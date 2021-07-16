@@ -24,10 +24,9 @@ terms. This can include \code{.} and selectors. See \code{\link[=selections]{sel
 for more details, and consider using \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}} when
 dummy variables have been created.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new columns created from the original variables will be
-used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}

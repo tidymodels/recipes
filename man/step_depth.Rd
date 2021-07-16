@@ -22,17 +22,15 @@ step_depth(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be used to create the new features. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{class}{A single character string that specifies a single
 categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that resulting depth estimates will be used as predictors in a
-model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -54,8 +52,8 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 \item{data}{The training data are stored here once after
 \code{\link[=prep.recipe]{prep.recipe()}} is executed.}
 
-\item{prefix}{A character string that defines the naming convention for
-new depth columns. Defaults to \code{"depth_"}. See Details below.}
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked

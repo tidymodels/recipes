@@ -7,11 +7,6 @@
 #'  random uniform number between zero and the truncation point.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param threshold A named numeric vector of lower bounds. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @template step-return

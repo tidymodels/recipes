@@ -5,9 +5,8 @@
 #'
 #' @param recipe A recipe object. The step will be added to the
 #'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
+#' @param ... One or more selector functions to choose variables
+#'  for this step. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param trained A logical to indicate if the quantities for

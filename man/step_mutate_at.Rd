@@ -19,18 +19,16 @@ step_mutate_at(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{fn}{A function fun, a quosure style lambda `~ fun(.)`` or a list of
 either form. (see \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}). \strong{Note that this argument must be
 named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the function assumes that the new dimension
-columns created by the original variables will be used as predictors in a
-model.}
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}

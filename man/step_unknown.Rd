@@ -19,10 +19,8 @@ step_unknown(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be affected by the step. These variables
-should be character or factor types. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}

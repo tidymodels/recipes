@@ -7,8 +7,6 @@
 #' @param ... Comma separated list of unquoted variable names.
 #'  Use `desc()`` to sort a variable in descending order. See
 #'  [dplyr::arrange()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param inputs Quosure of values given by `...`.
 #' @template step-return
 #' @details When an object in the user's global environment is

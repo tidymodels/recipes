@@ -4,16 +4,11 @@
 #'  step that will convert date data into one or more factor or
 #'  numeric variables.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be used to create the new variables. The
-#'  selected variables should have class `Date` or
+#' @param ... One or more selector functions to choose variables
+#'  for this step. The selected variables should have class `Date` or
 #'  `POSIXct`. See [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new variable columns created by the original variables
-#'  will be used as predictors in a model.
 #' @param features A character string that includes at least one
 #'  of the following values: `month`, `dow` (day of week),
 #'  `doy` (day of year), `week`, `month`,

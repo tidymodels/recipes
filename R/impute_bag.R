@@ -4,12 +4,10 @@
 #'  create bagged tree models to impute missing data.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose variables. For
-#'  `step_impute_bag`, this indicates the variables to be imputed. When used
-#'  with `imp_vars`, the dots indicate which variables are used to predict the
-#'  missing data in each variable. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
+#' @param ... One or more selector functions to choose variables to be imputed.
+#'  When used with `imp_vars`, these dots indicate which variables are used to
+#'  predict the missing data in each variable. See [selections()] for more
+#'  details.
 #' @param impute_with A call to `imp_vars` to specify which variables are used
 #'  to impute the variables that can include specific variable names separated
 #'  by commas or different selectors (see [selections()]). If a column is
