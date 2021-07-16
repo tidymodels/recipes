@@ -23,6 +23,10 @@ A character string of column names or an error of there
 are no selectors or if no variables are selected.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+\code{terms_select()} has been deprecated in favor of \code{\link[=recipes_eval_select]{recipes_eval_select()}}.
+
 This function bakes the step function selectors and might be
 useful when creating custom steps.
 }
@@ -40,3 +44,4 @@ terms_select(info = info, quos(all_predictors()))
 }
 \concept{preprocessing}
 \keyword{datagen}
+\keyword{internal}

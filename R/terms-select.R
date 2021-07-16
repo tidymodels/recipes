@@ -1,9 +1,9 @@
-# Old method for selection. This has been completely superseded by
-# `recipes_eval_select()`, and should no longer be used in recipes, but we
-# have exported it so we continue to support it here.
-
-
 #' Select Terms in a Step Function.
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `terms_select()` has been deprecated in favor of [recipes_eval_select()].
 #'
 #' This function bakes the step function selectors and might be
 #'  useful when creating custom steps.
@@ -23,6 +23,7 @@
 #' @seealso [recipe()] [summary.recipe()]
 #'   [prep.recipe()]
 #' @export
+#' @keywords internal
 #' @examples
 #' library(rlang)
 #' library(modeldata)
@@ -31,6 +32,8 @@
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
 terms_select <- function(terms, info, empty_fun = abort_selection) {
+  lifecycle::deprecate_soft("0.1.17", "terms_select()", "recipes_eval_select()")
+
   # unique in case a variable has multiple roles
   vars <- unique(info$variable)
 
