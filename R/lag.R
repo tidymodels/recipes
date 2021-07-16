@@ -101,7 +101,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
     lag = x$lag,
     default = x$default,
     prefix = x$prefix,
-    columns = eval_select_recipes(x$terms, training, info),
+    columns = recipes_eval_select(x$terms, training, info),
     skip = x$skip,
     id = x$id
   )

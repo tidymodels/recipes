@@ -150,7 +150,7 @@ step_impute_roll_new <-
 
 #' @export
 prep.step_impute_roll <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
   dbl_check <- vapply(training[, col_names], is.double, logical(1))
   if (any(!dbl_check))

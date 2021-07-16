@@ -101,7 +101,7 @@ step_holiday_new <-
 
 #' @export
 prep.step_holiday <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   holiday_data <- info[info$variable %in% col_names, ]
   if (any(holiday_data$type != "date"))

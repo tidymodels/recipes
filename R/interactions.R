@@ -135,17 +135,17 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
   # Use formula environment as quosure env
   env <- rlang::f_env(x$terms)
 
-  eval_select_recipes_expr <- function(expr) {
-    # Wrap `expr` into a list-of-quos as `eval_select_recipes()` expects
+  recipes_eval_select_expr <- function(expr) {
+    # Wrap `expr` into a list-of-quos as `recipes_eval_select()` expects
     quo <- new_quosure(expr, env)
     quos <- list(quo)
-    eval_select_recipes(quos, data = training, info = info)
+    recipes_eval_select(quos, data = training, info = info)
   }
 
   ## Resolve the selectors to a expression containing an additive
   ## function of the variables
   if(length(form_sel) > 0) {
-    form_res <- map(form_sel, eval_select_recipes_expr)
+    form_res <- map(form_sel, recipes_eval_select_expr)
     form_res <- map(form_res, vec_2_expr)
     ## Subsitute the column names into the original interaction
     ## formula.

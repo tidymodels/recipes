@@ -132,8 +132,8 @@ check_is_lat_lon <- function(x) {
 
 #' @export
 prep.step_geodist <- function(x, training, info = NULL, ...) {
-  lon_name <- eval_select_recipes(x$lon, training, info)
-  lat_name <- eval_select_recipes(x$lat, training, info)
+  lon_name <- recipes_eval_select(x$lon, training, info)
+  lat_name <- recipes_eval_select(x$lat, training, info)
 
   x <- check_is_lat_lon(x)
 

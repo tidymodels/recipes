@@ -40,7 +40,7 @@
   * `step_pca()`, `step_ica()`, `step_nnmf()`, `step_kpca_rbf()`, `step_kpca_poly()`, `step_pls()`, `step_isomap()` which all default to `FALSE` (#635).
   * `step_ratio()`, `step_holiday()`, `step_date()` which all default to `TRUE` to maintain original behavior, as well as `step_dummy()` which defaults to `FALSE` (#645).
 
-* Added `allow_rename` argument to `eval_select_recipes()` (#646).
+* Added `allow_rename` argument to `recipes_eval_select()` (#646).
 
 * Performance improvements for `step_bs()` and `step_ns()`. The `prep()` step no longer evaluates the basis functions on the training set and the `bake()` steps only evaluates the basis functions once for each unique input value (#574)
 

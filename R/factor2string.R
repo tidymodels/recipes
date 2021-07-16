@@ -91,7 +91,7 @@ step_factor2string_new <-
 
 #' @export
 prep.step_factor2string <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   fac_check <-
     vapply(training[, col_names], is.factor, logical(1))
   if (any(!fac_check))

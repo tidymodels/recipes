@@ -121,7 +121,7 @@ get_existing_values <- function(x) {
 
 #' @export
 prep.step_novel <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   col_check <- dplyr::filter(info, variable %in% col_names)
 

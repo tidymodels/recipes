@@ -144,7 +144,7 @@ step_other_new <-
 
 #' @export
 prep.step_other <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   if (length(col_names) > 0) {
     objects <- lapply(training[, col_names],

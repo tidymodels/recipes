@@ -105,7 +105,7 @@
 NULL
 
 
-eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
+recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
 
   ellipsis::check_dots_empty()
 

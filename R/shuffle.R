@@ -69,7 +69,7 @@ step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
 
 #' @export
 prep.step_shuffle <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   step_shuffle_new(
     terms = x$terms,
     role = x$role,

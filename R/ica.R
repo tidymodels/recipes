@@ -149,7 +149,7 @@ step_ica_new <-
 
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   if (x$num_comp > 0) {

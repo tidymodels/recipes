@@ -67,7 +67,7 @@ step_rename_at_new <-
 
 #' @export
 prep.step_rename_at <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   step_rename_at_new(
     terms = x$terms,

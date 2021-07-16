@@ -1,5 +1,5 @@
 # Old method for selection. This has been completely superseded by
-# `eval_select_recipes()`, and should no longer be used in recipes, but we
+# `recipes_eval_select()`, and should no longer be used in recipes, but we
 # have exported it so we continue to support it here.
 
 
