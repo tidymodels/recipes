@@ -16,7 +16,7 @@ library(modeldata)
 data(biomass)
 rec2 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-           new_role = "predictor") %>%
+              new_role = "predictor") %>%
   update_role(HHV, new_role = "outcome") %>%
   update_role(sample, new_role = "id variable") %>%
   update_role(dataset, new_role = "splitting indicator")
