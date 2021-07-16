@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper.
+
 * When only the terms attributes are desired from `model.frame` use the first row of data to improve speed and memory use (#726).
 
 * Use Haversine formula for latitude-longitude pairs in step_geodist (#725).
