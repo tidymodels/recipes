@@ -140,8 +140,6 @@ test_that('namespaced selectors', {
 test_that('new dplyr selectors', {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
-  skip_if(tidyselect_pre_1.0.0())
-
   vnames <- c("hydrogen", "carbon")
   expect_error(
     rec_1 <-

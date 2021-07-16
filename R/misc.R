@@ -710,13 +710,6 @@ cast <- function(x, ref) {
 
 ## -----------------------------------------------------------------------------
 
-tidyselect_pre_1.0.0 <- function() {
-  utils::packageVersion("tidyselect") <= "0.2.5"
-}
-
-
-## -----------------------------------------------------------------------------
-
 print_col_names <- function(x, prefix = "") {
   if (length(x) == 0) {
     return(invisible(TRUE))
