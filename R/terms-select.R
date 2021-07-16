@@ -43,7 +43,7 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
 
   # Set current_info so available to helpers
 
-  nested_info <- nest_current_info(info)
+  nested_info <- tidyr::nest(info, data = -variable)
 
   local_current_info(nested_info)
 

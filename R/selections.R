@@ -159,7 +159,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
   data_info <- tibble(variable = names(data))
   data_info <- dplyr::left_join(data_info, info, by = "variable")
 
-  nested_info <- nest_current_info(data_info)
+  nested_info <- tidyr::nest(data_info, data = -variable)
 
   local_current_info(nested_info)
 
@@ -194,15 +194,6 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
 
   names(out) <- names
   out
-}
-
-nest_current_info <- function(info) {
-  # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
-  if (tidyr_new_interface()) {
-    tidyr::nest(info, data = -variable)
-  } else {
-    tidyr::nest(info, -variable)
-  }
 }
 
 #' Role Selection

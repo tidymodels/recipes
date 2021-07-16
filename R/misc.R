@@ -693,12 +693,6 @@ is_tune <- function(x) {
 }
 
 # ------------------------------------------------------------------------------
-
-tidyr_new_interface <- function() {
-  utils::packageVersion("tidyr") > "0.8.99"
-}
-
-# ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:
 # vctrs's cast functions would be better but we'll deal with the known cases
 # to avoid a dependency.
