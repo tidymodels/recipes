@@ -1,5 +1,3 @@
-
-
 #' @name selections
 #' @aliases selections
 #' @aliases selection
@@ -104,9 +102,56 @@
 #' will not work.
 NULL
 
+# ------------------------------------------------------------------------------
 
+#' Evaluate a selection with tidyselect semantics specific to recipes
+#'
+#' @description
+#' `recipes_eval_select()` is a recipes specific variant of
+#' [tidyselect::eval_select()] enhanced with the ability to recognize recipes
+#' selectors, such as [all_numeric_predictors()]. See [selections]
+#' for more information about the unique recipes selectors.
+#'
+#' This is a developer tool that is only useful for creating new recipes steps.
+#'
+#' @inheritParams ellipsis::dots_empty
+#'
+#' @param quos A list of quosures describing the selection. This is generally
+#'   the `...` argument of your step function, captured with [ellipse_check()]
+#'   or [rlang::enquos()] and stored in the step object as the `terms` element.
+#'
+#' @param data A data frame to use as the context to evaluate the selection in.
+#'   This is generally the `training` data passed to the [prep()] method
+#'   of your step.
+#'
+#' @param info A data frame of term information describing each column's type
+#'   and role for use with the recipes selectors. This is generally the `info`
+#'   data passed to the [prep()] method of your step.
+#'
+#' @param allow_rename Should the renaming syntax `c(foo = bar)` be allowed?
+#'   This is rarely required, and is currently only used by [step_select()].
+#'   It is unlikely that your step will need renaming capabilities.
+#'
+#' @return
+#' A named character vector containing the evaluated selection. The names are
+#' always the same as the values, except when `allow_rename = TRUE`, in which
+#' case the names reflect the new names chosen by the user.
+#'
+#' @export
+#' @examples
+#' library(rlang)
+#' library(modeldata)
+#' data(okc)
+#'
+#' rec <- recipe(age ~ ., data = okc)
+#'
+#' info <- summary(rec)
+#' info
+#'
+#' quos <- quos(all_numeric_predictors(), where(is.character))
+#'
+#' recipes_eval_select(quos, okc, info)
 recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
-
   ellipsis::check_dots_empty()
 
   # Maintain ordering between `data` column names and `info$variable` so
