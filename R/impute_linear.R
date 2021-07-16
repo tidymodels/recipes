@@ -5,7 +5,6 @@
 #'
 #' @inheritParams step_impute_bag
 #' @inheritParams step_center
-#' @inherit step_center return
 #' @param ... One or more selector functions to choose variables to be imputed;
 #' these variables **must** be of type `numeric`. When used with `imp_vars`,
 #' these dots indicate which variables are used to predict the missing data
