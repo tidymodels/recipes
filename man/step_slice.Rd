@@ -39,7 +39,7 @@ Care should be taken when using \code{skip = FALSE}.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_slice} creates a \emph{specification} of a recipe step
