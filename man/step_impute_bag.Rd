@@ -4,7 +4,7 @@
 \alias{step_impute_bag}
 \alias{step_bagimpute}
 \alias{imp_vars}
-\title{Imputation via bagged trees}
+\title{Impute via bagged trees}
 \usage{
 step_impute_bag(
   recipe,

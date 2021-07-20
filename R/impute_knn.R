@@ -1,4 +1,4 @@
-#' Imputation via k-nearest neighbors
+#' Impute via k-nearest neighbors
 #'
 #' `step_impute_knn` creates a *specification* of a recipe step that will
 #'  impute missing data using nearest neighbors.
