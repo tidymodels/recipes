@@ -43,7 +43,7 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{signed}{A logical indicating whether to take the signed log.
 This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
@@ -53,7 +53,7 @@ If \code{TRUE} the \code{offset} argument will be ignored.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_log} creates a \emph{specification} of a recipe step
