@@ -6,7 +6,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used in the *numerator* of the ratio.
 #'  When used with `denom_vars`, the dots indicate which

@@ -114,7 +114,7 @@ used.
 The best way to use use a recipe for modeling is via the \code{workflows}
 package. This bundles a model and preprocessor (e.g. a recipe) together
 and gives the user a fluent way to train the model/recipe and make
-predictions.\if{html}{\out{<div class="r">}}\preformatted{library(dplyr)
+predictions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
 library(workflows)
 library(recipes)
 library(parsnip)
@@ -150,7 +150,7 @@ sp_signed
 }
 
 We can create a \code{parsnip} model, and then build a workflow with the
-model and recipe:\if{html}{\out{<div class="r">}}\preformatted{linear_mod <- linear_reg()
+model and recipe:\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_mod <- linear_reg()
 
 linear_sp_sign_wflow <- 
   workflow() \%>\% 
@@ -170,16 +170,17 @@ linear_sp_sign_wflow
 ## 
 ## ── Model ─────────────────────────────────────────────────────────────
 ## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
 }
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to \code{fit()} is used:\if{html}{\out{<div class="r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
-}\if{html}{\out{</div>}}\preformatted{## Warning: Engine set to `lm`.
-}
+single call to \code{fit()} is used:\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
+}\if{html}{\out{</div>}}
 
 When predicting, there is no need to do anything other than call
 \code{predict()}. This preprocesses the new data in the same manner as the
-training set, then gives the data to the linear model prediction code:\if{html}{\out{<div class="r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
+training set, then gives the data to the linear model prediction code:\if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 1
 ##   .pred
 ##   <dbl>
@@ -202,14 +203,14 @@ Once a recipe has been defined, the \code{\link[=prep]{prep()}} function can be
 used to estimate quantities required for the operations using a data set
 (a.k.a. the training data). \code{\link[=prep]{prep()}} returns a recipe.
 
-As an example of using PCA (perhaps to produce a plot):\if{html}{\out{<div class="r">}}\preformatted{# Define the recipe
+As an example of using PCA (perhaps to produce a plot):\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Define the recipe
 pca_rec <- 
   rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_pca(all_numeric_predictors())
 }\if{html}{\out{</div>}}
 
-Now to estimate the normalization statistics and the PCA loadings:\if{html}{\out{<div class="r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
+Now to estimate the normalization statistics and the PCA loadings:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
 pca_rec
 }\if{html}{\out{</div>}}\preformatted{## Data Recipe
 ## 
@@ -231,19 +232,19 @@ Note that the estimated recipe shows the actual column names captured by
 the selectors.
 
 You can \code{\link[=tidy.recipe]{tidy.recipe()}} a recipe, either when it is
-prepped or unprepped, to learn more about its components.\if{html}{\out{<div class="r">}}\preformatted{tidy(pca_rec)
+prepped or unprepped, to learn more about its components.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 x 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_uFLiq
-## 2      2 step      pca       TRUE    FALSE pca_VMdtm
+## 1      1 step      normalize TRUE    FALSE normalize_b4SMT
+## 2      2 step      pca       TRUE    FALSE pca_tMA15
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.
 
 To apply the prepped recipe to a data set, the \code{\link[=bake]{bake()}}
 function is used in the same manner that \code{predict()} would be for
-models. This applies the estimated steps to any data set.\if{html}{\out{<div class="r">}}\preformatted{bake(pca_rec, head(biomass_te))
+models. This applies the estimated steps to any data set.\if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 6
 ##     HHV    PC1    PC2     PC3     PC4     PC5
 ##   <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
