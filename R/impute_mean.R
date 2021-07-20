@@ -1,4 +1,4 @@
-#' Impute Numeric Data Using the Mean
+#' Impute numeric data using the mean
 #'
 #' `step_impute_mean` creates a *specification* of a recipe step that will
 #'  substitute missing values of numeric variables by the training set mean of

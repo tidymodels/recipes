@@ -1,4 +1,4 @@
-#' Impute Numeric Data Using a Rolling Window Statistic
+#' Impute numeric data using a rolling window statistic
 #'
 #' `step_impute_roll` creates a *specification* of a
 #'  recipe step that will substitute missing values of numeric

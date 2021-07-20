@@ -1,4 +1,4 @@
-#' Impute Numeric Data Below the Threshold of Measurement
+#' Impute numeric data below the threshold of measurement
 #'
 #' `step_impute_lower` creates a *specification* of a recipe step
 #'  designed for cases where the non-negative numeric data cannot be

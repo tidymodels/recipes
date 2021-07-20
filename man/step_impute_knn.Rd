@@ -3,7 +3,7 @@
 \name{step_impute_knn}
 \alias{step_impute_knn}
 \alias{step_knnimpute}
-\title{Imputation via K-Nearest Neighbors}
+\title{Imputation via k-nearest neighbors}
 \usage{
 step_impute_knn(
   recipe,

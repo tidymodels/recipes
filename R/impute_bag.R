@@ -1,4 +1,4 @@
-#' Imputation via Bagged Trees
+#' Imputation via bagged trees
 #'
 #' `step_impute_bag` creates a *specification* of a recipe step that will
 #'  create bagged tree models to impute missing data.

@@ -3,7 +3,7 @@
 \name{step_impute_lower}
 \alias{step_impute_lower}
 \alias{step_lowerimpute}
-\title{Impute Numeric Data Below the Threshold of Measurement}
+\title{Impute numeric data below the threshold of measurement}
 \usage{
 step_impute_lower(
   recipe,

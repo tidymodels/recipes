@@ -3,7 +3,7 @@
 \name{step_impute_mean}
 \alias{step_impute_mean}
 \alias{step_meanimpute}
-\title{Impute Numeric Data Using the Mean}
+\title{Impute numeric data using the mean}
 \usage{
 step_impute_mean(
   recipe,

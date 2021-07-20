@@ -2,7 +2,7 @@
 % Please edit documentation in R/impute_linear.R
 \name{step_impute_linear}
 \alias{step_impute_linear}
-\title{Imputation of numeric variables via a linear model.}
+\title{Imputation of numeric variables via a linear model}
 \usage{
 step_impute_linear(
   recipe,

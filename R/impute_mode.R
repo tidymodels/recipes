@@ -1,4 +1,4 @@
-#' Impute Nominal Data Using the Most Common Value
+#' Impute nominal data using the most common value
 #'
 #'   `step_impute_mode` creates a *specification* of a
 #'  recipe step that will substitute missing values of nominal

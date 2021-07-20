@@ -3,7 +3,7 @@
 \name{step_impute_roll}
 \alias{step_impute_roll}
 \alias{step_rollimpute}
-\title{Impute Numeric Data Using a Rolling Window Statistic}
+\title{Impute numeric data using a rolling window statistic}
 \usage{
 step_impute_roll(
   recipe,

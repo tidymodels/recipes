@@ -170,12 +170,13 @@ linear_sp_sign_wflow
 ## 
 ## ── Model ─────────────────────────────────────────────────────────────
 ## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
 }
 
 To estimate the preprocessing steps and then fit the linear model, a
 single call to \code{fit()} is used:\if{html}{\out{<div class="r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
-}\if{html}{\out{</div>}}\preformatted{## Warning: Engine set to `lm`.
-}
+}\if{html}{\out{</div>}}
 
 When predicting, there is no need to do anything other than call
 \code{predict()}. This preprocesses the new data in the same manner as the
@@ -235,8 +236,8 @@ prepped or unprepped, to learn more about its components.\if{html}{\out{<div cla
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 x 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_LBf9s
-## 2      2 step      pca       TRUE    FALSE pca_S75w7
+## 1      1 step      normalize TRUE    FALSE normalize_MfOEN
+## 2      2 step      pca       TRUE    FALSE pca_LR27A
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.

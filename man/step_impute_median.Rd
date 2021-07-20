@@ -3,7 +3,7 @@
 \name{step_impute_median}
 \alias{step_impute_median}
 \alias{step_medianimpute}
-\title{Impute Numeric Data Using the Median}
+\title{Impute numeric data using the median}
 \usage{
 step_impute_median(
   recipe,
