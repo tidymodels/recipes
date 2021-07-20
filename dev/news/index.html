@@ -120,7 +120,7 @@
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -179,6 +179,7 @@
 <li><p>Reorganize documentation for all recipe step <code>tidy</code> methods (<a href='https://github.com/tidymodels/recipes/issues/701'>#701</a>).</p></li>
 <li><p>Generate warning when user attempts a Box-Cox transformation of non-positive data (<a href='https://github.com/LiamBlake'>@LiamBlake</a>, <a href='https://github.com/tidymodels/recipes/issues/713'>#713</a>).</p></li>
 <li><p>Fix imputation steps for new data that is all <code>NA</code>, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (<a href='https://github.com/tidymodels/recipes/issues/719'>#719</a>).</p></li>
+<li><p>Escalate deprecation for old versions of imputation steps (such as <code><a href="../reference/step_impute_bag.html">step_bagimpute()</a></code>) from a soft deprecation to a regular deprecation; these imputation steps have new names like <code><a href="../reference/step_impute_bag.html">step_impute_bag()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/753'>#753</a>).</p></li>
 </ul></div>
     <div id="recipes-0116" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.16">
