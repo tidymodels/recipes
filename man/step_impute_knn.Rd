@@ -3,7 +3,7 @@
 \name{step_impute_knn}
 \alias{step_impute_knn}
 \alias{step_knnimpute}
-\title{Imputation via K-Nearest Neighbors}
+\title{Impute via k-nearest neighbors}
 \usage{
 step_impute_knn(
   recipe,
@@ -149,4 +149,3 @@ of its properties," Biometrics, 857-871.
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

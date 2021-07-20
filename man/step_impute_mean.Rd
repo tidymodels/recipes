@@ -3,7 +3,7 @@
 \name{step_impute_mean}
 \alias{step_impute_mean}
 \alias{step_meanimpute}
-\title{Impute Numeric Data Using the Mean}
+\title{Impute numeric data using the mean}
 \usage{
 step_impute_mean(
   recipe,
@@ -110,4 +110,3 @@ tidy(imp_models, number = 1)
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

@@ -3,7 +3,7 @@
 \name{step_impute_median}
 \alias{step_impute_median}
 \alias{step_medianimpute}
-\title{Impute Numeric Data Using the Median}
+\title{Impute numeric data using the median}
 \usage{
 step_impute_median(
   recipe,
@@ -104,4 +104,3 @@ tidy(imp_models, number = 1)
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

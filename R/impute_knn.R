@@ -1,4 +1,4 @@
-#' Imputation via K-Nearest Neighbors
+#' Impute via k-nearest neighbors
 #'
 #' `step_impute_knn` creates a *specification* of a recipe step that will
 #'  impute missing data using nearest neighbors.
@@ -130,7 +130,6 @@ step_impute_knn <-
 
 #' @rdname step_impute_knn
 #' @export
-#' @keywords internal
 step_knnimpute <-
   function(recipe,
            ...,
@@ -143,7 +142,7 @@ step_knnimpute <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("impute_knn")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_knnimpute()",
       with = "recipes::step_impute_knn()"

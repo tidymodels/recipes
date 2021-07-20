@@ -4,7 +4,7 @@
 \alias{step_impute_bag}
 \alias{step_bagimpute}
 \alias{imp_vars}
-\title{Imputation via Bagged Trees}
+\title{Impute via bagged trees}
 \usage{
 step_impute_bag(
   recipe,
@@ -162,4 +162,3 @@ Springer Verlag.
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

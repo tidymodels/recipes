@@ -3,7 +3,7 @@
 \name{step_impute_mode}
 \alias{step_impute_mode}
 \alias{step_modeimpute}
-\title{Impute Nominal Data Using the Most Common Value}
+\title{Impute nominal data using the most common value}
 \usage{
 step_impute_mode(
   recipe,
@@ -109,4 +109,3 @@ tidy(imp_models, number = 1)
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

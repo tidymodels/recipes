@@ -1,4 +1,4 @@
-#' Impute Nominal Data Using the Most Common Value
+#' Impute nominal data using the most common value
 #'
 #'   `step_impute_mode` creates a *specification* of a
 #'  recipe step that will substitute missing values of nominal
@@ -80,7 +80,6 @@ step_impute_mode <-
 
 #' @rdname step_impute_mode
 #' @export
-#' @keywords internal
 step_modeimpute <-
   function(recipe,
            ...,
@@ -90,7 +89,7 @@ step_modeimpute <-
            ptype = NULL,
            skip = FALSE,
            id = rand_id("impute_mode")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_modeimpute()",
       with = "recipes::step_impute_mode()"
