@@ -1,5 +1,9 @@
 # recipes (development version)
 
+* Added new `step_harmonic()` (#702).
+
+* Speed-up/simplification to step_spatialsign
+
 * When only the terms attributes are desired from `model.frame` use the first row of data to improve speed and memory use (#726).
 
 * Use Haversine formula for latitude-longitude pairs in step_geodist (#725).
