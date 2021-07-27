@@ -4,14 +4,12 @@
 #'  recipe step that will calculate the distance between
 #'  points on a map to a reference location.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param lon,lat Selector functions to choose which variables are
 #'  used by the step. See [selections()] for more details.
 #' @param ref_lon,ref_lat Single numeric values for the location
 #'  of the reference point.
-#' @param role or model term created by this step, what analysis
-#'  role should be assigned?. By default, the function assumes
-#'  that resulting distance will be used as a predictor in a model.
 #' @param is_lat_lon A logical: Are coordinates in latitude and longitude? If
 #'  `TRUE` the Haversine formula is used and the returned result is meters. If
 #'  `FALSE` the Pythagorean formula is used. Default is `TRUE` and for recipes

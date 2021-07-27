@@ -1,13 +1,10 @@
-#' Impute Numeric Data Using the Mean
+#' Impute numeric data using the mean
 #'
 #' `step_impute_mean` creates a *specification* of a recipe step that will
 #'  substitute missing values of numeric variables by the training set mean of
 #'  those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is `NULL` until computed
 #'  by [prep.recipe()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.
@@ -84,7 +81,6 @@ step_impute_mean <-
 
 #' @rdname step_impute_mean
 #' @export
-#' @keywords internal
 step_meanimpute <-
   function(recipe,
            ...,
@@ -94,7 +90,7 @@ step_meanimpute <-
            trim = 0,
            skip = FALSE,
            id = rand_id("impute_mean")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_meanimpute()",
       with = "recipes::step_impute_mean()"

@@ -19,18 +19,16 @@ step_rename_at(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{fn}{A function \code{fun}, a quosure style lambda `~ fun(.)`` or a list of
 either form (but containing only a single function, see \code{\link[dplyr:select_all]{dplyr::rename_at()}}).
 \strong{Note that this argument must be named}.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the function assumes that the new dimension
-columns created by the original variables will be used as predictors in a
-model.}
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -42,13 +40,13 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_rename_at} creates a \emph{specification} of a recipe step that will rename

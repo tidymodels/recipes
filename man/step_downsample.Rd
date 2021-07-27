@@ -25,11 +25,8 @@ step_downsample(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variable is used to sample the data. See \code{\link[=selections]{selections()}}
-for more details. The selection should result in \emph{single
-factor variable}. For the \code{tidy} method, these are not
-currently used.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{under_ratio}{A numeric value for the ratio of the
 minority-to-majority frequencies. The default value (1) means
@@ -57,7 +54,7 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{seed}{An integer that will be used as the seed when downsampling.}
 
@@ -67,7 +64,7 @@ the computations for subsequent operations}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}

@@ -4,15 +4,8 @@
 #'  will convert numeric data into one or more principal components
 #'  using a polynomial kernel basis expansion.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to compute the components. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned? By default, the function assumes
-#'  that the new principal component columns created by the original
-#'  variables will be used as predictors in a model.
 #' @param num_comp The number of PCA components to retain as new
 #'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
@@ -21,10 +14,6 @@
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
 #' @template step-return
 #' @keywords datagen
 #' @concept preprocessing

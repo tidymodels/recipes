@@ -17,9 +17,8 @@ check_cols(
 \item{recipe}{A recipe object. The check will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are checked in the check See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this check. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
@@ -34,7 +33,11 @@ conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
-\item{id}{A character string that is unique to this step to identify it.}
+\item{id}{A character string that is unique to this check to identify it.}
+}
+\value{
+An updated version of \code{recipe} with the new check added to the
+sequence of any existing operations.
 }
 \description{
 \code{check_cols} creates a \emph{specification} of a recipe

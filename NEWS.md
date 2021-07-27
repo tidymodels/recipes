@@ -1,16 +1,23 @@
 # recipes (development version)
 
+
 * New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
+
+* Added new `step_harmonic()` (#702).
+
+* Speed-up/simplification to `step_spatialsign()`
 
 * When only the terms attributes are desired from `model.frame` use the first row of data to improve speed and memory use (#726).
 
-* Use Haversine formula for latitude-longitude pairs in step_geodist (#725).
+* Use Haversine formula for latitude-longitude pairs in `step_geodist()` (#725).
 
 * Reorganize documentation for all recipe step `tidy` methods (#701).
 
 * Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
 
 * Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
+
+* Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
 
 # recipes 0.1.16
 

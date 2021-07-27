@@ -17,9 +17,8 @@ step_select(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be selected when baking. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms selected by this step, what analysis
 role should they be assigned?}
@@ -32,13 +31,13 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_select()} creates a \emph{specification} of a recipe step

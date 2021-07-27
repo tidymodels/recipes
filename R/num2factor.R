@@ -5,10 +5,6 @@
 #'  integers.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'  converted to factors. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param transform A function taking a single argument `x` that can be used
 #'  to modify the numeric values prior to determining the levels (perhaps using
 #'  [base::as.integer()]). The output of a function should be an integer that

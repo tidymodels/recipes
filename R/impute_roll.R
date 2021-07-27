@@ -1,16 +1,13 @@
-#' Impute Numeric Data Using a Rolling Window Statistic
+#' Impute numeric data using a rolling window statistic
 #'
 #' `step_impute_roll` creates a *specification* of a
 #'  recipe step that will substitute missing values of numeric
 #'  variables by the measure of location (e.g. median) within a moving window.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()] for more
-#'  details. These columns should be non-integer numerics (i.e.,
-#'  double precision).
-#' @param role Not used by this step since no new variables are
-#'  created.
+#' @param ... One or more selector functions to choose variables to be imputed;
+#'  these columns must be non-integer numerics (i.e., double precision).
+#'  See [selections()] for more details.
 #' @param columns A named numeric vector of columns. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @param window The size of the window around a point to be imputed. Should be
@@ -101,10 +98,8 @@ step_impute_roll <-
     )
   }
 
-
 #' @rdname step_impute_roll
 #' @export
-#' @keywords internal
 step_rollimpute <-
   function(recipe,
            ...,
@@ -115,7 +110,7 @@ step_rollimpute <-
            window = 5,
            skip = FALSE,
            id = rand_id("impute_roll")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_rollimpute()",
       with = "recipes::step_impute_roll()"

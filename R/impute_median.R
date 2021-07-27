@@ -1,13 +1,10 @@
-#' Impute Numeric Data Using the Median
+#' Impute numeric data using the median
 #'
 #' `step_impute_median` creates a *specification* of a recipe step that will
 #'  substitute missing values of numeric variables by the training set median of
 #'  those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param medians A named numeric vector of medians. This is `NULL` until
 #'  computed by [prep.recipe()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
@@ -79,7 +76,6 @@ step_impute_median <-
 
 #' @rdname step_impute_median
 #' @export
-#' @keywords internal
 step_medianimpute <-
   function(recipe,
            ...,
@@ -88,7 +84,7 @@ step_medianimpute <-
            medians = NULL,
            skip = FALSE,
            id = rand_id("impute_median")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_medianimpute()",
       with = "recipes::step_impute_median()"

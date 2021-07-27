@@ -214,8 +214,6 @@ print.discretize <-
 #'  on a training set).
 #'
 #' @inheritParams step_center
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param num_breaks An integer defining how many cuts to make of the
 #'  data.
 #' @param min_unique An integer defining a sample size line of
@@ -230,10 +228,6 @@ print.discretize <-
 #'  the options `prefix` and `labels` when more than one
 #'  variable is being transformed might be problematic as all
 #'  variables inherit those values.
-#' @param ... For `step_discretize`, the dots specify
-#'  one or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more
-#'  details.
 #' @template step-return
 #' @details  When you [`tidy()`] this step, a tibble
 #'  with columns `terms` (the selectors or variables selected)

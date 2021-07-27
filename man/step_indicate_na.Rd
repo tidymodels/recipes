@@ -16,19 +16,18 @@ step_indicate_na(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The check will be added to the
+\item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new na indicator columns created from the original
-variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical for whether the selectors in \code{...}
-have been resolved by \code{\link[=prep]{prep()}}.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{columns}{A character string of variable names that will
 be populated (eventually) by the terms argument.}
@@ -36,7 +35,7 @@ be populated (eventually) by the terms argument.}
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. Defaults to "na_ind".}
 
-\item{skip}{A logical. Should the check be skipped when the
+\item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
@@ -47,7 +46,7 @@ the computations for subsequent operations.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_indicate_na} creates a \emph{specification} of a recipe step that will

@@ -3,7 +3,7 @@
 \name{step_impute_roll}
 \alias{step_impute_roll}
 \alias{step_rollimpute}
-\title{Impute Numeric Data Using a Rolling Window Statistic}
+\title{Impute numeric data using a rolling window statistic}
 \usage{
 step_impute_roll(
   recipe,
@@ -33,10 +33,9 @@ step_rollimpute(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}} for more
-details. These columns should be non-integer numerics (i.e.,
-double precision).}
+\item{...}{One or more selector functions to choose variables to be imputed;
+these columns must be non-integer numerics (i.e., double precision).
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -60,13 +59,13 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_impute_roll} creates a \emph{specification} of a
@@ -121,4 +120,3 @@ bake(seven_pt, new_data = NULL)
 \concept{imputation}
 \concept{preprocessing}
 \keyword{datagen}
-\keyword{internal}

@@ -5,11 +5,6 @@
 #'  and unbalanced.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param freq_cut,unique_cut Numeric parameters for the filtering process. See
 #'  the Details section below.
 #' @param options A list of options for the filter (see Details

@@ -4,15 +4,8 @@
 #'  step that will convert new data into a set of integers based
 #'  on the original data values.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to create the integer variables. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created by the original variables will be
-#'  used as predictors in a model.
 #' @param key A list that contains the information needed to
 #'  create integer variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by

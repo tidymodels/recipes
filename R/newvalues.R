@@ -3,31 +3,12 @@
 #' `check_new_values` creates a *specification* of a recipe
 #'  operation that will check if variables contain new values.
 #'
-#' @param recipe A recipe object. The check will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are checked in the check. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this check since no new variables are
-#'  created.
-#' @param trained A logical for whether the selectors in `...`
-#' have been resolved by [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the terms argument.
+#' @inheritParams check_missing
 #' @param ignore_NA A logical that indicates if we should consider missing
 #'  values as value or not. Defaults to `TRUE`.
 #' @param values A named list with the allowed values.
 #'  This is `NULL` until computed by prep.recipe().
-#' @param id A character string that is unique to this step to identify it.
-#' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations.
-#' @return An updated version of `recipe` with the new check added to the
-#'  sequence of any existing operations.
+#' @template check-return
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain values it did not contain when `prep` was called

@@ -9,13 +9,6 @@
 #'  levels in a specific factor level equal.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variable is used to sample the data. See [selections()]
-#'  for more details. The selection should result in _single
-#'  factor variable_. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param column A character string of the variable name that will
 #'  be populated (eventually) by the `...` selectors.
 #' @param over_ratio A numeric value for the ratio of the

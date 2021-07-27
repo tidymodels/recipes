@@ -5,17 +5,10 @@
 #'  *data depth*. This is done for each value of a categorical
 #'  class variable.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be used to create the new features. See
-#'  [selections()] for more details.
 #' @param class A single character string that specifies a single
 #'  categorical variable to be used as the class.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that resulting depth estimates will be used as predictors in a
-#'  model.
 #' @param metric A character string specifying the depth metric.
 #'  Possible values are "potential", "halfspace", "Mahalanobis",
 #'  "simplicialVolume", "spatial", and "zonoid".
@@ -28,8 +21,6 @@
 #'  [ddalpha::depth.simplicialVolume()],
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
-#' @param prefix A character string that defines the naming convention for
-#'  new depth columns. Defaults to `"depth_"`. See Details below.
 #' @param data The training data are stored here once after
 #'  [prep.recipe()] is executed.
 #' @template step-return
