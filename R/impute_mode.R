@@ -1,15 +1,10 @@
-#' Impute Nominal Data Using the Most Common Value
+#' Impute nominal data using the most common value
 #'
 #'   `step_impute_mode` creates a *specification* of a
 #'  recipe step that will substitute missing values of nominal
 #'  variables by the training set mode of those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param modes A named character vector of modes. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @param ptype A data frame prototype to cast new data sets to. This is
@@ -85,7 +80,6 @@ step_impute_mode <-
 
 #' @rdname step_impute_mode
 #' @export
-#' @keywords internal
 step_modeimpute <-
   function(recipe,
            ...,
@@ -95,7 +89,7 @@ step_modeimpute <-
            ptype = NULL,
            skip = FALSE,
            id = rand_id("impute_mode")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_modeimpute()",
       with = "recipes::step_impute_mode()"

@@ -15,12 +15,11 @@ step_naomit(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to remove observations containing \code{NA} or \code{NaN}
-values. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Unused, include for consistency with other steps.}
 
@@ -40,7 +39,7 @@ Care should be taken when using \code{skip = FALSE}.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of any existing steps.
+sequence of any existing operations.
 }
 \description{
 \code{step_naomit} creates a \emph{specification} of a recipe step that
