@@ -139,7 +139,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 5 x 4</span>
+<span class="co">#&gt; # A tibble: 5 × 4</span>
 <span class="co">#&gt;   variable     type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length numeric predictor original</span>
@@ -149,13 +149,13 @@
 <span class="co">#&gt; 5 Species      nominal outcome   original</span>
 
 <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 4</span>
+<span class="co">#&gt; # A tibble: 1 × 4</span>
 <span class="co">#&gt;   variable type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Species  nominal predictor original</span>
 
 <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 5 x 4</span>
+<span class="co">#&gt; # A tibble: 5 × 4</span>
 <span class="co">#&gt;   variable     type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Petal.Length numeric predictor original</span>
@@ -172,7 +172,7 @@
   <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">dataset</span>, new_role <span class="op">=</span> <span class="st">"dataset split variable"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"sample ID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 8 x 4</span>
+<span class="co">#&gt; # A tibble: 8 × 4</span>
 <span class="co">#&gt;   variable type    role                   source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 sample   nominal sample ID              original</span>
@@ -188,7 +188,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/roles.html">remove_role</a></span><span class="op">(</span><span class="va">sample</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 8 x 4</span>
+<span class="co">#&gt; # A tibble: 8 × 4</span>
 <span class="co">#&gt;   variable type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 sample   nominal &lt;NA&gt;      original</span>
@@ -214,7 +214,7 @@
 
 <span class="va">multi_role</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 9 x 4</span>
+<span class="co">#&gt; # A tibble: 9 × 4</span>
 <span class="co">#&gt;   variable type    role                   source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 sample   nominal sample ID              original</span>
@@ -231,7 +231,7 @@
 <code class="sourceCode R"><span class="va">multi_role</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"flounder"</span>, old_role <span class="op">=</span> <span class="st">"jellyfish"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 9 x 4</span>
+<span class="co">#&gt; # A tibble: 9 × 4</span>
 <span class="co">#&gt;   variable type    role                   source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 sample   nominal sample ID              original</span>
@@ -251,7 +251,7 @@
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">biomass</span>, retain <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 8</span>
+<span class="co">#&gt; # A tibble: 6 × 8</span>
 <span class="co">#&gt;   sample                 dataset  carbon hydrogen oxygen nitrogen  sulfur   HHV</span>
 <span class="co">#&gt;   &lt;fct&gt;                  &lt;fct&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 Akhrot Shell           Training  1.52    0.181    4.37  -0.667  -0.234   20.0</span>
@@ -269,7 +269,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 8 x 4</span>
+<span class="co">#&gt; # A tibble: 8 × 4</span>
 <span class="co">#&gt;   variable type    role  source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;lgl&gt; &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 sample   nominal NA    original</span>
@@ -286,7 +286,7 @@
   <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"gen"</span><span class="op">)</span>, new_role <span class="op">=</span> <span class="st">"lunchroom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, <span class="va">HHV</span>, new_role <span class="op">=</span> <span class="st">"snail"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 8 x 4</span>
+<span class="co">#&gt; # A tibble: 8 × 4</span>
 <span class="co">#&gt;   variable type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 sample   nominal snail     original</span>

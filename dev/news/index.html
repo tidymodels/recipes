@@ -174,7 +174,9 @@
     <div id="recipes-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor" aria-hidden="true"></a>recipes (development version)<small> Unreleased </small></h1>
-<ul><li><p>When only the terms attributes are desired from <code>model.frame</code> use the first row of data to improve speed and memory use (<a href='https://github.com/tidymodels/recipes/issues/726'>#726</a>).</p></li>
+<ul><li><p>Added new <code><a href="../reference/step_harmonic.html">step_harmonic()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/702'>#702</a>).</p></li>
+<li><p>Speed-up/simplification to step_spatialsign</p></li>
+<li><p>When only the terms attributes are desired from <code>model.frame</code> use the first row of data to improve speed and memory use (<a href='https://github.com/tidymodels/recipes/issues/726'>#726</a>).</p></li>
 <li><p>Use Haversine formula for latitude-longitude pairs in step_geodist (<a href='https://github.com/tidymodels/recipes/issues/725'>#725</a>).</p></li>
 <li><p>Reorganize documentation for all recipe step <code>tidy</code> methods (<a href='https://github.com/tidymodels/recipes/issues/701'>#701</a>).</p></li>
 <li><p>Generate warning when user attempts a Box-Cox transformation of non-positive data (<a href='https://github.com/LiamBlake'>@LiamBlake</a>, <a href='https://github.com/tidymodels/recipes/issues/713'>#713</a>).</p></li>

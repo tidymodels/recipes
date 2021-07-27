@@ -173,7 +173,7 @@
 <p>Before any steps are used the information on the original variables is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 5 x 4</span>
+<span class="co">#&gt; # A tibble: 5 × 4</span>
 <span class="co">#&gt;   variable  type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Seniority numeric predictor original</span>
@@ -194,7 +194,7 @@
 <code class="sourceCode R"><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
 <span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
 <span class="va">with_dummy</span>
-<span class="co">#&gt; # A tibble: 4,454 x 5</span>
+<span class="co">#&gt; # A tibble: 4,454 × 5</span>
 <span class="co">#&gt;    Seniority  Time   Age Status Records_yes</span>
 <span class="co">#&gt;        &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;        &lt;dbl&gt;</span>
 <span class="co">#&gt;  1         9    60    30 good             0</span>

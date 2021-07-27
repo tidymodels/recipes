@@ -328,7 +328,7 @@ Analysis</em>. Springer.</p>
 <span class='r-in'>  <span class='fu'>step_pca</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric</a></span><span class='op'>(</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fl'>.99</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>with_thresh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>with_thresh</span>, training <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>with_thresh</span>, <span class='va'>USArrests</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 50 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 50 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>        PC1     PC2     PC3      PC4</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> -<span style='color: #BB0000;'>0.976</span>   1.12   -<span style='color: #BB0000;'>0.440</span>   0.155  </span>
@@ -344,12 +344,12 @@ Analysis</em>. Springer.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 40 more rows</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>pca_trans</span>, number <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   terms         value component id       </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> all_numeric()    <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>        pca_PMvd9</span>
 <span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>pca_estimates</span>, number <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 16 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 16 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    terms      value component id       </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> Murder   -<span style='color: #BB0000;'>0.536</span>  PC1       pca_PMvd9</span>

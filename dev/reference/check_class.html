@@ -282,7 +282,7 @@ selectors or variables selected) and <code>value</code> (the type) is returned.<
 <span class='r-in'>  <span class='fu'>check_class</span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1,000 x 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1,000 × 6</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    diet                height location      date       Class   age</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> <span style='color: #BB0000;'>NA</span>                      66 san francisco 2012-06-27 other    34</span>
@@ -304,7 +304,7 @@ selectors or variables selected) and <code>value</code> (the type) is returned.<
 <span class='r-in'>  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>date</span>, class_nm <span class='op'>=</span> <span class='st'>"Date"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>train</span>, strings_as_factors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1,000 x 6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1,000 × 6</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    diet                height location      date       Class   age</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> <span style='color: #BB0000;'>NA</span>                      66 san francisco 2012-06-27 other    34</span>
@@ -336,11 +336,11 @@ selectors or variables selected) and <code>value</code> (the type) is returned.<
 <span class='r-in'>  <span class='fu'>check_class</span><span class='op'>(</span><span class='va'>time</span>, class_nm <span class='op'>=</span> <span class='st'>"POSIXt"</span>, allow_additional <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>x_df</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 x 1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2 × 1</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   time               </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>             </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2021-07-20 <span style='color: #949494;'>18:29:26</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2021-07-20 <span style='color: #949494;'>18:30:26</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> 2021-07-27 <span style='color: #949494;'>21:54:08</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> 2021-07-27 <span style='color: #949494;'>21:55:08</span></span>
 <span class='r-in'></span>
 </code></pre></div>
   </div>

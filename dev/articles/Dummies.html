@@ -143,7 +143,7 @@
 
 <span class="va">iris_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_rec</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 4</span>
+<span class="co">#&gt; # A tibble: 6 × 4</span>
 <span class="co">#&gt;   variable     type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length numeric predictor original</span>
@@ -160,7 +160,7 @@
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ref_cell</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 7 x 4</span>
+<span class="co">#&gt; # A tibble: 7 × 4</span>
 <span class="co">#&gt;   variable           type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;              &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length       numeric predictor original</span>
@@ -173,7 +173,7 @@
 
 <span class="co"># Get a row for each factor level</span>
 <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">ref_cell</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt; # A tibble: 3 × 3</span>
 <span class="co">#&gt;   original   Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;                   &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                      0                 0</span>
@@ -203,7 +203,7 @@
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">helmert</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 7 x 4</span>
+<span class="co">#&gt; # A tibble: 7 × 4</span>
 <span class="co">#&gt;   variable     type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length numeric predictor original</span>
@@ -215,7 +215,7 @@
 <span class="co">#&gt; 7 Species_X2   numeric predictor derived</span>
 
 <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">helmert</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt; # A tibble: 3 × 3</span>
 <span class="co">#&gt;   original   Species_X1 Species_X2</span>
 <span class="co">#&gt;   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa             -1         -1</span>
@@ -238,7 +238,7 @@
   <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Sepal.Width</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 7 x 4</span>
+<span class="co">#&gt; # A tibble: 7 × 4</span>
 <span class="co">#&gt;   variable                   type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;                      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length               numeric predictor original</span>
@@ -280,7 +280,7 @@
   <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 9 x 4</span>
+<span class="co">#&gt; # A tibble: 9 × 4</span>
 <span class="co">#&gt;   variable                          type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;                             &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length                      numeric predictor original</span>
@@ -329,7 +329,7 @@
 <span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are produced</span>
 <span class="co">#&gt; by `step_dummy`. Please convert all involved variables to dummy variables first.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 8 x 4</span>
+<span class="co">#&gt; # A tibble: 8 × 4</span>
 <span class="co">#&gt;   variable                         type    role      source  </span>
 <span class="co">#&gt;   &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
 <span class="co">#&gt; 1 Sepal.Length                     numeric predictor original</span>
@@ -354,7 +354,7 @@
   <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt; # A tibble: 3 × 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                  1                  0                 0</span>
@@ -372,7 +372,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">hot_reference</span>
-<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt; # A tibble: 3 × 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                  1                  0                 0</span>
@@ -390,7 +390,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">hot_helmert</span>
-<span class="co">#&gt; # A tibble: 3 x 4</span>
+<span class="co">#&gt; # A tibble: 3 × 4</span>
 <span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
 <span class="co">#&gt;   &lt;fct&gt;               &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 setosa                  1                  0                 0</span>

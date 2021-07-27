@@ -199,6 +199,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_geodist.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_harmonic.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_holiday.html</loc>
   </url>
   <url>
