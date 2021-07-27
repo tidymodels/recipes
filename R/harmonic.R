@@ -200,7 +200,7 @@ step_harmonic_new <-
 #' @export
 prep.step_harmonic <- function(x, training, info = NULL, ...) {
 
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   harmonic_data <- info[info$variable %in% col_names, ]
 
   # check input columns
