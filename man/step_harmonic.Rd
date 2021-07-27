@@ -104,67 +104,71 @@ frequency, for example, a \code{POSIXct} input column given a \code{frequency} o
 }
 \examples{
 library(ggplot2, quietly = TRUE)
+library(dplyr)
 
 data(sunspot.year)
-sunspots <- tibble(yr = 1700:1988,
-                   n_sunspot = sunspot.year,
-                   type = "measured")[1:75,]
+sunspots <-
+  tibble(year = 1700:1988,
+         n_sunspot = sunspot.year,
+         type = "measured") \%>\%
+  slice(1:75)
 
 # sunspots period is around 11 years, sample spacing is one year
-rec <- recipe(n_sunspot ~ yr,
-              data = sunspots) \%>\%
-              step_harmonic(yr, frequency = 1/11, cycle_size = 1) \%>\%
-              prep() \%>\%
-              bake(new_data = NULL)
+dat <- recipe(n_sunspot ~ year, data = sunspots) \%>\%
+  step_harmonic(year, frequency = 1 / 11, cycle_size = 1) \%>\%
+  prep() \%>\%
+  bake(new_data = NULL)
 
- fit <- lm(n_sunspot~yr_sin_1 + yr_cos_1, rec)
+fit <- lm(n_sunspot ~ year_sin_1 + year_cos_1, data = dat)
 
- preds <- tibble(yr = sunspots$yr,
-                 n_sunspot = fit$fitted.values,
-                 type = 'predicted')
+preds <- tibble(year = sunspots$year,
+                n_sunspot = fit$fitted.values,
+                type = 'predicted')
 
- ggplot(rbind(sunspots, preds), aes(x = yr, y = n_sunspot, color = type)) +
-   geom_line()
+bind_rows(sunspots, preds) \%>\%
+  ggplot(aes(x = year, y = n_sunspot, color = type)) +
+  geom_line()
 
 
-
+# ------------------------------------------------------------------------------
 # POSIXct example
-datetime <- as.POSIXct(paste0(rep(1959:1997, each = 12), '-',
-                   rep(1:12, length(1959:1997)),
-                   '-01'), tz = 'UTC')
 
-carbon_dioxide <- tibble(datetime = datetime,
-                   co2 = as.numeric(co2),
-                   type = "measured")
+date_time <-
+  as.POSIXct(
+    paste0(rep(1959:1997, each = 12), '-', rep(1:12, length(1959:1997)), '-01'),
+    tz = 'UTC')
+
+carbon_dioxide <- tibble(date_time = date_time,
+                         co2 = as.numeric(co2),
+                         type = "measured")
 
 # yearly co2 fluctuations
-rec <- recipe(co2 ~ datetime,
-              data = carbon_dioxide) \%>\%
-              step_mutate(datetime_num = as.numeric(datetime)) \%>\%
-              step_ns(datetime_num,
-                      deg_free = 3) \%>\%
-              step_harmonic(datetime,
-                            frequency = 1,
-                            cycle_size = 86400 * 365.24) \%>\%
-              prep() \%>\%
-              bake(new_data = NULL)
+dat <-
+  recipe(co2 ~ date_time,
+         data = carbon_dioxide) \%>\%
+  step_mutate(date_time_num = as.numeric(date_time)) \%>\%
+  step_ns(date_time_num, deg_free = 3) \%>\%
+  step_harmonic(date_time, frequency = 1, cycle_size = 86400 * 365.24) \%>\%
+  prep() \%>\%
+  bake(new_data = NULL)
 
- fit <- lm(co2~datetime_num_ns_1 + datetime_num_ns_2 +
-               datetime_num_ns_3 + datetime_sin_1 +
-               datetime_cos_1, rec)
+ fit <- lm(co2 ~ date_time_num_ns_1 + date_time_num_ns_2 +
+                 date_time_num_ns_3 + date_time_sin_1 +
+                 date_time_cos_1, data = dat)
 
- preds <- tibble(datetime = datetime,
+ preds <- tibble(date_time = date_time,
                  co2 = fit$fitted.values,
                  type = 'predicted')
 
- ggplot(rbind(carbon_dioxide, preds), aes(x = datetime, y = co2, color = type)) +
+ bind_rows(carbon_dioxide, preds) \%>\%
+   ggplot(aes(x = date_time, y = co2, color = type)) +
    geom_line()
 
 }
 \references{
 Doran, H. E., & Quilkey, J. J. (1972).
 Harmonic analysis of seasonal data: some important properties.
-American Journal of Agricultural Economics, 54(volume 4 part 1), 646-651.
+American Journal of Agricultural Economics, 54, volume 4, part 1, 646-651.
 
 Foreman, M. G. G., & Henry, R. F. (1989).
 The harmonic analysis of tidal model time series.
