@@ -24,6 +24,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept row_filters
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%

@@ -20,6 +20,7 @@
 #'
 #' @keywords datagen
 #' @concept preprocessing
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%

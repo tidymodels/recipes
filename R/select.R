@@ -20,6 +20,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #' library(dplyr)

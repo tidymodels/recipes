@@ -19,6 +19,7 @@
 #' `replace`, and `id` is returned.
 #' @keywords datagen
 #' @concept preprocessing
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #'
