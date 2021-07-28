@@ -98,5 +98,17 @@ qq_rec <-
 
 tidy(qq_rec, number = 1)
 }
+\seealso{
+Other {dplyr steps}: 
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
 \concept{preprocessing}
+\concept{{dplyr steps}}
 \keyword{datagen}

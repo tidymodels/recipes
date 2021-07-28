@@ -96,6 +96,17 @@ bake(smaller_cars, new_data = mtcars \%>\% slice(21:32)) \%>\% nrow()
 }
 \seealso{
 \code{\link[=step_filter]{step_filter()}} \code{\link[=step_naomit]{step_naomit()}} \code{\link[=step_slice]{step_slice()}}
+
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
 }
 \concept{preprocessing}
+\concept{{dplyr steps}}
 \keyword{datagen}

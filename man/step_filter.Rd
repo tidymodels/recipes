@@ -106,7 +106,18 @@ tidy(qq_rec, number = 1)
 }
 \seealso{
 \code{\link[=step_naomit]{step_naomit()}} \code{\link[=step_sample]{step_sample()}} \code{\link[=step_slice]{step_slice()}}
+
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
 }
 \concept{preprocessing}
 \concept{row_filters}
+\concept{{dplyr steps}}
 \keyword{datagen}
