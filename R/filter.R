@@ -24,6 +24,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept row_filters
+#' @family {row operations}
 #' @family {dplyr steps}
 #' @export
 #' @examples

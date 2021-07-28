@@ -13,6 +13,7 @@
 #'  be populated (eventually) by the `terms` argument.
 #'
 #' @template step-return
+#' @family {row operations}
 #' @export
 #'
 #' @examples

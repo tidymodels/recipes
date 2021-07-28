@@ -19,6 +19,7 @@
 #' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
+#' @family {row operations}
 #' @export
 #' @rdname step_lag
 #'

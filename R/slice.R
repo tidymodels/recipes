@@ -20,6 +20,7 @@
 #'
 #' @keywords datagen
 #' @concept preprocessing
+#' @family {row operations}
 #' @family {dplyr steps}
 #' @export
 #' @examples

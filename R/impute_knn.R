@@ -17,6 +17,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
+#' @family {imputations}
 #' @export
 #' @details The step uses the training set to impute any other data sets. The
 #'  only distance function available is Gower's distance which can be used for

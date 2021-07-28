@@ -13,6 +13,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
+#' @family {imputations}
 #' @export
 #' @details `step_impute_lower` estimates the variable minimums
 #'  from the data used in the `training` argument of `prep.recipe`.
