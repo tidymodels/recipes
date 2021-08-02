@@ -15,7 +15,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
-#' @family {imputations}
+#' @family {imputation steps}
 #' @export
 #' @details For each variable requiring imputation, a linear model is fit
 #'  where the outcome is the variable of interest and the predictors are any

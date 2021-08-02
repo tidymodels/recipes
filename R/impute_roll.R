@@ -20,8 +20,8 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
-#' @family {imputations}
-#' @family {row operations}
+#' @family {imputation steps}
+#' @family {row operation steps}
 #' @export
 #' @details On the tails, the window is shifted towards the ends.
 #'  For example, for a 5-point window, the windows for the first

@@ -15,7 +15,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
-#' @family {imputations}
+#' @family {imputation steps}
 #' @export
 #' @details `step_impute_mean` estimates the variable means from the data used
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the

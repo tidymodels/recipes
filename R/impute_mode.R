@@ -13,7 +13,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
-#' @family {imputations}
+#' @family {imputation steps}
 #' @export
 #' @details `step_impute_mode` estimates the variable modes
 #'  from the data used in the `training` argument of
