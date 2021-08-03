@@ -41,14 +41,14 @@ This is a developer tool that is only useful for creating new recipes steps.
 \examples{
 library(rlang)
 library(modeldata)
-data(okc)
+data(scat)
 
-rec <- recipe(age ~ ., data = okc)
+rec <- recipe(Species ~ ., data = scat)
 
 info <- summary(rec)
 info
 
-quos <- quos(all_numeric_predictors(), where(is.character))
+quos <- quos(all_numeric_predictors(), where(is.factor))
 
-recipes_eval_select(quos, okc, info)
+recipes_eval_select(quos, scat, info)
 }
