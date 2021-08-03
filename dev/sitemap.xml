@@ -127,6 +127,9 @@
     <loc>https://recipes.tidymodels.org/reference/recipes.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/recipes_eval_select.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/recipes_pkg_check.html</loc>
   </url>
   <url>

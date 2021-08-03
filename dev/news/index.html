@@ -174,10 +174,11 @@
     <div id="recipes-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor" aria-hidden="true"></a>recipes (development version)<small> Unreleased </small></h1>
-<ul><li><p>Added new <code><a href="../reference/step_harmonic.html">step_harmonic()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/702'>#702</a>).</p></li>
-<li><p>Speed-up/simplification to step_spatialsign</p></li>
+<ul><li><p>New <code><a href="../reference/recipes_eval_select.html">recipes_eval_select()</a></code> which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older <code><a href="../reference/terms_select.html">terms_select()</a></code> has been deprecated in favor of this new helper (<a href='https://github.com/tidymodels/recipes/issues/739'>#739</a>).</p></li>
+<li><p>Added new <code><a href="../reference/step_harmonic.html">step_harmonic()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/702'>#702</a>).</p></li>
+<li><p>Speed-up/simplification to <code><a href="../reference/step_spatialsign.html">step_spatialsign()</a></code></p></li>
 <li><p>When only the terms attributes are desired from <code>model.frame</code> use the first row of data to improve speed and memory use (<a href='https://github.com/tidymodels/recipes/issues/726'>#726</a>).</p></li>
-<li><p>Use Haversine formula for latitude-longitude pairs in step_geodist (<a href='https://github.com/tidymodels/recipes/issues/725'>#725</a>).</p></li>
+<li><p>Use Haversine formula for latitude-longitude pairs in <code><a href="../reference/step_geodist.html">step_geodist()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/725'>#725</a>).</p></li>
 <li><p>Reorganize documentation for all recipe step <code>tidy</code> methods (<a href='https://github.com/tidymodels/recipes/issues/701'>#701</a>).</p></li>
 <li><p>Generate warning when user attempts a Box-Cox transformation of non-positive data (<a href='https://github.com/LiamBlake'>@LiamBlake</a>, <a href='https://github.com/tidymodels/recipes/issues/713'>#713</a>).</p></li>
 <li><p>Fix imputation steps for new data that is all <code>NA</code>, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (<a href='https://github.com/tidymodels/recipes/issues/719'>#719</a>).</p></li>
@@ -213,7 +214,7 @@
 <li>
 <code><a href="../reference/step_ratio.html">step_ratio()</a></code>, <code><a href="../reference/step_holiday.html">step_holiday()</a></code>, <code><a href="../reference/step_date.html">step_date()</a></code> which all default to <code>TRUE</code> to maintain original behavior, as well as <code><a href="../reference/step_dummy.html">step_dummy()</a></code> which defaults to <code>FALSE</code> (<a href='https://github.com/tidymodels/recipes/issues/645'>#645</a>).</li>
 </ul></li>
-<li><p>Added <code>allow_rename</code> argument to <code>eval_select_recipes()</code> (<a href='https://github.com/tidymodels/recipes/issues/646'>#646</a>).</p></li>
+<li><p>Added <code>allow_rename</code> argument to <code><a href="../reference/recipes_eval_select.html">recipes_eval_select()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/646'>#646</a>).</p></li>
 <li><p>Performance improvements for <code><a href="../reference/step_bs.html">step_bs()</a></code> and <code><a href="../reference/step_ns.html">step_ns()</a></code>. The <code><a href="../reference/prep.html">prep()</a></code> step no longer evaluates the basis functions on the training set and the <code><a href="../reference/bake.html">bake()</a></code> steps only evaluates the basis functions once for each unique input value (<a href='https://github.com/tidymodels/recipes/issues/574'>#574</a>)</p></li>
 <li><p>The <code>neighbors</code> parameter’s default range for <code><a href="../reference/step_isomap.html">step_isomap()</a></code> was changed to be 20-80.</p></li>
 <li><p>The deprecation for <code><a href="../reference/step_upsample.html">step_upsample()</a></code> and <code><a href="../reference/step_downsample.html">step_downsample()</a></code> has been escalated from a soft deprecation to a regular deprecation; these functions are available in the themis package.</p></li>
