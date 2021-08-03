@@ -4,6 +4,7 @@
 #'  step that will create one or more ratios out of numeric
 #'  variables.
 #'
+#' @inheritParams step_date
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose which
@@ -22,8 +23,6 @@
 #' @param columns The column names used in the ratios. This
 #'  argument is not populated until [prep.recipe()] is
 #'  executed.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `denom` is returned.

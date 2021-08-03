@@ -3,19 +3,13 @@
 #' `step_harmonic` creates a *specification* of a recipe step that
 #'   will add sin and cos terms for harmonic analysis.
 #'
+#' @inheritParams step_date
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.  This will
+#' @param ... One or more selector functions to choose variables
+#'  for this step. See [selections()] for more details. This will
 #'  typically be a single variable.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated. Again included for consistency.
 #' @param frequency A numeric vector with at least one value.
 #'   The value(s) must be greater than zero and finite.
 #' @param cycle_size A numeric vector with at least one value that indicates
@@ -27,10 +21,7 @@
 #'   using `as.numeric`. This parameter may be specified to increase control
 #'   over the signal phase.  If `starting_val` is not specified the default
 #'   is 0.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
-#' @return An updated version of `recipe` with the
-#'   new step added to the sequence of existing steps (if any).
+#' @template step-return
 #' @export
 #' @details This step seeks to describe periodic components of observational
 #'  data using a combination of sin and cos waves. To do this, each wave of a
@@ -136,8 +127,6 @@
 #'  bind_rows(carbon_dioxide, preds) %>%
 #'    ggplot(aes(x = date_time, y = co2, color = type)) +
 #'    geom_line()
-#'
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 step_harmonic <-
   function(recipe,
            ...,
