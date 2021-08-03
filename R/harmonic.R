@@ -22,6 +22,7 @@
 #'   over the signal phase.  If `starting_val` is not specified the default
 #'   is 0.
 #' @template step-return
+#' @family {individual transformation steps}
 #' @export
 #' @details This step seeks to describe periodic components of observational
 #'  data using a combination of sin and cos waves. To do this, each wave of a
