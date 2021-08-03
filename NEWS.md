@@ -17,7 +17,10 @@
 
 * Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
 
+* The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.
+
 * Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
+
 
 # recipes 0.1.16
 

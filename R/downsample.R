@@ -53,28 +53,13 @@
 #' @concept preprocessing
 #' @concept subsampling
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(okc)
-#'
-#' sort(table(okc$diet, useNA = "always"))
-#'
-#' ds_rec <- recipe( ~ ., data = okc) %>%
-#'   step_downsample(diet) %>%
-#'   prep(training = okc)
-#'
-#' table(bake(ds_rec, new_data = NULL)$diet, useNA = "always")
-#'
-#' # since `skip` defaults to TRUE, baking the step has no effect
-#' baked_okc <- bake(ds_rec, new_data = okc)
-#' table(baked_okc$diet, useNA = "always")
 
 step_downsample <-
   function(recipe, ...,  under_ratio = 1, ratio = NA, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1), id = rand_id("downsample")) {
 
-    lifecycle::deprecate_warn("0.1.13",
+    lifecycle::deprecate_stop("0.1.13",
                               "recipes::step_downsample()",
                               "themis::step_downsample()")
 
