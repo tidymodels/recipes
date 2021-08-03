@@ -97,7 +97,7 @@ get_ord_lvls <- function(x)
 
 #' @export
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   str_check <-
     vapply(
       training[, col_names],

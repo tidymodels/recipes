@@ -72,10 +72,6 @@
 #'               role = "outcome")
 #' rec <- prep(rec, training = sim_dat)
 #'
-#' # If you aren't sure how to set the names, see which variables are selected
-#' # and the order that they are selected:
-#' terms_select(info = summary(rec), terms = quos(starts_with("y")))
-#'
 #' smoothed_dat <- bake(rec, sim_dat, everything())
 #'
 #' ggplot(data = sim_dat, aes(x = x1, y = y1)) +
@@ -185,7 +181,7 @@ step_window_new <-
 
 #' @export
 prep.step_window <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   if (any(info$type[info$variable %in% col_names] != "numeric"))
     rlang::abort("The selected variables should be numeric")

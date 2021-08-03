@@ -107,7 +107,7 @@ step_count_new <-
 
 #' @export
 prep.step_count <- function(x, training, info = NULL, ...) {
-  col_name <- eval_select_recipes(x$terms, training, info)
+  col_name <- recipes_eval_select(x$terms, training, info)
   if (length(col_name) != 1)
     rlang::abort("The selector should only select a single variable")
   if (any(info$type[info$variable %in% col_name] != "nominal"))

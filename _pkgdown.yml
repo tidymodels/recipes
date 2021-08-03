@@ -132,7 +132,7 @@ reference:
     - fully_trained
     - names0
     - prepper
-    - terms_select
+    - recipes_eval_select
     - update.step
   - title: Tidy Methods
     contents:

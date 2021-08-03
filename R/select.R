@@ -83,7 +83,7 @@ step_select_new <- function(terms, role, trained, skip, id) {
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {
-  terms <- eval_select_recipes(x$terms, training, info, allow_rename = TRUE)
+  terms <- recipes_eval_select(x$terms, training, info, allow_rename = TRUE)
 
   step_select_new(
     terms = terms,

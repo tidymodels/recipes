@@ -87,7 +87,7 @@ step_unknown_new <-
 
 #' @export
 prep.step_unknown <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   col_check <- dplyr::filter(info, variable %in% col_names)
   if (any(col_check$type != "nominal"))
     rlang::abort(

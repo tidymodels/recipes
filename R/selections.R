@@ -1,5 +1,3 @@
-
-
 #' @name selections
 #' @aliases selections
 #' @aliases selection
@@ -104,9 +102,56 @@
 #' will not work.
 NULL
 
+# ------------------------------------------------------------------------------
 
-eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
-
+#' Evaluate a selection with tidyselect semantics specific to recipes
+#'
+#' @description
+#' `recipes_eval_select()` is a recipes specific variant of
+#' [tidyselect::eval_select()] enhanced with the ability to recognize recipes
+#' selectors, such as [all_numeric_predictors()]. See [selections]
+#' for more information about the unique recipes selectors.
+#'
+#' This is a developer tool that is only useful for creating new recipes steps.
+#'
+#' @inheritParams ellipsis::dots_empty
+#'
+#' @param quos A list of quosures describing the selection. This is generally
+#'   the `...` argument of your step function, captured with [ellipse_check()]
+#'   or [rlang::enquos()] and stored in the step object as the `terms` element.
+#'
+#' @param data A data frame to use as the context to evaluate the selection in.
+#'   This is generally the `training` data passed to the [prep()] method
+#'   of your step.
+#'
+#' @param info A data frame of term information describing each column's type
+#'   and role for use with the recipes selectors. This is generally the `info`
+#'   data passed to the [prep()] method of your step.
+#'
+#' @param allow_rename Should the renaming syntax `c(foo = bar)` be allowed?
+#'   This is rarely required, and is currently only used by [step_select()].
+#'   It is unlikely that your step will need renaming capabilities.
+#'
+#' @return
+#' A named character vector containing the evaluated selection. The names are
+#' always the same as the values, except when `allow_rename = TRUE`, in which
+#' case the names reflect the new names chosen by the user.
+#'
+#' @export
+#' @examples
+#' library(rlang)
+#' library(modeldata)
+#' data(scat)
+#'
+#' rec <- recipe(Species ~ ., data = scat)
+#'
+#' info <- summary(rec)
+#' info
+#'
+#' quos <- quos(all_numeric_predictors(), where(is.factor))
+#'
+#' recipes_eval_select(quos, scat, info)
+recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
   ellipsis::check_dots_empty()
 
   # Maintain ordering between `data` column names and `info$variable` so
@@ -114,7 +159,7 @@ eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
   data_info <- tibble(variable = names(data))
   data_info <- dplyr::left_join(data_info, info, by = "variable")
 
-  nested_info <- nest_current_info(data_info)
+  nested_info <- tidyr::nest(data_info, data = -variable)
 
   local_current_info(nested_info)
 
@@ -149,15 +194,6 @@ eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
 
   names(out) <- names
   out
-}
-
-nest_current_info <- function(info) {
-  # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
-  if (tidyr_new_interface()) {
-    tidyr::nest(info, data = -variable)
-  } else {
-    tidyr::nest(info, -variable)
-  }
 }
 
 #' Role Selection
@@ -300,125 +336,3 @@ local_current_info <- function(nested_info, frame = parent.frame()) {
 current_info <- function() {
   cur_info_env %||% rlang::abort("Variable context not set")
 }
-
-# ------------------------------------------------------------------------------
-# Old method for selection. This has been completely superseded by
-# `eval_select_recipes()`, and should no longer be used in recipes, but we
-# have exported it so we continue to support it here.
-
-# This flags formulas that are not allowed
-element_check <- function(x) {
-  funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
-
-  # i.e. tidyselect::matches()
-  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr", "recipes"))]
-
-  name_selectors <- c(
-    "starts_with",
-    "ends_with",
-    "contains",
-    "matches",
-    "num_range",
-    "everything",
-    "one_of",
-    "all_of",
-    "any_of",
-    "c"
-  )
-  role_selectors <- c(
-    "has_role",
-    "all_predictors",
-    "all_numeric_predictors",
-    "all_nominal_predictors",
-    "all_outcomes"
-  )
-  type_selectors <- c(
-    "has_type",
-    "all_numeric",
-    "all_nominal"
-  )
-  selectors <- c(
-    name_selectors,
-    role_selectors,
-    type_selectors
-  )
-
-  not_good <- funs[!(funs %in% selectors)]
-
-  if (length(not_good) > 0) {
-    rlang::abort(paste0(
-      "Not all functions are allowed in step function selectors (e.g. ",
-      paste0("`", not_good, "`", collapse = ", "),
-      "). See ?selections."
-    ))
-  }
-
-  invisible(NULL)
-}
-
-#' Select Terms in a Step Function.
-#'
-#' This function bakes the step function selectors and might be
-#'  useful when creating custom steps.
-#'
-#' @param info A tibble with columns `variable`, `type`, `role`,
-#'  and `source` that represent the current state of the data. The
-#'  function [summary.recipe()] can be used to get this information
-#'  from a recipe.
-#' @param terms A list of formulas whose right-hand side contains
-#'  quoted expressions. See [rlang::quos()] for examples.
-#' @param empty_fun A function to execute when no terms are selected by the
-#'  step. The default function throws an error with a message.
-#' @keywords datagen
-#' @concept preprocessing
-#' @return A character string of column names or an error of there
-#'  are no selectors or if no variables are selected.
-#' @seealso [recipe()] [summary.recipe()]
-#'   [prep.recipe()]
-#' @export
-#' @examples
-#' library(rlang)
-#' library(modeldata)
-#' data(okc)
-#' rec <- recipe(~ ., data = okc)
-#' info <- summary(rec)
-#' terms_select(info = info, quos(all_predictors()))
-terms_select <- function(terms, info, empty_fun = abort_selection) {
-  # unique in case a variable has multiple roles
-  vars <- unique(info$variable)
-
-  if (is_empty(terms)) {
-    rlang::abort("At least one selector should be used")
-  }
-
-  ## check arguments against whitelist
-  lapply(terms, element_check)
-
-  # Set current_info so available to helpers
-
-  nested_info <- nest_current_info(info)
-
-  local_current_info(nested_info)
-
-  # `terms` might be a single call (like in step_interact()),
-  # or it could be a list of quosures.
-  # They have to be unquoted differently
-  if (is.call(terms)) {
-    sel <- with_handlers(
-      tidyselect::vars_select(vars, !! terms),
-      tidyselect_empty = empty_fun
-    )
-  } else {
-    sel <- with_handlers(
-      tidyselect::vars_select(vars, !!! terms),
-      tidyselect_empty = empty_fun
-    )
-  }
-
-  unname(sel)
-}
-
-abort_selection <- exiting(function(cnd) {
-  abort("No variables or terms were selected.")
-})
