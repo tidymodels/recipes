@@ -138,11 +138,22 @@ versus local methods in nonlinear dimensionality reduction.
 https://github.com/gdkrmr
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}
-\code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other {multivariate transformation steps}: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
 \concept{isomap}
 \concept{preprocessing}
 \concept{projection_methods}
+\concept{{multivariate transformation steps}}
 \keyword{datagen}

@@ -117,6 +117,27 @@ seven_pt <- recipe(~ . , data = example_data) \%>\%
 # The training set:
 bake(seven_pt, new_data = NULL)
 }
+\seealso{
+Other {imputation steps}: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()}
+
+Other {row operation steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
+}
 \concept{imputation}
 \concept{preprocessing}
+\concept{{imputation steps}}
+\concept{{row operation steps}}
 \keyword{datagen}

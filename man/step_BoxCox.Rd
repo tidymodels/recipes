@@ -94,16 +94,28 @@ plot(density(bc_data$Illiteracy), main = "after")
 
 tidy(bc_trans, number = 1)
 tidy(bc_estimates, number = 1)
-
 }
 \references{
 Sakia, R. M. (1992). The Box-Cox transformation technique:
 A review. \emph{The Statistician}, 169-178..
 }
 \seealso{
-\code{\link[=step_YeoJohnson]{step_YeoJohnson()}} \code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other {individual transformation steps}: 
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_log}()},
+\code{\link{step_mutate}()},
+\code{\link{step_ns}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
 }
 \concept{preprocessing}
 \concept{transformation_methods}
+\concept{{individual transformation steps}}
 \keyword{datagen}

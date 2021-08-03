@@ -74,6 +74,26 @@ rec <- recipe(~ diet + location, data = okc) \%>\%
 data <- bake(rec, okc)
 levels(data$diet)
 }
+\seealso{
+Other {dummy variables and encodings steps}: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
+}
 \concept{factors}
 \concept{preprocessing}
+\concept{{dummy variables and encodings steps}}
 \keyword{datagen}

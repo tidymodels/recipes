@@ -72,6 +72,20 @@ recipe(~ ., data = iris) \%>\%
   slice(1:10)
 }
 \seealso{
+Other {multivariate transformation steps}: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
+
 Other {dplyr steps}: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
@@ -85,4 +99,5 @@ Other {dplyr steps}:
 \concept{preprocessing}
 \concept{transformation_methods}
 \concept{{dplyr steps}}
+\concept{{multivariate transformation steps}}
 \keyword{datagen}

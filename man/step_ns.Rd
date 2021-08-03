@@ -89,9 +89,22 @@ expanded <- bake(with_splines, biomass_te)
 expanded
 }
 \seealso{
-\code{\link[=step_poly]{step_poly()}} \code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other {individual transformation steps}: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_log}()},
+\code{\link{step_mutate}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
 }
 \concept{basis_expansion}
 \concept{preprocessing}
+\concept{{individual transformation steps}}
 \keyword{datagen}

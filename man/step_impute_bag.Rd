@@ -159,6 +159,17 @@ tidy(imp_models, number = 1)
 Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}.
 Springer Verlag.
 }
+\seealso{
+Other {imputation steps}: 
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
 \concept{imputation}
 \concept{preprocessing}
+\concept{{imputation steps}}
 \keyword{datagen}
