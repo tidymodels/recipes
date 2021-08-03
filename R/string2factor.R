@@ -14,7 +14,7 @@
 #' @concept preprocessing
 #' @concept variable_encodings
 #' @concept factors
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
 #'  convert all variables affected by this step to have the same

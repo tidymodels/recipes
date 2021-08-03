@@ -19,7 +19,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @seealso [dummy_names()]
 #' @export
 #' @details The overall proportion (or total counts) of the categories are

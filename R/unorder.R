@@ -10,7 +10,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept ordinal_data
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #'

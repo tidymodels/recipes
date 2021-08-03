@@ -162,7 +162,7 @@ tidy(dummies_one_hot, number = 1)
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}
 
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -184,5 +184,5 @@ Other {dummy variables and encodings steps}:
 \concept{model_specification}
 \concept{preprocessing}
 \concept{variable_encodings}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

@@ -19,7 +19,7 @@
 #' @concept model_specification
 #' @concept variable_encodings
 #' @concept dates
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @seealso [step_rm()], [timeDate::listHolidays()]
 #' @export
 #' @details Unlike some other steps, `step_holiday` does *not*

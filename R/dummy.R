@@ -27,7 +27,7 @@
 #' @concept model_specification
 #' @concept dummy_variables
 #' @concept variable_encodings
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @seealso [dummy_names()]
 #' @export
 #' @details `step_dummy()` will create a set of binary dummy

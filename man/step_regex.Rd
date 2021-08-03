@@ -86,7 +86,7 @@ tidy(rec, number = 1)
 tidy(rec2, number = 1)
 }
 \seealso{
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -107,5 +107,5 @@ Other {dummy variables and encodings steps}:
 \concept{dummy_variables}
 \concept{preprocessing}
 \concept{regular_expressions}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

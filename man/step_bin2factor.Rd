@@ -88,7 +88,7 @@ table(results$rocks, results$more_rocks)
 tidy(rec, number = 3)
 }
 \seealso{
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_count}()},
 \code{\link{step_date}()},
 \code{\link{step_dummy}()},
@@ -109,5 +109,5 @@ Other {dummy variables and encodings steps}:
 \concept{dummy_variables}
 \concept{factors}
 \concept{preprocessing}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

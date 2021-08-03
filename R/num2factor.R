@@ -21,7 +21,7 @@
 #' @concept preprocessing
 #' @concept variable_encodings
 #' @concept factors
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @examples
 #' library(dplyr)

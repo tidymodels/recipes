@@ -83,7 +83,7 @@ okc \%>\% head
 tidy(make_factor, number = 1)
 }
 \seealso{
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -104,5 +104,5 @@ Other {dummy variables and encodings steps}:
 \concept{factors}
 \concept{preprocessing}
 \concept{variable_encodings}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

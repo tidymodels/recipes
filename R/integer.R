@@ -18,7 +18,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details `step_integer` will determine the unique values of
 #'  each variable from the training set (excluding missing values),

@@ -30,7 +30,7 @@
 #' @concept preprocessing
 #' @concept dummy_variables
 #' @concept regular_expressions
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @examples
 #' library(modeldata)

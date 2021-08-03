@@ -110,7 +110,7 @@ tidy(date_rec, number = 1)
 \seealso{
 \code{\link[=step_rm]{step_rm()}}
 
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_dummy}()},
@@ -132,5 +132,5 @@ Other {dummy variables and encodings steps}:
 \concept{model_specification}
 \concept{preprocessing}
 \concept{variable_encodings}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

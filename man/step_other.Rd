@@ -130,7 +130,7 @@ tidy(rec, number = 1)
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}
 
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -150,5 +150,5 @@ Other {dummy variables and encodings steps}:
 }
 \concept{factors}
 \concept{preprocessing}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

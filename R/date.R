@@ -38,7 +38,7 @@
 #' @concept model_specification
 #' @concept variable_encodings
 #' @concept dates
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @seealso [step_rm()]
 #' @export
 #' @details Unlike some other steps, `step_date` does *not*

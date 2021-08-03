@@ -81,7 +81,7 @@ imp_models <- prep(impute_rec, training = credit_tr)
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
 }
 \seealso{
-Other {dummy variables and encodings steps}: 
+Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -101,5 +101,5 @@ Other {dummy variables and encodings steps}:
 }
 \concept{imputation}
 \concept{preprocessing}
-\concept{{dummy variables and encodings steps}}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

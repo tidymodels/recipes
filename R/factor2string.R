@@ -12,7 +12,7 @@
 #' @concept preprocessing
 #' @concept variable_encodings
 #' @concept factors
-#' @family {dummy variables and encodings steps}
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. If this step is used with the default
