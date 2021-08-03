@@ -38,6 +38,8 @@
 #' @concept model_specification
 #' @concept variable_encodings
 #' @concept dates
+#' @family {dummy variables and encodings steps}
+#' @seealso [step_rm()]
 #' @export
 #' @details Unlike some other steps, `step_date` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
@@ -64,9 +66,6 @@
 #'
 #' tidy(date_rec, number = 1)
 #'
-#' @seealso [step_holiday()] [step_rm()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 step_date <-
   function(recipe,
            ...,

@@ -16,6 +16,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
+#' @family {dummy variables and encodings steps}
 #' @export
 #' @details The selected variables are releveled to a level
 #' (given by `ref_level`). Placing the `ref_level` in the first

@@ -9,6 +9,7 @@
 #' @param values A named list with the allowed values.
 #'  This is `NULL` until computed by prep.recipe().
 #' @template check-return
+#' @family {checks}
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain values it did not contain when `prep` was called

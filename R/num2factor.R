@@ -21,8 +21,8 @@
 #' @concept preprocessing
 #' @concept variable_encodings
 #' @concept factors
+#' @family {dummy variables and encodings steps}
 #' @export
-#' @seealso [step_factor2string()], [step_string2factor()], [step_dummy()]
 #' @examples
 #' library(dplyr)
 #' library(modeldata)

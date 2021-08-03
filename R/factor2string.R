@@ -12,6 +12,7 @@
 #' @concept preprocessing
 #' @concept variable_encodings
 #' @concept factors
+#' @family {dummy variables and encodings steps}
 #' @export
 #' @details `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. If this step is used with the default
@@ -21,7 +22,6 @@
 #' When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) is returned.
 #'
-#' @seealso [step_string2factor()] [step_dummy()]
 #' @examples
 #' library(modeldata)
 #' data(okc)

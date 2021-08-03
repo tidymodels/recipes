@@ -61,8 +61,6 @@
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
-#' @seealso [step_filter()] [step_naomit()] [step_sample()]
-
 step_slice <- function(
   recipe, ...,
   role = NA,

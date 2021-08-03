@@ -12,6 +12,8 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
+#' @family {dummy variables and encodings steps}
+#' @seealso [dummy_names()]
 #' @export
 #' @details The selected variables are adjusted to have a new
 #'  level (given by `new_level`) that is placed in the last
@@ -27,9 +29,6 @@
 #'  columns that will be affected) and `value` (the factor
 #'  levels that is used for the new value) is returned.
 #'
-#' @seealso [step_factor2string()], [step_string2factor()],
-#'  [dummy_names()], [step_regex()], [step_count()],
-#'  [step_ordinalscore()], [step_unorder()], [step_other()], [step_novel()]
 #' @examples
 #' library(modeldata)
 #' data(okc)

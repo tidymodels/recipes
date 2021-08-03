@@ -21,6 +21,8 @@
 #' @concept model_specification
 #' @concept variable_encodings
 #' @concept dates
+#' @family {dummy variables and encodings steps}
+#' @seealso [step_rm()], [timeDate::listHolidays()]
 #' @export
 #' @details Unlike some other steps, `step_holiday` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
@@ -39,9 +41,6 @@
 #' holiday_rec <- prep(holiday_rec, training = examples)
 #' holiday_values <- bake(holiday_rec, new_data = examples)
 #' holiday_values
-#' @seealso [step_date()] [step_rm()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()] [timeDate::listHolidays()]
 #' @import timeDate
 step_holiday <-
   function(

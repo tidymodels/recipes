@@ -29,6 +29,7 @@
 #'  selectors or variables selected) and `denom` is returned.
 #' @keywords datagen
 #' @concept preprocessing
+#' @family {multivariate transformation steps}
 #' @export
 #' @examples
 #' library(recipes)

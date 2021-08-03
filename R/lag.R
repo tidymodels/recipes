@@ -36,8 +36,6 @@
 #'   step_lag(index, day, lag = 2:3) %>%
 #'   prep(df) %>%
 #'   bake(df)
-#'
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()] [step_naomit()]
 step_lag <-
   function(recipe,
            ...,

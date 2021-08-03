@@ -47,9 +47,6 @@
 #'
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
-#' @seealso [step_poly()] [recipe()] [step_ns()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_bs <-
   function(recipe,
            ...,

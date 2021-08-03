@@ -13,6 +13,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
+#' @family {variable filter steps}
 #' @export
 #' @examples
 #' library(modeldata)

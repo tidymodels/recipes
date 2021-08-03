@@ -22,6 +22,7 @@
 #' @concept preprocessing
 #' @concept ica
 #' @concept projection_methods
+#' @family {multivariate transformation steps}
 #' @export
 #' @details Independent component analysis (ICA) is a
 #'  transformation of a group of variables that produces a new set
@@ -82,9 +83,6 @@
 #'   tidy(ica_trans, number = 3)
 #'   tidy(ica_estimates, number = 3)
 #' }
-#' @seealso [step_pca()] [step_kpca()]
-#'   [step_isomap()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 step_ica <-
   function(recipe,
            ...,

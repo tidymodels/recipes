@@ -15,6 +15,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
+#' @family {normalization steps}
 #' @export
 #' @details Centering data means that the average of a variable is subtracted
 #'  from the data. Scaling data means that the standard deviation of a variable

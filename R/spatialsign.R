@@ -14,6 +14,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept projection_methods
+#' @family {multivariate transformation steps}
 #' @export
 #' @details The spatial sign transformation projects the variables
 #'  onto a unit sphere and is related to global contrast

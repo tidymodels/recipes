@@ -28,6 +28,7 @@
 #' @concept preprocessing
 #' @concept nnmf
 #' @concept projection_methods
+#' @family {multivariate transformation steps}
 #' @export
 #' @details Non-negative matrix factorization computes latent components that
 #'  have non-negative values and take into account that the original data
@@ -61,10 +62,6 @@
 #' # library(ggplot2)
 #' # bake(rec, new_data = NULL) %>%
 #' #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
-#'
-#' @seealso [step_pca()], [step_ica()], [step_kpca()],
-#'   [step_isomap()], [recipe()], [prep.recipe()],
-#'   [bake.recipe()]
 step_nnmf <-
   function(recipe,
            ...,

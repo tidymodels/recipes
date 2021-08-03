@@ -16,6 +16,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
+#' @family {variable filter steps}
 #' @export
 #'
 #' @details This step diagnoses predictors that have one unique
@@ -68,9 +69,6 @@
 #'
 #' tidy(nzv_filter, number = 1)
 #' tidy(filter_obj, number = 1)
-#' @seealso [step_corr()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_nzv <-
   function(recipe,
            ...,

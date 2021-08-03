@@ -17,6 +17,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
+#' @family {dummy variables and encodings steps}
 #' @export
 #' @examples
 #' library(modeldata)

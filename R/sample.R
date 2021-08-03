@@ -46,8 +46,6 @@
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-#' @seealso [step_filter()] [step_naomit()] [step_slice()]
-
 step_sample <- function(
   recipe, ...,
   role = NA,

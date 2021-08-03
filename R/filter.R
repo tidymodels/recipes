@@ -60,8 +60,6 @@
 #'   step_filter(Sepal.Length > 4.5, Species  %in% !!values)
 #'
 #' tidy(qq_rec, number = 1)
-#' @seealso [step_naomit()] [step_sample()] [step_slice()]
-
 step_filter <- function(
   recipe, ...,
   role = NA,

@@ -27,6 +27,7 @@
 #'  is returned.
 #' @keywords datagen
 #' @concept preprocessing
+#' @family {multivariate transformation steps}
 #' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
 #' @details `step_geodist` uses the Pythagorean theorem to calculate Euclidean

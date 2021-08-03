@@ -15,6 +15,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {multivariate transformation steps}
 #' @family {dplyr steps}
 #' @export
 #' @examples
