@@ -84,7 +84,7 @@ step_mutate <- function(
   id = rand_id("mutate")
 ) {
 
-  inputs <- enquos(..., .named = TRUE)
+  inputs <- enquos(...)
 
   add_step(
     recipe,
@@ -131,10 +131,8 @@ bake.step_mutate <- function(object, new_data, ...) {
 
 
 print.step_mutate <-
-  function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ",
-        paste0(names(x$inputs), collapse = ", "),
-        sep = "")
+  function(x, ...) {
+    cat("Variable mutation")
     if (x$trained) {
       cat(" [trained]\n")
     } else {
@@ -147,11 +145,14 @@ print.step_mutate <-
 #' @param x A `step_mutate` object
 #' @export
 tidy.step_mutate <- function(x, ...) {
-  var_expr <- map(x$inputs, quo_get_expr)
-  var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
-    tibble(
-      terms = names(x$inputs),
-      value = var_expr,
-      id = rep(x$id, length(x$inputs))
-    )
+  inputs <- x$inputs
+
+  terms <- names(quos_auto_name(inputs))
+  value <- map_chr(unname(inputs), as_label)
+
+  tibble(
+    terms = terms,
+    value = value,
+    id = rep(x$id, length(x$inputs))
+  )
 }
