@@ -89,7 +89,6 @@ step_mutate <- function(
   add_step(
     recipe,
     step_mutate_new(
-      terms = terms,
       trained = trained,
       role = role,
       inputs = inputs,
@@ -100,10 +99,9 @@ step_mutate <- function(
 }
 
 step_mutate_new <-
-  function(terms, role, trained, inputs, skip, id) {
+  function(role, trained, inputs, skip, id) {
     step(
       subclass = "mutate",
-      terms = terms,
       role = role,
       trained = trained,
       inputs = inputs,
@@ -115,7 +113,6 @@ step_mutate_new <-
 #' @export
 prep.step_mutate <- function(x, training, info = NULL, ...) {
   step_mutate_new(
-    terms = x$terms,
     trained = TRUE,
     role = x$role,
     inputs = x$inputs,
