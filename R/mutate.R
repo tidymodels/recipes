@@ -1,13 +1,11 @@
 #' Add new variables using dplyr
 #'
-#' `step_mutate` creates a *specification* of a recipe step
+#' `step_mutate()` creates a *specification* of a recipe step
 #'  that will add variables using [dplyr::mutate()].
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
-#' If the argument is not named, the expression is converted to
-#' a column name.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
 #' @details When an object in the user's global environment is
@@ -17,7 +15,7 @@
 #'  between sessions). See the examples.
 #'
 #'  When you [`tidy()`] this step, a tibble with column `values`, which
-#'  contains the `mutate` expressions as character strings
+#'  contains the `mutate()` expressions as character strings
 #'  (and are not reparsable), is returned.
 #'
 #' @keywords datagen
