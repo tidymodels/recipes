@@ -80,7 +80,7 @@ holiday_values <- bake(holiday_rec, new_data = examples)
 holiday_values
 }
 \seealso{
-\code{\link[=step_rm]{step_rm()}}, \code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}}
+\code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}}
 
 Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},

@@ -108,8 +108,6 @@ tidy(date_rec, number = 1)
 
 }
 \seealso{
-\code{\link[=step_rm]{step_rm()}}
-
 Other {dummy variable and encoding steps}: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},

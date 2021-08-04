@@ -39,7 +39,6 @@
 #' @concept variable_encodings
 #' @concept dates
 #' @family {dummy variable and encoding steps}
-#' @seealso [step_rm()]
 #' @export
 #' @details Unlike some other steps, `step_date` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`

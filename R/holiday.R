@@ -20,7 +20,7 @@
 #' @concept variable_encodings
 #' @concept dates
 #' @family {dummy variable and encoding steps}
-#' @seealso [step_rm()], [timeDate::listHolidays()]
+#' @seealso [timeDate::listHolidays()]
 #' @export
 #' @details Unlike some other steps, `step_holiday` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
