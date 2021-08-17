@@ -6,7 +6,7 @@
 #'  the original data.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
+#' @inheritParams step_dummy
 #' @param ... One or more selector functions to choose which variables will be
 #'  used to compute the components. See [selections()] for more details.
 #' @param role For model terms created by this step, what analysis
@@ -24,14 +24,11 @@
 #' @param input A character vector containing the names of the columns used.
 #'  This is `NULL` until the step is trained by [prep.recipe()].
 #' @param other A single character value for the "other" category.
-#' @param naming A function that defines the naming convention for
-#'  new dummy columns. See Details below.
 #' @param prefix A character string that will be the prefix to the resulting
 #'  new variables. See notes below.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dummy_multi_choice
@@ -272,7 +269,7 @@ print.step_dummy_multi_choice <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_dummy_multi_choice` object.
+#' @param x A `step_dummy` object.
 #' @export
 tidy.step_dummy_multi_choice <- function(x, ...) {
   if (is_trained(x)) {
