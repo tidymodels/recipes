@@ -38,23 +38,21 @@
 #' `step_dummy_multi_choice()` will create a set of binary dummy
 #'  variables from a selection of factor variables. For data such as:
 #'
-#'  ```
-#'  lang_1     lang_2     lang_3
-#'  English    Italian    NA
-#'  Spanish    NA         French
-#'  Armenian   English    French
-#'  NA         NA         NA
-#'  ```
+#' | lang_1   | lang_2  | lang_3 |
+#' | -------- | ------- | ------ |
+#' | English  | Italian | NA     |
+#' | Spanish  | NA      | French |
+#' | Armenian | English | French |
+#' | NA       | NA      | NA     |
 #'
 #'  the results will be:
 #'
-#'  ```
-#'  Armenian English French Italian Spanish
-#'  0       1      0       1       0
-#'  0       0      1       0       1
-#'  1       1      1       0       0
-#'  0       0      0       0       0
-#'  ```
+#' | Armenian | English | French | Italian | Spanish |
+#' | -------- | ------- | ------ | ------- | ------- |
+#' | 0        | 1       | 0      | 1       | 0       |
+#' | 0        | 0       | 1      | 0       | 1       |
+#' | 1        | 1       | 1      | 0       | 0       |
+#' | 0        | 0       | 0      | 0       | 0       |
 #'
 #'  This function allows for non-standard naming of the resulting
 #'  variables. For an unordered factor named `x`, with levels `"a"`

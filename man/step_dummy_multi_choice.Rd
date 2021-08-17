@@ -80,19 +80,23 @@ the original data.
 }
 \details{
 \code{step_dummy_multi_choice()} will create a set of binary dummy
-variables from a selection of factor variables. For data such as:\preformatted{lang_1     lang_2     lang_3
-English    Italian    NA
-Spanish    NA         French
-Armenian   English    French
-NA         NA         NA
+variables from a selection of factor variables. For data such as:\tabular{lll}{
+   lang_1 \tab lang_2 \tab lang_3 \cr
+   English \tab Italian \tab NA \cr
+   Spanish \tab NA \tab French \cr
+   Armenian \tab English \tab French \cr
+   NA \tab NA \tab NA \cr
 }
 
-the results will be:\preformatted{Armenian English French Italian Spanish
-0       1      0       1       0
-0       0      1       0       1
-1       1      1       0       0
-0       0      0       0       0
+
+the results will be:\tabular{lllll}{
+   Armenian \tab English \tab French \tab Italian \tab Spanish \cr
+   0 \tab 1 \tab 0 \tab 1 \tab 0 \cr
+   0 \tab 0 \tab 1 \tab 0 \tab 1 \cr
+   1 \tab 1 \tab 1 \tab 0 \tab 0 \cr
+   0 \tab 0 \tab 0 \tab 0 \tab 0 \cr
 }
+
 
 This function allows for non-standard naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
