@@ -1,13 +1,11 @@
 #' Add new variables using dplyr
 #'
-#' `step_mutate` creates a *specification* of a recipe step
+#' `step_mutate()` creates a *specification* of a recipe step
 #'  that will add variables using [dplyr::mutate()].
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
-#' If the argument is not named, the expression is converted to
-#' a column name.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
 #' @details When an object in the user's global environment is
@@ -17,7 +15,7 @@
 #'  between sessions). See the examples.
 #'
 #'  When you [`tidy()`] this step, a tibble with column `values`, which
-#'  contains the `mutate` expressions as character strings
+#'  contains the `mutate()` expressions as character strings
 #'  (and are not reparsable), is returned.
 #'
 #' @keywords datagen
@@ -84,12 +82,11 @@ step_mutate <- function(
   id = rand_id("mutate")
 ) {
 
-  inputs <- enquos(..., .named = TRUE)
+  inputs <- enquos(...)
 
   add_step(
     recipe,
     step_mutate_new(
-      terms = terms,
       trained = trained,
       role = role,
       inputs = inputs,
@@ -100,10 +97,9 @@ step_mutate <- function(
 }
 
 step_mutate_new <-
-  function(terms, role, trained, inputs, skip, id) {
+  function(role, trained, inputs, skip, id) {
     step(
       subclass = "mutate",
-      terms = terms,
       role = role,
       trained = trained,
       inputs = inputs,
@@ -115,7 +111,6 @@ step_mutate_new <-
 #' @export
 prep.step_mutate <- function(x, training, info = NULL, ...) {
   step_mutate_new(
-    terms = x$terms,
     trained = TRUE,
     role = x$role,
     inputs = x$inputs,
@@ -131,10 +126,8 @@ bake.step_mutate <- function(object, new_data, ...) {
 
 
 print.step_mutate <-
-  function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ",
-        paste0(names(x$inputs), collapse = ", "),
-        sep = "")
+  function(x, ...) {
+    cat("Variable mutation")
     if (x$trained) {
       cat(" [trained]\n")
     } else {
@@ -147,11 +140,14 @@ print.step_mutate <-
 #' @param x A `step_mutate` object
 #' @export
 tidy.step_mutate <- function(x, ...) {
-  var_expr <- map(x$inputs, quo_get_expr)
-  var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
-    tibble(
-      terms = names(x$inputs),
-      value = var_expr,
-      id = rep(x$id, length(x$inputs))
-    )
+  inputs <- x$inputs
+
+  terms <- names(quos_auto_name(inputs))
+  value <- map_chr(unname(inputs), as_label)
+
+  tibble(
+    terms = terms,
+    value = value,
+    id = rep(x$id, length(x$inputs))
+  )
 }

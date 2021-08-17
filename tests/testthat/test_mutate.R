@@ -79,6 +79,26 @@ test_that('quasiquotation', {
   expect_equal(dplyr_train, rec_2_train)
 })
 
+test_that("can use unnamed expressions like `across()` (#759)", {
+  skip_if_not_installed("dplyr", "1.0.0")
+
+  df <- tibble(
+    x = c(TRUE, FALSE),
+    y = c(1, 2),
+    z = c(TRUE, FALSE)
+  )
+
+  rec <- recipe(~., df) %>%
+    step_mutate(across(where(is.logical), as.integer))
+
+  rec <- prep(rec, df)
+
+  expect_identical(
+    bake(rec, new_data = NULL),
+    mutate(df, across(where(is.logical), as.integer))
+  )
+})
+
 test_that('no input', {
   no_inputs <-
     iris_rec %>%
@@ -92,6 +112,22 @@ test_that('printing', {
   rec <- iris_rec %>% step_mutate(x = 5)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))
+})
+
+test_that("tidying allows for named and unnamed expressions", {
+  rec <- step_mutate(iris_rec, x = mean(y), id = "named")
+  tidied <- tidy(rec, id = "named")
+
+  # Named expressions use the name
+  expect_identical(tidied$terms, "x")
+  expect_identical(tidied$value, "mean(y)")
+
+  rec <- step_mutate(iris_rec, across(c(x, y), mean), id = "unnamed")
+  tidied <- tidy(rec, id = "unnamed")
+
+  # Unnamed expressions use the expression
+  expect_identical(tidied$terms, "across(c(x, y), mean)")
+  expect_identical(tidied$value, "across(c(x, y), mean)")
 })
 
 # ------------------------------------------------------------------------------
