@@ -3,17 +3,13 @@
 #' `step_rename_at` creates a *specification* of a recipe step that will rename
 #' the selected variables using a common function via [dplyr::rename_at()].
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param fn A function `fun`, a quosure style lambda `~ fun(.)`` or a list of
 #' either form (but containing only a single function, see [dplyr::rename_at()]).
 #' **Note that this argument must be named**.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the function assumes that the new dimension
-#'  columns created by the original variables will be used as predictors in a
-#'  model.
 #' @param inputs A vector of column names populated by `prep()`.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with
 #'  columns `terms` which contains the columns being transformed is returned.
 #' @keywords datagen
@@ -68,7 +64,7 @@ step_rename_at_new <-
 
 #' @export
 prep.step_rename_at <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   step_rename_at_new(
     terms = x$terms,

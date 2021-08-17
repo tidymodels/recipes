@@ -3,17 +3,13 @@
 #' `step_mutate` creates a *specification* of a recipe step
 #'  that will add variables using [dplyr::mutate()].
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
 #' If the argument is not named, the expression is converted to
 #' a column name.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned? By default, the function assumes
-#'  that the new dimension columns created by the original variables
-#'  will be used as predictors in a model.
 #' @param inputs Quosure(s) of `...`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed

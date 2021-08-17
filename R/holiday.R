@@ -4,16 +4,9 @@
 #'  recipe step that will convert date data into one or more binary
 #'  indicator variables for common holidays.
 #'
+#' @inheritParams step_date
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to create the new variables. The selected
-#'  variables should have class `Date` or `POSIXct`. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new variable columns created by the original variables
-#'  will be used as predictors in a model.
 #' @param holidays A character string that includes at least one
 #'  holiday supported by the `timeDate` package. See
 #'  [timeDate::listHolidays()] for a complete list.
@@ -22,8 +15,7 @@
 #'  populated once [prep.recipe()] is used.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification
@@ -102,7 +94,7 @@ step_holiday_new <-
 
 #' @export
 prep.step_holiday <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   holiday_data <- info[info$variable %in% col_names, ]
   if (any(holiday_data$type != "date"))

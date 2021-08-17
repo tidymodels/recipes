@@ -4,14 +4,8 @@
 #'  that will create new columns that are basis expansions of
 #'  variables using B-splines.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param objects A list of [splines::bs()] objects
 #'  created once the step has been trained.
 #' @param deg_free The degrees of freedom for the spline. As the
@@ -21,8 +15,7 @@
 #' @param degree Degree of polynomial spline (integer).
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept basis_expansion
@@ -139,7 +132,7 @@ bs_predict <- function(object, x) {
 
 #' @export
 prep.step_bs <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   opt <- x$options

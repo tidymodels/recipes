@@ -9,13 +9,6 @@
 #'  levels in a specific factor level equal.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variable is used to sample the data. See [selections()]
-#'  for more details. The selection should result in _single
-#'  factor variable_. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param column A character string of the variable name that will
 #'  be populated (eventually) by the `...` selectors.
 #' @param over_ratio A numeric value for the ratio of the
@@ -28,10 +21,7 @@
 #' @param target An integer that will be used to subsample. This
 #'  should not be set by the user and will be populated by `prep`.
 #' @param seed An integer that will be used as the seed when upsampling.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any). For the
-#'  `tidy` method, a tibble with columns `terms` which is
-#'  the variable used to sample.
+#' @template step-return
 #' @details
 #' Up-sampling is intended to be performed on the _training_ set alone. For
 #'  this reason, the default is `skip = TRUE`. It is advisable to use
@@ -58,34 +48,6 @@
 #' @concept preprocessing
 #' @concept subsampling
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(okc)
-#'
-#' orig <- table(okc$diet, useNA = "always")
-#'
-#' sort(orig, decreasing = TRUE)
-#'
-#' up_rec <- recipe( ~ ., data = okc) %>%
-#'   # Bring the minority levels up to about 200 each
-#'   # 200/16562 is approx 0.0121
-#'   step_upsample(diet, over_ratio = 0.0121) %>%
-#'   prep(training = okc)
-#'
-#' training <- table(bake(up_rec, new_data = NULL)$diet, useNA = "always")
-#'
-#' # Since `skip` defaults to TRUE, baking the step has no effect
-#' baked_okc <- bake(up_rec, new_data = okc)
-#' baked <- table(baked_okc$diet, useNA = "always")
-#'
-#' # Note that if the original data contained more rows than the
-#' # target n (= ratio * majority_n), the data are left alone:
-#' data.frame(
-#'   level = names(orig),
-#'   orig_freq = as.vector(orig),
-#'   train_freq = as.vector(training),
-#'   baked_freq = as.vector(baked)
-#' )
 
 step_upsample <-
   function(recipe, ...,  over_ratio = 1, ratio = NA, role = NA, trained = FALSE,
@@ -93,7 +55,7 @@ step_upsample <-
            seed = sample.int(10^5, 1),
            id = rand_id("upsample")) {
 
-    lifecycle::deprecate_warn("0.1.13",
+    lifecycle::deprecate_stop("0.1.13",
                               "recipes::step_upsample()",
                               "themis::step_upsample()")
 
@@ -144,7 +106,7 @@ step_upsample_new <-
 
 #' @export
 prep.step_upsample <- function(x, training, info = NULL, ...) {
-  col_name <- eval_select_recipes(x$terms, training, info)
+  col_name <- recipes_eval_select(x$terms, training, info)
 
   if (length(col_name) != 1)
     rlang::abort("Please select a single factor variable.")

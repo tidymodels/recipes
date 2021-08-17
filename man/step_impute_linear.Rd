@@ -2,7 +2,7 @@
 % Please edit documentation in R/impute_linear.R
 \name{step_impute_linear}
 \alias{step_impute_linear}
-\title{Imputation of numeric variables via a linear model.}
+\title{Impute numeric variables via a linear model}
 \usage{
 step_impute_linear(
   recipe,
@@ -19,13 +19,13 @@ step_impute_linear(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables. For
-\code{step_impute_linear}, this indicates the variables to be imputed; these variables
-\strong{must} be of type \code{numeric}. When used with \code{imp_vars}, the dots indicates
-which variables are used to predict the missing data in each variable. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables to be imputed;
+these variables \strong{must} be of type \code{numeric}. When used with \code{imp_vars},
+these dots indicate which variables are used to predict the missing data
+in each variable. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -44,13 +44,13 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
 \code{step_impute_linear} creates a \emph{specification} of a recipe step that will

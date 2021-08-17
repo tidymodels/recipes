@@ -7,13 +7,8 @@
 #'   specify an alternative filler value with the `default`
 #'   argument.
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'   affected by the step. See [selections()] for more details.
-#' @param role Defaults to "predictor"
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated.
+#' @inheritParams step_pca
+#' @inheritParams step_center
 #' @param lag A vector of positive integers. Each specified column will be
 #'  lagged for each value in the vector.
 #' @param prefix A prefix for generated column names, default to "lag_".
@@ -21,15 +16,7 @@
 #'  be populated (eventually) by the `terms` argument.
 #' @param default Passed to `dplyr::lag`, determines what fills empty rows
 #'   left by lagging (defaults to NA).
-#' @param id A character string that is unique to this step to identify it.
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations
-#' @return An updated version of `recipe` with the
-#'   new step added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
 #' @export
@@ -102,7 +89,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
     lag = x$lag,
     default = x$default,
     prefix = x$prefix,
-    columns = eval_select_recipes(x$terms, training, info),
+    columns = recipes_eval_select(x$terms, training, info),
     skip = x$skip,
     id = x$id
   )

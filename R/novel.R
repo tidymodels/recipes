@@ -5,19 +5,11 @@
 #'  new value.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be affected by the step. These variables
-#'  should be character or factor types. See [selections()] for more
-#'  details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param new_level A single character value that will be assigned
 #'  to new factor levels.
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
@@ -122,7 +114,7 @@ get_existing_values <- function(x) {
 
 #' @export
 prep.step_novel <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   col_check <- dplyr::filter(info, variable %in% col_names)
 

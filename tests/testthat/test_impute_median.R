@@ -17,7 +17,7 @@ test_that('simple median', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_medianimpute(Age, Assets, Income, id = "")
+    step_impute_median(Age, Assets, Income, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
 
@@ -56,14 +56,25 @@ test_that('non-numeric', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_medianimpute(Assets, Job)
+    step_impute_median(Assets, Job)
   expect_error(prep(impute_rec, training = credit_tr, verbose = FALSE))
+})
+
+test_that('all NA values', {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_median(Age, Assets)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed_te <- bake(imputed, new_data = credit_te %>% mutate(Age = NA))
+
+  expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$medians$Age)
 })
 
 
 test_that('printing', {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
-    step_medianimpute(Age, Assets, Income)
+    step_impute_median(Age, Assets, Income)
   expect_output(print(impute_rec))
   expect_output(prep(impute_rec, training = credit_tr, verbose = TRUE))
 })

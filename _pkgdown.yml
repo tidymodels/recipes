@@ -38,6 +38,7 @@ reference:
     contents:
     - step_BoxCox
     - step_bs
+    - step_harmonic
     - step_hyperbolic
     - step_inverse
     - step_invlogit
@@ -131,7 +132,7 @@ reference:
     - fully_trained
     - names0
     - prepper
-    - terms_select
+    - recipes_eval_select
     - update.step
   - title: Tidy Methods
     contents:
@@ -147,7 +148,7 @@ navbar:
       - text: "Selecting Variables"
         href: articles/Selecting_Variables.html
       - text: "Custom Steps"
-        href: articles/Custom_Steps.html
+        href: https://www.tidymodels.org/learn/develop/recipes/
       - text: "The Order of Steps"
         href: articles/Ordering.html
       - text: "Dummy Variables and Interactions"

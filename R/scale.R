@@ -5,11 +5,6 @@
 #'  deviation of one.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param sds A named numeric vector of standard deviations. This
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param factor A numeric value of either 1 or 2 that scales the
@@ -19,8 +14,7 @@
 #'  binary inputs. Defaults to `1`. More in reference below.
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
@@ -103,7 +97,7 @@ step_scale_new <-
 
 #' @export
 prep.step_scale <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   if (x$factor != 1 & x$factor != 2) {

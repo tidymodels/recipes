@@ -5,9 +5,8 @@
 #'
 #' @param recipe A recipe object. The step will be added to the
 #'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
+#' @param ... One or more selector functions to choose variables
+#'  for this step. See [selections()] for more details.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param trained A logical to indicate if the quantities for
@@ -21,10 +20,9 @@
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations
+#'  the computations for subsequent operations.
 #' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #'
 #' @keywords datagen
 #' @concept preprocessing
@@ -103,7 +101,7 @@ step_center_new <-
 
 #' @export
 prep.step_center <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   means <-

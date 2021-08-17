@@ -22,7 +22,7 @@ test_that('imputation values with 7-pt median', {
 
   seven_pt <- recipe(~ . , data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
-    step_rollimpute(all_predictors(), window = 7, id = "") %>%
+    step_impute_roll(all_predictors(), window = 7, id = "") %>%
     prep(training = example_data)
 
   seven_pt_exp <- example_data
@@ -51,7 +51,7 @@ test_that('imputation values with 3-pt mean', {
 
   three_pt <- recipe(~ . , data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
-    step_rollimpute(all_predictors(), window = 3, id = "") %>%
+    step_impute_roll(all_predictors(), window = 3, id = "") %>%
     prep(training = example_data)
 
 
@@ -81,14 +81,14 @@ test_that('imputation values with 3-pt mean', {
 test_that('bad args', {
   expect_error(
     recipe( ~ . , data = example_data) %>%
-      step_rollimpute(all_predictors(), window = 3) %>%
+      step_impute_roll(all_predictors(), window = 3) %>%
       prep(training = example_data)
   )
 
   expect_error(
     recipe( ~ . , data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
-      step_rollimpute(all_predictors(), window = 4) %>%
+      step_impute_roll(all_predictors(), window = 4) %>%
       prep(training = example_data)
   )
 
@@ -96,7 +96,7 @@ test_that('bad args', {
   expect_error(
     recipe( ~ . , data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
-      step_rollimpute(all_predictors(), window = 3) %>%
+      step_impute_roll(all_predictors(), window = 3) %>%
       prep(training = example_data)
   )
 })
@@ -106,7 +106,7 @@ test_that('bad args', {
 test_that('printing', {
   seven_pt <- recipe(~ . , data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
-    step_rollimpute(all_predictors(), window = 7)
+    step_impute_roll(all_predictors(), window = 7)
   expect_output(print(seven_pt))
   expect_output(prep(seven_pt, training = example_data, verbose = TRUE))
 })
@@ -115,7 +115,7 @@ test_that('printing', {
 test_that('tunable', {
   rec <-
     recipe(~ ., data = iris) %>%
-    step_rollimpute(all_predictors(), outcome = "Species")
+    step_impute_roll(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_impute_roll(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "window"))
   expect_true(all(rec_param$source == "recipe"))

@@ -4,17 +4,10 @@
 #'  that will remove variables that contain only a single value.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
 #' @keywords datagen
@@ -90,7 +83,7 @@ one_unique <- function(x) {
 
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   filter <- vapply(training[, col_names], one_unique, logical(1))
 
   step_zv_new(

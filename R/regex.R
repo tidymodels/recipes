@@ -3,16 +3,11 @@
 #' `step_regex` creates a *specification* of a recipe step that will
 #'   create a new dummy variable based on a regular expression.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... A single selector functions to choose which variable
-#'  will be searched for the pattern. The selector should resolve
-#'  into a single variable. See [selections()] for more
-#'  details.
-#' @param role For a variable created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new dummy variable column created by the original
-#'  variable will be used as a predictor in a model.
+#' @param ... A single selector function to choose which variable
+#'  will be searched for the regex pattern. The selector should resolve
+#'  to a single variable. See [selections()] for more details.
 #' @param pattern A character string containing a regular
 #'  expression (or character string for `fixed = TRUE`) to be
 #'  matched in the given character vector. Coerced by
@@ -24,8 +19,7 @@
 #' @param input A single character value for the name of the
 #'  variable being searched. This is `NULL` until computed by
 #'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `result` (the
 #'  new column name) is returned.
@@ -111,7 +105,7 @@ step_regex_new <-
 
 #' @export
 prep.step_regex <- function(x, training, info = NULL, ...) {
-  col_name <- eval_select_recipes(x$terms, training, info)
+  col_name <- recipes_eval_select(x$terms, training, info)
 
   if (length(col_name) != 1)
     rlang::abort("The selector should only select a single variable")

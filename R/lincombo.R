@@ -5,17 +5,11 @@
 #'  linear combinations between them.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param max_steps A value.
+#' @param max_steps The number of times to apply the algorithm.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
@@ -97,7 +91,7 @@ step_lincomb_new <-
 
 #' @export
 prep.step_lincomb <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
 

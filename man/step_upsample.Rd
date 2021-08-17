@@ -25,11 +25,8 @@ step_upsample(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variable is used to sample the data. See \code{\link[=selections]{selections()}}
-for more details. The selection should result in \emph{single
-factor variable}. For the \code{tidy} method, these are not
-currently used.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{over_ratio}{A numeric value for the ratio of the
 majority-to-minority frequencies. The default value (1) means
@@ -57,7 +54,7 @@ recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operatio
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{seed}{An integer that will be used as the seed when upsampling.}
 
@@ -66,10 +63,8 @@ the computations for subsequent operations}
 \item{x}{A \code{step_upsample} object.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} which is
-the variable used to sample.
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
@@ -100,35 +95,6 @@ All columns in the data are sampled and returned by \code{\link[=bake]{bake()}}.
 When used in modeling, users should strongly consider using the
 option \code{skip = TRUE} so that the extra sampling is \emph{not}
 conducted outside of the training set.
-}
-\examples{
-library(modeldata)
-data(okc)
-
-orig <- table(okc$diet, useNA = "always")
-
-sort(orig, decreasing = TRUE)
-
-up_rec <- recipe( ~ ., data = okc) \%>\%
-  # Bring the minority levels up to about 200 each
-  # 200/16562 is approx 0.0121
-  step_upsample(diet, over_ratio = 0.0121) \%>\%
-  prep(training = okc)
-
-training <- table(bake(up_rec, new_data = NULL)$diet, useNA = "always")
-
-# Since `skip` defaults to TRUE, baking the step has no effect
-baked_okc <- bake(up_rec, new_data = okc)
-baked <- table(baked_okc$diet, useNA = "always")
-
-# Note that if the original data contained more rows than the
-# target n (= ratio * majority_n), the data are left alone:
-data.frame(
-  level = names(orig),
-  orig_freq = as.vector(orig),
-  train_freq = as.vector(training),
-  baked_freq = as.vector(baked)
-)
 }
 \concept{preprocessing}
 \concept{subsampling}

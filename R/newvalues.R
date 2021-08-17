@@ -3,37 +3,20 @@
 #' `check_new_values` creates a *specification* of a recipe
 #'  operation that will check if variables contain new values.
 #'
-#' @param recipe A recipe object. The check will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are checked in the check. See [selections()]
-#'  for more details. For the `tidy` method, these are not
-#'  currently used.
-#' @param role Not used by this check since no new variables are
-#'  created.
-#' @param trained A logical for whether the selectors in `...`
-#' have been resolved by [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the terms argument.
+#' @inheritParams check_missing
 #' @param ignore_NA A logical that indicates if we should consider missing
 #'  values as value or not. Defaults to `TRUE`.
 #' @param values A named list with the allowed values.
 #'  This is `NULL` until computed by prep.recipe().
-#' @param id A character string that is unique to this step to identify it.
-#' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing operations (if any). For the
-#'  `tidy` method, a tibble with columns `terms` (the
-#'  selectors or variables selected).
+#' @template check-return
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain values it did not contain when `prep` was called
 #'  on the recipe. If the check passes, nothing is changed to the data.
+#'
+#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
+#'  selectors or variables selected) is returned.
+#'
 #' @examples
 #' library(modeldata)
 #' data(credit_data)
@@ -122,7 +105,7 @@ new_values_func <- function(x,
 }
 
 prep.check_new_values <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   values <- lapply(training[ ,col_names], unique)
 

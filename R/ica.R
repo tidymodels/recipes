@@ -4,15 +4,8 @@
 #'  that will convert numeric data into one or more independent
 #'  components.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to compute the components. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new independent component columns created by the
-#'  original variables will be used as predictors in a model.
 #' @param num_comp The number of ICA components to retain as new
 #'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
@@ -24,12 +17,7 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept ica
@@ -150,7 +138,7 @@ step_ica_new <-
 
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   if (x$num_comp > 0) {

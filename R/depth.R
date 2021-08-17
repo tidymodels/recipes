@@ -5,17 +5,10 @@
 #'  *data depth*. This is done for each value of a categorical
 #'  class variable.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be used to create the new features. See
-#'  [selections()] for more details.
 #' @param class A single character string that specifies a single
 #'  categorical variable to be used as the class.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that resulting depth estimates will be used as predictors in a
-#'  model.
 #' @param metric A character string specifying the depth metric.
 #'  Possible values are "potential", "halfspace", "Mahalanobis",
 #'  "simplicialVolume", "spatial", and "zonoid".
@@ -28,19 +21,16 @@
 #'  [ddalpha::depth.simplicialVolume()],
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
-#' @param prefix A character string that defines the naming convention for
-#'  new depth columns. Defaults to `"depth_"`. See Details below.
 #' @param data The training data are stored here once after
 #'  [prep.recipe()] is executed.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dimension_reduction
 #' @export
 #' @details Data depth metrics attempt to measure how close data a
 #'  data point is to the center of its distribution. There are a
-#'  number of methods for calculating death but a simple example is
+#'  number of methods for calculating depth but a simple example is
 #'  the inverse of the distance of a data point to the centroid of
 #'  the distribution. Generally, small values indicate that a data
 #'  point not close to the centroid. `step_depth` can compute a
@@ -142,7 +132,7 @@ step_depth_new <-
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
-  x_names <- eval_select_recipes(x$terms, training, info)
+  x_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, x_names])
 
   x_dat <-

@@ -4,17 +4,13 @@
 #'  step that will create one or more ratios out of numeric
 #'  variables.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used in the *numerator* of the ratio.
 #'  When used with `denom_vars`, the dots indicate which
 #'  variables are used in the *denominator*. See
 #'  [selections()] for more details.
-#' @param role For terms created by this step, what analysis role
-#'  should they be assigned?. By default, the function assumes that
-#'  the newly created ratios created by the original variables will
-#'  be used as predictors in a model.
 #' @param denom A call to `denom_vars` to specify which
 #'  variables are used in the denominator that can include specific
 #'  variable names separated by commas or different selectors (see
@@ -28,8 +24,7 @@
 #'  executed.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `denom` is returned.
 #' @keywords datagen
@@ -115,8 +110,8 @@ step_ratio_new <-
 #' @export
 prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
-    top = eval_select_recipes(x$terms, training, info),
-    bottom = eval_select_recipes(x$denom, training, info),
+    top = recipes_eval_select(x$terms, training, info),
+    bottom = recipes_eval_select(x$denom, training, info),
     stringsAsFactors = FALSE
   )
   col_names <- col_names[!(col_names$top == col_names$bottom), ]

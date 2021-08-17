@@ -7,12 +7,6 @@
 #'  models.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be fixed to a single value. See [selections()] for
-#'  more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param profile A call to [dplyr::vars()]) to specify which
 #'  variable will be profiled (see [selections()]). If a column is
 #'  included in both lists to be fixed and to be profiled, an error
@@ -49,8 +43,7 @@
 #'  is the columns that will be affected) and `type` (fixed or
 #'  profiled) is returned.
 #'
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -162,8 +155,8 @@ step_profile_new <-
 
 #' @export
 prep.step_profile <- function(x, training, info = NULL, ...) {
-  fixed_names <- eval_select_recipes(x$terms, training, info)
-  profile_name <- eval_select_recipes(x$profile, training, info)
+  fixed_names <- recipes_eval_select(x$terms, training, info)
+  profile_name <- recipes_eval_select(x$profile, training, info)
 
   if(length(fixed_names) == 0)
     rlang::abort("At least one variable should be fixed")

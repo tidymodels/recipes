@@ -4,19 +4,12 @@
 #'  vectors to factors (ordered or unordered).
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be converted to factors. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param levels An options specification of the levels to be used
 #'  for the new factor. If left `NULL`, the sorted unique
 #'  values present when `bake` is called will be used.
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
@@ -104,7 +97,7 @@ get_ord_lvls <- function(x)
 
 #' @export
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   str_check <-
     vapply(
       training[, col_names],

@@ -5,11 +5,6 @@
 #'  absolute correlations with other variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param threshold A value for the threshold of absolute
 #'  correlation values. The step will try to remove the minimum
 #'  number of columns so that all the resulting absolute
@@ -21,8 +16,7 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @author Original R code for filtering algorithm by Dong Li,
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
@@ -117,7 +111,7 @@ step_corr_new <-
 
 #' @export
 prep.step_corr <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   if (length(col_names) > 1) {

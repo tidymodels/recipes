@@ -4,16 +4,10 @@
 #'  that will remove variables based on their name, type, or role.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering bake. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
 #' @keywords datagen
@@ -75,7 +69,7 @@ step_rm_new <- function(terms, role, trained, removals, skip, id) {
 
 #' @export
 prep.step_rm <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   step_rm_new(
     terms = x$terms,

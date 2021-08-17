@@ -5,19 +5,13 @@
 #'  deviation of one and a mean of zero.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param means A named numeric vector of means. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @param sds A named numeric vector of standard deviations This
 #'  is `NULL` until computed by [prep.recipe()].
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation and mean.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
@@ -106,7 +100,7 @@ step_normalize_new <-
 
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
 

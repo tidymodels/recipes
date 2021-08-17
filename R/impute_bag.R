@@ -1,15 +1,13 @@
-#' Imputation via Bagged Trees
+#' Impute via bagged trees
 #'
 #' `step_impute_bag` creates a *specification* of a recipe step that will
 #'  create bagged tree models to impute missing data.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose variables. For
-#'  `step_impute_bag`, this indicates the variables to be imputed. When used
-#'  with `imp_vars`, the dots indicate which variables are used to predict the
-#'  missing data in each variable. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
+#' @param ... One or more selector functions to choose variables to be imputed.
+#'  When used with `imp_vars`, these dots indicate which variables are used to
+#'  predict the missing data in each variable. See [selections()] for more
+#'  details.
 #' @param impute_with A call to `imp_vars` to specify which variables are used
 #'  to impute the variables that can include specific variable names separated
 #'  by commas or different selectors (see [selections()]). If a column is
@@ -23,8 +21,7 @@
 #'  is used across all imputation models.
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
 #'  bagged trees have be trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -131,7 +128,6 @@ step_impute_bag <-
 
 #' @rdname step_impute_bag
 #' @export
-#' @keywords internal
 step_bagimpute <-
   function(recipe,
            ...,
@@ -144,7 +140,7 @@ step_bagimpute <-
            seed_val = sample.int(10 ^ 4, 1),
            skip = FALSE,
            id = rand_id("impute_bag")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_bagimpute()",
       with = "recipes::step_impute_bag()"
@@ -200,8 +196,8 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 ## This figures out which data should be used to predict each variable
 ## scheduled for imputation
 impute_var_lists <- function(to_impute, impute_using, training, info) {
-  to_impute <- eval_select_recipes(to_impute, training, info)
-  impute_using <- eval_select_recipes(impute_using, training, info)
+  to_impute <- recipes_eval_select(to_impute, training, info)
+  impute_using <- recipes_eval_select(impute_using, training, info)
 
   var_lists <- vector(mode = "list", length = length(to_impute))
   for (i in seq_along(var_lists)) {
@@ -269,6 +265,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
       } else {
         pred_vals <- predict(object$models[[imp_var]], pred_data)
         pred_vals <- cast(pred_vals, new_data[[imp_var]])
+        new_data[[imp_var]] <- vec_cast(new_data[[imp_var]], pred_vals)
         new_data[missing_rows, imp_var] <- pred_vals
       }
     }

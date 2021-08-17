@@ -5,11 +5,6 @@
 #'  range of values.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables will be scaled. See [selections()] for more
-#'  details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param min A single numeric value for the smallest value in the
 #'  range.
 #' @param max A single numeric value for the largest value in the
@@ -18,8 +13,7 @@
 #'  normalized. Note that this is ignored until the values are
 #'  determined by [prep.recipe()]. Setting this value will
 #'  be ineffective.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
@@ -96,7 +90,7 @@ step_range_new <-
 
 #' @export
 prep.step_range <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   mins <-

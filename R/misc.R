@@ -62,7 +62,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
-  data_info <- attr(model.frame(formula, data), "terms")
+  data_info <- attr(model.frame(formula, data[1,]), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))
   if (length(response_info) > 0 && all(response_info > 0)) {
@@ -693,12 +693,6 @@ is_tune <- function(x) {
 }
 
 # ------------------------------------------------------------------------------
-
-tidyr_new_interface <- function() {
-  utils::packageVersion("tidyr") > "0.8.99"
-}
-
-# ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:
 # vctrs's cast functions would be better but we'll deal with the known cases
 # to avoid a dependency.
@@ -713,13 +707,6 @@ cast <- function(x, ref) {
   }
   x
 }
-
-## -----------------------------------------------------------------------------
-
-tidyselect_pre_1.0.0 <- function() {
-  utils::packageVersion("tidyselect") <= "0.2.5"
-}
-
 
 ## -----------------------------------------------------------------------------
 

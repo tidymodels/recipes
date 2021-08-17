@@ -5,18 +5,12 @@
 #'  function.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param func A character value for the function. Valid values
 #'  are "sin", "cos", or "tan".
 #' @param inverse A logical: should the inverse function be used?
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
@@ -90,7 +84,7 @@ step_hyperbolic_new <-
 
 #' @export
 prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   step_hyperbolic_new(

@@ -36,6 +36,7 @@
 \alias{tidy.step_factor2string}
 \alias{tidy.step_filter}
 \alias{tidy.step_geodist}
+\alias{tidy.step_harmonic}
 \alias{tidy.step_holiday}
 \alias{tidy.step_hyperbolic}
 \alias{tidy.step_ica}
@@ -140,6 +141,8 @@
 \method{tidy}{step_filter}(x, ...)
 
 \method{tidy}{step_geodist}(x, ...)
+
+\method{tidy}{step_harmonic}(x, ...)
 
 \method{tidy}{step_holiday}(x, ...)
 

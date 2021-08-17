@@ -5,24 +5,22 @@
 #'
 #' @param recipe A recipe object. The check will be added to the
 #'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are checked in the check See [selections()]
-#'  for more details.
+#' @param ... One or more selector functions to choose variables
+#'  for this check. See [selections()] for more details.
 #' @param role Not used by this check since no new variables are
 #'  created.
 #' @param trained A logical for whether the selectors in `...`
 #' have been resolved by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the terms argument.
-#' @param id A character string that is unique to this step to identify it.
+#' @param id A character string that is unique to this check to identify it.
 #' @param skip A logical. Should the check be skipped when the
 #'  recipe is baked by [bake.recipe()]? While all operations are baked
 #'  when [prep.recipe()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing operations (if any).
+#' @template check-return
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed
@@ -97,7 +95,7 @@ check_missing_new <-
   }
 
 prep.check_missing <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_missing_new(terms = x$terms,
                     role  = x$role,

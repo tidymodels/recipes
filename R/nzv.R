@@ -5,11 +5,6 @@
 #'  and unbalanced.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param freq_cut,unique_cut Numeric parameters for the filtering process. See
 #'  the Details section below.
 #' @param options A list of options for the filter (see Details
@@ -17,8 +12,7 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
@@ -136,7 +130,7 @@ step_nzv_new <-
 
 #' @export
 prep.step_nzv <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   filter <- nzv(
     x = training[, col_names],

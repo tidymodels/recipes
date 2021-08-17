@@ -4,13 +4,9 @@
 #'  that will select variables using [dplyr::select()].
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables will be selected when baking. See
-#'  [selections()] for more details.
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
@@ -87,7 +83,7 @@ step_select_new <- function(terms, role, trained, skip, id) {
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {
-  terms <- eval_select_recipes(x$terms, training, info, allow_rename = TRUE)
+  terms <- recipes_eval_select(x$terms, training, info, allow_rename = TRUE)
 
   step_select_new(
     terms = terms,

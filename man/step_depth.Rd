@@ -22,17 +22,15 @@ step_depth(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be used to create the new features. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{class}{A single character string that specifies a single
 categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that resulting depth estimates will be used as predictors in a
-model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -54,21 +52,21 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 \item{data}{The training data are stored here once after
 \code{\link[=prep.recipe]{prep.recipe()}} is executed.}
 
-\item{prefix}{A character string that defines the naming convention for
-new depth columns. Defaults to \code{"depth_"}. See Details below.}
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
 when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
 \code{step_depth} creates a \emph{specification} of a recipe
@@ -79,7 +77,7 @@ class variable.
 \details{
 Data depth metrics attempt to measure how close data a
 data point is to the center of its distribution. There are a
-number of methods for calculating death but a simple example is
+number of methods for calculating depth but a simple example is
 the inverse of the distance of a data point to the centroid of
 the distribution. Generally, small values indicate that a data
 point not close to the centroid. \code{step_depth} can compute a

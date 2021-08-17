@@ -20,7 +20,7 @@ biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 test_that('basic usage', {
   rec1 <- rec %>%
-    step_lowerimpute(carbon, hydrogen, id = "")
+    step_impute_lower(carbon, hydrogen, id = "")
 
   untrained <- tibble(
     terms = c("carbon", "hydrogen"),
@@ -54,18 +54,17 @@ test_that('basic usage', {
 
 })
 
-
 test_that('bad data', {
   expect_error(
     rec %>%
-      step_lowerimpute(carbon, hydrogen, has_neg) %>%
+      step_impute_lower(carbon, hydrogen, has_neg) %>%
       prep
   )
 })
 
 test_that('printing', {
   rec2 <- rec %>%
-    step_lowerimpute(carbon, hydrogen)
+    step_impute_lower(carbon, hydrogen)
 
   expect_output(print(rec))
   expect_output(prep(rec2, training = biomass_tr, verbose = TRUE))

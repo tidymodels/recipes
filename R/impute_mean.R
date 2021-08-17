@@ -1,21 +1,17 @@
-#' Impute Numeric Data Using the Mean
+#' Impute numeric data using the mean
 #'
 #' `step_impute_mean` creates a *specification* of a recipe step that will
 #'  substitute missing values of numeric variables by the training set mean of
 #'  those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is `NULL` until computed
 #'  by [prep.recipe()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -85,7 +81,6 @@ step_impute_mean <-
 
 #' @rdname step_impute_mean
 #' @export
-#' @keywords internal
 step_meanimpute <-
   function(recipe,
            ...,
@@ -95,7 +90,7 @@ step_meanimpute <-
            trim = 0,
            skip = FALSE,
            id = rand_id("impute_mean")) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.1.16",
       what = "recipes::step_meanimpute()",
       with = "recipes::step_impute_mean()"
@@ -128,7 +123,7 @@ step_impute_mean_new <-
 
 #' @export
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
 
@@ -154,6 +149,7 @@ prep.step_meanimpute <- prep.step_impute_mean
 bake.step_impute_mean <- function(object, new_data, ...) {
   for (i in names(object$means)) {
     if (any(is.na(new_data[[i]])))
+      new_data[[i]] <- vec_cast(new_data[[i]], object$means[[i]])
       new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
   }
   as_tibble(new_data)

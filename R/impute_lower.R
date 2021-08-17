@@ -1,4 +1,4 @@
-#' Impute Numeric Data Below the Threshold of Measurement
+#' Impute numeric data below the threshold of measurement
 #'
 #' `step_impute_lower` creates a *specification* of a recipe step
 #'  designed for cases where the non-negative numeric data cannot be
@@ -7,15 +7,9 @@
 #'  random uniform number between zero and the truncation point.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param threshold A named numeric vector of lower bounds. This is
 #'  `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
@@ -86,7 +80,6 @@ step_impute_lower <-
 
 #' @rdname step_impute_lower
 #' @export
-#' @keywords internal
 step_lowerimpute <- function(recipe,
                              ...,
                              role = NA,
@@ -94,7 +87,7 @@ step_lowerimpute <- function(recipe,
                              threshold = NULL,
                              skip = FALSE,
                              id = rand_id("impute_lower")) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     when = "0.1.16",
     what = "recipes::step_lowerimpute()",
     with = "recipes::step_impute_lower()"
@@ -125,7 +118,7 @@ step_impute_lower_new <-
 
 #' @export
 prep.step_impute_lower <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   threshold <-

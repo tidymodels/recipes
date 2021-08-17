@@ -3,25 +3,12 @@
 #' `step_cut()` creates a *specification* of a recipe step that cuts a numeric
 #'  variable into a factor based on provided boundary values
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'  operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'  have been estimated.
+#' @inheritParams step_center
 #' @param breaks A numeric vector with at least one cut point.
 #' @param include_outside_range Logical, indicating if values outside the
 #'  range in the train set should be included in the lowest or highest bucket.
 #'  Defaults to `FALSE`, values outside the original range will be set to `NA`.
-#' @param skip A logical. Should the step be skipped when the recipe is baked
-#'  by [bake.recipe()]? While all operations are baked when [prep.recipe()] is
-#'  run, some operations may not be able to be conducted on new data (e.g.
-#'  processing the outcome variable(s)). Care should be taken when using `skip =
-#'  TRUE` as it may affect the computations for subsequent operations
-#' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @export
@@ -110,7 +97,7 @@ step_cut_new <-
   }
 
 prep.step_cut <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
 

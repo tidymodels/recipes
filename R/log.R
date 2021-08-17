@@ -4,21 +4,15 @@
 #'  that will log transform data.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param base A numeric value for the base.
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `log(0)`).
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @param signed A logical indicating whether to take the signed log.
-#'  This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
+#'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
@@ -109,7 +103,7 @@ step_log_new <-
 
 #' @export
 prep.step_log <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
 

@@ -5,19 +5,12 @@
 #'  variables.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be permuted. See [selections()] for more
-#'  details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param columns A character string that contains the names of
 #'  columns that should be shuffled. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#' columns that will be affected) is returned.
+#' columns that will be permuted) is returned.
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept randomization
@@ -70,7 +63,7 @@ step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
 
 #' @export
 prep.step_shuffle <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   step_shuffle_new(
     terms = x$terms,
     role = x$role,

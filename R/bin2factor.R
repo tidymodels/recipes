@@ -4,11 +4,6 @@
 #'  recipe step that will create a two-level factor from a single
 #'  dummy variable.
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... Selector functions that choose which variables will
-#'  be converted. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param levels A length 2 character string that indicates the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)
@@ -16,8 +11,7 @@
 #' 1's, be the factor reference level?
 #' @param columns A vector with the selected variable names. This
 #'  is `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
 #'  categorical instead of numeric. For example, naive Bayes models
@@ -95,7 +89,7 @@ step_bin2factor_new <-
 
 #' @export
 prep.step_bin2factor <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   if (length(col_names) < 1)
     rlang::abort("The selector should only select at least one variable")
   if (any(info$type[info$variable %in% col_names] != "numeric"))

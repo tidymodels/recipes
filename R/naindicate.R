@@ -4,29 +4,13 @@
 #'  create and append additional binary columns to the dataset to indicate
 #'  which observations are missing.
 #'
-#' @param recipe A recipe object. The check will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new na indicator columns created from the original
-#'  variables will be used as predictors in a model.
-#' @param trained A logical for whether the selectors in `...`
-#' have been resolved by [prep()].
+#' @inheritParams step_pca
+#' @inheritParams step_center
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the terms argument.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. Defaults to "na_ind".
-#' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations.
-#' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
+#' @template step-return
 #' @details  When you [`tidy()`] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  median value) is returned.
@@ -98,7 +82,7 @@ step_indicate_na_new <-
 
 #' @export
 prep.step_indicate_na <- function(x, training, info = NULL, ...) {
-  col_names <- terms_select(x$terms, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   step_indicate_na_new(
     terms = x$terms,

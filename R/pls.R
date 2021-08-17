@@ -3,14 +3,8 @@
 #' `step_pls` creates a *specification* of a recipe step that will
 #'  convert numeric data into one or more new dimensions.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'  used to compute the dimensions. See [selections()] for more details.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned?. By default, the function assumes that the new dimension
-#'  columns created by the original variables will be used as predictors in a
-#'  model.
 #' @param num_comp The number of pls dimensions to retain as new predictors.
 #'  If `num_comp` is greater than the number of columns or the number of
 #'  possible dimensions, a smaller value will be used.
@@ -26,12 +20,7 @@
 #' arguments).
 #' @param res A list of results are stored here once this preprocessing step
 #'  has been trained by [prep.recipe()].
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept pls
@@ -307,8 +296,8 @@ prop2int <- function(x, p) {
 
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
-  x_names <- eval_select_recipes(x$terms, training, info)
-  y_names <- eval_select_recipes(x$outcome, training, info)
+  x_names <- recipes_eval_select(x$terms, training, info)
+  y_names <- recipes_eval_select(x$outcome, training, info)
 
   check_type(training[, x_names])
   if (length(y_names) > 1 ) {

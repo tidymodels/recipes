@@ -17,7 +17,7 @@ test_that('simple modes', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_modeimpute(Status, Home, Marital, id = "")
+    step_impute_mode(Status, Home, Marital, id = "")
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = credit_te)
 
@@ -54,13 +54,41 @@ test_that('non-nominal', {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_modeimpute(Assets, Job)
+    step_impute_mode(Assets, Job)
   expect_error(prep(impute_rec, training = credit_tr, verbose = FALSE))
 })
 
+test_that('all NA values', {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_mode(Status, Home)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+  imputed_te <- bake(imputed, credit_te %>% mutate(Status = factor(NA)))
+  expect_equal(
+    imputed$steps[[1]]$modes[["Status"]],
+    as.character(unique(imputed_te$Status))
+  )
+})
+
+
+test_that('can bake recipes with no ptype', {
+  imputed <- recipe(Price ~ ., data = credit_tr) %>%
+    step_impute_mode(Status, Home) %>%
+    prep(credit_tr, verbose = FALSE)
+
+  imputed$steps[[1]]$ptype <- NULL
+
+  expect_warning(
+    imputed_te <- bake(imputed, credit_te),
+    "'ptype' was added to"
+  )
+})
+
+
 test_that('printing', {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
-    step_modeimpute(Status, Home, Marital)
+    step_impute_mode(Status, Home, Marital)
   expect_output(print(impute_rec))
   expect_output(prep(impute_rec, training = credit_tr, verbose = TRUE))
 })

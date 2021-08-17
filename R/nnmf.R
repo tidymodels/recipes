@@ -4,15 +4,8 @@
 #'  that will convert numeric data into one or more non-negative
 #'  components.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to compute the components. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new component columns created by the
-#'  original variables will be used as predictors in a model.
 #' @param num_comp The number of components to retain as new
 #'  predictors. If `num_comp` is greater than the number of columns
 #'  or the number of possible components, a smaller value will be
@@ -30,10 +23,7 @@
 #'  resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation
 #'  when computing the factorization.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept nnmf
@@ -132,7 +122,7 @@ step_nnmf_new <-
 
 #' @export
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
 

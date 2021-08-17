@@ -4,16 +4,11 @@
 #'  step that will convert date data into one or more factor or
 #'  numeric variables.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be used to create the new variables. The
-#'  selected variables should have class `Date` or
+#' @param ... One or more selector functions to choose variables
+#'  for this step. The selected variables should have class `Date` or
 #'  `POSIXct`. See [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new variable columns created by the original variables
-#'  will be used as predictors in a model.
 #' @param features A character string that includes at least one
 #'  of the following values: `month`, `dow` (day of week),
 #'  `doy` (day of year), `week`, `month`,
@@ -37,8 +32,7 @@
 #'  populated once [prep.recipe()] is used.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
-#' @return For `step_date`, an updated version of recipe with
-#'  the new step added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification
@@ -98,8 +92,8 @@ step_date <-
       "month")
   if (!is_tune(features) & !is_varying(features)) {
     if (!all(features %in% feat)) {
-      rlang::abort("Possible values of `features` should include: ",
-           paste0("'", feat, "'", collapse = ", "))
+      rlang::abort(paste0("Possible values of `features` should include: ",
+           paste0("'", feat, "'", collapse = ", ")))
     }
   }
   add_step(
@@ -142,7 +136,7 @@ step_date_new <-
 
 #' @export
 prep.step_date <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   date_data <- info[info$variable %in% col_names, ]
   if (any(date_data$type != "date"))

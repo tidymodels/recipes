@@ -4,22 +4,18 @@
 #'  step that will create new columns that are interaction terms
 #'  between two or more variables.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param terms A traditional R formula that contains interaction
 #'  terms. This can include `.` and selectors. See [selections()]
 #'  for more details, and consider using [tidyselect::starts_with()] when
 #'  dummy variables have been created.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param objects A list of `terms` objects for each
 #'  individual interaction.
 #' @param sep A character value used to delineate variables in an
 #'  interaction (e.g. `var1_x_var2` instead of the more
 #'  traditional `var1:var2`).
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification
@@ -136,17 +132,17 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
   # Use formula environment as quosure env
   env <- rlang::f_env(x$terms)
 
-  eval_select_recipes_expr <- function(expr) {
-    # Wrap `expr` into a list-of-quos as `eval_select_recipes()` expects
+  recipes_eval_select_expr <- function(expr) {
+    # Wrap `expr` into a list-of-quos as `recipes_eval_select()` expects
     quo <- new_quosure(expr, env)
     quos <- list(quo)
-    eval_select_recipes(quos, data = training, info = info)
+    recipes_eval_select(quos, data = training, info = info)
   }
 
   ## Resolve the selectors to a expression containing an additive
   ## function of the variables
   if(length(form_sel) > 0) {
-    form_res <- map(form_sel, eval_select_recipes_expr)
+    form_res <- map(form_sel, recipes_eval_select_expr)
     form_res <- map(form_res, vec_2_expr)
     ## Subsitute the column names into the original interaction
     ## formula.

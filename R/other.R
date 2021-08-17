@@ -5,23 +5,17 @@
 #'  into an "other" category.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will potentially be reduced. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param threshold A numeric value between 0 and 1 or an integer greater or
-#'  equal to one.  If it's less than one then factor levels whose rate of
-#'  occurrence in the training set are below `threshold` will be "othered". If
-#'  it's greater or equal to one then it's treated as a frequency and factor
-#'  levels that occur less then `threshold` times will be "othered".
+#' @param threshold A numeric value between 0 and 1, or an integer greater or
+#'  equal to one.  If less than one, then factor levels with a rate of
+#'  occurrence in the training set below `threshold` will be pooled to `other`.
+#'  If greater or equal to one, then this value is treated as a frequency
+#'  and factor levels that occur less than `threshold` times will be pooled
+#'  to `other`.
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information
 #'  to pool infrequent levels that is determined by
 #'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
@@ -145,7 +139,7 @@ step_other_new <-
 
 #' @export
 prep.step_other <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   if (length(col_names) > 0) {
     objects <- lapply(training[, col_names],
