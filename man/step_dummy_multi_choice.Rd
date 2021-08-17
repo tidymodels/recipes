@@ -98,7 +98,7 @@ the results will be:\tabular{lllll}{
 }
 
 
-This function allows for non-standard naming of the resulting
+This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a
 new variable called \code{x_b}. The naming format can be changed using
