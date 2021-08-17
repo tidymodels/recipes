@@ -50,7 +50,7 @@
 
 
 <meta property="og:title" content="Add new variables using dplyr — step_mutate" />
-<meta property="og:description" content="step_mutate creates a specification of a recipe step
+<meta property="og:description" content="step_mutate() creates a specification of a recipe step
 that will add variables using dplyr::mutate()." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -175,7 +175,7 @@ that will add variables using dplyr::mutate()." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_mutate</code> creates a <em>specification</em> of a recipe step
+    <p><code>step_mutate()</code> creates a <em>specification</em> of a recipe step
 that will add variables using <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code>.</p>
     </div>
 
@@ -199,9 +199,7 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Name-value pairs of expressions. See <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code>.
-If the argument is not named, the expression is converted to
-a column name.</p></td>
+      <td><p>Name-value pairs of expressions. See <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>dplyr::mutate()</a></code>.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -245,7 +243,7 @@ it is a good idea to use quasiquotation (e.g. <code>!!</code>) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.</p>
 <p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>values</code>, which
-contains the <code>mutate</code> expressions as character strings
+contains the <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> expressions as character strings
 (and are not reparsable), is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
