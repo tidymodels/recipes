@@ -67,10 +67,14 @@ ames_rec <-
   prep()
 
 # return the training set (already embedded in ames_rec)
-ames_train <- bake(ames_rec, new_data = NULL)
+bake(ames_rec, new_data = NULL)
 
 # apply processing to other data:
-ames_new <- bake(ames_rec, new_data = head(ames))
+bake(ames_rec, new_data = head(ames))
+
+# only return selected variables:
+bake(ames_rec, new_data = head(ames), all_numeric_predictors())
+bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
 }
 \seealso{
 \code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}
