@@ -93,7 +93,6 @@
 #'
 #' bake(dummy_multi_choice_rec2, new_data = NULL)
 #' tidy(dummy_multi_choice_rec2, number = 1)
-#' @seealso [step_dummy()]
 step_dummy_multi_choice <- function(recipe,
                      ...,
                      role = "predictor",
