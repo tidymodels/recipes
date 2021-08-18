@@ -22,6 +22,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept dimension_reduction
+#' @family {multivariate transformation steps}
 #' @export
 #' @details `step_classdist` will create a new column for every
 #'  unique value of the `class` variable.

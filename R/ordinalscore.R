@@ -14,6 +14,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept ordinal_data
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details Dummy variables from ordered factors with `C`
 #'  levels will create polynomial basis functions with `C-1`

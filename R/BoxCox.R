@@ -15,6 +15,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @export
 #' @details The Box-Cox transformation, which requires a strictly
 #'  positive variable, can be used to rescale a variable to be more
@@ -55,9 +56,6 @@
 #'
 #' tidy(bc_trans, number = 1)
 #' tidy(bc_estimates, number = 1)
-#'
-#' @seealso [step_YeoJohnson()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
 step_BoxCox <-
   function(recipe,
            ...,

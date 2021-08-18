@@ -110,9 +110,22 @@ Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 transformations to improve normality or symmetry. \emph{Biometrika}.
 }
 \seealso{
-\code{\link[=step_BoxCox]{step_BoxCox()}} \code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other {individual transformation steps}: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_log}()},
+\code{\link{step_mutate}()},
+\code{\link{step_ns}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
 }
 \concept{preprocessing}
 \concept{transformation_methods}
+\concept{{individual transformation steps}}
 \keyword{datagen}

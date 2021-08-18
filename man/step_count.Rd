@@ -91,7 +91,27 @@ count_values
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
 }
+\seealso{
+Other {dummy variable and encoding steps}: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
+}
 \concept{dummy_variables}
 \concept{preprocessing}
 \concept{regular_expressions}
+\concept{{dummy variable and encoding steps}}
 \keyword{datagen}

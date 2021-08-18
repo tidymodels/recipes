@@ -11,6 +11,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @export
 #' @details The inverse logit transformation takes values on the
 #'  real line and translates them to be between zero and one using
@@ -37,11 +38,6 @@
 #'
 #' transformed_te <- bake(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
-#' @seealso [step_logit()] [step_log()]
-#'   [step_sqrt()]  [step_hyperbolic()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
 step_invlogit <-
   function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
            skip = FALSE, id = rand_id("invlogit")) {

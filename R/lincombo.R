@@ -13,6 +13,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_filters
+#' @family {variable filter steps}
 #' @author Max Kuhn, Kirk Mettler, and Jed Wing
 #' @export
 #'
@@ -48,10 +49,6 @@
 #'
 #' tidy(lincomb_filter, number = 1)
 #' tidy(lincomb_filter_trained, number = 1)
-#' @seealso [step_nzv()][step_corr()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
 step_lincomb <-
   function(recipe,
            ...,

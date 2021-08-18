@@ -10,6 +10,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #' columns that will be affected) is returned.
 #' @export
@@ -30,10 +31,6 @@
 #'
 #' tidy(sqrt_trans, number = 1)
 #' tidy(sqrt_obj, number = 1)
-#' @seealso [step_logit()] [step_invlogit()]
-#'   [step_log()]  [step_hyperbolic()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_sqrt <- function(recipe, ..., role = NA,
                       trained = FALSE, columns = NULL,
                       skip = FALSE,

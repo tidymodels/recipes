@@ -232,6 +232,7 @@ print.discretize <-
 #' @details  When you [`tidy()`] this step, a tibble
 #'  with columns `terms` (the selectors or variables selected)
 #'  and `value` (the breaks) is returned.
+#' @family {discretization steps}
 #' @export
 
 step_discretize <- function(recipe,

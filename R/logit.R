@@ -10,6 +10,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @export
 #' @details The logit transformation takes values between
 #'  zero and one and translates them to be on the real line using
@@ -34,10 +35,6 @@
 #'
 #' tidy(logit_trans, number = 1)
 #' tidy(logit_obj, number = 1)
-#' @seealso [step_invlogit()] [step_log()]
-#' [step_sqrt()]  [step_hyperbolic()] [recipe()]
-#' [prep.recipe()] [bake.recipe()]
-
 step_logit <-
   function(recipe,
            ...,

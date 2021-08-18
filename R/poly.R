@@ -17,6 +17,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept basis_expansion
+#' @family {individual transformation steps}
 #' @export
 #' @details `step_poly` can create new features from a single
 #'  variable that enable fitting routines to model this variable in
@@ -47,10 +48,6 @@
 #' expanded
 #'
 #' tidy(quadratic, number = 1)
-#' @seealso [step_ns()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
-
 step_poly <-
   function(recipe,
            ...,

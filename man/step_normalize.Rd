@@ -100,6 +100,13 @@ keep_orig_te <- bake(keep_orig_obj, biomass_te)
 keep_orig_te
 
 }
+\seealso{
+Other {normalization steps}: 
+\code{\link{step_center}()},
+\code{\link{step_range}()},
+\code{\link{step_scale}()}
+}
 \concept{normalization_methods}
 \concept{preprocessing}
+\concept{{normalization steps}}
 \keyword{datagen}

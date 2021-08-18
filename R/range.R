@@ -17,6 +17,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
+#' @family {normalization steps}
 #' @export
 #' @details When a new data point is outside of the ranges seen in
 #'  the training set, the new values are truncated at `min` or

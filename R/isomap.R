@@ -20,6 +20,7 @@
 #' @concept preprocessing
 #' @concept isomap
 #' @concept projection_methods
+#' @family {multivariate transformation steps}
 #' @export
 #' @details Isomap is a form of multidimensional scaling (MDS).
 #'  MDS methods try to find a reduced set of dimensions such that
@@ -86,10 +87,6 @@
 #'   tidy(im_estimates, number = 3)
 #' }
 #' }
-#' @seealso [step_pca()] [step_kpca()]
-#'   [step_ica()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
 step_isomap <-
   function(recipe,
            ...,

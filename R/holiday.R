@@ -13,14 +13,14 @@
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep.recipe()] is used.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
 #' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept model_specification
 #' @concept variable_encodings
 #' @concept dates
+#' @family {dummy variable and encoding steps}
+#' @seealso [timeDate::listHolidays()]
 #' @export
 #' @details Unlike some other steps, `step_holiday` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
@@ -39,9 +39,6 @@
 #' holiday_rec <- prep(holiday_rec, training = examples)
 #' holiday_values <- bake(holiday_rec, new_data = examples)
 #' holiday_values
-#' @seealso [step_date()] [step_rm()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()] [timeDate::listHolidays()]
 #' @import timeDate
 step_holiday <-
   function(

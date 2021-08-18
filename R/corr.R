@@ -24,6 +24,7 @@
 #'  function.
 #' @concept preprocessing
 #' @concept variable_filters
+#' @family {variable filter steps}
 #' @export
 #'
 #' @details This step attempts to remove variables to keep the
@@ -63,9 +64,6 @@
 #'
 #' tidy(corr_filter, number = 1)
 #' tidy(filter_obj, number = 1)
-#' @seealso [step_nzv()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_corr <- function(recipe,
                       ...,
                       role = NA,

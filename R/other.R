@@ -19,6 +19,8 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept factors
+#' @family {dummy variable and encoding steps}
+#' @seealso [dummy_names()]
 #' @export
 #' @details The overall proportion (or total counts) of the categories are
 #'  computed. The "other" category is used in place of any categorical levels
@@ -47,9 +49,6 @@
 #'  columns that will be affected) and `retained` (the factor
 #'  levels that were not pulled into "other") is returned.
 #'
-#' @seealso [step_factor2string()], [step_string2factor()],
-#'  [dummy_names()], [step_regex()], [step_count()],
-#'  [step_ordinalscore()], [step_unorder()], [step_novel()]
 #' @examples
 #' library(modeldata)
 #' data(okc)

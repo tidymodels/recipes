@@ -17,6 +17,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept normalization_methods
+#' @family {checks}
 #' @export
 #' @details
 #'   The amount of slack that is allowed is determined by the
@@ -56,8 +57,6 @@
 #'     prep() %>%
 #'     bake(slack_new_data)
 #' }
-#' @seealso [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 check_range <-
   function(recipe,
            ...,

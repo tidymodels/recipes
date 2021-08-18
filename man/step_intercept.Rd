@@ -73,6 +73,3 @@ with_intercept <- bake(rec_obj, biomass_te)
 with_intercept
 
 }
-\seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
-}

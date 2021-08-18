@@ -18,6 +18,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept variable_encodings
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details `step_integer` will determine the unique values of
 #'  each variable from the training set (excluding missing values),
@@ -36,10 +37,6 @@
 #'  variables selected) and `value` (a _list column_ with the
 #'  conversion key) is returned.
 #'
-#' @seealso [step_factor2string()], [step_string2factor()],
-#'  [step_regex()], [step_count()],
-#'  [step_ordinalscore()], [step_unorder()], [step_other()]
-#'  [step_novel()], [step_dummy()]
 #' @examples
 #' library(modeldata)
 #' data(okc)

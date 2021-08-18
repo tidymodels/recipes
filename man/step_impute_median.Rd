@@ -101,6 +101,17 @@ imputed_te[missing_examples, names(credit_te)]
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
+\seealso{
+Other {imputation steps}: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
 \concept{imputation}
 \concept{preprocessing}
+\concept{{imputation steps}}
 \keyword{datagen}

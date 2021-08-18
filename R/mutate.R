@@ -21,6 +21,8 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {individual transformation steps}
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #' rec <-

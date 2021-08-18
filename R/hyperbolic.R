@@ -14,6 +14,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected), `inverse`, and `func` is returned.
@@ -35,10 +36,6 @@
 #'
 #' tidy(cos_trans, number = 1)
 #' tidy(cos_obj, number = 1)
-#' @seealso [step_logit()] [step_invlogit()]
-#'   [step_log()]  [step_sqrt()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_hyperbolic <-
   function(recipe,
            ...,

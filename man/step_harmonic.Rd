@@ -18,20 +18,19 @@ step_harmonic(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.  This will
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details. This will
 typically be a single variable.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new columns created from the original variables will be
-used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated. Again included for consistency.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{frequency}{A numeric vector with at least one value.
 The value(s) must be greater than zero and finite.}
@@ -60,8 +59,8 @@ the computations for subsequent operations.}
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the
-new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
 \code{step_harmonic} creates a \emph{specification} of a recipe step that
@@ -163,7 +162,6 @@ dat <-
  bind_rows(carbon_dioxide, preds) \%>\%
    ggplot(aes(x = date_time, y = co2, color = type)) +
    geom_line()
-
 }
 \references{
 Doran, H. E., & Quilkey, J. J. (1972).
@@ -175,5 +173,19 @@ The harmonic analysis of tidal model time series.
 Advances in water resources, 12(3), 109-120.
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other {individual transformation steps}: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_log}()},
+\code{\link{step_mutate}()},
+\code{\link{step_ns}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
 }
+\concept{{individual transformation steps}}

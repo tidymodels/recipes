@@ -108,6 +108,34 @@ bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 # The difference:
 tidy(qq_rec, number = 1)
 }
+\seealso{
+Other {individual transformation steps}: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_log}()},
+\code{\link{step_ns}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
+
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
 \concept{preprocessing}
 \concept{transformation_methods}
+\concept{{dplyr steps}}
+\concept{{individual transformation steps}}
 \keyword{datagen}

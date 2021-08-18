@@ -11,6 +11,7 @@
 #' @template step-return
 #' @keywords datagen
 #' @concept preprocessing
+#' @family {discretization steps}
 #' @export
 #' @details Unlike the `base::cut()` function there is no need to specify the
 #'  min and the max values in the breaks. All values before the lowest break

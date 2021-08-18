@@ -106,6 +106,17 @@ Kuhn, M. and Johnson, K. (2013).
 \emph{Feature Engineering and Selection}
 \url{https://bookdown.org/max/FES/handling-missing-data.html}
 }
+\seealso{
+Other {imputation steps}: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
 \concept{imputation}
 \concept{preprocessing}
+\concept{{imputation steps}}
 \keyword{datagen}

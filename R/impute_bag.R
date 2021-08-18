@@ -25,6 +25,7 @@
 #' @keywords datagen
 #' @concept preprocessing
 #' @concept imputation
+#' @family {imputation steps}
 #' @export
 #' @details For each variable requiring imputation, a bagged tree is created
 #'  where the outcome is the variable of interest and the predictors are any

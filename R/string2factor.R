@@ -14,6 +14,7 @@
 #' @concept preprocessing
 #' @concept variable_encodings
 #' @concept factors
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
 #'  convert all variables affected by this step to have the same
@@ -27,8 +28,6 @@
 #'  When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered` is returned.
 #'
-#' @seealso [step_factor2string()] [step_dummy()] [step_other()]
-#'  [step_novel()]
 #' @examples
 #' library(modeldata)
 #' data(okc)

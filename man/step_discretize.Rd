@@ -72,3 +72,8 @@ When you \code{\link[=tidy]{tidy()}} this step, a tibble
 with columns \code{terms} (the selectors or variables selected)
 and \code{value} (the breaks) is returned.
 }
+\seealso{
+Other {discretization steps}: 
+\code{\link{step_cut}()}
+}
+\concept{{discretization steps}}

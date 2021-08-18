@@ -113,8 +113,12 @@ recipe(x_df) \%>\%
 
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other {checks}: 
+\code{\link{check_cols}()},
+\code{\link{check_missing}()},
+\code{\link{check_new_values}()},
+\code{\link{check_range}()}
 }
 \concept{preprocessing normalization_methods}
+\concept{{checks}}
 \keyword{datagen}
