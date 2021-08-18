@@ -5,55 +5,16 @@
 #'  into one or more numeric binary model terms for the levels of
 #'  the original data.
 #'
-#' @inheritParams step_center
 #' @inheritParams step_dummy
-#' @param ... One or more selector functions to choose which variables will be
-#'  used to compute the components. See [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the binary dummy variable columns created by the original
-#'  variables will be used as predictors in a model.
-#' @param threshold A numeric value between 0 and 1. If less than one,
-#'  factor levels whose rate of occurrence in the training set are below
-#'  `threshold` will be "othered". See Details below.
-#'   If `threshold = 0` then no thresholding is done.
-#' @param levels A list with the information needed to
-#'  create dummy variables for each variable contained in
-#'  `terms`. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
+#' @inheritParams step_center
+#' @inheritParams step_other
+#' @inheritParams step_pca
 #' @param input A character vector containing the names of the columns used.
 #'  This is `NULL` until the step is trained by [prep.recipe()].
-#' @param other A single character value for the "other" category.
-#' @param prefix A character string that will be the prefix to the resulting
-#'  new variables. See notes below.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dummy_multi_choice
-#' @concept projection_methods
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details
-#' `step_dummy_multi_choice()` will create a set of binary dummy
-#'  variables from a selection of factor variables. For data such as:
-#'
-#' | lang_1   | lang_2  | lang_3 |
-#' | -------- | ------- | ------ |
-#' | English  | Italian | NA     |
-#' | Spanish  | NA      | French |
-#' | Armenian | English | French |
-#' | NA       | NA      | NA     |
-#'
-#'  the results will be:
-#'
-#' | Armenian | English | French | Italian | Spanish |
-#' | -------- | ------- | ------ | ------- | ------- |
-#' | 0        | 1       | 0      | 1       | 0       |
-#' | 0        | 0       | 1      | 0       | 1       |
-#' | 1        | 1       | 1      | 0       | 0       |
-#' | 0        | 0       | 0      | 0       | 0       |
-#'
 #'  This recipe step allows for flexible naming of the resulting
 #'  variables. For an unordered factor named `x`, with levels `"a"`
 #'  and `"b"`, the default naming convention would be to create a

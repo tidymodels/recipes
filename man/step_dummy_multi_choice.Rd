@@ -24,23 +24,25 @@ step_dummy_multi_choice(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-used to compute the components. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details. The selected
+variables \emph{must} be factors.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the binary dummy variable columns created by the original
-variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A numeric value between 0 and 1. If less than one,
-factor levels whose rate of occurrence in the training set are below
-\code{threshold} will be "othered". See Details below.
-If \code{threshold = 0} then no thresholding is done.}
+\item{threshold}{A numeric value between 0 and 1, or an integer greater or
+equal to one.  If less than one, then factor levels with a rate of
+occurrence in the training set below \code{threshold} will be pooled to \code{other}.
+If greater or equal to one, then this value is treated as a frequency
+and factor levels that occur less than \code{threshold} times will be pooled
+to \code{other}.}
 
-\item{levels}{A list with the information needed to
+\item{levels}{A list that contains the information needed to
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
@@ -53,8 +55,8 @@ This is \code{NULL} until the step is trained by \code{\link[=prep.recipe]{prep.
 \item{naming}{A function that defines the naming convention for
 new dummy columns. See Details below.}
 
-\item{prefix}{A character string that will be the prefix to the resulting
-new variables. See notes below.}
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -79,25 +81,6 @@ into one or more numeric binary model terms for the levels of
 the original data.
 }
 \details{
-\code{step_dummy_multi_choice()} will create a set of binary dummy
-variables from a selection of factor variables. For data such as:\tabular{lll}{
-   lang_1 \tab lang_2 \tab lang_3 \cr
-   English \tab Italian \tab NA \cr
-   Spanish \tab NA \tab French \cr
-   Armenian \tab English \tab French \cr
-   NA \tab NA \tab NA \cr
-}
-
-
-the results will be:\tabular{lllll}{
-   Armenian \tab English \tab French \tab Italian \tab Spanish \cr
-   0 \tab 1 \tab 0 \tab 1 \tab 0 \cr
-   0 \tab 0 \tab 1 \tab 0 \tab 1 \cr
-   1 \tab 1 \tab 1 \tab 0 \tab 0 \cr
-   0 \tab 0 \tab 0 \tab 0 \tab 0 \cr
-}
-
-
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a
@@ -138,10 +121,4 @@ dummy_multi_choice_rec2 <- recipe(~ ., data = languages) \%>\%
 bake(dummy_multi_choice_rec2, new_data = NULL)
 tidy(dummy_multi_choice_rec2, number = 1)
 }
-\seealso{
-\code{\link[=step_dummy]{step_dummy()}}
-}
-\concept{dummy_multi_choice}
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\concept{{dummy variable and encoding steps}}
