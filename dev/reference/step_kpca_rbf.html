@@ -301,9 +301,19 @@ kernlab - An S4 package for kernel methods in R. <em>Journal
 of Statistical Software</em>, 11(1), 1-20.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_ica.html'>step_ica()</a></code>
-<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p>Other multivariate transformation steps: 
+<code><a href='step_classdist.html'>step_classdist</a>()</code>,
+<code><a href='step_depth.html'>step_depth</a>()</code>,
+<code><a href='step_geodist.html'>step_geodist</a>()</code>,
+<code><a href='step_ica.html'>step_ica</a>()</code>,
+<code><a href='step_isomap.html'>step_isomap</a>()</code>,
+<code><a href='step_kpca_poly.html'>step_kpca_poly</a>()</code>,
+<code><a href='step_mutate_at.html'>step_mutate_at</a>()</code>,
+<code><a href='step_nnmf.html'>step_nnmf</a>()</code>,
+<code><a href='step_pca.html'>step_pca</a>()</code>,
+<code><a href='step_pls.html'>step_pls</a>()</code>,
+<code><a href='step_ratio.html'>step_ratio</a>()</code>,
+<code><a href='step_spatialsign.html'>step_spatialsign</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
@@ -332,9 +342,9 @@ of Statistical Software</em>, 11(1), 1-20.</p>
 <span class='r-in'>  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>kpca_trans</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>kpca_estimates</span>, number <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> 2021-08-17 18:36:29: Calculating kernel PCA</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> 2021-08-17 18:36:29: Trying to calculate reverse</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> 2021-08-17 18:36:29: DONE</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 2021-08-18 17:34:05: Calculating kernel PCA</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 2021-08-18 17:34:05: Trying to calculate reverse</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 2021-08-18 17:34:05: DONE</span>
 <span class='r-plt'><img src='step_kpca_rbf-1.png' alt='' width='768' height='552' /></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 5 × 2</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   terms    id            </span>
@@ -344,6 +354,7 @@ of Statistical Software</em>, 11(1), 1-20.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> oxygen   kpca_rbf_evI1V</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> nitrogen kpca_rbf_evI1V</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> sulfur   kpca_rbf_evI1V</span>
+<span class='r-in'></span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

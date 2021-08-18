@@ -257,7 +257,23 @@ not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing <code><a href='recipe.html'>recipe()</a></code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_filter.html'>step_filter()</a></code> <code><a href='step_naomit.html'>step_naomit()</a></code> <code><a href='step_sample.html'>step_sample()</a></code></p></div>
+    <div class='dont-index'><p>Other row operation steps: 
+<code><a href='step_arrange.html'>step_arrange</a>()</code>,
+<code><a href='step_filter.html'>step_filter</a>()</code>,
+<code><a href='step_impute_roll.html'>step_impute_roll</a>()</code>,
+<code><a href='step_lag.html'>step_lag</a>()</code>,
+<code><a href='step_naomit.html'>step_naomit</a>()</code>,
+<code><a href='step_sample.html'>step_sample</a>()</code>,
+<code><a href='step_shuffle.html'>step_shuffle</a>()</code></p>
+<p>Other dplyr steps: 
+<code><a href='step_arrange.html'>step_arrange</a>()</code>,
+<code><a href='step_filter.html'>step_filter</a>()</code>,
+<code><a href='step_mutate_at.html'>step_mutate_at</a>()</code>,
+<code><a href='step_mutate.html'>step_mutate</a>()</code>,
+<code><a href='step_rename_at.html'>step_rename_at</a>()</code>,
+<code><a href='step_rename.html'>step_rename</a>()</code>,
+<code><a href='step_sample.html'>step_sample</a>()</code>,
+<code><a href='step_select.html'>step_select</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
