@@ -40,19 +40,9 @@
 #'  cell) will correspond to the first level of the unordered
 #'  factor being converted.
 #'
-#' The function allows for non-standard naming of the resulting
-#'  variables. For an unordered factor named `x`, with levels `"a"`
-#'  and `"b"`, the default naming convention would be to create a
-#'  new variable called `x_b`. Note that if the factor levels are
-#'  not valid variable names (e.g. "some text with spaces"), it will
-#'  be changed by [base::make.names()] to be valid (see the example
-#'  below). The naming format can be changed using the `naming`
-#'  argument and the function [dummy_names()] is the default. This
-#'  function will also change the names of ordinal dummy variables.
-#'  Instead of values such as "`.L`", "`.Q`", or "`^4`", ordinal
-#'  dummy variables are given simple integer suffixes such as
-#'  "`_1`", "`_2`", etc.
+#' @template dummy-naming
 #'
+#' @details
 #' To change the type of contrast being used, change the global
 #' contrast option via `options`.
 #'

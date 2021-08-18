@@ -15,20 +15,12 @@
 #' @family {dummy variable and encoding steps}
 #' @export
 #' @details
-#'  This recipe step allows for flexible naming of the resulting
-#'  variables. For an unordered factor named `x`, with levels `"a"`
-#'  and `"b"`, the default naming convention would be to create a
-#'  new variable called `x_b`. The naming format can be changed using
-#'  the `naming` argument; the function [dummy_names()] is the
-#'  default. This function will also change the names of ordinal
-#'  dummy variables. Instead of values such as "`.L`", "`.Q`", or
-#'  "`^4`", ordinal dummy variables are given simple integer
-#'  suffixes such as "`_1`", "`_2`", etc.
-#'
 #'  The overall proportion (or total counts) of the categories are
 #'  computed. The "other" category is used in place of any categorical levels
 #'  whose individual proportion (or frequency) in the training set is less than
 #'  `threshold`.
+#'
+#' @template dummy-naming
 #'
 #' @examples
 #' library(tibble)

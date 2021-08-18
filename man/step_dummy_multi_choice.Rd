@@ -81,6 +81,11 @@ into one or more numeric binary model terms for the levels of
 the original data.
 }
 \details{
+The overall proportion (or total counts) of the categories are
+computed. The "other" category is used in place of any categorical levels
+whose individual proportion (or frequency) in the training set is less than
+\code{threshold}.
+
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a
@@ -90,11 +95,6 @@ default. This function will also change the names of ordinal
 dummy variables. Instead of values such as "\code{.L}", "\code{.Q}", or
 "\verb{^4}", ordinal dummy variables are given simple integer
 suffixes such as "\verb{_1}", "\verb{_2}", etc.
-
-The overall proportion (or total counts) of the categories are
-computed. The "other" category is used in place of any categorical levels
-whose individual proportion (or frequency) in the training set is less than
-\code{threshold}.
 }
 \examples{
 library(tibble)
