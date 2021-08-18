@@ -106,7 +106,4 @@ Other {checks}:
 \code{\link{check_missing}()},
 \code{\link{check_new_values}()}
 }
-\concept{normalization_methods}
-\concept{preprocessing}
 \concept{{checks}}
-\keyword{datagen}

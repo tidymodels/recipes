@@ -115,6 +115,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_pls}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{preprocessing}
 \concept{{multivariate transformation steps}}
-\keyword{datagen}

@@ -90,7 +90,4 @@ Other {normalization steps}:
 \code{\link{step_range}()},
 \code{\link{step_scale}()}
 }
-\concept{normalization_methods}
-\concept{preprocessing}
 \concept{{normalization steps}}
-\keyword{datagen}

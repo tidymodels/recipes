@@ -21,9 +21,6 @@
 #'  contains the conditional statements is returned. These
 #'  expressions are text representations and are not parsable.
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept row_filters
 #' @family {row operation steps}
 #' @family {dplyr steps}
 #' @export

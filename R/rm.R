@@ -10,9 +10,6 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_filters
 #' @family {variable filter steps}
 #' @export
 #' @examples

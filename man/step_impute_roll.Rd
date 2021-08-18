@@ -136,8 +136,5 @@ Other {row operation steps}:
 \code{\link{step_shuffle}()},
 \code{\link{step_slice}()}
 }
-\concept{imputation}
-\concept{preprocessing}
 \concept{{imputation steps}}
 \concept{{row operation steps}}
-\keyword{datagen}

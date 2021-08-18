@@ -15,9 +15,6 @@
 #' @param zero_based A logical for whether the integers should start at zero and
 #'  new values be appended as the largest integer.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_encodings
 #' @family {dummy variable and encoding steps}
 #' @export
 #' @details `step_integer` will determine the unique values of

@@ -17,9 +17,6 @@
 #'  the imputed value. Only complete values will be passed to the function and
 #'  it should return a double precision value.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
 #' @family {imputation steps}
 #' @family {row operation steps}
 #' @export

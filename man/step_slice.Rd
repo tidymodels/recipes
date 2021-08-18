@@ -126,7 +126,5 @@ Other {dplyr steps}:
 \code{\link{step_sample}()},
 \code{\link{step_select}()}
 }
-\concept{preprocessing}
 \concept{{dplyr steps}}
 \concept{{row operation steps}}
-\keyword{datagen}

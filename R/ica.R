@@ -18,10 +18,6 @@
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept ica
-#' @concept projection_methods
 #' @family {multivariate transformation steps}
 #' @export
 #' @details Independent component analysis (ICA) is a

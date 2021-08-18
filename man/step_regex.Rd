@@ -104,8 +104,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{dummy_variables}
-\concept{preprocessing}
-\concept{regular_expressions}
 \concept{{dummy variable and encoding steps}}
-\keyword{datagen}

@@ -15,9 +15,6 @@
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept normalization_methods
 #' @family {normalization steps}
 #' @export
 #' @details Scaling data means that the standard deviation of a

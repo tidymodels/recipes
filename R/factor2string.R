@@ -8,10 +8,6 @@
 #'  converted. This is `NULL` until computed by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_encodings
-#' @concept factors
 #' @family {dummy variable and encoding steps}
 #' @export
 #' @details `prep` has an option `strings_as_factors` that

@@ -101,6 +101,4 @@ When used in modeling, users should strongly consider using the
 option \code{skip = TRUE} so that the extra sampling is \emph{not}
 conducted outside of the training set.
 }
-\concept{preprocessing}
-\concept{subsampling}
 \keyword{internal}

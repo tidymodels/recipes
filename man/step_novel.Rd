@@ -117,7 +117,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{factors}
-\concept{preprocessing}
 \concept{{dummy variable and encoding steps}}
-\keyword{datagen}

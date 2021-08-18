@@ -26,10 +26,6 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept pca
-#' @concept projection_methods
 #' @family {multivariate transformation steps}
 #' @export
 #' @details

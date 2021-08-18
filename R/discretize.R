@@ -37,10 +37,6 @@ discretize.default <- function(x, ...)
 #' @return `discretize` returns an object of class
 #'  `discretize` and `predict.discretize` returns a factor
 #'  vector.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept discretization
-#' @concept factors
 #' @export
 #' @details `discretize` estimates the cut points from
 #'  `x` using percentiles. For example, if `cuts = 3`, the

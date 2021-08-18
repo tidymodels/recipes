@@ -130,7 +130,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{dimension_reduction}
-\concept{preprocessing}
 \concept{{multivariate transformation steps}}
-\keyword{datagen}

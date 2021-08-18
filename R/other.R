@@ -16,9 +16,6 @@
 #'  to pool infrequent levels that is determined by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept factors
 #' @family {dummy variable and encoding steps}
 #' @seealso [dummy_names()]
 #' @export

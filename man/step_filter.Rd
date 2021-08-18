@@ -124,8 +124,5 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{preprocessing}
-\concept{row_filters}
 \concept{{dplyr steps}}
 \concept{{row operation steps}}
-\keyword{datagen}

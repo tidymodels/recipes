@@ -45,8 +45,6 @@
 #'  conducted outside of the training set.
 #'
 #' @keywords internal
-#' @concept preprocessing
-#' @concept subsampling
 #' @export
 
 step_upsample <-

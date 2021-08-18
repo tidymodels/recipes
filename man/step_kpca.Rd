@@ -146,10 +146,3 @@ of Statistical Software}, 11(1), 1-20.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
-\concept{basis_expansion}
-\concept{kernel_methods}
-\concept{pca}
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
-\keyword{internal}

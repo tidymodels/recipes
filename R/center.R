@@ -24,9 +24,6 @@
 #' @param id A character string that is unique to this step to identify it.
 #' @template step-return
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept normalization_methods
 #' @family {normalization steps}
 #' @export
 #' @details Centering data means that the average of a variable is

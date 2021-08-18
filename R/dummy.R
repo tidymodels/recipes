@@ -21,12 +21,6 @@
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dummy_variables
-#' @concept model_specification
-#' @concept dummy_variables
-#' @concept variable_encodings
 #' @family {dummy variable and encoding steps}
 #' @seealso [dummy_names()]
 #' @export

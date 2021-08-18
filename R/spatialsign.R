@@ -11,9 +11,6 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept projection_methods
 #' @family {multivariate transformation steps}
 #' @export
 #' @details The spatial sign transformation projects the variables

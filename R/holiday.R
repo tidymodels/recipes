@@ -14,11 +14,6 @@
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep.recipe()] is used.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
-#' @concept variable_encodings
-#' @concept dates
 #' @family {dummy variable and encoding steps}
 #' @seealso [timeDate::listHolidays()]
 #' @export

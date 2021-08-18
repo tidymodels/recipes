@@ -116,7 +116,4 @@ modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 original in \code{caret} package). Max Kuhn for the \code{step}
 function.
 }
-\concept{preprocessing}
-\concept{variable_filters}
 \concept{{variable filter steps}}
-\keyword{datagen}

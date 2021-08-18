@@ -78,8 +78,4 @@ Other {row operation steps}:
 \code{\link{step_sample}()},
 \code{\link{step_slice}()}
 }
-\concept{permutation}
-\concept{preprocessing}
-\concept{randomization}
 \concept{{row operation steps}}
-\keyword{datagen}

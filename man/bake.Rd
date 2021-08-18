@@ -78,6 +78,3 @@ ames_new <- bake(ames_rec, new_data = head(ames))
 \author{
 Max Kuhn
 }
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

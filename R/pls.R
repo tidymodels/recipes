@@ -21,10 +21,6 @@
 #' @param res A list of results are stored here once this preprocessing step
 #'  has been trained by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept pls
-#' @concept projection_methods
 #' @family {multivariate transformation steps}
 #' @export
 #' @details PLS is a supervised version of principal component

@@ -12,9 +12,6 @@
 #' @param num_unique An integer to specify minimum required unique
 #'  values to evaluate for a transformation.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
 #' @family {individual transformation steps}
 #' @export
 #' @details The Box-Cox transformation, which requires a strictly

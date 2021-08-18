@@ -156,7 +156,4 @@ Other {imputation steps}:
 \code{\link{step_impute_mode}()},
 \code{\link{step_impute_roll}()}
 }
-\concept{imputation}
-\concept{preprocessing}
 \concept{{imputation steps}}
-\keyword{datagen}

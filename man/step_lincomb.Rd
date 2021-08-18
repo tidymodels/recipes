@@ -97,7 +97,4 @@ Other {variable filter steps}:
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing
 }
-\concept{preprocessing}
-\concept{variable_filters}
 \concept{{variable filter steps}}
-\keyword{datagen}

@@ -28,9 +28,6 @@
 #'  `summary` function (see the example below). These will be
 #'  the names of the new columns created by the step.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept moving_windows
 #' @export
 #' @details The calculations use a somewhat atypical method for
 #'  handling the beginning and end parts of the rolling statistics.

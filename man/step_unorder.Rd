@@ -92,7 +92,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_string2factor}()},
 \code{\link{step_unknown}()}
 }
-\concept{ordinal_data}
-\concept{preprocessing}
 \concept{{dummy variable and encoding steps}}
-\keyword{datagen}

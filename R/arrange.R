@@ -19,8 +19,6 @@
 #'  contains the sorting variable(s) or expression(s) is returned. The
 #'  expressions are text representations and are not parsable.
 #'
-#' @keywords datagen
-#' @concept preprocessing
 #' @family {row operation steps}
 #' @family {dplyr steps}
 #' @export

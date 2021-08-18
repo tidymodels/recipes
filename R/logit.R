@@ -7,9 +7,6 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
 #' @family {individual transformation steps}
 #' @export
 #' @details The logit transformation takes values between

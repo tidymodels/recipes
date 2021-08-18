@@ -119,6 +119,4 @@ Other {checks}:
 \code{\link{check_new_values}()},
 \code{\link{check_range}()}
 }
-\concept{preprocessing normalization_methods}
 \concept{{checks}}
-\keyword{datagen}

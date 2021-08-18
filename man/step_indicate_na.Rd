@@ -99,7 +99,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{imputation}
-\concept{preprocessing}
 \concept{{dummy variable and encoding steps}}
-\keyword{datagen}
