@@ -84,7 +84,4 @@ Other {variable filter steps}:
 \code{\link{step_rm}()},
 \code{\link{step_select}()}
 }
-\concept{preprocessing}
-\concept{variable_filters}
 \concept{{variable filter steps}}
-\keyword{datagen}

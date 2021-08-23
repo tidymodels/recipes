@@ -22,9 +22,6 @@
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
 #'  bagged trees have be trained by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
 #' @family {imputation steps}
 #' @export
 #' @details For each variable requiring imputation, a bagged tree is created

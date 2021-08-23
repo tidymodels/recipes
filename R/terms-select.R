@@ -16,8 +16,6 @@
 #'  quoted expressions. See [rlang::quos()] for examples.
 #' @param empty_fun A function to execute when no terms are selected by the
 #'  step. The default function throws an error with a message.
-#' @keywords datagen
-#' @concept preprocessing
 #' @return A character string of column names or an error of there
 #'  are no selectors or if no variables are selected.
 #' @seealso [recipe()] [summary.recipe()]

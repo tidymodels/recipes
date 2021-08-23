@@ -17,9 +17,6 @@
 #'  contains the `select` expressions as character strings
 #'  (and are not reparsable) is returned.
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_filters
 #' @family {variable filter steps}
 #' @family {dplyr steps}
 #' @export

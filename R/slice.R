@@ -18,8 +18,6 @@
 #'  When you [`tidy()`] this step, a tibble with column `terms` which
 #'  contains the filtering indices is returned.
 #'
-#' @keywords datagen
-#' @concept preprocessing
 #' @family {row operation steps}
 #' @family {dplyr steps}
 #' @export

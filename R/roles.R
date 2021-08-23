@@ -46,9 +46,6 @@
 #' on all of the variables that have a custom role with the selector
 #' [has_role()].
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @examples
 #' library(recipes)
 #' library(modeldata)

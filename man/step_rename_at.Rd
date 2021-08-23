@@ -75,7 +75,4 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{preprocessing}
-\concept{transformation_methods}
 \concept{{dplyr steps}}
-\keyword{datagen}

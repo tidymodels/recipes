@@ -12,9 +12,6 @@
 #' @param num_unique An integer where data that have less possible
 #'  values will not be evaluated for a transformation.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
 #' @family {individual transformation steps}
 #' @export
 #' @details The Yeo-Johnson transformation is very similar to the

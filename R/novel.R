@@ -10,9 +10,6 @@
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept factors
 #' @family {dummy variable and encoding steps}
 #' @seealso [dummy_names()]
 #' @export

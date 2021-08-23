@@ -14,9 +14,6 @@
 #' @details  When you [`tidy()`] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  median value) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
 #' @family {dummy variable and encoding steps}
 #' @export
 #' @examples

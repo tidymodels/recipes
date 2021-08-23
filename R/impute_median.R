@@ -9,9 +9,6 @@
 #'  computed by [prep.recipe()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
 #' @family {imputation steps}
 #' @export
 #' @details `step_impute_median` estimates the variable medians from the data

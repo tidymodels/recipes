@@ -127,8 +127,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{nnmf}
-\concept{preprocessing}
-\concept{projection_methods}
 \concept{{multivariate transformation steps}}
-\keyword{datagen}

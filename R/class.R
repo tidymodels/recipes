@@ -13,8 +13,6 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @template check-return
 #'
-#' @keywords datagen
-#' @concept preprocessing normalization_methods
 #' @family {checks}
 #' @export
 #' @details

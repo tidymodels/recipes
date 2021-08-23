@@ -24,10 +24,6 @@
 #' @param seed An integer that will be used to set the seed in isolation
 #'  when computing the factorization.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept nnmf
-#' @concept projection_methods
 #' @family {multivariate transformation steps}
 #' @export
 #' @details Non-negative matrix factorization computes latent components that

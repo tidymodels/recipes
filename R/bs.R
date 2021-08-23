@@ -16,9 +16,6 @@
 #' @param options A list of options for [splines::bs()]
 #'  which should not include `x`, `degree`, or `df`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept basis_expansion
 #' @family {individual transformation steps}
 #' @export
 #' @details `step_bs` can create new features from a single variable

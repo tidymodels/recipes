@@ -5,9 +5,6 @@
 #'
 #' @aliases recipe recipe.default recipe.formula
 #' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 recipe <- function(x, ...)
   UseMethod("recipe")
@@ -240,9 +237,6 @@ inline_check <- function(x) {
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 prep <- function(x, ...)
   UseMethod("prep")
@@ -459,9 +453,6 @@ prep.recipe <-
 #' @rdname bake
 #' @aliases bake bake.recipe
 #' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 bake <- function(object, ...)
   UseMethod("bake")

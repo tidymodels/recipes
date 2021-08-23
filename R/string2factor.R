@@ -10,10 +10,6 @@
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_encodings
-#' @concept factors
 #' @family {dummy variable and encoding steps}
 #' @export
 #' @details If `levels` is given, `step_string2factor` will

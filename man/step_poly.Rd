@@ -105,7 +105,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{basis_expansion}
-\concept{preprocessing}
 \concept{{individual transformation steps}}
-\keyword{datagen}

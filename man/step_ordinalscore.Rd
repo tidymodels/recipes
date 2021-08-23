@@ -120,7 +120,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{ordinal_data}
-\concept{preprocessing}
 \concept{{dummy variable and encoding steps}}
-\keyword{datagen}

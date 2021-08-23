@@ -85,7 +85,4 @@ Other {individual transformation steps}:
 \code{\link{step_poly}()},
 \code{\link{step_relu}()}
 }
-\concept{preprocessing}
-\concept{transformation_methods}
 \concept{{individual transformation steps}}
-\keyword{datagen}

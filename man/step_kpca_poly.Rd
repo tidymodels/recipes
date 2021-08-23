@@ -152,10 +152,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{basis_expansion}
-\concept{kernel_methods}
-\concept{pca}
-\concept{preprocessing}
-\concept{projection_methods}
 \concept{{multivariate transformation steps}}
-\keyword{datagen}

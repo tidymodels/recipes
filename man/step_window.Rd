@@ -136,6 +136,3 @@ ggplot(smoothed_dat, aes(x = original, y = y1)) +
   geom_point() +
   theme_bw()
 }
-\concept{moving_windows}
-\concept{preprocessing}
-\keyword{datagen}

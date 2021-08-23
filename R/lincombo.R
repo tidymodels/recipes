@@ -10,9 +10,6 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_filters
 #' @family {variable filter steps}
 #' @author Max Kuhn, Kirk Mettler, and Jed Wing
 #' @export

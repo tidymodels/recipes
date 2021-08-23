@@ -8,7 +8,6 @@
 #' @param ... All arguments to the operator that should be returned.
 #' @param .prefix Prefix to the subclass created.
 #' @keywords internal
-#' @concept preprocessing
 #' @return An updated step or check with the new class.
 #' @export
 step <- function(subclass, ..., .prefix = "step_") {
@@ -30,8 +29,6 @@ check <- function(subclass, ..., .prefix = "check_") {
 #'
 #' @param rec A [recipe()].
 #' @param object A step or check object.
-#' @keywords datagen
-#' @concept preprocessing
 #' @return A updated [recipe()] with the new operation in the last slot.
 #' @export
 add_step <- function(rec, object) {

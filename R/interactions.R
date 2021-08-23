@@ -16,9 +16,6 @@
 #'  interaction (e.g. `var1_x_var2` instead of the more
 #'  traditional `var1:var2`).
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 #' @details `step_interact` can create interactions between
 #'  variables. It is primarily intended for **numeric data**;

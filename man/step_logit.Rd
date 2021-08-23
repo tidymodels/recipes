@@ -89,7 +89,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{preprocessing}
-\concept{transformation_methods}
 \concept{{individual transformation steps}}
-\keyword{datagen}

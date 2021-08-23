@@ -118,7 +118,4 @@ Other {variable filter steps}:
 \code{\link{step_select}()},
 \code{\link{step_zv}()}
 }
-\concept{preprocessing}
-\concept{variable_filters}
 \concept{{variable filter steps}}
-\keyword{datagen}

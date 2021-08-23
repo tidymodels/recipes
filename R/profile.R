@@ -44,8 +44,6 @@
 #'  profiled) is returned.
 #'
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
 #' @export
 #' @examples
 #' library(modeldata)

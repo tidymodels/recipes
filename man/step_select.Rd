@@ -105,8 +105,5 @@ Other {dplyr steps}:
 \code{\link{step_sample}()},
 \code{\link{step_slice}()}
 }
-\concept{preprocessing}
-\concept{variable_filters}
 \concept{{dplyr steps}}
 \concept{{variable filter steps}}
-\keyword{datagen}

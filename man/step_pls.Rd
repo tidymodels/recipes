@@ -177,8 +177,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{pls}
-\concept{preprocessing}
-\concept{projection_methods}
 \concept{{multivariate transformation steps}}
-\keyword{datagen}

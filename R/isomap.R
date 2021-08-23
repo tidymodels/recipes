@@ -16,10 +16,6 @@
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept isomap
-#' @concept projection_methods
 #' @family {multivariate transformation steps}
 #' @export
 #' @details Isomap is a form of multidimensional scaling (MDS).

@@ -119,6 +119,3 @@ names(dat_2)
 tidy(int_mod_1, number = 1)
 tidy(int_mod_2, number = 2)
 }
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

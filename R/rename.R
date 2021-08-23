@@ -18,9 +18,6 @@
 #'  columns `values` which contains the `rename` expressions as character
 #'  strings (and are not reparsable) is returned.
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
 #' @family {dplyr steps}
 #' @export
 #' @examples

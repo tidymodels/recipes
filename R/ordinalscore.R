@@ -11,9 +11,6 @@
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept ordinal_data
 #' @family {dummy variable and encoding steps}
 #' @export
 #' @details Dummy variables from ordered factors with `C`
