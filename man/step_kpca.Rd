@@ -146,3 +146,4 @@ of Statistical Software}, 11(1), 1-20.
 \code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
 \code{\link[=bake.recipe]{bake.recipe()}}
 }
+\keyword{internal}
