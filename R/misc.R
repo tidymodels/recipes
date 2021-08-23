@@ -123,26 +123,33 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #' @param ordinal A logical; was the original factor ordered?
 #' @param sep A single character value for the separator between the names and
 #'  levels.
+#'
+#' @details When using `dummy_names()`, factor levels that are not valid
+#'  variable names (e.g. "some text  with spaces") will be changed to valid
+#'  names by [base::make.names()]; see example below. This function will also
+#'  change the names of ordinal dummy variables. Instead of values such as
+#'  "`.L`", "`.Q`", or "`^4`", ordinal dummy variables are given simple integer
+#'  suffixes such as "`_1`", "`_2`", etc.
+#'
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`.
-#' @keywords datagen
-#' @concept string_functions
-#' @concept naming_functions
 #' @examples
-#' names0(9, "x")
-#' names0(10, "x")
+#' names0(9, "a")
+#' names0(10, "a")
 #'
-#' example <- data.frame(y = ordered(letters[1:5]),
-#'                       z = factor(LETTERS[1:5]))
+#' example <- data.frame(x = ordered(letters[1:5]),
+#'                       y = factor(LETTERS[1:5]),
+#'                       z = factor(paste(LETTERS[1:5], 1:5)))
 #'
+#' dummy_names("y", levels(example$y)[-1])
 #' dummy_names("z", levels(example$z)[-1])
 #'
-#' after_mm <- colnames(model.matrix(~y, data = example))[-1]
+#' after_mm <- colnames(model.matrix(~x, data = example))[-1]
 #' after_mm
-#' levels(example$y)
+#' levels(example$x)
 #'
-#' dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
+#' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
 
 names0 <- function(num, prefix = "x") {

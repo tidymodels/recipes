@@ -38,21 +38,28 @@ The names are numbered with leading zeros (e.g.
 \code{dummy_names} can be used for renaming unordered and ordered
 dummy variables (in \code{\link[=step_dummy]{step_dummy()}}).
 }
+\details{
+When using \code{dummy_names()}, factor levels that are not valid
+variable names (e.g. "some text  with spaces") will be changed to valid
+names by \code{\link[base:make.names]{base::make.names()}}; see example below. This function will also
+change the names of ordinal dummy variables. Instead of values such as
+"\code{.L}", "\code{.Q}", or "\verb{^4}", ordinal dummy variables are given simple integer
+suffixes such as "\verb{_1}", "\verb{_2}", etc.
+}
 \examples{
-names0(9, "x")
-names0(10, "x")
+names0(9, "a")
+names0(10, "a")
 
-example <- data.frame(y = ordered(letters[1:5]),
-                      z = factor(LETTERS[1:5]))
+example <- data.frame(x = ordered(letters[1:5]),
+                      y = factor(LETTERS[1:5]),
+                      z = factor(paste(LETTERS[1:5], 1:5)))
 
+dummy_names("y", levels(example$y)[-1])
 dummy_names("z", levels(example$z)[-1])
 
-after_mm <- colnames(model.matrix(~y, data = example))[-1]
+after_mm <- colnames(model.matrix(~x, data = example))[-1]
 after_mm
-levels(example$y)
+levels(example$x)
 
-dummy_names("y", substring(after_mm, 2), ordinal = TRUE)
+dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 }
-\concept{naming_functions}
-\concept{string_functions}
-\keyword{datagen}

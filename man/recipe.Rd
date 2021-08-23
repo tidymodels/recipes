@@ -181,7 +181,7 @@ single call to \code{fit()} is used:\if{html}{\out{<div class="r">}}\preformatte
 When predicting, there is no need to do anything other than call
 \code{predict()}. This preprocesses the new data in the same manner as the
 training set, then gives the data to the linear model prediction code:\if{html}{\out{<div class="r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 1
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 1
 ##   .pred
 ##   <dbl>
 ## 1  18.1
@@ -233,11 +233,11 @@ the selectors.
 
 You can \code{\link[=tidy.recipe]{tidy.recipe()}} a recipe, either when it is
 prepped or unprepped, to learn more about its components.\if{html}{\out{<div class="r">}}\preformatted{tidy(pca_rec)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 x 6
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_mnfYN
-## 2      2 step      pca       TRUE    FALSE pca_DiY2m
+## 1      1 step      normalize TRUE    FALSE normalize_9jzw4
+## 2      2 step      pca       TRUE    FALSE pca_P2ayf
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.
@@ -245,7 +245,7 @@ You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id}
 To apply the prepped recipe to a data set, the \code{\link[=bake]{bake()}}
 function is used in the same manner that \code{predict()} would be for
 models. This applies the estimated steps to any data set.\if{html}{\out{<div class="r">}}\preformatted{bake(pca_rec, head(biomass_te))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 6
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 6
 ##     HHV    PC1    PC2     PC3     PC4     PC5
 ##   <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
 ## 1  18.3 0.730   0.412  0.495   0.333   0.253 

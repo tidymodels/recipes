@@ -87,10 +87,7 @@ variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a
 new variable called \code{x_b}. The naming format can be changed using
 the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
-default. This function will also change the names of ordinal
-dummy variables. Instead of values such as "\code{.L}", "\code{.Q}", or
-"\verb{^4}", ordinal dummy variables are given simple integer
-suffixes such as "\verb{_1}", "\verb{_2}", etc.
+default.
 
 To change the type of contrast being used, change the global
 contrast option via \code{options}.
