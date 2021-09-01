@@ -289,7 +289,7 @@ tunable.step_window <- function(x, ...) {
     name = c("statistic", "window"),
     call_info = list(
       list(pkg = "dials", fun = "summary_stat"),
-      list(pkg = "dials", fun = "window")
+      list(pkg = "dials", fun = "window_size")
     ),
     source = "recipe",
     component = "step_window",
