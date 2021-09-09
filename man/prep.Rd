@@ -3,7 +3,7 @@
 \name{prep}
 \alias{prep}
 \alias{prep.recipe}
-\title{Estimate a Data Recipe}
+\title{Estimate a preprocessing recipe}
 \usage{
 prep(x, ...)
 
