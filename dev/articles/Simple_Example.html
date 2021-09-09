@@ -174,7 +174,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
 <span class="va">rec_obj</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -214,8 +214,10 @@
   <span class="fu"><a href="../reference/step_impute_knn.html">step_knnimpute</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="co">#&gt; Warning: `step_knnimpute()` was deprecated in recipes 0.1.16.</span>
 <span class="co">#&gt; Please use `step_impute_knn()` instead.</span>
+<span class="co">#&gt; This warning is displayed once every 8 hours.</span>
+<span class="co">#&gt; Call `lifecycle::last_warnings()` to see where this warning was generated.</span>
 <span class="va">imputed</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -232,7 +234,7 @@
 <code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">ind_vars</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -250,7 +252,7 @@
   <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">standardized</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -268,7 +270,7 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
 <span class="va">trained_rec</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>

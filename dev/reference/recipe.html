@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a Recipe for Preprocessing Data — recipe • recipes</title>
+<title>Create a recipe for preprocessing data — recipe • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,7 @@
 
 
 
-<meta property="og:title" content="Create a Recipe for Preprocessing Data — recipe" />
+<meta property="og:title" content="Create a recipe for preprocessing data — recipe" />
 <meta property="og:description" content="A recipe is a description of the steps to be applied to a data set in
 order to prepare it for data analysis." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
@@ -169,7 +169,7 @@ order to prepare it for data analysis." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a Recipe for Preprocessing Data</h1>
+    <h1>Create a recipe for preprocessing data</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/recipe.R'><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>recipe.Rd</code></div>
     </div>
@@ -318,7 +318,7 @@ predictions.<div class="sourceCode r"></p><pre class='sourceCode r'><code><span 
   <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>sp_signed</span>
-</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## Data Recipe</span>
+</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## Recipe</span>
 <span class='co'>## </span>
 <span class='co'>## Inputs:</span>
 <span class='co'>## </span>
@@ -341,17 +341,17 @@ model and recipe:<div class="sourceCode r"></p><pre class='sourceCode r'><code><
   <span class='fu'><a href='https://workflows.tidymodels.org//reference/add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>sp_signed</span><span class='op'>)</span>
 
 <span class='va'>linear_sp_sign_wflow</span>
-</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## ══ Workflow ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════</span>
+</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## ══ Workflow ══════════════════════════════════════════════════════════</span>
 <span class='co'>## Preprocessor: Recipe</span>
 <span class='co'>## Model: linear_reg()</span>
 <span class='co'>## </span>
-<span class='co'>## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class='co'>## ── Preprocessor ──────────────────────────────────────────────────────</span>
 <span class='co'>## 2 Recipe Steps</span>
 <span class='co'>## </span>
 <span class='co'>## • step_normalize()</span>
 <span class='co'>## • step_spatialsign()</span>
 <span class='co'>## </span>
-<span class='co'>## ── Model ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class='co'>## ── Model ─────────────────────────────────────────────────────────────</span>
 <span class='co'>## Linear Regression Model Specification (regression)</span>
 <span class='co'>## </span>
 <span class='co'>## Computational engine: lm</span>
@@ -392,7 +392,7 @@ used to estimate quantities required for the operations using a data set
 </code></pre><p></div></p>
 <p>Now to estimate the normalization statistics and the PCA loadings:<div class="sourceCode r"></p><pre class='sourceCode r'><code><span class='va'>pca_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='va'>pca_rec</span>, training <span class='op'>=</span> <span class='va'>biomass_tr</span><span class='op'>)</span>
 <span class='va'>pca_rec</span>
-</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## Data Recipe</span>
+</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## Recipe</span>
 <span class='co'>## </span>
 <span class='co'>## Inputs:</span>
 <span class='co'>## </span>
@@ -462,7 +462,7 @@ applications.</p>
 <span class='r-in'>  <span class='fu'><a href='step_normalize.html'>step_normalize</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='step_spatialsign.html'>step_spatialsign</a></span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>sp_signed</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Data Recipe</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Recipe</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Inputs:</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
@@ -496,7 +496,7 @@ applications.</p>
 <span class='r-in'>  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>sample</span>, new_role <span class='op'>=</span> <span class='st'>"id variable"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span class='r-in'>  <span class='fu'><a href='roles.html'>update_role</a></span><span class='op'>(</span><span class='va'>dataset</span>, new_role <span class='op'>=</span> <span class='st'>"splitting indicator"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>rec</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Data Recipe</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Recipe</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Inputs:</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
