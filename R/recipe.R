@@ -628,7 +628,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #' @author Max Kuhn
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
-  cat("Data Recipe\n\n")
+  cat("Recipe\n\n")
   cat("Inputs:\n\n")
   no_role <- is.na(x$var_info$role)
   if (any(!no_role)) {

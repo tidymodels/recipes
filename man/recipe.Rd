@@ -135,7 +135,7 @@ sp_signed <-
   step_normalize(all_numeric_predictors()) \%>\%
   step_spatialsign(all_numeric_predictors())
 sp_signed
-}\if{html}{\out{</div>}}\preformatted{## Data Recipe
+}\if{html}{\out{</div>}}\preformatted{## Recipe
 ## 
 ## Inputs:
 ## 
@@ -212,7 +212,7 @@ pca_rec <-
 
 Now to estimate the normalization statistics and the PCA loadings:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
 pca_rec
-}\if{html}{\out{</div>}}\preformatted{## Data Recipe
+}\if{html}{\out{</div>}}\preformatted{## Recipe
 ## 
 ## Inputs:
 ## 
