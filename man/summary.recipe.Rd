@@ -2,7 +2,7 @@
 % Please edit documentation in R/recipe.R
 \name{summary.recipe}
 \alias{summary.recipe}
-\title{Summarize a Recipe}
+\title{Summarize a recipe}
 \usage{
 \method{summary}{recipe}(object, original = FALSE, ...)
 }

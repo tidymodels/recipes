@@ -6,7 +6,7 @@
 \alias{recipe.formula}
 \alias{recipe.data.frame}
 \alias{recipe.matrix}
-\title{Create a Recipe for Preprocessing Data}
+\title{Create a recipe for preprocessing data}
 \usage{
 recipe(x, ...)
 
@@ -158,17 +158,17 @@ linear_sp_sign_wflow <-
   add_recipe(sp_signed)
 
 linear_sp_sign_wflow
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ══════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ──────────────────────────────────────────────────────
 ## 2 Recipe Steps
 ## 
 ## • step_normalize()
 ## • step_spatialsign()
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Model ─────────────────────────────────────────────────────────────
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm

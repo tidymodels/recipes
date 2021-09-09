@@ -3,7 +3,7 @@
 \name{bake}
 \alias{bake}
 \alias{bake.recipe}
-\title{Apply a Trained Data Recipe}
+\title{Apply a trained preprocessing recipe}
 \usage{
 bake(object, ...)
 
