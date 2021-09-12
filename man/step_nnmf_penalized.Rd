@@ -34,28 +34,27 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of components to retain as new predictors. If
+\code{num_comp} is greater than the number of columns or the number of possible
+components, a smaller value will be used.}
 
 \item{penalty}{A non-negative number used as a penalization factor for the
-loadings. Values between zero and roughtly 0.1 are good.}
+loadings. Values are usually between zero and 1.}
 
-\item{options}{A list of options to \code{nmf()} in the RcppML package
-\strong{Note} that the argument \code{A}, \code{k}, \code{L1}, and \code{seed} should not be passed
-here. Also parallel processing is turned off in favor of resample-level
-parallelization. The \code{threads} option can be passed to change this.}
+\item{options}{A list of options to \code{nmf()} in the RcppML package. That
+package has a separate function \code{setRcppMLthreads()} that controls the
+amount of internal parallelization. \strong{Note} that the argument \code{A}, \code{k},
+\code{L1}, and \code{seed} should not be passed here.}
 
-\item{res}{A matrix of loadings is stored
-here once this preprocessing step has been trained by
+\item{res}{A matrix of loadings is stored here, along with the names of the
+original predictors, once this preprocessing step has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
 
-\item{seed}{An integer that will be used to set the seed in isolation
-when computing the factorization.}
+\item{seed}{An integer that will be used to set the seed in isolation when
+computing the factorization.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -80,20 +79,18 @@ components.
 }
 \details{
 Non-negative matrix factorization computes latent components that
-have non-negative values and take into account that the original data
-have non-negative values.
+have non-negative values and take into account that the original data have
+non-negative values.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
-If \code{num = 101}, the names would be \code{NNMF001} -
-\code{NNMF101}.
+The argument \code{num_comp} controls the number of components that will be
+retained (the original variables that are used to derive the components are
+removed from the data). The new components will have names that begin with
+\code{prefix} and a sequence of numbers. The variable names are padded with
+zeros. For example, if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}. If
+\code{num = 101}, the names would be \code{NNMF001} - \code{NNMF101}.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) and the number of components is returned.
+When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the selectors
+or variables selected) and the number of components is returned.
 }
 \examples{
 
@@ -103,7 +100,12 @@ data(biomass)
 rec <- recipe(HHV ~ ., data = biomass) \%>\%
   update_role(sample, new_role = "id var") \%>\%
   update_role(dataset, new_role = "split variable") \%>\%
-  step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, penalty = 0.01) \%>\%
+  step_nnmf_penalized(
+     all_numeric_predictors(),
+     num_comp = 2,
+     seed = 473,
+     penalty = 0.01
+  ) \%>\%
   prep(training = biomass)
 
 bake(rec, new_data = NULL)

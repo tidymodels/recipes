@@ -140,6 +140,7 @@ Other {multivariate transformation steps}:
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_penalized}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},

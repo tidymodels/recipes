@@ -6,41 +6,39 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
+#' @param num_comp The number of components to retain as new predictors. If
+#'  `num_comp` is greater than the number of columns or the number of possible
+#'  components, a smaller value will be used.
 #' @param penalty A non-negative number used as a penalization factor for the
-#' loadings. Values between zero and roughtly 0.1 are good.
-#' @param options A list of options to `nmf()` in the RcppML package
-#'  **Note** that the argument `A`, `k`, `L1`, and `seed` should not be passed
-#'  here. Also parallel processing is turned off in favor of resample-level
-#'  parallelization. The `threads` option can be passed to change this.
-#' @param res A matrix of loadings is stored
-#'  here once this preprocessing step has been trained by
+#' loadings. Values are usually between zero and 1.
+#' @param options A list of options to `nmf()` in the RcppML package. That
+#'  package has a separate function `setRcppMLthreads()` that controls the
+#'  amount of internal parallelization. **Note** that the argument `A`, `k`,
+#'  `L1`, and `seed` should not be passed here.
+#' @param res A matrix of loadings is stored here, along with the names of the
+#'  original predictors, once this preprocessing step has been trained by
 #'  [prep.recipe()].
+
 #' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
-#' @param seed An integer that will be used to set the seed in isolation
-#'  when computing the factorization.
+#'   resulting new variables. See notes below.
+#' @param seed An integer that will be used to set the seed in isolation when
+#'  computing the factorization.
 #' @template step-return
 #' @family {multivariate transformation steps}
 #' @export
 #' @details Non-negative matrix factorization computes latent components that
-#'  have non-negative values and take into account that the original data
-#'  have non-negative values.
+#'  have non-negative values and take into account that the original data have
+#'  non-negative values.
 #'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num < 10`, their names will be `NNMF1` - `NNMF9`.
-#'  If `num = 101`, the names would be `NNMF001` -
-#'  `NNMF101`.
+#'   The argument `num_comp` controls the number of components that will be
+#'  retained (the original variables that are used to derive the components are
+#'  removed from the data). The new components will have names that begin with
+#'  `prefix` and a sequence of numbers. The variable names are padded with
+#'  zeros. For example, if `num < 10`, their names will be `NNMF1` - `NNMF9`. If
+#'  `num = 101`, the names would be `NNMF001` - `NNMF101`.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) and the number of components is returned.
+#'   When you [`tidy()`] this step, a tibble with column `terms` (the selectors
+#'  or variables selected) and the number of components is returned.
 #'
 #' @examples
 #'
@@ -50,7 +48,12 @@
 #' rec <- recipe(HHV ~ ., data = biomass) %>%
 #'   update_role(sample, new_role = "id var") %>%
 #'   update_role(dataset, new_role = "split variable") %>%
-#'   step_nnmf(all_numeric_predictors(), num_comp = 2, seed = 473, penalty = 0.01) %>%
+#'   step_nnmf_penalized(
+#'      all_numeric_predictors(),
+#'      num_comp = 2,
+#'      seed = 473,
+#'      penalty = 0.01
+#'   ) %>%
 #'   prep(training = biomass)
 #'
 #' bake(rec, new_data = NULL)
