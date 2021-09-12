@@ -127,9 +127,8 @@ nnmf_pen_call <- function(x) {
     list(
       A = expr(dat),
       k = x$num_comp,
-      L1 = c(x$penalty, 0),
+      L1 = c(x$penalty, x$penalty),
       verbose = FALSE,
-      threads = 1,
       seed = x$seed,
       nonneg = TRUE
     )
@@ -138,9 +137,6 @@ nnmf_pen_call <- function(x) {
   cl <- rlang::call_modify(cl, !!!user_opts)
   cl
 }
-
-# tmp <- list(num_comp = 3, penalty = .1, seed = 123, opt = list(verbose = TRUE))
-# nnmf_pen_call(tmp)
 
 #' @export
 prep.step_nnmf_penalized <- function(x, training, info = NULL, ...) {
