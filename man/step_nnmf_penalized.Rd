@@ -39,7 +39,7 @@ preprocessing have been estimated.}
 components, a smaller value will be used.}
 
 \item{penalty}{A non-negative number used as a penalization factor for the
-loadings. Values are usually between zero and 1.}
+loadings. Values are usually between zero and one.}
 
 \item{options}{A list of options to \code{nmf()} in the RcppML package. That
 package has a separate function \code{setRcppMLthreads()} that controls the

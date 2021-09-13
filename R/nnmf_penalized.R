@@ -10,7 +10,7 @@
 #'  `num_comp` is greater than the number of columns or the number of possible
 #'  components, a smaller value will be used.
 #' @param penalty A non-negative number used as a penalization factor for the
-#' loadings. Values are usually between zero and 1.
+#' loadings. Values are usually between zero and one.
 #' @param options A list of options to `nmf()` in the RcppML package. That
 #'  package has a separate function `setRcppMLthreads()` that controls the
 #'  amount of internal parallelization. **Note** that the argument `A`, `k`,
@@ -18,7 +18,6 @@
 #' @param res A matrix of loadings is stored here, along with the names of the
 #'  original predictors, once this preprocessing step has been trained by
 #'  [prep.recipe()].
-
 #' @param prefix A character string that will be the prefix to the
 #'   resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation when
@@ -148,7 +147,6 @@ prep.step_nnmf_penalized <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   if (x$num_comp > 0) {
-
     x$num_comp <- min(x$num_comp, length(col_names))
     dat <- tibble_to_sparse(training[, col_names], transp = TRUE)
     cl <- nnmf_pen_call(x)
@@ -210,7 +208,7 @@ print.step_nnmf_penalized <- function(x, width = max(20, options()$width - 29), 
     cat("Non-negative matrix factorization was not done.\n")
   } else {
     cat("Non-negative matrix factorization for ")
-    printer(colnames(x$res$x_vars), x$terms, x$trained, width = width)
+    printer(x$res$x_vars, x$terms, x$trained, width = width)
   }
   invisible(x)
 }
