@@ -18,9 +18,7 @@ step_mutate(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.
-If the argument is not named, the expression is converted to
-a column name.}
+\item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
@@ -45,7 +43,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_mutate} creates a \emph{specification} of a recipe step
+\code{step_mutate()} creates a \emph{specification} of a recipe step
 that will add variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
@@ -56,7 +54,7 @@ the value of the object in the expression (to be portable
 between sessions). See the examples.
 
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{values}, which
-contains the \code{mutate} expressions as character strings
+contains the \code{mutate()} expressions as character strings
 (and are not reparsable), is returned.
 }
 \examples{
@@ -110,6 +108,31 @@ bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 # The difference:
 tidy(qq_rec, number = 1)
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\seealso{
+Other {individual transformation steps}: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_log}()},
+\code{\link{step_ns}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
+
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{{dplyr steps}}
+\concept{{individual transformation steps}}

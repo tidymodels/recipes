@@ -76,6 +76,15 @@ car_rec \%>\%
 car_rec \%>\%
   tidy(number = 1)
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\seealso{
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{{dplyr steps}}

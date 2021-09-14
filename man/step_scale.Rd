@@ -99,6 +99,10 @@ Gelman, A. (2007) "Scaling regression inputs by
 dividing by two standard deviations." Unpublished. Source:
 \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
 }
-\concept{normalization_methods}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other {normalization steps}: 
+\code{\link{step_center}()},
+\code{\link{step_normalize}()},
+\code{\link{step_range}()}
+}
+\concept{{normalization steps}}

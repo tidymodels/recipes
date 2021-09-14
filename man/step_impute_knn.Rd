@@ -146,6 +146,14 @@ tidy(ratio_recipe2, number = 1)
 Gower, C. (1971) "A general coefficient of similarity and some
 of its properties," Biometrics, 857-871.
 }
-\concept{imputation}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other {imputation steps}: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
+\concept{{imputation steps}}

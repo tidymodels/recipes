@@ -81,4 +81,3 @@ rec \%>\%
   bake(new_data = NULL)
 
 }
-\keyword{datagen}

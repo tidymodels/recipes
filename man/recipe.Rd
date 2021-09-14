@@ -6,7 +6,7 @@
 \alias{recipe.formula}
 \alias{recipe.data.frame}
 \alias{recipe.matrix}
-\title{Create a Recipe for Preprocessing Data}
+\title{Create a recipe for preprocessing data}
 \usage{
 recipe(x, ...)
 
@@ -135,7 +135,7 @@ sp_signed <-
   step_normalize(all_numeric_predictors()) \%>\%
   step_spatialsign(all_numeric_predictors())
 sp_signed
-}\if{html}{\out{</div>}}\preformatted{## Data Recipe
+}\if{html}{\out{</div>}}\preformatted{## Recipe
 ## 
 ## Inputs:
 ## 
@@ -212,7 +212,7 @@ pca_rec <-
 
 Now to estimate the normalization statistics and the PCA loadings:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
 pca_rec
-}\if{html}{\out{</div>}}\preformatted{## Data Recipe
+}\if{html}{\out{</div>}}\preformatted{## Recipe
 ## 
 ## Inputs:
 ## 
@@ -236,8 +236,8 @@ prepped or unprepped, to learn more about its components.\if{html}{\out{<div cla
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_BLPhj
-## 2      2 step      pca       TRUE    FALSE pca_7TOMo
+## 1      1 step      normalize TRUE    FALSE normalize_8WF2w
+## 2      2 step      pca       TRUE    FALSE pca_8BSFb
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.
@@ -307,6 +307,3 @@ rec
 \author{
 Max Kuhn
 }
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

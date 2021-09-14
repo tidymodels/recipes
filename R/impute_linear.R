@@ -12,9 +12,7 @@
 #' @param models The [lm()] objects are stored here once the linear models
 #'  have been trained by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#' @family {imputation steps}
 #' @export
 #' @details For each variable requiring imputation, a linear model is fit
 #'  where the outcome is the variable of interest and the predictors are any

@@ -3,7 +3,7 @@
 \name{prep}
 \alias{prep}
 \alias{prep.recipe}
-\title{Estimate a Data Recipe}
+\title{Estimate a preprocessing recipe}
 \usage{
 prep(x, ...)
 
@@ -103,6 +103,3 @@ prep(ames_rec, log_changes = TRUE)
 \author{
 Max Kuhn
 }
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

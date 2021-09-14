@@ -24,9 +24,7 @@
 #' @param data The training data are stored here once after
 #'  [prep.recipe()] is executed.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dimension_reduction
+#' @family {multivariate transformation steps}
 #' @export
 #' @details Data depth metrics attempt to measure how close data a
 #'  data point is to the center of its distribution. There are a

@@ -63,8 +63,6 @@ create_documentation <- function(name,
 #' @param id A character string that is unique to this step to identify it.
 #' @return <describe return>
 #'
-#' @keywords datagen
-#' @concept preprocessing
 #' @export
 #' @details <describe details>
 #'

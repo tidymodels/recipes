@@ -7,9 +7,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept ordinal_data
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #'
@@ -35,9 +33,6 @@
 #'
 #' tidy(factor_trans, number = 1)
 #' tidy(factor_obj, number = 1)
-#' @seealso [step_ordinalscore()] [recipe()]
-#' [prep.recipe()] [bake.recipe()]
-
 step_unorder <-
   function(recipe,
            ...,

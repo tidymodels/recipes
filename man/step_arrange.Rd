@@ -98,5 +98,25 @@ qq_rec <-
 
 tidy(qq_rec, number = 1)
 }
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other {row operation steps}: 
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
+
+Other {dplyr steps}: 
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{{dplyr steps}}
+\concept{{row operation steps}}

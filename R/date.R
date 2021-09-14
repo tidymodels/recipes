@@ -33,11 +33,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
-#' @concept variable_encodings
-#' @concept dates
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details Unlike some other steps, `step_date` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
@@ -64,9 +60,6 @@
 #'
 #' tidy(date_rec, number = 1)
 #'
-#' @seealso [step_holiday()] [step_rm()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 step_date <-
   function(recipe,
            ...,

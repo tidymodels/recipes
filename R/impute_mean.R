@@ -12,9 +12,7 @@
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#' @family {imputation steps}
 #' @export
 #' @details `step_impute_mean` estimates the variable means from the data used
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the

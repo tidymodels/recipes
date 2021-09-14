@@ -68,7 +68,14 @@ bake(rand_set, integers)
 tidy(rec, number = 1)
 tidy(rand_set, number = 1)
 }
-\concept{permutation}
-\concept{preprocessing}
-\concept{randomization}
-\keyword{datagen}
+\seealso{
+Other {row operation steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_slice}()}
+}
+\concept{{row operation steps}}

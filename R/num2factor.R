@@ -17,12 +17,8 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered` is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_encodings
-#' @concept factors
+#' @family {dummy variable and encoding steps}
 #' @export
-#' @seealso [step_factor2string()], [step_string2factor()], [step_dummy()]
 #' @examples
 #' library(dplyr)
 #' library(modeldata)

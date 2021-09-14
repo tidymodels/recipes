@@ -19,6 +19,7 @@
 #' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
+#' @family {row operation steps}
 #' @export
 #' @rdname step_lag
 #'
@@ -35,8 +36,6 @@
 #'   step_lag(index, day, lag = 2:3) %>%
 #'   prep(df) %>%
 #'   bake(df)
-#'
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()] [step_naomit()]
 step_lag <-
   function(recipe,
            ...,

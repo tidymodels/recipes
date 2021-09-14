@@ -13,6 +13,7 @@
 #'  be populated (eventually) by the `terms` argument.
 #'
 #' @template step-return
+#' @family {row operation steps}
 #' @export
 #'
 #' @examples
@@ -22,7 +23,6 @@
 #'   prep(airquality, verbose = FALSE) %>%
 #'   bake(new_data = NULL)
 #'
-#' @seealso [step_filter()] [step_sample()] [step_slice()]
 step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
                         columns = NULL, skip = FALSE,
                         id = rand_id("naomit")) {

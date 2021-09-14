@@ -88,3 +88,11 @@ bake(rp, train_data)
 bake(rp, test_data)
 }
 }
+\seealso{
+Other {checks}: 
+\code{\link{check_class}()},
+\code{\link{check_cols}()},
+\code{\link{check_new_values}()},
+\code{\link{check_range}()}
+}
+\concept{{checks}}

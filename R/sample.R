@@ -17,8 +17,8 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `size`,
 #' `replace`, and `id` is returned.
-#' @keywords datagen
-#' @concept preprocessing
+#' @family {row operation steps}
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #'
@@ -44,8 +44,6 @@
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-#' @seealso [step_filter()] [step_naomit()] [step_slice()]
-
 step_sample <- function(
   recipe, ...,
   role = NA,

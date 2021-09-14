@@ -126,6 +126,7 @@ if (require(dimRed) & require(kernlab)) {
   tidy(kpca_trans, number = 3)
   tidy(kpca_estimates, number = 3)
 }
+
 }
 \references{
 Scholkopf, B., Smola, A., and Muller, K. (1997).
@@ -137,13 +138,18 @@ kernlab - An S4 package for kernel methods in R. \emph{Journal
 of Statistical Software}, 11(1), 1-20.
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_ica]{step_ica()}}
-\code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other {multivariate transformation steps}: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
-\concept{basis_expansion}
-\concept{kernel_methods}
-\concept{pca}
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\concept{{multivariate transformation steps}}

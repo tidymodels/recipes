@@ -105,6 +105,14 @@ transformed_te <- bake(impute_rec, biomass_te)
 plot(transformed_te$carbon, biomass_te$carbon,
      ylab = "pre-imputation", xlab = "imputed")
 }
-\concept{imputation}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other {imputation steps}: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
+\concept{{imputation steps}}

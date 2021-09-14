@@ -64,6 +64,15 @@ recipe(~ ., data = iris) \%>\%
   bake(new_data = NULL) \%>\%
   slice(1:10)
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\seealso{
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{{dplyr steps}}

@@ -143,5 +143,3 @@ ggplot(plot_data, aes(x = disp, y = pred)) +
   geom_point(alpha = .5, cex = 1) +
   facet_wrap(~ method)
 }
-\concept{preprocessing}
-\keyword{datagen}

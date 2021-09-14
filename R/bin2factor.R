@@ -23,10 +23,7 @@
 #'  When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be affected) is returned.
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dummy_variables
-#' @concept factors
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @examples
 #' library(modeldata)

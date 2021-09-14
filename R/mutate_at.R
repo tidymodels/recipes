@@ -12,9 +12,8 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with
 #'  column `terms` which contains the columns being transformed is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @family {multivariate transformation steps}
+#' @family {dplyr steps}
 #' @export
 #' @examples
 #' library(dplyr)

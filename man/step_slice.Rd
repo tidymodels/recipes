@@ -107,7 +107,24 @@ qq_rec <-
 tidy(qq_rec, number = 1)
 }
 \seealso{
-\code{\link[=step_filter]{step_filter()}} \code{\link[=step_naomit]{step_naomit()}} \code{\link[=step_sample]{step_sample()}}
+Other {row operation steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()}
+
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()}
 }
-\concept{preprocessing}
-\keyword{datagen}
+\concept{{dplyr steps}}
+\concept{{row operation steps}}

@@ -99,5 +99,8 @@ rec \%>\%
   prep() \%>\%
   bake(new_df)
 }
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other {discretization steps}: 
+\code{\link{step_discretize}()}
+}
+\concept{{discretization steps}}

@@ -24,9 +24,7 @@
 #' @param id A character string that is unique to this step to identify it.
 #' @template step-return
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept normalization_methods
+#' @family {normalization steps}
 #' @export
 #' @details Centering data means that the average of a variable is
 #'  subtracted from the data. `step_center` estimates the
@@ -59,8 +57,6 @@
 #'
 #' tidy(center_trans, number = 1)
 #' tidy(center_obj, number = 1)
-#' @seealso [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 step_center <-
   function(recipe,
            ...,

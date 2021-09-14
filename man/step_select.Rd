@@ -87,6 +87,23 @@ qq_rec <-
 # Note that `sepal_vars` is inlined in the second approach
 qq_rec
 }
-\concept{preprocessing}
-\concept{variable_filters}
-\keyword{datagen}
+\seealso{
+Other {variable filter steps}: 
+\code{\link{step_corr}()},
+\code{\link{step_lincomb}()},
+\code{\link{step_nzv}()},
+\code{\link{step_rm}()},
+\code{\link{step_zv}()}
+
+Other {dplyr steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_mutate}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_sample}()},
+\code{\link{step_slice}()}
+}
+\concept{{dplyr steps}}
+\concept{{variable filter steps}}

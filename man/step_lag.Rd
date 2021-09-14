@@ -80,8 +80,15 @@ recipe(~ ., data = df) \%>\%
   step_lag(index, day, lag = 2:3) \%>\%
   prep(df) \%>\%
   bake(df)
-
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}} \code{\link[=step_naomit]{step_naomit()}}
+Other {row operation steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
 }
+\concept{{row operation steps}}

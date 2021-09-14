@@ -19,12 +19,7 @@
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen internal
-#' @concept preprocessing
-#' @concept pca
-#' @concept projection_methods
-#' @concept kernel_methods
-#' @concept basis_expansion
+#' @keywords internal
 #' @export
 #' @details Kernel principal component analysis (kPCA) is an
 #'  extension of a PCA analysis that conducts the calculations in a

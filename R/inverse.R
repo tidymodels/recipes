@@ -9,9 +9,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms`
 #' (the columns that will be affected) is returned.
@@ -32,10 +30,6 @@
 #'
 #' tidy(inverse_trans, number = 1)
 #' tidy(inverse_obj, number = 1)
-#' @seealso [step_log()]
-#' [step_sqrt()]  [step_hyperbolic()] [recipe()]
-#' [prep.recipe()] [bake.recipe()]
-
 step_inverse <-
   function(recipe,
            ...,

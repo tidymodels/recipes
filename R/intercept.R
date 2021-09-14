@@ -36,7 +36,6 @@
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
 #'
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept",
                            value = 1,

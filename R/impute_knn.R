@@ -14,9 +14,7 @@
 #' @param columns The column names that will be imputed and used for
 #'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#' @family {imputation steps}
 #' @export
 #' @details The step uses the training set to impute any other data sets. The
 #'  only distance function available is Gower's distance which can be used for

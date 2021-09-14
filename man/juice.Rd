@@ -2,7 +2,7 @@
 % Please edit documentation in R/recipe.R
 \name{juice}
 \alias{juice}
-\title{Extract Finalized Training Set}
+\title{Extract transformed training set}
 \usage{
 juice(object, ..., composition = "tibble")
 }

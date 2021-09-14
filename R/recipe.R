@@ -1,13 +1,10 @@
-#' Create a Recipe for Preprocessing Data
+#' Create a recipe for preprocessing data
 #'
 #' A recipe is a description of the steps to be applied to a data set in
 #'   order to prepare it for data analysis.
 #'
 #' @aliases recipe recipe.default recipe.formula
 #' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 recipe <- function(x, ...)
   UseMethod("recipe")
@@ -240,14 +237,11 @@ inline_check <- function(x) {
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 prep <- function(x, ...)
   UseMethod("prep")
 
-#' Estimate a Data Recipe
+#' Estimate a preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
@@ -459,14 +453,11 @@ prep.recipe <-
 #' @rdname bake
 #' @aliases bake bake.recipe
 #' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
 #' @export
 bake <- function(object, ...)
   UseMethod("bake")
 
-#' Apply a Trained Data Recipe
+#' Apply a trained preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation that has been trained by
 #'   [prep.recipe()], apply the computations to new data.
@@ -517,10 +508,14 @@ bake <- function(object, ...)
 #'   prep()
 #'
 #' # return the training set (already embedded in ames_rec)
-#' ames_train <- bake(ames_rec, new_data = NULL)
+#' bake(ames_rec, new_data = NULL)
 #'
 #' # apply processing to other data:
-#' ames_new <- bake(ames_rec, new_data = head(ames))
+#' bake(ames_rec, new_data = head(ames))
+#'
+#' # only return selected variables:
+#' bake(ames_rec, new_data = head(ames), all_numeric_predictors())
+#' bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
@@ -633,7 +628,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #' @author Max Kuhn
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
-  cat("Data Recipe\n\n")
+  cat("Recipe\n\n")
   cat("Inputs:\n\n")
   no_role <- is.na(x$var_info$role)
   if (any(!no_role)) {
@@ -668,7 +663,7 @@ print.recipe <- function(x, form_width = 30, ...) {
   invisible(x)
 }
 
-#' Summarize a Recipe
+#' Summarize a recipe
 #'
 #' This function prints the current set of variables/features and some of their
 #' characteristics.
@@ -705,7 +700,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 }
 
 
-#' Extract Finalized Training Set
+#' Extract transformed training set
 #'
 #' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.

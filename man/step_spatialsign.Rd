@@ -97,6 +97,19 @@ Serneels, S., De Nolf, E., and Van Espen, P.
 moderate robustness to multivariate estimators. \emph{Journal of
 Chemical Information and Modeling}, 46(3), 1402-1409.
 }
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\seealso{
+Other {multivariate transformation steps}: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()}
+}
+\concept{{multivariate transformation steps}}

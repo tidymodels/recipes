@@ -9,8 +9,7 @@
 #'  range in the train set should be included in the lowest or highest bucket.
 #'  Defaults to `FALSE`, values outside the original range will be set to `NA`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
+#' @family {discretization steps}
 #' @export
 #' @details Unlike the `base::cut()` function there is no need to specify the
 #'  min and the max values in the breaks. All values before the lowest break

@@ -28,9 +28,6 @@
 #'  `summary` function (see the example below). These will be
 #'  the names of the new columns created by the step.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept moving_windows
 #' @export
 #' @details The calculations use a somewhat atypical method for
 #'  handling the beginning and end parts of the rolling statistics.
@@ -292,7 +289,7 @@ tunable.step_window <- function(x, ...) {
     name = c("statistic", "window"),
     call_info = list(
       list(pkg = "dials", fun = "summary_stat"),
-      list(pkg = "dials", fun = "window")
+      list(pkg = "dials", fun = "window_size")
     ),
     source = "recipe",
     component = "step_window",

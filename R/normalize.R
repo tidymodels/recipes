@@ -12,9 +12,7 @@
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation and mean.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept normalization_methods
+#' @family {normalization steps}
 #' @export
 #' @details Centering data means that the average of a variable is subtracted
 #'  from the data. Scaling data means that the standard deviation of a variable

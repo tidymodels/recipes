@@ -26,10 +26,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept pca
-#' @concept projection_methods
+#' @family {multivariate transformation steps}
 #' @export
 #' @details
 #' Principal component analysis (PCA) is a transformation of a
@@ -86,9 +83,6 @@
 #'
 #' tidy(pca_trans, number = 2)
 #' tidy(pca_estimates, number = 2)
-#' @seealso [step_ica()] [step_kpca()]
-#'   [step_isomap()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 step_pca <- function(recipe,
                      ...,
                      role = "predictor",

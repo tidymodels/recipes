@@ -21,12 +21,8 @@
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dummy_variables
-#' @concept model_specification
-#' @concept dummy_variables
-#' @concept variable_encodings
+#' @family {dummy variable and encoding steps}
+#' @seealso [dummy_names()]
 #' @export
 #' @details `step_dummy()` will create a set of binary dummy
 #'  variables from a factor variable. For example, if an unordered
@@ -70,10 +66,6 @@
 #'  selectors or original variables selected) and `columns` (the
 #'  list of corresponding binary columns) is returned.
 #'
-#' @seealso [step_factor2string()], [step_string2factor()],
-#'  [dummy_names()], [step_regex()], [step_count()],
-#'  [step_ordinalscore()], [step_unorder()], [step_other()]
-#'  [step_novel()]
 #' @examples
 #' library(modeldata)
 #' data(okc)

@@ -227,7 +227,6 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
 #'
 #' `current_info()` returns an environment with objects `vars` and `data`.
 #'
-#' @keywords datagen
 #' @examples
 #' library(modeldata)
 #' data(biomass)

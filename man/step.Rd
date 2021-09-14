@@ -24,5 +24,4 @@ An updated step or check with the new class.
 \description{
 \code{step} sets the class of the \code{step} and \code{check} is for checks.
 }
-\concept{preprocessing}
 \keyword{internal}

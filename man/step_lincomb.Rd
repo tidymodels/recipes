@@ -87,13 +87,14 @@ tidy(lincomb_filter, number = 1)
 tidy(lincomb_filter_trained, number = 1)
 }
 \seealso{
-\link[=step_corr]{step_nzv()}
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other {variable filter steps}: 
+\code{\link{step_corr}()},
+\code{\link{step_nzv}()},
+\code{\link{step_rm}()},
+\code{\link{step_select}()},
+\code{\link{step_zv}()}
 }
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing
 }
-\concept{preprocessing}
-\concept{variable_filters}
-\keyword{datagen}
+\concept{{variable filter steps}}

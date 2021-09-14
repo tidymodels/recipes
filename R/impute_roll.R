@@ -17,9 +17,8 @@
 #'  the imputed value. Only complete values will be passed to the function and
 #'  it should return a double precision value.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#' @family {imputation steps}
+#' @family {row operation steps}
 #' @export
 #' @details On the tails, the window is shifted towards the ends.
 #'  For example, for a 5-point window, the windows for the first

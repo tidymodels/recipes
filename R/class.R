@@ -13,8 +13,7 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @template check-return
 #'
-#' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @family {checks}
 #' @export
 #' @details
 #' This function can check the classes of the variables
@@ -71,8 +70,6 @@
 #'   prep(x_df) %>%
 #'   bake(x_df)
 #'
-#' @seealso [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 check_class <-
   function(recipe,
            ...,

@@ -67,5 +67,13 @@ recipe(Ozone ~ ., data = airquality) \%>\%
 
 }
 \seealso{
-\code{\link[=step_filter]{step_filter()}} \code{\link[=step_sample]{step_sample()}} \code{\link[=step_slice]{step_slice()}}
+Other {row operation steps}: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
 }
+\concept{{row operation steps}}

@@ -10,9 +10,7 @@
 #' @param threshold A named numeric vector of lower bounds. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#' @family {imputation steps}
 #' @export
 #' @details `step_impute_lower` estimates the variable minimums
 #'  from the data used in the `training` argument of `prep.recipe`.

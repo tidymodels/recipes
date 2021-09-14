@@ -12,10 +12,7 @@
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
 #' @template step-return
-#'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept factors
+#' @family {dummy variable and encoding steps}
 #' @export
 #' @details The selected variables are releveled to a level
 #' (given by `ref_level`). Placing the `ref_level` in the first

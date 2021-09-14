@@ -13,9 +13,7 @@
 #'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @family {individual transformation steps}
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) and `base`.
@@ -52,11 +50,6 @@
 #'   prep(training = examples2) %>%
 #'   bake(examples2)
 #'
-#' @seealso [step_logit()] [step_invlogit()]
-#'   [step_hyperbolic()]  [step_sqrt()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
 step_log <-
   function(recipe,
            ...,

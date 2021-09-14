@@ -15,12 +15,7 @@
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept pca
-#' @concept projection_methods
-#' @concept kernel_methods
-#' @concept basis_expansion
+#' @family {multivariate transformation steps}
 #' @export
 #' @details Kernel principal component analysis (kPCA) is an
 #'  extension of a PCA analysis that conducts the calculations in a
@@ -86,9 +81,6 @@
 #'   tidy(kpca_trans, number = 3)
 #'   tidy(kpca_estimates, number = 3)
 #' }
-#' @seealso [step_pca()] [step_ica()]
-#'   [step_isomap()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 #'
 step_kpca_poly <-
   function(recipe,

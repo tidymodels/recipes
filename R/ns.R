@@ -15,9 +15,7 @@
 #' @param options A list of options for [splines::ns()]
 #'  which should not include `x` or `df`.
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept basis_expansion
+#' @family {individual transformation steps}
 #' @export
 #' @details `step_ns` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a
@@ -46,9 +44,6 @@
 #'
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
-#' @seealso [step_poly()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_ns <-
   function(recipe,
            ...,

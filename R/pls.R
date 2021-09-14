@@ -21,10 +21,7 @@
 #' @param res A list of results are stored here once this preprocessing step
 #'  has been trained by [prep.recipe()].
 #' @template step-return
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept pls
-#' @concept projection_methods
+#' @family {multivariate transformation steps}
 #' @export
 #' @details PLS is a supervised version of principal component
 #'  analysis that requires the outcome data to compute
@@ -107,9 +104,6 @@
 #'   recipe(class ~ ., data = cell_tr) %>%
 #'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
 #'
-#' @seealso [step_pca()], [step_kpca()], [step_ica()], [recipe()],
-#'  [prep.recipe()], [bake.recipe()]
-
 step_pls <-
   function(recipe,
            ...,

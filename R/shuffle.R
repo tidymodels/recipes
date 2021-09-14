@@ -11,10 +11,7 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #' columns that will be permuted) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept randomization
-#' @concept permutation
+#' @family {row operation steps}
 #' @export
 #' @examples
 #' integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)

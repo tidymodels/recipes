@@ -103,8 +103,12 @@ tidy(corr_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-\code{\link[=step_nzv]{step_nzv()}} \code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other {variable filter steps}: 
+\code{\link{step_lincomb}()},
+\code{\link{step_nzv}()},
+\code{\link{step_rm}()},
+\code{\link{step_select}()},
+\code{\link{step_zv}()}
 }
 \author{
 Original R code for filtering algorithm by Dong Li,
@@ -112,6 +116,4 @@ modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 original in \code{caret} package). Max Kuhn for the \code{step}
 function.
 }
-\concept{preprocessing}
-\concept{variable_filters}
-\keyword{datagen}
+\concept{{variable filter steps}}
