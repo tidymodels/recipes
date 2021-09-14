@@ -104,13 +104,15 @@ step_window <-
            names = NULL,
            skip = FALSE,
            id = rand_id("window")) {
-    if (!(statistic %in% roll_funs) | length(statistic) != 1)
+    if (!is_call(statistic) &&
+        (!(statistic %in% roll_funs) | length(statistic) != 1)) {
       rlang::abort(
         paste0(
-        "`statistic` should be one of: ",
-        paste0("'", roll_funs, "'", collapse = ", ")
-          )
+          "`statistic` should be one of: ",
+          paste0("'", roll_funs, "'", collapse = ", ")
         )
+      )
+    }
 
     ## ensure size is odd, integer, and not too small
     if (!is_tune(size) & !is_varying(size)) {
