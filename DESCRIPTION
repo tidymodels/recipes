@@ -70,7 +70,6 @@ RdMacros:
     lifecycle
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.2
 Remotes:
     tidymodels/parsnip
-    
