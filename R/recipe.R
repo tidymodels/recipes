@@ -779,7 +779,9 @@ utils::globalVariables(c("number"))
 
 # ------------------------------------------------------------------------------
 
-#' @rdname required_pkgs
+#' API for listing required packages for each step
+#'
+#' @name required_pkgs
 #' @export
 required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res <- purrr::map(x$steps, required_pkgs)

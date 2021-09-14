@@ -198,7 +198,9 @@ tidy.step_bs <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
+#' Information on what step arguments can be tuned
+#'
+#' @name tunable.step
 #' @export
 tunable.step_bs <- function(x, ...) {
   tibble::tibble(
