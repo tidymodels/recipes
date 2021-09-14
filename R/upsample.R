@@ -187,7 +187,7 @@ tidy.step_upsample <- function(x, ...) {
 
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_upsample <- function(x, ...) {
   tibble::tibble(

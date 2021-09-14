@@ -238,7 +238,7 @@ tidy.step_ica <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_ica <- function(x, ...) {
   tibble::tibble(

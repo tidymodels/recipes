@@ -232,7 +232,7 @@ tidy.step_isomap <- function(x, ...) {
 
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_isomap <- function(x, ...) {
   tibble::tibble(

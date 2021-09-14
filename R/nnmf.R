@@ -217,7 +217,7 @@ tidy.step_nnmf <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_nnmf <- function(x, ...) {
   tibble::tibble(

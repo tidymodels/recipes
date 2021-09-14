@@ -232,7 +232,7 @@ tidy.step_kpca_rbf <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_kpca_rbf <- function(x, ...) {
   tibble::tibble(

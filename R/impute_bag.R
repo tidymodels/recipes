@@ -313,7 +313,7 @@ tidy.step_bagimpute <- tidy.step_impute_bag
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_bag <- function(x, ...) {
   tibble::tibble(

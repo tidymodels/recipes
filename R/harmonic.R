@@ -347,7 +347,7 @@ tidy.step_harmonic <- function(x, ...) {
   res
 }
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_harmonic <- function(x, ...) {
   tibble::tibble(

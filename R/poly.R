@@ -176,7 +176,7 @@ tidy.step_poly <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_poly <- function(x, ...) {
   tibble::tibble(

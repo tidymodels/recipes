@@ -242,7 +242,7 @@ tidy.step_dummy_multi_choice <- function(x, ...) {
   res
 }
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_dummy_multi_choice <- function(x, ...) {
   tibble::tibble(
