@@ -8,7 +8,7 @@
 %   R/impute_mode.R, R/impute_roll.R, R/integer.R, R/interactions.R,
 %   R/inverse.R, R/invlogit.R, R/isomap.R, R/kpca.R, R/kpca_poly.R,
 %   R/kpca_rbf.R, R/lincombo.R, R/log.R, R/logit.R, R/missing.r, R/mutate.R,
-%   R/mutate_at.R, R/naindicate.R, R/naomit.R, R/nnmf.R, R/nnmf_penalized.R,
+%   R/mutate_at.R, R/naindicate.R, R/naomit.R, R/nnmf.R, R/nnmf_sparse.R,
 %   R/normalize.R, R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R,
 %   R/other.R, R/pca.R, R/pls.R, R/poly.R, R/profile.R, R/range.R,
 %   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
@@ -64,7 +64,7 @@
 \alias{tidy.step_indicate_na}
 \alias{tidy.step_naomit}
 \alias{tidy.step_nnmf}
-\alias{tidy.step_nnmf_penalized}
+\alias{tidy.step_nnmf_sparse}
 \alias{tidy.step_normalize}
 \alias{tidy.step_novel}
 \alias{tidy.step_ns}
@@ -198,7 +198,7 @@
 
 \method{tidy}{step_nnmf}(x, ...)
 
-\method{tidy}{step_nnmf_penalized}(x, ...)
+\method{tidy}{step_nnmf_sparse}(x, ...)
 
 \method{tidy}{step_normalize}(x, ...)
 

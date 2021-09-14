@@ -2,7 +2,7 @@
 % Please edit documentation in R/nnmf.R
 \name{step_nnmf}
 \alias{step_nnmf}
-\title{NNMF Signal Extraction}
+\title{Non-Negative Matrix Factorization Signal Extraction}
 \usage{
 step_nnmf(
   recipe,
@@ -77,6 +77,10 @@ sequence of any existing operations.
 \code{step_nnmf} creates a \emph{specification} of a recipe step
 that will convert numeric data into one or more non-negative
 components.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+
+Please use \code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}} instead of this step function.
 }
 \details{
 Non-negative matrix factorization computes latent components that
@@ -122,7 +126,7 @@ Other {multivariate transformation steps}:
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_mutate_at}()},
-\code{\link{step_nnmf_penalized}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},

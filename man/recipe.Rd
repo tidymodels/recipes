@@ -158,17 +158,17 @@ linear_sp_sign_wflow <-
   add_recipe(sp_signed)
 
 linear_sp_sign_wflow
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ══════════════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ═══════════════════════════════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ──────────────────────────────────────────────────────
+## ── Preprocessor ───────────────────────────────────────────────────────────────────────────────
 ## 2 Recipe Steps
 ## 
 ## • step_normalize()
 ## • step_spatialsign()
 ## 
-## ── Model ─────────────────────────────────────────────────────────────
+## ── Model ──────────────────────────────────────────────────────────────────────────────────────
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm
@@ -236,8 +236,8 @@ prepped or unprepped, to learn more about its components.\if{html}{\out{<div cla
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_M2CLZ
-## 2      2 step      pca       TRUE    FALSE pca_0J3wX
+## 1      1 step      normalize TRUE    FALSE normalize_q6nuY
+## 2      2 step      pca       TRUE    FALSE pca_ys3lX
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.

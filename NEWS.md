@@ -1,5 +1,6 @@
 # recipes (development version)
 
+* `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. 
 
 * New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
 

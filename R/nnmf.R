@@ -1,8 +1,14 @@
-#' NNMF Signal Extraction
+#' Non-Negative Matrix Factorization Signal Extraction
+#'
+#' @description
 #'
 #' `step_nnmf` creates a *specification* of a recipe step
 #'  that will convert numeric data into one or more non-negative
 #'  components.
+#'
+#' `r lifecycle::badge("soft-deprecated")`
+#'
+#' Please use [step_nnmf_sparse()] instead of this step function.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -74,6 +80,7 @@ step_nnmf <-
            id = rand_id("nnmf")
            ) {
     recipes_pkg_check(required_pkgs.step_nnmf())
+    lifecycle::deprecate_soft("0.2.3", "step_nnmf()", "step_nnmf_penalized()")
     add_step(
       recipe,
       step_nnmf_new(

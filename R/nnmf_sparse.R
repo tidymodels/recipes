@@ -1,6 +1,6 @@
-#' NNMF signal extraction with lasso penalization
+#' Non-Negative Matrix Factorization Signal Extraction with lasso Penalization
 #'
-#' `step_nnmf` creates a *specification* of a recipe step
+#' `step_nnmf_sparse()` creates a *specification* of a recipe step
 #'  that will convert numeric data into one or more non-negative
 #'  components.
 #'
@@ -41,13 +41,14 @@
 #'
 #' @examples
 #'
+#' library(Matrix)
 #' library(modeldata)
 #' data(biomass)
 #'
 #' rec <- recipe(HHV ~ ., data = biomass) %>%
 #'   update_role(sample, new_role = "id var") %>%
 #'   update_role(dataset, new_role = "split variable") %>%
-#'   step_nnmf_penalized(
+#'   step_nnmf_sparse(
 #'      all_numeric_predictors(),
 #'      num_comp = 2,
 #'      seed = 473,
@@ -61,7 +62,7 @@
 #' bake(rec, new_data = NULL) %>%
 #'  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 
-step_nnmf_penalized <-
+step_nnmf_sparse <-
   function(recipe,
            ...,
            role = "predictor",
@@ -74,12 +75,12 @@ step_nnmf_penalized <-
            seed = sample.int(10^5, 1),
            keep_original_cols = FALSE,
            skip = FALSE,
-           id = rand_id("nnmf_penalized")
+           id = rand_id("nnmf_sparse")
   ) {
-    recipes_pkg_check(required_pkgs.step_nnmf_penalized())
+    recipes_pkg_check(required_pkgs.step_nnmf_sparse())
     add_step(
       recipe,
-      step_nnmf_penalized_new(
+      step_nnmf_sparse_new(
         terms = ellipse_check(...),
         role = role,
         trained = trained,
@@ -96,11 +97,11 @@ step_nnmf_penalized <-
     )
   }
 
-step_nnmf_penalized_new <-
+step_nnmf_sparse_new <-
   function(terms, role, trained, num_comp, penalty, options, res,
            prefix, seed, keep_original_cols, skip, id) {
     step(
-      subclass = "nnmf_penalized",
+      subclass = "nnmf_sparse",
       terms = terms,
       role = role,
       trained = trained,
@@ -141,7 +142,7 @@ nnmf_pen_call <- function(x) {
 }
 
 #' @export
-prep.step_nnmf_penalized <- function(x, training, info = NULL, ...) {
+prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   check_type(training[, col_names])
@@ -154,7 +155,7 @@ prep.step_nnmf_penalized <- function(x, training, info = NULL, ...) {
     nnm <- try(rlang::eval_tidy(cl), silent = TRUE)
 
     if (inherits(nnm, "try-error")) {
-      rlang::abort(paste0("`step_nnmf_penalized` failed with error:\n", as.character(nnm)))
+      rlang::abort(paste0("`step_nnmf_sparse` failed with error:\n", as.character(nnm)))
     } else {
       na_w <- sum(is.na(nnm$w))
       if (na_w > 0) {
@@ -170,7 +171,7 @@ prep.step_nnmf_penalized <- function(x, training, info = NULL, ...) {
     nnm <- list(x_vars = col_names, w = NULL)
   }
 
-  step_nnmf_penalized_new(
+  step_nnmf_sparse_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -187,7 +188,7 @@ prep.step_nnmf_penalized <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_nnmf_penalized <- function(object, new_data, ...) {
+bake.step_nnmf_sparse <- function(object, new_data, ...) {
   if (object$num_comp > 0) {
     proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
     proj_data <- proj_data %*% object$res$w
@@ -203,7 +204,7 @@ bake.step_nnmf_penalized <- function(object, new_data, ...) {
 }
 
 
-print.step_nnmf_penalized <- function(x, width = max(20, options()$width - 29), ...) {
+print.step_nnmf_sparse <- function(x, width = max(20, options()$width - 29), ...) {
   if (x$num_comp == 0) {
     cat("Non-negative matrix factorization was not done.\n")
   } else {
@@ -215,8 +216,8 @@ print.step_nnmf_penalized <- function(x, width = max(20, options()$width - 29), 
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_nnmf_penalized` object.
-tidy.step_nnmf_penalized <- function(x, ...) {
+#' @param x A `step_nnmf_sparse` object.
+tidy.step_nnmf_sparse <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {
       res <- x$res$w
@@ -243,7 +244,7 @@ tidy.step_nnmf_penalized <- function(x, ...) {
 
 #' @rdname tunable.step
 #' @export
-tunable.step_nnmf_penalized <- function(x, ...) {
+tunable.step_nnmf_sparse <- function(x, ...) {
   tibble::tibble(
     name = c("num_comp", "penalty"),
     call_info = list(
@@ -251,14 +252,14 @@ tunable.step_nnmf_penalized <- function(x, ...) {
       list(pkg = "dials", fun = "penalty")
     ),
     source = "recipe",
-    component = "step_nnmf_penalized",
+    component = "step_nnmf_sparse",
     component_id = x$id
   )
 }
 
 #' @rdname required_pkgs.step
 #' @export
-required_pkgs.step_nnmf_penalized <- function(x, ...) {
+required_pkgs.step_nnmf_sparse <- function(x, ...) {
   c("Matrix", "RcppML")
 }
 
