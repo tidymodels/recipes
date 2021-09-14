@@ -158,17 +158,17 @@ linear_sp_sign_wflow <-
   add_recipe(sp_signed)
 
 linear_sp_sign_wflow
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ═══════════════════════════════════════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ══════════════════════════════════════════════════════════
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ───────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ──────────────────────────────────────────────────────
 ## 2 Recipe Steps
 ## 
 ## • step_normalize()
 ## • step_spatialsign()
 ## 
-## ── Model ──────────────────────────────────────────────────────────────────────────────────────
+## ── Model ─────────────────────────────────────────────────────────────
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm
@@ -206,8 +206,8 @@ used to estimate quantities required for the operations using a data set
 As an example of using PCA (perhaps to produce a plot):\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Define the recipe
 pca_rec <- 
   rec \%>\%
-  step_normalize(all_numeric_predictors()) \%>\%
-  step_pca(all_numeric_predictors())
+  step_normalize(all_numeric_predictors(), id = "norm") \%>\%
+  step_pca(all_numeric_predictors(), id = "pca")
 }\if{html}{\out{</div>}}
 
 Now to estimate the normalization statistics and the PCA loadings:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
@@ -234,10 +234,10 @@ the selectors.
 You can \code{\link[=tidy.recipe]{tidy.recipe()}} a recipe, either when it is
 prepped or unprepped, to learn more about its components.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 6
-##   number operation type      trained skip  id             
-##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_BqiWv
-## 2      2 step      pca       TRUE    FALSE pca_HZfCM
+##   number operation type      trained skip  id   
+##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>
+## 1      1 step      normalize TRUE    FALSE norm 
+## 2      2 step      pca       TRUE    FALSE pca
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.

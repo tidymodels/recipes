@@ -1,5 +1,6 @@
 ```{r startup, include = FALSE}
 options(width = 70)
+options(cli.width = 70)
 set.seed(123)
 
 library(dplyr)
