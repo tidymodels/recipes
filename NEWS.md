@@ -28,6 +28,7 @@
 
 * Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
 
+* Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
 
 # recipes 0.1.16
 

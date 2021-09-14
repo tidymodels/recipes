@@ -32,6 +32,7 @@
 \alias{tidy.step_depth}
 \alias{tidy.step_discretize}
 \alias{tidy.step_dummy}
+\alias{tidy.step_dummy_multi_choice}
 \alias{tidy.step_factor2string}
 \alias{tidy.step_filter}
 \alias{tidy.step_geodist}
@@ -133,6 +134,8 @@
 \method{tidy}{step_discretize}(x, ...)
 
 \method{tidy}{step_dummy}(x, ...)
+
+\method{tidy}{step_dummy_multi_choice}(x, ...)
 
 \method{tidy}{step_factor2string}(x, ...)
 

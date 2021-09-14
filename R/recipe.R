@@ -1,4 +1,4 @@
-#' Create a Recipe for Preprocessing Data
+#' Create a recipe for preprocessing data
 #'
 #' A recipe is a description of the steps to be applied to a data set in
 #'   order to prepare it for data analysis.
@@ -241,7 +241,7 @@ inline_check <- function(x) {
 prep <- function(x, ...)
   UseMethod("prep")
 
-#' Estimate a Data Recipe
+#' Estimate a preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
@@ -457,7 +457,7 @@ prep.recipe <-
 bake <- function(object, ...)
   UseMethod("bake")
 
-#' Apply a Trained Data Recipe
+#' Apply a trained preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation that has been trained by
 #'   [prep.recipe()], apply the computations to new data.
@@ -628,7 +628,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #' @author Max Kuhn
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
-  cat("Data Recipe\n\n")
+  cat("Recipe\n\n")
   cat("Inputs:\n\n")
   no_role <- is.na(x$var_info$role)
   if (any(!no_role)) {
@@ -663,7 +663,7 @@ print.recipe <- function(x, form_width = 30, ...) {
   invisible(x)
 }
 
-#' Summarize a Recipe
+#' Summarize a recipe
 #'
 #' This function prints the current set of variables/features and some of their
 #' characteristics.
@@ -700,7 +700,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 }
 
 
-#' Extract Finalized Training Set
+#' Extract transformed training set
 #'
 #' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.

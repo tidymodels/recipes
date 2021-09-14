@@ -60,6 +60,7 @@ reference:
     - step_count
     - step_date
     - step_dummy
+    - step_dummy_multi_choice
     - step_factor2string
     - step_holiday
     - step_indicate_na
