@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy_multi_choice.R
 \name{step_dummy_multi_choice}
 \alias{step_dummy_multi_choice}
-\title{Multi Choice Dummy Variables Creation}
+\title{Multiple Choice Dummy Variables Creation}
 \usage{
 step_dummy_multi_choice(
   recipe,
