@@ -245,7 +245,7 @@ tidy.step_impute_roll <- function(x, ...) {
 #' @keywords internal
 tidy.step_rollimpute <- tidy.step_impute_roll
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(

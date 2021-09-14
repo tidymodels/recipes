@@ -354,7 +354,7 @@ tidy.step_discretize <- function(x, ...) {
 
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_discretize <- function(x, ...) {
   tibble::tibble(

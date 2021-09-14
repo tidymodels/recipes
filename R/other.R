@@ -263,7 +263,7 @@ tidy.step_other <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_other <- function(x, ...) {
   tibble::tibble(

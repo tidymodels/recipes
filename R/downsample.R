@@ -192,7 +192,7 @@ tidy.step_downsample <- function(x, ...) {
 # ------------------------------------------------------------------------------
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_downsample <- function(x, ...) {
   tibble::tibble(
