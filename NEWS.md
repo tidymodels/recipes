@@ -1,10 +1,18 @@
 # recipes (development version)
 
+## New Steps
+
 * `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. 
 
-* New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
-
 * Added new `step_harmonic()` (#702).
+
+## Bug Fixes
+
+* Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
+
+## Improvements and Other Changes
+
+* New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
 
 * Speed-up/simplification to `step_spatialsign()`
 
@@ -15,8 +23,6 @@
 * Reorganize documentation for all recipe step `tidy` methods (#701).
 
 * Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
-
-* Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
 
 * The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.
 
