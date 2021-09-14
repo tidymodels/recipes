@@ -341,17 +341,17 @@ model and recipe:<div class="sourceCode r"></p><pre class='sourceCode r'><code><
   <span class='fu'><a href='https://workflows.tidymodels.org//reference/add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>sp_signed</span><span class='op'>)</span>
 
 <span class='va'>linear_sp_sign_wflow</span>
-</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## ══ Workflow ══════════════════════════════════════════════════════════</span>
+</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## ══ Workflow ═══════════════════════════════════════════════════════════════════════════════════</span>
 <span class='co'>## Preprocessor: Recipe</span>
 <span class='co'>## Model: linear_reg()</span>
 <span class='co'>## </span>
-<span class='co'>## ── Preprocessor ──────────────────────────────────────────────────────</span>
+<span class='co'>## ── Preprocessor ───────────────────────────────────────────────────────────────────────────────</span>
 <span class='co'>## 2 Recipe Steps</span>
 <span class='co'>## </span>
 <span class='co'>## • step_normalize()</span>
 <span class='co'>## • step_spatialsign()</span>
 <span class='co'>## </span>
-<span class='co'>## ── Model ─────────────────────────────────────────────────────────────</span>
+<span class='co'>## ── Model ──────────────────────────────────────────────────────────────────────────────────────</span>
 <span class='co'>## Linear Regression Model Specification (regression)</span>
 <span class='co'>## </span>
 <span class='co'>## Computational engine: lm</span>
@@ -415,8 +415,8 @@ prepped or unprepped, to learn more about its components.<div class="sourceCode 
 </code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## # A tibble: 2 × 6</span>
 <span class='co'>##   number operation type      trained skip  id             </span>
 <span class='co'>##    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;          </span>
-<span class='co'>## 1      1 step      normalize TRUE    FALSE normalize_AeYA4</span>
-<span class='co'>## 2      2 step      pca       TRUE    FALSE pca_Zn1yz</span>
+<span class='co'>## 1      1 step      normalize TRUE    FALSE normalize_BqiWv</span>
+<span class='co'>## 2      2 step      pca       TRUE    FALSE pca_HZfCM</span>
 </code></pre>
 
 <p>You can also <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> recipe <em>steps</em> with a <code>number</code> or <code>id</code> argument.</p>

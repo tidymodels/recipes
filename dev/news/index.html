@@ -185,6 +185,7 @@
 <li><p>The deprecation for <code><a href="../reference/step_upsample.html">step_upsample()</a></code> and <code><a href="../reference/step_downsample.html">step_downsample()</a></code> has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.</p></li>
 <li><p>Escalate deprecation for old versions of imputation steps (such as <code><a href="../reference/step_impute_bag.html">step_bagimpute()</a></code>) from a soft deprecation to a regular deprecation; these imputation steps have new names like <code><a href="../reference/step_impute_bag.html">step_impute_bag()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/753'>#753</a>).</p></li>
 <li><p>Added a new step called <code><a href="../reference/step_dummy_multi_choice.html">step_dummy_multi_choice()</a></code>, which will take multiple nominal variables and produces shared dummy variables. (<a href='https://github.com/tidymodels/recipes/issues/716'>#716</a>)</p></li>
+<li><p><code><a href="../reference/step_logit.html">step_logit()</a></code> gained an offset argument for cases where the input is either zero or one (<a href='https://github.com/tidymodels/recipes/issues/784'>#784</a>)</p></li>
 </ul></div>
     <div id="recipes-0116" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.16">

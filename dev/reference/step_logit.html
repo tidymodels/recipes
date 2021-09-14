@@ -182,6 +182,7 @@ step that will logit transform the data.</p>
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>step_logit</span><span class='op'>(</span>
   <span class='va'>recipe</span>,
   <span class='va'>...</span>,
+  offset <span class='op'>=</span> <span class='fl'>0</span>,
   role <span class='op'>=</span> <span class='cn'>NA</span>,
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
   columns <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -201,6 +202,11 @@ sequence of operations for this recipe.</p></td>
       <th>...</th>
       <td><p>One or more selector functions to choose variables
 for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+    </tr>
+    <tr>
+      <th>offset</th>
+      <td><p>A numeric value to modify values of the columns that are either
+one or zero. They are modified to be <code>x - offset</code> or <code>offset</code>, respectively.</p></td>
     </tr>
     <tr>
       <th>role</th>
