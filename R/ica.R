@@ -251,7 +251,7 @@ tunable.step_ica <- function(x, ...) {
 }
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_ica <- function(x, ...) {
   c("dimRed", "fastICA")

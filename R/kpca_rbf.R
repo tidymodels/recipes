@@ -247,7 +247,7 @@ tunable.step_kpca_rbf <- function(x, ...) {
   )
 }
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_kpca_rbf <- function(x, ...) {
   c("dimRed", "kernlab")

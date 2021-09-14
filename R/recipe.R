@@ -779,7 +779,13 @@ utils::globalVariables(c("number"))
 
 # ------------------------------------------------------------------------------
 
-#' @rdname required_pkgs
+#' S3 methods for tracking which additional packages are needed for steps.
+#'
+#' @param x A recipe or recipe step
+#' @param infra Should recipes itself be included in the result?
+#' @return A character vector
+#' @name required_pkgs.recipe
+#' @keywords internal
 #' @export
 required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res <- purrr::map(x$steps, required_pkgs)
@@ -792,13 +798,13 @@ required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res
 }
 
-#' @rdname required_pkgs
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step <- function(x, ...) {
   character(0)
 }
 
-#' @rdname required_pkgs
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.check <- function(x, ...) {
   character(0)

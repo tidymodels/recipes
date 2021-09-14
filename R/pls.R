@@ -422,7 +422,7 @@ tunable.step_pls <- function(x, ...) {
 }
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_pls <- function(x, ...) {
   c("mixOmics")
