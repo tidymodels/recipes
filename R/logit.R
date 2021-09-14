@@ -6,6 +6,8 @@
 #' @inheritParams step_center
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
+#' @param offset A numeric value to modify values of the columns that are either
+#' one or zero. They are modified to be `x - offset` or `offset`, respectively.
 #' @template step-return
 #' @family {individual transformation steps}
 #' @export
@@ -35,6 +37,7 @@
 step_logit <-
   function(recipe,
            ...,
+           offset = 0,
            role = NA,
            trained = FALSE,
            columns = NULL,
@@ -43,6 +46,7 @@ step_logit <-
     add_step(recipe,
              step_logit_new(
                terms = ellipse_check(...),
+               offset = offset,
                role = role,
                trained = trained,
                columns = columns,
@@ -52,10 +56,11 @@ step_logit <-
   }
 
 step_logit_new <-
-  function(terms, role, trained, columns, skip, id) {
+  function(terms, offset, role, trained, columns, skip, id) {
     step(
       subclass = "logit",
       terms = terms,
+      offset = offset,
       role = role,
       trained = trained,
       columns = columns,
@@ -72,6 +77,7 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
 
   step_logit_new(
     terms = x$terms,
+    offset = x$offset,
     role = x$role,
     trained = TRUE,
     columns = col_names,
@@ -80,11 +86,20 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
   )
 }
 
+pre_logit <- function(x, eps = 0) {
+  x <- ifelse(x == 1, x - eps, x)
+  x <- ifelse(x == 0,     eps, x)
+  x
+}
+
 #' @export
 bake.step_logit <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
+  for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
-      binomial()$linkfun(getElement(new_data, object$columns[i]))
+      binomial()$linkfun(
+        pre_logit(new_data[[ object$columns[i] ]], object$offset)
+      )
+  }
   as_tibble(new_data)
 }
 
