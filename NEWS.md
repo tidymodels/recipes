@@ -23,6 +23,8 @@
 
 * Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
 
+* `step_logit()` gained an offset argument for cases where the input is either zero or one (#784)
+
 # recipes 0.1.16
 
 ## New Steps
