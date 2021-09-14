@@ -280,18 +280,12 @@ are used to encode the numeric values.</p>
 <p>By default, the excluded dummy variable (i.e. the reference
 cell) will correspond to the first level of the unordered
 factor being converted.</p>
-<p>The function allows for non-standard naming of the resulting
+<p>This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named <code>x</code>, with levels <code>"a"</code>
 and <code>"b"</code>, the default naming convention would be to create a
-new variable called <code>x_b</code>. Note that if the factor levels are
-not valid variable names (e.g. "some text with spaces"), it will
-be changed by <code><a href='https://rdrr.io/r/base/make.names.html'>base::make.names()</a></code> to be valid (see the example
-below). The naming format can be changed using the <code>naming</code>
-argument and the function <code><a href='names0.html'>dummy_names()</a></code> is the default. This
-function will also change the names of ordinal dummy variables.
-Instead of values such as "<code>.L</code>", "<code>.Q</code>", or "<code>^4</code>", ordinal
-dummy variables are given simple integer suffixes such as
-"<code>_1</code>", "<code>_2</code>", etc.</p>
+new variable called <code>x_b</code>. The naming format can be changed using
+the <code>naming</code> argument; the function <code><a href='names0.html'>dummy_names()</a></code> is the
+default.</p>
 <p>To change the type of contrast being used, change the global
 contrast option via <code>options</code>.</p>
 <p>When the factor being converted has a missing value, all of the

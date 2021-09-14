@@ -193,6 +193,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_dummy.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_dummy_multi_choice.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_factor2string.html</loc>
   </url>
   <url>
