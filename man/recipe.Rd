@@ -236,8 +236,8 @@ prepped or unprepped, to learn more about its components.\if{html}{\out{<div cla
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_8WF2w
-## 2      2 step      pca       TRUE    FALSE pca_8BSFb
+## 1      1 step      normalize TRUE    FALSE normalize_AeYA4
+## 2      2 step      pca       TRUE    FALSE pca_Zn1yz
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.
