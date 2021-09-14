@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find recommended methods for generating parameter values — tunable.recipe • recipes</title>
+<title>Find recommended methods for generating parameter values — tunable.step_bs • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,7 @@
 
 
 
-<meta property="og:title" content="Find recommended methods for generating parameter values — tunable.recipe" />
+<meta property="og:title" content="Find recommended methods for generating parameter values — tunable.step_bs" />
 <meta property="og:description" content="tunable() determines which parameters in an object can be tuned along
 with information about the parameters." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
@@ -170,7 +170,7 @@ with information about the parameters." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Find recommended methods for generating parameter values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/tunable.R'><code>R/tunable.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/bs.R'><code>R/bs.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/corr.R'><code>R/corr.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/discretize.R'><code>R/discretize.R</code></a>, and 21 more</small>
     <div class="hidden name"><code>tunable.recipe.Rd</code></div>
     </div>
 
@@ -179,13 +179,82 @@ with information about the parameters." />
 with information about the parameters.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for recipe</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for step_bs</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_corr</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_discretize</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_downsample</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_dummy_multi_choice</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_harmonic</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_ica</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_impute_bag</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_impute_knn</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_impute_mean</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_impute_roll</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_isomap</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_kpca_poly</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_kpca_rbf</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_nnmf</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_ns</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_nzv</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_other</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_pca</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_pls</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_poly</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for recipe</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for step</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for check</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_upsample</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step_window</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tunable.html'>tunable</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
