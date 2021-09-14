@@ -180,6 +180,10 @@ step_impute_bag_new <-
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
+  if (is.character(dat[[vars$y]])) {
+    dat[[vars$y]] <- factor(dat[[vars$y]])
+  }
+
   if (!is.null(seed_val) && !is.na(seed_val))
     set.seed(seed_val)
 
