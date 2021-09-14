@@ -781,7 +781,10 @@ utils::globalVariables(c("number"))
 
 #' API for listing required packages for each step
 #'
-#' @name required_pkgs
+#' @param x An object.
+#' @param infra A logical; should infrastructure packages be included?
+#' @param ... Not currently used.
+#' @rdname required_pkgs
 #' @export
 required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res <- purrr::map(x$steps, required_pkgs)

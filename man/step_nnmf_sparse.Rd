@@ -93,27 +93,28 @@ When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms
 or variables selected) and the number of components is returned.
 }
 \examples{
+if (rlang::is_installed("RcppML")) {
 
-library(Matrix)
-library(modeldata)
-data(biomass)
+  library(Matrix)
+  library(modeldata)
+  data(biomass)
 
-rec <- recipe(HHV ~ ., data = biomass) \%>\%
-  update_role(sample, new_role = "id var") \%>\%
-  update_role(dataset, new_role = "split variable") \%>\%
-  step_nnmf_sparse(
-     all_numeric_predictors(),
-     num_comp = 2,
-     seed = 473,
-     penalty = 0.01
-  ) \%>\%
-  prep(training = biomass)
+  rec <- recipe(HHV ~ ., data = biomass) \%>\%
+    update_role(sample, new_role = "id var") \%>\%
+    update_role(dataset, new_role = "split variable") \%>\%
+    step_nnmf_sparse(
+      all_numeric_predictors(),
+      num_comp = 2,
+      seed = 473,
+      penalty = 0.01
+    ) \%>\%
+    prep(training = biomass)
 
-bake(rec, new_data = NULL)
-
-library(ggplot2)
-bake(rec, new_data = NULL) \%>\%
- ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+  bake(rec, new_data = NULL)
+  library(ggplot2)
+  bake(rec, new_data = NULL) \%>\%
+    ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+}
 }
 \seealso{
 Other {multivariate transformation steps}: 

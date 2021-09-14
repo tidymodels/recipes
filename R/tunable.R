@@ -22,7 +22,7 @@
 #' the source of the function (e.g. the `dials` package).
 #' @export
 #' @keywords internal
-#'
+#' @name tunable.step
 #' @examples
 #' \donttest{
 #' library(recipes)
@@ -37,7 +37,6 @@
 #'   tunable()
 #' }
 #'
-#' @name tunable.recipe
 #' @export
 tunable.recipe <- function(x, ...) {
   if (length(x$steps) == 0) {
@@ -51,7 +50,7 @@ tunable.recipe <- function(x, ...) {
   res
 }
 
-#' @rdname tunable.recipe
+#' @rdname tunable.step
 #' @export
 tunable.step <- function(x, ...) {
   no_param
@@ -68,7 +67,7 @@ no_param <-
     component_id = NA_character_
   )
 
-#' @rdname tunable.recipe
+#' @rdname tunable.step
 #' @export
 tunable.check <- function(x, ...) {
   no_param

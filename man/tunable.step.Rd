@@ -3,9 +3,8 @@
 %   R/harmonic.R, R/ica.R, R/impute_bag.R, R/impute_knn.R, R/impute_mean.R,
 %   R/impute_roll.R, R/isomap.R, R/kpca_poly.R, R/kpca_rbf.R, R/nnmf.R,
 %   R/nnmf_sparse.R, R/ns.R, R/nzv.R, R/other.R, R/pca.R, R/pls.R, R/poly.R,
-%   R/upsample.R, R/window.R
-\name{tunable.step}
-\alias{tunable.step}
+%   R/tunable.R, R/upsample.R, R/window.R
+\name{tunable.step_bs}
 \alias{tunable.step_bs}
 \alias{tunable.step_corr}
 \alias{tunable.step_discretize}
@@ -27,9 +26,12 @@
 \alias{tunable.step_pca}
 \alias{tunable.step_pls}
 \alias{tunable.step_poly}
+\alias{tunable.step}
+\alias{tunable.recipe}
+\alias{tunable.check}
 \alias{tunable.step_upsample}
 \alias{tunable.step_window}
-\title{Information on what step arguments can be tuned}
+\title{Find recommended methods for generating parameter values}
 \usage{
 \method{tunable}{step_bs}(x, ...)
 
@@ -73,10 +75,57 @@
 
 \method{tunable}{step_poly}(x, ...)
 
+\method{tunable}{recipe}(x, ...)
+
+\method{tunable}{step}(x, ...)
+
+\method{tunable}{check}(x, ...)
+
 \method{tunable}{step_upsample}(x, ...)
 
 \method{tunable}{step_window}(x, ...)
 }
-\description{
-Information on what step arguments can be tuned
+\arguments{
+\item{x}{A recipe, recipe step, or recipe check object}
+
+\item{...}{Not currently used.}
 }
+\value{
+A tibble with a column for the parameter \code{name}, information on the
+\emph{default} method for generating a corresponding parameter object, the
+\code{source} of the parameter (e.g. "recipe", etc.), and the \code{component} within
+the source. For the \code{component} column, a little more specificity is given
+about the location of the parameter (e.g. "step_normalize" for recipes).
+The \code{component_id} column contains the unique step \code{id} field.
+}
+\description{
+\code{\link[=tunable]{tunable()}} determines which parameters in an object \emph{can} be tuned along
+with information about the parameters.
+}
+\details{
+These functions define what parameters \emph{can} be tuned for specific steps.
+They also define the recommended objects from the \code{dials} package that can
+be used to generate new parameter values and other characteristics.
+
+If the object has no tunable parameters, a tibble with no rows is returned.
+
+The information about the default parameter object takes the form of a
+named list with an element for the function call and an optional element for
+the source of the function (e.g. the \code{dials} package).
+}
+\examples{
+\donttest{
+library(recipes)
+
+recipe(mpg ~ ., data = mtcars) \%>\%
+  step_knnimpute(all_predictors()) \%>\%
+  step_pca(all_numeric_predictors()) \%>\%
+  tunable()
+
+recipe(mpg ~ ., data = mtcars) \%>\%
+  step_normalize(all_numeric_predictors()) \%>\%
+  tunable()
+}
+
+}
+\keyword{internal}
