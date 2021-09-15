@@ -20,7 +20,6 @@
 #' The information about the default parameter object takes the form of a
 #' named list with an element for the function call and an optional element for
 #' the source of the function (e.g. the `dials` package).
-#' @export
 #' @keywords internal
 #'
 #' @examples

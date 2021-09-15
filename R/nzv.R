@@ -211,7 +211,7 @@ nzv <- function(x,
 tidy.step_nzv <- tidy_filter
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_nzv <- function(x, ...) {
   tibble::tibble(

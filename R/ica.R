@@ -238,7 +238,7 @@ tidy.step_ica <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_ica <- function(x, ...) {
   tibble::tibble(
@@ -251,7 +251,7 @@ tunable.step_ica <- function(x, ...) {
 }
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_ica <- function(x, ...) {
   c("dimRed", "fastICA")

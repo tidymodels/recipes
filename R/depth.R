@@ -210,13 +210,7 @@ tidy.step_depth <- function(x, ...) {
 }
 
 
-
-#' S3 methods for tracking which additional packages are needed for steps.
-#'
-#' @param x A recipe step
-#' @return A character vector
-#' @rdname required_pkgs.step
-#' @keywords internal
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_depth <- function(x, ...) {
   c("ddalpha")

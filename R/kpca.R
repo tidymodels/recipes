@@ -239,9 +239,8 @@ tidy.step_kpca <- function(x, ...) {
 
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
-#' @keywords internal
 required_pkgs.step_kpca <- function(x, ...) {
   c("dimRed", "kernlab")
 }
