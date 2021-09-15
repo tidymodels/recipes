@@ -25,6 +25,8 @@
 
 * `step_logit()` gained an offset argument for cases where the input is either zero or one (#784)
 
+* A bug was fixed where imputed values via bagged trees would have the wrong levels.
+
 # recipes 0.1.16
 
 ## New Steps

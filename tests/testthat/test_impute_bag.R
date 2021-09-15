@@ -100,3 +100,16 @@ test_that('tunable', {
   )
 })
 
+
+test_that('non-factor imputation', {
+  data(scat)
+  scat$Location <- as.character(scat$Location)
+  scat$Location[1] <- NA
+  rec <-
+    recipe(Species ~ ., data = scat) %>%
+    step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
+    prep(strings_as_factors = FALSE)
+  expect_true(is.character(bake(rec, NULL, Location)[[1]]))
+
+})
+

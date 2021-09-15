@@ -29,7 +29,7 @@ Imports:
     generics (>= 0.1.0),
     glue,
     gower,
-    ipred,
+    ipred (>= 0.9-12),
     lifecycle,
     lubridate,
     magrittr,
