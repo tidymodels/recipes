@@ -69,7 +69,7 @@ test_that("empty tidying", {
 
   expect_identical(
     tidy(rec, number = 1),
-    tibble(terms = set_names(character()), id = character())
+    tibble(terms = character(), id = character())
   )
 })
 
