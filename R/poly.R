@@ -149,7 +149,7 @@ bake.step_poly <- function(object, new_data, ...) {
     purrr::map(as_tibble) %>%
     purrr::map2_dfc(new_names, ~ setNames(.x, .y))
   new_data <- dplyr::bind_cols(new_data, poly_values)
-  new_data <- dplyr::select(new_data, -col_names)
+  new_data <- dplyr::select(new_data, -dplyr::all_of(col_names))
   new_data
 }
 

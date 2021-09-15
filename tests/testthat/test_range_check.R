@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Checking ranges")
-
 x = -10:110
 
 test_that("core function - correct input", {
@@ -38,16 +36,13 @@ test_that("in recipe", {
   expect_warning(bake(rec1, test), NA)
 
   rec2 <- recipe(train) %>% check_range(x, y) %>% prep()
-  expect_error(bake(rec2, test),
-               "min x is -10, lower bound is -5, max x is 110, upper bound is 105")
+  expect_snapshot(error = TRUE, bake(rec2, test))
 
   rec3 <- recipe(train) %>% check_range(x, y, warn = TRUE) %>% prep()
-  expect_warning(bake(rec3, test),
-                 "min x is -10, lower bound is -5, max x is 110, upper bound is 105")
+  expect_snapshot(bake(rec3, test))
 
   rec4 <- recipe(train) %>% check_range(y, slack_prop = c(0.2, 0.1)) %>% prep()
-  expect_error(bake(rec4, test),
-               "max y is 60, upper bound is 55")
+  expect_snapshot(error = TRUE, bake(rec4, test))
 })
 
 test_that('printing', {

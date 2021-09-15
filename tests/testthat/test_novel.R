@@ -1,8 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("Indicator for novel levels")
-
 
 n <- 200
 

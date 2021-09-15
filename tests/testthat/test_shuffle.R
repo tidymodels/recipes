@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Data shuffling")
-
 
 n <- 50
 set.seed(424)

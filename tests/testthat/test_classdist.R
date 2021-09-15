@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("class distances")
-
 # Note: some tests convert to data frame prior to testing
 # https://github.com/tidyverse/dplyr/issues/2751
 

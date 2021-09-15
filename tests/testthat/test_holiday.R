@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 library(lubridate)
 
-context("Holiday features")
-
-
 exp_dates <- data.frame(date  = ymd(c("2017-12-25", "2017-05-29", "2017-04-16")),
                         holiday = c("ChristmasDay", "USMemorialDay", "Easter"),
                         stringsAsFactors = FALSE)

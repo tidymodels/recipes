@@ -4,8 +4,6 @@ library(modeldata)
 library(modeldata)
 data(credit_data)
 
-context("Mode imputation")
-
 
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
@@ -44,8 +42,8 @@ test_that('simple modes', {
            model = modes,
            id = "")
 
-  expect_equivalent(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
-  expect_equivalent(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+  expect_equal(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
+  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
 })
 

@@ -289,8 +289,8 @@ tidy.step_impute_knn <- function(x, ...) {
     res <- purrr::map_df(x$columns,
                          function(x)
                            data.frame(
-                             terms = x$y,
-                             predictors = x$x,
+                             terms = unname(x$y),
+                             predictors = unname(x$x),
                              stringsAsFactors = FALSE
                            )
     )

@@ -3,8 +3,6 @@ library(recipes)
 library(modeldata)
 data(biomass)
 
-context("ICA")
-
 
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]

@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("Removing variables")
-
-
 test_that("basics", {
 
   n <- 20
@@ -155,7 +152,7 @@ test_that("remove with quasi-quotation", {
     iris %>%
     as_tibble() %>%
     slice(1:75) %>%
-    select(-sepal_vars)
+    select(-all_of(sepal_vars))
 
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)

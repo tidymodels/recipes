@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-
-context("Yeo Johnson transformation")
-
 n <- 20
 set.seed(1)
 ex_dat <- data.frame(x1 = exp(rnorm(n, mean = .1)),
@@ -56,8 +53,8 @@ test_that('simple YJ trans', {
   rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
-  expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tol = .001)
-  expect_equal(as.matrix(exp_dat), as.matrix(rec_trans), tol = .05)
+  expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tolerance = .001)
+  expect_equal(as.matrix(exp_dat), as.matrix(rec_trans), tolerance = .05)
 })
 
 test_that('missing data', {

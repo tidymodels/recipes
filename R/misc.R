@@ -163,6 +163,11 @@ names0 <- function(num, prefix = "x") {
 #' @export
 #' @rdname names0
 dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
+  # Work around `paste()` recycling bug with 0 length input
+  args <- vctrs::vec_recycle_common(var, lvl)
+  var <- args[[1]]
+  lvl <- args[[2]]
+
   if(!ordinal)
     nms <- paste(var, make.names(lvl), sep = sep)
   else

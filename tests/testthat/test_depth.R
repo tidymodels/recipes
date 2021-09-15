@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(ddalpha)
 
-context("depth features")
-
 
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%

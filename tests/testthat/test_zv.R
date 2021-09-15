@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-
-context("Zero variance filter")
-
 n <- 50
 set.seed(424)
 dat <- data.frame(x1 = rnorm(n),

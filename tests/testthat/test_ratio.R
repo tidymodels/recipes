@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("Ratio creation")
-
 
 n <- 20
 ex_dat <- data.frame(

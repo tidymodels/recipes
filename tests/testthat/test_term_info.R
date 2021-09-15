@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("Merging/updating term_info")
-
 # results based on second example at
 # https://github.com/tidymodels/textrecipes/issues/17#issue-382503618
 tokenize_old <-

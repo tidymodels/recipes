@@ -1,5 +1,3 @@
-context("Check new values")
-
 x    <- rep(letters[1:3], 2)
 x_na <- c(rep(letters[1:3], 2), NA)
 allowed_values <- letters[1:3]

@@ -5,8 +5,6 @@ library(recipes)
 library(modeldata)
 data(biomass)
 
-context("Testing center and scale")
-
 means <- vapply(biomass[, 3:7], mean, c(mean = 0))
 sds <- vapply(biomass[, 3:7], sd, c(sd = 0))
 
@@ -92,8 +90,8 @@ test_that('training in stages', {
   in_stages_retrained <-
     prep(in_stages, training = biomass, fresh = TRUE)
 
-  expect_equal(at_once_trained, in_stages_trained)
-  expect_equal(at_once_trained, in_stages_retrained)
+  expect_equal(at_once_trained, in_stages_trained, ignore_formula_env = TRUE)
+  expect_equal(at_once_trained, in_stages_retrained, ignore_formula_env = TRUE)
 })
 
 

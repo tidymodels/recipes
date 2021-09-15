@@ -5,8 +5,6 @@ library(dplyr)
 library(modeldata)
 data(biomass)
 
-context("K-nn imputation")
-
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
@@ -38,7 +36,7 @@ test_that('imputation values', {
     neighbors = rep(3, 2),
     id = ""
   )
-  expect_equivalent(as.data.frame(tidy(impute_rec, number = 2)), as.data.frame(imp_exp_un))
+  expect_equal(as.data.frame(tidy(impute_rec, number = 2)), as.data.frame(imp_exp_un))
   discr_rec <- prep(discr_rec, training = biomass_tr, verbose = FALSE)
   tr_data <- bake(discr_rec, new_data = biomass_tr)
   te_data <- bake(discr_rec, new_data = biomass_te) %>%

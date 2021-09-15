@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-context("Lower limit imputation")
-
 library(modeldata)
 data(biomass)
 

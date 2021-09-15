@@ -6,10 +6,6 @@ data(biomass)
 
 # ------------------------------------------------------------------------------
 
-context("Natural splines")
-
-# ------------------------------------------------------------------------------
-
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
 

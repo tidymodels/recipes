@@ -3,8 +3,6 @@ library(ipred)
 library(rpart)
 library(recipes)
 
-context("bagged imputation")
-
 library(modeldata)
 data(biomass)
 
@@ -56,11 +54,9 @@ test_that('imputation models', {
            model = imputed_trained$steps[[1]]$models,
            id = imputed_trained$steps[[1]]$id)
 
-  expect_equivalent(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_un))
+  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_un))
   expect_equal(tidy(imputed_trained, 1)$terms, imp_tibble_tr$terms)
   expect_equal(tidy(imputed_trained, 1)$model, imp_tibble_tr$model)
-
-
 })
 
 

@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Testing retraining")
-
 library(modeldata)
 data(biomass)
 

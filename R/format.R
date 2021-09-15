@@ -10,7 +10,7 @@ format_ch_vec <-
   function(x,
            sep = ", ",
            width = options()$width - 9) {
-    glue::glue_collapse(x, sep = sep, width = width)
+    as.character(glue::glue_collapse(x, sep = sep, width = width))
   }
 
 

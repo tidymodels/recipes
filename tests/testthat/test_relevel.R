@@ -1,8 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("Relevel factors")
-
 library(modeldata)
 data(okc)
 

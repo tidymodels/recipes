@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-context("Missing data checks")
-
 
 set_with_na <- tibble(
   a = c(1, 2, NA),

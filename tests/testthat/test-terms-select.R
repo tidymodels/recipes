@@ -4,9 +4,6 @@ library(tibble)
 library(tidyselect)
 library(rlang)
 
-context("Term selection")
-
-
 library(modeldata)
 data(okc)
 rec1 <- recipe(~ ., data = okc)

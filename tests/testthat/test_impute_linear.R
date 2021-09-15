@@ -1,7 +1,6 @@
 library(testthat)
 library(modeldata)
 
-context("linear regression imputation")
 data(ames)
 
 ames_dat <- ames %>%

@@ -157,10 +157,12 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
       )
     kprc <-
       try(
-        kprc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          kprc@stdpars
-        ),
+        suppressMessages({
+          kprc@fun(
+            dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+            kprc@stdpars
+          )
+        }),
         silent = TRUE
       )
     if (inherits(kprc, "try-error")) {

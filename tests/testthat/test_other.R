@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Pooling to other category")
-
-
 library(modeldata)
 data(okc)
 

@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Muli Choice Dummy variable creation")
-
 languages <- tribble(
   ~lang_1,    ~lang_2,   ~lang_3,  ~lang_4,
   "English",  "Italian", NA,       NA,
@@ -27,8 +25,8 @@ test_that('dummy variables with factor inputs', {
   dummy_pred <- bake(dummy_prepped, new_data = languages)
 
   expect_identical(
-    unname(dummy_pred),
-    unname(result)
+    unname(unclass(dummy_pred)),
+    unname(unclass(result))
   )
 
   expect_identical(

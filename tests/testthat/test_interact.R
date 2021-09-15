@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Interaction creation")
-
-
 dat_tr <- data.frame(
   x1 = 1:10,
   x2 = (1:10) + 1,
@@ -88,11 +85,13 @@ test_that('using selectors', {
   colnames(te_og) <- gsub(":", "_x_", colnames(te_og), fixed = TRUE)
   colnames(te_og) <- gsub("zb", "z_b", colnames(te_og), fixed = TRUE)
   colnames(te_og) <- gsub("zc", "z_c", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_b", "z_b_x_x1", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_c", "z_c_x_x1", colnames(te_og), fixed = TRUE)
 
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
 
-  expect_equivalent(te_og, te_new)
+  expect_equal(te_og, te_new)
 })
 
 test_that("using where() works", {
@@ -103,7 +102,7 @@ test_that("using where() works", {
   x <- prep(ex_rec, dat_tr)
 
   expr <- x$steps[[2]]$terms[[2]]
-  expect <- expr((x1 + x2 + x3 + x4 + x5 + y + z_b + z_c):x1)
+  expect <- expr(`:`(x1 + x2 + x3 + x4 + x5 + y + z_b + z_c, x1))
 
   expect_equal(
     expr,
@@ -120,7 +119,7 @@ test_that("using all_of() works", {
   x <- prep(ex_rec, dat_tr)
 
   expr <- x$steps[[1]]$terms[[2]]
-  expect <- expr((x2 + x3):x1)
+  expect <- expr(`:`(x2 + x3, x1))
 
   expect_equal(
     expr,
@@ -171,7 +170,7 @@ test_that('replacing selectors in formulas', {
       quote(starts_with("huh?")),
       quote((x1+x2+x3))
     ),
-    ~(a + b + (x1 + x2 + x3)):has_role("something")
+    expr(~(a + b + (x1 + x2 + x3)):has_role("something"))
   )
   expect_equal(
     recipes:::replace_selectors(
@@ -179,7 +178,7 @@ test_that('replacing selectors in formulas', {
       quote(matches("wat?")),
       quote(a)
     ),
-    ~ (a) ^ 2
+    expr(~ (a) ^ 2)
   )
   expect_equal(
     recipes:::replace_selectors(
@@ -187,7 +186,7 @@ test_that('replacing selectors in formulas', {
       quote(all_predictors()),
       quote(a)
     ),
-    ~ a + a
+    expr(~ a + a)
   )
 })
 
