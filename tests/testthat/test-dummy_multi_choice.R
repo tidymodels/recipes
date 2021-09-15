@@ -25,8 +25,8 @@ test_that('dummy variables with factor inputs', {
   dummy_pred <- bake(dummy_prepped, new_data = languages)
 
   expect_identical(
-    unname(dummy_pred),
-    unname(result)
+    unname(unclass(dummy_pred)),
+    unname(unclass(result))
   )
 
   expect_identical(
