@@ -1,5 +1,3 @@
-context("Changing roles")
-
 library(testthat)
 library(recipes)
 library(tibble)

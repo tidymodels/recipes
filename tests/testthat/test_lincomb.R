@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Linear combination detection")
-
-
 dummies <- cbind(model.matrix( ~ block - 1, npk),
                  model.matrix( ~ N - 1, npk),
                  model.matrix( ~ P - 1, npk),

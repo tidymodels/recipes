@@ -3,8 +3,6 @@ library(ipred)
 library(rpart)
 library(recipes)
 
-context("bagged imputation")
-
 library(modeldata)
 data(biomass)
 

@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Integer conversion")
-
 tr_n <- 10
 tr_dat <-
   data.frame(

@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Formula stuff")
-
 
 test_that('is trained?', {
   rec1 <- recipe(~ ., data = iris)

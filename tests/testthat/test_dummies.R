@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Dummy variable creation")
-
 
 library(modeldata)
 data(okc)

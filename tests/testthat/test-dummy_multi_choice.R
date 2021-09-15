@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Muli Choice Dummy variable creation")
-
 languages <- tribble(
   ~lang_1,    ~lang_2,   ~lang_3,  ~lang_4,
   "English",  "Italian", NA,       NA,

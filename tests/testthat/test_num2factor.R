@@ -1,8 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("Number to factor conversion")
-
 # ------------------------------------------------------------------------------
 
 n <- 200

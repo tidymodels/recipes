@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("Log transformation")
-
-
 n <- 20
 set.seed(1)
 ex_dat <- data.frame(x1 = exp(rnorm(n, mean = .1)),

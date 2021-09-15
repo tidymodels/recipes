@@ -1,5 +1,3 @@
-context("Column ordering")
-
 library(testthat)
 library(tibble)
 library(modeldata)

@@ -1,7 +1,5 @@
 library(dplyr)
 
-context("step_cut function")
-
 test_that("step_cut throws error on non-numerics", {
   x <- tibble(num_var = 1:3, cat_var = c("1", "2" ,"3"))
   expect_error(recipe(x) %>% step_cut(num_var, breaks = 2) %>% prep(), NA)

@@ -2,9 +2,7 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-context("List column operations")
-
-cmplt_ex_1 <- 
+cmplt_ex_1 <-
   tibble(
     x = letters[1:10],
     y = lapply(as.list(1:10), function(x) 1:100),

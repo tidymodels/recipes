@@ -2,8 +2,6 @@ library(recipes)
 library(dplyr)
 library(testthat)
 
-context("Checking factors in new data versus original")
-
 # ----------------------------------------------------------------
 
 library(modeldata)

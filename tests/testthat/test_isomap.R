@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("ISOmap")
-
 ## expected results form the `dimRed` package
 
 exp_res <- structure(list(Isomap1 = c(0.312570873898531, 0.371885353599467, 2.23124009833741,

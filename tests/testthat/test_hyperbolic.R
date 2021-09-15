@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("Hyperbolic transformations")
-
 
 n <- 20
 ex_dat <- data.frame(x1 = seq(0, 1, length = n),

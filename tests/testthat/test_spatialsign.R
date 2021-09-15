@@ -3,9 +3,6 @@ library(recipes)
 library(modeldata)
 data(biomass)
 
-context("Spatial sign transformation")
-
-
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
 
@@ -29,19 +26,19 @@ test_that('spatial sign', {
 test_that('Missing values', {
   sp_sign <- rec %>%
     step_spatialsign(carbon, hydrogen)
-  
+
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
-  
+
   with_na <- head(biomass)
   with_na$carbon[1] <- NA
-  with_na$hydrogen[2] <- NA  
-  
+  with_na$hydrogen[2] <- NA
+
   sp_sign_pred <- bake(sp_sign_trained, new_data = with_na)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
-  
+
   x <- as.matrix(with_na[, 3:4])
   x <- t(apply(x, 1, function(x) x/sqrt(sum(x^2, na.rm = TRUE))))
-  
+
   expect_equivalent(sp_sign_pred, x)
 })
 

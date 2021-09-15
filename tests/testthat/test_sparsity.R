@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(Matrix)
 
-context("Spare matrix format")
-
 
 ###################################################################
 

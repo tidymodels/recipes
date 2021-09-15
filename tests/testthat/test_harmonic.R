@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("harmonic parameters")
 x_year           <- seq(0, 86400*365*4, by = 31556926)
 x_month_sidereal <- seq(0, 86400*7, by = 2360592)
 x_month_synodic  <- seq(0, 86400*7, by = 2551443)

@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Interaction creation")
-
-
 dat_tr <- data.frame(
   x1 = 1:10,
   x2 = (1:10) + 1,

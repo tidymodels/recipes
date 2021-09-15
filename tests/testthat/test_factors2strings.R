@@ -1,8 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("factor to string conversion")
-
 
 n <- 200
 

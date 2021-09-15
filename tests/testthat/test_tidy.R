@@ -2,7 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("General tidy method")
 
 library(modeldata)
 data(okc)

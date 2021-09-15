@@ -3,9 +3,6 @@ library(recipes)
 library(modeldata)
 data(biomass)
 
-context("Range scaling")
-
-
 biomass_tr <- biomass[1:10,]
 biomass_te <- biomass[c(13:14, 19, 522),]
 

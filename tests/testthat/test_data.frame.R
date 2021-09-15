@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Data framedness")
-
-
 ###################################################################
 
 library(modeldata)

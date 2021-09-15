@@ -1,7 +1,5 @@
 library(testthat)
 
-context("Checking ranges")
-
 x = -10:110
 
 test_that("core function - correct input", {

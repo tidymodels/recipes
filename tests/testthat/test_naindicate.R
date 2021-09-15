@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(tidyr)
 
-context("step_indicate_na")
-
 train <-
   tibble::tibble(
     col1 = c("a", "b", "c"),

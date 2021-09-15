@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Regex pattern matching indicators")
-
 library(modeldata)
 data(covers)
 covers$rows <- 1:nrow(covers)

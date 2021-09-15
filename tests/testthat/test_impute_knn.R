@@ -5,8 +5,6 @@ library(dplyr)
 library(modeldata)
 data(biomass)
 
-context("K-nn imputation")
-
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)

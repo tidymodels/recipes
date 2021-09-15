@@ -1,7 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("Convert to unknowns")
 
 library(modeldata)
 data(okc)

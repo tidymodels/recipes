@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-context("Logit transformation")
-
-
 n <- 20
 set.seed(12)
 ex_dat <- data.frame(x1 = runif(n),

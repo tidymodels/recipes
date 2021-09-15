@@ -2,8 +2,6 @@ library(testthat)
 library(tibble)
 library(recipes)
 
-context("Testing basic functionalities")
-
 library(modeldata)
 data(biomass)
 biomass_tr <- biomass[biomass$dataset == "Training",]

@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Geographic distances")
-
 set.seed(4693)
 rand_data <- data.frame(x = round(runif(10), 2), y = round(runif(10), 2))
 rand_data$x[1] <- NA

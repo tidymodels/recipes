@@ -1,9 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("String to factor conversion")
-
-
 n <- 200
 
 set.seed(8575)

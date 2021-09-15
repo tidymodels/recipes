@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 
 
-context("discretization")
-
-
 ex_tr <- data.frame(x1 = 1:100,
                     x2 = rep(1:5, each = 20),
                     x3 = factor(rep(letters[1:2], each = 50)))

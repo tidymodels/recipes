@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("step_relu")
-
 df <- tibble(val1 = -10:10, val2 = factor(LETTERS[1:21]))
 
 test_that('default relu settings', {

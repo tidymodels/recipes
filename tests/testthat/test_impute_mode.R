@@ -4,8 +4,6 @@ library(modeldata)
 library(modeldata)
 data(credit_data)
 
-context("Mode imputation")
-
 
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)

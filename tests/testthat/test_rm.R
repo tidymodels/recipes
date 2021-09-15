@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-context("Removing variables")
-
-
 test_that("basics", {
 
   n <- 20

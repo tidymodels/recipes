@@ -1,5 +1,3 @@
-context("test-update")
-
 test_that("can update a step", {
 
   stp_4 <- recipes::step("stp", x = 4, trained = FALSE)

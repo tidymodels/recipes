@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Matrix data types")
-
 
 ###################################################################
 

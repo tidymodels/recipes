@@ -1,8 +1,6 @@
 library(tibble)
 library(dplyr)
 
-context("Grouped data frame tests")
-
 
 n <- 20
 ex_dat <-

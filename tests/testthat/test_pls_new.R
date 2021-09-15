@@ -1,5 +1,3 @@
-context("PLS (new objects)")
-
 library(testthat)
 library(recipes)
 library(dplyr)
