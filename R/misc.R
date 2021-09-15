@@ -329,15 +329,22 @@ printer <- function(tr_obj = NULL,
                     width = max(20, options()$width - 30)) {
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
-  } else
+  } else {
     txt <- format_selectors(untr_obj, width = width)
-  if (nchar(txt) == 0)
+  }
+
+  if (length(txt) == 0L) {
     txt <- "<none>"
+  }
+
   cat(txt)
-  if (trained)
+
+  if (trained) {
     cat(" [trained]\n")
-  else
+  } else {
     cat("\n")
+  }
+
   invisible(NULL)
 }
 
