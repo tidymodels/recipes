@@ -98,8 +98,8 @@ As an example of using PCA (perhaps to produce a plot):
 # Define the recipe
 pca_rec <- 
   rec %>%
-  step_normalize(all_numeric_predictors(), id = "norm") %>%
-  step_pca(all_numeric_predictors(), id = "pca")
+  step_normalize(all_numeric_predictors()) %>%
+  step_pca(all_numeric_predictors())
 ```
 
 Now to estimate the normalization statistics and the PCA loadings: 
