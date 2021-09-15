@@ -44,8 +44,8 @@ test_that('simple median', {
            model = as.integer(unlist(medians)),
            id = "")
 
-  expect_equivalent(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
-  expect_equivalent(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+  expect_equal(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
+  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
 })
 
