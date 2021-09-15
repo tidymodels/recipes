@@ -57,7 +57,7 @@ step_bin2factor <-
     add_step(
       recipe,
       step_bin2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         levels = levels,
@@ -87,10 +87,11 @@ step_bin2factor_new <-
 #' @export
 prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  if (length(col_names) < 1)
-    rlang::abort("The selector should only select at least one variable")
-  if (any(info$type[info$variable %in% col_names] != "numeric"))
+
+  if (any(info$type[info$variable %in% col_names] != "numeric")) {
     rlang::abort("The variables should be numeric")
+  }
+
   step_bin2factor_new(
     terms = x$terms,
     role = x$role,
