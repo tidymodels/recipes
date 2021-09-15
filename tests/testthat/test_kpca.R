@@ -15,8 +15,10 @@ test_that('correct kernel PCA values', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, id = "")
+  # Capture deprecation message
+  expect_snapshot(
+    kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6, id = "")
+  )
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
@@ -47,17 +49,21 @@ test_that('printing', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6)
+  expect_snapshot(
+    kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
+  )
+
   expect_output(print(kpca_rec))
   expect_output(prep(kpca_rec, training = tr_dat, verbose = TRUE))
 })
 
 
 test_that('No kPCA comps', {
-  pca_extract <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
-    prep()
+  expect_snapshot(
+    pca_extract <- rec %>%
+      step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
+      prep()
+  )
 
   expect_equal(
     names(juice(pca_extract)),
