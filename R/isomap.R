@@ -183,10 +183,11 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 bake.step_isomap <- function(object, new_data, ...) {
   if (object$num_terms > 0) {
     isomap_vars <- colnames(environment(object$res@apply)$indata)
-    comps <-
-      object$res@apply(
+    suppressMessages({
+      comps <- object$res@apply(
         dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
       )@data
+    })
     comps <- comps[, 1:object$num_terms, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
