@@ -45,7 +45,7 @@ test_that('simple mean', {
            model = means,
            id = "")
 
-  expect_equivalent(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
+  expect_equal(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
   expect_equal(tidy(imputed, 1), imp_tibble_tr)
 
 })
