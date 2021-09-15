@@ -32,6 +32,7 @@ test_that('Missing values', {
   with_na <- head(biomass)
   with_na$carbon[1] <- NA
   with_na$hydrogen[2] <- NA
+  rownames(with_na) <- NULL
 
   sp_sign_pred <- bake(sp_sign_trained, new_data = with_na)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
@@ -39,7 +40,7 @@ test_that('Missing values', {
   x <- as.matrix(with_na[, 3:4])
   x <- t(apply(x, 1, function(x) x/sqrt(sum(x^2, na.rm = TRUE))))
 
-  expect_equivalent(sp_sign_pred, x)
+  expect_equal(sp_sign_pred, x)
 })
 
 
