@@ -50,7 +50,7 @@
 
 
 <meta property="og:title" content="Polynomial Kernel PCA Signal Extraction — step_kpca_poly" />
-<meta property="og:description" content="step_kpca_poly a specification of a recipe step that
+<meta property="og:description" content="step_kpca_poly creates a specification of a recipe step that
 will convert numeric data into one or more principal components
 using a polynomial kernel basis expansion." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
@@ -176,7 +176,7 @@ using a polynomial kernel basis expansion." />
     </div>
 
     <div class="ref-description">
-    <p><code>step_kpca_poly</code> a <em>specification</em> of a recipe step that
+    <p><code>step_kpca_poly</code> creates a <em>specification</em> of a recipe step that
 will convert numeric data into one or more principal components
 using a polynomial kernel basis expansion.</p>
     </div>
@@ -223,16 +223,15 @@ preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>num_comp</th>
-      <td><p>The number of PCA components to retain as new
-predictors. If <code>num_comp</code> is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.</p></td>
+      <td><p>The number of PCA components to retain as new predictors.
+If <code>num_comp</code> is greater than the number of columns or the number of
+possible components, a smaller value will be used.</p></td>
     </tr>
     <tr>
       <th>res</th>
       <td><p>An S4 <code><a href='https://rdrr.io/pkg/kernlab/man/kpca.html'>kernlab::kpca()</a></code> object is stored
 here once this preprocessing step has be trained by
-<code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+<code><a href='prep.html'>prep()</a></code>.</p></td>
     </tr>
     <tr>
       <th>degree, scale_factor, offset</th>
@@ -269,30 +268,27 @@ the computations for subsequent operations.</p></td>
 sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Kernel principal component analysis (kPCA) is an
-extension of a PCA analysis that conducts the calculations in a
-broader dimensionality defined by a kernel function. For
-example, if a quadratic kernel function were used, each variable
-would be represented by its original values as well as its
-square. This nonlinear mapping is used during the PCA analysis
-and can potentially help find better representations of the
-original data.</p>
+    <p>Kernel principal component analysis (kPCA) is an extension of a PCA analysis
+that conducts the calculations in a broader dimensionality defined by a
+kernel function. For example, if a quadratic kernel function were used,
+each variable would be represented by its original values as well as its
+square. This nonlinear mapping is used during the PCA analysis and can
+potentially help find better representations of the original data.</p>
 <p>This step requires the <span class="pkg">dimRed</span> and <span class="pkg">kernlab</span> packages.
-If not installed, the step will stop with a note about installing
+If not installed, the step will stop with a prompt about installing
 these packages.</p>
-<p>As with ordinary PCA, it is important to standardize the
-variables prior to running PCA (<code>step_center</code> and
-<code>step_scale</code> can be used for this purpose).</p>
-<p>The argument <code>num_comp</code> controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with <code>prefix</code> and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if <code>num_comp &lt; 10</code>, their names will be <code>kPC1</code> -
-<code>kPC9</code>. If <code>num_comp = 101</code>, the names would be
+<p>As with ordinary PCA, it is important to center and scale the variables
+prior to computing PCA components (<code><a href='step_normalize.html'>step_normalize()</a></code> can be used for
+this purpose).</p>
+<p>The argument <code>num_comp</code> controls the number of components that will be
+retained; the original variables that are used to derive the components are
+removed from the data when <code>keep_original_cols = FALSE</code>. The new components
+will have names that begin with <code>prefix</code> and a sequence of numbers. The
+variable names are padded with zeros. For example, if <code>num_comp &lt; 10</code>, the
+new names will be <code>kPC1</code> - <code>kPC9</code>. If <code>num_comp = 101</code>, the names would be
 <code>kPC001</code> - <code>kPC101</code>.</p>
-<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>terms</code> (the
-selectors or variables selected) is returned.</p>
+<p>When you <code><a href='tidy.recipe.html'>tidy()</a></code> this step, a tibble with column <code>terms</code>
+(the selectors or variables selected) is returned.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Scholkopf, B., Smola, A., and Muller, K. (1997).
@@ -310,6 +306,7 @@ of Statistical Software</em>, 11(1), 1-20.</p>
 <code><a href='step_ica.html'>step_ica</a>()</code>,
 <code><a href='step_isomap.html'>step_isomap</a>()</code>,
 <code><a href='step_kpca_rbf.html'>step_kpca_rbf</a>()</code>,
+<code><a href='step_kpca.html'>step_kpca</a>()</code>,
 <code><a href='step_mutate_at.html'>step_mutate_at</a>()</code>,
 <code><a href='step_nnmf.html'>step_nnmf</a>()</code>,
 <code><a href='step_pca.html'>step_pca</a>()</code>,
