@@ -27,6 +27,9 @@
 
 * A bug was fixed where imputed values via bagged trees would have the wrong levels.
 
+* `step_kpca()` was un-deprecated.
+
+
 # recipes 0.1.16
 
 ## New Steps
