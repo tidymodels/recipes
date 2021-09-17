@@ -153,7 +153,7 @@ test_that("center - empty selection prep/bake is a no-op", {
   baked1 <- bake(rec1, mtcars)
   baked2 <- bake(rec2, mtcars)
 
-  expect_identical(baked1, baked1)
+  expect_identical(baked1, baked2)
 })
 
 test_that("center - empty selection tidy method works", {
