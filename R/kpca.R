@@ -63,6 +63,7 @@ step_kpca <-
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("kpca")) {
 
@@ -78,6 +79,7 @@ step_kpca <-
         res = res,
         options = options,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -85,7 +87,8 @@ step_kpca <-
 }
 
 step_kpca_new <-
-  function(terms, role, trained, num_comp, res, options, prefix, skip, id) {
+  function(terms, role, trained, num_comp, res, options, prefix,
+           keep_original_cols, skip, id) {
     step(
       subclass = "kpca",
       terms = terms,
@@ -95,6 +98,7 @@ step_kpca_new <-
       res = res,
       options = options,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -132,6 +136,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     options = x$options,
     res = kprc,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -147,7 +152,11 @@ bake.step_kpca <- function(object, new_data, ...) {
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    keep_original_cols <- get_keep_original_cols(object)
+
+    if (!keep_original_cols) {
+      new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    }
   }
   as_tibble(new_data)
 }

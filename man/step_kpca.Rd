@@ -13,6 +13,7 @@ step_kpca(
   res = NULL,
   options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
   prefix = "kPC",
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("kpca")
 )
@@ -45,6 +46,9 @@ the arguments \code{kernel} and \code{kpar} but others can be passed in.
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
