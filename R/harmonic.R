@@ -154,7 +154,7 @@ step_harmonic <-
     add_step(
       recipe,
       step_harmonic_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         role = role,
         frequency = frequency,
@@ -325,9 +325,9 @@ tidy.step_harmonic <- function(x, ...) {
 
     res <-
       tibble(terms = rep(col_names, each = n_frequency * 2L),
-             starting_val = rep(x$starting_val, each = n_frequency * 2L),
-             cycle_size = rep(x$cycle_size, each = n_frequency * 2L),
-             frequency = rep(rep(x$frequency, times = 2L), times = n_terms),
+             starting_val = rep(unname(x$starting_val), each = n_frequency * 2L),
+             cycle_size = rep(unname(x$cycle_size), each = n_frequency * 2L),
+             frequency = rep(rep(unname(x$frequency), times = 2L), times = n_terms),
       )
     res$key <- paste0(res$terms,
                       rep(rep(c('_sin_', '_cos_'), each = n_frequency),
