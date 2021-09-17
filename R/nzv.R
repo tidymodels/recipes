@@ -82,14 +82,12 @@ step_nzv <-
     if (!isTRUE(all.equal(exp_list, options))) {
       freq_cut <- options$freq_cut
       unique_cut <- options$unique_cut
-      message(
-        paste(
-          "The argument `options` is deprecated in favor of `freq_cut`",
-          "and `unique_cut`. options` will be removed in next version."
-        )
+      lifecycle::deprecate_stop(
+        "0.1.7",
+        "step_nzv(options)",
+        details = "Please use the arguments `freq_cut` and `unique_cut` instead."
       )
     }
-
 
     add_step(
       recipe,

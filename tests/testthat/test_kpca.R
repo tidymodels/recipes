@@ -15,10 +15,7 @@ test_that('correct kernel PCA values', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
 
-  # Capture deprecation message
-  expect_snapshot(
-    kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6, id = "")
-  )
+  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6, id = "")
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
