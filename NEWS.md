@@ -29,6 +29,8 @@
 
 * `step_kpca()` was un-deprecated.
 
+* The deprecation of the `preserve` argument to `step_pls()` and `step_dummy()` was escalated from a soft deprecation to regular deprecation. 
+
 
 # recipes 0.1.16
 
