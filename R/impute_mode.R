@@ -65,7 +65,7 @@ step_impute_mode <-
     add_step(
       recipe,
       step_impute_mode_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         modes = modes,
@@ -189,7 +189,7 @@ mode_est <- function(x) {
 tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$modes),
-                  model = x$modes)
+                  model = unname(x$modes))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_chr)
