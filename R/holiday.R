@@ -57,7 +57,7 @@ step_holiday <-
   add_step(
     recipe,
     step_holiday_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       holidays = holidays,
@@ -161,9 +161,7 @@ print.step_holiday <-
 #' @export
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)
-  res <- expand.grid(terms = res$terms,
-                     holiday = x$holidays,
-                     stringsAsFactors = FALSE)
+  res <- tidyr::expand_grid(terms = res$terms, holiday = x$holidays)
   res$id <- x$id
-  as_tibble(res)
+  res
 }
