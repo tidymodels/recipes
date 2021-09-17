@@ -29,10 +29,7 @@ reference:
     - bake
     - juice
     - selections
-    - starts_with("all_")
     - has_role
-    - has_type
-    - current_info
     - add_role
   - title: Step Functions - Imputation
     contents:
