@@ -329,4 +329,3 @@ okc_rec_trained <- prep(okc_rec, training = okc)
 tidy(okc_rec_trained)
 tidy(okc_rec_trained, number = 3)
 }
-\keyword{internal}
