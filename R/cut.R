@@ -69,7 +69,7 @@ step_cut <-
       add_step(
         recipe,
         step_cut_new(
-          terms = ellipse_check(...),
+          terms = enquos(...),
           trained = trained,
           role = role,
           breaks = breaks,
@@ -198,14 +198,16 @@ print.step_cut <-
 #' @export
 tidy.step_cut <- function(x, ...) {
   if (is_trained(x)) {
-    res <-
-      tibble(terms = names(x$breaks),
-             value = sapply(x$class_list,
-                            function(x) paste0(x, collapse = "-")))
+    values <- vapply(
+      unname(x$class_list),
+      FUN = function(x) paste0(x, collapse = "-"),
+      FUN.VALUE = character(1)
+    )
+
+    res <- tibble(terms = names(x$breaks), value = values)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(terms = term_names, value = na_chr)
   }
   res$id <- x$id
   res
