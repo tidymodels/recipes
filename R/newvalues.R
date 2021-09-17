@@ -143,6 +143,9 @@ print.check_new_values <-
     invisible(x)
   }
 
+#' @rdname tidy.recipe
+#' @param x A `check_new_values` object.
+#' @export
 tidy.check_new_values <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = x$columns)

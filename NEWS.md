@@ -27,6 +27,9 @@
 
 * A bug was fixed where imputed values via bagged trees would have the wrong levels.
 
+* The `tidy()` method for objects from `check_new_values()` is now exported.
+
+
 # recipes 0.1.16
 
 ## New Steps
