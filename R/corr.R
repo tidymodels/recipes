@@ -75,7 +75,7 @@ step_corr <- function(recipe,
   add_step(
     recipe,
     step_corr_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       threshold = threshold,
@@ -117,7 +117,7 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
       method = x$method
     )
   } else {
-    filter <- numeric(0)
+    filter <- character(0)
   }
 
   step_corr_new(
@@ -221,7 +221,7 @@ tidy_filter <- function(x, ...) {
     res <- tibble(terms = x$removals)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = na_chr)
+    res <- tibble(terms = term_names)
   }
   res$id <- x$id
   res
