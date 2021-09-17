@@ -37,7 +37,7 @@ check_cols <-
     add_check(
       recipe,
       check_cols_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         trained = trained,
         columns = NULL,
@@ -100,7 +100,7 @@ print.check_cols <-
 #' @export
 tidy.check_cols <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = unname(x$columns))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
