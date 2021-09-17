@@ -68,7 +68,7 @@ step_integer <-
     add_step(
       recipe,
       step_integer_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         strict = strict,
@@ -175,10 +175,9 @@ print.step_integer <-
 #' @export
 tidy.step_integer <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$key), value = x$key)
+    res <- tibble(terms = names(x$key), value = unname(x$key))
   } else {
-    res <- tibble(terms = sel2char(x$terms))
-    res$value = NA
+    res <- tibble(terms = sel2char(x$terms), value = list(NULL))
   }
   res$id <- x$id
   res
