@@ -190,6 +190,7 @@ using a kernel basis expansion.</p>
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
   options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kernel <span class='op'>=</span> <span class='st'>"rbfdot"</span>, kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span>,
   prefix <span class='op'>=</span> <span class='st'>"kPC"</span>,
+  keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
   id <span class='op'>=</span> <span class='fu'><a href='rand_id.html'>rand_id</a></span><span class='op'>(</span><span class='st'>"kpca"</span><span class='op'>)</span>
 <span class='op'>)</span></code></pre></div>
@@ -240,6 +241,11 @@ the arguments <code>kernel</code> and <code>kpar</code> but others can be passed
       <th>prefix</th>
       <td><p>A character string for the prefix of the resulting new
 variables. See notes below.</p></td>
+    </tr>
+    <tr>
+      <th>keep_original_cols</th>
+      <td><p>A logical to keep the original variables in the
+output. Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>skip</th>
