@@ -144,7 +144,6 @@ print.check_new_values <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `check_new_values` object.
 #' @export
 tidy.check_new_values <- function(x, ...) {
   if (is_trained(x)) {
