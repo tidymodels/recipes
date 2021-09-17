@@ -62,7 +62,7 @@ step_impute_median <-
     add_step(
       recipe,
       step_impute_median_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         medians = medians,
@@ -165,7 +165,7 @@ print.step_medianimpute <- print.step_impute_median
 tidy.step_impute_median <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$medians),
-                  model = unlist(x$medians))
+                  model = vctrs::vec_unchop(unname(x$medians), ptype = double()))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)
