@@ -90,6 +90,7 @@ reference:
     - step_geodist
     - step_ica
     - step_isomap
+    - step_kpca
     - step_kpca_poly
     - step_kpca_rbf
     - step_mutate_at
