@@ -126,7 +126,7 @@ print.step_filter <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_filter <- function(x, ...) {
-  cond_expr <- map(x$inputs, quo_get_expr)
+  cond_expr <- map(unname(x$inputs), quo_get_expr)
   cond_expr <- map_chr(cond_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
     terms = cond_expr,
