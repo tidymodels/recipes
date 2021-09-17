@@ -72,7 +72,7 @@ step_dummy_multi_choice <- function(recipe,
   add_step(
     recipe,
     step_dummy_multi_choice_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       threshold = threshold,
@@ -115,7 +115,7 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   multi_dummy_check_type(training[, col_names])
 
   levels <- purrr::map(training[, col_names], as.character)
-  levels <- unlist(levels)
+  levels <- vctrs::vec_unchop(levels, ptype = character(), name_spec = rlang::zap())
   levels <- levels[!is.na(levels)]
   levels <- keep_levels(levels, x$threshold, other = x$other)
 
@@ -176,7 +176,11 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
 multi_dummy <- function(x, y) {
   row_id <- rep(seq_len(nrow(x)), times = ncol(x))
-  values <- unlist(purrr::map(x, as.character), use.names = FALSE)
+  values <- vctrs::vec_unchop(
+    purrr::map(x, as.character),
+    ptype = character(),
+    name_spec = rlang::zap()
+  )
 
   if (y$collapse) {
     values[(!values %in% y$keep) & !is.na(values)] <- y$other
@@ -222,18 +226,13 @@ print.step_dummy_multi_choice <-
 #' @export
 tidy.step_dummy_multi_choice <- function(x, ...) {
   if (is_trained(x)) {
-    if (length(x$input) > 0) {
-      if (x$levels$collapse) {
-        columns <- c(x$levels$keep, x$levels$other)
-      } else {
-        columns <- x$levels$keep
-      }
-
-      res <- tibble(terms = x$input[1],
-                    columns = columns)
+    if (x$levels$collapse) {
+      columns <- c(x$levels$keep, x$levels$other)
     } else {
-      res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
+      columns <- x$levels$keep
     }
+
+    res <- tibble(terms = unname(x$input), columns = columns)
   } else {
     res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)
   }
