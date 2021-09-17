@@ -1,6 +1,6 @@
 #' Kernel PCA Signal Extraction
 #'
-#' `step_kpca` a *specification* of a recipe step that
+#' `step_kpca` creates a *specification* of a recipe step that
 #'  will convert numeric data into one or more principal components
 #'  using a kernel basis expansion.
 #'
@@ -11,53 +11,20 @@
 #'  **Note** that the arguments `x` and `features` should not be passed here
 #'  (or at all).
 #' @param res An S4 [kernlab::kpca()] object is stored here once this
-#'  preprocessing step has be trained by [prep.recipe()].
+#'  preprocessing step has be trained by [`prep()`][prep.recipe()].
 #' @template step-return
 #' @family {multivariate transformation steps}
 #' @export
-#' @details Kernel principal component analysis (kPCA) is an
-#'  extension of a PCA analysis that conducts the calculations in a
-#'  broader dimensionality defined by a kernel function. For
-#'  example, if a quadratic kernel function were used, each variable
-#'  would be represented by its original values as well as its
-#'  square. This nonlinear mapping is used during the PCA analysis
-#'  and can potentially help find better representations of the
-#'  original data.
+#' @details
+#' When performing kPCA with `step_kpca()`, you must choose the kernel
+#' function (and any important kernel parameters). This step uses \pkg{kernlab}
+#' package; the reference below discusses the types of kernels available and
+#' their parameter(s). These specifications can be made in the `kernel` and
+#' `kpar` slots of the `options` argument to `step_kpca()`. Consider using
+#' [step_kpca_rbf()] for a radial basis function kernel or [step_kpca_poly()]
+#' for a polynomial kernel.
 #'
-#' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
-#' If not installed, the step will stop with a note about installing
-#' these packages.
-#'
-#' As with ordinary PCA, it is important to standardize the
-#'  variables prior to running PCA ([`step_center()`] and
-#'  [`step_scale()`] can be used for this purpose).
-#'
-#' When performing kPCA, the kernel function (and any important
-#'  kernel parameters) must be chosen. The \pkg{kernlab} package is
-#'  used and the reference below discusses the types of kernels
-#'  available and their parameter(s). These specifications can be
-#'  made in the `kernel` and `kpar` slots of the
-#'  `options` argument to `step_kpca()`.
-#'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_comp < 10`, their names will be `kPC1` -
-#'  `kPC9`. If `num_comp = 101`, the names would be
-#'  `kPC001` - `kPC101`.
-#'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) is returned.
-#'
-#' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
-#'  Kernel principal component analysis. *Lecture Notes in
-#'  Computer Science*, 1327, 583-588.
-#'
-#' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
-#'  kernlab - An S4 package for kernel methods in R. *Journal
-#'  of Statistical Software*, 11(1), 1-20.
+#' @template kpca-info
 #'
 #' @examples
 #' library(modeldata)

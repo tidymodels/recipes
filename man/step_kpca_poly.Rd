@@ -34,14 +34,13 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of PCA components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of PCA components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep.recipe]{prep()}}.}
 
 \item{degree, scale_factor, offset}{Numeric values for the polynomial kernel function.}
 
@@ -65,39 +64,36 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca_poly} a \emph{specification} of a recipe step that
+\code{step_kpca_poly} creates a \emph{specification} of a recipe step that
 will convert numeric data into one or more principal components
 using a polynomial kernel basis expansion.
 }
 \details{
-Kernel principal component analysis (kPCA) is an
-extension of a PCA analysis that conducts the calculations in a
-broader dimensionality defined by a kernel function. For
-example, if a quadratic kernel function were used, each variable
-would be represented by its original values as well as its
-square. This nonlinear mapping is used during the PCA analysis
-and can potentially help find better representations of the
-original data.
+Kernel principal component analysis (kPCA) is an extension of a PCA analysis
+that conducts the calculations in a broader dimensionality defined by a
+kernel function. For example, if a quadratic kernel function were used,
+each variable would be represented by its original values as well as its
+square. This nonlinear mapping is used during the PCA analysis and can
+potentially help find better representations of the original data.
 
 This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
-If not installed, the step will stop with a note about installing
+If not installed, the step will stop with a prompt about installing
 these packages.
 
-As with ordinary PCA, it is important to standardize the
-variables prior to running PCA (\code{step_center} and
-\code{step_scale} can be used for this purpose).
+As with ordinary PCA, it is important to center and scale the variables
+prior to computing PCA components (\code{\link[=step_normalize]{step_normalize()}} can be used for
+this purpose).
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_comp < 10}, their names will be \code{kPC1} -
-\code{kPC9}. If \code{num_comp = 101}, the names would be
+The argument \code{num_comp} controls the number of components that will be
+retained; the original variables that are used to derive the components are
+removed from the data when \code{keep_original_cols = FALSE}. The new components
+will have names that begin with \code{prefix} and a sequence of numbers. The
+variable names are padded with zeros. For example, if \code{num_comp < 10}, the
+new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column \code{terms}
+(the selectors or variables selected) is returned.
 }
 \examples{
 library(modeldata)
