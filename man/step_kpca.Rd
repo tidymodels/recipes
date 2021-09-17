@@ -11,6 +11,7 @@ step_kpca(
   trained = FALSE,
   num_comp = 5,
   res = NULL,
+  columns = NULL,
   options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
   prefix = "kPC",
   keep_original_cols = FALSE,
@@ -38,6 +39,9 @@ possible components, a smaller value will be used.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep.recipe]{prep()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{options}{A list of options to \code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for
 the arguments \code{kernel} and \code{kpar} but others can be passed in.
