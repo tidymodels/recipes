@@ -83,7 +83,7 @@ check_class <-
     add_check(
       recipe,
       check_class_new(
-        terms            = ellipse_check(...),
+        terms            = enquos(...),
         trained          = trained,
         role             = role,
         class_nm         = class_nm,
@@ -188,7 +188,7 @@ bake.check_class <- function(object,
          new_data[ ,col_names],
          object$class_list,
          col_names,
-         aa = object$allow_additional)
+         MoreArgs = list(aa = object$allow_additional))
 
   as_tibble(new_data)
 }
@@ -204,13 +204,16 @@ print.check_class <-
 #' @rdname tidy.recipe
 tidy.check_class <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$class_list),
-                  value = sapply(x$class_list,
-                                 function(x) paste0(x, collapse = "-")))
+    values <- vapply(
+      unname(x$class_list),
+      FUN = function(x) paste0(x, collapse = "-"),
+      FUN.VALUE = character(1)
+    )
+    res <- tibble(terms = names(x$class_list), value = values)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_chr)
+    res <- tibble(terms = term_names, value = na_chr)
   }
+  res$id <- x$id
   res
 }
