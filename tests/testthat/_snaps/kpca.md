@@ -1,8 +1,3 @@
-# correct kernel PCA values
-
-    Code
-      kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6, id = "")
-
 # printing
 
     Code
