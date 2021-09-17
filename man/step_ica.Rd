@@ -12,6 +12,7 @@ step_ica(
   num_comp = 5,
   options = list(method = "C"),
   res = NULL,
+  columns = NULL,
   prefix = "IC",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -45,6 +46,9 @@ not be passed here.}
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
