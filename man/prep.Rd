@@ -100,6 +100,3 @@ prep(ames_rec, verbose = TRUE)
 
 prep(ames_rec, log_changes = TRUE)
 }
-\author{
-Max Kuhn
-}

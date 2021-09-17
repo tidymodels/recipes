@@ -304,6 +304,3 @@ rec <- recipe(biomass_tr) \%>\%
   update_role(dataset, new_role = "splitting indicator")
 rec
 }
-\author{
-Max Kuhn
-}
