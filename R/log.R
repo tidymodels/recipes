@@ -65,7 +65,7 @@ step_log <-
     add_step(
       recipe,
       step_log_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         base = base,
