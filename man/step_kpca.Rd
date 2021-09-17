@@ -31,20 +31,17 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of PCA components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of PCA components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used.}
 
-\item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
-here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
+preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
-\item{options}{A list of options to
-\code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for the arguments
-\code{kernel} and \code{kpar} but others can be passed in.
-\strong{Note} that the arguments \code{x} and \code{features}
-should not be passed here (or at all).}
+\item{options}{A list of options to \code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for
+the arguments \code{kernel} and \code{kpar} but others can be passed in.
+\strong{Note} that the arguments \code{x} and \code{features} should not be passed here
+(or at all).}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -82,15 +79,15 @@ If not installed, the step will stop with a note about installing
 these packages.
 
 As with ordinary PCA, it is important to standardize the
-variables prior to running PCA (\code{step_center} and
-\code{step_scale} can be used for this purpose).
+variables prior to running PCA (\code{\link[=step_center]{step_center()}} and
+\code{\link[=step_scale]{step_scale()}} can be used for this purpose).
 
 When performing kPCA, the kernel function (and any important
 kernel parameters) must be chosen. The \pkg{kernlab} package is
 used and the reference below discusses the types of kernels
 available and their parameter(s). These specifications can be
 made in the \code{kernel} and \code{kpar} slots of the
-\code{options} argument to \code{step_kpca}.
+\code{options} argument to \code{step_kpca()}.
 
 The argument \code{num_comp} controls the number of components that
 will be retained (the original variables that are used to derive
@@ -142,8 +139,19 @@ kernlab - An S4 package for kernel methods in R. \emph{Journal
 of Statistical Software}, 11(1), 1-20.
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_ica]{step_ica()}}
-\code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other {multivariate transformation steps}: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
-\keyword{internal}
+\concept{{multivariate transformation steps}}

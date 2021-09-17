@@ -171,6 +171,7 @@ Other {multivariate transformation steps}:
 \code{\link{step_isomap}()},
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
+\code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
