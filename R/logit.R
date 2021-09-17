@@ -45,7 +45,7 @@ step_logit <-
            id = rand_id("logit")) {
     add_step(recipe,
              step_logit_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                offset = offset,
                role = role,
                trained = trained,
