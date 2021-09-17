@@ -73,6 +73,17 @@ test_that("empty tidying", {
   )
 })
 
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_arrange(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that('printing', {
   rec <- iris_rec %>% step_arrange(Sepal.Length)
   expect_output(print(rec))
