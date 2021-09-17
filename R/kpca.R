@@ -12,6 +12,8 @@
 #'  (or at all).
 #' @param res An S4 [kernlab::kpca()] object is stored here once this
 #'  preprocessing step has be trained by [`prep()`][prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @template step-return
 #' @family {multivariate transformation steps}
 #' @export
@@ -60,6 +62,7 @@ step_kpca <-
            trained = FALSE,
            num_comp  = 5,
            res = NULL,
+           columns = NULL,
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
@@ -72,11 +75,12 @@ step_kpca <-
     add_step(
       recipe,
       step_kpca_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
         res = res,
+        columns = columns,
         options = options,
         prefix = prefix,
         keep_original_cols = keep_original_cols,
@@ -87,7 +91,7 @@ step_kpca <-
 }
 
 step_kpca_new <-
-  function(terms, role, trained, num_comp, res, options, prefix,
+  function(terms, role, trained, num_comp, res, columns, options, prefix,
            keep_original_cols, skip, id) {
     step(
       subclass = "kpca",
@@ -96,6 +100,7 @@ step_kpca_new <-
       trained = trained,
       num_comp = num_comp,
       res = res,
+      columns = columns,
       options = options,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
@@ -109,7 +114,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(col_names) > 0) {
     kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num_comp), x$options))
     kprc <-
       try(
@@ -125,7 +130,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
       rlang::abort(paste0("`step_kpca` failed with error:\n", as.character(kprc)))
     }
   } else {
-    kprc <- list(x_vars = col_names)
+    kprc <- NULL
   }
 
   step_kpca_new(
@@ -135,6 +140,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     num_comp = x$num_comp,
     options = x$options,
     res = kprc,
+    columns = col_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -144,7 +150,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_kpca <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
+  if (object$num_comp > 0 && length(object$columns) > 0) {
     pca_vars <- colnames(environment(object$res@apply)$indata)
     comps <- object$res@apply(
       dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
@@ -163,7 +169,7 @@ bake.step_kpca <- function(object, new_data, ...) {
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
   if (x$trained) {
-    if (x$num_comp == 0) {
+    if (x$num_comp == 0 || length(x$columns) == 0) {
       cat("No kPCA components were extracted.\n")
     } else {
       cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
@@ -182,10 +188,10 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
 #' @export
 tidy.step_kpca <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_comp > 0) {
+    if (x$num_comp > 0 && length(x$columns) > 0) {
       res <- tibble(terms = colnames(x$res@org.data))
     } else {
-      res <- tibble(terms = unname(x$res$x_vars))
+      res <- tibble(terms = unname(x$columns))
     }
   } else {
     term_names <- sel2char(x$terms)
