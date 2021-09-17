@@ -13,6 +13,7 @@ step_nnmf(
   num_run = 30,
   options = list(),
   res = NULL,
+  columns = NULL,
   prefix = "NNMF",
   seed = sample.int(10^5, 1),
   keep_original_cols = FALSE,
@@ -50,6 +51,9 @@ processing is turned off in favor of resample-level parallelization.}
 \item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
