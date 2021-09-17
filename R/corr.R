@@ -218,7 +218,7 @@ corr_filter <-
 
 tidy_filter <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$removals)
+    res <- tibble(terms = unname(x$removals))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
