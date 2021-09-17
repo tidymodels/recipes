@@ -66,12 +66,12 @@ using a kernel basis expansion.
 }
 \details{
 When performing kPCA with \code{step_kpca()}, you must choose the kernel
-function (and any important kernel parameters). This step uses \pkg{kernlab}
-package; the reference below discusses the types of kernels available and
-their parameter(s). These specifications can be made in the \code{kernel} and
-\code{kpar} slots of the \code{options} argument to \code{step_kpca()}. Consider using
-\code{\link[=step_kpca_rbf]{step_kpca_rbf()}} for a radial basis function kernel or \code{\link[=step_kpca_poly]{step_kpca_poly()}}
-for a polynomial kernel.
+function (and any important kernel parameters). This step uses the
+\pkg{kernlab} package; the reference below discusses the types of kernels
+available and their parameter(s). These specifications can be made in the
+\code{kernel} and \code{kpar} slots of the \code{options} argument to \code{step_kpca()}.
+Consider using \code{\link[=step_kpca_rbf]{step_kpca_rbf()}} for a radial basis function kernel or
+\code{\link[=step_kpca_poly]{step_kpca_poly()}} for a polynomial kernel.
 
 Kernel principal component analysis (kPCA) is an extension of a PCA analysis
 that conducts the calculations in a broader dimensionality defined by a
