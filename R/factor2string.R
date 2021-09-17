@@ -56,7 +56,7 @@ step_factor2string <-
     add_step(
       recipe,
       step_factor2string_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         columns = columns,
@@ -104,12 +104,12 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_factor2string <- function(object, new_data, ...) {
-  new_data[, object$columns] <-
-    map_df(new_data[, object$columns],
-           as.character)
+  new_data[, object$columns] <- map(new_data[, object$columns], as.character)
 
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
+
   new_data
 }
 
