@@ -85,7 +85,7 @@ step_impute_roll <-
     add_step(
       recipe,
       step_impute_roll_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         columns = columns,
@@ -231,10 +231,10 @@ print.step_rollimpute <- print.step_impute_roll
 #' @export
 tidy.step_impute_roll <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = unname(x$columns), window = x$window)
+    res <- tibble(terms = unname(x$columns), window = unname(x$window))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, window = x$window)
+    res <- tibble(terms = term_names, window = unname(x$window))
   }
   res$id <- x$id
   res
