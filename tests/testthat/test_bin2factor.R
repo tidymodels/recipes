@@ -71,3 +71,14 @@ test_that("empty selection tidy method works", {
     tibble(terms = character(), id = character())
   )
 })
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_bin2factor(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
