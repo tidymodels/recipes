@@ -20,7 +20,11 @@ figures:
 reference:
   - title: Basic Functions
     contents:
-    - matches("recipe")
+    - recipes
+    - recipe
+    - formula.recipe
+    - print.recipe
+    - summary.recipe
     - prep
     - bake
     - juice
@@ -52,7 +56,8 @@ reference:
     - step_YeoJohnson
   - title: Step Functions - Discretization
     contents:
-    - matches("discreti")
+    - step_discretize
+    - discretize
     - step_cut
   - title: Step Functions - Dummy Variables and Encodings
     contents:
