@@ -48,7 +48,7 @@ step_indicate_na <-
            skip = FALSE,
            id = rand_id("indicate_na")) {
 
-    terms = ellipse_check(...)
+    terms = enquos(...)
 
     add_step(
       recipe,
@@ -97,12 +97,15 @@ prep.step_indicate_na <- function(x, training, info = NULL, ...) {
 bake.step_indicate_na <- function(object, new_data, ...) {
   col_names <- object$columns
 
-  df_ind_na <- purrr::map_dfc(
-      new_data[col_names],
-      ~ifelse(is.na(.x), 1L, 0L)
-    ) %>%
-    dplyr::rename_with(~paste0(object$prefix, "_", .x))
-  new_data <- dplyr::bind_cols(new_data, df_ind_na)
+  cols <- purrr::map(
+    new_data[col_names],
+    ~ifelse(is.na(.x), 1L, 0L)
+  )
+
+  cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
+  cols <- dplyr::rename_with(cols, ~paste0(object$prefix, "_", .x))
+
+  new_data <- dplyr::bind_cols(new_data, cols)
 
   tibble::as_tibble(new_data)
 }
@@ -118,7 +121,7 @@ print.step_indicate_na <-
 #' @export
 tidy.step_indicate_na <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble::tibble(terms = x$columns)
+    res <- tibble::tibble(terms = unname(x$columns))
   } else {
     res <- tibble::tibble(terms = sel2char(x$terms))
   }
