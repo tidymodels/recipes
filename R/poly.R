@@ -162,7 +162,6 @@ print.step_poly <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_poly` object.
 #' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {

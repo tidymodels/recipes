@@ -158,7 +158,6 @@ print.step_holiday <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_holiday` object.
 #' @export
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)

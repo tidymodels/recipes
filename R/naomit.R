@@ -77,7 +77,6 @@ print.step_naomit <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_naomit` object.
 #' @export
 tidy.step_naomit <- function(x, ...) {
   res <-simple_terms(x, ...)

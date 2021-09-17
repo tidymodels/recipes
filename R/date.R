@@ -264,7 +264,6 @@ print.step_date <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_date` object.
 #' @export
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {

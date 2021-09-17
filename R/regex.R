@@ -156,7 +156,6 @@ print.step_regex <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_regex` object.
 #' @export
 tidy.step_regex <- function(x, ...) {
   term_names <- sel2char(x$terms)

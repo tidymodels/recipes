@@ -97,7 +97,6 @@ print.check_cols <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `check_cols` object.
 #' @export
 tidy.check_cols <- function(x, ...) {
   if (is_trained(x)) {

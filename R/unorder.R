@@ -117,7 +117,6 @@ print.step_unorder <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_unorder` object.
 #' @export
 tidy.step_unorder <- function(x, ...) {
   res <- simple_terms(x, ...)

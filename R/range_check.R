@@ -188,7 +188,6 @@ print.check_range <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `check_range` object.
 #' @export
 tidy.check_range <- function(x, ...) {
   if (is_trained(x)) {

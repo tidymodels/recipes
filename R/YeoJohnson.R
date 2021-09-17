@@ -239,6 +239,5 @@ estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5,
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_YeoJohnson` object.
 #' @export
 tidy.step_YeoJohnson <- tidy.step_BoxCox

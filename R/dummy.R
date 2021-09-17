@@ -355,7 +355,6 @@ get_dummy_columns <- function(x, one_hot) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_dummy` object.
 #' @export
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {

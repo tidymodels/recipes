@@ -174,7 +174,6 @@ print.step_novel <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_novel` object.
 #' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {

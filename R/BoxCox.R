@@ -210,7 +210,6 @@ estimate_bc <- function(dat,
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_BoxCox` object.
 #' @export
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {

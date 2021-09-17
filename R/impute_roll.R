@@ -228,7 +228,6 @@ print.step_impute_roll <-
 print.step_rollimpute <- print.step_impute_roll
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_roll` object.
 #' @export
 tidy.step_impute_roll <- function(x, ...) {
   if (is_trained(x)) {

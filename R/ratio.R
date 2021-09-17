@@ -177,7 +177,6 @@ print.step_ratio <-
 denom_vars <- function(...) quos(...)
 
 #' @rdname tidy.recipe
-#' @param x A `step_ratio` object
 #' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {

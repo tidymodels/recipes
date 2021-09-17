@@ -143,7 +143,6 @@ print.step_sample <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_sample` object
 #' @export
 tidy.step_sample <- function(x, ...) {
   tibble(

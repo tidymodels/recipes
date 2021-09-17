@@ -134,7 +134,6 @@ print.step_normalize <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_normalize` object.
 #' @export
 tidy.step_normalize <- function(x, ...) {
   if (is_trained(x)) {

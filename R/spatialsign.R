@@ -127,7 +127,6 @@ print.step_spatialsign <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_spatialsign` object.
 #' @export
 tidy.step_spatialsign <- function(x, ...) {
   res <-simple_terms(x, ...)

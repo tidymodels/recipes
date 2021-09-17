@@ -90,7 +90,6 @@ print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_sqrt` object.
 #' @export
 tidy.step_sqrt <- function(x, ...) {
   res <-simple_terms(x, ...)

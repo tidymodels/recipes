@@ -282,7 +282,6 @@ print.step_impute_knn <-
 print.step_knnimpute <- print.step_impute_knn
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_knn` object.
 #' @export
 tidy.step_impute_knn <- function(x, ...) {
   if (is_trained(x)) {

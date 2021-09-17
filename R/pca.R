@@ -277,10 +277,9 @@ pca_variances <- function(x) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_pca` object.
-#' @param type For `step_pca`, either "coef" (for the variable
-#'  loadings per component) or "variance" (how much variance does each component
-#'  account for).
+#' @param type For `step_pca`, either `"coef"` (for the variable loadings per
+#' component) or `"variance"` (how much variance does each component
+#' account for).
 #' @export
 tidy.step_pca <- function(x, type = "coef", ...) {
   if (!is_trained(x)) {

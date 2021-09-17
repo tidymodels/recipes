@@ -204,7 +204,6 @@ print.step_ica <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_ica` object.
 #' @export
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {

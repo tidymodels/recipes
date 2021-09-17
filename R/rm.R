@@ -110,6 +110,5 @@ print.step_rm <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_rm` object.
 #' @export
 tidy.step_rm <- tidy_filter

@@ -154,7 +154,6 @@ print.step_unknown <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_unknown` object.
 #' @export
 tidy.step_unknown <- function(x, ...) {
   if (is_trained(x)) {

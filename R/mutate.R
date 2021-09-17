@@ -136,7 +136,6 @@ print.step_mutate <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_mutate` object
 #' @export
 tidy.step_mutate <- function(x, ...) {
   inputs <- x$inputs

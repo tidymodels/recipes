@@ -297,7 +297,6 @@ print.step_bagimpute <- print.step_impute_bag
 imp_vars <- function(...) quos(...)
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_bag` object.
 #' @export
 tidy.step_impute_bag <- function(x, ...) {
   if (is_trained(x)) {

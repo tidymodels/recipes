@@ -334,7 +334,6 @@ print.step_discretize <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_discretize` object
 #' @export
 tidy.step_discretize <- function(x, ...) {
   if (is_trained(x)) {

@@ -99,7 +99,6 @@ print.step_inverse <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_inverse` object.
 #' @export
 tidy.step_inverse <- function(x, ...) {
   res <-simple_terms(x, ...)

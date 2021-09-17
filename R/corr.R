@@ -228,11 +228,8 @@ tidy_filter <- function(x, ...) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_corr` object.
 #' @export
 tidy.step_corr <- tidy_filter
-
-
 
 
 #' @rdname tunable.recipe

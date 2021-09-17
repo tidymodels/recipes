@@ -185,7 +185,6 @@ mode_est <- function(x) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_mode` object.
 #' @export
 tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {

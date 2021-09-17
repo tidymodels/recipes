@@ -182,7 +182,6 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_relu` object.
 #' @export
 tidy.step_relu <- function(x, ...) {
   out <- simple_terms(x, ...)

@@ -176,7 +176,6 @@ print.step_ns <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_ns` object.
 #' @export
 tidy.step_ns <- function(x, ...) {
   if (is_trained(x)) {

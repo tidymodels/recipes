@@ -215,7 +215,6 @@ print.step_profile <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_profile` object.
 #' @export
 tidy.step_profile <- function(x, ...) {
   if (is_trained(x)) {

@@ -95,7 +95,6 @@ print.step_invlogit <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_invlogit` object.
 #' @export
 tidy.step_invlogit <- function(x, ...) {
   res <- simple_terms(x, ...)
