@@ -43,7 +43,7 @@ step_mutate_at <- function(
   add_step(
     recipe,
     step_mutate_at_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       fn = fn,
       trained = trained,
       role = role,
@@ -100,7 +100,7 @@ print.step_mutate_at <-
 #' @export
 tidy.step_mutate_at <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$inputs)
+    res <- tibble(terms = unname(x$inputs))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
