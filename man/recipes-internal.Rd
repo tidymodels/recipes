@@ -10,7 +10,7 @@
 \alias{sel2char}
 \title{Internal Functions}
 \usage{
-yj_transform(x, lambda, eps = 0.001)
+yj_transform(x, lambda, ind_neg = NULL, eps = 0.001)
 
 estimate_yj(dat, limits = c(-5, 5), num_unique = 5, na_rm = TRUE)
 
