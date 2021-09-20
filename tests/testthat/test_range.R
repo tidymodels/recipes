@@ -46,8 +46,8 @@ test_that('correct values', {
            id = "")
   rng_tibble_tr <-
     tibble(terms = c("carbon", "hydrogen"),
-           min = mins,
-           max = maxs,
+           min = unname(mins),
+           max = unname(maxs),
            id = "")
 
   expect_equal(tidy(standardized, 1), rng_tibble_un)
@@ -118,3 +118,39 @@ test_that('printing', {
   expect_output(prep(standardized, training = biomass_tr, verbose = TRUE))
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_range(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_range(rec)
+
+  expect <- tibble(terms = character(), min = double(), max = double(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_range(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
