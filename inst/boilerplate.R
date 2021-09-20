@@ -84,7 +84,7 @@ create_function <- function(name, which) {
       add_{which}(
         recipe,
         {which}_{name}_new(
-          terms = ellipse_check(...),
+          terms = enquos(...),
           trained = trained,
           role = role,
           <additional args here>

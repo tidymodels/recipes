@@ -291,6 +291,9 @@ merge_term_info <- function(.new, .old) {
 
 #' Check for Empty Ellipses
 #'
+#' `ellipse_check()` is deprecated. Instead, empty selections should be
+#' supported by all steps.
+#'
 #' @param ... Arguments pass in from a call to `step`
 #' @return If not empty, a list of quosures. If empty, an error is thrown.
 #' @export
