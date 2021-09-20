@@ -45,7 +45,7 @@ step_relevel <-
     add_step(
       recipe,
       step_relevel_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         ref_level = ref_level,
