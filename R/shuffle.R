@@ -37,7 +37,7 @@ step_shuffle <- function(recipe,
                          id = rand_id("shuffle")) {
   add_step(recipe,
            step_shuffle_new(
-             terms = ellipse_check(...),
+             terms = enquos(...),
              role = role,
              trained = trained,
              columns = columns,
