@@ -288,10 +288,10 @@ tidy.step_impute_knn <- function(x, ...) {
     terms <- purrr::map(x$columns, function(x) unname(x$y))
     predictors <- purrr::map(x$columns, function(x) unname(x$x))
     res <- tibble(terms = terms, predictors = predictors)
-    res <- tidyr::unnest(
+    res <- tidyr::unchop(
       data = res,
       cols = tidyselect::all_of(c("terms", "predictors")),
-      ptype = list(terms = character(), predictors = character())
+      ptype = tibble(terms = character(), predictors = character())
     )
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
