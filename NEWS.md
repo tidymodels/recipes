@@ -1,9 +1,34 @@
 # recipes (development version)
 
-
-* New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
+## New Steps
 
 * Added new `step_harmonic()` (#702).
+
+* Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
+
+## Deprecation News
+
+* The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.
+
+* Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
+
+* `step_kpca()` was un-deprecated and gained the `keep_original_cols` argument.
+
+* The deprecation of the `preserve` argument to `step_pls()` and `step_dummy()` was escalated from a soft deprecation to regular deprecation. 
+
+* The deprecation of the `options` argument to `step_nzv()` was escalated to a deprecation error.
+
+## Bug Fixes
+
+* Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
+
+* A bug was fixed where imputed values via bagged trees would have the wrong levels.
+
+## Improvements and Other Changes
+
+* The computations for the Yeo-Johnson transformation were made more efficient (#782).
+
+* New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
 
 * Speed-up/simplification to `step_spatialsign()`
 
@@ -15,23 +40,7 @@
 
 * Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
 
-* Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
-
-* The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.
-
-* Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
-
-* Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
-
 * `step_logit()` gained an offset argument for cases where the input is either zero or one (#784)
-
-* A bug was fixed where imputed values via bagged trees would have the wrong levels.
-
-* `step_kpca()` was un-deprecated and gained the `keep_original_cols` argument.
-
-* The deprecation of the `preserve` argument to `step_pls()` and `step_dummy()` was escalated from a soft deprecation to regular deprecation. 
-
-* The deprecation of the `options` argument to `step_nzv()` was escalated to a deprecation error.
 
 * The `tidy()` methods for objects from `check_new_values()`, `check_class()` and `step_nnmf()` are now exported.
 
