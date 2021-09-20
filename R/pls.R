@@ -290,6 +290,13 @@ prop2int <- function(x, p) {
   as.integer(cut(x * p, breaks = cuts, include.lowest = TRUE))
 }
 
+get_columns_pls <- function(x) {
+  if (use_old_pls(x$res)) {
+    rownames(x$res$projection)
+  } else {
+    x$columns
+  }
+}
 
 ## -----------------------------------------------------------------------------
 
@@ -343,7 +350,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
-  if (object$num_comp > 0 && length(object$columns) > 0 && pls_worked(object$res)) {
+  if (object$num_comp > 0 && length(get_columns_pls(object)) > 0 && pls_worked(object$res)) {
 
     if (use_old_pls(object$res)) {
       comps <- old_pls_project(object$res, new_data)
@@ -388,7 +395,7 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
 #' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_comp > 0 && length(x$columns) > 0) {
+    if (x$num_comp > 0 && length(get_columns_pls(object)) > 0) {
       res <-
         purrr::map2_dfc(as.data.frame(x$res$coefs), x$res$col_norms, ~ .x * .y) %>%
         dplyr::mutate(terms = rownames(x$res$coefs)) %>%
@@ -396,7 +403,7 @@ tidy.step_pls <- function(x, ...) {
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {
-      res <- tibble(terms = unname(x$columns), value = na_dbl, component  = na_chr)
+      res <- tibble(terms = unname(get_columns_pls(object)), value = na_dbl, component  = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)
