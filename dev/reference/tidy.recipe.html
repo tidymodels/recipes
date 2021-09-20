@@ -171,7 +171,7 @@ method for the operation exists)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Tidy the Result of a Recipe</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/BoxCox.R'><code>R/BoxCox.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/YeoJohnson.R'><code>R/YeoJohnson.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/arrange.R'><code>R/arrange.R</code></a>, and 79 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/BoxCox.R'><code>R/BoxCox.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/YeoJohnson.R'><code>R/YeoJohnson.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/arrange.R'><code>R/arrange.R</code></a>, and 80 more</small>
     <div class="hidden name"><code>tidy.recipe.Rd</code></div>
     </div>
 
@@ -325,6 +325,9 @@ method for the operation exists).</p>
 <span class='co'># S3 method for step_naomit</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='co'># S3 method for check_new_values</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for step_nnmf</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
@@ -438,7 +441,7 @@ method for the operation exists).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>step_zv</code> object.</p></td>
+      <td><p>A <code>recipe</code> object, step, or check (trained or otherwise).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -446,8 +449,8 @@ method for the operation exists).</p>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>For <code>step_pca</code>, either "coef" (for the variable
-loadings per component) or "variance" (how much variance does each component
+      <td><p>For <code>step_pca</code>, either <code>"coef"</code> (for the variable loadings per
+component) or <code>"variance"</code> (how much variance does each component
 account for).</p></td>
     </tr>
     <tr>
