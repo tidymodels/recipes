@@ -47,7 +47,7 @@ step_zv <-
     add_step(
       recipe,
       step_zv_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         removals = removals,
