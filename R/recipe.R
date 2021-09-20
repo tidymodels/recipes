@@ -4,7 +4,6 @@
 #'   order to prepare it for data analysis.
 #'
 #' @aliases recipe recipe.default recipe.formula
-#' @author Max Kuhn
 #' @export
 recipe <- function(x, ...)
   UseMethod("recipe")
@@ -236,7 +235,6 @@ inline_check <- function(x) {
 #' @param x an object
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
-#' @author Max Kuhn
 #' @export
 prep <- function(x, ...)
   UseMethod("prep")
@@ -452,7 +450,6 @@ prep.recipe <-
 
 #' @rdname bake
 #' @aliases bake bake.recipe
-#' @author Max Kuhn
 #' @export
 bake <- function(object, ...)
   UseMethod("bake")
@@ -625,7 +622,6 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #'   used).
 #' @return The original object (invisibly)
 #'
-#' @author Max Kuhn
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
   cat("Recipe\n\n")
