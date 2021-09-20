@@ -15,6 +15,7 @@ step_pls(
   options = list(scale = TRUE),
   preserve = deprecated(),
   res = NULL,
+  columns = NULL,
   prefix = "PLS",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -55,6 +56,9 @@ original predictor data should be retained along with the new features.}
 
 \item{res}{A list of results are stored here once this preprocessing step
 has been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}

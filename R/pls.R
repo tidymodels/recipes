@@ -20,6 +20,8 @@
 #' arguments).
 #' @param res A list of results are stored here once this preprocessing step
 #'  has been trained by [prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @template step-return
 #' @family {multivariate transformation steps}
 #' @export
@@ -115,6 +117,7 @@ step_pls <-
            options = list(scale = TRUE),
            preserve = deprecated(),
            res = NULL,
+           columns = NULL,
            prefix = "PLS",
            keep_original_cols = FALSE,
            skip = FALSE,
@@ -137,7 +140,7 @@ step_pls <-
     add_step(
       recipe,
       step_pls_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
@@ -146,6 +149,7 @@ step_pls <-
         options = options,
         preserve = keep_original_cols,
         res = res,
+        columns = columns,
         prefix = prefix,
         keep_original_cols = keep_original_cols,
         skip = skip,
@@ -156,7 +160,7 @@ step_pls <-
 
 step_pls_new <-
   function(terms, role, trained, num_comp, predictor_prop, outcome, options,
-           preserve, res, prefix, keep_original_cols, skip, id) {
+           preserve, res, columns, prefix, keep_original_cols, skip, id) {
     step(
       subclass = "pls",
       terms = terms,
@@ -168,6 +172,7 @@ step_pls_new <-
       options = options,
       preserve = preserve,
       res = res,
+      columns = columns,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -298,7 +303,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     rlang::abort("`step_pls()` only supports univariate models.")
   }
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(x_names) > 0) {
     ncomp <- min(x$num_comp,  length(x_names))
     # Convert proportion to number of terms
     x$predictor_prop <- max(x$predictor_prop, 0.00001)
@@ -315,7 +320,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     }
 
   } else {
-    res <- list(x_vars = x_names, y_vars = y_names)
+    res <- NULL
   }
 
   step_pls_new(
@@ -328,6 +333,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     options = x$options,
     preserve = x$preserve,
     res = res,
+    columns = x_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -337,7 +343,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
-  if (object$num_comp > 0 & pls_worked(object$res)) {
+  if (object$num_comp > 0 && length(object$columns) > 0 && pls_worked(object$res)) {
 
     if (use_old_pls(object$res)) {
       comps <- old_pls_project(object$res, new_data)
@@ -372,12 +378,8 @@ bake.step_pls <- function(object, new_data, ...) {
 
 
 print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
-  if (x$num_comp == 0) {
-    cat("No PLS components were extracted.\n")
-  } else {
-    cat("PLS feature extraction with ")
-    printer(rownames(x$res$coefs), x$terms, x$trained, width = width)
-  }
+  cat("PLS feature extraction with ")
+  printer(x$columns, x$terms, x$trained, width = width)
   invisible(x)
 }
 
@@ -386,7 +388,7 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
 #' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_comp > 0) {
+    if (x$num_comp > 0 && length(x$columns) > 0) {
       res <-
         purrr::map2_dfc(as.data.frame(x$res$coefs), x$res$col_norms, ~ .x * .y) %>%
         dplyr::mutate(terms = rownames(x$res$coefs)) %>%
@@ -394,7 +396,7 @@ tidy.step_pls <- function(x, ...) {
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {
-      res <- tibble(terms = rownames(x$res$coefs), value = na_dbl, component  = na_chr)
+      res <- tibble(terms = unname(x$columns), value = na_dbl, component  = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)
