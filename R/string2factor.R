@@ -62,7 +62,7 @@ step_string2factor <-
     add_step(
       recipe,
       step_string2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         levels = levels,
@@ -138,16 +138,16 @@ bake.step_string2factor <- function(object, new_data, ...) {
 
   if (is.list(object$levels)) {
     new_data[, col_names] <-
-      map2_df(new_data[, col_names],
-              object$levels,
-              make_factor,
-              ord = object$ordered[1])
+      purrr::map2(new_data[, col_names],
+                  object$levels,
+                  make_factor,
+                  ord = object$ordered[1])
   } else {
     new_data[, col_names] <-
-      map_df(new_data[, col_names],
-             make_factor,
-             lvl = object$levels,
-             ord = object$ordered[1])
+      map(new_data[, col_names],
+          make_factor,
+          lvl = object$levels,
+          ord = object$ordered[1])
   }
 
   if (!is_tibble(new_data))
@@ -170,10 +170,10 @@ tidy.step_string2factor <- function(x, ...) {
   p <- length(term_names)
   if (is_trained(x)) {
     res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+                  ordered = rep(unname(x$ordered), p))
   } else {
     res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+                  ordered = rep(unname(x$ordered), p))
   }
   res$id <- x$id
   res
