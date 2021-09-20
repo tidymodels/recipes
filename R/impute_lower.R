@@ -173,7 +173,6 @@ print.step_impute_lower <-
 print.step_lowerimpute <- print.step_impute_lower
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_lower` object.
 #' @export
 tidy.step_impute_lower <- function(x, ...) {
   if (is_trained(x)) {

@@ -236,7 +236,6 @@ print.step_geodist <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_geodist` object.
 #' @export
 tidy.step_geodist <- function(x, ...) {
 

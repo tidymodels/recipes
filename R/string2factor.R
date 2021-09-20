@@ -164,7 +164,6 @@ print.step_string2factor <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_string2factor` object.
 #' @export
 tidy.step_string2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)

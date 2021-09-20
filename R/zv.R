@@ -118,6 +118,5 @@ print.step_zv <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_zv` object.
 #' @export
 tidy.step_zv <- tidy_filter

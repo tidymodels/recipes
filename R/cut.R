@@ -195,7 +195,6 @@ print.step_cut <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_cut` object.
 #' @export
 tidy.step_cut <- function(x, ...) {
   if (is_trained(x)) {

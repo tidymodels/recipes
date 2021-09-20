@@ -316,7 +316,6 @@ print.step_harmonic <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_harmonic` object.
 #' @export
 tidy.step_harmonic <- function(x, ...) {
   if (is_trained(x)) {

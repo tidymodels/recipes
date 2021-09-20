@@ -194,7 +194,6 @@ print.step_depth <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_depth` object.
 #' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {

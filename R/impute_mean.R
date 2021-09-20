@@ -170,7 +170,6 @@ print.step_impute_mean <-
 print.step_meanimpute <- print.step_impute_mean
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_mean` object.
 #' @export
 tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {

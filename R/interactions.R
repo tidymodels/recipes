@@ -308,7 +308,6 @@ int_name <- function(x) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_interact` object
 #' @export
 tidy.step_interact <- function(x, ...) {
   res <- tibble(terms = vapply(x$objects, int_name, character(1)))

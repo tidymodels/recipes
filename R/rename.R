@@ -108,7 +108,6 @@ print.step_rename <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_rename` object
 #' @export
 tidy.step_rename <- function(x, ...) {
   var_expr <- map(x$inputs, quo_get_expr)

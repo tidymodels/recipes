@@ -146,7 +146,6 @@ print.step_log <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_log` object.
 #' @export
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)

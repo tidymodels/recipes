@@ -274,12 +274,12 @@
 \method{tidy}{step_zv}(x, ...)
 }
 \arguments{
-\item{x}{A \code{step_zv} object.}
+\item{x}{A \code{recipe} object, step, or check (trained or otherwise).}
 
 \item{...}{Not currently used.}
 
-\item{type}{For \code{step_pca}, either "coef" (for the variable
-loadings per component) or "variance" (how much variance does each component
+\item{type}{For \code{step_pca}, either \code{"coef"} (for the variable loadings per
+component) or \code{"variance"} (how much variance does each component
 account for).}
 
 \item{number}{An integer or \code{NA}. If missing and \code{id} is not provided,

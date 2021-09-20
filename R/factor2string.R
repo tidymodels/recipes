@@ -122,7 +122,6 @@ print.step_factor2string <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_factor2string` object.
 #' @export
 tidy.step_factor2string <- function(x, ...) {
   res <- simple_terms(x, ...)

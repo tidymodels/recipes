@@ -115,7 +115,6 @@ print.step_indicate_na <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_indicate_na` object.
 #' @export
 tidy.step_indicate_na <- function(x, ...) {
   if (is_trained(x)) {

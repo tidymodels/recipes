@@ -121,7 +121,6 @@ print.step_select <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_select` object
 #' @export
 tidy.step_select <- function(x, ...) {
   if (is_trained(x)) {

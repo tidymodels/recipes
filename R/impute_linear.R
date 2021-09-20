@@ -205,7 +205,6 @@ print.step_impute_linear <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_linear` object.
 #' @export
 tidy.step_impute_linear <- function(x, ...) {
   if (is_trained(x)) {

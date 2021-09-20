@@ -204,7 +204,6 @@ nzv <- function(x,
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_nzv` object.
 #' @export
 tidy.step_nzv <- tidy_filter
 

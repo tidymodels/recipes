@@ -185,7 +185,6 @@ print.step_num2factor <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_num2factor` object.
 #' @export
 tidy.step_num2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)

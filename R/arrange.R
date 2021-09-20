@@ -129,7 +129,6 @@ print.step_arrange <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_arrange` object
 #' @export
 tidy.step_arrange <- function(x, ...) {
   cond_expr <- map(x$inputs, quo_get_expr)

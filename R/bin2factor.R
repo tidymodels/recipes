@@ -125,7 +125,6 @@ print.step_bin2factor <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_bin2factor` object.
 #' @export
 tidy.step_bin2factor <- function(x, ...) {
   res <-simple_terms(x, ...)

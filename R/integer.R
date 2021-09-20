@@ -172,7 +172,6 @@ print.step_integer <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_integer` object.
 #' @export
 tidy.step_integer <- function(x, ...) {
   if (is_trained(x)) {

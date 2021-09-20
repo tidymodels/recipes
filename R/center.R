@@ -131,7 +131,6 @@ print.step_center <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_center` object.
 #' @export
 tidy.step_center <- function(x, ...) {
   if (is_trained(x)) {

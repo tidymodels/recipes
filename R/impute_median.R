@@ -161,7 +161,6 @@ print.step_impute_median <-
 print.step_medianimpute <- print.step_impute_median
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_median` object.
 #' @export
 tidy.step_impute_median <- function(x, ...) {
   if (is_trained(x)) {

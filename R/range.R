@@ -131,7 +131,6 @@ print.step_range <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_range` object.
 #' @export
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {

@@ -214,7 +214,6 @@ get_centroid <- function(x) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_classdist` object.
 #' @export
 tidy.step_classdist <- function(x, ...) {
   if (is_trained(x)) {

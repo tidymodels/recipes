@@ -245,7 +245,6 @@ keep_levels <- function(x, threshold = .1, other = "other") {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_other` object.
 #' @export
 tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {

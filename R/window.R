@@ -273,7 +273,6 @@ print.step_window <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_window` object.
 #' @export
 tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)

@@ -127,7 +127,6 @@ print.check_missing <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `check_missing` object.
 #' @export
 tidy.check_missing <- function(x, ...) {
   if (is_trained(x)) {

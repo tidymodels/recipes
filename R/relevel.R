@@ -139,7 +139,6 @@ print.step_relevel <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_relevel` object.
 #' @export
 tidy.step_relevel <- function(x, ...) {
   if (is_trained(x)) {

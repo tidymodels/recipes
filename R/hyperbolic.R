@@ -117,7 +117,6 @@ print.step_hyperbolic <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_hyperbolic` object.
 #' @export
 tidy.step_hyperbolic <- function(x, ...) {
   out <- simple_terms(x, ...)

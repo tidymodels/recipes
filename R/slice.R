@@ -126,7 +126,6 @@ print.step_slice <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_slice` object
 #' @export
 tidy.step_slice <- function(x, ...) {
   cond_expr <- map(x$inputs, quo_get_expr)

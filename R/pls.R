@@ -383,7 +383,6 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_pls` object
 #' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {

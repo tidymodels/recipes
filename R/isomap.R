@@ -214,7 +214,6 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_isomap` object
 #' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {

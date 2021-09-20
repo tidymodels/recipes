@@ -187,7 +187,6 @@ print.step_kpca_poly <- function(x, width = max(20, options()$width - 40), ...) 
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_kpca_poly` object
 #' @export
 tidy.step_kpca_poly <- function(x, ...) {
   if (is_trained(x)) {

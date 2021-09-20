@@ -183,7 +183,6 @@ print.step_bs <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_bs` object.
 #' @export
 tidy.step_bs <- function(x, ...) {
   if (is_trained(x)) {

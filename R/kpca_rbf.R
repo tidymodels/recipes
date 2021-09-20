@@ -177,7 +177,6 @@ print.step_kpca_rbf <- function(x, width = max(20, options()$width - 40), ...) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_kpca_rbf` object
 #' @export
 tidy.step_kpca_rbf <- function(x, ...) {
   if (is_trained(x)) {

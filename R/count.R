@@ -165,7 +165,6 @@ print.step_count <-
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_count` object.
 #' @export
 tidy.step_count <- function(x, ...) {
   term_names <- sel2char(x$terms)

@@ -124,7 +124,6 @@ print.step_filter <-
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_filter` object
 #' @export
 tidy.step_filter <- function(x, ...) {
   cond_expr <- map(x$inputs, quo_get_expr)
