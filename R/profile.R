@@ -120,7 +120,7 @@ step_profile <- function(recipe,
 
   add_step(recipe,
            step_profile_new(
-             terms = ellipse_check(...),
+             terms = enquos(...),
              profile = profile,
              pct = pct,
              index = index,
@@ -156,8 +156,6 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
   fixed_names <- recipes_eval_select(x$terms, training, info)
   profile_name <- recipes_eval_select(x$profile, training, info)
 
-  if(length(fixed_names) == 0)
-    rlang::abort("At least one variable should be fixed")
   if(length(profile_name) != 1)
     rlang::abort("Only one variable should be profiled")
   if(any(profile_name == fixed_names))
@@ -198,7 +196,7 @@ bake.step_profile <- function(object, new_data, ...) {
   keepers <- c(names(object$columns), names(object$profile))
   # Keep the predictors in the same order
   keepers <- names(new_data)[names(new_data) %in% keepers]
-  new_data <- dplyr::select(new_data,! !keepers)
+  new_data <- dplyr::select(new_data, !!keepers)
 
   for (i in names(object$columns)) {
     new_data[[i]] <- rep(object$columns[[i]], n)
@@ -209,7 +207,7 @@ bake.step_profile <- function(object, new_data, ...) {
 
 print.step_profile <-
   function(x, width = max(20, options()$width - 22), ...) {
-    cat("Profiling data set for  ")
+    cat("Profiling data set for ")
     printer(names(x$profile), x$profile, x$trained, width = width)
     invisible(x)
   }
