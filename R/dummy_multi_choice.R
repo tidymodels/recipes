@@ -159,7 +159,10 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
   indicators <- multi_dummy(new_data[, col_names], object$levels)
 
-  prefix <- object$prefix %||% col_names[1]
+  prefix <- object$prefix
+  if (is.null(prefix)) {
+    prefix <- if (length(col_names) >= 1) col_names[[1]] else ""
+  }
 
   used_lvl <- gsub(paste0("^", prefix), "", colnames(indicators))
   colnames(indicators) <- object$naming(prefix, used_lvl)
@@ -232,7 +235,13 @@ tidy.step_dummy_multi_choice <- function(x, ...) {
       columns <- x$levels$keep
     }
 
-    res <- tibble(terms = unname(x$input), columns = columns)
+    if (length(x$input) >= 1) {
+      terms <- x$input[[1]]
+    } else {
+      terms <- character()
+    }
+
+    res <- tibble(terms = terms, columns = columns)
   } else {
     res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)
   }
