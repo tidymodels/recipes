@@ -21,6 +21,8 @@
 #'  should not be passed here (or at all).
 #' @param res The [stats::prcomp.default()] object is stored here once this
 #'  preprocessing step has be trained by [prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @param prefix A character string for the prefix of the resulting new
 #'  variables. See notes below.
 #' @param keep_original_cols A logical to keep the original variables in the
@@ -91,6 +93,7 @@ step_pca <- function(recipe,
                      threshold = NA,
                      options = list(),
                      res = NULL,
+                     columns = NULL,
                      prefix = "PC",
                      keep_original_cols = FALSE,
                      skip = FALSE,
@@ -105,13 +108,14 @@ step_pca <- function(recipe,
   add_step(
     recipe,
     step_pca_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       num_comp = num_comp,
       threshold = threshold,
       options = options,
       res = res,
+      columns = columns,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -121,7 +125,7 @@ step_pca <- function(recipe,
 }
 
 step_pca_new <-
-  function(terms, role, trained, num_comp, threshold, options, res,
+  function(terms, role, trained, num_comp, threshold, options, res, columns,
            prefix,  keep_original_cols, skip, id) {
     step(
       subclass = "pca",
@@ -132,6 +136,7 @@ step_pca_new <-
       threshold = threshold,
       options = options,
       res = res,
+      columns = columns,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -145,7 +150,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
   check_type(training[, col_names])
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(col_names) > 0) {
     prc_call <-
       expr(prcomp(
         retx = FALSE,
@@ -172,10 +177,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     ## e.g. `sdev` etc.
 
   } else {
-    # fake a rotation matrix so that the resolved names can be used for tidy()
-    fake_matrix <- matrix(NA, nrow = length(col_names))
-    rownames(fake_matrix) <- col_names
-    prc_obj <- list(rotation = fake_matrix)
+    prc_obj <- NULL
   }
 
   step_pca_new(
@@ -186,6 +188,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     options = x$options,
     res = prc_obj,
+    columns = col_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -195,7 +198,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
-  if (!all(is.na(object$res$rotation))) {
+  if (length(object$columns) > 0 && !all(is.na(object$res$rotation))) {
     pca_vars <- rownames(object$res$rotation)
     comps <- predict(object$res, newdata = new_data[, pca_vars])
     comps <- comps[, 1:object$num_comp, drop = FALSE]
@@ -212,7 +215,7 @@ bake.step_pca <- function(object, new_data, ...) {
 
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
-    if (all(is.na(x$res$rotation))) {
+    if (length(x$columns) == 0 || all(is.na(x$res$rotation))) {
       cat("No PCA components were extracted.\n")
     } else {
       cat("PCA extraction with ")
@@ -223,26 +226,23 @@ print.step_pca <-
   }
 
 pca_coefs <- function(x) {
-  rot <- as.data.frame(x$res$rotation)
-  vars <- rownames(rot)
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(x$columns) > 0) {
+    rot <- as.data.frame(x$res$rotation)
     npc <- ncol(rot)
     res <- utils::stack(rot)
     colnames(res) <- c("value", "component")
     res$component <- as.character(res$component)
-    res$terms <- rep(vars, npc)
+    res$terms <- rep(unname(x$columns), npc)
     res <- as_tibble(res)[, c("terms", "value", "component")]
   } else {
-    res <- tibble::tibble(terms = vars, value = rlang::na_dbl,
+    res <- tibble::tibble(terms = unname(x$columns), value = rlang::na_dbl,
                           component = rlang::na_chr)
   }
   res
 }
 
 pca_variances <- function(x) {
-  rot <- as.data.frame(x$res$rotation)
-  vars <- rownames(rot)
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(x$columns) > 0) {
     variances <- x$res$sdev ^ 2
     p <- length(variances)
     tot <- sum(variances)
@@ -266,9 +266,9 @@ pca_variances <- function(x) {
                           component = rep(1:p, 4))
   } else {
     res <- tibble::tibble(
-      terms = vars,
-      value = rep(rlang::na_dbl, length(vars)),
-      component = rep(rlang::na_chr, length(vars))
+      terms = unname(x$columns),
+      value = rep(rlang::na_dbl, length(x$columns)),
+      component = rep(rlang::na_chr, length(x$columns))
     )
   }
   res
