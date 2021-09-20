@@ -33,6 +33,8 @@
 
 * The deprecation of the `options` argument to `step_nzv()` was escalated to a deprecation error.
 
+* The `tidy()` methods for objects from `check_new_values()`, `check_class()` and `step_nnmf()` are now exported.
+
 
 # recipes 0.1.16
 
