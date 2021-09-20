@@ -114,7 +114,7 @@ tidy.step_rename <- function(x, ...) {
   var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
     terms = names(x$inputs),
-    value = var_expr,
+    value = unname(var_expr),
     id = rep(x$id, length(x$inputs))
   )
 }
