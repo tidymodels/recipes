@@ -395,7 +395,7 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
 #' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_comp > 0 && length(get_columns_pls(object)) > 0) {
+    if (x$num_comp > 0 && length(get_columns_pls(x)) > 0) {
       res <-
         purrr::map2_dfc(as.data.frame(x$res$coefs), x$res$col_norms, ~ .x * .y) %>%
         dplyr::mutate(terms = rownames(x$res$coefs)) %>%
@@ -403,7 +403,7 @@ tidy.step_pls <- function(x, ...) {
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {
-      res <- tibble(terms = unname(get_columns_pls(object)), value = na_dbl, component  = na_chr)
+      res <- tibble(terms = unname(get_columns_pls(x)), value = na_dbl, component  = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)
