@@ -112,15 +112,6 @@ test_that("quasiquotation", {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that("no input", {
-  expect_error(
-    recipe(~., data = iris) %>%
-      step_select() %>%
-      prep(training = iris),
-    "Please supply at least one variable specification.See [?]selections."
-  )
-})
-
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%
     step_select(Species, starts_with("Sepal"), petal_width = Petal.Width)
