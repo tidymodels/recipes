@@ -20,15 +20,16 @@ figures:
 reference:
   - title: Basic Functions
     contents:
-    - matches("recipe")
+    - recipes
+    - recipe
+    - formula.recipe
+    - print.recipe
+    - summary.recipe
     - prep
     - bake
     - juice
     - selections
-    - starts_with("all_")
     - has_role
-    - has_type
-    - current_info
     - add_role
   - title: Step Functions - Imputation
     contents:
@@ -52,7 +53,8 @@ reference:
     - step_YeoJohnson
   - title: Step Functions - Discretization
     contents:
-    - matches("discreti")
+    - step_discretize
+    - discretize
     - step_cut
   - title: Step Functions - Dummy Variables and Encodings
     contents:
@@ -90,6 +92,7 @@ reference:
     - step_geodist
     - step_ica
     - step_isomap
+    - step_kpca
     - step_kpca_poly
     - step_kpca_rbf
     - step_mutate_at

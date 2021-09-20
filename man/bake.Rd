@@ -79,6 +79,3 @@ bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
 \seealso{
 \code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}
 }
-\author{
-Max Kuhn
-}

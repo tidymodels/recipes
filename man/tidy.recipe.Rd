@@ -7,14 +7,14 @@
 %   R/impute_bag.R, R/impute_knn.R, R/impute_linear.R, R/impute_lower.R,
 %   R/impute_mean.R, R/impute_median.R, R/impute_mode.R, R/impute_roll.R,
 %   R/integer.R, R/interactions.R, R/inverse.R, R/invlogit.R, R/isomap.R,
-%   R/kpca.R, R/kpca_poly.R, R/kpca_rbf.R, R/lincombo.R, R/log.R, R/logit.R,
-%   R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R, R/naomit.R,
-%   R/nnmf.R, R/normalize.R, R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R,
-%   R/ordinalscore.R, R/other.R, R/pca.R, R/pls.R, R/poly.R, R/profile.R,
-%   R/range.R, R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R,
-%   R/rename.R, R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R,
-%   R/shuffle.R, R/slice.R, R/spatialsign.R, R/sqrt.R, R/string2factor.R,
-%   R/tidy.R, R/unknown.R, R/unorder.R, R/window.R, R/zv.R
+%   R/kpca.R, R/kpca_poly.R, R/kpca_rbf.R, R/lincombo.R, R/log.R,
+%   R/logit.R, R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R,
+%   R/naomit.R, R/newvalues.R, R/nnmf.R, R/normalize.R, R/novel.R, R/ns.R,
+%   R/num2factor.R, R/nzv.R, R/ordinalscore.R, R/other.R, R/pca.R, R/pls.R,
+%   R/poly.R, R/profile.R, R/range.R, R/range_check.R, R/ratio.R, R/regex.R,
+%   R/relevel.R, R/relu.R, R/rename.R, R/rename_at.R, R/rm.R, R/sample.R,
+%   R/scale.R, R/select.R, R/shuffle.R, R/slice.R, R/spatialsign.R, R/sqrt.R,
+%   R/string2factor.R, R/tidy.R, R/unknown.R, R/unorder.R, R/window.R, R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
@@ -64,6 +64,7 @@
 \alias{tidy.step_mutate_at}
 \alias{tidy.step_indicate_na}
 \alias{tidy.step_naomit}
+\alias{tidy.check_new_values}
 \alias{tidy.step_nnmf}
 \alias{tidy.step_normalize}
 \alias{tidy.step_novel}
@@ -198,6 +199,8 @@
 
 \method{tidy}{step_naomit}(x, ...)
 
+\method{tidy}{check_new_values}(x, ...)
+
 \method{tidy}{step_nnmf}(x, ...)
 
 \method{tidy}{step_normalize}(x, ...)
@@ -326,4 +329,3 @@ okc_rec_trained <- prep(okc_rec, training = okc)
 tidy(okc_rec_trained)
 tidy(okc_rec_trained, number = 3)
 }
-\keyword{internal}

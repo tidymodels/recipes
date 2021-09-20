@@ -47,8 +47,8 @@ test_that('printing', {
 
   kpca_rec <- rec %>%
     step_kpca_rbf(X2, X3, X4, X5, X6)
-  expect_output(print(kpca_rec))
-  expect_output(prep(kpca_rec, training = tr_dat, verbose = TRUE))
+  expect_snapshot(kpca_rec)
+  expect_snapshot(prep(kpca_rec, training = tr_dat, verbose = TRUE))
 })
 
 
@@ -62,8 +62,7 @@ test_that('No kPCA comps', {
     paste0("X", c(2:6, 1))
   )
   expect_true(inherits(pca_extract$steps[[1]]$res, "list"))
-  expect_output(print(pca_extract),
-                regexp = "No kPCA components were extracted")
+  expect_snapshot(pca_extract)
   expect_equal(
     tidy(pca_extract, 1),
     tibble::tibble(terms = paste0("X", 2:6), id = "")
@@ -115,9 +114,8 @@ test_that('can prep recipes with no keep_original_cols', {
 
   kpca_rec$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
+  expect_snapshot(
     kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE),
-    "'keep_original_cols' was added to"
   )
 
   expect_error(

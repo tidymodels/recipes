@@ -15,10 +15,7 @@ test_that('correct kernel PCA values', {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("kernlab")
 
-  # Capture deprecation message
-  expect_snapshot(
-    kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6, id = "")
-  )
+  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6, id = "")
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
@@ -53,8 +50,8 @@ test_that('printing', {
     kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
   )
 
-  expect_output(print(kpca_rec))
-  expect_output(prep(kpca_rec, training = tr_dat, verbose = TRUE))
+  expect_snapshot(kpca_rec)
+  expect_snapshot(prep(kpca_rec, training = tr_dat, verbose = TRUE))
 })
 
 
@@ -70,10 +67,50 @@ test_that('No kPCA comps', {
     paste0("X", c(2:6, 1))
   )
   expect_true(inherits(pca_extract$steps[[1]]$res, "list"))
-  expect_output(print(pca_extract),
-                regexp = "No kPCA components were extracted")
+  expect_snapshot(pca_extract)
   expect_equal(
     tidy(pca_extract, 1),
     tibble::tibble(terms = paste0("X", 2:6), id = "")
   )
+})
+
+
+test_that('keep_original_cols works', {
+
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>%
+    step_kpca(X2, X3, X4, X5, X6, id = "", keep_original_cols = TRUE)
+
+  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+
+  pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
+
+  expect_equal(
+    colnames(pca_pred),
+    c("X2", "X3", "X4", "X5", "X6",
+      "kPC1", "kPC2", "kPC3", "kPC4", "kPC5")
+  )
+
+})
+
+test_that('can prep recipes with no keep_original_cols', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>%
+    step_kpca(X2, X3, X4, X5, X6, id = "")
+
+  kpca_rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE),
+  )
+
+  expect_error(
+    pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors()),
+    NA
+  )
+
 })

@@ -21,6 +21,3 @@ The original object (invisibly)
 \description{
 Print a Recipe
 }
-\author{
-Max Kuhn
-}

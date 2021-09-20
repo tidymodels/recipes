@@ -42,14 +42,16 @@ test_that('nzv filtering', {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
 
-test_that('altered options', {
+test_that('altered freq_cut and unique_cut', {
   rec <- recipe(y ~ ., data = dat)
 
-  expect_message(
-    filtering <- rec %>%
-      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10)),
-    "deprecated in favor of"
+  expect_snapshot_error(
+    rec %>%
+      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10))
   )
+
+  filtering <- rec %>%
+    step_nzv(x1, x2, x3, x4, freq_cut = 50, unique_cut = 10)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
 
