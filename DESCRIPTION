@@ -54,7 +54,7 @@ Suggests:
     kernlab,
     knitr,
     modeldata,
-    parsnip (>= 0.1.6.9000),
+    parsnip (>= 0.1.7),
     RANN,
     RcppRoll,
     rmarkdown,
@@ -71,6 +71,4 @@ RdMacros:
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Remotes:
-    tidymodels/parsnip
 Config/testthat/edition: 3
