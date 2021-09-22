@@ -13,7 +13,7 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @template check-return
 #'
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details
 #' This function can check the classes of the variables

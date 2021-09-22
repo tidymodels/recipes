@@ -110,7 +110,7 @@ Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 transformations to improve normality or symmetry. \emph{Biometrika}.
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_bs}()},
 \code{\link{step_harmonic}()},
@@ -125,4 +125,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{{individual transformation steps}}
+\concept{individual transformation steps}

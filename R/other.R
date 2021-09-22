@@ -16,7 +16,7 @@
 #'  to pool infrequent levels that is determined by
 #'  [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
 #' @details The overall proportion (or total counts) of the categories are

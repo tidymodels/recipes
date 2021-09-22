@@ -9,7 +9,7 @@
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
 #' @details The selected variables are adjusted to have a new

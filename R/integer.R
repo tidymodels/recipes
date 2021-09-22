@@ -15,7 +15,7 @@
 #' @param zero_based A logical for whether the integers should start at zero and
 #'  new values be appended as the largest integer.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details `step_integer` will determine the unique values of
 #'  each variable from the training set (excluding missing values),

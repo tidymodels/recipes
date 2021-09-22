@@ -118,7 +118,7 @@ seven_pt <- recipe(~ . , data = example_data) \%>\%
 bake(seven_pt, new_data = NULL)
 }
 \seealso{
-Other {imputation steps}: 
+Other imputation steps: 
 \code{\link{step_impute_bag}()},
 \code{\link{step_impute_knn}()},
 \code{\link{step_impute_linear}()},
@@ -127,7 +127,7 @@ Other {imputation steps}:
 \code{\link{step_impute_median}()},
 \code{\link{step_impute_mode}()}
 
-Other {row operation steps}: 
+Other row operation steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_lag}()},
@@ -136,5 +136,5 @@ Other {row operation steps}:
 \code{\link{step_shuffle}()},
 \code{\link{step_slice}()}
 }
-\concept{{imputation steps}}
-\concept{{row operation steps}}
+\concept{imputation steps}
+\concept{row operation steps}

@@ -12,7 +12,7 @@
 #' @param input A character vector containing the names of the columns used.
 #'  This is `NULL` until the step is trained by [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details
 #'  The overall proportion (or total counts) of the categories are

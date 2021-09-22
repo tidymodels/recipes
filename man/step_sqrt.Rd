@@ -70,7 +70,7 @@ tidy(sqrt_trans, number = 1)
 tidy(sqrt_obj, number = 1)
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
@@ -85,4 +85,4 @@ Other {individual transformation steps}:
 \code{\link{step_poly}()},
 \code{\link{step_relu}()}
 }
-\concept{{individual transformation steps}}
+\concept{individual transformation steps}

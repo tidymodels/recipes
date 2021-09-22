@@ -12,7 +12,7 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with
 #'  columns `terms` which contains the columns being transformed is returned.
-#' @family {dplyr steps}
+#' @family dplyr steps
 #' @export
 #' @examples
 #' library(dplyr)

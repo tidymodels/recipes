@@ -23,7 +23,7 @@
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `result` (the
 #'  new column name) is returned.
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @examples
 #' library(modeldata)

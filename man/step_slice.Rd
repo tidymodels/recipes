@@ -107,7 +107,7 @@ qq_rec <-
 tidy(qq_rec, number = 1)
 }
 \seealso{
-Other {row operation steps}: 
+Other row operation steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_impute_roll}()},
@@ -116,7 +116,7 @@ Other {row operation steps}:
 \code{\link{step_sample}()},
 \code{\link{step_shuffle}()}
 
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate_at}()},
@@ -126,5 +126,5 @@ Other {dplyr steps}:
 \code{\link{step_sample}()},
 \code{\link{step_select}()}
 }
-\concept{{dplyr steps}}
-\concept{{row operation steps}}
+\concept{dplyr steps}
+\concept{row operation steps}

@@ -17,8 +17,8 @@
 #'  contains the `select` expressions as character strings
 #'  (and are not reparsable) is returned.
 #'
-#' @family {variable filter steps}
-#' @family {dplyr steps}
+#' @family variable filter steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' library(dplyr)

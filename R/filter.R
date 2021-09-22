@@ -21,8 +21,8 @@
 #'  contains the conditional statements is returned. These
 #'  expressions are text representations and are not parsable.
 #'
-#' @family {row operation steps}
-#' @family {dplyr steps}
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%

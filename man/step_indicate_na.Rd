@@ -81,7 +81,7 @@ imp_models <- prep(impute_rec, training = credit_tr)
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
 }
 \seealso{
-Other {dummy variable and encoding steps}: 
+Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -100,4 +100,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{{dummy variable and encoding steps}}
+\concept{dummy variable and encoding steps}

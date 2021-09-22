@@ -6,7 +6,7 @@
 #'
 #' @inheritParams check_missing
 #' @template check-return
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details This check will break the `bake` function if any of the specified
 #' columns is not present in the data. If the check passes, nothing is changed

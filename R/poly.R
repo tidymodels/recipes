@@ -14,7 +14,7 @@
 #'  the option `raw = TRUE` will produce the regular polynomial
 #'  values (not orthogonalized).
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details `step_poly` can create new features from a single
 #'  variable that enable fitting routines to model this variable in

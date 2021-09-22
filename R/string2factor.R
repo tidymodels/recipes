@@ -10,7 +10,7 @@
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
 #'  convert all variables affected by this step to have the same

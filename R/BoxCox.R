@@ -12,7 +12,7 @@
 #' @param num_unique An integer to specify minimum required unique
 #'  values to evaluate for a transformation.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details The Box-Cox transformation, which requires a strictly
 #'  positive variable, can be used to rescale a variable to be more

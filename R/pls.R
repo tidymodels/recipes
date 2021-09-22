@@ -21,7 +21,7 @@
 #' @param res A list of results are stored here once this preprocessing step
 #'  has been trained by [prep.recipe()].
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details PLS is a supervised version of principal component
 #'  analysis that requires the outcome data to compute

@@ -87,7 +87,7 @@ tidy(lincomb_filter, number = 1)
 tidy(lincomb_filter_trained, number = 1)
 }
 \seealso{
-Other {variable filter steps}: 
+Other variable filter steps: 
 \code{\link{step_corr}()},
 \code{\link{step_nzv}()},
 \code{\link{step_rm}()},
@@ -97,4 +97,4 @@ Other {variable filter steps}:
 \author{
 Max Kuhn, Kirk Mettler, and Jed Wing
 }
-\concept{{variable filter steps}}
+\concept{variable filter steps}

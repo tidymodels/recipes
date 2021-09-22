@@ -15,7 +15,7 @@
 #' @param options A list of options for [splines::ns()]
 #'  which should not include `x` or `df`.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details `step_ns` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a

@@ -98,7 +98,7 @@ moderate robustness to multivariate estimators. \emph{Journal of
 Chemical Information and Modeling}, 46(3), 1402-1409.
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -113,4 +113,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

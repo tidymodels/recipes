@@ -18,7 +18,7 @@
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details Independent component analysis (ICA) is a
 #'  transformation of a group of variables that produces a new set

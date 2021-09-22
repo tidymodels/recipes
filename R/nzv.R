@@ -13,7 +13,7 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
-#' @family {variable filter steps}
+#' @family variable filter steps
 #' @export
 #'
 #' @details This step diagnoses predictors that have one unique

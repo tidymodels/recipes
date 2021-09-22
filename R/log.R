@@ -13,7 +13,7 @@
 #'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) and `base`.

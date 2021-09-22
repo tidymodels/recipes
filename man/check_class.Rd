@@ -113,10 +113,10 @@ recipe(x_df) \%>\%
 
 }
 \seealso{
-Other {checks}: 
+Other checks: 
 \code{\link{check_cols}()},
 \code{\link{check_missing}()},
 \code{\link{check_new_values}()},
 \code{\link{check_range}()}
 }
-\concept{{checks}}
+\concept{checks}
