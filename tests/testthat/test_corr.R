@@ -38,11 +38,10 @@ test_that('many missing values', {
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .25)
 
-  filtering_trained <-
-    expect_warning(
-      prep(filtering, training = dat2, verbose = FALSE),
-      "1 columns were excluded from the filter"
-    )
+  expect_warning(
+    filtering_trained <- prep(filtering, training = dat2, verbose = FALSE),
+    "1 columns were excluded from the filter"
+  )
 
   expect_equal(filtering_trained$steps[[1]]$removals, paste0("V", 1:2))
 })
@@ -55,11 +54,10 @@ test_that('occasional missing values', {
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .25, use = "everything")
 
-  filtering_trained <-
-    expect_warning(
-      prep(filtering, training = dat3, verbose = FALSE),
-      "Some columns were excluded from the filter"
-    )
+  expect_warning(
+    filtering_trained <- prep(filtering, training = dat3, verbose = FALSE),
+    "Some columns were excluded from the filter"
+  )
 
   expect_equal(filtering_trained$steps[[1]]$removals, "V2")
 })
