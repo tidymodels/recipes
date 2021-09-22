@@ -232,17 +232,32 @@ anything but common roles are <code>"outcome"</code>, <code>"predictor"</code>,
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>recipe</code> with sub-objects:</p>
+<dl>
 <dt>var_info</dt><dd><p>A tibble containing information about the original data
 set columns</p></dd>
+</dl>
+
+
+<dl>
 <dt>term_info</dt><dd><p>A tibble that contains the current set of terms in the
 data set. This initially defaults to the same data contained in
 <code>var_info</code>.</p></dd>
+</dl>
+
+
+<dl>
 <dt>steps</dt><dd><p>A list of <code>step</code>  or <code>check</code> objects that define the sequence of
 preprocessing operations that will be applied to data. The default value is
 <code>NULL</code></p></dd>
+</dl>
+
+
+<dl>
 <dt>template</dt><dd><p>A tibble of the data. This is initialized to be the same
 as the data given in the <code>data</code> argument but can be different after
 the recipe is trained.</p></dd>
+</dl>
+
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
