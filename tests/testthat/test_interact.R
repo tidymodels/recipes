@@ -195,7 +195,7 @@ test_that('missing columns', {
     rec %>%
     step_rm(x1) %>%
     step_interact(~x1:x2)
-  no_fail_rec <- expect_warning(prep(no_fail, dat_tr))
+  expect_warning(no_fail_rec <- prep(no_fail, dat_tr))
   no_fail_res <- juice(no_fail_rec) %>% names()
   expect_true(!any(grepl("_x_", no_fail_res)))
 
@@ -204,7 +204,7 @@ test_that('missing columns', {
     step_rm(x1) %>%
     step_interact(~x1:x2) %>%
     step_interact(~x3:x2)
-  one_int_rec <- expect_warning(prep(one_int, dat_tr))
+  expect_warning(one_int_rec <- prep(one_int, dat_tr))
   one_int_res <- juice(one_int_rec) %>% names()
   expect_true(sum(grepl("_x_", one_int_res)) == 1)
 
