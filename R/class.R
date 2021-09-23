@@ -202,6 +202,7 @@ print.check_class <-
 
 
 #' @rdname tidy.recipe
+#' @export
 tidy.check_class <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$class_list),

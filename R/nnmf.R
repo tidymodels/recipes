@@ -192,6 +192,7 @@ print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
 
 
 #' @rdname tidy.recipe
+#' @export
 tidy.step_nnmf <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {
