@@ -21,7 +21,7 @@
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
 #' @details `step_dummy()` will create a set of binary dummy

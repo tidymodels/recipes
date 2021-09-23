@@ -18,8 +18,8 @@
 #'  When you [`tidy()`] this step, a tibble with column `terms` which
 #'  contains the filtering indices is returned.
 #'
-#' @family {row operation steps}
-#' @family {dplyr steps}
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%

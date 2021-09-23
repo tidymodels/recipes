@@ -163,7 +163,7 @@ Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) \emph{mixOmics: An R package fo
 13(11): e1005752. \doi{10.1371/journal.pcbi.1005752}
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -178,4 +178,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

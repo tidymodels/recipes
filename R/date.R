@@ -33,7 +33,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details Unlike some other steps, `step_date` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`

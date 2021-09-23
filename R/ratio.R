@@ -26,7 +26,7 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `denom` is returned.
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @examples
 #' library(recipes)

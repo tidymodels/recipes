@@ -26,7 +26,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details
 #' Principal component analysis (PCA) is a transformation of a

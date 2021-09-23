@@ -25,7 +25,7 @@
 #' @details When you [`tidy()`] this step, a tibble with columns echoing the
 #'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `is_lat_lon`, `name`, and `id`
 #'  is returned.
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
 #' @details `step_geodist` uses the Pythagorean theorem to calculate Euclidean

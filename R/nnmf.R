@@ -24,7 +24,7 @@
 #' @param seed An integer that will be used to set the seed in isolation
 #'  when computing the factorization.
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details Non-negative matrix factorization computes latent components that
 #'  have non-negative values and take into account that the original data
@@ -192,6 +192,7 @@ print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
 
 
 #' @rdname tidy.recipe
+#' @export
 tidy.step_nnmf <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0) {

@@ -23,7 +23,7 @@
 #'  When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be affected) is returned.
 #'
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @examples
 #' library(modeldata)

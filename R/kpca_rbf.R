@@ -11,7 +11,7 @@
 #'  here once this preprocessing step has be trained by
 #'  [`prep()`][prep.recipe()].
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @template kpca-info
 #'

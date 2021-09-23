@@ -21,7 +21,7 @@
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 #'  original in `caret` package). Max Kuhn for the `step`
 #'  function.
-#' @family {variable filter steps}
+#' @family variable filter steps
 #' @export
 #'
 #' @details This step attempts to remove variables to keep the

@@ -24,7 +24,7 @@
 #' @param id A character string that is unique to this step to identify it.
 #' @template step-return
 #'
-#' @family {normalization steps}
+#' @family normalization steps
 #' @export
 #' @details Centering data means that the average of a variable is
 #'  subtracted from the data. `step_center` estimates the

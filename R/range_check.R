@@ -14,7 +14,7 @@
 #' @param upper A named numeric vector of maximum values in the train set.
 #'   This is `NULL` until computed by [prep.recipe()].
 #' @template check-return
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details
 #'   The amount of slack that is allowed is determined by the

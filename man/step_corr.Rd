@@ -103,7 +103,7 @@ tidy(corr_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-Other {variable filter steps}: 
+Other variable filter steps: 
 \code{\link{step_lincomb}()},
 \code{\link{step_nzv}()},
 \code{\link{step_rm}()},
@@ -116,4 +116,4 @@ modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 original in \code{caret} package). Max Kuhn for the \code{step}
 function.
 }
-\concept{{variable filter steps}}
+\concept{variable filter steps}

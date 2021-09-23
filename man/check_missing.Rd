@@ -89,10 +89,10 @@ bake(rp, test_data)
 }
 }
 \seealso{
-Other {checks}: 
+Other checks: 
 \code{\link{check_class}()},
 \code{\link{check_cols}()},
 \code{\link{check_new_values}()},
 \code{\link{check_range}()}
 }
-\concept{{checks}}
+\concept{checks}

@@ -147,7 +147,7 @@ Gower, C. (1971) "A general coefficient of similarity and some
 of its properties," Biometrics, 857-871.
 }
 \seealso{
-Other {imputation steps}: 
+Other imputation steps: 
 \code{\link{step_impute_bag}()},
 \code{\link{step_impute_linear}()},
 \code{\link{step_impute_lower}()},
@@ -156,4 +156,4 @@ Other {imputation steps}:
 \code{\link{step_impute_mode}()},
 \code{\link{step_impute_roll}()}
 }
-\concept{{imputation steps}}
+\concept{imputation steps}

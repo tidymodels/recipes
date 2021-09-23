@@ -77,11 +77,11 @@ tidy(zv_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-Other {variable filter steps}: 
+Other variable filter steps: 
 \code{\link{step_corr}()},
 \code{\link{step_lincomb}()},
 \code{\link{step_nzv}()},
 \code{\link{step_rm}()},
 \code{\link{step_select}()}
 }
-\concept{{variable filter steps}}
+\concept{variable filter steps}

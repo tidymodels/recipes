@@ -13,7 +13,7 @@
 #'  `NULL` until computed by [prep.recipe()].
 #' @template check-return
 #'
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details
 #' This function can check the classes of the variables
@@ -202,6 +202,7 @@ print.check_class <-
 
 
 #' @rdname tidy.recipe
+#' @export
 tidy.check_class <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$class_list),

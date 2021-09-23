@@ -11,7 +11,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected), `inverse`, and `func` is returned.

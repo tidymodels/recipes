@@ -18,7 +18,7 @@
 #'  columns `values` which contains the `rename` expressions as character
 #'  strings (and are not reparsable) is returned.
 #'
-#' @family {dplyr steps}
+#' @family dplyr steps
 #' @export
 #' @examples
 #' recipe( ~ ., data = iris) %>%

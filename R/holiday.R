@@ -14,7 +14,7 @@
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep.recipe()] is used.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
 #' @export
 #' @details Unlike some other steps, `step_holiday` does *not*

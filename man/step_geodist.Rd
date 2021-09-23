@@ -101,7 +101,7 @@ tidy(near_station, number = 1)
 https://en.wikipedia.org/wiki/Haversine_formula
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_ica}()},
@@ -116,4 +116,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

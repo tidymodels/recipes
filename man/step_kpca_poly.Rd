@@ -134,7 +134,7 @@ kernlab - An S4 package for kernel methods in R. \emph{Journal
 of Statistical Software}, 11(1), 1-20.
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -149,4 +149,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

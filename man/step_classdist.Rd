@@ -116,7 +116,7 @@ tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
 \code{\link{step_ica}()},
@@ -131,4 +131,4 @@ Other {multivariate transformation steps}:
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

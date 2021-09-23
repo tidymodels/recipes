@@ -109,7 +109,7 @@ bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 tidy(qq_rec, number = 1)
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
@@ -124,7 +124,7 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate_at}()},
@@ -134,5 +134,5 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{{dplyr steps}}
-\concept{{individual transformation steps}}
+\concept{dplyr steps}
+\concept{individual transformation steps}

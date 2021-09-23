@@ -10,7 +10,7 @@
 #' @param ptype A data frame prototype to cast new data sets to. This is
 #'  commonly a 0-row slice of the training set.
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details `step_impute_mode` estimates the variable modes
 #'  from the data used in the `training` argument of

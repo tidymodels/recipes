@@ -17,8 +17,8 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `size`,
 #' `replace`, and `id` is returned.
-#' @family {row operation steps}
-#' @family {dplyr steps}
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #'

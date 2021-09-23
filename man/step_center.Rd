@@ -85,9 +85,9 @@ tidy(center_trans, number = 1)
 tidy(center_obj, number = 1)
 }
 \seealso{
-Other {normalization steps}: 
+Other normalization steps: 
 \code{\link{step_normalize}()},
 \code{\link{step_range}()},
 \code{\link{step_scale}()}
 }
-\concept{{normalization steps}}
+\concept{normalization steps}

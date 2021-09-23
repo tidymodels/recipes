@@ -108,7 +108,7 @@ tidy(date_rec, number = 1)
 
 }
 \seealso{
-Other {dummy variable and encoding steps}: 
+Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_dummy_multi_choice}()},
@@ -127,4 +127,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{{dummy variable and encoding steps}}
+\concept{dummy variable and encoding steps}

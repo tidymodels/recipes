@@ -173,7 +173,7 @@ The harmonic analysis of tidal model time series.
 Advances in water resources, 12(3), 109-120.
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
@@ -188,4 +188,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{{individual transformation steps}}
+\concept{individual transformation steps}

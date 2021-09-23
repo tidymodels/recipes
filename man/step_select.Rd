@@ -88,14 +88,14 @@ qq_rec <-
 qq_rec
 }
 \seealso{
-Other {variable filter steps}: 
+Other variable filter steps: 
 \code{\link{step_corr}()},
 \code{\link{step_lincomb}()},
 \code{\link{step_nzv}()},
 \code{\link{step_rm}()},
 \code{\link{step_zv}()}
 
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate_at}()},
@@ -105,5 +105,5 @@ Other {dplyr steps}:
 \code{\link{step_sample}()},
 \code{\link{step_slice}()}
 }
-\concept{{dplyr steps}}
-\concept{{variable filter steps}}
+\concept{dplyr steps}
+\concept{variable filter steps}

@@ -17,7 +17,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @rdname step_relu
 #'

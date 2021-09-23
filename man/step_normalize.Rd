@@ -101,9 +101,9 @@ keep_orig_te
 
 }
 \seealso{
-Other {normalization steps}: 
+Other normalization steps: 
 \code{\link{step_center}()},
 \code{\link{step_range}()},
 \code{\link{step_scale}()}
 }
-\concept{{normalization steps}}
+\concept{normalization steps}

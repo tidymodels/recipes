@@ -11,7 +11,7 @@
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details Dummy variables from ordered factors with `C`
 #'  levels will create polynomial basis functions with `C-1`

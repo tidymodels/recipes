@@ -13,7 +13,7 @@
 #' @param res An S4 [kernlab::kpca()] object is stored here once this
 #'  preprocessing step has be trained by [`prep()`][prep.recipe()].
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details
 #' When performing kPCA with `step_kpca()`, you must choose the kernel

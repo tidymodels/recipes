@@ -12,7 +12,7 @@
 #' @param num_unique An integer where data that have less possible
 #'  values will not be evaluated for a transformation.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details The Yeo-Johnson transformation is very similar to the
 #'  Box-Cox but does not require the input variables to be strictly
