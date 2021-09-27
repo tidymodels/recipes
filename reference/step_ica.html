@@ -103,7 +103,7 @@ components." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ components." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -205,16 +205,14 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables will be used to compute the components. See
-<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new independent component columns created by the
-original variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -243,8 +241,8 @@ here once this preprocessing step has be trained by
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>A character string that will be the prefix to the
-resulting new variables. See notes below.</p></td>
+      <td><p>A character string for the prefix of the resulting new
+variables. See notes below.</p></td>
     </tr>
     <tr>
       <th>keep_original_cols</th>
@@ -258,7 +256,7 @@ recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -268,8 +266,8 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Independent component analysis (ICA) is a
@@ -304,9 +302,20 @@ component analysis: algorithms and applications. <em>Neural
 Networks</em>, 13(4-5), 411-430.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_pca.html'>step_pca()</a></code> <code><a href='step_kpca.html'>step_kpca()</a></code>
-<code><a href='step_isomap.html'>step_isomap()</a></code> <code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p>Other multivariate transformation steps: 
+<code><a href='step_classdist.html'>step_classdist</a>()</code>,
+<code><a href='step_depth.html'>step_depth</a>()</code>,
+<code><a href='step_geodist.html'>step_geodist</a>()</code>,
+<code><a href='step_isomap.html'>step_isomap</a>()</code>,
+<code><a href='step_kpca_poly.html'>step_kpca_poly</a>()</code>,
+<code><a href='step_kpca_rbf.html'>step_kpca_rbf</a>()</code>,
+<code><a href='step_kpca.html'>step_kpca</a>()</code>,
+<code><a href='step_mutate_at.html'>step_mutate_at</a>()</code>,
+<code><a href='step_nnmf.html'>step_nnmf</a>()</code>,
+<code><a href='step_pca.html'>step_pca</a>()</code>,
+<code><a href='step_pls.html'>step_pls</a>()</code>,
+<code><a href='step_ratio.html'>step_ratio</a>()</code>,
+<code><a href='step_spatialsign.html'>step_spatialsign</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># from fastICA::fastICA</span></span>
@@ -337,6 +346,11 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: dimRed</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: DRR</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: kernlab</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘kernlab’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:ggplot2’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     alpha</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: CVST</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: Matrix</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
@@ -350,7 +364,7 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: fastICA</span>
 <span class='r-plt'><img src='step_ica-1.png' alt='' width='768' height='552' /></span>
 <span class='r-plt'><img src='step_ica-2.png' alt='' width='768' height='552' /></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 4 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 4 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   terms component  value id       </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> V1    IC1       -<span style='color: #BB0000;'>1.04</span>  ica_3zAWC</span>

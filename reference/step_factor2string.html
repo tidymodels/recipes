@@ -102,7 +102,7 @@ vectors to strings." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ vectors to strings." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -199,9 +199,8 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables will be converted to strings. See <code><a href='selections.html'>selections()</a></code>
-for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
@@ -226,7 +225,7 @@ recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -236,19 +235,36 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> (the
-columns that will be affected).</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>prep</code> has an option <code>strings_as_factors</code> that
 defaults to <code>TRUE</code>. If this step is used with the default
 option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.</p>
+<p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+columns that will be affected) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_string2factor.html'>step_string2factor()</a></code> <code><a href='step_dummy.html'>step_dummy()</a></code></p></div>
+    <div class='dont-index'><p>Other dummy variable and encoding steps: 
+<code><a href='step_bin2factor.html'>step_bin2factor</a>()</code>,
+<code><a href='step_count.html'>step_count</a>()</code>,
+<code><a href='step_date.html'>step_date</a>()</code>,
+<code><a href='step_dummy_multi_choice.html'>step_dummy_multi_choice</a>()</code>,
+<code><a href='step_dummy.html'>step_dummy</a>()</code>,
+<code><a href='step_holiday.html'>step_holiday</a>()</code>,
+<code><a href='step_indicate_na.html'>step_indicate_na</a>()</code>,
+<code><a href='step_integer.html'>step_integer</a>()</code>,
+<code><a href='step_novel.html'>step_novel</a>()</code>,
+<code><a href='step_num2factor.html'>step_num2factor</a>()</code>,
+<code><a href='step_ordinalscore.html'>step_ordinalscore</a>()</code>,
+<code><a href='step_other.html'>step_other</a>()</code>,
+<code><a href='step_regex.html'>step_regex</a>()</code>,
+<code><a href='step_relevel.html'>step_relevel</a>()</code>,
+<code><a href='step_string2factor.html'>step_string2factor</a>()</code>,
+<code><a href='step_unknown.html'>step_unknown</a>()</code>,
+<code><a href='step_unorder.html'>step_unorder</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
@@ -279,10 +295,10 @@ to factors after all of the steps have been prepped.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "character"</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 1 × 3</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   terms ordered id                 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> diet  FALSE   string2factor_qApoE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> diet  FALSE   string2factor_oEGyP</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

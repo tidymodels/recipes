@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimate a Data Recipe — prep • recipes</title>
+<title>Estimate a preprocessing recipe — prep • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,7 @@
 
 
 
-<meta property="og:title" content="Estimate a Data Recipe — prep" />
+<meta property="og:title" content="Estimate a preprocessing recipe — prep" />
 <meta property="og:description" content="For a recipe with at least one preprocessing operation, estimate the required
 parameters from a training set that can be later applied to other data
 sets." />
@@ -103,7 +103,7 @@ sets." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ sets." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -170,7 +170,7 @@ sets." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimate a Data Recipe</h1>
+    <h1>Estimate a preprocessing recipe</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/recipe.R'><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>prep.Rd</code></div>
     </div>
@@ -268,9 +268,6 @@ are added, <code>prep()</code> will only update the new operations. If
 <p>As the steps are executed, the <code>training</code> set is updated. For example,
 if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.</p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Max Kuhn</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span>, package <span class='op'>=</span> <span class='st'>"modeldata"</span><span class='op'>)</span></span>
@@ -296,7 +293,7 @@ data, the step for scaling is given the centered data.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> oper 4 step ns [training] </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> The retained training set is ~ 0.49 Mb  in memory.</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Data Recipe</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Recipe</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Inputs:</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
@@ -314,20 +311,20 @@ data, the step for scaling is given the centered data.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Natural Splines on Longitude, Latitude [trained]</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'>prep</span><span class='op'>(</span><span class='va'>ames_rec</span>, log_changes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> step_other (other_hiYO6): same number of columns</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> step_other (other_BZtQz): same number of columns</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> step_dummy (dummy_JgwxH): </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> step_dummy (dummy_yzsC0): </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  new (9): Neighborhood_College_Creek, Neighborhood_Old_Town, ...</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  removed (2): Neighborhood, Central_Air</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> step_interact (interact_Fe2kG): </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> step_interact (interact_s2hFm): </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  new (1): Central_Air_Y_x_Year_Built</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> step_ns (ns_LGGmr): </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> step_ns (ns_XrbyI): </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  new (10): Longitude_ns_1, Longitude_ns_2, Longitude_ns_3, ...</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>  removed (2): Longitude, Latitude</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Data Recipe</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Recipe</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Inputs:</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>

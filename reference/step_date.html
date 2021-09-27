@@ -103,7 +103,7 @@ numeric variables." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ numeric variables." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -206,17 +206,15 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variables that will be used to create the new variables. The
-selected variables should have class <code>Date</code> or
+      <td><p>One or more selector functions to choose variables
+for this step. The selected variables should have class <code>Date</code> or
 <code>POSIXct</code>. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new variable columns created by the original variables
-will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -270,7 +268,7 @@ recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -280,8 +278,8 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For <code>step_date</code>, an updated version of recipe with
-the new step added to the sequence of existing steps (if any).</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Unlike some other steps, <code>step_date</code> does <em>not</em>
@@ -292,9 +290,24 @@ to <code>FALSE</code> to remove them.</p>
 names), and <code>ordinal</code> (a logical) is returned.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='step_holiday.html'>step_holiday()</a></code> <code><a href='step_rm.html'>step_rm()</a></code>
-<code><a href='recipe.html'>recipe()</a></code> <code><a href='prep.html'>prep.recipe()</a></code>
-<code><a href='bake.html'>bake.recipe()</a></code></p></div>
+    <div class='dont-index'><p>Other dummy variable and encoding steps: 
+<code><a href='step_bin2factor.html'>step_bin2factor</a>()</code>,
+<code><a href='step_count.html'>step_count</a>()</code>,
+<code><a href='step_dummy_multi_choice.html'>step_dummy_multi_choice</a>()</code>,
+<code><a href='step_dummy.html'>step_dummy</a>()</code>,
+<code><a href='step_factor2string.html'>step_factor2string</a>()</code>,
+<code><a href='step_holiday.html'>step_holiday</a>()</code>,
+<code><a href='step_indicate_na.html'>step_indicate_na</a>()</code>,
+<code><a href='step_integer.html'>step_integer</a>()</code>,
+<code><a href='step_novel.html'>step_novel</a>()</code>,
+<code><a href='step_num2factor.html'>step_num2factor</a>()</code>,
+<code><a href='step_ordinalscore.html'>step_ordinalscore</a>()</code>,
+<code><a href='step_other.html'>step_other</a>()</code>,
+<code><a href='step_regex.html'>step_regex</a>()</code>,
+<code><a href='step_relevel.html'>step_relevel</a>()</code>,
+<code><a href='step_string2factor.html'>step_string2factor</a>()</code>,
+<code><a href='step_unknown.html'>step_unknown</a>()</code>,
+<code><a href='step_unorder.html'>step_unorder</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span></span>
@@ -310,7 +323,7 @@ names), and <code>ordinal</code> (a logical) is returned.</p>
 <span class='r-in'>   <span class='fu'>step_date</span><span class='op'>(</span><span class='fu'><a href='has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 3 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   terms            value ordinal id        </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> all_predictors() dow   FALSE   date_vUNsj</span>
@@ -321,7 +334,7 @@ names), and <code>ordinal</code> (a logical) is returned.</p>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>date_values</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>date_rec</span>, new_data <span class='op'>=</span> <span class='va'>examples</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>date_values</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 10 x 8</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 10 × 8</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    Dan        Stefan     Dan_dow Dan_month Dan_year Stefan_dow Stefan_month</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;date&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>       </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> 2002-03-05 2006-01-14 Tue     Mar           <span style='text-decoration: underline;'>2</span>002 Sat        Jan         </span>
@@ -337,7 +350,7 @@ names), and <code>ordinal</code> (a logical) is returned.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 1 more variable: Stefan_year &lt;dbl&gt;</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>date_rec</span>, number <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 x 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 4</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   terms  value ordinal id        </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;lgl&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> Dan    dow   FALSE   date_vUNsj</span>

@@ -105,7 +105,7 @@ level equal." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -125,7 +125,7 @@ level equal." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -212,11 +212,8 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which
-variable is used to sample the data. See <code><a href='selections.html'>selections()</a></code>
-for more details. The selection should result in <em>single
-factor variable</em>. For the <code>tidy</code> method, these are not
-currently used.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>under_ratio</th>
@@ -258,7 +255,7 @@ recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>seed</th>
@@ -276,10 +273,8 @@ the computations for subsequent operations</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated version of <code>recipe</code> with the new step
-added to the sequence of existing steps (if any). For the
-<code>tidy</code> method, a tibble with columns <code>terms</code> which is
-the variable used to sample.</p>
+    <p>An updated version of <code>recipe</code> with the new step added to the
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Down-sampling is intended to be performed on the <em>training</em> set alone. For
@@ -303,59 +298,6 @@ it is not clear whether those operations should be conducted
 option <code>skip = TRUE</code> so that the extra sampling is <em>not</em>
 conducted outside of the training set.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>)</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>okc</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>               halal              kosher      strictly halal     strictly kosher </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  11                  11                  18                  18 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>        mostly halal       mostly kosher               vegan      strictly vegan </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  48                  86                 136                 227 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>               other        mostly vegan      strictly other          vegetarian </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                 331                 335                 450                 665 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> strictly vegetarian        mostly other   mostly vegetarian   strictly anything </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                 874                1004                3438                5107 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>            anything     mostly anything                &lt;NA&gt; </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                6174               16562               24360 </span>
-<span class='r-in'></span>
-<span class='r-in'><span class='va'>ds_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'>step_downsample</span><span class='op'>(</span><span class='va'>diet</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
-<span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span>training <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span></span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>`step_downsample()` was deprecated in recipes 0.1.13.</span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> Please use `themis::step_downsample()` instead.</span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'>This warning is displayed once every 8 hours.</span></span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ds_rec</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>            anything               halal              kosher     mostly anything </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  11                  11                  11                  11 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>        mostly halal       mostly kosher        mostly other        mostly vegan </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  11                  11                  11                  11 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly vegetarian               other   strictly anything      strictly halal </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  11                  11                  11                  11 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>     strictly kosher      strictly other      strictly vegan strictly vegetarian </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  11                  11                  11                  11 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>               vegan          vegetarian                &lt;NA&gt; </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  11                  11                  11 </span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># since `skip` defaults to TRUE, baking the step has no effect</span></span>
-<span class='r-in'><span class='va'>baked_okc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bake.html'>bake</a></span><span class='op'>(</span><span class='va'>ds_rec</span>, new_data <span class='op'>=</span> <span class='va'>okc</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>baked_okc</span><span class='op'>$</span><span class='va'>diet</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>            anything               halal              kosher     mostly anything </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                6174                  11                  11               16562 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>        mostly halal       mostly kosher        mostly other        mostly vegan </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  48                  86                1004                 335 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   mostly vegetarian               other   strictly anything      strictly halal </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                3438                 331                5107                  18 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>     strictly kosher      strictly other      strictly vegan strictly vegetarian </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                  18                 450                 227                 874 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>               vegan          vegetarian                &lt;NA&gt; </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                 136                 665               24360 </span>
-</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Imputation of numeric variables via a linear model. — step_impute_linear • recipes</title>
+<title>Impute numeric variables via a linear model — step_impute_linear • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,7 @@
 
 
 
-<meta property="og:title" content="Imputation of numeric variables via a linear model. — step_impute_linear" />
+<meta property="og:title" content="Impute numeric variables via a linear model — step_impute_linear" />
 <meta property="og:description" content="step_impute_linear creates a specification of a recipe step that will
 create linear regression models to impute missing data." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
@@ -102,7 +102,7 @@ create linear regression models to impute missing data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ create linear regression models to impute missing data." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -169,7 +169,7 @@ create linear regression models to impute missing data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Imputation of numeric variables via a linear model.</h1>
+    <h1>Impute numeric variables via a linear model</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/impute_linear.R'><code>R/impute_linear.R</code></a></small>
     <div class="hidden name"><code>step_impute_linear.Rd</code></div>
     </div>
@@ -200,15 +200,15 @@ sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose variables. For
-<code>step_impute_linear</code>, this indicates the variables to be imputed; these variables
-<strong>must</strong> be of type <code>numeric</code>. When used with <code>imp_vars</code>, the dots indicates
-which variables are used to predict the missing data in each variable. See
-<code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables to be imputed;
+these variables <strong>must</strong> be of type <code>numeric</code>. When used with <code>imp_vars</code>,
+these dots indicate which variables are used to predict the missing data
+in each variable. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>Not used by this step since no new variables are created.</p></td>
+      <td><p>Not used by this step since no new variables are
+created.</p></td>
     </tr>
     <tr>
       <th>trained</th>
@@ -235,7 +235,7 @@ recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations</p></td>
+the computations for subsequent operations.</p></td>
     </tr>
     <tr>
       <th>id</th>
@@ -246,7 +246,7 @@ the computations for subsequent operations</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step added to the
-sequence of existing steps (if any).</p>
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For each variable requiring imputation, a linear model is fit
@@ -266,6 +266,16 @@ bagged tree object) is returned.</p>
     <p>Kuhn, M. and Johnson, K. (2013).
 <em>Feature Engineering and Selection</em>
 <a href='https://bookdown.org/max/FES/handling-missing-data.html'>https://bookdown.org/max/FES/handling-missing-data.html</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other imputation steps: 
+<code><a href='step_impute_bag.html'>step_impute_bag</a>()</code>,
+<code><a href='step_impute_knn.html'>step_impute_knn</a>()</code>,
+<code><a href='step_impute_lower.html'>step_impute_lower</a>()</code>,
+<code><a href='step_impute_mean.html'>step_impute_mean</a>()</code>,
+<code><a href='step_impute_median.html'>step_impute_median</a>()</code>,
+<code><a href='step_impute_mode.html'>step_impute_mode</a>()</code>,
+<code><a href='step_impute_roll.html'>step_impute_roll</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span>, package <span class='op'>=</span> <span class='st'>"modeldata"</span><span class='op'>)</span></span>
@@ -289,11 +299,6 @@ bagged tree object) is returned.</p>
 <span class='r-in'>  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>Longitude</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘ggplot2’</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:kernlab’:</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span>     alpha</span>
 <span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>imputed</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>original</span>, y <span class='op'>=</span> <span class='va'>imputed</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span class='r-in'>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_abline</a></span><span class='op'>(</span>col <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span class='r-in'>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>.3</span><span class='op'>)</span> <span class='op'>+</span></span>

@@ -52,7 +52,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -173,7 +173,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
 <span class="va">rec_obj</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -213,8 +213,10 @@
   <span class="fu"><a href="../reference/step_impute_knn.html">step_knnimpute</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="co">#&gt; Warning: `step_knnimpute()` was deprecated in recipes 0.1.16.</span>
 <span class="co">#&gt; Please use `step_impute_knn()` instead.</span>
+<span class="co">#&gt; This warning is displayed once every 8 hours.</span>
+<span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span>
 <span class="va">imputed</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -231,7 +233,7 @@
 <code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">ind_vars</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -249,7 +251,7 @@
   <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
 <span class="va">standardized</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -267,7 +269,7 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
 <span class="va">trained_rec</span>
-<span class="co">#&gt; Data Recipe</span>
+<span class="co">#&gt; Recipe</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Inputs:</span>
 <span class="co">#&gt; </span>
@@ -293,7 +295,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
 <span class="va">test_data</span>
-<span class="co">#&gt; # A tibble: 1,114 x 23</span>
+<span class="co">#&gt; # A tibble: 1,114 × 23</span>
 <span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span>
 <span class="co">#&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt;  1     1.09   0.924  1.88    -0.385 -0.131  -0.488 -0.295 -0.0817  0.297  </span>
@@ -326,35 +328,50 @@
 <span class="co">#&gt;                 1                 1                 1</span></code></pre></div>
 <p>Selectors can also be used. For example, if only the predictors are needed, you can use <code>bake(object, new_data, all_predictors())</code>.</p>
 <p>There are a number of other steps included in the package:</p>
-<pre><code>#&gt;  [1] "step_arrange"       "step_bagimpute"     "step_bin2factor"   
-#&gt;  [4] "step_BoxCox"        "step_bs"            "step_center"       
-#&gt;  [7] "step_classdist"     "step_corr"          "step_count"        
-#&gt; [10] "step_cut"           "step_date"          "step_depth"        
-#&gt; [13] "step_discretize"    "step_downsample"    "step_dummy"        
-#&gt; [16] "step_factor2string" "step_filter"        "step_geodist"      
-#&gt; [19] "step_holiday"       "step_hyperbolic"    "step_ica"          
-#&gt; [22] "step_impute_bag"    "step_impute_knn"    "step_impute_linear"
-#&gt; [25] "step_impute_lower"  "step_impute_mean"   "step_impute_median"
-#&gt; [28] "step_impute_mode"   "step_impute_roll"   "step_indicate_na"  
-#&gt; [31] "step_integer"       "step_interact"      "step_intercept"    
-#&gt; [34] "step_inverse"       "step_invlogit"      "step_isomap"       
-#&gt; [37] "step_knnimpute"     "step_kpca"          "step_kpca_poly"    
-#&gt; [40] "step_kpca_rbf"      "step_lag"           "step_lincomb"      
-#&gt; [43] "step_log"           "step_logit"         "step_lowerimpute"  
-#&gt; [46] "step_meanimpute"    "step_medianimpute"  "step_modeimpute"   
-#&gt; [49] "step_mutate"        "step_mutate_at"     "step_naomit"       
-#&gt; [52] "step_nnmf"          "step_normalize"     "step_novel"        
-#&gt; [55] "step_ns"            "step_num2factor"    "step_nzv"          
-#&gt; [58] "step_ordinalscore"  "step_other"         "step_pca"          
-#&gt; [61] "step_pls"           "step_poly"          "step_profile"      
-#&gt; [64] "step_range"         "step_ratio"         "step_regex"        
-#&gt; [67] "step_relevel"       "step_relu"          "step_rename"       
-#&gt; [70] "step_rename_at"     "step_rm"            "step_rollimpute"   
-#&gt; [73] "step_sample"        "step_scale"         "step_select"       
-#&gt; [76] "step_shuffle"       "step_slice"         "step_spatialsign"  
-#&gt; [79] "step_sqrt"          "step_string2factor" "step_unknown"      
-#&gt; [82] "step_unorder"       "step_upsample"      "step_window"       
-#&gt; [85] "step_YeoJohnson"    "step_zv"</code></pre>
+<pre><code>#&gt;  [1] "step_arrange"            "step_bagimpute"         
+#&gt;  [3] "step_bin2factor"         "step_BoxCox"            
+#&gt;  [5] "step_bs"                 "step_center"            
+#&gt;  [7] "step_classdist"          "step_corr"              
+#&gt;  [9] "step_count"              "step_cut"               
+#&gt; [11] "step_date"               "step_depth"             
+#&gt; [13] "step_discretize"         "step_downsample"        
+#&gt; [15] "step_dummy"              "step_dummy_multi_choice"
+#&gt; [17] "step_factor2string"      "step_filter"            
+#&gt; [19] "step_geodist"            "step_harmonic"          
+#&gt; [21] "step_holiday"            "step_hyperbolic"        
+#&gt; [23] "step_ica"                "step_impute_bag"        
+#&gt; [25] "step_impute_knn"         "step_impute_linear"     
+#&gt; [27] "step_impute_lower"       "step_impute_mean"       
+#&gt; [29] "step_impute_median"      "step_impute_mode"       
+#&gt; [31] "step_impute_roll"        "step_indicate_na"       
+#&gt; [33] "step_integer"            "step_interact"          
+#&gt; [35] "step_intercept"          "step_inverse"           
+#&gt; [37] "step_invlogit"           "step_isomap"            
+#&gt; [39] "step_knnimpute"          "step_kpca"              
+#&gt; [41] "step_kpca_poly"          "step_kpca_rbf"          
+#&gt; [43] "step_lag"                "step_lincomb"           
+#&gt; [45] "step_log"                "step_logit"             
+#&gt; [47] "step_lowerimpute"        "step_meanimpute"        
+#&gt; [49] "step_medianimpute"       "step_modeimpute"        
+#&gt; [51] "step_mutate"             "step_mutate_at"         
+#&gt; [53] "step_naomit"             "step_nnmf"              
+#&gt; [55] "step_normalize"          "step_novel"             
+#&gt; [57] "step_ns"                 "step_num2factor"        
+#&gt; [59] "step_nzv"                "step_ordinalscore"      
+#&gt; [61] "step_other"              "step_pca"               
+#&gt; [63] "step_pls"                "step_poly"              
+#&gt; [65] "step_profile"            "step_range"             
+#&gt; [67] "step_ratio"              "step_regex"             
+#&gt; [69] "step_relevel"            "step_relu"              
+#&gt; [71] "step_rename"             "step_rename_at"         
+#&gt; [73] "step_rm"                 "step_rollimpute"        
+#&gt; [75] "step_sample"             "step_scale"             
+#&gt; [77] "step_select"             "step_shuffle"           
+#&gt; [79] "step_slice"              "step_spatialsign"       
+#&gt; [81] "step_sqrt"               "step_string2factor"     
+#&gt; [83] "step_unknown"            "step_unorder"           
+#&gt; [85] "step_upsample"           "step_window"            
+#&gt; [87] "step_YeoJohnson"         "step_zv"</code></pre>
 </div>
 <div id="checks" class="section level2">
 <h2 class="hasAnchor">

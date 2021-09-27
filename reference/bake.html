@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply a Trained Data Recipe — bake • recipes</title>
+<title>Apply a trained preprocessing recipe — bake • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,7 @@
 
 
 
-<meta property="og:title" content="Apply a Trained Data Recipe — bake" />
+<meta property="og:title" content="Apply a trained preprocessing recipe — bake" />
 <meta property="og:description" content="For a recipe with at least one preprocessing operation that has been trained by
 prep.recipe(), apply the computations to new data." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
@@ -102,7 +102,7 @@ prep.recipe(), apply the computations to new data." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ prep.recipe(), apply the computations to new data." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -169,7 +169,7 @@ prep.recipe(), apply the computations to new data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply a Trained Data Recipe</h1>
+    <h1>Apply a trained preprocessing recipe</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/recipe.R'><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>bake.Rd</code></div>
     </div>
@@ -236,9 +236,6 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='recipe.html'>recipe()</a></code>, <code><a href='prep.html'>prep()</a></code></p></div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Max Kuhn</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span>, package <span class='op'>=</span> <span class='st'>"modeldata"</span><span class='op'>)</span></span>
@@ -255,10 +252,75 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
 <span class='r-in'>  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># return the training set (already embedded in ames_rec)</span></span>
-<span class='r-in'><span class='va'>ames_train</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 2,924 × 259</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area BsmtFin_SF_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span>           41     <span style='text-decoration: underline;'>4</span>920       <span style='text-decoration: underline;'>2</span>001           <span style='text-decoration: underline;'>2</span>001            0            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span>           43     <span style='text-decoration: underline;'>5</span>005       <span style='text-decoration: underline;'>1</span>992           <span style='text-decoration: underline;'>1</span>992            0            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span>           39     <span style='text-decoration: underline;'>5</span>389       <span style='text-decoration: underline;'>1</span>995           <span style='text-decoration: underline;'>1</span>996            0            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span>           60     <span style='text-decoration: underline;'>7</span>500       <span style='text-decoration: underline;'>1</span>999           <span style='text-decoration: underline;'>1</span>999            0            7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span>           75    <span style='text-decoration: underline;'>10</span>000       <span style='text-decoration: underline;'>1</span>993           <span style='text-decoration: underline;'>1</span>994            0            7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span>            0     <span style='text-decoration: underline;'>7</span>980       <span style='text-decoration: underline;'>1</span>992           <span style='text-decoration: underline;'>2</span>007            0            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span>           63     <span style='text-decoration: underline;'>8</span>402       <span style='text-decoration: underline;'>1</span>998           <span style='text-decoration: underline;'>1</span>998            0            7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span>           85    <span style='text-decoration: underline;'>10</span>176       <span style='text-decoration: underline;'>1</span>990           <span style='text-decoration: underline;'>1</span>990            0            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span>            0     <span style='text-decoration: underline;'>6</span>820       <span style='text-decoration: underline;'>1</span>985           <span style='text-decoration: underline;'>1</span>985            0            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span>           47    <span style='text-decoration: underline;'>53</span>504       <span style='text-decoration: underline;'>2</span>003           <span style='text-decoration: underline;'>2</span>003          603            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 2,914 more rows, and 253 more variables: BsmtFin_SF_2 &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Bsmt_Unf_SF &lt;dbl&gt;, Total_Bsmt_SF &lt;dbl&gt;, First_Flr_SF &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Second_Flr_SF &lt;int&gt;, Gr_Liv_Area &lt;int&gt;, Bsmt_Full_Bath &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Bsmt_Half_Bath &lt;dbl&gt;, Full_Bath &lt;int&gt;, Half_Bath &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Bedroom_AbvGr &lt;int&gt;, Kitchen_AbvGr &lt;int&gt;, TotRms_AbvGrd &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Fireplaces &lt;int&gt;, Garage_Cars &lt;dbl&gt;, Garage_Area &lt;dbl&gt;, Wood_Deck_SF &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Open_Porch_SF &lt;int&gt;, Enclosed_Porch &lt;int&gt;, Three_season_porch &lt;int&gt;, …</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># apply processing to other data:</span></span>
-<span class='r-in'><span class='va'>ames_new</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 259</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area BsmtFin_SF_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>          141    <span style='text-decoration: underline;'>31</span>770       <span style='text-decoration: underline;'>1</span>960           <span style='text-decoration: underline;'>1</span>960          112            2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>           80    <span style='text-decoration: underline;'>11</span>622       <span style='text-decoration: underline;'>1</span>961           <span style='text-decoration: underline;'>1</span>961            0            6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>           81    <span style='text-decoration: underline;'>14</span>267       <span style='text-decoration: underline;'>1</span>958           <span style='text-decoration: underline;'>1</span>958          108            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>           93    <span style='text-decoration: underline;'>11</span>160       <span style='text-decoration: underline;'>1</span>968           <span style='text-decoration: underline;'>1</span>968            0            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>           74    <span style='text-decoration: underline;'>13</span>830       <span style='text-decoration: underline;'>1</span>997           <span style='text-decoration: underline;'>1</span>998            0            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>           78     <span style='text-decoration: underline;'>9</span>978       <span style='text-decoration: underline;'>1</span>998           <span style='text-decoration: underline;'>1</span>998           20            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 253 more variables: BsmtFin_SF_2 &lt;dbl&gt;, Bsmt_Unf_SF &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Total_Bsmt_SF &lt;dbl&gt;, First_Flr_SF &lt;int&gt;, Second_Flr_SF &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Gr_Liv_Area &lt;int&gt;, Bsmt_Full_Bath &lt;dbl&gt;, Bsmt_Half_Bath &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Full_Bath &lt;int&gt;, Half_Bath &lt;int&gt;, Bedroom_AbvGr &lt;int&gt;, Kitchen_AbvGr &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   TotRms_AbvGrd &lt;int&gt;, Fireplaces &lt;int&gt;, Garage_Cars &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Garage_Area &lt;dbl&gt;, Wood_Deck_SF &lt;int&gt;, Open_Porch_SF &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Enclosed_Porch &lt;int&gt;, Three_season_porch &lt;int&gt;, Screen_Porch &lt;int&gt;, …</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># only return selected variables:</span></span>
+<span class='r-in'><span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span>, <span class='fu'><a href='has_role.html'>all_numeric_predictors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 258</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area BsmtFin_SF_1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>          141    <span style='text-decoration: underline;'>31</span>770       <span style='text-decoration: underline;'>1</span>960           <span style='text-decoration: underline;'>1</span>960          112            2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>           80    <span style='text-decoration: underline;'>11</span>622       <span style='text-decoration: underline;'>1</span>961           <span style='text-decoration: underline;'>1</span>961            0            6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>           81    <span style='text-decoration: underline;'>14</span>267       <span style='text-decoration: underline;'>1</span>958           <span style='text-decoration: underline;'>1</span>958          108            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>           93    <span style='text-decoration: underline;'>11</span>160       <span style='text-decoration: underline;'>1</span>968           <span style='text-decoration: underline;'>1</span>968            0            1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>           74    <span style='text-decoration: underline;'>13</span>830       <span style='text-decoration: underline;'>1</span>997           <span style='text-decoration: underline;'>1</span>998            0            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>           78     <span style='text-decoration: underline;'>9</span>978       <span style='text-decoration: underline;'>1</span>998           <span style='text-decoration: underline;'>1</span>998           20            3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 252 more variables: BsmtFin_SF_2 &lt;dbl&gt;, Bsmt_Unf_SF &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Total_Bsmt_SF &lt;dbl&gt;, First_Flr_SF &lt;int&gt;, Second_Flr_SF &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Gr_Liv_Area &lt;int&gt;, Bsmt_Full_Bath &lt;dbl&gt;, Bsmt_Half_Bath &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Full_Bath &lt;int&gt;, Half_Bath &lt;int&gt;, Bedroom_AbvGr &lt;int&gt;, Kitchen_AbvGr &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   TotRms_AbvGrd &lt;int&gt;, Fireplaces &lt;int&gt;, Garage_Cars &lt;dbl&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Garage_Area &lt;dbl&gt;, Wood_Deck_SF &lt;int&gt;, Open_Porch_SF &lt;int&gt;,</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'>#   Enclosed_Porch &lt;int&gt;, Three_season_porch &lt;int&gt;, Screen_Porch &lt;int&gt;, …</span></span>
+<span class='r-in'><span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec</span>, new_data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Longitude"</span>, <span class='st'>"Latitude"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 6 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Longitude_ns_1 Longitude_ns_2 Latitude_ns_1 Latitude_ns_2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span>          0.570       -<span style='color: #BB0000;'>0.014</span><span style='color: #BB0000; text-decoration: underline;'>1</span>          0.472         0.394</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span>          0.570       -<span style='color: #BB0000;'>0.014</span><span style='color: #BB0000; text-decoration: underline;'>2</span>          0.481         0.360</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span>          0.569       -<span style='color: #BB0000;'>0.008</span><span style='color: #BB0000; text-decoration: underline;'>93</span>         0.484         0.348</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span>          0.563        0.021<span style='text-decoration: underline;'>2</span>          0.496         0.301</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span>          0.562       -<span style='color: #BB0000;'>0.212</span>           0.405         0.634</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span>          0.562       -<span style='color: #BB0000;'>0.212</span>           0.407         0.630</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

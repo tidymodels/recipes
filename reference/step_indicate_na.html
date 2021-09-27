@@ -103,7 +103,7 @@ which observations are missing." />
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ which observations are missing." />
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -197,25 +197,24 @@ which observations are missing.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>recipe</th>
-      <td><p>A recipe object. The check will be added to the
+      <td><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>One or more selector functions to choose which variables are
-affected by the step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
+      <td><p>One or more selector functions to choose variables
+for this step. See <code><a href='selections.html'>selections()</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>role</th>
-      <td><p>For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new na indicator columns created from the original
-variables will be used as predictors in a model.</p></td>
+      <td><p>For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as <em>predictors</em> in a model.</p></td>
     </tr>
     <tr>
       <th>trained</th>
-      <td><p>A logical for whether the selectors in <code>...</code>
-have been resolved by <code><a href='prep.html'>prep()</a></code>.</p></td>
+      <td><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></td>
     </tr>
     <tr>
       <th>columns</th>
@@ -229,7 +228,7 @@ resulting new variables. Defaults to "na_ind".</p></td>
     </tr>
     <tr>
       <th>skip</th>
-      <td><p>A logical. Should the check be skipped when the
+      <td><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href='bake.html'>bake.recipe()</a></code>? While all operations are baked
 when <code><a href='prep.html'>prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
@@ -245,12 +244,32 @@ the computations for subsequent operations.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An updated version of <code>recipe</code> with the new step added to the
-sequence of existing steps (if any).</p>
+sequence of any existing operations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with
 columns <code>terms</code> (the selectors or variables selected) and <code>model</code> (the
 median value) is returned.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other dummy variable and encoding steps: 
+<code><a href='step_bin2factor.html'>step_bin2factor</a>()</code>,
+<code><a href='step_count.html'>step_count</a>()</code>,
+<code><a href='step_date.html'>step_date</a>()</code>,
+<code><a href='step_dummy_multi_choice.html'>step_dummy_multi_choice</a>()</code>,
+<code><a href='step_dummy.html'>step_dummy</a>()</code>,
+<code><a href='step_factor2string.html'>step_factor2string</a>()</code>,
+<code><a href='step_holiday.html'>step_holiday</a>()</code>,
+<code><a href='step_integer.html'>step_integer</a>()</code>,
+<code><a href='step_novel.html'>step_novel</a>()</code>,
+<code><a href='step_num2factor.html'>step_num2factor</a>()</code>,
+<code><a href='step_ordinalscore.html'>step_ordinalscore</a>()</code>,
+<code><a href='step_other.html'>step_other</a>()</code>,
+<code><a href='step_regex.html'>step_regex</a>()</code>,
+<code><a href='step_relevel.html'>step_relevel</a>()</code>,
+<code><a href='step_string2factor.html'>step_string2factor</a>()</code>,
+<code><a href='step_unknown.html'>step_unknown</a>()</code>,
+<code><a href='step_unorder.html'>step_unorder</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span></span>

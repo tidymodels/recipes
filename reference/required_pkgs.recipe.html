@@ -101,7 +101,7 @@
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
         </div>
       </div>
     </div>
@@ -121,7 +121,7 @@
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="../articles/Custom_Steps.html">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -169,8 +169,8 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>S3 methods for tracking which additional packages are needed for steps.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/depth.R'><code>R/depth.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/ica.R'><code>R/ica.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/isomap.R'><code>R/isomap.R</code></a>, and 6 more</small>
-    <div class="hidden name"><code>required_pkgs.step.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/depth.R'><code>R/depth.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/ica.R'><code>R/ica.R</code></a>, <a href='https://github.com/tidymodels/recipes/blob/master/R/isomap.R'><code>R/isomap.R</code></a>, and 7 more</small>
+    <div class="hidden name"><code>required_pkgs.recipe.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -201,6 +201,15 @@
 <span class='co'># S3 method for step_pls</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/required_pkgs.html'>required_pkgs</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='co'># S3 method for recipe</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/required_pkgs.html'>required_pkgs</a></span><span class='op'>(</span><span class='va'>x</span>, infra <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for step</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/required_pkgs.html'>required_pkgs</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for check</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/required_pkgs.html'>required_pkgs</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='co'># S3 method for step_window</span>
 <span class='fu'><a href='https://generics.r-lib.org/reference/required_pkgs.html'>required_pkgs</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
@@ -209,7 +218,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A recipe step</p></td>
+      <td><p>A recipe or recipe step</p></td>
+    </tr>
+    <tr>
+      <th>infra</th>
+      <td><p>Should recipes itself be included in the result?</p></td>
     </tr>
     </table>
 
