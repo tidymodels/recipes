@@ -176,9 +176,7 @@ ll_bc <- function(lambda, y, gm, eps = .001) {
 
 
 ## eliminates missing data and returns -llh
-bc_obj <- function(lam, dat) {
-  dat <- dat[complete.cases(dat)]
-  geo_mean <- exp(mean(log(dat)))
+bc_obj <- function(lam, dat, geo_mean) {
   ll_bc(lambda = lam, y = dat, gm = geo_mean)
 }
 
@@ -191,15 +189,19 @@ estimate_bc <- function(dat,
   if (length(unique(dat)) < num_unique) {
     rlang::warn("Fewer than `num_unique` values in selected variable.")
     return(NA)
-  } else if (any(dat[complete.cases(dat)] <= 0)) {
+  } else if (any(dat <= 0)) {
     rlang::warn("Non-positive values in selected variable.")
     return(NA)
   }
+
+  geo_mean <- exp(mean(log(dat)))
+
   res <- optimize(
     bc_obj,
     interval = limits,
     maximum = TRUE,
     dat = dat,
+    geo_mean = geo_mean,
     tol = .0001
   )
   lam <- res$maximum
