@@ -76,6 +76,15 @@ is chosen), some columns will also be excluded from the filter.
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
 that will be removed) is returned.
 }
+\section{The effect of removing columns}{
+
+
+This step has the ability to remove columns from the data set. This may
+cause issues in subsequent steps if the missing columns are specifically
+referenced. To avoid this, see the advice in the \emph{Tips for saving recipes
+and filtering columns} section of \code{?selections}.
+}
+
 \examples{
 library(modeldata)
 data(biomass)

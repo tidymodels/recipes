@@ -4,7 +4,12 @@
 #'
 #' @title Methods for Selecting Variables in Step Functions
 #'
-#' @description When selecting variables or model terms in `step`
+#' @description
+#'
+#' Tips for selecting columns in step functions.
+#'
+#' @details
+#'  When selecting variables or model terms in `step`
 #'  functions, `dplyr`-like tools are used. The *selector* functions
 #'  can choose variables based on their name, current role, data
 #'  type, or any combination of these. The selectors are passed as
@@ -88,6 +93,8 @@
 #' If a role for a variable has not been defined, it will never be
 #' selected using role-specific selectors.
 #'
+#' ## Interactions
+#'
 #' Selectors can be used in [step_interact()] in similar ways but
 #' must be embedded in a model formula (as opposed to a sequence
 #' of selectors). For example, the interaction specification
@@ -100,6 +107,8 @@
 #' will not be recognized. Additionally, the tidyselect domain specific
 #' language is not recognized here, meaning that `&`, `|`, `!`, and `-`
 #' will not work.
+#'
+#' @includeRmd man/rmd/selections.Rmd details
 NULL
 
 # ------------------------------------------------------------------------------

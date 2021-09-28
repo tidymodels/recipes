@@ -10,6 +10,9 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
+#'
+#' @template filter-steps
+#'
 #' @family variable filter steps
 #' @export
 #'
