@@ -190,6 +190,7 @@ components.</p>
   num_run <span class='op'>=</span> <span class='fl'>30</span>,
   options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   prefix <span class='op'>=</span> <span class='st'>"NNMF"</span>,
   seed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>^</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>)</span>,
   keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -245,6 +246,11 @@ processing is turned off in favor of resample-level parallelization.</p></td>
       <td><p>The <code><a href='https://rdrr.io/pkg/dimRed/man/NNMF-class.html'>NNMF()</a></code> object is stored
 here once this preprocessing step has been trained by
 <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>columns</th>
+      <td><p>A character string of variable names that will
+be populated elsewhere.</p></td>
     </tr>
     <tr>
       <th>prefix</th>

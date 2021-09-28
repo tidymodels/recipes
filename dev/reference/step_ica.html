@@ -189,6 +189,7 @@ components.</p>
   num_comp <span class='op'>=</span> <span class='fl'>5</span>,
   options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"C"</span><span class='op'>)</span>,
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   prefix <span class='op'>=</span> <span class='st'>"IC"</span>,
   keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -238,6 +239,11 @@ not be passed here.</p></td>
       <td><p>The <code><a href='https://rdrr.io/pkg/fastICA/man/fastICA.html'>fastICA::fastICA()</a></code> object is stored
 here once this preprocessing step has be trained by
 <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>columns</th>
+      <td><p>A character string of variable names that will
+be populated elsewhere.</p></td>
     </tr>
     <tr>
       <th>prefix</th>

@@ -188,6 +188,7 @@ using a polynomial kernel basis expansion.</p>
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
   num_comp <span class='op'>=</span> <span class='fl'>5</span>,
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   degree <span class='op'>=</span> <span class='fl'>2</span>,
   scale_factor <span class='op'>=</span> <span class='fl'>1</span>,
   offset <span class='op'>=</span> <span class='fl'>1</span>,
@@ -232,6 +233,11 @@ possible components, a smaller value will be used.</p></td>
       <td><p>An S4 <code><a href='https://rdrr.io/pkg/kernlab/man/kpca.html'>kernlab::kpca()</a></code> object is stored
 here once this preprocessing step has be trained by
 <code><a href='prep.html'>prep()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>columns</th>
+      <td><p>A character string of variable names that will
+be populated elsewhere.</p></td>
     </tr>
     <tr>
       <th>degree, scale_factor, offset</th>

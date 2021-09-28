@@ -188,6 +188,7 @@ using a kernel basis expansion.</p>
   trained <span class='op'>=</span> <span class='cn'>FALSE</span>,
   num_comp <span class='op'>=</span> <span class='fl'>5</span>,
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>kernel <span class='op'>=</span> <span class='st'>"rbfdot"</span>, kpar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>sigma <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span>,
   prefix <span class='op'>=</span> <span class='st'>"kPC"</span>,
   keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -229,6 +230,11 @@ possible components, a smaller value will be used.</p></td>
       <th>res</th>
       <td><p>An S4 <code><a href='https://rdrr.io/pkg/kernlab/man/kpca.html'>kernlab::kpca()</a></code> object is stored here once this
 preprocessing step has be trained by <code><a href='prep.html'>prep()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>columns</th>
+      <td><p>A character string of variable names that will
+be populated elsewhere.</p></td>
     </tr>
     <tr>
       <th>options</th>

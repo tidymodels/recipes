@@ -188,6 +188,7 @@ numeric data into one or more principal components.</p>
   threshold <span class='op'>=</span> <span class='cn'>NA</span>,
   options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   res <span class='op'>=</span> <span class='cn'>NULL</span>,
+  columns <span class='op'>=</span> <span class='cn'>NULL</span>,
   prefix <span class='op'>=</span> <span class='st'>"PC"</span>,
   keep_original_cols <span class='op'>=</span> <span class='cn'>FALSE</span>,
   skip <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -242,6 +243,11 @@ should not be passed here (or at all).</p></td>
       <th>res</th>
       <td><p>The <code><a href='https://rdrr.io/r/stats/prcomp.html'>stats::prcomp.default()</a></code> object is stored here once this
 preprocessing step has be trained by <code><a href='prep.html'>prep.recipe()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>columns</th>
+      <td><p>A character string of variable names that will
+be populated elsewhere.</p></td>
     </tr>
     <tr>
       <th>prefix</th>
