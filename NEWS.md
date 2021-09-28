@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Improved the efficiency of computations for the Box-Cox transformation (#820).
+
 # recipes 0.1.17
 
 ## New Steps
