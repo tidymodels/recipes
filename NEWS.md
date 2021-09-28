@@ -30,6 +30,8 @@
 
 ## Improvements and Other Changes
 
+* All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531).
+
 * The computations for the Yeo-Johnson transformation were made more efficient (#782).
 
 * New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).

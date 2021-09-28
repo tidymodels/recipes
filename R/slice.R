@@ -131,7 +131,7 @@ tidy.step_slice <- function(x, ...) {
   cond_expr <- map(x$inputs, quo_get_expr)
   cond_expr <- map_chr(cond_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
-    terms = cond_expr,
+    terms = unname(cond_expr),
     id = rep(x$id, length(x$inputs))
   )
 }

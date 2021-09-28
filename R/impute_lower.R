@@ -66,7 +66,7 @@ step_impute_lower <-
     add_step(
       recipe,
       step_impute_lower_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         threshold = threshold,

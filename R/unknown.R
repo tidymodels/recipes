@@ -56,7 +56,7 @@ step_unknown <-
     add_step(
       recipe,
       step_unknown_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         new_level = new_level,

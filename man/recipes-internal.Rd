@@ -57,6 +57,9 @@ A character vector
 \description{
 These are not to be used directly by the users.
 
+\code{ellipse_check()} is deprecated. Instead, empty selections should be
+supported by all steps.
+
 This internal function is used for printing steps.
 
 This internal function takes a list of selectors (e.g. \code{terms}

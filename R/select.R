@@ -61,7 +61,7 @@ step_select <- function(recipe,
   add_step(
     recipe,
     step_select_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       trained = trained,
       role = role,
       skip = skip,
@@ -128,7 +128,7 @@ tidy.step_select <- function(x, ...) {
   } else {
     var_expr <- map(x$terms, quo_get_expr)
     var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
-    res <- tibble(terms = var_expr)
+    res <- tibble(terms = unname(var_expr))
   }
   res$id <- x$id
   res

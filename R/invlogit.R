@@ -40,7 +40,7 @@ step_invlogit <-
            skip = FALSE, id = rand_id("invlogit")) {
     add_step(recipe,
              step_invlogit_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                role = role,
                trained = trained,
                columns = columns,

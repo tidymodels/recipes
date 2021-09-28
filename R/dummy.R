@@ -129,7 +129,7 @@ step_dummy <-
     add_step(
       recipe,
       step_dummy_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         one_hot = one_hot,
@@ -160,11 +160,6 @@ step_dummy_new <-
       id = id
     )
   }
-
-passover <- function(cmd) {
-  # cat("`step_dummy()` was not able to select any columns. ",
-  #     "No dummy variables will be created.\n")
-} # figure out how to return a warning() without exiting
 
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
@@ -361,7 +356,7 @@ tidy.step_dummy <- function(x, ...) {
     if (length(x$levels) > 0) {
       res <- purrr::map_dfr(x$levels, get_dummy_columns, x$one_hot, .id = "terms")
     } else {
-      res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
+      res <- tibble(terms = character(), columns = character())
     }
   } else {
     res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)

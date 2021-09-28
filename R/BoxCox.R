@@ -66,7 +66,7 @@ step_BoxCox <-
     add_step(
       recipe,
       step_BoxCox_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         lambdas = lambdas,
@@ -128,12 +128,12 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_BoxCox <- function(object, new_data, ...) {
-  if (length(object$lambdas) == 0)
-    return(as_tibble(new_data))
   param <- names(object$lambdas)
-  for (i in seq_along(object$lambdas))
-    new_data[, param[i]] <-
-    bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+
+  for (i in seq_along(object$lambdas)) {
+    new_data[, param[i]] <- bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+  }
+
   as_tibble(new_data)
 }
 
@@ -216,7 +216,7 @@ estimate_bc <- function(dat,
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$lambdas),
-                  value = x$lambdas)
+                  value = unname(x$lambdas))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

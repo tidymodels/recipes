@@ -64,7 +64,7 @@ step_count <- function(recipe,
     rlang::abort(paste0("Valid options are: ",
                         paste0(valid_args, collapse = ", ")))
 
-  terms <- ellipse_check(...)
+  terms <- enquos(...)
   if (length(terms) > 1)
     rlang::abort("For this step, only a single selector can be used.")
 
@@ -105,8 +105,8 @@ step_count_new <-
 #' @export
 prep.step_count <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
-  if (length(col_name) != 1)
-    rlang::abort("The selector should only select a single variable")
+  if (length(col_name) > 1)
+    rlang::abort("The selector should select at most a single variable")
   if (any(info$type[info$variable %in% col_name] != "nominal"))
     rlang::abort("The regular expression input should be character or factor")
 
@@ -125,6 +125,12 @@ prep.step_count <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_count <- function(object, new_data, ...) {
+  if (length(object$input) == 0L) {
+    # Empty selection, but still return the new column
+    new_data[, object$result] <- if (object$normalize) NA_real_ else NA_integer_
+    return(new_data)
+  }
+
   ## sub in options
   regex <- expr(
     gregexpr(

@@ -41,7 +41,7 @@ step_inverse <-
            id = rand_id("inverse")) {
     add_step(recipe,
              step_inverse_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                role = role,
                offset = offset,
                trained = trained,

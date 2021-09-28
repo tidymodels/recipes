@@ -68,7 +68,7 @@ step_YeoJohnson <-
     add_step(
       recipe,
       step_YeoJohnson_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         lambdas = lambdas,

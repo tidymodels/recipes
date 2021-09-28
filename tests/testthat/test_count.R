@@ -40,10 +40,8 @@ test_that('nondefault options', {
 
 test_that('bad selector(s)', {
   expect_error(rec %>% step_count(description, rows, pattern = "(rock|stony)"))
-  rec3 <- rec %>% step_count(starts_with("b"), pattern = "(rock|stony)")
-  expect_error(prep(rec3, training = covers))
-  rec4 <- rec %>% step_count(rows, pattern = "(rock|stony)")
-  expect_error(prep(rec4, training = covers))
+  rec2 <- rec %>% step_count(rows, pattern = "(rock|stony)")
+  expect_error(prep(rec2, training = covers))
 })
 
 
@@ -52,4 +50,43 @@ test_that('printing', {
     step_count(description, pattern = "(rock|stony)")
   expect_output(print(rec5))
   expect_output(prep(rec5, training = covers, verbose = TRUE))
+})
+
+test_that("empty selection prep/bake adds an NA column", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_count(rec1, pattern = "rock")
+
+  rec2 <- prep(rec2, mtcars)
+
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked2$rock, rep(NA_integer_, nrow(mtcars)))
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_count(rec)
+
+  expect_identical(
+    tidy(rec, number = 1),
+    tibble(terms = character(), result = character(), id = character())
+  )
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(
+    tidy(rec, number = 1),
+    tibble(terms = character(), result = character(), id = character())
+  )
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_count(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

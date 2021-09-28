@@ -15,6 +15,8 @@
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -92,6 +94,7 @@ step_isomap <-
            neighbors = 50,
            options = list(.mute = c("message", "output")),
            res = NULL,
+           columns = NULL,
            prefix = "Isomap",
            keep_original_cols = FALSE,
            skip = FALSE,
@@ -102,13 +105,14 @@ step_isomap <-
     add_step(
       recipe,
       step_isomap_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_terms = num_terms,
         neighbors = neighbors,
         options = options,
         res = res,
+        columns = columns,
         prefix = prefix,
         keep_original_cols = keep_original_cols,
         skip = skip,
@@ -118,7 +122,7 @@ step_isomap <-
   }
 
 step_isomap_new <-
-  function(terms, role, trained, num_terms, neighbors, options, res,
+  function(terms, role, trained, num_terms, neighbors, options, res, columns,
            prefix, keep_original_cols, skip, id) {
     step(
       subclass = "isomap",
@@ -129,6 +133,7 @@ step_isomap_new <-
       neighbors = neighbors,
       options = options,
       res = res,
+      columns = columns,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -142,7 +147,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
   check_type(training[, col_names])
 
-  if (x$num_terms > 0) {
+  if (x$num_terms > 0 && length(col_names) > 0L) {
     x$num_terms <- min(x$num_terms, ncol(training))
     x$neighbors <- min(x$neighbors, nrow(training))
 
@@ -161,7 +166,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     }
 
   } else {
-    iso_map <- list(x_vars = col_names)
+    iso_map <- NULL
   }
 
   step_isomap_new(
@@ -172,6 +177,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     neighbors = x$neighbors,
     options = x$options,
     res = iso_map,
+    columns = col_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -181,7 +187,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_isomap <- function(object, new_data, ...) {
-  if (object$num_terms > 0) {
+  if (object$num_terms > 0 && length(object$columns) > 0L) {
     isomap_vars <- colnames(environment(object$res@apply)$indata)
     suppressMessages({
       comps <- object$res@apply(
@@ -207,7 +213,7 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
     cat("Isomap was not conducted.\n")
   } else {
     cat("Isomap approximation with ")
-    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
+    printer(x$columns, x$terms, x$trained, width = width)
   }
     invisible(x)
   }
@@ -217,10 +223,10 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
 #' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_terms > 0) {
+    if (x$num_terms > 0 && length(x$columns) > 0) {
       res <- tibble(terms = colnames(x$res@org.data))
     } else {
-      res <- tibble(terms = x$res$x_vars)
+      res <- tibble(terms = unname(x$columns))
     }
   } else {
     term_names <- sel2char(x$terms)

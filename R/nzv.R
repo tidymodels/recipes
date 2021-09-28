@@ -92,7 +92,7 @@ step_nzv <-
     add_step(
       recipe,
       step_nzv_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         freq_cut = freq_cut,

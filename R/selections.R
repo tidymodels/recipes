@@ -117,8 +117,8 @@ NULL
 #' @inheritParams ellipsis::dots_empty
 #'
 #' @param quos A list of quosures describing the selection. This is generally
-#'   the `...` argument of your step function, captured with [ellipse_check()]
-#'   or [rlang::enquos()] and stored in the step object as the `terms` element.
+#'   the `...` argument of your step function, captured with [rlang::enquos()]
+#'   and stored in the step object as the `terms` element.
 #'
 #' @param data A data frame to use as the context to evaluate the selection in.
 #'   This is generally the `training` data passed to the [prep()] method

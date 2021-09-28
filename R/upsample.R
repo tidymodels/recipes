@@ -71,7 +71,7 @@ step_upsample <-
 
     add_step(recipe,
              step_upsample_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                over_ratio = over_ratio,
                ratio = ratio,
                role = role,
@@ -106,14 +106,17 @@ step_upsample_new <-
 prep.step_upsample <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
 
-  if (length(col_name) != 1)
-    rlang::abort("Please select a single factor variable.")
+  if (length(col_name) > 1)
+    rlang::abort("Please select at most one factor variable.")
   if (!is.factor(training[[col_name]]))
     rlang::abort(col_name, " should be a factor variable.")
 
-
-  obs_freq <- table(training[[col_name]])
-  majority <- max(obs_freq)
+  if (length(col_name) == 0) {
+    majority <- 0
+  } else {
+    obs_freq <- table(training[[col_name]])
+    majority <- max(obs_freq)
+  }
 
   step_upsample_new(
     terms = x$terms,
@@ -142,6 +145,11 @@ supsamp <- function(x, num) {
 
 #' @export
 bake.step_upsample <- function(object, new_data, ...) {
+  if (length(object$column) == 0L) {
+    # Empty selection
+    return(new_data)
+  }
+
   if (any(is.na(new_data[[object$column]])))
     missing <- new_data[is.na(new_data[[object$column]]),]
   else

@@ -291,6 +291,9 @@ merge_term_info <- function(.new, .old) {
 
 #' Check for Empty Ellipses
 #'
+#' `ellipse_check()` is deprecated. Instead, empty selections should be
+#' supported by all steps.
+#'
 #' @param ... Arguments pass in from a call to `step`
 #' @return If not empty, a list of quosures. If empty, an error is thrown.
 #' @export
@@ -329,15 +332,22 @@ printer <- function(tr_obj = NULL,
                     width = max(20, options()$width - 30)) {
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
-  } else
+  } else {
     txt <- format_selectors(untr_obj, width = width)
-  if (nchar(txt) == 0)
+  }
+
+  if (length(txt) == 0L) {
     txt <- "<none>"
+  }
+
   cat(txt)
-  if (trained)
+
+  if (trained) {
     cat(" [trained]\n")
-  else
+  } else {
     cat("\n")
+  }
+
   invisible(NULL)
 }
 

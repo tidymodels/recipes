@@ -59,7 +59,7 @@ step_range <-
     add_step(
       recipe,
       step_range_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         min = min,
@@ -134,9 +134,9 @@ print.step_range <-
 #' @export
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$ranges),
-                  min = x$ranges["mins",],
-                  max = x$ranges["maxs",])
+    res <- tibble(terms = colnames(x$ranges) %||% character(),
+                  min = unname(x$ranges["mins",]),
+                  max = unname(x$ranges["maxs",]))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

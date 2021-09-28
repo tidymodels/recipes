@@ -73,7 +73,7 @@ check_missing <-
     add_check(
       recipe,
       check_missing_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         trained = trained,
         columns = columns,
@@ -130,7 +130,7 @@ print.check_missing <-
 #' @export
 tidy.check_missing <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = unname(x$columns))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }

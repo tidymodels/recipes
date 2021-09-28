@@ -57,7 +57,7 @@ step_ns <-
     add_step(
       recipe,
       step_ns_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         deg_free = deg_free,
         role = role,
@@ -179,13 +179,11 @@ print.step_ns <-
 #' @export
 tidy.step_ns <- function(x, ...) {
   if (is_trained(x)) {
-    cols <- tibble(terms = names(x$objects))
+    terms <- names(x$objects)
   } else {
-    cols <- sel2char(x$terms)
+    terms <- sel2char(x$terms)
   }
-  res <- expand.grid(terms = cols, stringsAsFactors = FALSE)
-  res$id <- x$id
-  as_tibble(res)
+  tibble(terms = terms, id = x$id)
 }
 
 

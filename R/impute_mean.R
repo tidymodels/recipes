@@ -66,7 +66,7 @@ step_impute_mean <-
     add_step(
       recipe,
       step_impute_mean_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         means = means,
@@ -174,7 +174,7 @@ print.step_meanimpute <- print.step_impute_mean
 tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
-                  model = unlist(x$means))
+                  model = vctrs::vec_unchop(unname(x$means), ptype = double()))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)

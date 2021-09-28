@@ -250,7 +250,7 @@ step_discretize <- function(recipe,
   add_step(
     recipe,
     step_discretize_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       trained = trained,
       role = role,
       num_breaks = num_breaks,
@@ -337,12 +337,15 @@ print.step_discretize <-
 #' @export
 tidy.step_discretize <- function(x, ...) {
   if (is_trained(x)) {
-    brks <- lapply(x$objects,
-                   function(x) x$breaks)
+    brks <- lapply(x$objects, function(x) x$breaks)
     num_brks <- vapply(brks, length, c(1L))
     brk_vars <- rep(names(num_brks), num_brks)
 
-    res <- tibble(terms = brk_vars, value = unname(unlist(brks)))
+    brks <- unname(brks)
+    brks <- lapply(brks, unname)
+    values <- vctrs::vec_unchop(brks, ptype = double())
+
+    res <- tibble(terms = brk_vars, value = values)
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)

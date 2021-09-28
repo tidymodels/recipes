@@ -50,7 +50,7 @@ step_lag <-
     add_step(
       recipe,
       step_lag_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         lag = lag,
@@ -110,10 +110,9 @@ bake.step_lag <- function(object, new_data, ...) {
     )
   }
 
-  grid <- expand.grid(col = object$columns, lag_val = object$lag,
-                      stringsAsFactors = FALSE)
+  grid <- tidyr::expand_grid(col = object$columns, lag_val = object$lag)
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-  newname <- paste0(object$prefix, grid$lag_val, "_", grid$col)
+  newname <- as.character(glue::glue("{object$prefix}{grid$lag_val}_{grid$col}"))
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
   as_tibble(mutate(new_data, !!!calls))

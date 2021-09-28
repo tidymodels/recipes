@@ -92,7 +92,7 @@ step_date <-
   add_step(
     recipe,
     step_date_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       features = features,
@@ -268,7 +268,7 @@ print.step_date <-
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
     res <- tidyr::crossing(
-      terms = x$columns,
+      terms = unname(x$columns),
       value = x$features,
       ordinal = x$ordinal
     )

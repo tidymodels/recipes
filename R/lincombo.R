@@ -58,7 +58,7 @@ step_lincomb <-
     add_step(
       recipe,
       step_lincomb_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         max_steps = max_steps,
@@ -167,6 +167,11 @@ recommend_rm <- function(x, eps  = 1e-6, ...) {
 iter_lc_rm <- function(x,
                        max_steps = 10,
                        verbose = FALSE) {
+  if (ncol(x) == 0L) {
+    # Empty selection
+    return(character())
+  }
+
   if (is.null(colnames(x)))
     rlang::abort("`x` should have column names")
 

@@ -64,7 +64,7 @@ check_new_values <-
     add_check(
       recipe,
       check_new_values_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         trained = trained,
         columns = columns,
@@ -147,9 +147,10 @@ print.check_new_values <-
 #' @export
 tidy.check_new_values <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = unname(x$columns))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }
+  res$id <- x$id
   res
 }

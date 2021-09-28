@@ -13,6 +13,7 @@ step_isomap(
   neighbors = 50,
   options = list(.mute = c("message", "output")),
   res = NULL,
+  columns = NULL,
   prefix = "Isomap",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -45,6 +46,9 @@ used.}
 \item{res}{The \code{\link[dimRed:Isomap-class]{dimRed::Isomap()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}

@@ -68,7 +68,7 @@ check_range <-
     add_check(
       recipe,
       check_range_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         skip    = skip,
         trained = trained,
@@ -191,7 +191,7 @@ print.check_range <-
 #' @export
 tidy.check_range <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = names(x$lower))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }

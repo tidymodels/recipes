@@ -17,6 +17,8 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -87,6 +89,7 @@ step_ica <-
            num_comp  = 5,
            options = list(method = "C"),
            res = NULL,
+           columns = NULL,
            prefix = "IC",
            keep_original_cols = FALSE,
            skip = FALSE,
@@ -98,12 +101,13 @@ step_ica <-
     add_step(
       recipe,
       step_ica_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
         options = options,
         res = res,
+        columns = columns,
         prefix = prefix,
         keep_original_cols = keep_original_cols,
         skip = skip,
@@ -113,7 +117,7 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, options, res,
+  function(terms, role, trained, num_comp, options, res, columns,
            prefix, keep_original_cols, skip, id) {
     step(
       subclass = "ica",
@@ -123,6 +127,7 @@ step_ica_new <-
       num_comp = num_comp,
       options = options,
       res = res,
+      columns = columns,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -135,7 +140,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
 
     indc <- dimRed::FastICA(stdpars = x$options)
@@ -151,7 +156,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
       rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
     }
   } else {
-    indc <- list(x_vars = col_names)
+    indc <- NULL
   }
 
   step_ica_new(
@@ -161,6 +166,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     num_comp = x$num_comp,
     options = x$options,
     res = indc,
+    columns = col_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -170,7 +176,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
+  if (object$num_comp > 0 && length(object$columns) > 0) {
     ica_vars <- colnames(environment(object$res@apply)$indata)
     comps <-
       object$res@apply(
@@ -197,7 +203,7 @@ print.step_ica <-
       cat("No ICA components were extracted.\n")
     } else {
       cat("ICA extraction with ")
-      printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
+      printer(x$columns, x$terms, x$trained, width = width)
     }
 
     invisible(x)
@@ -207,7 +213,7 @@ print.step_ica <-
 #' @export
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_comp > 0) {
+    if (x$num_comp > 0 && length(x$columns) > 0) {
       rot <- dimRed::getRotationMatrix(x$res)
       colnames(rot) <- names0(ncol(rot), x$prefix)
       rot <- as.data.frame(rot)
@@ -219,7 +225,7 @@ tidy.step_ica <- function(x, ...) {
       res$terms <- rep(vars, npc)
       res <- as_tibble(res)
     } else {
-      res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
+      res <- tibble(terms = unname(x$columns), value = na_dbl, component = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)

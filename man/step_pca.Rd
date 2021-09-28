@@ -13,6 +13,7 @@ step_pca(
   threshold = NA,
   options = list(),
   res = NULL,
+  columns = NULL,
   prefix = "PC",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -49,6 +50,9 @@ should not be passed here (or at all).}
 
 \item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}

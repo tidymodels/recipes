@@ -64,9 +64,9 @@ step_regex <- function(recipe,
                         paste0(valid_args, collapse = ", ")))
   }
 
-  terms <- ellipse_check(...)
+  terms <- enquos(...)
   if (length(terms) > 1)
-    rlang::abort("For this step, only a single selector can be used.")
+    rlang::abort("For this step, at most a single selector can be used.")
 
   add_step(
     recipe,
@@ -104,8 +104,8 @@ step_regex_new <-
 prep.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
 
-  if (length(col_name) != 1)
-    rlang::abort("The selector should only select a single variable")
+  if (length(col_name) > 1)
+    rlang::abort("The selector should select at most a single variable")
   if (any(info$type[info$variable %in% col_name] != "nominal"))
     rlang::abort("The regular expression input should be character or factor")
 
@@ -123,6 +123,12 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_regex <- function(object, new_data, ...) {
+  if (length(object$input) == 0) {
+    # Handle empty selection by adding an all `0` column
+    new_data[[object$result]] <- rep(0, times = nrow(new_data))
+    return(new_data)
+  }
+
   ## sub in options
   regex <- expr(
     grepl(
@@ -162,7 +168,7 @@ tidy.step_regex <- function(x, ...) {
   p <- length(term_names)
   if (is_trained(x)) {
     res <- tibble(terms = term_names,
-                  result = rep(x$result, p))
+                  result = rep(unname(x$result), p))
   } else {
     res <- tibble(terms = term_names,
                   result = rep(na_chr, p))

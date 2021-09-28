@@ -66,7 +66,7 @@ step_spatialsign <-
            id = rand_id("spatialsign")) {
     add_step(recipe,
              step_spatialsign_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                role = role,
                na_rm = na_rm,
                trained = trained,

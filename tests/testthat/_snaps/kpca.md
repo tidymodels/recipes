@@ -76,3 +76,40 @@
       'keep_original_cols' was added to `step_kpca()` after this recipe was created.
       Regenerate your recipe to avoid this warning.
 
+# empty printing
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         10
+      
+      Operations:
+      
+      Kernel PCA extraction with 
+
+---
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         10
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      No kPCA components were extracted.
+       [trained]
+

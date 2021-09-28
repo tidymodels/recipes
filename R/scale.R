@@ -66,7 +66,7 @@ step_scale <-
     add_step(
       recipe,
       step_scale_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         sds = sds,
@@ -141,7 +141,7 @@ print.step_scale <-
 tidy.step_scale <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$sds),
-                  value = x$sds)
+                  value = unname(x$sds))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

@@ -68,7 +68,7 @@ step_novel <-
     add_step(
       recipe,
       step_novel_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         new_level = new_level,

@@ -95,7 +95,7 @@ step_depth <-
     add_step(
       recipe,
       step_depth_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         class = class,
         role = role,
         trained = trained,
@@ -151,6 +151,11 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
 }
 
 get_depth <- function(tr_dat, new_dat, metric, opts) {
+  if (ncol(new_dat) == 0L) {
+    # ddalpha can't handle 0 col inputs
+    return(rep(NA_real_, nrow(new_dat)))
+  }
+
   if (!is.matrix(new_dat))
     new_dat <- as.matrix(new_dat)
   opts$data <- tr_dat
@@ -181,12 +186,15 @@ bake.step_depth <- function(object, new_data, ...) {
 
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Data depth by ", x$class, "for ")
+    cat("Data depth by", x$class, "for ")
 
     if (x$trained) {
+      x_names <- colnames(x$data[[1]])
       cat(format_ch_vec(x_names, width = width))
-    } else
-      x_names <- NULL
+    } else {
+      x_names <- character()
+    }
+
     printer(x_names, x$terms, x$trained, width = width)
     invisible(x)
   }
@@ -197,7 +205,7 @@ print.step_depth <-
 #' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$data[[1]]),
+    res <- tibble(terms = colnames(x$data[[1]]) %||% character(),
                   class = x$class)
   } else {
     term_names <- sel2char(x$terms)

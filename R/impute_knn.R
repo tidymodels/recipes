@@ -112,7 +112,7 @@ step_impute_knn <-
     add_step(
       recipe,
       step_impute_knn_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         neighbors = neighbors,
@@ -285,15 +285,14 @@ print.step_knnimpute <- print.step_impute_knn
 #' @export
 tidy.step_impute_knn <- function(x, ...) {
   if (is_trained(x)) {
-    res <- purrr::map_df(x$columns,
-                         function(x)
-                           data.frame(
-                             terms = unname(x$y),
-                             predictors = unname(x$x),
-                             stringsAsFactors = FALSE
-                           )
+    terms <- purrr::map(x$columns, function(x) unname(x$y))
+    predictors <- purrr::map(x$columns, function(x) unname(x$x))
+    res <- tibble(terms = terms, predictors = predictors)
+    res <- tidyr::unchop(
+      data = res,
+      cols = tidyselect::all_of(c("terms", "predictors")),
+      ptype = tibble(terms = character(), predictors = character())
     )
-    res <- as_tibble(res)
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
     term_names <- sel2char(x$terms)

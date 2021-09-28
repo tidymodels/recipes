@@ -110,7 +110,7 @@ step_impute_bag <-
     add_step(
       recipe,
       step_impute_bag_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -301,10 +301,10 @@ imp_vars <- function(...) quos(...)
 tidy.step_impute_bag <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),
-                  model = x$models)
+                  model = unname(x$models))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = NA)
+    res <- tibble(terms = term_names, model = list(NULL))
   }
   res$id <- x$id
   res

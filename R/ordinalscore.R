@@ -72,7 +72,7 @@ step_ordinalscore <-
     add_step(
       recipe,
       step_ordinalscore_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         columns = columns,

@@ -76,7 +76,7 @@ step_impute_linear <-
     add_step(
       recipe,
       step_impute_linear_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -209,10 +209,10 @@ print.step_impute_linear <-
 tidy.step_impute_linear <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),
-                  model = x$models)
+                  model = unname(x$models))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = NA)
+    res <- tibble(terms = term_names, model = list(NULL))
   }
   res$id <- x$id
   res

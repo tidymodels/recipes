@@ -69,7 +69,7 @@ step_normalize <-
     add_step(
       recipe,
       step_normalize_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         means = means,
@@ -139,7 +139,7 @@ tidy.step_normalize <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = c(names(x$means), names(x$sds)),
                   statistic = rep(c("mean", "sd"), each = length(x$sds)),
-                  value = c(x$means, x$sds))
+                  value = unname(c(x$means, x$sds)))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

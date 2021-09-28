@@ -43,7 +43,7 @@ step_rm <- function(recipe,
   add_step(
     recipe,
     step_rm_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       removals = removals,

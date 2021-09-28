@@ -29,7 +29,7 @@ step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
   add_step(
     recipe,
     step_naomit_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       columns = columns,

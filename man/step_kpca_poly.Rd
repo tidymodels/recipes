@@ -11,6 +11,7 @@ step_kpca_poly(
   trained = FALSE,
   num_comp = 5,
   res = NULL,
+  columns = NULL,
   degree = 2,
   scale_factor = 1,
   offset = 1,
@@ -41,6 +42,9 @@ possible components, a smaller value will be used.}
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{degree, scale_factor, offset}{Numeric values for the polynomial kernel function.}
 
