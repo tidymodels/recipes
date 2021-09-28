@@ -1,6 +1,11 @@
 # recipes (development version)
 
+## Improvements and Other Changes
+
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
+
+* The recipes steps in this package are now tolerant to empty selections. For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
+
 
 # recipes 0.1.17
 
