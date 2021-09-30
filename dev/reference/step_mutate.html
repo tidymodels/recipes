@@ -245,6 +245,8 @@ between sessions). See the examples.</p>
 <p>When you <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> this step, a tibble with column <code>values</code>, which
 contains the <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> expressions as character strings
 (and are not reparsable), is returned.</p>
+<p>If a preceding step removes a column that is selected by name in
+<code>step_mutate()</code>, the recipe will error when being estimated with <code><a href='prep.html'>prep()</a></code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other individual transformation steps: 

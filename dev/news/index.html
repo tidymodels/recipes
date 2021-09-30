@@ -174,8 +174,13 @@
     <div id="recipes-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
 <a href="#recipes-development-version" class="anchor" aria-hidden="true"></a>recipes (development version)<small> Unreleased </small></h1>
-<ul><li>Improved the efficiency of computations for the Box-Cox transformation (<a href='https://github.com/tidymodels/recipes/issues/820'>#820</a>).</li>
+<div id="improvements-and-other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#improvements-and-other-changes" class="anchor" aria-hidden="true"></a>Improvements and Other Changes</h2>
+<ul><li><p>Improved the efficiency of computations for the Box-Cox transformation (<a href='https://github.com/tidymodels/recipes/issues/820'>#820</a>).</p></li>
+<li><p>All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (<a href='https://github.com/tidymodels/recipes/issues/603'>#603</a>, <a href='https://github.com/tidymodels/recipes/issues/531'>#531</a>). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of <code><a href="../reference/step_mutate.html">step_mutate()</a></code>). The documentation in <code><a href="../reference/selections.html">?selections</a></code> has been updated with advice for writing selectors when filtering steps are used. (<a href='https://github.com/tidymodels/recipes/issues/813'>#813</a>)</p></li>
 </ul></div>
+</div>
     <div id="recipes-0117" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.17">
 <a href="#recipes-0117" class="anchor" aria-hidden="true"></a>recipes 0.1.17<small> 2021-09-27 </small></h1>
@@ -200,11 +205,10 @@
 <ul><li><p>Fix imputation steps for new data that is all <code>NA</code>, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (<a href='https://github.com/tidymodels/recipes/issues/719'>#719</a>).</p></li>
 <li><p>A bug was fixed where imputed values via bagged trees would have the wrong levels.</p></li>
 </ul></div>
-<div id="improvements-and-other-changes" class="section level2">
+<div id="improvements-and-other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#improvements-and-other-changes" class="anchor" aria-hidden="true"></a>Improvements and Other Changes</h2>
-<ul><li><p>All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (<a href='https://github.com/tidymodels/recipes/issues/603'>#603</a>, <a href='https://github.com/tidymodels/recipes/issues/531'>#531</a>).</p></li>
-<li><p>The computations for the Yeo-Johnson transformation were made more efficient (<a href='https://github.com/tidymodels/recipes/issues/782'>#782</a>).</p></li>
+<a href="#improvements-and-other-changes-1" class="anchor" aria-hidden="true"></a>Improvements and Other Changes</h2>
+<ul><li><p>The computations for the Yeo-Johnson transformation were made more efficient (<a href='https://github.com/tidymodels/recipes/issues/782'>#782</a>).</p></li>
 <li><p>New <code><a href="../reference/recipes_eval_select.html">recipes_eval_select()</a></code> which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older <code><a href="../reference/terms_select.html">terms_select()</a></code> has been deprecated in favor of this new helper (<a href='https://github.com/tidymodels/recipes/issues/739'>#739</a>).</p></li>
 <li><p>Speed-up/simplification to <code><a href="../reference/step_spatialsign.html">step_spatialsign()</a></code></p></li>
 <li><p>When only the terms attributes are desired from <code>model.frame</code> use the first row of data to improve speed and memory use (<a href='https://github.com/tidymodels/recipes/issues/726'>#726</a>).</p></li>
@@ -233,9 +237,9 @@
 <li><p>Fixed behavior of the retain flag in <code><a href="../reference/prep.html">prep()</a></code> (<a href='https://github.com/tidymodels/recipes/issues/652'>#652</a>).</p></li>
 <li><p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> methods for <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> was rewritten since it was not great (<a href='https://github.com/tidymodels/recipes/issues/665'>#665</a>), and <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> now no longer fully loads underlying packages (<a href='https://github.com/tidymodels/recipes/issues/685'>#685</a>).</p></li>
 </ul></div>
-<div id="improvements-and-other-changes-1" class="section level2">
+<div id="improvements-and-other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#improvements-and-other-changes-1" class="anchor" aria-hidden="true"></a>Improvements and Other Changes</h2>
+<a href="#improvements-and-other-changes-2" class="anchor" aria-hidden="true"></a>Improvements and Other Changes</h2>
 <ul><li><p>Two new selectors that combine role and data type were added: <code><a href="../reference/has_role.html">all_numeric_predictors()</a></code> and <code><a href="../reference/has_role.html">all_nominal_predictors()</a></code>. (<a href='https://github.com/tidymodels/recipes/issues/620'>#620</a>)</p></li>
 <li><p>Changed the names of all imputation steps, for example, from <code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> or <code><a href="../reference/step_impute_median.html">step_medianimpute()</a></code> (old) to <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> or <code><a href="../reference/step_impute_median.html">step_impute_median()</a></code> (new) (<a href='https://github.com/tidymodels/recipes/issues/614'>#614</a>).</p></li>
 <li>

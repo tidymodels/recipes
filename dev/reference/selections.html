@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Methods for Selecting Variables in Step Functions — selections • recipes</title>
+<title>Methods for selecting variables in step functions — selections • recipes</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,91 +49,8 @@
 
 
 
-<meta property="og:title" content="Methods for Selecting Variables in Step Functions — selections" />
-<meta property="og:description" content="When selecting variables or model terms in step
-functions, dplyr-like tools are used. The selector functions
-can choose variables based on their name, current role, data
-type, or any combination of these. The selectors are passed as
-any other argument to the step. If the variables are explicitly
-stated in the step function, this might be similar to:
-
-  recipe( ~ ., data = USArrests) %&amp;gt;%
-    step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
-
-
-The first four arguments indicate which variables should be
-used in the PCA while the last argument is a specific argument
-to step_pca().
-Note that:
-
-These arguments are not evaluated until the prep
-function for the step is executed.
-The dplyr-like syntax allows for negative signs to
-exclude variables (e.g. -Murder) and the set of selectors will
-processed in order.
-A leading exclusion in these arguments (e.g. -Murder)
-has the effect of adding all variables to the list except the
-excluded variable(s), ignoring role information.
-
-
-Select helpers from the tidyselect package can also be used:
-tidyselect::starts_with(), tidyselect::ends_with(),
-tidyselect::contains(), tidyselect::matches(),
-tidyselect::num_range(), tidyselect::everything(),
-tidyselect::one_of(), tidyselect::all_of(), and
-tidyselect::any_of()
-For example:
-
-  recipe(Species ~ ., data = iris) %&amp;gt;%
-    step_center(starts_with(&quot;Sepal&quot;), -contains(&quot;Width&quot;))
-
-
-would only select Sepal.Length
-Columns of the design matrix that may not exist when the step
-is coded can also be selected. For example, when using
-step_pca(), the number of columns created by feature extraction
-may not be known when subsequent steps are defined. In this
-case, using matches(&quot;^PC&quot;) will select all of the columns
-whose names start with &quot;PC&quot; once those columns are created.
-There are sets of recipes-specific functions that can be used to select
-variables based on their role or type: has_role() and
-has_type(). For convenience, there are also functions that are
-more specific. The functions all_numeric() and all_nominal() select
-based on type, with nominal variables including both character and factor;
-the functions all_predictors() and all_outcomes() select based on role.
-The functions all_numeric_predictors() and all_nominal_predictors()
-select intersections of role and type. Any can be used in conjunction with
-the previous functions described for selecting variables using their names.
-A selection like this:
-
-  data(biomass)
-  recipe(HHV ~ ., data = biomass) %&amp;gt;%
-    step_center(all_numeric(), -all_outcomes())
-
-
-is equivalent to:
-
-  data(biomass)
-  recipe(HHV ~ ., data = biomass) %&amp;gt;%
-    step_center(all_numeric_predictors())
-
-
-Both result in all the numeric predictors: carbon, hydrogen,
-oxygen, nitrogen, and sulfur.
-If a role for a variable has not been defined, it will never be
-selected using role-specific selectors.
-Selectors can be used in step_interact() in similar ways but
-must be embedded in a model formula (as opposed to a sequence
-of selectors). For example, the interaction specification
-could be ~ starts_with(&quot;Species&quot;):Sepal.Width. This can be
-useful if Species was converted to dummy variables
-previously using step_dummy(). The implementation of
-step_interact() is special, and is more restricted than
-the other step functions. Only the selector functions from
-recipes and tidyselect are allowed. User defined selector functions
-will not be recognized. Additionally, the tidyselect domain specific
-language is not recognized here, meaning that &amp;amp;, |, !, and -
-will not work." />
+<meta property="og:title" content="Methods for selecting variables in step functions — selections" />
+<meta property="og:description" content="Tips for selecting columns in step functions." />
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -251,18 +168,25 @@ will not work." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Methods for Selecting Variables in Step Functions</h1>
+    <h1>Methods for selecting variables in step functions</h1>
     <small class="dont-index">Source: <a href='https://github.com/tidymodels/recipes/blob/master/R/selections.R'><code>R/selections.R</code></a></small>
     <div class="hidden name"><code>selections.Rd</code></div>
     </div>
 
     <div class="ref-description">
+    <p>Tips for selecting columns in step functions.</p>
+    </div>
+
+
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
     <p>When selecting variables or model terms in <code>step</code>
 functions, <code>dplyr</code>-like tools are used. The <em>selector</em> functions
 can choose variables based on their name, current role, data
 type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
-stated in the step function, this might be similar to:</p>
+named in the step function, this might look like:</p>
 <pre class='sourceCode r'><code>
   <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>USArrests</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='step_pca.html'>step_pca</a></span><span class='op'>(</span><span class='va'>Murder</span>, <span class='va'>Assault</span>, <span class='va'>UrbanPop</span>, <span class='va'>Rape</span>, num_comp <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
@@ -270,7 +194,7 @@ stated in the step function, this might be similar to:</p>
 
 <p>The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
-to <code><a href='step_pca.html'>step_pca()</a></code>.</p>
+to <code><a href='step_pca.html'>step_pca()</a></code> about the number of components.</p>
 <p>Note that:</p>
 <ol>
 <li><p>These arguments are not evaluated until the <code>prep</code>
@@ -328,7 +252,9 @@ the previous functions described for selecting variables using their names.</p>
 <p>Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.</p>
 <p>If a role for a variable has not been defined, it will never be
-selected using role-specific selectors.</p>
+selected using role-specific selectors.</p><h3 class='hasAnchor' id='interactions'><a class='anchor' aria-hidden='true' href='#interactions'></a>Interactions</h3>
+
+
 <p>Selectors can be used in <code><a href='step_interact.html'>step_interact()</a></code> in similar ways but
 must be embedded in a model formula (as opposed to a sequence
 of selectors). For example, the interaction specification
@@ -341,9 +267,59 @@ recipes and tidyselect are allowed. User defined selector functions
 will not be recognized. Additionally, the tidyselect domain specific
 language is not recognized here, meaning that <code>&amp;</code>, <code>|</code>, <code>!</code>, and <code>-</code>
 will not work.</p>
-    </div>
+
+<h3 class='hasAnchor' id='tips-for-saving-recipes-and-filtering-columns'><a class='anchor' aria-hidden='true' href='#tips-for-saving-recipes-and-filtering-columns'></a>Tips for saving recipes and filtering columns</h3>
 
 
+<p>When creating variable selections:</p><ul>
+<li><p>If you are using column filtering steps, such as <code><a href='step_corr.html'>step_corr()</a></code>, try
+to avoid hardcoding specific variable names in downstream steps in
+case those columns are removed by the filter. Instead, use
+<code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>dplyr::any_of()</a></code> and
+<code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>dplyr::all_of()</a></code>.</p><ul>
+<li><p><code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>dplyr::any_of()</a></code> will be tolerant if a
+column has been removed.</p></li>
+<li><p><code><a href='https://tidyselect.r-lib.org/reference/all_of.html'>dplyr::all_of()</a></code> will fail unless all of
+the columns are present in the data.</p></li>
+</ul></li>
+<li><p>For both of these functions, if you are going to save the recipe as
+a binary object to use in another R session, try to avoid referring
+to a vector in your workspace.</p><ul>
+<li><p>Preferred: <code>any_of(!!var_names)</code></p></li>
+<li><p>Avoid: <code>any_of(var_names)</code></p></li>
+</ul></li>
+</ul>
+
+<p>Some examples:<div class="sourceCode r"></p><pre class='sourceCode r'><code><span class='va'>some_vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
+
+<span class='co'># No filter steps, OK for not saving the recipe</span>
+<span class='va'>rec_1</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='step_log.html'>step_log</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>all_of</a></span><span class='op'>(</span><span class='va'>some_vars</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># No filter steps, saving the recipe</span>
+<span class='va'>rec_2</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='step_log.html'>step_log</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>some_vars</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># This fails since `wt` is not in the data</span>
+<span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>  <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='step_rm.html'>step_rm</a></span><span class='op'>(</span><span class='va'>wt</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='step_log.html'>step_log</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='op'>!</span><span class='va'>some_vars</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre><p></div></p><pre class='sourceCode r'><code><span class='co'>## Error: Can't subset columns that don't exist.</span>
+<span class='co'>## x Column `wt` doesn't exist.</span>
+</code></pre><p><div class="sourceCode r"></p><pre class='sourceCode r'><code><span class='co'># Best for filters (using any_of()) and when</span>
+<span class='co'># saving the recipe</span>
+<span class='va'>rec_4</span> <span class='op'>&lt;-</span> 
+  <span class='fu'><a href='recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='step_rm.html'>step_rm</a></span><span class='op'>(</span><span class='va'>wt</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='step_log.html'>step_log</a></span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/all_of.html'>any_of</a></span><span class='op'>(</span><span class='op'>!</span><span class='op'>!</span><span class='va'>some_vars</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='co'># equal to step_log(any_of(c("hp", "drat", "wt")))</span>
+  <span class='fu'><a href='prep.html'>prep</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre><p></div></p>
 
 
   </div>
