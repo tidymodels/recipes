@@ -19,6 +19,7 @@
 #'
 #' @family variable filter steps
 #' @family dplyr steps
+#' @template filter-steps
 #' @export
 #' @examples
 #' library(dplyr)

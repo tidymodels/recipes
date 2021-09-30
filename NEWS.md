@@ -1,6 +1,11 @@
 # recipes (development version)
 
+## Improvements and Other Changes
+
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
+
+* All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
+
 
 # recipes 0.1.17
 
@@ -29,8 +34,6 @@
 * A bug was fixed where imputed values via bagged trees would have the wrong levels.
 
 ## Improvements and Other Changes
-
-* All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531).
 
 * The computations for the Yeo-Johnson transformation were made more efficient (#782).
 
