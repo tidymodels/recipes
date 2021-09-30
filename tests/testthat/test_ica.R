@@ -94,7 +94,8 @@ test_that('correct ICA values', {
     arrange(terms, component)
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 1))
 
-  loadings <- dimRed::getRotationMatrix(ica_extract_trained$steps[[1]]$res)
+  loadings <-
+    dimred_call("getRotationMatrix", x = ica_extract_trained$steps[[1]]$res)
   comps <- ncol(loadings)
   loadings <- as.data.frame(loadings)
   rownames(loadings) <- vars

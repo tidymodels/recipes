@@ -71,16 +71,14 @@
 #' ica_trans <- step_scale(ica_trans, V1, V2)
 #' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 #'
-#' if (require(dimRed) & require(fastICA)) {
-#'   ica_estimates <- prep(ica_trans, training = tr)
-#'   ica_data <- bake(ica_estimates, te)
-#'
-#'   plot(te$V1, te$V2)
-#'   plot(ica_data$IC1, ica_data$IC2)
-#'
-#'   tidy(ica_trans, number = 3)
-#'   tidy(ica_estimates, number = 3)
-#' }
+#' # ica_estimates <- prep(ica_trans, training = tr)
+#' # ica_data <- bake(ica_estimates, te)
+#' #
+#' # plot(te$V1, te$V2)
+#' # plot(ica_data$IC1, ica_data$IC2)
+#' #
+#' # tidy(ica_trans, number = 3)
+#' # tidy(ica_estimates, number = 3)
 step_ica <-
   function(recipe,
            ...,
@@ -143,15 +141,16 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
   if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
 
-    indc <- dimRed::FastICA(stdpars = x$options)
-    indc <-
-      try(
-        indc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          list(ndim = x$num_comp)
-        ),
-        silent = TRUE
-      )
+    cl <-
+      rlang::call2(
+        "fastICA",
+        .ns = "fastICA",
+        n.comp = x$num_comp,
+        method = "C",
+        X = rlang::expr(as.matrix(training[, col_names]))
+        )
+    indc <- try(rlang::eval_tidy(cl), silent = TRUE)
+
     if (inherits(indc, "try-error")) {
       rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
     }
@@ -177,20 +176,18 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
   if (object$num_comp > 0 && length(object$columns) > 0) {
-    ica_vars <- colnames(environment(object$res@apply)$indata)
+
     comps <-
-      object$res@apply(
-        dimRed::dimRedData(
-          as.data.frame(new_data[, ica_vars, drop = FALSE])
-        )
-      )@data
+      as.matrix(new_data[, object$columns]) %*%
+      object$res$K %*% object$res$W
+
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+      new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
     }
   }
   as_tibble(new_data)
@@ -214,7 +211,7 @@ print.step_ica <-
 tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(x$columns) > 0) {
-      rot <- dimRed::getRotationMatrix(x$res)
+      rot <- dimred_call("getRotationMatrix", x = x$res)
       colnames(rot) <- names0(ncol(rot), x$prefix)
       rot <- as.data.frame(rot)
       vars <- colnames(x$res@org.data)
@@ -259,5 +256,5 @@ tunable.step_ica <- function(x, ...) {
 #' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_ica <- function(x, ...) {
-  c("dimRed", "fastICA")
+  c("fastICA")
 }

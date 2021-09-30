@@ -769,3 +769,18 @@ changelog <- function(show, before, after, x) {
   }
 }
 
+# ------------------------------------------------------------------------------
+
+dimred_call <- function(fn, ...) {
+  opts <- list(...)
+  cl <- rlang::call2(fn, .ns = "dimRed", !!!opts)
+  rlang::eval_tidy(cl)
+}
+
+
+dimred_data <- function(dat) {
+  cl <- rlang::call2("dimRedData", .ns = "dimRed", rlang::expr(as.matrix(dat)))
+  rlang::eval_tidy(cl)
+}
+
+
