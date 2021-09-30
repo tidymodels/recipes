@@ -57,8 +57,8 @@ When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{value
 contains the \code{mutate()} expressions as character strings
 (and are not reparsable), is returned.
 
-If a preceding step removes a column that is used in \code{step_mutate()},
-the recipe will error when being estimated.
+If a preceding step removes a column that is selected by name in
+\code{step_mutate()}, the recipe will error when being estimated with \code{prep()}.
 }
 \examples{
 rec <-

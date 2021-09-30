@@ -53,6 +53,11 @@ step that will potentially remove numeric variables that have
 linear combinations between them.
 }
 \details{
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
+
 This step finds exact linear combinations between two
 or more variables and recommends which column(s) should be
 removed to resolve the issue. This algorithm may need to be
@@ -61,15 +66,6 @@ applied multiple times (as defined by \code{max_steps}).
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
 that will be removed) is returned.
 }
-\section{The effect of removing columns}{
-
-
-This step has the ability to remove columns from the data set. This may
-cause issues in subsequent steps if the missing columns are specifically
-referenced. To avoid this, see the advice in the \emph{Tips for saving recipes
-and filtering columns} section of \code{?selections}.
-}
-
 \examples{
 library(modeldata)
 data(biomass)

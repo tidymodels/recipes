@@ -3,7 +3,7 @@
 \name{selections}
 \alias{selections}
 \alias{selection}
-\title{Methods for Selecting Variables in Step Functions}
+\title{Methods for selecting variables in step functions}
 \description{
 Tips for selecting columns in step functions.
 }
@@ -13,7 +13,7 @@ functions, \code{dplyr}-like tools are used. The \emph{selector} functions
 can choose variables based on their name, current role, data
 type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
-stated in the step function, this might be similar to:
+named in the step function, this might look like:
 
 \preformatted{
   recipe( ~ ., data = USArrests) \%>\%
@@ -22,7 +22,7 @@ stated in the step function, this might be similar to:
 
 The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
-to \code{\link[=step_pca]{step_pca()}}.
+to \code{\link[=step_pca]{step_pca()}} about the number of components.
 
 Note that:
 
@@ -109,10 +109,10 @@ will not work.
 
 \subsection{Tips for saving recipes and filtering columns}{
 
-When creating column selections:
+When creating variable selections:
 \itemize{
 \item If you are using column filtering steps, such as \code{step_corr()}, try
-to avoid hardcoding specific column names in downstream steps in
+to avoid hardcoding specific variable names in downstream steps in
 case those columns are removed by the filter. Instead, use
 \code{\link[dplyr:reexports]{dplyr::any_of()}} and
 \code{\link[dplyr:reexports]{dplyr::all_of()}}.
@@ -122,8 +122,9 @@ column has been removed.
 \item \code{\link[dplyr:reexports]{dplyr::all_of()}} will fail unless all of
 the columns are present in the data.
 }
-\item For both of these functions, \emph{if you are going to save the recipe},
-try to avoid referring to a vector in your workspace.
+\item For both of these functions, if you are going to save the recipe as
+a binary object to use in another R session, try to avoid referring
+to a vector in your workspace.
 \itemize{
 \item Preferred: \code{any_of(!!var_names)}
 \item Avoid: \code{any_of(var_names)}
@@ -132,7 +133,7 @@ try to avoid referring to a vector in your workspace.
 
 Some examples:\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_vars <- names(mtcars)[4:6]
 
-# No filter steps, not saving the recipe
+# No filter steps, OK for not saving the recipe
 rec_1 <-
   recipe(mpg ~ ., data = mtcars) \%>\% 
   step_log(all_of(some_vars)) \%>\% 
@@ -144,7 +145,7 @@ rec_2 <-
   step_log(!!!some_vars) \%>\% 
   prep()
 
-# This would fail since `wt` is not in the data
+# This fails since `wt` is not in the data
 recipe(mpg ~ ., data = mtcars)  \%>\% 
   step_rm(wt) \%>\% 
   step_log(!!!some_vars) \%>\% 
