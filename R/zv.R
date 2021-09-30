@@ -8,10 +8,9 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
+#' @template filter-steps
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
-#'
-#' @template filter-steps
 #'
 #' @family variable filter steps
 #' @export

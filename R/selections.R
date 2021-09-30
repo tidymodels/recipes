@@ -2,7 +2,7 @@
 #' @aliases selections
 #' @aliases selection
 #'
-#' @title Methods for Selecting Variables in Step Functions
+#' @title Methods for selecting variables in step functions
 #'
 #' @description
 #'
@@ -14,7 +14,7 @@
 #'  can choose variables based on their name, current role, data
 #'  type, or any combination of these. The selectors are passed as
 #'  any other argument to the step. If the variables are explicitly
-#'  stated in the step function, this might be similar to:
+#'  named in the step function, this might look like:
 #'
 #' \preformatted{
 #'   recipe( ~ ., data = USArrests) \%>\%
@@ -23,7 +23,7 @@
 #'
 #'  The first four arguments indicate which variables should be
 #'  used in the PCA while the last argument is a specific argument
-#'  to [step_pca()].
+#'  to [step_pca()] about the number of components.
 #'
 #' Note that:
 #'

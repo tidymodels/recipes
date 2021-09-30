@@ -18,8 +18,8 @@
 #'  contains the `mutate()` expressions as character strings
 #'  (and are not reparsable), is returned.
 #'
-#' If a preceding step removes a column that is used in `step_mutate()`,
-#' the recipe will error when being estimated.
+#' If a preceding step removes a column that is selected by name in
+#' `step_mutate()`, the recipe will error when being estimated with `prep()`.
 #'
 #' @family individual transformation steps
 #' @family dplyr steps
