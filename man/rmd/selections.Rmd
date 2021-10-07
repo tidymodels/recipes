@@ -1,0 +1,46 @@
+## Tips for saving recipes and filtering columns
+
+When creating variable selections:
+
+* If you are using column filtering steps, such as `step_corr()`, try to avoid hardcoding specific variable names in downstream steps in case those columns are removed by the filter. Instead, use [dplyr::any_of()] and [dplyr::all_of()]. 
+  
+   * [dplyr::any_of()] will be tolerant if a column has been removed. 
+   * [dplyr::all_of()] will fail unless all of the columns are present in the data. 
+
+* For both of these functions, if you are going to save the recipe as a binary object to use in another R session, try to avoid referring to a vector in your workspace. 
+
+   * Preferred: `any_of(!!var_names)`
+   * Avoid: `any_of(var_names)` 
+   
+Some examples:
+
+```{r, error=TRUE}
+some_vars <- names(mtcars)[4:6]
+
+# No filter steps, OK for not saving the recipe
+rec_1 <-
+  recipe(mpg ~ ., data = mtcars) %>% 
+  step_log(all_of(some_vars)) %>% 
+  prep()
+
+# No filter steps, saving the recipe
+rec_2 <-
+  recipe(mpg ~ ., data = mtcars) %>% 
+  step_log(!!!some_vars) %>% 
+  prep()
+
+# This fails since `wt` is not in the data
+recipe(mpg ~ ., data = mtcars)  %>% 
+  step_rm(wt) %>% 
+  step_log(!!!some_vars) %>% 
+  prep()
+
+# Best for filters (using any_of()) and when
+# saving the recipe
+rec_4 <- 
+  recipe(mpg ~ ., data = mtcars) %>% 
+  step_rm(wt) %>% 
+  step_log(any_of(!!some_vars)) %>% 
+  # equal to step_log(any_of(c("hp", "drat", "wt")))
+  prep()
+```

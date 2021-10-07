@@ -17,6 +17,7 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
+#' @template filter-steps
 #' @author Original R code for filtering algorithm by Dong Li,
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 #'  original in `caret` package). Max Kuhn for the `step`

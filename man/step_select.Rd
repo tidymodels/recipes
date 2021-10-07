@@ -53,6 +53,11 @@ between sessions). See the examples.
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
 contains the \code{select} expressions as character strings
 (and are not reparsable) is returned.
+
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 }
 \examples{
 library(dplyr)

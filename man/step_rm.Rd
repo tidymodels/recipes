@@ -49,6 +49,11 @@ sequence of any existing operations.
 that will remove variables based on their name, type, or role.
 }
 \details{
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
+
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
 columns that will be removed) is returned.
 }

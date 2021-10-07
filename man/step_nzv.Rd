@@ -59,6 +59,11 @@ that will potentially remove variables that are highly sparse
 and unbalanced.
 }
 \details{
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
+
 This step diagnoses predictors that have one unique
 value (i.e. are zero variance predictors) or predictors that have
 both of the following characteristics:

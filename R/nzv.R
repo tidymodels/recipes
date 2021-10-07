@@ -13,6 +13,7 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
+#' @template filter-steps
 #' @family variable filter steps
 #' @export
 #'
