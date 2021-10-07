@@ -146,13 +146,16 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
         "fastICA",
         .ns = "fastICA",
         n.comp = x$num_comp,
-        method = "C",
         X = rlang::expr(as.matrix(training[, col_names]))
-        )
-    indc <- try(rlang::eval_tidy(cl), silent = TRUE)
+      )
+    cl <- rlang::call_modify(cl, !!!x$options)
+    indc <- try(withr::with_seed(1, rlang::eval_tidy(cl)), silent = TRUE)
 
     if (inherits(indc, "try-error")) {
       rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
+    } else {
+      indc <- indc[c("K", "W")]
+      indc$means <- colMeans(training[, col_names])
     }
   } else {
     indc <- NULL
@@ -175,10 +178,12 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
-  if (object$num_comp > 0 && length(object$columns) > 0) {
+  uses_dim_red(object)
 
+  if (object$num_comp > 0 && length(object$columns) > 0) {
     comps <-
-      as.matrix(new_data[, object$columns]) %*%
+      as.matrix(new_data[, object$columns]) %>%
+      scale(center = object$res$means, scale = FALSE) %*%
       object$res$K %*% object$res$W
 
     comps <- comps[, 1:object$num_comp, drop = FALSE]
@@ -209,20 +214,31 @@ print.step_ica <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_ica <- function(x, ...) {
+  uses_dim_red(x)
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(x$columns) > 0) {
-      rot <- dimred_call("getRotationMatrix", x = x$res)
-      colnames(rot) <- names0(ncol(rot), x$prefix)
-      rot <- as.data.frame(rot)
-      vars <- colnames(x$res@org.data)
-      npc <- ncol(rot)
-      res <- utils::stack(rot)
-      colnames(res) <- c("value", "component")
-      res$component <- as.character(res$component)
-      res$terms <- rep(vars, npc)
-      res <- as_tibble(res)
+      res <- x$res$K %*% x$res$W
+
+
+      colnames(res) <- names0(ncol(res), x$prefix)
+      res <- as.data.frame(res)
+      res$terms <- x$columns
+      res$id <- x$id
+      res <-
+        tidyr::pivot_longer(
+          res,
+          cols = dplyr::starts_with(x$prefix),
+          names_to = "component",
+          values_to = "value"
+        )
     } else {
-      res <- tibble(terms = unname(x$columns), value = na_dbl, component = na_chr)
+      res <-
+        tibble(
+          terms = character(0),
+          value = double(),
+          component = character(0),
+          id = character(0)
+        )
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -233,10 +249,11 @@ tidy.step_ica <- function(x, ...) {
     res$terms <- as.character(res$terms)
     res$component <- as.character(res$component)
     res <- as_tibble(res)
+    res$id <- x$id
   }
-  res$id <- x$id
-  res <- arrange(res, terms, component)
-  select(res, terms, component, value, id)
+
+  res <- dplyr::arrange(res, terms, component)
+  dplyr::select(res, terms, component, value, id)
 }
 
 
