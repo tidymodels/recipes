@@ -70,6 +70,9 @@ test_that('correct ICA values', {
 
 
 test_that('printing', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, num_comp = 2)
   expect_output(print(ica_extract))
@@ -78,6 +81,9 @@ test_that('printing', {
 
 
 test_that('No ICA comps', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
 
@@ -95,6 +101,9 @@ test_that('No ICA comps', {
 
 
 test_that('tunable', {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
   rec <-
     recipe(~ ., data = iris) %>%
     step_ica(all_predictors())
@@ -152,6 +161,10 @@ test_that('can prep recipes with no keep_original_cols', {
 })
 
 test_that("empty selection prep/bake is a no-op", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_ica(rec1)
 
@@ -165,6 +178,10 @@ test_that("empty selection prep/bake is a no-op", {
 })
 
 test_that("empty selection tidy method works", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_ica(rec)
 
@@ -183,6 +200,10 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_ica(rec)
 
