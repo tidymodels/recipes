@@ -148,6 +148,8 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_kpca <- function(object, new_data, ...) {
+  uses_dim_red(object)
+
   if (object$num_comp > 0 && length(object$columns) > 0) {
     cl <-
       rlang::call2(
@@ -175,8 +177,8 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
     if (x$num_comp == 0 || length(x$columns) == 0) {
       cat("No kPCA components were extracted.\n")
     } else {
-      cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
+      cat("Kernel PCA extraction with ", sep = "")
+      cat(format_ch_vec(unname(x$columns), width = width))
     }
   } else {
     cat("Kernel PCA extraction with ", sep = "")
@@ -190,11 +192,12 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
 #' @rdname tidy.recipe
 #' @export
 tidy.step_kpca <- function(x, ...) {
+  uses_dim_red(x)
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(x$columns) > 0) {
-      res <- tibble(terms = x$columns)
+      res <- tibble(terms = unname(x$columns))
     } else {
-      res <- tibble(terms = NA_character_)
+      res <- tibble(terms = character(0))
     }
   } else {
     term_names <- sel2char(x$terms)

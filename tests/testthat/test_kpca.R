@@ -70,7 +70,7 @@ test_that('No kPCA comps', {
   expect_snapshot(pca_extract)
   expect_equal(
     tidy(pca_extract, 1),
-    tibble::tibble(terms = paste0("X", 2:6), id = "")
+    tibble::tibble(terms = character(0), id = character(0))
   )
 })
 
@@ -129,15 +129,15 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_kpca(rec)
+  rec <- step_kpca(rec, id = "potato")
 
-  expect <- tibble(terms = character(), id = character())
+  expected <- tibble(terms = character(), id = character())
 
-  expect_identical(tidy(rec, number = 1), expect)
+  expect_identical(tidy(rec, number = 1), expected)
 
   rec <- prep(rec, mtcars)
 
-  expect_identical(tidy(rec, number = 1), expect)
+  expect_identical(tidy(rec, number = 1), expected)
 })
 
 test_that("empty printing", {

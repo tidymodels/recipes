@@ -40,7 +40,7 @@
       
       Operations:
       
-      Kernel PCA (rbfdot) extraction with X2, X3, X4, X5, X6 [trained]
+      Kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
 
 # No kPCA comps
 

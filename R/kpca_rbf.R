@@ -138,6 +138,8 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_kpca_rbf <- function(object, new_data, ...) {
+  uses_dim_red(object)
+
   if (object$num_comp > 0 && length(object$columns) > 0) {
     cl <-
       rlang::call2(
@@ -180,11 +182,12 @@ print.step_kpca_rbf <- function(x, width = max(20, options()$width - 40), ...) {
 #' @rdname tidy.recipe
 #' @export
 tidy.step_kpca_rbf <- function(x, ...) {
+  uses_dim_red(x)
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(x$columns) > 0) {
-      res <- tibble(terms = colnames(x$res@org.data))
-    } else {
       res <- tibble(terms = unname(x$columns))
+    } else {
+      res <- tibble(terms = character(0))
     }
   } else {
     term_names <- sel2char(x$terms)

@@ -65,7 +65,7 @@ test_that('No kPCA comps', {
   expect_snapshot(pca_extract)
   expect_equal(
     tidy(pca_extract, 1),
-    tibble::tibble(terms = paste0("X", 2:6), id = "")
+    tibble::tibble(terms = character(), id = character())
   )
 })
 

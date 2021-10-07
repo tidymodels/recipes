@@ -783,4 +783,15 @@ dimred_data <- function(dat) {
   rlang::eval_tidy(cl)
 }
 
-
+uses_dim_red <- function(x) {
+  dr <- inherits(x, "dimRedResult")
+  if (dr) {
+    rlang::abort(
+      paste(
+        "Recipes version >= 0.1.17 represents the estimates using a different format.",
+        "Please recreate this recipe or use version 0.1.16 or less. See issue #823."
+      )
+    )
+  }
+  invisible(NULL)
+}

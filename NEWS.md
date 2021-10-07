@@ -2,6 +2,15 @@
 
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
 
+
+## Breaking Changes
+
+* `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
+
+* `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
+
+* `step_ica()` now runs `fastICA()` using a specific set of random numbers so that initialization is the same from run-to-run. 
+
 # recipes 0.1.17
 
 ## New Steps
