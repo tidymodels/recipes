@@ -99,9 +99,10 @@ step_center_new <-
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+  wts <- get_case_weights(info, training)
 
-  means <-
-    vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
+  means <- averages(training[, col_names], wts)
+
   step_center_new(
     terms = x$terms,
     role = x$role,

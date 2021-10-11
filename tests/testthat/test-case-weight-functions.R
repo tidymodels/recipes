@@ -1,0 +1,84 @@
+library(testthat)
+source(test_path("helper-case-weights.R"))
+
+test_that('correct means', {
+  exp_means <- colMeans(mtcars)
+  calc_means <- averages(mtcars)
+  expect_equal(exp_means, calc_means)
+
+  exp_means <- cov.wt(mtcars, frac_wts)$center
+  calc_means <- averages(mtcars, frac_wts)
+  expect_equal(exp_means, calc_means)
+
+  exp_means <- cov.wt(mtcars, freq_wts)$center
+  calc_means <- averages(mtcars, freq_wts)
+  expect_equal(exp_means, calc_means)
+
+  # Missing case weight
+  exp_means <- cov.wt(mtcars[-1,], freq_wts[-1])$center
+  calc_means <- averages(mtcars, miss_wts)
+  expect_equal(exp_means, calc_means)
+
+  # Missing data in x
+  exp_means <- cov.wt(mtcars, freq_wts)$center
+  exp_means[2] <- weighted.mean(mtcar_mis[[2]], freq_wts, na.rm = TRUE)
+  exp_means[3] <- weighted.mean(mtcar_mis[[3]], freq_wts, na.rm = TRUE)
+  calc_means <- averages(mtcar_mis, freq_wts)
+  expect_equal(exp_means, calc_means)
+
+})
+
+
+test_that('correct variances', {
+  exp_vars <- diag(var(mtcars))
+  calc_vars <- variances(mtcars)
+  expect_equal(exp_vars, calc_vars)
+
+  exp_vars <- diag(cov.wt(mtcars, frac_wts)$cov)
+  calc_vars <- variances(mtcars, frac_wts)
+  expect_equal(exp_vars, calc_vars)
+
+  exp_vars <- diag(cov.wt(mtcars, freq_wts)$cov)
+  calc_vars <- variances(mtcars, freq_wts)
+  expect_equal(exp_vars, calc_vars)
+
+  # Missing case weight
+  exp_vars <- diag(cov.wt(mtcars[-1,], freq_wts[-1])$cov)
+  calc_vars <- variances(mtcars, miss_wts)
+  expect_equal(exp_vars, calc_vars)
+
+  # Missing data in x
+  exp_vars <- diag(cov.wt(mtcars, freq_wts)$cov)
+  exp_vars[2] <- diag(cov.wt(mtcar_mis[-1,2,drop = FALSE], freq_wts[-1])$cov)
+  exp_vars[3] <- diag(cov.wt(mtcar_mis[-2,3,drop = FALSE], freq_wts[-2])$cov)
+  calc_vars <- variances(mtcar_mis, freq_wts)
+  expect_equal(exp_vars, calc_vars)
+
+})
+
+
+test_that('correct correlations', {
+  exp_cors <- cor(mtcars)
+  calc_cors <- correlations(mtcars)
+  expect_equal(exp_cors, calc_cors)
+
+  exp_cors <- cov.wt(mtcars, frac_wts, cor = TRUE)$cor
+  calc_cors <- correlations(mtcars, frac_wts)
+  expect_equal(exp_cors, calc_cors)
+
+  exp_cors <- cov.wt(mtcars, freq_wts, cor = TRUE)$cor
+  calc_cors <- correlations(mtcars, freq_wts)
+  expect_equal(exp_cors, calc_cors)
+
+  # Missing case weight
+  exp_cors <- cov.wt(mtcars[-1,], freq_wts[-1], cor = TRUE)$cor
+  calc_cors <- correlations(mtcars, miss_wts)
+  expect_equal(exp_cors, calc_cors)
+
+  # Missing data in x
+  exp_cors <- cov.wt(mtcars[-(1:2), 1:3], freq_wts[-(1:2)], cor = TRUE)$cor
+  calc_cors <- correlations(mtcar_mis[, 1:3], freq_wts)
+  expect_equal(exp_cors, calc_cors)
+
+})
+

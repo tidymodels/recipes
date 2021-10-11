@@ -262,3 +262,18 @@ test_that("normalize - empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("centering with case weights", {
+  rec <-
+    recipe(mpg ~ ., mtcars) %>%
+    update_role(wt, new_role = "case weight") %>%
+    step_center(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    tidy(rec, number = 1)[["value"]],
+    unname(averages(mtcars[, -c(1, 6)], mtcars$wt))
+  )
+})
+
+
