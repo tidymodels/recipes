@@ -171,6 +171,7 @@ print.step_nzv <-
     invisible(x)
   }
 
+# TODO case weights: Use a weights arg
 nzv <- function(x,
                 freq_cut = 95 / 5,
                 unique_cut = 10) {

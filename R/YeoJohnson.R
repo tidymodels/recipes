@@ -159,7 +159,7 @@ yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
     if (!is.vector(x))
       x <- as.vector(x)
   }
-
+  # TODO case weights: can we use weights here?
   if (is.null(ind_neg)) {
     dat_neg <- x < 0
     ind_neg <- list(is = which(dat_neg), not = which(!dat_neg))

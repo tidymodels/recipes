@@ -201,6 +201,7 @@ print.step_other <-
     invisible(x)
   }
 
+# TODO case weights: Use case weights here
 keep_levels <- function(x, threshold = .1, other = "other") {
   if (!is.factor(x))
     x <- factor(x)

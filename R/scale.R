@@ -101,7 +101,7 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
   if (x$factor != 1 & x$factor != 2) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
   }
-
+  # TODO case weights: use helper function
   sds <-
     vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
 

@@ -163,6 +163,7 @@ bc_trans <- function(x, lambda, eps = .001) {
 
 ## helper for the log-likelihood calc
 
+# TODO case weights: Is there a weighted version of this likelihood?
 ll_bc <- function(lambda, y, gm, eps = .001) {
   n <- length(y)
   gm0 <- gm ^ (lambda - 1)

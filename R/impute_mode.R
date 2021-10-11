@@ -176,6 +176,7 @@ print.step_impute_mode <-
 #' @keywords internal
 print.step_modeimpute <- print.step_impute_mode
 
+# TODO case weights: This should use case weights. We need a weighted table()
 mode_est <- function(x) {
   if (!is.character(x) & !is.factor(x))
     rlang::abort("The data should be character or factor to compute the mode.")

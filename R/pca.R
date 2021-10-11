@@ -150,6 +150,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
   check_type(training[, col_names])
 
+  # TODO case weights: Is there a weighted PCA that we can easily use?
   if (x$num_comp > 0 && length(col_names) > 0) {
     prc_call <-
       expr(prcomp(

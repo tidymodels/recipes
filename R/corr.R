@@ -161,6 +161,8 @@ print.step_corr <-
   }
 
 
+# TODO case weights: Use helper function
+
 corr_filter <-
   function(x,
            cutoff = .90,

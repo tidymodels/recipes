@@ -125,6 +125,8 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
 
   check_type(training[, col_names])
 
+  # TODO case weights use helper functions
+
   means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
   means <- purrr::map2(means, training[, col_names], cast)
 

@@ -111,6 +111,7 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 bake.step_spatialsign <- function(object, new_data, ...) {
   col_names <- object$columns
 
+  # TODO case weights: use weights in calculations
   res <- as.matrix(new_data[, col_names])
   res <- res / sqrt(rowSums(res ^ 2, na.rm = object$na_rm))
 
