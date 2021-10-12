@@ -21,22 +21,25 @@
 #' "complete.obs" strategy in [stats::cor()]).
 #' @export
 #' @name case-weight-helpers
-get_case_weights <- function(info, .data) {
-  wt_ind <- which(info$role == "case weight")
-  if (length(wt_ind) == 1) {
-    wt_var <- info$variable[wt_ind]
-    res <- .data[[wt_var]]
+get_case_weights <- function(selection, info, .data) {
+  if (is.null(selection)) {
+    return(NULL)
+  }
+  wt_col <- unname(recipes_eval_select(selection, .data, info))
+
+  if (length(wt_col) == 1) {
+    res <- .data[[wt_col]]
     if (!is.numeric(res)) {
       rlang::abort(
-        "Column ", wt_var, " has a 'case weight' role but is not numeric."
+        "Column ", wt_col, " has a 'case weight' role but is not numeric."
       )
     }
-  } else if (length(wt_ind) == 0) {
+  } else if (length(wt_col) == 0) {
     res <- NULL
   } else {
     rlang::abort(
-      "There should only be a single column with the role 'case-weight'. ",
-      "In these data, there are ", length(wt_ind), "columns."
+      "There should only be a single column with the role 'case_weights'. ",
+      "In these data, there are ", length(wt_col), "columns."
     )
   }
 

@@ -6,6 +6,8 @@ frac_wts <- runif(32)
 miss_wts <- freq_wts
 miss_wts[1] <- NA
 
+mtcars_expanded <- mtcars[rep(seq_along(freq_wts), freq_wts), ]
+
 mtcar_mis <- mtcars
 mtcar_mis[1, 2] <- NA
 mtcar_mis[2, 3] <- NA

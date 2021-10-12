@@ -60,6 +60,7 @@
 step_center <-
   function(recipe,
            ...,
+           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            means = NULL,
@@ -70,6 +71,7 @@ step_center <-
       recipe,
       step_center_new(
         terms = enquos(...),
+        case_weights = enquo(case_weights),
         trained = trained,
         role = role,
         means = means,
@@ -82,10 +84,11 @@ step_center <-
 
 ## Initializes a new object
 step_center_new <-
-  function(terms, role, trained, means, na_rm, skip, id) {
+  function(terms, case_weights, role, trained, means, na_rm, skip, id) {
     step(
       subclass = "center",
       terms = terms,
+      case_weights = case_weights,
       role = role,
       trained = trained,
       means = means,
@@ -99,12 +102,13 @@ step_center_new <-
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
-  wts <- get_case_weights(info, training)
+  wts <- get_case_weights(x$case_weights, info, training)
 
   means <- averages(training[, col_names], wts)
 
   step_center_new(
     terms = x$terms,
+    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     means = means,
