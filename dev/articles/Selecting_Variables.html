@@ -173,14 +173,14 @@
 <p>Before any steps are used the information on the original variables is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 5 × 4</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span>
 <span class="co">#&gt;   variable  type    role      source  </span>
-<span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   </span>
-<span class="co">#&gt; 1 Seniority numeric predictor original</span>
-<span class="co">#&gt; 2 Time      numeric predictor original</span>
-<span class="co">#&gt; 3 Age       numeric predictor original</span>
-<span class="co">#&gt; 4 Records   nominal predictor original</span>
-<span class="co">#&gt; 5 Status    nominal outcome   original</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Seniority numeric predictor original</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Time      numeric predictor original</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Age       numeric predictor original</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Records   nominal predictor original</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Status    nominal outcome   original</span></code></pre></div>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -194,20 +194,20 @@
 <code class="sourceCode R"><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
 <span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span>
 <span class="va">with_dummy</span>
-<span class="co">#&gt; # A tibble: 4,454 × 5</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,454 × 5</span></span>
 <span class="co">#&gt;    Seniority  Time   Age Status Records_yes</span>
-<span class="co">#&gt;        &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt;  1         9    60    30 good             0</span>
-<span class="co">#&gt;  2        17    60    58 good             0</span>
-<span class="co">#&gt;  3        10    36    46 bad              1</span>
-<span class="co">#&gt;  4         0    60    24 good             0</span>
-<span class="co">#&gt;  5         0    36    26 good             0</span>
-<span class="co">#&gt;  6         1    60    36 good             0</span>
-<span class="co">#&gt;  7        29    60    44 good             0</span>
-<span class="co">#&gt;  8         9    12    27 good             0</span>
-<span class="co">#&gt;  9         0    60    32 good             0</span>
-<span class="co">#&gt; 10         0    48    41 bad              0</span>
-<span class="co">#&gt; # … with 4,444 more rows</span></code></pre></div>
+<span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         9    60    30 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        17    60    58 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        10    36    46 bad              1</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         0    60    24 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         0    36    26 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1    60    36 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        29    60    44 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         9    12    27 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         0    60    32 good             0</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         0    48    41 bad              0</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 4,444 more rows</span></span></code></pre></div>
 <p><code>Status</code> is unaffected.</p>
 <p>One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, <code>Records</code> is a factor variable before the step is executed. Afterwards, <code>Records</code> is gone and the binary variable <code>Records_yes</code> is in its place. One reason to have general selection routines like <code><a href="../reference/has_role.html">all_predictors()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code> is to be able to select variables that have not be created yet.</p>
   </div>

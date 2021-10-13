@@ -191,25 +191,25 @@
 
 <span class="co"># These *should* produce the same results (as they do for `hp`)</span>
 <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>   <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 × 2</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
 <span class="co">#&gt;     disp    hp</span>
-<span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 -0.210 -36.7</span>
-<span class="co">#&gt; 2 -0.210 -36.7</span>
-<span class="co">#&gt; 3 -0.603 -53.7</span>
-<span class="co">#&gt; 4  0.268 -36.7</span>
-<span class="co">#&gt; 5  0.601  28.3</span>
-<span class="co">#&gt; 6  0.131 -41.7</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> -<span style="color: #BB0000;">0.210</span> -<span style="color: #BB0000;">36.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> -<span style="color: #BB0000;">0.210</span> -<span style="color: #BB0000;">36.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> -<span style="color: #BB0000;">0.603</span> -<span style="color: #BB0000;">53.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  0.268 -<span style="color: #BB0000;">36.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  0.601  28.3</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  0.131 -<span style="color: #BB0000;">41.7</span></span>
 <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">car_recipe</span>, new_data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 × 2</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span>
 <span class="co">#&gt;    disp    hp</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1  155. -36.7</span>
-<span class="co">#&gt; 2  155. -36.7</span>
-<span class="co">#&gt; 3  103. -53.7</span>
-<span class="co">#&gt; 4  253. -36.7</span>
-<span class="co">#&gt; 5  355.  28.3</span>
-<span class="co">#&gt; 6  220. -41.7</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>  155. -<span style="color: #BB0000;">36.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>  155. -<span style="color: #BB0000;">36.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>  103. -<span style="color: #BB0000;">53.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  253. -<span style="color: #BB0000;">36.7</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>  355.  28.3</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span>  220. -<span style="color: #BB0000;">41.7</span></span></code></pre></div>
 <p>This should emphasize that <code>bake(new_data = NULL)</code> should be used to get the training set values whenever a step is skipped.</p>
 </div>
   </div>
