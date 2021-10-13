@@ -7,6 +7,10 @@
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose variables
 #'  for this step. See [selections()] for more details.
+#' @param case_weights A selector that specifies a single numeric column that
+#' can be used for case weights. The default will choose a column with the
+#' role of `"case_weights"`. If the data set contains case weights but the
+#' step should not use them, use `case_weights = NULL`.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param trained A logical to indicate if the quantities for

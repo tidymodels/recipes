@@ -266,13 +266,24 @@ test_that("normalize - empty printing", {
 test_that("centering with case weights", {
   rec <-
     recipe(mpg ~ ., mtcars) %>%
-    update_role(wt, new_role = "case weight") %>%
+    update_role(wt, new_role = "case_weights") %>%
     step_center(all_numeric_predictors()) %>%
     prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
     unname(averages(mtcars[, -c(1, 6)], mtcars$wt))
+  )
+
+  rec <-
+    recipe(mpg ~ ., mtcars) %>%
+    update_role(wt, new_role = "case_weights") %>%
+    step_center(all_numeric_predictors(), case_weights = NULL) %>%
+    prep()
+
+  expect_equal(
+    tidy(rec, number = 1)[["value"]],
+    unname(averages(mtcars[, -c(1, 6)], NULL))
   )
 })
 

@@ -702,7 +702,7 @@ is_varying <- function(x) {
 
 # from tune package
 is_tune <- function(x) {
-  if (is.call(x)) {
+  if (is_call(x) & !is_quosure(x)) {
     if (rlang::call_name(x) == "tune") {
       return(TRUE)
     } else {
@@ -713,6 +713,7 @@ is_tune <- function(x) {
   }
   FALSE
 }
+
 
 # ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:

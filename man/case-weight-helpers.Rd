@@ -8,7 +8,7 @@
 \alias{correlations}
 \title{Helpers for steps with case weights}
 \usage{
-get_case_weights(info, .data)
+get_case_weights(selection, info, .data)
 
 averages(x, wts = NULL)
 
@@ -17,6 +17,8 @@ variances(x, wts = NULL)
 correlations(x, wts = NULL)
 }
 \arguments{
+\item{selection}{A quosure.}
+
 \item{info}{A data frame from the \code{info} argument within steps.}
 
 \item{.data}{The training data}
