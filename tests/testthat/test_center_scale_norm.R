@@ -285,6 +285,18 @@ test_that("centering with case weights", {
     tidy(rec, number = 1)[["value"]],
     unname(averages(mtcars[, -c(1, 6)], NULL))
   )
+
+
+  rec <-
+    recipe(mpg ~ ., mtcars) %>%
+    update_role(wt, new_role = "case_weights") %>%
+    step_center(all_numeric_predictors(), case_weights = wt) %>%
+    prep()
+
+  expect_equal(
+    tidy(rec, number = 1)[["value"]],
+    unname(averages(mtcars[, -c(1, 6)], mtcars$wt))
+  )
 })
 
 
