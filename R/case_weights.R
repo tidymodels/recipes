@@ -32,15 +32,19 @@ get_case_weights <- function(selection, info, .data) {
     res <- .data[[wt_col]]
     if (!is.numeric(res)) {
       rlang::abort(
-        "Column ", wt_col, " has a 'case weight' role but is not numeric."
+        paste0(
+          "Column ", wt_col, " has a 'case weight' role but is not numeric."
+        )
       )
     }
   } else if (length(wt_col) == 0) {
     res <- NULL
   } else {
     rlang::abort(
-      "There should only be a single column with the role 'case_weights'. ",
-      "In these data, there are ", length(wt_col), "columns."
+      paste0(
+        "There should only be a single column with the role 'case_weights'. ",
+        "In these data, there are ", length(wt_col), " columns."
+      )
     )
   }
 

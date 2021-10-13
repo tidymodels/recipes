@@ -297,6 +297,34 @@ test_that("centering with case weights", {
     tidy(rec, number = 1)[["value"]],
     unname(averages(mtcars[, -c(1, 6)], mtcars$wt))
   )
+
+  # multiple columns
+  expect_error(
+    recipe(mpg ~ ., mtcars) %>%
+      update_role(wt, disp, new_role = "case_weights") %>%
+      step_center(all_numeric_predictors()) %>%
+      prep(),
+    "There should only be a single column with the role"
+  )
+
+  # wrong type
+  expect_error(
+    recipe(mpg ~ ., mtcars) %>%
+      step_mutate(wt = as.factor(wt)) %>%
+      update_role(wt, new_role = "case_weights") %>%
+      step_center(all_numeric_predictors()) %>%
+      prep(),
+    "is not numeric"
+  )
+
+  # failed selection
+  expect_error(
+    recipe(mpg ~ ., mtcars) %>%
+      update_role(wts, new_role = "case_weights") %>%
+      step_center(all_numeric_predictors()) %>%
+      prep(),
+    "doesn't exist"
+  )
 })
 
 
