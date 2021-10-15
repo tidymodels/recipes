@@ -23,7 +23,7 @@
 #' @export
 #' @name case-weight-helpers
 get_case_weights <- function(selection, info, .data) {
-  if (quo_is_null(selection)) {
+  if (all(purrr::map_lgl(selection, quo_is_null))) {
     return(NULL)
   }
   wt_col <- unname(recipes_eval_select(selection, .data, info))
@@ -33,7 +33,7 @@ get_case_weights <- function(selection, info, .data) {
     if (!is.numeric(res)) {
       rlang::abort(
         paste0(
-          "Column ", wt_col, " has a 'case weight' role but is not numeric."
+          "Column ", wt_col, " has a 'case_weights' role but is not numeric."
         )
       )
     }

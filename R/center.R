@@ -75,7 +75,7 @@ step_center <-
       recipe,
       step_center_new(
         terms = enquos(...),
-        case_weights = enquo(case_weights),
+        case_weights = enquos(case_weights),
         trained = trained,
         role = role,
         means = means,

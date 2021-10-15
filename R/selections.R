@@ -172,12 +172,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
 
   local_current_info(nested_info)
 
-  if (is_quosures(quos)) {
-    expr <- expr(c(!!!quos))
-  } else {
-    # case_weights selections can wind up here
-    expr <- expr(c(!!quos))
-  }
+  expr <- expr(c(!!!quos))
 
   # FIXME: Ideally this is `FALSE` for strict selection,
   # but empty selections incorrectly throw an
