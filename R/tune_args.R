@@ -1,6 +1,5 @@
 
-
-# @export - lazily and conditionally registered in .onLoad()
+# Lazily registered in .onLoad()
 tune_args_recipe <- function(object, full = FALSE, ...) {
 
   steps <- object$steps
