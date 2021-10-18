@@ -56,7 +56,7 @@ tune_args_check <- tune_args_step
 
 
 # helpers for tune_args() methods -----------------------------------------
-# these are copied from tune
+# they also exist in parsnip for the `tune_args()` method there
 
 # useful for standardization and for creating a 0 row tunable tbl
 # (i.e. for when there are no steps in a recipe)
