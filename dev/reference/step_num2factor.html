@@ -27,7 +27,7 @@ integers."><meta property="og:image" content="https://recipes.tidymodels.org/log
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -46,7 +46,7 @@ integers."><meta property="og:image" content="https://recipes.tidymodels.org/log
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -61,10 +61,10 @@ integers."><meta property="og:image" content="https://recipes.tidymodels.org/log
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -74,7 +74,7 @@ integers."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,7 +89,7 @@ integers."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert Numbers to Factors</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/num2factor.R"><code>R/num2factor.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/num2factor.R" class="external-link"><code>R/num2factor.R</code></a></small>
     <div class="hidden name"><code>step_num2factor.Rd</code></div>
     </div>
 
@@ -111,50 +111,48 @@ integers.</p>
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"num2factor"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
-    </tr><tr><th>transform</th>
-      <td><p>A function taking a single argument <code>x</code> that can be used
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+created.</p></dd>
+</dl><dl><dt>transform</dt><dd><p>A function taking a single argument <code>x</code> that can be used
 to modify the numeric values prior to determining the levels (perhaps using
-<code><a href="https://rdrr.io/r/base/integer.html">base::as.integer()</a></code>). The output of a function should be an integer that
+<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">base::as.integer()</a></code>). The output of a function should be an integer that
 corresponds to the value of <code>levels</code> that should be assigned. If not an
-integer, the value will be converted to an integer during <code><a href="bake.html">bake()</a></code>.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>levels</th>
-      <td><p>A character vector of values that will be used as the levels.
+integer, the value will be converted to an integer during <code><a href="bake.html">bake()</a></code>.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>levels</dt><dd><p>A character vector of values that will be used as the levels.
 These are the numeric data converted to character and ordered. This is
-modified once <code><a href="prep.html">prep.recipe()</a></code> is executed.</p></td>
-    </tr><tr><th>ordered</th>
-      <td><p>A single logical value; should the factor(s) be ordered?</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+modified once <code><a href="prep.html">prep.recipe()</a></code> is executed.</p></dd>
+</dl><dl><dt>ordered</dt><dd><p>A single logical value; should the factor(s) be ordered?</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
 selectors or variables selected) and <code>ordered</code> is returned.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other dummy variable and encoding steps: 
 <code><a href="step_bin2factor.html">step_bin2factor</a>()</code>,
 <code><a href="step_count.html">step_count</a>()</code>,
@@ -173,15 +171,18 @@ selectors or variables selected) and <code>ordered</code> is returned.</p>
 <code><a href="step_string2factor.html">step_string2factor</a>()</code>,
 <code><a href="step_unknown.html">step_unknown</a>()</code>,
 <code><a href="step_unorder.html">step_unorder</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">attrition</span><span class="op">)</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">attrition</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">StockOptionLevel</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">StockOptionLevel</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   StockOptionLevel [4]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   StockOptionLevel     n</span>
@@ -191,19 +192,19 @@ selectors or variables selected) and <code>ordered</code> is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>                2   158</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>                3    85</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">amnt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nothin"</span>, <span class="st">"meh"</span>, <span class="st">"some"</span>, <span class="st">"copious"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">amnt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nothin"</span>, <span class="st">"meh"</span>, <span class="st">"some"</span>, <span class="st">"copious"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Attrition</span> <span class="op">~</span> <span class="va">StockOptionLevel</span>, data <span class="op">=</span> <span class="va">attrition</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Attrition</span> <span class="op">~</span> <span class="va">StockOptionLevel</span>, data <span class="op">=</span> <span class="va">attrition</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_num2factor</span><span class="op">(</span></span>
 <span class="r-in">    <span class="va">StockOptionLevel</span>,</span>
 <span class="r-in">    transform <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">+</span> <span class="fl">1</span>,</span>
 <span class="r-in">    levels <span class="op">=</span> <span class="va">amnt</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">encoded</span><span class="op">$</span><span class="va">StockOptionLevel</span>, <span class="va">attrition</span><span class="op">$</span><span class="va">StockOptionLevel</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">encoded</span><span class="op">$</span><span class="va">StockOptionLevel</span>, <span class="va">attrition</span><span class="op">$</span><span class="va">StockOptionLevel</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             0   1   2   3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   nothin  631   0   0   0</span>
@@ -215,26 +216,26 @@ selectors or variables selected) and <code>ordered</code> is returned.</p>
 <span class="r-in"><span class="co"># an example for binning</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">binner</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fl">1000</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>, include.lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fl">1000</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>, include.lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in">  <span class="co"># now return the group number</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"med"</span>, <span class="st">"high"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"med"</span>, <span class="st">"high"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Attrition</span> <span class="op">~</span> <span class="va">MonthlyIncome</span>, data <span class="op">=</span> <span class="va">attrition</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Attrition</span> <span class="op">~</span> <span class="va">MonthlyIncome</span>, data <span class="op">=</span> <span class="va">attrition</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_num2factor</span><span class="op">(</span></span>
 <span class="r-in">    <span class="va">MonthlyIncome</span>,</span>
 <span class="r-in">    transform <span class="op">=</span> <span class="va">binner</span>,</span>
 <span class="r-in">    levels <span class="op">=</span> <span class="va">inc</span>,</span>
 <span class="r-in">    ordered <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in">  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">encoded</span><span class="op">$</span><span class="va">MonthlyIncome</span>, <span class="fu">binner</span><span class="op">(</span><span class="va">attrition</span><span class="op">$</span><span class="va">MonthlyIncome</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">encoded</span><span class="op">$</span><span class="va">MonthlyIncome</span>, <span class="fu">binner</span><span class="op">(</span><span class="va">attrition</span><span class="op">$</span><span class="va">MonthlyIncome</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1   2   3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   low  749   0   0</span>
@@ -242,7 +243,7 @@ selectors or variables selected) and <code>ordered</code> is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   high   0   0 281</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># What happens when a value is out of range?</span></span>
-<span class="r-in"><span class="va">ceo</span> <span class="op">&lt;-</span> <span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>MonthlyIncome <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">ceo</span> <span class="op">&lt;-</span> <span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MonthlyIncome <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">ceo</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
@@ -250,6 +251,7 @@ selectors or variables selected) and <code>ordered</code> is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #BB0000;">NA</span>            Yes      </span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -263,8 +265,8 @@ selectors or variables selected) and <code>ordered</code> is returned.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

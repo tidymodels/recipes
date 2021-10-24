@@ -26,7 +26,7 @@ impute missing data using nearest neighbors."><meta property="og:image" content=
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ impute missing data using nearest neighbors."><meta property="og:image" content=
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ impute missing data using nearest neighbors."><meta property="og:image" content=
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ impute missing data using nearest neighbors."><meta property="og:image" content=
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ impute missing data using nearest neighbors."><meta property="og:image" content=
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Impute via k-nearest neighbors</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/impute_knn.R"><code>R/impute_knn.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/impute_knn.R" class="external-link"><code>R/impute_knn.R</code></a></small>
     <div class="hidden name"><code>step_impute_knn.Rd</code></div>
     </div>
 
@@ -104,7 +104,7 @@ impute missing data using nearest neighbors.</p>
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
   neighbors <span class="op">=</span> <span class="fl">5</span>,
   impute_with <span class="op">=</span> <span class="fu"><a href="step_impute_bag.html">imp_vars</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nthread <span class="op">=</span> <span class="fl">1</span>, eps <span class="op">=</span> <span class="fl">1e-08</span><span class="op">)</span>,
+  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nthread <span class="op">=</span> <span class="fl">1</span>, eps <span class="op">=</span> <span class="fl">1e-08</span><span class="op">)</span>,
   ref_data <span class="op">=</span> <span class="cn">NULL</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -118,61 +118,56 @@ impute missing data using nearest neighbors.</p>
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
   neighbors <span class="op">=</span> <span class="fl">5</span>,
   impute_with <span class="op">=</span> <span class="fu"><a href="step_impute_bag.html">imp_vars</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>nthread <span class="op">=</span> <span class="fl">1</span>, eps <span class="op">=</span> <span class="fl">1e-08</span><span class="op">)</span>,
+  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nthread <span class="op">=</span> <span class="fl">1</span>, eps <span class="op">=</span> <span class="fl">1e-08</span><span class="op">)</span>,
   ref_data <span class="op">=</span> <span class="cn">NULL</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_knn"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables to be imputed.
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables to be imputed.
 When used with <code>imp_vars</code>, these dots indicate which variables are used to
 predict the missing data in each variable. See <code><a href="selections.html">selections()</a></code> for more
-details.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>neighbors</th>
-      <td><p>The number of neighbors.</p></td>
-    </tr><tr><th>impute_with</th>
-      <td><p>A call to <code>imp_vars</code> to specify which variables are used
+details.</p></dd>
+</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+created.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>neighbors</dt><dd><p>The number of neighbors.</p></dd>
+</dl><dl><dt>impute_with</dt><dd><p>A call to <code>imp_vars</code> to specify which variables are used
 to impute the variables that can include specific variable names separated
 by commas or different selectors (see <code><a href="selections.html">selections()</a></code>). If a column is
 included in both lists to be imputed and to be an imputation predictor, it
-will be removed from the latter and not used to impute itself.</p></td>
-    </tr><tr><th>options</th>
-      <td><p>A named list of options to pass to <code><a href="https://rdrr.io/pkg/gower/man/gower_topn.html">gower::gower_topn()</a></code>.
-Available options are currently <code>nthread</code> and <code>eps</code>.</p></td>
-    </tr><tr><th>ref_data</th>
-      <td><p>A tibble of data that will reflect the data preprocessing
+will be removed from the latter and not used to impute itself.</p></dd>
+</dl><dl><dt>options</dt><dd><p>A named list of options to pass to <code><a href="https://rdrr.io/pkg/gower/man/gower_topn.html" class="external-link">gower::gower_topn()</a></code>.
+Available options are currently <code>nthread</code> and <code>eps</code>.</p></dd>
+</dl><dl><dt>ref_data</dt><dd><p>A tibble of data that will reflect the data preprocessing
 done up to the point of this imputation step. This is <code>NULL</code> until the step
-is trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>The column names that will be imputed and used for
-imputation. This is <code>NULL</code> until the step is trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+is trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+</dl><dl><dt>columns</dt><dd><p>The column names that will be imputed and used for
+imputation. This is <code>NULL</code> until the step is trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>The step uses the training set to impute any other data sets. The
 only distance function available is Gower's distance which can be used for
 mixtures of nominal and numeric data.</p>
@@ -183,17 +178,19 @@ underlying data are integer, the mean will be converted to an integer too.</p>
 this variable will be ignored.</p>
 <p>It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this step, a tibble with
+<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with
 columns <code>terms</code> (the selectors or variables for imputation), <code>predictors</code>
 (those variables used to impute), and <code>neighbors</code> is returned.</p>
 <p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_knnimpute()</code>
 to <code>step_impute_knn()</code>.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References</h2>
     <p>Gower, C. (1971) "A general coefficient of similarity and some
 of its properties," Biometrics, 857-871.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other imputation steps: 
 <code><a href="step_impute_bag.html">step_impute_bag</a>()</code>,
 <code><a href="step_impute_linear.html">step_impute_linear</a>()</code>,
@@ -202,20 +199,23 @@ of its properties," Biometrics, 857-871.</p>
 <code><a href="step_impute_median.html">step_impute_median</a>()</code>,
 <code><a href="step_impute_mode.html">step_impute_mode</a>()</code>,
 <code><a href="step_impute_roll.html">step_impute_roll</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes">recipes</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">biomass_te_whole</span> <span class="op">&lt;-</span> <span class="va">biomass_te</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># induce some missing data at random</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">9039</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">carb_missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">nitro_missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">9039</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">carb_missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">nitro_missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">biomass_te</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span class="r-in"><span class="va">biomass_te</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
@@ -223,38 +223,38 @@ of its properties," Biometrics, 857-871.</p>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
 <span class="r-in">              data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">ratio_recipe</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">ratio_recipe</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_impute_knn</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>, neighbors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ratio_recipe2</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">ratio_recipe</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">ratio_recipe2</span>, <span class="va">biomass_te</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># how well did it work?</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   27.80   44.24   47.30   47.96   49.00   79.34 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span>,</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span>,</span>
 <span class="r-in">      after <span class="op">=</span> <span class="va">imputed</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      before    after</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  46.83 47.43000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  47.80 47.53333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  46.40 46.21000</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0.010   0.295   0.690   1.092   1.450   4.790 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span>,</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span>,</span>
 <span class="r-in">      after <span class="op">=</span> <span class="va">imputed</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      before      after</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   1.24 0.59333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   0.30 0.92333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]   0.06 0.04666667</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">ratio_recipe</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">ratio_recipe</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms            predictors neighbors id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_predictors() <span style="color: #BB0000;">NA</span>                 3 impute_knn_iyPXM</span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">ratio_recipe2</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">ratio_recipe2</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    terms    predictors neighbors id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
@@ -279,6 +279,7 @@ of its properties," Biometrics, 857-871.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> sulfur   oxygen             3 impute_knn_iyPXM</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> sulfur   nitrogen           3 impute_knn_iyPXM</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -292,8 +293,8 @@ of its properties," Biometrics, 857-871.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

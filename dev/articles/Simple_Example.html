@@ -139,9 +139,9 @@
 <li>
 <strong>terms</strong> are columns in a design matrix such as <code>A</code>, <code>B</code>, and <code>A:B</code>. These can be other derived entities that are grouped, such as a set of principal components or a set of columns, that define a basis function for a variable. These are synonymous with features in machine learning. Variables that have <code>predictor</code> roles would automatically be main effect terms.</li>
 </ul>
-<div id="an-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#an-example" class="anchor" aria-hidden="true"></a>An Example</h2>
+<div class="section level2">
+<h2 id="an-example">An Example<a class="anchor" aria-label="anchor" href="#an-example"></a>
+</h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
@@ -165,9 +165,9 @@
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
-<div id="an-initial-recipe" class="section level2">
-<h2 class="hasAnchor">
-<a href="#an-initial-recipe" class="anchor" aria-hidden="true"></a>An Initial Recipe</h2>
+<div class="section level2">
+<h2 id="an-initial-recipe">An Initial Recipe<a class="anchor" aria-label="anchor" href="#an-initial-recipe"></a>
+</h2>
 <p>First, we will create a recipe object from the original data and then specify the processing steps.</p>
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
@@ -184,9 +184,9 @@
 <p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
 <p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
 </div>
-<div id="preprocessing-steps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#preprocessing-steps" class="anchor" aria-hidden="true"></a>Preprocessing Steps</h2>
+<div class="section level2">
+<h2 id="preprocessing-steps">Preprocessing Steps<a class="anchor" aria-label="anchor" href="#preprocessing-steps"></a>
+</h2>
 <p>From here, preprocessing steps for some step <em>X</em> can be added sequentially in one of two ways:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>rec_obj &lt;-<span class="st"> </span>step_{X}(rec_obj, arguments)    <span class="co">## or</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>rec_obj &lt;-<span class="st"> </span>rec_obj <span class="op">%&gt;%</span><span class="st"> </span>step_{X}(arguments)</span></code></pre></div>
@@ -374,9 +374,9 @@
 #&gt; [85] "step_upsample"           "step_window"            
 #&gt; [87] "step_YeoJohnson"         "step_zv"</code></pre>
 </div>
-<div id="checks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#checks" class="anchor" aria-hidden="true"></a>Checks</h2>
+<div class="section level2">
+<h2 id="checks">Checks<a class="anchor" aria-label="anchor" href="#checks"></a>
+</h2>
 <p>Another type of operation that can be added to a recipes is a <em>check</em>. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown.</p>
 <p>For example, <code>check_missing</code> will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -404,7 +404,7 @@
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.
+    Developed by .
     Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>

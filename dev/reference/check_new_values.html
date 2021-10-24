@@ -26,7 +26,7 @@ operation that will check if variables contain new values."><meta property="og:i
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ operation that will check if variables contain new values."><meta property="og:i
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ operation that will check if variables contain new values."><meta property="og:i
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ operation that will check if variables contain new values."><meta property="og:i
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ operation that will check if variables contain new values."><meta property="og:i
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Check for New Values</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/newvalues.R"><code>R/newvalues.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/newvalues.R" class="external-link"><code>R/newvalues.R</code></a></small>
     <div class="hidden name"><code>check_new_values.Rd</code></div>
     </div>
 
@@ -109,120 +109,122 @@ operation that will check if variables contain new values.</p>
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"new_values"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The check will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
-for this check. See <code><a href="selections.html">selections()</a></code> for more details.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>Not used by this check since no new variables are
-created.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical for whether the selectors in <code>...</code>
-have been resolved by <code><a href="prep.html">prep()</a></code>.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>A character string of variable names that will
-be populated (eventually) by the terms argument.</p></td>
-    </tr><tr><th>ignore_NA</th>
-      <td><p>A logical that indicates if we should consider missing
-values as value or not. Defaults to <code>TRUE</code>.</p></td>
-    </tr><tr><th>values</th>
-      <td><p>A named list with the allowed values.
-This is <code>NULL</code> until computed by prep.recipe().</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the check be skipped when the
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The check will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+for this check. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+</dl><dl><dt>role</dt><dd><p>Not used by this check since no new variables are
+created.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical for whether the selectors in <code>...</code>
+have been resolved by <code><a href="prep.html">prep()</a></code>.</p></dd>
+</dl><dl><dt>columns</dt><dd><p>A character string of variable names that will
+be populated (eventually) by the terms argument.</p></dd>
+</dl><dl><dt>ignore_NA</dt><dd><p>A logical that indicates if we should consider missing
+values as value or not. Defaults to <code>TRUE</code>.</p></dd>
+</dl><dl><dt>values</dt><dd><p>A named list with the allowed values.
+This is <code>NULL</code> until computed by prep.recipe().</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the check be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this check to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this check to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new check added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>This check will break the <code>bake</code> function if any of the checked
 columns does contain values it did not contain when <code>prep</code> was called
 on the recipe. If the check passes, nothing is changed to the data.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this check, a tibble with columns <code>terms</code> (the
+<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this check, a tibble with columns <code>terms</code> (the
 selectors or variables selected) is returned.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other checks: 
 <code><a href="check_class.html">check_class</a>()</code>,
 <code><a href="check_cols.html">check_cols</a>()</code>,
 <code><a href="check_missing.html">check_missing</a>()</code>,
 <code><a href="check_range.html">check_range</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># If the test passes, `new_data` is returned unaltered</span></span>
-<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4,454 × 14</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Status Seniority Home     Time   Age Marital Records Job       Expenses Income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> good           9 rent       60    30 married no      freelance       73    129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> good          17 rent       60    58 widow   no      fixed           48    131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bad           10 owner      36    46 married yes     freelance       90    200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> good           0 rent       60    24 single  no      fixed           63    182</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> good           0 rent       36    26 single  no      fixed           46    107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> good           1 owner      60    36 married no      fixed           75    214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> good          29 owner      60    44 married no      fixed           75    125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> good           9 parents    12    27 single  no      fixed           35     80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> good           0 owner      60    32 married no      freelance       90    107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> bad            0 parents    48    41 married no      partime         90     80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Status Seniority Home     Time   Age Marital Records Job      Expenses Income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> good           9 rent       60    30 married no      freelan…       73    129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> good          17 rent       60    58 widow   no      fixed          48    131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bad           10 owner      36    46 married yes     freelan…       90    200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> good           0 rent       60    24 single  no      fixed          63    182</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> good           0 rent       36    26 single  no      fixed          46    107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> good           1 owner      60    36 married no      fixed          75    214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> good          29 owner      60    44 married no      fixed          75    125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> good           9 parents    12    27 single  no      fixed          35     80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> good           0 owner      60    32 married no      freelan…       90    107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> bad            0 parents    48    41 married no      partime        90     80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 4,444 more rows, and 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Amount &lt;int&gt;, Price &lt;int&gt;</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># If `new_data` contains values not in `x` at the `prep()` function,</span></span>
 <span class="r-in"><span class="co"># the `bake()` function will break.</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Home</span> <span class="op">!=</span> <span class="st">"rent"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Home</span> <span class="op">!=</span> <span class="st">"rent"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># By default missing values are ignored, so this passes.</span></span>
-<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Home</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Home</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4,454 × 14</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Status Seniority Home     Time   Age Marital Records Job       Expenses Income</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> good           9 rent       60    30 married no      freelance       73    129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> good          17 rent       60    58 widow   no      fixed           48    131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bad           10 owner      36    46 married yes     freelance       90    200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> good           0 rent       60    24 single  no      fixed           63    182</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> good           0 rent       36    26 single  no      fixed           46    107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> good           1 owner      60    36 married no      fixed           75    214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> good          29 owner      60    44 married no      fixed           75    125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> good           9 parents    12    27 single  no      fixed           35     80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> good           0 owner      60    32 married no      freelance       90    107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> bad            0 parents    48    41 married no      partime         90     80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Status Seniority Home     Time   Age Marital Records Job      Expenses Income</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> good           9 rent       60    30 married no      freelan…       73    129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> good          17 rent       60    58 widow   no      fixed          48    131</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bad           10 owner      36    46 married yes     freelan…       90    200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> good           0 rent       60    24 single  no      fixed          63    182</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> good           0 rent       36    26 single  no      fixed          46    107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> good           1 owner      60    36 married no      fixed          75    214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> good          29 owner      60    44 married no      fixed          75    125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> good           9 parents    12    27 single  no      fixed          35     80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> good           0 owner      60    32 married no      freelan…       90    107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> bad            0 parents    48    41 married no      partime        90     80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 4,444 more rows, and 4 more variables: Assets &lt;int&gt;, Debt &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Amount &lt;int&gt;, Price &lt;int&gt;</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Use `ignore_NA = FALSE` if you consider missing values  as a value,</span></span>
 <span class="r-in"><span class="co"># that should not occur when not observed in the train set.</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">Home</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span>, ignore_NA <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Home</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">check_new_values</span><span class="op">(</span><span class="va">Home</span>, ignore_NA <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -236,8 +238,8 @@ selectors or variables selected) is returned.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

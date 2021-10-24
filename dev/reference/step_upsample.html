@@ -29,7 +29,7 @@ levels in a specific factor level equal."><meta property="og:image" content="htt
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -48,7 +48,7 @@ levels in a specific factor level equal."><meta property="og:image" content="htt
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -63,10 +63,10 @@ levels in a specific factor level equal."><meta property="og:image" content="htt
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -76,7 +76,7 @@ levels in a specific factor level equal."><meta property="og:image" content="htt
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,12 +91,12 @@ levels in a specific factor level equal."><meta property="og:image" content="htt
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Up-Sample a Data Set Based on a Factor Variable</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/upsample.R"><code>R/upsample.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/upsample.R" class="external-link"><code>R/upsample.R</code></a></small>
     <div class="hidden name"><code>step_upsample.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p>
+    <p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p>
 <p><code>step_upsample</code> is now available as <code>themis::step_upsample()</code>. This
 function creates a <em>specification</em> of a recipe step that
 will replicate rows of a data set to make the occurrence of
@@ -113,60 +113,54 @@ levels in a specific factor level equal.</p>
   column <span class="op">=</span> <span class="cn">NULL</span>,
   target <span class="op">=</span> <span class="cn">NA</span>,
   skip <span class="op">=</span> <span class="cn">TRUE</span>,
-  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>,
+  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">)</span>,
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"upsample"</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="co"># S3 method for step_upsample</span>
-<span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></td>
-    </tr><tr><th>over_ratio</th>
-      <td><p>A numeric value for the ratio of the
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+</dl><dl><dt>over_ratio</dt><dd><p>A numeric value for the ratio of the
 majority-to-minority frequencies. The default value (1) means
 that all other levels are sampled up to have the same
 frequency as the most occurring level. A value of 0.5 would mean
 that the minority levels will have (at most) (approximately)
-half as many rows than the majority level.</p></td>
-    </tr><tr><th>ratio</th>
-      <td><p>Deprecated argument; same as <code>over_ratio</code>.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>column</th>
-      <td><p>A character string of the variable name that will
-be populated (eventually) by the <code>...</code> selectors.</p></td>
-    </tr><tr><th>target</th>
-      <td><p>An integer that will be used to subsample. This
-should not be set by the user and will be populated by <code>prep</code>.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+half as many rows than the majority level.</p></dd>
+</dl><dl><dt>ratio</dt><dd><p>Deprecated argument; same as <code>over_ratio</code>.</p></dd>
+</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+created.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>column</dt><dd><p>A character string of the variable name that will
+be populated (eventually) by the <code>...</code> selectors.</p></dd>
+</dl><dl><dt>target</dt><dd><p>An integer that will be used to subsample. This
+should not be set by the user and will be populated by <code>prep</code>.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>seed</th>
-      <td><p>An integer that will be used as the seed when upsampling.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr><tr><th>x</th>
-      <td><p>A <code>step_upsample</code> object.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>seed</dt><dd><p>An integer that will be used as the seed when upsampling.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl><dl><dt>x</dt><dd><p>A <code>step_upsample</code> object.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>Up-sampling is intended to be performed on the <em>training</em> set alone. For
 this reason, the default is <code>skip = TRUE</code>. It is advisable to use
 <code>prep(recipe, retain = TRUE)</code> when preparing the recipe; in this way
@@ -183,6 +177,8 @@ frequency as the majority level, all data will be retained.</p>
 <p>When used in modeling, users should strongly consider using the
 option <code>skip = TRUE</code> so that the extra sampling is <em>not</em>
 conducted outside of the training set.</p>
+    </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -197,8 +193,8 @@ conducted outside of the training set.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

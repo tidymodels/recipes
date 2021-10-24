@@ -28,7 +28,7 @@ the original data."><meta property="og:image" content="https://recipes.tidymodel
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -47,7 +47,7 @@ the original data."><meta property="og:image" content="https://recipes.tidymodel
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -62,10 +62,10 @@ the original data."><meta property="og:image" content="https://recipes.tidymodel
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -75,7 +75,7 @@ the original data."><meta property="og:image" content="https://recipes.tidymodel
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -90,7 +90,7 @@ the original data."><meta property="og:image" content="https://recipes.tidymodel
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Dummy Variables Creation</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/dummy.R"><code>R/dummy.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/dummy.R" class="external-link"><code>R/dummy.R</code></a></small>
     <div class="hidden name"><code>step_dummy.Rd</code></div>
     </div>
 
@@ -107,7 +107,7 @@ the original data.</p>
   role <span class="op">=</span> <span class="st">"predictor"</span>,
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
   one_hot <span class="op">=</span> <span class="cn">FALSE</span>,
-  preserve <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
+  preserve <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
   naming <span class="op">=</span> <span class="va">dummy_names</span>,
   levels <span class="op">=</span> <span class="cn">NULL</span>,
   keep_original_cols <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -115,53 +115,48 @@ the original data.</p>
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"dummy"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details. The selected
-variables <em>must</em> be factors.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
+variables <em>must</em> be factors.</p></dd>
+</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>one_hot</th>
-      <td><p>A logical. For C levels, should C dummy variables be created
-rather than C-1?</p></td>
-    </tr><tr><th>preserve</th>
-      <td><p>Use <code>keep_original_cols</code> to specify whether the selected
-column(s) should be retained (in addition to the new dummy variables).</p></td>
-    </tr><tr><th>naming</th>
-      <td><p>A function that defines the naming convention for
-new dummy columns. See Details below.</p></td>
-    </tr><tr><th>levels</th>
-      <td><p>A list that contains the information needed to
+the original variables will be used as <em>predictors</em> in a model.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>one_hot</dt><dd><p>A logical. For C levels, should C dummy variables be created
+rather than C-1?</p></dd>
+</dl><dl><dt>preserve</dt><dd><p>Use <code>keep_original_cols</code> to specify whether the selected
+column(s) should be retained (in addition to the new dummy variables).</p></dd>
+</dl><dl><dt>naming</dt><dd><p>A function that defines the naming convention for
+new dummy columns. See Details below.</p></dd>
+</dl><dl><dt>levels</dt><dd><p>A list that contains the information needed to
 create dummy variables for each variable contained in
 <code>terms</code>. This is <code>NULL</code> until the step is trained by
-<code><a href="prep.html">prep.recipe()</a></code>.</p></td>
-    </tr><tr><th>keep_original_cols</th>
-      <td><p>A logical to keep the original variables in the
-output. Defaults to <code>FALSE</code>.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+<code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+output. Defaults to <code>FALSE</code>.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p><code>step_dummy()</code> will create a set of binary dummy
 variables from a factor variable. For example, if an unordered
 factor column in the data set has levels of "red", "green",
@@ -190,16 +185,17 @@ the results. See <code><a href="step_other.html">step_other()</a></code> for an 
 <code><a href="bake.html">bake()</a></code> will return the data as-is (e.g. with no dummy variables).</p>
 <p>Note that, by default, the new dummy variable column names obey the naming
 rules for columns. If there are levels such as "0", <code><a href="names0.html">dummy_names()</a></code> will put
-a leading "X" in front of the level (since it uses <code><a href="https://rdrr.io/r/base/make.names.html">make.names()</a></code>). This can
+a leading "X" in front of the level (since it uses <code><a href="https://rdrr.io/r/base/make.names.html" class="external-link">make.names()</a></code>). This can
 be changed by passing in a different function to the <code>naming</code> argument for
 this step.</p>
 <p>The <a href="https://recipes.tidymodels.org/articles/Dummies.html">package vignette for dummy variables</a>
 and interactions has more information.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
 selectors or original variables selected) and <code>columns</code> (the
 list of corresponding binary columns) is returned.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p><code><a href="names0.html">dummy_names()</a></code></p>
 <p>Other dummy variable and encoding steps: 
 <code><a href="step_bin2factor.html">step_bin2factor</a>()</code>,
@@ -219,16 +215,19 @@ list of corresponding binary columns) is returned.</p>
 <code><a href="step_string2factor.html">step_string2factor</a>()</code>,
 <code><a href="step_unknown.html">step_unknown</a>()</code>,
 <code><a href="step_unorder.html">step_unorder</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">okc</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span>,<span class="op">]</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">okc</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span>,<span class="op">]</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Original data: diet has 18 levels</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">okc</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">okc</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 18</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">okc</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">okc</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "anything"            "halal"               "kosher"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "mostly anything"     "mostly halal"        "mostly kosher"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "mostly other"        "mostly vegan"        "mostly vegetarian"  </span>
@@ -239,15 +238,15 @@ list of corresponding binary columns) is returned.</p>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">height</span>, data <span class="op">=</span> <span class="va">okc</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Default dummy coding: 17 dummy variables</span></span>
-<span class="r-in"><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">step_dummy</span><span class="op">(</span><span class="va">diet</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    <span class="fu">step_dummy</span><span class="op">(</span><span class="va">diet</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">okc</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummies</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">dummy_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"diet"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># level "anything" is the reference level</span></span>
+<span class="r-in"><span class="va">dummy_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"diet"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># level "anything" is the reference level</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "diet_halal"               "diet_kosher"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "diet_mostly.anything"     "diet_mostly.halal"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "diet_mostly.kosher"       "diet_mostly.other"       </span>
@@ -259,15 +258,15 @@ list of corresponding binary columns) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] "diet_vegetarian"         </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Obtain the full set of 18 dummy variables using `one_hot` option</span></span>
-<span class="r-in"><span class="va">dummies_one_hot</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">step_dummy</span><span class="op">(</span><span class="va">diet</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">dummies_one_hot</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    <span class="fu">step_dummy</span><span class="op">(</span><span class="va">diet</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">    <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">okc</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data_one_hot</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummies_one_hot</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">dummy_data_one_hot</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"diet"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># no reference level</span></span>
+<span class="r-in"><span class="va">dummy_data_one_hot</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"diet"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># no reference level</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "diet_anything"            "diet_halal"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "diet_kosher"              "diet_mostly.anything"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "diet_mostly.halal"        "diet_mostly.kosher"      </span>
@@ -279,7 +278,7 @@ list of corresponding binary columns) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] "diet_vegan"               "diet_vegetarian"         </span>
 <span class="r-in"></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">dummies</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">dummies</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    terms columns             id         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
@@ -300,7 +299,7 @@ list of corresponding binary columns) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> diet  strictly vegetarian dummy_hhrhR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> diet  vegan               dummy_hhrhR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> diet  vegetarian          dummy_hhrhR</span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">dummies_one_hot</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">dummies_one_hot</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    terms columns             id         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
@@ -323,6 +322,7 @@ list of corresponding binary columns) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> diet  vegan               dummy_ypfCg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> diet  vegetarian          dummy_ypfCg</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -336,8 +336,8 @@ list of corresponding binary columns) is returned.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

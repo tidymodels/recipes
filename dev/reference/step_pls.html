@@ -26,7 +26,7 @@ convert numeric data into one or more new dimensions."><meta property="og:image"
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ convert numeric data into one or more new dimensions."><meta property="og:image"
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ convert numeric data into one or more new dimensions."><meta property="og:image"
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ convert numeric data into one or more new dimensions."><meta property="og:image"
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ convert numeric data into one or more new dimensions."><meta property="og:image"
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Partial Least Squares Feature Extraction</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/pls.R"><code>R/pls.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/pls.R" class="external-link"><code>R/pls.R</code></a></small>
     <div class="hidden name"><code>step_pls.Rd</code></div>
     </div>
 
@@ -105,8 +105,8 @@ convert numeric data into one or more new dimensions.</p>
   num_comp <span class="op">=</span> <span class="fl">2</span>,
   predictor_prop <span class="op">=</span> <span class="fl">1</span>,
   outcome <span class="op">=</span> <span class="cn">NULL</span>,
-  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  preserve <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/deprecated.html">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
+  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+  preserve <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,
   res <span class="op">=</span> <span class="cn">NULL</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   prefix <span class="op">=</span> <span class="st">"PLS"</span>,
@@ -115,65 +115,56 @@ convert numeric data into one or more new dimensions.</p>
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"pls"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>num_comp</th>
-      <td><p>The number of pls dimensions to retain as new predictors.
+the original variables will be used as <em>predictors</em> in a model.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>num_comp</dt><dd><p>The number of pls dimensions to retain as new predictors.
 If <code>num_comp</code> is greater than the number of columns or the number of
-possible dimensions, a smaller value will be used.</p></td>
-    </tr><tr><th>predictor_prop</th>
-      <td><p>The maximum number of original predictors that can have
-non-zero coefficients for each PLS component (via regularization).</p></td>
-    </tr><tr><th>outcome</th>
-      <td><p>When a single outcome is available, character
-string or call to <code><a href="https://dplyr.tidyverse.org/reference/vars.html">dplyr::vars()</a></code> can be used to specify a single outcome
-variable.</p></td>
-    </tr><tr><th>options</th>
-      <td><p>A list of options to <code><a href="https://rdrr.io/pkg/mixOmics/man/pls.html">mixOmics::pls()</a></code>, <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html">mixOmics::spls()</a></code>,
-<code><a href="https://rdrr.io/pkg/mixOmics/man/plsda.html">mixOmics::plsda()</a></code>, or <code><a href="https://rdrr.io/pkg/mixOmics/man/splsda.html">mixOmics::splsda()</a></code> (depending on the data and
-arguments).</p></td>
-    </tr><tr><th>preserve</th>
-      <td><p>Use <code>keep_original_cols</code> instead to specify whether the
-original predictor data should be retained along with the new features.</p></td>
-    </tr><tr><th>res</th>
-      <td><p>A list of results are stored here once this preprocessing step
-has been trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>A character string of variable names that will
-be populated elsewhere.</p></td>
-    </tr><tr><th>prefix</th>
-      <td><p>A character string for the prefix of the resulting new
-variables. See notes below.</p></td>
-    </tr><tr><th>keep_original_cols</th>
-      <td><p>A logical to keep the original variables in the
-output. Defaults to <code>FALSE</code>.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+possible dimensions, a smaller value will be used.</p></dd>
+</dl><dl><dt>predictor_prop</dt><dd><p>The maximum number of original predictors that can have
+non-zero coefficients for each PLS component (via regularization).</p></dd>
+</dl><dl><dt>outcome</dt><dd><p>When a single outcome is available, character
+string or call to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">dplyr::vars()</a></code> can be used to specify a single outcome
+variable.</p></dd>
+</dl><dl><dt>options</dt><dd><p>A list of options to <code><a href="https://rdrr.io/pkg/mixOmics/man/pls.html" class="external-link">mixOmics::pls()</a></code>, <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html" class="external-link">mixOmics::spls()</a></code>,
+<code><a href="https://rdrr.io/pkg/mixOmics/man/plsda.html" class="external-link">mixOmics::plsda()</a></code>, or <code><a href="https://rdrr.io/pkg/mixOmics/man/splsda.html" class="external-link">mixOmics::splsda()</a></code> (depending on the data and
+arguments).</p></dd>
+</dl><dl><dt>preserve</dt><dd><p>Use <code>keep_original_cols</code> instead to specify whether the
+original predictor data should be retained along with the new features.</p></dd>
+</dl><dl><dt>res</dt><dd><p>A list of results are stored here once this preprocessing step
+has been trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+</dl><dl><dt>columns</dt><dd><p>A character string of variable names that will
+be populated elsewhere.</p></dd>
+</dl><dl><dt>prefix</dt><dd><p>A character string for the prefix of the resulting new
+variables. See notes below.</p></dd>
+</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+output. Defaults to <code>FALSE</code>.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>PLS is a supervised version of principal component
 analysis that requires the outcome data to compute
 the new features.</p>
@@ -188,23 +179,25 @@ names would be <code>PLS001</code> - <code>PLS101</code>.</p>
 <p>Sparsity can be encouraged using the <code>predictor_prop</code> parameter. This affects
 each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. <code>step_pls()</code> converts this
-proportion to determine the <code>keepX</code> parameter in <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html">mixOmics::spls()</a></code> and
-<code><a href="https://rdrr.io/pkg/mixOmics/man/splsda.html">mixOmics::splsda()</a></code>. See the references in <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html">mixOmics::spls()</a></code> for details.</p>
-<p>The <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> method returns the coefficients that are usually defined as</p>
+proportion to determine the <code>keepX</code> parameter in <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html" class="external-link">mixOmics::spls()</a></code> and
+<code><a href="https://rdrr.io/pkg/mixOmics/man/splsda.html" class="external-link">mixOmics::splsda()</a></code>. See the references in <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html" class="external-link">mixOmics::spls()</a></code> for details.</p>
+<p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method returns the coefficients that are usually defined as</p>
 <p>$$W(P'W)^{-1}$$</p>
 <p>(See the Wikipedia article below)</p>
 <p>When applied to data, these values are usually scaled by a column-specific
-norm. The <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> method applies this same norm to the coefficients shown
-above. When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
+norm. The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method applies this same norm to the coefficients shown
+above. When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
 selectors or variables selected), <code>components</code>, and <code>values</code> is returned.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p><a href="https://en.wikipedia.org/wiki/Partial_least_squares_regression">https://en.wikipedia.org/wiki/Partial_least_squares_regression</a></p>
+    </div>
+    <div id="references">
+    <h2>References</h2>
+    <p><a href="https://en.wikipedia.org/wiki/Partial_least_squares_regression" class="external-link">https://en.wikipedia.org/wiki/Partial_least_squares_regression</a></p>
 <p>Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) <em>mixOmics: An R package for
 'omics feature selection and multiple data integration</em>. PLoS Comput Biol
-13(11): e1005752. doi: <a href="https://doi.org/10.1371/journal.pcbi.1005752">10.1371/journal.pcbi.1005752</a></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+13(11): e1005752. doi: <a href="https://doi.org/10.1371/journal.pcbi.1005752" class="external-link">10.1371/journal.pcbi.1005752</a></p>
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other multivariate transformation steps: 
 <code><a href="step_classdist.html">step_classdist</a>()</code>,
 <code><a href="step_depth.html">step_depth</a>()</code>,
@@ -219,51 +212,55 @@ selectors or variables selected), <code>components</code>, and <code>values</cod
 <code><a href="step_pca.html">step_pca</a>()</code>,
 <code><a href="step_ratio.html">step_ratio</a>()</code>,
 <code><a href="step_spatialsign.html">step_spatialsign</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># requires the Bioconductor mixOmics package</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">biomass</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">biom_tr</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">dataset</span>,<span class="op">-</span><span class="va">sample</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">dataset</span>,<span class="op">-</span><span class="va">sample</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">biom_te</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">dataset</span>,<span class="op">-</span><span class="va">sample</span>,<span class="op">-</span><span class="va">HHV</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">dataset</span>,<span class="op">-</span><span class="va">sample</span>,<span class="op">-</span><span class="va">HHV</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dense_pls</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biom_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biom_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"HHV"</span>, num_comp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">sparse_pls</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biom_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biom_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"HHV"</span>, num_comp <span class="op">=</span> <span class="fl">3</span>, predictor_prop <span class="op">=</span> <span class="fl">4</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## -----------------------------------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## PLS discriminant analysis</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">cells</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cells</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">cell_tr</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">cells</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">case</span> <span class="op">==</span> <span class="st">"Train"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">case</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">cells</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">case</span> <span class="op">==</span> <span class="st">"Train"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">case</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">cell_te</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">cells</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">case</span> <span class="op">==</span> <span class="st">"Test"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">case</span>,<span class="op">-</span><span class="va">class</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">cells</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">case</span> <span class="op">==</span> <span class="st">"Test"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">case</span>,<span class="op">-</span><span class="va">class</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dense_plsda</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cell_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cell_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"class"</span>, num_comp <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">sparse_plsda</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cell_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cell_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"class"</span>, num_comp <span class="op">=</span> <span class="fl">5</span>, predictor_prop <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span>
 <span class="r-in"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -277,8 +274,8 @@ selectors or variables selected), <code>components</code>, and <code>values</cod
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

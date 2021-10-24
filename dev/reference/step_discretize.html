@@ -28,7 +28,7 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -47,7 +47,7 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -62,10 +62,10 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -75,7 +75,7 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -90,7 +90,7 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Discretize Numeric Variables</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/discretize.R"><code>R/discretize.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/discretize.R" class="external-link"><code>R/discretize.R</code></a></small>
     <div class="hidden name"><code>step_discretize.Rd</code></div>
     </div>
 
@@ -109,64 +109,63 @@ on a training set).</p>
   num_breaks <span class="op">=</span> <span class="fl">4</span>,
   min_unique <span class="op">=</span> <span class="fl">10</span>,
   objects <span class="op">=</span> <span class="cn">NULL</span>,
-  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
+  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"discretize"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>Not used by this step since no new variables are
-created.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>num_breaks</th>
-      <td><p>An integer defining how many cuts to make of the
-data.</p></td>
-    </tr><tr><th>min_unique</th>
-      <td><p>An integer defining a sample size line of
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+created.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>num_breaks</dt><dd><p>An integer defining how many cuts to make of the
+data.</p></dd>
+</dl><dl><dt>min_unique</dt><dd><p>An integer defining a sample size line of
 dignity for the binning. If (the number of unique
 values)<code>/(cuts+1)</code> is less than <code>min_unique</code>, no
-discretization takes place.</p></td>
-    </tr><tr><th>objects</th>
-      <td><p>The <code><a href="discretize.html">discretize()</a></code> objects are stored
+discretization takes place.</p></dd>
+</dl><dl><dt>objects</dt><dd><p>The <code><a href="discretize.html">discretize()</a></code> objects are stored
 here once the recipe has be trained by
-<code><a href="prep.html">prep.recipe()</a></code>.</p></td>
-    </tr><tr><th>options</th>
-      <td><p>A list of options to <code><a href="discretize.html">discretize()</a></code>. A
+<code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+</dl><dl><dt>options</dt><dd><p>A list of options to <code><a href="discretize.html">discretize()</a></code>. A
 default is set for the argument <code>x</code>. Note that using
 the options <code>prefix</code> and <code>labels</code> when more than one
 variable is being transformed might be problematic as all
-variables inherit those values.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+variables inherit those values.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this step, a tibble
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble
 with columns <code>terms</code> (the selectors or variables selected)
 and <code>value</code> (the breaks) is returned.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other discretization steps: 
 <code><a href="step_cut.html">step_cut</a>()</code></p></div>
+    </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -181,8 +180,8 @@ and <code>value</code> (the breaks) is returned.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

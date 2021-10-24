@@ -26,7 +26,7 @@ will add sin and cos terms for harmonic analysis."><meta property="og:image" con
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ will add sin and cos terms for harmonic analysis."><meta property="og:image" con
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ will add sin and cos terms for harmonic analysis."><meta property="og:image" con
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ will add sin and cos terms for harmonic analysis."><meta property="og:image" con
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ will add sin and cos terms for harmonic analysis."><meta property="og:image" con
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add sin and cos terms for harmonic analysis</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/harmonic.R"><code>R/harmonic.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/harmonic.R" class="external-link"><code>R/harmonic.R</code></a></small>
     <div class="hidden name"><code>step_harmonic.Rd</code></div>
     </div>
 
@@ -110,53 +110,49 @@ will add sin and cos terms for harmonic analysis.</p>
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"harmonic"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details. This will
-typically be a single variable.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
+typically be a single variable.</p></dd>
+</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>frequency</th>
-      <td><p>A numeric vector with at least one value.
-The value(s) must be greater than zero and finite.</p></td>
-    </tr><tr><th>cycle_size</th>
-      <td><p>A numeric vector with at least one value that indicates
+the original variables will be used as <em>predictors</em> in a model.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>frequency</dt><dd><p>A numeric vector with at least one value.
+The value(s) must be greater than zero and finite.</p></dd>
+</dl><dl><dt>cycle_size</dt><dd><p>A numeric vector with at least one value that indicates
 the size of a single cycle. <code>cycle_size</code> should have the same units as the
-input variable(s).</p></td>
-    </tr><tr><th>starting_val</th>
-      <td><p>either <code>NA</code>, numeric, Date or POSIXt value(s) that indicates
+input variable(s).</p></dd>
+</dl><dl><dt>starting_val</dt><dd><p>either <code>NA</code>, numeric, Date or POSIXt value(s) that indicates
 the reference point for the sin and cos curves for each input variable.
 If the value is a <code>Date</code> or <code>POISXt</code> the value is converted to numeric
 using <code>as.numeric</code>. This parameter may be specified to increase control
 over the signal phase.  If <code>starting_val</code> is not specified the default
-is 0.</p></td>
-    </tr><tr><th>keep_original_cols</th>
-      <td><p>A logical to keep the original variables in the
-output. Defaults to <code>TRUE</code>.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+is 0.</p></dd>
+</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+output. Defaults to <code>TRUE</code>.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>This step seeks to describe periodic components of observational
 data using a combination of sin and cos waves. To do this, each wave of a
 specified frequency is modeled using one sin and one cos term. The two
@@ -181,16 +177,18 @@ input column(s) units. There are multiple ways to specify a wave of given
 frequency, for example, a <code>POSIXct</code> input column given a <code>frequency</code> of
 24 and a <code>cycle_size</code> equal to 86400 is equivalent to a <code>frequency</code> of
 1.0 with <code>cycle_size</code> equal to 3600.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References</h2>
     <p>Doran, H. E., &amp; Quilkey, J. J. (1972).
 Harmonic analysis of seasonal data: some important properties.
 American Journal of Agricultural Economics, 54, volume 4, part 1, 646-651.</p>
 <p>Foreman, M. G. G., &amp; Henry, R. F. (1989).
 The harmonic analysis of tidal model time series.
 Advances in water resources, 12(3), 109-120.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other individual transformation steps: 
 <code><a href="step_BoxCox.html">step_BoxCox</a>()</code>,
 <code><a href="step_YeoJohnson.html">step_YeoJohnson</a>()</code>,
@@ -205,33 +203,36 @@ Advances in water resources, 12(3), 109-120.</p>
 <code><a href="step_poly.html">step_poly</a>()</code>,
 <code><a href="step_relu.html">step_relu</a>()</code>,
 <code><a href="step_sqrt.html">step_sqrt</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">sunspot.year</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sunspot.year</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sunspots</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1700</span><span class="op">:</span><span class="fl">1988</span>,</span>
+<span class="r-in">  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1700</span><span class="op">:</span><span class="fl">1988</span>,</span>
 <span class="r-in">         n_sunspot <span class="op">=</span> <span class="va">sunspot.year</span>,</span>
-<span class="r-in">         type <span class="op">=</span> <span class="st">"measured"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span></span>
+<span class="r-in">         type <span class="op">=</span> <span class="st">"measured"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">75</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># sunspots period is around 11 years, sample spacing is one year</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">n_sunspot</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">sunspots</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_harmonic</span><span class="op">(</span><span class="va">year</span>, frequency <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">11</span>, cycle_size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">n_sunspot</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">sunspots</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">step_harmonic</span><span class="op">(</span><span class="va">year</span>, frequency <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">11</span>, cycle_size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">n_sunspot</span> <span class="op">~</span> <span class="va">year_sin_1</span> <span class="op">+</span> <span class="va">year_cos_1</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">n_sunspot</span> <span class="op">~</span> <span class="va">year_sin_1</span> <span class="op">+</span> <span class="va">year_cos_1</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">sunspots</span><span class="op">$</span><span class="va">year</span>,</span>
+<span class="r-in"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">sunspots</span><span class="op">$</span><span class="va">year</span>,</span>
 <span class="r-in">                n_sunspot <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">fitted.values</span>,</span>
 <span class="r-in">                type <span class="op">=</span> <span class="st">'predicted'</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">sunspots</span>, <span class="va">preds</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">n_sunspot</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">sunspots</span>, <span class="va">preds</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">n_sunspot</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-plt"><img src="step_harmonic-1.png" alt="" width="768" height="552"></span>
 <span class="r-in"></span>
 <span class="r-in"></span>
@@ -239,37 +240,38 @@ Advances in water resources, 12(3), 109-120.</p>
 <span class="r-in"><span class="co"># POSIXct example</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">date_time</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html">as.POSIXct</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1959</span><span class="op">:</span><span class="fl">1997</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, <span class="st">'-'</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fl">1959</span><span class="op">:</span><span class="fl">1997</span><span class="op">)</span><span class="op">)</span>, <span class="st">'-01'</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span></span>
+<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1959</span><span class="op">:</span><span class="fl">1997</span>, each <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>, <span class="st">'-'</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fl">1959</span><span class="op">:</span><span class="fl">1997</span><span class="op">)</span><span class="op">)</span>, <span class="st">'-01'</span><span class="op">)</span>,</span>
 <span class="r-in">    tz <span class="op">=</span> <span class="st">'UTC'</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">carbon_dioxide</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>date_time <span class="op">=</span> <span class="va">date_time</span>,</span>
-<span class="r-in">                         co2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">co2</span><span class="op">)</span>,</span>
+<span class="r-in"><span class="va">carbon_dioxide</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>date_time <span class="op">=</span> <span class="va">date_time</span>,</span>
+<span class="r-in">                         co2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">co2</span><span class="op">)</span>,</span>
 <span class="r-in">                         type <span class="op">=</span> <span class="st">"measured"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># yearly co2 fluctuations</span></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span></span>
 <span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">co2</span> <span class="op">~</span> <span class="va">date_time</span>,</span>
-<span class="r-in">         data <span class="op">=</span> <span class="va">carbon_dioxide</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_mutate.html">step_mutate</a></span><span class="op">(</span>date_time_num <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_ns.html">step_ns</a></span><span class="op">(</span><span class="va">date_time_num</span>, deg_free <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_harmonic</span><span class="op">(</span><span class="va">date_time</span>, frequency <span class="op">=</span> <span class="fl">1</span>, cycle_size <span class="op">=</span> <span class="fl">86400</span> <span class="op">*</span> <span class="fl">365.24</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">         data <span class="op">=</span> <span class="va">carbon_dioxide</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_mutate.html">step_mutate</a></span><span class="op">(</span>date_time_num <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">date_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_ns.html">step_ns</a></span><span class="op">(</span><span class="va">date_time_num</span>, deg_free <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">step_harmonic</span><span class="op">(</span><span class="va">date_time</span>, frequency <span class="op">=</span> <span class="fl">1</span>, cycle_size <span class="op">=</span> <span class="fl">86400</span> <span class="op">*</span> <span class="fl">365.24</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"> <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">co2</span> <span class="op">~</span> <span class="va">date_time_num_ns_1</span> <span class="op">+</span> <span class="va">date_time_num_ns_2</span> <span class="op">+</span></span>
+<span class="r-in"> <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">co2</span> <span class="op">~</span> <span class="va">date_time_num_ns_1</span> <span class="op">+</span> <span class="va">date_time_num_ns_2</span> <span class="op">+</span></span>
 <span class="r-in">                 <span class="va">date_time_num_ns_3</span> <span class="op">+</span> <span class="va">date_time_sin_1</span> <span class="op">+</span></span>
 <span class="r-in">                 <span class="va">date_time_cos_1</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"> <span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>date_time <span class="op">=</span> <span class="va">date_time</span>,</span>
+<span class="r-in"> <span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>date_time <span class="op">=</span> <span class="va">date_time</span>,</span>
 <span class="r-in">                 co2 <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">fitted.values</span>,</span>
 <span class="r-in">                 type <span class="op">=</span> <span class="st">'predicted'</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">carbon_dioxide</span>, <span class="va">preds</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_time</span>, y <span class="op">=</span> <span class="va">co2</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">carbon_dioxide</span>, <span class="va">preds</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_time</span>, y <span class="op">=</span> <span class="va">co2</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span class="r-in">   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-plt"><img src="step_harmonic-2.png" alt="" width="768" height="552"></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -283,8 +285,8 @@ Advances in water resources, 12(3), 109-120.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

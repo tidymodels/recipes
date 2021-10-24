@@ -26,7 +26,7 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract transformed training set</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R"><code>R/recipe.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>juice.Rd</code></div>
     </div>
 
@@ -99,24 +99,26 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">juice</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, composition <span class="op">=</span> <span class="st">"tibble"</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
-      <td><p>A <code>recipe</code> object that has been prepared
-with the option <code>retain = TRUE</code>.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose which variables will be
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>object</dt><dd><p>A <code>recipe</code> object that has been prepared
+with the option <code>retain = TRUE</code>.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose which variables will be
 returned by the function. See <code><a href="selections.html">selections()</a></code> for more details.
 If no selectors are given, the default is to use
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>.</p></td>
-    </tr><tr><th>composition</th>
-      <td><p>Either "tibble", "matrix", "data.frame", or
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+</dl><dl><dt>composition</dt><dd><p>Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that
 all computations during the baking process are done in a
 non-sparse format. Also, note that this argument should be
 called <strong>after</strong> any selectors and the selectors should only
-resolve to numeric columns (otherwise an error is thrown).</p></td>
-    </tr></table><h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+resolve to numeric columns (otherwise an error is thrown).</p></dd>
+</dl></div>
+    <div id="details">
+    <h2>Details</h2>
     <p>As steps are estimated by <code>prep</code>, these operations are
 applied to the training set. Rather than running <code><a href="bake.html">bake()</a></code>
 to duplicate this processing, this function will return
@@ -127,9 +129,12 @@ recipe to get the preprocessed training set.</p>
 <p><code>juice()</code> will return the results of a recipe where <em>all steps</em>
 have been applied to the data, irrespective of the value of
 the step's <code>skip</code> argument.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p><code><a href="recipe.html">recipe()</a></code> <code><a href="prep.html">prep.recipe()</a></code> <code><a href="bake.html">bake.recipe()</a></code></p></div>
+    </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -144,8 +149,8 @@ the step's <code>skip</code> argument.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

@@ -140,15 +140,15 @@
 <li>There are outcomes in the recipe that won’t be available when a recipe is baked in the future. For predictive modeling, this is common when you receive <em>new</em> data to be predicted.</li>
 <li>When doing resampling or a training/test split, certain operations make sense for the data to be used for modeling but are problematic for new samples or the test set.</li>
 </ul>
-<div id="example-class-imbalance-sampling-and-skipping-steps" class="section level1">
-<h1 class="hasAnchor">
-<a href="#example-class-imbalance-sampling-and-skipping-steps" class="anchor" aria-hidden="true"></a>Example: Class Imbalance Sampling and Skipping Steps</h1>
+<div class="section level1">
+<h1 id="example-class-imbalance-sampling-and-skipping-steps">Example: Class Imbalance Sampling and Skipping Steps<a class="anchor" aria-label="anchor" href="#example-class-imbalance-sampling-and-skipping-steps"></a>
+</h1>
 <p>As an example of the second case, consider the problem of a <a href="https://github.com/topepo/useR2016" class="external-link">severe class imbalance</a>. Suppose that there are two classes to be predicted and the event of interest occurs in only 5% of the time. Many models will quickly optimize accuracy by overfitting to the majority class by predicting everything to be a non-event. One method to compensate for this is to <em>down-sample</em> the <strong>training set</strong> so that the class frequencies are about equal. Although somewhat counter-intuitive, this can often lead to better models.</p>
 <p>The important consideration is that this preprocessing is <em>only applied to the training set</em> so that it can impact the model fit. The test set should be unaffected by this operation. If the recipe is used to create the design matrix for the model, down-sampling would remove rows. This would be a bad idea for the test set since these data should represent what the population of samples looks like “in the wild.”. Based on this, a recipe that included down-sample should <em>skip</em> this step when data are baked for the test set.</p>
 </div>
-<div id="other-examples" class="section level1">
-<h1 class="hasAnchor">
-<a href="#other-examples" class="anchor" aria-hidden="true"></a>Other Examples</h1>
+<div class="section level1">
+<h1 id="other-examples">Other Examples<a class="anchor" aria-label="anchor" href="#other-examples"></a>
+</h1>
 <p>There are other steps that have a default value of <code>skip = TRUE</code>:</p>
 <ul>
 <li>
@@ -166,9 +166,9 @@
 <p>The return value is a tibble with the <strong>same number of rows</strong> as the data being predicted and in the same order.</p>
 </blockquote>
 </div>
-<div id="how-to-skip-steps" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-to-skip-steps" class="anchor" aria-hidden="true"></a>How To Skip Steps</h1>
+<div class="section level1">
+<h1 id="how-to-skip-steps">How To Skip Steps<a class="anchor" aria-label="anchor" href="#how-to-skip-steps"></a>
+</h1>
 <p>As of version recipes 0.1.2, each step has an optional logical argument called <code>skip</code>. In almost every case, the default is <code>FALSE</code>. When using this option:</p>
 <ul>
 <li>No steps are skipped during <code><a href="../reference/prep.html">prep()</a></code>
@@ -177,9 +177,9 @@
 </ul>
 <p>Recall that there are two ways of getting the results for the training set with recipes. First, <code><a href="../reference/bake.html">bake()</a></code> can be used as usual. Second, <code>bake(new_data = NULL)</code> is a shortcut that will use the already processed data that is contained in the recipe when <code>prep(recipe, retain = TRUE)</code> is used. <code>bake(new_data = NULL)</code> is much faster and would be the way to get the training set <em>with all of the steps applied to the data</em>. For this reason, you should almost always used <code>retain = TRUE</code> if any steps are skipped (and a warning is produced otherwise).</p>
 </div>
-<div id="be-careful" class="section level1">
-<h1 class="hasAnchor">
-<a href="#be-careful" class="anchor" aria-hidden="true"></a>Be Careful!</h1>
+<div class="section level1">
+<h1 id="be-careful">Be Careful!<a class="anchor" aria-label="anchor" href="#be-careful"></a>
+</h1>
 <p>Skipping is a necessary feature but can be dangerous if used carelessly.</p>
 <p>As an example, skipping an operation whose variables are used later might be an issue:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -230,7 +230,7 @@
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.
+    Developed by .
     Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>

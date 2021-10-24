@@ -26,7 +26,7 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Apply a trained preprocessing recipe</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R"><code>R/recipe.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>bake.Rd</code></div>
     </div>
 
@@ -102,32 +102,34 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
 <span class="co"># S3 method for recipe</span>
 <span class="fu">bake</span><span class="op">(</span><span class="va">object</span>, <span class="va">new_data</span>, <span class="va">...</span>, composition <span class="op">=</span> <span class="st">"tibble"</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
-      <td><p>A trained object such as a <code><a href="recipe.html">recipe()</a></code> with at least
-one preprocessing operation.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose which variables will be
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>object</dt><dd><p>A trained object such as a <code><a href="recipe.html">recipe()</a></code> with at least
+one preprocessing operation.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose which variables will be
 returned by the function. See <code><a href="selections.html">selections()</a></code> for more details.
 If no selectors are given, the default is to use
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html">everything()</a></code>.</p></td>
-    </tr><tr><th>new_data</th>
-      <td><p>A data frame or tibble for whom the preprocessing will be
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+</dl><dl><dt>new_data</dt><dd><p>A data frame or tibble for whom the preprocessing will be
 applied. If <code>NULL</code> is given to <code>new_data</code>, the pre-processed <em>training
-data</em> will be returned (assuming that <code>prep(retain = TRUE)</code> was used).</p></td>
-    </tr><tr><th>composition</th>
-      <td><p>Either "tibble", "matrix", "data.frame", or
+data</em> will be returned (assuming that <code>prep(retain = TRUE)</code> was used).</p></dd>
+</dl><dl><dt>composition</dt><dd><p>Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that
 all computations during the baking process are done in a
 non-sparse format. Also, note that this argument should be
 called <strong>after</strong> any selectors and the selectors should only
-resolve to numeric columns (otherwise an error is thrown).</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+resolve to numeric columns (otherwise an error is thrown).</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>A tibble, matrix, or sparse matrix that may have different
 columns than the original columns in <code>new_data</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p><code>bake()</code> takes a trained recipe and applies its operations to a
 data set to create a design matrix. If you are using a recipe as a
 preprocessor for modeling, we <strong>highly recommend</strong> that you use a <code>workflow()</code>
@@ -139,22 +141,26 @@ will return it for free.</p>
 <p>Also, any steps with <code>skip = TRUE</code> will not be applied to the
 data when <code>bake()</code> is invoked with a data set in <code>new_data</code>.
 <code>bake(object, new_data = NULL)</code> will always have all of the steps applied.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p><code><a href="recipe.html">recipe()</a></code>, <code><a href="prep.html">prep()</a></code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ames</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
+    <div id="examples">
+    <h2>Examples</h2>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ames</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">ames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">ames</span>, Sale_Price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">Sale_Price</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">ames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">ames</span>, Sale_Price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">Sale_Price</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">ames_rec</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Sale_Price</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">ames</span><span class="op">[</span><span class="op">-</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_other.html">step_other</a></span><span class="op">(</span><span class="va">Neighborhood</span>, threshold <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_interact.html">step_interact</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Central_Air"</span><span class="op">)</span><span class="op">:</span><span class="va">Year_Built</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_ns.html">step_ns</a></span><span class="op">(</span><span class="va">Longitude</span>, <span class="va">Latitude</span>, deg_free <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_zv.html">step_zv</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Sale_Price</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">ames</span><span class="op">[</span><span class="op">-</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_other.html">step_other</a></span><span class="op">(</span><span class="va">Neighborhood</span>, threshold <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_interact.html">step_interact</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Central_Air"</span><span class="op">)</span><span class="op">:</span><span class="va">Year_Built</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_ns.html">step_ns</a></span><span class="op">(</span><span class="va">Longitude</span>, <span class="va">Latitude</span>, deg_free <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_zv.html">step_zv</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># return the training set (already embedded in ames_rec)</span></span>
@@ -181,7 +187,7 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Open_Porch_SF &lt;int&gt;, Enclosed_Porch &lt;int&gt;, Three_season_porch &lt;int&gt;, …</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># apply processing to other data:</span></span>
-<span class="r-in"><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 259</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area BsmtFin_SF_1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -200,7 +206,7 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Enclosed_Porch &lt;int&gt;, Three_season_porch &lt;int&gt;, Screen_Porch &lt;int&gt;, …</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># only return selected variables:</span></span>
-<span class="r-in"><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span>, <span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span>, <span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 258</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Lot_Frontage Lot_Area Year_Built Year_Remod_Add Mas_Vnr_Area BsmtFin_SF_1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -217,7 +223,7 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TotRms_AbvGrd &lt;int&gt;, Fireplaces &lt;int&gt;, Garage_Cars &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Garage_Area &lt;dbl&gt;, Wood_Deck_SF &lt;int&gt;, Open_Porch_SF &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Enclosed_Porch &lt;int&gt;, Three_season_porch &lt;int&gt;, Screen_Porch &lt;int&gt;, …</span></span>
-<span class="r-in"><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Longitude"</span>, <span class="st">"Latitude"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">bake</span><span class="op">(</span><span class="va">ames_rec</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ames</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Longitude"</span>, <span class="st">"Latitude"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Longitude_ns_1 Longitude_ns_2 Latitude_ns_1 Latitude_ns_2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -228,6 +234,7 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>          0.562       -<span style="color: #BB0000;">0.212</span>           0.405         0.634</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>          0.562       -<span style="color: #BB0000;">0.212</span>           0.407         0.630</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -241,8 +248,8 @@ data when <code>bake()</code> is invoked with a data set in <code>new_data</code
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

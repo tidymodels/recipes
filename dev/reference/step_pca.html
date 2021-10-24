@@ -26,7 +26,7 @@ numeric data into one or more principal components."><meta property="og:image" c
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ numeric data into one or more principal components."><meta property="og:image" c
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -60,10 +60,10 @@ numeric data into one or more principal components."><meta property="og:image" c
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +73,7 @@ numeric data into one or more principal components."><meta property="og:image" c
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,7 +88,7 @@ numeric data into one or more principal components."><meta property="og:image" c
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>PCA Signal Extraction</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/pca.R"><code>R/pca.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/pca.R" class="external-link"><code>R/pca.R</code></a></small>
     <div class="hidden name"><code>step_pca.Rd</code></div>
     </div>
 
@@ -104,7 +104,7 @@ numeric data into one or more principal components.</p>
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
   num_comp <span class="op">=</span> <span class="fl">5</span>,
   threshold <span class="op">=</span> <span class="cn">NA</span>,
-  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
+  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
   res <span class="op">=</span> <span class="cn">NULL</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   prefix <span class="op">=</span> <span class="st">"PC"</span>,
@@ -113,61 +113,54 @@ numeric data into one or more principal components.</p>
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"pca"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>recipe</th>
-      <td><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></td>
-    </tr><tr><th>role</th>
-      <td><p>For model terms created by this step, what analysis role should
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
+
+<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+sequence of operations for this recipe.</p></dd>
+</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></td>
-    </tr><tr><th>num_comp</th>
-      <td><p>The number of PCA components to retain as new predictors.
+the original variables will be used as <em>predictors</em> in a model.</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+preprocessing have been estimated.</p></dd>
+</dl><dl><dt>num_comp</dt><dd><p>The number of PCA components to retain as new predictors.
 If <code>num_comp</code> is greater than the number of columns or the number of
-possible components, a smaller value will be used.</p></td>
-    </tr><tr><th>threshold</th>
-      <td><p>A fraction of the total variance that should be covered by
+possible components, a smaller value will be used.</p></dd>
+</dl><dl><dt>threshold</dt><dd><p>A fraction of the total variance that should be covered by
 the components. For example, <code>threshold = .75</code> means that <code>step_pca</code> should
 generate enough components to capture 75 percent of the variability in the
 variables. Note: using this argument will override and reset any value given
-to <code>num_comp</code>.</p></td>
-    </tr><tr><th>options</th>
-      <td><p>A list of options to the default method for
-<code><a href="https://rdrr.io/r/stats/prcomp.html">stats::prcomp()</a></code>. Argument defaults are set to <code>retx = FALSE</code>, <code>center = FALSE</code>, <code>scale. = FALSE</code>, and <code>tol = NULL</code>. <strong>Note</strong> that the argument <code>x</code>
-should not be passed here (or at all).</p></td>
-    </tr><tr><th>res</th>
-      <td><p>The <code><a href="https://rdrr.io/r/stats/prcomp.html">stats::prcomp.default()</a></code> object is stored here once this
-preprocessing step has be trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></td>
-    </tr><tr><th>columns</th>
-      <td><p>A character string of variable names that will
-be populated elsewhere.</p></td>
-    </tr><tr><th>prefix</th>
-      <td><p>A character string for the prefix of the resulting new
-variables. See notes below.</p></td>
-    </tr><tr><th>keep_original_cols</th>
-      <td><p>A logical to keep the original variables in the
-output. Defaults to <code>FALSE</code>.</p></td>
-    </tr><tr><th>skip</th>
-      <td><p>A logical. Should the step be skipped when the
+to <code>num_comp</code>.</p></dd>
+</dl><dl><dt>options</dt><dd><p>A list of options to the default method for
+<code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">stats::prcomp()</a></code>. Argument defaults are set to <code>retx = FALSE</code>, <code>center = FALSE</code>, <code>scale. = FALSE</code>, and <code>tol = NULL</code>. <strong>Note</strong> that the argument <code>x</code>
+should not be passed here (or at all).</p></dd>
+</dl><dl><dt>res</dt><dd><p>The <code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">stats::prcomp.default()</a></code> object is stored here once this
+preprocessing step has be trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+</dl><dl><dt>columns</dt><dd><p>A character string of variable names that will
+be populated elsewhere.</p></dd>
+</dl><dl><dt>prefix</dt><dd><p>A character string for the prefix of the resulting new
+variables. See notes below.</p></dd>
+</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+output. Defaults to <code>FALSE</code>.</p></dd>
+</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></td>
-    </tr><tr><th>id</th>
-      <td><p>A character string that is unique to this step to identify it.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
+the computations for subsequent operations.</p></dd>
+</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details</h2>
     <p>Principal component analysis (PCA) is a transformation of a
 group of variables that produces a new set of artificial
 features or components. These components are designed to capture
@@ -191,15 +184,17 @@ If <code>num_comp = 101</code>, the names would be <code>PC001</code> -
 <p>Alternatively, <code>threshold</code> can be used to determine the
 number of components that are required to capture a specified
 fraction of the total variance in the variables.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> this step, use either <code>type = "coef"</code> for the variable
+<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, use either <code>type = "coef"</code> for the variable
 loadings per component or <code>type = "variance"</code> for how much variance each
 component accounts for.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References</h2>
     <p>Jolliffe, I. T. (2010). <em>Principal Component
 Analysis</em>. Springer.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
     <div class="dont-index"><p>Other multivariate transformation steps: 
 <code><a href="step_classdist.html">step_classdist</a>()</code>,
 <code><a href="step_depth.html">step_depth</a>()</code>,
@@ -214,22 +209,25 @@ Analysis</em>. Springer.</p>
 <code><a href="step_pls.html">step_pls</a>()</code>,
 <code><a href="step_ratio.html">step_ratio</a>()</code>,
 <code><a href="step_spatialsign.html">step_spatialsign</a>()</code></p></div>
+    </div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">USArrests</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pca_trans</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">pca_trans</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_pca</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span>, num_comp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">pca_estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">pca_trans</span>, training <span class="op">=</span> <span class="va">USArrests</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">pca_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">pca_estimates</span>, <span class="va">USArrests</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/extendrange.html">extendrange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pca_data</span><span class="op">$</span><span class="va">PC1</span>, <span class="va">pca_data</span><span class="op">$</span><span class="va">PC2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/dimRed/man/plot.html">plot</a></span><span class="op">(</span><span class="va">pca_data</span><span class="op">$</span><span class="va">PC1</span>, <span class="va">pca_data</span><span class="op">$</span><span class="va">PC2</span>,</span>
+<span class="r-in"><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/extendrange.html" class="external-link">extendrange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pca_data</span><span class="op">$</span><span class="va">PC1</span>, <span class="va">pca_data</span><span class="op">$</span><span class="va">PC2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/dimRed/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pca_data</span><span class="op">$</span><span class="va">PC1</span>, <span class="va">pca_data</span><span class="op">$</span><span class="va">PC2</span>,</span>
 <span class="r-in">     xlim <span class="op">=</span> <span class="va">rng</span>, ylim <span class="op">=</span> <span class="va">rng</span><span class="op">)</span></span>
 <span class="r-plt"><img src="step_pca-1.png" alt="" width="768" height="552"></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">with_thresh</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">with_thresh</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_pca</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span>, threshold <span class="op">=</span> <span class="fl">.99</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">with_thresh</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">with_thresh</span>, training <span class="op">=</span> <span class="va">USArrests</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">with_thresh</span>, <span class="va">USArrests</span><span class="op">)</span></span>
@@ -248,12 +246,12 @@ Analysis</em>. Springer.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> -<span style="color: #BB0000;">1.62</span>    1.27   -<span style="color: #BB0000;">0.339</span>   1.07   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 40 more rows</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">pca_trans</span>, number <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_trans</span>, number <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms         value component id       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric()    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>        pca_PMvd9</span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">pca_estimates</span>, number <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_estimates</span>, number <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 16 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    terms      value component id       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
@@ -274,6 +272,7 @@ Analysis</em>. Springer.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> UrbanPop  0.134  PC4       pca_PMvd9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Rape      0.089<span style="text-decoration: underline;">0</span> PC4       pca_PMvd9</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
@@ -287,8 +286,8 @@ Analysis</em>. Springer.</p>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 

@@ -31,7 +31,7 @@ printing."><meta property="og:image" content="https://recipes.tidymodels.org/log
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">recipes</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
           <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.17.9000</span>
         </div>
       </div>
@@ -50,7 +50,7 @@ printing."><meta property="og:image" content="https://recipes.tidymodels.org/log
       <a href="../articles/Selecting_Variables.html">Selecting Variables</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/develop/recipes/">Custom Steps</a>
+      <a href="https://www.tidymodels.org/learn/develop/recipes/" class="external-link">Custom Steps</a>
     </li>
     <li>
       <a href="../articles/Ordering.html">The Order of Steps</a>
@@ -65,10 +65,10 @@ printing."><meta property="og:image" content="https://recipes.tidymodels.org/log
       <a href="../articles/Skipping.html">On Skipping Steps</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for Class Imbalances</a>
+      <a href="https://www.tidymodels.org/learn/models/sub-sampling/" class="external-link">Subsampling for Class Imbalances</a>
     </li>
     <li>
-      <a href="https://www.tidymodels.org/learn/models/pls/">Multivariate Analysis using Partial Least Squares</a>
+      <a href="https://www.tidymodels.org/learn/models/pls/" class="external-link">Multivariate Analysis using Partial Least Squares</a>
     </li>
   </ul></li>
 <li>
@@ -78,7 +78,7 @@ printing."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <a href="../news/index.html">News</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/recipes/">
+  <a href="https://github.com/tidymodels/recipes/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -93,7 +93,7 @@ printing."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Internal Functions</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/YeoJohnson.R"><code>R/YeoJohnson.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/master/R/misc.R"><code>R/misc.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/YeoJohnson.R" class="external-link"><code>R/YeoJohnson.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/master/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
     <div class="hidden name"><code>recipes-internal.Rd</code></div>
     </div>
 
@@ -109,7 +109,7 @@ printing.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">yj_transform</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span>, ind_neg <span class="op">=</span> <span class="cn">NULL</span>, eps <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span>
 
-<span class="fu">estimate_yj</span><span class="op">(</span><span class="va">dat</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, num_unique <span class="op">=</span> <span class="fl">5</span>, na_rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">estimate_yj</span><span class="op">(</span><span class="va">dat</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, num_unique <span class="op">=</span> <span class="fl">5</span>, na_rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu">ellipse_check</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
 
@@ -117,7 +117,7 @@ printing.</p>
   tr_obj <span class="op">=</span> <span class="cn">NULL</span>,
   untr_obj <span class="op">=</span> <span class="cn">NULL</span>,
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
-  width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">width</span> <span class="op">-</span> <span class="fl">30</span><span class="op">)</span>
+  width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">width</span> <span class="op">-</span> <span class="fl">30</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="fu">prepare</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
@@ -126,28 +126,29 @@ printing.</p>
 
 <span class="fu">sel2char</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A list of selectors</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments pass in from a call to <code>step</code></p></td>
-    </tr><tr><th>tr_obj</th>
-      <td><p>A character vector of names that have been
-resolved during preparing the recipe (e.g. the <code>columns</code> object
-of <code><a href="step_log.html">step_log()</a></code>).</p></td>
-    </tr><tr><th>untr_obj</th>
-      <td><p>An object of selectors prior to prepping the
-recipe (e.g. <code>terms</code> in most steps).</p></td>
-    </tr><tr><th>trained</th>
-      <td><p>A logical for whether the step has been trained.</p></td>
-    </tr><tr><th>width</th>
-      <td><p>An integer denoting where the output should be wrapped.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <div id="ref-sections">
+    <div id="arguments">
+    <h2>Arguments</h2>
+    
 
+<dl><dt>x</dt><dd><p>A list of selectors</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments pass in from a call to <code>step</code></p></dd>
+</dl><dl><dt>tr_obj</dt><dd><p>A character vector of names that have been
+resolved during preparing the recipe (e.g. the <code>columns</code> object
+of <code><a href="step_log.html">step_log()</a></code>).</p></dd>
+</dl><dl><dt>untr_obj</dt><dd><p>An object of selectors prior to prepping the
+recipe (e.g. <code>terms</code> in most steps).</p></dd>
+</dl><dl><dt>trained</dt><dd><p>A logical for whether the step has been trained.</p></dd>
+</dl><dl><dt>width</dt><dd><p>An integer denoting where the output should be wrapped.</p></dd>
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
     <p>If not empty, a list of quosures. If empty, an error is thrown.</p>
 <p><code>NULL</code>, invisibly.</p>
 <p>A logical</p>
 <p>A character vector</p>
+    </div>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -162,8 +163,8 @@ recipe (e.g. <code>terms</code> in most steps).</p></td>
 
 <div class="author">
   <p>
-    Developed by Max Kuhn, <a href="http://hadley.nz">Hadley Wickham</a>.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 
