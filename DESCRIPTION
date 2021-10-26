@@ -26,7 +26,7 @@ Depends:
     R (>= 3.1)
 Imports: 
     ellipsis,
-    generics (>= 0.1.0),
+    generics (>= 0.1.0.9000),
     glue,
     gower,
     ipred (>= 0.9-12),
