@@ -90,7 +90,7 @@ each value of a categorical class variable."><meta property="og:image" content="
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Distances to Class Centroids</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/classdist.R" class="external-link"><code>R/classdist.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/classdist.R" class="external-link"><code>R/classdist.R</code></a></small>
     <div class="hidden name"><code>step_classdist.Rd</code></div>
     </div>
 
@@ -120,37 +120,48 @@ each value of a categorical class variable.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>class</dt><dd><p>A single character string that specifies a single
+<dt>class</dt>
+<dd><p>A single character string that specifies a single
 categorical variable to be used as the class.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>mean_func</dt><dd><p>A function to compute the center of the
+<dt>mean_func</dt>
+<dd><p>A function to compute the center of the
 distribution.</p></dd>
-</dl><dl><dt>cov_func</dt><dd><p>A function that computes the covariance matrix</p></dd>
-</dl><dl><dt>pool</dt><dd><p>A logical: should the covariance matrix be computed
+<dt>cov_func</dt>
+<dd><p>A function that computes the covariance matrix</p></dd>
+<dt>pool</dt>
+<dd><p>A logical: should the covariance matrix be computed
 by pooling the data for all of the classes?</p></dd>
-</dl><dl><dt>log</dt><dd><p>A logical: should the distances be transformed by
+<dt>log</dt>
+<dd><p>A logical: should the distances be transformed by
 the natural log function?</p></dd>
-</dl><dl><dt>objects</dt><dd><p>Statistics are stored here once this step has
+<dt>objects</dt>
+<dd><p>Statistics are stored here once this step has
 been trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
-</dl><dl><dt>prefix</dt><dd><p>A character string for the prefix of the resulting new
+<dt>prefix</dt>
+<dd><p>A character string for the prefix of the resulting new
 variables. See notes below.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -233,23 +244,23 @@ the class), and <code>class</code> is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms                    value class id             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric_predictors()    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>    classdist_cWIIv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric_predictors()    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>    classdist_hbPm2</span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec_dists</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    terms        value class      id             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sepal.Length 5.01  setosa     classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Sepal.Width  3.43  setosa     classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Petal.Length 1.46  setosa     classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Petal.Width  0.246 setosa     classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Sepal.Length 5.94  versicolor classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Sepal.Width  2.77  versicolor classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Petal.Length 4.26  versicolor classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Petal.Width  1.33  versicolor classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Sepal.Length 6.59  virginica  classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Sepal.Width  2.97  virginica  classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Petal.Length 5.55  virginica  classdist_cWIIv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Petal.Width  2.03  virginica  classdist_cWIIv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sepal.Length 5.01  setosa     classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Sepal.Width  3.43  setosa     classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Petal.Length 1.46  setosa     classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Petal.Width  0.246 setosa     classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Sepal.Length 5.94  versicolor classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Sepal.Width  2.77  versicolor classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Petal.Length 4.26  versicolor classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Petal.Width  1.33  versicolor classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Sepal.Length 6.59  virginica  classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Sepal.Width  2.97  virginica  classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Petal.Length 5.55  virginica  classdist_hbPm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Petal.Width  2.03  virginica  classdist_hbPm2</span>
 </code></pre></div>
     </div>
   </div>

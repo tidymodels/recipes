@@ -89,7 +89,7 @@ Throws an error if check fails."><meta property="og:image" content="https://reci
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>check that newly created variable names don't overlap</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
     <div class="hidden name"><code>check_name.Rd</code></div>
     </div>
 
@@ -104,14 +104,17 @@ Throws an error if check fails.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>res</dt><dd><p>A data frame or tibble of the newly created variables.</p></dd>
-</dl><dl><dt>new_data</dt><dd><p>A data frame or tibble passed to the bake function.</p></dd>
-</dl><dl><dt>object</dt><dd><p>A trained object passed to the bake function.</p></dd>
-</dl><dl><dt>newname</dt><dd><p>A string of variable names if prefix isn't specified
+    <dl><dt>res</dt>
+<dd><p>A data frame or tibble of the newly created variables.</p></dd>
+<dt>new_data</dt>
+<dd><p>A data frame or tibble passed to the bake function.</p></dd>
+<dt>object</dt>
+<dd><p>A trained object passed to the bake function.</p></dd>
+<dt>newname</dt>
+<dd><p>A string of variable names if prefix isn't specified
 in the trained object.</p></dd>
-</dl><dl><dt>names</dt><dd><p>A logical determining if the names should be set using
+<dt>names</dt>
+<dd><p>A logical determining if the names should be set using
 the names function (TRUE) or colnames function (FALSE).</p></dd>
 </dl></div>
     </div>

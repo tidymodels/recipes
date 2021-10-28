@@ -88,7 +88,7 @@ will add sin and cos terms for harmonic analysis."><meta property="og:image" con
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add sin and cos terms for harmonic analysis</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/harmonic.R" class="external-link"><code>R/harmonic.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/harmonic.R" class="external-link"><code>R/harmonic.R</code></a></small>
     <div class="hidden name"><code>step_harmonic.Rd</code></div>
     </div>
 
@@ -113,38 +113,46 @@ will add sin and cos terms for harmonic analysis.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details. This will
 typically be a single variable.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>frequency</dt><dd><p>A numeric vector with at least one value.
+<dt>frequency</dt>
+<dd><p>A numeric vector with at least one value.
 The value(s) must be greater than zero and finite.</p></dd>
-</dl><dl><dt>cycle_size</dt><dd><p>A numeric vector with at least one value that indicates
+<dt>cycle_size</dt>
+<dd><p>A numeric vector with at least one value that indicates
 the size of a single cycle. <code>cycle_size</code> should have the same units as the
 input variable(s).</p></dd>
-</dl><dl><dt>starting_val</dt><dd><p>either <code>NA</code>, numeric, Date or POSIXt value(s) that indicates
+<dt>starting_val</dt>
+<dd><p>either <code>NA</code>, numeric, Date or POSIXt value(s) that indicates
 the reference point for the sin and cos curves for each input variable.
 If the value is a <code>Date</code> or <code>POISXt</code> the value is converted to numeric
 using <code>as.numeric</code>. This parameter may be specified to increase control
 over the signal phase.  If <code>starting_val</code> is not specified the default
 is 0.</p></dd>
-</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+<dt>keep_original_cols</dt>
+<dd><p>A logical to keep the original variables in the
 output. Defaults to <code>TRUE</code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

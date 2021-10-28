@@ -89,7 +89,7 @@ dimensions."><meta property="og:image" content="https://recipes.tidymodels.org/l
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Isomap Embedding</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/isomap.R" class="external-link"><code>R/isomap.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/isomap.R" class="external-link"><code>R/isomap.R</code></a></small>
     <div class="hidden name"><code>step_isomap.Rd</code></div>
     </div>
 
@@ -118,39 +118,50 @@ dimensions.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>num_terms</dt><dd><p>The number of isomap dimensions to retain as new
+<dt>num_terms</dt>
+<dd><p>The number of isomap dimensions to retain as new
 predictors. If <code>num_terms</code> is greater than the number of columns
 or the number of possible dimensions, a smaller value will be
 used.</p></dd>
-</dl><dl><dt>neighbors</dt><dd><p>The number of neighbors.</p></dd>
-</dl><dl><dt>options</dt><dd><p>A list of options to <code><a href="https://rdrr.io/pkg/dimRed/man/Isomap-class.html" class="external-link">dimRed::Isomap()</a></code>.</p></dd>
-</dl><dl><dt>res</dt><dd><p>The <code><a href="https://rdrr.io/pkg/dimRed/man/Isomap-class.html" class="external-link">dimRed::Isomap()</a></code> object is stored
+<dt>neighbors</dt>
+<dd><p>The number of neighbors.</p></dd>
+<dt>options</dt>
+<dd><p>A list of options to <code><a href="https://rdrr.io/pkg/dimRed/man/Isomap-class.html" class="external-link">dimRed::Isomap()</a></code>.</p></dd>
+<dt>res</dt>
+<dd><p>The <code><a href="https://rdrr.io/pkg/dimRed/man/Isomap-class.html" class="external-link">dimRed::Isomap()</a></code> object is stored
 here once this preprocessing step has be trained by
 <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
-</dl><dl><dt>columns</dt><dd><p>A character string of variable names that will
+<dt>columns</dt>
+<dd><p>A character string of variable names that will
 be populated elsewhere.</p></dd>
-</dl><dl><dt>prefix</dt><dd><p>A character string for the prefix of the resulting new
+<dt>prefix</dt>
+<dd><p>A character string for the prefix of the resulting new
 variables. See notes below.</p></dd>
-</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+<dt>keep_original_cols</dt>
+<dd><p>A logical to keep the original variables in the
 output. Defaults to <code>FALSE</code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -240,10 +251,10 @@ https://github.com/gdkrmr</p>
 <span class="r-in">  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">im_estimates</span>, number <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: RSpectra</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-26 11:29:12: Isomap START</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-26 11:29:12: constructing knn graph</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-26 11:29:12: calculating geodesic distances</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-26 11:29:13: Classical Scaling</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-28 23:25:58: Isomap START</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-28 23:25:58: constructing knn graph</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-28 23:25:58: calculating geodesic distances</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2021-10-28 23:25:58: Classical Scaling</span>
 <span class="r-plt"><img src="step_isomap-1.png" alt="" width="768" height="552"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms    id          </span>

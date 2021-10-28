@@ -92,7 +92,7 @@ remove_role() eliminates a single existing role in the recipe."><meta property="
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Manually Alter Roles</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/roles.R" class="external-link"><code>R/roles.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/roles.R" class="external-link"><code>R/roles.R</code></a></small>
     <div class="hidden name"><code>roles.Rd</code></div>
     </div>
 
@@ -114,16 +114,19 @@ multiple roles.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>An existing <code><a href="recipe.html">recipe()</a></code>.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose which variables are
+    <dl><dt>recipe</dt>
+<dd><p>An existing <code><a href="recipe.html">recipe()</a></code>.</p></dd>
+<dt>...</dt>
+<dd><p>One or more selector functions to choose which variables are
 being assigned a role. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>new_role</dt><dd><p>A character string for a single role.</p></dd>
-</dl><dl><dt>new_type</dt><dd><p>A character string for specific type that the variable should
+<dt>new_role</dt>
+<dd><p>A character string for a single role.</p></dd>
+<dt>new_type</dt>
+<dd><p>A character string for specific type that the variable should
 be identified as. If left as <code>NULL</code>, the type is automatically identified
 as the <em>first</em> type you see for that variable in <code>summary(recipe)</code>.</p></dd>
-</dl><dl><dt>old_role</dt><dd><p>A character string for the specific role to update for the
+<dt>old_role</dt>
+<dd><p>A character string for the specific role to update for the
 variables selected by <code>...</code>. <code>update_role()</code> accepts a <code>NULL</code> as long as the
 variables have only a single role.</p></dd>
 </dl></div>

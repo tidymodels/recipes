@@ -89,7 +89,7 @@ dummy variable."><meta property="og:image" content="https://recipes.tidymodels.o
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a Factors from A Dummy Variable</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/bin2factor.R" class="external-link"><code>R/bin2factor.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/bin2factor.R" class="external-link"><code>R/bin2factor.R</code></a></small>
     <div class="hidden name"><code>step_bin2factor.Rd</code></div>
     </div>
 
@@ -114,30 +114,37 @@ dummy variable.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>levels</dt><dd><p>A length 2 character string that indicates the
+<dt>levels</dt>
+<dd><p>A length 2 character string that indicates the
 factor levels for the 1's (in the first position) and the zeros
 (second)</p></dd>
-</dl><dl><dt>ref_first</dt><dd><p>Logical. Should the first level, which replaces
+<dt>ref_first</dt>
+<dd><p>Logical. Should the first level, which replaces
 1's, be the factor reference level?</p></dd>
-</dl><dl><dt>columns</dt><dd><p>A vector with the selected variable names. This
+<dt>columns</dt>
+<dd><p>A vector with the selected variable names. This
 is <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -193,7 +200,7 @@ columns that will be affected) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_GJXzF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_m7Dsu</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">covers</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, new_data <span class="op">=</span> <span class="va">covers</span><span class="op">)</span></span>
@@ -208,7 +215,7 @@ columns that will be affected) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_GJXzF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_m7Dsu</span>
 </code></pre></div>
     </div>
   </div>

@@ -88,7 +88,7 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Apply a trained preprocessing recipe</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>bake.Rd</code></div>
     </div>
 
@@ -105,18 +105,20 @@ prep.recipe(), apply the computations to new data."><meta property="og:image" co
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>object</dt><dd><p>A trained object such as a <code><a href="recipe.html">recipe()</a></code> with at least
+    <dl><dt>object</dt>
+<dd><p>A trained object such as a <code><a href="recipe.html">recipe()</a></code> with at least
 one preprocessing operation.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose which variables will be
+<dt>...</dt>
+<dd><p>One or more selector functions to choose which variables will be
 returned by the function. See <code><a href="selections.html">selections()</a></code> for more details.
 If no selectors are given, the default is to use
 <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
-</dl><dl><dt>new_data</dt><dd><p>A data frame or tibble for whom the preprocessing will be
+<dt>new_data</dt>
+<dd><p>A data frame or tibble for whom the preprocessing will be
 applied. If <code>NULL</code> is given to <code>new_data</code>, the pre-processed <em>training
 data</em> will be returned (assuming that <code>prep(retain = TRUE)</code> was used).</p></dd>
-</dl><dl><dt>composition</dt><dd><p>Either "tibble", "matrix", "data.frame", or
+<dt>composition</dt>
+<dd><p>Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that
 all computations during the baking process are done in a
 non-sparse format. Also, note that this argument should be

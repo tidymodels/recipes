@@ -93,7 +93,7 @@ printing."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Internal Functions</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/YeoJohnson.R" class="external-link"><code>R/YeoJohnson.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/master/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/YeoJohnson.R" class="external-link"><code>R/YeoJohnson.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
     <div class="hidden name"><code>recipes-internal.Rd</code></div>
     </div>
 
@@ -129,24 +129,28 @@ printing.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A list of selectors</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments pass in from a call to <code>step</code></p></dd>
-</dl><dl><dt>tr_obj</dt><dd><p>A character vector of names that have been
+    <dl><dt>x</dt>
+<dd><p>A list of selectors</p></dd>
+<dt>...</dt>
+<dd><p>Arguments pass in from a call to <code>step</code></p></dd>
+<dt>tr_obj</dt>
+<dd><p>A character vector of names that have been
 resolved during preparing the recipe (e.g. the <code>columns</code> object
 of <code><a href="step_log.html">step_log()</a></code>).</p></dd>
-</dl><dl><dt>untr_obj</dt><dd><p>An object of selectors prior to prepping the
+<dt>untr_obj</dt>
+<dd><p>An object of selectors prior to prepping the
 recipe (e.g. <code>terms</code> in most steps).</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical for whether the step has been trained.</p></dd>
-</dl><dl><dt>width</dt><dd><p>An integer denoting where the output should be wrapped.</p></dd>
+<dt>trained</dt>
+<dd><p>A logical for whether the step has been trained.</p></dd>
+<dt>width</dt>
+<dd><p>An integer denoting where the output should be wrapped.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If not empty, a list of quosures. If empty, an error is thrown.</p>
-<p><code>NULL</code>, invisibly.</p>
-<p>A logical</p>
-<p>A character vector</p>
+    <p>If not empty, a list of quosures. If empty, an error is thrown.
+<code>NULL</code>, invisibly.
+A logical
+A character vector</p>
     </div>
     </div>
 

@@ -88,7 +88,7 @@ that will filter rows using dplyr::slice()."><meta property="og:image" content="
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Filter rows by position using dplyr</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/slice.R" class="external-link"><code>R/slice.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/slice.R" class="external-link"><code>R/slice.R</code></a></small>
     <div class="hidden name"><code>step_slice.Rd</code></div>
     </div>
 
@@ -110,23 +110,28 @@ that will filter rows using <code><a href="https://dplyr.tidyverse.org/reference
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Integer row values. See
+<dt>...</dt>
+<dd><p>Integer row values. See
 <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">dplyr::slice()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>inputs</dt><dd><p>Quosure of values given by <code>...</code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>inputs</dt>
+<dd><p>Quosure of values given by <code>...</code>.</p></dd>
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = FALSE</code>.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

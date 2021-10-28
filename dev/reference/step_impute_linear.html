@@ -88,7 +88,7 @@ create linear regression models to impute missing data."><meta property="og:imag
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Impute numeric variables via a linear model</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/impute_linear.R" class="external-link"><code>R/impute_linear.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/impute_linear.R" class="external-link"><code>R/impute_linear.R</code></a></small>
     <div class="hidden name"><code>step_impute_linear.Rd</code></div>
     </div>
 
@@ -111,32 +111,38 @@ create linear regression models to impute missing data.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables to be imputed;
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables to be imputed;
 these variables <strong>must</strong> be of type <code>numeric</code>. When used with <code>imp_vars</code>,
 these dots indicate which variables are used to predict the missing data
 in each variable. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>impute_with</dt><dd><p>A call to <code>imp_vars</code> to specify which variables are used
+<dt>impute_with</dt>
+<dd><p>A call to <code>imp_vars</code> to specify which variables are used
 to impute the variables that can include specific variable names separated
 by commas or different selectors (see <code><a href="selections.html">selections()</a></code>). If a column is
 included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.</p></dd>
-</dl><dl><dt>models</dt><dd><p>The <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> objects are stored here once the linear models
+<dt>models</dt>
+<dd><p>The <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> objects are stored here once the linear models
 have been trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

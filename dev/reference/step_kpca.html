@@ -89,7 +89,7 @@ using a kernel basis expansion."><meta property="og:image" content="https://reci
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Kernel PCA Signal Extraction</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/kpca.R" class="external-link"><code>R/kpca.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/kpca.R" class="external-link"><code>R/kpca.R</code></a></small>
     <div class="hidden name"><code>step_kpca.Rd</code></div>
     </div>
 
@@ -117,39 +117,49 @@ using a kernel basis expansion.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>num_comp</dt><dd><p>The number of PCA components to retain as new predictors.
+<dt>num_comp</dt>
+<dd><p>The number of PCA components to retain as new predictors.
 If <code>num_comp</code> is greater than the number of columns or the number of
 possible components, a smaller value will be used.</p></dd>
-</dl><dl><dt>res</dt><dd><p>An S4 <code><a href="https://rdrr.io/pkg/kernlab/man/kpca.html" class="external-link">kernlab::kpca()</a></code> object is stored here once this
+<dt>res</dt>
+<dd><p>An S4 <code><a href="https://rdrr.io/pkg/kernlab/man/kpca.html" class="external-link">kernlab::kpca()</a></code> object is stored here once this
 preprocessing step has be trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
-</dl><dl><dt>columns</dt><dd><p>A character string of variable names that will
+<dt>columns</dt>
+<dd><p>A character string of variable names that will
 be populated elsewhere.</p></dd>
-</dl><dl><dt>options</dt><dd><p>A list of options to <code><a href="https://rdrr.io/pkg/kernlab/man/kpca.html" class="external-link">kernlab::kpca()</a></code>. Defaults are set for
+<dt>options</dt>
+<dd><p>A list of options to <code><a href="https://rdrr.io/pkg/kernlab/man/kpca.html" class="external-link">kernlab::kpca()</a></code>. Defaults are set for
 the arguments <code>kernel</code> and <code>kpar</code> but others can be passed in.
 <strong>Note</strong> that the arguments <code>x</code> and <code>features</code> should not be passed here
 (or at all).</p></dd>
-</dl><dl><dt>prefix</dt><dd><p>A character string for the prefix of the resulting new
+<dt>prefix</dt>
+<dd><p>A character string for the prefix of the resulting new
 variables. See notes below.</p></dd>
-</dl><dl><dt>keep_original_cols</dt><dd><p>A logical to keep the original variables in the
+<dt>keep_original_cols</dt>
+<dd><p>A logical to keep the original variables in the
 output. Defaults to <code>FALSE</code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

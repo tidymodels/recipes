@@ -89,7 +89,7 @@ between two or more variables."><meta property="og:image" content="https://recip
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create Interaction Variables</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/interactions.R" class="external-link"><code>R/interactions.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/interactions.R" class="external-link"><code>R/interactions.R</code></a></small>
     <div class="hidden name"><code>step_interact.Rd</code></div>
     </div>
 
@@ -113,31 +113,37 @@ between two or more variables.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>terms</dt><dd><p>A traditional R formula that contains interaction
+<dt>terms</dt>
+<dd><p>A traditional R formula that contains interaction
 terms. This can include <code>.</code> and selectors. See <code><a href="selections.html">selections()</a></code>
 for more details, and consider using <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::starts_with()</a></code> when
 dummy variables have been created.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>objects</dt><dd><p>A list of <code>terms</code> objects for each
+<dt>objects</dt>
+<dd><p>A list of <code>terms</code> objects for each
 individual interaction.</p></dd>
-</dl><dl><dt>sep</dt><dd><p>A character value used to delineate variables in an
+<dt>sep</dt>
+<dd><p>A character value used to delineate variables in an
 interaction (e.g. <code>var1_x_var2</code> instead of the more
 traditional <code>var1:var2</code>).</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

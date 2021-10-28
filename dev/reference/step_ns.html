@@ -89,7 +89,7 @@ variables using natural splines."><meta property="og:image" content="https://rec
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Natural Spline Basis Functions</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/ns.R" class="external-link"><code>R/ns.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/ns.R" class="external-link"><code>R/ns.R</code></a></small>
     <div class="hidden name"><code>step_ns.Rd</code></div>
     </div>
 
@@ -114,32 +114,39 @@ variables using natural splines.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>objects</dt><dd><p>A list of <code><a href="https://rdrr.io/r/splines/ns.html" class="external-link">splines::ns()</a></code> objects
+<dt>objects</dt>
+<dd><p>A list of <code><a href="https://rdrr.io/r/splines/ns.html" class="external-link">splines::ns()</a></code> objects
 created once the step has been trained.</p></dd>
-</dl><dl><dt>deg_free</dt><dd><p>The degrees of freedom for the natural spline. As the
+<dt>deg_free</dt>
+<dd><p>The degrees of freedom for the natural spline. As the
 degrees of freedom for a natural spline increase, more flexible and
 complex curves can be generated. When a single degree of freedom is used,
 the result is a rescaled version of the original data.</p></dd>
-</dl><dl><dt>options</dt><dd><p>A list of options for <code><a href="https://rdrr.io/r/splines/ns.html" class="external-link">splines::ns()</a></code>
+<dt>options</dt>
+<dd><p>A list of options for <code><a href="https://rdrr.io/r/splines/ns.html" class="external-link">splines::ns()</a></code>
 which should not include <code>x</code> or <code>df</code>.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

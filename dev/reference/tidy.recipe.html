@@ -89,7 +89,7 @@ method for the operation exists)."><meta property="og:image" content="https://re
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Tidy the Result of a Recipe</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/BoxCox.R" class="external-link"><code>R/BoxCox.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/master/R/YeoJohnson.R" class="external-link"><code>R/YeoJohnson.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/master/R/arrange.R" class="external-link"><code>R/arrange.R</code></a>, and 80 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/BoxCox.R" class="external-link"><code>R/BoxCox.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/YeoJohnson.R" class="external-link"><code>R/YeoJohnson.R</code></a>, <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/arrange.R" class="external-link"><code>R/arrange.R</code></a>, and 80 more</small>
     <div class="hidden name"><code>tidy.recipe.Rd</code></div>
     </div>
 
@@ -357,19 +357,22 @@ method for the operation exists).</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A <code>recipe</code> object, step, or check (trained or otherwise).</p></dd>
-</dl><dl><dt>...</dt><dd><p>Not currently used.</p></dd>
-</dl><dl><dt>type</dt><dd><p>For <code>step_pca</code>, either <code>"coef"</code> (for the variable loadings per
+    <dl><dt>x</dt>
+<dd><p>A <code>recipe</code> object, step, or check (trained or otherwise).</p></dd>
+<dt>...</dt>
+<dd><p>Not currently used.</p></dd>
+<dt>type</dt>
+<dd><p>For <code>step_pca</code>, either <code>"coef"</code> (for the variable loadings per
 component) or <code>"variance"</code> (how much variance does each component
 account for).</p></dd>
-</dl><dl><dt>number</dt><dd><p>An integer or <code>NA</code>. If missing and <code>id</code> is not provided,
+<dt>number</dt>
+<dd><p>An integer or <code>NA</code>. If missing and <code>id</code> is not provided,
 the return value is a list of the operations in the recipe.
 If a number is given, a <code>tidy</code> method is executed for that operation
 in the recipe (if it exists). <code>number</code> must not be provided if
 <code>id</code> is.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string or <code>NA</code>. If missing and <code>number</code> is not provided,
+<dt>id</dt>
+<dd><p>A character string or <code>NA</code>. If missing and <code>number</code> is not provided,
 the return value is a list of the operations in the recipe.
 If a character string is given, a <code>tidy</code> method is executed for that
 operation in the recipe (if it exists). <code>id</code> must not be provided

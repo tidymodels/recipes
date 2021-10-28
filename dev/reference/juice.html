@@ -88,7 +88,7 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract transformed training set</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>juice.Rd</code></div>
     </div>
 
@@ -102,15 +102,16 @@ bake(object, new_data = NULL)."><meta property="og:image" content="https://recip
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>object</dt><dd><p>A <code>recipe</code> object that has been prepared
+    <dl><dt>object</dt>
+<dd><p>A <code>recipe</code> object that has been prepared
 with the option <code>retain = TRUE</code>.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose which variables will be
+<dt>...</dt>
+<dd><p>One or more selector functions to choose which variables will be
 returned by the function. See <code><a href="selections.html">selections()</a></code> for more details.
 If no selectors are given, the default is to use
 <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
-</dl><dl><dt>composition</dt><dd><p>Either "tibble", "matrix", "data.frame", or
+<dt>composition</dt>
+<dd><p>Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that
 all computations during the baking process are done in a
 non-sparse format. Also, note that this argument should be

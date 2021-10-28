@@ -89,7 +89,7 @@ dplyr::sample_frac()."><meta property="og:image" content="https://recipes.tidymo
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sample rows using dplyr</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/sample.R" class="external-link"><code>R/sample.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/sample.R" class="external-link"><code>R/sample.R</code></a></small>
     <div class="hidden name"><code>step_sample.Rd</code></div>
     </div>
 
@@ -113,28 +113,34 @@ that will sample rows using <code><a href="https://dplyr.tidyverse.org/reference
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Argument ignored; included for consistency with other step
+<dt>...</dt>
+<dd><p>Argument ignored; included for consistency with other step
 specification functions.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>size</dt><dd><p>An integer or fraction. If the value is within (0, 1),
+<dt>size</dt>
+<dd><p>An integer or fraction. If the value is within (0, 1),
 <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_frac()</a></code> is applied to the data. If an integer
 value of 1 or greater is used, <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_n()</a></code> is applied.
 The default of <code>NULL</code> uses <code><a href="https://dplyr.tidyverse.org/reference/sample_n.html" class="external-link">dplyr::sample_n()</a></code> with the size
 of the training set (or smaller for smaller <code>new_data</code>).</p></dd>
-</dl><dl><dt>replace</dt><dd><p>Sample with or without replacement?</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>replace</dt>
+<dd><p>Sample with or without replacement?</p></dd>
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = FALSE</code>.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

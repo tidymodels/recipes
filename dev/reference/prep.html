@@ -89,7 +89,7 @@ sets."><meta property="og:image" content="https://recipes.tidymodels.org/logo.pn
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Estimate a preprocessing recipe</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/recipe.R" class="external-link"><code>R/recipe.R</code></a></small>
     <div class="hidden name"><code>prep.Rd</code></div>
     </div>
 
@@ -116,19 +116,23 @@ sets.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>an object</p></dd>
-</dl><dl><dt>...</dt><dd><p>further arguments passed to or from other methods (not currently
+    <dl><dt>x</dt>
+<dd><p>an object</p></dd>
+<dt>...</dt>
+<dd><p>further arguments passed to or from other methods (not currently
 used).</p></dd>
-</dl><dl><dt>training</dt><dd><p>A data frame or tibble that will be used to estimate
+<dt>training</dt>
+<dd><p>A data frame or tibble that will be used to estimate
 parameters for preprocessing.</p></dd>
-</dl><dl><dt>fresh</dt><dd><p>A logical indicating whether already trained operation should be
+<dt>fresh</dt>
+<dd><p>A logical indicating whether already trained operation should be
 re-trained. If <code>TRUE</code>, you should pass in a data set to the argument
 <code>training</code>.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>A logical that controls whether progress is reported as operations
+<dt>verbose</dt>
+<dd><p>A logical that controls whether progress is reported as operations
 are executed.</p></dd>
-</dl><dl><dt>retain</dt><dd><p>A logical: should the <em>preprocessed</em> training set be saved
+<dt>retain</dt>
+<dd><p>A logical: should the <em>preprocessed</em> training set be saved
 into the <code>template</code> slot of the recipe after training? This is a good
 idea if you want to add more steps later but want to avoid re-training
 the existing steps. Also, it is advisable to use <code>retain = TRUE</code>
@@ -136,9 +140,11 @@ if any steps use the option <code>skip = FALSE</code>. <strong>Note</strong> tha
 the final recipe size large. When <code>verbose = TRUE</code>, a message is written
 with the approximate object size in memory but may be an underestimate
 since it does not take environments into account.</p></dd>
-</dl><dl><dt>log_changes</dt><dd><p>A logical for printing a summary for each step regarding
+<dt>log_changes</dt>
+<dd><p>A logical for printing a summary for each step regarding
 which (if any) columns were added or removed during training.</p></dd>
-</dl><dl><dt>strings_as_factors</dt><dd><p>A logical: should character columns be converted to
+<dt>strings_as_factors</dt>
+<dd><p>A logical: should character columns be converted to
 factors? This affects the preprocessed training set (when
 <code>retain = TRUE</code>) as well as the results of <code>bake.recipe</code>.</p></dd>
 </dl></div>
@@ -210,16 +216,16 @@ data, the step for scaling is given the centered data.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Natural Splines on Longitude, Latitude [trained]</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">prep</span><span class="op">(</span><span class="va">ames_rec</span>, log_changes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_other (other_b7ReE): same number of columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_other (other_kqvUe): same number of columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_dummy (dummy_TIz3I): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_dummy (dummy_fxYVm): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  new (9): Neighborhood_College_Creek, Neighborhood_Old_Town, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  removed (2): Neighborhood, Central_Air</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_interact (interact_XfnSj): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_interact (interact_AcV69): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  new (1): Central_Air_Y_x_Year_Built</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_ns (ns_j90C1): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_ns (ns_Ou7nE): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  new (10): Longitude_ns_1, Longitude_ns_2, Longitude_ns_3, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  removed (2): Longitude, Latitude</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

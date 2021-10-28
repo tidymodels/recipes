@@ -89,7 +89,7 @@ integers."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert Numbers to Factors</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/num2factor.R" class="external-link"><code>R/num2factor.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/num2factor.R" class="external-link"><code>R/num2factor.R</code></a></small>
     <div class="hidden name"><code>step_num2factor.Rd</code></div>
     </div>
 
@@ -114,32 +114,39 @@ integers.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>transform</dt><dd><p>A function taking a single argument <code>x</code> that can be used
+<dt>transform</dt>
+<dd><p>A function taking a single argument <code>x</code> that can be used
 to modify the numeric values prior to determining the levels (perhaps using
 <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">base::as.integer()</a></code>). The output of a function should be an integer that
 corresponds to the value of <code>levels</code> that should be assigned. If not an
 integer, the value will be converted to an integer during <code><a href="bake.html">bake()</a></code>.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>levels</dt><dd><p>A character vector of values that will be used as the levels.
+<dt>levels</dt>
+<dd><p>A character vector of values that will be used as the levels.
 These are the numeric data converted to character and ordered. This is
 modified once <code><a href="prep.html">prep.recipe()</a></code> is executed.</p></dd>
-</dl><dl><dt>ordered</dt><dd><p>A single logical value; should the factor(s) be ordered?</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>ordered</dt>
+<dd><p>A single logical value; should the factor(s) be ordered?</p></dd>
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

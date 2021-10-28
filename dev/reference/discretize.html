@@ -89,7 +89,7 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Discretize Numeric Variables</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/discretize.R" class="external-link"><code>R/discretize.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/discretize.R" class="external-link"><code>R/discretize.R</code></a></small>
     <div class="hidden name"><code>discretize.Rd</code></div>
     </div>
 
@@ -122,31 +122,39 @@ on a training set).</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A numeric vector</p></dd>
-</dl><dl><dt>...</dt><dd><p>Options to pass to
+    <dl><dt>x</dt>
+<dd><p>A numeric vector</p></dd>
+<dt>...</dt>
+<dd><p>Options to pass to
 <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">stats::quantile()</a></code> that should not include <code>x</code>
 or <code>probs</code>.</p></dd>
-</dl><dl><dt>cuts</dt><dd><p>An integer defining how many cuts to make of the
+<dt>cuts</dt>
+<dd><p>An integer defining how many cuts to make of the
 data.</p></dd>
-</dl><dl><dt>labels</dt><dd><p>A character vector defining the factor levels
+<dt>labels</dt>
+<dd><p>A character vector defining the factor levels
 that will be in the new factor (from smallest to largest). This
 should have length <code>cuts+1</code> and should not include a level
 for missing (see <code>keep_na</code> below).</p></dd>
-</dl><dl><dt>prefix</dt><dd><p>A single parameter value to be used as a prefix
+<dt>prefix</dt>
+<dd><p>A single parameter value to be used as a prefix
 for the factor levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If
 the string is not a valid R name, it is coerced to one.</p></dd>
-</dl><dl><dt>keep_na</dt><dd><p>A logical for whether a factor level should be
+<dt>keep_na</dt>
+<dd><p>A logical for whether a factor level should be
 created to identify missing values in <code>x</code>.</p></dd>
-</dl><dl><dt>infs</dt><dd><p>A logical indicating whether the smallest and
+<dt>infs</dt>
+<dd><p>A logical indicating whether the smallest and
 largest cut point should be infinite.</p></dd>
-</dl><dl><dt>min_unique</dt><dd><p>An integer defining a sample size line of
+<dt>min_unique</dt>
+<dd><p>An integer defining a sample size line of
 dignity for the binning. If (the number of unique
 values)<code>/(cuts+1)</code> is less than <code>min_unique</code>, no
 discretization takes place.</p></dd>
-</dl><dl><dt>object</dt><dd><p>An object of class <code>discretize</code>.</p></dd>
-</dl><dl><dt>new_data</dt><dd><p>A new numeric object to be binned.</p></dd>
+<dt>object</dt>
+<dd><p>An object of class <code>discretize</code>.</p></dd>
+<dt>new_data</dt>
+<dd><p>A new numeric object to be binned.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

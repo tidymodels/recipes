@@ -92,7 +92,7 @@ argument."><meta property="og:image" content="https://recipes.tidymodels.org/log
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a lagged predictor</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/lag.R" class="external-link"><code>R/lag.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/lag.R" class="external-link"><code>R/lag.R</code></a></small>
     <div class="hidden name"><code>step_lag.Rd</code></div>
     </div>
 
@@ -121,31 +121,39 @@ argument.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>For model terms created by this step, what analysis role should
+<dt>role</dt>
+<dd><p>For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
 the original variables will be used as <em>predictors</em> in a model.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>lag</dt><dd><p>A vector of positive integers. Each specified column will be
+<dt>lag</dt>
+<dd><p>A vector of positive integers. Each specified column will be
 lagged for each value in the vector.</p></dd>
-</dl><dl><dt>prefix</dt><dd><p>A prefix for generated column names, default to "lag_".</p></dd>
-</dl><dl><dt>default</dt><dd><p>Passed to <code><a href="https://dplyr.tidyverse.org/reference/lead-lag.html" class="external-link">dplyr::lag</a></code>, determines what fills empty rows
+<dt>prefix</dt>
+<dd><p>A prefix for generated column names, default to "lag_".</p></dd>
+<dt>default</dt>
+<dd><p>Passed to <code><a href="https://dplyr.tidyverse.org/reference/lead-lag.html" class="external-link">dplyr::lag</a></code>, determines what fills empty rows
 left by lagging (defaults to NA).</p></dd>
-</dl><dl><dt>columns</dt><dd><p>A character string of variable names that will
+<dt>columns</dt>
+<dd><p>A character string of variable names that will
 be populated (eventually) by the <code>terms</code> argument.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

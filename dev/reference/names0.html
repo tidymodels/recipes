@@ -91,7 +91,7 @@ dummy variables (in step_dummy())."><meta property="og:image" content="https://r
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Naming Tools</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/misc.R" class="external-link"><code>R/misc.R</code></a></small>
     <div class="hidden name"><code>names0.Rd</code></div>
     </div>
 
@@ -110,17 +110,21 @@ dummy variables (in <code><a href="step_dummy.html">step_dummy()</a></code>).</p
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>num</dt><dd><p>A single integer for how many elements are created.</p></dd>
-</dl><dl><dt>prefix</dt><dd><p>A character string that will start each name.</p></dd>
-</dl><dl><dt>var</dt><dd><p>A single string for the original factor name.</p></dd>
-</dl><dl><dt>lvl</dt><dd><p>A character vectors of the factor levels (in order).
+    <dl><dt>num</dt>
+<dd><p>A single integer for how many elements are created.</p></dd>
+<dt>prefix</dt>
+<dd><p>A character string that will start each name.</p></dd>
+<dt>var</dt>
+<dd><p>A single string for the original factor name.</p></dd>
+<dt>lvl</dt>
+<dd><p>A character vectors of the factor levels (in order).
 When used with <code><a href="step_dummy.html">step_dummy()</a></code>, <code>lvl</code> would be the suffixes
 that result <em>after</em> <code>model.matrix</code> is called (see the
 example below).</p></dd>
-</dl><dl><dt>ordinal</dt><dd><p>A logical; was the original factor ordered?</p></dd>
-</dl><dl><dt>sep</dt><dd><p>A single character value for the separator between the names and
+<dt>ordinal</dt>
+<dd><p>A logical; was the original factor ordered?</p></dd>
+<dt>sep</dt>
+<dd><p>A single character value for the separator between the names and
 levels.</p></dd>
 </dl></div>
     <div id="value">

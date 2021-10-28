@@ -91,7 +91,7 @@ models."><meta property="og:image" content="https://recipes.tidymodels.org/logo.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a Profiling Version of a Data Set</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/profile.R" class="external-link"><code>R/profile.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/profile.R" class="external-link"><code>R/profile.R</code></a></small>
     <div class="hidden name"><code>step_profile.Rd</code></div>
     </div>
 
@@ -120,26 +120,30 @@ models.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>profile</dt><dd><p>A call to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">dplyr::vars()</a></code>) to specify which
+<dt>profile</dt>
+<dd><p>A call to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">dplyr::vars()</a></code>) to specify which
 variable will be profiled (see <code><a href="selections.html">selections()</a></code>). If a column is
 included in both lists to be fixed and to be profiled, an error
 is thrown.</p></dd>
-</dl><dl><dt>pct</dt><dd><p>A value between 0 and 1 that is the percentile to
+<dt>pct</dt>
+<dd><p>A value between 0 and 1 that is the percentile to
 fix continuous variables. This is applied to all continuous
 variables captured by the selectors. For date variables, either
 the minimum, median, or maximum used based on their distance to
 <code>pct</code>.</p></dd>
-</dl><dl><dt>index</dt><dd><p>The level that qualitative variables will be
+<dt>index</dt>
+<dd><p>The level that qualitative variables will be
 fixed. If the variables are character (not factors), this will
 be the index of the sorted unique values. This is applied to all
 qualitative variables captured by the selectors.</p></dd>
-</dl><dl><dt>grid</dt><dd><p>A named list with elements <code>pctl</code> (a logical) and
+<dt>grid</dt>
+<dd><p>A named list with elements <code>pctl</code> (a logical) and
 <code>len</code> (an integer). If <code>pctl = TRUE</code>, then <code>len</code> denotes how
 many percentiles to use to create the profiling grid. This
 creates a grid between 0 and 1 and the profile is determined by
@@ -151,20 +155,25 @@ This parameter is ignored for qualitative variables (since all
 of their possible levels are profiled). In the case of date
 variables, <code>pctl = FALSE</code> will always be used since there is no
 quantile method for dates.</p></dd>
-</dl><dl><dt>columns</dt><dd><p>A character string that contains the names of
+<dt>columns</dt>
+<dd><p>A character string that contains the names of
 columns that should be fixed and their values. These values are
 not determined until <code><a href="prep.html">prep.recipe()</a></code> is called.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

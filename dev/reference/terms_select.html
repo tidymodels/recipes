@@ -90,7 +90,7 @@ useful when creating custom steps."><meta property="og:image" content="https://r
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select Terms in a Step Function.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/terms-select.R" class="external-link"><code>R/terms-select.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/terms-select.R" class="external-link"><code>R/terms-select.R</code></a></small>
     <div class="hidden name"><code>terms_select.Rd</code></div>
     </div>
 
@@ -106,15 +106,16 @@ useful when creating custom steps.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>terms</dt><dd><p>A list of formulas whose right-hand side contains
+    <dl><dt>terms</dt>
+<dd><p>A list of formulas whose right-hand side contains
 quoted expressions. See <code><a href="https://rlang.r-lib.org/reference/nse-defuse.html" class="external-link">rlang::quos()</a></code> for examples.</p></dd>
-</dl><dl><dt>info</dt><dd><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
+<dt>info</dt>
+<dd><p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
 and <code>source</code> that represent the current state of the data. The
 function <code><a href="summary.recipe.html">summary.recipe()</a></code> can be used to get this information
 from a recipe.</p></dd>
-</dl><dl><dt>empty_fun</dt><dd><p>A function to execute when no terms are selected by the
+<dt>empty_fun</dt>
+<dd><p>A function to execute when no terms are selected by the
 step. The default function throws an error with a message.</p></dd>
 </dl></div>
     <div id="value">

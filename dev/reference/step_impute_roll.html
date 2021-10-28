@@ -89,7 +89,7 @@ variables by the measure of location (e.g. median) within a moving window."><met
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Impute numeric data using a rolling window statistic</h1>
-    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/master/R/impute_roll.R" class="external-link"><code>R/impute_roll.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/impute_roll.R" class="external-link"><code>R/impute_roll.R</code></a></small>
     <div class="hidden name"><code>step_impute_roll.Rd</code></div>
     </div>
 
@@ -126,32 +126,39 @@ variables by the measure of location (e.g. median) within a moving window.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>recipe</dt><dd><p>A recipe object. The step will be added to the
+    <dl><dt>recipe</dt>
+<dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
-</dl><dl><dt>...</dt><dd><p>One or more selector functions to choose variables to be imputed;
+<dt>...</dt>
+<dd><p>One or more selector functions to choose variables to be imputed;
 these columns must be non-integer numerics (i.e., double precision).
 See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
-</dl><dl><dt>role</dt><dd><p>Not used by this step since no new variables are
+<dt>role</dt>
+<dd><p>Not used by this step since no new variables are
 created.</p></dd>
-</dl><dl><dt>trained</dt><dd><p>A logical to indicate if the quantities for
+<dt>trained</dt>
+<dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
-</dl><dl><dt>columns</dt><dd><p>A named numeric vector of columns. This is
+<dt>columns</dt>
+<dd><p>A named numeric vector of columns. This is
 <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
-</dl><dl><dt>statistic</dt><dd><p>A function with a single argument for the data to compute
+<dt>statistic</dt>
+<dd><p>A function with a single argument for the data to compute
 the imputed value. Only complete values will be passed to the function and
 it should return a double precision value.</p></dd>
-</dl><dl><dt>window</dt><dd><p>The size of the window around a point to be imputed. Should be
+<dt>window</dt>
+<dd><p>The size of the window around a point to be imputed. Should be
 an odd integer greater than one. See Details below for a discussion of
 points at the ends of the series.</p></dd>
-</dl><dl><dt>skip</dt><dd><p>A logical. Should the step be skipped when the
+<dt>skip</dt>
+<dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
 when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
-</dl><dl><dt>id</dt><dd><p>A character string that is unique to this step to identify it.</p></dd>
+<dt>id</dt>
+<dd><p>A character string that is unique to this step to identify it.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
