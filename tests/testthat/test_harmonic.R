@@ -76,7 +76,8 @@ test_that("harmonic frequencies", {
   rec <- recipe(osc ~ time_var, data = harmonic_dat) %>%
     step_harmonic(time_var,
                   frequency = c(1, 1.93, 2),
-                  cycle_size = 86400) %>%
+                  cycle_size = 86400,
+                  keep_original_cols = TRUE) %>%
     prep() %>%
     bake(new_data = NULL)
 
@@ -232,7 +233,8 @@ test_that("harmonic NA in term", {
   rec_na <- recipe(osc ~ time_var, data = harmonic_dat) %>%
     step_harmonic(time_var,
                   frequency = 4,
-                  cycle_size = 86400) %>%
+                  cycle_size = 86400,
+                  keep_original_cols = TRUE) %>%
     prep() %>%
     bake(new_data = NULL)
 
@@ -374,6 +376,13 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that('printing', {
+  rec <- recipe(mpg ~ ., mtcars)
+  with_harmonic <- rec %>%  step_harmonic(hp, frequency = 1/11, cycle_size = 1)
+  expect_output(print(with_harmonic))
+  expect_output(prep(with_harmonic, training = mtcars, verbose = TRUE))
 })
 
 test_that("empty printing", {
