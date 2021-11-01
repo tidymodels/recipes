@@ -48,11 +48,10 @@ over the signal phase.  If \code{starting_val} is not specified the default
 is 0.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{TRUE}.}
+output. Defaults to \code{FALSE}.}
 
-\item{columns}{A character string of variables that will be
-used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
