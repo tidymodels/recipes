@@ -209,26 +209,26 @@ A review. <em>The Statistician</em>, 169-178..</p>
 <span class="r-in"><span class="va">bc_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">bc_estimates</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">[</span>, <span class="st">"Illiteracy"</span><span class="op">]</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"before"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="step_BoxCox-1.png" alt="" width="768" height="552"></span>
+<span class="r-plt img"><img src="step_BoxCox-1.png" alt="" width="768" height="552"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">bc_data</span><span class="op">$</span><span class="va">Illiteracy</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"after"</span><span class="op">)</span></span>
-<span class="r-plt"><img src="step_BoxCox-2.png" alt="" width="768" height="552"></span>
+<span class="r-plt img"><img src="step_BoxCox-2.png" alt="" width="768" height="552"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">bc_trans</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms         value id          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric()    <span style="color: #BB0000;">NA</span> BoxCox_H6jwW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric()    <span style="color: #BB0000;">NA</span> BoxCox_QzC2O</span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">bc_estimates</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms          value id          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Population  0.000<span style="text-decoration: underline;">966</span> BoxCox_H6jwW</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Income      0.524    BoxCox_H6jwW</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Illiteracy -<span style="color: #BB0000;">0.379</span>    BoxCox_H6jwW</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Life Exp    4.59     BoxCox_H6jwW</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Murder      0.606    BoxCox_H6jwW</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> HS Grad     1.92     BoxCox_H6jwW</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Area        0.250    BoxCox_H6jwW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Population  0.000<span style="text-decoration: underline;">966</span> BoxCox_QzC2O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Income      0.524    BoxCox_QzC2O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Illiteracy -<span style="color: #BB0000;">0.379</span>    BoxCox_QzC2O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> Life Exp    4.59     BoxCox_QzC2O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Murder      0.606    BoxCox_QzC2O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> HS Grad     1.92     BoxCox_QzC2O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Area        0.250    BoxCox_QzC2O</span>
 </code></pre></div>
     </div>
   </div>

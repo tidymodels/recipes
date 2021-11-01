@@ -94,7 +94,8 @@
 <h2 class="page-header" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
 <div class="section level3">
 <h3 id="improvements-and-other-changes-development-version">Improvements and Other Changes<a class="anchor" aria-label="anchor" href="#improvements-and-other-changes-development-version"></a></h3>
-<ul><li><p>Improved the efficiency of computations for the Box-Cox transformation (<a href="https://github.com/tidymodels/recipes/issues/820" class="external-link">#820</a>).</p></li>
+<ul><li><p>Fixed bug in <code><a href="../reference/step_harmonic.html">step_harmonic()</a></code> printing and changed defaults to <code>role = "predictor"</code> and <code>keep_original_cols = FALSE</code> (<a href="https://github.com/tidymodels/recipes/issues/822" class="external-link">#822</a>).</p></li>
+<li><p>Improved the efficiency of computations for the Box-Cox transformation (<a href="https://github.com/tidymodels/recipes/issues/820" class="external-link">#820</a>).</p></li>
 <li><p>All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (<a href="https://github.com/tidymodels/recipes/issues/603" class="external-link">#603</a>, <a href="https://github.com/tidymodels/recipes/issues/531" class="external-link">#531</a>). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of <code><a href="../reference/step_mutate.html">step_mutate()</a></code>). The documentation in <code><a href="../reference/selections.html">?selections</a></code> has been updated with advice for writing selectors when filtering steps are used. (<a href="https://github.com/tidymodels/recipes/issues/813" class="external-link">#813</a>)</p></li>
 </ul></div>
 </div>
