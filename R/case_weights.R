@@ -3,23 +3,23 @@
 #' These functions can be used to do basic calculations with or without case
 #' weights.
 #'
-#' @param selection A quosure.
-#' @param info A data frame from the `info` argument within steps.
+#' @param selection A quosure
+#' @param info A data frame from the `info` argument within steps
 #' @param .data The training data
-#' @param x A numeric vector or a data frame.
-#' @param wts A vector of case weights.
+#' @param x A numeric vector or a data frame
+#' @param wts A vector of case weights
 #' @details
-#' [get_case_weights()] is designed for developers to use so that any column
-#' with the role of "case weight" will be returned as a vector.
+#' [get_case_weights()] is designed for developers of recipe steps, to return
+#' a column with the role of "case weight" as a vector.
 #'
-#' For the other functions:
+#' For the other functions, rows with missing case weights are removed from
+#' calculations.
 #'
-#' Rows with missing case weights are removed from all calculations.
-#'
-#' For means and variances, the missing values in the data (not case weights)
-#' only affect the calculations for those rows. For the correlation matrix, the
-#' calculation first removes rows with any missing values (equal to the
-#' "complete.obs" strategy in [stats::cor()]).
+#' For `averages()` and `variances()`, missing values in the data (*not* the
+#' case weights) only affect the calculations for those rows. For
+#' `correlations()`, the correlation matrix computation first removes rows
+#' with any missing values (equal to the "complete.obs" strategy in
+#' [stats::cor()]).
 #' @export
 #' @name case-weight-helpers
 get_case_weights <- function(selection, info, .data) {

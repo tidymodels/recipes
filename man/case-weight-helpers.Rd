@@ -17,30 +17,30 @@ variances(x, wts = NULL)
 correlations(x, wts = NULL)
 }
 \arguments{
-\item{selection}{A quosure.}
+\item{selection}{A quosure}
 
-\item{info}{A data frame from the \code{info} argument within steps.}
+\item{info}{A data frame from the \code{info} argument within steps}
 
 \item{.data}{The training data}
 
-\item{x}{A numeric vector or a data frame.}
+\item{x}{A numeric vector or a data frame}
 
-\item{wts}{A vector of case weights.}
+\item{wts}{A vector of case weights}
 }
 \description{
 These functions can be used to do basic calculations with or without case
 weights.
 }
 \details{
-\code{\link[=get_case_weights]{get_case_weights()}} is designed for developers to use so that any column
-with the role of "case weight" will be returned as a vector.
+\code{\link[=get_case_weights]{get_case_weights()}} is designed for developers of recipe steps, to return
+a column with the role of "case weight" as a vector.
 
-For the other functions:
+For the other functions, rows with missing case weights are removed from
+calculations.
 
-Rows with missing case weights are removed from all calculations.
-
-For means and variances, the missing values in the data (not case weights)
-only affect the calculations for those rows. For the correlation matrix, the
-calculation first removes rows with any missing values (equal to the
-"complete.obs" strategy in \code{\link[stats:cor]{stats::cor()}}).
+For \code{averages()} and \code{variances()}, missing values in the data (\emph{not} the
+case weights) only affect the calculations for those rows. For
+\code{correlations()}, the correlation matrix computation first removes rows
+with any missing values (equal to the "complete.obs" strategy in
+\code{\link[stats:cor]{stats::cor()}}).
 }
