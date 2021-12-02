@@ -6,6 +6,7 @@
 \alias{averages}
 \alias{variances}
 \alias{correlations}
+\alias{pca_wts}
 \title{Helpers for steps with case weights}
 \usage{
 get_case_weights(selection, info, .data)
@@ -15,6 +16,8 @@ averages(x, wts = NULL)
 variances(x, wts = NULL)
 
 correlations(x, wts = NULL)
+
+pca_wts(x, wts = NULL)
 }
 \arguments{
 \item{selection}{A quosure}

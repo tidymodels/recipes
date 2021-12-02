@@ -54,10 +54,15 @@ get_case_weights <- function(selection, info, .data) {
 # ------------------------------------------------------------------------------
 
 wt_calcs <- function(x, wts, statistic = "mean") {
-  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor"))
+  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor", "pca"))
   if (!is.data.frame(x)) {
     x <- data.frame(x)
   }
+
+  if (is.null(wts)) {
+    wts <- rep(1L, nrow(x))
+  }
+
   complete <- stats::complete.cases(x) & !is.na(wts)
   wts <- wts[complete]
   x <- x[complete,,drop = FALSE]
@@ -67,6 +72,8 @@ wt_calcs <- function(x, wts, statistic = "mean") {
     res <- unname(res[["center"]])
   } else if (statistic == "var") {
     res <- unname(diag(res[["cov"]]))
+  } else if (statistic == "pca") {
+    res <- cov2pca(res$cov)
   } else {
     res <- res[["cor"]]
   }
@@ -110,6 +117,20 @@ correlations <- function(x, wts = NULL) {
     res <- wt_calcs(x, wts, statistic = "cor")
   }
   res
+}
+
+#' @export
+#' @rdname case-weight-helpers
+pca_wts <- function(x, wts = NULL) {
+  cv_mat <- variances(x, wts)
+  cov2pca(cv_mat)
+}
+
+cov2pca <- function(cv_mat) {
+  res <- eigen(cv_mat)
+
+  # emulate prcomp results
+  list(sdev = sqrt(res$values), rotation = res$vectors)
 }
 
 
