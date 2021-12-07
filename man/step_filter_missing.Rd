@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter_missing.R
 \name{step_filter_missing}
 \alias{step_filter_missing}
-\title{High Correlation Filter}
+\title{Missing Value Column Filter}
 \usage{
 step_filter_missing(
   recipe,

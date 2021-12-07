@@ -1,4 +1,4 @@
-#' High Correlation Filter
+#' Missing Value Column Filter
 #'
 #' `step_filter_missing` creates a *specification* of a recipe
 #'  step that will potentially remove variables that have too many missing
