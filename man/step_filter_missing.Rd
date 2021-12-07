@@ -29,7 +29,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{threshold}{A value for the threshold of missing values in column. The
-step will try to remove the columns where the proportion of missing values
+step will remove the columns where the proportion of missing values
 exceeds the threshold.}
 
 \item{removals}{A character string that contains the names of
@@ -60,7 +60,7 @@ cause issues for subsequent steps in your recipe if the missing columns are
 specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 
-This step attempts to remove variables if the proportion of missing
+This step will remove variables if the proportion of missing
 values exceeds the \code{threshold}.
 
 All variables with missing values will be removed for \code{threshold = 0}.
