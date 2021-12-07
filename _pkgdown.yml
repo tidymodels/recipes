@@ -104,12 +104,12 @@ reference:
   - title: Step Functions - Filters
     contents:
     - step_corr
+    - step_filter_missing
     - step_lincomb
     - step_nzv
     - step_rm
     - step_select
     - step_zv
-    - step_filter_missing
   - title: Step Functions - Row Operations
     contents:
     - step_arrange
