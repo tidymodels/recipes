@@ -109,6 +109,7 @@ reference:
     - step_rm
     - step_select
     - step_zv
+    - step_filter_missing
   - title: Step Functions - Row Operations
     contents:
     - step_arrange
