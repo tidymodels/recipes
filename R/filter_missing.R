@@ -109,12 +109,12 @@ print.step_filter_missing <-
   function(x,  width = max(20, options()$width - 36), ...) {
     if (x$trained) {
       if (length(x$removals) > 0) {
-        cat("Correlation filter removed ")
+        cat("Missing value column filter removed ")
         cat(format_ch_vec(x$removals, width = width))
       } else
-        cat("Correlation filter removed no terms")
+        cat("Missing value column filter removed no terms")
     } else {
-      cat("Correlation filter on ", sep = "")
+      cat("Missing value column filter on ", sep = "")
       cat(format_selectors(x$terms, width = width))
     }
     if (x$trained)
