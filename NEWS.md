@@ -4,7 +4,7 @@
 
 * Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
 
-* Added a new step called `step_filter_numeric()`, which can filter columns based on proportion of missingness (#270).
+* Added a new step called `step_filter_missing()`, which can filter columns based on proportion of missingness (#270).
 
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
 
