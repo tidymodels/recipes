@@ -140,11 +140,10 @@ tunable.step_filter_missing <- function(x, ...) {
   tibble::tibble(
     name = "threshold",
     call_info = list(
-      list(pkg = "dials", fun = "threshold")
+      list(pkg = "dials", fun = "threshold", range = c(0.05, 1.00))
     ),
     source = "recipe",
     component = "step_filter_missing",
     component_id = x$id
   )
 }
-
