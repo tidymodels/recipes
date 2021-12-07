@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param threshold A value for the threshold of missing values in column. The
-#'  step will try to remove the columns where the proportion of missing values
+#'  step will remove the columns where the proportion of missing values
 #'  exceeds the threshold.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
