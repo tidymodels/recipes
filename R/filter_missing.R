@@ -16,7 +16,7 @@
 #' @family variable filter steps
 #' @export
 #'
-#' @details This step attempts to remove variables if the proportion of missing
+#' @details This step will remove variables if the proportion of missing
 #'  values exceeds the `threshold`.
 #'
 #' All variables with missing values will be removed for `threshold = 0`.
