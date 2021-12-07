@@ -326,6 +326,8 @@ find_selectors <- function (f) {
   }
   else if (is.call(f)) {
     fname <- as.character(f[[1]])
+    fname <- fname[!(fname %in% c("::", "tidyselect", "dplyr", "recipes"))]
+
     res <- if (fname %in% intersect_selectors) f else list()
     c(res, unlist(lapply(f[-1], find_selectors), use.names = FALSE))
   }
