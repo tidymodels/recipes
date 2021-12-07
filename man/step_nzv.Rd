@@ -118,6 +118,7 @@ tidy(filter_obj, number = 1)
 \seealso{
 Other variable filter steps: 
 \code{\link{step_corr}()},
+\code{\link{step_filter_missing}()},
 \code{\link{step_lincomb}()},
 \code{\link{step_rm}()},
 \code{\link{step_select}()},
