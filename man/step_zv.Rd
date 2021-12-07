@@ -9,6 +9,7 @@ step_zv(
   ...,
   role = NA,
   trained = FALSE,
+  group = NULL,
   removals = NULL,
   skip = FALSE,
   id = rand_id("zv")
@@ -26,6 +27,9 @@ created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
+
+\item{group}{A character string or call to dplyr::vars() can be used to
+specify the group(s) variable.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined

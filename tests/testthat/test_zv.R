@@ -1,5 +1,6 @@
 library(testthat)
 library(recipes)
+library(dplyr)
 
 n <- 50
 set.seed(424)
@@ -28,6 +29,43 @@ test_that('zv filtering', {
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
 
   expect_equal(filtering_trained$steps[[1]]$removals, "x4")
+})
+
+test_that('group-wise zv filtering', {
+  mtcars0 <- mtcars %>%
+    mutate(const = 0,
+           group1 = am,
+           group2 = vs)
+
+  rec_group1 <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = "group1") %>%
+    prep()
+
+  expect_equal(rec_group1$steps[[1]]$removals, c("am", "const"))
+
+  rec_group2 <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = "group2") %>%
+    prep()
+
+  expect_equal(rec_group2$steps[[1]]$removals, c("vs", "const"))
+
+  rec_group12 <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = c("group1", "group2")) %>%
+    prep()
+
+  expect_equal(
+    rec_group12$steps[[1]]$removals,
+    c("cyl", "vs", "am", "gear", "const")
+  )
+
+  rec_group12_vars <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = vars(group1, group2)) %>%
+    prep()
+
+  expect_equal(
+    rec_group12_vars$steps[[1]]$removals,
+    c("cyl", "vs", "am", "gear", "const")
+  )
 })
 
 test_that('printing', {
