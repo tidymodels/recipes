@@ -99,7 +99,8 @@ step that will randomly change the order of rows for selected
 variables.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">step_shuffle</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">step_shuffle</span><span class="op">(</span>
   <span class="va">recipe</span>,
   <span class="va">...</span>,
   role <span class="op">=</span> <span class="cn">NA</span>,
@@ -108,8 +109,8 @@ variables.</p>
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"shuffle"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>recipe</dt>
@@ -159,11 +160,10 @@ columns that will be permuted) is returned.</p>
 <code><a href="step_sample.html">step_sample</a>()</code>,
 <code><a href="step_slice.html">step_slice</a>()</code></p></div>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">integers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, B <span class="op">=</span> <span class="fl">13</span><span class="op">:</span><span class="fl">24</span>, C <span class="op">=</span> <span class="fl">25</span><span class="op">:</span><span class="fl">36</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">integers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, B <span class="op">=</span> <span class="fl">13</span><span class="op">:</span><span class="fl">24</span>, C <span class="op">=</span> <span class="fl">25</span><span class="op">:</span><span class="fl">36</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span> <span class="op">+</span> <span class="va">C</span>, data <span class="op">=</span> <span class="va">integers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>

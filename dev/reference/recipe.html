@@ -97,7 +97,8 @@ order to prepare it for data analysis."><meta property="og:image" content="https
 order to prepare it for data analysis.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">recipe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">recipe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
 <span class="fu">recipe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
@@ -110,8 +111,8 @@ order to prepare it for data analysis.</p>
 
 <span class="co"># S3 method for matrix</span>
 <span class="fu">recipe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x, data</dt>
@@ -229,7 +230,7 @@ predictions.</p><div class="sourceCode r"><pre><code><span class="kw"><a href="h
   <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_spatialsign.html">step_spatialsign</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="va">sp_signed</span></code></pre><p></p></div><pre><code><span class="co">## Recipe</span>
+<span class="va">sp_signed</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Recipe</span>
 <span class="co">## </span>
 <span class="co">## Inputs:</span>
 <span class="co">## </span>
@@ -240,7 +241,7 @@ predictions.</p><div class="sourceCode r"><pre><code><span class="kw"><a href="h
 <span class="co">## Operations:</span>
 <span class="co">## </span>
 <span class="co">## Centering and scaling for all_numeric_predictors()</span>
-<span class="co">## Spatial sign on  all_numeric_predictors()</span></code></pre>
+<span class="co">## Spatial sign on  all_numeric_predictors()</span></code></pre></div>
 
 <p>We can create a <code>parsnip</code> model, and then build a workflow with the
 model and recipe:</p><div class="sourceCode r"><pre><code><span class="va">linear_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span>
@@ -250,7 +251,7 @@ model and recipe:</p><div class="sourceCode r"><pre><code><span class="va">linea
   <span class="fu"><a href="https://workflows.tidymodels.org//reference/add_model.html" class="external-link">add_model</a></span><span class="op">(</span><span class="va">linear_mod</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://workflows.tidymodels.org//reference/add_recipe.html" class="external-link">add_recipe</a></span><span class="op">(</span><span class="va">sp_signed</span><span class="op">)</span>
 
-<span class="va">linear_sp_sign_wflow</span></code></pre><p></p></div><pre><code><span class="co">## == Workflow ==========================================================</span>
+<span class="va">linear_sp_sign_wflow</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## == Workflow ==========================================================</span>
 <span class="co">## Preprocessor: Recipe</span>
 <span class="co">## Model: linear_reg()</span>
 <span class="co">## </span>
@@ -263,13 +264,13 @@ model and recipe:</p><div class="sourceCode r"><pre><code><span class="va">linea
 <span class="co">## -- Model -------------------------------------------------------------</span>
 <span class="co">## Linear Regression Model Specification (regression)</span>
 <span class="co">## </span>
-<span class="co">## Computational engine: lm</span></code></pre>
+<span class="co">## Computational engine: lm</span></code></pre></div>
 
 <p>To estimate the preprocessing steps and then fit the linear model, a
 single call to <code>fit()</code> is used:</p><div class="sourceCode r"><pre><code><span class="va">linear_sp_sign_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">linear_sp_sign_wflow</span>, data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></code></pre><p></p></div>
 <p>When predicting, there is no need to do anything other than call
 <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>. This preprocesses the new data in the same manner as the
-training set, then gives the data to the linear model prediction code:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">linear_sp_sign_fit</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><pre><code><span class="co">## # A tibble: 6 x 1</span>
+training set, then gives the data to the linear model prediction code:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">linear_sp_sign_fit</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 x 1</span>
 <span class="co">##   .pred</span>
 <span class="co">##   &lt;dbl&gt;</span>
 <span class="co">## 1  18.1</span>
@@ -277,7 +278,7 @@ training set, then gives the data to the linear model prediction code:</p><div c
 <span class="co">## 3  17.2</span>
 <span class="co">## 4  18.8</span>
 <span class="co">## 5  19.6</span>
-<span class="co">## 6  14.6</span></code></pre>
+<span class="co">## 6  14.6</span></code></pre></div>
 
 </div>
 
@@ -297,7 +298,7 @@ used to estimate quantities required for the operations using a data set
   <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_pca.html">step_pca</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
 <p>Now to estimate the normalization statistics and the PCA loadings:</p><div class="sourceCode r"><pre><code><span class="va">pca_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">pca_rec</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span>
-<span class="va">pca_rec</span></code></pre><p></p></div><pre><code><span class="co">## Recipe</span>
+<span class="va">pca_rec</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Recipe</span>
 <span class="co">## </span>
 <span class="co">## Inputs:</span>
 <span class="co">## </span>
@@ -310,21 +311,21 @@ used to estimate quantities required for the operations using a data set
 <span class="co">## Operations:</span>
 <span class="co">## </span>
 <span class="co">## Centering and scaling for carbon, hydrogen, oxygen, nitrogen, s... [trained]</span>
-<span class="co">## PCA extraction with carbon, hydrogen, oxygen, nitrogen, su... [trained]</span></code></pre>
+<span class="co">## PCA extraction with carbon, hydrogen, oxygen, nitrogen, su... [trained]</span></code></pre></div>
 
 <p>Note that the estimated recipe shows the actual column names captured by
 the selectors.</p>
 <p>You can <code><a href="tidy.recipe.html">tidy.recipe()</a></code> a recipe, either when it is
-prepped or unprepped, to learn more about its components.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_rec</span><span class="op">)</span></code></pre><p></p></div><pre><code><span class="co">## # A tibble: 2 x 6</span>
+prepped or unprepped, to learn more about its components.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_rec</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 x 6</span>
 <span class="co">##   number operation type      trained skip  id             </span>
 <span class="co">##    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;          </span>
 <span class="co">## 1      1 step      normalize TRUE    FALSE normalize_AeYA4</span>
-<span class="co">## 2      2 step      pca       TRUE    FALSE pca_Zn1yz</span></code></pre>
+<span class="co">## 2      2 step      pca       TRUE    FALSE pca_Zn1yz</span></code></pre></div>
 
 <p>You can also <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> recipe <em>steps</em> with a <code>number</code> or <code>id</code> argument.</p>
 <p>To apply the prepped recipe to a data set, the <code><a href="bake.html">bake()</a></code>
 function is used in the same manner that <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> would be for
-models. This applies the estimated steps to any data set.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><pre><code><span class="co">## # A tibble: 6 x 6</span>
+models. This applies the estimated steps to any data set.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 x 6</span>
 <span class="co">##     HHV    PC1    PC2     PC3     PC4     PC5</span>
 <span class="co">##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
 <span class="co">## 1  18.3 0.730   0.412  0.495   0.333   0.253 </span>
@@ -332,7 +333,7 @@ models. This applies the estimated steps to any data set.</p><div class="sourceC
 <span class="co">## 3  17.2 0.761  -1.10   0.0550 -0.397   0.747 </span>
 <span class="co">## 4  18.9 0.0400 -0.950 -0.158   0.405  -0.143 </span>
 <span class="co">## 5  20.5 0.792   0.732 -0.204   0.465  -0.148 </span>
-<span class="co">## 6  18.5 0.433   0.127  0.354  -0.0168 -0.0888</span></code></pre>
+<span class="co">## 6  18.5 0.433   0.127  0.354  -0.0168 -0.0888</span></code></pre></div>
 
 <p>In general, the workflow interface to recipes is recommended for most
 applications.</p>
@@ -342,11 +343,10 @@ applications.</p>
 </div>
 
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># formula example with single outcome:</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span></span>

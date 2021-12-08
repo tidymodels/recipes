@@ -202,6 +202,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_filter.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_filter_missing.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_geodist.html</loc>
   </url>
   <url>

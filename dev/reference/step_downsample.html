@@ -103,7 +103,8 @@ rows of a data set to make the occurrence of levels in a specific factor
 level equal.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">step_downsample</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">step_downsample</span><span class="op">(</span>
   <span class="va">recipe</span>,
   <span class="va">...</span>,
   under_ratio <span class="op">=</span> <span class="fl">1</span>,
@@ -119,8 +120,8 @@ level equal.</p>
 
 <span class="co"># S3 method for step_downsample</span>
 <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>recipe</dt>
@@ -191,7 +192,6 @@ it is not clear whether those operations should be conducted
 <p>When used in modeling, users should strongly consider using the
 option <code>skip = TRUE</code> so that the extra sampling is <em>not</em>
 conducted outside of the training set.</p>
-    </div>
     </div>
 
   </div>
