@@ -119,8 +119,8 @@ case those columns are removed by the filter. Instead, use
 \itemize{
 \item \code{\link[dplyr:reexports]{dplyr::any_of()}} will be tolerant if a
 column has been removed.
-\item \code{\link[dplyr:reexports]{dplyr::all_of()}} will fail unless all of
-the columns are present in the data.
+\item \code{\link[dplyr:reexports]{dplyr::all_of()}} will fail unless all of the
+columns are present in the data.
 }
 \item For both of these functions, if you are going to save the recipe as
 a binary object to use in another R session, try to avoid referring

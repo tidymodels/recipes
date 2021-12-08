@@ -4,6 +4,8 @@
 
 * Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
 
+* Added a new step called `step_filter_missing()`, which can filter columns based on proportion of missingness (#270).
+
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
 
 * All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
