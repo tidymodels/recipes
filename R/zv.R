@@ -7,8 +7,8 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
-#' @param group A character string or call to dplyr::vars() can be used to
-#'  specify the group(s) variable.
+#' @param group An optional character string or call to [dplyr::vars()] that can be used to
+#'  specify a group(s) within which to identify variables that contain only a single value.
 #' @template step-return
 #' @template filter-steps
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
