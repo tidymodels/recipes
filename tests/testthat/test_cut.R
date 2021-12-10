@@ -66,8 +66,8 @@ test_that("adjust_levels_min_max gives correct output", {
 test_that("step_cut integration test", {
 
   tb <- tibble(x = c(2, 5, 7), y = c(1, 8, 12))
-  tb2 <- tibble(x = c(5, 9))
-  tb3 <- tibble(x = c(-1, 6))
+  tb2 <- tibble(x = c(5, 9), y = c(1, 1))
+  tb3 <- tibble(x = c(-1, 6), y = c(1, 1))
 
   expect_equal(recipe(tb) %>%
                  step_cut(x, breaks = 5) %>%
