@@ -523,8 +523,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     filter(source == "original") %>%
     pull(variable)
 
-  if (!is.null(new_data) && !all(original_vars %in% names(new_data))) {
-    missing_vars <- setdiff(original_vars, names(new_data))
+  if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
+    missing_vars <- setdiff(original_vars, colnames(new_data))
 
     vars_print <- format_ch_vec(
       missing_vars,
