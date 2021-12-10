@@ -520,7 +520,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   original_vars <- object$var_info %>%
-    filter(source == "original") %>%
+    filter(source == "original", role == "predictor") %>%
     pull(variable)
 
   if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
