@@ -520,8 +520,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   original_vars <- object$var_info %>%
-    filter(source == "original", role == "predictor") %>%
-    pull(variable)
+    dplyr::filter(source == "original", role == "predictor") %>%
+    dplyr::pull(variable)
 
   if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
     missing_vars <- setdiff(original_vars, colnames(new_data))
