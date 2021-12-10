@@ -528,13 +528,11 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
     vars_print <- format_ch_vec(
       missing_vars,
-      width = options()$width - 40
+      width = options()$width - 55
     )
-    n_var <- ""
-    s <-
-      rlang::abort(
-        glue::glue("Missing variable in `new_data`: {vars_print}")
-      )
+    rlang::abort(
+      glue::glue("The following cols are missing from `new_data`: {vars_print}")
+    )
   }
 
   if (is.null(new_data)) {
