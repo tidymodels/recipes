@@ -518,19 +518,6 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
     rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
   }
-
-  original_vars <- object$var_info %>%
-    filter(source == "original") %>%
-    pull(variable)
-
-  if (!is.null(new_data) && !all(original_vars %in% names(new_data))) {
-    missing_vars <- format_ch_vec(
-      setdiff(original_vars, names(new_data)),
-      width = options()$width - 35
-    )
-    rlang::abort(glue::glue("Missing variable in `new_data`: {missing_vars}"))
-  }
-
   if (is.null(new_data)) {
     return(juice(object, ..., composition = composition))
   }
