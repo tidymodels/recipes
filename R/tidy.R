@@ -55,8 +55,16 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   # If number is NA and ID is not, select the step with the corresponding
   # ID. Only a single ID is allowed, as this follows the convention for number
   num_oper <- length(x$steps)
-  if (num_oper == 0)
-    rlang::abort("No steps in recipe.")
+  if (num_oper == 0) {
+    return(
+      tibble(number = integer(),
+             operation = character(),
+             type = character(),
+             trained = logical(),
+             skip = logical(),
+             id = character())
+    )
+  }
   pattern <- "(^step_)|(^check_)"
   if (!is.na(id)) {
     if (!is.na(number))

@@ -53,12 +53,23 @@ test_that('select step', {
   expect_equal(tidy(okc_rec, id = "date_dow"), exp_res_3)
 })
 
+test_that("empty recipe", {
+  expect_equal(
+    tidy(recipe(x = mtcars)),
+    tibble(number = integer(),
+           operation = character(),
+           type = character(),
+           trained = logical(),
+           skip = logical(),
+           id = character())
+  )
+})
+
 
 test_that('bad args', {
   expect_error(tidy(trained, number = NULL))
   expect_error(tidy(trained, number = 100))
   expect_error(tidy(trained, number = 1, id = "id"))
   expect_error(tidy(trained, id = "id"))
-  expect_error(tidy(recipe(x = iris)))
 })
 
