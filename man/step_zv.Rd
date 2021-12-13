@@ -28,8 +28,11 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{group}{A character string or call to dplyr::vars() can be used to
-specify the group(s) variable.}
+\item{group}{An optional character string or call to \code{\link[dplyr:vars]{dplyr::vars()}}
+that can be used to specify a group(s) within which to identify
+variables that contain only a single value. If the grouping variables
+are contained in terms selector, they will not be considered for
+removal.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
