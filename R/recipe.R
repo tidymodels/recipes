@@ -519,21 +519,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
   }
 
-  original_vars <- object$var_info %>%
-    dplyr::filter(source == "original", role == "predictor") %>%
-    dplyr::pull(variable)
-
-  if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
-    missing_vars <- setdiff(original_vars, colnames(new_data))
-
-    vars_print <- format_ch_vec(
-      missing_vars,
-      width = options()$width - 55
-    )
-    rlang::abort(
-      glue::glue("The following cols are missing from `new_data`: {vars_print}")
-    )
-  }
+  check_newdata_columns(object, new_data)
 
   if (is.null(new_data)) {
     return(juice(object, ..., composition = composition))
