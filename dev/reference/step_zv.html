@@ -103,6 +103,7 @@ that will remove variables that contain only a single value.</p>
   <span class="va">...</span>,
   role <span class="op">=</span> <span class="cn">NA</span>,
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
+  group <span class="op">=</span> <span class="cn">NULL</span>,
   removals <span class="op">=</span> <span class="cn">NULL</span>,
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
   id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"zv"</span><span class="op">)</span>
@@ -123,6 +124,12 @@ created.</p></dd>
 <dt>trained</dt>
 <dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
+<dt>group</dt>
+<dd><p>An optional character string or call to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">dplyr::vars()</a></code>
+that can be used to specify a group(s) within which to identify
+variables that contain only a single value. If the grouping variables
+are contained in terms selector, they will not be considered for
+removal.</p></dd>
 <dt>removals</dt>
 <dd><p>A character string that contains the names of
 columns that should be removed. These values are not determined
