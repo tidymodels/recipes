@@ -209,14 +209,10 @@ bake.step_isomap <- function(object, new_data, ...) {
 
 
 print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
-  if (x$num_terms == 0) {
-    cat("Isomap was not conducted.\n")
-  } else {
-    cat("Isomap approximation with ")
-    printer(x$columns, x$terms, x$trained, width = width)
-  }
-    invisible(x)
-  }
+  title <- "Isomap approximation with "
+  print_step(x$columns, x$terms, x$trained, title, width)
+  invisible(x)
+}
 
 
 #' @rdname tidy.recipe
