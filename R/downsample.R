@@ -184,8 +184,8 @@ bake.step_downsample <- function(object, new_data, ...) {
 
 print.step_downsample <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Down-sampling based on ", sep = "")
-    printer(x$column, x$terms, x$trained, width = width)
+    title <- "Down-sampling based on "
+    print_step(x$column, x$terms, x$trained, title, width)
     invisible(x)
   }
 
