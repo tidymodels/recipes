@@ -312,8 +312,8 @@ bake.step_harmonic <- function(object, new_data, ...) {
 #' @export
 print.step_harmonic <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Harmonic numeric variables for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Harmonic numeric variables for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
