@@ -121,8 +121,8 @@ bake.check_missing <- function(object, new_data, ...) {
 
 print.check_missing <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Check missing values for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Check missing values for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
