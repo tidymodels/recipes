@@ -173,8 +173,8 @@ bake.step_upsample <- function(object, new_data, ...) {
 
 print.step_upsample <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Up-sampling based on ", sep = "")
-    printer(x$column, x$terms, x$trained, width = width)
+    title <- "Up-sampling based on "
+    print_step(x$column, x$terms, x$trained, title, width)
     invisible(x)
   }
 
