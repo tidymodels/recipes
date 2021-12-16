@@ -163,8 +163,8 @@ bake.step_lowerimpute <- bake.step_impute_lower
 #' @export
 print.step_impute_lower <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Lower Bound Imputation for ", sep = "")
-    printer(names(x$threshold), x$terms, x$trained, width = width)
+    title <- "Lower Bound Imputation for "
+    print_step(names(x$threshold), x$terms, x$trained, title, width)
     invisible(x)
   }
 
