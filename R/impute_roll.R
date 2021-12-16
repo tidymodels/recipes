@@ -218,8 +218,8 @@ bake.step_rollimpute <- bake.step_impute_roll
 #' @export
 print.step_impute_roll <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Rolling Imputation for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Rolling Imputation for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
