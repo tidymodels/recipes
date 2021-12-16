@@ -133,8 +133,8 @@ bake.step_relevel <- function(object, new_data, ...) {
 
 print.step_relevel <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Re-order factor level to ref_level for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Re-order factor level to ref_level for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
