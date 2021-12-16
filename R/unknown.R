@@ -148,8 +148,8 @@ bake.step_unknown <- function(object, new_data, ...) {
 
 print.step_unknown <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Unknown factor level assignment for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Unknown factor level assignment for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
