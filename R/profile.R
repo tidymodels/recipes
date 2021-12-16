@@ -207,8 +207,8 @@ bake.step_profile <- function(object, new_data, ...) {
 
 print.step_profile <-
   function(x, width = max(20, options()$width - 22), ...) {
-    cat("Profiling data set for ")
-    printer(names(x$profile), x$profile, x$trained, width = width)
+    title <- "Profiling data set for "
+    print_step(names(x$profile), x$profile, x$trained, title, width)
     invisible(x)
   }
 
