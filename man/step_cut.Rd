@@ -88,7 +88,7 @@ rec \%>\%
 
 # It is up to you if you want values outside the
 # range learned at prep to be included
-new_df <- data.frame(x = 1:11)
+new_df <- data.frame(x = 1:11, y = 5:15)
 rec \%>\%
   step_cut(x, breaks = 5, include_outside_range = TRUE) \%>\%
   prep() \%>\%
