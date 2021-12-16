@@ -659,7 +659,7 @@ check_training_set <- function(x, rec, fresh) {
   x
 }
 
-check_newdata_columns <- function(object, new_data) {
+check_new_data_columns <- function(object, new_data) {
   original_vars <- object$var_info %>%
     dplyr::filter(source == "original", is.na(role) | role != "outcome") %>%
     dplyr::pull(variable)

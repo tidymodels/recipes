@@ -519,7 +519,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
   }
 
-  check_newdata_columns(object, new_data)
+  check_new_data_columns(object, new_data)
 
   if (is.null(new_data)) {
     return(juice(object, ..., composition = composition))
