@@ -128,13 +128,9 @@ bake.step_mutate <- function(object, new_data, ...) {
 
 
 print.step_mutate <-
-  function(x, ...) {
-    cat("Variable mutation")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+  function(x, width = max(20, options()$width - 35), ...) {
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
