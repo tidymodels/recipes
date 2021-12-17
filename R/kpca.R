@@ -169,17 +169,11 @@ bake.step_kpca <- function(object, new_data, ...) {
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
   if (x$trained) {
-    if (x$num_comp == 0 || length(x$columns) == 0) {
-      cat("No kPCA components were extracted.\n")
-    } else {
-      cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
-    }
+    title <- glue::glue("Kernel PCA ({x$res@pars$kernel}) extraction with ")
   } else {
-    cat("Kernel PCA extraction with ", sep = "")
-    cat(format_selectors(x$terms, width = width))
+    title <- "Kernel PCA extraction with "
   }
-  if (x$trained) cat(" [trained]\n") else cat("\n")
+  print_step(colnames(x$res@org.data), x$terms, x$trained, title, width)
   invisible(x)
 }
 
