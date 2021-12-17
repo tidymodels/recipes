@@ -117,7 +117,8 @@ bake.step_slice <- function(object, new_data, ...) {
 print.step_slice <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row filtering via position "
-    print_step(format_selectors(x$inputs), x$inputs, x$trained, title, width)
+    tr_obj = format_selectors(x$inputs, width)
+    print_step(tr_obj, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
