@@ -323,21 +323,8 @@ bake.step_dummy <- function(object, new_data, ...) {
 
 print.step_dummy <-
   function(x, width = max(20, options()$width - 20), ...) {
-    if (x$trained) {
-      if (length(x$levels) > 0) {
-        cat("Dummy variables from ")
-        cat(format_ch_vec(names(x$levels), width = width))
-      } else {
-        cat("Dummy variables were *not* created since no columns were selected.")
-      }
-    } else {
-      cat("Dummy variables from ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Dummy variables from "
+    print_step(names(x$levels), x$terms, x$trained, title, width)
     invisible(x)
   }
 
