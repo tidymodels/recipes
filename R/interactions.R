@@ -288,12 +288,10 @@ make_small_terms <- function(forms, dat) {
 
 print.step_interact <-
   function(x, width = max(20, options()$width - 27), ...) {
-    cat("Interactions with ", sep = "")
-    cat(as.character(x$terms)[-1])
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Interactions with "
+    terms <- as.character(x$terms)[-1]
+    untrained_terms <- rlang::parse_quos(terms, rlang::current_env())
+    print_step(terms, untrained_terms, x$trained, title, width)
     invisible(x)
   }
 
