@@ -70,9 +70,8 @@ bake.step_naomit <- function(object, new_data, ...) {
 
 print.step_naomit <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Removing rows with NA values in ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-    cat("\n")
+    title <- "Removing rows with NA values in "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
