@@ -328,7 +328,7 @@ bake.step_discretize <- function(object, new_data, ...) {
 
 print.step_discretize <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- "Dummy variables from "
+    title <- "Discretize Numeric Variables from "
     print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
