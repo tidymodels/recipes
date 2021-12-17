@@ -211,17 +211,8 @@ multi_dummy <- function(x, y) {
 
 print.step_dummy_multi_choice <-
   function(x, width = max(20, options()$width - 20), ...) {
-    if (x$trained) {
-      cat("Multi-choice Dummy variables from ")
-      cat(format_ch_vec(x$input, width = width))
-    } else {
-      cat("Multi-choice Dummy variables from ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Multi-choice Dummy variables from "
+    print_step(x$input, x$terms, x$trained, title, width)
     invisible(x)
   }
 
