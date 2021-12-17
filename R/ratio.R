@@ -164,16 +164,9 @@ bake.step_ratio <- function(object, new_data, ...) {
 
 print.step_ratio <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Ratios from ")
-    if (x$trained) {
-      vars <- c(unique(x$columns$top), unique(x$columns$bottom))
-      cat(format_ch_vec(vars, width = width))
-    } else
-      cat(format_selectors(c(x$terms, x$denom), width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Ratios from "
+    vars <- c(unique(x$columns$top), unique(x$columns$bottom))
+    print_step(vars, c(x$terms, x$denom), x$trained, title, width)
     invisible(x)
   }
 
