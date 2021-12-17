@@ -120,7 +120,7 @@ bake.step_arrange <- function(object, new_data, ...) {
 print.step_arrange <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row arrangement using "
-    print_step(x$input, x$input, x$trained, title, width)
+    print_step(x$inputs, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
