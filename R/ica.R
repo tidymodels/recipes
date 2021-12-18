@@ -199,7 +199,12 @@ bake.step_ica <- function(object, new_data, ...) {
 
 print.step_ica <-
   function(x, width = max(20, options()$width - 29), ...) {
-    title <- "ICA extraction with "
+    if (x$num_comp == 0) {
+      title <- "No ICA components were extracted from "
+    } else {
+      title <- "ICA extraction with "
+    }
+
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }

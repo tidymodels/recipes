@@ -215,8 +215,18 @@ bake.step_pca <- function(object, new_data, ...) {
 
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
-    title <- "PCA extraction with "
-    print_step(rownames(x$res$rotation), x$terms, x$trained, title, width)
+    if (x$trained) {
+      if (length(x$columns) == 0 || all(is.na(x$res$rotation))) {
+        title <- "No PCA components were extracted from "
+        columns <- names(x$columns)
+      } else {
+        title <- glue::glue("PCA extraction with ")
+        columns <- rownames(x$res$rotation)
+      }
+    } else {
+      title <- "PCA extraction with "
+    }
+    print_step(columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
