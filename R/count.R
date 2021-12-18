@@ -159,7 +159,7 @@ counter <- function(x) length(x[x > 0])
 print.step_count <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Regular expression counts using "
-    print_step(x$pattern, x$terms, x$trained, title, width)
+    print_step(x$input, x$terms, x$trained, title, width)
     invisible(x)
   }
 
