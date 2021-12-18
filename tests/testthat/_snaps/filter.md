@@ -13,7 +13,7 @@
       
       Operations:
       
-      Row filtering
+      Row filtering using <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Row filtering [trained]
+      Row filtering using <none> [trained]
 

@@ -13,7 +13,7 @@
       
       Operations:
       
-      Moving 3-point mean on 
+      Moving 3-point mean on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Moving 3-point mean on  [trained]
+      Moving 3-point mean on <none> [trained]
 

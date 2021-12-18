@@ -13,7 +13,7 @@
       
       Operations:
       
-      Variable renaming for  
+      Variable renaming for <none>
 
 ---
 
@@ -32,7 +32,7 @@
       
       Operations:
       
-      Variable renaming for   [trained]
+      Variable renaming for <none> [trained]
 
 # rename_at - empty printing
 

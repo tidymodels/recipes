@@ -13,7 +13,7 @@
       
       Operations:
       
-      Integer encoding for 
+      Integer encoding for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Integer encoding for  [trained]
+      Integer encoding for <none> [trained]
 

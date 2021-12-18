@@ -54,8 +54,7 @@
       
       Operations:
       
-      No kPCA components were extracted.
-       [trained]
+      RBF kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
 
 # can prep recipes with no keep_original_cols
 
@@ -80,7 +79,7 @@
       
       Operations:
       
-      RBF kernel PCA extraction with 
+      RBF kernel PCA extraction with <none>
 
 ---
 
@@ -99,5 +98,5 @@
       
       Operations:
       
-      RBF kernel PCA extraction with  [trained]
+      RBF kernel PCA extraction with <none> [trained]
 

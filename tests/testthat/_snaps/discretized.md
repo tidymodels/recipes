@@ -13,7 +13,7 @@
       
       Operations:
       
-      Dummy variables from <none>
+      Discretize Numeric Variables from <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Dummy variables from <none> [trained]
+      Discretize Numeric Variables from <none> [trained]
 
