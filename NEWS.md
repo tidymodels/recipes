@@ -12,6 +12,9 @@
 
 * `tidy.recipe()` now returns a zero row tibble instead of an error when applied to a empty recipe. (#867)
 
+* `step_zv()` now has a `group` argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (#711)
+
+
 # recipes 0.1.17
 
 ## New Steps
