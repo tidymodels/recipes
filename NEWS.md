@@ -10,8 +10,9 @@
 
 * All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
 
-* `detect_step()` is no longer restricted to steps created in recipes (#869).
+* `step_zv()` now has a `group` argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (#711)
 
+* `detect_step()` is no longer restricted to steps created in recipes (#869).
 
 # recipes 0.1.17
 
