@@ -12,6 +12,8 @@
 
 * `step_zv()` now has a `group` argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (#711)
 
+* `detect_step()` is no longer restricted to steps created in recipes (#869).
+
 # recipes 0.1.17
 
 ## New Steps
