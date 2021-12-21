@@ -13,7 +13,7 @@
       
       Operations:
       
-      Multi-choice Dummy variables from <none>
+      Multi-choice dummy variables from <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Multi-choice Dummy variables from <none> [trained]
+      Multi-choice dummy variables from <none> [trained]
 

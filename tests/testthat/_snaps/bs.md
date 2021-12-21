@@ -13,7 +13,7 @@
       
       Operations:
       
-      B-Splines on <none>
+      B-splines on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      B-Splines on <none> [trained]
+      B-splines on <none> [trained]
 

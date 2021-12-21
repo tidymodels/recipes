@@ -211,7 +211,7 @@ multi_dummy <- function(x, y) {
 
 print.step_dummy_multi_choice <-
   function(x, width = max(20, options()$width - 20), ...) {
-    title <- "Multi-choice Dummy variables from "
+    title <- "Multi-choice dummy variables from "
     print_step(x$input, x$terms, x$trained, title, width)
     invisible(x)
   }

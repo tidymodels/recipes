@@ -170,7 +170,7 @@ bake.step_ns <- function(object, new_data, ...) {
 
 print.step_ns <-
   function(x, width = max(20, options()$width - 28), ...) {
-    title <- "Natural Splines on "
+    title <- "Natural splines on "
     print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }

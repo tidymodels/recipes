@@ -160,7 +160,7 @@ bake.step_meanimpute <- bake.step_impute_mean
 #' @export
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- "Mean Imputation for "
+    title <- "Mean imputation for "
     print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }

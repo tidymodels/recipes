@@ -151,7 +151,7 @@ bake.step_medianimpute <- bake.step_impute_median
 #' @export
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- "Median Imputation for "
+    title <- "Median imputation for "
     print_step(names(x$medians), x$terms, x$trained, title, width)
     invisible(x)
   }
