@@ -7,6 +7,11 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
+#' @param group An optional character string or call to [dplyr::vars()]
+#'  that can be used to specify a group(s) within which to identify
+#'  variables that contain only a single value. If the grouping variables
+#'  are contained in terms selector, they will not be considered for
+#'  removal.
 #' @template step-return
 #' @template filter-steps
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
@@ -43,6 +48,7 @@ step_zv <-
            ...,
            role = NA,
            trained = FALSE,
+           group = NULL,
            removals = NULL,
            skip = FALSE,
            id = rand_id("zv")) {
@@ -52,6 +58,7 @@ step_zv <-
         terms = enquos(...),
         role = role,
         trained = trained,
+        group = group,
         removals = removals,
         skip = skip,
         id = id
@@ -60,12 +67,13 @@ step_zv <-
   }
 
 step_zv_new <-
-  function(terms, role, trained, removals, skip, id) {
+  function(terms, role, trained, group, removals, skip, id) {
     step(
       subclass = "zv",
       terms = terms,
       role = role,
       trained = trained,
+      group = group,
       removals = removals,
       skip = skip,
       id = id
@@ -75,17 +83,34 @@ step_zv_new <-
 one_unique <- function(x) {
   x <- x[!is.na(x)]
   length(unique(x)) < 2
-  }
+}
+
+group_one_unique <- function(x, f) {
+  x_split <- split(x, f)
+  any(vapply(x_split, one_unique, logical(1)))
+}
 
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  filter <- vapply(training[, col_names], one_unique, logical(1))
+  group_names <- recipes_eval_select(x$group, training, info)
+
+  if (is.null(x$group)) {
+    filter <- vapply(training[, col_names], one_unique, logical(1))
+  } else {
+    filter <- vapply(
+      training[, setdiff(col_names, group_names)],
+      group_one_unique,
+      f = interaction(training[group_names]),
+      logical(1)
+    )
+  }
 
   step_zv_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    group = x$group,
     removals = names(filter)[filter],
     skip = x$skip,
     id = x$id
