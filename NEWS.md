@@ -14,6 +14,9 @@
 
 * `detect_step()` is no longer restricted to steps created in recipes (#869).
 
+* New `extract_parameter_set_dials()` method to extract parameter sets from `recipe` objects.
+
+
 # recipes 0.1.17
 
 ## New Steps

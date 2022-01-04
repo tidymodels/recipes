@@ -15,6 +15,10 @@ generics::tunable
 #' @export
 generics::tune_args
 
+#' @importFrom hardhat extract_parameter_set_dials
+#' @export
+hardhat::extract_parameter_set_dials
+
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`
