@@ -2,7 +2,6 @@
 % Please edit documentation in R/downsample.R
 \name{step_downsample}
 \alias{step_downsample}
-\alias{tidy.step_downsample}
 \title{Down-Sample a Data Set Based on a Factor Variable}
 \usage{
 step_downsample(
@@ -18,8 +17,6 @@ step_downsample(
   seed = sample.int(10^5, 1),
   id = rand_id("downsample")
 )
-
-\method{tidy}{step_downsample}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -59,8 +56,6 @@ the computations for subsequent operations.}
 \item{seed}{An integer that will be used as the seed when downsampling.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_downsample} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
