@@ -42,7 +42,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dials,
+    dials (>= 0.0.10.9001),
     dimRed (>= 0.2.2),
     fastICA,
     ggplot2,
@@ -61,6 +61,7 @@ Suggests:
     workflows,
     xml2
 Remotes: 
+    tidymodels/dials@extract-parameter,
     tidymodels/hardhat
 VignetteBuilder: 
     knitr
