@@ -18,8 +18,14 @@
 #'  contains the `mutate()` expressions as character strings
 #'  (and are not reparsable), is returned.
 #'
-#' If a preceding step removes a column that is selected by name in
-#' `step_mutate()`, the recipe will error when being estimated with `prep()`.
+#'  If a preceding step removes a column that is selected by name in
+#'  `step_mutate()`, the recipe will error when being estimated with `prep()`.
+#'
+#'  Please be aware that it is easy to create data leakage by having
+#'  the calculations depend on the characteristics of the data set itself.
+#'  The expression `x = w > mean(w)` would when applied to the testing
+#'  data set use the mean of w in the testing data set instead of the
+#'  training data set as it should.
 #'
 #' @family individual transformation steps
 #' @family dplyr steps

@@ -59,6 +59,12 @@ contains the \code{mutate()} expressions as character strings
 
 If a preceding step removes a column that is selected by name in
 \code{step_mutate()}, the recipe will error when being estimated with \code{prep()}.
+
+Please be aware that it is easy to create data leakage by having
+the calculations depend on the characteristics of the data set itself.
+The expression \code{x = w > mean(w)} would when applied to the testing
+data set use the mean of w in the testing data set instead of the
+training data set as it should.
 }
 \examples{
 rec <-
