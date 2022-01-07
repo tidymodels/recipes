@@ -5,9 +5,8 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ref_dist A prefix for generated column names, defaults to "right_relu_"
-#'   for right hinge transformation and "left_relu_" for reversed/left hinge
-#'   transformations.
+#' @param ref_dist The computed percentiles is stored here once this
+#'  preprocessing step has be trained by [prep.recipe()].
 #' @param options A named list of options to pass to [stats::quantile()].
 #'   See Details for more information.
 #' @template step-return

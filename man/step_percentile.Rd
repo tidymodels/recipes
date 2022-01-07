@@ -29,9 +29,8 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{ref_dist}{A prefix for generated column names, defaults to "right_relu_"
-for right hinge transformation and "left_relu_" for reversed/left hinge
-transformations.}
+\item{ref_dist}{The computed percentiles is stored here once this
+preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
 
 \item{options}{A named list of options to pass to \code{\link[stats:quantile]{stats::quantile()}}.
 See Details for more information.}
