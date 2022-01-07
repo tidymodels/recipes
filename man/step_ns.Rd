@@ -100,6 +100,7 @@ Other individual transformation steps:
 \code{\link{step_logit}()},
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
