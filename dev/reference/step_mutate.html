@@ -142,7 +142,11 @@ sequence of any existing operations.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>When an object in the user's global environment is
+    <p>When using this flexible step, use extra care to avoid data leakage in your
+preprocessing. Consider, for example, the transformation <code>x = w &gt; mean(w)</code>.
+When applied to new data or testing data, this transformation would use the
+mean of <code>w</code> from the <em>new</em> data, not the mean of <code>w</code> from the training data.</p>
+<p>When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. <code>!!</code>) to embed
 the value of the object in the expression (to be portable
