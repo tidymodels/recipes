@@ -10,7 +10,7 @@ step_percentile(
   role = NA,
   trained = FALSE,
   ref_dist = NULL,
-  options = list(probs = (0:100)/100, names = TRUE),
+  options = list(probs = (0:100)/100),
   skip = FALSE,
   id = rand_id("percentile")
 )
