@@ -53,14 +53,13 @@ sequence of any existing operations.
 the selected variables using a common function via \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
 }
 \details{
+When using this flexible step, use extra care to avoid data leakage in your
+preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
+When applied to new data or testing data, this transformation would use the
+mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
+
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with
 column \code{terms} which contains the columns being transformed is returned.
-
-Please be aware that it is easy to create data leakage by having
-the calculations depend on the characteristics of the data set itself.
-The expression \code{x = w > mean(w)} would when applied to the testing
-data set use the mean of w in the testing data set instead of the
-training data set as it should.
 }
 \examples{
 library(dplyr)

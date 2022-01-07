@@ -8,6 +8,7 @@
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
+#' @template mutate-leakage
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
@@ -20,12 +21,6 @@
 #'
 #'  If a preceding step removes a column that is selected by name in
 #'  `step_mutate()`, the recipe will error when being estimated with `prep()`.
-#'
-#'  Please be aware that it is easy to create data leakage by having
-#'  the calculations depend on the characteristics of the data set itself.
-#'  The expression `x = w > mean(w)` would when applied to the testing
-#'  data set use the mean of w in the testing data set instead of the
-#'  training data set as it should.
 #'
 #' @family individual transformation steps
 #' @family dplyr steps

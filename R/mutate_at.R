@@ -10,14 +10,9 @@
 #' named**.
 #' @param inputs A vector of column names populated by `prep()`.
 #' @template step-return
+#' @template mutate-leakage
 #' @details When you [`tidy()`] this step, a tibble with
 #'  column `terms` which contains the columns being transformed is returned.
-#'
-#'  Please be aware that it is easy to create data leakage by having
-#'  the calculations depend on the characteristics of the data set itself.
-#'  The expression `x = w > mean(w)` would when applied to the testing
-#'  data set use the mean of w in the testing data set instead of the
-#'  training data set as it should.
 #'
 #' @family multivariate transformation steps
 #' @family dplyr steps
