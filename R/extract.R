@@ -40,6 +40,6 @@ eval_call_info <-  function(x) {
 }
 
 #' @export
-extract_parameter_dials.recipe <- function(x, id, ...) {
-  extract_parameter_dials(extract_parameter_set_dials(x), id)
+extract_parameter_dials.recipe <- function(x, parameter, ...) {
+  extract_parameter_dials(extract_parameter_set_dials(x), parameter)
 }
