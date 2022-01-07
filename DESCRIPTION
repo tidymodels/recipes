@@ -23,7 +23,7 @@ Imports:
     generics (>= 0.1.0.9000),
     glue,
     gower,
-    hardhat (>= 0.1.6.9000),
+    hardhat (>= 0.1.6.9001),
     ipred (>= 0.9-12),
     lifecycle,
     lubridate,
@@ -62,7 +62,7 @@ Suggests:
     xml2
 Remotes: 
     tidymodels/dials@extract-parameter,
-    tidymodels/hardhat
+    tidymodels/hardhat@add-tune
 VignetteBuilder: 
     knitr
 RdMacros: 
