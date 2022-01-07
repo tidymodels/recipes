@@ -14,6 +14,8 @@
 
 * `detect_step()` is no longer restricted to steps created in recipes (#869).
 
+* Added a new step called `step_percentile()`, that replaces the value of a variable with its percentile from the training set. (#765)
+
 # recipes 0.1.17
 
 ## New Steps
