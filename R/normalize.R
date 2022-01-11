@@ -127,8 +127,8 @@ bake.step_normalize <- function(object, new_data, ...) {
 
 print.step_normalize <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Centering and scaling for ", sep = "")
-    printer(names(x$sds), x$terms, x$trained, width = width)
+    title <- "Centering and scaling for "
+    print_step(names(x$sds), x$terms, x$trained, title, width)
     invisible(x)
   }
 

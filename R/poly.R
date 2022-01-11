@@ -169,8 +169,8 @@ bake.step_poly <- function(object, new_data, ...) {
 
 print.step_poly <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Orthogonal polynomials on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Orthogonal polynomials on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 

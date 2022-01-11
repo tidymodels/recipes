@@ -115,8 +115,8 @@ bake.step_factor2string <- function(object, new_data, ...) {
 
 print.step_factor2string <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Character variables from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Character variables from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

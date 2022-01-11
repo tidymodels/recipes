@@ -93,8 +93,8 @@ bake.step_inverse <- function(object, new_data, ...) {
 
 print.step_inverse <-
   function(x, width = max(20, options()$width - 33), ...) {
-    cat("Inverse transformation on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Inverse transformation on "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

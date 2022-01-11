@@ -18,7 +18,7 @@
       
       Operations:
       
-      Sparse, unbalanced variable filter on 
+      Sparse, unbalanced variable filter on <none>
 
 ---
 
@@ -37,5 +37,5 @@
       
       Operations:
       
-      Sparse, unbalanced variable filter removed no terms [trained]
+      Sparse, unbalanced variable filter removed <none> [trained]
 

@@ -13,7 +13,7 @@
       
       Operations:
       
-      Zero variance filter on 
+      Zero variance filter on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Zero variance filter removed no terms [trained]
+      Zero variance filter removed <none> [trained]
 

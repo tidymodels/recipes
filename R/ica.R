@@ -200,12 +200,12 @@ bake.step_ica <- function(object, new_data, ...) {
 print.step_ica <-
   function(x, width = max(20, options()$width - 29), ...) {
     if (x$num_comp == 0) {
-      cat("No ICA components were extracted.\n")
+      title <- "No ICA components were extracted from "
     } else {
-      cat("ICA extraction with ")
-      printer(x$columns, x$terms, x$trained, width = width)
+      title <- "ICA extraction with "
     }
 
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

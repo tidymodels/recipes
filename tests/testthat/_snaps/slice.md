@@ -13,7 +13,7 @@
       
       Operations:
       
-      Row filtering via position
+      Row filtering via position <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Row filtering via position [trained]
+      Row filtering via position <none> [trained]
 

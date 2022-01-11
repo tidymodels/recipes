@@ -157,17 +157,8 @@ bake.step_integer <- function(object, new_data, ...) {
 
 print.step_integer <-
   function(x, width = max(20, options()$width - 20), ...) {
-    if (x$trained) {
-      cat("Integer encoding for ")
-      cat(format_ch_vec(names(x$key), width = width))
-    } else {
-      cat("Integer encoding for ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Integer encoding for "
+    print_step(names(x$key), x$terms, x$trained, title, width)
     invisible(x)
   }
 

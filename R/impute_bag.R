@@ -283,8 +283,8 @@ bake.step_bagimpute <- bake.step_impute_bag
 #' @export
 print.step_impute_bag <-
   function(x, width = max(20, options()$width - 31), ...) {
-    cat("Bagged tree imputation for ", sep = "")
-    printer(names(x$models), x$terms, x$trained, width = width)
+    title <- "Bagged tree imputation for "
+    print_step(names(x$models), x$terms, x$trained, title, width)
     invisible(x)
   }
 

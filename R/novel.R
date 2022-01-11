@@ -168,8 +168,8 @@ bake.step_novel <- function(object, new_data, ...) {
 
 print.step_novel <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Novel factor level assignment for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Novel factor level assignment for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 

@@ -130,8 +130,8 @@ bake.step_scale <- function(object, new_data, ...) {
 
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Scaling for ", sep = "")
-    printer(names(x$sds), x$terms, x$trained, width = width)
+    title <- "Scaling for "
+    print_step(names(x$sds), x$terms, x$trained, title, width)
     invisible(x)
   }
 

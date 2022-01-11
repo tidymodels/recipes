@@ -93,8 +93,8 @@ bake.step_mutate_at <- function(object, new_data, ...) {
 
 print.step_mutate_at <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ", sep = "")
-    printer(x$inputs, x$terms, x$trained, width = width)
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$terms, x$trained, title, width)
     invisible(x)
   }
 
