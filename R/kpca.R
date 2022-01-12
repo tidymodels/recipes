@@ -173,18 +173,8 @@ bake.step_kpca <- function(object, new_data, ...) {
 }
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
-  if (x$trained) {
-    if (x$num_comp == 0 || length(x$columns) == 0) {
-      title <- "No kPCA components were extracted from "
-      columns <- names(x$columns)
-    } else {
-      cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
-    }
-  } else {
-    title <- "Kernel PCA extraction with "
-  }
-  print_step(columns, x$terms, x$trained, title, width)
+  title <- "Kernel PCA extraction with "
+  print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 
