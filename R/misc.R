@@ -15,7 +15,8 @@ get_types <- function(x) {
       logical = "logical",
       Date = "date",
       POSIXct = "date",
-      list = "list"
+      list = "list",
+      textrecipes_tokenlist = "tokenlist"
     )
 
   classes <- lapply(x, class)
@@ -401,11 +402,8 @@ fully_trained <- function(x) {
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_intercept()
 #'
-#' detect_step(rec, "step_intercept")
+#' detect_step(rec, "intercept")
 detect_step <- function(recipe, name) {
-  exports <- getNamespaceExports("recipes")
-  if (!any(grepl(paste0(".*", name, ".*"), exports)))
-    rlang::abort("Please provide the name of valid step or check (ex: `center`).")
   name %in% tidy(recipe)$type
 }
 

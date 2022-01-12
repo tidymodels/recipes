@@ -13,7 +13,7 @@
       
       Operations:
       
-      Rolling Imputation for <none>
+      Rolling imputation for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Rolling Imputation for <none> [trained]
+      Rolling imputation for <none> [trained]
 

@@ -10,8 +10,10 @@
 #' named**.
 #' @param inputs A vector of column names populated by `prep()`.
 #' @template step-return
+#' @template mutate-leakage
 #' @details When you [`tidy()`] this step, a tibble with
 #'  column `terms` which contains the columns being transformed is returned.
+#'
 #' @family multivariate transformation steps
 #' @family dplyr steps
 #' @export
@@ -91,8 +93,8 @@ bake.step_mutate_at <- function(object, new_data, ...) {
 
 print.step_mutate_at <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ", sep = "")
-    printer(x$inputs, x$terms, x$trained, width = width)
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$terms, x$trained, title, width)
     invisible(x)
   }
 

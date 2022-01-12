@@ -13,7 +13,7 @@
       
       Operations:
       
-      Mode Imputation for <none>
+      Mode imputation for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Mode Imputation for <none> [trained]
+      Mode imputation for <none> [trained]
 

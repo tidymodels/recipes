@@ -32,5 +32,5 @@
       
       Operations:
       
-      Ratios from  [trained]
+      Ratios from <none> [trained]
 

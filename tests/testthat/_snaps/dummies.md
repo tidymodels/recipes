@@ -13,7 +13,7 @@
       
       Operations:
       
-      Dummy variables from 
+      Dummy variables from <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Dummy variables were *not* created since no columns were selected. [trained]
+      Dummy variables from <none> [trained]
 

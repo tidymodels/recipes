@@ -121,8 +121,8 @@ bake.step_spatialsign <- function(object, new_data, ...) {
 
 print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Spatial sign on  ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Spatial sign on  "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

@@ -13,7 +13,7 @@
       
       Operations:
       
-      Lower Bound Imputation for <none>
+      Lower bound imputation for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Lower Bound Imputation for <none> [trained]
+      Lower bound imputation for <none> [trained]
 

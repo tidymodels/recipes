@@ -272,7 +272,7 @@ test_that('no columns selected', {
 
   expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
-  expect_output(print(rec), regexp = "since no columns were selected")
+  expect_output(print(rec), regexp = "<none>")
 
   exp_tidy <- tibble(terms = character(), columns = character(), id = character())
   expect_equal(exp_tidy, tidy(rec, number = 2))

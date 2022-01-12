@@ -227,9 +227,10 @@ bake.step_geodist <- function(object, new_data, ...) {
 
 print.step_geodist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Geographical distances from",
-        format(x$ref_lat, digits = 10), "x",
-        format(x$ref_lon, digits = 10), "\n")
+    title <- paste("Geographical distances from",
+                   format(x$ref_lat, digits = 10), "x",
+                   format(x$ref_lon, digits = 10), "using ")
+    print_step(x$columns, c(x$lat, x$lon), x$trained, title, width)
     invisible(x)
   }
 

@@ -13,7 +13,7 @@
       
       Operations:
       
-      Delete terms 
+      Variables removed <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      No variables were removed [trained]
+      Variables removed <none> [trained]
 

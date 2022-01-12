@@ -180,8 +180,8 @@ bake.step_bs <- function(object, new_data, ...) {
 
 print.step_bs <-
   function(x, width = max(20, options()$width - 28), ...) {
-    cat("B-Splines on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "B-splines on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 

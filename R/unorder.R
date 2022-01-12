@@ -106,8 +106,8 @@ bake.step_unorder <- function(object, new_data, ...) {
 
 print.step_unorder <-
   function(x, width = max(20, options()$width - 33), ...) {
-    cat("Unordered variables ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Unordered variables "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

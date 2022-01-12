@@ -130,14 +130,11 @@ bake.step_sample <- function(object, new_data, ...) {
 
 print.step_sample <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Row sampling")
-    if (x$replace)
-      cat(" with replacement")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
+    title <- "Row sampling "
+    if (x$replace) {
+      title <- paste(title, "with replacement ")
     }
+    print_step(NULL, NULL, x$trained, title, width)
     invisible(x)
   }
 

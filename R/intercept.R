@@ -85,6 +85,8 @@ bake.step_intercept <- function(object, new_data, ...) {
 
 print.step_intercept <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Adding intercept\n")
+    title <- "Adding intercept named: "
+    untrained_terms <- rlang::parse_quos(x$name, rlang::current_env())
+    print_step(x$name, untrained_terms, x$trained, title, width)
     invisible(x)
   }
