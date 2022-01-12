@@ -155,19 +155,11 @@ bake.step_nzv <- function(object, new_data, ...) {
 print.step_nzv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Sparse, unbalanced variable filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Sparse, unbalanced variable filter removed no terms")
+      title <- "Sparse, unbalanced variable filter removed "
     } else {
-      cat("Sparse, unbalanced variable filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
+      title <- "Sparse, unbalanced variable filter on "
     }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 

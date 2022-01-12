@@ -13,7 +13,7 @@
       
       Operations:
       
-      Removing rows with NA values in 
+      Removing rows with NA values in <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Removing rows with NA values in 
+      Removing rows with NA values in <none> [trained]
 

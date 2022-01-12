@@ -65,8 +65,7 @@
       
       Operations:
       
-      No kPCA components were extracted.
-       [trained]
+      No kPCA components were extracted from X2, X3, X4, X5, X6 [trained]
 
 # can prep recipes with no keep_original_cols
 
@@ -91,7 +90,7 @@
       
       Operations:
       
-      Kernel PCA extraction with 
+      Kernel PCA extraction with <none>
 
 ---
 
@@ -110,6 +109,5 @@
       
       Operations:
       
-      No kPCA components were extracted.
-       [trained]
+      No kPCA components were extracted from <none> [trained]
 

@@ -124,8 +124,8 @@ bake.step_center <- function(object, new_data, ...) {
 
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Centering for ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "Centering for "
+    print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }
 

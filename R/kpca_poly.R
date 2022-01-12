@@ -175,18 +175,8 @@ bake.step_kpca_poly <- function(object, new_data, ...) {
 }
 
 print.step_kpca_poly <- function(x, width = max(20, options()$width - 40), ...) {
-  if (x$trained) {
-    if (x$num_comp == 0) {
-      cat("No kPCA components were extracted.\n")
-    } else {
-      cat("Polynomial kernel PCA extraction with ", sep = "")
-      cat(format_ch_vec(x$columns, width = width))
-    }
-  } else {
-    cat("Polynomial kernel PCA extraction with ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-  }
-  if (x$trained) cat(" [trained]\n") else cat("\n")
+  title <- "Polynomial kernel PCA extraction with "
+  print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 

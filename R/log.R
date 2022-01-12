@@ -139,9 +139,9 @@ bake.step_log <- function(object, new_data, ...) {
 
 print.step_log <-
   function(x, width = max(20, options()$width - 31), ...) {
-    msg <- ifelse(x$signed, "Signed log ", "Log ")
-    cat(msg, "transformation on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    msg <- ifelse(x$signed, "Signed log", "Log")
+    title <- glue::glue("{msg} transformation on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

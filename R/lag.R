@@ -120,7 +120,7 @@ bake.step_lag <- function(object, new_data, ...) {
 
 print.step_lag <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Lagging ",  sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Lagging "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }

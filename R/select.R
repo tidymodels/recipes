@@ -102,22 +102,8 @@ bake.step_select <- function(object, new_data, ...) {
 
 print.step_select <-
   function(x, width = max(20, options()$width - 35), ...) {
-    if (x$trained) {
-      cat(
-        "Variables selected ",
-        paste0(names(x$terms), collapse = ", ")
-      )
-    } else {
-      cat(
-        "Terms selected ",
-        paste0(x$terms, collapse = ", ")
-      )
-    }
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variables selected "
+    print_step(names(x$terms), x$terms, x$trained, title, width)
     invisible(x)
   }
 

@@ -89,8 +89,8 @@ bake.step_invlogit <- function(object, new_data, ...) {
 
 print.step_invlogit <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Inverse logit on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Inverse logit on "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

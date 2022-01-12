@@ -188,12 +188,8 @@ bake.step_nnmf <- function(object, new_data, ...) {
 
 
 print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
-  if (x$num_comp == 0 || length(x$columns) == 0) {
-    cat("Non-negative matrix factorization was not done.\n")
-  } else {
-    cat("Non-negative matrix factorization for ")
-    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
-  }
+  title <- "Non-negative matrix factorization for "
+  print_step(colnames(x$res@org.data), x$terms, x$trained, title, width)
   invisible(x)
 }
 

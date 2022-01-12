@@ -11,6 +11,10 @@ generics::required_pkgs
 #' @export
 generics::tunable
 
+#' @importFrom generics tune_args
+#' @export
+generics::tune_args
+
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`

@@ -272,8 +272,8 @@ print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
-    cat("K-nearest neighbor imputation for ", sep = "")
-    printer(all_x_vars, x$terms, x$trained, width = width)
+    title <- "K-nearest neighbor imputation for "
+    print_step(all_x_vars, x$terms, x$trained, title, width)
     invisible(x)
   }
 
