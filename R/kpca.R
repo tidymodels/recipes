@@ -177,8 +177,8 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
     if (x$num_comp == 0 || length(x$columns) == 0) {
       cat("No kPCA components were extracted.\n")
     } else {
-      cat("Kernel PCA extraction with ", sep = "")
-      cat(format_ch_vec(unname(x$columns), width = width))
+      cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
+      cat(format_ch_vec(colnames(x$res@org.data), width = width))
     }
   } else {
     cat("Kernel PCA extraction with ", sep = "")
