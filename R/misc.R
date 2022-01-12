@@ -771,7 +771,7 @@ changelog <- function(show, before, after, x) {
 
 # ------------------------------------------------------------------------------
 
-dimred_call <- function(fn, ...) {
+eval_dimred_call <- function(fn, ...) {
   opts <- list(...)
   cl <- rlang::call2(fn, .ns = "dimRed", !!!opts)
   rlang::eval_tidy(cl)

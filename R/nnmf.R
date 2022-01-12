@@ -131,7 +131,7 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
     nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
 
     nnm <- try(
-      dimred_call(
+      eval_dimred_call(
         "embed",
         .method = "NNMF",
         .data = dimred_data(training[, col_names, drop = FALSE]),
