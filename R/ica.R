@@ -14,6 +14,8 @@
 #'  [fastICA::fastICA()]. No defaults are set here.
 #'  **Note** that the arguments `X` and `n.comp` should
 #'  not be passed here.
+#' @param seed A single integer to set the random number stream prior to
+#'  running ICA.
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
@@ -71,14 +73,16 @@
 #' ica_trans <- step_scale(ica_trans, V1, V2)
 #' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 #'
-#' # ica_estimates <- prep(ica_trans, training = tr)
-#' # ica_data <- bake(ica_estimates, te)
-#' #
-#' # plot(te$V1, te$V2)
-#' # plot(ica_data$IC1, ica_data$IC2)
-#' #
-#' # tidy(ica_trans, number = 3)
-#' # tidy(ica_estimates, number = 3)
+#' if (FALSE) {
+#'   ica_estimates <- prep(ica_trans, training = tr)
+#'   ica_data <- bake(ica_estimates, te)
+#'
+#'   plot(te$V1, te$V2)
+#'   plot(ica_data$IC1, ica_data$IC2)
+#'
+#'   tidy(ica_trans, number = 3)
+#'   tidy(ica_estimates, number = 3)
+#' }
 step_ica <-
   function(recipe,
            ...,
@@ -86,6 +90,7 @@ step_ica <-
            trained = FALSE,
            num_comp  = 5,
            options = list(method = "C"),
+           seed = sample.int(10000, 5),
            res = NULL,
            columns = NULL,
            prefix = "IC",
@@ -104,6 +109,7 @@ step_ica <-
         trained = trained,
         num_comp = num_comp,
         options = options,
+        seed = seed,
         res = res,
         columns = columns,
         prefix = prefix,
@@ -115,7 +121,7 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, options, res, columns,
+  function(terms, role, trained, num_comp, options, seed, res, columns,
            prefix, keep_original_cols, skip, id) {
     step(
       subclass = "ica",
@@ -124,6 +130,7 @@ step_ica_new <-
       trained = trained,
       num_comp = num_comp,
       options = options,
+      seed = seed,
       res = res,
       columns = columns,
       prefix = prefix,
@@ -149,7 +156,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
         X = rlang::expr(as.matrix(training[, col_names]))
       )
     cl <- rlang::call_modify(cl, !!!x$options)
-    indc <- try(withr::with_seed(1, rlang::eval_tidy(cl)), silent = TRUE)
+    indc <- try(withr::with_seed(x$seed, rlang::eval_tidy(cl)), silent = TRUE)
 
     if (inherits(indc, "try-error")) {
       rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
@@ -167,6 +174,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     num_comp = x$num_comp,
     options = x$options,
+    seed = x$seed,
     res = indc,
     columns = col_names,
     prefix = x$prefix,
@@ -181,11 +189,9 @@ bake.step_ica <- function(object, new_data, ...) {
   uses_dim_red(object)
 
   if (object$num_comp > 0 && length(object$columns) > 0) {
-    comps <-
-      as.matrix(new_data[, object$columns]) %>%
-      scale(center = object$res$means, scale = FALSE) %*%
-      object$res$K %*% object$res$W
-
+    comps <- scale(as.matrix(new_data[, object$columns]),
+                   center = object$res$means, scale = FALSE)
+    comps <- comps %*% object$res$K %*% object$res$W
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
@@ -218,8 +224,6 @@ tidy.step_ica <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(x$columns) > 0) {
       res <- x$res$K %*% x$res$W
-
-
       colnames(res) <- names0(ncol(res), x$prefix)
       res <- as.data.frame(res)
       res$terms <- x$columns
@@ -235,7 +239,7 @@ tidy.step_ica <- function(x, ...) {
       res <-
         tibble(
           terms = character(0),
-          value = double(),
+          value = double(0),
           component = character(0),
           id = character(0)
         )

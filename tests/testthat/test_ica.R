@@ -32,7 +32,7 @@ test_that('correct ICA values', {
   skip_if_not_installed("RSpectra")
 
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
+    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, seed = 1, id = "")
 
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)

@@ -11,6 +11,7 @@ step_ica(
   trained = FALSE,
   num_comp = 5,
   options = list(method = "C"),
+  seed = sample.int(10000, 5),
   res = NULL,
   columns = NULL,
   prefix = "IC",
@@ -42,6 +43,9 @@ used.}
 \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
 \strong{Note} that the arguments \code{X} and \code{n.comp} should
 not be passed here.}
+
+\item{seed}{A single integer to set the random number stream prior to
+running ICA.}
 
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
@@ -120,14 +124,16 @@ ica_trans <- step_center(rec,  V1, V2)
 ica_trans <- step_scale(ica_trans, V1, V2)
 ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 
-# ica_estimates <- prep(ica_trans, training = tr)
-# ica_data <- bake(ica_estimates, te)
-#
-# plot(te$V1, te$V2)
-# plot(ica_data$IC1, ica_data$IC2)
-#
-# tidy(ica_trans, number = 3)
-# tidy(ica_estimates, number = 3)
+if (FALSE) {
+  ica_estimates <- prep(ica_trans, training = tr)
+  ica_data <- bake(ica_estimates, te)
+
+  plot(te$V1, te$V2)
+  plot(ica_data$IC1, ica_data$IC2)
+
+  tidy(ica_trans, number = 3)
+  tidy(ica_estimates, number = 3)
+}
 }
 \references{
 Hyvarinen, A., and Oja, E. (2000). Independent
