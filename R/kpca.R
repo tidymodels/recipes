@@ -184,11 +184,7 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
 tidy.step_kpca <- function(x, ...) {
   uses_dim_red(x)
   if (is_trained(x)) {
-    if (x$num_comp > 0 && length(x$columns) > 0) {
-      res <- tibble(terms = unname(x$columns))
-    } else {
-      res <- tibble(terms = character(0))
-    }
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)

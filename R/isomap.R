@@ -226,11 +226,7 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
 #' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_terms > 0 && length(x$columns) > 0) {
-      res <- tibble(terms = colnames(x$res@org.data))
-    } else {
-      res <- tibble(terms = unname(x$columns))
-    }
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)

@@ -227,7 +227,6 @@ tidy.step_ica <- function(x, ...) {
       colnames(res) <- names0(ncol(res), x$prefix)
       res <- as.data.frame(res)
       res$terms <- x$columns
-      res$id <- x$id
       res <-
         tidyr::pivot_longer(
           res,
@@ -238,10 +237,9 @@ tidy.step_ica <- function(x, ...) {
     } else {
       res <-
         tibble(
-          terms = character(0),
-          value = double(0),
-          component = character(0),
-          id = character(0)
+          terms = unname(x$columns),
+          value = na_dbl,
+          component = na_chr
         )
     }
   } else {
@@ -253,10 +251,11 @@ tidy.step_ica <- function(x, ...) {
     res$terms <- as.character(res$terms)
     res$component <- as.character(res$component)
     res <- as_tibble(res)
-    res$id <- x$id
   }
 
+  res$id <- x$id
   res <- dplyr::arrange(res, terms, component)
+
   dplyr::select(res, terms, component, value, id)
 }
 
