@@ -58,32 +58,32 @@
 #'
 #' @examples
 #' \donttest{
-#' library(modeldata)
-#' data(biomass)
+#'   library(modeldata)
+#'   data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#'   biomass_tr <- biomass[biomass$dataset == "Training",]
+#'   biomass_te <- biomass[biomass$dataset == "Testing",]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#'   rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'                 data = biomass_tr)
 #'
-#' im_trans <- rec %>%
-#'   step_YeoJohnson(all_numeric_predictors()) %>%
-#'   step_normalize(all_numeric_predictors()) %>%
-#'   step_isomap(all_numeric_predictors(), neighbors = 100, num_terms = 2)
+#'   im_trans <- rec %>%
+#'     step_YeoJohnson(all_numeric_predictors()) %>%
+#'     step_normalize(all_numeric_predictors()) %>%
+#'     step_isomap(all_numeric_predictors(), neighbors = 100, num_terms = 2)
 #'
-#' if (require(dimRed) & require(RSpectra)) {
-#'   im_estimates <- prep(im_trans, training = biomass_tr)
+#'   if (FALSE) {
+#'     im_estimates <- prep(im_trans, training = biomass_tr)
 #'
-#'   im_te <- bake(im_estimates, biomass_te)
+#'     im_te <- bake(im_estimates, biomass_te)
 #'
-#'   rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-#'   plot(im_te$Isomap1, im_te$Isomap2,
-#'        xlim = rng, ylim = rng)
+#'     rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+#'     plot(im_te$Isomap1, im_te$Isomap2,
+#'          xlim = rng, ylim = rng)
 #'
-#'   tidy(im_trans, number = 3)
-#'   tidy(im_estimates, number = 3)
-#' }
+#'     tidy(im_trans, number = 3)
+#'     tidy(im_estimates, number = 3)
+#'   }
 #' }
 step_isomap <-
   function(recipe,
@@ -153,9 +153,10 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
     iso_map <-
       try(
-        dimRed::embed(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          "Isomap",
+        eval_dimred_call(
+          "embed",
+          .data = dimred_data(training[, col_names, drop = FALSE]),
+          .method = "Isomap",
           knn = x$neighbors,
           ndim = x$num_terms,
           .mute = x$options$.mute
@@ -191,7 +192,7 @@ bake.step_isomap <- function(object, new_data, ...) {
     isomap_vars <- colnames(environment(object$res@apply)$indata)
     suppressMessages({
       comps <- object$res@apply(
-        dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
+        dimred_data(new_data[, isomap_vars, drop = FALSE])
       )@data
     })
     comps <- comps[, 1:object$num_terms, drop = FALSE]
@@ -225,11 +226,7 @@ print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
 #' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_terms > 0 && length(x$columns) > 0) {
-      res <- tibble(terms = colnames(x$res@org.data))
-    } else {
-      res <- tibble(terms = unname(x$columns))
-    }
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)

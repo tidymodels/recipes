@@ -128,17 +128,22 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
     x$num_comp <- min(x$num_comp, length(col_names))
 
-    opts <- list(options = x$options)
-    opts$ndim <- x$num_comp
-    opts$nrun <- x$num_run
-    opts$seed <- x$seed
-    opts$.mute <- c("message", "output")
-    opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
-    opts$.method <- "NNMF"
     nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
-    opts$options <- list(.options = nmf_opts)
 
-    nnm <- try(do.call(dimRed::embed, opts), silent = TRUE)
+    nnm <- try(
+      eval_dimred_call(
+        "embed",
+        .method = "NNMF",
+        .data = dimred_data(training[, col_names, drop = FALSE]),
+        ndim = x$num_comp,
+        nrun = x$num_run,
+        seed = x$seed,
+        .mute = c("message", "output"),
+        options = x$options,
+        .options = nmf_opts
+      ),
+      silent = TRUE
+    )
     if (inherits(nnm, "try-error")) {
       rlang::abort(paste0("`step_nnmf` failed with error:\n", as.character(nnm)))
     }
@@ -168,11 +173,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
   if (object$num_comp > 0 && length(object$columns) > 0) {
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-
-      object$res@apply(
-        dimRed::dimRedData(
-          as.data.frame(new_data[, nnmf_vars, drop = FALSE])
-        )
-      )@data
+      object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))

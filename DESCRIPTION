@@ -41,8 +41,6 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dimRed (>= 0.2.2),
-    fastICA,
     ggplot2,
     igraph,
     kernlab,
