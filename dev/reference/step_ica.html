@@ -107,6 +107,7 @@ components.</p>
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
   num_comp <span class="op">=</span> <span class="fl">5</span>,
   options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span>,
+  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">5</span><span class="op">)</span>,
   res <span class="op">=</span> <span class="cn">NULL</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   prefix <span class="op">=</span> <span class="st">"IC"</span>,
@@ -141,6 +142,9 @@ used.</p></dd>
 <code><a href="https://rdrr.io/pkg/fastICA/man/fastICA.html" class="external-link">fastICA::fastICA()</a></code>. No defaults are set here.
 <strong>Note</strong> that the arguments <code>X</code> and <code>n.comp</code> should
 not be passed here.</p></dd>
+<dt>seed</dt>
+<dd><p>A single integer to set the random number stream prior to
+running ICA.</p></dd>
 <dt>res</dt>
 <dd><p>The <code><a href="https://rdrr.io/pkg/fastICA/man/fastICA.html" class="external-link">fastICA::fastICA()</a></code> object is stored
 here once this preprocessing step has be trained by
@@ -238,44 +242,16 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class="r-in"><span class="va">ica_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="va">ica_trans</span>, <span class="va">V1</span>, <span class="va">V2</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ica_trans</span> <span class="op">&lt;-</span> <span class="fu">step_ica</span><span class="op">(</span><span class="va">ica_trans</span>, <span class="va">V1</span>, <span class="va">V2</span>, num_comp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://www.guido-kraemer.com/software/dimred/" class="external-link">dimRed</a></span><span class="op">)</span> <span class="op">&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va">fastICA</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">ica_estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">ica_trans</span>, training <span class="op">=</span> <span class="va">tr</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">ica_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">ica_estimates</span>, <span class="va">te</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/dimRed/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">te</span><span class="op">$</span><span class="va">V1</span>, <span class="va">te</span><span class="op">$</span><span class="va">V2</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/pkg/dimRed/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ica_data</span><span class="op">$</span><span class="va">IC1</span>, <span class="va">ica_data</span><span class="op">$</span><span class="va">IC2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">te</span><span class="op">$</span><span class="va">V1</span>, <span class="va">te</span><span class="op">$</span><span class="va">V2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ica_data</span><span class="op">$</span><span class="va">IC1</span>, <span class="va">ica_data</span><span class="op">$</span><span class="va">IC2</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in">  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">ica_trans</span>, number <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">ica_estimates</span>, number <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: dimRed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: DRR</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: kernlab</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘kernlab’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:ggplot2’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     alpha</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: CVST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: Matrix</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dimRed’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     embed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     as.data.frame</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: fastICA</span>
-<span class="r-plt img"><img src="step_ica-1.png" alt="" width="768" height="552"></span>
-<span class="r-plt img"><img src="step_ica-2.png" alt="" width="768" height="552"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   terms component  value id       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> V1    IC1       -<span style="color: #BB0000;">1.04</span>  ica_3zAWC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> V1    IC2       -<span style="color: #BB0000;">0.378</span> ica_3zAWC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> V2    IC1       -<span style="color: #BB0000;">0.773</span> ica_3zAWC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> V2    IC2        0.788 ica_3zAWC</span>
 </code></pre></div>
     </div>
   </div>
