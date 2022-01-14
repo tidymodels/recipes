@@ -119,8 +119,8 @@ bake.step_bin2factor <- function(object, new_data, ...) {
 
 print.step_bin2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Dummy variable to factor conversion for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Dummy variable to factor conversion for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

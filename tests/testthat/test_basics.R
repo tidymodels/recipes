@@ -73,10 +73,6 @@ test_that("detect_step function works", {
 
   prepped_rec <- prep(rec, iris)
 
-  # only allow checking for valid steps
-  expect_error(detect_step(rec, "not_a_step"))
-  expect_error(detect_step(prepped_rec, "not_a_step"))
-
   # detect untrained steps
   expect_true(detect_step(rec, "center"))
   expect_true(detect_step(rec, "scale"))

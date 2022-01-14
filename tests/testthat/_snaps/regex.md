@@ -13,7 +13,7 @@
       
       Operations:
       
-      Regular expression dummy variable using `.`
+      Regular expression dummy variable using "."
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Regular expression dummy variable using `.` [trained]
+      Regular expression dummy variable using "." [trained]
 

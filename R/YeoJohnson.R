@@ -138,8 +138,8 @@ bake.step_YeoJohnson <- function(object, new_data, ...) {
 
 print.step_YeoJohnson <-
   function(x, width = max(20, options()$width - 39), ...) {
-    cat("Yeo-Johnson transformation on ", sep = "")
-    printer(names(x$lambdas), x$terms, x$trained, width = width)
+    title <- "Yeo-Johnson transformation on "
+    print_step(names(x$lambdas), x$terms, x$trained, title, width)
     invisible(x)
   }
 

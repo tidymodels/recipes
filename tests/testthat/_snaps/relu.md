@@ -13,7 +13,7 @@
       
       Operations:
       
-      Adding relu transform for 
+      Adding relu transform for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Adding relu transform for  [trained]
+      Adding relu transform for <none> [trained]
 

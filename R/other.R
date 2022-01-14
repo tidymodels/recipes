@@ -185,21 +185,16 @@ bake.step_other <- function(object, new_data, ...) {
 print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
 
-    if (x$trained) {
-      collapsed <- map_lgl(x$objects, ~ .x$collapse)
-      collapsed <- names(collapsed)[collapsed]
-      if (length(collapsed) > 0) {
-        cat("Collapsing factor levels for ", sep = "")
-        printer(collapsed, x$terms, x$trained, width = width)
-      } else {
-        cat("No factor levels were collapsed\n")
-      }
-    } else {
-      cat("Collapsing factor levels for ", sep = "")
-      printer(names(x$objects), x$terms, x$trained, width = width)
-    }
-    invisible(x)
+  title <- "Collapsing factor levels for "
+  if (x$trained) {
+    columns <- map_lgl(x$objects, ~ .x$collapse)
+    columns <- names(columns)[columns]
+  } else {
+    columns <- names(x$objects)
   }
+  print_step(columns, x$terms, x$trained, title, width)
+  invisible(x)
+}
 
 # TODO case weights: Use case weights here
 keep_levels <- function(x, threshold = .1, other = "other") {

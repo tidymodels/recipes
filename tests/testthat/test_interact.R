@@ -94,6 +94,38 @@ test_that('using selectors', {
   expect_equal(te_og, te_new)
 })
 
+
+# Tests related to #648
+# https://github.com/tidymodels/recipes/issues/648
+test_that('using selectors when namespaces with ::', {
+  int_rec <- rec %>%
+    step_dummy(z) %>%
+    step_interact( ~ tidyselect::starts_with("z"):x1)
+  int_rec_trained <-
+    prep(int_rec, training = dat_tr, verbose = FALSE)
+
+  te_new <-
+    bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
+  te_new <- te_new[, sort(names(te_new))]
+  te_new <- as.matrix(te_new)
+  te_new <- te_new[, c("x1", "x2", "x3", "x4", "x5",
+                       "z_b", "z_c", "z_b_x_x1", "z_c_x_x1")]
+
+  og_terms <- terms( ~ x1 + x2 + x3 + x4 + x5 +
+                       x1*z, data = dat_te)
+  te_og <- model.matrix(og_terms, data = dat_te)[,-1]
+  colnames(te_og) <- gsub(":", "_x_", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("zb", "z_b", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("zc", "z_c", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_b", "z_b_x_x1", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_c", "z_c_x_x1", colnames(te_og), fixed = TRUE)
+
+  rownames(te_new) <- NULL
+  rownames(te_og) <- NULL
+
+  expect_equal(te_og, te_new)
+})
+
 test_that("using where() works", {
   ex_rec <- rec %>%
     step_dummy(z) %>%

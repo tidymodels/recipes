@@ -260,15 +260,8 @@ bake.step_window <- function(object, new_data, ...) {
 
 print.step_window <-
   function(x, width = max(20, options()$width - 28), ...) {
-    cat("Moving ", x$size, "-point ", x$statistic, " on ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(x$columns, width = width))
-    } else
-      cat(format_selectors(x$terms, width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- glue::glue("Moving {x$size}-point {x$statistic} on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

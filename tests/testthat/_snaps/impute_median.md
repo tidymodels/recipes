@@ -13,7 +13,7 @@
       
       Operations:
       
-      Median Imputation for <none>
+      Median imputation for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Median Imputation for <none> [trained]
+      Median imputation for <none> [trained]
 

@@ -181,8 +181,8 @@ bake.check_range <- function(object,
 
 print.check_range <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking range of ", sep = "")
-    printer(names(x$lower), x$terms, x$trained, width = width)
+    title <- "Checking range of "
+    print_step(names(x$lower), x$terms, x$trained, title, width)
     invisible(x)
   }
 

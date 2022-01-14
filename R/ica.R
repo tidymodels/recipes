@@ -14,6 +14,8 @@
 #'  [fastICA::fastICA()]. No defaults are set here.
 #'  **Note** that the arguments `X` and `n.comp` should
 #'  not be passed here.
+#' @param seed A single integer to set the random number stream prior to
+#'  running ICA.
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
@@ -71,7 +73,7 @@
 #' ica_trans <- step_scale(ica_trans, V1, V2)
 #' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 #'
-#' if (require(dimRed) & require(fastICA)) {
+#' if (FALSE) {
 #'   ica_estimates <- prep(ica_trans, training = tr)
 #'   ica_data <- bake(ica_estimates, te)
 #'
@@ -88,6 +90,7 @@ step_ica <-
            trained = FALSE,
            num_comp  = 5,
            options = list(method = "C"),
+           seed = sample.int(10000, 5),
            res = NULL,
            columns = NULL,
            prefix = "IC",
@@ -106,6 +109,7 @@ step_ica <-
         trained = trained,
         num_comp = num_comp,
         options = options,
+        seed = seed,
         res = res,
         columns = columns,
         prefix = prefix,
@@ -117,7 +121,7 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, options, res, columns,
+  function(terms, role, trained, num_comp, options, seed, res, columns,
            prefix, keep_original_cols, skip, id) {
     step(
       subclass = "ica",
@@ -126,6 +130,7 @@ step_ica_new <-
       trained = trained,
       num_comp = num_comp,
       options = options,
+      seed = seed,
       res = res,
       columns = columns,
       prefix = prefix,
@@ -143,17 +148,21 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
   if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
 
-    indc <- dimRed::FastICA(stdpars = x$options)
-    indc <-
-      try(
-        indc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          list(ndim = x$num_comp)
-        ),
-        silent = TRUE
+    cl <-
+      rlang::call2(
+        "fastICA",
+        .ns = "fastICA",
+        n.comp = x$num_comp,
+        X = rlang::expr(as.matrix(training[, col_names]))
       )
+    cl <- rlang::call_modify(cl, !!!x$options)
+    indc <- try(withr::with_seed(x$seed, rlang::eval_tidy(cl)), silent = TRUE)
+
     if (inherits(indc, "try-error")) {
       rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
+    } else {
+      indc <- indc[c("K", "W")]
+      indc$means <- colMeans(training[, col_names])
     }
   } else {
     indc <- NULL
@@ -165,6 +174,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     num_comp = x$num_comp,
     options = x$options,
+    seed = x$seed,
     res = indc,
     columns = col_names,
     prefix = x$prefix,
@@ -176,21 +186,19 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
+  uses_dim_red(object)
+
   if (object$num_comp > 0 && length(object$columns) > 0) {
-    ica_vars <- colnames(environment(object$res@apply)$indata)
-    comps <-
-      object$res@apply(
-        dimRed::dimRedData(
-          as.data.frame(new_data[, ica_vars, drop = FALSE])
-        )
-      )@data
+    comps <- scale(as.matrix(new_data[, object$columns]),
+                   center = object$res$means, scale = FALSE)
+    comps <- comps %*% object$res$K %*% object$res$W
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+      new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
     }
   }
   as_tibble(new_data)
@@ -200,32 +208,39 @@ bake.step_ica <- function(object, new_data, ...) {
 print.step_ica <-
   function(x, width = max(20, options()$width - 29), ...) {
     if (x$num_comp == 0) {
-      cat("No ICA components were extracted.\n")
+      title <- "No ICA components were extracted from "
     } else {
-      cat("ICA extraction with ")
-      printer(x$columns, x$terms, x$trained, width = width)
+      title <- "ICA extraction with "
     }
 
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
 #' @export
 tidy.step_ica <- function(x, ...) {
+  uses_dim_red(x)
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(x$columns) > 0) {
-      rot <- dimRed::getRotationMatrix(x$res)
-      colnames(rot) <- names0(ncol(rot), x$prefix)
-      rot <- as.data.frame(rot)
-      vars <- colnames(x$res@org.data)
-      npc <- ncol(rot)
-      res <- utils::stack(rot)
-      colnames(res) <- c("value", "component")
-      res$component <- as.character(res$component)
-      res$terms <- rep(vars, npc)
-      res <- as_tibble(res)
+      res <- x$res$K %*% x$res$W
+      colnames(res) <- names0(ncol(res), x$prefix)
+      res <- as.data.frame(res)
+      res$terms <- x$columns
+      res <-
+        tidyr::pivot_longer(
+          res,
+          cols = dplyr::starts_with(x$prefix),
+          names_to = "component",
+          values_to = "value"
+        )
     } else {
-      res <- tibble(terms = unname(x$columns), value = na_dbl, component = na_chr)
+      res <-
+        tibble(
+          terms = unname(x$columns),
+          value = na_dbl,
+          component = na_chr
+        )
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -237,9 +252,11 @@ tidy.step_ica <- function(x, ...) {
     res$component <- as.character(res$component)
     res <- as_tibble(res)
   }
+
   res$id <- x$id
-  res <- arrange(res, terms, component)
-  select(res, terms, component, value, id)
+  res <- dplyr::arrange(res, terms, component)
+
+  dplyr::select(res, terms, component, value, id)
 }
 
 
@@ -259,5 +276,5 @@ tunable.step_ica <- function(x, ...) {
 #' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_ica <- function(x, ...) {
-  c("dimRed", "fastICA")
+  c("fastICA")
 }

@@ -6,6 +6,7 @@
 \alias{tidy}
 \alias{required_pkgs}
 \alias{tunable}
+\alias{tune_args}
 \alias{\%>\%}
 \alias{update}
 \title{Objects exported from other packages}
@@ -15,7 +16,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{generics}{\code{\link[generics]{required_pkgs}}, \code{\link[generics]{tidy}}, \code{\link[generics]{tunable}}}
+  \item{generics}{\code{\link[generics]{required_pkgs}}, \code{\link[generics]{tidy}}, \code{\link[generics]{tunable}}, \code{\link[generics]{tune_args}}}
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 

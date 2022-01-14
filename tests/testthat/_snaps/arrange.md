@@ -13,7 +13,7 @@
       
       Operations:
       
-      Row arrangement
+      Row arrangement using <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Row arrangement [trained]
+      Row arrangement using <none> [trained]
 
