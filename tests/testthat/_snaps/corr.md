@@ -13,7 +13,7 @@
       
       Operations:
       
-      Correlation filter on 
+      Correlation filter on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Correlation filter removed no terms [trained]
+      Correlation filter on <none> [trained]
 

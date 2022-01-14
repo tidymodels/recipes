@@ -13,7 +13,7 @@
       
       Operations:
       
-      Regular expression counts using `.`
+      Regular expression counts using <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Regular expression counts using `.` [trained]
+      Regular expression counts using <none> [trained]
 

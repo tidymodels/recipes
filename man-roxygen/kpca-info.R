@@ -6,9 +6,9 @@
 #' square. This nonlinear mapping is used during the PCA analysis and can
 #' potentially help find better representations of the original data.
 #'
-#' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
+#' This step requires the \pkg{kernlab} package.
 #' If not installed, the step will stop with a prompt about installing
-#' these packages.
+#' the package.
 #'
 #' As with ordinary PCA, it is important to center and scale the variables
 #' prior to computing PCA components ([step_normalize()] can be used for

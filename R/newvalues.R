@@ -138,8 +138,8 @@ bake.check_new_values <- function(object,
 
 print.check_new_values <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking no new_values for ", sep = "")
-    printer(names(x$values), x$terms, x$trained, width = width)
+    title <- "Checking no new_values for "
+    print_step(names(x$values), x$terms, x$trained, title, width)
     invisible(x)
   }
 

@@ -385,8 +385,8 @@ bake.step_pls <- function(object, new_data, ...) {
 
 
 print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
-  cat("PLS feature extraction with ")
-  printer(x$columns, x$terms, x$trained, width = width)
+  title <- "PLS feature extraction with "
+  print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 

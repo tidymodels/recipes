@@ -11,7 +11,7 @@ colnames(te_dat) <- paste0("X", 1:6)
 rec <- recipe(X1 ~ ., data = tr_dat)
 
 test_that('correct kernel PCA values', {
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   kpca_rec <- rec %>%
@@ -42,7 +42,7 @@ test_that('correct kernel PCA values', {
 })
 
 test_that('printing', {
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   kpca_rec <- rec %>%
@@ -87,7 +87,7 @@ test_that('tunable', {
 
 test_that('keep_original_cols works', {
 
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   kpca_rec <- rec %>%
@@ -106,7 +106,7 @@ test_that('keep_original_cols works', {
 })
 
 test_that('can prep recipes with no keep_original_cols', {
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   kpca_rec <- rec %>%
@@ -126,7 +126,7 @@ test_that('can prep recipes with no keep_original_cols', {
 })
 
 test_that("empty selection prep/bake is a no-op", {
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   rec1 <- recipe(mpg ~ ., mtcars)
@@ -142,7 +142,7 @@ test_that("empty selection prep/bake is a no-op", {
 })
 
 test_that("empty selection tidy method works", {
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   rec <- recipe(mpg ~ ., mtcars)
@@ -158,7 +158,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
-  skip_if_not_installed("dimRed")
+
   skip_if_not_installed("kernlab")
 
   rec <- recipe(mpg ~ ., mtcars)

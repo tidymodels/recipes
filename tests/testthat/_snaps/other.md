@@ -32,5 +32,5 @@
       
       Operations:
       
-      No factor levels were collapsed
+      Collapsing factor levels for <none> [trained]
 

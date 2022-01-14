@@ -189,8 +189,8 @@ adjust_levels_min_max <- function(x) {
 
 print.step_cut <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Cut numeric for ", sep = "")
-    printer(names(x$breaks), x$terms, x$trained, width = width)
+    title <- "Cut numeric for "
+    print_step(names(x$breaks), x$terms, x$trained, title, width)
     invisible(x)
   }
 

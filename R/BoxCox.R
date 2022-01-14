@@ -139,8 +139,8 @@ bake.step_BoxCox <- function(object, new_data, ...) {
 
 print.step_BoxCox <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Box-Cox transformation on ", sep = "")
-    printer(names(x$lambdas), x$terms, x$trained, width = width)
+    title <- "Box-Cox transformation on "
+    print_step(names(x$lambdas), x$terms, x$trained, title, width)
     invisible(x)
   }
 

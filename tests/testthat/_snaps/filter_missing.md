@@ -13,7 +13,7 @@
       
       Operations:
       
-      Missing value column filter on 
+      Missing value column filter on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Missing value column filter removed no terms [trained]
+      Missing value column filter removed <none> [trained]
 

@@ -13,7 +13,7 @@
       
       Operations:
       
-      No PCA components were extracted.
+      PCA extraction with <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      No PCA components were extracted.
+      No PCA components were extracted from <none> [trained]
 

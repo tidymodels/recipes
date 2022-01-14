@@ -13,7 +13,7 @@
       
       Operations:
       
-      Mean Imputation for <none>
+      Mean imputation for <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Mean Imputation for <none> [trained]
+      Mean imputation for <none> [trained]
 

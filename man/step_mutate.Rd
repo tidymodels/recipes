@@ -47,6 +47,11 @@ sequence of any existing operations.
 that will add variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
+When using this flexible step, use extra care to avoid data leakage in your
+preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
+When applied to new data or testing data, this transformation would use the
+mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
+
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
