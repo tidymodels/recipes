@@ -14,7 +14,7 @@
 #' @importFrom splines bs ns
 #' @importFrom stats as.formula binomial complete.cases cor cov lm mahalanobis
 #' @importFrom stats median model.frame model.matrix na.omit na.pass optimize
-#' @importFrom stats poly prcomp predict quantile runif sd terms var
+#' @importFrom stats poly prcomp predict quantile runif sd terms var cov.wt
 #' @importFrom tibble add_column as_tibble is_tibble tibble
 #' @importFrom tidyselect everything
 #' @importFrom utils globalVariables install.packages object.size packageVersion

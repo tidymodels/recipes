@@ -116,13 +116,32 @@ step_classdist_new <-
   }
 
 # TODO case weights: Compute these with helpers
-get_center <- function(x, mfun = mean) {
+get_center <- function(x, wts = NULL, mfun = mean) {
+  if (!is.null(wts) & !identical(mfun, mean)) {
+    rlang::abort("The centering function requested cannot be used with case weights.")
+  }
   x <- tibble::as_tibble(x)
-  vapply(x, FUN = mfun, FUN.VALUE = numeric(1))
+  if (is.null(wts)) {
+    res <- vapply(x, FUN = mfun, FUN.VALUE = numeric(1))
+  } else {
+    res <- averages(x, wts)
+  }
+  res
 }
-get_both <- function(x, mfun = mean, cfun = cov) {
-  list(center = get_center(x, mfun),
-       scale = cfun(x))
+get_both <- function(x, wts = NULL, mfun = mean, cfun = cov) {
+  if (!is.null(wts) & !identical(mfun, mean)) {
+    rlang::abort("The centering function requested cannot be used with case weights.")
+  }
+  if (!is.null(wts) & !identical(cfun, cov)) {
+    rlang::abort("The variance function requested cannot be used with case weights.")
+  }
+
+  if (is.null(wts)) {
+    res <- list(center = get_center(x, wts = wts, mfun = mfun), scale = cfun(x))
+  } else {
+    res <- list(center = averages(x, wts), scale = cov.wt(x, wts)$cov)
+  }
+  res
 }
 
 #' @export
