@@ -13,7 +13,7 @@
       
       Operations:
       
-      Natural Splines on <none>
+      Natural splines on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Natural Splines on <none> [trained]
+      Natural splines on <none> [trained]
 

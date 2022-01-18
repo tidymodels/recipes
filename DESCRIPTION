@@ -43,8 +43,6 @@ Suggests:
     covr,
     ddalpha,
     dials (>= 0.0.10.9001),
-    dimRed (>= 0.2.2),
-    fastICA,
     ggplot2,
     igraph,
     kernlab,

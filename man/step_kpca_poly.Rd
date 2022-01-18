@@ -80,9 +80,9 @@ each variable would be represented by its original values as well as its
 square. This nonlinear mapping is used during the PCA analysis and can
 potentially help find better representations of the original data.
 
-This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
+This step requires the \pkg{kernlab} package.
 If not installed, the step will stop with a prompt about installing
-these packages.
+the package.
 
 As with ordinary PCA, it is important to center and scale the variables
 prior to computing PCA components (\code{\link[=step_normalize]{step_normalize()}} can be used for
@@ -114,14 +114,14 @@ kpca_trans <- rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_kpca_poly(all_numeric_predictors())
 
-if (require(dimRed) & require(kernlab)) {
+if (require(ggplot2) & require(kernlab)) {
   kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 
   kpca_te <- bake(kpca_estimates, biomass_te)
 
-  rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-  plot(kpca_te$kPC1, kpca_te$kPC2,
-       xlim = rng, ylim = rng)
+  ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
+   geom_point() +
+   coord_equal()
 
   tidy(kpca_trans, number = 3)
   tidy(kpca_estimates, number = 3)

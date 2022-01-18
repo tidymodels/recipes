@@ -199,8 +199,8 @@ bake.step_impute_linear <- function(object, new_data, ...) {
 #' @export
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
-    cat("Linear regression imputation for ", sep = "")
-    printer(names(x$models), x$terms, x$trained, width = width)
+    title <- "Linear regression imputation for "
+    print_step(names(x$models), x$terms, x$trained, title, width)
     invisible(x)
   }
 

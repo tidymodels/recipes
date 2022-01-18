@@ -178,8 +178,8 @@ bake.step_num2factor <- function(object, new_data, ...) {
 
 print.step_num2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Factor variables from ")
-    printer(names(x$ordered), x$terms, x$trained, width = width)
+    title <- "Factor variables from "
+    print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
 

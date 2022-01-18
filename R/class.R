@@ -195,8 +195,8 @@ bake.check_class <- function(object,
 
 print.check_class <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking the class(es) for ", sep = "")
-    printer(names(x$class_list), x$terms, x$trained, width = width)
+    title <- "Checking the class(es) for "
+    print_step(names(x$class_list), x$terms, x$trained, title, width)
     invisible(x)
   }
 

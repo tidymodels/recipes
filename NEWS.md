@@ -2,22 +2,31 @@
 
 ## Improvements and Other Changes
 
+* All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
+
 * Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
 
 * Added a new step called `step_filter_missing()`, which can filter columns based on proportion of missingness (#270).
 
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
 
-* All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
+* When a feature extraction step (e.g., `step_pca()`, `step_ica()`, etc.) has zero components specified, the `tidy()` method now lists the selected columns in the `terms` column.
+
+## Breaking Changes
+
+* `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
+
+* `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
+
+* `step_ica()` now runs `fastICA()` using a specific set of random numbers so that initialization is reproducible. 
+
+* `tidy.recipe()` now returns a zero row tibble instead of an error when applied to a empty recipe. (#867)
 
 * `step_zv()` now has a `group` argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (#711)
 
 * `detect_step()` is no longer restricted to steps created in recipes (#869).
 
-* New `extract_parameter_set_dials()` method to extract parameter sets from `recipe` objects. 
-
-* New `extract_parameter_dials()` method to extract a single parameter from `recipe` objects.
-
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to extract parameter sets and single parameters from `recipe` objects. 
 
 
 # recipes 0.1.17

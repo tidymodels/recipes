@@ -13,7 +13,7 @@
       
       Operations:
       
-      Linear combination filter on 
+      Linear combination filter on <none>
 
 ---
 
@@ -32,5 +32,5 @@
       
       Operations:
       
-      Linear combination filter removed no terms [trained]
+      Linear combination filter removed <none> [trained]
 

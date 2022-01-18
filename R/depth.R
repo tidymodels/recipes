@@ -186,16 +186,15 @@ bake.step_depth <- function(object, new_data, ...) {
 
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Data depth by", x$class, "for ")
+    title <- glue::glue("Data depth by {x$class} for ")
 
     if (x$trained) {
       x_names <- colnames(x$data[[1]])
-      cat(format_ch_vec(x_names, width = width))
     } else {
       x_names <- character()
     }
 
-    printer(x_names, x$terms, x$trained, width = width)
+    print_step(x_names, x$terms, x$trained, title, width)
     invisible(x)
   }
 

@@ -108,19 +108,11 @@ bake.step_filter_missing <- function(object, new_data, ...) {
 print.step_filter_missing <-
   function(x,  width = max(20, options()$width - 36), ...) {
     if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Missing value column filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Missing value column filter removed no terms")
+      title <- "Missing value column filter removed "
     } else {
-      cat("Missing value column filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
+      title <- "Missing value column filter on "
     }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 

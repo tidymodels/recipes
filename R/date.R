@@ -258,8 +258,8 @@ bake.step_date <- function(object, new_data, ...) {
 
 print.step_date <-
   function(x, width = max(20, options()$width - 29), ...) {
-    cat("Date features from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Date features from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

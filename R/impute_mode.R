@@ -167,8 +167,8 @@ bake.step_modeimpute <- bake.step_impute_mode
 #' @export
 print.step_impute_mode <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Mode Imputation for ", sep = "")
-    printer(names(x$modes), x$terms, x$trained, width = width)
+    title <- "Mode imputation for "
+    print_step(names(x$modes), x$terms, x$trained, title, width)
     invisible(x)
   }
 
