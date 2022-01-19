@@ -28,6 +28,9 @@
 
 * Added a new step called `step_percentile()`, that replaces the value of a variable with its percentile from the training set. (#765)
 
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to extract parameter sets and single parameters from `recipe` objects. 
+
+
 # recipes 0.1.17
 
 ## New Steps

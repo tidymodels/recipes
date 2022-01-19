@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 0.1.17.9000
+Version: 0.1.17.9001
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
@@ -23,6 +23,7 @@ Imports:
     generics (>= 0.1.0.9000),
     glue,
     gower,
+    hardhat (>= 0.1.6.9001),
     ipred (>= 0.9-12),
     lifecycle,
     lubridate,
@@ -41,6 +42,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
+    dials (>= 0.0.10.9001),
     ggplot2,
     igraph,
     kernlab,
@@ -56,6 +58,9 @@ Suggests:
     testthat (>= 3.0.0),
     workflows,
     xml2
+Remotes: 
+    tidymodels/dials,
+    tidymodels/hardhat
 VignetteBuilder: 
     knitr
 RdMacros: 
