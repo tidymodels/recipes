@@ -83,7 +83,7 @@ step_nnmf <-
            id = rand_id("nnmf")
            ) {
     recipes_pkg_check(required_pkgs.step_nnmf())
-    lifecycle::deprecate_soft("0.1.7", "step_nnmf()", "step_nnmf_penalized()")
+    lifecycle::deprecate_soft("0.1.8", "step_nnmf()", "step_nnmf_penalized()")
     add_step(
       recipe,
       step_nnmf_new(
