@@ -47,6 +47,37 @@ test_that('simple percentile trans', {
   )
 })
 
+test_that('works works with fewer unique values than percentiles requested', {
+  biomass_tr1 <- biomass_tr %>%
+    mutate(carbon1 = round(carbon, -1))
+  biomass_te1 <- biomass_te %>%
+    mutate(carbon1 = round(carbon, -1))
+
+  rec <- recipe(~., data = biomass_tr1) %>%
+    step_percentile(carbon1)
+
+  rec_trained <- prep(rec)
+  biomass_tr_baked <- bake(rec_trained, new_data = biomass_tr1)
+  biomass_te_baked <- bake(rec_trained, new_data = biomass_te1)
+
+  carbon1_quantiles <- quantile(
+    biomass_tr1$carbon1,
+    probs = (0:100)/100,
+    names = TRUE
+  )
+  carbon1_quantiles <- carbon1_quantiles[!duplicated(carbon1_quantiles)]
+
+  carbon1_values <- as.numeric(gsub("%$", "", names(carbon1_quantiles)))
+  expect_equal(
+    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_tr1$carbon1)$y/100,
+    biomass_tr_baked$carbon1
+  )
+  expect_equal(
+    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_te1$carbon1)$y/100,
+    biomass_te_baked$carbon1
+  )
+})
+
 test_that('passing new probs works', {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur, options = list(probs = seq(0, 1, by = 0.2)))
