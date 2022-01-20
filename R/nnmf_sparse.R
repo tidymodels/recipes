@@ -207,12 +207,17 @@ bake.step_nnmf_sparse <- function(object, new_data, ...) {
 
 
 print.step_nnmf_sparse <- function(x, width = max(20, options()$width - 29), ...) {
-  if (x$num_comp == 0) {
-    cat("Non-negative matrix factorization was not done.\n")
+  if (x$trained) {
+    if (x$num_comp == 0) {
+      title <- "No non-negative matrix factorization was extracted from "
+    } else {
+      title <- "Non-negative matrix factorization for "
+    }
+    columns <- names(x$res$x_vars)
   } else {
-    cat("Non-negative matrix factorization for ")
-    printer(x$res$x_vars, x$terms, x$trained, width = width)
+    title <- "Non-negative matrix factorization for "
   }
+  print_step(columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 
