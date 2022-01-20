@@ -48,7 +48,7 @@ amount of internal parallelization. \strong{Note} that the argument \code{A}, \c
 
 \item{res}{A matrix of loadings is stored here, along with the names of the
 original predictors, once this preprocessing step has been trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep.recipe]{prep()}}.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}

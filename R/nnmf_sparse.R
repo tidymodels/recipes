@@ -17,7 +17,7 @@
 #'  `L1`, and `seed` should not be passed here.
 #' @param res A matrix of loadings is stored here, along with the names of the
 #'  original predictors, once this preprocessing step has been trained by
-#'  [prep.recipe()].
+#'  [`prep()`][prep.recipe()].
 #' @param prefix A character string that will be the prefix to the
 #'   resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation when
