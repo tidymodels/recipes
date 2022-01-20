@@ -12,7 +12,9 @@
 
 * When a feature extraction step (e.g., `step_pca()`, `step_ica()`, etc.) has zero components specified, the `tidy()` method now lists the selected columns in the `terms` column.
 
-* `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. 
+* Added a new step called `step_nnmf_sparse()` which uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
+
+* Deprecation has started for `step_nnmf()` in favor of `step_nnmf_sparse()`. (#790)
 
 ## Breaking Changes
 
