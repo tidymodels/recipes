@@ -10,7 +10,7 @@
 #' @param ptype A data frame prototype to cast new data sets to. This is
 #'  commonly a 0-row slice of the training set.
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details `step_impute_mode` estimates the variable modes
 #'  from the data used in the `training` argument of
@@ -65,7 +65,7 @@ step_impute_mode <-
     add_step(
       recipe,
       step_impute_mode_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         modes = modes,
@@ -167,8 +167,8 @@ bake.step_modeimpute <- bake.step_impute_mode
 #' @export
 print.step_impute_mode <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Mode Imputation for ", sep = "")
-    printer(names(x$modes), x$terms, x$trained, width = width)
+    title <- "Mode imputation for "
+    print_step(names(x$modes), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -185,12 +185,11 @@ mode_est <- function(x) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_mode` object.
 #' @export
 tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$modes),
-                  model = x$modes)
+                  model = unname(x$modes))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_chr)

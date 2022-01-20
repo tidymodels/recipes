@@ -12,7 +12,7 @@
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation and mean.
 #' @template step-return
-#' @family {normalization steps}
+#' @family normalization steps
 #' @export
 #' @details Centering data means that the average of a variable is subtracted
 #'  from the data. Scaling data means that the standard deviation of a variable
@@ -69,7 +69,7 @@ step_normalize <-
     add_step(
       recipe,
       step_normalize_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         means = means,
@@ -127,20 +127,19 @@ bake.step_normalize <- function(object, new_data, ...) {
 
 print.step_normalize <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Centering and scaling for ", sep = "")
-    printer(names(x$sds), x$terms, x$trained, width = width)
+    title <- "Centering and scaling for "
+    print_step(names(x$sds), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_normalize` object.
 #' @export
 tidy.step_normalize <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = c(names(x$means), names(x$sds)),
                   statistic = rep(c("mean", "sd"), each = length(x$sds)),
-                  value = c(x$means, x$sds))
+                  value = unname(c(x$means, x$sds)))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

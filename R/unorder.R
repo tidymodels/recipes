@@ -7,7 +7,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #'
@@ -43,7 +43,7 @@ step_unorder <-
            id = rand_id("unorder")) {
     add_step(recipe,
              step_unorder_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                role = role,
                trained = trained,
                columns = columns,
@@ -71,21 +71,17 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
   order_check <- vapply(training[, col_names],
                         is.ordered,
                         logical(1L))
-  if(all(!order_check)) {
-    rlang::abort("`step_unorder` required ordered factors.")
-  } else {
-    if(any(!order_check)) {
-      bad_cols <- names(order_check)[!order_check]
-      bad_cols <- paste0(bad_cols, collapse = ", ")
-      rlang::warn(
-        paste0(
-          "`step_unorder` requires ordered factors. Variables ",
-          bad_cols,
-          " will be ignored."
-        )
+  if(any(!order_check)) {
+    bad_cols <- names(order_check)[!order_check]
+    bad_cols <- paste0(bad_cols, collapse = ", ")
+    rlang::warn(
+      paste0(
+        "`step_unorder` requires ordered factors. Variables ",
+        bad_cols,
+        " will be ignored."
       )
-      col_names <- names(order_check)[order_check]
-    }
+    )
+    col_names <- names(order_check)[order_check]
   }
 
   step_unorder_new(
@@ -110,14 +106,13 @@ bake.step_unorder <- function(object, new_data, ...) {
 
 print.step_unorder <-
   function(x, width = max(20, options()$width - 33), ...) {
-    cat("Unordered variables ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Unordered variables "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_unorder` object.
 #' @export
 tidy.step_unorder <- function(x, ...) {
   res <- simple_terms(x, ...)

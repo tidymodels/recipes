@@ -12,7 +12,7 @@
 #' @param num_unique An integer to specify minimum required unique
 #'  values to evaluate for a transformation.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details The Box-Cox transformation, which requires a strictly
 #'  positive variable, can be used to rescale a variable to be more
@@ -66,7 +66,7 @@ step_BoxCox <-
     add_step(
       recipe,
       step_BoxCox_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         lambdas = lambdas,
@@ -128,19 +128,19 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_BoxCox <- function(object, new_data, ...) {
-  if (length(object$lambdas) == 0)
-    return(as_tibble(new_data))
   param <- names(object$lambdas)
-  for (i in seq_along(object$lambdas))
-    new_data[, param[i]] <-
-    bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+
+  for (i in seq_along(object$lambdas)) {
+    new_data[, param[i]] <- bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+  }
+
   as_tibble(new_data)
 }
 
 print.step_BoxCox <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Box-Cox transformation on ", sep = "")
-    printer(names(x$lambdas), x$terms, x$trained, width = width)
+    title <- "Box-Cox transformation on "
+    print_step(names(x$lambdas), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -176,9 +176,7 @@ ll_bc <- function(lambda, y, gm, eps = .001) {
 
 
 ## eliminates missing data and returns -llh
-bc_obj <- function(lam, dat) {
-  dat <- dat[complete.cases(dat)]
-  geo_mean <- exp(mean(log(dat)))
+bc_obj <- function(lam, dat, geo_mean) {
   ll_bc(lambda = lam, y = dat, gm = geo_mean)
 }
 
@@ -191,15 +189,19 @@ estimate_bc <- function(dat,
   if (length(unique(dat)) < num_unique) {
     rlang::warn("Fewer than `num_unique` values in selected variable.")
     return(NA)
-  } else if (any(dat[complete.cases(dat)] <= 0)) {
+  } else if (any(dat <= 0)) {
     rlang::warn("Non-positive values in selected variable.")
     return(NA)
   }
+
+  geo_mean <- exp(mean(log(dat)))
+
   res <- optimize(
     bc_obj,
     interval = limits,
     maximum = TRUE,
     dat = dat,
+    geo_mean = geo_mean,
     tol = .0001
   )
   lam <- res$maximum
@@ -210,12 +212,11 @@ estimate_bc <- function(dat,
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_BoxCox` object.
 #' @export
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$lambdas),
-                  value = x$lambdas)
+                  value = unname(x$lambdas))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

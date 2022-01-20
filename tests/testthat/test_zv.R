@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
-
-
-context("Zero variance filter")
+library(dplyr)
 
 n <- 50
 set.seed(424)
@@ -33,6 +31,43 @@ test_that('zv filtering', {
   expect_equal(filtering_trained$steps[[1]]$removals, "x4")
 })
 
+test_that('group-wise zv filtering', {
+  mtcars0 <- mtcars %>%
+    mutate(const = 0,
+           group1 = am,
+           group2 = vs)
+
+  rec_group1 <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = "group1") %>%
+    prep()
+
+  expect_equal(rec_group1$steps[[1]]$removals, c("am", "const"))
+
+  rec_group2 <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = "group2") %>%
+    prep()
+
+  expect_equal(rec_group2$steps[[1]]$removals, c("vs", "const"))
+
+  rec_group12 <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = c("group1", "group2")) %>%
+    prep()
+
+  expect_equal(
+    rec_group12$steps[[1]]$removals,
+    c("cyl", "vs", "am", "gear", "const")
+  )
+
+  rec_group12_vars <- recipe(~ ., data = mtcars0) %>%
+    step_zv(all_predictors(), group = vars(group1, group2)) %>%
+    prep()
+
+  expect_equal(
+    rec_group12_vars$steps[[1]]$removals,
+    c("cyl", "vs", "am", "gear", "const")
+  )
+})
+
 test_that('printing', {
   rec <- recipe(y ~ ., data = dat) %>%
     step_zv(x1, x2, x3, x4)
@@ -51,4 +86,44 @@ test_that('mssing values in zero-variance screen', {
   expect_true(recipes:::one_unique(y))
   expect_true(recipes:::one_unique(z))
 
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_zv(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_zv(rec)
+
+  expect <- tibble(
+    terms = character(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_zv(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

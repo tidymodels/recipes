@@ -17,11 +17,12 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
+#' @template filter-steps
 #' @author Original R code for filtering algorithm by Dong Li,
 #'  modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 #'  original in `caret` package). Max Kuhn for the `step`
 #'  function.
-#' @family {variable filter steps}
+#' @family variable filter steps
 #' @export
 #'
 #' @details This step attempts to remove variables to keep the
@@ -75,7 +76,7 @@ step_corr <- function(recipe,
   add_step(
     recipe,
     step_corr_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       threshold = threshold,
@@ -117,7 +118,7 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
       method = x$method
     )
   } else {
-    filter <- numeric(0)
+    filter <- character(0)
   }
 
   step_corr_new(
@@ -142,20 +143,8 @@ bake.step_corr <- function(object, new_data, ...) {
 
 print.step_corr <-
   function(x,  width = max(20, options()$width - 36), ...) {
-    if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Correlation filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Correlation filter removed no terms")
-    } else {
-      cat("Correlation filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Correlation filter on "
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -218,24 +207,21 @@ corr_filter <-
 
 tidy_filter <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$removals)
+    res <- tibble(terms = unname(x$removals))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = na_chr)
+    res <- tibble(terms = term_names)
   }
   res$id <- x$id
   res
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_corr` object.
 #' @export
 tidy.step_corr <- tidy_filter
 
 
-
-
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_corr <- function(x, ...) {
   tibble::tibble(

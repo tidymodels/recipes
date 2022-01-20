@@ -12,7 +12,7 @@
 #' @param models The [lm()] objects are stored here once the linear models
 #'  have been trained by [prep.recipe()].
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details For each variable requiring imputation, a linear model is fit
 #'  where the outcome is the variable of interest and the predictors are any
@@ -76,7 +76,7 @@ step_impute_linear <-
     add_step(
       recipe,
       step_impute_linear_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -199,21 +199,20 @@ bake.step_impute_linear <- function(object, new_data, ...) {
 #' @export
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
-    cat("Linear regression imputation for ", sep = "")
-    printer(names(x$models), x$terms, x$trained, width = width)
+    title <- "Linear regression imputation for "
+    print_step(names(x$models), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_linear` object.
 #' @export
 tidy.step_impute_linear <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),
-                  model = x$models)
+                  model = unname(x$models))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = NA)
+    res <- tibble(terms = term_names, model = list(NULL))
   }
   res$id <- x$id
   res

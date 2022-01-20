@@ -8,9 +8,10 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
+#' @template filter-steps
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
-#' @family {variable filter steps}
+#' @family variable filter steps
 #' @export
 #' @examples
 #' library(modeldata)
@@ -43,7 +44,7 @@ step_rm <- function(recipe,
   add_step(
     recipe,
     step_rm_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       removals = removals,
@@ -89,27 +90,12 @@ bake.step_rm <- function(object, new_data, ...) {
 
 print.step_rm <-
   function(x, width = max(20, options()$width - 22), ...) {
-    if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Variables removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else {
-        cat("No variables were removed")
-      }
-    } else {
-      cat("Delete terms ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variables removed "
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_rm` object.
 #' @export
 tidy.step_rm <- tidy_filter

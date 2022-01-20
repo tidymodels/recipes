@@ -67,7 +67,7 @@ recipe(Ozone ~ ., data = airquality) \%>\%
 
 }
 \seealso{
-Other {row operation steps}: 
+Other row operation steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_impute_roll}()},
@@ -76,4 +76,4 @@ Other {row operation steps}:
 \code{\link{step_shuffle}()},
 \code{\link{step_slice}()}
 }
-\concept{{row operation steps}}
+\concept{row operation steps}

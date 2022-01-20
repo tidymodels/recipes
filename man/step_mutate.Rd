@@ -47,6 +47,11 @@ sequence of any existing operations.
 that will add variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
+When using this flexible step, use extra care to avoid data leakage in your
+preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
+When applied to new data or testing data, this transformation would use the
+mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
+
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
@@ -56,6 +61,9 @@ between sessions). See the examples.
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{values}, which
 contains the \code{mutate()} expressions as character strings
 (and are not reparsable), is returned.
+
+If a preceding step removes a column that is selected by name in
+\code{step_mutate()}, the recipe will error when being estimated with \code{prep()}.
 }
 \examples{
 rec <-
@@ -109,7 +117,7 @@ bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 tidy(qq_rec, number = 1)
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
@@ -124,7 +132,7 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate_at}()},
@@ -134,5 +142,5 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{{dplyr steps}}
-\concept{{individual transformation steps}}
+\concept{dplyr steps}
+\concept{individual transformation steps}

@@ -1,27 +1,26 @@
-#' @importFrom stats sd predict complete.cases median quantile as.formula model.frame
-#' @importFrom stats binomial prcomp model.matrix terms poly cov var optimize
-#' @importFrom stats mahalanobis runif cor na.pass na.omit lm
-#' @importFrom purrr map map_dbl map_lgl map_chr map_df map2_df map_dfc reduce
-#' @importFrom purrr map_dfr map_if
-#' @importFrom ipred ipredbagg
-#' @importFrom tibble as_tibble add_column is_tibble tibble
-#' @importFrom dplyr filter group_by count ungroup do select_vars tbl_vars mutate
-#' @importFrom dplyr tibble bind_rows slice right_join rename select full_join
-#' @importFrom dplyr arrange desc bind_cols sample_n sample_frac mutate_at
-#' @importFrom dplyr summarise
-#' @importFrom Matrix Matrix
-#' @importFrom rlang quos call2 sym quo_get_expr quo_text expr f_lhs f_rhs
-#' @importFrom rlang is_empty is_quosure as_character na_dbl syms !! names2
-#' @importFrom rlang quo quo_squash exec na_dbl
+#' @importFrom dplyr arrange bind_cols bind_rows count desc do filter full_join
+#' @importFrom dplyr group_by mutate mutate_at rename sample_frac sample_n
+#' @importFrom dplyr select slice summarise ungroup
 #' @importFrom gower gower_topn
-#' @importFrom lubridate year yday week decimal_date quarter semester wday month
-#' @importFrom lubridate is.Date
+#' @importFrom ipred ipredbagg
 #' @importFrom lifecycle deprecated
-#' @importFrom utils stack globalVariables packageVersion object.size install.packages
+#' @importFrom lubridate decimal_date is.Date month quarter semester wday week
+#' @importFrom lubridate yday year
+#' @importFrom Matrix Matrix
+#' @importFrom purrr map map_chr map_dbl map_dfr map_if map_lgl reduce
+#' @importFrom rlang !! as_character call2 exec expr f_lhs f_rhs is_empty
+#' @importFrom rlang is_quosure na_dbl quo quo_get_expr quo_squash quo_text quos
+#' @importFrom rlang sym syms
+#' @importFrom splines bs ns
+#' @importFrom stats as.formula binomial complete.cases cor cov lm mahalanobis
+#' @importFrom stats median model.frame model.matrix na.omit na.pass optimize
+#' @importFrom stats poly prcomp predict quantile runif sd terms var
+#' @importFrom tibble add_column as_tibble is_tibble tibble
 #' @importFrom tidyselect everything
-#' @importFrom withr with_seed
-#' @importFrom splines ns bs
+#' @importFrom utils globalVariables install.packages object.size packageVersion
+#' @importFrom utils stack
 #' @importFrom vctrs vec_cast vec_slice
+#' @importFrom withr with_seed
 
 # ------------------------------------------------------------------------------
 
@@ -36,6 +35,7 @@ utils::globalVariables(
     "component", "denom", "id", "value",                                 # ica.R
     "training", "x_names", "y_names",                                    # pls.R
     ".order_1", ".order_2", "role", "skip",                          # recipes.R
+    "call_info",                                                     # extract.R
     "dat"                                                        # nnmf_sparse.R
   )
 )

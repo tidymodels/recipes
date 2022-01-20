@@ -25,7 +25,7 @@
 #' @details When you [`tidy()`] this step, a tibble with columns echoing the
 #'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `is_lat_lon`, `name`, and `id`
 #'  is returned.
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
 #' @details `step_geodist` uses the Pythagorean theorem to calculate Euclidean
@@ -227,16 +227,16 @@ bake.step_geodist <- function(object, new_data, ...) {
 
 print.step_geodist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Geographical distances from",
-        format(x$ref_lat, digits = 10), "x",
-        format(x$ref_lon, digits = 10), "\n")
+    title <- paste("Geographical distances from",
+                   format(x$ref_lat, digits = 10), "x",
+                   format(x$ref_lon, digits = 10), "using ")
+    print_step(x$columns, c(x$lat, x$lon), x$trained, title, width)
     invisible(x)
   }
 
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_geodist` object.
 #' @export
 tidy.step_geodist <- function(x, ...) {
 

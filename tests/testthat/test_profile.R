@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Creating profiling data")
-
-
 library(modeldata)
 data(okc)
 okc <- okc[1:20,]
@@ -94,11 +91,6 @@ test_that('bad values', {
   )
   expect_error(
     okc_rec %>%
-      step_profile(starts_with("q"), profile = vars(age)) %>%
-      prep(data = okc)
-  )
-  expect_error(
-    okc_rec %>%
       step_profile(diet, profile = vars(age), pct = -1) %>%
       prep(data = okc)
   )
@@ -151,3 +143,41 @@ test_that('tidy', {
   expect_equal(tidy_4, exp_4)
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_profile(rec1, profile = vars(mpg))
+
+  rec2 <- prep(rec2, mtcars)
+
+  baked2 <- bake(rec2, mtcars)
+
+  expect_named(baked2, "mpg")
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_profile(rec, profile = vars(mpg), id = "foo")
+
+  expect <- tibble(
+    terms = "mpg",
+    type = "profiled",
+    id = "foo"
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_profile(rec, profile = vars(mpg))
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

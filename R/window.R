@@ -104,13 +104,15 @@ step_window <-
            names = NULL,
            skip = FALSE,
            id = rand_id("window")) {
-    if (!(statistic %in% roll_funs) | length(statistic) != 1)
+    if (!is_call(statistic) &&
+        (!(statistic %in% roll_funs) | length(statistic) != 1)) {
       rlang::abort(
         paste0(
-        "`statistic` should be one of: ",
-        paste0("'", roll_funs, "'", collapse = ", ")
-          )
+          "`statistic` should be one of: ",
+          paste0("'", roll_funs, "'", collapse = ", ")
         )
+      )
+    }
 
     ## ensure size is odd, integer, and not too small
     if (!is_tune(size) & !is_varying(size)) {
@@ -143,7 +145,7 @@ step_window <-
     add_step(
       recipe,
       step_window_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         role = role,
         size = size,
@@ -258,20 +260,12 @@ bake.step_window <- function(object, new_data, ...) {
 
 print.step_window <-
   function(x, width = max(20, options()$width - 28), ...) {
-    cat("Moving ", x$size, "-point ", x$statistic, " on ", sep = "")
-    if (x$trained) {
-      cat(format_ch_vec(x$columns, width = width))
-    } else
-      cat(format_selectors(x$terms, width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- glue::glue("Moving {x$size}-point {x$statistic} on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_window` object.
 #' @export
 tidy.step_window <- function(x, ...) {
   out <- simple_terms(x, ...)
@@ -282,7 +276,7 @@ tidy.step_window <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_window <- function(x, ...) {
   tibble::tibble(
@@ -298,7 +292,7 @@ tunable.step_window <- function(x, ...) {
 }
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_window <- function(x, ...) {
   c("RcppRoll")

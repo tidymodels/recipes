@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("correlation filter")
-
-
 n <- 100
 set.seed(424)
 dat <- matrix(rnorm(n*5), ncol =  5)
@@ -41,11 +38,10 @@ test_that('many missing values', {
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .25)
 
-  filtering_trained <-
-    expect_warning(
-      prep(filtering, training = dat2, verbose = FALSE),
-      "1 columns were excluded from the filter"
-    )
+  expect_warning(
+    filtering_trained <- prep(filtering, training = dat2, verbose = FALSE),
+    "1 columns were excluded from the filter"
+  )
 
   expect_equal(filtering_trained$steps[[1]]$removals, paste0("V", 1:2))
 })
@@ -58,11 +54,10 @@ test_that('occasional missing values', {
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .25, use = "everything")
 
-  filtering_trained <-
-    expect_warning(
-      prep(filtering, training = dat3, verbose = FALSE),
-      "Some columns were excluded from the filter"
-    )
+  expect_warning(
+    filtering_trained <- prep(filtering, training = dat3, verbose = FALSE),
+    "Some columns were excluded from the filter"
+  )
 
   expect_equal(filtering_trained$steps[[1]]$removals, "V2")
 })
@@ -91,4 +86,45 @@ test_that('tunable', {
     names(rec_param),
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_corr(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_corr(rec)
+
+  expect_identical(
+    tidy(rec, number = 1),
+    tibble(terms = character(), id = character())
+  )
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(
+    tidy(rec, number = 1),
+    tibble(terms = character(), id = character())
+  )
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_corr(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

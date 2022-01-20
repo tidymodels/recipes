@@ -6,7 +6,7 @@
 #'
 #' @inheritParams check_missing
 #' @template check-return
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details This check will break the `bake` function if any of the specified
 #' columns is not present in the data. If the check passes, nothing is changed
@@ -37,7 +37,7 @@ check_cols <-
     add_check(
       recipe,
       check_cols_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         trained = trained,
         columns = NULL,
@@ -91,17 +91,16 @@ bake.check_cols <- function(object, new_data, ...) {
 
 print.check_cols <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Check if the following columns are present: ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Check if the following columns are present: "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `check_cols` object.
 #' @export
 tidy.check_cols <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = unname(x$columns))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }

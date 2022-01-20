@@ -158,17 +158,17 @@ linear_sp_sign_wflow <-
   add_recipe(sp_signed)
 
 linear_sp_sign_wflow
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow ═══════════════════════════════════════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## == Workflow ==========================================================
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ───────────────────────────────────────────────────────────────────────────────
+## -- Preprocessor ------------------------------------------------------
 ## 2 Recipe Steps
 ## 
-## • step_normalize()
-## • step_spatialsign()
+## * step_normalize()
+## * step_spatialsign()
 ## 
-## ── Model ──────────────────────────────────────────────────────────────────────────────────────
+## -- Model -------------------------------------------------------------
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm
@@ -181,7 +181,7 @@ single call to \code{fit()} is used:\if{html}{\out{<div class="sourceCode r">}}\
 When predicting, there is no need to do anything other than call
 \code{predict()}. This preprocesses the new data in the same manner as the
 training set, then gives the data to the linear model prediction code:\if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 1
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 1
 ##   .pred
 ##   <dbl>
 ## 1  18.1
@@ -233,11 +233,11 @@ the selectors.
 
 You can \code{\link[=tidy.recipe]{tidy.recipe()}} a recipe, either when it is
 prepped or unprepped, to learn more about its components.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 × 6
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 x 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
-## 1      1 step      normalize TRUE    FALSE normalize_GWrof
-## 2      2 step      pca       TRUE    FALSE pca_K5qin
+## 1      1 step      normalize TRUE    FALSE normalize_AeYA4
+## 2      2 step      pca       TRUE    FALSE pca_Zn1yz
 }
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.
@@ -245,7 +245,7 @@ You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id}
 To apply the prepped recipe to a data set, the \code{\link[=bake]{bake()}}
 function is used in the same manner that \code{predict()} would be for
 models. This applies the estimated steps to any data set.\if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 × 6
+}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 6
 ##     HHV    PC1    PC2     PC3     PC4     PC5
 ##   <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
 ## 1  18.3 0.730   0.412  0.495   0.333   0.253 
@@ -303,7 +303,4 @@ rec <- recipe(biomass_tr) \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting indicator")
 rec
-}
-\author{
-Max Kuhn
 }

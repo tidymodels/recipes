@@ -14,7 +14,7 @@
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep.recipe()] is used.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
 #' @export
 #' @details Unlike some other steps, `step_holiday` does *not*
@@ -57,7 +57,7 @@ step_holiday <-
   add_step(
     recipe,
     step_holiday_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       holidays = holidays,
@@ -152,19 +152,16 @@ bake.step_holiday <- function(object, new_data, ...) {
 
 print.step_holiday <-
   function(x, width = max(20, options()$width - 29), ...) {
-    cat("Holiday features from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Holiday features from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_holiday` object.
 #' @export
 tidy.step_holiday <- function(x, ...) {
   res <- simple_terms(x, ...)
-  res <- expand.grid(terms = res$terms,
-                     holiday = x$holidays,
-                     stringsAsFactors = FALSE)
+  res <- tidyr::expand_grid(terms = res$terms, holiday = x$holidays)
   res$id <- x$id
-  as_tibble(res)
+  res
 }

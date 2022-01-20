@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("harmonic parameters")
 x_year           <- seq(0, 86400*365*4, by = 31556926)
 x_month_sidereal <- seq(0, 86400*7, by = 2360592)
 x_month_synodic  <- seq(0, 86400*7, by = 2551443)
@@ -81,7 +80,7 @@ test_that("harmonic frequencies", {
     prep() %>%
     bake(new_data = NULL)
 
-  expect_equal(ncol(rec), 2+6)
+  expect_equal(ncol(rec), 7)
 
 })
 
@@ -94,11 +93,11 @@ test_that("harmonic keep_original_cols", {
     step_harmonic(time_var,
                   frequency = c(1, 1.93, 2),
                   cycle_size = 86400,
-                  keep_original_cols = FALSE) %>%
+                  keep_original_cols = TRUE) %>%
     prep() %>%
     bake(new_data = NULL)
 
-  expect_equal(ncol(rec), 1+6)
+  expect_equal(ncol(rec), 8)
 
 })
 
@@ -233,7 +232,8 @@ test_that("harmonic NA in term", {
   rec_na <- recipe(osc ~ time_var, data = harmonic_dat) %>%
     step_harmonic(time_var,
                   frequency = 4,
-                  cycle_size = 86400) %>%
+                  cycle_size = 86400,
+                  keep_original_cols = TRUE) %>%
     prep() %>%
     bake(new_data = NULL)
 
@@ -344,4 +344,53 @@ test_that("harmonic check tidy starting value", {
 
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_harmonic(rec1, frequency = 1/11, cycle_size = 1)
 
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_harmonic(rec, frequency = 1/11, cycle_size = 1)
+
+  expect <- tibble(
+    terms = character(),
+    starting_val = double(),
+    cycle_size = double(),
+    frequency = double(),
+    key = character(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that('printing', {
+  rec <- recipe(mpg ~ ., mtcars)
+  with_harmonic <- rec %>%  step_harmonic(hp, frequency = 1/11, cycle_size = 1)
+  expect_snapshot(print(with_harmonic))
+  expect_snapshot(prep(with_harmonic, training = mtcars, verbose = TRUE))
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_harmonic(rec, frequency = 1/11, cycle_size = 1)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

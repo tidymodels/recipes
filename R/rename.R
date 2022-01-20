@@ -18,7 +18,7 @@
 #'  columns `values` which contains the `rename` expressions as character
 #'  strings (and are not reparsable) is returned.
 #'
-#' @family {dplyr steps}
+#' @family dplyr steps
 #' @export
 #' @examples
 #' recipe( ~ ., data = iris) %>%
@@ -97,25 +97,20 @@ bake.step_rename <- function(object, new_data, ...) {
 
 print.step_rename <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable renaming for ",
-        paste0(names(x$inputs), collapse = ", "))
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variable renaming for "
+    untrained_terms <- rlang::parse_quos(names(x$inputs), rlang::current_env())
+    print_step(names(x$inputs), untrained_terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_rename` object
 #' @export
 tidy.step_rename <- function(x, ...) {
   var_expr <- map(x$inputs, quo_get_expr)
   var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
     terms = names(x$inputs),
-    value = var_expr,
+    value = unname(var_expr),
     id = rep(x$id, length(x$inputs))
   )
 }

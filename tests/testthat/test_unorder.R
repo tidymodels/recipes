@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-
-context("Unordering data")
-
 lmh <- c("Low", "Med", "High")
 
 examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
@@ -29,7 +26,7 @@ test_that('wrong vars', {
   rec2 <- rec %>% step_unorder(X1, X2)
   expect_warning(prep(rec2, training = examples, verbose = FALSE))
   rec3 <- rec %>% step_unorder(X1)
-  expect_error(prep(rec3, training = examples, verbose = FALSE))
+  expect_warning(prep(rec3, training = examples, verbose = FALSE))
 })
 
 test_that('printing', {
@@ -38,3 +35,39 @@ test_that('printing', {
   expect_output(prep(rec4, training = examples, verbose = TRUE))
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_unorder(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_unorder(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_unorder(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

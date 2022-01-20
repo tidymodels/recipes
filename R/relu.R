@@ -17,7 +17,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @rdname step_relu
 #'
@@ -89,7 +89,7 @@ step_relu <-
     add_step(
       recipe,
       step_relu_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         shift = shift,
@@ -145,7 +145,7 @@ bake.step_relu <- function(object, new_data, ...) {
     call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
   exprs <- purrr::map(object$columns, make_relu_call)
-  newname <- paste0(object$prefix, object$columns)
+  newname <- glue::glue("{object$prefix}{object$columns}")
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
   dplyr::mutate(new_data, !!!exprs)
 }
@@ -153,12 +153,8 @@ bake.step_relu <- function(object, new_data, ...) {
 
 print.step_relu <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Adding relu transform for ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Adding relu transform for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
 }
 
@@ -182,7 +178,6 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_relu` object.
 #' @export
 tidy.step_relu <- function(x, ...) {
   out <- simple_terms(x, ...)

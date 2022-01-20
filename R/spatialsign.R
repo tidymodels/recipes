@@ -11,7 +11,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details The spatial sign transformation projects the variables
 #'  onto a unit sphere and is related to global contrast
@@ -66,7 +66,7 @@ step_spatialsign <-
            id = rand_id("spatialsign")) {
     add_step(recipe,
              step_spatialsign_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                role = role,
                na_rm = na_rm,
                trained = trained,
@@ -121,13 +121,12 @@ bake.step_spatialsign <- function(object, new_data, ...) {
 
 print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Spatial sign on  ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Spatial sign on  "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_spatialsign` object.
 #' @export
 tidy.step_spatialsign <- function(x, ...) {
   res <-simple_terms(x, ...)

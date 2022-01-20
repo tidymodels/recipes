@@ -24,7 +24,7 @@
 #' @param id A character string that is unique to this step to identify it.
 #' @template step-return
 #'
-#' @family {normalization steps}
+#' @family normalization steps
 #' @export
 #' @details Centering data means that the average of a variable is
 #'  subtracted from the data. `step_center` estimates the
@@ -69,7 +69,7 @@ step_center <-
     add_step(
       recipe,
       step_center_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         role = role,
         means = means,
@@ -124,19 +124,18 @@ bake.step_center <- function(object, new_data, ...) {
 
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Centering for ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "Centering for "
+    print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_center` object.
 #' @export
 tidy.step_center <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
-                  value = x$means)
+                  value = unname(x$means))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

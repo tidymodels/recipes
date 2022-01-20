@@ -14,7 +14,7 @@
 #'  the option `raw = TRUE` will produce the regular polynomial
 #'  values (not orthogonalized).
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details `step_poly` can create new features from a single
 #'  variable that enable fitting routines to model this variable in
@@ -73,7 +73,7 @@ step_poly <-
     add_step(
       recipe,
       step_poly_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         role = role,
         objects = objects,
@@ -144,25 +144,37 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
-  poly_values <-
-    purrr::map2(new_data[, col_names], object$objects, ~ predict(.y, .x)) %>%
-    purrr::map(as_tibble) %>%
-    purrr::map2_dfc(new_names, ~ setNames(.x, .y))
-  new_data <- dplyr::bind_cols(new_data, poly_values)
-  new_data <- dplyr::select(new_data, -col_names)
+
+  # Start with n-row, 0-col tibble for the empty selection case
+  new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))
+
+  for (i in seq_along(col_names)) {
+    i_col_name <- col_names[[i]]
+    i_col <- new_data[[i_col_name]]
+    i_object <- object$objects[[i]]
+    i_new_names <- new_names[[i]]
+
+    new_cols <- predict(i_object, i_col)
+    colnames(new_cols) <- i_new_names
+    new_cols <- tibble::as_tibble(new_cols)
+
+    new_tbl[i_new_names] <- new_cols
+  }
+
+  new_data <- dplyr::bind_cols(new_data, new_tbl)
+  new_data <- dplyr::select(new_data, -dplyr::all_of(col_names))
   new_data
 }
 
 
 print.step_poly <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Orthogonal polynomials on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Orthogonal polynomials on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_poly` object.
 #' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
@@ -176,7 +188,7 @@ tidy.step_poly <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_poly <- function(x, ...) {
   tibble::tibble(

@@ -13,7 +13,7 @@
 #'  be populated (eventually) by the `terms` argument.
 #'
 #' @template step-return
-#' @family {row operation steps}
+#' @family row operation steps
 #' @export
 #'
 #' @examples
@@ -29,7 +29,7 @@ step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
   add_step(
     recipe,
     step_naomit_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       columns = columns,
@@ -70,14 +70,12 @@ bake.step_naomit <- function(object, new_data, ...) {
 
 print.step_naomit <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Removing rows with NA values in ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-    cat("\n")
+    title <- "Removing rows with NA values in "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_naomit` object.
 #' @export
 tidy.step_naomit <- function(x, ...) {
   res <-simple_terms(x, ...)

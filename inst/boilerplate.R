@@ -84,7 +84,7 @@ create_function <- function(name, which) {
       add_{which}(
         recipe,
         {which}_{name}_new(
-          terms = ellipse_check(...),
+          terms = enquos(...),
           trained = trained,
           role = role,
           <additional args here>
@@ -150,8 +150,8 @@ create_print_method <- function(name, which) {
   glue('
 print.{which}_{name} <-
   function(x, width = max(20, options()$width - 30), ...) {{
-    cat("<describe action here> ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "<describe action here> "
+    print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }}
 

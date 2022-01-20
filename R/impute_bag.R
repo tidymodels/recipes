@@ -22,7 +22,7 @@
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
 #'  bagged trees have be trained by [prep.recipe()].
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details For each variable requiring imputation, a bagged tree is created
 #'  where the outcome is the variable of interest and the predictors are any
@@ -110,7 +110,7 @@ step_impute_bag <-
     add_step(
       recipe,
       step_impute_bag_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -180,6 +180,10 @@ step_impute_bag_new <-
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
+  if (is.character(dat[[vars$y]])) {
+    dat[[vars$y]] <- factor(dat[[vars$y]])
+  }
+
   if (!is.null(seed_val) && !is.na(seed_val))
     set.seed(seed_val)
 
@@ -262,8 +266,8 @@ bake.step_impute_bag <- function(object, new_data, ...) {
         rlang::warn("All predictors are missing; cannot impute")
       } else {
         pred_vals <- predict(object$models[[imp_var]], pred_data)
-        pred_vals <- cast(pred_vals, new_data[[imp_var]])
-        new_data[[imp_var]] <- vec_cast(new_data[[imp_var]], pred_vals)
+        # For an ipred bug reported on 2021-09-14:
+        pred_vals <- cast(pred_vals, object$models[[imp_var]]$y)
         new_data[missing_rows, imp_var] <- pred_vals
       }
     }
@@ -279,8 +283,8 @@ bake.step_bagimpute <- bake.step_impute_bag
 #' @export
 print.step_impute_bag <-
   function(x, width = max(20, options()$width - 31), ...) {
-    cat("Bagged tree imputation for ", sep = "")
-    printer(names(x$models), x$terms, x$trained, width = width)
+    title <- "Bagged tree imputation for "
+    print_step(names(x$models), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -293,15 +297,14 @@ print.step_bagimpute <- print.step_impute_bag
 imp_vars <- function(...) quos(...)
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_bag` object.
 #' @export
 tidy.step_impute_bag <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$models),
-                  model = x$models)
+                  model = unname(x$models))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = NA)
+    res <- tibble(terms = term_names, model = list(NULL))
   }
   res$id <- x$id
   res
@@ -313,7 +316,7 @@ tidy.step_bagimpute <- tidy.step_impute_bag
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_bag <- function(x, ...) {
   tibble::tibble(

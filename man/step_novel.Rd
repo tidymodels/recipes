@@ -99,7 +99,7 @@ tidy(rec, number = 1)
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}
 
-Other {dummy variable and encoding steps}: 
+Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
@@ -118,4 +118,4 @@ Other {dummy variable and encoding steps}:
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }
-\concept{{dummy variable and encoding steps}}
+\concept{dummy variable and encoding steps}

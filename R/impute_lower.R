@@ -10,7 +10,7 @@
 #' @param threshold A named numeric vector of lower bounds. This is
 #'  `NULL` until computed by [prep.recipe()].
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details `step_impute_lower` estimates the variable minimums
 #'  from the data used in the `training` argument of `prep.recipe`.
@@ -66,7 +66,7 @@ step_impute_lower <-
     add_step(
       recipe,
       step_impute_lower_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         threshold = threshold,
@@ -163,8 +163,8 @@ bake.step_lowerimpute <- bake.step_impute_lower
 #' @export
 print.step_impute_lower <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Lower Bound Imputation for ", sep = "")
-    printer(names(x$threshold), x$terms, x$trained, width = width)
+    title <- "Lower bound imputation for "
+    print_step(names(x$threshold), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -173,7 +173,6 @@ print.step_impute_lower <-
 print.step_lowerimpute <- print.step_impute_lower
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_lower` object.
 #' @export
 tidy.step_impute_lower <- function(x, ...) {
   if (is_trained(x)) {

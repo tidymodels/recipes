@@ -1,5 +1,3 @@
-context("PLS (old objects)")
-
 library(testthat)
 library(recipes)
 library(dplyr)
@@ -20,6 +18,7 @@ test_that('check old PLS scores from recipes version <= 0.1.12', {
   new_values_tr <- juice(old_pls, all_predictors())
   expect_equal(new_values_tr, old_pls_tr)
 
-  new_values_te <- bake(old_pls, biom_te)
+  # Capture known warning about `keep_original_cols`
+  expect_snapshot(new_values_te <- bake(old_pls, biom_te))
   expect_equal(new_values_te, old_pls_te)
 })

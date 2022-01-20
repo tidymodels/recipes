@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("ISOmap")
-
 ## expected results form the `dimRed` package
 
 exp_res <- structure(list(Isomap1 = c(0.312570873898531, 0.371885353599467, 2.23124009833741,
@@ -80,12 +78,12 @@ test_that('No ISOmap', {
     names(juice(im_rec)),
     colnames(dat1)
   )
-  expect_true(inherits(im_rec$steps[[1]]$res, "list"))
+  expect_null(im_rec$steps[[1]]$res)
   expect_output(print(im_rec),
                 regexp = "Isomap was not conducted")
   expect_equal(
     tidy(im_rec, 1),
-    tibble::tibble(terms = im_rec$steps[[1]]$res$x_vars, id = "")
+    tibble::tibble(terms = unname(im_rec$steps[[1]]$columns), id = "")
   )
 })
 
@@ -171,4 +169,41 @@ test_that('can prep recipes with no keep_original_cols', {
     NA
   )
 
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_isomap(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_isomap(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_isomap(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

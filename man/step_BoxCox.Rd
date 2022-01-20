@@ -100,7 +100,7 @@ Sakia, R. M. (1992). The Box-Cox transformation technique:
 A review. \emph{The Statistician}, 169-178..
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
 \code{\link{step_harmonic}()},
@@ -115,4 +115,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{{individual transformation steps}}
+\concept{individual transformation steps}

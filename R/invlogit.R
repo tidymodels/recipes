@@ -8,7 +8,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details The inverse logit transformation takes values on the
 #'  real line and translates them to be between zero and one using
@@ -40,7 +40,7 @@ step_invlogit <-
            skip = FALSE, id = rand_id("invlogit")) {
     add_step(recipe,
              step_invlogit_new(
-               terms = ellipse_check(...),
+               terms = enquos(...),
                role = role,
                trained = trained,
                columns = columns,
@@ -89,13 +89,12 @@ bake.step_invlogit <- function(object, new_data, ...) {
 
 print.step_invlogit <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Inverse logit on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Inverse logit on "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_invlogit` object.
 #' @export
 tidy.step_invlogit <- function(x, ...) {
   res <- simple_terms(x, ...)

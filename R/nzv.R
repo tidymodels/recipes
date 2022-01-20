@@ -13,7 +13,8 @@
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
 #' @template step-return
-#' @family {variable filter steps}
+#' @template filter-steps
+#' @family variable filter steps
 #' @export
 #'
 #' @details This step diagnoses predictors that have one unique
@@ -82,19 +83,17 @@ step_nzv <-
     if (!isTRUE(all.equal(exp_list, options))) {
       freq_cut <- options$freq_cut
       unique_cut <- options$unique_cut
-      message(
-        paste(
-          "The argument `options` is deprecated in favor of `freq_cut`",
-          "and `unique_cut`. options` will be removed in next version."
-        )
+      lifecycle::deprecate_stop(
+        "0.1.7",
+        "step_nzv(options)",
+        details = "Please use the arguments `freq_cut` and `unique_cut` instead."
       )
     }
-
 
     add_step(
       recipe,
       step_nzv_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         freq_cut = freq_cut,
@@ -156,19 +155,11 @@ bake.step_nzv <- function(object, new_data, ...) {
 print.step_nzv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Sparse, unbalanced variable filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Sparse, unbalanced variable filter removed no terms")
+      title <- "Sparse, unbalanced variable filter removed "
     } else {
-      cat("Sparse, unbalanced variable filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
+      title <- "Sparse, unbalanced variable filter on "
     }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -206,12 +197,11 @@ nzv <- function(x,
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_nzv` object.
 #' @export
 tidy.step_nzv <- tidy_filter
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_nzv <- function(x, ...) {
   tibble::tibble(

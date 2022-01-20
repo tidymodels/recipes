@@ -25,12 +25,14 @@
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
 #'  [prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation
 #'  when computing the factorization.
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details Non-negative matrix factorization computes latent components that
 #'  have non-negative values and take into account that the original data
@@ -73,6 +75,7 @@ step_nnmf <-
            num_run = 30,
            options = list(),
            res = NULL,
+           columns = NULL,
            prefix = "NNMF",
            seed = sample.int(10^5, 1),
            keep_original_cols = FALSE,
@@ -84,13 +87,14 @@ step_nnmf <-
     add_step(
       recipe,
       step_nnmf_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
         num_run = num_run,
         options = options,
         res = res,
+        columns = columns,
         prefix = prefix,
         seed = seed,
         keep_original_cols = keep_original_cols,
@@ -101,7 +105,7 @@ step_nnmf <-
   }
 
 step_nnmf_new <-
-  function(terms, role, trained, num_comp, num_run, options, res,
+  function(terms, role, trained, num_comp, num_run, options, res, columns,
            prefix, seed, keep_original_cols, skip, id) {
     step(
       subclass = "nnmf",
@@ -112,6 +116,7 @@ step_nnmf_new <-
       num_run = num_run,
       options = options,
       res = res,
+      columns = columns,
       prefix = prefix,
       seed = seed,
       keep_original_cols = keep_original_cols,
@@ -126,26 +131,31 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
   check_type(training[, col_names])
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(col_names) > 0) {
 
     x$num_comp <- min(x$num_comp, length(col_names))
 
-    opts <- list(options = x$options)
-    opts$ndim <- x$num_comp
-    opts$nrun <- x$num_run
-    opts$seed <- x$seed
-    opts$.mute <- c("message", "output")
-    opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
-    opts$.method <- "NNMF"
     nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
-    opts$options <- list(.options = nmf_opts)
 
-    nnm <- try(do.call(dimRed::embed, opts), silent = TRUE)
+    nnm <- try(
+      eval_dimred_call(
+        "embed",
+        .method = "NNMF",
+        .data = dimred_data(training[, col_names, drop = FALSE]),
+        ndim = x$num_comp,
+        nrun = x$num_run,
+        seed = x$seed,
+        .mute = c("message", "output"),
+        options = x$options,
+        .options = nmf_opts
+      ),
+      silent = TRUE
+    )
     if (inherits(nnm, "try-error")) {
       rlang::abort(paste0("`step_nnmf` failed with error:\n", as.character(nnm)))
     }
   } else {
-    nnm <- list(x_vars = col_names)
+    nnm <- NULL
   }
 
   step_nnmf_new(
@@ -156,6 +166,7 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
     num_run = x$num_run,
     options = x$options,
     res = nnm,
+    columns = col_names,
     prefix = x$prefix,
     seed = x$seed,
     keep_original_cols = get_keep_original_cols(x),
@@ -166,14 +177,10 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
+  if (object$num_comp > 0 && length(object$columns) > 0) {
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-
-      object$res@apply(
-        dimRed::dimRedData(
-          as.data.frame(new_data[, nnmf_vars, drop = FALSE])
-        )
-      )@data
+      object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
@@ -188,21 +195,17 @@ bake.step_nnmf <- function(object, new_data, ...) {
 
 
 print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
-  if (x$num_comp == 0) {
-    cat("Non-negative matrix factorization was not done.\n")
-  } else {
-    cat("Non-negative matrix factorization for ")
-    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
-  }
+  title <- "Non-negative matrix factorization for "
+  print_step(colnames(x$res@org.data), x$terms, x$trained, title, width)
   invisible(x)
 }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_nnmf` object.
+#' @export
 tidy.step_nnmf <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_comp > 0) {
+    if (x$num_comp > 0 && length(x$columns) > 0) {
       res <- x$res@other.data$w
       var_nms <- rownames(res)
       res <- tibble::as_tibble(res)
@@ -212,7 +215,7 @@ tidy.step_nnmf <- function(x, ...) {
       res <- res[,c("terms", "value", "component")]
       res <- res[order(res$component, res$terms),]
     } else {
-      res <- tibble(terms = x$res$x_vars, value = na_dbl, component  = na_chr)
+      res <- tibble(terms = unname(x$columns), value = na_dbl, component  = na_dbl)
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -224,7 +227,7 @@ tidy.step_nnmf <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_nnmf <- function(x, ...) {
   tibble::tibble(
@@ -239,7 +242,7 @@ tunable.step_nnmf <- function(x, ...) {
   )
 }
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_nnmf <- function(x, ...) {
   c("dimRed", "NMF")

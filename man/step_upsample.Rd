@@ -2,7 +2,6 @@
 % Please edit documentation in R/upsample.R
 \name{step_upsample}
 \alias{step_upsample}
-\alias{tidy.step_upsample}
 \title{Up-Sample a Data Set Based on a Factor Variable}
 \usage{
 step_upsample(
@@ -18,8 +17,6 @@ step_upsample(
   seed = sample.int(10^5, 1),
   id = rand_id("upsample")
 )
-
-\method{tidy}{step_upsample}(x, ...)
 }
 \arguments{
 \item{recipe}{A recipe object. The step will be added to the
@@ -59,8 +56,6 @@ the computations for subsequent operations.}
 \item{seed}{An integer that will be used as the seed when upsampling.}
 
 \item{id}{A character string that is unique to this step to identify it.}
-
-\item{x}{A \code{step_upsample} object.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the

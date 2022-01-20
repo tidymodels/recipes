@@ -65,7 +65,7 @@ recipe(~ ., data = iris) \%>\%
   slice(1:10)
 }
 \seealso{
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate_at}()},
@@ -75,4 +75,4 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{{dplyr steps}}
+\concept{dplyr steps}

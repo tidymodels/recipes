@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("class distances")
-
 # Note: some tests convert to data frame prior to testing
 # https://github.com/tidyverse/dplyr/issues/2751
 
@@ -85,4 +83,54 @@ test_that('prefix', {
   dists <- bake(trained, new_data = iris)
   expect_false(any(grepl("classdist_", names(dists))))
   expect_true(any(grepl("centroid_", names(dists))))
+})
+
+test_that("empty selection prep/bake returns NA columns", {
+  rec1 <- recipe(Species ~ ., iris)
+  rec2 <- step_classdist(rec1, class = "Species", pool = FALSE)
+  rec3 <- step_classdist(rec1, class = "Species", pool = TRUE)
+
+  rec2 <- prep(rec2, iris)
+  rec3 <- prep(rec3, iris)
+
+  baked2 <- bake(rec2, iris)
+  baked3 <- bake(rec3, iris)
+
+  expect <- rep(NA_real_, nrow(iris))
+
+  expect_identical(baked2$classdist_setosa, expect)
+  expect_identical(baked2$classdist_versicolor, expect)
+  expect_identical(baked2$classdist_virginica, expect)
+
+  expect_identical(baked3$classdist_setosa, expect)
+  expect_identical(baked3$classdist_versicolor, expect)
+  expect_identical(baked3$classdist_virginica, expect)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(Species ~ ., iris)
+  rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
+  rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
+
+  expect <- tibble(terms = character(), value = double(), class = character(), id = character())
+
+  expect_identical(tidy(rec2, number = 1), expect)
+  expect_identical(tidy(rec3, number = 1), expect)
+
+  rec2 <- prep(rec2, iris)
+  rec3 <- prep(rec3, iris)
+
+  expect_identical(tidy(rec2, number = 1), expect)
+  expect_identical(tidy(rec3, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_classdist(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
 })

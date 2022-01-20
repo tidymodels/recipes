@@ -100,10 +100,10 @@ selectors or variables selected) and \code{value} (the means) is returned.
 }
 }
 \seealso{
-Other {checks}: 
+Other checks: 
 \code{\link{check_class}()},
 \code{\link{check_cols}()},
 \code{\link{check_missing}()},
 \code{\link{check_new_values}()}
 }
-\concept{{checks}}
+\concept{checks}

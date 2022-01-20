@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Formula stuff")
-
 
 test_that('is trained?', {
   rec1 <- recipe(~ ., data = iris)
@@ -29,25 +27,29 @@ test_that('formulas', {
   rec6 <- recipe(Species ~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec6),
-    as.formula(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width)
+    as.formula(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width),
+    ignore_formula_env = TRUE
   )
 
   rec7 <- rec6 %>% step_rm(starts_with("Sepal")) %>% prep(iris)
   expect_equal(
     formula(rec7),
-    as.formula(Species ~ Petal.Length + Petal.Width)
+    as.formula(Species ~ Petal.Length + Petal.Width),
+    ignore_formula_env = TRUE
   )
 
   rec8 <- recipe(~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec8),
-    as.formula( ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species)
+    as.formula( ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species),
+    ignore_formula_env = TRUE
   )
 
   rec9 <- recipe(Species + Sepal.Length ~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec9),
-    as.formula(Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width)
+    as.formula(Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width),
+    ignore_formula_env = TRUE
   )
 })
 

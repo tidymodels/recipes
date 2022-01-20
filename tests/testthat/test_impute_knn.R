@@ -5,8 +5,6 @@ library(dplyr)
 library(modeldata)
 data(biomass)
 
-context("K-nn imputation")
-
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass)
@@ -38,7 +36,7 @@ test_that('imputation values', {
     neighbors = rep(3, 2),
     id = ""
   )
-  expect_equivalent(as.data.frame(tidy(impute_rec, number = 2)), as.data.frame(imp_exp_un))
+  expect_equal(as.data.frame(tidy(impute_rec, number = 2)), as.data.frame(imp_exp_un))
   discr_rec <- prep(discr_rec, training = biomass_tr, verbose = FALSE)
   tr_data <- bake(discr_rec, new_data = biomass_tr)
   te_data <- bake(discr_rec, new_data = biomass_te) %>%
@@ -176,4 +174,46 @@ test_that('tunable', {
     names(rec_param),
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_impute_knn(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_knn(rec)
+
+  expect <- tibble(
+    terms = character(),
+    predictors = character(),
+    neighbors = double(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_knn(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

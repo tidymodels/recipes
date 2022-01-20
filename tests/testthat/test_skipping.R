@@ -1,8 +1,6 @@
 library(recipes)
 library(testthat)
 
-context("Skipping steps")
-
 test_that('simple skip', {
   rec_1 <- recipe(Sepal.Length ~ ., data = iris) %>%
     step_log(Sepal.Length, skip = TRUE) %>%
@@ -37,13 +35,14 @@ test_that('simple skip', {
 
 
 test_that('check existing steps for `skip` arg', {
-  step_check <- ls("package:recipes", pattern = "(^step_)|(^check_)")
+  step_check <- grep(pattern = "(^step_)|(^check_)", x = names(asNamespace("recipes")), value = TRUE)
   # These ones are not operations
   step_check <- step_check[step_check != "check_type"]
   step_check <- step_check[step_check != "check_nominal_type"]
   step_check <- step_check[step_check != "check_name"]
   step_check <- step_check[step_check != "step_type"]
   step_check <- step_check[step_check != "check_training_set"]
+  step_check <- step_check[step_check != "check_is_lat_lon"]
   has_skip_arg <- function(x) {
     x_code <- getFromNamespace(x, "recipes")
     x_args <- names(formals(x_code))

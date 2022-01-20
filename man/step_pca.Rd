@@ -13,6 +13,7 @@ step_pca(
   threshold = NA,
   options = list(),
   res = NULL,
+  columns = NULL,
   prefix = "PC",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -49,6 +50,9 @@ should not be passed here (or at all).}
 
 \item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -131,7 +135,7 @@ Jolliffe, I. T. (2010). \emph{Principal Component
 Analysis}. Springer.
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -139,11 +143,11 @@ Other {multivariate transformation steps}:
 \code{\link{step_isomap}()},
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
+\code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
-\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

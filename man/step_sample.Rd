@@ -95,7 +95,7 @@ bake(smaller_cars, new_data = NULL) \%>\% nrow()
 bake(smaller_cars, new_data = mtcars \%>\% slice(21:32)) \%>\% nrow()
 }
 \seealso{
-Other {row operation steps}: 
+Other row operation steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_impute_roll}()},
@@ -104,7 +104,7 @@ Other {row operation steps}:
 \code{\link{step_shuffle}()},
 \code{\link{step_slice}()}
 
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate_at}()},
@@ -114,5 +114,5 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{{dplyr steps}}
-\concept{{row operation steps}}
+\concept{dplyr steps}
+\concept{row operation steps}

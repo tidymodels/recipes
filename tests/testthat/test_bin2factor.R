@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("binary to factor conversion")
-
 library(modeldata)
 data(covers)
 rec <- recipe(~ description, covers) %>%
@@ -47,4 +45,40 @@ test_that('choose reference level', {
   expect_true(all(res4$rocks[res4$more_rocks == 1] == "yes"))
   expect_true(all(res4$rocks[res4$more_rocks == 0] == "no"))
   expect_true(levels(res4$rocks)[1] == "no")
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_bin2factor(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_bin2factor(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(
+    tidy(rec, number = 1),
+    tibble(terms = character(), id = character())
+  )
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_bin2factor(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

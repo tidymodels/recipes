@@ -1,5 +1,3 @@
-context("Changing roles")
-
 library(testthat)
 library(recipes)
 library(tibble)
@@ -279,49 +277,41 @@ test_that("can use tidyselect ops in role selection", {
 test_that("empty dots and zero column selections return input with a warning", {
   rec <- recipe(x = biomass)
 
-  expect_identical(
-    expect_warning(
-      add_role(rec),
-      "No columns were selected in `add_role[(][)]`"
-    ),
-    rec
+  expect_warning(
+    rec2 <- add_role(rec),
+    "No columns were selected in `add_role[(][)]`"
   )
-  expect_identical(
-    expect_warning(
-      update_role(rec),
-      "No columns were selected in `update_role[(][)]`"
-    ),
-    rec
-  )
-  expect_identical(
-    expect_warning(
-      remove_role(rec, old_role = "foo"),
-      "No columns were selected in `remove_role[(][)]`"
-    ),
-    rec
-  )
+  expect_identical(rec2, rec)
 
-  expect_identical(
-    expect_warning(
-      add_role(rec, starts_with("foobar")),
-      "No columns were selected in `add_role[(][)]`"
-    ),
-    rec
+  expect_warning(
+    rec2 <- update_role(rec),
+    "No columns were selected in `update_role[(][)]`"
   )
-  expect_identical(
-    expect_warning(
-      update_role(rec, starts_with("foobar")),
-      "No columns were selected in `update_role[(][)]`"
-    ),
-    rec
+  expect_identical(rec2, rec)
+
+  expect_warning(
+    rec2 <- remove_role(rec, old_role = "foo"),
+    "No columns were selected in `remove_role[(][)]`"
   )
-  expect_identical(
-    expect_warning(
-      remove_role(rec, starts_with("foobar"), old_role = "foo"),
-      "No columns were selected in `remove_role[(][)]`"
-    ),
-    rec
+  expect_identical(rec2, rec)
+
+  expect_warning(
+    rec2 <- add_role(rec, starts_with("foobar")),
+    "No columns were selected in `add_role[(][)]`"
   )
+  expect_identical(rec2, rec)
+
+  expect_warning(
+    rec2 <- update_role(rec, starts_with("foobar")),
+    "No columns were selected in `update_role[(][)]`"
+  )
+  expect_identical(rec2, rec)
+
+  expect_warning(
+    rec2 <- remove_role(rec, starts_with("foobar"), old_role = "foo"),
+    "No columns were selected in `remove_role[(][)]`"
+  )
+  expect_identical(rec2, rec)
 })
 
 test_that('bad args', {

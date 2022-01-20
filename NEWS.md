@@ -1,16 +1,65 @@
 # recipes (development version)
 
-## New Steps
+## Improvements and Other Changes
+
+* All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
+
+* Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
+
+* Added a new step called `step_filter_missing()`, which can filter columns based on proportion of missingness (#270).
+
+* Improved the efficiency of computations for the Box-Cox transformation (#820).
+
+* When a feature extraction step (e.g., `step_pca()`, `step_ica()`, etc.) has zero components specified, the `tidy()` method now lists the selected columns in the `terms` column.
 
 * `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. 
 
+## Breaking Changes
+
+* `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
+
+* `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
+
+* `step_ica()` now runs `fastICA()` using a specific set of random numbers so that initialization is reproducible. 
+
+* `tidy.recipe()` now returns a zero row tibble instead of an error when applied to a empty recipe. (#867)
+
+* `step_zv()` now has a `group` argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (#711)
+
+* `detect_step()` is no longer restricted to steps created in recipes (#869).
+
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to extract parameter sets and single parameters from `recipe` objects. 
+
+
+# recipes 0.1.17
+
+## New Steps
+
 * Added new `step_harmonic()` (#702).
+
+* Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
+
+## Deprecation News
+
+* The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.
+
+* Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
+
+* `step_kpca()` was un-deprecated and gained the `keep_original_cols` argument.
+
+* The deprecation of the `preserve` argument to `step_pls()` and `step_dummy()` was escalated from a soft deprecation to regular deprecation. 
+
+* The deprecation of the `options` argument to `step_nzv()` was escalated to a deprecation error.
 
 ## Bug Fixes
 
 * Fix imputation steps for new data that is all `NA`, and generate a warning for recipes created under previous versions that cannot be imputed with this fix (#719).
 
+* A bug was fixed where imputed values via bagged trees would have the wrong levels.
+
 ## Improvements and Other Changes
+
+* The computations for the Yeo-Johnson transformation were made more efficient (#782).
 
 * New `recipes_eval_select()` which is a developer tool that is useful for creating new recipes steps. It powers the tidyselect semantics that are specific to recipes and supports the modern tidyselect API introduced in tidyselect 1.0.0. Additionally, the older `terms_select()` has been deprecated in favor of this new helper (#739).
 
@@ -24,11 +73,9 @@
 
 * Generate warning when user attempts a Box-Cox transformation of non-positive data (@LiamBlake, #713).
 
-* The deprecation for `step_upsample()` and `step_downsample()` has been escalated from a deprecation warning to a deprecation error; these functions are available in the themis package.
+* `step_logit()` gained an offset argument for cases where the input is either zero or one (#784)
 
-* Escalate deprecation for old versions of imputation steps (such as `step_bagimpute()`) from a soft deprecation to a regular deprecation; these imputation steps have new names like `step_impute_bag()` (#753).
-
-* Added a new step called `step_dummy_multi_choice()`, which will take multiple nominal variables and produces shared dummy variables. (#716)
+* The `tidy()` methods for objects from `check_new_values()`, `check_class()` and `step_nnmf()` are now exported.
 
 # recipes 0.1.16
 

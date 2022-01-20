@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Dummy variable creation")
-
 
 library(modeldata)
 data(okc)
@@ -37,7 +35,7 @@ test_that('dummy variables with factor inputs', {
   exp_res <- exp_res[, order(colnames(exp_res))]
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
-  expect_equivalent(dummy_pred, exp_res)
+  expect_equal(dummy_pred, exp_res, ignore_attr = TRUE)
 
   dum_tibble <-
     tibble(terms = c("diet", "location"), columns = rep(rlang::na_chr, 2), id = "")
@@ -100,7 +98,7 @@ test_that('create all dummy variables', {
   colnames(exp_res) <- make.names(colnames(exp_res))
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
-  expect_equivalent(dummy_pred, exp_res)
+  expect_equal(dummy_pred, exp_res, ignore_attr = TRUE)
 
   dum_tibble <-
     tibble(terms = c("diet", "location"), columns = rep(rlang::na_chr, 2), id = "")
@@ -274,16 +272,15 @@ test_that('no columns selected', {
 
   expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
-  expect_output(print(rec), regexp = "since no columns were selected")
+  expect_output(print(rec), regexp = "<none>")
 
-  exp_tidy <- tibble(terms = rlang::na_chr, columns = rlang::na_chr,
-                     id = rec$steps[[2]]$id)
+  exp_tidy <- tibble(terms = character(), columns = character(), id = character())
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
 test_that('retained columns', {
   rec <- recipe(age ~ location + diet, data = okc_fac)
-  dummy <- rec %>% step_dummy(diet, location, preserve = TRUE, id = "")
+  dummy <- rec %>% step_dummy(diet, location, keep_original_cols = TRUE, id = "")
   dummy_trained <- prep(dummy, training = okc_fac)
   dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors())
 
@@ -319,4 +316,41 @@ test_that('can prep recipes with no keep_original_cols', {
     dummy_pred <- bake(dummy_trained, new_data = okc_fac, all_predictors()),
     NA
   )
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_dummy(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_dummy(rec)
+
+  expect <- tibble(terms = character(), columns = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_dummy(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

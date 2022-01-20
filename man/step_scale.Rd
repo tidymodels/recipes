@@ -100,9 +100,9 @@ dividing by two standard deviations." Unpublished. Source:
 \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
 }
 \seealso{
-Other {normalization steps}: 
+Other normalization steps: 
 \code{\link{step_center}()},
 \code{\link{step_normalize}()},
 \code{\link{step_range}()}
 }
-\concept{{normalization steps}}
+\concept{normalization steps}

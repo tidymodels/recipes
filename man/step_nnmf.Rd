@@ -13,6 +13,7 @@ step_nnmf(
   num_run = 30,
   options = list(),
   res = NULL,
+  columns = NULL,
   prefix = "NNMF",
   seed = sample.int(10^5, 1),
   keep_original_cols = FALSE,
@@ -50,6 +51,9 @@ processing is turned off in favor of resample-level parallelization.}
 \item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has been trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -117,7 +121,7 @@ data(biomass)
 #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -125,11 +129,11 @@ Other {multivariate transformation steps}:
 \code{\link{step_isomap}()},
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
+\code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
-\code{\link{step_nnmf_sparse}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

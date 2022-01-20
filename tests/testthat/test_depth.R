@@ -2,8 +2,6 @@ library(testthat)
 library(recipes)
 library(ddalpha)
 
-context("depth features")
-
 
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
@@ -15,7 +13,7 @@ test_that("defaults", {
 
   split_up <- split(iris[, 1:4], iris$Species)
   spatial <- function(x, y)
-    depth.spatial(x = y, data = x)
+    ddalpha::depth.spatial(x = y, data = x)
 
   exp_res <- lapply(split_up, spatial, y = iris[, 1:4])
   exp_res <- as.data.frame(exp_res)
@@ -77,4 +75,41 @@ test_that('prefix', {
   dists <- bake(trained, new_data = iris)
   expect_false(any(grepl("depth_", names(dists))))
   expect_true(any(grepl("spatial_", names(dists))))
+})
+
+test_that("empty selection prep/bake adds NA columns", {
+  rec1 <- recipe(Species ~ ., iris)
+  rec2 <- step_depth(rec1, class = "Species")
+
+  rec2 <- prep(rec2, iris)
+
+  baked2 <- bake(rec2, iris)
+
+  expect_identical(baked2$depth_setosa, rep(NA_real_, nrow(iris)))
+  expect_identical(baked2$depth_versicolor, rep(NA_real_, nrow(iris)))
+  expect_identical(baked2$depth_virginica, rep(NA_real_, nrow(iris)))
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_depth(rec, class = "Species")
+
+  expect <- tibble(terms = character(), class = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, iris)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_depth(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
 })

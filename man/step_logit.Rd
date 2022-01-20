@@ -7,6 +7,7 @@
 step_logit(
   recipe,
   ...,
+  offset = 0,
   role = NA,
   trained = FALSE,
   columns = NULL,
@@ -20,6 +21,9 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
+
+\item{offset}{A numeric value to modify values of the columns that are either
+one or zero. They are modified to be \code{x - offset} or \code{offset}, respectively.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -74,7 +78,7 @@ tidy(logit_trans, number = 1)
 tidy(logit_obj, number = 1)
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
@@ -89,4 +93,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{{individual transformation steps}}
+\concept{individual transformation steps}

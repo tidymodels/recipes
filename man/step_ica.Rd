@@ -11,7 +11,9 @@ step_ica(
   trained = FALSE,
   num_comp = 5,
   options = list(method = "C"),
+  seed = sample.int(10000, 5),
   res = NULL,
+  columns = NULL,
   prefix = "IC",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -42,9 +44,15 @@ used.}
 \strong{Note} that the arguments \code{X} and \code{n.comp} should
 not be passed here.}
 
+\item{seed}{A single integer to set the random number stream prior to
+running ICA.}
+
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -116,7 +124,7 @@ ica_trans <- step_center(rec,  V1, V2)
 ica_trans <- step_scale(ica_trans, V1, V2)
 ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 
-if (require(dimRed) & require(fastICA)) {
+if (FALSE) {
   ica_estimates <- prep(ica_trans, training = tr)
   ica_data <- bake(ica_estimates, te)
 
@@ -133,19 +141,19 @@ component analysis: algorithms and applications. \emph{Neural
 Networks}, 13(4-5), 411-430.
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
 \code{\link{step_isomap}()},
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
+\code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
-\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

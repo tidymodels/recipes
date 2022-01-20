@@ -14,7 +14,7 @@
 #' @param upper A named numeric vector of maximum values in the train set.
 #'   This is `NULL` until computed by [prep.recipe()].
 #' @template check-return
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details
 #'   The amount of slack that is allowed is determined by the
@@ -68,7 +68,7 @@ check_range <-
     add_check(
       recipe,
       check_range_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         skip    = skip,
         trained = trained,
@@ -181,18 +181,17 @@ bake.check_range <- function(object,
 
 print.check_range <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking range of ", sep = "")
-    printer(names(x$lower), x$terms, x$trained, width = width)
+    title <- "Checking range of "
+    print_step(names(x$lower), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `check_range` object.
 #' @export
 tidy.check_range <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = names(x$lower))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }

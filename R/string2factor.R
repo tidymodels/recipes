@@ -10,7 +10,7 @@
 #' @param ordered A single logical value; should the factor(s) be
 #'  ordered?
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details If `levels` is given, `step_string2factor` will
 #'  convert all variables affected by this step to have the same
@@ -62,7 +62,7 @@ step_string2factor <-
     add_step(
       recipe,
       step_string2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         levels = levels,
@@ -138,16 +138,16 @@ bake.step_string2factor <- function(object, new_data, ...) {
 
   if (is.list(object$levels)) {
     new_data[, col_names] <-
-      map2_df(new_data[, col_names],
-              object$levels,
-              make_factor,
-              ord = object$ordered[1])
+      purrr::map2(new_data[, col_names],
+                  object$levels,
+                  make_factor,
+                  ord = object$ordered[1])
   } else {
     new_data[, col_names] <-
-      map_df(new_data[, col_names],
-             make_factor,
-             lvl = object$levels,
-             ord = object$ordered[1])
+      map(new_data[, col_names],
+          make_factor,
+          lvl = object$levels,
+          ord = object$ordered[1])
   }
 
   if (!is_tibble(new_data))
@@ -157,24 +157,23 @@ bake.step_string2factor <- function(object, new_data, ...) {
 
 print.step_string2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Factor variables from ")
-    printer(names(x$ordered), x$terms, x$trained, width = width)
+    title <- "Factor variables from "
+    print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_string2factor` object.
 #' @export
 tidy.step_string2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
     res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+                  ordered = rep(unname(x$ordered), p))
   } else {
     res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+                  ordered = rep(unname(x$ordered), p))
   }
   res$id <- x$id
   res

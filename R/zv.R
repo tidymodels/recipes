@@ -7,10 +7,17 @@
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
 #'  until [prep.recipe()] is called.
+#' @param group An optional character string or call to [dplyr::vars()]
+#'  that can be used to specify a group(s) within which to identify
+#'  variables that contain only a single value. If the grouping variables
+#'  are contained in terms selector, they will not be considered for
+#'  removal.
 #' @template step-return
+#' @template filter-steps
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be removed) is returned.
-#' @family {variable filter steps}
+#'
+#' @family variable filter steps
 #' @export
 #'
 #' @examples
@@ -41,15 +48,17 @@ step_zv <-
            ...,
            role = NA,
            trained = FALSE,
+           group = NULL,
            removals = NULL,
            skip = FALSE,
            id = rand_id("zv")) {
     add_step(
       recipe,
       step_zv_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
+        group = group,
         removals = removals,
         skip = skip,
         id = id
@@ -58,12 +67,13 @@ step_zv <-
   }
 
 step_zv_new <-
-  function(terms, role, trained, removals, skip, id) {
+  function(terms, role, trained, group, removals, skip, id) {
     step(
       subclass = "zv",
       terms = terms,
       role = role,
       trained = trained,
+      group = group,
       removals = removals,
       skip = skip,
       id = id
@@ -73,17 +83,34 @@ step_zv_new <-
 one_unique <- function(x) {
   x <- x[!is.na(x)]
   length(unique(x)) < 2
-  }
+}
+
+group_one_unique <- function(x, f) {
+  x_split <- split(x, f)
+  any(vapply(x_split, one_unique, logical(1)))
+}
 
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  filter <- vapply(training[, col_names], one_unique, logical(1))
+  group_names <- recipes_eval_select(x$group, training, info)
+
+  if (is.null(x$group)) {
+    filter <- vapply(training[, col_names], one_unique, logical(1))
+  } else {
+    filter <- vapply(
+      training[, setdiff(col_names, group_names)],
+      group_one_unique,
+      f = interaction(training[group_names]),
+      logical(1)
+    )
+  }
 
   step_zv_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    group = x$group,
     removals = names(filter)[filter],
     skip = x$skip,
     id = x$id
@@ -100,24 +127,15 @@ bake.step_zv <- function(object, new_data, ...) {
 print.step_zv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Zero variance filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Zero variance filter removed no terms")
+      title <- "Zero variance filter removed "
     } else {
-      cat("Zero variance filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
+      title <- "Zero variance filter on "
     }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_zv` object.
 #' @export
 tidy.step_zv <- tidy_filter

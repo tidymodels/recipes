@@ -8,6 +8,7 @@
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
+#' @template mutate-leakage
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
@@ -18,8 +19,11 @@
 #'  contains the `mutate()` expressions as character strings
 #'  (and are not reparsable), is returned.
 #'
-#' @family {individual transformation steps}
-#' @family {dplyr steps}
+#'  If a preceding step removes a column that is selected by name in
+#'  `step_mutate()`, the recipe will error when being estimated with `prep()`.
+#'
+#' @family individual transformation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' rec <-
@@ -125,18 +129,13 @@ bake.step_mutate <- function(object, new_data, ...) {
 
 
 print.step_mutate <-
-  function(x, ...) {
-    cat("Variable mutation")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+  function(x, width = max(20, options()$width - 35), ...) {
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_mutate` object
 #' @export
 tidy.step_mutate <- function(x, ...) {
   inputs <- x$inputs

@@ -8,8 +8,8 @@ recipes_eval_select(quos, data, info, ..., allow_rename = FALSE)
 }
 \arguments{
 \item{quos}{A list of quosures describing the selection. This is generally
-the \code{...} argument of your step function, captured with \code{\link[=ellipse_check]{ellipse_check()}}
-or \code{\link[rlang:nse-defuse]{rlang::enquos()}} and stored in the step object as the \code{terms} element.}
+the \code{...} argument of your step function, captured with \code{\link[rlang:nse-defuse]{rlang::enquos()}}
+and stored in the step object as the \code{terms} element.}
 
 \item{data}{A data frame to use as the context to evaluate the selection in.
 This is generally the \code{training} data passed to the \code{\link[=prep]{prep()}} method

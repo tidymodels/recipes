@@ -17,7 +17,7 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered` is returned.
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @examples
 #' library(dplyr)
@@ -94,7 +94,7 @@ step_num2factor <-
     add_step(
       recipe,
       step_num2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         transform = transform,
         trained = trained,
@@ -165,11 +165,11 @@ bake.step_num2factor <- function(object, new_data, ...) {
   object$levels <- object$levels[names(object$levels) != "..levels"]
 
   new_data[, col_names] <-
-    map_df(new_data[, col_names],
-            make_factor_num,
-            lvl = lvls[[1]],
-            ord = object$ordered[1],
-            foo = object$transform)
+    map(new_data[, col_names],
+        make_factor_num,
+        lvl = lvls[[1]],
+        ord = object$ordered[1],
+        foo = object$transform)
 
   if (!is_tibble(new_data))
     new_data <- as_tibble(new_data)
@@ -178,24 +178,23 @@ bake.step_num2factor <- function(object, new_data, ...) {
 
 print.step_num2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Factor variables from ")
-    printer(names(x$ordered), x$terms, x$trained, width = width)
+    title <- "Factor variables from "
+    print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_num2factor` object.
 #' @export
 tidy.step_num2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
     res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+                  ordered = rep(unname(x$ordered), p))
   } else {
     res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+                  ordered = rep(unname(x$ordered), p))
   }
   res$id <- x$id
   res

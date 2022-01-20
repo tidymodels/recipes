@@ -17,8 +17,8 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with columns `size`,
 #' `replace`, and `id` is returned.
-#' @family {row operation steps}
-#' @family {dplyr steps}
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #'
@@ -130,20 +130,16 @@ bake.step_sample <- function(object, new_data, ...) {
 
 print.step_sample <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Row sampling")
-    if (x$replace)
-      cat(" with replacement")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
+    title <- "Row sampling "
+    if (x$replace) {
+      title <- paste(title, "with replacement ")
     }
+    print_step(NULL, NULL, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_sample` object
 #' @export
 tidy.step_sample <- function(x, ...) {
   tibble(

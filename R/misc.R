@@ -15,7 +15,8 @@ get_types <- function(x) {
       logical = "logical",
       Date = "date",
       POSIXct = "date",
-      list = "list"
+      list = "list",
+      textrecipes_tokenlist = "tokenlist"
     )
 
   classes <- lapply(x, class)
@@ -163,6 +164,11 @@ names0 <- function(num, prefix = "x") {
 #' @export
 #' @rdname names0
 dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
+  # Work around `paste()` recycling bug with 0 length input
+  args <- vctrs::vec_recycle_common(var, lvl)
+  var <- args[[1]]
+  lvl <- args[[2]]
+
   if(!ordinal)
     nms <- paste(var, make.names(lvl), sep = sep)
   else
@@ -286,6 +292,9 @@ merge_term_info <- function(.new, .old) {
 
 #' Check for Empty Ellipses
 #'
+#' `ellipse_check()` is deprecated. Instead, empty selections should be
+#' supported by all steps.
+#'
 #' @param ... Arguments pass in from a call to `step`
 #' @return If not empty, a list of quosures. If empty, an error is thrown.
 #' @export
@@ -324,15 +333,22 @@ printer <- function(tr_obj = NULL,
                     width = max(20, options()$width - 30)) {
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
-  } else
+  } else {
     txt <- format_selectors(untr_obj, width = width)
-  if (nchar(txt) == 0)
+  }
+
+  if (length(txt) == 0L) {
     txt <- "<none>"
+  }
+
   cat(txt)
-  if (trained)
+
+  if (trained) {
     cat(" [trained]\n")
-  else
+  } else {
     cat("\n")
+  }
+
   invisible(NULL)
 }
 
@@ -386,11 +402,8 @@ fully_trained <- function(x) {
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_intercept()
 #'
-#' detect_step(rec, "step_intercept")
+#' detect_step(rec, "intercept")
 detect_step <- function(recipe, name) {
-  exports <- getNamespaceExports("recipes")
-  if (!any(grepl(paste0(".*", name, ".*"), exports)))
-    rlang::abort("Please provide the name of valid step or check (ex: `center`).")
   name %in% tidy(recipe)$type
 }
 
@@ -754,3 +767,27 @@ changelog <- function(show, before, after, x) {
   }
 }
 
+# ------------------------------------------------------------------------------
+
+eval_dimred_call <- function(fn, ...) {
+  cl <- rlang::call2(fn, .ns = "dimRed", ...)
+  rlang::eval_tidy(cl)
+}
+
+dimred_data <- function(dat) {
+  cl <- rlang::call2("dimRedData", .ns = "dimRed", rlang::expr(as.matrix(dat)))
+  rlang::eval_tidy(cl)
+}
+
+uses_dim_red <- function(x) {
+  dr <- inherits(x, "dimRedResult")
+  if (dr) {
+    rlang::abort(
+      paste(
+        "Recipes version >= 0.1.17 represents the estimates using a different format.",
+        "Please recreate this recipe or use version 0.1.16 or less. See issue #823."
+      )
+    )
+  }
+  invisible(NULL)
+}

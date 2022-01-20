@@ -12,7 +12,7 @@
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details `step_impute_mean` estimates the variable means from the data used
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
@@ -66,7 +66,7 @@ step_impute_mean <-
     add_step(
       recipe,
       step_impute_mean_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         means = means,
@@ -160,8 +160,8 @@ bake.step_meanimpute <- bake.step_impute_mean
 #' @export
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Mean Imputation for ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "Mean imputation for "
+    print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -170,12 +170,11 @@ print.step_impute_mean <-
 print.step_meanimpute <- print.step_impute_mean
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_mean` object.
 #' @export
 tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$means),
-                  model = unlist(x$means))
+                  model = vctrs::vec_unchop(unname(x$means), ptype = double()))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)
@@ -188,7 +187,7 @@ tidy.step_impute_mean <- function(x, ...) {
 #' @keywords internal
 tidy.step_meanimpute <- tidy.step_impute_mean
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_mean <- function(x, ...) {
   tibble::tibble(

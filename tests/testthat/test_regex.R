@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Regex pattern matching indicators")
-
 library(modeldata)
 data(covers)
 covers$rows <- 1:nrow(covers)
@@ -35,8 +33,6 @@ test_that('nondefault options', {
 
 test_that('bad selector(s)', {
   expect_error(rec %>% step_regex(description, rows, pattern = "(rock|stony)"))
-  rec3 <- rec %>% step_regex(starts_with("b"), pattern = "(rock|stony)")
-  expect_error(prep(rec3, training = covers))
   rec4 <- rec %>% step_regex(rows, pattern = "(rock|stony)")
   expect_error(prep(rec4, training = covers))
 })
@@ -47,4 +43,41 @@ test_that('printing', {
     step_regex(description, pattern = "(rock|stony)")
   expect_output(print(rec1))
   expect_output(prep(rec1, training = covers, verbose = TRUE))
+})
+
+test_that("empty selection prep/bake adds a 0 column", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_regex(rec1, pattern = "xxx")
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked2$xxx, rep(0, nrow(mtcars)))
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_regex(rec)
+
+  expect <- tibble(terms = character(), result = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_regex(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

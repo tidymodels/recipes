@@ -1,69 +1,32 @@
 #' Kernel PCA Signal Extraction
 #'
-#' `step_kpca` a *specification* of a recipe step that
+#' `step_kpca` creates a *specification* of a recipe step that
 #'  will convert numeric data into one or more principal components
 #'  using a kernel basis expansion.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of PCA components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
-#' @param options A list of options to
-#'  [kernlab::kpca()]. Defaults are set for the arguments
-#'  `kernel` and `kpar` but others can be passed in.
-#'  **Note** that the arguments `x` and `features`
-#'  should not be passed here (or at all).
-#' @param res An S4 [kernlab::kpca()] object is stored
-#'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#' @param options A list of options to [kernlab::kpca()]. Defaults are set for
+#'  the arguments `kernel` and `kpar` but others can be passed in.
+#'  **Note** that the arguments `x` and `features` should not be passed here
+#'  (or at all).
+#' @param res An S4 [kernlab::kpca()] object is stored here once this
+#'  preprocessing step has be trained by [`prep()`][prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @template step-return
-#' @keywords internal
+#' @family multivariate transformation steps
 #' @export
-#' @details Kernel principal component analysis (kPCA) is an
-#'  extension of a PCA analysis that conducts the calculations in a
-#'  broader dimensionality defined by a kernel function. For
-#'  example, if a quadratic kernel function were used, each variable
-#'  would be represented by its original values as well as its
-#'  square. This nonlinear mapping is used during the PCA analysis
-#'  and can potentially help find better representations of the
-#'  original data.
+#' @details
+#' When performing kPCA with `step_kpca()`, you must choose the kernel
+#' function (and any important kernel parameters). This step uses the
+#' \pkg{kernlab} package; the reference below discusses the types of kernels
+#' available and their parameter(s). These specifications can be made in the
+#' `kernel` and `kpar` slots of the `options` argument to `step_kpca()`.
+#' Consider using [step_kpca_rbf()] for a radial basis function kernel or
+#' [step_kpca_poly()] for a polynomial kernel.
 #'
-#' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
-#' If not installed, the step will stop with a note about installing
-#' these packages.
-#'
-#' As with ordinary PCA, it is important to standardize the
-#'  variables prior to running PCA (`step_center` and
-#'  `step_scale` can be used for this purpose).
-#'
-#' When performing kPCA, the kernel function (and any important
-#'  kernel parameters) must be chosen. The \pkg{kernlab} package is
-#'  used and the reference below discusses the types of kernels
-#'  available and their parameter(s). These specifications can be
-#'  made in the `kernel` and `kpar` slots of the
-#'  `options` argument to `step_kpca`.
-#'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_comp < 10`, their names will be `kPC1` -
-#'  `kPC9`. If `num_comp = 101`, the names would be
-#'  `kPC001` - `kPC101`.
-#'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) is returned.
-#'
-#' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
-#'  Kernel principal component analysis. *Lecture Notes in
-#'  Computer Science*, 1327, 583-588.
-#'
-#' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
-#'  kernlab - An S4 package for kernel methods in R. *Journal
-#'  of Statistical Software*, 11(1), 1-20.
+#' @template kpca-info
 #'
 #' @examples
 #' library(modeldata)
@@ -80,22 +43,18 @@
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_kpca(all_numeric_predictors())
 #'
-#' if (require(dimRed) & require(kernlab)) {
+#' if (require(kernlab) & require(ggplot2)) {
 #'   kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 #'
 #'   kpca_te <- bake(kpca_estimates, biomass_te)
 #'
-#'   rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-#'   plot(kpca_te$kPC1, kpca_te$kPC2,
-#'        xlim = rng, ylim = rng)
+#'   ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
+#'    geom_point() +
+#'    coord_equal()
 #'
 #'   tidy(kpca_trans, number = 3)
 #'   tidy(kpca_estimates, number = 3)
 #' }
-#' @seealso [step_pca()] [step_ica()]
-#'   [step_isomap()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-#'
 step_kpca <-
   function(recipe,
            ...,
@@ -103,30 +62,28 @@ step_kpca <-
            trained = FALSE,
            num_comp  = 5,
            res = NULL,
+           columns = NULL,
            options = list(kernel = "rbfdot",
                           kpar = list(sigma = 0.2)),
            prefix = "kPC",
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("kpca")) {
 
     recipes_pkg_check(required_pkgs.step_kpca())
-    rlang::inform(
-      paste(
-        "`step_kpca()` is deprecated in favor of either `step_kpca_rbf()`",
-        "or `step_kpca_poly()`. It will be removed in future versions."
-      )
-    )
 
     add_step(
       recipe,
       step_kpca_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
         res = res,
+        columns = columns,
         options = options,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -134,7 +91,8 @@ step_kpca <-
 }
 
 step_kpca_new <-
-  function(terms, role, trained, num_comp, res, options, prefix, skip, id) {
+  function(terms, role, trained, num_comp, res, columns, options, prefix,
+           keep_original_cols, skip, id) {
     step(
       subclass = "kpca",
       terms = terms,
@@ -142,34 +100,35 @@ step_kpca_new <-
       trained = trained,
       num_comp = num_comp,
       res = res,
+      columns = columns,
       options = options,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
   }
 
 #' @export
-#' @keywords internal
 prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
-  if (x$num_comp > 0) {
-    kprc <- dimRed::kPCA(stdpars = c(list(ndim = x$num_comp), x$options))
-    kprc <-
-      try(
-        kprc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          kprc@stdpars
-        ),
-        silent = TRUE
+  if (x$num_comp > 0 && length(col_names) > 0) {
+    cl <-
+      rlang::call2(
+        "kpca",
+        .ns = "kernlab",
+        x = rlang::expr(as.matrix(training[, col_names])),
+        features = x$num_comp
       )
+    cl <- call_modify(cl, !!!x$options)
+    kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
       rlang::abort(paste0("`step_kpca` failed with error:\n", as.character(kprc)))
     }
   } else {
-    kprc <- list(x_vars = col_names)
+    kprc <- NULL
   }
 
   step_kpca_new(
@@ -179,56 +138,53 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     num_comp = x$num_comp,
     options = x$options,
     res = kprc,
+    columns = col_names,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
 }
 
 #' @export
-#' @keywords internal
 bake.step_kpca <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
-    pca_vars <- colnames(environment(object$res@apply)$indata)
-    comps <- object$res@apply(
-      dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
-    )@data
+  uses_dim_red(object)
+
+  if (object$num_comp > 0 && length(object$columns) > 0) {
+    cl <-
+      rlang::call2(
+        "predict",
+        .ns = "kernlab",
+        object = object$res,
+        rlang::expr(as.matrix(new_data[, object$columns]))
+      )
+    comps <- rlang::eval_tidy(cl)
     comps <- comps[, 1:object$num_comp, drop = FALSE]
+    colnames(comps) <- names0(ncol(comps), object$prefix)
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+    keep_original_cols <- get_keep_original_cols(object)
+
+    if (!keep_original_cols) {
+      new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
+    }
   }
   as_tibble(new_data)
 }
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
-  if (x$trained) {
-    if (x$num_comp == 0) {
-      cat("No kPCA components were extracted.\n")
-    } else {
-      cat("Kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
-    }
-  } else {
-    cat("Kernel PCA extraction with ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-  }
-  if (x$trained) cat(" [trained]\n") else cat("\n")
+  title <- "Kernel PCA extraction with "
+  print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_kpca` object
 #' @export
-#' @keywords internal
 tidy.step_kpca <- function(x, ...) {
+  uses_dim_red(x)
   if (is_trained(x)) {
-    if (x$num_comp > 0) {
-      res <- tibble(terms = colnames(x$res@org.data))
-    } else {
-      res <- tibble(terms = unname(x$res$x_vars))
-    }
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
@@ -239,9 +195,8 @@ tidy.step_kpca <- function(x, ...) {
 
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
-#' @keywords internal
 required_pkgs.step_kpca <- function(x, ...) {
-  c("dimRed", "kernlab")
+  c("kernlab")
 }

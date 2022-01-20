@@ -4,7 +4,6 @@
 #'   order to prepare it for data analysis.
 #'
 #' @aliases recipe recipe.default recipe.formula
-#' @author Max Kuhn
 #' @export
 recipe <- function(x, ...)
   UseMethod("recipe")
@@ -99,15 +98,15 @@ recipe.data.frame <-
       if (!is.null(vars))
         rlang::abort(
           paste0("This `vars` specification will be ignored ",
-             "when a formula is used"
-             )
+                 "when a formula is used"
           )
+        )
       if (!is.null(roles))
         rlang::abort(
           paste0("This `roles` specification will be ignored ",
-             "when a formula is used"
-             )
+                 "when a formula is used"
           )
+        )
 
       obj <- recipe.formula(formula, x, ...)
       return(obj)
@@ -133,7 +132,7 @@ recipe.data.frame <-
       if (length(roles) != length(vars))
         rlang::abort(
           paste0("The number of roles should be the same as the number of ",
-             "variables")
+                 "variables")
         )
       var_info$role <- roles
     } else
@@ -236,7 +235,6 @@ inline_check <- function(x) {
 #' @param x an object
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
-#' @author Max Kuhn
 #' @export
 prep <- function(x, ...)
   UseMethod("prep")
@@ -452,7 +450,6 @@ prep.recipe <-
 
 #' @rdname bake
 #' @aliases bake bake.recipe
-#' @author Max Kuhn
 #' @export
 bake <- function(object, ...)
   UseMethod("bake")
@@ -532,8 +529,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!any(composition == formats)) {
     rlang::abort(
       paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
+        "`composition` should be one of: ",
+        paste0("'", formats, "'", collapse = ",")
       )
     )
   }
@@ -625,7 +622,6 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #'   used).
 #' @return The original object (invisibly)
 #'
-#' @author Max Kuhn
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
   cat("Recipe\n\n")
@@ -779,12 +775,13 @@ utils::globalVariables(c("number"))
 
 # ------------------------------------------------------------------------------
 
-#' API for listing required packages for each step
+#' S3 methods for tracking which additional packages are needed for steps.
 #'
-#' @param x An object.
-#' @param infra A logical; should infrastructure packages be included?
-#' @param ... Not currently used.
-#' @rdname required_pkgs
+#' @param x A recipe or recipe step
+#' @param infra Should recipes itself be included in the result?
+#' @return A character vector
+#' @name required_pkgs.recipe
+#' @keywords internal
 #' @export
 required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res <- purrr::map(x$steps, required_pkgs)
@@ -797,13 +794,13 @@ required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res
 }
 
-#' @rdname required_pkgs
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step <- function(x, ...) {
   character(0)
 }
 
-#' @rdname required_pkgs
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.check <- function(x, ...) {
   character(0)

@@ -11,7 +11,7 @@
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details Dummy variables from ordered factors with `C`
 #'  levels will create polynomial basis functions with `C-1`
@@ -72,7 +72,7 @@ step_ordinalscore <-
     add_step(
       recipe,
       step_ordinalscore_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         columns = columns,
@@ -131,14 +131,13 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
 
 print.step_ordinalscore <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Scoring for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Scoring for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_ordinalscore` object.
 #' @export
 tidy.step_ordinalscore <- function(x, ...) {
   res <- simple_terms(x, ...)

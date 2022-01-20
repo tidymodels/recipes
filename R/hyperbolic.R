@@ -11,7 +11,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected), `inverse`, and `func` is returned.
@@ -45,11 +45,11 @@ step_hyperbolic <-
            id = rand_id("hyperbolic")) {
     funcs <- c("sin", "cos", "tan")
     if (!(func %in% funcs))
-      rlang::abort("`func` should be either `sin``, `cos`, or `tan`")
+      rlang::abort("`func` should be either `sin`, `cos`, or `tan`")
     add_step(
       recipe,
       step_hyperbolic_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         func = func,
@@ -111,13 +111,12 @@ print.step_hyperbolic <-
     ttl <- paste("Hyperbolic", x$func)
     if (x$inverse)
       ttl <- paste(ttl, "(inv)")
-    cat(ttl, "transformation on ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- glue::glue("{ttl} transformation on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_hyperbolic` object.
 #' @export
 tidy.step_hyperbolic <- function(x, ...) {
   out <- simple_terms(x, ...)

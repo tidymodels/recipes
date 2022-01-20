@@ -12,7 +12,7 @@
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details The selected variables are releveled to a level
 #' (given by `ref_level`). Placing the `ref_level` in the first
@@ -45,7 +45,7 @@ step_relevel <-
     add_step(
       recipe,
       step_relevel_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         ref_level = ref_level,
@@ -133,13 +133,12 @@ bake.step_relevel <- function(object, new_data, ...) {
 
 print.step_relevel <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Re-order factor level to ref_level for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Re-order factor level to ref_level for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_relevel` object.
 #' @export
 tidy.step_relevel <- function(x, ...) {
   if (is_trained(x)) {

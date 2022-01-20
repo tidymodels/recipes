@@ -10,10 +10,12 @@
 #' named**.
 #' @param inputs A vector of column names populated by `prep()`.
 #' @template step-return
+#' @template mutate-leakage
 #' @details When you [`tidy()`] this step, a tibble with
 #'  column `terms` which contains the columns being transformed is returned.
-#' @family {multivariate transformation steps}
-#' @family {dplyr steps}
+#'
+#' @family multivariate transformation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' library(dplyr)
@@ -43,7 +45,7 @@ step_mutate_at <- function(
   add_step(
     recipe,
     step_mutate_at_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       fn = fn,
       trained = trained,
       role = role,
@@ -91,8 +93,8 @@ bake.step_mutate_at <- function(object, new_data, ...) {
 
 print.step_mutate_at <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ", sep = "")
-    printer(x$inputs, x$terms, x$trained, width = width)
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -100,7 +102,7 @@ print.step_mutate_at <-
 #' @export
 tidy.step_mutate_at <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$inputs)
+    res <- tibble(terms = unname(x$inputs))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)

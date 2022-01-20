@@ -59,6 +59,11 @@ that will potentially remove variables that are highly sparse
 and unbalanced.
 }
 \details{
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
+
 This step diagnoses predictors that have one unique
 value (i.e. are zero variance predictors) or predictors that have
 both of the following characteristics:
@@ -111,11 +116,12 @@ tidy(nzv_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-Other {variable filter steps}: 
+Other variable filter steps: 
 \code{\link{step_corr}()},
+\code{\link{step_filter_missing}()},
 \code{\link{step_lincomb}()},
 \code{\link{step_rm}()},
 \code{\link{step_select}()},
 \code{\link{step_zv}()}
 }
-\concept{{variable filter steps}}
+\concept{variable filter steps}

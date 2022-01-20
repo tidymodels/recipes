@@ -11,7 +11,7 @@
 #' @template step-return
 #' @details When you [`tidy()`] this step, a tibble with column `terms` (the
 #' columns that will be permuted) is returned.
-#' @family {row operation steps}
+#' @family row operation steps
 #' @export
 #' @examples
 #' integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
@@ -37,7 +37,7 @@ step_shuffle <- function(recipe,
                          id = rand_id("shuffle")) {
   add_step(recipe,
            step_shuffle_new(
-             terms = ellipse_check(...),
+             terms = enquos(...),
              role = role,
              trained = trained,
              columns = columns,
@@ -87,13 +87,12 @@ bake.step_shuffle <- function(object, new_data, ...) {
 
 print.step_shuffle <-
   function(x, width = max(20, options()$width - 22), ...) {
-    cat("Shuffled ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Shuffled "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_shuffle` object.
 #' @export
 tidy.step_shuffle <- function(x, ...) {
   res <-simple_terms(x, ...)

@@ -10,7 +10,7 @@
 #' @param objects A list of objects that contain the information
 #'  on factor levels that will be determined by [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
 #' @details The selected variables are adjusted to have a new
@@ -68,7 +68,7 @@ step_novel <-
     add_step(
       recipe,
       step_novel_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         new_level = new_level,
@@ -168,13 +168,12 @@ bake.step_novel <- function(object, new_data, ...) {
 
 print.step_novel <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Novel factor level assignment for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Novel factor level assignment for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_novel` object.
 #' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {

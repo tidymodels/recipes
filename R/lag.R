@@ -19,7 +19,7 @@
 #' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
-#' @family {row operation steps}
+#' @family row operation steps
 #' @export
 #' @rdname step_lag
 #'
@@ -50,7 +50,7 @@ step_lag <-
     add_step(
       recipe,
       step_lag_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         lag = lag,
@@ -110,10 +110,9 @@ bake.step_lag <- function(object, new_data, ...) {
     )
   }
 
-  grid <- expand.grid(col = object$columns, lag_val = object$lag,
-                      stringsAsFactors = FALSE)
+  grid <- tidyr::expand_grid(col = object$columns, lag_val = object$lag)
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-  newname <- paste0(object$prefix, grid$lag_val, "_", grid$col)
+  newname <- as.character(glue::glue("{object$prefix}{grid$lag_val}_{grid$col}"))
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
   as_tibble(mutate(new_data, !!!calls))
@@ -121,7 +120,7 @@ bake.step_lag <- function(object, new_data, ...) {
 
 print.step_lag <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Lagging ",  sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Lagging "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }

@@ -228,7 +228,7 @@ print.discretize <-
 #' @details  When you [`tidy()`] this step, a tibble
 #'  with columns `terms` (the selectors or variables selected)
 #'  and `value` (the breaks) is returned.
-#' @family {discretization steps}
+#' @family discretization steps
 #' @export
 
 step_discretize <- function(recipe,
@@ -250,7 +250,7 @@ step_discretize <- function(recipe,
   add_step(
     recipe,
     step_discretize_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       trained = trained,
       role = role,
       num_breaks = num_breaks,
@@ -328,22 +328,24 @@ bake.step_discretize <- function(object, new_data, ...) {
 
 print.step_discretize <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Dummy variables from ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Discretize numeric variables from "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_discretize` object
 #' @export
 tidy.step_discretize <- function(x, ...) {
   if (is_trained(x)) {
-    brks <- lapply(x$objects,
-                   function(x) x$breaks)
+    brks <- lapply(x$objects, function(x) x$breaks)
     num_brks <- vapply(brks, length, c(1L))
     brk_vars <- rep(names(num_brks), num_brks)
 
-    res <- tibble(terms = brk_vars, value = unname(unlist(brks)))
+    brks <- unname(brks)
+    brks <- lapply(brks, unname)
+    values <- vctrs::vec_unchop(brks, ptype = double())
+
+    res <- tibble(terms = brk_vars, value = values)
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)
@@ -354,7 +356,7 @@ tidy.step_discretize <- function(x, ...) {
 
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_discretize <- function(x, ...) {
   tibble::tibble(

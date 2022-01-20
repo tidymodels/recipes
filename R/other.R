@@ -16,7 +16,7 @@
 #'  to pool infrequent levels that is determined by
 #'  [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
 #' @details The overall proportion (or total counts) of the categories are
@@ -106,7 +106,7 @@ step_other <-
     add_step(
       recipe,
       step_other_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         threshold = threshold,
@@ -137,14 +137,10 @@ step_other_new <-
 prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
-  if (length(col_names) > 0) {
-    objects <- lapply(training[, col_names],
-                      keep_levels,
-                      threshold = x$threshold,
-                      other = x$other)
-  } else {
-    objects <- NULL
-  }
+  objects <- lapply(training[, col_names],
+                    keep_levels,
+                    threshold = x$threshold,
+                    other = x$other)
 
   step_other_new(
     terms = x$terms,
@@ -160,27 +156,25 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_other <- function(object, new_data, ...) {
-  if (!is.null(object$objects)) {
-    for (i in names(object$objects)) {
-      if (object$objects[[i]]$collapse) {
-        tmp <- if (!is.character(new_data[, i]))
-          as.character(getElement(new_data, i))
-        else
-          getElement(new_data, i)
+  for (i in names(object$objects)) {
+    if (object$objects[[i]]$collapse) {
+      tmp <- if (!is.character(new_data[, i]))
+        as.character(getElement(new_data, i))
+      else
+        getElement(new_data, i)
 
-        tmp <- ifelse(
-          !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
-          object$objects[[i]]$other,
-          tmp
-        )
+      tmp <- ifelse(
+        !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
+        object$objects[[i]]$other,
+        tmp
+      )
 
-        # assign other factor levels other here too.
-        tmp <- factor(tmp,
-                      levels = c(object$objects[[i]]$keep,
-                                 object$objects[[i]]$other))
+      # assign other factor levels other here too.
+      tmp <- factor(tmp,
+                    levels = c(object$objects[[i]]$keep,
+                               object$objects[[i]]$other))
 
-        new_data[, i] <- tmp
-      }
+      new_data[, i] <- tmp
     }
   }
   if (!is_tibble(new_data))
@@ -191,21 +185,16 @@ bake.step_other <- function(object, new_data, ...) {
 print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
 
-    if (x$trained) {
-      collapsed <- map_lgl(x$objects, ~ .x$collapse)
-      collapsed <- names(collapsed)[collapsed]
-      if (length(collapsed) > 0) {
-        cat("Collapsing factor levels for ", sep = "")
-        printer(collapsed, x$terms, x$trained, width = width)
-      } else {
-        cat("No factor levels were collapsed\n")
-      }
-    } else {
-      cat("Collapsing factor levels for ", sep = "")
-      printer(names(x$objects), x$terms, x$trained, width = width)
-    }
-    invisible(x)
+  title <- "Collapsing factor levels for "
+  if (x$trained) {
+    columns <- map_lgl(x$objects, ~ .x$collapse)
+    columns <- names(columns)[columns]
+  } else {
+    columns <- names(x$objects)
   }
+  print_step(columns, x$terms, x$trained, title, width)
+  invisible(x)
+}
 
 keep_levels <- function(x, threshold = .1, other = "other") {
   if (!is.factor(x))
@@ -245,14 +234,14 @@ keep_levels <- function(x, threshold = .1, other = "other") {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_other` object.
 #' @export
 tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {
     values <- purrr::map(x$objects, function(x) x$keep)
     n <- vapply(values, length, integer(1))
+    values <- vctrs::vec_unchop(values, ptype = character(), name_spec = rlang::zap())
     res <- tibble(terms = rep(names(n), n),
-                  retained = unname(unlist(values)))
+                  retained = values)
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,
@@ -263,7 +252,7 @@ tidy.step_other <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_other <- function(x, ...) {
   tibble::tibble(

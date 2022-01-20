@@ -1,58 +1,21 @@
 #' Polynomial Kernel PCA Signal Extraction
 #'
-#' `step_kpca_poly` a *specification* of a recipe step that
+#' `step_kpca_poly` creates a *specification* of a recipe step that
 #'  will convert numeric data into one or more principal components
 #'  using a polynomial kernel basis expansion.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of PCA components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
 #' @param degree,scale_factor,offset Numeric values for the polynomial kernel function.
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#'  [`prep()`][prep.recipe()].
+#' @param columns A character string of variable names that will
+#'  be populated elsewhere.
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
-#' @details Kernel principal component analysis (kPCA) is an
-#'  extension of a PCA analysis that conducts the calculations in a
-#'  broader dimensionality defined by a kernel function. For
-#'  example, if a quadratic kernel function were used, each variable
-#'  would be represented by its original values as well as its
-#'  square. This nonlinear mapping is used during the PCA analysis
-#'  and can potentially help find better representations of the
-#'  original data.
-#'
-#' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
-#' If not installed, the step will stop with a note about installing
-#' these packages.
-#'
-#' As with ordinary PCA, it is important to standardize the
-#'  variables prior to running PCA (`step_center` and
-#'  `step_scale` can be used for this purpose).
-#'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_comp < 10`, their names will be `kPC1` -
-#'  `kPC9`. If `num_comp = 101`, the names would be
-#'  `kPC001` - `kPC101`.
-#'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) is returned.
-#'
-#' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
-#'  Kernel principal component analysis. *Lecture Notes in
-#'  Computer Science*, 1327, 583-588.
-#'
-#' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
-#'  kernlab - An S4 package for kernel methods in R. *Journal
-#'  of Statistical Software*, 11(1), 1-20.
+#' @template kpca-info
 #'
 #' @examples
 #' library(modeldata)
@@ -69,14 +32,14 @@
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_kpca_poly(all_numeric_predictors())
 #'
-#' if (require(dimRed) & require(kernlab)) {
+#' if (require(ggplot2) & require(kernlab)) {
 #'   kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 #'
 #'   kpca_te <- bake(kpca_estimates, biomass_te)
 #'
-#'   rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-#'   plot(kpca_te$kPC1, kpca_te$kPC2,
-#'        xlim = rng, ylim = rng)
+#'   ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
+#'    geom_point() +
+#'    coord_equal()
 #'
 #'   tidy(kpca_trans, number = 3)
 #'   tidy(kpca_estimates, number = 3)
@@ -89,6 +52,7 @@ step_kpca_poly <-
            trained = FALSE,
            num_comp = 5,
            res = NULL,
+           columns = NULL,
            degree = 2,
            scale_factor = 1,
            offset = 1,
@@ -102,11 +66,12 @@ step_kpca_poly <-
     add_step(
       recipe,
       step_kpca_poly_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
         res = res,
+        columns = columns,
         degree = degree,
         scale_factor = scale_factor,
         offset = offset,
@@ -119,7 +84,7 @@ step_kpca_poly <-
   }
 
 step_kpca_poly_new <-
-  function(terms, role, trained, num_comp, res, degree, scale_factor, offset,
+  function(terms, role, trained, num_comp, res, columns, degree, scale_factor, offset,
            prefix, keep_original_cols, skip, id) {
     step(
       subclass = "kpca_poly",
@@ -128,6 +93,7 @@ step_kpca_poly_new <-
       trained = trained,
       num_comp = num_comp,
       res = res,
+      columns = columns,
       degree = degree,
       scale_factor = scale_factor,
       offset = offset,
@@ -144,31 +110,26 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
 
   check_type(training[, col_names])
 
-  if (x$num_comp > 0) {
-    kprc <-
-      dimRed::kPCA(
-        stdpars = c(
-          list(ndim = x$num_comp),
-          list(
-            kernel = "polydot",
-            kpar = list(degree = x$degree, scale = x$scale_factor, offset = x$offset)
-          )
+  if (x$num_comp > 0 && length(col_names) > 0) {
+    cl <-
+      rlang::call2(
+        "kpca",
+        .ns = "kernlab",
+        x = rlang::expr(as.matrix(training[, col_names])),
+        features = x$num_comp,
+        kernel = "polydot",
+        kpar = list(
+          degree = x$degree,
+          scale = x$scale_factor,
+          offset = x$offset
         )
       )
-    kprc <-
-      try(
-        kprc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          kprc@stdpars
-        ),
-        silent = TRUE
-      )
+    kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      rlang::abort(paste0("`step_kpca_poly` failed with error:\n",
-                          as.character(kprc)))
+      rlang::abort(paste0("`step_kpca_poly` failed with error:\n", as.character(kprc)))
     }
   } else {
-    kprc <- list(x_vars = col_names)
+    kprc <- NULL
   }
 
   step_kpca_poly_new(
@@ -180,6 +141,7 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
     scale_factor = x$scale_factor,
     offset = x$offset,
     res = kprc,
+    columns = col_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -189,50 +151,42 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_kpca_poly <- function(object, new_data, ...) {
-  if (object$num_comp > 0) {
-    pca_vars <- colnames(environment(object$res@apply)$indata)
-    comps <- object$res@apply(
-      dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
-    )@data
+  uses_dim_red(object)
+  if (object$num_comp > 0 && length(object$columns) > 0) {
+    cl <-
+      rlang::call2(
+        "predict",
+        .ns = "kernlab",
+        object = object$res,
+        rlang::expr(as.matrix(new_data[, object$columns]))
+      )
+    comps <- rlang::eval_tidy(cl)
     comps <- comps[, 1:object$num_comp, drop = FALSE]
+    colnames(comps) <- names0(ncol(comps), object$prefix)
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+      new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
     }
   }
   as_tibble(new_data)
 }
 
 print.step_kpca_poly <- function(x, width = max(20, options()$width - 40), ...) {
-  if (x$trained) {
-    if (x$num_comp == 0) {
-      cat("No kPCA components were extracted.\n")
-    } else {
-      cat("Polynomial kernel PCA (", x$res@pars$kernel, ") extraction with ", sep = "")
-      cat(format_ch_vec(colnames(x$res@org.data), width = width))
-    }
-  } else {
-    cat("Polynomial kernel PCA extraction with ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-  }
-  if (x$trained) cat(" [trained]\n") else cat("\n")
+  title <- "Polynomial kernel PCA extraction with "
+  print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_kpca_poly` object
 #' @export
 tidy.step_kpca_poly <- function(x, ...) {
+  uses_dim_red(x)
   if (is_trained(x)) {
-    if (x$num_comp > 0) {
-      res <- tibble(terms = colnames(x$res@org.data))
-    } else {
-      res <- tibble(terms = unname(x$res$x_vars))
-    }
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
@@ -242,7 +196,7 @@ tidy.step_kpca_poly <- function(x, ...) {
 }
 
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_kpca_poly <- function(x, ...) {
   tibble::tibble(
@@ -260,8 +214,8 @@ tunable.step_kpca_poly <- function(x, ...) {
 }
 
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_kpca_poly <- function(x, ...) {
-  c("dimRed", "kernlab")
+  c("kernlab")
 }

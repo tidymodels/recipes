@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Data framedness")
-
-
 ###################################################################
 
 library(modeldata)
@@ -19,8 +16,8 @@ okc_te <- okc[(401:800), ]
 ###################################################################
 
 rec <- recipe( ~ ., data = okc_tr) %>%
-  step_modeimpute(all_nominal()) %>%
-  step_meanimpute(all_numeric()) %>%
+  step_impute_mode(all_nominal()) %>%
+  step_impute_mean(all_numeric()) %>%
   step_dummy(location, diet) %>%
   prep(training = okc_tr)
 

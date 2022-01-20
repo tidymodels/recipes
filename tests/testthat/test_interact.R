@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Interaction creation")
-
-
 dat_tr <- data.frame(
   x1 = 1:10,
   x2 = (1:10) + 1,
@@ -88,11 +85,45 @@ test_that('using selectors', {
   colnames(te_og) <- gsub(":", "_x_", colnames(te_og), fixed = TRUE)
   colnames(te_og) <- gsub("zb", "z_b", colnames(te_og), fixed = TRUE)
   colnames(te_og) <- gsub("zc", "z_c", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_b", "z_b_x_x1", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_c", "z_c_x_x1", colnames(te_og), fixed = TRUE)
 
   rownames(te_new) <- NULL
   rownames(te_og) <- NULL
 
-  expect_equivalent(te_og, te_new)
+  expect_equal(te_og, te_new)
+})
+
+
+# Tests related to #648
+# https://github.com/tidymodels/recipes/issues/648
+test_that('using selectors when namespaces with ::', {
+  int_rec <- rec %>%
+    step_dummy(z) %>%
+    step_interact( ~ tidyselect::starts_with("z"):x1)
+  int_rec_trained <-
+    prep(int_rec, training = dat_tr, verbose = FALSE)
+
+  te_new <-
+    bake(int_rec_trained, new_data = dat_te, all_predictors(), -all_nominal())
+  te_new <- te_new[, sort(names(te_new))]
+  te_new <- as.matrix(te_new)
+  te_new <- te_new[, c("x1", "x2", "x3", "x4", "x5",
+                       "z_b", "z_c", "z_b_x_x1", "z_c_x_x1")]
+
+  og_terms <- terms( ~ x1 + x2 + x3 + x4 + x5 +
+                       x1*z, data = dat_te)
+  te_og <- model.matrix(og_terms, data = dat_te)[,-1]
+  colnames(te_og) <- gsub(":", "_x_", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("zb", "z_b", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("zc", "z_c", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_b", "z_b_x_x1", colnames(te_og), fixed = TRUE)
+  colnames(te_og) <- gsub("x1_x_z_c", "z_c_x_x1", colnames(te_og), fixed = TRUE)
+
+  rownames(te_new) <- NULL
+  rownames(te_og) <- NULL
+
+  expect_equal(te_og, te_new)
 })
 
 test_that("using where() works", {
@@ -103,7 +134,7 @@ test_that("using where() works", {
   x <- prep(ex_rec, dat_tr)
 
   expr <- x$steps[[2]]$terms[[2]]
-  expect <- expr((x1 + x2 + x3 + x4 + x5 + y + z_b + z_c):x1)
+  expect <- expr(`:`(x1 + x2 + x3 + x4 + x5 + y + z_b + z_c, x1))
 
   expect_equal(
     expr,
@@ -120,7 +151,7 @@ test_that("using all_of() works", {
   x <- prep(ex_rec, dat_tr)
 
   expr <- x$steps[[1]]$terms[[2]]
-  expect <- expr((x2 + x3):x1)
+  expect <- expr(`:`(x2 + x3, x1))
 
   expect_equal(
     expr,
@@ -171,7 +202,7 @@ test_that('replacing selectors in formulas', {
       quote(starts_with("huh?")),
       quote((x1+x2+x3))
     ),
-    ~(a + b + (x1 + x2 + x3)):has_role("something")
+    expr(~(a + b + (x1 + x2 + x3)):has_role("something"))
   )
   expect_equal(
     recipes:::replace_selectors(
@@ -179,7 +210,7 @@ test_that('replacing selectors in formulas', {
       quote(matches("wat?")),
       quote(a)
     ),
-    ~ (a) ^ 2
+    expr(~ (a) ^ 2)
   )
   expect_equal(
     recipes:::replace_selectors(
@@ -187,7 +218,7 @@ test_that('replacing selectors in formulas', {
       quote(all_predictors()),
       quote(a)
     ),
-    ~ a + a
+    expr(~ a + a)
   )
 })
 
@@ -196,7 +227,7 @@ test_that('missing columns', {
     rec %>%
     step_rm(x1) %>%
     step_interact(~x1:x2)
-  no_fail_rec <- expect_warning(prep(no_fail, dat_tr))
+  expect_warning(no_fail_rec <- prep(no_fail, dat_tr))
   no_fail_res <- juice(no_fail_rec) %>% names()
   expect_true(!any(grepl("_x_", no_fail_res)))
 
@@ -205,7 +236,7 @@ test_that('missing columns', {
     step_rm(x1) %>%
     step_interact(~x1:x2) %>%
     step_interact(~x3:x2)
-  one_int_rec <- expect_warning(prep(one_int, dat_tr))
+  expect_warning(one_int_rec <- prep(one_int, dat_tr))
   one_int_res <- juice(one_int_rec) %>% names()
   expect_true(sum(grepl("_x_", one_int_res)) == 1)
 

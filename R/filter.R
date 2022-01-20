@@ -21,8 +21,8 @@
 #'  contains the conditional statements is returned. These
 #'  expressions are text representations and are not parsable.
 #'
-#' @family {row operation steps}
-#' @family {dplyr steps}
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' rec <- recipe( ~ ., data = iris) %>%
@@ -114,20 +114,15 @@ bake.step_filter <- function(object, new_data, ...) {
 
 print.step_filter <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Row filtering")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Row filtering using "
+    print_step(x$inputs, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_filter` object
 #' @export
 tidy.step_filter <- function(x, ...) {
-  cond_expr <- map(x$inputs, quo_get_expr)
+  cond_expr <- map(unname(x$inputs), quo_get_expr)
   cond_expr <- map_chr(cond_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
     terms = cond_expr,

@@ -13,7 +13,7 @@
 #'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @template step-return
-#' @family {individual transformation steps}
+#' @family individual transformation steps
 #' @export
 #' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) and `base`.
@@ -65,7 +65,7 @@ step_log <-
     add_step(
       recipe,
       step_log_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         base = base,
@@ -139,14 +139,13 @@ bake.step_log <- function(object, new_data, ...) {
 
 print.step_log <-
   function(x, width = max(20, options()$width - 31), ...) {
-    msg <- ifelse(x$signed, "Signed log ", "Log ")
-    cat(msg, "transformation on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    msg <- ifelse(x$signed, "Signed log", "Log")
+    title <- glue::glue("{msg} transformation on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_log` object.
 #' @export
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)

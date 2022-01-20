@@ -15,7 +15,7 @@
 #' @param zero_based A logical for whether the integers should start at zero and
 #'  new values be appended as the largest integer.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details `step_integer` will determine the unique values of
 #'  each variable from the training set (excluding missing values),
@@ -68,7 +68,7 @@ step_integer <-
     add_step(
       recipe,
       step_integer_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         strict = strict,
@@ -157,29 +157,18 @@ bake.step_integer <- function(object, new_data, ...) {
 
 print.step_integer <-
   function(x, width = max(20, options()$width - 20), ...) {
-    if (x$trained) {
-      cat("Integer encoding for ")
-      cat(format_ch_vec(names(x$key), width = width))
-    } else {
-      cat("Integer encoding for ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Integer encoding for "
+    print_step(names(x$key), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_integer` object.
 #' @export
 tidy.step_integer <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$key), value = x$key)
+    res <- tibble(terms = names(x$key), value = unname(x$key))
   } else {
-    res <- tibble(terms = sel2char(x$terms))
-    res$value = NA
+    res <- tibble(terms = sel2char(x$terms), value = list(NULL))
   }
   res$id <- x$id
   res

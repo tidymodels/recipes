@@ -69,7 +69,7 @@ tidy(rec, number = 1)
 tidy(rand_set, number = 1)
 }
 \seealso{
-Other {row operation steps}: 
+Other row operation steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_impute_roll}()},
@@ -78,4 +78,4 @@ Other {row operation steps}:
 \code{\link{step_sample}()},
 \code{\link{step_slice}()}
 }
-\concept{{row operation steps}}
+\concept{row operation steps}

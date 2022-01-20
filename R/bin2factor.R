@@ -23,7 +23,7 @@
 #'  When you [`tidy()`] this step, a tibble with column `terms` (the
 #'  columns that will be affected) is returned.
 #'
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @examples
 #' library(modeldata)
@@ -57,7 +57,7 @@ step_bin2factor <-
     add_step(
       recipe,
       step_bin2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         levels = levels,
@@ -87,10 +87,11 @@ step_bin2factor_new <-
 #' @export
 prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  if (length(col_names) < 1)
-    rlang::abort("The selector should only select at least one variable")
-  if (any(info$type[info$variable %in% col_names] != "numeric"))
+
+  if (any(info$type[info$variable %in% col_names] != "numeric")) {
     rlang::abort("The variables should be numeric")
+  }
+
   step_bin2factor_new(
     terms = x$terms,
     role = x$role,
@@ -118,14 +119,13 @@ bake.step_bin2factor <- function(object, new_data, ...) {
 
 print.step_bin2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Dummy variable to factor conversion for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Dummy variable to factor conversion for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_bin2factor` object.
 #' @export
 tidy.step_bin2factor <- function(x, ...) {
   res <-simple_terms(x, ...)

@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-
-context("Yeo Johnson transformation")
-
 n <- 20
 set.seed(1)
 ex_dat <- data.frame(x1 = exp(rnorm(n, mean = .1)),
@@ -56,8 +53,8 @@ test_that('simple YJ trans', {
   rec_trans <- bake(rec_trained, new_data = ex_dat)
 
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
-  expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tol = .001)
-  expect_equal(as.matrix(exp_dat), as.matrix(rec_trans), tol = .05)
+  expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tolerance = .001)
+  expect_equal(as.matrix(exp_dat), as.matrix(rec_trans), tolerance = .05)
 })
 
 test_that('missing data', {
@@ -82,3 +79,43 @@ test_that('printing', {
   expect_output(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_YeoJohnson(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_YeoJohnson(rec)
+
+  expect <- tibble(
+    terms = character(),
+    value = double(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_YeoJohnson(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

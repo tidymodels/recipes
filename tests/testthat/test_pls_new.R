@@ -1,5 +1,3 @@
-context("PLS (new objects)")
-
 library(testthat)
 library(recipes)
 library(dplyr)
@@ -107,9 +105,8 @@ test_that('No PLS', {
 
   rec <- prep(rec)
 
-  expect_equal(
-    names(rec$steps[[1]]$res),
-    c("x_vars", "y_vars")
+  expect_null(
+    rec$steps[[1]]$res
   )
   pred_names <- summary(rec)$variable[summary(rec)$role == "predictor"]
 
@@ -207,4 +204,46 @@ test_that('can prep recipes with no keep_original_cols', {
     NA
   )
 
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_pls(rec1, outcome = "mpg")
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_pls(rec, outcome = "mpg")
+
+  expect <- tibble(
+    terms = character(),
+    value = double(),
+    component = character(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_pls(rec, outcome = "mpg")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

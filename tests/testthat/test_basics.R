@@ -2,8 +2,6 @@ library(testthat)
 library(tibble)
 library(recipes)
 
-context("Testing basic functionalities")
-
 library(modeldata)
 data(biomass)
 biomass_tr <- biomass[biomass$dataset == "Training",]
@@ -74,10 +72,6 @@ test_that("detect_step function works", {
     step_intercept()
 
   prepped_rec <- prep(rec, iris)
-
-  # only allow checking for valid steps
-  expect_error(detect_step(rec, "not_a_step"))
-  expect_error(detect_step(prepped_rec, "not_a_step"))
 
   # detect untrained steps
   expect_true(detect_step(rec, "center"))

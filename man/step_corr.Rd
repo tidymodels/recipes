@@ -64,6 +64,11 @@ step that will potentially remove variables that have large
 absolute correlations with other variables.
 }
 \details{
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
+
 This step attempts to remove variables to keep the
 largest absolute correlation between the variables less than
 \code{threshold}.
@@ -103,7 +108,8 @@ tidy(corr_filter, number = 1)
 tidy(filter_obj, number = 1)
 }
 \seealso{
-Other {variable filter steps}: 
+Other variable filter steps: 
+\code{\link{step_filter_missing}()},
 \code{\link{step_lincomb}()},
 \code{\link{step_nzv}()},
 \code{\link{step_rm}()},
@@ -116,4 +122,4 @@ modified by Max Kuhn. Contributions by Reynald Lescarbeau (for
 original in \code{caret} package). Max Kuhn for the \code{step}
 function.
 }
-\concept{{variable filter steps}}
+\concept{variable filter steps}

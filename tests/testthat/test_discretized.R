@@ -2,9 +2,6 @@ library(testthat)
 library(recipes)
 
 
-context("discretization")
-
-
 ex_tr <- data.frame(x1 = 1:100,
                     x2 = rep(1:5, each = 20),
                     x3 = factor(rep(letters[1:2], each = 50)))
@@ -129,4 +126,41 @@ test_that('tunable', {
     names(rec_param),
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_discretize(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_discretize(rec)
+
+  expect <- tibble(terms = character(), value = double(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_discretize(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

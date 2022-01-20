@@ -73,7 +73,7 @@ with columns \code{terms} (the selectors or variables selected)
 and \code{value} (the breaks) is returned.
 }
 \seealso{
-Other {discretization steps}: 
+Other discretization steps: 
 \code{\link{step_cut}()}
 }
-\concept{{discretization steps}}
+\concept{discretization steps}

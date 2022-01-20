@@ -1,9 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Near zero variance filter")
-
-
 n <- 50
 set.seed(424)
 dat <- data.frame(x1 = rnorm(n),
@@ -28,9 +25,7 @@ test_that('nzv filtering', {
   filtering <- rec %>%
     step_nzv(x1, x2, x3, x4, id = "")
 
-  exp_tidy_un <- tibble(terms = "")
-  exp_tidy_un$terms[1] <- NA
-  exp_tidy_un$id <- ""
+  exp_tidy_un <- tibble(terms = c("x1", "x2", "x3", "x4"), id = "")
   expect_equal(exp_tidy_un, tidy(filtering, number = 1))
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
@@ -45,14 +40,16 @@ test_that('nzv filtering', {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
 
-test_that('altered options', {
+test_that('altered freq_cut and unique_cut', {
   rec <- recipe(y ~ ., data = dat)
 
-  expect_message(
-    filtering <- rec %>%
-      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10)),
-    "deprecated in favor of"
+  expect_snapshot_error(
+    rec %>%
+      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10))
   )
+
+  filtering <- rec %>%
+    step_nzv(x1, x2, x3, x4, freq_cut = 50, unique_cut = 10)
 
   filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
 
@@ -85,4 +82,41 @@ test_that('tunable', {
     names(rec_param),
     c('name', 'call_info', 'source', 'component', 'component_id')
   )
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_nzv(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_nzv(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_nzv(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

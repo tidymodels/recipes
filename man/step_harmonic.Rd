@@ -7,12 +7,13 @@
 step_harmonic(
   recipe,
   ...,
-  role = NA,
+  role = "predictor",
   trained = FALSE,
   frequency = NA_real_,
   cycle_size = NA_real_,
   starting_val = NA_real_,
-  keep_original_cols = TRUE,
+  keep_original_cols = FALSE,
+  columns = NULL,
   skip = FALSE,
   id = rand_id("harmonic")
 )
@@ -47,7 +48,10 @@ over the signal phase.  If \code{starting_val} is not specified the default
 is 0.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{TRUE}.}
+output. Defaults to \code{FALSE}.}
+
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -173,7 +177,7 @@ The harmonic analysis of tidal model time series.
 Advances in water resources, 12(3), 109-120.
 }
 \seealso{
-Other {individual transformation steps}: 
+Other individual transformation steps: 
 \code{\link{step_BoxCox}()},
 \code{\link{step_YeoJohnson}()},
 \code{\link{step_bs}()},
@@ -188,4 +192,4 @@ Other {individual transformation steps}:
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}
 }
-\concept{{individual transformation steps}}
+\concept{individual transformation steps}

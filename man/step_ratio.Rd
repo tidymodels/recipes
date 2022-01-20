@@ -101,7 +101,7 @@ ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -109,11 +109,11 @@ Other {multivariate transformation steps}:
 \code{\link{step_isomap}()},
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
+\code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
-\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_spatialsign}()}
 }
-\concept{{multivariate transformation steps}}
+\concept{multivariate transformation steps}

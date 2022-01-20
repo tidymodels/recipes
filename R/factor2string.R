@@ -8,7 +8,7 @@
 #'  converted. This is `NULL` until computed by
 #'  [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details `prep` has an option `strings_as_factors` that
 #'  defaults to `TRUE`. If this step is used with the default
@@ -56,7 +56,7 @@ step_factor2string <-
     add_step(
       recipe,
       step_factor2string_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         columns = columns,
@@ -104,25 +104,24 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_factor2string <- function(object, new_data, ...) {
-  new_data[, object$columns] <-
-    map_df(new_data[, object$columns],
-           as.character)
+  new_data[, object$columns] <- map(new_data[, object$columns], as.character)
 
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
+
   new_data
 }
 
 print.step_factor2string <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Character variables from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Character variables from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_factor2string` object.
 #' @export
 tidy.step_factor2string <- function(x, ...) {
   res <- simple_terms(x, ...)

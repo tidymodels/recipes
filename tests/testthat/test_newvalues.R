@@ -1,4 +1,5 @@
-context("Check new values")
+library(modeldata)
+data("credit_data")
 
 x    <- rep(letters[1:3], 2)
 x_na <- c(rep(letters[1:3], 2), NA)
@@ -145,4 +146,41 @@ test_that("check_new_values works on logicals", {
   x1 <- tibble(a = c(TRUE, TRUE))
   x2 <- tibble(a = c(TRUE, TRUE, FALSE))
   check_new_values_data_type_unit_tests(x1, x2)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- check_new_values(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- check_new_values(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- check_new_values(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

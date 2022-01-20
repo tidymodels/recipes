@@ -14,7 +14,7 @@
 #'  determined by [prep.recipe()]. Setting this value will
 #'  be ineffective.
 #' @template step-return
-#' @family {normalization steps}
+#' @family normalization steps
 #' @export
 #' @details When a new data point is outside of the ranges seen in
 #'  the training set, the new values are truncated at `min` or
@@ -59,7 +59,7 @@ step_range <-
     add_step(
       recipe,
       step_range_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         min = min,
@@ -125,19 +125,18 @@ bake.step_range <- function(object, new_data, ...) {
 
 print.step_range <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Range scaling to [", x$min, ",", x$max, "] for ", sep = "")
-    printer(colnames(x$ranges), x$terms, x$trained, width = width)
+    title <- glue::glue("Range scaling to [{x$min},{x$max}] for ")
+    print_step(colnames(x$ranges), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_range` object.
 #' @export
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$ranges),
-                  min = x$ranges["mins",],
-                  max = x$ranges["maxs",])
+    res <- tibble(terms = colnames(x$ranges) %||% character(),
+                  min = unname(x$ranges["mins",]),
+                  max = unname(x$ranges["maxs",]))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

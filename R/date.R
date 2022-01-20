@@ -33,7 +33,7 @@
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @export
 #' @details Unlike some other steps, `step_date` does *not*
 #'  remove the original date variables by default. Set `keep_original_cols`
@@ -92,7 +92,7 @@ step_date <-
   add_step(
     recipe,
     step_date_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       features = features,
@@ -258,18 +258,17 @@ bake.step_date <- function(object, new_data, ...) {
 
 print.step_date <-
   function(x, width = max(20, options()$width - 29), ...) {
-    cat("Date features from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Date features from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_date` object.
 #' @export
 tidy.step_date <- function(x, ...) {
   if (is_trained(x)) {
     res <- tidyr::crossing(
-      terms = x$columns,
+      terms = unname(x$columns),
       value = x$features,
       ordinal = x$ordinal
     )

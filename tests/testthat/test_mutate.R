@@ -4,10 +4,6 @@ library(dplyr)
 
 # ------------------------------------------------------------------------------
 
-context("dplyr mutate steps")
-
-# ------------------------------------------------------------------------------
-
 iris_rec <- recipe( ~ ., data = iris)
 
 # ------------------------------------------------------------------------------
@@ -132,10 +128,6 @@ test_that("tidying allows for named and unnamed expressions", {
 
 # ------------------------------------------------------------------------------
 
-context("dplyr mutate_at steps")
-
-# ------------------------------------------------------------------------------
-
 test_that('basic usage', {
   rec <-
     iris_rec %>%
@@ -216,4 +208,41 @@ test_that('printing', {
   rec <- iris_rec %>% step_mutate_at(contains("Sepal"), fn = log)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))
+})
+
+test_that("mutate_at - empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_mutate_at(rec1, fn = mean)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("mutate_at - empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_mutate_at(rec, fn = mean)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("mutate_at - empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_mutate_at(rec, fn = mean)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

@@ -17,8 +17,8 @@
 #'  the imputed value. Only complete values will be passed to the function and
 #'  it should return a double precision value.
 #' @template step-return
-#' @family {imputation steps}
-#' @family {row operation steps}
+#' @family imputation steps
+#' @family row operation steps
 #' @export
 #' @details On the tails, the window is shifted towards the ends.
 #'  For example, for a 5-point window, the windows for the first
@@ -85,7 +85,7 @@ step_impute_roll <-
     add_step(
       recipe,
       step_impute_roll_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         columns = columns,
@@ -218,8 +218,8 @@ bake.step_rollimpute <- bake.step_impute_roll
 #' @export
 print.step_impute_roll <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Rolling Imputation for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Rolling imputation for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -228,14 +228,13 @@ print.step_impute_roll <-
 print.step_rollimpute <- print.step_impute_roll
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_roll` object.
 #' @export
 tidy.step_impute_roll <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = unname(x$columns), window = x$window)
+    res <- tibble(terms = unname(x$columns), window = unname(x$window))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, window = x$window)
+    res <- tibble(terms = term_names, window = unname(x$window))
   }
   res$id <- x$id
   res
@@ -245,7 +244,7 @@ tidy.step_impute_roll <- function(x, ...) {
 #' @keywords internal
 tidy.step_rollimpute <- tidy.step_impute_roll
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(

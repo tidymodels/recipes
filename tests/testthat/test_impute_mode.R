@@ -4,8 +4,6 @@ library(modeldata)
 library(modeldata)
 data(credit_data)
 
-context("Mode imputation")
-
 
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
@@ -44,8 +42,8 @@ test_that('simple modes', {
            model = modes,
            id = "")
 
-  expect_equivalent(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
-  expect_equivalent(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+  expect_equal(as.data.frame(tidy(impute_rec, 1)), as.data.frame(imp_tibble_un))
+  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
 })
 
@@ -91,4 +89,41 @@ test_that('printing', {
     step_impute_mode(Status, Home, Marital)
   expect_output(print(impute_rec))
   expect_output(prep(impute_rec, training = credit_tr, verbose = TRUE))
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_impute_mode(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_mode(rec)
+
+  expect <- tibble(terms = character(), model = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_mode(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

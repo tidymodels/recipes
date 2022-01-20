@@ -11,8 +11,10 @@ step_kpca(
   trained = FALSE,
   num_comp = 5,
   res = NULL,
+  columns = NULL,
   options = list(kernel = "rbfdot", kpar = list(sigma = 0.2)),
   prefix = "kPC",
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("kpca")
 )
@@ -31,23 +33,26 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of PCA components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of PCA components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used.}
 
-\item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
-here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
+preprocessing step has be trained by \code{\link[=prep.recipe]{prep()}}.}
 
-\item{options}{A list of options to
-\code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for the arguments
-\code{kernel} and \code{kpar} but others can be passed in.
-\strong{Note} that the arguments \code{x} and \code{features}
-should not be passed here (or at all).}
+\item{columns}{A character string of variable names that will
+be populated elsewhere.}
+
+\item{options}{A list of options to \code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for
+the arguments \code{kernel} and \code{kpar} but others can be passed in.
+\strong{Note} that the arguments \code{x} and \code{features} should not be passed here
+(or at all).}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
@@ -63,46 +68,44 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca} a \emph{specification} of a recipe step that
+\code{step_kpca} creates a \emph{specification} of a recipe step that
 will convert numeric data into one or more principal components
 using a kernel basis expansion.
 }
 \details{
-Kernel principal component analysis (kPCA) is an
-extension of a PCA analysis that conducts the calculations in a
-broader dimensionality defined by a kernel function. For
-example, if a quadratic kernel function were used, each variable
-would be represented by its original values as well as its
-square. This nonlinear mapping is used during the PCA analysis
-and can potentially help find better representations of the
-original data.
+When performing kPCA with \code{step_kpca()}, you must choose the kernel
+function (and any important kernel parameters). This step uses the
+\pkg{kernlab} package; the reference below discusses the types of kernels
+available and their parameter(s). These specifications can be made in the
+\code{kernel} and \code{kpar} slots of the \code{options} argument to \code{step_kpca()}.
+Consider using \code{\link[=step_kpca_rbf]{step_kpca_rbf()}} for a radial basis function kernel or
+\code{\link[=step_kpca_poly]{step_kpca_poly()}} for a polynomial kernel.
 
-This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
-If not installed, the step will stop with a note about installing
-these packages.
+Kernel principal component analysis (kPCA) is an extension of a PCA analysis
+that conducts the calculations in a broader dimensionality defined by a
+kernel function. For example, if a quadratic kernel function were used,
+each variable would be represented by its original values as well as its
+square. This nonlinear mapping is used during the PCA analysis and can
+potentially help find better representations of the original data.
 
-As with ordinary PCA, it is important to standardize the
-variables prior to running PCA (\code{step_center} and
-\code{step_scale} can be used for this purpose).
+This step requires the \pkg{kernlab} package.
+If not installed, the step will stop with a prompt about installing
+the package.
 
-When performing kPCA, the kernel function (and any important
-kernel parameters) must be chosen. The \pkg{kernlab} package is
-used and the reference below discusses the types of kernels
-available and their parameter(s). These specifications can be
-made in the \code{kernel} and \code{kpar} slots of the
-\code{options} argument to \code{step_kpca}.
+As with ordinary PCA, it is important to center and scale the variables
+prior to computing PCA components (\code{\link[=step_normalize]{step_normalize()}} can be used for
+this purpose).
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_comp < 10}, their names will be \code{kPC1} -
-\code{kPC9}. If \code{num_comp = 101}, the names would be
+The argument \code{num_comp} controls the number of components that will be
+retained; the original variables that are used to derive the components are
+removed from the data when \code{keep_original_cols = FALSE}. The new components
+will have names that begin with \code{prefix} and a sequence of numbers. The
+variable names are padded with zeros. For example, if \code{num_comp < 10}, the
+new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column \code{terms}
+(the selectors or variables selected) is returned.
 }
 \examples{
 library(modeldata)
@@ -119,14 +122,14 @@ kpca_trans <- rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_kpca(all_numeric_predictors())
 
-if (require(dimRed) & require(kernlab)) {
+if (require(kernlab) & require(ggplot2)) {
   kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 
   kpca_te <- bake(kpca_estimates, biomass_te)
 
-  rng <- extendrange(c(kpca_te$kPC1, kpca_te$kPC2))
-  plot(kpca_te$kPC1, kpca_te$kPC2,
-       xlim = rng, ylim = rng)
+  ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
+   geom_point() +
+   coord_equal()
 
   tidy(kpca_trans, number = 3)
   tidy(kpca_estimates, number = 3)
@@ -142,8 +145,19 @@ kernlab - An S4 package for kernel methods in R. \emph{Journal
 of Statistical Software}, 11(1), 1-20.
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_ica]{step_ica()}}
-\code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
-\keyword{internal}
+\concept{multivariate transformation steps}

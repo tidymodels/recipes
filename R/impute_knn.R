@@ -14,7 +14,7 @@
 #' @param columns The column names that will be imputed and used for
 #'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details The step uses the training set to impute any other data sets. The
 #'  only distance function available is Gower's distance which can be used for
@@ -112,7 +112,7 @@ step_impute_knn <-
     add_step(
       recipe,
       step_impute_knn_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         neighbors = neighbors,
@@ -272,8 +272,8 @@ print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_x_vars <- lapply(x$columns, function(x) x$x)
     all_x_vars <- unique(unlist(all_x_vars))
-    cat("K-nearest neighbor imputation for ", sep = "")
-    printer(all_x_vars, x$terms, x$trained, width = width)
+    title <- "K-nearest neighbor imputation for "
+    print_step(all_x_vars, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -282,19 +282,17 @@ print.step_impute_knn <-
 print.step_knnimpute <- print.step_impute_knn
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_knn` object.
 #' @export
 tidy.step_impute_knn <- function(x, ...) {
   if (is_trained(x)) {
-    res <- purrr::map_df(x$columns,
-                         function(x)
-                           data.frame(
-                             terms = x$y,
-                             predictors = x$x,
-                             stringsAsFactors = FALSE
-                           )
+    terms <- purrr::map(x$columns, function(x) unname(x$y))
+    predictors <- purrr::map(x$columns, function(x) unname(x$x))
+    res <- tibble(terms = terms, predictors = predictors)
+    res <- tidyr::unchop(
+      data = res,
+      cols = tidyselect::all_of(c("terms", "predictors")),
+      ptype = tibble(terms = character(), predictors = character())
     )
-    res <- as_tibble(res)
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
     term_names <- sel2char(x$terms)
@@ -308,7 +306,7 @@ tidy.step_impute_knn <- function(x, ...) {
 #' @keywords internal
 tidy.step_knnimpute <- tidy.step_impute_knn
 
-#' @rdname tunable.step
+#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(

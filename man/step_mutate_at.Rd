@@ -53,6 +53,11 @@ sequence of any existing operations.
 the selected variables using a common function via \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
 }
 \details{
+When using this flexible step, use extra care to avoid data leakage in your
+preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
+When applied to new data or testing data, this transformation would use the
+mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
+
 When you \code{\link[=tidy]{tidy()}} this step, a tibble with
 column \code{terms} which contains the columns being transformed is returned.
 }
@@ -72,7 +77,7 @@ recipe(~ ., data = iris) \%>\%
   slice(1:10)
 }
 \seealso{
-Other {multivariate transformation steps}: 
+Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
@@ -80,14 +85,14 @@ Other {multivariate transformation steps}:
 \code{\link{step_isomap}()},
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
-\code{\link{step_nnmf_sparse}()},
+\code{\link{step_kpca}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},
 \code{\link{step_spatialsign}()}
 
-Other {dplyr steps}: 
+Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
 \code{\link{step_mutate}()},
@@ -97,5 +102,5 @@ Other {dplyr steps}:
 \code{\link{step_select}()},
 \code{\link{step_slice}()}
 }
-\concept{{dplyr steps}}
-\concept{{multivariate transformation steps}}
+\concept{dplyr steps}
+\concept{multivariate transformation steps}

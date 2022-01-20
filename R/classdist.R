@@ -19,7 +19,7 @@
 #' @param objects Statistics are stored here once this step has
 #'  been trained by [prep.recipe()].
 #' @template step-return
-#' @family {multivariate transformation steps}
+#' @family multivariate transformation steps
 #' @export
 #' @details `step_classdist` will create a new column for every
 #'  unique value of the `class` variable.
@@ -79,7 +79,7 @@ step_classdist <- function(recipe,
   add_step(
     recipe,
     step_classdist_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       class = class,
       role = role,
       trained = trained,
@@ -116,7 +116,8 @@ step_classdist_new <-
   }
 
 get_center <- function(x, mfun = mean) {
-  apply(x, 2, mfun)
+  x <- tibble::as_tibble(x)
+  vapply(x, FUN = mfun, FUN.VALUE = numeric(1))
 }
 get_both <- function(x, mfun = mean, cfun = cov) {
   list(center = get_center(x, mfun),
@@ -160,11 +161,23 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   )
 }
 
-mah_by_class <- function(param, x)
-  mahalanobis(x, param$center, param$scale)
+mah_by_class <- function(param, x) {
+  if (ncol(x) == 0L) {
+    # mahalanobis() can't handle 0 column case
+    return(rep(NA_real_, nrow(x)))
+  }
 
-mah_pooled <- function(means, x, cov_mat)
+  mahalanobis(x, param$center, param$scale)
+}
+
+mah_pooled <- function(means, x, cov_mat) {
+  if (ncol(x) == 0L) {
+    # mahalanobis() can't handle 0 column case
+    return(rep(NA_real_, nrow(x)))
+  }
+
   mahalanobis(x, means, cov_mat)
+}
 
 
 #' @export
@@ -195,14 +208,14 @@ bake.step_classdist <- function(object, new_data, ...) {
 
 print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Distances to", x$class, "for ")
+    title <- glue::glue("Distances to {x$class} for ")
     if (x$trained) {
       x_names <- if (x$pool)
         names(x$objects[["center"]][[1]])
       else
         names(x$objects[[1]]$center)
     } else x_names <- NULL
-    printer(x_names, x$terms, x$trained, width = width)
+    print_step(x_names, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -212,13 +225,19 @@ get_centroid <- function(x) {
   tibble(terms = names(x$center),
          value = unname(x$center))
 }
+get_centroid_pool <- function(x) {
+  tibble(terms = names(x), value = unname(x))
+}
 
 #' @rdname tidy.recipe
-#' @param x A `step_classdist` object.
 #' @export
 tidy.step_classdist <- function(x, ...) {
   if (is_trained(x)) {
-    centroids <- lapply(x$objects, get_centroid)
+    if (x$pool) {
+      centroids <- lapply(x$objects$center, get_centroid_pool)
+    } else {
+      centroids <- lapply(x$objects, get_centroid)
+    }
     num_rows <- vapply(centroids, nrow, numeric(1))
     classes <- rep(names(centroids), num_rows)
     res <- dplyr::bind_rows(centroids)

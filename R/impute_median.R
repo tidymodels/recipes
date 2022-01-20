@@ -9,7 +9,7 @@
 #'  computed by [prep.recipe()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
 #' @template step-return
-#' @family {imputation steps}
+#' @family imputation steps
 #' @export
 #' @details `step_impute_median` estimates the variable medians from the data
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
@@ -62,7 +62,7 @@ step_impute_median <-
     add_step(
       recipe,
       step_impute_median_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         medians = medians,
@@ -151,8 +151,8 @@ bake.step_medianimpute <- bake.step_impute_median
 #' @export
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Median Imputation for ", sep = "")
-    printer(names(x$medians), x$terms, x$trained, width = width)
+    title <- "Median imputation for "
+    print_step(names(x$medians), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -161,12 +161,11 @@ print.step_impute_median <-
 print.step_medianimpute <- print.step_impute_median
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_median` object.
 #' @export
 tidy.step_impute_median <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$medians),
-                  model = unlist(x$medians))
+                  model = vctrs::vec_unchop(unname(x$medians), ptype = double()))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)

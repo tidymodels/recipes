@@ -15,7 +15,7 @@
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation.
 #' @template step-return
-#' @family {normalization steps}
+#' @family normalization steps
 #' @export
 #' @details Scaling data means that the standard deviation of a
 #'  variable is divided out of the data. `step_scale` estimates
@@ -66,7 +66,7 @@ step_scale <-
     add_step(
       recipe,
       step_scale_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         sds = sds,
@@ -130,19 +130,18 @@ bake.step_scale <- function(object, new_data, ...) {
 
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Scaling for ", sep = "")
-    printer(names(x$sds), x$terms, x$trained, width = width)
+    title <- "Scaling for "
+    print_step(names(x$sds), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_scale` object.
 #' @export
 tidy.step_scale <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(terms = names(x$sds),
-                  value = x$sds)
+                  value = unname(x$sds))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names,

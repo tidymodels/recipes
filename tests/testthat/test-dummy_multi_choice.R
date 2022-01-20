@@ -1,8 +1,6 @@
 library(testthat)
 library(recipes)
 
-context("Muli Choice Dummy variable creation")
-
 languages <- tribble(
   ~lang_1,    ~lang_2,   ~lang_3,  ~lang_4,
   "English",  "Italian", NA,       NA,
@@ -27,8 +25,8 @@ test_that('dummy variables with factor inputs', {
   dummy_pred <- bake(dummy_prepped, new_data = languages)
 
   expect_identical(
-    unname(dummy_pred),
-    unname(result)
+    unname(unclass(dummy_pred)),
+    unname(unclass(result))
   )
 
   expect_identical(
@@ -72,8 +70,7 @@ test_that('no columns selected', {
 
   expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
-  exp_tidy <- tibble(terms = rlang::na_chr, columns = rlang::na_chr,
-                     id = rec$steps[[2]]$id)
+  exp_tidy <- tibble(terms = character(), columns = character(), id = character())
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
@@ -94,4 +91,41 @@ test_that('one columns selected', {
   )
 
   expect_equal(names(bake(rec, zdat)), c("z", "y", "x_a"))
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_dummy_multi_choice(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_dummy_multi_choice(rec)
+
+  expect <- tibble(terms = character(), columns = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_dummy_multi_choice(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })

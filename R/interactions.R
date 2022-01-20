@@ -288,12 +288,10 @@ make_small_terms <- function(forms, dat) {
 
 print.step_interact <-
   function(x, width = max(20, options()$width - 27), ...) {
-    cat("Interactions with ", sep = "")
-    cat(as.character(x$terms)[-1])
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Interactions with "
+    terms <- as.character(x$terms)[-1]
+    untrained_terms <- rlang::parse_quos(terms, rlang::current_env())
+    print_step(terms, untrained_terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -308,7 +306,6 @@ int_name <- function(x) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_interact` object
 #' @export
 tidy.step_interact <- function(x, ...) {
   res <- tibble(terms = vapply(x$objects, int_name, character(1)))
@@ -327,6 +324,8 @@ find_selectors <- function (f) {
   }
   else if (is.call(f)) {
     fname <- as.character(f[[1]])
+    fname <- fname[!(fname %in% c("::", "tidyselect", "dplyr", "recipes"))]
+
     res <- if (fname %in% intersect_selectors) f else list()
     c(res, unlist(lapply(f[-1], find_selectors), use.names = FALSE))
   }

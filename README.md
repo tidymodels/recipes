@@ -3,7 +3,7 @@
 
 [![R-CMD-check](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/recipes/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/recipes?branch=master)
+coverage](https://codecov.io/gh/tidymodels/recipes/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/recipes?branch=main)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/recipes)](https://CRAN.R-project.org/package=recipes)
 [![Downloads](https://cranlogs.r-pkg.org/badges/recipes)](https://CRAN.R-project.org/package=recipes)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
@@ -24,7 +24,7 @@ ad_rec <- recipe(Class ~ tau + VEGF, data = ad_data) %>%
   step_normalize(all_numeric_predictors())
 
 ad_rec
-#> Data Recipe
+#> Recipe
 #> 
 #> Inputs:
 #> 

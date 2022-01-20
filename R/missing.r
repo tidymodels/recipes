@@ -21,7 +21,7 @@
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
 #' @template check-return
-#' @family {checks}
+#' @family checks
 #' @export
 #' @details This check will break the `bake` function if any of the checked
 #'  columns does contain `NA` values. If the check passes, nothing is changed
@@ -73,7 +73,7 @@ check_missing <-
     add_check(
       recipe,
       check_missing_new(
-        terms   = ellipse_check(...),
+        terms   = enquos(...),
         role    = role,
         trained = trained,
         columns = columns,
@@ -121,17 +121,16 @@ bake.check_missing <- function(object, new_data, ...) {
 
 print.check_missing <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Check missing values for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Check missing values for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `check_missing` object.
 #' @export
 tidy.check_missing <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = unname(x$columns))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }

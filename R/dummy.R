@@ -21,7 +21,7 @@
 #'  `terms`. This is `NULL` until the step is trained by
 #'  [prep.recipe()].
 #' @template step-return
-#' @family {dummy variable and encoding steps}
+#' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
 #' @details `step_dummy()` will create a set of binary dummy
@@ -118,7 +118,7 @@ step_dummy <-
            id = rand_id("dummy")) {
 
     if (lifecycle::is_present(preserve)) {
-      lifecycle::deprecate_soft(
+      lifecycle::deprecate_warn(
         "0.1.16",
         "step_dummy(preserve = )",
         "step_dummy(keep_original_cols = )"
@@ -129,7 +129,7 @@ step_dummy <-
     add_step(
       recipe,
       step_dummy_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         one_hot = one_hot,
@@ -160,11 +160,6 @@ step_dummy_new <-
       id = id
     )
   }
-
-passover <- function(cmd) {
-  # cat("`step_dummy()` was not able to select any columns. ",
-  #     "No dummy variables will be created.\n")
-} # figure out how to return a warning() without exiting
 
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
@@ -328,21 +323,8 @@ bake.step_dummy <- function(object, new_data, ...) {
 
 print.step_dummy <-
   function(x, width = max(20, options()$width - 20), ...) {
-    if (x$trained) {
-      if (length(x$levels) > 0) {
-        cat("Dummy variables from ")
-        cat(format_ch_vec(names(x$levels), width = width))
-      } else {
-        cat("Dummy variables were *not* created since no columns were selected.")
-      }
-    } else {
-      cat("Dummy variables from ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Dummy variables from "
+    print_step(names(x$levels), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -355,14 +337,13 @@ get_dummy_columns <- function(x, one_hot) {
 
 
 #' @rdname tidy.recipe
-#' @param x A `step_dummy` object.
 #' @export
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
       res <- purrr::map_dfr(x$levels, get_dummy_columns, x$one_hot, .id = "terms")
     } else {
-      res <- tibble(terms = rlang::na_chr, columns = rlang::na_chr)
+      res <- tibble(terms = character(), columns = character())
     }
   } else {
     res <- tibble(terms = sel2char(x$terms), columns = rlang::na_chr)
