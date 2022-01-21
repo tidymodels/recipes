@@ -102,7 +102,7 @@ step_impute_linear_new <-
     )
   }
 
-
+# TODO pass case weights
 lm_wrap <- function(vars, dat) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
   dat <- na.omit(dat)
