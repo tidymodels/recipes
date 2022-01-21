@@ -50,8 +50,8 @@ amount of internal parallelization. \strong{Note} that the argument \code{A}, \c
 original predictors, once this preprocessing step has been trained by
 \code{\link[=prep.recipe]{prep()}}.}
 
-\item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below.}
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
 
 \item{seed}{An integer that will be used to set the seed in isolation when
 computing the factorization.}
