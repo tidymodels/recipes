@@ -98,15 +98,15 @@ recipe.data.frame <-
       if (!is.null(vars))
         rlang::abort(
           paste0("This `vars` specification will be ignored ",
-             "when a formula is used"
-             )
+                 "when a formula is used"
           )
+        )
       if (!is.null(roles))
         rlang::abort(
           paste0("This `roles` specification will be ignored ",
-             "when a formula is used"
-             )
+                 "when a formula is used"
           )
+        )
 
       obj <- recipe.formula(formula, x, ...)
       return(obj)
@@ -132,7 +132,7 @@ recipe.data.frame <-
       if (length(roles) != length(vars))
         rlang::abort(
           paste0("The number of roles should be the same as the number of ",
-             "variables")
+                 "variables")
         )
       var_info$role <- roles
     } else
@@ -529,8 +529,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!any(composition == formats)) {
     rlang::abort(
       paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
+        "`composition` should be one of: ",
+        paste0("'", formats, "'", collapse = ",")
       )
     )
   }
