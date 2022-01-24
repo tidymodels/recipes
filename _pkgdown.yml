@@ -98,6 +98,7 @@ reference:
     - step_kpca_rbf
     - step_mutate_at
     - step_nnmf
+    - step_nnmf_sparse
     - step_pca
     - step_pls
     - step_ratio

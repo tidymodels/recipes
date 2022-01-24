@@ -12,6 +12,10 @@
 
 * When a feature extraction step (e.g., `step_pca()`, `step_ica()`, etc.) has zero components specified, the `tidy()` method now lists the selected columns in the `terms` column.
 
+* Added a new step called `step_nnmf_sparse()` which uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
+
+* Deprecation has started for `step_nnmf()` in favor of `step_nnmf_sparse()`. (#790)
+
 ## Breaking Changes
 
 * `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
@@ -76,7 +80,6 @@
 * `step_logit()` gained an offset argument for cases where the input is either zero or one (#784)
 
 * The `tidy()` methods for objects from `check_new_values()`, `check_class()` and `step_nnmf()` are now exported.
-
 
 # recipes 0.1.16
 
