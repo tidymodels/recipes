@@ -111,7 +111,7 @@ for more information about the unique recipes selectors.</p>
     <h2>Arguments</h2>
     <dl><dt>quos</dt>
 <dd><p>A list of quosures describing the selection. This is generally
-the <code>...</code> argument of your step function, captured with <code><a href="https://rlang.r-lib.org/reference/nse-defuse.html" class="external-link">rlang::enquos()</a></code>
+the <code>...</code> argument of your step function, captured with <code><a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">rlang::enquos()</a></code>
 and stored in the step object as the <code>terms</code> element.</p></dd>
 <dt>data</dt>
 <dd><p>A data frame to use as the context to evaluate the selection in.
@@ -168,7 +168,7 @@ case the names reflect the new names chosen by the user.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> scrape    numeric predictor original</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> Species   nominal outcome   original</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">quos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/nse-defuse.html" class="external-link">quos</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">quos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/defusing-advanced.html" class="external-link">quos</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">recipes_eval_select</span><span class="op">(</span><span class="va">quos</span>, <span class="va">scat</span>, <span class="va">info</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Year         Age      Number      Length    Diameter       Taper </span>

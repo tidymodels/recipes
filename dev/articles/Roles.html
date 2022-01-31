@@ -203,7 +203,8 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span>
-<span class="co">#&gt; Error: `new_role` must not be `NA`.</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`single_chr()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00;">!</span> `new_role` must not be `NA`.</span></code></pre></div>
 <p>When there are cases when a column will be used in more than one context, <code><a href="../reference/roles.html">add_role()</a></code> can create additional roles:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">multi_role</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 

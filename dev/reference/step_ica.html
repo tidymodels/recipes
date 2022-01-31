@@ -139,14 +139,14 @@ or the number of possible components, a smaller value will be
 used.</p></dd>
 <dt>options</dt>
 <dd><p>A list of options to
-<code><a href="https://rdrr.io/pkg/fastICA/man/fastICA.html" class="external-link">fastICA::fastICA()</a></code>. No defaults are set here.
+<code>fastICA::fastICA()</code>. No defaults are set here.
 <strong>Note</strong> that the arguments <code>X</code> and <code>n.comp</code> should
 not be passed here.</p></dd>
 <dt>seed</dt>
 <dd><p>A single integer to set the random number stream prior to
 running ICA.</p></dd>
 <dt>res</dt>
-<dd><p>The <code><a href="https://rdrr.io/pkg/fastICA/man/fastICA.html" class="external-link">fastICA::fastICA()</a></code> object is stored
+<dd><p>The <code>fastICA::fastICA()</code> object is stored
 here once this preprocessing step has be trained by
 <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
 <dt>columns</dt>
@@ -241,6 +241,7 @@ Networks</em>, 13(4-5), 411-430.</p>
 <span class="r-in"><span class="va">ica_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="va">rec</span>,  <span class="va">V1</span>, <span class="va">V2</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ica_trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="va">ica_trans</span>, <span class="va">V1</span>, <span class="va">V2</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ica_trans</span> <span class="op">&lt;-</span> <span class="fu">step_ica</span><span class="op">(</span><span class="va">ica_trans</span>, <span class="va">V1</span>, <span class="va">V2</span>, num_comp <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 package is needed for this step and is not installed. (fastICA). Start a clean R session then run: install.packages("fastICA")</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">ica_estimates</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">ica_trans</span>, training <span class="op">=</span> <span class="va">tr</span><span class="op">)</span></span>
