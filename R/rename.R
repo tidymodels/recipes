@@ -98,8 +98,13 @@ bake.step_rename <- function(object, new_data, ...) {
 print.step_rename <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Variable renaming for "
-    untrained_terms <- rlang::parse_quos(names(x$inputs), rlang::current_env())
-    print_step(names(x$inputs), untrained_terms, x$trained, title, width)
+    trained_names <- names(x$inputs)
+
+    untrained_terms <- rlang::parse_quos(
+      trained_names %||% "",
+      rlang::current_env()
+    )
+    print_step(trained_names, untrained_terms, x$trained, title, width)
     invisible(x)
   }
 
