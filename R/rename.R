@@ -113,9 +113,10 @@ print.step_rename <-
 tidy.step_rename <- function(x, ...) {
   var_expr <- map(x$inputs, quo_get_expr)
   var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
+
   tibble(
-    terms = names(x$inputs),
-    value = unname(var_expr),
+    terms = names(x$inputs) %||% character(),
+    value = unname(var_expr) %||% character(),
     id = rep(x$id, length(x$inputs))
   )
 }
