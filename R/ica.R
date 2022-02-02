@@ -6,10 +6,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of ICA components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
 #' @param options A list of options to
 #'  [fastICA::fastICA()]. No defaults are set here.
 #'  **Note** that the arguments `X` and `n.comp` should

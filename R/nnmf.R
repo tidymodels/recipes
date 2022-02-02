@@ -12,10 +12,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
 #' @param num_run A positive integer for the number of computations runs used
 #'  to obtain a consensus projection.
 #' @param options A list of options to `nmf()` in the NMF package by way of the

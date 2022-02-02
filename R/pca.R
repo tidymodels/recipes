@@ -7,7 +7,7 @@
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned? By default, the new columns created by this step from
 #'  the original variables will be used as _predictors_ in a model.
-#' @param num_comp The number of PCA components to retain as new predictors.
+#' @param num_comp The number of components to retain as new predictors.
 #'  If `num_comp` is greater than the number of columns or the number of
 #'  possible components, a smaller value will be used.
 #' @param threshold A fraction of the total variance that should be covered by
