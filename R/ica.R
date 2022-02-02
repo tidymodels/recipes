@@ -11,12 +11,12 @@
 #'  or the number of possible components, a smaller value will be
 #'  used.
 #' @param options A list of options to
-#'  [fastICA::fastICA()]. No defaults are set here.
+#'  `fastICA::fastICA()`. No defaults are set here.
 #'  **Note** that the arguments `X` and `n.comp` should
 #'  not be passed here.
 #' @param seed A single integer to set the random number stream prior to
 #'  running ICA.
-#' @param res The [fastICA::fastICA()] object is stored
+#' @param res The `fastICA::fastICA()` object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep.recipe()].
 #' @param columns A character string of variable names that will

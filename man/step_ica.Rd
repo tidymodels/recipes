@@ -40,14 +40,14 @@ or the number of possible components, a smaller value will be
 used.}
 
 \item{options}{A list of options to
-\code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
+\code{fastICA::fastICA()}. No defaults are set here.
 \strong{Note} that the arguments \code{X} and \code{n.comp} should
 not be passed here.}
 
 \item{seed}{A single integer to set the random number stream prior to
 running ICA.}
 
-\item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
+\item{res}{The \code{fastICA::fastICA()} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep.recipe]{prep.recipe()}}.}
 
