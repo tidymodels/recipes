@@ -174,6 +174,7 @@ test_that("center - empty selection tidy method works", {
 })
 
 test_that("center - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_center(rec)
 
@@ -211,6 +212,7 @@ test_that("scale - empty selection tidy method works", {
 })
 
 test_that("scale - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_scale(rec)
 
@@ -253,6 +255,7 @@ test_that("normalize - empty selection tidy method works", {
 })
 
 test_that("normalize - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_normalize(rec)
 

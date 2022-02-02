@@ -74,6 +74,7 @@ test_that("empty tidying", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_arrange(rec)
 

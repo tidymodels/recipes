@@ -200,6 +200,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")

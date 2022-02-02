@@ -9,7 +9,7 @@
 
     Code
       bake(rec3, test)
-    Warning <warning>
+    Warning <rlang_warning>
       min x is -10, lower bound is -5, max x is 110, upper bound is 105
       min y is -10, lower bound is -2.5, max x is 60, upper bound is 52.5
     Output

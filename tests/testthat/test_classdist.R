@@ -125,6 +125,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(Species ~ ., iris)
   rec <- step_classdist(rec, class = "Species")
 

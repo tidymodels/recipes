@@ -117,6 +117,7 @@ Other individual transformation steps:
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_sqrt}()}
 }

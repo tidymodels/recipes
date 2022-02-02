@@ -237,6 +237,7 @@ test_that("mutate_at - empty selection tidy method works", {
 })
 
 test_that("mutate_at - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_mutate_at(rec, fn = mean)
 

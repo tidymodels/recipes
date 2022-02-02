@@ -71,6 +71,7 @@ reference:
     - step_num2factor
     - step_ordinalscore
     - step_other
+    - step_percentile
     - step_regex
     - step_relevel
     - step_string2factor
