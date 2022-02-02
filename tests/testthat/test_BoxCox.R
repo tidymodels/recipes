@@ -48,7 +48,7 @@ test_that('simple Box Cox', {
   expect_equal(bc_tibble_un, tidy(rec, number = 1))
 
   # Capture warnings
-  expect_snapshot(
+  suppressWarnings(
     rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   )
   rec_trans <- bake(rec_trained, new_data = ex_dat)
@@ -56,10 +56,17 @@ test_that('simple Box Cox', {
   expect_equal(names(exp_lambda)[!is.na(exp_lambda)], names(rec_trained$steps[[1]]$lambdas))
   expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tolerance = .001)
   expect_equal(as.matrix(exp_dat), as.matrix(rec_trans), tolerance = .05)
+
+  skip_if(packageVersion("rlang") < "1.0.0")
+  # Capture warnings
+  expect_snapshot(
+    rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+  )
 })
 
 
 test_that('printing', {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(~., data = ex_dat) %>%
     step_BoxCox(x1, x2, x3, x4)
 
@@ -98,6 +105,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_BoxCox(rec)
 

@@ -19,6 +19,9 @@ test_that('check old PLS scores from recipes version <= 0.1.12', {
   expect_equal(new_values_tr, old_pls_tr)
 
   # Capture known warning about `keep_original_cols`
-  expect_snapshot(new_values_te <- bake(old_pls, biom_te))
+
+  suppressWarnings(new_values_te <- bake(old_pls, biom_te))
   expect_equal(new_values_te, old_pls_te)
+  skip_if(packageVersion("rlang") < "1.0.0")
+  expect_snapshot(new_values_te <- bake(old_pls, biom_te))
 })

@@ -378,6 +378,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that('printing', {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   with_harmonic <- rec %>%  step_harmonic(hp, frequency = 1/11, cycle_size = 1)
   expect_snapshot(print(with_harmonic))
@@ -385,6 +386,7 @@ test_that('printing', {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_harmonic(rec, frequency = 1/11, cycle_size = 1)
 

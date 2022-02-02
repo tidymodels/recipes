@@ -84,6 +84,7 @@ test_that("rename - empty selection tidy method works", {
 })
 
 test_that("rename - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_rename(rec)
 
@@ -173,6 +174,7 @@ test_that("rename_at - empty selection tidy method works", {
 })
 
 test_that("rename_at - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_rename_at(rec, fn = identity)
 
