@@ -2,7 +2,7 @@
 
     Code
       rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-    Warning <warning>
+    Warning <rlang_warning>
       Non-positive values in selected variable.
       Fewer than `num_unique` values in selected variable.
       No Box-Cox transformation could be estimated for: `x2`, `x3`
@@ -27,7 +27,7 @@
 
     Code
       prep(rec, training = ex_dat)
-    Warning <warning>
+    Warning <rlang_warning>
       Non-positive values in selected variable.
       Fewer than `num_unique` values in selected variable.
       No Box-Cox transformation could be estimated for: `x2`, `x3`

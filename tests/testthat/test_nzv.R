@@ -43,11 +43,6 @@ test_that('nzv filtering', {
 test_that('altered freq_cut and unique_cut', {
   rec <- recipe(y ~ ., data = dat)
 
-  expect_snapshot_error(
-    rec %>%
-      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10))
-  )
-
   filtering <- rec %>%
     step_nzv(x1, x2, x3, x4, freq_cut = 50, unique_cut = 10)
 
@@ -58,6 +53,12 @@ test_that('altered freq_cut and unique_cut', {
       f_ratio >= filtering_trained$steps[[1]]$freq_cut]
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
+
+  skip_if(packageVersion("rlang") < "1.0.0")
+  expect_snapshot_error(
+    rec %>%
+      step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10))
+  )
 })
 
 
@@ -111,6 +112,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_nzv(rec)
 
