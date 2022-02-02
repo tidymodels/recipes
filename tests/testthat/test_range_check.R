@@ -35,6 +35,7 @@ test_that("in recipe", {
   expect_error(bake(rec1, test), NA)
   expect_warning(bake(rec1, test), NA)
 
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec2 <- recipe(train) %>% check_range(x, y) %>% prep()
   expect_snapshot(error = TRUE, bake(rec2, test))
 
@@ -79,6 +80,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- check_range(rec)
 
