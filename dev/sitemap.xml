@@ -325,6 +325,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_pca.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_percentile.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_pls.html</loc>
   </url>
   <url>
