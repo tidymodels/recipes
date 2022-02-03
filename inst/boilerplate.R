@@ -66,6 +66,11 @@ create_documentation <- function(name,
 #' @export
 #' @details <describe details>
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' <describe tidying> is returned.
+#'
 #' @examples
 
   ")
