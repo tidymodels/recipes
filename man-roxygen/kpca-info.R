@@ -22,8 +22,10 @@
 #' new names will be `kPC1` - `kPC9`. If `num_comp = 101`, the names would be
 #' `kPC001` - `kPC101`.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms`
-#' (the selectors or variables selected) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the selectors or variables selected) is returned.
 #'
 #' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
 #'  Kernel principal component analysis. *Lecture Notes in

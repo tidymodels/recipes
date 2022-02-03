@@ -38,8 +38,8 @@ are "sin", "cos", or "tan".}
 be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -55,10 +55,12 @@ sequence of any existing operations.
 recipe step that will transform data using a hyperbolic
 function.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected), \code{inverse}, and \code{func} is returned.
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the columns that will be affected), \code{inverse}, and \code{func} is
+returned.
 }
+
 \examples{
 set.seed(313)
 examples <- matrix(rnorm(40), ncol = 2)

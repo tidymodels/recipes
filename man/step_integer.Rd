@@ -39,11 +39,11 @@ new values be appended as the largest integer.}
 \item{key}{A list that contains the information needed to
 create integer variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -72,11 +72,13 @@ ordered by \code{sort}.
 
 Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the selectors or
-variables selected) and \code{value} (a \emph{list column} with the
-conversion key) is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value}
+(a \emph{list column} with the conversion key) is returned.
+}
+
 \examples{
 library(modeldata)
 data(okc)

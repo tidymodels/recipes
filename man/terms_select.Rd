@@ -40,6 +40,6 @@ terms_select(info = info, quos(all_predictors()))
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=summary.recipe]{summary.recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=prep]{prep()}}
 }
 \keyword{internal}

@@ -49,7 +49,7 @@ running ICA.}
 
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -61,8 +61,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -103,11 +103,13 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
 If \code{num_comp = 101}, the names would be \code{IC001} -
 \code{IC101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the loading),
+}
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{value} (the loading),
 and \code{component} is returned.
 }
+
 \examples{
 # from fastICA::fastICA
 set.seed(131)

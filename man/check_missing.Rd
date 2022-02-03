@@ -31,8 +31,8 @@ have been resolved by \code{\link[=prep]{prep()}}.}
 be populated (eventually) by the terms argument.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -51,10 +51,12 @@ operation that will check if variables contain missing values.
 This check will break the \code{bake} function if any of the checked
 columns does contain \code{NA} values. If the check passes, nothing is changed
 to the data.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with column \code{terms} (the
-selectors or variables selected) is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with column
+\code{terms} (the selectors or variables selected) is returned.
+}
+
 \examples{
 library(modeldata)
 data(credit_data)
@@ -74,7 +76,7 @@ recipe(credit_data)  \%>\%
   prep()
 }
 
-# If `new_data` contain missing values, the check will stop bake()
+# If `new_data` contain missing values, the check will stop `bake()`
 
 train_data <- credit_data \%>\% dplyr::filter(Income > 150)
 test_data  <- credit_data \%>\% dplyr::filter(Income <= 150 | is.na(Income))

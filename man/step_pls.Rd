@@ -55,7 +55,7 @@ arguments).}
 original predictor data should be retained along with the new features.}
 
 \item{res}{A list of results are stored here once this preprocessing step
-has been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+has been trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -67,8 +67,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -103,8 +103,10 @@ each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. \code{step_pls()} converts this
 proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} and
 \code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
-
-The \code{\link[=tidy]{tidy()}} method returns the coefficients that are usually defined as
+}
+\section{tidy() results}{
+The \code{\link[=tidy.recipe]{tidy()}} method returns the coefficients that are
+usually defined as
 
 \deqn{W(P'W)^{-1}}
 
@@ -115,6 +117,7 @@ norm. The \code{tidy()} method applies this same norm to the coefficients shown
 above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
 selectors or variables selected), \code{components}, and \code{values} is returned.
 }
+
 \examples{
 # requires the Bioconductor mixOmics package
 data(biomass, package = "modeldata")

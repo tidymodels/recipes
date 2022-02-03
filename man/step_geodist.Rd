@@ -53,8 +53,8 @@ issued.}
 be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -71,14 +71,16 @@ recipe step that will calculate the distance between
 points on a map to a reference location.
 }
 \details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns echoing the
-values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon}, \code{is_lat_lon}, \code{name}, and \code{id}
-is returned.
-
 \code{step_geodist} uses the Pythagorean theorem to calculate Euclidean
 distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haversine
 formula is used to calculate the great-circle distance in meters.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+echoing the values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon},
+\code{is_lat_lon}, \code{name}, and \code{id} is returned.
+}
+
 \examples{
 
 library(modeldata)

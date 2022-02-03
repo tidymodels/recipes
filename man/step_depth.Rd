@@ -50,14 +50,14 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 \code{\link[ddalpha:depth.zonoid]{ddalpha::depth.zonoid()}}.}
 
 \item{data}{The training data are stored here once after
-\code{\link[=prep.recipe]{prep.recipe()}} is executed.}
+\code{\link[=prep]{prep()}} is executed.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -100,10 +100,12 @@ The function will create a new column for every unique value of
 the \code{class} variable. The resulting variables will not
 replace the original values and by default have the prefix \code{depth_}. The
 naming format can be changed using the \code{prefix} argument.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{class} is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{class} is returned.
+}
+
 \examples{
 
 # halfspace depth is the default

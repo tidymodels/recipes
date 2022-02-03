@@ -45,10 +45,10 @@ to \code{other}.}
 \item{levels}{A list that contains the information needed to
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{input}{A character vector containing the names of the columns used.
-This is \code{NULL} until the step is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+This is \code{NULL} until the step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{other}{A single character value for the "other" category.}
 
@@ -62,8 +62,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}

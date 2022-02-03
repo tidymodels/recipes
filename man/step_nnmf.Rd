@@ -50,7 +50,7 @@ processing is turned off in favor of resample-level parallelization.}
 
 \item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has been trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -65,8 +65,8 @@ when computing the factorization.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -99,10 +99,13 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
 If \code{num = 101}, the names would be \code{NNMF001} -
 \code{NNMF101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) and the number of components is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the selectors or variables selected) and the number of
+components is returned.
+}
+
 \examples{
 
 library(modeldata)

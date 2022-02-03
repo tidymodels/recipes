@@ -45,7 +45,7 @@ used.}
 
 \item{res}{The \code{\link[dimRed:Isomap-class]{dimRed::Isomap()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -57,8 +57,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -98,10 +98,12 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \code{Isomap9}. If \code{num_terms = 101}, the names would be
 \code{Isomap001} - \code{Isomap101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the selectors or variables selected) is returned.
+}
+
 \examples{
 \donttest{
   library(modeldata)
