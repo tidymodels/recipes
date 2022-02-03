@@ -9,7 +9,7 @@
 #'  to modify the numeric values prior to determining the levels (perhaps using
 #'  [base::as.integer()]). The output of a function should be an integer that
 #'  corresponds to the value of `levels` that should be assigned. If not an
-#'  integer, the value will be converted to an integer during `bake()`.
+#'  integer, the value will be converted to an integer during [bake()].
 #' @param levels A character vector of values that will be used as the levels.
 #'  These are the numeric data converted to character and ordered. This is
 #'  modified once [prep()] is executed.

@@ -15,7 +15,7 @@
 #'  be populated (eventually) by the terms argument.
 #' @param id A character string that is unique to this check to identify it.
 #' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
+#'  recipe is baked by [bake()]? While all operations are baked
 #'  when [prep()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
@@ -49,7 +49,7 @@
 #'   prep()
 #' }
 #'
-#' # If `new_data` contain missing values, the check will stop bake()
+#' # If `new_data` contain missing values, the check will stop `bake()`
 #'
 #' train_data <- credit_data %>% dplyr::filter(Income > 150)
 #' test_data  <- credit_data %>% dplyr::filter(Income <= 150 | is.na(Income))

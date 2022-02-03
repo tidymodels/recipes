@@ -51,7 +51,7 @@
 #' the results. See [step_other()] for an alternative.
 #'
 #' If no columns are selected (perhaps due to an earlier `step_zv()`),
-#'  `bake()` will return the data as-is (e.g. with no dummy variables).
+#'  [bake()] will return the data as-is (e.g. with no dummy variables).
 #'
 #' Note that, by default, the new dummy variable column names obey the naming
 #' rules for columns. If there are levels such as "0", [dummy_names()] will put

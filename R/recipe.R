@@ -486,7 +486,7 @@ bake <- function(object, ...)
 #'  will return it for free.
 #'
 #' Also, any steps with `skip = TRUE` will not be applied to the
-#'   data when `bake()` is invoked with a data set in `new_data`.
+#'   data when [bake()] is invoked with a data set in `new_data`.
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
 #' @rdname bake
@@ -702,21 +702,21 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #' `bake(object, new_data = NULL)`.
 #'
 #' As steps are estimated by `prep`, these operations are
-#'  applied to the training set. Rather than running `bake()`
+#'  applied to the training set. Rather than running [bake()]
 #'  to duplicate this processing, this function will return
 #'  variables from the processed training set.
 #' @inheritParams bake.recipe
 #' @param object A `recipe` object that has been prepared
 #'   with the option `retain = TRUE`.
 #' @details When preparing a recipe, if the training data set is
-#'  retained using `retain = TRUE`, there is no need to `bake()` the
+#'  retained using `retain = TRUE`, there is no need to [bake()] the
 #'  recipe to get the preprocessed training set.
 #'
 #'  `juice()` will return the results of a recipe where _all steps_
 #'  have been applied to the data, irrespective of the value of
 #'  the step's `skip` argument.
 #' @export
-#' @seealso [recipe()] [prep()] [bake.recipe()]
+#' @seealso [recipe()] [prep()] [bake()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
     rlang::abort("At least one step has not been trained. Please run `prep()`.")
