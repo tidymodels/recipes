@@ -29,7 +29,7 @@
 #'  the check will be break `bake` when `strings_as_factors` is
 #'  `TRUE`.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `value` (the type)

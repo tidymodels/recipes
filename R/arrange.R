@@ -15,7 +15,7 @@
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` which contains the sorting variable(s) or expression(s) is

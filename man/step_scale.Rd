@@ -67,7 +67,7 @@ the variable standard deviations from the data used in the
 \code{bake.recipe} then applies the scaling to new data sets
 using these standard deviations.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} (the
 standard deviations) is returned.

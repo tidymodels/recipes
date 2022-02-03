@@ -53,7 +53,7 @@ sequence of any existing operations.
 create and append additional binary columns to the dataset to indicate
 which observations are missing.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{model} (the
 median value) is returned.

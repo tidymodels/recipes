@@ -70,7 +70,7 @@ that in \code{prep} the argument \code{strings_as_factors} defaults to
 the check will be break \code{bake} when \code{strings_as_factors} is
 \code{TRUE}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} (the type)
 is returned.

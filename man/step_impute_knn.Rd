@@ -101,7 +101,7 @@ large majority (or all) of the imputing variables are also missing.
 As of \code{recipes} 0.1.16, this function name changed from \code{step_knnimpute()}
 to \code{step_impute_knn()}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables for imputation), \code{predictors}
 (those variables used to impute), and \code{neighbors} is returned.

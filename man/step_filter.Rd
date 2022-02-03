@@ -66,7 +66,7 @@ not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} which contains the conditional statements is returned.
 These expressions are text representations and are not parsable.

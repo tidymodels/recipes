@@ -42,7 +42,7 @@
 #' When data to be processed contains novel levels (i.e., not
 #' contained in the training set), the other category is assigned.
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected) and `retained` (the factor

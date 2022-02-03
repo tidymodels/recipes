@@ -54,7 +54,7 @@ defaults to \code{TRUE}. If this step is used with the default
 option, the string(s() produced by this step will be converted
 to factors after all of the steps have been prepped.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) is returned.
 }

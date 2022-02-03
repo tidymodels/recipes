@@ -24,7 +24,7 @@
 #'   is used to compute the allowed slack at the lower end,
 #'   the second to compute the allowed slack at the upper end.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `value` (the means)

@@ -17,7 +17,7 @@
 #' @export
 #' @details
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected) and `base`.

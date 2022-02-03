@@ -53,7 +53,7 @@ the expression defining the new variable(s), it is a good idea to use
 quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
 expression (to be portable between sessions).
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
 columns \code{values} which contains the \code{rename} expressions as character
 strings (and are not reparsable) is returned.

@@ -62,7 +62,7 @@ defaults to \code{TRUE}. This should be changed so that raw character
 data will be applied to \code{step_string2factor}. However, this step
 can also take existing factors (but will leave them as-is).
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{ordered} is
 returned.

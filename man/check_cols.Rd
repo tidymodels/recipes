@@ -49,7 +49,7 @@ This check will break the \code{bake} function if any of the specified
 columns is not present in the data. If the check passes, nothing is changed
 to the data.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} (the type)
 is returned.

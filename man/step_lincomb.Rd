@@ -63,7 +63,7 @@ or more variables and recommends which column(s) should be
 removed to resolve the issue. This algorithm may need to be
 applied multiple times (as defined by \code{max_steps}).
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
 }

@@ -88,7 +88,7 @@ number of samples (times 100), must also be below
 In the above example, the frequency ratio is 999 and the unique
 value percent is 0.2\%.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
 }

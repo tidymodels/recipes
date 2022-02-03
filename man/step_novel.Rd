@@ -72,7 +72,7 @@ When fitting a model that can deal with new factor levels, consider using
 \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}. This will allow your model to handle
 new levels at prediction time, instead of throwing warnings or errors.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) and \code{value} (the factor
 levels that is used for the new value) is returned.

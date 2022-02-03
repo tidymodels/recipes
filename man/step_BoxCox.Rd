@@ -75,7 +75,7 @@ If the transformation parameters are estimated to be very
 closed to the bounds, or if the optimization fails, a value of
 \code{NA} is used and no transformation is applied.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} (the
 lambda estimate) is returned.

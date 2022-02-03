@@ -89,7 +89,7 @@ This step is atypical in that, when baked, the
 \code{new_data} argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (which is the columns that will be affected) and \code{type} (fixed
 or profiled) is returned.

@@ -12,7 +12,7 @@
 #' columns is not present in the data. If the check passes, nothing is changed
 #'  to the data.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `value` (the type)

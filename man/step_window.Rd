@@ -87,7 +87,7 @@ uses \code{median(x[2:6])}.
 
 step will stop with a note about installing the package.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{statistic} (the
 summary function name), and \code{size} is returned.

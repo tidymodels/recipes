@@ -69,7 +69,7 @@ coerced to integer as needed).
 Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
 columns \code{terms} (the selectors or variables selected) and \code{model} (the
 bagged tree object) is returned.

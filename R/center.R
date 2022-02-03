@@ -32,7 +32,7 @@
 #'  argument of `prep.recipe`. `bake.recipe` then applies
 #'  the centering to new data sets using these means.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `value` (the means)

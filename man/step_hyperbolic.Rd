@@ -55,7 +55,7 @@ sequence of any existing operations.
 recipe step that will transform data using a hyperbolic
 function.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected), \code{inverse}, and \code{func} is
 returned.

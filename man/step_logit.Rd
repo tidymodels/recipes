@@ -56,7 +56,7 @@ The logit transformation takes values between
 zero and one and translates them to be on the real line using
 the function \code{f(p) = log(p/(1-p))}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) is returned.
 }

@@ -63,7 +63,7 @@ When a new data point is outside of the ranges seen in
 the training set, the new values are truncated at \code{min} or
 \code{max}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{min}, and \code{max} is
 returned.

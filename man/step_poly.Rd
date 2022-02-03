@@ -67,7 +67,7 @@ determined by the \code{degree} argument of
 from the data and new columns are added. The naming convention
 for the new variables is \code{varname_poly_1} and so on.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) and \code{degree} is returned.
 }

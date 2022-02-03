@@ -64,7 +64,7 @@ deviations and means from the data used in the \code{training} argument of
 \code{prep.recipe}. \code{\link{bake.recipe}} then applies the scaling to new data sets using
 these estimates.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{value} (the standard
 deviations and means), and \code{statistic} for the type of value is

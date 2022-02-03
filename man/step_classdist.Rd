@@ -86,7 +86,7 @@ listed in the \code{terms} argument. If \code{pool = TRUE},
 there must be at least as many data points are variables
 overall.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{value} (the centroid
 of the class), and \code{class} is returned.

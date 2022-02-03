@@ -69,7 +69,7 @@ sequence of any existing operations.
 step that will create a variable that counts instances of a
 regular expression pattern in text.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{result} (the
 new column name) is returned.

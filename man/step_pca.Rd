@@ -105,7 +105,7 @@ Alternatively, \code{threshold} can be used to determine the
 number of components that are required to capture a specified
 fraction of the total variance in the variables.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, use either \code{type = "coef"}
 for the variable loadings per component or \code{type = "variance"} for how
 much variance each component accounts for.

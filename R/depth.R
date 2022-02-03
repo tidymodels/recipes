@@ -52,7 +52,7 @@
 #'  replace the original values and by default have the prefix `depth_`. The
 #'  naming format can be changed using the `prefix` argument.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `class` is returned.

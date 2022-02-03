@@ -34,7 +34,7 @@
 #'  has sporadic missing values (and an inappropriate value of `use`
 #'  is chosen), some columns will also be excluded from the filter.
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be removed) is returned.

@@ -32,7 +32,7 @@
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `value` (the

@@ -84,7 +84,7 @@ pooling is needed, they will be placed into the other category.
 When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) and \code{retained} (the factor
 levels that were not pulled into "other") is returned.

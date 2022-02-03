@@ -72,7 +72,7 @@ sequence of any existing operations.
 step that will create one or more ratios out of numeric
 variables.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{denom} is returned.
 }

@@ -65,7 +65,7 @@ Unlike some other steps, \code{step_holiday} does \emph{not}
 remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) and \code{holiday} is returned.
 }

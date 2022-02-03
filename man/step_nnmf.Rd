@@ -100,7 +100,7 @@ if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
 If \code{num = 101}, the names would be \code{NNMF001} -
 \code{NNMF101}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) and the number of
 components is returned.

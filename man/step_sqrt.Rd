@@ -47,7 +47,7 @@ sequence of any existing operations.
 \code{step_sqrt} creates a \emph{specification} of a recipe
 step that will square root transform the data.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }

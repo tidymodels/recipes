@@ -70,7 +70,7 @@ with a random uniform value between zero and the minimum.
 As of \code{recipes} 0.1.16, this function name changed from \code{step_lowerimpute()}
 to \code{step_impute_lower()}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} for the
 estimated threshold is returned.

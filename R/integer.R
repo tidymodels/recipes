@@ -30,7 +30,7 @@
 #' Despite the name, the new values are returned as numeric unless
 #'  `strict = TRUE`, which will coerce the results to integers.
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `value`

@@ -101,7 +101,7 @@ the \code{class} variable. The resulting variables will not
 replace the original values and by default have the prefix \code{depth_}. The
 naming format can be changed using the \code{prefix} argument.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{class} is returned.
 }

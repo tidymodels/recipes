@@ -49,7 +49,7 @@
 #'  If `num_comp = 101`, the names would be `IC001` -
 #'  `IC101`.
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected), `value` (the loading),

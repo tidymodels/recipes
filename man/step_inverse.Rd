@@ -51,7 +51,7 @@ sequence of any existing operations.
 \code{step_inverse} creates a \emph{specification} of a recipe
 step that will inverse transform the data.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) is returned.
 }

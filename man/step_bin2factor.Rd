@@ -66,7 +66,7 @@ distribution is modeled instead of a Gaussian probability
 density of numeric binary data. Note that the numeric data is
 only verified to be numeric (and does not count levels).
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }

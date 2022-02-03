@@ -73,7 +73,7 @@ ordered by \code{sort}.
 Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value}
 (a \emph{list column} with the conversion key) is returned.

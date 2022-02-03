@@ -29,7 +29,7 @@
 #'  distances if `is_lat_lon` is FALSE. If `is_lat_lon` is TRUE, the Haversine
 #'  formula is used to calculate the great-circle distance in meters.
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,

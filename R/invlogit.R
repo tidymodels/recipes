@@ -14,7 +14,7 @@
 #'  real line and translates them to be between zero and one using
 #'  the function `f(x) = 1/(1+exp(-x))`.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the columns that will be affected) is returned.

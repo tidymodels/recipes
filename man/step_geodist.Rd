@@ -75,7 +75,7 @@ points on a map to a reference location.
 distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haversine
 formula is used to calculate the great-circle distance in meters.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 echoing the values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon},
 \code{is_lat_lon}, \code{name}, and \code{id} is returned.

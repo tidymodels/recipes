@@ -104,7 +104,7 @@ if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
 If \code{num_comp = 101}, the names would be \code{IC001} -
 \code{IC101}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{value} (the loading),
 and \code{component} is returned.

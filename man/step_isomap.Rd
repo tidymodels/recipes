@@ -99,7 +99,7 @@ if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \code{Isomap9}. If \code{num_terms = 101}, the names would be
 \code{Isomap001} - \code{Isomap101}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
 }

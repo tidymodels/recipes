@@ -112,7 +112,7 @@ this step.
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or original variables selected) and \code{columns}
 (the list of corresponding binary columns) is returned.

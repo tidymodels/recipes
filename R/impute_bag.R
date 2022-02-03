@@ -41,7 +41,7 @@
 #'  As of `recipes` 0.1.16, this function name changed from `step_bagimpute()`
 #'    to `step_impute_bag()`.
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `model`

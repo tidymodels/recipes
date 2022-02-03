@@ -62,7 +62,7 @@ represent (subjective) scores. By default, the translation uses
 a linear scale (1, 2, 3, ... \code{C}) but custom score
 functions can also be used (see the example below).
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }

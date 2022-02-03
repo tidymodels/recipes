@@ -68,7 +68,7 @@ of the train set range. If of length two, its first value
 is used to compute the allowed slack at the lower end,
 the second to compute the allowed slack at the upper end.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} (the means)
 is returned.

@@ -67,7 +67,7 @@ step that will convert numeric data into a factor with
 bins having approximately the same number of data points (based
 on a training set).
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value}
 (the breaks) is returned.

@@ -58,7 +58,7 @@ preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
 When applied to new data or testing data, this transformation would use the
 mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} which contains the columns being transformed is returned.
 }

@@ -54,7 +54,7 @@ it is a good idea to use quasiquotation (e.g. \verb{!!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} which contains the sorting variable(s) or expression(s) is
 returned. The expressions are text representations and are not

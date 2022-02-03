@@ -60,7 +60,7 @@ This check will break the \code{bake} function if any of the checked
 columns does contain values it did not contain when \code{prep} was called
 on the recipe. If the check passes, nothing is changed to the data.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
 \code{terms} (the selectors or variables selected) is returned.
 }

@@ -78,7 +78,7 @@ excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of \code{use}
 is chosen), some columns will also be excluded from the filter.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
 }

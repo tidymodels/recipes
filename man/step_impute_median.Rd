@@ -68,7 +68,7 @@ the new values to new data sets using these medians.
 As of \code{recipes} 0.1.16, this function name changed from
 \code{step_medianimpute()} to \code{step_impute_median()}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
 columns \code{terms} (the selectors or variables selected) and \code{model}
 (themedian value) is returned.

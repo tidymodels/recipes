@@ -59,7 +59,7 @@ sequence of any existing operations.
 (ordered or unordered). This can be useful when categories are encoded as
 integers.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{ordered} is returned.
 }

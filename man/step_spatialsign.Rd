@@ -62,7 +62,7 @@ normalization. The spatial sign of a vector \code{w} is
 The variables should be centered and scaled prior to the
 computations.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }

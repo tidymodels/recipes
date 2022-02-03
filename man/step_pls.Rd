@@ -104,7 +104,7 @@ non-zero coefficients in each component. \code{step_pls()} converts this
 proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} and
 \code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
 }
-\section{tidy() results}{
+\section{Tidying}{
 The \code{\link[=tidy.recipe]{tidy()}} method returns the coefficients that are
 usually defined as
 

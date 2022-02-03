@@ -13,7 +13,7 @@
 #' @template step-return
 #' @details
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `model` (the

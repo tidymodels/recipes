@@ -65,7 +65,7 @@ values exceeds the \code{threshold}.
 
 All variables with missing values will be removed for \code{threshold = 0}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
 }

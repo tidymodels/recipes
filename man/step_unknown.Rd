@@ -62,7 +62,7 @@ converted to factors by this step.
 If \code{new_level} is already in the data given to \code{prep}, an error
 is thrown.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) and \code{value} (the factor
 levels that is used for the new value) is returned.

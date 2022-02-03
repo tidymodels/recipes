@@ -53,7 +53,7 @@ The inverse logit transformation takes values on the
 real line and translates them to be between zero and one using
 the function \code{f(x) = 1/(1+exp(-x))}.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) is returned.
 }

@@ -89,7 +89,7 @@ create a set of specific interaction effects (e.g.
 so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and
 all two-way interactions are created.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the interaction effects) is returned.
 }

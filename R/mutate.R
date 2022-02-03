@@ -18,7 +18,7 @@
 #'  If a preceding step removes a column that is selected by name in
 #'  `step_mutate()`, the recipe will error when being estimated with [prep()].
 #'
-#'  # tidy() results
+#'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `values`, which contains the `mutate()` expressions as character

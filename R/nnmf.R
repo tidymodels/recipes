@@ -48,7 +48,7 @@
 #'  `NNMF101`.
 #'
 #'
-#' # tidy() results
+#' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the selectors or variables selected) and the number of

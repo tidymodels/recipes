@@ -49,7 +49,7 @@ sequence of any existing operations.
 step that will randomly change the order of rows for selected
 variables.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be permuted) is returned.
 }

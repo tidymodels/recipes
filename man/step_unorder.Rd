@@ -50,7 +50,7 @@ step that will transform the data.
 \details{
 The factors level order is preserved during the transformation.
 }
-\section{tidy() results}{
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }
