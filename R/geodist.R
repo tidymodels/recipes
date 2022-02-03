@@ -22,9 +22,6 @@
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
 #' @template step-return
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns echoing the
-#'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `is_lat_lon`, `name`, and `id`
-#'  is returned.
 #' @family multivariate transformation steps
 #' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
@@ -32,6 +29,11 @@
 #'  distances if `is_lat_lon` is FALSE. If `is_lat_lon` is TRUE, the Haversine
 #'  formula is used to calculate the great-circle distance in meters.
 #'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
+#' `is_lat_lon`, `name`, and `id` is returned.
 #' @examples
 #'
 #' library(modeldata)

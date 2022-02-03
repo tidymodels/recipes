@@ -8,8 +8,12 @@
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the
-#' columns that will be affected) is returned.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
 #' @export
 #' @examples
 #' set.seed(313)

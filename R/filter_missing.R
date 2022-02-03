@@ -21,8 +21,10 @@
 #'
 #' All variables with missing values will be removed for `threshold = 0`.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the columns
-#'  that will be removed) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be removed) is returned.
 #'
 #' @examples
 #' library(modeldata)

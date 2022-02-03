@@ -24,8 +24,10 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the
 #'  standard deviations) is returned.
 #'
 #' @references Gelman, A. (2007) "Scaling regression inputs by

@@ -30,12 +30,14 @@
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#'  columns `terms` (the selectors or variables for imputation), `predictors`
-#'  (those variables used to impute), and `neighbors` is returned.
-#'
 #' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
 #'    to `step_impute_knn()`.
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables for imputation), `predictors`
+#' (those variables used to impute), and `neighbors` is returned.
 #'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.

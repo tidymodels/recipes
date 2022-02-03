@@ -15,8 +15,10 @@
 #'  zero and one and translates them to be on the real line using
 #'  the function `f(p) = log(p/(1-p))`.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
-#'  (the columns that will be affected) is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the columns that will be affected) is returned.
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(runif(40), ncol = 2)

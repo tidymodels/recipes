@@ -11,8 +11,12 @@
 #' @param inputs A vector of column names populated by [prep()].
 #' @template step-return
 #' @template mutate-leakage
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#'  column `terms` which contains the columns being transformed is returned.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` which contains the columns being transformed is returned.
 #'
 #' @family multivariate transformation steps
 #' @family dplyr steps

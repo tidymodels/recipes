@@ -39,8 +39,10 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
-#'  (the selectors or variables selected), `value` (the feature
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected), `value` (the feature
 #'  names), and `ordinal` (a logical) is returned.
 #'
 #' @examples

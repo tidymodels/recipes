@@ -21,8 +21,10 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
-#'  (the columns that will be affected) and `holiday` is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the columns that will be affected) and `holiday` is returned.
 #'
 #' @examples
 #' library(lubridate)

@@ -23,9 +23,14 @@
 #'  variable being searched. This is `NULL` until computed by
 #'  [prep()].
 #' @template step-return
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `result` (the
-#'  new column name) is returned.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `result` (the
+#' new column name) is returned.
+#'
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples

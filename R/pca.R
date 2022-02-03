@@ -58,9 +58,11 @@
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"` for the variable
-#'  loadings per component or `type = "variance"` for how much variance each
-#'  component accounts for.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
+#' for the variable loadings per component or `type = "variance"` for how
+#' much variance each component accounts for.
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.

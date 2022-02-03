@@ -31,9 +31,11 @@
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
-#'  lambda estimate) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value` (the
+#' lambda estimate) is returned.
 #'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. *Biometrika*.

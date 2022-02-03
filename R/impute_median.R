@@ -15,12 +15,14 @@
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
 #'  the new values to new data sets using these medians.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  median value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from
 #'    `step_medianimpute()` to `step_impute_median()`.
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
+#' columns `terms` (the selectors or variables selected) and `model`
+#' (themedian value) is returned.
 #'
 #' @examples
 #' library(modeldata)

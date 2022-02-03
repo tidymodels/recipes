@@ -15,8 +15,12 @@
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `base`.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) and `base`.
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(exp(rnorm(40)), ncol = 2)

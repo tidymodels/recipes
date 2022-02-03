@@ -21,9 +21,12 @@
 #'  `prep.recipe`. [`bake.recipe`] then applies the scaling to new data sets using
 #'  these estimates.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the standard deviations and
-#'  means), and `statistic` for the type of value is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected), `value` (the standard
+#'  deviations and means), and `statistic` for the type of value is
+#'  returned.
 #'
 #' @examples
 #' library(modeldata)

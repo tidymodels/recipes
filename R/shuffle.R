@@ -9,8 +9,12 @@
 #'  columns that should be shuffled. These values are not determined
 #'  until [prep()] is called.
 #' @template step-return
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the
-#' columns that will be permuted) is returned.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be permuted) is returned.
 #' @family row operation steps
 #' @export
 #' @examples

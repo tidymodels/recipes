@@ -15,8 +15,10 @@
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) is returned.
 #'
 #' @examples
 #' library(modeldata)

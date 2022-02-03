@@ -15,8 +15,10 @@
 #'  columns does contain values it did not contain when `prep` was called
 #'  on the recipe. If the check passes, nothing is changed to the data.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) is returned.
 #'
 #' @examples
 #' library(modeldata)

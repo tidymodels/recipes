@@ -20,8 +20,11 @@
 #'  the training set, the new values are truncated at `min` or
 #'  `max`.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `min`, and `max` is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected), `min`, and `max` is
+#'  returned.
 #'
 #' @examples
 #' library(modeldata)

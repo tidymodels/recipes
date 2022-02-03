@@ -20,8 +20,10 @@
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` (the columns that will be affected) is returned.
 #'
 #' @family dummy variable and encoding steps
 #' @export

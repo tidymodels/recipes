@@ -24,8 +24,12 @@
 #'  argument is not populated until [prep()] is
 #'  executed.
 #' @template step-return
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `denom` is returned.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `denom` is returned.
 #' @family multivariate transformation steps
 #' @export
 #' @examples

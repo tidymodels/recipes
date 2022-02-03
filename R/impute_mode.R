@@ -18,12 +18,14 @@
 #'  values to new data sets using these values. If the training set
 #'  data has more than one mode, one is selected at random.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the mode
-#'  value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
 #'    to `step_impute_mode()`.
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `model` (the mode
+#' value) is returned.
 #'
 #' @examples
 #' library(modeldata)

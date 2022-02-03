@@ -24,8 +24,11 @@
 #'   is used to compute the allowed slack at the lower end,
 #'   the second to compute the allowed slack at the upper end.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the means) is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the means)
+#'  is returned.
 #'
 #' @examples
 #'   slack_df <- data_frame(x = 0:100)

@@ -15,8 +15,10 @@
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` which
-#'  contains the filtering indices is returned.
+#'  # tidy() results
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` which contains the filtering indices is returned.
 #'
 #' @family row operation steps
 #' @family dplyr steps

@@ -15,8 +15,12 @@
 #'  of the training set (or smaller for smaller `new_data`).
 #' @param replace Sample with or without replacement?
 #' @template step-return
-#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `size`,
-#' `replace`, and `id` is returned.
+#' @details
+#'
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `size`, `replace`, and `id` is returned.
 #' @family row operation steps
 #' @family dplyr steps
 #' @export

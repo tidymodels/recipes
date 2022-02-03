@@ -21,8 +21,10 @@
 #'  a linear scale (1, 2, 3, ... `C`) but custom score
 #'  functions can also be used (see the example below).
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#'  # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
 #'
 #' @examples
 #' fail_lvls <- c("meh", "annoying", "really_bad")

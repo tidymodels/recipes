@@ -41,8 +41,10 @@
 #' In the above example, the frequency ratio is 999 and the unique
 #'  value percent is 0.2%.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the columns
-#'  that will be removed) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be removed) is returned.
 #'
 #' @examples
 #' library(modeldata)

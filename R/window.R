@@ -42,9 +42,11 @@
 #  This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `statistic` (the
-#'  summary function name), and `size` is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `statistic` (the
+#' summary function name), and `size` is returned.
 #'
 #' @examples
 #' library(recipes)
