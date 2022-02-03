@@ -6,7 +6,7 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ref_dist The computed percentiles is stored here once this
-#'  preprocessing step has be trained by [prep.recipe()].
+#'  preprocessing step has be trained by [prep()].
 #' @param options A named list of options to pass to [stats::quantile()].
 #'   See Details for more information.
 #' @template step-return

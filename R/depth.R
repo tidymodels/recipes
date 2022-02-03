@@ -22,7 +22,7 @@
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
 #' @param data The training data are stored here once after
-#'  [prep.recipe()] is executed.
+#'  [prep()] is executed.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export

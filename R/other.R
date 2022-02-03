@@ -14,7 +14,7 @@
 #' @param other A single character value for the "other" category.
 #' @param objects A list of objects that contain the information
 #'  to pool infrequent levels that is determined by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -26,7 +26,7 @@
 #'
 #' If no pooling is done the data are unmodified (although character data may
 #'   be changed to factors based on the value of `strings_as_factors` in
-#'   [prep.recipe()]). Otherwise, a factor is always returned with
+#'   [prep()]). Otherwise, a factor is always returned with
 #'   different factor levels.
 #'
 #' If `threshold` is less than the largest category proportion, all levels

@@ -24,7 +24,7 @@
 #'  processing is turned off in favor of resample-level parallelization.
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @param prefix A character string that will be the prefix to the

@@ -11,7 +11,7 @@
 #'  **Note** that the arguments `x` and `features` should not be passed here
 #'  (or at all).
 #' @param res An S4 [kernlab::kpca()] object is stored here once this
-#'  preprocessing step has be trained by [`prep()`][prep.recipe()].
+#'  preprocessing step has be trained by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return

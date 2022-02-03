@@ -10,7 +10,7 @@
 #' @param ref_first Logical. Should the first level, which replaces
 #' 1's, be the factor reference level?
 #' @param columns A vector with the selected variable names. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as

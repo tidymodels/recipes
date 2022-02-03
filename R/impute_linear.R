@@ -10,7 +10,7 @@
 #' these dots indicate which variables are used to predict the missing data
 #' in each variable. See [selections()] for more details.
 #' @param models The [lm()] objects are stored here once the linear models
-#'  have been trained by [prep.recipe()].
+#'  have been trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export

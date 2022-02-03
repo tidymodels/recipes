@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param medians A named numeric vector of medians. This is `NULL` until
-#'  computed by [prep.recipe()]. Note that, if the original data are integers,
+#'  computed by [prep()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
 #' @template step-return
 #' @family imputation steps

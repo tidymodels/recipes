@@ -28,8 +28,8 @@
 #'   prep() %>%
 #'   bake(new_data = credit_data)
 #'
-#' # If `new_data` contains values not in `x` at the `prep()` function,
-#' # the `bake()` function will break.
+#' # If `new_data` contains values not in `x` at the [prep()] function,
+#' # the [`bake()`] function will break.
 #' \dontrun{
 #' recipe(credit_data %>% dplyr::filter(Home != "rent")) %>%
 #'   check_new_values(Home) %>%

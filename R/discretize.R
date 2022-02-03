@@ -218,7 +218,7 @@ print.discretize <-
 #'  discretization takes place.
 #' @param objects The [discretize()] objects are stored
 #'  here once the recipe has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param options A list of options to [discretize()]. A
 #'  default is set for the argument `x`. Note that using
 #'  the options `prefix` and `labels` when more than one

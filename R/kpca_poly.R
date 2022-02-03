@@ -9,7 +9,7 @@
 #' @param degree,scale_factor,offset Numeric values for the polynomial kernel function.
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [`prep()`][prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return

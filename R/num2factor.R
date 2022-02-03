@@ -12,7 +12,7 @@
 #'  integer, the value will be converted to an integer during `bake()`.
 #' @param levels A character vector of values that will be used as the levels.
 #'  These are the numeric data converted to character and ordered. This is
-#'  modified once [prep.recipe()] is executed.
+#'  modified once [prep()] is executed.
 #' @param ordered A single logical value; should the factor(s) be ordered?
 #' @template step-return
 #' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the

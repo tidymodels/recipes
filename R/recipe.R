@@ -457,7 +457,7 @@ bake <- function(object, ...)
 #' Apply a trained preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation that has been trained by
-#'   [prep.recipe()], apply the computations to new data.
+#'   [prep()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
 #' @param new_data A data frame or tibble for whom the preprocessing will be
@@ -687,7 +687,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' rec <- prep(rec, training = USArrests)
 #' summary(rec)
 #' @export
-#' @seealso [recipe()] [prep.recipe()]
+#' @seealso [recipe()] [prep()]
 summary.recipe <- function(object, original = FALSE, ...) {
   if (original)
     object$var_info
@@ -716,7 +716,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 #'  have been applied to the data, irrespective of the value of
 #'  the step's `skip` argument.
 #' @export
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
+#' @seealso [recipe()] [prep()] [bake.recipe()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
     rlang::abort("At least one step has not been trained. Please run `prep()`.")

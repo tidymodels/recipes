@@ -17,7 +17,7 @@
 #' @param log A logical: should the distances be transformed by
 #'  the natural log function?
 #' @param objects Statistics are stored here once this step has
-#'  been trained by [prep.recipe()].
+#'  been trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export

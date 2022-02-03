@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param lambdas A numeric vector of transformation values. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
 #' @param num_unique An integer where data that have less possible

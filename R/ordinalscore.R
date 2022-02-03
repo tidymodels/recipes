@@ -7,7 +7,7 @@
 #' @inheritParams step_center
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return

@@ -20,7 +20,7 @@
 #' @param seed_val An integer used to create reproducible models. The same seed
 #'  is used across all imputation models.
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
-#'  bagged trees have be trained by [prep.recipe()].
+#'  bagged trees have be trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export

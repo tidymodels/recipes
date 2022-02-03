@@ -11,7 +11,7 @@
 #'  below).
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @template step-return
 #' @template filter-steps
 #' @family variable filter steps

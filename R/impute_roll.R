@@ -9,7 +9,7 @@
 #'  these columns must be non-integer numerics (i.e., double precision).
 #'  See [selections()] for more details.
 #' @param columns A named numeric vector of columns. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param window The size of the window around a point to be imputed. Should be
 #'  an odd integer greater than one. See Details below for a discussion of
 #'  points at the ends of the series.

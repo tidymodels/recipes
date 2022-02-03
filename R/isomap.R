@@ -14,7 +14,7 @@
 #' @param options A list of options to [dimRed::Isomap()].
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return

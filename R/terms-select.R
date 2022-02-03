@@ -19,7 +19,7 @@
 #' @return A character string of column names or an error of there
 #'  are no selectors or if no variables are selected.
 #' @seealso [recipe()] [summary.recipe()]
-#'   [prep.recipe()]
+#'   [prep()]
 #' @export
 #' @keywords internal
 #' @examples

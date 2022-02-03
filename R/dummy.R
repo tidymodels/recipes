@@ -19,7 +19,7 @@
 #' @param levels A list that contains the information needed to
 #'  create dummy variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]

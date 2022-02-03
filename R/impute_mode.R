@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param modes A named character vector of modes. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param ptype A data frame prototype to cast new data sets to. This is
 #'  commonly a 0-row slice of the training set.
 #' @template step-return

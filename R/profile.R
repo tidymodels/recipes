@@ -34,7 +34,7 @@
 #'  quantile method for dates.
 #' @param columns A character string that contains the names of
 #'  columns that should be fixed and their values. These values are
-#'  not determined until [prep.recipe()] is called.
+#'  not determined until [prep()] is called.
 #' @details This step is atypical in that, when baked, the
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.

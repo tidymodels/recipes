@@ -15,7 +15,7 @@
 #'  to the [stats::cor()] function.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @template step-return
 #' @template filter-steps
 #' @author Original R code for filtering algorithm by Dong Li,

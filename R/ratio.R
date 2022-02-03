@@ -21,7 +21,7 @@
 #' @param naming A function that defines the naming convention for
 #'  new ratio columns.
 #' @param columns The column names used in the ratios. This
-#'  argument is not populated until [prep.recipe()] is
+#'  argument is not populated until [prep()] is
 #'  executed.
 #' @template step-return
 #' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the

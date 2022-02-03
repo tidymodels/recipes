@@ -8,7 +8,7 @@
 #'
 #' @inheritParams step_center
 #' @param threshold A named numeric vector of lower bounds. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export

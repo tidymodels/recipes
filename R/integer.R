@@ -9,7 +9,7 @@
 #' @param key A list that contains the information needed to
 #'  create integer variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param strict A logical for whether the values should be returned as
 #'  integers (as opposed to double).
 #' @param zero_based A logical for whether the integers should start at zero and

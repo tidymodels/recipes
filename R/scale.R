@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param sds A named numeric vector of standard deviations. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to

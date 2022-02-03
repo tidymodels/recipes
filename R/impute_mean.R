@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed
-#'  by [prep.recipe()]. Note that, if the original data are integers, the mean
+#'  by [prep()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside

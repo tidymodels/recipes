@@ -10,9 +10,9 @@
 #' @param warn If `TRUE` the check will throw a warning instead
 #'   of an error when failing.
 #' @param lower A named numeric vector of minimum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @param upper A named numeric vector of maximum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @template check-return
 #' @family checks
 #' @export

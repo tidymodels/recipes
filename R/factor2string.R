@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export

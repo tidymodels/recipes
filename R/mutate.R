@@ -20,7 +20,7 @@
 #'  (and are not reparsable), is returned.
 #'
 #'  If a preceding step removes a column that is selected by name in
-#'  `step_mutate()`, the recipe will error when being estimated with `prep()`.
+#'  `step_mutate()`, the recipe will error when being estimated with [prep()].
 #'
 #' @family individual transformation steps
 #' @family dplyr steps

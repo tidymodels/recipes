@@ -8,7 +8,7 @@
 #' @param fn A function fun, a quosure style lambda `~ fun(.)`` or a list of
 #' either form. (see [dplyr::mutate_at()]). **Note that this argument must be
 #' named**.
-#' @param inputs A vector of column names populated by `prep()`.
+#' @param inputs A vector of column names populated by [prep()].
 #' @template step-return
 #' @template mutate-leakage
 #' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with
