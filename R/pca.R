@@ -9,7 +9,9 @@
 #'  the original variables will be used as _predictors_ in a model.
 #' @param num_comp The number of components to retain as new predictors.
 #'  If `num_comp` is greater than the number of columns or the number of
-#'  possible components, a smaller value will be used.
+#'  possible components, a smaller value will be used. If `num_comp = 0`
+#'  is set then no transformation is done and selected variables will
+#'  stay unchanged.
 #' @param threshold A fraction of the total variance that should be covered by
 #'  the components. For example, `threshold = .75` means that `step_pca` should
 #'  generate enough components to capture 75 percent of the variability in the

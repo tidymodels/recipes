@@ -36,7 +36,9 @@ preprocessing have been estimated.}
 
 \item{num_comp}{The number of components to retain as new predictors.
 If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used.}
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged.}
 
 \item{threshold}{A fraction of the total variance that should be covered by
 the components. For example, \code{threshold = .75} means that \code{step_pca} should
