@@ -22,7 +22,7 @@
 #' If `new_level` is already in the data given to `prep`, an error
 #'  is thrown.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) and `value` (the factor
 #'  levels that is used for the new value) is returned.
 #'

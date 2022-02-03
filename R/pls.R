@@ -46,7 +46,7 @@
 #' proportion to determine the `keepX` parameter in `mixOmics::spls()` and
 #' `mixOmics::splsda()`. See the references in `mixOmics::spls()` for details.
 #'
-#' The [`tidy()`] method returns the coefficients that are usually defined as
+#' The [`tidy()`][tidy.recipe()] method returns the coefficients that are usually defined as
 #'
 #' \deqn{W(P'W)^{-1}}
 #'

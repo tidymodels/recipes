@@ -17,7 +17,7 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` which
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` which
 #'  contains the conditional statements is returned. These
 #'  expressions are text representations and are not parsable.
 #'

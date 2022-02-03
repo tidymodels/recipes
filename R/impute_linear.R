@@ -26,7 +26,7 @@
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
 #'
-#'  When you [`tidy()`] this step, a tibble with
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  bagged tree object) is returned.
 #'

@@ -11,7 +11,7 @@
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details When you [`tidy()`] this step, a tibble with columns `terms`
+#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
 #' (the columns that will be affected) is returned.
 #' @examples
 #' set.seed(313)

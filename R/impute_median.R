@@ -15,7 +15,7 @@
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
 #'  the new values to new data sets using these medians.
 #'
-#' When you [`tidy()`] this step, a tibble with
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  median value) is returned.
 #'

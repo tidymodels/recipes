@@ -22,7 +22,7 @@
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns echoing the
+#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns echoing the
 #'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `is_lat_lon`, `name`, and `id`
 #'  is returned.
 #' @family multivariate transformation steps

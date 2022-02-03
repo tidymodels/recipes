@@ -21,7 +21,7 @@
 #' The variables should be centered and scaled prior to the
 #'  computations.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the columns
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the columns
 #'  that will be affected) is returned.
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.

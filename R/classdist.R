@@ -33,7 +33,7 @@
 #'  there must be at least as many data points are variables
 #'  overall.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected), `value` (the centroid of
 #'  the class), and `class` is returned.
 #'

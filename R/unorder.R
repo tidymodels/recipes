@@ -11,7 +11,7 @@
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the
 #'  columns that will be affected) is returned.
 #'
 #' @examples

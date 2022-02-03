@@ -30,7 +30,7 @@
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#' When you [`tidy()`] this step, a tibble with
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` (the selectors or variables for imputation), `predictors`
 #'  (those variables used to impute), and `neighbors` is returned.
 #'

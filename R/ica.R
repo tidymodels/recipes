@@ -49,7 +49,7 @@
 #'  If `num_comp = 101`, the names would be `IC001` -
 #'  `IC101`.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected), `value` (the loading),
 #'  and `component` is returned.
 #'

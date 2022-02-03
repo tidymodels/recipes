@@ -38,7 +38,7 @@
 #'   It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the selectors
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the selectors
 #'  or variables selected) and `model` (the bagged tree object) is returned.
 #'
 #'  As of `recipes` 0.1.16, this function name changed from `step_bagimpute()`

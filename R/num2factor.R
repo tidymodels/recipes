@@ -15,7 +15,7 @@
 #'  modified once [prep.recipe()] is executed.
 #' @param ordered A single logical value; should the factor(s) be ordered?
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
+#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered` is returned.
 #' @family dummy variable and encoding steps
 #' @export

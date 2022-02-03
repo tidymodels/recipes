@@ -24,7 +24,7 @@
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_poly_1` and so on.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  columns that will be affected) and `degree` is returned.
 #'
 #' @examples

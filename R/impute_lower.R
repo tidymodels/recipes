@@ -17,7 +17,7 @@
 #'  `bake.recipe` then simulates a value for any data at the minimum
 #'  with a random uniform value between zero and the minimum.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `value` for the estimated
 #'  threshold is returned.
 #'

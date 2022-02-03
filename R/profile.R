@@ -39,7 +39,7 @@
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (which
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (which
 #'  is the columns that will be affected) and `type` (fixed or
 #'  profiled) is returned.
 #'

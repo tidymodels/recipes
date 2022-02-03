@@ -47,7 +47,7 @@
 #'  If `num = 101`, the names would be `NNMF001` -
 #'  `NNMF101`.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms` (the
 #'  selectors or variables selected) and the number of components is returned.
 #'
 #' @examples

@@ -10,7 +10,7 @@
 #' **Note that this argument must be named**.
 #' @param inputs A vector of column names populated by `prep()`.
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with
+#' @details When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` which contains the columns being transformed is returned.
 #' @family dplyr steps
 #' @export

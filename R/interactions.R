@@ -49,7 +49,7 @@
 #'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x_6):z` and
 #'  all two-way interactions are created.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms`
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms`
 #'  (the interaction effects) is returned.
 #' @examples
 #' library(modeldata)

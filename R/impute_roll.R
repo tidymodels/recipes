@@ -35,7 +35,7 @@
 #'  does not know anything about previous imputations in the series
 #'  prior to the current point.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `window` (the window size) is returned.
 #'
 #'  As of `recipes` 0.1.16, this function name changed from `step_rollimpute()`

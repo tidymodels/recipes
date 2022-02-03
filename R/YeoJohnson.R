@@ -31,7 +31,7 @@
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `value` (the
 #'  lambda estimate) is returned.
 #'

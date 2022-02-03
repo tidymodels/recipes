@@ -14,7 +14,7 @@
 #'  quasiquotation (e.g. `!!`) to embed the value of the object in the
 #'  expression (to be portable between sessions).
 #'
-#'  When you [`tidy()`] this step, a tibble with
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `values` which contains the `rename` expressions as character
 #'  strings (and are not reparsable) is returned.
 #'

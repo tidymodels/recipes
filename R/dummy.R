@@ -62,7 +62,7 @@
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or original variables selected) and `columns` (the
 #'  list of corresponding binary columns) is returned.
 #'

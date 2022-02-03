@@ -11,7 +11,7 @@
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. Defaults to "na_ind".
 #' @template step-return
-#' @details  When you [`tidy()`] this step, a tibble with
+#' @details  When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  median value) is returned.
 #' @family dummy variable and encoding steps

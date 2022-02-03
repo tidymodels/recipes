@@ -21,7 +21,7 @@
 #'  data will be applied to `step_string2factor`. However, this step
 #'  can also take existing factors (but will leave them as-is).
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms` (the
 #'  selectors or variables selected) and `ordered` is returned.
 #'
 #' @examples
