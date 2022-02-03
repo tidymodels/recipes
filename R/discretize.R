@@ -70,13 +70,6 @@ discretize.default <- function(x, ...)
 #'
 #' carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 #' predict(carbon_no_infs, c(50, 100))
-#'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
-#' rec <- rec %>% step_discretize(carbon, hydrogen)
-#' rec <- prep(rec, biomass_tr)
-#' binned_te <- bake(rec, biomass_te)
-#' table(binned_te$carbon)
 
 discretize.numeric <-
   function(x,
@@ -230,6 +223,23 @@ print.discretize <-
 #'  and `value` (the breaks) is returned.
 #' @family discretization steps
 #' @export
+#'
+#' @examples
+#' library(modeldata)
+#' data(biomass)
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training",]
+#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#'
+#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'               data = biomass_tr) %>%
+#'   step_discretize(carbon, hydrogen)
+#'
+#' rec <- prep(rec, biomass_tr)
+#' binned_te <- bake(rec, biomass_te)
+#' table(binned_te$carbon)
+#'
+#' tidy(rec, 1)
 
 step_discretize <- function(recipe,
                             ...,
