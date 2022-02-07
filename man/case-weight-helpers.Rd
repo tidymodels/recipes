@@ -7,6 +7,7 @@
 \alias{variances}
 \alias{correlations}
 \alias{pca_wts}
+\alias{weighted_table}
 \title{Helpers for steps with case weights}
 \usage{
 get_case_weights(selection, info, .data)
@@ -18,6 +19,8 @@ variances(x, wts = NULL)
 correlations(x, wts = NULL)
 
 pca_wts(x, wts = NULL)
+
+weighted_table(.data, wts = NULL)
 }
 \arguments{
 \item{selection}{A quosure}

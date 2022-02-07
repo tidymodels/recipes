@@ -133,4 +133,35 @@ cov2pca <- function(cv_mat) {
   list(sdev = sqrt(res$values), rotation = res$vectors)
 }
 
+#' @export
+#' @rdname case-weight-helpers
+weighted_table <- function(.data, wts = NULL) {
+  if (is.null(wts)) {
+    return(table(.data))
+  }
 
+  if (!is.data.frame(.data)) {
+    .data <- data.frame(.data = factor(.data))
+  }
+
+  data <- .data %>%
+    mutate(wts = wts) %>%
+    group_by(dplyr::across(c(-wts)), .drop = FALSE) %>%
+    summarise(n = sum(wts), .groups = "drop") %>%
+    ungroup()
+
+  var_names <- names(data)[seq_len(length(data) - 1)]
+  tab <- table(.data[var_names], dnn = var_names)
+  combinations <- expand.grid(attr(tab, "dimnames"))
+  names(combinations) <- var_names
+
+  data_order <- combinations %>%
+    dplyr::right_join(
+      by = var_names,
+      data %>% mutate(.row_number = dplyr::row_number())
+    )
+
+  tab[seq_along(tab)] <- data$n[data_order$.row_number]
+
+  tab
+}
