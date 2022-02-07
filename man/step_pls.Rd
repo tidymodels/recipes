@@ -36,9 +36,11 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of pls dimensions to retain as new predictors.
+\item{num_comp}{The number of components to retain as new predictors.
 If \code{num_comp} is greater than the number of columns or the number of
-possible dimensions, a smaller value will be used.}
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged.}
 
 \item{predictor_prop}{The maximum number of original predictors that can have
 non-zero coefficients for each PLS component (via regularization).}

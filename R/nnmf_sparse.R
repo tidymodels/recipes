@@ -6,9 +6,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of components to retain as new predictors. If
-#'  `num_comp` is greater than the number of columns or the number of possible
-#'  components, a smaller value will be used.
 #' @param penalty A non-negative number used as a penalization factor for the
 #' loadings. Values are usually between zero and one.
 #' @param options A list of options to `nmf()` in the RcppML package. That

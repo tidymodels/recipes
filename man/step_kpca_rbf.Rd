@@ -33,9 +33,11 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of PCA components to retain as new predictors.
+\item{num_comp}{The number of components to retain as new predictors.
 If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used.}
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
 here once this preprocessing step has be trained by

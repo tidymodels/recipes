@@ -9,13 +9,13 @@
 %   R/impute_roll.R, R/integer.R, R/interactions.R, R/inverse.R, R/invlogit.R,
 %   R/isomap.R, R/kpca.R, R/kpca_poly.R, R/kpca_rbf.R, R/lincombo.R, R/log.R,
 %   R/logit.R, R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R,
-%   R/naomit.R, R/newvalues.R, R/nnmf.R, R/nnmf_sparse.R, R/normalize.R, R/novel.R,
-%   R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R, R/other.R, R/pca.R,
-%   R/percentile.R, R/pls.R, R/poly.R, R/profile.R, R/range.R, R/range_check.R,
-%   R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R, R/rename_at.R,
-%   R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R, R/slice.R,
-%   R/spatialsign.R, R/sqrt.R, R/string2factor.R, R/tidy.R, R/unknown.R,
-%   R/unorder.R, R/window.R, R/zv.R
+%   R/naomit.R, R/newvalues.R, R/nnmf.R, R/nnmf_sparse.R, R/normalize.R,
+%   R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R, R/other.R,
+%   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/profile.R, R/range.R,
+%   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
+%   R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R,
+%   R/slice.R, R/spatialsign.R, R/sqrt.R, R/string2factor.R, R/tidy.R,
+%   R/unknown.R, R/unorder.R, R/window.R, R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
