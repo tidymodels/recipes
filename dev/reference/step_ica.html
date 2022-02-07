@@ -133,10 +133,11 @@ the original variables will be used as <em>predictors</em> in a model.</p></dd>
 <dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
 <dt>num_comp</dt>
-<dd><p>The number of ICA components to retain as new
-predictors. If <code>num_comp</code> is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.</p></dd>
+<dd><p>The number of components to retain as new predictors.
+If <code>num_comp</code> is greater than the number of columns or the number of
+possible components, a smaller value will be used. If <code>num_comp = 0</code>
+is set then no transformation is done and selected variables will
+stay unchanged.</p></dd>
 <dt>options</dt>
 <dd><p>A list of options to
 <code>fastICA::fastICA()</code>. No defaults are set here.
