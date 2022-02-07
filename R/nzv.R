@@ -70,6 +70,7 @@
 step_nzv <-
   function(recipe,
            ...,
+           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            freq_cut = 95 / 5,
@@ -94,6 +95,7 @@ step_nzv <-
       recipe,
       step_nzv_new(
         terms = enquos(...),
+        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         freq_cut = freq_cut,
@@ -107,10 +109,12 @@ step_nzv <-
   }
 
 step_nzv_new <-
-  function(terms, role, trained, freq_cut, unique_cut, options, removals, skip, id) {
+  function(terms, case_weights, role, trained, freq_cut, unique_cut, options,
+           removals, skip, id) {
     step(
       subclass = "nzv",
       terms = terms,
+      case_weights = case_weights,
       role = role,
       trained = trained,
       freq_cut = freq_cut,
@@ -126,14 +130,18 @@ step_nzv_new <-
 prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
+  wts <- get_case_weights(x$case_weights, info, training)
+
   filter <- nzv(
     x = training[, col_names],
+    wts = wts,
     freq_cut = x$freq_cut,
     unique_cut = x$unique_cut
   )
 
   step_nzv_new(
     terms = x$terms,
+    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     freq_cut = x$freq_cut,
@@ -163,15 +171,15 @@ print.step_nzv <-
     invisible(x)
   }
 
-# TODO case weights: Use a weights arg
 nzv <- function(x,
+                wts,
                 freq_cut = 95 / 5,
                 unique_cut = 10) {
   if (is.null(dim(x)))
     x <- matrix(x, ncol = 1)
 
   fr_foo <- function(data) {
-    t <- table(data[!is.na(data)])
+    t <- weighted_table(data[!is.na(data)], wts = wts)
     if (length(t) <= 1) {
       return(0)
     }
