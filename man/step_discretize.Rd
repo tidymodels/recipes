@@ -73,6 +73,23 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the breaks) is returned.
 }
 
+\examples{
+library(modeldata)
+data(biomass)
+
+biomass_tr <- biomass[biomass$dataset == "Training",]
+biomass_te <- biomass[biomass$dataset == "Testing",]
+
+rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+              data = biomass_tr) \%>\%
+  step_discretize(carbon, hydrogen)
+
+rec <- prep(rec, biomass_tr)
+binned_te <- bake(rec, biomass_te)
+table(binned_te$carbon)
+
+tidy(rec, 1)
+}
 \seealso{
 Other discretization steps: 
 \code{\link{step_cut}()}

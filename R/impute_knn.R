@@ -293,7 +293,7 @@ tidy.step_impute_knn <- function(x, ...) {
     res <- tidyr::unchop(
       data = res,
       cols = tidyselect::all_of(c("terms", "predictors")),
-      ptype = tibble(terms = character(), predictors = character())
+      ptype = list(terms = character(), predictors = character())
     )
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {

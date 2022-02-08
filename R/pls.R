@@ -5,9 +5,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of pls dimensions to retain as new predictors.
-#'  If `num_comp` is greater than the number of columns or the number of
-#'  possible dimensions, a smaller value will be used.
 #' @param predictor_prop The maximum number of original predictors that can have
 #'  non-zero coefficients for each PLS component (via regularization).
 #' @param preserve Use `keep_original_cols` instead to specify whether the
