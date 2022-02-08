@@ -188,9 +188,6 @@ tidy.step_ns <- function(x, ...) {
   tibble(terms = terms, id = x$id)
 }
 
-
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_ns <- function(x, ...) {
   tibble::tibble(

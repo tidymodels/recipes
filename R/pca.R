@@ -308,9 +308,6 @@ tidy.step_pca <- function(x, type = "coef", ...) {
   res
 }
 
-
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_pca <- function(x, ...) {
   tibble::tibble(

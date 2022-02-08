@@ -413,8 +413,6 @@ tidy.step_pls <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_pls <- function(x, ...) {
   tibble::tibble(
