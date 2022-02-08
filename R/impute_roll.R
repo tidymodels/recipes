@@ -9,7 +9,7 @@
 #'  these columns must be non-integer numerics (i.e., double precision).
 #'  See [selections()] for more details.
 #' @param columns A named numeric vector of columns. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param window The size of the window around a point to be imputed. Should be
 #'  an odd integer greater than one. See Details below for a discussion of
 #'  points at the ends of the series.
@@ -35,11 +35,14 @@
 #'  does not know anything about previous imputations in the series
 #'  prior to the current point.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `window` (the window size) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_rollimpute()`
 #'    to `step_impute_roll()`.
+#'
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `window`
+#'  (the window size) is returned.
 #'
 #' @examples
 #' library(lubridate)

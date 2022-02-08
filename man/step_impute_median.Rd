@@ -39,12 +39,12 @@ created.}
 preprocessing have been estimated.}
 
 \item{medians}{A named numeric vector of medians. This is \code{NULL} until
-computed by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers,
+computed by \code{\link[=prep]{prep()}}. Note that, if the original data are integers,
 the median will be converted to an integer to maintain the same data type.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -65,13 +65,15 @@ those variables.
 used in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies
 the new values to new data sets using these medians.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
-median value) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from
 \code{step_medianimpute()} to \code{step_impute_median()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{model}
+(themedian value) is returned.
+}
+
 \examples{
 library(modeldata)
 data("credit_data")

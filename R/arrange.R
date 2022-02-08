@@ -15,9 +15,12 @@
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the sorting variable(s) or expression(s) is returned. The
-#'  expressions are text representations and are not parsable.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` which contains the sorting variable(s) or expression(s) is
+#'  returned. The expressions are text representations and are not
+#'  parsable.
 #'
 #' @family row operation steps
 #' @family dplyr steps

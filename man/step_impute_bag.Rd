@@ -60,7 +60,7 @@ will be removed from the latter and not used to impute itself.}
 \item{trees}{An integer for the number of bagged trees to use in each model.}
 
 \item{models}{The \code{\link[ipred:bagging]{ipred::ipredbagg()}} objects are stored here once this
-bagged trees have be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+bagged trees have be trained by \code{\link[=prep]{prep()}}.}
 
 \item{options}{A list of options to \code{\link[ipred:bagging]{ipred::ipredbagg()}}. Defaults are set
 for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \strong{Note}
@@ -70,8 +70,8 @@ that the arguments \code{X} and \code{y} should not be passed here.}
 is used across all imputation models.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -101,12 +101,15 @@ this variable will be ignored.
 It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the selectors
-or variables selected) and \code{model} (the bagged tree object) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_bagimpute()}
 to \code{step_impute_bag()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model}
+(the bagged tree object) is returned.
+}
+
 \examples{
 library(modeldata)
 data("credit_data")

@@ -17,7 +17,7 @@
 #' @param log A logical: should the distances be transformed by
 #'  the natural log function?
 #' @param objects Statistics are stored here once this step has
-#'  been trained by [prep.recipe()].
+#'  been trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -33,9 +33,11 @@
 #'  there must be at least as many data points are variables
 #'  overall.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the centroid of
-#'  the class), and `class` is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `value` (the centroid
+#' of the class), and `class` is returned.
 #'
 #' @examples
 #'

@@ -7,10 +7,14 @@
 #' @inheritParams step_center
 #' @param columns A character string that contains the names of
 #'  columns that should be shuffled. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#' columns that will be permuted) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be permuted) is returned.
 #' @family row operation steps
 #' @export
 #' @examples

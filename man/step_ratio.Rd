@@ -48,15 +48,15 @@ listing.}
 new ratio columns.}
 
 \item{columns}{The column names used in the ratios. This
-argument is not populated until \code{\link[=prep.recipe]{prep.recipe()}} is
+argument is not populated until \code{\link[=prep]{prep()}} is
 executed.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -72,10 +72,11 @@ sequence of any existing operations.
 step that will create one or more ratios out of numeric
 variables.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{denom} is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{denom} is returned.
 }
+
 \examples{
 library(recipes)
 library(modeldata)

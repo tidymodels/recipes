@@ -49,14 +49,14 @@ by pooling the data for all of the classes?}
 the natural log function?}
 
 \item{objects}{Statistics are stored here once this step has
-been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+been trained by \code{\link[=prep]{prep()}}.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -85,11 +85,13 @@ that each class should have at least as many rows as variables
 listed in the \code{terms} argument. If \code{pool = TRUE},
 there must be at least as many data points are variables
 overall.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the centroid of
-the class), and \code{class} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{value} (the centroid
+of the class), and \code{class} is returned.
+}
+
 \examples{
 
 # in case of missing data...

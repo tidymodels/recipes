@@ -45,14 +45,14 @@ new dummy columns. See Details below.}
 \item{levels}{A list that contains the information needed to
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -101,7 +101,7 @@ contained in the training set), a missing value is assigned to
 the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
 If no columns are selected (perhaps due to an earlier \code{step_zv()}),
-\code{bake()} will return the data as-is (e.g. with no dummy variables).
+\code{\link[=bake]{bake()}} will return the data as-is (e.g. with no dummy variables).
 
 Note that, by default, the new dummy variable column names obey the naming
 rules for columns. If there are levels such as "0", \code{\link[=dummy_names]{dummy_names()}} will put
@@ -111,11 +111,13 @@ this step.
 
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or original variables selected) and \code{columns} (the
-list of corresponding binary columns) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or original variables selected) and \code{columns}
+(the list of corresponding binary columns) is returned.
+}
+
 \examples{
 library(modeldata)
 data(okc)

@@ -12,7 +12,7 @@
 #'  [timeDate::listHolidays()] for a complete list.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep.recipe()] is used.
+#'  populated once [prep()] is used.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
@@ -21,8 +21,10 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms`
-#'  (the columns that will be affected) and `holiday` is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the columns that will be affected) and `holiday` is returned.
 #'
 #' @examples
 #' library(lubridate)

@@ -28,12 +28,12 @@ As of \code{recipes} version 0.1.14, \strong{\code{juice()} is superseded} in fa
 }
 \details{
 As steps are estimated by \code{prep}, these operations are
-applied to the training set. Rather than running \code{bake()}
+applied to the training set. Rather than running \code{\link[=bake]{bake()}}
 to duplicate this processing, this function will return
 variables from the processed training set.
 
 When preparing a recipe, if the training data set is
-retained using \code{retain = TRUE}, there is no need to \code{bake()} the
+retained using \code{retain = TRUE}, there is no need to \code{\link[=bake]{bake()}} the
 recipe to get the preprocessed training set.
 
 \code{juice()} will return the results of a recipe where \emph{all steps}
@@ -41,5 +41,5 @@ have been applied to the data, irrespective of the value of
 the step's \code{skip} argument.
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep]{prep()}} \code{\link[=bake]{bake()}}
 }

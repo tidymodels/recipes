@@ -32,8 +32,8 @@ preprocessing have been estimated.}
 \item{inputs}{Quosure of values given by \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
@@ -53,21 +53,23 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
-contains the conditional statements is returned. These
-expressions are text representations and are not parsable.
 }
 \section{Row Filtering}{
 
 
 This step can entirely remove observations (rows of data), which can have
 unintended and/or problematic consequences when applying the step to new
-data later via \code{\link[=bake.recipe]{bake.recipe()}}. Consider whether \code{skip = TRUE} or
+data later via \code{\link[=bake]{bake()}}. Consider whether \code{skip = TRUE} or
 \code{skip = FALSE} is more appropriate in any given use case. In most instances
 that affect the rows of the data being predicted, this step probably should
 not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing \code{\link[=recipe]{recipe()}}.
+}
+
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} which contains the conditional statements is returned.
+These expressions are text representations and are not parsable.
 }
 
 \examples{

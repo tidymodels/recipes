@@ -9,7 +9,7 @@
 #' @param key A list that contains the information needed to
 #'  create integer variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param strict A logical for whether the values should be returned as
 #'  integers (as opposed to double).
 #' @param zero_based A logical for whether the integers should start at zero and
@@ -30,9 +30,11 @@
 #' Despite the name, the new values are returned as numeric unless
 #'  `strict = TRUE`, which will coerce the results to integers.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the selectors or
-#'  variables selected) and `value` (a _list column_ with the
-#'  conversion key) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value`
+#' (a _list column_ with the conversion key) is returned.
 #'
 #' @examples
 #' library(modeldata)

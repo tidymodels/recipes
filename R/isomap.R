@@ -14,7 +14,7 @@
 #' @param options A list of options to [dimRed::Isomap()].
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return
@@ -45,8 +45,10 @@
 #'  `Isomap9`. If `num_terms = 101`, the names would be
 #'  `Isomap001` - `Isomap101`.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the selectors or variables selected) is returned.
 #'
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.

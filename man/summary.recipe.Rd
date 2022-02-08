@@ -40,5 +40,5 @@ rec <- prep(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep]{prep()}}
 }

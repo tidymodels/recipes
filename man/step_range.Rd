@@ -37,12 +37,12 @@ range.}
 
 \item{ranges}{A character vector of variables that will be
 normalized. Note that this is ignored until the values are
-determined by \code{\link[=prep.recipe]{prep.recipe()}}. Setting this value will
+determined by \code{\link[=prep]{prep()}}. Setting this value will
 be ineffective.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -62,10 +62,13 @@ range of values.
 When a new data point is outside of the ranges seen in
 the training set, the new values are truncated at \code{min} or
 \code{max}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{min}, and \code{max} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{min}, and \code{max} is
+returned.
+}
+
 \examples{
 library(modeldata)
 data(biomass)

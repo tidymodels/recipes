@@ -37,11 +37,11 @@ factor levels for the 1's (in the first position) and the zeros
 1's, be the factor reference level?}
 
 \item{columns}{A vector with the selected variable names. This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -65,10 +65,12 @@ would do better to have factor predictors so that the binomial
 distribution is modeled instead of a Gaussian probability
 density of numeric binary data. Note that the numeric data is
 only verified to be numeric (and does not count levels).
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be affected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be affected) is returned.
+}
+
 \examples{
 library(modeldata)
 data(covers)

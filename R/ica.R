@@ -14,7 +14,7 @@
 #'  running ICA.
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return
@@ -45,9 +45,11 @@
 #'  If `num_comp = 101`, the names would be `IC001` -
 #'  `IC101`.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the loading),
-#'  and `component` is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `value` (the loading),
+#' and `component` is returned.
 #'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
 #'  component analysis: algorithms and applications. *Neural

@@ -56,7 +56,7 @@ quantile method for dates.}
 
 \item{columns}{A character string that contains the names of
 columns that should be fixed and their values. These values are
-not determined until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+not determined until \code{\link[=prep]{prep()}} is called.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -65,8 +65,8 @@ created.}
 preprocessing have been estimated.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -88,11 +88,13 @@ models.
 This step is atypical in that, when baked, the
 \code{new_data} argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (which
-is the columns that will be affected) and \code{type} (fixed or
-profiled) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (which is the columns that will be affected) and \code{type} (fixed
+or profiled) is returned.
+}
+
 \examples{
 library(modeldata)
 data(okc)

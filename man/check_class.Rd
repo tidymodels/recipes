@@ -37,14 +37,14 @@ Can contain more than one class.}
 have additional classes to the one(s) that are checked.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{class_list}{A named list of column classes. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -69,10 +69,13 @@ that in \code{prep} the argument \code{strings_as_factors} defaults to
 \code{TRUE}. If the train set contains character variables
 the check will be break \code{bake} when \code{strings_as_factors} is
 \code{TRUE}.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the type) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the type)
+is returned.
+}
+
 \examples{
 library(dplyr)
 library(modeldata)

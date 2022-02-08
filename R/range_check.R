@@ -10,9 +10,9 @@
 #' @param warn If `TRUE` the check will throw a warning instead
 #'   of an error when failing.
 #' @param lower A named numeric vector of minimum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @param upper A named numeric vector of maximum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @template check-return
 #' @family checks
 #' @export
@@ -24,8 +24,11 @@
 #'   is used to compute the allowed slack at the lower end,
 #'   the second to compute the allowed slack at the upper end.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the means) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the means)
+#'  is returned.
 #'
 #' @examples
 #'   slack_df <- data_frame(x = 0:100)

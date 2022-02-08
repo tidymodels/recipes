@@ -10,7 +10,7 @@
 #' @param ref_first Logical. Should the first level, which replaces
 #' 1's, be the factor reference level?
 #' @param columns A vector with the selected variable names. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
@@ -20,8 +20,10 @@
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` (the columns that will be affected) is returned.
 #'
 #' @family dummy variable and encoding steps
 #' @export

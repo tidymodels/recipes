@@ -29,11 +29,11 @@ preprocessing have been estimated.}
 
 \item{columns}{A character string that contains the names of
 columns that should be shuffled. These values are not determined
-until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+until \code{\link[=prep]{prep()}} is called.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -49,10 +49,11 @@ sequence of any existing operations.
 step that will randomly change the order of rows for selected
 variables.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be permuted) is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be permuted) is returned.
 }
+
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
 

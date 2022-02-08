@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed
-#'  by [prep.recipe()]. Note that, if the original data are integers, the mean
+#'  by [prep()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside
@@ -18,12 +18,14 @@
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
 #'  new values to new data sets using these averages.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the mean
-#'  value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
 #'    to `step_impute_mean()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `model` (the mean
+#' value) is returned.
 #'
 #' @examples
 #' library(modeldata)

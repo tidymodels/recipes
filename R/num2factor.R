@@ -9,14 +9,18 @@
 #'  to modify the numeric values prior to determining the levels (perhaps using
 #'  [base::as.integer()]). The output of a function should be an integer that
 #'  corresponds to the value of `levels` that should be assigned. If not an
-#'  integer, the value will be converted to an integer during `bake()`.
+#'  integer, the value will be converted to an integer during [bake()].
 #' @param levels A character vector of values that will be used as the levels.
 #'  These are the numeric data converted to character and ordered. This is
-#'  modified once [prep.recipe()] is executed.
+#'  modified once [prep()] is executed.
 #' @param ordered A single logical value; should the factor(s) be ordered?
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `ordered` is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `ordered` is returned.
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples

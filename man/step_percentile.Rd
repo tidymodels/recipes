@@ -30,14 +30,14 @@ the original variables will be used as \emph{predictors} in a model.}
 preprocessing have been estimated.}
 
 \item{ref_dist}{The computed percentiles is stored here once this
-preprocessing step has be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{options}{A named list of options to pass to \code{\link[stats:quantile]{stats::quantile()}}.
 See Details for more information.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}

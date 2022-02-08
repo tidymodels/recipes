@@ -16,7 +16,7 @@
 #' `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
 #' arguments).
 #' @param res A list of results are stored here once this preprocessing step
-#'  has been trained by [prep.recipe()].
+#'  has been trained by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return
@@ -43,7 +43,10 @@
 #' proportion to determine the `keepX` parameter in `mixOmics::spls()` and
 #' `mixOmics::splsda()`. See the references in `mixOmics::spls()` for details.
 #'
-#' The [`tidy()`] method returns the coefficients that are usually defined as
+#' # Tidying
+#'
+#' The [`tidy()`][tidy.recipe()] method returns the coefficients that are
+#' usually defined as
 #'
 #' \deqn{W(P'W)^{-1}}
 #'

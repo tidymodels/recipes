@@ -11,7 +11,7 @@
 #'  range.
 #' @param ranges A character vector of variables that will be
 #'  normalized. Note that this is ignored until the values are
-#'  determined by [prep.recipe()]. Setting this value will
+#'  determined by [prep()]. Setting this value will
 #'  be ineffective.
 #' @template step-return
 #' @family normalization steps
@@ -20,8 +20,11 @@
 #'  the training set, the new values are truncated at `min` or
 #'  `max`.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `min`, and `max` is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected), `min`, and `max` is
+#'  returned.
 #'
 #' @examples
 #' library(modeldata)

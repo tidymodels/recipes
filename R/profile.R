@@ -34,14 +34,16 @@
 #'  quantile method for dates.
 #' @param columns A character string that contains the names of
 #'  columns that should be fixed and their values. These values are
-#'  not determined until [prep.recipe()] is called.
+#'  not determined until [prep()] is called.
 #' @details This step is atypical in that, when baked, the
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (which
-#'  is the columns that will be affected) and `type` (fixed or
-#'  profiled) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (which is the columns that will be affected) and `type` (fixed
+#'  or profiled) is returned.
 #'
 #' @template step-return
 #' @export

@@ -35,7 +35,7 @@ columns than the original columns in \code{new_data}.
 }
 \description{
 For a recipe with at least one preprocessing operation that has been trained by
-\code{\link[=prep.recipe]{prep.recipe()}}, apply the computations to new data.
+\code{\link[=prep]{prep()}}, apply the computations to new data.
 }
 \details{
 \code{\link[=bake]{bake()}} takes a trained recipe and applies its operations to a
@@ -49,7 +49,7 @@ training set. With this option set, \code{bake(object, new_data = NULL)}
 will return it for free.
 
 Also, any steps with \code{skip = TRUE} will not be applied to the
-data when \code{bake()} is invoked with a data set in \code{new_data}.
+data when \code{\link[=bake]{bake()}} is invoked with a data set in \code{new_data}.
 \code{bake(object, new_data = NULL)} will always have all of the steps applied.
 }
 \examples{

@@ -10,9 +10,9 @@
 #'  Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'  done up to the point of this imputation step. This is `NULL` until the step
-#'  is trained by [prep.recipe()].
+#'  is trained by [prep()].
 #' @param columns The column names that will be imputed and used for
-#'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
+#'  imputation. This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
@@ -30,12 +30,14 @@
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables for imputation), `predictors`
-#'  (those variables used to impute), and `neighbors` is returned.
-#'
 #' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
 #'    to `step_impute_knn()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables for imputation), `predictors`
+#' (those variables used to impute), and `neighbors` is returned.
 #'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.

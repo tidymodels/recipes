@@ -19,7 +19,7 @@
 #' @param levels A list that contains the information needed to
 #'  create dummy variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -51,7 +51,7 @@
 #' the results. See [step_other()] for an alternative.
 #'
 #' If no columns are selected (perhaps due to an earlier `step_zv()`),
-#'  `bake()` will return the data as-is (e.g. with no dummy variables).
+#'  [bake()] will return the data as-is (e.g. with no dummy variables).
 #'
 #' Note that, by default, the new dummy variable column names obey the naming
 #' rules for columns. If there are levels such as "0", [dummy_names()] will put
@@ -62,9 +62,11 @@
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or original variables selected) and `columns` (the
-#'  list of corresponding binary columns) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or original variables selected) and `columns`
+#'  (the list of corresponding binary columns) is returned.
 #'
 #' @examples
 #' library(modeldata)

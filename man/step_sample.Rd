@@ -37,8 +37,8 @@ of the training set (or smaller for smaller \code{new_data}).}
 \item{replace}{Sample with or without replacement?}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
@@ -53,20 +53,21 @@ sequence of any existing operations.
 that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
 \code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{size},
-\code{replace}, and \code{id} is returned.
-}
 \section{Row Filtering}{
 
 
 This step can entirely remove observations (rows of data), which can have
 unintended and/or problematic consequences when applying the step to new
-data later via \code{\link[=bake.recipe]{bake.recipe()}}. Consider whether \code{skip = TRUE} or
+data later via \code{\link[=bake]{bake()}}. Consider whether \code{skip = TRUE} or
 \code{skip = FALSE} is more appropriate in any given use case. In most instances
 that affect the rows of the data being predicted, this step probably should
 not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing \code{\link[=recipe]{recipe()}}.
+}
+
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{size}, \code{replace}, and \code{id} is returned.
 }
 
 \examples{

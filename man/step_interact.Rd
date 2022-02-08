@@ -39,8 +39,8 @@ interaction (e.g. \code{var1_x_var2} instead of the more
 traditional \code{var1:var2}).}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -88,10 +88,12 @@ create a set of specific interaction effects (e.g.
 \code{starts_with("x_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x_6)}
 so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and
 all two-way interactions are created.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms}
-(the interaction effects) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the interaction effects) is returned.
+}
+
 \examples{
 library(modeldata)
 data(penguins)

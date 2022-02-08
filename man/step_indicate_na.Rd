@@ -36,8 +36,8 @@ be populated (eventually) by the terms argument.}
 resulting new variables. Defaults to "na_ind".}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -53,11 +53,12 @@ sequence of any existing operations.
 create and append additional binary columns to the dataset to indicate
 which observations are missing.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model} (the
 median value) is returned.
 }
+
 \examples{
 library(modeldata)
 data("credit_data")

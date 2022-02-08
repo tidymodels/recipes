@@ -41,14 +41,14 @@ created.}
 preprocessing have been estimated.}
 
 \item{modes}{A named character vector of modes. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{ptype}{A data frame prototype to cast new data sets to. This is
 commonly a 0-row slice of the training set.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -71,13 +71,15 @@ from the data used in the \code{training} argument of
 values to new data sets using these values. If the training set
 data has more than one mode, one is selected at random.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{model} (the mode
-value) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_modeimpute()}
 to \code{step_impute_mode()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model} (the mode
+value) is returned.
+}
+
 \examples{
 library(modeldata)
 data("credit_data")

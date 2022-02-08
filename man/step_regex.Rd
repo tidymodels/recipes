@@ -45,11 +45,11 @@ variable. It should be a valid column name.}
 
 \item{input}{A single character value for the name of the
 variable being searched. This is \code{NULL} until computed by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -64,11 +64,12 @@ sequence of any existing operations.
 \code{step_regex} creates a \emph{specification} of a recipe step that will
 create a new dummy variable based on a regular expression.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{result} (the
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{result} (the
 new column name) is returned.
 }
+
 \examples{
 library(modeldata)
 data(covers)

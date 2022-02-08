@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param sds A named numeric vector of standard deviations. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to
@@ -24,8 +24,10 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the
 #'  standard deviations) is returned.
 #'
 #' @references Gelman, A. (2007) "Scaling regression inputs by

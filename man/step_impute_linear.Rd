@@ -37,11 +37,11 @@ included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.}
 
 \item{models}{The \code{\link[=lm]{lm()}} objects are stored here once the linear models
-have been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+have been trained by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -68,11 +68,13 @@ coerced to integer as needed).
 
 Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
 columns \code{terms} (the selectors or variables selected) and \code{model} (the
 bagged tree object) is returned.
 }
+
 \examples{
 data(ames, package = "modeldata")
 set.seed(393)

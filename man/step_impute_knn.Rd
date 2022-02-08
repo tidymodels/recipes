@@ -61,14 +61,14 @@ Available options are currently \code{nthread} and \code{eps}.}
 
 \item{ref_data}{A tibble of data that will reflect the data preprocessing
 done up to the point of this imputation step. This is \code{NULL} until the step
-is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{The column names that will be imputed and used for
-imputation. This is \code{NULL} until the step is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+imputation. This is \code{NULL} until the step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -98,13 +98,15 @@ this variable will be ignored.
 It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables for imputation), \code{predictors}
-(those variables used to impute), and \code{neighbors} is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_knnimpute()}
 to \code{step_impute_knn()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables for imputation), \code{predictors}
+(those variables used to impute), and \code{neighbors} is returned.
+}
+
 \examples{
 library(recipes)
 library(modeldata)

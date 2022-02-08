@@ -22,7 +22,7 @@
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
 #' @param data The training data are stored here once after
-#'  [prep.recipe()] is executed.
+#'  [prep()] is executed.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -52,8 +52,10 @@
 #'  replace the original values and by default have the prefix `depth_`. The
 #'  naming format can be changed using the `prefix` argument.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `class` is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `class` is returned.
 #'
 #' @examples
 #'

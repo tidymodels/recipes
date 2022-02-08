@@ -30,7 +30,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{sds}{A named numeric vector of standard deviations. This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{factor}{A numeric value of either 1 or 2 that scales the
 numeric inputs by one or two standard deviations. By dividing
@@ -42,8 +42,8 @@ binary inputs. Defaults to \code{1}. More in reference below.}
 values should be removed when computing the standard deviation.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -66,11 +66,13 @@ the variable standard deviations from the data used in the
 \code{training} argument of \code{prep.recipe}.
 \code{bake.recipe} then applies the scaling to new data sets
 using these standard deviations.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the
 standard deviations) is returned.
 }
+
 \examples{
 library(modeldata)
 data(biomass)

@@ -10,7 +10,7 @@
 #' @inheritParams step_other
 #' @inheritParams step_pca
 #' @param input A character vector containing the names of the columns used.
-#'  This is `NULL` until the step is trained by [prep.recipe()].
+#'  This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export

@@ -10,7 +10,7 @@
 #' these dots indicate which variables are used to predict the missing data
 #' in each variable. See [selections()] for more details.
 #' @param models The [lm()] objects are stored here once the linear models
-#'  have been trained by [prep.recipe()].
+#'  have been trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
@@ -26,7 +26,9 @@
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
 #'
-#'  When you [`tidy()`] this step, a tibble with
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  bagged tree object) is returned.
 #'

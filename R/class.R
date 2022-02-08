@@ -10,7 +10,7 @@
 #' @param allow_additional If `TRUE` a variable is allowed to
 #'  have additional classes to the one(s) that are checked.
 #' @param class_list A named list of column classes. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @template check-return
 #'
 #' @family checks
@@ -29,8 +29,11 @@
 #'  the check will be break `bake` when `strings_as_factors` is
 #'  `TRUE`.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the type) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the type)
+#'  is returned.
 #'
 #' @examples
 #' library(dplyr)

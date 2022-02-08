@@ -30,8 +30,8 @@ preprocessing have been estimated.}
 \item{inputs}{Quosure(s) of \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -58,13 +58,15 @@ it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{values}, which
-contains the \code{mutate()} expressions as character strings
-(and are not reparsable), is returned.
-
 If a preceding step removes a column that is selected by name in
-\code{step_mutate()}, the recipe will error when being estimated with \code{prep()}.
+\code{step_mutate()}, the recipe will error when being estimated with \code{\link[=prep]{prep()}}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{values}, which contains the \code{mutate()} expressions as character
+strings (and are not reparsable), is returned.
+}
+
 \examples{
 rec <-
   recipe( ~ ., data = iris) \%>\%

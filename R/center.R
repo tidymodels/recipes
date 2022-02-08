@@ -12,12 +12,12 @@
 #' @param trained A logical to indicate if the quantities for
 #'  preprocessing have been estimated.
 #' @param means A named numeric vector of means. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed during computations.
 #' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  recipe is baked by [bake()]? While all operations are baked
+#'  when [prep()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations.
@@ -32,8 +32,11 @@
 #'  argument of `prep.recipe`. `bake.recipe` then applies
 #'  the centering to new data sets using these means.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the means) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the means)
+#'  is returned.
 #'
 #' @examples
 #' library(modeldata)

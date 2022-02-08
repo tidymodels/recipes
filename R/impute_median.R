@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param medians A named numeric vector of medians. This is `NULL` until
-#'  computed by [prep.recipe()]. Note that, if the original data are integers,
+#'  computed by [prep()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
 #' @template step-return
 #' @family imputation steps
@@ -15,12 +15,14 @@
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
 #'  the new values to new data sets using these medians.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  median value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from
 #'    `step_medianimpute()` to `step_impute_median()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
+#' columns `terms` (the selectors or variables selected) and `model`
+#' (themedian value) is returned.
 #'
 #' @examples
 #' library(modeldata)

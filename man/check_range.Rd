@@ -28,8 +28,8 @@ for this check. See \code{\link[=selections]{selections()}} for more details.}
 created.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -44,10 +44,10 @@ of the variable in the train set.}
 of an error when failing.}
 
 \item{lower}{A named numeric vector of minimum values in the train set.
-This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{upper}{A named numeric vector of maximum values in the train set.
-This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -67,10 +67,13 @@ of length one, the same proportion will be used at both ends
 of the train set range. If of length two, its first value
 is used to compute the allowed slack at the lower end,
 the second to compute the allowed slack at the upper end.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the means) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the means)
+is returned.
+}
+
 \examples{
   slack_df <- data_frame(x = 0:100)
   slack_new_data <- data_frame(x = -10:110)

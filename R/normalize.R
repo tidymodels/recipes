@@ -6,9 +6,9 @@
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param sds A named numeric vector of standard deviations This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed when computing the standard deviation and mean.
 #' @template step-return
@@ -21,9 +21,12 @@
 #'  `prep.recipe`. [`bake.recipe`] then applies the scaling to new data sets using
 #'  these estimates.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the standard deviations and
-#'  means), and `statistic` for the type of value is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected), `value` (the standard
+#'  deviations and means), and `statistic` for the type of value is
+#'  returned.
 #'
 #' @examples
 #' library(modeldata)

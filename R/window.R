@@ -21,7 +21,7 @@
 #'  `'var'`
 #' @param columns A character string that contains the names of
 #'  columns that should be processed. These values are not
-#'  determined until [prep.recipe()] is called.
+#'  determined until [prep()] is called.
 #' @param names An optional character string that is the same
 #'  length of the number of terms selected by `terms`. If you
 #'  are not sure what columns will be selected, use the
@@ -42,9 +42,11 @@
 #  This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `statistic` (the
-#'  summary function name), and `size` is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `statistic` (the
+#' summary function name), and `size` is returned.
 #'
 #' @examples
 #' library(recipes)

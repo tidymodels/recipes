@@ -33,11 +33,11 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{inputs}{A vector of column names populated by \code{prep()}.}
+\item{inputs}{A vector of column names populated by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -52,10 +52,11 @@ sequence of any existing operations.
 \code{step_rename_at} creates a \emph{specification} of a recipe step that will rename
 the selected variables using a common function via \code{\link[dplyr:select_all]{dplyr::rename_at()}}.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} which contains the columns being transformed is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} which contains the columns being transformed is returned.
 }
+
 \examples{
 library(dplyr)
 recipe(~ ., data = iris) \%>\%

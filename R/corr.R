@@ -15,7 +15,7 @@
 #'  to the [stats::cor()] function.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @template step-return
 #' @template filter-steps
 #' @author Original R code for filtering algorithm by Dong Li,
@@ -34,8 +34,10 @@
 #'  has sporadic missing values (and an inappropriate value of `use`
 #'  is chosen), some columns will also be excluded from the filter.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the columns
-#'  that will be removed) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be removed) is returned.
 #'
 #' @examples
 #' library(modeldata)

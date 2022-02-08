@@ -20,7 +20,7 @@
 #'  processing is turned off in favor of resample-level parallelization.
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @param prefix A character string that will be the prefix to the
@@ -43,8 +43,12 @@
 #'  If `num = 101`, the names would be `NNMF001` -
 #'  `NNMF101`.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) and the number of components is returned.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the selectors or variables selected) and the number of
+#' components is returned.
 #'
 #' @examples
 #'

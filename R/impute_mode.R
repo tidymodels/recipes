@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param modes A named character vector of modes. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param ptype A data frame prototype to cast new data sets to. This is
 #'  commonly a 0-row slice of the training set.
 #' @template step-return
@@ -18,12 +18,14 @@
 #'  values to new data sets using these values. If the training set
 #'  data has more than one mode, one is selected at random.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the mode
-#'  value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
 #'    to `step_impute_mode()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `model` (the mode
+#' value) is returned.
 #'
 #' @examples
 #' library(modeldata)

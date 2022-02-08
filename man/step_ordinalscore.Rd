@@ -30,14 +30,14 @@ preprocessing have been estimated.}
 
 \item{columns}{A character string of variables that will be
 converted. This is \code{NULL} until computed by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{convert}{A function that takes an ordinal factor vector
 as an input and outputs a single numeric variable.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -61,10 +61,12 @@ ordered levels into a single numeric vector of values that
 represent (subjective) scores. By default, the translation uses
 a linear scale (1, 2, 3, ... \code{C}) but custom score
 functions can also be used (see the example below).
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be affected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be affected) is returned.
+}
+
 \examples{
 fail_lvls <- c("meh", "annoying", "really_bad")
 

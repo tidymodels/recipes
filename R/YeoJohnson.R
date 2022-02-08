@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param lambdas A numeric vector of transformation values. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
 #' @param num_unique An integer where data that have less possible
@@ -31,9 +31,11 @@
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
-#'  lambda estimate) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value` (the
+#' lambda estimate) is returned.
 #'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. *Biometrika*.

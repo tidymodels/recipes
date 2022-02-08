@@ -41,7 +41,7 @@ stay unchanged.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -55,8 +55,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -95,10 +95,12 @@ will have names that begin with \code{prefix} and a sequence of numbers. The
 variable names are padded with zeros. For example, if \code{num_comp < 10}, the
 new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
-
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column \code{terms}
-(the selectors or variables selected) is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the selectors or variables selected) is returned.
+}
+
 \examples{
 library(modeldata)
 data(biomass)

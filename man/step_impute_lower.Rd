@@ -39,11 +39,11 @@ created.}
 preprocessing have been estimated.}
 
 \item{threshold}{A named numeric vector of lower bounds. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -67,13 +67,15 @@ from the data used in the \code{training} argument of \code{prep.recipe}.
 \code{bake.recipe} then simulates a value for any data at the minimum
 with a random uniform value between zero and the minimum.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} for the estimated
-threshold is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_lowerimpute()}
 to \code{step_impute_lower()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} for the
+estimated threshold is returned.
+}
+
 \examples{
 library(recipes)
 library(modeldata)

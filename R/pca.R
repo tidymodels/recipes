@@ -22,7 +22,7 @@
 #'  FALSE`, `scale. = FALSE`, and `tol = NULL`. **Note** that the argument `x`
 #'  should not be passed here (or at all).
 #' @param res The [stats::prcomp.default()] object is stored here once this
-#'  preprocessing step has be trained by [prep.recipe()].
+#'  preprocessing step has be trained by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @param prefix A character string for the prefix of the resulting new
@@ -60,9 +60,11 @@
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
 #'
-#' When you [`tidy()`] this step, use either `type = "coef"` for the variable
-#'  loadings per component or `type = "variance"` for how much variance each
-#'  component accounts for.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
+#' for the variable loadings per component or `type = "variance"` for how
+#' much variance each component accounts for.
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.

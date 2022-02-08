@@ -21,11 +21,16 @@
 #'  variable. It should be a valid column name.
 #' @param input A single character value for the name of the
 #'  variable being searched. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `result` (the
-#'  new column name) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `result` (the
+#' new column name) is returned.
+#'
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples

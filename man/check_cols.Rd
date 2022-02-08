@@ -27,8 +27,8 @@ created.}
 have been resolved by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -48,10 +48,13 @@ present in the new data.
 This check will break the \code{bake} function if any of the specified
 columns is not present in the data. If the check passes, nothing is changed
 to the data.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the type) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the type)
+is returned.
+}
+
 \examples{
 
 library(modeldata)

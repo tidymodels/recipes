@@ -8,7 +8,7 @@
 #' @param max_steps The number of times to apply the algorithm.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @template step-return
 #' @template filter-steps
 #' @family variable filter steps
@@ -20,8 +20,10 @@
 #'  removed to resolve the issue. This algorithm may need to be
 #'  applied multiple times (as defined by `max_steps`).
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` (the columns
-#'  that will be removed) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` (the columns that will be removed) is returned.
 #'
 #' @examples
 #' library(modeldata)

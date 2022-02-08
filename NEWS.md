@@ -16,6 +16,8 @@
 
 * Deprecation has started for `step_nnmf()` in favor of `step_nnmf_sparse()`. (#790)
 
+* Steps now have a dedicated subsection detailing what happens when `tidy()` is applied. (#876)
+
 ## Breaking Changes
 
 * `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
