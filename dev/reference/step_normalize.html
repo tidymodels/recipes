@@ -129,17 +129,17 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>means</dt>
 <dd><p>A named numeric vector of means. This is
-<code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>sds</dt>
 <dd><p>A named numeric vector of standard deviations This
-is <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>na_rm</dt>
 <dd><p>A logical value indicating whether <code>NA</code>
 values should be removed when computing the standard deviation and mean.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -159,9 +159,13 @@ is divided out of the data. <code>step_normalize</code> estimates the variable s
 deviations and means from the data used in the <code>training</code> argument of
 <code>prep.recipe</code>. <code><a href="bake.html">bake.recipe</a></code> then applies the scaling to new data sets using
 these estimates.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected), <code>value</code> (the standard deviations and
-means), and <code>statistic</code> for the type of value is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected), <code>value</code> (the standard
+deviations and means), and <code>statistic</code> for the type of value is
+returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

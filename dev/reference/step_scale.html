@@ -129,7 +129,7 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>sds</dt>
 <dd><p>A named numeric vector of standard deviations. This
-is <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>factor</dt>
 <dd><p>A numeric value of either 1 or 2 that scales the
 numeric inputs by one or two standard deviations. By dividing
@@ -141,8 +141,8 @@ binary inputs. Defaults to <code>1</code>. More in reference below.</p></dd>
 values should be removed when computing the standard deviation.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -162,8 +162,11 @@ the variable standard deviations from the data used in the
 <code>training</code> argument of <code>prep.recipe</code>.
 <code>bake.recipe</code> then applies the scaling to new data sets
 using these standard deviations.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>value</code> (the
 standard deviations) is returned.</p>
     </div>
     <div id="references">

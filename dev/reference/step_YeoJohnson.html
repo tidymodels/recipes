@@ -130,7 +130,7 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>lambdas</dt>
 <dd><p>A numeric vector of transformation values. This
-is <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>limits</dt>
 <dd><p>A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.</p></dd>
@@ -142,8 +142,8 @@ values will not be evaluated for a transformation.</p></dd>
 values should be removed during computations.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -171,8 +171,11 @@ variable distributions more symmetric.</p>
 <p>If the transformation parameters are estimated to be very
 closed to the bounds, or if the optimization fails, a value of
 <code>NA</code> is used and no transformation is applied.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>value</code> (the
 lambda estimate) is returned.</p>
     </div>
     <div id="references">
@@ -226,17 +229,17 @@ transformations to improve normality or symmetry. <em>Biometrika</em>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms         value id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric()    <span style="color: #BB0000;">NA</span> YeoJohnson_wOXmC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric()    <span style="color: #BB0000;">NA</span> YeoJohnson_yM4JI</span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">yj_estimates</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms      value id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> carbon   -<span style="color: #BB0000;">0.022</span><span style="color: #BB0000; text-decoration: underline;">5</span> YeoJohnson_wOXmC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hydrogen  2.10   YeoJohnson_wOXmC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> oxygen    1.78   YeoJohnson_wOXmC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> nitrogen -<span style="color: #BB0000;">0.830</span>  YeoJohnson_wOXmC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> sulfur   -<span style="color: #BB0000;">4.09</span>   YeoJohnson_wOXmC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> HHV      -<span style="color: #BB0000;">0.388</span>  YeoJohnson_wOXmC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> carbon   -<span style="color: #BB0000;">0.022</span><span style="color: #BB0000; text-decoration: underline;">5</span> YeoJohnson_yM4JI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> hydrogen  2.10   YeoJohnson_yM4JI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> oxygen    1.78   YeoJohnson_yM4JI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> nitrogen -<span style="color: #BB0000;">0.830</span>  YeoJohnson_yM4JI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> sulfur   -<span style="color: #BB0000;">4.09</span>   YeoJohnson_yM4JI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> HHV      -<span style="color: #BB0000;">0.388</span>  YeoJohnson_yM4JI</span>
 </code></pre></div>
     </div>
   </div>

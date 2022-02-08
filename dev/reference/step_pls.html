@@ -154,7 +154,7 @@ arguments).</p></dd>
 original predictor data should be retained along with the new features.</p></dd>
 <dt>res</dt>
 <dd><p>A list of results are stored here once this preprocessing step
-has been trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+has been trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>columns</dt>
 <dd><p>A character string of variable names that will
 be populated elsewhere.</p></dd>
@@ -166,8 +166,8 @@ variables. See notes below.</p></dd>
 output. Defaults to <code>FALSE</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -197,7 +197,11 @@ each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. <code>step_pls()</code> converts this
 proportion to determine the <code>keepX</code> parameter in <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html" class="external-link">mixOmics::spls()</a></code> and
 <code><a href="https://rdrr.io/pkg/mixOmics/man/splsda.html" class="external-link">mixOmics::splsda()</a></code>. See the references in <code><a href="https://rdrr.io/pkg/mixOmics/man/spls.html" class="external-link">mixOmics::spls()</a></code> for details.</p>
-<p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method returns the coefficients that are usually defined as</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>The <code><a href="tidy.recipe.html">tidy()</a></code> method returns the coefficients that are
+usually defined as</p>
 <p>$$W(P'W)^{-1}$$</p>
 <p>(See the Wikipedia article below)</p>
 <p>When applied to data, these values are usually scaled by a column-specific

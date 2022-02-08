@@ -138,8 +138,8 @@ interaction (e.g. <code>var1_x_var2</code> instead of the more
 traditional <code>var1:var2</code>).</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -181,8 +181,11 @@ create a set of specific interaction effects (e.g.
 <code>starts_with("x_")</code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x_6)</code>
 so that the formula is now <code>(x_2 + x_3 + x_4 + x_5 + x_6):z</code> and
 all two-way interactions are created.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with column <code>terms</code>
-(the interaction effects) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with column
+<code>terms</code> (the interaction effects) is returned.</p>
     </div>
 
     <div id="ref-examples">

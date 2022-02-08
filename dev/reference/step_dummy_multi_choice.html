@@ -146,10 +146,10 @@ to <code>other</code>.</p></dd>
 <dd><p>A list that contains the information needed to
 create dummy variables for each variable contained in
 <code>terms</code>. This is <code>NULL</code> until the step is trained by
-<code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>input</dt>
 <dd><p>A character vector containing the names of the columns used.
-This is <code>NULL</code> until the step is trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+This is <code>NULL</code> until the step is trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>other</dt>
 <dd><p>A single character value for the "other" category.</p></dd>
 <dt>naming</dt>
@@ -163,8 +163,8 @@ variables. See notes below.</p></dd>
 output. Defaults to <code>FALSE</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>

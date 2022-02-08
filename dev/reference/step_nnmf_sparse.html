@@ -161,8 +161,8 @@ computing the factorization.</p></dd>
 output. Defaults to <code>FALSE</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -185,8 +185,12 @@ removed from the data). The new components will have names that begin with
 <code>prefix</code> and a sequence of numbers. The variable names are padded with
 zeros. For example, if <code>num &lt; 10</code>, their names will be <code>NNMF1</code> - <code>NNMF9</code>. If
 <code>num = 101</code>, the names would be <code>NNMF001</code> - <code>NNMF101</code>.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with column <code>terms</code> (the selectors
-or variables selected) and the number of components is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with column
+<code>terms</code> (the selectors or variables selected) and the number of
+components is returned.</p>
     </div>
 
     <div id="ref-examples">

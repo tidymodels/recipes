@@ -152,8 +152,8 @@ issued.</p></dd>
 be populated (eventually) by the <code>terms</code> argument.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -167,12 +167,15 @@ sequence of any existing operations.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns echoing the
-values of <code>lat</code>, <code>lon</code>, <code>ref_lat</code>, <code>ref_lon</code>, <code>is_lat_lon</code>, <code>name</code>, and <code>id</code>
-is returned.</p>
-<p><code>step_geodist</code> uses the Pythagorean theorem to calculate Euclidean
+    <p><code>step_geodist</code> uses the Pythagorean theorem to calculate Euclidean
 distances if <code>is_lat_lon</code> is FALSE. If <code>is_lat_lon</code> is TRUE, the Haversine
 formula is used to calculate the great-circle distance in meters.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+echoing the values of <code>lat</code>, <code>lon</code>, <code>ref_lat</code>, <code>ref_lon</code>,
+<code>is_lat_lon</code>, <code>name</code>, and <code>id</code> is returned.</p>
     </div>
     <div id="references">
     <h2>References</h2>

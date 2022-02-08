@@ -127,8 +127,8 @@ for this check. See <code><a href="selections.html">selections()</a></code> for 
 created.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the check be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -143,10 +143,10 @@ of the variable in the train set.</p></dd>
 of an error when failing.</p></dd>
 <dt>lower</dt>
 <dd><p>A named numeric vector of minimum values in the train set.
-This is <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+This is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>upper</dt>
 <dd><p>A named numeric vector of maximum values in the train set.
-This is <code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+This is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>id</dt>
 <dd><p>A character string that is unique to this check to identify it.</p></dd>
 </dl></div>
@@ -163,8 +163,12 @@ of length one, the same proportion will be used at both ends
 of the train set range. If of length two, its first value
 is used to compute the allowed slack at the lower end,
 the second to compute the allowed slack at the upper end.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this check, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the means) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this check, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>value</code> (the means)
+is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

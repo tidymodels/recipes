@@ -139,14 +139,14 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>modes</dt>
 <dd><p>A named character vector of modes. This is
-<code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>ptype</dt>
 <dd><p>A data frame prototype to cast new data sets to. This is
 commonly a 0-row slice of the training set.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -165,11 +165,14 @@ from the data used in the <code>training</code> argument of
 <code>prep.recipe</code>. <code>bake.recipe</code> then applies the new
 values to new data sets using these values. If the training set
 data has more than one mode, one is selected at random.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>model</code> (the mode
-value) is returned.</p>
 <p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_modeimpute()</code>
 to <code>step_impute_mode()</code>.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>model</code> (the mode
+value) is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

@@ -142,7 +142,7 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>columns</dt>
 <dd><p>A named numeric vector of columns. This is
-<code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>statistic</dt>
 <dd><p>A function with a single argument for the data to compute
 the imputed value. Only complete values will be passed to the function and
@@ -153,8 +153,8 @@ an odd integer greater than one. See Details below for a discussion of
 points at the ends of the series.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -180,10 +180,14 @@ window are missing, their imputed values are not included in the
 window data used for imputation. In other words, each imputation
 does not know anything about previous imputations in the series
 prior to the current point.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>window</code> (the window size) is returned.</p>
 <p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_rollimpute()</code>
 to <code>step_impute_roll()</code>.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>window</code>
+(the window size) is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

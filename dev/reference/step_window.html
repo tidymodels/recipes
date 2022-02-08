@@ -147,7 +147,7 @@ values are: <code>'max'</code>, <code>'mean'</code>, <code>'median'</code>,
 <dt>columns</dt>
 <dd><p>A character string that contains the names of
 columns that should be processed. These values are not
-determined until <code><a href="prep.html">prep.recipe()</a></code> is called.</p></dd>
+determined until <code><a href="prep.html">prep()</a></code> is called.</p></dd>
 <dt>names</dt>
 <dd><p>An optional character string that is the same
 length of the number of terms selected by <code>terms</code>. If you
@@ -156,8 +156,8 @@ are not sure what columns will be selected, use the
 the names of the new columns created by the step.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -181,8 +181,11 @@ smoothed with a 5-point moving median, the first three smoothed
 values are estimated by <code>median(x[1:5])</code> and the fourth
 uses <code>median(x[2:6])</code>.</p>
 <p>step will stop with a note about installing the package.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected), <code>statistic</code> (the
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected), <code>statistic</code> (the
 summary function name), and <code>size</code> is returned.</p>
     </div>
 

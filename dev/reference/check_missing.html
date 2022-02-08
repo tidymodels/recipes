@@ -128,8 +128,8 @@ have been resolved by <code><a href="prep.html">prep()</a></code>.</p></dd>
 be populated (eventually) by the terms argument.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the check be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -146,8 +146,11 @@ sequence of any existing operations.</p>
     <p>This check will break the <code>bake</code> function if any of the checked
 columns does contain <code>NA</code> values. If the check passes, nothing is changed
 to the data.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this check, a tibble with column <code>terms</code> (the
-selectors or variables selected) is returned.</p>
+    </div>
+    <div id="tidy-results">
+    <h2>tidy() results</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this check, a tibble with column
+<code>terms</code> (the selectors or variables selected) is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -197,7 +200,7 @@ selectors or variables selected) is returned.</p>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># If `new_data` contain missing values, the check will stop bake()</span></span>
+<span class="r-in"><span class="co"># If `new_data` contain missing values, the check will stop `bake()`</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Income</span> <span class="op">&gt;</span> <span class="fl">150</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="va">credit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Income</span> <span class="op">&lt;=</span> <span class="fl">150</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Income</span><span class="op">)</span><span class="op">)</span></span>

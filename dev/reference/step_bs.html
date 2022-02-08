@@ -144,8 +144,8 @@ created once the step has been trained.</p></dd>
 which should not include <code>x</code>, <code>degree</code>, or <code>df</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -166,8 +166,11 @@ determined by the <code>df</code>, <code>degree</code>, or <code>knot</code> arg
 <code><a href="https://rdrr.io/r/splines/bs.html" class="external-link">splines::bs()</a></code>. The original variables are removed
 from the data and new columns are added. The naming convention
 for the new variables is <code>varname_bs_1</code> and so on.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with column <code>terms</code> (the
-columns that will be affected) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with column
+<code>terms</code> (the columns that will be affected) is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

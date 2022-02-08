@@ -134,14 +134,14 @@ Can contain more than one class.</p></dd>
 have additional classes to the one(s) that are checked.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the check be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
 <dt>class_list</dt>
 <dd><p>A named list of column classes. This is
-<code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>id</dt>
 <dd><p>A character string that is unique to this check to identify it.</p></dd>
 </dl></div>
@@ -164,8 +164,12 @@ that in <code>prep</code> the argument <code>strings_as_factors</code> defaults 
 <code>TRUE</code>. If the train set contains character variables
 the check will be break <code>bake</code> when <code>strings_as_factors</code> is
 <code>TRUE</code>.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this check, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the type) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this check, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>value</code> (the type)
+is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -246,8 +250,8 @@ selectors or variables selected) and <code>value</code> (the type) is returned.<
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   time               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-07 <span style="color: #949494;">13:49:00</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-07 <span style="color: #949494;">13:50:00</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-08 <span style="color: #949494;">18:10:52</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-08 <span style="color: #949494;">18:11:52</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

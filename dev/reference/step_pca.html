@@ -148,7 +148,7 @@ to <code>num_comp</code>.</p></dd>
 should not be passed here (or at all).</p></dd>
 <dt>res</dt>
 <dd><p>The <code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">stats::prcomp.default()</a></code> object is stored here once this
-preprocessing step has be trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+preprocessing step has be trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>columns</dt>
 <dd><p>A character string of variable names that will
 be populated elsewhere.</p></dd>
@@ -160,8 +160,8 @@ variables. See notes below.</p></dd>
 output. Defaults to <code>FALSE</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -198,9 +198,12 @@ If <code>num_comp = 101</code>, the names would be <code>PC001</code> -
 <p>Alternatively, <code>threshold</code> can be used to determine the
 number of components that are required to capture a specified
 fraction of the total variance in the variables.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, use either <code>type = "coef"</code> for the variable
-loadings per component or <code>type = "variance"</code> for how much variance each
-component accounts for.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, use either <code>type = "coef"</code>
+for the variable loadings per component or <code>type = "variance"</code> for how
+much variance each component accounts for.</p>
     </div>
     <div id="references">
     <h2>References</h2>

@@ -151,14 +151,14 @@ depth functions. See <code><a href="https://rdrr.io/pkg/ddalpha/man/depth.halfsp
 <code><a href="https://rdrr.io/pkg/ddalpha/man/depth.zonoid.html" class="external-link">ddalpha::depth.zonoid()</a></code>.</p></dd>
 <dt>data</dt>
 <dd><p>The training data are stored here once after
-<code><a href="prep.html">prep.recipe()</a></code> is executed.</p></dd>
+<code><a href="prep.html">prep()</a></code> is executed.</p></dd>
 <dt>prefix</dt>
 <dd><p>A character string for the prefix of the resulting new
 variables. See notes below.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -194,8 +194,11 @@ the <code>terms</code> argument.</p>
 the <code>class</code> variable. The resulting variables will not
 replace the original values and by default have the prefix <code>depth_</code>. The
 naming format can be changed using the <code>prefix</code> argument.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>class</code> is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>class</code> is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

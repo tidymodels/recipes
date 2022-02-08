@@ -139,11 +139,11 @@ to <code>other</code>.</p></dd>
 <dt>objects</dt>
 <dd><p>A list of objects that contain the information
 to pool infrequent levels that is determined by
-<code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -163,7 +163,7 @@ whose individual proportion (or frequency) in the training set is less than
 <code>threshold</code>.</p>
 <p>If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of <code>strings_as_factors</code> in
-<code><a href="prep.html">prep.recipe()</a></code>). Otherwise, a factor is always returned with
+<code><a href="prep.html">prep()</a></code>). Otherwise, a factor is always returned with
 different factor levels.</p>
 <p>If <code>threshold</code> is less than the largest category proportion, all levels
 except for the most frequent are collapsed to the <code>other</code> level.</p>
@@ -174,8 +174,11 @@ occurs.</p>
 pooling is needed, they will be placed into the other category.</p>
 <p>When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-columns that will be affected) and <code>retained</code> (the factor
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the columns that will be affected) and <code>retained</code> (the factor
 levels that were not pulled into "other") is returned.</p>
     </div>
     <div id="see-also">

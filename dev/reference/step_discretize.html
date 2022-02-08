@@ -141,7 +141,7 @@ discretization takes place.</p></dd>
 <dt>objects</dt>
 <dd><p>The <code><a href="discretize.html">discretize()</a></code> objects are stored
 here once the recipe has be trained by
-<code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>options</dt>
 <dd><p>A list of options to <code><a href="discretize.html">discretize()</a></code>. A
 default is set for the argument <code>x</code>. Note that using
@@ -150,8 +150,8 @@ variable is being transformed might be problematic as all
 variables inherit those values.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -163,11 +163,11 @@ the computations for subsequent operations.</p></dd>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
     </div>
-    <div id="details">
-    <h2>Details</h2>
-    <p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble
-with columns <code>terms</code> (the selectors or variables selected)
-and <code>value</code> (the breaks) is returned.</p>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>value</code>
+(the breaks) is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

@@ -134,11 +134,11 @@ included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.</p></dd>
 <dt>models</dt>
 <dd><p>The <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> objects are stored here once the linear models
-have been trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+have been trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -161,7 +161,10 @@ will keep the same type as their original data (i.e, model predictions are
 coerced to integer as needed).</p>
 <p>Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with
 columns <code>terms</code> (the selectors or variables selected) and <code>model</code> (the
 bagged tree object) is returned.</p>
     </div>

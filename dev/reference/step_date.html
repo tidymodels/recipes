@@ -156,14 +156,14 @@ available for features <code>month</code> or <code>dow</code>.</p></dd>
 <dt>columns</dt>
 <dd><p>A character string of variables that will be
 used as inputs. This field is a placeholder and will be
-populated once <code><a href="prep.html">prep.recipe()</a></code> is used.</p></dd>
+populated once <code><a href="prep.html">prep()</a></code> is used.</p></dd>
 <dt>keep_original_cols</dt>
 <dd><p>A logical to keep the original variables in the
 output. Defaults to <code>TRUE</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -180,8 +180,11 @@ sequence of any existing operations.</p>
     <p>Unlike some other steps, <code>step_date</code> does <em>not</em>
 remove the original date variables by default. Set <code>keep_original_cols</code>
 to <code>FALSE</code> to remove them.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code>
-(the selectors or variables selected), <code>value</code> (the feature
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected), <code>value</code> (the feature
 names), and <code>ordinal</code> (a logical) is returned.</p>
     </div>
     <div id="see-also">

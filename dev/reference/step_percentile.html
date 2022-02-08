@@ -127,14 +127,14 @@ the original variables will be used as <em>predictors</em> in a model.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>ref_dist</dt>
 <dd><p>The computed percentiles is stored here once this
-preprocessing step has be trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+preprocessing step has be trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>options</dt>
 <dd><p>A named list of options to pass to <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">stats::quantile()</a></code>.
 See Details for more information.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>

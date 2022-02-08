@@ -159,7 +159,7 @@ quantile method for dates.</p></dd>
 <dt>columns</dt>
 <dd><p>A character string that contains the names of
 columns that should be fixed and their values. These values are
-not determined until <code><a href="prep.html">prep.recipe()</a></code> is called.</p></dd>
+not determined until <code><a href="prep.html">prep()</a></code> is called.</p></dd>
 <dt>role</dt>
 <dd><p>Not used by this step since no new variables are
 created.</p></dd>
@@ -168,8 +168,8 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -186,9 +186,12 @@ sequence of any existing operations.</p>
     <p>This step is atypical in that, when baked, the
 <code>new_data</code> argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (which
-is the columns that will be affected) and <code>type</code> (fixed or
-profiled) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (which is the columns that will be affected) and <code>type</code> (fixed
+or profiled) is returned.</p>
     </div>
 
     <div id="ref-examples">

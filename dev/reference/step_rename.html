@@ -128,8 +128,8 @@ preprocessing have been estimated.</p></dd>
 <dd><p>Quosure(s) of <code>...</code>.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -147,7 +147,10 @@ sequence of any existing operations.</p>
 the expression defining the new variable(s), it is a good idea to use
 quasiquotation (e.g. <code>!!</code>) to embed the value of the object in the
 expression (to be portable between sessions).</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with
 columns <code>values</code> which contains the <code>rename</code> expressions as character
 strings (and are not reparsable) is returned.</p>
     </div>

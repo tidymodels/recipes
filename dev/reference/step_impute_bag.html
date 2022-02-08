@@ -155,7 +155,7 @@ will be removed from the latter and not used to impute itself.</p></dd>
 <dd><p>An integer for the number of bagged trees to use in each model.</p></dd>
 <dt>models</dt>
 <dd><p>The <code><a href="https://rdrr.io/pkg/ipred/man/bagging.html" class="external-link">ipred::ipredbagg()</a></code> objects are stored here once this
-bagged trees have be trained by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+bagged trees have be trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>options</dt>
 <dd><p>A list of options to <code><a href="https://rdrr.io/pkg/ipred/man/bagging.html" class="external-link">ipred::ipredbagg()</a></code>. Defaults are set
 for the arguments <code>nbagg</code> and <code>keepX</code> but others can be passed in. <strong>Note</strong>
@@ -165,8 +165,8 @@ that the arguments <code>X</code> and <code>y</code> should not be passed here.<
 is used across all imputation models.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -191,10 +191,14 @@ will remain categorical. Also, integers will be imputed to integer too.</p>
 this variable will be ignored.</p>
 <p>It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the selectors
-or variables selected) and <code>model</code> (the bagged tree object) is returned.</p>
 <p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_bagimpute()</code>
 to <code>step_impute_bag()</code>.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>model</code>
+(the bagged tree object) is returned.</p>
     </div>
     <div id="references">
     <h2>References</h2>

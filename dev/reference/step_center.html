@@ -126,14 +126,14 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>means</dt>
 <dd><p>A named numeric vector of means. This is
-<code>NULL</code> until computed by <code><a href="prep.html">prep.recipe()</a></code>.</p></dd>
+<code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt>na_rm</dt>
 <dd><p>A logical value indicating whether <code>NA</code>
 values should be removed during computations.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -152,8 +152,12 @@ subtracted from the data. <code>step_center</code> estimates the
 variable means from the data used in the <code>training</code>
 argument of <code>prep.recipe</code>. <code>bake.recipe</code> then applies
 the centering to new data sets using these means.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected) and <code>value</code> (the means) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
+<code>terms</code> (the selectors or variables selected) and <code>value</code> (the means)
+is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -213,16 +217,16 @@ selectors or variables selected) and <code>value</code> (the means) is returned.
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms               value id          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">"</span>carbon<span style="color: #949494;">"</span>               <span style="color: #BB0000;">NA</span> center_35CgK</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">"</span>contains(\"gen\")<span style="color: #949494;">"</span>    <span style="color: #BB0000;">NA</span> center_35CgK</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">"</span>-hydrogen<span style="color: #949494;">"</span>            <span style="color: #BB0000;">NA</span> center_35CgK</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">"</span>carbon<span style="color: #949494;">"</span>               <span style="color: #BB0000;">NA</span> center_NOrYS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">"</span>contains(\"gen\")<span style="color: #949494;">"</span>    <span style="color: #BB0000;">NA</span> center_NOrYS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #949494;">"</span>-hydrogen<span style="color: #949494;">"</span>            <span style="color: #BB0000;">NA</span> center_NOrYS</span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">center_obj</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms    value id          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> carbon   48.4  center_35CgK</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> oxygen   38.5  center_35CgK</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> nitrogen  1.07 center_35CgK</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> carbon   48.4  center_NOrYS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> oxygen   38.5  center_NOrYS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> nitrogen  1.07 center_NOrYS</span>
 </code></pre></div>
     </div>
   </div>

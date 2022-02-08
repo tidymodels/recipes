@@ -137,11 +137,11 @@ below).</p></dd>
 <dt>removals</dt>
 <dd><p>A character string that contains the names of
 columns that should be removed. These values are not determined
-until <code><a href="prep.html">prep.recipe()</a></code> is called.</p></dd>
+until <code><a href="prep.html">prep()</a></code> is called.</p></dd>
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake.recipe()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep.recipe()</a></code> is run, some operations may not be able to be
+recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
+when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
@@ -176,8 +176,11 @@ number of samples (times 100), must also be below
 <code>unique_cut</code>.</p>
 <p>In the above example, the frequency ratio is 999 and the unique
 value percent is 0.2%.</p>
-<p>When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with column <code>terms</code> (the columns
-that will be removed) is returned.</p>
+    </div>
+    <div id="tidying">
+    <h2>Tidying</h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with column
+<code>terms</code> (the columns that will be removed) is returned.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
