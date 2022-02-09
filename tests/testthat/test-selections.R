@@ -89,17 +89,17 @@ test_that('simple name selections', {
     setNames(nm = character())
   )
 
-  expect_error(
+  expect_snapshot(
     recipes_eval_select(quos = quos(log(date)), data = okc, info = info1),
-    "non-numeric argument to mathematical function"
+    error = TRUE
   )
-  expect_error(
+  expect_snapshot(
     recipes_eval_select(quos = quos(I(date:age)), data = okc, info = info1),
-    "object 'age' not found"
+    error = TRUE
   )
-  expect_error(
+  expect_snapshot(
     recipes_eval_select(data = okc, info = info1),
-    'argument "quos" is missing, with no default'
+    error = TRUE
   )
 })
 
