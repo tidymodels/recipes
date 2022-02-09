@@ -9,15 +9,21 @@ data(okc)
 rec1 <- recipe(~ ., data = okc)
 info1 <- summary(rec1)
 
+rec2 <- recipe(age ~ ., data = okc)
+info2 <- summary(rec2)
+
+rec3 <- recipe(diet ~ ., data = okc)
+info3 <- summary(rec3)
+
 library(modeldata)
 data(biomass)
-rec2 <- recipe(biomass) %>%
+rec4 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
               new_role = "predictor") %>%
   update_role(HHV, new_role = "outcome") %>%
   update_role(sample, new_role = "id variable") %>%
   update_role(dataset, new_role = "splitting indicator")
-info2 <- summary(rec2)
+info4 <- summary(rec4)
 
 test_that('simple role selections', {
   expect_equal(
@@ -29,14 +35,14 @@ test_that('simple role selections', {
     setNames(nm = character())
   )
   expect_equal(
-    recipes_eval_select(quos = quos(all_outcomes()), data = biomass, info = info2),
+    recipes_eval_select(quos = quos(all_outcomes()), data = biomass, info = info4),
     setNames(nm = "HHV")
   )
   expect_equal(
     recipes_eval_select(
       quos = quos(has_role("splitting indicator")),
       data = biomass,
-      info = info2
+      info = info4
     ),
     setNames(nm = "dataset")
   )
@@ -63,11 +69,11 @@ test_that('simple name selections', {
     setNames(nm = c("age", "date"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(contains("gen")), data = biomass, info = info2),
+    recipes_eval_select(quos = quos(contains("gen")), data = biomass, info = info4),
     setNames(nm = c("hydrogen", "oxygen", "nitrogen"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(contains("gen"), -nitrogen), data = biomass, info = info2),
+    recipes_eval_select(quos = quos(contains("gen"), -nitrogen), data = biomass, info = info4),
     setNames(nm = c("hydrogen", "oxygen"))
   )
   expect_equal(
@@ -110,7 +116,7 @@ test_that('combinations', {
     recipes_eval_select(
       quos = quos(matches("[hH]"), -all_outcomes()),
       data = biomass,
-      info = info2
+      info = info4
     ),
     setNames(nm = "hydrogen")
   )
@@ -118,7 +124,7 @@ test_that('combinations', {
     recipes_eval_select(
       quos = quos(all_numeric(), -all_predictors()),
       data = biomass,
-      info = info2
+      info = info4
     ),
     setNames(nm = "HHV")
   )
@@ -126,7 +132,7 @@ test_that('combinations', {
     recipes_eval_select(
       quos = quos(all_numeric(), -all_predictors(), dataset),
       data = biomass,
-      info = info2
+      info = info4
     ),
     setNames(nm = c("HHV", "dataset"))
   )
@@ -134,7 +140,7 @@ test_that('combinations', {
     recipes_eval_select(
       quos = quos(all_numeric(), -all_predictors(), dataset, -dataset),
       data = biomass,
-      info = info2
+      info = info4
     ),
     setNames(nm = "HHV")
   )
@@ -192,4 +198,16 @@ test_that('new dplyr selectors', {
     regex = NA
   )
   expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
+})
+
+test_that('predictor specific role selections', {
+  expect_equal(
+    recipes_eval_select(quos = quos(all_numeric_predictors()), data = okc, info = info2),
+    setNames(nm = "height")
+  )
+
+  expect_equal(
+    recipes_eval_select(quos = quos(all_nominal_predictors()), data = okc, info = info3),
+    setNames(nm = c("location", "Class"))
+  )
 })
