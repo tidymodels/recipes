@@ -136,12 +136,16 @@ cov2pca <- function(cv_mat) {
 #' @export
 #' @rdname case-weight-helpers
 weighted_table <- function(.data, wts = NULL) {
-  if (is.null(wts)) {
-    return(table(.data))
-  }
-
   if (!is.data.frame(.data)) {
     .data <- data.frame(.data = factor(.data))
+  }
+
+  if (!all(purrr::map_lgl(.data, is.factor))) {
+    rlang::abort("All columns in `.data` must be factors.")
+  }
+
+  if (is.null(wts)) {
+    return(table(.data))
   }
 
   data <- .data %>%

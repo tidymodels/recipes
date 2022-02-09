@@ -153,4 +153,6 @@ test_that('correct tables', {
   calc_table <- weighted_table(mtcars2, wts = mtcars$qsec)
 
   expect_equal(exp_table, calc_table)
+
+  expect_snapshot(weighted_table(mtcars["vs"]), error = TRUE)
 })
