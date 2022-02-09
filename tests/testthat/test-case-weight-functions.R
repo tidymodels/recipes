@@ -82,3 +82,75 @@ test_that('correct correlations', {
 
 })
 
+
+test_that('correct tables', {
+  mtcars1 <- mtcars[c("cyl")]
+  mtcars1$cyl <- factor(mtcars1$cyl)
+  exp_table <- table(mtcars1)
+  calc_table <- weighted_table(mtcars1)
+  names(dimnames(exp_table)) <- "tmp"
+  names(dimnames(calc_table)) <- "tmp"
+
+  expect_equal(exp_table, calc_table)
+
+  mtcars2 <- mtcars[c("cyl", "vs")]
+  mtcars2$cyl <- factor(mtcars2$cyl)
+  mtcars2$vs <- factor(mtcars2$vs)
+  exp_table <- table(mtcars2)
+  calc_table <- weighted_table(mtcars2)
+
+  expect_equal(exp_table, calc_table)
+
+  # Integer weights 1D
+  exp_weigts <- mtcars %>% count(cyl, wt = carb)
+  exp_table <- table(mtcars1)
+  value_order <- match(names(exp_table), exp_weigts$cyl)
+  exp_table[seq_along(exp_table)] <- exp_weigts$n[value_order]
+
+  calc_table <- weighted_table(mtcars1, wts = mtcars$carb)
+  names(dimnames(exp_table)) <- "tmp"
+  names(dimnames(calc_table)) <- "tmp"
+
+  expect_equal(exp_table, calc_table)
+
+  # Irrational weights 1D
+  exp_weigts <- mtcars %>% count(cyl, wt = qsec)
+  exp_table <- table(mtcars1)
+  exp_table[seq_along(exp_table)] <- exp_weigts$n
+
+  calc_table <- weighted_table(mtcars1, wts = mtcars$qsec)
+  names(dimnames(exp_table)) <- "tmp"
+  names(dimnames(calc_table)) <- "tmp"
+
+  expect_equal(exp_table, calc_table)
+
+  # Irrational weights 2D
+  exp_weigts <- mtcars %>%
+    mutate(cyl = factor(cyl),
+           vs = factor(vs)) %>%
+    group_by(cyl, vs, .drop = FALSE) %>%
+    summarise(n = sum(carb), .groups = "drop") %>%
+    ungroup() %>%
+    arrange(vs, cyl)
+  exp_table <- table(mtcars2)
+  exp_table[seq_along(exp_table)] <- exp_weigts$n
+
+  calc_table <- weighted_table(mtcars2, wts = mtcars$carb)
+
+  expect_equal(exp_table, calc_table)
+
+  # Irrational weights 2D
+  exp_weigts <- mtcars %>%
+    mutate(cyl = factor(cyl),
+           vs = factor(vs)) %>%
+    group_by(cyl, vs, .drop = FALSE) %>%
+    summarise(n = sum(qsec), .groups = "drop") %>%
+    ungroup() %>%
+    arrange(vs, cyl)
+  exp_table <- table(mtcars2)
+  exp_table[seq_along(exp_table)] <- exp_weigts$n
+
+  calc_table <- weighted_table(mtcars2, wts = mtcars$qsec)
+
+  expect_equal(exp_table, calc_table)
+})
