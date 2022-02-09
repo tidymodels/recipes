@@ -1,11 +1,4 @@
-library(testthat)
-library(recipes)
-library(tibble)
-library(tidyselect)
-library(rlang)
-
-library(modeldata)
-data(okc)
+data("okc", package = "modeldata")
 rec1 <- recipe(~ ., data = okc)
 info1 <- summary(rec1)
 
@@ -15,8 +8,7 @@ info2 <- summary(rec2)
 rec3 <- recipe(diet ~ ., data = okc)
 info3 <- summary(rec3)
 
-library(modeldata)
-data(biomass)
+data("biomass", package = "modeldata")
 rec4 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
               new_role = "predictor") %>%
