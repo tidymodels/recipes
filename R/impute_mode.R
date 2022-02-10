@@ -56,6 +56,7 @@
 step_impute_mode <-
   function(recipe,
            ...,
+           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            modes = NULL,
@@ -66,6 +67,7 @@ step_impute_mode <-
       recipe,
       step_impute_mode_new(
         terms = enquos(...),
+        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         modes = modes,
@@ -105,10 +107,11 @@ step_modeimpute <-
   }
 
 step_impute_mode_new <-
-  function(terms, role, trained, modes, ptype, skip, id) {
+  function(terms, case_weights, role, trained, modes, ptype, skip, id) {
     step(
       subclass = "impute_mode",
       terms = terms,
+      case_weights = case_weights,
       role = role,
       trained = trained,
       modes = modes,
@@ -121,11 +124,14 @@ step_impute_mode_new <-
 #' @export
 prep.step_impute_mode <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  # TODO case weights
-  modes <- vapply(training[, col_names], mode_est, c(mode = ""))
+
+  wts <- get_case_weights(x$case_weights, info, training)
+
+  modes <- vapply(training[, col_names], mode_est, c(mode = ""), wts = wts)
   ptype <- vec_slice(training[, col_names], 0)
   step_impute_mode_new(
     terms = x$terms,
+    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     modes = modes,
@@ -177,11 +183,10 @@ print.step_impute_mode <-
 #' @keywords internal
 print.step_modeimpute <- print.step_impute_mode
 
-# TODO case weights: This should use case weights. We need a weighted table()
-mode_est <- function(x) {
+mode_est <- function(x, wts = NULL) {
   if (!is.character(x) & !is.factor(x))
     rlang::abort("The data should be character or factor to compute the mode.")
-  tab <- table(x)
+  tab <- weighted_table(x, wts = wts)
   modes <- names(tab)[tab == max(tab)]
   sample(modes, size = 1)
 }

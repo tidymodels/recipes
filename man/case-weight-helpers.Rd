@@ -20,7 +20,7 @@ correlations(x, wts = NULL)
 
 pca_wts(x, wts = NULL)
 
-weighted_table(.data, wts = NULL)
+weighted_table(.data, wts = NULL, useNA = "no")
 }
 \arguments{
 \item{selection}{A quosure}
