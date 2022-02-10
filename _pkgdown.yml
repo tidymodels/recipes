@@ -63,6 +63,7 @@ reference:
     - step_date
     - step_dummy
     - step_dummy_multi_choice
+    - step_dummy_regex
     - step_factor2string
     - step_holiday
     - step_indicate_na
