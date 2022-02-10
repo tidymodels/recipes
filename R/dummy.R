@@ -168,24 +168,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   if (length(col_names) > 0) {
-    fac_check <- vapply(training[, col_names], is.factor, logical(1))
-    if (any(!fac_check))
-      rlang::warn(
-        paste0(
-        "The following variables are not factor vectors and will be ignored: ",
-        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
-        )
-      )
-    col_names <- col_names[fac_check]
-    if (length(col_names) == 0) {
-      rlang::abort(
-        paste0(
-        "The `terms` argument in `step_dummy` did not select ",
-        "any factor columns."
-        )
-      )
-    }
-
+    col_names <- check_factor_vars(training, col_names, "step_dummy")
 
     ## I hate doing this but currently we are going to have
     ## to save the terms object from the original (= training)
@@ -230,6 +213,29 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     skip = x$skip,
     id = x$id
   )
+}
+
+check_factor_vars <- function(data, col_names, step_name) {
+  fac_check <- vapply(data[, col_names], is.factor, logical(1))
+  if (any(!fac_check))
+    rlang::warn(
+      paste0(
+        "The following variables are not factor vectors and will be ignored: ",
+        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
+      )
+    )
+  col_names <- col_names[fac_check]
+  if (length(col_names) == 0) {
+    rlang::abort(
+      paste0(
+        "The `terms` argument in `",
+        step_name,
+        "` did not select ",
+        "any factor columns."
+      )
+    )
+  }
+  col_names
 }
 
 warn_new_levels <- function(dat, lvl, details = NULL) {
