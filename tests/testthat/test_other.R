@@ -327,3 +327,20 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("othering with case weights", {
+  weighted_props <- okc_tr %>%
+    count(diet, wt = age, sort = TRUE) %>%
+    mutate(prop = n / sum(n[!is.na(diet)])) %>%
+    filter(!is.na(diet))
+
+  for (n_cols in 1:5) {
+    others <- recipe(~ diet + age, data = okc_tr) %>%
+      update_role(age, new_role = "case_weights") %>%
+      step_other(diet, other = "another", id = "",
+                 threshold = weighted_props$prop[n_cols])
+
+    others <- prep(others, training = okc_tr)
+    expect_equal(n_cols, nrow(tidy(others, number = 1)))
+  }
+})

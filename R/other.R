@@ -88,6 +88,7 @@
 step_other <-
   function(recipe,
            ...,
+           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            threshold = .05,
@@ -107,6 +108,7 @@ step_other <-
       recipe,
       step_other_new(
         terms = enquos(...),
+        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         threshold = threshold,
@@ -119,10 +121,11 @@ step_other <-
   }
 
 step_other_new <-
-  function(terms, role, trained, threshold, other, objects, skip, id) {
+  function(terms, case_weights, role, trained, threshold, other, objects, skip, id) {
     step(
       subclass = "other",
       terms = terms,
+      case_weights = case_weights,
       role = role,
       trained = trained,
       threshold = threshold,
@@ -137,13 +140,17 @@ step_other_new <-
 prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
+  wts <- get_case_weights(x$case_weights, info, training)
+
   objects <- lapply(training[, col_names],
                     keep_levels,
                     threshold = x$threshold,
-                    other = x$other)
+                    other = x$other,
+                    wts = wts)
 
   step_other_new(
     terms = x$terms,
+    case_weights = wts,
     role = x$role,
     trained = TRUE,
     threshold = x$threshold,
@@ -196,15 +203,18 @@ print.step_other <-
   invisible(x)
 }
 
-# TODO case weights: Use case weights here
-keep_levels <- function(x, threshold = .1, other = "other") {
+keep_levels <- function(x, threshold = .1, other = "other", wts = NULL) {
   if (!is.factor(x))
     x <- factor(x)
 
-  xtab <- sort(table(x, useNA = "no"), decreasing = TRUE)
+  xtab <- sort(weighted_table(x, wts = wts), decreasing = TRUE)
 
   if (threshold < 1) {
-    xtab <- xtab / sum(!is.na(x))
+    if (is.null(wts)) {
+        xtab <- xtab / sum(!is.na(x))
+    } else {
+        xtab <- xtab / sum(wts[!is.na(x)])
+    }
   }
 
   dropped <- which(xtab < threshold)
