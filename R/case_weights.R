@@ -135,7 +135,7 @@ cov2pca <- function(cv_mat) {
 
 #' @export
 #' @rdname case-weight-helpers
-weighted_table <- function(.data, wts = NULL) {
+weighted_table <- function(.data, wts = NULL, useNA = "no") {
   if (!is.data.frame(.data)) {
     .data <- data.frame(.data = factor(.data))
   }
@@ -154,8 +154,13 @@ weighted_table <- function(.data, wts = NULL) {
     summarise(n = sum(wts), .groups = "drop") %>%
     ungroup()
 
+  if (useNA == "no") {
+    missing <- purrr::map(data, is.na) %>% purrr::reduce(`|`)
+    data <- data[!missing, ]
+  }
+
   var_names <- names(data)[seq_len(length(data) - 1)]
-  tab <- table(.data[var_names], dnn = var_names)
+  tab <- table(.data[var_names], dnn = var_names, useNA = useNA)
   combinations <- expand.grid(attr(tab, "dimnames"))
   names(combinations) <- var_names
 
