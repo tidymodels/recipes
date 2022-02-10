@@ -18,6 +18,8 @@
 
 * Steps now have a dedicated subsection detailing what happens when `tidy()` is applied. (#876)
 
+* Added a new step called `step_dummy_regex()` which creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.
+
 ## Breaking Changes
 
 * `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
