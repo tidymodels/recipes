@@ -137,7 +137,11 @@ cov2pca <- function(cv_mat) {
 #' @rdname case-weight-helpers
 weighted_table <- function(.data, wts = NULL, useNA = "no") {
   if (!is.data.frame(.data)) {
-    .data <- data.frame(.data = factor(.data))
+    if (is.factor(.data)) {
+      .data <- data.frame(.data = .data)
+    } else {
+      .data <- data.frame(.data = factor(.data))
+    }
   }
 
   if (!all(purrr::map_lgl(.data, is.factor))) {

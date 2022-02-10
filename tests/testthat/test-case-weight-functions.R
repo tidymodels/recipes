@@ -155,4 +155,13 @@ test_that('correct tables', {
   expect_equal(exp_table, calc_table)
 
   expect_snapshot(weighted_table(mtcars["vs"]), error = TRUE)
+
+  # Deal with empty levels
+  f1 <- factor(c("A", "B"), levels = c("A", "B", "C"))
+  exp_table <- table(f1)
+  calc_table <- weighted_table(f1)
+  names(dimnames(exp_table)) <- "tmp"
+  names(dimnames(calc_table)) <- "tmp"
+
+  expect_equal(exp_table, calc_table)
 })
