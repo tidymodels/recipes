@@ -32,6 +32,9 @@ weighted_table(.data, wts = NULL, useNA = "no")
 \item{x}{A numeric vector or a data frame}
 
 \item{wts}{A vector of case weights}
+
+\item{useNA}{whether to include NA values in the table.
+Loosely mimics \code{\link[=table]{table()}}.}
 }
 \description{
 These functions can be used to do basic calculations with or without case

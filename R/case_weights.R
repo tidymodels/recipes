@@ -133,6 +133,8 @@ cov2pca <- function(cv_mat) {
   list(sdev = sqrt(res$values), rotation = res$vectors)
 }
 
+#' @param useNA whether to include NA values in the table.
+#'   Loosely mimics [table()].
 #' @export
 #' @rdname case-weight-helpers
 weighted_table <- function(.data, wts = NULL, useNA = "no") {
