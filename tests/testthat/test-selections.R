@@ -1,3 +1,5 @@
+r_version <- function() paste0("R", getRversion()[, 1:2])
+
 data("okc", package = "modeldata")
 rec1 <- recipe(~ ., data = okc)
 info1 <- summary(rec1)
@@ -95,7 +97,8 @@ test_that('simple name selections', {
   )
   expect_snapshot(
     recipes_eval_select(quos = quos(I(date:age)), data = okc, info = info1),
-    error = TRUE
+    error = TRUE,
+    variant = r_version()
   )
   expect_snapshot(
     recipes_eval_select(data = okc, info = info1),
