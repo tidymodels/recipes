@@ -8,11 +8,11 @@
 #' @inheritParams step_center
 #' @inheritParams step_other
 #' @inheritParams step_dummy
-#' @param sep character vector containing a regular expression to use
+#' @param sep Character vector containing a regular expression to use
 #'   for splitting. [strsplit()] is used to perform the split. `sep` takes
 #'   priority if `pattern` is also specified.
-#' @param pattern character vector containing a regular expression used
-#'   for extraction. [gregexpr()] and [regmatches()] is used to perform
+#' @param pattern Character vector containing a regular expression used
+#'   for extraction. [gregexpr()] and [regmatches()] are used to perform
 #'   pattern extraction using `perl = TRUE`.
 #' @template step-return
 #' @family dummy variable and encoding steps
