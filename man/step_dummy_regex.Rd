@@ -34,12 +34,12 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{sep}{character vector containing a regular expression to use
+\item{sep}{Character vector containing a regular expression to use
 for splitting. \code{\link[=strsplit]{strsplit()}} is used to perform the split. \code{sep} takes
 priority if \code{pattern} is also specified.}
 
-\item{pattern}{character vector containing a regular expression used
-for extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} is used to perform
+\item{pattern}{Character vector containing a regular expression used
+for extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} are used to perform
 pattern extraction using \code{perl = TRUE}.}
 
 \item{threshold}{A fraction of the total variance that should be covered by
