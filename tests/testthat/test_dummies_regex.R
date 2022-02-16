@@ -30,7 +30,7 @@ mini_tate_result <- tibble(
 test_that('dummy variables', {
   # Using `sep` argument
   dummy <- recipe(~ medium, data = mini_tate) %>%
-    step_dummy_regex(medium, sep = "( and )|( on )", id = "")
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "")
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
@@ -47,7 +47,7 @@ test_that('dummy variables', {
 
   # Using `pattern` argument
   dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_regex(colors, pattern = "(?<=')[^',]+(?=')", id = "")
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "")
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = color_examples)
@@ -66,7 +66,7 @@ test_that('dummy variables', {
 test_that('other argument', {
   # Using `sep` argument
   dummy <- recipe(~ medium, data = mini_tate) %>%
-    step_dummy_regex(medium, sep = "( and )|( on )", id = "", other = "cake")
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "", other = "cake")
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
@@ -77,7 +77,7 @@ test_that('other argument', {
 test_that('error when neither sep or pattern is specified', {
   expect_snapshot(error = TRUE,
     recipe(~ medium, data = tate_text) %>%
-      step_dummy_regex(medium) %>%
+      step_dummy_extract(medium) %>%
       prep()
   )
 })
@@ -85,7 +85,7 @@ test_that('error when neither sep or pattern is specified', {
 test_that('dummy variables with threshold', {
   # threshold = 0.5
   dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_regex(colors, pattern = "(?<=')[^',]+(?=')", id = "",
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
                      threshold = 0.5)
 
   dummy_prepped <- prep(dummy)
@@ -109,7 +109,7 @@ test_that('dummy variables with threshold', {
 
   # threshold = 0.8
   dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_regex(colors, pattern = "(?<=')[^',]+(?=')", id = "",
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
                      threshold = 0.8)
 
   dummy_prepped <- prep(dummy)
@@ -134,14 +134,14 @@ test_that('dummy variables with threshold', {
 
 test_that('printing', {
   rec <- recipe(~ medium, data = tate_text) %>%
-    step_dummy_regex(all_predictors(), sep = ", ")
+    step_dummy_extract(all_predictors(), sep = ", ")
   expect_output(print(rec))
   expect_output(prep(rec, training = tate_text, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_dummy_regex(rec1)
+  rec2 <- step_dummy_extract(rec1)
 
   rec1 <- prep(rec1, mtcars)
   rec2 <- prep(rec2, mtcars)
@@ -154,7 +154,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_dummy_regex(rec)
+  rec <- step_dummy_extract(rec)
 
   expect <- tibble(terms = character(), columns = character(), id = character())
 
@@ -168,7 +168,7 @@ test_that("empty selection tidy method works", {
 test_that("empty printing", {
   skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_dummy_regex(rec)
+  rec <- step_dummy_extract(rec)
 
   expect_snapshot(rec)
 

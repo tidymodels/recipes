@@ -1,7 +1,7 @@
 # error when neither sep or pattern is specified
 
     Code
-      recipe(~medium, data = tate_text) %>% step_dummy_regex(medium) %>% prep()
+      recipe(~medium, data = tate_text) %>% step_dummy_extract(medium) %>% prep()
     Error <rlang_error>
       `sep` or `pattern` must be specified.
 

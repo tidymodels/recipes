@@ -1,6 +1,6 @@
 #' Regular Expression Dummy Variables Creation
 #'
-#' `step_dummy_regex()` creates a *specification* of a recipe
+#' `step_dummy_extract()` creates a *specification* of a recipe
 #'  step that will convert nominal data (e.g. character or factors)
 #'  into one or more integer model terms for the extracted levels.
 #'
@@ -18,7 +18,7 @@
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
-#' @details `step_dummy_regex()` will create a set of integer dummy
+#' @details `step_dummy_extract()` will create a set of integer dummy
 #'  variables from a character variable by extract individual strings
 #'  by either splitting or extracting then counting those to create
 #'  count variables.
@@ -44,7 +44,7 @@
 #' data(tate_text)
 #'
 #' dummies <- recipe(~ artist + medium, data = tate_text) %>%
-#'     step_dummy_regex(artist, medium, sep = ", ") %>%
+#'     step_dummy_extract(artist, medium, sep = ", ") %>%
 #'     prep()
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
@@ -55,7 +55,7 @@
 #'
 #' # More detailed splitting
 #' dummies_specific <- recipe(~ medium, data = tate_text) %>%
-#'     step_dummy_regex(medium, sep = "(, )|( and )|( on )") %>%
+#'     step_dummy_extract(medium, sep = "(, )|( and )|( on )") %>%
 #'     prep()
 #'
 #' dummy_data_specific <- bake(dummies_specific, new_data = NULL)
@@ -75,14 +75,14 @@
 #' )
 #'
 #' dummies_color <- recipe(~ colors, data = color_examples) %>%
-#'   step_dummy_regex(colors, pattern = "(?<=')[^',]+(?=')") %>%
+#'   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") %>%
 #'   prep()
 #'
 #' dommies_data_color <- dummies_color %>%
 #'   bake(new_data = NULL)
 #'
 #' dommies_data_color
-step_dummy_regex <-
+step_dummy_extract <-
   function(recipe,
            ...,
            role = "predictor",
@@ -95,7 +95,7 @@ step_dummy_regex <-
            levels = NULL,
            keep_original_cols = FALSE,
            skip = FALSE,
-           id = rand_id("dummy_regex")) {
+           id = rand_id("dummy_extract")) {
 
     if (!is_tune(threshold) & !is_varying(threshold)) {
       if (threshold < 0) {
@@ -108,7 +108,7 @@ step_dummy_regex <-
 
     add_step(
       recipe,
-      step_dummy_regex_new(
+      step_dummy_extract_new(
         terms = enquos(...),
         role = role,
         trained = trained,
@@ -125,11 +125,11 @@ step_dummy_regex <-
     )
   }
 
-step_dummy_regex_new <-
+step_dummy_extract_new <-
   function(terms, role, trained, sep, pattern, threshold, other, naming, levels,
            keep_original_cols, skip, id) {
     step(
-      subclass = "dummy_regex",
+      subclass = "dummy_extract",
       terms = terms,
       role = role,
       trained = trained,
@@ -146,7 +146,7 @@ step_dummy_regex_new <-
   }
 
 #' @export
-prep.step_dummy_regex <- function(x, training, info = NULL, ...) {
+prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   if (length(col_names) > 0) {
@@ -158,7 +158,7 @@ prep.step_dummy_regex <- function(x, training, info = NULL, ...) {
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (col_name in col_names) {
-      elements <- dummy_regex_extract(
+      elements <- dummy_extract_extract(
         training[[col_name]], sep = x$sep, pattern = x$pattern
       )
 
@@ -174,7 +174,7 @@ prep.step_dummy_regex <- function(x, training, info = NULL, ...) {
     levels <- NULL
   }
 
-  step_dummy_regex_new(
+  step_dummy_extract_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -191,7 +191,7 @@ prep.step_dummy_regex <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.step_dummy_regex <- function(object, new_data, ...) {
+bake.step_dummy_extract <- function(object, new_data, ...) {
 
   # If no terms were selected
   if (length(object$levels) == 0) {
@@ -204,7 +204,7 @@ bake.step_dummy_regex <- function(object, new_data, ...) {
   for (i in seq_along(object$levels)) {
     orig_var <- names(object$levels)[i]
 
-    elements <- dummy_regex_extract(
+    elements <- dummy_extract_extract(
       getElement(new_data, orig_var),
       sep = object$sep, pattern = object$pattern
     )
@@ -226,7 +226,7 @@ bake.step_dummy_regex <- function(object, new_data, ...) {
   new_data
 }
 
-dummy_regex_extract <- function(x, sep = NULL, pattern = NULL) {
+dummy_extract_extract <- function(x, sep = NULL, pattern = NULL) {
   x <- as.character(x)
   if (!is.null(sep)) {
     return(strsplit(x, sep))
@@ -256,7 +256,7 @@ list_to_dummies <- function(x, dict, other = "other") {
   tibble::as_tibble(out)
 }
 
-print.step_dummy_regex <-
+print.step_dummy_extract <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Regex dummy variables from "
     print_step(names(x$levels), x$terms, x$trained, title, width)
@@ -265,7 +265,7 @@ print.step_dummy_regex <-
 
 #' @rdname tidy.recipe
 #' @export
-tidy.step_dummy_regex <- function(x, ...) {
+tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
       res <- purrr::map_dfr(x$levels, ~list(columns = .x), FALSE, .id = "terms")

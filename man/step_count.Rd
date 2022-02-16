@@ -96,8 +96,8 @@ tidy(rec2, number = 1)
 Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
-\code{\link{step_dummy_regex}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
 \code{\link{step_holiday}()},
