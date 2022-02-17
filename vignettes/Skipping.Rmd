@@ -1,11 +1,10 @@
 ---
 title: "On Skipping Steps"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{On Skipping Steps}
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r ex_setup, include=FALSE}

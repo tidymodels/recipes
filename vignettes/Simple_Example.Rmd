@@ -1,11 +1,10 @@
 ---
 title: "Basic Recipes"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Basic Recipes}
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r ex_setup, include=FALSE}
@@ -119,7 +118,7 @@ At this point in the recipe, all of the predictor should be encoded as numeric, 
 
 ```{r center_scale}
 standardized <- ind_vars %>%
-  step_center(all_numeric_predictors())  %>%
+  step_center(all_numeric_predictors()) %>%
   step_scale(all_numeric_predictors()) 
 standardized
 ```
@@ -171,5 +170,3 @@ Currently, `recipes` includes:
 ```{r check_list, echo = FALSE}
 grep("^check_", ls("package:recipes"), value = TRUE)
 ```
-
-
