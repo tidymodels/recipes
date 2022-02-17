@@ -2,7 +2,7 @@
 % Please edit documentation in R/BoxCox.R, R/YeoJohnson.R, R/arrange.R,
 %   R/bin2factor.R, R/bs.R, R/center.R, R/class.R, R/classdist.R, R/colcheck.R,
 %   R/corr.R, R/count.R, R/cut.R, R/date.R, R/depth.R, R/discretize.R,
-%   R/dummy.R, R/dummy_extract.R, R/dummy_multi_choice.R, R/factor2string.R,
+%   R/dummy.R, R/dummy_multi_choice.R, R/extract.R, R/factor2string.R,
 %   R/filter.R, R/filter_missing.R, R/geodist.R, R/harmonic.R, R/holiday.R,
 %   R/hyperbolic.R, R/ica.R, R/impute_bag.R, R/impute_knn.R, R/impute_linear.R,
 %   R/impute_lower.R, R/impute_mean.R, R/impute_median.R, R/impute_mode.R,
@@ -33,8 +33,8 @@
 \alias{tidy.step_depth}
 \alias{tidy.step_discretize}
 \alias{tidy.step_dummy}
-\alias{tidy.step_extract}
 \alias{tidy.step_dummy_multi_choice}
+\alias{tidy.step_extract}
 \alias{tidy.step_factor2string}
 \alias{tidy.step_filter}
 \alias{tidy.step_filter_missing}
@@ -140,9 +140,9 @@
 
 \method{tidy}{step_dummy}(x, ...)
 
-\method{tidy}{step_extract}(x, ...)
-
 \method{tidy}{step_dummy_multi_choice}(x, ...)
+
+\method{tidy}{step_extract}(x, ...)
 
 \method{tidy}{step_factor2string}(x, ...)
 
