@@ -1,7 +1,7 @@
 # error when neither sep or pattern is specified
 
     Code
-      recipe(~medium, data = tate_text) %>% step_dummy_extract(medium) %>% prep()
+      recipe(~medium, data = tate_text) %>% step_extract(medium) %>% prep()
     Error <rlang_error>
       `sep` or `pattern` must be specified.
 
@@ -20,7 +20,7 @@
       
       Operations:
       
-      Regex dummy variables from <none>
+      Extract patterns from <none>
 
 ---
 
@@ -39,5 +39,5 @@
       
       Operations:
       
-      Regex dummy variables from <none> [trained]
+      Extract patterns from <none> [trained]
 

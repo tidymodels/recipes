@@ -18,7 +18,7 @@
 
 * Steps now have a dedicated subsection detailing what happens when `tidy()` is applied. (#876)
 
-* Added a new step called `step_dummy_extract()` which creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.
+* Added a new step called `step_extract()` which creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.
 
 ## Breaking Changes
 
