@@ -98,8 +98,8 @@ step_other <-
            skip = FALSE,
            id = rand_id("other")) {
     if (!is_tune(threshold) & !is_varying(threshold)) {
-      if (threshold <= 0) {
-        rlang::abort("`threshold` should be greater than zero")
+      if (threshold < 0) {
+        rlang::abort("`threshold` should be non-negative.")
       }
       if (threshold >= 1 && !is_integerish(threshold)) {
         rlang::abort("If `threshold` is greater than one it should be an integer.")
