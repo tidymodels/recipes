@@ -11,7 +11,7 @@ step_dummy_extract(
   trained = FALSE,
   sep = NULL,
   pattern = NULL,
-  threshold = 0.05,
+  threshold = 0,
   other = "other",
   naming = dummy_names,
   levels = NULL,

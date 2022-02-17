@@ -88,7 +88,7 @@ step_dummy_extract <-
            trained = FALSE,
            sep = NULL,
            pattern = NULL,
-           threshold = 0.05,
+           threshold = 0.0,
            other = "other",
            naming = dummy_names,
            levels = NULL,
@@ -98,10 +98,10 @@ step_dummy_extract <-
 
     if (!is_tune(threshold) & !is_varying(threshold)) {
       if (threshold < 0) {
-        rlang::abort("`threshold` should be non-negative.")
+        rlang::abort("`threshold` should not be negative.")
       }
-      if (threshold > 1) {
-        rlang::abort("`threshold` should be less then or equal to 1.")
+      if (threshold >= 1 && !is_integerish(threshold)) {
+        rlang::abort("If `threshold` is greater than one it should be an integer.")
       }
     }
 
@@ -164,6 +164,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
       lvls <- map(elements, unique)
       lvls <- unlist(lvls)
       lvls <- sort(table(lvls), decreasing = TRUE)
+
       lvls <- lvls[(lvls / length(elements)) > x$threshold]
       lvls <- names(lvls)
 
