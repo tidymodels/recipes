@@ -204,6 +204,17 @@ test_that('dummy variables with integer threshold', {
   )
 })
 
+test_that('naming function', {
+  expect_equal(
+    dummy_extract_names("x", letters[c(1, 2, 3, 3)]),
+    c("x_a", "x_b", "x_c", "x_c_2")
+  )
+  expect_equal(
+    dummy_extract_names("x", letters[c(1, 2, 3, 3)], ordinal = TRUE),
+    c("x_1", "x_2", "x_3", "x_4")
+  )
+})
+
 test_that('printing', {
   rec <- recipe(~ medium, data = tate_text) %>%
     step_dummy_extract(all_predictors(), sep = ", ")

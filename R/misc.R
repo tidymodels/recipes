@@ -178,6 +178,33 @@ dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   nms
 }
 
+#' @export
+#' @rdname names0
+dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
+  # Work around `paste()` recycling bug with 0 length input
+  args <- vctrs::vec_recycle_common(var, lvl)
+  var <- args[[1]]
+  lvl <- args[[2]]
+
+  if(!ordinal)
+    nms <- paste(var, make.names(lvl), sep = sep)
+  else
+    # assuming they are in order:
+    nms <- paste0(var, names0(length(lvl), sep))
+
+  while (any(duplicated(nms))) {
+    dupe_count <- vapply(seq_along(nms), function(i) {
+      sum(nms[i] == nms[1:i])
+    }, 1L)
+    nms[dupe_count > 1] <- paste(
+      nms[dupe_count > 1],
+      dupe_count[dupe_count > 1],
+      sep = sep
+    )
+  }
+  nms
+}
+
 
 ## As suggested by HW, brought in from the `pryr` package
 ## https://github.com/hadley/pryr

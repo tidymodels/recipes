@@ -15,7 +15,7 @@
 #'   pattern extraction using `perl = TRUE`.
 #' @template step-return
 #' @family dummy variable and encoding steps
-#' @seealso [dummy_names()]
+#' @seealso [dummy_extract_names()]
 #' @export
 #' @details `step_dummy_extract()` will create a set of integer dummy
 #'  variables from a character variable by extract individual strings
@@ -90,7 +90,7 @@ step_dummy_extract <-
            pattern = NULL,
            threshold = 0.0,
            other = "other",
-           naming = dummy_names,
+           naming = dummy_extract_names,
            levels = NULL,
            keep_original_cols = FALSE,
            skip = FALSE,

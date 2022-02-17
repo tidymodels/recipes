@@ -13,7 +13,7 @@ step_dummy_extract(
   pattern = NULL,
   threshold = 0,
   other = "other",
-  naming = dummy_names,
+  naming = dummy_extract_names,
   levels = NULL,
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -149,7 +149,7 @@ dommies_data_color <- dummies_color \%>\%
 dommies_data_color
 }
 \seealso{
-\code{\link[=dummy_names]{dummy_names()}}
+\code{\link[=dummy_extract_names]{dummy_extract_names()}}
 
 Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
