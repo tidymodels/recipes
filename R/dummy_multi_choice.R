@@ -1,4 +1,4 @@
-#'  Multiple Choice Dummy Variables Creation
+#' Handle levels in multiple predictors together
 #'
 #' `step_dummy_multi_choice()` creates a *specification* of a recipe
 #'  step that will convert multiple nominal data (e.g. character or factors)

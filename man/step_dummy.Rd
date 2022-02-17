@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy.R
 \name{step_dummy}
 \alias{step_dummy}
-\title{Dummy Variables Creation}
+\title{Create traditional dummy variables}
 \usage{
 step_dummy(
   recipe,

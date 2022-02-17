@@ -1,4 +1,4 @@
-#' Regular Expression Dummy Variables Creation
+#' Extract patterns from nominal data
 #'
 #' `step_extract()` creates a *specification* of a recipe
 #'  step that will convert nominal data (e.g. character or factors)

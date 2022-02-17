@@ -2,7 +2,7 @@
 % Please edit documentation in R/regex.R
 \name{step_regex}
 \alias{step_regex}
-\title{Create Dummy Variables using Regular Expressions}
+\title{Detect a regular expression}
 \usage{
 step_regex(
   recipe,

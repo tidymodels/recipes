@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy_extract.R
 \name{step_extract}
 \alias{step_extract}
-\title{Regular Expression Dummy Variables Creation}
+\title{Extract patterns from nominal data}
 \usage{
 step_extract(
   recipe,

@@ -1,4 +1,4 @@
-#' Create Dummy Variables using Regular Expressions
+#' Detect a regular expression
 #'
 #' `step_regex` creates a *specification* of a recipe step that will
 #'   create a new dummy variable based on a regular expression.

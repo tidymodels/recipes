@@ -1,4 +1,4 @@
-#' Dummy Variables Creation
+#' Create traditional dummy variables
 #'
 #' `step_dummy()` creates a *specification* of a recipe
 #'  step that will convert nominal data (e.g. character or factors)
