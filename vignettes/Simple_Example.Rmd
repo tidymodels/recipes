@@ -96,14 +96,14 @@ Note that the methods listed above are the only ones that can be used to select 
 For our data, we can add an operation to impute the predictors. There are many ways to do this and `recipes` includes a few steps for this purpose:
 
 ```{r imp-steps}
-grep("impute$", ls("package:recipes"), value = TRUE)
+grep("impute_", ls("package:recipes"), value = TRUE)
 ```
 
 Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors and then removes those that are numeric:
 
 ```{r dummy}
 imputed <- rec_obj %>%
-  step_knnimpute(all_predictors()) 
+  step_impute_knn(all_predictors()) 
 imputed
 ```
 
