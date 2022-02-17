@@ -4,7 +4,6 @@
 #'  step that will convert nominal data (e.g. character or factors)
 #'  into one or more integer model terms for the extracted levels.
 #'
-#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @inheritParams step_other
 #' @inheritParams step_dummy

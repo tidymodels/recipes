@@ -27,9 +27,8 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -42,11 +41,12 @@ priority if \code{pattern} is also specified.}
 for extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} are used to perform
 pattern extraction using \code{perl = TRUE}.}
 
-\item{threshold}{A fraction of the total variance that should be covered by
-the components. For example, \code{threshold = .75} means that \code{step_pca} should
-generate enough components to capture 75 percent of the variability in the
-variables. Note: using this argument will override and reset any value given
-to \code{num_comp}.}
+\item{threshold}{A numeric value between 0 and 1, or an integer greater or
+equal to one.  If less than one, then factor levels with a rate of
+occurrence in the training set below \code{threshold} will be pooled to \code{other}.
+If greater or equal to one, then this value is treated as a frequency
+and factor levels that occur less than \code{threshold} times will be pooled
+to \code{other}.}
 
 \item{other}{A single character value for the "other" category.}
 
