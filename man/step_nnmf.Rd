@@ -135,6 +135,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},

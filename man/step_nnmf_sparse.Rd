@@ -121,4 +121,21 @@ if (rlang::is_installed("RcppML")) {
     ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 }
 }
-\concept{{multivariate transformation steps}}
+\seealso{
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_kpca}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
+}
+\concept{multivariate transformation steps}
