@@ -36,6 +36,8 @@
 
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to extract parameter sets and single parameters from `recipe` objects. 
 
+* `step_other()` now allow for setting `threshold = 0` which will result in no othering. (#904)
+
 
 # recipes 0.1.17
 
