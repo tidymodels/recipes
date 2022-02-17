@@ -222,8 +222,6 @@ tidy_filter <- function(x, ...) {
 #' @export
 tidy.step_corr <- tidy_filter
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_corr <- function(x, ...) {
   tibble::tibble(

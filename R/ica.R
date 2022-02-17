@@ -257,8 +257,6 @@ tidy.step_ica <- function(x, ...) {
   dplyr::select(res, terms, component, value, id)
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_ica <- function(x, ...) {
   tibble::tibble(

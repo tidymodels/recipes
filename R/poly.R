@@ -189,8 +189,6 @@ tidy.step_poly <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_poly <- function(x, ...) {
   tibble::tibble(

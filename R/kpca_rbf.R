@@ -183,8 +183,6 @@ tidy.step_kpca_rbf <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_kpca_rbf <- function(x, ...) {
   tibble::tibble(

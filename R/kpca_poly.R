@@ -195,8 +195,6 @@ tidy.step_kpca_poly <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_kpca_poly <- function(x, ...) {
   tibble::tibble(

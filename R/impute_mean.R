@@ -189,7 +189,6 @@ tidy.step_impute_mean <- function(x, ...) {
 #' @keywords internal
 tidy.step_meanimpute <- tidy.step_impute_mean
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_mean <- function(x, ...) {
   tibble::tibble(

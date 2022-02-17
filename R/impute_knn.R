@@ -308,7 +308,6 @@ tidy.step_impute_knn <- function(x, ...) {
 #' @keywords internal
 tidy.step_knnimpute <- tidy.step_impute_knn
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(

@@ -277,8 +277,6 @@ tidy.step_window <- function(x, ...) {
   out
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_window <- function(x, ...) {
   tibble::tibble(

@@ -202,7 +202,6 @@ tidy.step_bs <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_bs <- function(x, ...) {
   tibble::tibble(

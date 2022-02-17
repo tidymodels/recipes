@@ -128,7 +128,6 @@ filter_missing_fun <- function(x, threshold) {
 #' @export
 tidy.step_filter_missing <- tidy_filter
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_filter_missing <- function(x, ...) {
   tibble::tibble(

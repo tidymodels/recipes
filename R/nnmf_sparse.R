@@ -247,7 +247,6 @@ tidy.step_nnmf_sparse <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
 #' @export
 tunable.step_nnmf_sparse <- function(x, ...) {
   tibble::tibble(
@@ -262,7 +261,7 @@ tunable.step_nnmf_sparse <- function(x, ...) {
   )
 }
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_nnmf_sparse <- function(x, ...) {
   c("Matrix", "RcppML")
