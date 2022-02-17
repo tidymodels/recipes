@@ -151,9 +151,6 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   if (length(col_names) > 0) {
     col_names <- check_factor_vars(training, col_names, "step_dummy")
 
-    ## I hate doing this but currently we are going to have
-    ## to save the terms object from the original (= training)
-    ## data
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (col_name in col_names) {
