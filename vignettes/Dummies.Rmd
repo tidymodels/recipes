@@ -1,9 +1,13 @@
 ---
-title: "How are categorical predictors handled in `recipes`?"
+title: "Handling Categorical Predictors"
 output: rmarkdown::html_vignette
+description: |
+  Recipes can be different from their base R counterparts such as model.matrix. 
+  This vignette describes the different methods for encoding categorical 
+  predictors with special attention to interaction terms and contrasts.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{How are categorical predictors handled in `recipes`?}
+  %\VignetteIndexEntry{Handling Categorical Predictors}
   %\VignetteEncoding{UTF-8}
 ---
 

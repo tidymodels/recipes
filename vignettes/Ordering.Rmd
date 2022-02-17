@@ -1,6 +1,10 @@
 ---
 title: "Ordering of Steps"
 output: rmarkdown::html_vignette
+description: |
+  recipes don't force the order of steps beyond what is possible. However,
+  the order of steps matters in terms of performance and this vignette gives
+  some general suggestions that you should consider.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Ordering of Steps}

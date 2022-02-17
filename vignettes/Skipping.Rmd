@@ -1,6 +1,10 @@
 ---
 title: "On Skipping Steps"
 output: rmarkdown::html_vignette
+description: |
+  Steps generally will be applied to both the training and testing data set.
+  There are times when it is advantageous to only apply to the training data
+  set. This vignette will go over which steps default to skipping.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{On Skipping Steps}
