@@ -132,6 +132,78 @@ test_that('dummy variables with threshold', {
   )
 })
 
+test_that('dummy variables with integer threshold', {
+  # threshold = 1
+  dummy <- recipe(~ colors, data = color_examples) %>%
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
+                       threshold = 1)
+
+  dummy_prepped <- prep(dummy)
+  dummy_pred <- bake(dummy_prepped, new_data = color_examples)
+
+  expect_identical(
+    dummy_pred,
+    color_result
+  )
+
+  expect_identical(
+    tidy(dummy_prepped, 1),
+    tibble(
+      terms = "colors",
+      columns = gsub("colors_", "", names(color_result))[1:3],
+      id = ""
+    )
+  )
+
+  # threshold = 2
+  dummy <- recipe(~ colors, data = color_examples) %>%
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
+                       threshold = 2)
+
+  dummy_prepped <- prep(dummy)
+  dummy_pred <- bake(dummy_prepped, new_data = color_examples)
+
+  expect_identical(
+    dummy_pred,
+    color_result %>%
+      mutate(colors_other = colors_other + colors_white) %>%
+      select(-colors_white)
+  )
+
+  expect_identical(
+    tidy(dummy_prepped, 1),
+    tibble(
+      terms = "colors",
+      columns = gsub("colors_", "", names(color_result))[1:2],
+      id = ""
+    )
+  )
+
+  # threshold = 3
+  dummy <- recipe(~ colors, data = color_examples) %>%
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
+                       threshold = 3)
+
+  dummy_prepped <- prep(dummy)
+  dummy_pred <- bake(dummy_prepped, new_data = color_examples)
+
+  expect_identical(
+    dummy_pred,
+    color_result %>%
+      mutate(colors_other = colors_other + colors_white + colors_red) %>%
+      select(-colors_white, -colors_red)
+  )
+
+  expect_identical(
+    tidy(dummy_prepped, 1),
+    tibble(
+      terms = "colors",
+      columns = gsub("colors_", "", names(color_result))[1],
+      id = ""
+    )
+  )
+})
+
 test_that('printing', {
   rec <- recipe(~ medium, data = tate_text) %>%
     step_dummy_extract(all_predictors(), sep = ", ")

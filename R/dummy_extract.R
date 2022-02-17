@@ -165,7 +165,12 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
       lvls <- unlist(lvls)
       lvls <- sort(table(lvls), decreasing = TRUE)
 
-      lvls <- lvls[(lvls / length(elements)) > x$threshold]
+      if (x$threshold < 1) {
+        lvls <- lvls[(lvls / length(elements)) >= x$threshold]
+      } else {
+        lvls <- lvls[lvls >= x$threshold]
+      }
+
       lvls <- names(lvls)
 
       levels[[col_name]] <- lvls
