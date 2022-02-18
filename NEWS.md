@@ -1,4 +1,14 @@
-# recipes (development version)
+# recipes 0.2.0
+
+# New Steps
+
+* `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
+
+* `step_dummy_extract()` creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.
+
+* `step_filter_missing()` can filter columns based on proportion of missingness (#270).
+
+* `step_percentile()` replaces the value of a variable with its percentile from the training set. (#765)
 
 ## Improvements and Other Changes
 
@@ -6,25 +16,13 @@
 
 * Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
 
-* Added a new step called `step_filter_missing()`, which can filter columns based on proportion of missingness (#270).
-
 * Improved the efficiency of computations for the Box-Cox transformation (#820).
 
 * When a feature extraction step (e.g., `step_pca()`, `step_ica()`, etc.) has zero components specified, the `tidy()` method now lists the selected columns in the `terms` column.
 
-* Added a new step called `step_nnmf_sparse()` which uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
-
 * Deprecation has started for `step_nnmf()` in favor of `step_nnmf_sparse()`. (#790)
 
 * Steps now have a dedicated subsection detailing what happens when `tidy()` is applied. (#876)
-
-* Added a new step called `step_dummy_extract()` which creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.
-
-## Breaking Changes
-
-* `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
-
-* `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
 
 * `step_ica()` now runs `fastICA()` using a specific set of random numbers so that initialization is reproducible. 
 
@@ -34,11 +32,16 @@
 
 * `detect_step()` is no longer restricted to steps created in recipes (#869).
 
-* Added a new step called `step_percentile()`, that replaces the value of a variable with its percentile from the training set. (#765)
-
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to extract parameter sets and single parameters from `recipe` objects. 
 
 * `step_other()` now allow for setting `threshold = 0` which will result in no othering. (#904)
+
+## Breaking Changes
+
+* `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
+
+* `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
+
 
 ## Developer
 
