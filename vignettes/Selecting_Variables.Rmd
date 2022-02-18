@@ -1,13 +1,12 @@
 ---
-title: "Selecting Variables"
+title: "Selecting variables"
 output: rmarkdown::html_vignette
 description: |
-  Different approaches can be used to select which variables or features 
-  should be used. This vignette goes over the basics of using selections 
-  functions.
+  You can select which variables or features  should be used in recipes. This 
+  vignette goes over the basics of using selection functions.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Selecting Variables}
+  %\VignetteIndexEntry{Selecting variables}
   %\VignetteEncoding{UTF-8}
 ---
 

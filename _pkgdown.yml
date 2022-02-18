@@ -3,18 +3,15 @@ url: https://recipes.tidymodels.org
 navbar:
   components:
     home: ~
-    intro:
-      text: Simple Example
-      href: articles/Simple_Example.html
     tutorials:
-      text: Tutorials
+      text: Learn more
       menu:
-      - text: "Custom Steps"
-        href: https://www.tidymodels.org/learn/develop/recipes/
-      - text: "Subsampling for Class Imbalances"
+      - text: "Subsampling for class imbalance"
         href: https://www.tidymodels.org/learn/models/sub-sampling/
-      - text: "Multivariate Analysis using Partial Least Squares"
+      - text: "Multivariate analysis using partial least squares"
         href: https://www.tidymodels.org/learn/models/pls/
+      - text: "Build your own custom recipe step"
+        href: https://www.tidymodels.org/learn/develop/recipes/
 
 template:
   package: tidytemplate
@@ -162,11 +159,11 @@ reference:
     - tidy.recipe
 
 articles:
-- title: Introduction
+- title: Get started
   contents:
-  - Simple_Example
+  - recipes
 
-- title: Advanced Usage
+- title: Learn more
   navbar: ~
   contents:
   - Dummies
@@ -174,7 +171,7 @@ articles:
   - Roles
   - Skipping
 
-- title: Practical Advice
+- title: Practical advice
   contents:
   - Ordering
 

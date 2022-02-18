@@ -1,12 +1,12 @@
 ---
-title: "Basic Recipes"
+title: "Introduction to recipes"
 output: rmarkdown::html_vignette
 description: |
-  Start here if this is your first time using recipes. You will learn about 
+  Start here if this is your first time using recipes! You will learn about 
   basic usage, steps, selectors, and checks.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Basic Recipes}
+  %\VignetteIndexEntry{Introduction to recipes}
   %\VignetteEncoding{UTF-8}
 ---
 

@@ -1,13 +1,13 @@
 ---
-title: "On Skipping Steps"
+title: "On skipping steps"
 output: rmarkdown::html_vignette
 description: |
-  Steps generally will be applied to both the training and testing data set.
-  There are times when it is advantageous to only apply to the training data
-  set. This vignette will go over which steps default to skipping.
+  In recipes, steps are usually applied to both the training and testing sets.
+  However, in some situations we only want to only apply a step to the training 
+  data and we want to skip that step on testing data.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{On Skipping Steps}
+  %\VignetteIndexEntry{On skipping steps}
   %\VignetteEncoding{UTF-8}
 ---
 
