@@ -59,9 +59,6 @@ Suggests:
     testthat (>= 3.0.0),
     workflows,
     xml2
-Remotes: 
-    tidymodels/dials,
-    tidymodels/hardhat
 VignetteBuilder: 
     knitr
 RdMacros: 

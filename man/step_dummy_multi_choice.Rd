@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy_multi_choice.R
 \name{step_dummy_multi_choice}
 \alias{step_dummy_multi_choice}
-\title{Multiple Choice Dummy Variables Creation}
+\title{Handle levels in multiple predictors together}
 \usage{
 step_dummy_multi_choice(
   recipe,
@@ -123,6 +123,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
 \code{\link{step_holiday}()},

@@ -3,11 +3,14 @@
 \name{names0}
 \alias{names0}
 \alias{dummy_names}
+\alias{dummy_extract_names}
 \title{Naming Tools}
 \usage{
 names0(num, prefix = "x")
 
 dummy_names(var, lvl, ordinal = FALSE, sep = "_")
+
+dummy_extract_names(var, lvl, ordinal = FALSE, sep = "_")
 }
 \arguments{
 \item{num}{A single integer for how many elements are created.}

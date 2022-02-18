@@ -2,7 +2,7 @@
 % Please edit documentation in R/regex.R
 \name{step_regex}
 \alias{step_regex}
-\title{Create Dummy Variables using Regular Expressions}
+\title{Detect a regular expression}
 \usage{
 step_regex(
   recipe,
@@ -91,6 +91,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
