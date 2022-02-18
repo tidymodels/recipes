@@ -151,6 +151,7 @@ only verified to be numeric (and does not count levels).</p>
     <div class="dont-index"><p>Other dummy variable and encoding steps: 
 <code><a href="step_count.html">step_count</a>()</code>,
 <code><a href="step_date.html">step_date</a>()</code>,
+<code><a href="step_dummy_extract.html">step_dummy_extract</a>()</code>,
 <code><a href="step_dummy_multi_choice.html">step_dummy_multi_choice</a>()</code>,
 <code><a href="step_dummy.html">step_dummy</a>()</code>,
 <code><a href="step_factor2string.html">step_factor2string</a>()</code>,
@@ -182,7 +183,7 @@ only verified to be numeric (and does not count levels).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_eMi0q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_3ZVoR</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">covers</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, new_data <span class="op">=</span> <span class="va">covers</span><span class="op">)</span></span>
@@ -197,7 +198,7 @@ only verified to be numeric (and does not count levels).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_eMi0q</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> rocks bin2factor_3ZVoR</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
