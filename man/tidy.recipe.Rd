@@ -34,7 +34,7 @@
 \alias{tidy.step_discretize}
 \alias{tidy.step_dummy}
 \alias{tidy.step_dummy_multi_choice}
-\alias{tidy.step_extract}
+\alias{tidy.step_dummy_extract}
 \alias{tidy.step_factor2string}
 \alias{tidy.step_filter}
 \alias{tidy.step_filter_missing}
@@ -142,7 +142,7 @@
 
 \method{tidy}{step_dummy_multi_choice}(x, ...)
 
-\method{tidy}{step_extract}(x, ...)
+\method{tidy}{step_dummy_extract}(x, ...)
 
 \method{tidy}{step_factor2string}(x, ...)
 
