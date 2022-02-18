@@ -92,6 +92,10 @@
 <li><p>New <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_parameter_set_dials()</a></code> and <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_parameter_dials()</a></code> methods to extract parameter sets and single parameters from <code>recipe</code> objects.</p></li>
 <li><p><code><a href="../reference/step_other.html">step_other()</a></code> now allow for setting <code>threshold = 0</code> which will result in no othering. (<a href="https://github.com/tidymodels/recipes/issues/904" class="external-link">#904</a>)</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="developer-development-version">Developer<a class="anchor" aria-label="anchor" href="#developer-development-version"></a></h3>
+<ul><li>The print methods have been internally changes to use <code><a href="../reference/recipes-internal.html">print_step()</a></code> instead of <code><a href="../reference/recipes-internal.html">printer()</a></code>. This is done for a smoother transition to use <code>cli</code> in the next version. (<a href="https://github.com/tidymodels/recipes/issues/871" class="external-link">#871</a>)</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.17" id="recipes-0117">recipes 0.1.17<a class="anchor" aria-label="anchor" href="#recipes-0117"></a></h2><p class="text-muted">CRAN release: 2021-09-27</p>
