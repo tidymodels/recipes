@@ -40,6 +40,9 @@
 
 * `step_other()` now allow for setting `threshold = 0` which will result in no othering. (#904)
 
+## Developer
+
+* The print methods have been internally changes to use `print_step()` instead of `printer()`. This is done for a smoother transition to use `cli` in the next version. (#871)
 
 # recipes 0.1.17
 
