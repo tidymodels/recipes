@@ -30,12 +30,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown, local::., any::mixOmics
           needs: website
-
-      - name: Install mixOmics (if possible)
-        run: |
-          try(remotes::install_bioc("mixOmics"), silent = TRUE)
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
