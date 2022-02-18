@@ -1,11 +1,13 @@
 ---
-title: "Basic Recipes"
+title: "Introduction to recipes"
+output: rmarkdown::html_vignette
+description: |
+  Start here if this is your first time using recipes! You will learn about 
+  basic usage, steps, selectors, and checks.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Basic Recipes}
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteIndexEntry{Introduction to recipes}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r ex_setup, include=FALSE}
@@ -94,14 +96,14 @@ Note that the methods listed above are the only ones that can be used to select 
 For our data, we can add an operation to impute the predictors. There are many ways to do this and `recipes` includes a few steps for this purpose:
 
 ```{r imp-steps}
-grep("impute$", ls("package:recipes"), value = TRUE)
+grep("impute_", ls("package:recipes"), value = TRUE)
 ```
 
 Here, _K_-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults _K_ to five To do this, it selects all predictors and then removes those that are numeric:
 
 ```{r dummy}
 imputed <- rec_obj %>%
-  step_knnimpute(all_predictors()) 
+  step_impute_knn(all_predictors()) 
 imputed
 ```
 
@@ -119,7 +121,7 @@ At this point in the recipe, all of the predictor should be encoded as numeric, 
 
 ```{r center_scale}
 standardized <- ind_vars %>%
-  step_center(all_numeric_predictors())  %>%
+  step_center(all_numeric_predictors()) %>%
   step_scale(all_numeric_predictors()) 
 standardized
 ```
@@ -171,5 +173,3 @@ Currently, `recipes` includes:
 ```{r check_list, echo = FALSE}
 grep("^check_", ls("package:recipes"), value = TRUE)
 ```
-
-

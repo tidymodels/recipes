@@ -1,11 +1,12 @@
 ---
-title: "Roles in Recipes"
+title: "Roles in recipes"
+output: rmarkdown::html_vignette
+description: |
+  In recipes, roles provide a way to select variables for different steps.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Roles in Recipes}
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteIndexEntry{Roles in recipes}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r ex_setup, include=FALSE}

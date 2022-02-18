@@ -13,7 +13,8 @@ Description: A recipe prepares your data for modeling. We provide an
     then applied to other data sets. The resulting processed output can
     then be used as inputs for statistical or machine learning models.
 License: MIT + file LICENSE
-URL: https://github.com/tidymodels/recipes, https://recipes.tidymodels.org
+URL: https://github.com/tidymodels/recipes,
+    https://recipes.tidymodels.org/
 BugReports: https://github.com/tidymodels/recipes/issues
 Depends: 
     dplyr,

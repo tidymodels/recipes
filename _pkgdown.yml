@@ -1,17 +1,30 @@
 url: https://recipes.tidymodels.org
 
+navbar:
+  components:
+    home: ~
+    tutorials:
+      text: Learn more
+      menu:
+      - text: "Subsampling for class imbalance"
+        href: https://www.tidymodels.org/learn/models/sub-sampling/
+      - text: "Multivariate analysis using partial least squares"
+        href: https://www.tidymodels.org/learn/models/pls/
+      - text: "Build your own custom recipe step"
+        href: https://www.tidymodels.org/learn/develop/recipes/
+
 template:
   package: tidytemplate
-  params:
-    theme: tidymodels
-    part_of: <a href="https://tidymodels.org">tidymodels</a>
-    footer: recipes is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
+  bootstrap: 5
+  bslib:
+    primary: "#CA225E"
+
+  includes:
+      in_header: |
+        <script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
 development:
   mode: auto
-
-home:
-  strip_header: true
 
 figures:
   fig.width: 8
@@ -145,30 +158,22 @@ reference:
     contents:
     - tidy.recipe
 
+articles:
+- title: Get started
+  contents:
+  - recipes
 
-navbar:
-  left:
-  - text: "Simple Example"
-    href: articles/Simple_Example.html
-  - text: "Articles"
-    menu:
-      - text: "Selecting Variables"
-        href: articles/Selecting_Variables.html
-      - text: "Custom Steps"
-        href: https://www.tidymodels.org/learn/develop/recipes/
-      - text: "The Order of Steps"
-        href: articles/Ordering.html
-      - text: "Dummy Variables and Interactions"
-        href: articles/Dummies.html
-      - text: "Column Roles"
-        href: articles/Roles.html
-      - text: "On Skipping Steps"
-        href: articles/Skipping.html
-      - text: "Subsampling for Class Imbalances"
-        href: https://www.tidymodels.org/learn/models/sub-sampling/
-      - text: "Multivariate Analysis using Partial Least Squares"
-        href: https://www.tidymodels.org/learn/models/pls/
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
+- title: Learn more
+  navbar: ~
+  contents:
+  - Dummies
+  - Selecting_Variables
+  - Roles
+  - Skipping
+
+- title: Practical advice
+  contents:
+  - Ordering
+
+
+
