@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 0.1.17.9001
+Version: 0.2.0
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),

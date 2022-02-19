@@ -1,5 +1,6 @@
 
 test_that('extract parameter set from recipe with no steps', {
+  skip_if(tune_check())
   bare_rec <- recipe(mpg ~ ., data = mtcars)
 
   bare_info <- extract_parameter_set_dials(bare_rec)
@@ -8,6 +9,7 @@ test_that('extract parameter set from recipe with no steps', {
 })
 
 test_that('extract parameter set from recipe with no tunable parameters', {
+  skip_if(tune_check())
   rm_rec <-
     recipe(mpg ~ ., data = mtcars) %>%
     step_rm(hp)
@@ -18,6 +20,7 @@ test_that('extract parameter set from recipe with no tunable parameters', {
 })
 
 test_that('extract parameter set from recipe with tunable parameters', {
+  skip_if(tune_check())
   spline_rec <-
     recipe(mpg ~ ., data = mtcars) %>%
     step_impute_knn(all_numeric_predictors(), neighbors = hardhat::tune("imputation")) %>%
@@ -49,6 +52,7 @@ test_that('extract parameter set from recipe with tunable parameters', {
 # -------------------------------------------------------------------------
 
 test_that('extract single parameter from recipe with no steps', {
+  skip_if(tune_check())
   bare_rec <- recipe(mpg ~ ., data = mtcars)
 
   expect_error(
@@ -57,6 +61,7 @@ test_that('extract single parameter from recipe with no steps', {
 })
 
 test_that('extract single parameter from recipe with no tunable parameters', {
+  skip_if(tune_check())
   rm_rec <-
     recipe(mpg ~ ., data = mtcars) %>%
     step_rm(hp)
@@ -67,6 +72,7 @@ test_that('extract single parameter from recipe with no tunable parameters', {
 })
 
 test_that('extract single parameter from recipe with tunable parameters', {
+  skip_if(tune_check())
   spline_rec <-
     recipe(mpg ~ ., data = mtcars) %>%
     step_impute_knn(all_numeric_predictors(), neighbors = hardhat::tune("imputation")) %>%
