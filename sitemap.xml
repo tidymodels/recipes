@@ -28,13 +28,13 @@
     <loc>https://recipes.tidymodels.org/articles/Selecting_Variables.html</loc>
   </url>
   <url>
-    <loc>https://recipes.tidymodels.org/articles/Simple_Example.html</loc>
-  </url>
-  <url>
     <loc>https://recipes.tidymodels.org/articles/Skipping.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/articles/recipes.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/authors.html</loc>
@@ -196,6 +196,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_dummy.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_dummy_extract.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_dummy_multi_choice.html</loc>
   </url>
   <url>
@@ -203,6 +206,9 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_filter.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_filter_missing.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_geodist.html</loc>
@@ -298,6 +304,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_nnmf.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_nnmf_sparse.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_normalize.html</loc>
   </url>
   <url>
@@ -320,6 +329,9 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_pca.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_percentile.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_pls.html</loc>
@@ -401,9 +413,6 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/tidy.recipe.html</loc>
-  </url>
-  <url>
-    <loc>https://recipes.tidymodels.org/reference/tunable.recipe.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/update.step.html</loc>

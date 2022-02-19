@@ -1,14 +1,14 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1.9001
-pkgdown_sha: b5b4bd40887b7acfd4451656dd56ca8f0ca3d436
+pandoc: 2.14.2
+pkgdown: 2.0.2
+pkgdown_sha: ~
 articles:
   Dummies: Dummies.html
   Ordering: Ordering.html
   Roles: Roles.html
   Selecting_Variables: Selecting_Variables.html
-  Simple_Example: Simple_Example.html
   Skipping: Skipping.html
-last_built: 2021-09-27T20:26Z
+  recipes: recipes.html
+last_built: 2022-02-19T14:20Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles
