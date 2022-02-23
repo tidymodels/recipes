@@ -48,7 +48,7 @@ Suggests:
     igraph,
     kernlab,
     knitr,
-    modeldata,
+    modeldata (>= 0.1.1),
     parsnip (>= 0.1.7),
     RANN,
     RcppRoll,
