@@ -35,7 +35,7 @@ Imports:
     stats,
     tibble,
     tidyr (>= 1.0.0),
-    tidyselect (>= 1.1.0),
+    tidyselect (>= 1.1.2),
     timeDate,
     utils,
     vctrs,
