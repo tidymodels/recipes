@@ -112,7 +112,7 @@ test_that('can prep recipes with no keep_original_cols', {
   kpca_rec$steps[[1]]$keep_original_cols <- NULL
 
   suppressWarnings(
-    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE),
+    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
   )
 
   expect_error(
