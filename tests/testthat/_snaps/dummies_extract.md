@@ -2,8 +2,9 @@
 
     Code
       recipe(~medium, data = tate_text) %>% step_dummy_extract(medium) %>% prep()
-    Error <rlang_error>
-      `sep` or `pattern` must be specified.
+    Condition
+      Error in `dummy_extract()`:
+      ! `sep` or `pattern` must be specified.
 
 # empty printing
 
