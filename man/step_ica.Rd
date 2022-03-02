@@ -121,9 +121,9 @@ X <- as.data.frame(S \%*\% A)
 tr <- X[1:100, ]
 te <- X[101:200, ]
 
-rec <- recipe( ~ ., data = tr)
+rec <- recipe(~., data = tr)
 
-ica_trans <- step_center(rec,  V1, V2)
+ica_trans <- step_center(rec, V1, V2)
 ica_trans <- step_scale(ica_trans, V1, V2)
 ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 

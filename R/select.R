@@ -73,15 +73,15 @@ step_select <- function(recipe,
   )
 }
 step_select_new <- function(terms, role, trained, skip, id) {
-    step(
-      subclass = "select",
-      terms = terms,
-      role = role,
-      trained = trained,
-      skip = skip,
-      id = id
-    )
-  }
+  step(
+    subclass = "select",
+    terms = terms,
+    role = role,
+    trained = trained,
+    skip = skip,
+    id = id
+  )
+}
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {

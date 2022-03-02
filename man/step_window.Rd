@@ -108,12 +108,15 @@ sim_dat$x2 <- runif(n)
 sim_dat$x3 <- rnorm(n)
 
 rec <- recipe(y1 + y2 ~ x1 + x2 + x3, data = sim_dat) \%>\%
-  step_window(starts_with("y"), size = 7, statistic = "median",
-              names = paste0("med_7pt_", 1:2),
-              role = "outcome") \%>\%
   step_window(starts_with("y"),
-              names = paste0("mean_3pt_", 1:2),
-              role = "outcome")
+    size = 7, statistic = "median",
+    names = paste0("med_7pt_", 1:2),
+    role = "outcome"
+  ) \%>\%
+  step_window(starts_with("y"),
+    names = paste0("mean_3pt_", 1:2),
+    role = "outcome"
+  )
 rec <- prep(rec, training = sim_dat)
 
 smoothed_dat <- bake(rec, sim_dat, everything())

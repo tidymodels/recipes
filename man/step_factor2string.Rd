@@ -69,9 +69,11 @@ rec <- rec \%>\%
   step_string2factor(diet)
 
 factor_test <- rec \%>\%
-  prep(training = okc,
-       strings_as_factors = FALSE) \%>\%
-  juice
+  prep(
+    training = okc,
+    strings_as_factors = FALSE
+  ) \%>\%
+  juice()
 # diet is a
 class(factor_test$diet)
 
@@ -79,9 +81,11 @@ rec <- rec \%>\%
   step_factor2string(diet)
 
 string_test <- rec \%>\%
-  prep(training = okc,
-       strings_as_factors = FALSE) \%>\%
-  juice
+  prep(
+    training = okc,
+    strings_as_factors = FALSE
+  ) \%>\%
+  juice()
 # diet is a
 class(string_test$diet)
 

@@ -99,12 +99,13 @@ data(biomass)
 
 biomass$sparse <- c(1, rep(0, nrow(biomass) - 1))
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-                    nitrogen + sulfur + sparse,
-              data = biomass_tr)
+  nitrogen + sulfur + sparse,
+data = biomass_tr
+)
 
 nzv_filter <- rec \%>\%
   step_nzv(all_predictors())

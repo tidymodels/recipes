@@ -1,7 +1,7 @@
 library(recipes)
 library(testthat)
 
-test_that("order of columns after juice and bake",{
+test_that("order of columns after juice and bake", {
   car_rec <- recipe(cyl ~ ., mtcars) %>%
     step_center(all_predictors()) %>%
     step_scale(all_predictors())

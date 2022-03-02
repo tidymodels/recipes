@@ -71,7 +71,7 @@ step_nnmf <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num_comp  = 2,
+           num_comp = 2,
            num_run = 30,
            options = list(),
            res = NULL,
@@ -80,8 +80,7 @@ step_nnmf <-
            seed = sample.int(10^5, 1),
            keep_original_cols = FALSE,
            skip = FALSE,
-           id = rand_id("nnmf")
-           ) {
+           id = rand_id("nnmf")) {
     recipes_pkg_check(required_pkgs.step_nnmf())
     lifecycle::deprecate_soft("0.2.0", "step_nnmf()", "step_nnmf_sparse()")
     add_step(
@@ -132,7 +131,6 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   if (x$num_comp > 0 && length(col_names) > 0) {
-
     x$num_comp <- min(x$num_comp, length(col_names))
 
     nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
@@ -210,16 +208,18 @@ tidy.step_nnmf <- function(x, ...) {
       var_nms <- rownames(res)
       res <- tibble::as_tibble(res)
       res$terms <- var_nms
-      res <- tidyr::pivot_longer(res, cols = c(-terms),
-                                 names_to = "component", values_to = "value")
-      res <- res[,c("terms", "value", "component")]
-      res <- res[order(res$component, res$terms),]
+      res <- tidyr::pivot_longer(res,
+        cols = c(-terms),
+        names_to = "component", values_to = "value"
+      )
+      res <- res[, c("terms", "value", "component")]
+      res <- res[order(res$component, res$terms), ]
     } else {
-      res <- tibble(terms = unname(x$columns), value = na_dbl, component  = na_dbl)
+      res <- tibble(terms = unname(x$columns), value = na_dbl, component = na_dbl)
     }
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, value = na_dbl, component  = x$num_comp)
+    res <- tibble(terms = term_names, value = na_dbl, component = x$num_comp)
   }
   res$id <- x$id
   res
@@ -246,4 +246,3 @@ tunable.step_nnmf <- function(x, ...) {
 required_pkgs.step_nnmf <- function(x, ...) {
   c("dimRed", "NMF")
 }
-

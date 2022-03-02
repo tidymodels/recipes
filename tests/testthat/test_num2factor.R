@@ -12,9 +12,9 @@ ex_dat <- data.frame(
   z = rep(1:10, each = 20)
 )
 
-rec <- recipe(~ ., data = ex_dat)
+rec <- recipe(~., data = ex_dat)
 
-test_that('basic functionality', {
+test_that("basic functionality", {
   ex_1 <- rec %>%
     step_num2factor(z, levels = rev(LETTERS[1:10])) %>%
     prep(ex_dat) %>%
@@ -27,14 +27,14 @@ test_that('basic functionality', {
   ex_2 <- rec %>%
     step_num2factor(z, ordered = TRUE, levels = rev(LETTERS[1:10])) %>%
     prep(ex_dat) %>%
-    juice
+    juice()
   expect_true(inherits(ex_2$w, "factor"))
   expect_true(inherits(ex_2$x, "numeric"))
   expect_true(inherits(ex_2$z, "ordered"))
   expect_equal(levels(ex_1$z), rev(LETTERS[1:10]))
 })
 
-test_that('bad args', {
+test_that("bad args", {
   expect_error(
     rec %>%
       step_num2factor(w, x, levels = c("one", "two")) %>%
@@ -50,7 +50,7 @@ test_that('bad args', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   ex_3 <- rec %>%
     step_num2factor(z, levels = letters) %>%
     prep(ex_dat, strings_as_factors = FALSE)

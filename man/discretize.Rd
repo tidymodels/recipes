@@ -88,8 +88,8 @@ largest value of \code{x}, a missing value will result.
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 median(biomass_tr$carbon)
 discretize(biomass_tr$carbon, cuts = 2)

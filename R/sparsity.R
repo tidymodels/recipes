@@ -4,22 +4,23 @@ convert_matrix <- function(x, sparse = TRUE) {
 
   if (!all(is_num)) {
     num_viol <- sum(!is_num)
-    if (num_viol < 5)
+    if (num_viol < 5) {
       rlang::abort(
         paste0(
-        "Columns (",
-        paste0("`", names(is_num)[!is_num], "`", collapse = ", "),
-        ") are not numeric; cannot convert to matrix."
+          "Columns (",
+          paste0("`", names(is_num)[!is_num], "`", collapse = ", "),
+          ") are not numeric; cannot convert to matrix."
         )
       )
-    else
+    } else {
       rlang::abort(
         paste0(
           num_viol,
           " columns are not numeric; cannot ",
-           "convert to matrix."
-          )
+          "convert to matrix."
         )
+      )
+    }
   }
 
   # Issue-206: Don't use model.matrix(~ . + 0) here as it drops NA rows unless
@@ -34,4 +35,3 @@ convert_matrix <- function(x, sparse = TRUE) {
 
   res
 }
-

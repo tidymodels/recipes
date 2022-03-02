@@ -25,8 +25,8 @@ conflicting information can arise between the data returned from
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 # Create a recipe using step_bs() with degree = 3
 rec <- recipe(
@@ -40,11 +40,11 @@ rec2 <- rec
 rec2$steps[[1]] <- update(rec2$steps[[1]], degree = 4)
 
 # Prep both recipes
-rec_prepped  <- prep(rec, training = biomass_tr)
+rec_prepped <- prep(rec, training = biomass_tr)
 rec2_prepped <- prep(rec2, training = biomass_tr)
 
 # Juice both to see what changed
-bake(rec_prepped,  new_data = NULL)
+bake(rec_prepped, new_data = NULL)
 bake(rec2_prepped, new_data = NULL)
 
 # Cannot update a recipe step that has been trained!

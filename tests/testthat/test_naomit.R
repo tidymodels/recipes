@@ -3,7 +3,6 @@ library(recipes)
 library(tidyr)
 
 test_that("step_naomit on all columns", {
-
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(everything()) %>%
     prep(airquality, verbose = FALSE) %>%
@@ -16,7 +15,6 @@ test_that("step_naomit on all columns", {
 })
 
 test_that("step_naomit on subset of columns", {
-
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(Ozone, Solar.R) %>%
     prep(airquality, verbose = FALSE) %>%
@@ -81,4 +79,3 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
-

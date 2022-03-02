@@ -37,7 +37,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -50,12 +50,11 @@
 #'
 #' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
-#' credit_te[missing_examples,]
+#' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-
 step_impute_mean <-
   function(recipe,
            ...,
@@ -148,9 +147,10 @@ prep.step_meanimpute <- prep.step_impute_mean
 #' @export
 bake.step_impute_mean <- function(object, new_data, ...) {
   for (i in names(object$means)) {
-    if (any(is.na(new_data[[i]])))
+    if (any(is.na(new_data[[i]]))) {
       new_data[[i]] <- vec_cast(new_data[[i]], object$means[[i]])
-      new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
+    }
+    new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
   }
   as_tibble(new_data)
 }
@@ -175,8 +175,10 @@ print.step_meanimpute <- print.step_impute_mean
 #' @export
 tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$means),
-                  model = vctrs::vec_unchop(unname(x$means), ptype = double()))
+    res <- tibble(
+      terms = names(x$means),
+      model = vctrs::vec_unchop(unname(x$means), ptype = double())
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)

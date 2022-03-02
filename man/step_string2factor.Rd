@@ -77,12 +77,13 @@ rec <- recipe(~ diet + location, data = okc)
 make_factor <- rec \%>\%
   step_string2factor(diet)
 make_factor <- prep(make_factor,
-                    training = okc,
-                    strings_as_factors = FALSE)
+  training = okc,
+  strings_as_factors = FALSE
+)
 
 # note that `diet` is a factor
-bake(make_factor, new_data = NULL) \%>\% head
-okc \%>\% head
+bake(make_factor, new_data = NULL) \%>\% head()
+okc \%>\% head()
 tidy(make_factor, number = 1)
 }
 \seealso{

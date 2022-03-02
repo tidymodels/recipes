@@ -42,8 +42,8 @@
 #' library(modeldata)
 #' data(okc)
 #'
-#' okc_tr <- okc[1:30000,]
-#' okc_te <- okc[30001:30006,]
+#' okc_tr <- okc[1:30000, ]
+#' okc_te <- okc[30001:30006, ]
 #' okc_te$diet[3] <- "cannibalism"
 #' okc_te$diet[4] <- "vampirism"
 #'
@@ -57,7 +57,6 @@
 #' tibble(old = okc_te$diet, new = processed$diet)
 #'
 #' tidy(rec, number = 1)
-
 step_novel <-
   function(recipe,
            ...,
@@ -103,9 +102,9 @@ get_existing_values <- function(x) {
     if (is.factor(x)) {
       out <- levels(x)
       attr(out, "is_ordered") <- is.ordered(x)
-    }
-    else
+    } else {
       rlang::abort("Data should be either character or factor")
+    }
   }
   out
 }
@@ -116,25 +115,30 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
   col_check <- dplyr::filter(info, variable %in% col_names)
 
-  if (any(col_check$type != "nominal"))
+  if (any(col_check$type != "nominal")) {
     rlang::abort(
-      paste0("Columns must be character or factor: ",
-             paste0(col_check$variable[col_check$type != "nominal"],
-                    collapse = ", "))
+      paste0(
+        "Columns must be character or factor: ",
+        paste0(col_check$variable[col_check$type != "nominal"],
+          collapse = ", "
+        )
+      )
     )
+  }
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
-  if (any(level_check))
+  if (any(level_check)) {
     rlang::abort(
       paste0(
         "Columns already contain the new level: ",
         paste0(names(level_check)[level_check], collapse = ", ")
       )
     )
+  }
 
   step_novel_new(
     terms = x$terms,
@@ -160,11 +164,13 @@ bake.step_novel <- function(object, new_data, ...) {
 
     new_data[[i]] <-
       factor(new_data[[i]],
-             levels = c(object$object[[i]], object$new_level),
-             ordered = attributes(object$object[[i]])$is_ordered)
+        levels = c(object$object[[i]], object$new_level),
+        ordered = attributes(object$object[[i]])$is_ordered
+      )
   }
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
@@ -179,14 +185,17 @@ print.step_novel <-
 #' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$objects),
-                  value = rep(x$new_level, length(x$objects)))
+    res <- tibble(
+      terms = names(x$objects),
+      value = rep(x$new_level, length(x$objects))
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = rep(x$new_level, length(term_names)))
+    res <- tibble(
+      terms = term_names,
+      value = rep(x$new_level, length(term_names))
+    )
   }
   res$id <- x$id
   res
 }
-

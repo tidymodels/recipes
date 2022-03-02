@@ -24,7 +24,7 @@
 #'
 #' rec <- recipe(~ X1 + X2, data = examples)
 #'
-#' inverse_trans <- rec  %>%
+#' inverse_trans <- rec %>%
 #'   step_inverse(all_numeric_predictors())
 #'
 #' inverse_obj <- prep(inverse_trans, training = examples)
@@ -43,16 +43,18 @@ step_inverse <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("inverse")) {
-    add_step(recipe,
-             step_inverse_new(
-               terms = enquos(...),
-               role = role,
-               offset = offset,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+    add_step(
+      recipe,
+      step_inverse_new(
+        terms = enquos(...),
+        role = role,
+        offset = offset,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_inverse_new <-
@@ -88,9 +90,10 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_inverse <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
+  for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
-      1 / (new_data [[ object$columns[i] ]] + object$offset)
+      1 / (new_data[[object$columns[i]]] + object$offset)
+  }
   as_tibble(new_data)
 }
 
@@ -105,7 +108,7 @@ print.step_inverse <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_inverse <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

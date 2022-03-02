@@ -4,7 +4,7 @@ library(testthat)
 library(modeldata)
 data(okc)
 
-okc_tr <- okc[ (1:30000), ]
+okc_tr <- okc[(1:30000), ]
 okc_te <- okc[-(1:30000), ]
 
 rec <- recipe(~., data = okc_tr)

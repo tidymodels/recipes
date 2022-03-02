@@ -6,14 +6,15 @@ library(rlang)
 
 library(modeldata)
 data(okc)
-rec1 <- recipe(~ ., data = okc)
+rec1 <- recipe(~., data = okc)
 info1 <- summary(rec1)
 
 library(modeldata)
 data(biomass)
 rec2 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-              new_role = "predictor") %>%
+    new_role = "predictor"
+  ) %>%
   update_role(HHV, new_role = "outcome") %>%
   update_role(sample, new_role = "id variable") %>%
   update_role(dataset, new_role = "splitting indicator")
@@ -24,7 +25,7 @@ test_that("terms_select() is deprecated", {
   expect_warning(terms_select(info = info1, quos(all_predictors())))
 })
 
-test_that('simple role selections', {
+test_that("simple role selections", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
@@ -42,7 +43,7 @@ test_that('simple role selections', {
   )
 })
 
-test_that('simple type selections', {
+test_that("simple type selections", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
@@ -60,7 +61,7 @@ test_that('simple type selections', {
 })
 
 
-test_that('simple name selections', {
+test_that("simple name selections", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
@@ -96,7 +97,7 @@ test_that('simple name selections', {
 })
 
 
-test_that('combinations', {
+test_that("combinations", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
@@ -117,7 +118,7 @@ test_that('combinations', {
   )
 })
 
-test_that('namespaced selectors', {
+test_that("namespaced selectors", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
@@ -134,7 +135,7 @@ test_that('namespaced selectors', {
   )
 })
 
-test_that('new dplyr selectors', {
+test_that("new dplyr selectors", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   vnames <- c("hydrogen", "carbon")

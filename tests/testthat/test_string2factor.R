@@ -13,13 +13,13 @@ ex_dat <- data.frame(
   stringsAsFactors = FALSE
 )
 
-rec <- recipe(~ ., data = ex_dat)
+rec <- recipe(~., data = ex_dat)
 
-test_that('basic functionality', {
+test_that("basic functionality", {
   ex_1 <- rec %>%
     step_string2factor(w, x) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%
-    juice
+    juice()
   expect_equal(class(ex_1$w), "factor")
   expect_equal(class(ex_1$x), "factor")
   expect_equal(levels(ex_1$w), letters[1:3])
@@ -35,11 +35,11 @@ test_that('basic functionality', {
   expect_equal(levels(ex_2$x), LETTERS[1:2])
 })
 
-test_that('bad args', {
+test_that("bad args", {
   expect_error(
-  rec %>%
-    step_string2factor(w, n) %>%
-    prep(ex_dat)
+    rec %>%
+      step_string2factor(w, n) %>%
+      prep(ex_dat)
   )
   expect_error(
     rec %>%
@@ -49,7 +49,7 @@ test_that('bad args', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   ex_3 <- rec %>%
     step_string2factor(w, x) %>%
     prep(ex_dat, strings_as_factors = FALSE)
@@ -57,7 +57,7 @@ test_that('printing', {
   expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
 })
 
-test_that('pre-made factors', {
+test_that("pre-made factors", {
   ex_1 <- rec %>%
     step_string2factor(w, x, y, z) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%

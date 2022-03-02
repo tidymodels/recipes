@@ -5,10 +5,10 @@ library(modeldata)
 
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-test_that('simple percentile trans', {
+test_that("simple percentile trans", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur)
 
@@ -18,36 +18,36 @@ test_that('simple percentile trans', {
 
   carbon_quantiles <- quantile(
     biomass_tr$carbon,
-    probs = (0:100)/100,
+    probs = (0:100) / 100,
     names = TRUE
   )
   sulfur_quantiles <- quantile(
     biomass_tr$sulfur,
-    probs = (0:100)/100,
+    probs = (0:100) / 100,
     names = TRUE
   )
   sulfur_quantiles <- sulfur_quantiles[!duplicated(sulfur_quantiles)]
 
   expect_equal(
-    approx(carbon_quantiles, y = 0:100, xout = biomass_tr$carbon)$y/100,
+    approx(carbon_quantiles, y = 0:100, xout = biomass_tr$carbon)$y / 100,
     biomass_tr_baked$carbon
   )
   expect_equal(
-    approx(carbon_quantiles, y = 0:100, xout = biomass_te$carbon)$y/100,
+    approx(carbon_quantiles, y = 0:100, xout = biomass_te$carbon)$y / 100,
     biomass_te_baked$carbon
   )
   sulfur_values <- as.numeric(gsub("%$", "", names(sulfur_quantiles)))
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y/100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y / 100,
     biomass_tr_baked$sulfur
   )
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y/100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y / 100,
     biomass_te_baked$sulfur
   )
 })
 
-test_that('works works with fewer unique values than percentiles requested', {
+test_that("works works with fewer unique values than percentiles requested", {
   biomass_tr1 <- biomass_tr %>%
     mutate(carbon1 = round(carbon, -1))
   biomass_te1 <- biomass_te %>%
@@ -62,23 +62,23 @@ test_that('works works with fewer unique values than percentiles requested', {
 
   carbon1_quantiles <- quantile(
     biomass_tr1$carbon1,
-    probs = (0:100)/100,
+    probs = (0:100) / 100,
     names = TRUE
   )
   carbon1_quantiles <- carbon1_quantiles[!duplicated(carbon1_quantiles)]
 
   carbon1_values <- as.numeric(gsub("%$", "", names(carbon1_quantiles)))
   expect_equal(
-    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_tr1$carbon1)$y/100,
+    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_tr1$carbon1)$y / 100,
     biomass_tr_baked$carbon1
   )
   expect_equal(
-    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_te1$carbon1)$y/100,
+    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_te1$carbon1)$y / 100,
     biomass_te_baked$carbon1
   )
 })
 
-test_that('passing new probs works', {
+test_that("passing new probs works", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur, options = list(probs = seq(0, 1, by = 0.2)))
 
@@ -94,16 +94,16 @@ test_that('passing new probs works', {
 
   sulfur_values <- as.numeric(gsub("%$", "", names(sulfur_quantiles)))
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y/100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y / 100,
     biomass_tr_baked$sulfur
   )
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y/100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y / 100,
     biomass_te_baked$sulfur
   )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur)
   expect_output(print(rec))

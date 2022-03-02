@@ -30,9 +30,9 @@ te_miss <- te_dat
 te_miss$y[1] <- NA
 te_miss$z[1] <- NA
 
-rec <- recipe(~ ., data = tr_dat)
+rec <- recipe(~., data = tr_dat)
 
-test_that('basic functionality', {
+test_that("basic functionality", {
   ex_1 <- rec %>%
     step_novel(all_predictors()) %>%
     prep(tr_dat, strings_as_factors = FALSE)
@@ -46,12 +46,14 @@ test_that('basic functionality', {
   expect_true(all(vapply(ex_1_tr, is.factor, logical(1))))
   expect_true(all(vapply(ex_1_te, is.factor, logical(1))))
 
-  for(i in names(ex_1_tr))
+  for (i in names(ex_1_tr)) {
     expect_true(
-      all.equal(as.character(tr_dat[[i]]),
-                as.character(ex_1_tr[[i]])
+      all.equal(
+        as.character(tr_dat[[i]]),
+        as.character(ex_1_tr[[i]])
       )
     )
+  }
   expect_true(
     all(ex_1_te$v[!(ex_1_te$v %in% letters[1:3])] == "new")
   )
@@ -73,7 +75,7 @@ test_that('basic functionality', {
   expect_true(is.ordered(ex_1_te$z))
 })
 
-test_that('bad args', {
+test_that("bad args", {
   expect_error(
     recipe(~., data = iris) %>%
       step_novel(all_predictors()) %>%
@@ -86,17 +88,17 @@ test_that('bad args', {
   )
 })
 
-test_that('missing values', {
+test_that("missing values", {
   ex_2 <- rec %>%
     step_novel(all_predictors()) %>%
-    prep(training  = tr_dat)
+    prep(training = tr_dat)
   ex_2_te <- bake(ex_2, new_data = te_miss)
   expect_equal(which(is.na(te_miss$y)), which(is.na(ex_2_te$y)))
   expect_equal(which(is.na(te_miss$z)), which(is.na(ex_2_te$z)))
 })
 
 
-test_that('printing', {
+test_that("printing", {
   ex_3 <- rec %>%
     step_novel(all_predictors())
   expect_output(print(ex_3))

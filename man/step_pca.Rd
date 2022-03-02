@@ -114,7 +114,7 @@ much variance each component accounts for.
 }
 
 \examples{
-rec <- recipe( ~ ., data = USArrests)
+rec <- recipe(~., data = USArrests)
 pca_trans <- rec \%>\%
   step_normalize(all_numeric()) \%>\%
   step_pca(all_numeric(), num_comp = 3)
@@ -123,7 +123,8 @@ pca_data <- bake(pca_estimates, USArrests)
 
 rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
 plot(pca_data$PC1, pca_data$PC2,
-     xlim = rng, ylim = rng)
+  xlim = rng, ylim = rng
+)
 
 with_thresh <- rec \%>\%
   step_normalize(all_numeric()) \%>\%

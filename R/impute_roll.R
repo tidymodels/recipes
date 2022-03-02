@@ -59,14 +59,13 @@
 #' example_data$x2[c(1:4, 10)] <- NA
 #'
 #' library(recipes)
-#' seven_pt <- recipe(~ . , data = example_data) %>%
+#' seven_pt <- recipe(~., data = example_data) %>%
 #'   update_role(day, new_role = "time_index") %>%
 #'   step_impute_roll(all_numeric_predictors(), window = 7) %>%
 #'   prep(training = example_data)
 #'
 #' # The training set:
 #' bake(seven_pt, new_data = NULL)
-
 step_impute_roll <-
   function(recipe,
            ...,
@@ -77,7 +76,6 @@ step_impute_roll <-
            window = 5,
            skip = FALSE,
            id = rand_id("impute_roll")) {
-
     if (!is_tune(window) & !is_varying(window)) {
       if (window < 3 | window %% 2 != 1) {
         rlang::abort("`window` should be an odd integer >= 3")
@@ -150,8 +148,9 @@ prep.step_impute_roll <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
   dbl_check <- vapply(training[, col_names], is.double, logical(1))
-  if (any(!dbl_check))
+  if (any(!dbl_check)) {
     rlang::abort("All columns must be double precision for rolling imputation")
+  }
 
   step_impute_roll_new(
     terms = x$terms,
@@ -171,25 +170,31 @@ prep.step_rollimpute <- prep.step_impute_roll
 
 get_window_ind <- function(i, n, k) {
   sides <- (k - 1) / 2
-  if (i - sides >= 1 & i + sides <= n)
+  if (i - sides >= 1 & i + sides <= n) {
     return((i - sides):(i + sides))
-  if (i - sides < 1)
+  }
+  if (i - sides < 1) {
     return(1:k)
-  if (i + sides > n)
+  }
+  if (i + sides > n) {
     return((n - k + 1):n)
+  }
 }
 
-get_rolling_ind <- function(inds, n, k)
+get_rolling_ind <- function(inds, n, k) {
   map(inds, get_window_ind, n = n, k = k)
+}
 window_est <- function(inds, x, statfun) {
   x <- x[inds]
   x <- x[!is.na(x)]
-  out <- if(length(x) == 0)
+  out <- if (length(x) == 0) {
     na_dbl
-  else
+  } else {
     statfun(x)
-  if(!is.double(out))
+  }
+  if (!is.double(out)) {
     out <- as.double(out)
+  }
   out
 }
 impute_rolling <- function(inds, x, statfun) {
@@ -199,13 +204,15 @@ impute_rolling <- function(inds, x, statfun) {
 #' @export
 bake.step_impute_roll <- function(object, new_data, ...) {
   n <- nrow(new_data)
-  missing_ind <- lapply(new_data[, object$columns],
-                        function(x) which(is.na(x)))
+  missing_ind <- lapply(
+    new_data[, object$columns],
+    function(x) which(is.na(x))
+  )
   has_missing <- map_lgl(missing_ind, function(x) length(x) > 0)
   missing_ind <- missing_ind[has_missing]
   roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
 
-  for(i in seq(along.with = roll_ind)) {
+  for (i in seq(along.with = roll_ind)) {
     imp_var <- names(roll_ind)[i]
     estimates <-
       impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)

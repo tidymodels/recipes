@@ -33,11 +33,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' quadratic <- rec %>%
 #'   step_poly(carbon, hydrogen)
@@ -55,9 +57,8 @@ step_poly <-
            objects = NULL,
            degree = 2,
            options = list(),
-        skip = FALSE,
-        id = rand_id("poly")) {
-
+           skip = FALSE,
+           id = rand_id("poly")) {
     if (!is_tune(degree) & !is_varying(degree)) {
       degree <- as.integer(degree)
     }

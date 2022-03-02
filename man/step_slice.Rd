@@ -70,7 +70,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 }
 
 \examples{
-rec <- recipe( ~ ., data = iris) \%>\%
+rec <- recipe(~., data = iris) \%>\%
   step_slice(1:3)
 
 prepped <- prep(rec, training = iris \%>\% slice(1:75))
@@ -101,7 +101,7 @@ all.equal(dplyr_test, rec_test)
 keep_rows <- 1:6
 
 qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   # Embed `keep_rows` in the call using !!
   step_slice(!!keep_rows) \%>\%
   prep(training = iris)

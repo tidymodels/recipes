@@ -53,9 +53,11 @@ suffixes such as "\verb{_1}", "\verb{_2}", etc.
 names0(9, "a")
 names0(10, "a")
 
-example <- data.frame(x = ordered(letters[1:5]),
-                      y = factor(LETTERS[1:5]),
-                      z = factor(paste(LETTERS[1:5], 1:5)))
+example <- data.frame(
+  x = ordered(letters[1:5]),
+  y = factor(LETTERS[1:5]),
+  z = factor(paste(LETTERS[1:5], 1:5))
+)
 
 dummy_names("y", levels(example$y)[-1])
 dummy_names("z", levels(example$z)[-1])

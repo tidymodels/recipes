@@ -90,7 +90,7 @@ vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 missing_examples <- c(14, 394, 565)
 

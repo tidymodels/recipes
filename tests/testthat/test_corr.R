@@ -3,14 +3,14 @@ library(recipes)
 
 n <- 100
 set.seed(424)
-dat <- matrix(rnorm(n*5), ncol =  5)
+dat <- matrix(rnorm(n * 5), ncol = 5)
 dat <- as.data.frame(dat)
 dat$duplicate <- dat$V1
-dat$V6 <- -dat$V2 + runif(n)*.2
+dat$V6 <- -dat$V2 + runif(n) * .2
 
-test_that('high filter', {
+test_that("high filter", {
   set.seed(1)
-  rec <- recipe(~ ., data = dat)
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .5)
 
@@ -21,8 +21,8 @@ test_that('high filter', {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
 
-test_that('low filter', {
-  rec <- recipe(~ ., data = dat)
+test_that("low filter", {
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = 1)
 
@@ -31,10 +31,10 @@ test_that('low filter', {
   expect_equal(filtering_trained$steps[[1]]$removals, numeric(0))
 })
 
-test_that('many missing values', {
+test_that("many missing values", {
   dat2 <- dat
   dat2$V4 <- NA_real_
-  rec <- recipe(~ ., data = dat2)
+  rec <- recipe(~., data = dat2)
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .25)
 
@@ -46,11 +46,11 @@ test_that('many missing values', {
   expect_equal(filtering_trained$steps[[1]]$removals, paste0("V", 1:2))
 })
 
-test_that('occasional missing values', {
+test_that("occasional missing values", {
   dat3 <- dat
   dat3$V1[1] <- NA_real_
   dat3$V4[10] <- NA_real_
-  rec <- recipe(~ ., data = dat3)
+  rec <- recipe(~., data = dat3)
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .25, use = "everything")
 
@@ -63,9 +63,9 @@ test_that('occasional missing values', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   set.seed(1)
-  rec <- recipe(~ ., data = dat)
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_corr(all_predictors(), threshold = .5)
   expect_output(print(filtering))
@@ -73,9 +73,9 @@ test_that('printing', {
 })
 
 
-test_that('tunable', {
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_corr(all_predictors())
   rec_param <- tunable.step_corr(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -84,7 +84,7 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 1)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 

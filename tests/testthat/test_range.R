@@ -3,13 +3,14 @@ library(recipes)
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[1:10,]
-biomass_te <- biomass[c(13:14, 19, 522),]
+biomass_tr <- biomass[1:10, ]
+biomass_te <- biomass[c(13:14, 19, 522), ]
 
 rec <- recipe(HHV ~ carbon + hydrogen,
-              data = biomass_tr)
+  data = biomass_tr
+)
 
-test_that('correct values', {
+test_that("correct values", {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12, id = "")
 
@@ -26,12 +27,12 @@ test_that('correct values', {
   new_range <- new_max - new_min
 
   carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
-           (maxs["carbon"] - mins["carbon"])) + new_min
+    (maxs["carbon"] - mins["carbon"])) + new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
 
   hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
-              (maxs["hydrogen"] - mins["hydrogen"])) + new_min
+    (maxs["hydrogen"] - mins["hydrogen"])) + new_min
   hydro <- ifelse(hydro > new_max, new_max, hydro)
   hydro <- ifelse(hydro < new_min, new_min, hydro)
 
@@ -40,22 +41,26 @@ test_that('correct values', {
   expect_equal(exp_pred, obs_pred)
 
   rng_tibble_un <-
-    tibble(terms = c("carbon", "hydrogen"),
-           min = rep(NA_real_, 2),
-           max = rep(NA_real_, 2),
-           id = "")
+    tibble(
+      terms = c("carbon", "hydrogen"),
+      min = rep(NA_real_, 2),
+      max = rep(NA_real_, 2),
+      id = ""
+    )
   rng_tibble_tr <-
-    tibble(terms = c("carbon", "hydrogen"),
-           min = unname(mins),
-           max = unname(maxs),
-           id = "")
+    tibble(
+      terms = c("carbon", "hydrogen"),
+      min = unname(mins),
+      max = unname(maxs),
+      id = ""
+    )
 
   expect_equal(tidy(standardized, 1), rng_tibble_un)
   expect_equal(tidy(standardized_trained, 1), rng_tibble_tr)
 })
 
 
-test_that('defaults', {
+test_that("defaults", {
   standardized <- rec %>%
     step_range(carbon, hydrogen)
 
@@ -72,12 +77,12 @@ test_that('defaults', {
   new_range <- new_max - new_min
 
   carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
-             (maxs["carbon"] - mins["carbon"])) + new_min
+    (maxs["carbon"] - mins["carbon"])) + new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
 
   hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
-              (maxs["hydrogen"] - mins["hydrogen"])) + new_min
+    (maxs["hydrogen"] - mins["hydrogen"])) + new_min
   hydro <- ifelse(hydro > new_max, new_max, hydro)
   hydro <- ifelse(hydro < new_min, new_min, hydro)
 
@@ -87,7 +92,7 @@ test_that('defaults', {
 })
 
 
-test_that('one variable', {
+test_that("one variable", {
   standardized <- rec %>%
     step_range(carbon)
 
@@ -103,7 +108,7 @@ test_that('one variable', {
   new_range <- new_max - new_min
 
   carb <- ((new_range * (biomass_te$carbon - mins)) /
-             (maxs - mins)) + new_min
+    (maxs - mins)) + new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
 
@@ -111,7 +116,7 @@ test_that('one variable', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12)
   expect_output(print(standardized))

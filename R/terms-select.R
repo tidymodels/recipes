@@ -26,7 +26,7 @@
 #' library(rlang)
 #' library(modeldata)
 #' data(okc)
-#' rec <- recipe(~ ., data = okc)
+#' rec <- recipe(~., data = okc)
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
 terms_select <- function(terms, info, empty_fun = abort_selection) {
@@ -53,12 +53,12 @@ terms_select <- function(terms, info, empty_fun = abort_selection) {
   # They have to be unquoted differently
   if (is.call(terms)) {
     sel <- with_handlers(
-      tidyselect::vars_select(vars, !! terms),
+      tidyselect::vars_select(vars, !!terms),
       tidyselect_empty = empty_fun
     )
   } else {
     sel <- with_handlers(
-      tidyselect::vars_select(vars, !!! terms),
+      tidyselect::vars_select(vars, !!!terms),
       tidyselect_empty = empty_fun
     )
   }

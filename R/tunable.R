@@ -5,7 +5,7 @@ tunable.recipe <- function(x, ...) {
   } else {
     res <- purrr::map_dfr(x$steps, tunable)
     if (nrow(res) > 0) {
-      res <- res[!is.na(res$name),]
+      res <- res[!is.na(res$name), ]
     }
   }
   res

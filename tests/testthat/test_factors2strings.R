@@ -13,28 +13,27 @@ ex_dat <- data.frame(
   stringsAsFactors = FALSE
 )
 
-rec <- recipe(~ ., data = ex_dat)
+rec <- recipe(~., data = ex_dat)
 
-test_that('basic functionality', {
+test_that("basic functionality", {
   ex_1 <- rec %>%
     step_factor2string(y, z) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%
-    juice
+    juice()
   expect_equal(class(ex_1$w), "character")
   expect_equal(class(ex_1$x), "character")
 })
 
-test_that('bad args', {
+test_that("bad args", {
   expect_error(
     rec %>%
       step_factor2string(w, x) %>%
       prep(ex_dat, strings_as_factors = FALSE)
   )
-
 })
 
 
-test_that('printing', {
+test_that("printing", {
   ex_3 <- rec %>%
     step_factor2string(y, z) %>%
     prep(ex_dat, strings_as_factors = FALSE)

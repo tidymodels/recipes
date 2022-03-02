@@ -18,11 +18,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr) %>%
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' ) %>%
 #'   step_percentile(carbon)
 #'
 #' prepped_rec <- prep(rec)
@@ -38,23 +40,22 @@ step_percentile <-
            role = NA,
            trained = FALSE,
            ref_dist = NULL,
-           options = list(probs = (0:100)/100),
+           options = list(probs = (0:100) / 100),
            skip = FALSE,
            id = rand_id("percentile")) {
-
-  add_step(
-    recipe,
-    step_percentile_new(
-      terms = enquos(...),
-      trained = trained,
-      role = role,
-      ref_dist = ref_dist,
-      options = options,
-      skip = skip,
-      id = id
+    add_step(
+      recipe,
+      step_percentile_new(
+        terms = enquos(...),
+        trained = trained,
+        role = role,
+        ref_dist = ref_dist,
+        options = options,
+        skip = skip,
+        id = id
+      )
     )
-  )
-}
+  }
 
 step_percentile_new <-
   function(terms, role, trained, ref_dist, options, skip, id) {
@@ -78,7 +79,7 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
   x$options$names <- TRUE
 
   if (!any(names(x$options) == "probs")) {
-    x$options$probs <- (0:100)/100
+    x$options$probs <- (0:100) / 100
   } else {
     x$options$probs <- sort(unique(x$options$probs))
   }
@@ -120,7 +121,7 @@ pctl_by_approx <- function(x, ref) {
   # In case duplicates were removed, get the percentiles from
   # the names of the reference object
   grid <- as.numeric(gsub("%$", "", names(ref)))
-  stats::approx(x = ref, y = grid, xout = x)$y/100
+  stats::approx(x = ref, y = grid, xout = x)$y / 100
 }
 
 print.step_percentile <-
@@ -143,8 +144,7 @@ tidy.step_percentile <- function(x, ...) {
     } else {
       res <- map_dfr(x$ref_dist, format_pctl, .id = "term")
     }
-  }
-  else {
+  } else {
     term_names <- sel2char(x$terms)
     res <-
       tibble(

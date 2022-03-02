@@ -99,7 +99,7 @@ library(modeldata)
 data(penguins)
 penguins <- penguins \%>\% na.omit()
 
-rec <- recipe(flipper_length_mm ~., data = penguins)
+rec <- recipe(flipper_length_mm ~ ., data = penguins)
 
 int_mod_1 <- rec \%>\%
   step_interact(terms = ~ bill_depth_mm:bill_length_mm)

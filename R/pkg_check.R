@@ -17,8 +17,9 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
   good <- rep(TRUE, length(pkg))
   for (i in seq(along.with = pkg)) {
     tested <- try(find.package(pkg[i]), silent = TRUE)
-    if (class(tested)[1] == "try-error")
+    if (class(tested)[1] == "try-error") {
       good[i] <- FALSE
+    }
   }
   if (any(!good)) {
     pkList <- paste(pkg[!good], collapse = ", ")
@@ -36,17 +37,16 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
 
     install_opt <- quos(...)
     install_pkg <- pkg[!good]
-    if (length(install_pkg) > 1)
+    if (length(install_pkg) > 1) {
       inst_expr <-
-      quo(install.packages(c(!!!install_pkg),!!!install_opt))
-    else
+        quo(install.packages(c(!!!install_pkg), !!!install_opt))
+    } else {
       inst_expr <-
-      quo(install.packages(!!install_pkg,!!!install_opt))
+        quo(install.packages(!!install_pkg, !!!install_opt))
+    }
     pkg_str <- deparse(quo_squash(inst_expr))
     cat(pkg_str)
   }
 
   invisible()
 }
-
-

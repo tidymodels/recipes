@@ -4,11 +4,11 @@ library(dplyr)
 
 # ------------------------------------------------------------------------------
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage', {
+test_that("basic usage", {
   rec <-
     iris_rec %>%
     step_mutate(
@@ -42,7 +42,7 @@ test_that('basic usage', {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('quasiquotation', {
+test_that("quasiquotation", {
   const <- 9.077
   rec_1 <-
     iris_rec %>%
@@ -95,7 +95,7 @@ test_that("can use unnamed expressions like `across()` (#759)", {
   )
 })
 
-test_that('no input', {
+test_that("no input", {
   no_inputs <-
     iris_rec %>%
     step_mutate() %>%
@@ -104,7 +104,7 @@ test_that('no input', {
   expect_equal(no_inputs, iris)
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_mutate(x = 5)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))
@@ -128,7 +128,7 @@ test_that("tidying allows for named and unnamed expressions", {
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage', {
+test_that("basic usage", {
   rec <-
     iris_rec %>%
     step_mutate_at(contains("Length"), fn = log)
@@ -159,7 +159,7 @@ test_that('basic usage', {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('mulitple functions', {
+test_that("mulitple functions", {
   rec <-
     iris_rec %>%
     step_mutate_at(contains("Length"), fn = list(a = log, b = sqrt))
@@ -195,7 +195,7 @@ test_that('mulitple functions', {
 })
 
 
-test_that('no input', {
+test_that("no input", {
   expect_error(
     iris_rec %>%
       step_mutate_at() %>%
@@ -204,7 +204,7 @@ test_that('no input', {
   )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_mutate_at(contains("Sepal"), fn = log)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))

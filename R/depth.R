@@ -66,8 +66,10 @@
 #' # use zonoid metric instead
 #' # also, define naming convention for new columns
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_numeric_predictors(), class = "Species",
-#'              metric = "zonoid", prefix = "zonoid_")
+#'   step_depth(all_numeric_predictors(),
+#'     class = "Species",
+#'     metric = "zonoid", prefix = "zonoid_"
+#'   )
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
@@ -76,21 +78,21 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec_dists, number = 1)
-
 step_depth <-
   function(recipe,
            ...,
            class,
            role = "predictor",
            trained = FALSE,
-           metric =  "halfspace",
+           metric = "halfspace",
            options = list(),
            data = NULL,
            prefix = "depth_",
            skip = FALSE,
            id = rand_id("depth")) {
-    if (!is.character(class) || length(class) != 1)
+    if (!is.character(class) || length(class) != 1) {
       rlang::abort("`class` should be a single character value.")
+    }
 
     recipes_pkg_check(required_pkgs.step_depth())
 
@@ -158,8 +160,9 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
     return(rep(NA_real_, nrow(new_dat)))
   }
 
-  if (!is.matrix(new_dat))
+  if (!is.matrix(new_dat)) {
     new_dat <- as.matrix(new_dat)
+  }
   opts$data <- tr_dat
   opts$x <- new_dat
   dd_call <- call2(paste0("depth.", metric), !!!opts, .ns = "ddalpha")
@@ -181,8 +184,9 @@ bake.step_depth <- function(object, new_data, ...) {
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
+  if (!is_tibble(res)) {
     res <- as_tibble(res)
+  }
   res
 }
 
@@ -206,12 +210,16 @@ print.step_depth <-
 #' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$data[[1]]) %||% character(),
-                  class = x$class)
+    res <- tibble(
+      terms = colnames(x$data[[1]]) %||% character(),
+      class = x$class
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  class = na_chr)
+    res <- tibble(
+      terms = term_names,
+      class = na_chr
+    )
   }
   res$id <- x$id
   res

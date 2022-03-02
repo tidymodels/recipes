@@ -63,12 +63,15 @@
 #' sim_dat$x3 <- rnorm(n)
 #'
 #' rec <- recipe(y1 + y2 ~ x1 + x2 + x3, data = sim_dat) %>%
-#'   step_window(starts_with("y"), size = 7, statistic = "median",
-#'               names = paste0("med_7pt_", 1:2),
-#'               role = "outcome") %>%
 #'   step_window(starts_with("y"),
-#'               names = paste0("mean_3pt_", 1:2),
-#'               role = "outcome")
+#'     size = 7, statistic = "median",
+#'     names = paste0("med_7pt_", 1:2),
+#'     role = "outcome"
+#'   ) %>%
+#'   step_window(starts_with("y"),
+#'     names = paste0("mean_3pt_", 1:2),
+#'     role = "outcome"
+#'   )
 #' rec <- prep(rec, training = sim_dat)
 #'
 #' smoothed_dat <- bake(rec, sim_dat, everything())
@@ -92,8 +95,6 @@
 #' ggplot(smoothed_dat, aes(x = original, y = y1)) +
 #'   geom_point() +
 #'   theme_bw()
-
-
 step_window <-
   function(recipe,
            ...,
@@ -107,7 +108,7 @@ step_window <-
            skip = FALSE,
            id = rand_id("window")) {
     if (!is_call(statistic) &&
-        (!(statistic %in% roll_funs) | length(statistic) != 1)) {
+      (!(statistic %in% roll_funs) | length(statistic) != 1)) {
       rlang::abort(
         paste0(
           "`statistic` should be one of: ",
@@ -125,17 +126,18 @@ step_window <-
       if (!is.integer(size)) {
         tmp <- size
         size <- as.integer(size)
-        if (!isTRUE(all.equal(tmp, size)))
+        if (!isTRUE(all.equal(tmp, size))) {
           rlang::warn(
             paste0(
-            "`size` was not an integer (",
-            tmp,
-            ") and was ",
-            "converted to ",
-            size,
-            "."
+              "`size` was not an integer (",
+              tmp,
+              ") and was ",
+              "converted to ",
+              size,
+              "."
             )
           )
+        }
       }
       if (size %% 2 == 0) {
         rlang::abort("`size` should be odd.")
@@ -184,17 +186,20 @@ step_window_new <-
 prep.step_window <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
-  if (any(info$type[info$variable %in% col_names] != "numeric"))
+  if (any(info$type[info$variable %in% col_names] != "numeric")) {
     rlang::abort("The selected variables should be numeric")
+  }
 
   if (!is.null(x$names)) {
-    if (length(x$names) != length(col_names))
+    if (length(x$names) != length(col_names)) {
       rlang::abort(
-        paste0("There were ", length(col_names), " term(s) selected but ",
-           length(x$names), " values for the new features ",
-           "were passed to `names`."
+        paste0(
+          "There were ", length(col_names), " term(s) selected but ",
+          length(x$names), " values for the new features ",
+          "were passed to `names`."
         )
       )
+    }
   }
 
   step_window_new(
@@ -217,8 +222,9 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
   m <- length(x)
 
   gap <- floor(window / 2)
-  if (m - window <= 2)
+  if (m - window <= 2) {
     rlang::abort("The window is too large.")
+  }
 
   ## stats for centered window
   opts <- list(
@@ -244,16 +250,20 @@ bake.step_window <- function(object, new_data, ...) {
   for (i in seq(along.with = object$columns)) {
     if (!is.null(object$names)) {
       new_data[, object$names[i]] <-
-        roller(x = getElement(new_data, object$columns[i]),
-               stat = object$statistic,
-               na_rm = object$na_rm,
-               window = object$size)
+        roller(
+          x = getElement(new_data, object$columns[i]),
+          stat = object$statistic,
+          na_rm = object$na_rm,
+          window = object$size
+        )
     } else {
       new_data[, object$columns[i]] <-
-        roller(x = getElement(new_data, object$columns[i]),
-               stat = object$statistic,
-               na_rm = object$na_rm,
-               window = object$size)
+        roller(
+          x = getElement(new_data, object$columns[i]),
+          stat = object$statistic,
+          na_rm = object$na_rm,
+          window = object$size
+        )
     }
   }
   new_data

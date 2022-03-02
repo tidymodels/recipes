@@ -27,7 +27,7 @@
 #' @family dplyr steps
 #' @export
 #' @examples
-#' rec <- recipe( ~ ., data = iris) %>%
+#' rec <- recipe(~., data = iris) %>%
 #'   step_filter(Sepal.Length > 4.5, Species == "setosa")
 #'
 #' prepped <- prep(rec, training = iris %>% slice(1:75))
@@ -54,20 +54,17 @@
 #' values <- c("versicolor", "virginica")
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   # Embed the `values` object in the call using !!
-#'   step_filter(Sepal.Length > 4.5, Species  %in% !!values)
+#'   step_filter(Sepal.Length > 4.5, Species %in% !!values)
 #'
 #' tidy(qq_rec, number = 1)
-step_filter <- function(
-  recipe, ...,
-  role = NA,
-  trained = FALSE,
-  inputs = NULL,
-  skip = TRUE,
-  id = rand_id("filter")
-) {
-
+step_filter <- function(recipe, ...,
+                        role = NA,
+                        trained = FALSE,
+                        inputs = NULL,
+                        skip = TRUE,
+                        id = rand_id("filter")) {
   inputs <- enquos(...)
 
   add_step(

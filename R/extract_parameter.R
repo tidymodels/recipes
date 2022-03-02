@@ -20,7 +20,7 @@ extract_parameter_set_dials.recipe <- function(x, ...) {
   )
 }
 
-eval_call_info <-  function(x) {
+eval_call_info <- function(x) {
   if (!is.null(x)) {
     # Look for other options
     allowed_opts <- c("range", "trans", "values")

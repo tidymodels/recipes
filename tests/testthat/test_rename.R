@@ -4,11 +4,11 @@ library(dplyr)
 
 # ------------------------------------------------------------------------------
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage', {
+test_that("basic usage", {
   rec <-
     iris_rec %>%
     step_rename(
@@ -42,7 +42,7 @@ test_that('basic usage', {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('no input', {
+test_that("no input", {
   no_inputs <-
     iris_rec %>%
     step_rename() %>%
@@ -51,7 +51,7 @@ test_that('no input', {
   expect_equal(no_inputs, iris)
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_rename(wat = Species)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))
@@ -97,7 +97,7 @@ test_that("rename - empty printing", {
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage', {
+test_that("basic usage", {
   rec <-
     iris_rec %>%
     step_rename_at(contains("Length"), fn = ~ tolower(.))
@@ -122,17 +122,16 @@ test_that('basic usage', {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('mulitple functions', {
+test_that("mulitple functions", {
   rec <-
     iris_rec %>%
     step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
 
   expect_error(prep(rec, training = iris %>% slice(1:75)))
-
 })
 
 
-test_that('no input', {
+test_that("no input", {
   expect_error(
     iris_rec %>%
       step_rename_at() %>%
@@ -141,7 +140,7 @@ test_that('no input', {
   )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_rename_at(contains("Sepal"), fn = tolower)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))

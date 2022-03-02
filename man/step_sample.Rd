@@ -73,14 +73,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \examples{
 
 # Uses `sample_n`
-recipe( ~ ., data = mtcars) \%>\%
+recipe(~., data = mtcars) \%>\%
   step_sample(size = 1) \%>\%
   prep(training = mtcars) \%>\%
   bake(new_data = NULL) \%>\%
   nrow()
 
 # Uses `sample_frac`
-recipe( ~ ., data = mtcars) \%>\%
+recipe(~., data = mtcars) \%>\%
   step_sample(size = 0.9999) \%>\%
   prep(training = mtcars) \%>\%
   bake(new_data = NULL) \%>\%
@@ -88,7 +88,7 @@ recipe( ~ ., data = mtcars) \%>\%
 
 # Uses `sample_n` and returns _at maximum_ 20 samples.
 smaller_cars <-
-  recipe( ~ ., data = mtcars) \%>\%
+  recipe(~., data = mtcars) \%>\%
   step_sample() \%>\%
   prep(training = mtcars \%>\% slice(1:20))
 

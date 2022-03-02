@@ -1,17 +1,17 @@
 #' recipes: A package for computing and preprocessing design matrices.
 #'
-#'The `recipes` package can be used to create design matrices for modeling
+#' The `recipes` package can be used to create design matrices for modeling
 #'   and to conduct preprocessing of variables. It is meant to be a more
 #'   extensive framework that R's formula method. Some differences between
 #'   simple formula methods and recipes are that
-#'\enumerate{
-#'\item Variables can have arbitrary roles in the analysis beyond predictors
+#' \enumerate{
+#' \item Variables can have arbitrary roles in the analysis beyond predictors
 #'  and outcomes.
-#'\item A recipe consists of one or more steps that define actions on the
+#' \item A recipe consists of one or more steps that define actions on the
 #'  variables.
-#'\item Recipes can be defined sequentially using pipes as well as being
+#' \item Recipes can be defined sequentially using pipes as well as being
 #'  modifiable and extensible.
-#'}
+#' }
 #'
 #'
 #' @section Basic Functions:

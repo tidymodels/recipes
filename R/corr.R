@@ -46,12 +46,13 @@
 #' set.seed(3535)
 #' biomass$duplicate <- biomass$carbon + rnorm(nrow(biomass))
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-#'                     sulfur + duplicate,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + duplicate,
+#'   data = biomass_tr
+#' )
 #'
 #' corr_filter <- rec %>%
 #'   step_corr(all_numeric_predictors(), threshold = .5)
@@ -73,8 +74,7 @@ step_corr <- function(recipe,
                       method = "pearson",
                       removals = NULL,
                       skip = FALSE,
-                      id = rand_id("corr")
-                      ) {
+                      id = rand_id("corr")) {
   add_step(
     recipe,
     step_corr_new(
@@ -138,13 +138,14 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_corr <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
-    new_data <- new_data[,!(colnames(new_data) %in% object$removals)]
+  if (length(object$removals) > 0) {
+    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  }
   as_tibble(new_data)
 }
 
 print.step_corr <-
-  function(x,  width = max(20, options()$width - 36), ...) {
+  function(x, width = max(20, options()$width - 36), ...) {
     title <- "Correlation filter on "
     print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
@@ -165,7 +166,7 @@ corr_filter <-
         return(numeric(0))
       } else {
         na_cols <- which(all_na)
-        if (length(na_cols) >  0) {
+        if (length(na_cols) > 0) {
           x[na_cols, ] <- 0
           x[, na_cols] <- 0
           rlang::warn(
@@ -234,4 +235,3 @@ tunable.step_corr <- function(x, ...) {
     component_id = x$id
   )
 }
-

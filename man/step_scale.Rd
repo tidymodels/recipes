@@ -77,11 +77,13 @@ standard deviations) is returned.
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 scaled_trans <- rec \%>\%
   step_scale(carbon, hydrogen)
@@ -94,7 +96,6 @@ biomass_te[1:10, names(transformed_te)]
 transformed_te
 tidy(scaled_trans, number = 1)
 tidy(scaled_obj, number = 1)
-
 }
 \references{
 Gelman, A. (2007) "Scaling regression inputs by

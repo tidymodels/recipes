@@ -38,12 +38,13 @@
 #' data(biomass)
 #'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-#'                     sulfur + total,
-#'               data = biomass_tr)
+#'   sulfur + total,
+#' data = biomass_tr
+#' )
 #'
 #' ratio_recipe <- rec %>%
 #'   # all predictors over total
@@ -55,26 +56,27 @@
 #'
 #' ratio_data <- bake(ratio_recipe, biomass_te)
 #' ratio_data
-
 step_ratio <-
   function(recipe,
            ...,
            role = "predictor",
            trained = FALSE,
            denom = denom_vars(),
-           naming = function(numer, denom)
-             make.names(paste(numer, denom, sep = "_o_")),
+           naming = function(numer, denom) {
+             make.names(paste(numer, denom, sep = "_o_"))
+           },
            columns = NULL,
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("ratio")) {
-    if (is_empty(denom))
+    if (is_empty(denom)) {
       rlang::abort(
         paste0(
           "Please supply at least one denominator variable specification. ",
           "See ?selections."
         )
       )
+    }
     add_step(
       recipe,
       step_ratio_new(
@@ -119,10 +121,12 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- tibble::as_tibble(col_names)
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
-  if (any(info$type[info$variable %in% col_names$top] != "numeric"))
+  if (any(info$type[info$variable %in% col_names$top] != "numeric")) {
     rlang::abort("The ratio variables should be numeric")
-  if (any(info$type[info$variable %in% col_names$bottom] != "numeric"))
+  }
+  if (any(info$type[info$variable %in% col_names$bottom] != "numeric")) {
     rlang::abort("The ratio variables should be numeric")
+  }
 
   step_ratio_new(
     terms = x$terms,
@@ -161,8 +165,9 @@ bake.step_ratio <- function(object, new_data, ...) {
     new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
   }
 
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
@@ -182,14 +187,17 @@ denom_vars <- function(...) quos(...)
 #' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = unname(x$columns$top),
-                  denom = unname(x$columns$bottom))
+    res <- tibble(
+      terms = unname(x$columns$top),
+      denom = unname(x$columns$bottom)
+    )
   } else {
-    res <- tidyr::crossing(terms = sel2char(x$terms),
-                           denom = sel2char(x$denom))
+    res <- tidyr::crossing(
+      terms = sel2char(x$terms),
+      denom = sel2char(x$denom)
+    )
     res <- as_tibble(res)
   }
   res$id <- x$id
   arrange(res, terms, denom)
 }
-

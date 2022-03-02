@@ -3,14 +3,14 @@ library(recipes)
 
 library(modeldata)
 data(okc)
-okc <- okc[1:20,]
+okc <- okc[1:20, ]
 okc$diet <- factor(okc$diet)
 okc$int <- 1:20
-okc_rec <- recipe(~ ., data = okc)
+okc_rec <- recipe(~., data = okc)
 
 is_unq <- function(x) length(unique(x)) == 1
 
-test_that('numeric profile', {
+test_that("numeric profile", {
   num_rec <- okc_rec %>%
     step_profile(-age, profile = vars(age)) %>%
     prep(okc) %>%
@@ -22,17 +22,16 @@ test_that('numeric profile', {
   expect_true(is_unq(num_rec$int))
   expect_false(is_unq(num_rec$age))
 
-  expect_true(inherits(num_rec$diet,     "factor"))
-  expect_true(inherits(num_rec$height,   "integer"))
+  expect_true(inherits(num_rec$diet, "factor"))
+  expect_true(inherits(num_rec$height, "integer"))
   expect_true(inherits(num_rec$location, "factor"))
-  expect_true(inherits(num_rec$date,     "Date"))
-  expect_true(inherits(num_rec$int,      "integer"))
-  expect_true(inherits(num_rec$age,      "integer"))
-
+  expect_true(inherits(num_rec$date, "Date"))
+  expect_true(inherits(num_rec$int, "integer"))
+  expect_true(inherits(num_rec$age, "integer"))
 })
 
 
-test_that('factor profile', {
+test_that("factor profile", {
   fact_rec <- okc_rec %>%
     step_profile(-diet, profile = vars(diet)) %>%
     prep(okc) %>%
@@ -42,11 +41,10 @@ test_that('factor profile', {
   expect_true(is_unq(fact_rec$location))
   expect_true(is_unq(fact_rec$date))
   expect_true(is_unq(fact_rec$age))
-
 })
 
 
-test_that('date profile', {
+test_that("date profile", {
   date_rec <- okc_rec %>%
     step_profile(-date, profile = vars(date)) %>%
     prep(okc) %>%
@@ -56,10 +54,9 @@ test_that('date profile', {
   expect_true(is_unq(date_rec$location))
   expect_false(is_unq(date_rec$date))
   expect_true(is_unq(date_rec$age))
-
 })
 
-test_that('character profile', {
+test_that("character profile", {
   chr_rec <- okc_rec %>%
     step_profile(-location, profile = vars(location)) %>%
     prep(okc, strings_as_factors = FALSE) %>%
@@ -69,11 +66,10 @@ test_that('character profile', {
   expect_false(is_unq(chr_rec$location))
   expect_true(is_unq(chr_rec$date))
   expect_true(is_unq(chr_rec$age))
-
 })
 
 
-test_that('bad values', {
+test_that("bad values", {
   expect_error(
     okc_rec %>%
       step_profile(everything(), profile = vars(age)) %>%
@@ -107,10 +103,9 @@ test_that('bad values', {
   expect_error(
     fixed(rep(c(TRUE, FALSE), each = 5))
   )
-
 })
 
-test_that('printing', {
+test_that("printing", {
   num_rec_1 <- okc_rec %>%
     step_profile(-age, profile = vars(age))
   num_rec_2 <- prep(num_rec_1, okc)
@@ -121,7 +116,7 @@ test_that('printing', {
 
 
 
-test_that('tidy', {
+test_that("tidy", {
   num_rec_3 <- okc_rec %>%
     step_profile(-age, profile = vars(contains("age")), id = "")
   num_rec_4 <- prep(num_rec_3, okc)

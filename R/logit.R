@@ -26,7 +26,7 @@
 #'
 #' rec <- recipe(~ X1 + X2, data = examples)
 #'
-#' logit_trans <- rec  %>%
+#' logit_trans <- rec %>%
 #'   step_logit(all_numeric_predictors())
 #'
 #' logit_obj <- prep(logit_trans, training = examples)
@@ -45,16 +45,18 @@ step_logit <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("logit")) {
-    add_step(recipe,
-             step_logit_new(
-               terms = enquos(...),
-               offset = offset,
-               role = role,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+    add_step(
+      recipe,
+      step_logit_new(
+        terms = enquos(...),
+        offset = offset,
+        role = role,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_logit_new <-
@@ -90,7 +92,7 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
 
 pre_logit <- function(x, eps = 0) {
   x <- ifelse(x == 1, x - eps, x)
-  x <- ifelse(x == 0,     eps, x)
+  x <- ifelse(x == 0, eps, x)
   x
 }
 
@@ -99,7 +101,7 @@ bake.step_logit <- function(object, new_data, ...) {
   for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       binomial()$linkfun(
-        pre_logit(new_data[[ object$columns[i] ]], object$offset)
+        pre_logit(new_data[[object$columns[i]]], object$offset)
       )
   }
   as_tibble(new_data)

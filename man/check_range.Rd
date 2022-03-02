@@ -75,31 +75,31 @@ is returned.
 }
 
 \examples{
-  slack_df <- data_frame(x = 0:100)
-  slack_new_data <- data_frame(x = -10:110)
+slack_df <- data_frame(x = 0:100)
+slack_new_data <- data_frame(x = -10:110)
 
-  # this will fail the check both ends
+# this will fail the check both ends
 \dontrun{
-  recipe(slack_df) \%>\%
-    check_range(x) \%>\%
-    prep() \%>\%
-    bake(slack_new_data)
- }
-
-  # this will fail the check only at the upper end
-\dontrun{
-  recipe(slack_df) \%>\%
-    check_range(x, slack_prop = c(0.1, 0.05)) \%>\%
-    prep() \%>\%
-    bake(slack_new_data)
+recipe(slack_df) \%>\%
+  check_range(x) \%>\%
+  prep() \%>\%
+  bake(slack_new_data)
 }
 
-  # give a warning instead of an error
+# this will fail the check only at the upper end
 \dontrun{
-  recipe(slack_df) \%>\%
-    check_range(x, warn = TRUE) \%>\%
-    prep() \%>\%
-    bake(slack_new_data)
+recipe(slack_df) \%>\%
+  check_range(x, slack_prop = c(0.1, 0.05)) \%>\%
+  prep() \%>\%
+  bake(slack_new_data)
+}
+
+# give a warning instead of an error
+\dontrun{
+recipe(slack_df) \%>\%
+  check_range(x, warn = TRUE) \%>\%
+  prep() \%>\%
+  bake(slack_new_data)
 }
 }
 \seealso{

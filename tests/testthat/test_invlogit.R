@@ -4,10 +4,12 @@ library(tibble)
 
 n <- 20
 set.seed(12)
-ex_dat <- data.frame(x1 = rnorm(n),
-                     x2 = runif(n))
+ex_dat <- data.frame(
+  x1 = rnorm(n),
+  x2 = runif(n)
+)
 
-test_that('simple logit trans', {
+test_that("simple logit trans", {
   rec <- recipe(~., data = ex_dat) %>%
     step_invlogit(x1, id = "")
 
@@ -25,7 +27,7 @@ test_that('simple logit trans', {
   expect_equal(rec_trans, exp_res)
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_invlogit(x1)
   expect_output(print(rec))

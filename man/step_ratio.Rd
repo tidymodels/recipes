@@ -11,7 +11,7 @@ step_ratio(
   role = "predictor",
   trained = FALSE,
   denom = denom_vars(),
-  naming = function(numer, denom) make.names(paste(numer, denom, sep = "_o_")),
+  naming = function(numer, denom) {     make.names(paste(numer, denom, sep = "_o_")) },
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -83,12 +83,13 @@ library(modeldata)
 data(biomass)
 
 biomass$total <- apply(biomass[, 3:7], 1, sum)
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-                    sulfur + total,
-              data = biomass_tr)
+  sulfur + total,
+data = biomass_tr
+)
 
 ratio_recipe <- rec \%>\%
   # all predictors over total

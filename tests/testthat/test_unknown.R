@@ -5,13 +5,15 @@ library(testthat)
 library(modeldata)
 data(okc)
 
-okc_tr <- okc[ (1:30000), ]
+okc_tr <- okc[(1:30000), ]
 okc_te <- okc[-(1:30000), ]
 
-rec <- recipe(~ ., data = okc_tr)
+rec <- recipe(~., data = okc_tr)
 
-test_that('basic functionality', {
-  rec_1 <- rec %>% step_unknown(diet, location) %>% prep()
+test_that("basic functionality", {
+  rec_1 <- rec %>%
+    step_unknown(diet, location) %>%
+    prep()
 
   tr_1 <- juice(rec_1)
   tr_diet <- tr_1$diet[is.na(okc_tr$diet)]
@@ -42,17 +44,18 @@ test_that('basic functionality', {
   expect_true(all(te_loc == "unknown"))
   expect_equal(loc_lvl, levels(te_1$location))
 
-  rec_2 <- rec %>% step_unknown(diet, new_level = "potato-based") %>% prep()
+  rec_2 <- rec %>%
+    step_unknown(diet, new_level = "potato-based") %>%
+    prep()
   tr_2 <- juice(rec_2)
   tr_diet <- tr_2$diet[is.na(okc_tr$diet)]
   tr_diet <- unique(as.character(tr_diet))
   expect_true(all(tr_diet == "potato-based"))
   diet_lvl <- c(sort(unique(okc_tr$diet)), "potato-based")
   expect_equal(diet_lvl, levels(tr_2$diet))
-
 })
 
-test_that('bad args', {
+test_that("bad args", {
   expect_error(
     recipe(~., data = okc_tr) %>%
       step_unknown(age) %>%
@@ -66,12 +69,12 @@ test_that('bad args', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   expect_output(print(rec %>% step_unknown(diet, location)))
   expect_output(print(rec %>% step_unknown(diet, location) %>% prep()))
 })
 
-test_that('tidy methods', {
+test_that("tidy methods", {
   rec_raw <- rec %>% step_unknown(all_nominal(), new_level = "cake", id = "cheese")
 
   expect_equal(

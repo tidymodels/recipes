@@ -22,13 +22,15 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
-#' ilogit_trans <- rec  %>%
+#' ilogit_trans <- rec %>%
 #'   step_center(carbon, hydrogen) %>%
 #'   step_scale(carbon, hydrogen) %>%
 #'   step_invlogit(carbon, hydrogen)
@@ -38,17 +40,19 @@
 #' transformed_te <- bake(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
 step_invlogit <-
-  function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
+  function(recipe, ..., role = NA, trained = FALSE, columns = NULL,
            skip = FALSE, id = rand_id("invlogit")) {
-    add_step(recipe,
-             step_invlogit_new(
-               terms = enquos(...),
-               role = role,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+    add_step(
+      recipe,
+      step_invlogit_new(
+        terms = enquos(...),
+        role = role,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_invlogit_new <-
@@ -81,10 +85,12 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_invlogit <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
+  for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       binomial()$linkinv(unlist(getElement(new_data, object$columns[i]),
-                                use.names = FALSE))
+        use.names = FALSE
+      ))
+  }
   as_tibble(new_data)
 }
 

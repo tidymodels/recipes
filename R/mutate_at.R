@@ -23,29 +23,26 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~ ., data = iris) %>%
-#'   step_mutate_at(contains("Length"), fn = ~ 1/.) %>%
+#' recipe(~., data = iris) %>%
+#'   step_mutate_at(contains("Length"), fn = ~ 1 / .) %>%
 #'   prep() %>%
 #'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #'
-#' recipe(~ ., data = iris) %>%
+#' recipe(~., data = iris) %>%
 #'   # leads to more columns being created.
 #'   step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) %>%
 #'   prep() %>%
 #'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #' @export
-step_mutate_at <- function(
-  recipe, ...,
-  fn,
-  role = "predictor",
-  trained = FALSE,
-  inputs = NULL,
-  skip = FALSE,
-  id = rand_id("mutate_at")
-) {
-
+step_mutate_at <- function(recipe, ...,
+                           fn,
+                           role = "predictor",
+                           trained = FALSE,
+                           inputs = NULL,
+                           skip = FALSE,
+                           id = rand_id("mutate_at")) {
   add_step(
     recipe,
     step_mutate_at_new(
@@ -114,4 +111,3 @@ tidy.step_mutate_at <- function(x, ...) {
   res$id <- x$id
   res
 }
-

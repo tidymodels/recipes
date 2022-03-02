@@ -109,37 +109,39 @@ library(modeldata)
 data(tate_text)
 
 dummies <- recipe(~ artist + medium, data = tate_text) \%>\%
-    step_dummy_extract(artist, medium, sep = ", ") \%>\%
-    prep()
+  step_dummy_extract(artist, medium, sep = ", ") \%>\%
+  prep()
 
 dummy_data <- bake(dummies, new_data = NULL)
 
 dummy_data \%>\%
-    select(starts_with("medium")) \%>\%
-    names()
+  select(starts_with("medium")) \%>\%
+  names()
 
 # More detailed splitting
-dummies_specific <- recipe(~ medium, data = tate_text) \%>\%
-    step_dummy_extract(medium, sep = "(, )|( and )|( on )") \%>\%
-    prep()
+dummies_specific <- recipe(~medium, data = tate_text) \%>\%
+  step_dummy_extract(medium, sep = "(, )|( and )|( on )") \%>\%
+  prep()
 
 dummy_data_specific <- bake(dummies_specific, new_data = NULL)
 
 dummy_data_specific \%>\%
-    select(starts_with("medium")) \%>\%
-    names()
+  select(starts_with("medium")) \%>\%
+  names()
 
 tidy(dummies, number = 1)
 tidy(dummies_specific, number = 1)
 
 # pattern argument can be useful to extract harder patterns
 color_examples <- tibble(
-  colors = c("['red', 'blue']",
-             "['red', 'blue', 'white']",
-             "['blue', 'blue', 'blue']")
+  colors = c(
+    "['red', 'blue']",
+    "['red', 'blue', 'white']",
+    "['blue', 'blue', 'blue']"
+  )
 )
 
-dummies_color <- recipe(~ colors, data = color_examples) \%>\%
+dummies_color <- recipe(~colors, data = color_examples) \%>\%
   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") \%>\%
   prep()
 

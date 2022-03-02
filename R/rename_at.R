@@ -20,22 +20,19 @@
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~ ., data = iris) %>%
+#' recipe(~., data = iris) %>%
 #'   step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) %>%
 #'   prep() %>%
 #'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #' @export
-step_rename_at <- function(
-  recipe, ...,
-  fn,
-  role = "predictor",
-  trained = FALSE,
-  inputs = NULL,
-  skip = FALSE,
-  id = rand_id("rename_at")
-) {
-
+step_rename_at <- function(recipe, ...,
+                           fn,
+                           role = "predictor",
+                           trained = FALSE,
+                           inputs = NULL,
+                           skip = FALSE,
+                           id = rand_id("rename_at")) {
   add_step(
     recipe,
     step_rename_at_new(
@@ -103,4 +100,3 @@ tidy.step_rename_at <- function(x, ...) {
   res$id <- x$id
   res
 }
-

@@ -71,7 +71,7 @@ examples <- as.data.frame(examples)
 
 rec <- recipe(~ V1 + V2, data = examples)
 
-log_trans <- rec  \%>\%
+log_trans <- rec \%>\%
   step_log(all_numeric_predictors())
 
 log_obj <- prep(log_trans, training = examples)
@@ -96,7 +96,6 @@ recipe(~ V1 + V2, data = examples2) \%>\%
   step_log(all_numeric_predictors(), signed = TRUE) \%>\%
   prep(training = examples2) \%>\%
   bake(examples2)
-
 }
 \seealso{
 Other individual transformation steps: 

@@ -21,7 +21,7 @@ okc_all_fac <-
 
 # ----------------------------------------------------------------
 
-test_that('factors all the way down', {
+test_that("factors all the way down", {
   tr <-
     okc_all_fac %>%
     slice(1:500)
@@ -38,7 +38,7 @@ test_that('factors all the way down', {
 })
 
 
-test_that('factors all the way down with skipping', {
+test_that("factors all the way down with skipping", {
   tr <-
     okc_all_fac %>%
     slice(1:500)
@@ -57,7 +57,7 @@ test_that('factors all the way down with skipping', {
 
 # ----------------------------------------------------------------
 
-test_that('mixed nominal data', {
+test_that("mixed nominal data", {
   tr <-
     okc_fac %>%
     slice(1:500)
@@ -73,7 +73,7 @@ test_that('mixed nominal data', {
 })
 
 
-test_that('mixed nominal data with skipping', {
+test_that("mixed nominal data with skipping", {
   tr <-
     okc_fac %>%
     slice(1:500)
@@ -92,7 +92,7 @@ test_that('mixed nominal data with skipping', {
 
 # ----------------------------------------------------------------
 
-test_that('no factors', {
+test_that("no factors", {
   tr <-
     okc_chr %>%
     slice(1:500)
@@ -108,7 +108,7 @@ test_that('no factors', {
 })
 
 
-test_that('no factors with skipping', {
+test_that("no factors with skipping", {
   tr <-
     okc_chr %>%
     slice(1:500)
@@ -127,7 +127,7 @@ test_that('no factors with skipping', {
 
 # ----------------------------------------------------------------
 
-test_that('missing factors', {
+test_that("missing factors", {
   tr <-
     okc_fac %>%
     slice(1:500)
@@ -142,7 +142,7 @@ test_that('missing factors', {
   expect_warning(check_nominal_type(te, rec$orig_lvls))
 })
 
-test_that('missing factors with skipping', {
+test_that("missing factors with skipping", {
   tr <-
     okc_fac %>%
     slice(1:500)

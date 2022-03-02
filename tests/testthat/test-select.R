@@ -127,8 +127,10 @@ test_that("tidying", {
 
   set.seed(403)
   rec <- recipe(~., data = iris) %>%
-    step_select(species = Species, starts_with("Sepal"), all_of(petal),
-                id = "select_no_qq") %>%
+    step_select(
+      species = Species, starts_with("Sepal"), all_of(petal),
+      id = "select_no_qq"
+    ) %>%
     step_select(all_of(!!petal), id = "select_qq")
   prepped <- prep(rec, training = iris_train)
 

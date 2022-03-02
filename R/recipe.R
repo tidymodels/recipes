@@ -5,13 +5,15 @@
 #'
 #' @aliases recipe recipe.default recipe.formula
 #' @export
-recipe <- function(x, ...)
+recipe <- function(x, ...) {
   UseMethod("recipe")
+}
 
 #' @rdname recipe
 #' @export
-recipe.default <- function(x, ...)
+recipe.default <- function(x, ...) {
   rlang::abort("`x` should be a data frame, matrix, or tibble")
+}
 
 #' @rdname recipe
 #' @param vars A character string of column names corresponding to variables
@@ -53,12 +55,14 @@ recipe.default <- function(x, ...)
 #' data(biomass)
 #'
 #' # split data
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' # With only predictors and outcomes, use a formula
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' # Now add preprocessing steps to the recipe
 #' sp_signed <- rec %>%
@@ -71,7 +75,8 @@ recipe.default <- function(x, ...)
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
 #'
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
-#'                   data = biomass_tr)
+#'   data = biomass_tr
+#' )
 #' multi_y <- multi_y %>%
 #'   step_center(all_numeric_predictors()) %>%
 #'   step_scale(all_numeric_predictors())
@@ -82,7 +87,8 @@ recipe.default <- function(x, ...)
 #'
 #' rec <- recipe(biomass_tr) %>%
 #'   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-#'            new_role = "predictor") %>%
+#'     new_role = "predictor"
+#'   ) %>%
 #'   update_role(HHV, new_role = "outcome") %>%
 #'   update_role(sample, new_role = "id variable") %>%
 #'   update_role(dataset, new_role = "splitting indicator")
@@ -93,35 +99,42 @@ recipe.data.frame <-
            ...,
            vars = NULL,
            roles = NULL) {
-
     if (!is.null(formula)) {
-      if (!is.null(vars))
+      if (!is.null(vars)) {
         rlang::abort(
-          paste0("This `vars` specification will be ignored ",
-                 "when a formula is used"
+          paste0(
+            "This `vars` specification will be ignored ",
+            "when a formula is used"
           )
         )
-      if (!is.null(roles))
+      }
+      if (!is.null(roles)) {
         rlang::abort(
-          paste0("This `roles` specification will be ignored ",
-                 "when a formula is used"
+          paste0(
+            "This `roles` specification will be ignored ",
+            "when a formula is used"
           )
         )
+      }
 
       obj <- recipe.formula(formula, x, ...)
       return(obj)
     }
 
-    if (is.null(vars))
+    if (is.null(vars)) {
       vars <- colnames(x)
+    }
 
-    if (!is_tibble(x))
+    if (!is_tibble(x)) {
       x <- as_tibble(x)
+    }
 
-    if (any(table(vars) > 1))
+    if (any(table(vars) > 1)) {
       rlang::abort("`vars` should have unique members")
-    if (any(!(vars %in% colnames(x))))
+    }
+    if (any(!(vars %in% colnames(x)))) {
       rlang::abort("1+ elements of `vars` are not in `x`")
+    }
 
     x <- x[, vars]
 
@@ -129,14 +142,18 @@ recipe.data.frame <-
 
     ## Check and add roles when available
     if (!is.null(roles)) {
-      if (length(roles) != length(vars))
+      if (length(roles) != length(vars)) {
         rlang::abort(
-          paste0("The number of roles should be the same as the number of ",
-                 "variables")
+          paste0(
+            "The number of roles should be the same as the number of ",
+            "variables"
+          )
         )
+      }
       var_info$role <- roles
-    } else
+    } else {
       var_info$role <- NA
+    }
 
     ## Add types
     var_info <- full_join(get_types(x), var_info, by = "variable")
@@ -184,14 +201,16 @@ recipe.matrix <- function(x, ...) {
 }
 
 form2args <- function(formula, data, ...) {
-  if (!is_formula(formula))
+  if (!is_formula(formula)) {
     formula <- as.formula(formula)
+  }
 
   ## check for in-line formulas
   inline_check(formula)
 
-  if (!is_tibble(data))
+  if (!is_tibble(data)) {
     data <- as_tibble(data)
+  }
 
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
@@ -208,8 +227,9 @@ form2args <- function(formula, data, ...) {
 
   ## derive roles
   roles <- rep("predictor", length(predictors))
-  if (length(outcomes) > 0)
+  if (length(outcomes) > 0) {
     roles <- c(roles, rep("outcome", length(outcomes)))
+  }
 
   ## pass to recipe.default with vars and roles
 
@@ -236,8 +256,9 @@ inline_check <- function(x) {
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @export
-prep <- function(x, ...)
+prep <- function(x, ...) {
   UseMethod("prep")
+}
 
 #' Estimate a preprocessing recipe
 #'
@@ -319,7 +340,6 @@ prep.recipe <-
            log_changes = FALSE,
            strings_as_factors = TRUE,
            ...) {
-
     training <- check_training_set(training, x, fresh)
 
     tr_data <- train_info(training)
@@ -337,7 +357,7 @@ prep.recipe <-
     # The only way to get the results for skipped steps is to
     # use `retain = TRUE` so issue a warning if this is not the case
     skippers <- map_lgl(x$steps, is_skipable)
-    if (any(skippers) & !retain)
+    if (any(skippers) & !retain) {
       rlang::warn(
         paste0(
           "Since some operations have `skip = TRUE`, using ",
@@ -345,6 +365,7 @@ prep.recipe <-
           "be accessible."
         )
       )
+    }
 
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
@@ -361,9 +382,8 @@ prep.recipe <-
           )
         rlang::abort(msg)
       }
-      note <- paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
+      note <- paste("oper", i, gsub("_", " ", class(x$steps[[i]])[1]))
       if (!x$steps[[i]]$trained | fresh) {
-
         if (verbose) {
           cat(note, "[training]", "\n")
         }
@@ -374,8 +394,9 @@ prep.recipe <-
         # then apply it to the current training set
         x$steps[[i]] <-
           prep(x$steps[[i]],
-               training = training,
-               info = x$term_info)
+            training = training,
+            info = x$term_info
+          )
         training <- bake(x$steps[[i]], new_data = training)
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
@@ -385,11 +406,10 @@ prep.recipe <-
           new_vars <- setdiff(x$term_info$variable, running_info$variable)
           pos_new_var <- x$term_info$variable %in% new_vars
           pos_new_and_na_role <- pos_new_var & is.na(x$term_info$role)
-          pos_new_and_na_source <- pos_new_var  & is.na(x$term_info$source)
+          pos_new_and_na_source <- pos_new_var & is.na(x$term_info$source)
 
           x$term_info$role[pos_new_and_na_role] <- x$steps[[i]]$role
           x$term_info$source[pos_new_and_na_source] <- "derived"
-
         }
 
         changelog(log_changes, before_nms, names(training), x$steps[[i]])
@@ -398,9 +418,7 @@ prep.recipe <-
           running_info,
           mutate(x$term_info, number = i, skip = x$steps[[i]]$skip)
         )
-
-      }
-      else {
+      } else {
         if (verbose) cat(note, "[pre-trained]\n")
       }
     }
@@ -410,17 +428,22 @@ prep.recipe <-
       lvls <- lapply(training, get_levels)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
-    } else lvls <- NULL
+    } else {
+      lvls <- NULL
+    }
 
     if (retain) {
-      if (verbose)
-        cat("The retained training set is ~",
-            format(object.size(training), units = "Mb", digits = 2),
-            " in memory.\n\n")
+      if (verbose) {
+        cat(
+          "The retained training set is ~",
+          format(object.size(training), units = "Mb", digits = 2),
+          " in memory.\n\n"
+        )
+      }
 
       x$template <- training
     } else {
-      x$template <- training[0,]
+      x$template <- training[0, ]
     }
 
     x$tr_info <- tr_data
@@ -451,8 +474,9 @@ prep.recipe <-
 #' @rdname bake
 #' @aliases bake bake.recipe
 #' @export
-bake <- function(object, ...)
+bake <- function(object, ...) {
   UseMethod("bake")
+}
 
 #' Apply a trained preprocessing recipe
 #'
@@ -594,11 +618,13 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     var_levels <- object$levels
     var_levels <- var_levels[out_names]
     check_values <-
-      vapply(var_levels, function(x)
-        (!all(is.na(x))), c(all = TRUE))
+      vapply(var_levels, function(x) {
+        (!all(is.na(x)))
+      }, c(all = TRUE))
     var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0)
+    if (length(var_levels) > 0) {
       new_data <- strings2factors(new_data, var_levels)
+    }
   }
 
   if (composition == "dgCMatrix") {
@@ -640,21 +666,26 @@ print.recipe <- function(x, form_width = 30, ...) {
   if ("tr_info" %in% names(x)) {
     nmiss <- x$tr_info$nrows - x$tr_info$ncomplete
     cat("\nTraining data contained ",
-        x$tr_info$nrows,
-        " data points and ",
-        sep = "")
-    if (x$tr_info$nrows == x$tr_info$ncomplete)
+      x$tr_info$nrows,
+      " data points and ",
+      sep = ""
+    )
+    if (x$tr_info$nrows == x$tr_info$ncomplete) {
       cat("no missing data.\n")
-    else
-      cat(nmiss,
-          "incomplete",
-          ifelse(nmiss > 1, "rows.", "row."),
-          "\n")
+    } else {
+      cat(
+        nmiss,
+        "incomplete",
+        ifelse(nmiss > 1, "rows.", "row."),
+        "\n"
+      )
+    }
   }
   if (!is.null(x$steps)) {
     cat("\nOperations:\n\n")
-    for (i in seq_along(x$steps))
+    for (i in seq_along(x$steps)) {
       print(x$steps[[i]], form_width = form_width)
+    }
   }
   invisible(x)
 }
@@ -680,7 +711,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' row in the summary tibble.
 #'
 #' @examples
-#' rec <- recipe( ~ ., data = USArrests)
+#' rec <- recipe(~., data = USArrests)
 #' summary(rec)
 #' rec <- step_pca(rec, all_numeric(), num_comp = 3)
 #' summary(rec) # still the same since not yet trained
@@ -689,10 +720,11 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @export
 #' @seealso [recipe()] [prep()]
 summary.recipe <- function(object, original = FALSE, ...) {
-  if (original)
+  if (original) {
     object$var_info
-  else
+  } else {
     object$term_info
+  }
 }
 
 
@@ -751,11 +783,13 @@ juice <- function(object, ..., composition = "tibble") {
     var_levels <- object$levels
     var_levels <- var_levels[out_names]
     check_values <-
-      vapply(var_levels, function(x)
-        (!all(is.na(x))), c(all = TRUE))
+      vapply(var_levels, function(x) {
+        (!all(is.na(x)))
+      }, c(all = TRUE))
     var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0)
+    if (length(var_levels) > 0) {
       new_data <- strings2factors(new_data, var_levels)
+    }
   }
 
   if (composition == "dgCMatrix") {

@@ -82,8 +82,8 @@ levels that is used for the new value) is returned.
 library(modeldata)
 data(okc)
 
-okc_tr <- okc[1:30000,]
-okc_te <- okc[30001:30006,]
+okc_tr <- okc[1:30000, ]
+okc_te <- okc[30001:30006, ]
 okc_te$diet[3] <- "cannibalism"
 okc_te$diet[4] <- "vampirism"
 

@@ -4,11 +4,11 @@ library(dplyr)
 
 # ------------------------------------------------------------------------------
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage', {
+test_that("basic usage", {
   rec <-
     iris_rec %>%
     step_slice(1:5)
@@ -34,7 +34,7 @@ test_that('basic usage', {
 })
 
 
-test_that('skip = FALSE', {
+test_that("skip = FALSE", {
   rec <-
     iris_rec %>%
     step_slice(1:5, skip = FALSE)
@@ -59,7 +59,7 @@ test_that('skip = FALSE', {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('quasiquotation', {
+test_that("quasiquotation", {
   values <- 1:5
   rec_1 <-
     iris_rec %>%
@@ -96,7 +96,7 @@ test_that('quasiquotation', {
 })
 
 
-test_that('no input', {
+test_that("no input", {
   no_inputs <-
     iris_rec %>%
     step_slice() %>%
@@ -106,7 +106,7 @@ test_that('no input', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_slice(1:2)
   expect_output(print(rec))
   expect_output(prep(rec, training = iris, verbose = TRUE))

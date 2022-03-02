@@ -3,7 +3,6 @@ library(recipes)
 library(tibble)
 
 test_that("basics", {
-
   n <- 20
   set.seed(12)
   ex_dat <- data.frame(
@@ -174,7 +173,6 @@ test_that("remove with quasi-quotation", {
 })
 
 test_that("printing", {
-
   n <- 20
   set.seed(12)
   ex_dat <- data.frame(
@@ -225,4 +223,3 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
-

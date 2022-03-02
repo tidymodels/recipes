@@ -30,11 +30,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' ranged_trans <- rec %>%
 #'   step_range(carbon, hydrogen)
@@ -48,7 +50,6 @@
 #'
 #' tidy(ranged_trans, number = 1)
 #' tidy(ranged_obj, number = 1)
-
 step_range <-
   function(recipe,
            ...,
@@ -137,14 +138,18 @@ print.step_range <-
 #' @export
 tidy.step_range <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$ranges) %||% character(),
-                  min = unname(x$ranges["mins",]),
-                  max = unname(x$ranges["maxs",]))
+    res <- tibble(
+      terms = colnames(x$ranges) %||% character(),
+      min = unname(x$ranges["mins", ]),
+      max = unname(x$ranges["maxs", ])
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  min = na_dbl,
-                  max = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      min = na_dbl,
+      max = na_dbl
+    )
   }
   res$id <- x$id
   res

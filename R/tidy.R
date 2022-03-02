@@ -30,7 +30,7 @@
 #' library(modeldata)
 #' data(okc)
 #'
-#' okc_rec <- recipe(~ ., data = okc) %>%
+#' okc_rec <- recipe(~., data = okc) %>%
 #'   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
 #'   step_date(date, features = "dow") %>%
 #'   step_center(all_numeric()) %>%
@@ -57,12 +57,14 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   num_oper <- length(x$steps)
   pattern <- "(^step_)|(^check_)"
   if (!is.na(id)) {
-    if (!is.na(number))
+    if (!is.na(number)) {
       rlang::abort("You may specify `number` or `id`, but not both.")
-    if (length(id) != 1L && !is.character(id))
+    }
+    if (length(id) != 1L && !is.character(id)) {
       rlang::abort("If `id` is provided, it must be a length 1 character vector.")
+    }
     step_ids <- vapply(x$steps, function(x) x$id, character(1))
-    if(!(id %in% step_ids)) {
+    if (!(id %in% step_ids)) {
       rlang::abort("Supplied `id` not found in the recipe.")
     }
     number <- which(id == step_ids)
@@ -78,24 +80,29 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
     oper <- vapply(oper, function(x) x[1], character(1))
 
     oper_types <- gsub(pattern, "", oper_classes)
-    is_trained <- vapply(x$steps,
-                         function(x) x$trained,
-                         logical(1))
-    res <- tibble(number = seq_along(x$steps),
-                  operation = oper,
-                  type = oper_types,
-                  trained = is_trained,
-                  skip = skipped,
-                  id = ids)
+    is_trained <- vapply(
+      x$steps,
+      function(x) x$trained,
+      logical(1)
+    )
+    res <- tibble(
+      number = seq_along(x$steps),
+      operation = oper,
+      type = oper_types,
+      trained = is_trained,
+      skip = skipped,
+      id = ids
+    )
   } else {
-    if (number > num_oper || length(number) > 1)
+    if (number > num_oper || length(number) > 1) {
       rlang::abort(
         paste0(
           "`number` should be a single value between 1 and ",
-           num_oper,
+          num_oper,
           "."
-          )
+        )
       )
+    }
 
     res <- tidy(x$steps[[number]], ...)
   }
@@ -118,8 +125,8 @@ tidy.step <- function(x, ...) {
 tidy.check <- function(x, ...) {
   rlang::abort(
     paste0(
-       "No `tidy` method for a check with classes: ",
-       paste0(class(x), collapse = ", ")
+      "No `tidy` method for a check with classes: ",
+      paste0(class(x), collapse = ", ")
     )
   )
 }

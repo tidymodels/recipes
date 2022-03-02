@@ -7,14 +7,14 @@ library(modeldata)
 data(okc)
 
 set.seed(131)
-okc_rec <- recipe(~ ., data = okc) %>%
+okc_rec <- recipe(~., data = okc) %>%
   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
   step_date(date, features = "dow", id = "date_dow") %>%
   step_center(all_numeric()) %>%
   step_dummy(all_nominal()) %>%
   check_cols(starts_with("date"))
 
-test_that('untrained', {
+test_that("untrained", {
   exp_res_1 <- tibble(
     number = 1:5,
     operation = c("step", "step", "step", "step", "check"),
@@ -27,7 +27,7 @@ test_that('untrained', {
 })
 
 
-test_that('trained', {
+test_that("trained", {
   exp_res_2 <- tibble(
     number = 1:5,
     operation = c("step", "step", "step", "step", "check"),
@@ -42,12 +42,12 @@ test_that('trained', {
   expect_equal(tidy(trained), exp_res_2)
 })
 
-test_that('select step', {
+test_that("select step", {
   exp_res_3 <- tibble(
-   terms = "date",
-   value = "dow",
-   ordinal = FALSE,
-   id = okc_rec$steps[[2]][["id"]]
+    terms = "date",
+    value = "dow",
+    ordinal = FALSE,
+    id = okc_rec$steps[[2]][["id"]]
   )
   expect_equal(tidy(okc_rec, number = 2), exp_res_3)
   expect_equal(tidy(okc_rec, id = "date_dow"), exp_res_3)
@@ -56,20 +56,21 @@ test_that('select step', {
 test_that("empty recipe", {
   expect_equal(
     tidy(recipe(x = mtcars)),
-    tibble(number = integer(),
-           operation = character(),
-           type = character(),
-           trained = logical(),
-           skip = logical(),
-           id = character())
+    tibble(
+      number = integer(),
+      operation = character(),
+      type = character(),
+      trained = logical(),
+      skip = logical(),
+      id = character()
+    )
   )
 })
 
 
-test_that('bad args', {
+test_that("bad args", {
   expect_error(tidy(trained, number = NULL))
   expect_error(tidy(trained, number = 100))
   expect_error(tidy(trained, number = 1, id = "id"))
   expect_error(tidy(trained, id = "id"))
 })
-
