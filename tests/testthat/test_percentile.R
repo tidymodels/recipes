@@ -106,8 +106,8 @@ test_that("passing new probs works", {
 test_that("printing", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = biomass_tr, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

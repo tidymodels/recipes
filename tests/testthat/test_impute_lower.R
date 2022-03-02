@@ -55,7 +55,7 @@ test_that("basic usage", {
 })
 
 test_that("bad data", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_impute_lower(carbon, hydrogen, has_neg) %>%
       prep()
@@ -66,8 +66,8 @@ test_that("printing", {
   rec2 <- rec %>%
     step_impute_lower(carbon, hydrogen)
 
-  expect_output(print(rec))
-  expect_output(prep(rec2, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec2, training = biomass_tr, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

@@ -95,8 +95,8 @@ test_that("printing", {
       trees = 7
     )
 
-  expect_output(print(imputed))
-  expect_output(prep(imputed, training = biomass, verbose = TRUE))
+  expect_snapshot(print(imputed))
+  expect_snapshot(prep(imputed, training = biomass, verbose = TRUE))
 })
 
 test_that("tunable", {

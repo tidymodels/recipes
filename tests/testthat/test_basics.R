@@ -17,10 +17,18 @@ test_that("Recipe correctly identifies output variable", {
 })
 
 test_that("Recipe fails on in-line functions", {
-  expect_error(recipe(HHV ~ log(nitrogen), data = biomass))
-  expect_error(recipe(HHV ~ (.)^2, data = biomass))
-  expect_error(recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass))
-  expect_error(recipe(HHV ~ nitrogen^2, data = biomass))
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ log(nitrogen), data = biomass)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ (.)^2, data = biomass)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ nitrogen^2, data = biomass)
+  )
 })
 
 test_that("return character or factor values", {
@@ -40,13 +48,9 @@ test_that("return character or factor values", {
 
 
 test_that("Using prepare", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     prepare(recipe(HHV ~ ., data = biomass),
       training = biomass
-    ),
-    paste0(
-      "As of version 0.0.1.9006, used `prep` ",
-      "instead of `prepare`"
     )
   )
 })
@@ -110,13 +114,11 @@ test_that("bake without prep", {
     step_center(all_predictors()) %>%
     step_scale(all_predictors()) %>%
     step_spatialsign(all_predictors())
-  expect_error(
-    bake(sp_signed, new_data = biomass_te),
-    "At least one step has not been trained. Please run."
+  expect_snapshot(error = TRUE,
+    bake(sp_signed, new_data = biomass_te)
   )
-  expect_error(
-    juice(sp_signed),
-    "At least one step has not been trained. Please run."
+  expect_snapshot(error = TRUE,
+    juice(sp_signed)
   )
 })
 
@@ -127,7 +129,9 @@ test_that("bake without newdata", {
     step_scale(all_numeric()) %>%
     prep(training = biomass)
 
-  expect_error(bake(rec, newdata = biomass))
+  expect_snapshot(error = TRUE,
+    bake(rec, newdata = biomass)
+  )
 })
 
 test_that("`juice()` returns a 0 column / N row tibble when a selection returns no columns", {
@@ -153,20 +157,18 @@ test_that("`bake()` returns a 0 column / N row tibble when a selection returns n
 test_that("tunable arguments at prep-time", {
   .tune <- function() rlang::call2("tune")
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(Species ~ ., data = iris) %>%
       step_ns(all_predictors(), deg_free = .tune()) %>%
-      prep(),
-    "'deg_free'. Do you want "
+      prep()
   )
 })
 
 test_that("logging", {
-  expect_output(
+  expect_snapshot(
     recipe(mpg ~ ., data = mtcars) %>%
       step_ns(disp, deg_free = 2, id = "splines!") %>%
-      prep(log_changes = TRUE),
-    "splines"
+      prep(log_changes = TRUE)
   )
 })
 

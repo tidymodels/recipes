@@ -1,3 +1,40 @@
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Operations:
+      
+      Hyperbolic sin (inv) transformation on x1, x2
+
+---
+
+    Code
+      prep(rec, training = ex_dat, verbose = TRUE)
+    Output
+      oper 1 step hyperbolic [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Training data contained 20 data points and no missing data.
+      
+      Operations:
+      
+      Hyperbolic sin (inv) transformation on x1, x2 [trained]
+
 # empty printing
 
     Code

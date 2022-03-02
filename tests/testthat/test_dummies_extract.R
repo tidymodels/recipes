@@ -231,8 +231,8 @@ test_that("naming function", {
 test_that("printing", {
   rec <- recipe(~medium, data = tate_text) %>%
     step_dummy_extract(all_predictors(), sep = ", ")
-  expect_output(print(rec))
-  expect_output(prep(rec, training = tate_text, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = tate_text, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

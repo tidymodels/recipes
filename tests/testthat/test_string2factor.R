@@ -36,12 +36,12 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_string2factor(w, n) %>%
       prep(ex_dat)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_string2factor(n, ordered = "yes") %>%
       prep(ex_dat)
@@ -53,8 +53,8 @@ test_that("printing", {
   ex_3 <- rec %>%
     step_string2factor(w, x) %>%
     prep(ex_dat, strings_as_factors = FALSE)
-  expect_output(print(ex_3))
-  expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(ex_3))
+  expect_snapshot(prep(ex_3, training = ex_dat, verbose = TRUE))
 })
 
 test_that("pre-made factors", {

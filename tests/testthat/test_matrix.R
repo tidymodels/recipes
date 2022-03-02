@@ -64,6 +64,10 @@ test_that("correct types", {
 })
 
 test_that("bad args", {
-  expect_error(bake(rec, new_data = okc_te, composition = "matrix"))
-  expect_error(juice(rec, composition = "matrix"))
+  expect_snapshot(error = TRUE,
+    bake(rec, new_data = okc_te, composition = "matrix")
+  )
+  expect_snapshot(error = TRUE,
+    juice(rec, composition = "matrix")
+  )
 })

@@ -78,8 +78,8 @@ test_that("group-wise zv filtering", {
 test_that("printing", {
   rec <- recipe(y ~ ., data = dat) %>%
     step_zv(x1, x2, x3, x4)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = dat, verbose = TRUE))
 })
 
 

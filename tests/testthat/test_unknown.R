@@ -30,9 +30,8 @@ test_that("basic functionality", {
   expect_equal(loc_lvl, levels(tr_1$location))
 
 
-  expect_warning(
-    te_1 <- bake(rec_1, okc_te),
-    "There are new levels in a factor: port costa"
+  expect_snapshot(
+    te_1 <- bake(rec_1, okc_te)
   )
   te_diet <- te_1$diet[is.na(okc_te$diet)]
   te_diet <- unique(as.character(te_diet))
@@ -56,12 +55,12 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = okc_tr) %>%
       step_unknown(age) %>%
       prep()
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = okc_tr) %>%
       step_unknown(diet, new_level = "anything") %>%
       prep()
@@ -70,8 +69,8 @@ test_that("bad args", {
 
 
 test_that("printing", {
-  expect_output(print(rec %>% step_unknown(diet, location)))
-  expect_output(print(rec %>% step_unknown(diet, location) %>% prep()))
+  expect_snapshot(print(rec %>% step_unknown(diet, location)))
+  expect_snapshot(print(rec %>% step_unknown(diet, location) %>% prep()))
 })
 
 test_that("tidy methods", {

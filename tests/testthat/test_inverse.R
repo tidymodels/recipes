@@ -39,8 +39,8 @@ test_that("alt offset", {
 test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_inverse(x1, x2, x3, x4)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

@@ -82,8 +82,8 @@ test_that("printing", {
   skip_if_not_installed("RSpectra")
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, num_comp = 2)
-  expect_output(print(ica_extract))
-  expect_output(prep(ica_extract, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(ica_extract))
+  expect_snapshot(prep(ica_extract, training = biomass_tr, verbose = TRUE))
 })
 
 
@@ -100,9 +100,7 @@ test_that("No ICA comps", {
     names(biomass_tr)[-(1:2)]
   )
   expect_true(all(names(ica_extract_trained$steps[[1]]$res) == "x_vars"))
-  expect_output(print(ica_extract_trained),
-    regexp = "No ICA components were extracted"
-  )
+  expect_snapshot(print(ica_extract_trained))
   expect_true(all(is.na(tidy(ica_extract_trained, 2)$value)))
 })
 

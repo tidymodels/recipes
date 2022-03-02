@@ -51,8 +51,8 @@ test_that("alt offset", {
 test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_log(x1, x2, x3, x4)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
 
@@ -64,10 +64,7 @@ test_that("signed arg", {
   rec2 <- recipe(ex_with_neg, ~x) %>%
     step_log(x, offset = 2, signed = TRUE)
   expect_equal(bake(rec, ex_with_neg), tibble(x = c(-2, 0, 0, 2)))
-  expect_warning(
-    prep(rec2),
-    "When signed is TRUE, offset will be ignored"
-  )
+  expect_snapshot(prep(rec2))
 })
 
 test_that("empty selection prep/bake is a no-op", {

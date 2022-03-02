@@ -27,36 +27,15 @@ test_that("check_missing passes silently when no NA", {
 })
 
 test_that("check_missing throws error on all types", {
-  expect_error(
-    tst(a),
-    "The following columns contain missing values: `a`."
-  )
-  expect_error(
-    tst(b),
-    "The following columns contain missing values: `b`."
-  )
-  expect_error(
-    tst(d),
-    "The following columns contain missing values: `d`."
-  )
-  expect_error(
-    tst(e),
-    "The following columns contain missing values: `e`."
-  )
+  expect_snapshot(error = TRUE, tst(a))
+  expect_snapshot(error = TRUE, tst(b))
+  expect_snapshot(error = TRUE, tst(d))
+  expect_snapshot(error = TRUE, tst(e))
 })
 
 test_that("check_missing works on multiple columns simultaneously", {
-  expect_error(
-    tst(a, e),
-    "The following columns contain missing values: `a`, `e`."
-  )
-  expect_error(
-    tst(everything()),
-    paste0(
-      "The following columns contain missing values: ",
-      "`a`, `b`, `d`, `e`."
-    )
-  )
+  expect_snapshot(error = TRUE, tst(a, e))
+  expect_snapshot(error = TRUE, tst(everything()))
 })
 
 test_that("check_missing on a new set", {
@@ -65,9 +44,8 @@ test_that("check_missing on a new set", {
   rp <- recipe(no_na) %>%
     check_missing(a) %>%
     prep(no_na)
-  expect_error(
-    bake(rp, na),
-    "The following columns contain missing values: `a`."
+  expect_snapshot(error = TRUE,
+    bake(rp, na)
   )
 })
 

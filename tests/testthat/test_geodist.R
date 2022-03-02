@@ -69,95 +69,87 @@ test_that("lat lon", {
   expect_equal(near_station[["geo_dist"]], 367, tolerance = 1)
 
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 100, ref_lon = 100,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "`ref_lat` should be between -90 and 90"
+      prep()
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 0, ref_lon = 190,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "`ref_lon` should be between -180 and 180"
+      prep()
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = -100, ref_lon = 0,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "`ref_lat` should be between -90 and 90"
+      prep()
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 0, ref_lon = -190,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "`ref_lon` should be between -180 and 180"
+      prep()
   )
 
   postal <- tibble(latitude = 100, longitude = 0)
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 38.8986312, ref_lon = -77.0062457,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "All `lat` values should be between -90 and 90"
+      prep()
   )
 
   postal <- tibble(latitude = 0, longitude = 190)
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 38.8986312, ref_lon = -77.0062457,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "All `lon` values should be between -180 and 180"
+      prep()
   )
   postal <- tibble(latitude = -100, longitude = 0)
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 38.8986312, ref_lon = -77.0062457,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "All `lat` values should be between -90 and 90"
+      prep()
   )
 
   postal <- tibble(latitude = 0, longitude = -190)
-  expect_error(
+  expect_snapshot(error = TRUE,
     near_station <- recipe(~., data = postal) %>%
       step_geodist(
         lat = latitude, lon = longitude, log = FALSE,
         ref_lat = 38.8986312, ref_lon = -77.0062457,
         is_lat_lon = TRUE
       ) %>%
-      prep(),
-    "All `lon` values should be between -180 and 180"
+      prep()
   )
 })
 
@@ -167,32 +159,32 @@ test_that("bad args", {
   rand_data_2$y1 <- runif(nrow(rand_data_2))
   rec <- recipe(~., data = rand_data_2)
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_geodist(starts_with("x"), y, ref_lat = 0.5, ref_lon = 0.25) %>%
       prep(training = rand_data_2)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_geodist(x, starts_with("y"), ref_lat = 0.5, ref_lon = 0.25) %>%
       prep(training = rand_data_2)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_geodist(x, y, ref_lat = letters[1:2], ref_lon = 0.25) %>%
       prep(training = rand_data_2)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_geodist(x, y, ref_lon = letters[1:2], ref_lat = 0.25) %>%
       prep(training = rand_data_2)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, name = 1) %>%
       prep(training = rand_data_2)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, log = exp(1)) %>%
       prep(training = rand_data_2)
@@ -205,6 +197,6 @@ test_that("printing", {
       ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
       log = FALSE
     )
-  expect_output(print(rec))
-  expect_output(prep(rec, training = rand_data, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = rand_data, verbose = TRUE))
 })

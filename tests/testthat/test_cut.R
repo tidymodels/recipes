@@ -3,13 +3,11 @@ library(dplyr)
 test_that("step_cut throws error on non-numerics", {
   x <- tibble(num_var = 1:3, cat_var = c("1", "2", "3"))
   expect_error(recipe(x) %>% step_cut(num_var, breaks = 2) %>% prep(), NA)
-  expect_error(
-    recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep(),
-    "All columns selected for the step should be numeric"
+  expect_snapshot(error = TRUE,
+    recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
   )
-  expect_error(
-    recipe(x) %>% step_cut(everything(), breaks = 2) %>% prep(),
-    "All columns selected for the step should be numeric"
+  expect_snapshot(error = TRUE,
+    recipe(x) %>% step_cut(everything(), breaks = 2) %>% prep()
   )
 })
 
@@ -32,13 +30,11 @@ test_that("create_full_breaks helper function", {
 })
 
 test_that("full_breaks_check will give warnings", {
-  expect_error(
-    full_breaks_check(10),
-    "In step_cut: variable is invariant and equal to break point"
+  expect_snapshot(error = TRUE,
+    full_breaks_check(10)
   )
-  expect_warning(
-    full_breaks_check(c(10, 20)),
-    "In step_cut: this will create a factor with one value only"
+  expect_snapshot(
+    full_breaks_check(c(10, 20))
   )
   expect_error(full_breaks_check(c(10, 20, 30)), NA)
   expect_warning(full_breaks_check(c(10, 20, 30)), NA)

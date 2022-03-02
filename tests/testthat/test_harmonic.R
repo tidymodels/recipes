@@ -22,38 +22,49 @@ test_that("harmonic error", {
 
 
   # missing input
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 1,
-      cycle_size = NA
-    ))
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 1,
-      starting_val = 0,
-      cycle_size = NA
-    ))
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 1,
-      starting_val = 0,
-      cycle_size = "a"
-    ))
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+      step_harmonic(time_var,
+        frequency = 1,
+        cycle_size = NA
+      )
+  )
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+      step_harmonic(time_var,
+        frequency = 1,
+        starting_val = 0,
+        cycle_size = NA
+      )
+  )
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+     step_harmonic(time_var,
+       frequency = 1,
+       starting_val = 0,
+       cycle_size = "a"
+     )
+  )
 
   # starting_val is numeric, Date or POSIXt
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 1,
-      starting_val = "a",
-      cycle_size = 86400
-    ))
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+      step_harmonic(time_var,
+        frequency = 1,
+        starting_val = "a",
+        cycle_size = 86400
+      )
+  )
 
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 1,
-      starting_val = factor("a"),
-      cycle_size = 86400
-    ))
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+      step_harmonic(
+        time_var,
+        frequency = 1,
+        starting_val = factor("a"),
+        cycle_size = 86400
+      )
+  )
 })
 
 test_that("harmonic multiple variables", {
@@ -274,13 +285,15 @@ test_that("harmonic NA in term", {
     time_var = NA_real_
   )
 
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 4,
-      cycle_size = 86400
-    ) %>%
-    prep() %>%
-    bake(new_data = NULL))
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+      step_harmonic(time_var,
+        frequency = 4,
+        cycle_size = 86400
+      ) %>%
+      prep() %>%
+      bake(new_data = NULL)
+  )
 })
 
 test_that("harmonic character in term", {
@@ -288,13 +301,15 @@ test_that("harmonic character in term", {
     osc = sin(2 * pi * as.numeric(x_second) / (3600 * 6)),
     time_var = "x_second"
   )
-  expect_error(recipe(osc ~ time_var, data = harmonic_dat) %>%
-    step_harmonic(time_var,
-      frequency = 4,
-      cycle_size = 86400
-    ) %>%
-    prep() %>%
-    bake(new_data = NULL))
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var, data = harmonic_dat) %>%
+      step_harmonic(time_var,
+        frequency = 4,
+        cycle_size = 86400
+      ) %>%
+      prep() %>%
+      bake(new_data = NULL)
+  )
 })
 
 
@@ -305,12 +320,14 @@ test_that("harmonic cycle_size length", {
     time_var_2 = x_second,
     time_var_3 = x_second
   )
-  expect_error(recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
-    step_harmonic(time_var_1, time_var_2, time_var_3,
-      frequency = 4,
-      cycle_size = c(86400, 86400)
-    ) %>%
-    prep())
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
+      step_harmonic(time_var_1, time_var_2, time_var_3,
+        frequency = 4,
+        cycle_size = c(86400, 86400)
+      ) %>%
+      prep()
+  )
 })
 
 test_that("harmonic starting_val length", {
@@ -320,13 +337,15 @@ test_that("harmonic starting_val length", {
     time_var_2 = x_second,
     time_var_3 = x_second
   )
-  expect_error(recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
-    step_harmonic(time_var_1, time_var_2, time_var_3,
-      frequency = 4,
-      starting_val = c(86400, 86400),
-      cycle_size = 86400
-    ) %>%
-    prep())
+  expect_snapshot(error = TRUE,
+    recipe(osc ~ time_var_1 + time_var_2 + time_var_3, data = harmonic_dat) %>%
+      step_harmonic(time_var_1, time_var_2, time_var_3,
+        frequency = 4,
+        starting_val = c(86400, 86400),
+        cycle_size = 86400
+      ) %>%
+      prep()
+  )
 })
 
 test_that("harmonic check tidy starting value", {

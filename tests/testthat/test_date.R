@@ -107,8 +107,8 @@ test_that("printing", {
 
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
-  expect_output(print(date_rec))
-  expect_output(prep(date_rec, training = examples, verbose = TRUE))
+  expect_snapshot(print(date_rec))
+  expect_snapshot(prep(date_rec, training = examples, verbose = TRUE))
 })
 
 test_that("keep_original_cols works", {
@@ -130,9 +130,8 @@ test_that("can prep recipes with no keep_original_cols", {
 
   date_rec$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    date_rec <- prep(date_rec, training = examples, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    date_rec <- prep(date_rec, training = examples, verbose = FALSE)
   )
 
   expect_error(

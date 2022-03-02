@@ -90,8 +90,8 @@ test_that("something prints", {
   rec <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(all_predictors())
 
-  expect_output(print(rec))
-  expect_output(prep(rec, training = airquality, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = airquality, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

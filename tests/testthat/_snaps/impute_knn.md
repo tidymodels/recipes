@@ -1,3 +1,50 @@
+# printing
+
+    Code
+      print(discr_rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          5
+      
+      Operations:
+      
+      K-nearest neighbor imputation for carbon, nitrogen
+
+---
+
+    Code
+      prep(discr_rec, training = biomass_tr, verbose = TRUE)
+    Output
+      oper 1 step impute knn [training] 
+      The retained training set is ~ 0.02 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          5
+      
+      Training data contained 456 data points and no missing data.
+      
+      Operations:
+      
+      K-nearest neighbor imputation for hydrogen, oxygen, nitrogen [trained]
+
+# options
+
+    Code
+      new_nn <- gower_topn(x = dat_2, y = dat_1, n = 2, eps = 2)$index
+    Condition
+      Warning in `gower_work()`:
+      skipping variable with zero or non-finite range.
+
 # empty printing
 
     Code

@@ -66,7 +66,9 @@ test_that("non-nominal", {
 
   impute_rec <- rec %>%
     step_impute_mode(Assets, Job)
-  expect_error(prep(impute_rec, training = credit_tr, verbose = FALSE))
+  expect_snapshot(error = TRUE,
+    prep(impute_rec, training = credit_tr, verbose = FALSE)
+  )
 })
 
 test_that("all NA values", {
@@ -90,9 +92,8 @@ test_that("can bake recipes with no ptype", {
 
   imputed$steps[[1]]$ptype <- NULL
 
-  expect_warning(
-    imputed_te <- bake(imputed, credit_te),
-    "'ptype' was added to"
+  expect_snapshot(
+    imputed_te <- bake(imputed, credit_te)
   )
 })
 
@@ -100,8 +101,8 @@ test_that("can bake recipes with no ptype", {
 test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_impute_mode(Status, Home, Marital)
-  expect_output(print(impute_rec))
-  expect_output(prep(impute_rec, training = credit_tr, verbose = TRUE))
+  expect_snapshot(print(impute_rec))
+  expect_snapshot(prep(impute_rec, training = credit_tr, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

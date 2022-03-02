@@ -25,16 +25,22 @@ test_that("nondefault options", {
 
 test_that("bad options", {
   rec3 <- rec %>% step_bin2factor(description)
-  expect_error(prep(rec3, training = covers))
-  expect_error(rec %>% step_bin2factor(rocks, levels = letters[1:5]))
-  expect_error(rec %>% step_bin2factor(rocks, levels = 1:2))
+  expect_snapshot(error = TRUE,
+    prep(rec3, training = covers)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_bin2factor(rocks, levels = letters[1:5])
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_bin2factor(rocks, levels = 1:2)
+  )
 })
 
 
 test_that("printing", {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
-  expect_output(print(rec2))
-  expect_output(prep(rec2, training = covers, verbose = TRUE))
+  expect_snapshot(print(rec2))
+  expect_snapshot(prep(rec2, training = covers, verbose = TRUE))
 })
 
 

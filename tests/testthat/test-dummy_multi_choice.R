@@ -39,16 +39,14 @@ test_that("dummy variables with non-factor inputs", {
   dummy <- recipe(~., data = mtcars) %>%
     step_dummy_multi_choice(all_predictors())
 
-  expect_error(
-    prep(dummy)
-  )
+  expect_snapshot(error = TRUE, prep(dummy))
 })
 
 test_that("printing", {
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(all_predictors())
-  expect_output(print(rec))
-  expect_output(prep(rec, training = languages, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = languages, verbose = TRUE))
 })
 
 test_that("no columns selected", {

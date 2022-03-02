@@ -30,8 +30,8 @@ test_that("simple logit trans", {
 test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_invlogit(x1)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

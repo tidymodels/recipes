@@ -169,13 +169,10 @@ test_that("print method", {
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
     step_pls(all_predictors(), outcome = "HHV", num_comp = 3, id = "dork")
 
-  expect_output(print(rec), "feature extraction with all_predictors")
+  expect_snapshot(print(rec))
 
   rec <- prep(rec)
-  expect_output(
-    print(rec),
-    "feature extraction with carbon, hydrogen, oxygen, nitrogen, sulfur"
-  )
+  expect_snapshot(print(rec))
 })
 
 test_that("keep_original_cols works", {
@@ -202,9 +199,8 @@ test_that("can prep recipes with no keep_original_cols", {
 
   pls_rec$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    pls_trained <- prep(pls_rec, training = biom_tr, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    pls_trained <- prep(pls_rec, training = biom_tr, verbose = FALSE)
   )
 
   expect_error(

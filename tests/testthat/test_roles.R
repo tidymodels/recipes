@@ -31,7 +31,9 @@ test_that("changing roles", {
 test_that("change existing role", {
   rec <- recipe(x = biomass)
 
-  expect_error(add_role(rec, sample, new_role = "some other role"))
+  expect_snapshot(error = TRUE,
+    add_role(rec, sample, new_role = "some other role")
+  )
 
   rec <- update_role(rec, sample, new_role = "some other role")
   rec <- update_role(rec, sample, new_role = "other other role")
@@ -135,9 +137,8 @@ test_that("existing role is skipped", {
   rec <- add_role(rec, sample, new_role = "some other role")
 
   # skip me
-  expect_warning(
-    rec <- add_role(rec, sample, new_role = "some other role"),
-    "Role, 'some other role', already exists"
+  expect_snapshot(
+    rec <- add_role(rec, sample, new_role = "some other role")
   )
 
   # also tests the order, new roles come directly after old ones
@@ -156,9 +157,8 @@ test_that("existing role is skipped, but new one is added", {
   rec <- add_role(rec, sample, new_role = "some other role")
 
   # partially skip me
-  expect_warning(
-    rec <- add_role(rec, sample, dataset, new_role = "some other role"),
-    "Role, 'some other role', already exists"
+  expect_snapshot(
+    rec <- add_role(rec, sample, dataset, new_role = "some other role")
   )
 
   exp_res <- tibble(
@@ -175,46 +175,44 @@ test_that("existing role is skipped, but new one is added", {
 
 test_that("cannot add roles if the current one is `NA`", {
   rec <- recipe(x = biomass)
-  expect_error(add_role(rec, sample, sulfur), "No role currently exists")
+  expect_snapshot(error = TRUE,
+    add_role(rec, sample, sulfur)
+  )
 })
 
 test_that("`update_role()` cannot be ambiguous", {
   rec <- recipe(HHV ~ ., data = biomass)
   rec <- add_role(rec, sample, new_role = "x")
 
-  expect_error(
-    update_role(rec, sample, new_role = "y"),
-    "`old_role` can only be `NULL` when"
+  expect_snapshot(error = TRUE,
+    update_role(rec, sample, new_role = "y")
   )
 })
 
 test_that("`new_role` cannot be `NA_character_`", {
   rec <- recipe(x = biomass)
 
-  expect_error(
-    add_role(rec, sample, new_role = NA_character_),
-    "`new_role` must not be `NA`."
+  expect_snapshot(error = TRUE,
+    add_role(rec, sample, new_role = NA_character_)
   )
 
-  expect_error(
-    update_role(rec, sample, new_role = NA_character_),
-    "`new_role` must not be `NA`."
+  expect_snapshot(error = TRUE,
+    update_role(rec, sample, new_role = NA_character_)
   )
 })
 
 test_that("remove roles", {
   rec <- recipe(x = biomass)
   rec <- update_role(rec, sample, new_role = "role1")
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec <- remove_role(rec, sample, old_role = NA)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec <- remove_role(rec, sample)
   )
 
-  expect_warning(
-    remove_role(rec, sample, old_role = "non-existant"),
-    "Column, 'sample', does not have role, 'non-existant'."
+  expect_snapshot(
+    remove_role(rec, sample, old_role = "non-existant")
   )
 
   rec <- remove_role(rec, sample, old_role = "role1")
@@ -288,66 +286,56 @@ test_that("can use tidyselect ops in role selection", {
 test_that("empty dots and zero column selections return input with a warning", {
   rec <- recipe(x = biomass)
 
-  expect_warning(
-    rec2 <- add_role(rec),
-    "No columns were selected in `add_role[(][)]`"
+  expect_snapshot(
+    rec2 <- add_role(rec)
   )
   expect_identical(rec2, rec)
 
-  expect_warning(
-    rec2 <- update_role(rec),
-    "No columns were selected in `update_role[(][)]`"
+  expect_snapshot(
+    rec2 <- update_role(rec)
   )
   expect_identical(rec2, rec)
 
-  expect_warning(
-    rec2 <- remove_role(rec, old_role = "foo"),
-    "No columns were selected in `remove_role[(][)]`"
+  expect_snapshot(
+    rec2 <- remove_role(rec, old_role = "foo")
   )
   expect_identical(rec2, rec)
 
-  expect_warning(
-    rec2 <- add_role(rec, starts_with("foobar")),
-    "No columns were selected in `add_role[(][)]`"
+  expect_snapshot(
+    rec2 <- add_role(rec, starts_with("foobar"))
   )
   expect_identical(rec2, rec)
 
-  expect_warning(
-    rec2 <- update_role(rec, starts_with("foobar")),
-    "No columns were selected in `update_role[(][)]`"
+  expect_snapshot(
+    rec2 <- update_role(rec, starts_with("foobar"))
   )
   expect_identical(rec2, rec)
 
-  expect_warning(
-    rec2 <- remove_role(rec, starts_with("foobar"), old_role = "foo"),
-    "No columns were selected in `remove_role[(][)]`"
+  expect_snapshot(
+    rec2 <- remove_role(rec, starts_with("foobar"), old_role = "foo")
   )
   expect_identical(rec2, rec)
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(x = biomass) %>%
-      add_role(carbon, new_role = letters[1:2]),
-    "`new_role` must have length 1."
+      add_role(carbon, new_role = letters[1:2])
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(x = biomass) %>%
-      add_role(carbon, new_role = "a", new_type = letters[1:2]),
-    "`new_type` must have length 1."
+      add_role(carbon, new_role = "a", new_type = letters[1:2])
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(x = biomass) %>%
-      update_role(carbon, new_role = c("a", "b")),
-    "`new_role` must have length 1."
+      update_role(carbon, new_role = c("a", "b"))
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(x = biomass) %>%
-      update_role(carbon, old_role = c("a", "b")),
-    "`old_role` must have length 1."
+      update_role(carbon, old_role = c("a", "b"))
   )
 })
 

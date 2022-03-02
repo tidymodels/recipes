@@ -64,8 +64,8 @@ test_that("all data", {
 test_that("printing", {
   rec3 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
-  expect_output(print(rec3))
-  expect_output(prep(rec3, training = dat, verbose = TRUE))
+  expect_snapshot(print(rec3))
+  expect_snapshot(prep(rec3, training = dat, verbose = TRUE))
 })
 
 test_that("bake a single row", {
@@ -73,7 +73,7 @@ test_that("bake a single row", {
     step_shuffle(everything())
 
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
-  expect_warning(dat4 <- bake(rec4, dat[1, ], everything()))
+  expect_snapshot(dat4 <- bake(rec4, dat[1, ], everything()))
   expect_equal(dat4, tibble(dat[1, ]))
 })
 

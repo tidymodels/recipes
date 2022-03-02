@@ -65,8 +65,12 @@ test_that("correct types", {
 })
 
 test_that("bad args", {
-  expect_error(bake(rec, new_data = okc_te, composition = "dgCMatrix"))
-  expect_error(juice(rec, composition = "dgCMatrix"))
+  expect_snapshot(error = TRUE,
+    bake(rec, new_data = okc_te, composition = "dgCMatrix")
+  )
+  expect_snapshot(error = TRUE,
+    juice(rec, composition = "dgCMatrix")
+  )
 })
 
 test_that("issue 206 - NA values are kept when requesting matrix composition", {

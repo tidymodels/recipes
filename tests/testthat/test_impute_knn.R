@@ -108,8 +108,8 @@ test_that("printing", {
       neighbors = 3,
       id = ""
     )
-  expect_output(print(discr_rec))
-  expect_output(prep(discr_rec, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(discr_rec))
+  expect_snapshot(prep(discr_rec, training = biomass_tr, verbose = TRUE))
 })
 
 
@@ -167,7 +167,7 @@ test_that("options", {
     )
 
   ref_nn <- gower_topn(x = dat_2, y = dat_1, n = 2)$index
-  expect_warning(new_nn <- gower_topn(x = dat_2, y = dat_1, n = 2, eps = 2)$index)
+  expect_snapshot(new_nn <- gower_topn(x = dat_2, y = dat_1, n = 2, eps = 2)$index)
   expect_false(isTRUE(all.equal(ref_nn, new_nn)))
 })
 

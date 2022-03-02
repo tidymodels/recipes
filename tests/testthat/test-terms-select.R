@@ -22,7 +22,7 @@ info2 <- summary(rec2)
 
 test_that("terms_select() is deprecated", {
   rlang::local_options(lifecycle_verbosity = "warning")
-  expect_warning(terms_select(info = info1, quos(all_predictors())))
+  expect_snapshot(terms_select(info = info1, quos(all_predictors())))
 })
 
 test_that("simple role selections", {
@@ -32,7 +32,9 @@ test_that("simple role selections", {
     terms_select(info = info1, quos(all_predictors())),
     info1$variable
   )
-  expect_error(terms_select(info = info1, quos(all_outcomes())))
+  expect_snapshot(error = TRUE,
+    terms_select(info = info1, quos(all_outcomes()))
+  )
   expect_equal(
     terms_select(info = info2, quos(all_outcomes())),
     "HHV"
@@ -89,11 +91,21 @@ test_that("simple name selections", {
     terms_select(info = info1, quos(date, -age)),
     "date"
   )
-  expect_error(terms_select(info = info1, quos(log(date))))
-  expect_error(terms_select(info = info1, quos(date:age)))
-  expect_error(terms_select(info = info1, quos(I(date:age))))
-  expect_error(terms_select(info = info1, quos(matches("blahblahblah"))))
-  expect_error(terms_select(info = info1))
+  expect_snapshot(error = TRUE,
+    terms_select(info = info1, quos(log(date)))
+  )
+  expect_snapshot(error = TRUE,
+    terms_select(info = info1, quos(date:age))
+  )
+  expect_snapshot(error = TRUE,
+    terms_select(info = info1, quos(I(date:age)))
+  )
+  expect_snapshot(error = TRUE,
+    terms_select(info = info1, quos(matches("blahblahblah")))
+  )
+  expect_snapshot(error = TRUE,
+    terms_select(info = info1)
+  )
 })
 
 

@@ -50,8 +50,8 @@ test_that("printing", {
   rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_filter_missing(all_predictors(), threshold = .5)
-  expect_output(print(filtering))
-  expect_output(prep(filtering, training = dat, verbose = TRUE))
+  expect_snapshot(print(filtering))
+  expect_snapshot(prep(filtering, training = dat, verbose = TRUE))
 })
 
 

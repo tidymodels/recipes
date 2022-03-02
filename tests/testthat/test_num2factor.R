@@ -35,17 +35,15 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_num2factor(w, x, levels = c("one", "two")) %>%
-      prep(ex_dat),
-    "All columns selected for the step should be numeric"
+      prep(ex_dat)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_num2factor(w, x) %>%
-      prep(ex_dat),
-    "Please provide a character vector of"
+      prep(ex_dat)
   )
 })
 
@@ -54,8 +52,8 @@ test_that("printing", {
   ex_3 <- rec %>%
     step_num2factor(z, levels = letters) %>%
     prep(ex_dat, strings_as_factors = FALSE)
-  expect_output(print(ex_3))
-  expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(ex_3))
+  expect_snapshot(prep(ex_3, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

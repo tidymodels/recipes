@@ -33,31 +33,28 @@ test_that("adds arbitrary numeric column", {
 
 
 test_that("deals with bad input", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = ex_dat) %>%
       step_intercept(value = "Pie") %>%
-      prep(),
-    "Intercept value must be numeric."
+      prep()
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = ex_dat) %>%
       step_intercept(name = 4) %>%
-      prep(),
-    "Intercept/constant column name must be a character value."
+      prep()
   )
 
-  expect_warning(
+  expect_snapshot(
     recipe(~., data = ex_dat) %>%
       step_intercept(all_predictors()) %>%
-      prep(),
-    "Selectors are not used for this step."
+      prep()
   )
 })
 
 test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_intercept()
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
 })

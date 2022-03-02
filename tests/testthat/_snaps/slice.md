@@ -1,3 +1,50 @@
+# quasiquotation
+
+    Code
+      prep(rec_1, training = iris %>% slice(1:75))
+    Condition
+      Error in `dplyr::slice()`:
+      ! Problem while evaluating `..1 = values`.
+      Caused by error:
+      ! object 'values' not found
+
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Operations:
+      
+      Row filtering via position 1:2
+
+---
+
+    Code
+      prep(rec, training = iris, verbose = TRUE)
+    Output
+      oper 1 step slice [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Training data contained 150 data points and no missing data.
+      
+      Operations:
+      
+      Row filtering via position 1:2 [trained]
+
 # empty printing
 
     Code

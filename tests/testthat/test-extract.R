@@ -55,7 +55,7 @@ test_that("extract single parameter from recipe with no steps", {
   skip_if(tune_check())
   bare_rec <- recipe(mpg ~ ., data = mtcars)
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     extract_parameter_dials(bare_rec, parameter = "none there")
   )
 })
@@ -66,7 +66,7 @@ test_that("extract single parameter from recipe with no tunable parameters", {
     recipe(mpg ~ ., data = mtcars) %>%
     step_rm(hp)
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     extract_parameter_dials(rm_rec, parameter = "none there")
   )
 })

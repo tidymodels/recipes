@@ -59,12 +59,12 @@ test_that("Returns correct models.", {
 })
 
 test_that("Fails when one of the variables to impute is non-numeric.", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(tg_dat) %>%
       step_impute_linear(supp, impute_with = c("len")) %>%
       prep(tg_dat)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(tg_dat) %>%
       step_impute_linear(supp, dose, impute_with = c("len")) %>%
       prep(tg_dat)
@@ -88,8 +88,8 @@ test_that("Prints.", {
   imputed <- recipe(ames_dat) %>%
     step_impute_linear(Lot_Frontage, impute_with = imp_vars(Lot_Area))
 
-  expect_output(print(imputed))
-  expect_output(prep(imputed, training = ames_dat, verbose = TRUE))
+  expect_snapshot(print(imputed))
+  expect_snapshot(prep(imputed, training = ames_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

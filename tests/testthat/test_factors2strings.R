@@ -25,7 +25,7 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_factor2string(w, x) %>%
       prep(ex_dat, strings_as_factors = FALSE)
@@ -37,8 +37,8 @@ test_that("printing", {
   ex_3 <- rec %>%
     step_factor2string(y, z) %>%
     prep(ex_dat, strings_as_factors = FALSE)
-  expect_output(print(ex_3))
-  expect_output(prep(ex_3, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(ex_3))
+  expect_snapshot(prep(ex_3, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

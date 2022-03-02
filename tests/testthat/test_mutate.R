@@ -66,7 +66,9 @@ test_that("quasiquotation", {
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 
   rm(const)
-  expect_error(prep(rec_1, training = iris %>% slice(1:75)))
+  expect_snapshot(error = TRUE,
+    prep(rec_1, training = iris %>% slice(1:75))
+  )
   expect_error(
     prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
     regexp = NA
@@ -106,8 +108,8 @@ test_that("no input", {
 
 test_that("printing", {
   rec <- iris_rec %>% step_mutate(x = 5)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
 })
 
 test_that("tidying allows for named and unnamed expressions", {
@@ -196,7 +198,7 @@ test_that("mulitple functions", {
 
 
 test_that("no input", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     iris_rec %>%
       step_mutate_at() %>%
       prep(training = iris) %>%
@@ -206,8 +208,8 @@ test_that("no input", {
 
 test_that("printing", {
   rec <- iris_rec %>% step_mutate_at(contains("Sepal"), fn = log)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
 })
 
 test_that("mutate_at - empty selection prep/bake is a no-op", {

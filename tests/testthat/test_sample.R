@@ -70,15 +70,21 @@ test_that("basic usage", {
 })
 
 test_that("bad input", {
-  expect_error(iris_rec %>% step_sample(size = -1))
-  expect_error(iris_rec %>% step_sample(size = "a"))
-  expect_error(iris_rec %>% step_sample(replace = "a"))
+  expect_snapshot(error = TRUE,
+    iris_rec %>% step_sample(size = -1)
+  )
+  expect_snapshot(error = TRUE,
+    iris_rec %>% step_sample(size = "a")
+  )
+  expect_snapshot(error = TRUE,
+    iris_rec %>% step_sample(replace = "a")
+  )
 })
 
 
 
 test_that("printing", {
   rec <- iris_rec %>% step_sample()
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris2, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = iris2, verbose = TRUE))
 })

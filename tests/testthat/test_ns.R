@@ -74,8 +74,8 @@ test_that("correct basis functions", {
 
 test_that("printing", {
   with_ns <- rec %>% step_ns(carbon, hydrogen)
-  expect_output(print(with_ns))
-  expect_output(prep(with_ns, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(with_ns))
+  expect_snapshot(prep(with_ns, training = biomass_tr, verbose = TRUE))
 })
 
 

@@ -79,8 +79,8 @@ test_that("integers", {
 test_that("printing", {
   rec <- recipe(~ x + y + z, data = tr_dat)
   ints <- rec %>% step_integer(all_predictors())
-  expect_output(print(ints))
-  expect_output(prep(ints, training = tr_dat, verbose = TRUE))
+  expect_snapshot(print(ints))
+  expect_snapshot(prep(ints, training = tr_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

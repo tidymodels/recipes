@@ -63,8 +63,8 @@ test_that("NA values with step_discretize (issue #127)", {
 test_that("printing and tidys", {
   rec <- recipe(~., data = ex_tr) %>%
     step_discretize(x1, id = "")
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_tr, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_tr, verbose = TRUE))
 
   tidy_exp_un <- tibble(
     terms = "x1",
@@ -85,17 +85,17 @@ test_that("printing and tidys", {
 
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = ex_tr) %>%
       step_discretize(x1, num_breaks = 1) %>%
       prep()
   )
-  expect_warning(
+  expect_snapshot(
     recipe(~., data = ex_tr) %>%
       step_discretize(x1, num_breaks = 100) %>%
       prep()
   )
-  expect_warning(
+  expect_snapshot(
     recipe(~., data = ex_tr) %>%
       step_discretize(x1, options = list(prefix = "@$")) %>%
       prep()
@@ -107,8 +107,8 @@ test_that("bad args", {
 test_that("printing", {
   rec <- recipe(~., data = ex_tr) %>%
     step_discretize(x1, id = "")
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_tr, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_tr, verbose = TRUE))
 })
 
 

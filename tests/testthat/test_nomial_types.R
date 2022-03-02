@@ -139,7 +139,7 @@ test_that("missing factors", {
     recipe(Class ~ ., data = tr) %>%
     prep(training = tr)
 
-  expect_warning(check_nominal_type(te, rec$orig_lvls))
+  expect_snapshot(check_nominal_type(te, rec$orig_lvls))
 })
 
 test_that("missing factors with skipping", {
@@ -155,5 +155,5 @@ test_that("missing factors with skipping", {
     recipe(Class ~ ., data = tr) %>%
     prep(training = tr)
 
-  expect_warning(check_nominal_type(te, rec$orig_lvls))
+  expect_snapshot(check_nominal_type(te, rec$orig_lvls))
 })

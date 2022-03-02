@@ -70,37 +70,37 @@ test_that("character profile", {
 
 
 test_that("bad values", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     okc_rec %>%
       step_profile(everything(), profile = vars(age)) %>%
       prep(data = okc)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     okc_rec %>%
       step_profile(everything(), profile = age) %>%
       prep(data = okc)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     okc_rec %>%
       step_profile(age, date, height, profile = vars(location, date)) %>%
       prep(data = okc)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     okc_rec %>%
       step_profile(diet, profile = vars(age), pct = -1) %>%
       prep(data = okc)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     okc_rec %>%
       step_profile(diet, profile = vars(age), grid = 1:3) %>%
       prep(data = okc)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     okc_rec %>%
       step_profile(diet, profile = vars(age), grid = list(pctl = 1, len = 2)) %>%
       prep(data = okc)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     fixed(rep(c(TRUE, FALSE), each = 5))
   )
 })
@@ -110,8 +110,8 @@ test_that("printing", {
     step_profile(-age, profile = vars(age))
   num_rec_2 <- prep(num_rec_1, okc)
 
-  expect_output(print(num_rec_1))
-  expect_output(print(num_rec_2))
+  expect_snapshot(print(num_rec_1))
+  expect_snapshot(print(num_rec_2))
 })
 
 

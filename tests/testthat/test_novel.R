@@ -76,12 +76,12 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = iris) %>%
       step_novel(all_predictors()) %>%
       prep(iris)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = tr_bad) %>%
       step_novel(all_predictors()) %>%
       prep(tr_bad)
@@ -101,8 +101,8 @@ test_that("missing values", {
 test_that("printing", {
   ex_3 <- rec %>%
     step_novel(all_predictors())
-  expect_output(print(ex_3))
-  expect_output(print(prep(ex_3, training = tr_dat, verbose = TRUE)))
+  expect_snapshot(print(ex_3))
+  expect_snapshot(print(prep(ex_3, training = tr_dat, verbose = TRUE)))
 })
 
 test_that("empty selection prep/bake is a no-op", {

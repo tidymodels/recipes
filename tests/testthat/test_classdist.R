@@ -77,8 +77,8 @@ test_that("alt args", {
 test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
 })
 
 test_that("prefix", {

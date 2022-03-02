@@ -28,14 +28,12 @@ test_that("check_col works in the bake stage", {
     rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars),
     tibble(mtcars[, c(1, 5, 2)])
   )
-  expect_error(
-    rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1]),
-    "The following cols are missing from `new_data`: `mpg`."
+  expect_snapshot(error = TRUE,
+    rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1])
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>%
-      bake(mtcars[, c(2, 5)]),
-    "The following cols are missing from `new_data`: `mpg`."
+      bake(mtcars[, c(2, 5)])
   )
 })
 

@@ -22,12 +22,12 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_relevel(age, ref_level = 23) %>%
       prep()
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     rec %>%
       step_relevel(diet, ref_level = "missing_level") %>%
       prep()
@@ -35,8 +35,8 @@ test_that("bad args", {
 })
 
 test_that("printing", {
-  expect_output(print(rec %>% step_relevel(location, ref_level = "oakland")))
-  expect_output(print(rec %>% step_relevel(location, ref_level = "oakland") %>% prep()))
+  expect_snapshot(print(rec %>% step_relevel(location, ref_level = "oakland")))
+  expect_snapshot(print(rec %>% step_relevel(location, ref_level = "oakland") %>% prep()))
 })
 
 

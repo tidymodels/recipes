@@ -73,13 +73,13 @@ test_that("imputation values with 3-pt mean", {
 
 
 test_that("bad args", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = example_data) %>%
       step_impute_roll(all_predictors(), window = 3) %>%
       prep(training = example_data)
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_impute_roll(all_predictors(), window = 4) %>%
@@ -87,7 +87,7 @@ test_that("bad args", {
   )
 
   example_data$x4 <- 1:12
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_impute_roll(all_predictors(), window = 3) %>%
@@ -101,8 +101,8 @@ test_that("printing", {
   seven_pt <- recipe(~., data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
     step_impute_roll(all_predictors(), window = 7)
-  expect_output(print(seven_pt))
-  expect_output(prep(seven_pt, training = example_data, verbose = TRUE))
+  expect_snapshot(print(seven_pt))
+  expect_snapshot(prep(seven_pt, training = example_data, verbose = TRUE))
 })
 
 

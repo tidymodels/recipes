@@ -43,17 +43,21 @@ test_that("nondefault options", {
 
 
 test_that("bad selector(s)", {
-  expect_error(rec %>% step_count(description, rows, pattern = "(rock|stony)"))
+  expect_snapshot(error = TRUE,
+    rec %>% step_count(description, rows, pattern = "(rock|stony)")
+  )
   rec2 <- rec %>% step_count(rows, pattern = "(rock|stony)")
-  expect_error(prep(rec2, training = covers))
+  expect_snapshot(error = TRUE,
+    prep(rec2, training = covers)
+  )
 })
 
 
 test_that("printing", {
   rec5 <- rec %>%
     step_count(description, pattern = "(rock|stony)")
-  expect_output(print(rec5))
-  expect_output(prep(rec5, training = covers, verbose = TRUE))
+  expect_snapshot(print(rec5))
+  expect_snapshot(prep(rec5, training = covers, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake adds an NA column", {

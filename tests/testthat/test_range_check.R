@@ -4,41 +4,34 @@ x <- -10:110
 
 test_that("core function - correct input", {
   expect_error(range_check_func(x, -10, 110), NA)
-  expect_error(range_check_func(as.character(x), -10, 110))
-  expect_error(range_check_func(x, -10, 110, "a"))
+  expect_snapshot(error = TRUE, range_check_func(as.character(x), -10, 110))
+  expect_snapshot(error = TRUE, range_check_func(x, -10, 110, "a"))
   expect_error(range_check_func(x, -10, 110, .05), NA)
   expect_error(range_check_func(x, -10, 110, c(.05, .08)), NA)
-  expect_error(
-    range_check_func(x, -10, 110, c(.05, .08, .05)),
-    "slack_prop should be of length 1 or of length 2"
+  expect_snapshot(error = TRUE,
+    range_check_func(x, -10, 110, c(.05, .08, .05))
   )
 })
 
 test_that("core function - workings", {
   expect_error(range_check_func(x, -5, 110), NA)
-  expect_error(
-    range_check_func(x, 0, 100),
-    "min x is -10, lower bound is -5, max x is 110, upper bound is 105"
+  expect_snapshot(error = TRUE,
+    range_check_func(x, 0, 100)
   )
-  expect_error(
-    range_check_func(x, 0, 110),
-    "min x is -10, lower bound is -5.5"
+  expect_snapshot(error = TRUE,
+    range_check_func(x, 0, 110)
   )
-  expect_error(
-    range_check_func(x, -5, 100),
-    "max x is 110, upper bound is 105.25"
+  expect_snapshot(error = TRUE,
+    range_check_func(x, -5, 100)
   )
-  expect_error(
-    range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1)),
-    "min x is -10, lower bound is -5"
+  expect_snapshot(error = TRUE,
+    range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1))
   )
-  expect_error(
-    range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05)),
-    "max x is 110, upper bound is 105"
+  expect_snapshot(error = TRUE,
+    range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05))
   )
-  expect_warning(
-    range_check_func(x, 0, 100, warn = TRUE),
-    "min x is -10, lower bound is -5, max x is 110, upper bound is 105"
+  expect_snapshot(
+    range_check_func(x, 0, 100, warn = TRUE)
   )
 })
 
@@ -71,8 +64,8 @@ test_that("in recipe", {
 test_that("printing", {
   check_range_extract <- recipe(mtcars) %>%
     check_range(drat, cyl, am)
-  expect_output(print(check_range_extract))
-  expect_output(prep(check_range_extract, training = mtcars, verbose = TRUE))
+  expect_snapshot(print(check_range_extract))
+  expect_snapshot(prep(check_range_extract, training = mtcars, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

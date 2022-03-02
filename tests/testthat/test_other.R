@@ -223,15 +223,15 @@ test_that("novel levels", {
 
 test_that("'other' already in use", {
   others <- rec %>% step_other(diet, location, threshold = 10^-10)
-  expect_error(
+  expect_snapshot(error = TRUE,
     prep(others, training = okc_tr, strings_as_factors = FALSE)
   )
 })
 
 test_that("printing", {
   rec <- rec %>% step_other(diet, location)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = okc_tr, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = okc_tr, verbose = TRUE))
 })
 
 test_that(
@@ -264,10 +264,11 @@ test_that(
 )
 
 test_that(
-  desc = "if the threshold argument is greather than one then it should be
-          an integer(ish)",
+  desc = "if the threshold argument is greather than one then it should be an integer(ish)",
   code = {
-    expect_error(rec %>% step_other(diet, location, threshold = 3.14))
+    expect_snapshot(error = TRUE,
+      rec %>% step_other(diet, location, threshold = 3.14)
+    )
   }
 )
 

@@ -66,15 +66,17 @@ test_that("nonlinear scores", {
 test_that("bad spec", {
   rec3 <- recipe(~., data = ex_dat) %>%
     step_ordinalscore(everything())
-  expect_error(prep(rec3, training = ex_dat, verbose = FALSE))
+  expect_snapshot(error = TRUE,
+    prep(rec3, training = ex_dat, verbose = FALSE)
+  )
 })
 
 
 test_that("printing", {
   rec5 <- recipe(~., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
-  expect_output(print(rec5))
-  expect_output(prep(rec5, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec5))
+  expect_snapshot(prep(rec5, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

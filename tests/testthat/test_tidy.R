@@ -36,7 +36,7 @@ test_that("trained", {
     skip = rep(FALSE, 5),
     id = vapply(okc_rec$steps, function(x) x$id, character(1))
   )
-  expect_warning(
+  expect_snapshot(
     trained <- prep(okc_rec, training = okc)
   )
   expect_equal(tidy(trained), exp_res_2)
@@ -69,8 +69,8 @@ test_that("empty recipe", {
 
 
 test_that("bad args", {
-  expect_error(tidy(trained, number = NULL))
-  expect_error(tidy(trained, number = 100))
-  expect_error(tidy(trained, number = 1, id = "id"))
-  expect_error(tidy(trained, id = "id"))
+  expect_snapshot(error = TRUE, tidy(trained, number = NULL))
+  expect_snapshot(error = TRUE, tidy(trained, number = 100))
+  expect_snapshot(error = TRUE, tidy(trained, number = 1, id = "id"))
+  expect_snapshot(error = TRUE, tidy(trained, id = "id"))
 })

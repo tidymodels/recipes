@@ -65,40 +65,36 @@ test_that("works with all_predictors() selector", {
 
 
 test_that("input checking", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val1, shift = TRUE) %>% # wrong argument type to shift
-      prep(df, verbose = FALSE),
-    "numeric"
+      prep(df, verbose = FALSE)
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val1, reverse = 3) %>% # wrong argument type to reverse
-      prep(df, verbose = FALSE),
-    "logical"
+      prep(df, verbose = FALSE)
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val1, smooth = "cat") %>% # wrong argument type to smooth
-      prep(df, verbose = FALSE),
-    "logical"
+      prep(df, verbose = FALSE)
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val2) %>% # apply to non-numeric column
-      prep(df, verbose = FALSE),
-    "numeric"
+      prep(df, verbose = FALSE)
   )
 })
 
 test_that("prints something", {
   rec <- recipe(~., data = df) %>%
     step_relu(val1)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = df, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = df, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

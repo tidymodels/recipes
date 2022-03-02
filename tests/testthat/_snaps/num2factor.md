@@ -1,3 +1,58 @@
+# bad args
+
+    Code
+      rec %>% step_num2factor(w, x, levels = c("one", "two")) %>% prep(ex_dat)
+    Condition
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
+
+---
+
+    Code
+      rec %>% step_num2factor(w, x) %>% prep(ex_dat)
+    Condition
+      Error in `step_num2factor()`:
+      ! Please provide a character vector of appropriate length for `levels`.
+
+# printing
+
+    Code
+      print(ex_3)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          3
+      
+      Training data contained 200 data points and no missing data.
+      
+      Operations:
+      
+      Factor variables from z [trained]
+
+---
+
+    Code
+      prep(ex_3, training = ex_dat, verbose = TRUE)
+    Output
+      oper 1 step num2factor [pre-trained]
+      The retained training set is ~ 0.01 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          3
+      
+      Training data contained 200 data points and no missing data.
+      
+      Operations:
+      
+      Factor variables from z [trained]
+
 # empty printing
 
     Code

@@ -57,5 +57,5 @@ test_that("formulas", {
 test_that("bad args", {
   rec10 <- recipe(Species ~ ., data = iris) %>%
     step_center(all_numeric())
-  expect_error(formula(rec10))
+  expect_snapshot(error = TRUE, formula(rec10))
 })

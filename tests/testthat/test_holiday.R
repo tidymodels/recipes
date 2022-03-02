@@ -72,8 +72,8 @@ test_that("POSIXct class", {
 test_that("printing", {
   holiday_rec <- recipe(~day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
-  expect_output(print(holiday_rec))
-  expect_output(prep(holiday_rec, training = test_data, verbose = TRUE))
+  expect_snapshot(print(holiday_rec))
+  expect_snapshot(prep(holiday_rec, training = test_data, verbose = TRUE))
 })
 
 test_that("keep_original_cols works", {
@@ -102,9 +102,8 @@ test_that("can prep recipes with no keep_original_cols", {
 
   holiday_rec$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    holiday_rec <- prep(holiday_rec, training = test_data, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    holiday_rec <- prep(holiday_rec, training = test_data, verbose = FALSE)
   )
 
   expect_error(

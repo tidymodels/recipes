@@ -24,7 +24,7 @@ test_that("strings_as_factors = FALSE", {
     strings_as_factors = FALSE, verbose = FALSE
   )
   rec1_as_fact <- bake(rec1, new_data = as_fact)
-  expect_warning(rec1_as_str <- bake(rec1, new_data = as_str))
+  expect_snapshot(rec1_as_str <- bake(rec1, new_data = as_str))
   expect_equal(as_fact$fact, rec1_as_fact$fact)
   expect_equal(as_fact$ord, rec1_as_fact$ord)
   expect_equal(as_str$fact, rec1_as_str$fact)
@@ -39,7 +39,7 @@ test_that("strings_as_factors = TRUE", {
     strings_as_factors = TRUE, verbose = FALSE
   )
   rec2_as_fact <- bake(rec2, new_data = as_fact)
-  expect_warning(rec2_as_str <- bake(rec2, new_data = as_str))
+  expect_snapshot(rec2_as_str <- bake(rec2, new_data = as_str))
   expect_equal(as_fact$fact, rec2_as_fact$fact)
   expect_equal(as_fact$ord, rec2_as_fact$ord)
   expect_equal(as_fact$fact, rec2_as_str$fact)

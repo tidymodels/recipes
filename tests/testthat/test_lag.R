@@ -38,11 +38,11 @@ test_that("default lag works on a single feature", {
   expect_equal(baked, expected)
 
   # errors out on non-integer lag
-  expect_error({
+  expect_snapshot(error = TRUE,
     prepped_rec <- recipe(~., data = df) %>%
       step_lag(x, lag = 0.5) %>%
       prep(df)
-  })
+  )
 })
 
 test_that("specification of multiple lags in a vector", {
@@ -74,8 +74,8 @@ test_that("something prints", {
   rec <- recipe(~., data = df) %>%
     step_lag(t)
 
-  expect_output(print(rec))
-  expect_output(prep(rec, training = df, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = df, verbose = TRUE))
 })
 
 rm(n, start, end)

@@ -79,9 +79,8 @@ test_that("correct PCA values", {
     var_obj$value[var_obj$terms == "cumulative percent variance"],
     cumsum(variances) / sum(variances) * 100
   )
-  expect_error(
-    tidy(pca_extract_trained, number = 3, type = "variances"),
-    "variance"
+  expect_snapshot(error = TRUE,
+    tidy(pca_extract_trained, number = 3, type = "variances")
   )
 })
 
@@ -123,8 +122,8 @@ test_that("Reduced rotation size", {
 test_that("printing", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  expect_output(print(pca_extract))
-  expect_output(prep(pca_extract, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(pca_extract))
+  expect_snapshot(prep(pca_extract, training = biomass_tr, verbose = TRUE))
 })
 
 
@@ -138,9 +137,7 @@ test_that("No PCA comps", {
     names(biomass_tr)[-(1:2)]
   )
   expect_true(all(is.na(pca_extract_trained$steps[[1]]$res$rotation)))
-  expect_output(print(pca_extract_trained),
-    regexp = "No PCA components were extracted"
-  )
+  expect_snapshot(print(pca_extract_trained))
   expect_true(all(is.na(tidy(pca_extract_trained, 1)$value)))
 })
 
@@ -188,9 +185,8 @@ test_that("can prep recipes with no keep_original_cols", {
 
   pca_extract$steps[[3]]$keep_original_cols <- NULL
 
-  expect_warning(
-    pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
   )
 
   expect_error(

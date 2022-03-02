@@ -117,23 +117,29 @@ test_that("many:many", {
 test_that("wrong type", {
   rec4 <- rec %>%
     step_ratio(x1, denom = denom_vars(all_predictors()))
-  expect_error(prep(rec4, ex_dat, verbose = FALSE))
+  expect_snapshot(error = TRUE,
+    prep(rec4, ex_dat, verbose = FALSE)
+  )
 
   rec5 <- rec %>%
     step_ratio(all_predictors(), denom = denom_vars(x1))
-  expect_error(prep(rec5, ex_dat, verbose = FALSE))
+  expect_snapshot(error = TRUE,
+    prep(rec5, ex_dat, verbose = FALSE)
+  )
 
   rec6 <- rec %>%
     step_ratio(all_predictors(), denom = denom_vars(all_predictors()))
-  expect_error(prep(rec6, ex_dat, verbose = FALSE))
+  expect_snapshot(error = TRUE,
+    prep(rec6, ex_dat, verbose = FALSE)
+  )
 })
 
 
 test_that("printing", {
   rec3 <- rec %>%
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
-  expect_output(print(rec3))
-  expect_output(prep(rec3, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec3))
+  expect_snapshot(prep(rec3, training = ex_dat, verbose = TRUE))
 })
 
 test_that("keep_original_cols works", {
@@ -160,9 +166,8 @@ test_that("can prep recipes with no keep_original_cols", {
 
   rec1$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    prep1 <- prep(rec1, training = ex_dat, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    prep1 <- prep(rec1, training = ex_dat, verbose = FALSE)
   )
 
   expect_error(

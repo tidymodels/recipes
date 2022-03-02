@@ -119,8 +119,8 @@ test_that("one variable", {
 test_that("printing", {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12)
-  expect_output(print(standardized))
-  expect_output(prep(standardized, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(standardized))
+  expect_snapshot(prep(standardized, training = biomass_tr, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

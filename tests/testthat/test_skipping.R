@@ -15,7 +15,7 @@ test_that("simple skip", {
   expect_equal(baked_1$Sepal.Length, iris$Sepal.Length)
   expect_equal(juiced_1$Sepal.Length, log(iris$Sepal.Length))
 
-  expect_warning(
+  expect_snapshot(
     prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
   )
 
@@ -30,7 +30,7 @@ test_that("simple skip", {
   expect_equal(setdiff(names(baked_1), names(baked_2)), "Sepal.Length")
   expect_equal(setdiff(names(baked_2), names(baked_3)), character(0))
 
-  expect_warning(prep(rec_1, training = iris, retain = FALSE))
+  expect_snapshot(prep(rec_1, training = iris, retain = FALSE))
 })
 
 

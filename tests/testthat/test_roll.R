@@ -15,19 +15,41 @@ sim_dat$fac <- sample(letters[1:3], size = n, replace = TRUE)
 rec <- recipe(~., data = sim_dat)
 
 test_that("error checks", {
-  expect_error(rec %>% step_window(y1, size = 6))
-  expect_error(rec %>% step_window(y1, size = NA))
-  expect_error(rec %>% step_window(y1, size = NULL))
-  expect_error(rec %>% step_window(y1, statistic = "average"))
-  expect_error(rec %>% step_window(y1, size = 1))
-  expect_error(rec %>% step_window(y1, size = 2))
-  expect_error(rec %>% step_window(y1, size = -1))
-  expect_warning(rec %>% step_window(y1, size = pi))
-  expect_error(prep(rec %>% step_window(fac), training = sim_dat))
-  expect_error(prep(rec %>% step_window(y1, size = 1000L), training = sim_dat))
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, size = 6)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, size = NA)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, size = NULL)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, statistic = "average")
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, size = 1)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, size = 2)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_window(y1, size = -1)
+  )
+  expect_snapshot(
+    rec %>% step_window(y1, size = pi)
+  )
+  expect_snapshot(error = TRUE,
+    prep(rec %>% step_window(fac), training = sim_dat)
+  )
+  expect_snapshot(error = TRUE,
+    prep(rec %>% step_window(y1, size = 1000L), training = sim_dat)
+  )
   bad_names <- rec %>%
     step_window(starts_with("y"), names = "only_one_name")
-  expect_error(prep(bad_names, training = sim_dat))
+  expect_snapshot(error = TRUE,
+    prep(bad_names, training = sim_dat)
+  )
 })
 
 test_that("basic moving average", {
@@ -65,8 +87,8 @@ test_that("creating new variables", {
 test_that("printing", {
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
-  expect_output(print(new_names))
-  expect_output(prep(new_names, training = sim_dat, verbose = TRUE))
+  expect_snapshot(print(new_names))
+  expect_snapshot(prep(new_names, training = sim_dat, verbose = TRUE))
 })
 
 

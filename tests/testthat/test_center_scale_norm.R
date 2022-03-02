@@ -74,7 +74,7 @@ test_that("scale by factor of 1 or 2", {
 
   expect_equal(standardized_trained$steps[[1]]$sds, 2 * sds)
 
-  expect_warning(
+  expect_snapshot(
     not_recommended_standardized_input <- rec %>%
       step_scale(carbon, id = "scale", factor = 3) %>%
       prep(training = biomass)
@@ -123,8 +123,8 @@ test_that("printing", {
   standardized <- rec %>%
     step_center(carbon) %>%
     step_scale(hydrogen)
-  expect_output(print(standardized))
-  expect_output(prep(standardized, training = biomass, verbose = TRUE))
+  expect_snapshot(print(standardized))
+  expect_snapshot(prep(standardized, training = biomass, verbose = TRUE))
 })
 
 test_that("correct means and std devs for step_norm", {
