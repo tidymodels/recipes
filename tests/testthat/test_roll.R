@@ -21,7 +21,8 @@ test_that("error checks", {
   expect_snapshot(error = TRUE,
     rec %>% step_window(y1, size = NA)
   )
-  expect_snapshot(error = TRUE,
+  # Wait for call pass through
+  expect_error(
     rec %>% step_window(y1, size = NULL)
   )
   expect_snapshot(error = TRUE,

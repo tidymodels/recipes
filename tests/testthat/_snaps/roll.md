@@ -17,14 +17,6 @@
 ---
 
     Code
-      rec %>% step_window(y1, size = NULL)
-    Condition
-      Error in `if (is.na(size) | is.null(size)) ...`:
-      ! argument is of length zero
-
----
-
-    Code
       rec %>% step_window(y1, statistic = "average")
     Condition
       Error in `step_window()`:
