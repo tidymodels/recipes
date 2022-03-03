@@ -33,7 +33,7 @@
 #' library(modeldata)
 #' data(covers)
 #'
-#' rec <- recipe(~ description, covers) %>%
+#' rec <- recipe(~description, covers) %>%
 #'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
 #'   step_regex(description, pattern = "ratake families")
 #'
@@ -64,13 +64,16 @@ step_regex <- function(recipe,
   }
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    rlang::abort(paste0("Valid options are: ",
-                        paste0(valid_args, collapse = ", ")))
+    rlang::abort(paste0(
+      "Valid options are: ",
+      paste0(valid_args, collapse = ", ")
+    ))
   }
 
   terms <- enquos(...)
-  if (length(terms) > 1)
+  if (length(terms) > 1) {
     rlang::abort("For this step, at most a single selector can be used.")
+  }
 
   add_step(
     recipe,
@@ -90,28 +93,30 @@ step_regex <- function(recipe,
 
 step_regex_new <-
   function(terms, role, trained, pattern, options, result, input, skip, id) {
-  step(
-    subclass = "regex",
-    terms = terms,
-    role = role,
-    trained = trained,
-    pattern = pattern,
-    options = options,
-    result = result,
-    input = input,
-    skip = skip,
-    id = id
-  )
-}
+    step(
+      subclass = "regex",
+      terms = terms,
+      role = role,
+      trained = trained,
+      pattern = pattern,
+      options = options,
+      result = result,
+      input = input,
+      skip = skip,
+      id = id
+    )
+  }
 
 #' @export
 prep.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
 
-  if (length(col_name) > 1)
+  if (length(col_name) > 1) {
     rlang::abort("The selector should select at most a single variable")
-  if (any(info$type[info$variable %in% col_name] != "nominal"))
+  }
+  if (any(info$type[info$variable %in% col_name] != "nominal")) {
     rlang::abort("The regular expression input should be character or factor")
+  }
 
   step_regex_new(
     terms = x$terms,
@@ -144,8 +149,9 @@ bake.step_regex <- function(object, new_data, ...) {
       useBytes = FALSE
     )
   )
-  if (length(object$options) > 0)
+  if (length(object$options) > 0) {
     regex <- mod_call_args(regex, args = object$options)
+  }
 
   new_data[, object$result] <- ifelse(eval(regex), 1, 0)
   new_data
@@ -167,13 +173,16 @@ tidy.step_regex <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
-    res <- tibble(terms = term_names,
-                  result = rep(unname(x$result), p))
+    res <- tibble(
+      terms = term_names,
+      result = rep(unname(x$result), p)
+    )
   } else {
-    res <- tibble(terms = term_names,
-                  result = rep(na_chr, p))
+    res <- tibble(
+      terms = term_names,
+      result = rep(na_chr, p)
+    )
   }
   res$id <- x$id
   res
 }
-

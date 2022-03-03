@@ -35,11 +35,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' with_splines <- rec %>%
 #'   step_bs(carbon, hydrogen)
@@ -58,7 +60,6 @@ step_bs <-
            options = list(),
            skip = FALSE,
            id = rand_id("bs")) {
-
     add_step(
       recipe,
       step_bs_new(
@@ -174,8 +175,9 @@ bake.step_bs <- function(object, new_data, ...) {
     new_data[, orig_var] <- NULL
   }
   new_data <- bind_cols(new_data, as_tibble(bs_values))
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 

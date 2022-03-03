@@ -36,14 +36,14 @@
 #' make_factor <- rec %>%
 #'   step_string2factor(diet)
 #' make_factor <- prep(make_factor,
-#'                     training = okc,
-#'                     strings_as_factors = FALSE)
+#'   training = okc,
+#'   strings_as_factors = FALSE
+#' )
 #'
 #' # note that `diet` is a factor
-#' bake(make_factor, new_data = NULL) %>% head
-#' okc %>% head
+#' bake(make_factor, new_data = NULL) %>% head()
+#' okc %>% head()
 #' tidy(make_factor, number = 1)
-
 step_string2factor <-
   function(recipe,
            ...,
@@ -90,8 +90,9 @@ step_string2factor_new <-
     )
   }
 
-get_ord_lvls <- function(x)
+get_ord_lvls <- function(x) {
   sort(unique(x))
+}
 
 #' @export
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
@@ -102,18 +103,20 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
       function(x) is.character(x) | is.factor(x),
       logical(1)
     )
-  if (any(!str_check))
+  if (any(!str_check)) {
     rlang::abort(
       paste0(
         "The following variables are not character vectors: ",
         paste0("`", names(str_check)[!str_check], "`", collapse = ", ")
       )
     )
+  }
 
   if (is.null(x$levels)) {
     res <- lapply(training[, col_names], get_ord_lvls)
-  } else
+  } else {
     res <- x$levels
+  }
 
   ord <- rep(x$ordered, length(col_names))
   names(ord) <- col_names
@@ -130,8 +133,9 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
 }
 
 make_factor <- function(x, lvl, ord) {
-  if (is.factor(x))
+  if (is.factor(x)) {
     return(x)
+  }
   factor(x, levels = lvl, ordered = ord)
 }
 
@@ -142,19 +146,22 @@ bake.step_string2factor <- function(object, new_data, ...) {
   if (is.list(object$levels)) {
     new_data[, col_names] <-
       purrr::map2(new_data[, col_names],
-                  object$levels,
-                  make_factor,
-                  ord = object$ordered[1])
+        object$levels,
+        make_factor,
+        ord = object$ordered[1]
+      )
   } else {
     new_data[, col_names] <-
       map(new_data[, col_names],
-          make_factor,
-          lvl = object$levels,
-          ord = object$ordered[1])
+        make_factor,
+        lvl = object$levels,
+        ord = object$ordered[1]
+      )
   }
 
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
@@ -172,13 +179,16 @@ tidy.step_string2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
-    res <- tibble(terms = term_names,
-                  ordered = rep(unname(x$ordered), p))
+    res <- tibble(
+      terms = term_names,
+      ordered = rep(unname(x$ordered), p)
+    )
   } else {
-    res <- tibble(terms = term_names,
-                  ordered = rep(unname(x$ordered), p))
+    res <- tibble(
+      terms = term_names,
+      ordered = rep(unname(x$ordered), p)
+    )
   }
   res$id <- x$id
   res
 }
-

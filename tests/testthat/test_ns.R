@@ -6,14 +6,15 @@ data(biomass)
 
 # ------------------------------------------------------------------------------
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+  data = biomass_tr
+)
 # ------------------------------------------------------------------------------
 
-test_that('correct basis functions', {
+test_that("correct basis functions", {
   with_ns <- rec %>%
     step_ns(carbon, hydrogen)
 
@@ -71,16 +72,16 @@ test_that('correct basis functions', {
 })
 
 
-test_that('printing', {
-  with_ns <- rec %>%  step_ns(carbon, hydrogen)
-  expect_output(print(with_ns))
-  expect_output(prep(with_ns, training = biomass_tr, verbose = TRUE))
+test_that("printing", {
+  with_ns <- rec %>% step_ns(carbon, hydrogen)
+  expect_snapshot(print(with_ns))
+  expect_snapshot(prep(with_ns, training = biomass_tr, verbose = TRUE))
 })
 
 
-test_that('tunable', {
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_ns(all_predictors())
   rec_param <- tunable.step_ns(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free"))
@@ -89,7 +90,7 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 1)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 

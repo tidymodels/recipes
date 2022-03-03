@@ -4,9 +4,11 @@ library(recipes)
 data(tate_text, package = "modeldata")
 
 color_examples <- tibble(
-  colors = c("['red', 'blue']",
-             "['red', 'blue', 'white']",
-             "['blue', 'blue', 'blue']")
+  colors = c(
+    "['red', 'blue']",
+    "['red', 'blue', 'white']",
+    "['blue', 'blue', 'blue']"
+  )
 )
 
 color_result <- tribble(
@@ -27,9 +29,9 @@ mini_tate_result <- tibble(
   medium_other =    c(0, 0, 0, 0)
 )
 
-test_that('dummy variables', {
+test_that("dummy variables", {
   # Using `sep` argument
-  dummy <- recipe(~ medium, data = mini_tate) %>%
+  dummy <- recipe(~medium, data = mini_tate) %>%
     step_dummy_extract(medium, sep = "( and )|( on )", id = "")
 
   dummy_prepped <- prep(dummy)
@@ -40,13 +42,13 @@ test_that('dummy variables', {
     tidy(dummy_prepped, 1),
     tibble(
       terms = "medium",
-      columns = c("paper","Etching", "Charcoal", "aquatint", "gouache"),
+      columns = c("paper", "Etching", "Charcoal", "aquatint", "gouache"),
       id = ""
     )
   )
 
   # Using `pattern` argument
-  dummy <- recipe(~ colors, data = color_examples) %>%
+  dummy <- recipe(~colors, data = color_examples) %>%
     step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "")
 
   dummy_prepped <- prep(dummy)
@@ -63,9 +65,9 @@ test_that('dummy variables', {
   )
 })
 
-test_that('other argument', {
+test_that("other argument", {
   # Using `sep` argument
-  dummy <- recipe(~ medium, data = mini_tate) %>%
+  dummy <- recipe(~medium, data = mini_tate) %>%
     step_dummy_extract(medium, sep = "( and )|( on )", id = "", other = "cake")
 
   dummy_prepped <- prep(dummy)
@@ -74,19 +76,22 @@ test_that('other argument', {
   expect_identical(names(dummy_pred)[length(dummy_pred)], "medium_cake")
 })
 
-test_that('error when neither sep or pattern is specified', {
-  expect_snapshot(error = TRUE,
-    recipe(~ medium, data = tate_text) %>%
+test_that("error when neither sep or pattern is specified", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~medium, data = tate_text) %>%
       step_dummy_extract(medium) %>%
       prep()
   )
 })
 
-test_that('dummy variables with threshold', {
+test_that("dummy variables with threshold", {
   # threshold = 0.5
-  dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
-                     threshold = 0.5)
+  dummy <- recipe(~colors, data = color_examples) %>%
+    step_dummy_extract(colors,
+      pattern = "(?<=')[^',]+(?=')", id = "",
+      threshold = 0.5
+    )
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = color_examples)
@@ -108,9 +113,11 @@ test_that('dummy variables with threshold', {
   )
 
   # threshold = 0.8
-  dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
-                     threshold = 0.8)
+  dummy <- recipe(~colors, data = color_examples) %>%
+    step_dummy_extract(colors,
+      pattern = "(?<=')[^',]+(?=')", id = "",
+      threshold = 0.8
+    )
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = color_examples)
@@ -132,11 +139,13 @@ test_that('dummy variables with threshold', {
   )
 })
 
-test_that('dummy variables with integer threshold', {
+test_that("dummy variables with integer threshold", {
   # threshold = 1
-  dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
-                       threshold = 1)
+  dummy <- recipe(~colors, data = color_examples) %>%
+    step_dummy_extract(colors,
+      pattern = "(?<=')[^',]+(?=')", id = "",
+      threshold = 1
+    )
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = color_examples)
@@ -156,9 +165,11 @@ test_that('dummy variables with integer threshold', {
   )
 
   # threshold = 2
-  dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
-                       threshold = 2)
+  dummy <- recipe(~colors, data = color_examples) %>%
+    step_dummy_extract(colors,
+      pattern = "(?<=')[^',]+(?=')", id = "",
+      threshold = 2
+    )
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = color_examples)
@@ -180,9 +191,11 @@ test_that('dummy variables with integer threshold', {
   )
 
   # threshold = 3
-  dummy <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", id = "",
-                       threshold = 3)
+  dummy <- recipe(~colors, data = color_examples) %>%
+    step_dummy_extract(colors,
+      pattern = "(?<=')[^',]+(?=')", id = "",
+      threshold = 3
+    )
 
   dummy_prepped <- prep(dummy)
   dummy_pred <- bake(dummy_prepped, new_data = color_examples)
@@ -204,7 +217,7 @@ test_that('dummy variables with integer threshold', {
   )
 })
 
-test_that('naming function', {
+test_that("naming function", {
   expect_equal(
     dummy_extract_names("x", letters[c(1, 2, 3, 3)]),
     c("x_a", "x_b", "x_c", "x_c_2")
@@ -215,11 +228,11 @@ test_that('naming function', {
   )
 })
 
-test_that('printing', {
-  rec <- recipe(~ medium, data = tate_text) %>%
+test_that("printing", {
+  rec <- recipe(~medium, data = tate_text) %>%
     step_dummy_extract(all_predictors(), sep = ", ")
-  expect_output(print(rec))
-  expect_output(prep(rec, training = tate_text, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = tate_text, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {

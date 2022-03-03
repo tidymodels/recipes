@@ -4,9 +4,11 @@ library(recipes)
 # Note: some tests convert to data frame prior to testing
 # https://github.com/tidyverse/dplyr/issues/2751
 
-eps <- if (capabilities("long.double"))
-  sqrt(.Machine$double.eps) else
+eps <- if (capabilities("long.double")) {
+  sqrt(.Machine$double.eps)
+} else {
   0.1
+}
 
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
@@ -17,14 +19,16 @@ test_that("defaults", {
   dists <- as.data.frame(dists)
 
   split_up <- split(iris[, 1:4], iris$Species)
-  mahalanobis2 <- function(x, y)
+  mahalanobis2 <- function(x, y) {
     mahalanobis(y, center = colMeans(x), cov = cov(x))
+  }
 
   exp_res <- lapply(split_up, mahalanobis2, y = iris[, 1:4])
   exp_res <- as.data.frame(exp_res)
 
-  for(i in 1:ncol(exp_res))
+  for (i in 1:ncol(exp_res)) {
     expect_equal(dists[, i], exp_res[, i])
+  }
 
   tidy_exp_un <- tibble(
     terms = "all_predictors()",
@@ -58,27 +62,31 @@ test_that("alt args", {
   dists <- as.data.frame(dists)
 
   split_up <- split(iris[, 1:4], iris$Species)
-  mahalanobis2 <- function(x, y)
+  mahalanobis2 <- function(x, y) {
     mahalanobis(y, center = apply(x, 2, median), cov = cov(x))
+  }
 
   exp_res <- lapply(split_up, mahalanobis2, y = iris[, 1:4])
   exp_res <- as.data.frame(exp_res)
 
-  for(i in 1:ncol(exp_res))
+  for (i in 1:ncol(exp_res)) {
     expect_equal(dists[, i], exp_res[, i])
+  }
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
 })
 
-test_that('prefix', {
+test_that("prefix", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species",
-                   log = FALSE, prefix = "centroid_")
+    step_classdist(all_predictors(),
+      class = "Species",
+      log = FALSE, prefix = "centroid_"
+    )
   trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, new_data = iris)
   expect_false(any(grepl("classdist_", names(dists))))

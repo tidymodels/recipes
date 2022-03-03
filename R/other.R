@@ -55,8 +55,8 @@
 #' set.seed(19)
 #' in_train <- sample(1:nrow(okc), size = 30000)
 #'
-#' okc_tr <- okc[ in_train,]
-#' okc_te <- okc[-in_train,]
+#' okc_tr <- okc[in_train, ]
+#' okc_te <- okc[-in_train, ]
 #'
 #' rec <- recipe(~ diet + location, data = okc_tr)
 #'
@@ -71,7 +71,7 @@
 #' tidy(rec, number = 1)
 #'
 #' # novel levels are also "othered"
-#' tahiti <- okc[1,]
+#' tahiti <- okc[1, ]
 #' tahiti$location <- "a magical place"
 #' bake(rec, tahiti)
 #'
@@ -86,7 +86,6 @@
 #' # compare it to
 #' # okc_tr %>% count(diet, sort = TRUE) %>% top_n(4)
 #' # okc_tr %>% count(location, sort = TRUE) %>% top_n(3)
-
 step_other <-
   function(recipe,
            ...,
@@ -140,9 +139,10 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   objects <- lapply(training[, col_names],
-                    keep_levels,
-                    threshold = x$threshold,
-                    other = x$other)
+    keep_levels,
+    threshold = x$threshold,
+    other = x$other
+  )
 
   step_other_new(
     terms = x$terms,
@@ -160,10 +160,11 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 bake.step_other <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
-      tmp <- if (!is.character(new_data[, i]))
+      tmp <- if (!is.character(new_data[, i])) {
         as.character(getElement(new_data, i))
-      else
+      } else {
         getElement(new_data, i)
+      }
 
       tmp <- ifelse(
         !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
@@ -173,34 +174,38 @@ bake.step_other <- function(object, new_data, ...) {
 
       # assign other factor levels other here too.
       tmp <- factor(tmp,
-                    levels = c(object$objects[[i]]$keep,
-                               object$objects[[i]]$other))
+        levels = c(
+          object$objects[[i]]$keep,
+          object$objects[[i]]$other
+        )
+      )
 
       new_data[, i] <- tmp
     }
   }
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
 print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
-
-  title <- "Collapsing factor levels for "
-  if (x$trained) {
-    columns <- map_lgl(x$objects, ~ .x$collapse)
-    columns <- names(columns)[columns]
-  } else {
-    columns <- names(x$objects)
+    title <- "Collapsing factor levels for "
+    if (x$trained) {
+      columns <- map_lgl(x$objects, ~ .x$collapse)
+      columns <- names(columns)[columns]
+    } else {
+      columns <- names(x$objects)
+    }
+    print_step(columns, x$terms, x$trained, title, width)
+    invisible(x)
   }
-  print_step(columns, x$terms, x$trained, title, width)
-  invisible(x)
-}
 
 keep_levels <- function(x, threshold = .1, other = "other") {
-  if (!is.factor(x))
+  if (!is.factor(x)) {
     x <- factor(x)
+  }
 
   xtab <- sort(table(x, useNA = "no"), decreasing = TRUE)
 
@@ -211,27 +216,32 @@ keep_levels <- function(x, threshold = .1, other = "other") {
   dropped <- which(xtab < threshold)
   orig <- levels(x)
 
-  if (length(dropped) > 0)
+  if (length(dropped) > 0) {
     keepers <- names(xtab[-dropped])
-  else
+  } else {
     keepers <- orig
+  }
 
-  if (length(keepers) == 0)
+  if (length(keepers) == 0) {
     keepers <- names(xtab)[which.max(xtab)]
+  }
 
-  if (other %in% keepers)
+  if (other %in% keepers) {
     rlang::abort(
-        paste0(
+      paste0(
         "The level ",
         other,
         " is already a factor level that will be retained. ",
         "Please choose a different value."
       )
     )
+  }
 
-  list(keep = orig[orig %in% keepers],
-       collapse = length(dropped) > 0,
-       other = other)
+  list(
+    keep = orig[orig %in% keepers],
+    collapse = length(dropped) > 0,
+    other = other
+  )
 }
 
 
@@ -242,12 +252,16 @@ tidy.step_other <- function(x, ...) {
     values <- purrr::map(x$objects, function(x) x$keep)
     n <- vapply(values, length, integer(1))
     values <- vctrs::vec_unchop(values, ptype = character(), name_spec = rlang::zap())
-    res <- tibble(terms = rep(names(n), n),
-                  retained = values)
+    res <- tibble(
+      terms = rep(names(n), n),
+      retained = values
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  retained = rep(na_chr, length(term_names)))
+    res <- tibble(
+      terms = term_names,
+      retained = rep(na_chr, length(term_names))
+    )
   }
   res$id <- x$id
   res
@@ -265,4 +279,3 @@ tunable.step_other <- function(x, ...) {
     component_id = x$id
   )
 }
-

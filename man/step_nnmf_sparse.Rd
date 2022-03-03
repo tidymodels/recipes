@@ -99,7 +99,6 @@ components is returned.
 
 \examples{
 if (rlang::is_installed("RcppML")) {
-
   library(Matrix)
   library(modeldata)
   data(biomass)
@@ -116,9 +115,11 @@ if (rlang::is_installed("RcppML")) {
     prep(training = biomass)
 
   bake(rec, new_data = NULL)
+  #'
   library(ggplot2)
   bake(rec, new_data = NULL) \%>\%
-    ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+    ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
+    geom_point()
 }
 }
 \seealso{

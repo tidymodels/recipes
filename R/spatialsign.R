@@ -35,11 +35,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' ss_trans <- rec %>%
 #'   step_center(carbon, hydrogen) %>%
@@ -56,7 +58,6 @@
 #'
 #' tidy(ss_trans, number = 3)
 #' tidy(ss_obj, number = 3)
-
 step_spatialsign <-
   function(recipe,
            ...,
@@ -66,16 +67,18 @@ step_spatialsign <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("spatialsign")) {
-    add_step(recipe,
-             step_spatialsign_new(
-               terms = enquos(...),
-               role = role,
-               na_rm = na_rm,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+    add_step(
+      recipe,
+      step_spatialsign_new(
+        terms = enquos(...),
+        role = role,
+        na_rm = na_rm,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_spatialsign_new <-
@@ -114,7 +117,7 @@ bake.step_spatialsign <- function(object, new_data, ...) {
   col_names <- object$columns
 
   res <- as.matrix(new_data[, col_names])
-  res <- res / sqrt(rowSums(res ^ 2, na.rm = object$na_rm))
+  res <- res / sqrt(rowSums(res^2, na.rm = object$na_rm))
 
   res <- tibble::as_tibble(res)
   new_data[, col_names] <- res
@@ -131,7 +134,7 @@ print.step_spatialsign <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_spatialsign <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

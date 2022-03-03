@@ -60,7 +60,7 @@ strings (and are not reparsable) is returned.
 }
 
 \examples{
-recipe( ~ ., data = iris) \%>\%
+recipe(~., data = iris) \%>\%
   step_rename(Sepal_Width = Sepal.Width) \%>\%
   prep() \%>\%
   bake(new_data = NULL) \%>\%
@@ -68,7 +68,7 @@ recipe( ~ ., data = iris) \%>\%
 
 vars <- c(var1 = "cyl", var2 = "am")
 car_rec <-
-  recipe(~ ., data = mtcars) \%>\%
+  recipe(~., data = mtcars) \%>\%
   step_rename(!!vars)
 
 car_rec \%>\%

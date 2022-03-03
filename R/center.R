@@ -42,11 +42,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' center_trans <- rec %>%
 #'   step_center(carbon, contains("gen"), -hydrogen)
@@ -137,12 +139,16 @@ print.step_center <-
 #' @export
 tidy.step_center <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$means),
-                  value = unname(x$means))
+    res <- tibble(
+      terms = names(x$means),
+      value = unname(x$means)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl
+    )
   }
   res$id <- x$id
   res

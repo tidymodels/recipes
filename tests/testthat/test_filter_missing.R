@@ -11,8 +11,8 @@ dat <- data.frame(
   chr2 = rep(c(NA, "A"), times = c(90, 10))
 )
 
-test_that('high filter', {
-  rec <- recipe(~ ., data = dat)
+test_that("high filter", {
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_filter_missing(all_predictors(), threshold = .2)
 
@@ -23,8 +23,8 @@ test_that('high filter', {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
 
-test_that('low filter', {
-  rec <- recipe(~ ., data = dat)
+test_that("low filter", {
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_filter_missing(all_predictors(), threshold = 0.8)
 
@@ -33,8 +33,8 @@ test_that('low filter', {
   expect_equal(filtering_trained$steps[[1]]$removals, c("dbl5", "chr2"))
 })
 
-test_that('Remove all columns with missing data', {
-  rec <- recipe(~ ., data = dat)
+test_that("Remove all columns with missing data", {
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_filter_missing(all_predictors(), threshold = 0)
 
@@ -45,19 +45,19 @@ test_that('Remove all columns with missing data', {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })
 
-test_that('printing', {
+test_that("printing", {
   set.seed(1)
-  rec <- recipe(~ ., data = dat)
+  rec <- recipe(~., data = dat)
   filtering <- rec %>%
     step_filter_missing(all_predictors(), threshold = .5)
-  expect_output(print(filtering))
-  expect_output(prep(filtering, training = dat, verbose = TRUE))
+  expect_snapshot(print(filtering))
+  expect_snapshot(prep(filtering, training = dat, verbose = TRUE))
 })
 
 
-test_that('tunable', {
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_filter_missing(all_predictors())
   rec_param <- tunable.step_filter_missing(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
@@ -66,7 +66,7 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 1)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 

@@ -90,12 +90,13 @@ data(biomass)
 set.seed(3535)
 biomass$duplicate <- biomass$carbon + rnorm(nrow(biomass))
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-                    sulfur + duplicate,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + duplicate,
+  data = biomass_tr
+)
 
 corr_filter <- rec \%>\%
   step_corr(all_numeric_predictors(), threshold = .5)

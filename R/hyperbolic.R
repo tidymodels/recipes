@@ -27,9 +27,10 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' cos_trans <- rec  %>%
+#' cos_trans <- rec %>%
 #'   step_hyperbolic(all_numeric_predictors(),
-#'                   func = "cos", inverse = FALSE)
+#'     func = "cos", inverse = FALSE
+#'   )
 #'
 #' cos_obj <- prep(cos_trans, training = examples)
 #'
@@ -49,8 +50,9 @@ step_hyperbolic <-
            skip = FALSE,
            id = rand_id("hyperbolic")) {
     funcs <- c("sin", "cos", "tan")
-    if (!(func %in% funcs))
+    if (!(func %in% funcs)) {
       rlang::abort("`func` should be either `sin`, `cos`, or `tan`")
+    }
     add_step(
       recipe,
       step_hyperbolic_new(
@@ -100,22 +102,25 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_hyperbolic <- function(object, new_data, ...) {
-  func <- if (object$inverse)
+  func <- if (object$inverse) {
     get(paste0("a", object$func))
-  else
+  } else {
     get(object$func)
+  }
   col_names <- object$columns
-  for (i in seq_along(col_names))
+  for (i in seq_along(col_names)) {
     new_data[, col_names[i]] <-
-    func(getElement(new_data, col_names[i]))
+      func(getElement(new_data, col_names[i]))
+  }
   as_tibble(new_data)
 }
 
 print.step_hyperbolic <-
   function(x, width = max(20, options()$width - 32), ...) {
     ttl <- paste("Hyperbolic", x$func)
-    if (x$inverse)
+    if (x$inverse) {
       ttl <- paste(ttl, "(inv)")
+    }
     title <- glue::glue("{ttl} transformation on ")
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)

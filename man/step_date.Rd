@@ -94,10 +94,12 @@ names), and \code{ordinal} (a logical) is returned.
 \examples{
 library(lubridate)
 
-examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
-                       Stefan = ymd("2006-01-13") + days(1:10))
+examples <- data.frame(
+  Dan = ymd("2002-03-04") + days(1:10),
+  Stefan = ymd("2006-01-13") + days(1:10)
+)
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
-   step_date(all_predictors())
+  step_date(all_predictors())
 
 tidy(date_rec, number = 1)
 
@@ -107,7 +109,6 @@ date_values <- bake(date_rec, new_data = examples)
 date_values
 
 tidy(date_rec, number = 1)
-
 }
 \seealso{
 Other dummy variable and encoding steps: 

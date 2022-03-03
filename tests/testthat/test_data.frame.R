@@ -15,7 +15,7 @@ okc_te <- okc[(401:800), ]
 
 ###################################################################
 
-rec <- recipe( ~ ., data = okc_tr) %>%
+rec <- recipe(~., data = okc_tr) %>%
   step_impute_mode(all_nominal()) %>%
   step_impute_mean(all_numeric()) %>%
   step_dummy(location, diet) %>%
@@ -23,18 +23,20 @@ rec <- recipe( ~ ., data = okc_tr) %>%
 
 ###################################################################
 
-test_that('correct types', {
+test_that("correct types", {
   bake_default <- bake(rec, new_data = okc_te, all_numeric())
   bake_df <-
     bake(rec,
-         new_data = okc_te,
-         all_numeric(),
-         composition = "data.frame")
+      new_data = okc_te,
+      all_numeric(),
+      composition = "data.frame"
+    )
   bake_df_1d <-
     bake(rec,
-         new_data = okc_te,
-         age,
-         composition = "data.frame")
+      new_data = okc_te,
+      age,
+      composition = "data.frame"
+    )
   juice_default <- juice(rec, all_numeric())
   juice_df <-
     juice(rec, all_numeric(), composition = "data.frame")
@@ -49,5 +51,4 @@ test_that('correct types', {
 
   expect_equal(as.vector(class(bake_df_1d)), "data.frame")
   expect_equal(as.vector(class(juice_df_1d)), "data.frame")
-
 })

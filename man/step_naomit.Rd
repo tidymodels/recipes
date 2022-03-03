@@ -64,7 +64,6 @@ recipe(Ozone ~ ., data = airquality) \%>\%
   step_naomit(Solar.R) \%>\%
   prep(airquality, verbose = FALSE) \%>\%
   bake(new_data = NULL)
-
 }
 \seealso{
 Other row operation steps: 

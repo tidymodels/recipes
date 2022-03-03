@@ -37,7 +37,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -54,7 +54,6 @@
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-
 step_impute_mode <-
   function(recipe,
            ...,
@@ -142,10 +141,9 @@ prep.step_modeimpute <- prep.step_impute_mode
 
 #' @export
 bake.step_impute_mode <- function(object, new_data, ...) {
-
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
-      if(is.null(object$ptype)) {
+      if (is.null(object$ptype)) {
         rlang::warn(
           paste0(
             "'ptype' was added to `step_impute_mode()` after this recipe was created.\n",
@@ -179,8 +177,9 @@ print.step_impute_mode <-
 print.step_modeimpute <- print.step_impute_mode
 
 mode_est <- function(x) {
-  if (!is.character(x) & !is.factor(x))
+  if (!is.character(x) & !is.factor(x)) {
     rlang::abort("The data should be character or factor to compute the mode.")
+  }
   tab <- table(x)
   modes <- names(tab)[tab == max(tab)]
   sample(modes, size = 1)
@@ -190,8 +189,10 @@ mode_est <- function(x) {
 #' @export
 tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$modes),
-                  model = unname(x$modes))
+    res <- tibble(
+      terms = names(x$modes),
+      model = unname(x$modes)
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_chr)

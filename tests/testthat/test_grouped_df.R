@@ -16,7 +16,4 @@ test_that("grouped data frames work", {
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, new_data = ex_dat)
   expect_equal(names(rec_trans), c("x1", "x2_poly_1", "x2_poly_2"))
-
 })
-
-

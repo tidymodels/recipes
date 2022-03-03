@@ -1,7 +1,7 @@
 r_version <- function() paste0("R", getRversion()[, 1:2])
 
 data("okc", package = "modeldata")
-rec1 <- recipe(~ ., data = okc)
+rec1 <- recipe(~., data = okc)
 info1 <- summary(rec1)
 
 rec2 <- recipe(age ~ ., data = okc)
@@ -13,13 +13,14 @@ info3 <- summary(rec3)
 data("biomass", package = "modeldata")
 rec4 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-              new_role = "predictor") %>%
+    new_role = "predictor"
+  ) %>%
   update_role(HHV, new_role = "outcome") %>%
   update_role(sample, new_role = "id variable") %>%
   update_role(dataset, new_role = "splitting indicator")
 info4 <- summary(rec4)
 
-test_that('simple role selections', {
+test_that("simple role selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_predictors()), data = okc, info = info1),
     setNames(nm = info1$variable)
@@ -42,7 +43,7 @@ test_that('simple role selections', {
   )
 })
 
-test_that('simple type selections', {
+test_that("simple type selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_numeric()), data = okc, info = info1),
     setNames(nm = c("age", "height"))
@@ -57,7 +58,7 @@ test_that('simple type selections', {
   )
 })
 
-test_that('simple name selections', {
+test_that("simple name selections", {
   expect_equal(
     recipes_eval_select(quos = quos(matches("e$")), data = okc, info = info1),
     setNames(nm = c("age", "date"))
@@ -106,7 +107,7 @@ test_that('simple name selections', {
   )
 })
 
-test_that('combinations', {
+test_that("combinations", {
   expect_equal(
     recipes_eval_select(
       quos = quos(matches("[hH]"), -all_outcomes()),
@@ -141,7 +142,7 @@ test_that('combinations', {
   )
 })
 
-test_that('namespaced selectors', {
+test_that("namespaced selectors", {
   expect_equal(
     recipes_eval_select(quos = quos(tidyselect::matches("e$")), data = okc, info = info1),
     recipes_eval_select(quos = quos(matches("e$")), data = okc, info = info1)
@@ -156,7 +157,7 @@ test_that('namespaced selectors', {
   )
 })
 
-test_that('new dplyr selectors', {
+test_that("new dplyr selectors", {
   vnames <- c("hydrogen", "carbon")
   expect_error(
     rec_1 <-
@@ -195,7 +196,7 @@ test_that('new dplyr selectors', {
   expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
 })
 
-test_that('predictor specific role selections', {
+test_that("predictor specific role selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_numeric_predictors()), data = okc, info = info2),
     setNames(nm = "height")

@@ -14,7 +14,7 @@ okc_fac <- okc
 okc_fac$diet <- factor(okc_fac$diet)
 okc_fac$location <- factor(okc_fac$location)
 
-test_that('dummy variables with factor inputs', {
+test_that("dummy variables with factor inputs", {
   rec <- recipe(age ~ location + diet, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, id = "")
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
@@ -58,29 +58,26 @@ test_that('dummy variables with factor inputs', {
   )
 })
 
-test_that('dummy variables with non-factor inputs', {
+test_that("dummy variables with non-factor inputs", {
   rec <- recipe(age ~ location + diet, data = okc)
   dummy <- rec %>% step_dummy(diet, location)
 
-  expect_warning(
-    expect_error(
-      prep(dummy, training = okc, verbose = FALSE, strings_as_factors = FALSE)
-    )
+  expect_snapshot(error = TRUE,
+    prep(dummy, training = okc, verbose = FALSE, strings_as_factors = FALSE)
   )
 
   okc_fac_ish <-
     okc_fac %>%
     mutate(diet = as.character(diet))
 
-  expect_warning(
+  expect_snapshot(
     recipe(age ~ location + height + diet, data = okc_fac_ish) %>%
       step_dummy(diet, location, height) %>%
       prep(training = okc_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
   )
-
 })
 
-test_that('create all dummy variables', {
+test_that("create all dummy variables", {
   rec <- recipe(age ~ location + diet + height, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, one_hot = TRUE, id = "")
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE, strings_as_factors = FALSE)
@@ -118,40 +115,38 @@ test_that('create all dummy variables', {
     tidy(dummy_trained, 1),
     bind_rows(dum_tibble_prepped_1, dum_tibble_prepped_2)
   )
-
 })
 
-test_that('tests for issue #91', {
-  rec <- recipe(~ diet, data = okc)
+test_that("tests for issue #91", {
+  rec <- recipe(~diet, data = okc)
   factors <- rec %>% step_dummy(diet)
   factors <- prep(factors, training = okc)
   factors_data_1 <- bake(factors, new_data = okc)
   # Remove one category in diet
-  factors_data_2 <- bake(factors, new_data = okc %>% filter(diet != 'halal'))
+  factors_data_2 <- bake(factors, new_data = okc %>% filter(diet != "halal"))
   expect_equal(names(factors_data_1), names(factors_data_2))
 
   # now with ordered factor
 
   okc$ordered_diet <- as.ordered(okc$diet)
-  rec <- recipe(~ ordered_diet, data = okc)
+  rec <- recipe(~ordered_diet, data = okc)
   orderedfac <- rec %>% step_dummy(ordered_diet)
   orderedfac <- prep(orderedfac, training = okc)
   ordered_data_1 <- bake(orderedfac, new_data = okc)
   # Remove one category in diet
-  ordered_data_2 <- bake(orderedfac, new_data = okc %>% filter(diet != 'halal'))
+  ordered_data_2 <- bake(orderedfac, new_data = okc %>% filter(diet != "halal"))
   expect_equal(names(ordered_data_1), names(ordered_data_2))
-
 })
 
-test_that('tests for NA values in factor', {
-  rec <- recipe(~ diet, data = okc_missing)
+test_that("tests for NA values in factor", {
+  rec <- recipe(~diet, data = okc_missing)
   factors <- rec %>% step_dummy(diet)
-  expect_warning(
+  expect_snapshot(
     factors <- prep(factors, training = okc_missing)
   )
 
   factors_data_0 <- juice(factors)
-  expect_warning(
+  expect_snapshot(
     factors_data_1 <- bake(factors, new_data = okc_missing)
   )
 
@@ -163,17 +158,17 @@ test_that('tests for NA values in factor', {
   )
 })
 
-test_that('tests for NA values in ordered factor', {
+test_that("tests for NA values in ordered factor", {
   okc_ordered <- okc_missing
   okc_ordered$diet <- as.ordered(okc_ordered$diet)
-  rec <- recipe(~ diet, data = okc_ordered)
+  rec <- recipe(~diet, data = okc_ordered)
   factors <- rec %>% step_dummy(diet)
-  expect_warning(
+  expect_snapshot(
     factors <- prep(factors, training = okc_ordered)
   )
 
   factors_data_0 <- juice(factors)
-  expect_warning(
+  expect_snapshot(
     factors_data_1 <- bake(factors, new_data = okc_ordered)
   )
 
@@ -187,20 +182,23 @@ test_that('tests for NA values in ordered factor', {
 
 
 
-test_that('new levels', {
+test_that("new levels", {
   df <- data.frame(
-    y = c(1,0,1,1,0,0,0,1,1,1,0,0,1,0,1,0,0,0,1,0),
-    x1 = c('A','B','B','B','B','A','A','A','B','A','A','B',
-           'A','C','C','B','A','B','C','A'),
-    stringsAsFactors = FALSE)
-  training <- df[1:10,]
-  testing <- df[11:20,]
+    y = c(1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0),
+    x1 = c(
+      "A", "B", "B", "B", "B", "A", "A", "A", "B", "A", "A", "B",
+      "A", "C", "C", "B", "A", "B", "C", "A"
+    ),
+    stringsAsFactors = FALSE
+  )
+  training <- df[1:10, ]
+  testing <- df[11:20, ]
   training$y <- as.factor(training$y)
   training$x1 <- as.factor(training$x1)
   testing$y <- as.factor(testing$y)
   testing$x1 <- as.factor(testing$x1)
 
-  expect_warning(
+  expect_snapshot(
     recipes:::warn_new_levels(testing$x1, levels(training$x1))
   )
   expect_silent(
@@ -212,14 +210,13 @@ test_that('new levels', {
   expect_silent(
     rec <- prep(rec, training = training)
   )
-  expect_warning(
+  expect_snapshot(
     bake(rec, new_data = testing)
   )
 })
 
-test_that('tests for issue #301', {
-
-  rec <- recipe(~ Species, data = iris)
+test_that("tests for issue #301", {
+  rec <- recipe(~Species, data = iris)
   dummies <- rec %>% step_dummy(Species)
   dummies <- prep(dummies, training = iris)
   expect_equal(NULL, attr(dummies$steps[[1]]$levels$Species, ".Environment"))
@@ -237,26 +234,27 @@ test_that('tests for issue #301', {
   load(file = saved_recipe)
   unlink(saved_recipe)
   expect_equal(bake(dummies, new_data = iris), bake(saved_dummies, new_data = iris))
-
 })
 
 
 
-test_that('naming function', {
+test_that("naming function", {
   expect_equal(dummy_names("x", letters[1:3]), c("x_a", "x_b", "x_c"))
-  expect_equal(dummy_names("x", letters[1:3], ordinal = TRUE),
-               c("x_1", "x_2", "x_3"))
+  expect_equal(
+    dummy_names("x", letters[1:3], ordinal = TRUE),
+    c("x_1", "x_2", "x_3")
+  )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(age ~ ., data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location)
-  expect_output(print(dummy))
-  expect_output(prep(dummy, training = okc_fac, verbose = TRUE))
+  expect_snapshot(print(dummy))
+  expect_snapshot(prep(dummy, training = okc_fac, verbose = TRUE))
 })
 
 
-test_that('no columns selected', {
+test_that("no columns selected", {
   zdat <- tibble(
     y = c(1, 2, 3),
     x = c("a", "a", "a"),
@@ -272,13 +270,13 @@ test_that('no columns selected', {
 
   expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
-  expect_output(print(rec), regexp = "<none>")
+  expect_snapshot(print(rec))
 
   exp_tidy <- tibble(terms = character(), columns = character(), id = character())
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
-test_that('retained columns', {
+test_that("retained columns", {
   rec <- recipe(age ~ location + diet, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location, keep_original_cols = TRUE, id = "")
   dummy_trained <- prep(dummy, training = okc_fac)
@@ -288,7 +286,7 @@ test_that('retained columns', {
   expect_true(any(colnames(dummy_pred) == "location"))
 })
 
-test_that('keep_original_cols works', {
+test_that("keep_original_cols works", {
   rec <- recipe(age ~ diet, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, id = "", keep_original_cols = TRUE)
   dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE)
@@ -296,20 +294,21 @@ test_that('keep_original_cols works', {
 
   expect_equal(
     colnames(dummy_pred),
-    c("diet",
-      paste0("diet_", setdiff(gsub(" ", ".", levels(okc_fac$diet)), "anything")))
+    c(
+      "diet",
+      paste0("diet_", setdiff(gsub(" ", ".", levels(okc_fac$diet)), "anything"))
+    )
   )
 })
 
-test_that('can prep recipes with no keep_original_cols', {
+test_that("can prep recipes with no keep_original_cols", {
   rec <- recipe(age ~ diet, data = okc_fac)
   dummy <- rec %>% step_dummy(diet, id = "", keep_original_cols = TRUE)
 
   dummy$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE)
   )
 
   expect_error(

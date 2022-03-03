@@ -46,13 +46,17 @@
 #'
 #' # define naming convention
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(all_numeric_predictors(), class = "Species",
-#'                  pool = FALSE, mean_func = mean2, prefix = "centroid_")
+#'   step_classdist(all_numeric_predictors(),
+#'     class = "Species",
+#'     pool = FALSE, mean_func = mean2, prefix = "centroid_"
+#'   )
 #'
 #' # default naming
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(all_numeric_predictors(), class = "Species",
-#'                  pool = FALSE, mean_func = mean2)
+#'   step_classdist(all_numeric_predictors(),
+#'     class = "Species",
+#'     pool = FALSE, mean_func = mean2
+#'   )
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
@@ -76,8 +80,9 @@ step_classdist <- function(recipe,
                            prefix = "classdist_",
                            skip = FALSE,
                            id = rand_id("classdist")) {
-  if (!is.character(class) || length(class) != 1)
+  if (!is.character(class) || length(class) != 1) {
     rlang::abort("`class` should be a single character value.")
+  }
   add_step(
     recipe,
     step_classdist_new(
@@ -122,8 +127,10 @@ get_center <- function(x, mfun = mean) {
   vapply(x, FUN = mfun, FUN.VALUE = numeric(1))
 }
 get_both <- function(x, mfun = mean, cfun = cov) {
-  list(center = get_center(x, mfun),
-       scale = cfun(x))
+  list(
+    center = get_center(x, mfun),
+    scale = cfun(x)
+  )
 }
 
 #' @export
@@ -139,13 +146,13 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
       center = lapply(x_dat, get_center, mfun = x$mean_func),
       scale = x$cov_func(training[, x_names])
     )
-
   } else {
     res <-
       lapply(x_dat,
-             get_both,
-             mfun = x$mean_func,
-             cfun = x$cov_func)
+        get_both,
+        mfun = x$mean_func,
+        cfun = x$cov_func
+      )
   }
   step_classdist_new(
     terms = x$terms,
@@ -197,14 +204,16 @@ bake.step_classdist <- function(object, new_data, ...) {
     res <-
       lapply(object$objects, mah_by_class, x = new_data[, x_cols])
   }
-  if (object$log)
+  if (object$log) {
     res <- lapply(res, log)
+  }
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
+  if (!is_tibble(res)) {
     res <- as_tibble(res)
+  }
   res
 }
 
@@ -212,11 +221,14 @@ print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- glue::glue("Distances to {x$class} for ")
     if (x$trained) {
-      x_names <- if (x$pool)
+      x_names <- if (x$pool) {
         names(x$objects[["center"]][[1]])
-      else
+      } else {
         names(x$objects[[1]]$center)
-    } else x_names <- NULL
+      }
+    } else {
+      x_names <- NULL
+    }
     print_step(x_names, x$terms, x$trained, title, width)
     invisible(x)
   }
@@ -224,8 +236,10 @@ print.step_classdist <-
 
 
 get_centroid <- function(x) {
-  tibble(terms = names(x$center),
-         value = unname(x$center))
+  tibble(
+    terms = names(x$center),
+    value = unname(x$center)
+  )
 }
 get_centroid_pool <- function(x) {
   tibble(terms = names(x), value = unname(x))
@@ -246,9 +260,11 @@ tidy.step_classdist <- function(x, ...) {
     res$class <- classes
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl,
-                  class = na_chr)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl,
+      class = na_chr
+    )
   }
   res$id <- x$id
   res

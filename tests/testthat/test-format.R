@@ -9,18 +9,19 @@ test_that("format_ch_vec handles long vectors with short items", {
   expect_true(length(format_ch_vec(as.character(1:1000))) <= max_width)
   #  should list as many items as possible, not just return "n items"
   expect_true(format_ch_vec(as.character(1:1000)) != "1000 items")
-
 })
 
 test_that("format_ch_vec handles a vector with long items", {
   # create string with >100 characters
   long_vec <- ""
-  for (i in 1:50){
+  for (i in 1:50) {
     long_vec <- paste(long_vec, as.character(i))
   }
 
-  expect_equal(format_ch_vec(c("1", long_vec), width = 20),
-               "1,  1 2 3 4 5 6 7...")
+  expect_equal(
+    format_ch_vec(c("1", long_vec), width = 20),
+    "1,  1 2 3 4 5 6 7..."
+  )
 })
 
 test_that("format_selectors handles small numbers of selectors", {
@@ -31,7 +32,7 @@ test_that("format_selectors handles small numbers of selectors", {
 test_that("format_ch_vec handles lots of small selectors", {
   test_exprs_small_many <- lapply(1:100, quo)
   # should fit the screen
-  expect_true(length(format_selectors(test_exprs_small_many)) <=  max_width)
+  expect_true(length(format_selectors(test_exprs_small_many)) <= max_width)
   #  should list as many items as possible, not just return "n items"
   expect_true(format_selectors(test_exprs_small_many) != "1000 items")
 })
@@ -39,10 +40,12 @@ test_that("format_ch_vec handles lots of small selectors", {
 test_that("format_ch_vec handles a long expression", {
   # create string with >100 characters
   long_vec <- ""
-  for (i in 1:50){
+  for (i in 1:50) {
     long_vec <- paste(long_vec, as.character(i))
   }
 
-  expect_equal(format_ch_vec(c(expr(1), expr(!!long_vec)), width = 20),
-               "1,  1 2 3 4 5 6 7...")
+  expect_equal(
+    format_ch_vec(c(expr(1), expr(!!long_vec)), width = 20),
+    "1,  1 2 3 4 5 6 7..."
+  )
 })

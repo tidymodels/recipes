@@ -121,7 +121,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \examples{
 library(modeldata)
 data(okc)
-okc <- okc[complete.cases(okc),]
+okc <- okc[complete.cases(okc), ]
 
 # Original data: diet has 18 levels
 length(unique(okc$diet))
@@ -131,25 +131,25 @@ rec <- recipe(~ diet + age + height, data = okc)
 
 # Default dummy coding: 17 dummy variables
 dummies <- rec \%>\%
-    step_dummy(diet) \%>\%
-    prep(training = okc)
+  step_dummy(diet) \%>\%
+  prep(training = okc)
 
 dummy_data <- bake(dummies, new_data = NULL)
 
 dummy_data \%>\%
-    select(starts_with("diet")) \%>\%
-    names() # level "anything" is the reference level
+  select(starts_with("diet")) \%>\%
+  names() # level "anything" is the reference level
 
 # Obtain the full set of 18 dummy variables using `one_hot` option
 dummies_one_hot <- rec \%>\%
-    step_dummy(diet, one_hot = TRUE) \%>\%
-    prep(training = okc)
+  step_dummy(diet, one_hot = TRUE) \%>\%
+  prep(training = okc)
 
 dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 
 dummy_data_one_hot \%>\%
-    select(starts_with("diet")) \%>\%
-    names() # no reference level
+  select(starts_with("diet")) \%>\%
+  names() # no reference level
 
 
 tidy(dummies, number = 1)

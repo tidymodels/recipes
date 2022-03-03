@@ -32,11 +32,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' norm_trans <- rec %>%
 #'   step_normalize(carbon, hydrogen)
@@ -58,7 +60,6 @@
 #' keep_orig_obj <- prep(norm_keep_orig, training = biomass_tr)
 #' keep_orig_te <- bake(keep_orig_obj, biomass_te)
 #' keep_orig_te
-#'
 step_normalize <-
   function(recipe,
            ...,
@@ -140,14 +141,18 @@ print.step_normalize <-
 #' @export
 tidy.step_normalize <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = c(names(x$means), names(x$sds)),
-                  statistic = rep(c("mean", "sd"), each = length(x$sds)),
-                  value = unname(c(x$means, x$sds)))
+    res <- tibble(
+      terms = c(names(x$means), names(x$sds)),
+      statistic = rep(c("mean", "sd"), each = length(x$sds)),
+      value = unname(c(x$means, x$sds))
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  statistic = na_chr,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      statistic = na_chr,
+      value = na_dbl
+    )
   }
   res$id <- x$id
   res

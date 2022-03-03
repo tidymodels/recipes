@@ -79,7 +79,7 @@ new column name) is returned.
 library(modeldata)
 data(covers)
 
-rec <- recipe(~ description, covers) \%>\%
+rec <- recipe(~description, covers) \%>\%
   step_count(description, pattern = "(rock|stony)", result = "rocks") \%>\%
   step_count(description, pattern = "famil", normalize = TRUE)
 

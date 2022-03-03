@@ -52,12 +52,13 @@
 #'
 #' biomass$sparse <- c(1, rep(0, nrow(biomass) - 1))
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-#'                     nitrogen + sulfur + sparse,
-#'               data = biomass_tr)
+#'   nitrogen + sulfur + sparse,
+#' data = biomass_tr
+#' )
 #'
 #' nzv_filter <- rec %>%
 #'   step_nzv(all_predictors())
@@ -80,7 +81,6 @@ step_nzv <-
            removals = NULL,
            skip = FALSE,
            id = rand_id("nzv")) {
-
     exp_list <- list(freq_cut = 95 / 5, unique_cut = 10)
     if (!isTRUE(all.equal(exp_list, options))) {
       freq_cut <- options$freq_cut
@@ -149,8 +149,9 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nzv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
+  if (length(object$removals) > 0) {
     new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
+  }
   as_tibble(new_data)
 }
 
@@ -168,8 +169,9 @@ print.step_nzv <-
 nzv <- function(x,
                 freq_cut = 95 / 5,
                 unique_cut = 10) {
-  if (is.null(dim(x)))
+  if (is.null(dim(x))) {
     x <- matrix(x, ncol = 1)
+  }
 
   fr_foo <- function(data) {
     t <- table(data[!is.na(data)])
@@ -182,18 +184,20 @@ nzv <- function(x,
   }
 
   freq_ratio <- vapply(x, fr_foo, c(ratio = 0))
-  uni_foo <- function(data)
+  uni_foo <- function(data) {
     length(unique(data[!is.na(data)]))
+  }
   lunique <- vapply(x, uni_foo, c(num = 0))
   pct_unique <- 100 * lunique / vapply(x, length, c(num = 0))
 
-  zero_func <- function(data)
+  zero_func <- function(data) {
     all(is.na(data))
+  }
   zero_var <- (lunique == 1) | vapply(x, zero_func, c(zv = TRUE))
 
   out <-
-    which( (freq_ratio > freq_cut &
-             pct_unique <= unique_cut) | zero_var)
+    which((freq_ratio > freq_cut &
+      pct_unique <= unique_cut) | zero_var)
   names(out) <- NULL
   colnames(x)[out]
 }

@@ -34,7 +34,7 @@ useful when creating custom steps.
 library(rlang)
 library(modeldata)
 data(okc)
-rec <- recipe(~ ., data = okc)
+rec <- recipe(~., data = okc)
 info <- summary(rec)
 terms_select(info = info, quos(all_predictors()))
 }

@@ -69,7 +69,7 @@ purrr::map_dbl(credit_data, function(x) mean(is.na(x)))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 
 rec <- recipe(Price ~ ., data = credit_tr)

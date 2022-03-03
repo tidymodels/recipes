@@ -83,8 +83,8 @@ data(okc)
 
 # Learn the classes on the train set
 train <- okc[1:1000, ]
-test  <- okc[1001:2000, ]
-recipe(train, age ~ . ) \%>\%
+test <- okc[1001:2000, ]
+recipe(train, age ~ .) \%>\%
   check_class(everything()) \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
@@ -113,7 +113,6 @@ recipe(x_df) \%>\%
   check_class(time, class_nm = "POSIXt", allow_additional = TRUE) \%>\%
   prep(x_df) \%>\%
   bake(x_df)
-
 }
 \seealso{
 Other checks: 

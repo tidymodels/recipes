@@ -1,3 +1,19 @@
+# check_col works in the bake stage
+
+    Code
+      rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1])
+    Condition
+      Error in `bake()`:
+      ! The following cols are missing from `new_data`: `mpg`.
+
+---
+
+    Code
+      rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars[, c(2, 5)])
+    Condition
+      Error in `bake()`:
+      ! The following cols are missing from `new_data`: `mpg`.
+
 # empty printing
 
     Code

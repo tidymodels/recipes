@@ -61,10 +61,9 @@ library(modeldata)
 data(biomass)
 
 biomass_rec <- recipe(HHV ~ ., data = biomass) \%>\%
-   step_rm(sample, dataset) \%>\%
-   check_cols(contains("gen")) \%>\%
-   step_center(all_numeric_predictors())
-
+  step_rm(sample, dataset) \%>\%
+  check_cols(contains("gen")) \%>\%
+  step_center(all_numeric_predictors())
 \dontrun{
 bake(biomass_rec, biomass[, c("carbon", "HHV")])
 }

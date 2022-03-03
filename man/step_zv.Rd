@@ -72,12 +72,13 @@ data(biomass)
 
 biomass$one_value <- 1
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-                    nitrogen + sulfur + one_value,
-              data = biomass_tr)
+  nitrogen + sulfur + one_value,
+data = biomass_tr
+)
 
 zv_filter <- rec \%>\%
   step_zv(all_predictors())

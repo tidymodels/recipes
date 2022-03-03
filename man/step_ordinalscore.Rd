@@ -71,10 +71,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 fail_lvls <- c("meh", "annoying", "really_bad")
 
 ord_data <-
-  data.frame(item = c("paperclip", "twitter", "airbag"),
-             fail_severity = factor(fail_lvls,
-                                    levels = fail_lvls,
-                                    ordered = TRUE))
+  data.frame(
+    item = c("paperclip", "twitter", "airbag"),
+    fail_severity = factor(fail_lvls,
+      levels = fail_lvls,
+      ordered = TRUE
+    )
+  )
 
 model.matrix(~fail_severity, data = ord_data)
 

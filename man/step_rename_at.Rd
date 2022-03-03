@@ -59,7 +59,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 
 \examples{
 library(dplyr)
-recipe(~ ., data = iris) \%>\%
+recipe(~., data = iris) \%>\%
   step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) \%>\%
   prep() \%>\%
   bake(new_data = NULL) \%>\%

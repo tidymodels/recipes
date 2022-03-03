@@ -1,3 +1,40 @@
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Operations:
+      
+      Inverse transformation on x1, x2, x3, x4
+
+---
+
+    Code
+      prep(rec, training = ex_dat, verbose = TRUE)
+    Output
+      oper 1 step inverse [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Training data contained 20 data points and no missing data.
+      
+      Operations:
+      
+      Inverse transformation on x1, x2, x3, x4 [trained]
+
 # empty printing
 
     Code

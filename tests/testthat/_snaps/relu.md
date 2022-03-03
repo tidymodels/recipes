@@ -1,3 +1,72 @@
+# input checking
+
+    Code
+      recipe(~., data = df) %>% step_relu(val1, shift = TRUE) %>% prep(df, verbose = FALSE)
+    Condition
+      Error in `step_relu()`:
+      ! Shift argument must be a numeric value.
+
+---
+
+    Code
+      recipe(~., data = df) %>% step_relu(val1, reverse = 3) %>% prep(df, verbose = FALSE)
+    Condition
+      Error in `step_relu()`:
+      ! Reverse argument must be a logical value.
+
+---
+
+    Code
+      recipe(~., data = df) %>% step_relu(val1, smooth = "cat") %>% prep(df, verbose = FALSE)
+    Condition
+      Error in `step_relu()`:
+      ! Smooth argument must be logical value.
+
+---
+
+    Code
+      recipe(~., data = df) %>% step_relu(val2) %>% prep(df, verbose = FALSE)
+    Condition
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
+
+# prints something
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Operations:
+      
+      Adding relu transform for val1
+
+---
+
+    Code
+      prep(rec, training = df, verbose = TRUE)
+    Output
+      oper 1 step relu [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Training data contained 21 data points and no missing data.
+      
+      Operations:
+      
+      Adding relu transform for val1 [trained]
+
 # empty printing
 
     Code

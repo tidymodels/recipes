@@ -44,11 +44,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' transformed_te <- rec %>%
 #'   step_relu(carbon, shift = 40) %>%
@@ -156,12 +158,13 @@ print.step_relu <-
     title <- "Adding relu transform for "
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
-}
+  }
 
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
-  if (!is.numeric(x))
+  if (!is.numeric(x)) {
     rlang::abort("step_relu can only be applied to numeric data.")
+  }
 
   if (reverse) {
     shifted <- shift - x
@@ -170,7 +173,7 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   }
 
   if (smooth) {
-    out <- log1p(exp(shifted))  # use log1p for numerical accuracy
+    out <- log1p(exp(shifted)) # use log1p for numerical accuracy
   } else {
     out <- pmax(shifted, rep(0, length(shifted)))
   }

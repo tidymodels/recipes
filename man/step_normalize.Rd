@@ -75,11 +75,13 @@ returned.
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 norm_trans <- rec \%>\%
   step_normalize(carbon, hydrogen)
@@ -101,7 +103,6 @@ norm_keep_orig <- rec \%>\%
 keep_orig_obj <- prep(norm_keep_orig, training = biomass_tr)
 keep_orig_te <- bake(keep_orig_obj, biomass_te)
 keep_orig_te
-
 }
 \seealso{
 Other normalization steps: 

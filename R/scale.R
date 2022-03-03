@@ -37,11 +37,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' scaled_trans <- rec %>%
 #'   step_scale(carbon, hydrogen)
@@ -54,7 +56,6 @@
 #' transformed_te
 #' tidy(scaled_trans, number = 1)
 #' tidy(scaled_obj, number = 1)
-#'
 step_scale <-
   function(recipe,
            ...,
@@ -142,12 +143,16 @@ print.step_scale <-
 #' @export
 tidy.step_scale <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$sds),
-                  value = unname(x$sds))
+    res <- tibble(
+      terms = names(x$sds),
+      value = unname(x$sds)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl
+    )
   }
   res$id <- x$id
   res

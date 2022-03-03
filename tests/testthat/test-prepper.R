@@ -1,11 +1,10 @@
 library(rsample)
 
 test_that("prepper uses fresh = TRUE", {
-
   set.seed(123)
 
-  train1 <- mtcars[1:20,]
-  train2 <- mtcars[21:32,]
+  train1 <- mtcars[1:20, ]
+  train2 <- mtcars[21:32, ]
 
   rec <- recipe(cyl ~ mpg, train1) %>%
     step_center(mpg)
@@ -19,5 +18,4 @@ test_that("prepper uses fresh = TRUE", {
     prepped_rec2$steps[[1]]$means,
     c(mpg = mean(training(split2)$mpg))
   )
-
 })

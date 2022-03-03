@@ -48,10 +48,12 @@
 #' @examples
 #' library(lubridate)
 #'
-#' examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
-#'                        Stefan = ymd("2006-01-13") + days(1:10))
+#' examples <- data.frame(
+#'   Dan = ymd("2002-03-04") + days(1:10),
+#'   Stefan = ymd("2006-01-13") + days(1:10)
+#' )
 #' date_rec <- recipe(~ Dan + Stefan, examples) %>%
-#'    step_date(all_predictors())
+#'   step_date(all_predictors())
 #'
 #' tidy(date_rec, number = 1)
 #'
@@ -61,7 +63,6 @@
 #' date_values
 #'
 #' tidy(date_rec, number = 1)
-#'
 step_date <-
   function(recipe,
            ...,
@@ -74,40 +75,43 @@ step_date <-
            columns = NULL,
            keep_original_cols = TRUE,
            skip = FALSE,
-           id = rand_id("date")
-  ) {
-  feat <-
-    c("year",
-      "doy",
-      "week",
-      "decimal",
-      "semester",
-      "quarter",
-      "dow",
-      "month")
-  if (!is_tune(features) & !is_varying(features)) {
-    if (!all(features %in% feat)) {
-      rlang::abort(paste0("Possible values of `features` should include: ",
-           paste0("'", feat, "'", collapse = ", ")))
+           id = rand_id("date")) {
+    feat <-
+      c(
+        "year",
+        "doy",
+        "week",
+        "decimal",
+        "semester",
+        "quarter",
+        "dow",
+        "month"
+      )
+    if (!is_tune(features) & !is_varying(features)) {
+      if (!all(features %in% feat)) {
+        rlang::abort(paste0(
+          "Possible values of `features` should include: ",
+          paste0("'", feat, "'", collapse = ", ")
+        ))
+      }
     }
-  }
-  add_step(
-    recipe,
-    step_date_new(
-      terms = enquos(...),
-      role = role,
-      trained = trained,
-      features = features,
-      abbr = abbr,
-      label = label,
-      ordinal = ordinal,
-      columns = columns,
-      keep_original_cols = keep_original_cols,
-      skip = skip,
-      id = id
+    add_step(
+      recipe,
+      step_date_new(
+        terms = enquos(...),
+        role = role,
+        trained = trained,
+        features = features,
+        abbr = abbr,
+        label = label,
+        ordinal = ordinal,
+        columns = columns,
+        keep_original_cols = keep_original_cols,
+        skip = skip,
+        id = id
+      )
     )
-  )
-}
+  }
 
 step_date_new <-
   function(terms, role, trained, features, abbr, label, ordinal, columns,
@@ -134,12 +138,14 @@ prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   date_data <- info[info$variable %in% col_names, ]
-  if (any(date_data$type != "date"))
+  if (any(date_data$type != "date")) {
     rlang::abort(
-      paste0("All variables for `step_date` should be either `Date` or",
-          "`POSIXct` classes."
-         )
+      paste0(
+        "All variables for `step_date` should be either `Date` or",
+        "`POSIXct` classes."
       )
+    )
+  }
 
   step_date_new(
     terms = x$terms,
@@ -174,31 +180,39 @@ get_date_features <-
     colnames(res) <- feats
     res <- as_tibble(res)
 
-    if ("year" %in% feats)
+    if ("year" %in% feats) {
       res[, grepl("year$", names(res))] <- year(dt)
-    if ("doy" %in% feats)
+    }
+    if ("doy" %in% feats) {
       res[, grepl("doy$", names(res))] <- yday(dt)
-    if ("week" %in% feats)
+    }
+    if ("week" %in% feats) {
       res[, grepl("week$", names(res))] <- week(dt)
-    if ("decimal" %in% feats)
+    }
+    if ("decimal" %in% feats) {
       res[, grepl("decimal$", names(res))] <- decimal_date(dt)
-    if ("quarter" %in% feats)
+    }
+    if ("quarter" %in% feats) {
       res[, grepl("quarter$", names(res))] <- quarter(dt)
-    if ("semester" %in% feats)
+    }
+    if ("semester" %in% feats) {
       res[, grepl("semester$", names(res))] <- semester(dt)
+    }
     if ("dow" %in% feats) {
       res[, grepl("dow$", names(res))] <-
         wday(dt, abbr = abbr, label = label)
-      if (!ord & label == TRUE)
-        res[, grepl("dow$", names(res))]  <-
+      if (!ord & label == TRUE) {
+        res[, grepl("dow$", names(res))] <-
           ord2fac(res, grep("dow$", names(res), value = TRUE))
+      }
     }
     if ("month" %in% feats) {
       res[, grepl("month$", names(res))] <-
         month(dt, abbr = abbr, label = label)
-      if (!ord & label == TRUE)
-        res[, grepl("month$", names(res))]  <-
+      if (!ord & label == TRUE) {
+        res[, grepl("month$", names(res))] <-
           ord2fac(res, grep("month$", names(res), value = TRUE))
+      }
     }
     res
   }
@@ -284,4 +298,3 @@ tidy.step_date <- function(x, ...) {
   }
   tibble::add_column(res, id = x$id)
 }
-

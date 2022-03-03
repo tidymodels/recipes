@@ -83,7 +83,9 @@ rec <-
     levels = amnt
   )
 
-encoded <- rec \%>\% prep() \%>\% bake(new_data = NULL)
+encoded <- rec \%>\%
+  prep() \%>\%
+  bake(new_data = NULL)
 
 table(encoded$StockOptionLevel, attrition$StockOptionLevel)
 
@@ -113,7 +115,9 @@ encoded <- bake(rec, new_data = NULL)
 table(encoded$MonthlyIncome, binner(attrition$MonthlyIncome))
 
 # What happens when a value is out of range?
-ceo <- attrition \%>\% slice(1) \%>\% mutate(MonthlyIncome = 10^10)
+ceo <- attrition \%>\%
+  slice(1) \%>\%
+  mutate(MonthlyIncome = 10^10)
 
 bake(rec, ceo)
 }

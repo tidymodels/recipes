@@ -79,8 +79,9 @@ rec <-
   prep()
 
 table(bake(rec, new_data = NULL) \%>\% pull(diet),
-      okc \%>\% pull(diet),
-      useNA = "always") \%>\%
+  okc \%>\% pull(diet),
+  useNA = "always"
+) \%>\%
   as.data.frame() \%>\%
   dplyr::filter(Freq > 0)
 

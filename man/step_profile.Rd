@@ -103,7 +103,7 @@ data(okc)
 recipe(~ diet + height + date, data = okc) \%>\%
   step_profile(-date, profile = vars(date)) \%>\%
   prep(training = okc) \%>\%
-  juice
+  juice()
 
 
 ##########
@@ -129,13 +129,17 @@ disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
 
 grid_data <- bake(disp_grid, new_data = NULL)
 grid_data <- grid_data \%>\%
-  mutate(pred = predict(lin_mod, grid_data),
-         method = "grid")
+  mutate(
+    pred = predict(lin_mod, grid_data),
+    method = "grid"
+  )
 
 pctl_data <- bake(disp_pctl, new_data = NULL)
 pctl_data <- pctl_data \%>\%
-  mutate(pred = predict(lin_mod, pctl_data),
-         method = "percentile")
+  mutate(
+    pred = predict(lin_mod, pctl_data),
+    method = "percentile"
+  )
 
 plot_data <- bind_rows(grid_data, pctl_data)
 
@@ -143,5 +147,5 @@ library(ggplot2)
 
 ggplot(plot_data, aes(x = disp, y = pred)) +
   geom_point(alpha = .5, cex = 1) +
-  facet_wrap(~ method)
+  facet_wrap(~method)
 }

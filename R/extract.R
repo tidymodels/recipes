@@ -43,37 +43,39 @@
 #' data(tate_text)
 #'
 #' dummies <- recipe(~ artist + medium, data = tate_text) %>%
-#'     step_dummy_extract(artist, medium, sep = ", ") %>%
-#'     prep()
+#'   step_dummy_extract(artist, medium, sep = ", ") %>%
+#'   prep()
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
 #'
 #' dummy_data %>%
-#'     select(starts_with("medium")) %>%
-#'     names()
+#'   select(starts_with("medium")) %>%
+#'   names()
 #'
 #' # More detailed splitting
-#' dummies_specific <- recipe(~ medium, data = tate_text) %>%
-#'     step_dummy_extract(medium, sep = "(, )|( and )|( on )") %>%
-#'     prep()
+#' dummies_specific <- recipe(~medium, data = tate_text) %>%
+#'   step_dummy_extract(medium, sep = "(, )|( and )|( on )") %>%
+#'   prep()
 #'
 #' dummy_data_specific <- bake(dummies_specific, new_data = NULL)
 #'
 #' dummy_data_specific %>%
-#'     select(starts_with("medium")) %>%
-#'     names()
+#'   select(starts_with("medium")) %>%
+#'   names()
 #'
 #' tidy(dummies, number = 1)
 #' tidy(dummies_specific, number = 1)
 #'
 #' # pattern argument can be useful to extract harder patterns
 #' color_examples <- tibble(
-#'   colors = c("['red', 'blue']",
-#'              "['red', 'blue', 'white']",
-#'              "['blue', 'blue', 'blue']")
+#'   colors = c(
+#'     "['red', 'blue']",
+#'     "['red', 'blue', 'white']",
+#'     "['blue', 'blue', 'blue']"
+#'   )
 #' )
 #'
-#' dummies_color <- recipe(~ colors, data = color_examples) %>%
+#' dummies_color <- recipe(~colors, data = color_examples) %>%
 #'   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") %>%
 #'   prep()
 #'
@@ -95,7 +97,6 @@ step_dummy_extract <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy_extract")) {
-
     if (!is_tune(threshold) & !is_varying(threshold)) {
       if (threshold < 0) {
         rlang::abort("`threshold` should not be negative.")
@@ -155,7 +156,8 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     names(levels) <- col_names
     for (col_name in col_names) {
       elements <- dummy_extract(
-        training[[col_name]], sep = x$sep, pattern = x$pattern
+        training[[col_name]],
+        sep = x$sep, pattern = x$pattern
       )
 
       lvls <- map(elements, unique)
@@ -223,8 +225,9 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
       new_data[, col_names[i]] <- NULL
     }
   }
-  if (!is_tibble(new_data))
+  if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
+  }
   new_data
 }
 
@@ -270,7 +273,7 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, ~list(columns = .x), FALSE, .id = "terms")
+      res <- purrr::map_dfr(x$levels, ~ list(columns = .x), FALSE, .id = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
     }

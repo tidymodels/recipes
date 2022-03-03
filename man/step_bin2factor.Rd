@@ -75,10 +75,10 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 library(modeldata)
 data(covers)
 
-rec <- recipe(~ description, covers) \%>\%
- step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
- step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
- step_bin2factor(rocks)
+rec <- recipe(~description, covers) \%>\%
+  step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
+  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
+  step_bin2factor(rocks)
 
 tidy(rec, number = 3)
 

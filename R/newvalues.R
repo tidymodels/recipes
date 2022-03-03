@@ -66,8 +66,8 @@ check_new_values <-
     add_check(
       recipe,
       check_new_values_new(
-        terms   = enquos(...),
-        role    = role,
+        terms = enquos(...),
+        role = role,
         trained = trained,
         columns = columns,
         ignore_NA = ignore_NA,
@@ -80,16 +80,18 @@ check_new_values <-
 
 check_new_values_new <-
   function(terms, role, trained, columns, skip, id, values, ignore_NA) {
-    check(subclass  = "new_values",
-          prefix    = "check_",
-          terms     = terms,
-          role      = role,
-          trained   = trained,
-          columns   = columns,
-          skip      = skip,
-          id        = id,
-          values    = values,
-          ignore_NA = ignore_NA)
+    check(
+      subclass = "new_values",
+      prefix = "check_",
+      terms = terms,
+      role = role,
+      trained = trained,
+      columns = columns,
+      skip = skip,
+      id = id,
+      values = values,
+      ignore_NA = ignore_NA
+    )
   }
 
 new_values_func <- function(x,
@@ -97,8 +99,12 @@ new_values_func <- function(x,
                             colname = "x",
                             ignore_NA = TRUE) {
   new_vals <- setdiff(as.character(x), as.character(allowed_values))
-  if (length(new_vals) == 0) return()
-  if (all(is.na(new_vals)) && ignore_NA) return()
+  if (length(new_vals) == 0) {
+    return()
+  }
+  if (all(is.na(new_vals)) && ignore_NA) {
+    return()
+  }
   if (ignore_NA) new_vals <- new_vals[!is.na(new_vals)]
   rlang::abort(paste0(
     colname,
@@ -110,16 +116,16 @@ new_values_func <- function(x,
 prep.check_new_values <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
-  values <- lapply(training[ ,col_names], unique)
+  values <- lapply(training[, col_names], unique)
 
   check_new_values_new(
-    terms   = x$terms,
-    role    = x$role,
+    terms = x$terms,
+    role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip    = x$skip,
-    id      = x$id,
-    values  = values,
+    skip = x$skip,
+    id = x$id,
+    values = values,
     ignore_NA = x$ignore_NA
   )
 }
@@ -130,10 +136,11 @@ bake.check_new_values <- function(object,
   col_names <- names(object$values)
   for (i in seq_along(col_names)) {
     colname <- col_names[i]
-    new_values_func(new_data[[ colname ]],
-                    object$values[[colname]],
-                    colname,
-                    ignore_NA = object$ignore_NA)
+    new_values_func(new_data[[colname]],
+      object$values[[colname]],
+      colname,
+      ignore_NA = object$ignore_NA
+    )
   }
   as_tibble(new_data)
 }

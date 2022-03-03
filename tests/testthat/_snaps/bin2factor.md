@@ -1,3 +1,70 @@
+# bad options
+
+    Code
+      prep(rec3, training = covers)
+    Condition
+      Error in `prep()`:
+      ! The variables should be numeric
+
+---
+
+    Code
+      rec %>% step_bin2factor(rocks, levels = letters[1:5])
+    Condition
+      Error in `step_bin2factor()`:
+      ! `levels` should be a two element character string
+
+---
+
+    Code
+      rec %>% step_bin2factor(rocks, levels = 1:2)
+    Condition
+      Error in `step_bin2factor()`:
+      ! `levels` should be a two element character string
+
+# printing
+
+    Code
+      print(rec2)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          1
+      
+      Operations:
+      
+      Regular expression dummy variable using "(rock|stony)"
+      Regular expression dummy variable using "(rock|stony)"
+      Dummy variable to factor conversion for rocks
+
+---
+
+    Code
+      prep(rec2, training = covers, verbose = TRUE)
+    Output
+      oper 1 step regex [training] 
+      oper 2 step regex [training] 
+      oper 3 step bin2factor [training] 
+      The retained training set is ~ 0.01 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          1
+      
+      Training data contained 40 data points and no missing data.
+      
+      Operations:
+      
+      Regular expression dummy variable using "(rock|stony)" [trained]
+      Regular expression dummy variable using "(rock|stony)" [trained]
+      Dummy variable to factor conversion for rocks [trained]
+
 # empty printing
 
     Code

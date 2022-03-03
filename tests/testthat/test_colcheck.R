@@ -15,18 +15,26 @@ test_that("check_col works in the prep stage", {
 
 
 test_that("check_col works in the bake stage", {
-  expect_error(rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars),
-               NA)
-  expect_equal(rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars),
-               tibble(mtcars[ ,c(1, 3:11, 2)]))
-  expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars), NA)
-  expect_equal(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars),
-               tibble(mtcars[ ,c(1, 5, 2)]))
-  expect_error(rp1 %>% check_cols(everything()) %>% prep %>% bake(mtcars[-1]),
-               "The following cols are missing from `new_data`: `mpg`.")
-  expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>%
-                 bake(mtcars[ ,c(2, 5)]),
-               "The following cols are missing from `new_data`: `mpg`.")
+  expect_error(
+    rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars),
+    NA
+  )
+  expect_equal(
+    rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars),
+    tibble(mtcars[, c(1, 3:11, 2)])
+  )
+  expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars), NA)
+  expect_equal(
+    rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars),
+    tibble(mtcars[, c(1, 5, 2)])
+  )
+  expect_snapshot(error = TRUE,
+    rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1])
+  )
+  expect_snapshot(error = TRUE,
+    rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>%
+      bake(mtcars[, c(2, 5)])
+  )
 })
 
 test_that("empty selection prep/bake is a no-op", {

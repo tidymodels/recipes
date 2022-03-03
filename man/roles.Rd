@@ -126,5 +126,4 @@ recipe(HHV ~ ., data = biomass) \%>\%
 # If the formula method is not used, all columns have a missing role:
 recipe(biomass) \%>\%
   summary()
-
 }

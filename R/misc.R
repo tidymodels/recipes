@@ -1,5 +1,6 @@
-filter_terms <- function(x, ...)
+filter_terms <- function(x, ...) {
   UseMethod("filter_terms")
+}
 
 ## Buckets variables into discrete, mutally exclusive types
 get_types <- function(x) {
@@ -21,29 +22,33 @@ get_types <- function(x) {
 
   classes <- lapply(x, class)
   res <- lapply(classes,
-                function(x, types) {
-                  in_types <- x %in% names(types)
-                  if (sum(in_types) > 0) {
-                    # not sure what to do with multiple matches; right now
-                    ## pick the first match which favors "factor" over "ordered"
-                    out <-
-                      unname(types[min(which(names(types) %in% x))])
-                  } else
-                    out <- "other"
-                  out
-                },
-                types = var_types)
+    function(x, types) {
+      in_types <- x %in% names(types)
+      if (sum(in_types) > 0) {
+        # not sure what to do with multiple matches; right now
+        ## pick the first match which favors "factor" over "ordered"
+        out <-
+          unname(types[min(which(names(types) %in% x))])
+      } else {
+        out <- "other"
+      }
+      out
+    },
+    types = var_types
+  )
   res <- unlist(res)
   tibble(variable = names(res), type = unname(res))
 }
 
 ## get variables from formulas
-is_formula <- function(x)
+is_formula <- function(x) {
   isTRUE(inherits(x, "formula"))
+}
 
 get_lhs_vars <- function(formula, data) {
-  if (!is_formula(formula))
+  if (!is_formula(formula)) {
     formula <- as.formula(formula)
+  }
   ## Want to make sure that multiple outcomes can be expressed as
   ## additions with no cbind business and that `.` works too (maybe)
   new_formula <- rlang::new_formula(lhs = NULL, rhs = f_lhs(formula))
@@ -63,7 +68,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
-  data_info <- attr(model.frame(formula, data[1,]), "terms")
+  data_info <- attr(model.frame(formula, data[1, ]), "terms")
   response_info <- attr(data_info, "response")
   predictor_names <- names(attr(data_info, "dataClasses"))
   if (length(response_info) > 0 && all(response_info > 0)) {
@@ -77,11 +82,13 @@ get_rhs_terms <- function(x) x
 
 
 
-terms.recipe <- function(x, ...)
+terms.recipe <- function(x, ...) {
   x$term_info
+}
 
-filter_terms.formula <- function(formula, data, ...)
+filter_terms.formula <- function(formula, data, ...) {
   get_rhs_vars(formula, data)
+}
 
 
 ## This function takes the default arguments of `func` and
@@ -89,21 +96,26 @@ filter_terms.formula <- function(formula, data, ...)
 ## remove any in `removals`
 sub_args <- function(func, options, removals = NULL) {
   args <- formals(func)
-  for (i in seq_along(options))
+  for (i in seq_along(options)) {
     args[[names(options)[i]]] <- options[[i]]
-  if (!is.null(removals))
+  }
+  if (!is.null(removals)) {
     args[removals] <- NULL
+  }
   args
 }
 ## Same as above but starts with a call object
 mod_call_args <- function(cl, args, removals = NULL) {
-  if (!is.null(removals))
-    for (i in removals)
+  if (!is.null(removals)) {
+    for (i in removals) {
       cl[[i]] <- NULL
-    arg_names <- names(args)
-    for (i in arg_names)
-      cl[[i]] <- args[[i]]
-    cl
+    }
+  }
+  arg_names <- names(args)
+  for (i in arg_names) {
+    cl[[i]] <- args[[i]]
+  }
+  cl
 }
 
 #' Naming Tools
@@ -139,9 +151,11 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #' names0(9, "a")
 #' names0(10, "a")
 #'
-#' example <- data.frame(x = ordered(letters[1:5]),
-#'                       y = factor(LETTERS[1:5]),
-#'                       z = factor(paste(LETTERS[1:5], 1:5)))
+#' example <- data.frame(
+#'   x = ordered(letters[1:5]),
+#'   y = factor(LETTERS[1:5]),
+#'   z = factor(paste(LETTERS[1:5], 1:5))
+#' )
 #'
 #' dummy_names("y", levels(example$y)[-1])
 #' dummy_names("z", levels(example$z)[-1])
@@ -154,8 +168,9 @@ mod_call_args <- function(cl, args, removals = NULL) {
 #' @export
 
 names0 <- function(num, prefix = "x") {
-  if (num < 1)
+  if (num < 1) {
     rlang::abort("`num` should be > 0")
+  }
   ind <- format(1:num)
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
@@ -169,11 +184,12 @@ dummy_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   var <- args[[1]]
   lvl <- args[[2]]
 
-  if(!ordinal)
+  if (!ordinal) {
     nms <- paste(var, make.names(lvl), sep = sep)
-  else
+  } else {
     # assuming they are in order:
     nms <- paste0(var, names0(length(lvl), sep))
+  }
 
   nms
 }
@@ -186,11 +202,12 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   var <- args[[1]]
   lvl <- args[[2]]
 
-  if(!ordinal)
+  if (!ordinal) {
     nms <- paste(var, make.names(lvl), sep = sep)
-  else
+  } else {
     # assuming they are in order:
     nms <- paste0(var, names0(length(lvl), sep))
+  }
 
   while (any(duplicated(nms))) {
     dupe_count <- vapply(seq_along(nms), function(i) {
@@ -211,30 +228,36 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
 fun_calls <- function(f) {
   if (is.function(f)) {
     fun_calls(body(f))
-  } else if (is_quosure(f))  {
+  } else if (is_quosure(f)) {
     fun_calls(quo_get_expr(f))
   } else if (is.call(f)) {
     fname <- as.character(f[[1]])
     # Calls inside .Internal are special and shouldn't be included
-    if (identical(fname, ".Internal"))
+    if (identical(fname, ".Internal")) {
       return(fname)
+    }
     unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
   }
 }
 
 
 get_levels <- function(x) {
-  if (!is.factor(x) & !is.character(x))
+  if (!is.factor(x) & !is.character(x)) {
     return(list(values = NA, ordered = NA))
+  }
   out <-
     if (is.factor(x)) {
-      list(values = levels(x),
-           ordered = is.ordered(x),
-           factor = TRUE)
+      list(
+        values = levels(x),
+        ordered = is.ordered(x),
+        factor = TRUE
+      )
     } else {
-      list(values = sort(unique(x)),
-           ordered = FALSE,
-           factor = FALSE)
+      list(
+        values = sort(unique(x)),
+        ordered = FALSE,
+        factor = FALSE
+      )
     }
   out
 }
@@ -255,8 +278,9 @@ strings2factors <- function(x, info) {
     lcol <- names(info)[i]
     x[, lcol] <-
       factor(as.character(x[[lcol]]),
-             levels = info[[i]]$values,
-             ordered = info[[i]]$ordered)
+        levels = info[[i]]$values,
+        ordered = info[[i]]$ordered
+      )
   }
   x
 }
@@ -289,8 +313,10 @@ flatten_na <- function(x) {
 
 ## short summary of training set
 train_info <- function(x) {
-  data.frame(nrows = nrow(x),
-             ncomplete = n_complete_rows(x))
+  data.frame(
+    nrows = nrow(x),
+    ncomplete = n_complete_rows(x)
+  )
 }
 
 # ------------------------------------------------------------------------------
@@ -329,13 +355,14 @@ merge_term_info <- function(.new, .old) {
 #' @rdname recipes-internal
 ellipse_check <- function(...) {
   terms <- quos(...)
-  if (is_empty(terms))
+  if (is_empty(terms)) {
     rlang::abort(
       paste0(
-      "Please supply at least one variable specification.",
-      "See ?selections."
+        "Please supply at least one variable specification.",
+        "See ?selections."
       )
     )
+  }
   terms
 }
 
@@ -383,9 +410,12 @@ printer <- function(tr_obj = NULL,
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-prepare <- function(x, ...)
-  rlang::abort(paste0("As of version 0.0.1.9006, used `prep` ",
-       "instead of `prepare`"))
+prepare <- function(x, ...) {
+  rlang::abort(paste0(
+    "As of version 0.0.1.9006, used `prep` ",
+    "instead of `prepare`"
+  ))
+}
 
 
 #' Check to see if a recipe is trained/prepared
@@ -402,7 +432,9 @@ prepare <- function(x, ...)
 #' rec %>% fully_trained()
 #'
 #'
-#' rec %>% prep(training = iris) %>% fully_trained()
+#' rec %>%
+#'   prep(training = iris) %>%
+#'   fully_trained()
 fully_trained <- function(x) {
   if (is.null(x$steps)) {
     if (any(names(x) == "last_term_info")) {
@@ -436,22 +468,25 @@ detect_step <- function(recipe, name) {
 
 # to be used in a recipe
 is_skipable <- function(x) {
-  if(all("skip" != names(x)))
+  if (all("skip" != names(x))) {
     return(FALSE)
-  else
+  } else {
     return(x$skip)
+  }
 }
 
 # to be used within a step
 skip_me <- function(x) {
-  if(!exists("skip"))
+  if (!exists("skip")) {
     return(FALSE)
-  else
+  } else {
     return(x$skip)
+  }
 }
 
-is_qual <- function(x)
+is_qual <- function(x) {
   is.factor(x) | is.character(x)
+}
 
 #' Quantitatively check on variables
 #'
@@ -471,13 +506,15 @@ check_type <- function(dat, quant = TRUE) {
     all_good <- vapply(dat, is_qual, logical(1))
     label <- "factor or character"
   }
-  if (!all(all_good))
+  if (!all(all_good)) {
     rlang::abort(
       paste0(
         "All columns selected for the step",
-         " should be ",
-         label)
+        " should be ",
+        label
       )
+    )
+  }
   invisible(all_good)
 }
 
@@ -491,8 +528,9 @@ check_type <- function(dat, quant = TRUE) {
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-is_trained <- function(x)
+is_trained <- function(x) {
   x$trained
+}
 
 
 #' Convert Selectors to Character
@@ -544,12 +582,12 @@ simple_terms <- function(x, ...) {
 #' @export
 #' @keywords internal
 check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
-  if(is.null(newname)) {
+  if (is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
   }
   new_data_names <- colnames(new_data)
   intersection <- new_data_names %in% newname
-  if(any(intersection)) {
+  if (any(intersection)) {
     rlang::abort(
       paste0(
         "Name collision occured in `",
@@ -560,7 +598,7 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
       )
     )
   }
-  if(names) {
+  if (names) {
     names(res) <- newname
   } else {
     colnames(res) <- newname
@@ -579,8 +617,8 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
 rand_id <- function(prefix = "step", len = 5) {
   candidates <- c(letters, LETTERS, paste(0:9))
   paste(prefix,
-        paste0(sample(candidates, len, replace = TRUE), collapse = ""),
-        sep = "_"
+    paste0(sample(candidates, len, replace = TRUE), collapse = ""),
+    sep = "_"
   )
 }
 
@@ -633,21 +671,24 @@ check_training_set <- function(x, rec, fresh) {
   vars <- unique(rec$var_info$variable)
 
   if (is.null(x)) {
-    if (fresh)
+    if (fresh) {
       rlang::abort(
-        paste0("A training set must be supplied to the `training` argument ",
-               "when `fresh = TRUE`."
+        paste0(
+          "A training set must be supplied to the `training` argument ",
+          "when `fresh = TRUE`."
         )
       )
+    }
     x <- rec$template
   } else {
     in_data <- vars %in% colnames(x)
     if (!all(in_data)) {
       rlang::abort(
-        paste0("Not all variables in the recipe are present in the supplied ",
-               "training set: ",
-               paste0("'", vars[!in_data], "'", collapse = ", "),
-               "."
+        paste0(
+          "Not all variables in the recipe are present in the supplied ",
+          "training set: ",
+          paste0("'", vars[!in_data], "'", collapse = ", "),
+          "."
         )
       )
     }
@@ -660,7 +701,7 @@ check_training_set <- function(x, rec, fresh) {
 
   steps_trained <- vapply(rec$steps, is_trained, logical(1))
   if (any(steps_trained) & !fresh) {
-    if(!rec$retained) {
+    if (!rec$retained) {
       rlang::abort(
         paste0(
           "To prep new steps after prepping the original ",
@@ -717,10 +758,11 @@ is_varying <- function(x) {
   if (is.null(x)) {
     res <- FALSE
   } else {
-    res <- if (is_quosure(x))
+    res <- if (is_quosure(x)) {
       isTRUE(all.equal(x[[-1]], quote(varying())))
-    else
+    } else {
       isTRUE(all.equal(x, quote(varying())))
+    }
   }
   res
 }
@@ -767,7 +809,7 @@ print_col_names <- function(x, prefix = "") {
   }
   nm_sdth <- cumsum(c(nchar(prefix), purrr::map_int(x, nchar) + 2))
   keep_x <- nm_sdth + 5 < wdth
-  x <- x[ keep_x[-1] ]
+  x <- x[keep_x[-1]]
   y <- paste0(prefix, paste0(x, collapse = ", "))
   if (!all(keep_x)) {
     y <- paste0(y, ", ...")
@@ -789,7 +831,7 @@ changelog <- function(show, before, after, x) {
   } else {
     cat("\n")
     print_col_names(new_cols, " new")
-    print_col_names(rm_cols,  " removed")
+    print_col_names(rm_cols, " removed")
     cat("\n")
   }
 }

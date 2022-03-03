@@ -1,16 +1,91 @@
+# core function - correct input
+
+    Code
+      range_check_func(as.character(x), -10, 110)
+    Condition
+      Error in `range_check_func()`:
+      ! is.numeric(x) is not TRUE
+
+---
+
+    Code
+      range_check_func(x, -10, 110, "a")
+    Condition
+      Error in `range_check_func()`:
+      ! is.numeric(slack_prop) is not TRUE
+
+---
+
+    Code
+      range_check_func(x, -10, 110, c(0.05, 0.08, 0.05))
+    Condition
+      Error in `range_check_func()`:
+      ! slack_prop should be of length 1 or of length 2
+
+# core function - workings
+
+    Code
+      range_check_func(x, 0, 100)
+    Condition
+      Error in `range_check_func()`:
+      ! min x is -10, lower bound is -5, max x is 110, upper bound is 105
+
+---
+
+    Code
+      range_check_func(x, 0, 110)
+    Condition
+      Error in `range_check_func()`:
+      ! min x is -10, lower bound is -5.5
+
+---
+
+    Code
+      range_check_func(x, -5, 100)
+    Condition
+      Error in `range_check_func()`:
+      ! max x is 110, upper bound is 105.25
+
+---
+
+    Code
+      range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1))
+    Condition
+      Error in `range_check_func()`:
+      ! min x is -10, lower bound is -5
+
+---
+
+    Code
+      range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05))
+    Condition
+      Error in `range_check_func()`:
+      ! max x is 110, upper bound is 105
+
+---
+
+    Code
+      range_check_func(x, 0, 100, warn = TRUE)
+    Condition
+      Warning:
+      min x is -10, lower bound is -5, max x is 110, upper bound is 105
+
 # in recipe
 
     Code
       bake(rec2, test)
-    Error <rlang_error>
-      min x is -10, lower bound is -5, max x is 110, upper bound is 105
+    Condition
+      Error in `range_check_func()`:
+      ! min x is -10, lower bound is -5, max x is 110, upper bound is 105
 
 ---
 
     Code
       bake(rec3, test)
-    Warning <rlang_warning>
+    Condition
+      Warning:
       min x is -10, lower bound is -5, max x is 110, upper bound is 105
+      Warning:
       min y is -10, lower bound is -2.5, max x is 60, upper bound is 52.5
     Output
       # A tibble: 2 x 2
@@ -23,8 +98,44 @@
 
     Code
       bake(rec4, test)
-    Error <rlang_error>
-      max y is 60, upper bound is 55
+    Condition
+      Error in `range_check_func()`:
+      ! max y is 60, upper bound is 55
+
+# printing
+
+    Code
+      print(check_range_extract)
+    Output
+      Recipe
+      
+      Inputs:
+      
+        11 variables (no declared roles)
+      
+      Operations:
+      
+      Checking range of drat, cyl, am
+
+---
+
+    Code
+      prep(check_range_extract, training = mtcars, verbose = TRUE)
+    Output
+      oper 1 check range [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+        11 variables (no declared roles)
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Checking range of drat, cyl, am [trained]
 
 # empty printing
 

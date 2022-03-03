@@ -111,7 +111,6 @@
 #' # If the formula method is not used, all columns have a missing role:
 #' recipe(biomass) %>%
 #'   summary()
-#'
 #' @name roles
 NULL
 
@@ -183,7 +182,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   # Pull in first type we come across if unspecified
   if (is.null(new_type)) {
-    new_type <- purrr::map_chr(vars, ~{
+    new_type <- purrr::map_chr(vars, ~ {
       first_row_with_var <- which(recipe$var_info$variable == .x)[1]
       recipe$var_info$type[first_row_with_var]
     })
@@ -191,7 +190,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     new_type <- rep(new_type, times = length(vars))
   }
 
-  source <- purrr::map_chr(vars, ~{
+  source <- purrr::map_chr(vars, ~ {
     first_row_with_var <- which(recipe$var_info$variable == .x)[1]
     recipe$var_info$source[first_row_with_var]
   })
@@ -210,7 +209,6 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   recipe$term_info <- recipe$var_info
   recipe
-
 }
 
 #' @export
@@ -310,16 +308,16 @@ role_rm_machine <- function(x, role, var) {
     role <- glue::single_quote(role)
 
     rlang::warn(
-      glue::glue("Column, {var}, does not have role, {role}."))
+      glue::glue("Column, {var}, does not have role, {role}.")
+    )
 
     return(x)
   }
 
   if (nrow(x) == 1) {
     x$role <- NA_character_
-  }
-  else {
-    x <- x[x$role != role,]
+  } else {
+    x <- x[x$role != role, ]
   }
 
   x

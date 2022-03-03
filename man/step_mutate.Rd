@@ -69,7 +69,7 @@ strings (and are not reparsable), is returned.
 
 \examples{
 rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   step_mutate(
     dbl_width = Sepal.Width * 2,
     half_length = Sepal.Length / 2
@@ -106,7 +106,7 @@ all.equal(dplyr_test, rec_test)
 const <- 1.414
 
 qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   step_mutate(
     bad_approach = Sepal.Width * const,
     best_approach = Sepal.Width * !!const
