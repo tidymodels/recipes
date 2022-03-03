@@ -116,14 +116,6 @@
       Error in `dplyr::rename_at()`:
       ! `.funs` must contain one renaming function, not 2.
 
-# no input
-
-    Code
-      iris_rec %>% step_rename_at() %>% prep(training = iris) %>% juice(composition = "data.frame")
-    Condition
-      Error in `structure()`:
-      ! argument "fn" is missing, with no default
-
 # rename_at - empty printing
 
     Code

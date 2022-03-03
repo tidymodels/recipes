@@ -134,7 +134,8 @@ test_that("mulitple functions", {
 
 
 test_that("no input", {
-  expect_snapshot(error = TRUE,
+  # Wait for call pass through
+  expect_error(
     iris_rec %>%
       step_rename_at() %>%
       prep(training = iris) %>%

@@ -82,14 +82,6 @@
       
       Variable mutation for Sepal.Length, Sepal.Width [trained]
 
-# no input
-
-    Code
-      iris_rec %>% step_mutate_at() %>% prep(training = iris) %>% juice(composition = "data.frame")
-    Condition
-      Error in `structure()`:
-      ! argument "fn" is missing, with no default
-
 # mutate_at - empty printing
 
     Code
