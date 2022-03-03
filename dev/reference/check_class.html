@@ -166,8 +166,8 @@ is returned.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Learn the classes on the train set</span></span>
 <span class="r-in"><span class="va">train</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">test</span>  <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1001</span><span class="op">:</span><span class="fl">2000</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">train</span>, <span class="va">age</span> <span class="op">~</span> <span class="va">.</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">test</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1001</span><span class="op">:</span><span class="fl">2000</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">train</span>, <span class="va">age</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">check_class</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">train</span>, strings_as_factors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span>
@@ -228,9 +228,8 @@ is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   time               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-02-23 <span style="color: #949494;">21:31:27</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-02-23 <span style="color: #949494;">21:32:27</span></span>
-<span class="r-in"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2022-03-03 <span style="color: #949494;">15:54:31</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2022-03-03 <span style="color: #949494;">15:55:31</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

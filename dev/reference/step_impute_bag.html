@@ -212,7 +212,7 @@ Springer Verlag.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">342</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">in_training</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span>, <span class="fl">2000</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">credit_tr</span> <span class="op">&lt;-</span> <span class="va">credit_data</span><span class="op">[</span> <span class="va">in_training</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">credit_tr</span> <span class="op">&lt;-</span> <span class="va">credit_data</span><span class="op">[</span><span class="va">in_training</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">credit_te</span> <span class="op">&lt;-</span> <span class="va">credit_data</span><span class="op">[</span><span class="op">-</span><span class="va">in_training</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">missing_examples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>, <span class="fl">394</span>, <span class="fl">565</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -225,7 +225,7 @@ Springer Verlag.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">imputed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">imp_models</span>, new_data <span class="op">=</span> <span class="va">credit_te</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">credit_te</span><span class="op">[</span><span class="va">missing_examples</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">credit_te</span><span class="op">[</span><span class="va">missing_examples</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">imputed_te</span><span class="op">[</span><span class="va">missing_examples</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">credit_te</span><span class="op">)</span><span class="op">]</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">impute_rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -233,17 +233,18 @@ Springer Verlag.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Specifying which variables to imputate with</span></span>
 <span class="r-in"></span>
-<span class="r-in"> <span class="va">impute_rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">impute_rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_impute_bag</span><span class="op">(</span><span class="va">Status</span>, <span class="va">Home</span>, <span class="va">Marital</span>, <span class="va">Job</span>, <span class="va">Income</span>, <span class="va">Assets</span>, <span class="va">Debt</span>,</span>
-<span class="r-in">                 impute_with <span class="op">=</span> <span class="fu">imp_vars</span><span class="op">(</span><span class="va">Time</span>, <span class="va">Age</span>, <span class="va">Expenses</span><span class="op">)</span>,</span>
-<span class="r-in">                 <span class="co"># for quick execution, nbagg lowered</span></span>
-<span class="r-in">                 options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nbagg <span class="op">=</span> <span class="fl">5</span>, keepX <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">    impute_with <span class="op">=</span> <span class="fu">imp_vars</span><span class="op">(</span><span class="va">Time</span>, <span class="va">Age</span>, <span class="va">Expenses</span><span class="op">)</span>,</span>
+<span class="r-in">    <span class="co"># for quick execution, nbagg lowered</span></span>
+<span class="r-in">    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nbagg <span class="op">=</span> <span class="fl">5</span>, keepX <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">imp_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">impute_rec</span>, training <span class="op">=</span> <span class="va">credit_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">imputed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">imp_models</span>, new_data <span class="op">=</span> <span class="va">credit_te</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">credit_te</span><span class="op">[</span><span class="va">missing_examples</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">credit_te</span><span class="op">[</span><span class="va">missing_examples</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">imputed_te</span><span class="op">[</span><span class="va">missing_examples</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">credit_te</span><span class="op">)</span><span class="op">]</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">impute_rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>

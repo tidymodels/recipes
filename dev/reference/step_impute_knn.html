@@ -210,8 +210,10 @@ of its properties," Biometrics, 857-871.</p>
 <span class="r-in"><span class="va">biomass_te</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span class="r-in"><span class="va">biomass_te</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
-<span class="r-in">              data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
+<span class="r-in">  data <span class="op">=</span> <span class="va">biomass_tr</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">ratio_recipe</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_impute_knn</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>, neighbors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
@@ -222,8 +224,10 @@ of its properties," Biometrics, 857-871.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   27.80   44.24   47.30   47.96   49.00   79.34 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span>,</span>
-<span class="r-in">      after <span class="op">=</span> <span class="va">imputed</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span></span>
+<span class="r-in">  before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span>,</span>
+<span class="r-in">  after <span class="op">=</span> <span class="va">imputed</span><span class="op">$</span><span class="va">carbon</span><span class="op">[</span><span class="va">carb_missing</span><span class="op">]</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      before    after</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  46.83 47.43000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  47.80 47.53333</span>
@@ -232,8 +236,10 @@ of its properties," Biometrics, 857-871.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0.010   0.295   0.690   1.092   1.450   4.790 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span>,</span>
-<span class="r-in">      after <span class="op">=</span> <span class="va">imputed</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span></span>
+<span class="r-in">  before <span class="op">=</span> <span class="va">biomass_te_whole</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span>,</span>
+<span class="r-in">  after <span class="op">=</span> <span class="va">imputed</span><span class="op">$</span><span class="va">nitrogen</span><span class="op">[</span><span class="va">nitro_missing</span><span class="op">]</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      before      after</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   1.24 0.59333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]   0.30 0.92333333</span>

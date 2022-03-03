@@ -192,8 +192,8 @@ levels that were not pulled into "other") is returned.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">19</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">in_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">30000</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">okc_tr</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span> <span class="va">in_train</span>,<span class="op">]</span></span>
-<span class="r-in"><span class="va">okc_te</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="op">-</span><span class="va">in_train</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">okc_tr</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="va">in_train</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">okc_te</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="op">-</span><span class="va">in_train</span>, <span class="op">]</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -258,7 +258,7 @@ levels that were not pulled into "other") is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> location san francisco     other_ez6XT</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># novel levels are also "othered"</span></span>
-<span class="r-in"><span class="va">tahiti</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">tahiti</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">tahiti</span><span class="op">$</span><span class="va">location</span> <span class="op">&lt;-</span> <span class="st">"a magical place"</span></span>
 <span class="r-in"><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">tahiti</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>

@@ -151,7 +151,8 @@ specifically referenced by name. To avoid this, see the advice in the
 <span class="r-in"><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>, <span class="op">]</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
 <span class="r-in">  data <span class="op">=</span> <span class="va">biomass_tr</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>

@@ -293,17 +293,17 @@ used to estimate quantities required for the operations using a data set
 
 <p>Note that the estimated recipe shows the actual column names captured by
 the selectors.</p>
-<p>You can <code><a href="tidy.recipe.html">tidy.recipe()</a></code> a recipe, either when it is
-prepped or unprepped, to learn more about its components.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_rec</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 x 6</span>
+<p>You can [tidy.recipe()] a recipe, either when it is prepped or
+unprepped, to learn more about its components.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_rec</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 x 6</span>
 <span class="co">##   number operation type      trained skip  id             </span>
 <span class="co">##    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;          </span>
 <span class="co">## 1      1 step      normalize TRUE    FALSE normalize_AeYA4</span>
 <span class="co">## 2      2 step      pca       TRUE    FALSE pca_Zn1yz</span></code></pre></div>
 
 <p>You can also <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> recipe <em>steps</em> with a <code>number</code> or <code>id</code> argument.</p>
-<p>To apply the prepped recipe to a data set, the <code><a href="bake.html">bake()</a></code>
-function is used in the same manner that <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> would be for
-models. This applies the estimated steps to any data set.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 x 6</span>
+<p>To apply the prepped recipe to a data set, the [bake()] function is
+used in the same manner that <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> would be for models. This
+applies the estimated steps to any data set.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 x 6</span>
 <span class="co">##     HHV    PC1    PC2     PC3     PC4     PC5</span>
 <span class="co">##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
 <span class="co">## 1  18.3 0.730   0.412  0.495   0.333   0.253 </span>
@@ -315,6 +315,10 @@ models. This applies the estimated steps to any data set.</p><div class="sourceC
 
 <p>In general, the workflow interface to recipes is recommended for most
 applications.</p>
+<p>[biomass$dataset == "Training",]: R:biomass$dataset%20==%20%22Training%22,
+[biomass$dataset == "Testing",]: R:biomass$dataset%20==%20%22Testing%22,
+<code><a href="prep.html">prep()</a></code>: R:prep() <code><a href="prep.html">prep()</a></code>: R:prep()
+[tidy.recipe()]: R:tidy.recipe() [bake()]: R:bake()</p>
 </div>
 
 
@@ -330,12 +334,14 @@ applications.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># split data</span></span>
-<span class="r-in"><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>,<span class="op">]</span></span>
-<span class="r-in"><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>,<span class="op">]</span></span>
+<span class="r-in"><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>, <span class="op">]</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># With only predictors and outcomes, use a formula</span></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
-<span class="r-in">              data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
+<span class="r-in">  data <span class="op">=</span> <span class="va">biomass_tr</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Now add preprocessing steps to the recipe</span></span>
 <span class="r-in"><span class="va">sp_signed</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -360,7 +366,8 @@ applications.</p>
 <span class="r-in"><span class="co"># no need for `cbind(carbon, hydrogen)` for left-hand side</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">multi_y</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">~</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
-<span class="r-in">                  data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span>
+<span class="r-in">  data <span class="op">=</span> <span class="va">biomass_tr</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="va">multi_y</span> <span class="op">&lt;-</span> <span class="va">multi_y</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -371,7 +378,8 @@ applications.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">biomass_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span>, <span class="va">oxygen</span>, <span class="va">nitrogen</span>, <span class="va">sulfur</span>,</span>
-<span class="r-in">           new_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">    new_role <span class="op">=</span> <span class="st">"predictor"</span></span>
+<span class="r-in">  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">HHV</span>, new_role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"id variable"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="roles.html">update_role</a></span><span class="op">(</span><span class="va">dataset</span>, new_role <span class="op">=</span> <span class="st">"splitting indicator"</span><span class="op">)</span></span>

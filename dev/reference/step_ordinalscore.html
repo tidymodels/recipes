@@ -170,10 +170,13 @@ functions can also be used (see the example below).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fail_lvls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meh"</span>, <span class="st">"annoying"</span>, <span class="st">"really_bad"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">ord_data</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"paperclip"</span>, <span class="st">"twitter"</span>, <span class="st">"airbag"</span><span class="op">)</span>,</span>
-<span class="r-in">             fail_severity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">fail_lvls</span>,</span>
-<span class="r-in">                                    levels <span class="op">=</span> <span class="va">fail_lvls</span>,</span>
-<span class="r-in">                                    ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span class="r-in">    item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"paperclip"</span>, <span class="st">"twitter"</span>, <span class="st">"airbag"</span><span class="op">)</span>,</span>
+<span class="r-in">    fail_severity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">fail_lvls</span>,</span>
+<span class="r-in">      levels <span class="op">=</span> <span class="va">fail_lvls</span>,</span>
+<span class="r-in">      ordered <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">    <span class="op">)</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span><span class="va">fail_severity</span>, data <span class="op">=</span> <span class="va">ord_data</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) fail_severity.L fail_severity.Q</span>

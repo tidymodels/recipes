@@ -189,7 +189,9 @@ sequence of any existing operations.</p>
 <span class="r-in">    levels <span class="op">=</span> <span class="va">amnt</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">encoded</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">encoded</span><span class="op">$</span><span class="va">StockOptionLevel</span>, <span class="va">attrition</span><span class="op">$</span><span class="va">StockOptionLevel</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          </span>
@@ -230,7 +232,9 @@ sequence of any existing operations.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   high   0   0 281</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># What happens when a value is out of range?</span></span>
-<span class="r-in"><span class="va">ceo</span> <span class="op">&lt;-</span> <span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MonthlyIncome <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">ceo</span> <span class="op">&lt;-</span> <span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MonthlyIncome <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">ceo</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>

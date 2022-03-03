@@ -207,14 +207,14 @@ is ordered according the frequency in the training data set.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tate_text</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">artist</span> <span class="op">+</span> <span class="va">medium</span>, data <span class="op">=</span> <span class="va">tate_text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">artist</span>, <span class="va">medium</span>, sep <span class="op">=</span> <span class="st">", "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">artist</span>, <span class="va">medium</span>, sep <span class="op">=</span> <span class="st">", "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummies</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"medium"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"medium"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [1] "medium_X1.person"                                                           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [2] "medium_X1.projection.and.1.monitor"                                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [3] "medium_X100.digital.prints.on.paper"                                        </span>
@@ -1752,15 +1752,15 @@ is ordered according the frequency in the training data set.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1535] "medium_other"                                                               </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># More detailed splitting</span></span>
-<span class="r-in"><span class="va">dummies_specific</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">medium</span>, data <span class="op">=</span> <span class="va">tate_text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">medium</span>, sep <span class="op">=</span> <span class="st">"(, )|( and )|( on )"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">dummies_specific</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">medium</span>, data <span class="op">=</span> <span class="va">tate_text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">medium</span>, sep <span class="op">=</span> <span class="st">"(, )|( and )|( on )"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data_specific</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummies_specific</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data_specific</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"medium"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"medium"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [1] "medium_X1.monitor"                                          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [2] "medium_X1.person"                                           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [3] "medium_X1.projection"                                       </span>
@@ -3012,12 +3012,14 @@ is ordered according the frequency in the training data set.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># pattern argument can be useful to extract harder patterns</span></span>
 <span class="r-in"><span class="va">color_examples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">  colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"['red', 'blue']"</span>,</span>
-<span class="r-in">             <span class="st">"['red', 'blue', 'white']"</span>,</span>
-<span class="r-in">             <span class="st">"['blue', 'blue', 'blue']"</span><span class="op">)</span></span>
+<span class="r-in">  colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span class="r-in">    <span class="st">"['red', 'blue']"</span>,</span>
+<span class="r-in">    <span class="st">"['red', 'blue', 'white']"</span>,</span>
+<span class="r-in">    <span class="st">"['blue', 'blue', 'blue']"</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">dummies_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">colors</span>, data <span class="op">=</span> <span class="va">color_examples</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">dummies_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">colors</span>, data <span class="op">=</span> <span class="va">color_examples</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">colors</span>, pattern <span class="op">=</span> <span class="st">"(?&lt;=')[^',]+(?=')"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
