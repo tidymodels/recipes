@@ -3,10 +3,8 @@
     Code
       prep(rec_false, training = ex_dat, verbose = FALSE)
     Condition
-      Error:
-      ! Must subset columns with a valid subscript vector.
-      x Subscript has the wrong type `logical`.
-      i It must be numeric or character.
+      Error in `FUN()`:
+      ! Missing values in data. See `na_rm` option
 
 # printing
 
