@@ -108,6 +108,21 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
   sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+
+  which_sd <- which(sds ==0)
+  if (length(which_sd) > 0) {
+    with_na <- names(which_sd)
+    with_na_str <- paste(paste0("`", with_na, "`"), collapse = ", ")
+    rlang::abort(c(
+      "Some columns have Zero variance",
+      "i" = 'Consider running step_zv to remove those columns.',
+      "x" = paste0(
+        "The following columns have Zero variance: ",
+        with_na_str, "."
+      )
+    ))
+  }
+
   step_normalize_new(
     terms = x$terms,
     role = x$role,
