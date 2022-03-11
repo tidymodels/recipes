@@ -121,6 +121,29 @@
       
       Scaling for <none> [trained]
 
+# scale - warns on zv
+
+    Code
+      prep(rec1)
+    Condition
+      Warning:
+      Column(s) have zero variance so scaling is not defined: `zero_variance`
+      i Consider `step_zv()` to remove those columns before scaling
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          6
+      
+      Training data contained 536 data points and no missing data.
+      
+      Operations:
+      
+      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
+
 # normalize - empty printing
 
     Code

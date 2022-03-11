@@ -111,13 +111,15 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
   which_sd <- which(sds < .Machine$double.eps)
   if (length(which_sd) > 0) {
-    glue_cols <- glue::glue_collapse(glue::glue('`{names(which_sd)}`'),sep = ', ',last = ' and ')
+    glue_cols <- glue::glue_collapse(
+      glue::glue("`{names(which_sd)}`"), sep = ", ", last = " and "
+    )
     rlang::warn(c(
-      "Some columns have zero variance so normalization is not defined:",
-      glue_cols,
-      "i" = 'Consider `step_zv()` to remove those columns.'
-    )
-    )
+      glue::glue(
+        "Column(s) have zero variance so normalization is not defined: {glue_cols}"
+      ),
+      "i" = "Consider `step_zv()` to remove those columns before normalizing"
+    ))
   }
 
   step_normalize_new(
