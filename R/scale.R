@@ -115,8 +115,9 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     with_na <- names(which_sd)
     with_na_str <- paste(paste0("`", with_na, "`"), collapse = ", ")
     rlang::abort(c(
-      "Some columns have Zero variance",
-      "i" = 'Consider running step_zv to remove those columns.',
+      "Some columns have zero variance so normalization is not defined:",
+      glue_cols,
+      "i" = 'Consider `step_zv()` to remove those columns.',
       "x" = paste0(
         "The following columns have Zero variance: ",
         with_na_str, "."
