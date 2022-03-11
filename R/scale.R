@@ -107,22 +107,17 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
   sds <-
     vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
-
   sds <- sds * x$factor
 
-  which_sd <- which(sds ==0)
+  which_sd <- which(sds < .Machine$double.eps)
   if (length(which_sd) > 0) {
-    with_na <- names(which_sd)
-    with_na_str <- paste(paste0("`", with_na, "`"), collapse = ", ")
-    rlang::abort(c(
+    glue_cols <- glue::glue_collapse(glue::glue('`{names(which_sd)}`'),sep = ', ',last = ' and ')
+    rlang::warn(c(
       "Some columns have zero variance so normalization is not defined:",
       glue_cols,
-      "i" = 'Consider `step_zv()` to remove those columns.',
-      "x" = paste0(
-        "The following columns have Zero variance: ",
-        with_na_str, "."
+      "i" = 'Consider `step_zv()` to remove those columns.'
       )
-    ))
+    )
   }
 
   step_scale_new(

@@ -240,11 +240,11 @@ test_that("scale - empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("scale - fails on zv",{
+test_that("scale - warns on zv",{
 
   rec1 <- step_scale(rec_zv,all_numeric_predictors())
 
-  expect_error(prep(rec1))
+  expect_warning(prep(rec1))
 })
 
 test_that("normalize - empty selection prep/bake is a no-op", {
@@ -290,9 +290,9 @@ test_that("normalize - empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("normalize - fails on zv",{
+test_that("normalize - warns on zv",{
 
   rec1 <- step_normalize(rec_zv,all_numeric_predictors())
 
-  expect_error(prep(rec1))
+  expect_warning(prep(rec1))
 })
