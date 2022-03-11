@@ -115,7 +115,7 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
 
   multi_dummy_check_type(training[, col_names])
 
-  levels <- purrr::map(training[, col_names], as.character)
+  levels <- purrr::map(training[, col_names], levels)
   levels <- vctrs::vec_unchop(levels, ptype = character(), name_spec = rlang::zap())
   levels <- levels[!is.na(levels)]
   levels <- keep_levels(levels, x$threshold, other = x$other)
@@ -194,12 +194,15 @@ multi_dummy <- function(x, y) {
   row_id <- row_id[!is.na(values)]
   values <- values[!is.na(values)]
 
-  values <- factor(values)
+
+  original_levels <- c(y$keep,y$other)
+
+  values <- factor(values,levels = original_levels)
 
   res <- Matrix::sparseMatrix(
     i = row_id,
     j = as.numeric(values),
-    dims = c(nrow(x), length(levels(values)))
+    dims = c(nrow(x), length(original_levels))
   )
 
   colnames(res) <- levels(values)
@@ -208,7 +211,15 @@ multi_dummy <- function(x, y) {
   if (ncol(res) > 0) {
     res <- apply(res, 2, as.integer, simplify = FALSE)
   }
-  as_tibble(res)
+
+  # to preserve old behavior drop other if empty
+  res <- as_tibble(res)
+
+  if (sum(res[y$other]) == 0) {
+    res <- dplyr::select(res,-y$other)
+  }
+
+  return(res)
 }
 
 print.step_dummy_multi_choice <-
