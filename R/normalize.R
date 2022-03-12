@@ -122,6 +122,7 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
     ))
 
     sds <- sds[-which_sd]
+    means <- means[-which_sd]
   }
 
   step_normalize_new(
