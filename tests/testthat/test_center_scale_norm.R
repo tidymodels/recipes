@@ -289,8 +289,6 @@ test_that("normalize - empty printing", {
 })
 
 test_that("normalize - warns on zv",{
-
   rec1 <- step_normalize(rec_zv,all_numeric_predictors())
-
-  expect_warning(prep(rec1))
+  expect_snapshot(prep(rec1))
 })

@@ -107,9 +107,13 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
   sds <-
     vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
-  sds <- sds * x$factor
+
 
   which_sd <- which(sds < .Machine$double.eps)
+
+  sds <- sds * x$factor
+
+
   if (length(which_sd) > 0) {
     glue_cols <- glue::glue_collapse(
       glue::glue("`{names(which_sd)}`"), sep = ", ", last = " and "

@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `step_normalize()` and `step_scale()` generate a warning about columns with zero variance and suggest using `step_zv()` (#920).
+
 # recipes 0.2.0
 
 # New Steps
