@@ -142,7 +142,7 @@
       
       Operations:
       
-      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
+      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
 
 # normalize - empty printing
 
@@ -179,27 +179,4 @@
       Operations:
       
       Centering and scaling for <none> [trained]
-
-# normalize - warns on zv
-
-    Code
-      prep(rec1)
-    Condition
-      Warning:
-      Column(s) have zero variance so normalization is not defined: `zero_variance`
-      i Consider `step_zv()` to remove those columns before normalizing
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          6
-      
-      Training data contained 536 data points and no missing data.
-      
-      Operations:
-      
-      Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
 

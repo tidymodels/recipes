@@ -120,6 +120,8 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
       ),
       "i" = "Consider `step_zv()` to remove those columns before normalizing"
     ))
+
+    sds <- sds[-which_sd]
   }
 
   step_normalize_new(

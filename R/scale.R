@@ -124,6 +124,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
       ),
       "i" = "Consider `step_zv()` to remove those columns before scaling"
     ))
+
+    sds <- sds[-which_sd]
   }
 
   step_scale_new(
