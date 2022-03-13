@@ -122,7 +122,6 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
     ))
 
     sds <- sds[-which_sd]
-    means <- means[-which_sd]
   }
 
   step_normalize_new(
@@ -140,7 +139,7 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
   res <- sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
-  res <- sweep(res, 2, object$sds, "/")
+  res <- sweep(res[,names(object$sds)], 2, object$sds, "/")
   res <- tibble::as_tibble(res)
   new_data[, names(object$sds)] <- res
   as_tibble(new_data)
