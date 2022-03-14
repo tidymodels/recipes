@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param func A character value for the function. Valid values
-#'  are "sin", "cos", or "tan".
+#'  are "sinh", "cosh", or "tanh".
 #' @param inverse A logical: should the inverse function be used?
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
@@ -28,8 +28,9 @@
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
 #' cos_trans <- rec %>%
-#'   step_hyperbolic(all_numeric_predictors(),
-#'     func = "cos", inverse = FALSE
+#'   step_hyperbolic(
+#'     all_numeric_predictors(),
+#'     func = "cosh", inverse = FALSE
 #'   )
 #'
 #' cos_obj <- prep(cos_trans, training = examples)
@@ -44,15 +45,14 @@ step_hyperbolic <-
            ...,
            role = NA,
            trained = FALSE,
-           func = "sin",
+           func = c("sinh", "cosh", "tanh"),
            inverse = TRUE,
            columns = NULL,
            skip = FALSE,
            id = rand_id("hyperbolic")) {
-    funcs <- c("sin", "cos", "tan")
-    if (!(func %in% funcs)) {
-      rlang::abort("`func` should be either `sin`, `cos`, or `tan`")
-    }
+
+    func <- rlang::arg_match(func)
+
     add_step(
       recipe,
       step_hyperbolic_new(
@@ -117,7 +117,7 @@ bake.step_hyperbolic <- function(object, new_data, ...) {
 
 print.step_hyperbolic <-
   function(x, width = max(20, options()$width - 32), ...) {
-    ttl <- paste("Hyperbolic", x$func)
+    ttl <- paste("Hyperbolic", substr(x$func, 1, 3))
     if (x$inverse) {
       ttl <- paste(ttl, "(inv)")
     }
