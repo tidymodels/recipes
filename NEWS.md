@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug in which functions `step_hyperbolic()` uses (#932).
+
 # recipes 0.2.0
 
 # New Steps
