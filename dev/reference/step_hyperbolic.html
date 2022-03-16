@@ -84,7 +84,7 @@ function.</p>
   <span class="va">...</span>,
   role <span class="op">=</span> <span class="cn">NA</span>,
   trained <span class="op">=</span> <span class="cn">FALSE</span>,
-  func <span class="op">=</span> <span class="st">"sin"</span>,
+  func <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sinh"</span>, <span class="st">"cosh"</span>, <span class="st">"tanh"</span><span class="op">)</span>,
   inverse <span class="op">=</span> <span class="cn">TRUE</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -108,7 +108,7 @@ created.</p></dd>
 preprocessing have been estimated.</p></dd>
 <dt>func</dt>
 <dd><p>A character value for the function. Valid values
-are "sin", "cos", or "tan".</p></dd>
+are "sinh", "cosh", or "tanh".</p></dd>
 <dt>inverse</dt>
 <dd><p>A logical: should the inverse function be used?</p></dd>
 <dt>columns</dt>
@@ -163,8 +163,9 @@ returned.</p>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span>, data <span class="op">=</span> <span class="va">examples</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">cos_trans</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_hyperbolic</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">    func <span class="op">=</span> <span class="st">"cos"</span>, inverse <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span class="r-in">  <span class="fu">step_hyperbolic</span><span class="op">(</span></span>
+<span class="r-in">    <span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span class="r-in">    func <span class="op">=</span> <span class="st">"cosh"</span>, inverse <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">cos_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">cos_trans</span>, training <span class="op">=</span> <span class="va">examples</span><span class="op">)</span></span>
@@ -177,13 +178,13 @@ returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms                    inverse func  id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric_predictors() FALSE   cos   hyperbolic_IhS7o</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric_predictors() FALSE   cosh  hyperbolic_IhS7o</span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">cos_obj</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms inverse func  id              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> V1    FALSE   cos   hyperbolic_IhS7o</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> V2    FALSE   cos   hyperbolic_IhS7o</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> V1    FALSE   cosh  hyperbolic_IhS7o</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> V2    FALSE   cosh  hyperbolic_IhS7o</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
