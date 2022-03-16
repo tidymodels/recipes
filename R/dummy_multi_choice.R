@@ -195,9 +195,9 @@ multi_dummy <- function(x, y) {
   values <- values[!is.na(values)]
 
 
-  original_levels <- c(y$keep,y$other)
+  original_levels <- c(y$keep, y$other)
 
-  values <- factor(values,levels = original_levels)
+  values <- factor(values, levels = original_levels)
 
   res <- Matrix::sparseMatrix(
     i = row_id,
@@ -216,7 +216,7 @@ multi_dummy <- function(x, y) {
   res <- as_tibble(res)
 
   if (sum(res[y$other]) == 0) {
-    res <- dplyr::select(res,-y$other)
+    res <- dplyr::select(res, -y$other)
   }
 
   return(res)
