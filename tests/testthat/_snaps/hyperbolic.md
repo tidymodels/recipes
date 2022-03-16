@@ -71,3 +71,8 @@
       
       Hyperbolic sin (inv) transformation on <none> [trained]
 
+# wrong function
+
+    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
+    i Did you mean "cosh"?
+

@@ -9,7 +9,7 @@ step_hyperbolic(
   ...,
   role = NA,
   trained = FALSE,
-  func = "sin",
+  func = c("sinh", "cosh", "tanh"),
   inverse = TRUE,
   columns = NULL,
   skip = FALSE,
@@ -30,7 +30,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{func}{A character value for the function. Valid values
-are "sin", "cos", or "tan".}
+are "sinh", "cosh", or "tanh".}
 
 \item{inverse}{A logical: should the inverse function be used?}
 
@@ -69,8 +69,9 @@ examples <- as.data.frame(examples)
 rec <- recipe(~ V1 + V2, data = examples)
 
 cos_trans <- rec \%>\%
-  step_hyperbolic(all_numeric_predictors(),
-    func = "cos", inverse = FALSE
+  step_hyperbolic(
+    all_numeric_predictors(),
+    func = "cosh", inverse = FALSE
   )
 
 cos_obj <- prep(cos_trans, training = examples)
