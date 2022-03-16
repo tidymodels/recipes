@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
+
 # recipes 0.2.0
 
 # New Steps
