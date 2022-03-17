@@ -17,7 +17,8 @@ get_types <- function(x) {
       Date = "date",
       POSIXct = "date",
       list = "list",
-      textrecipes_tokenlist = "tokenlist"
+      textrecipes_tokenlist = "tokenlist",
+      hardhat_case_weights = "case_weights"
     )
 
   classes <- lapply(x, class)

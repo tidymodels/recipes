@@ -95,3 +95,11 @@
       
       Natural splines on disp [trained]
 
+# case weights are being infered correctly
+
+    Code
+      recipe(mpg ~ cyl + disp, data = mtcars2)
+    Condition
+      Error in `too_many_case_weights()`:
+      ! There should only be a single column with the role 'case_weights'. In these data, there are 2 columns.
+

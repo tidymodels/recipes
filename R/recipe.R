@@ -231,6 +231,14 @@ form2args <- function(formula, data, ...) {
     roles <- c(roles, rep("outcome", length(outcomes)))
   }
 
+  # assign case weights
+  case_weights_cols <- map_lgl(data, hardhat::is_case_weights)
+  case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+  if (case_weights_n > 1) {
+    too_many_case_weights(case_weights_n)
+  }
+  roles[case_weights_cols] <- "case_weights"
+
   ## pass to recipe.default with vars and roles
 
   list(x = data, vars = vars, roles = roles)
