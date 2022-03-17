@@ -17,7 +17,7 @@ okc_te <- okc[(401:800), ]
 
 ###################################################################
 
-rec <- recipe( ~ ., data = okc_tr) %>%
+rec <- recipe(~., data = okc_tr) %>%
   step_impute_mode(all_nominal()) %>%
   step_impute_mean(all_numeric()) %>%
   step_dummy(location, diet) %>%
@@ -25,18 +25,20 @@ rec <- recipe( ~ ., data = okc_tr) %>%
 
 ###################################################################
 
-test_that('correct types', {
+test_that("correct types", {
   bake_default <- bake(rec, new_data = okc_te, all_numeric())
   bake_sparse <-
     bake(rec,
-         new_data = okc_te,
-         all_numeric(),
-         composition = "dgCMatrix")
+      new_data = okc_te,
+      all_numeric(),
+      composition = "dgCMatrix"
+    )
   bake_sparse_1d <-
     bake(rec,
-         new_data = okc_te,
-         age,
-         composition = "dgCMatrix")
+      new_data = okc_te,
+      age,
+      composition = "dgCMatrix"
+    )
   juice_default <- juice(rec, all_numeric())
   juice_sparse <-
     juice(rec, all_numeric(), composition = "dgCMatrix")
@@ -52,18 +54,26 @@ test_that('correct types', {
   expect_equal(as.vector(class(bake_sparse_1d)), "dgCMatrix")
   expect_equal(as.vector(class(juice_sparse_1d)), "dgCMatrix")
 
-  expect_equal(recipes:::convert_matrix(bake_default),
-               bake_sparse)
-  expect_equal(recipes:::convert_matrix(juice_default),
-               juice_sparse)
+  expect_equal(
+    recipes:::convert_matrix(bake_default),
+    bake_sparse
+  )
+  expect_equal(
+    recipes:::convert_matrix(juice_default),
+    juice_sparse
+  )
 })
 
-test_that('bad args', {
-  expect_error(bake(rec, new_data = okc_te, composition = "dgCMatrix"))
-  expect_error(juice(rec, composition = "dgCMatrix"))
+test_that("bad args", {
+  expect_snapshot(error = TRUE,
+    bake(rec, new_data = okc_te, composition = "dgCMatrix")
+  )
+  expect_snapshot(error = TRUE,
+    juice(rec, composition = "dgCMatrix")
+  )
 })
 
-test_that('issue 206 - NA values are kept when requesting matrix composition', {
+test_that("issue 206 - NA values are kept when requesting matrix composition", {
   df <- data.frame(x = factor(c("x", "x", "y")), x2 = c(NA, 1, NA))
 
   rec <- recipe(x2 ~ ., data = df) %>%
@@ -76,7 +86,6 @@ test_that('issue 206 - NA values are kept when requesting matrix composition', {
   expect_equal(nrow(res_mat), 3)
   expect_equal(nrow(res_sparse), 3)
 
-  expect_equal(as.vector(res_mat[,"x2"]), df$x2)
-  expect_equal(as.vector(res_sparse[,"x2"]), df$x2)
-
+  expect_equal(as.vector(res_mat[, "x2"]), df$x2)
+  expect_equal(as.vector(res_sparse[, "x2"]), df$x2)
 })

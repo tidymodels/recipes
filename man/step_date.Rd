@@ -57,14 +57,14 @@ available for features \code{month} or \code{dow}.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
+populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -84,18 +84,22 @@ numeric variables.
 Unlike some other steps, \code{step_date} does \emph{not}
 remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms}
-(the selectors or variables selected), \code{value} (the feature
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{value} (the feature
 names), and \code{ordinal} (a logical) is returned.
 }
+
 \examples{
 library(lubridate)
 
-examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
-                       Stefan = ymd("2006-01-13") + days(1:10))
+examples <- data.frame(
+  Dan = ymd("2002-03-04") + days(1:10),
+  Stefan = ymd("2006-01-13") + days(1:10)
+)
 date_rec <- recipe(~ Dan + Stefan, examples) \%>\%
-   step_date(all_predictors())
+  step_date(all_predictors())
 
 tidy(date_rec, number = 1)
 
@@ -105,12 +109,12 @@ date_values <- bake(date_rec, new_data = examples)
 date_values
 
 tidy(date_rec, number = 1)
-
 }
 \seealso{
 Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},

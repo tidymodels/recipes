@@ -3,15 +3,24 @@ library(recipes)
 
 ## expected results form the `dimRed` package
 
-exp_res <- structure(list(Isomap1 = c(0.312570873898531, 0.371885353599467, 2.23124009833741,
-                                      0.248271457498181, -0.420128801874122),
-                          Isomap2 = c(-0.443724171391742, -0.407721529759647, 0.245721022395862,
-                                      3.112001672258, 0.0292770508011519),
-                          Isomap3 = c(0.761529345514676, 0.595015565588918, 1.59943072269788,
-                                      0.566884409484389, 1.53770327701819)),
-                     .Names = c("Isomap1","Isomap2", "Isomap3"),
-                     class = c("tbl_df", "tbl", "data.frame"),
-                     row.names = c(NA, -5L))
+exp_res <- structure(list(
+  Isomap1 = c(
+    0.312570873898531, 0.371885353599467, 2.23124009833741,
+    0.248271457498181, -0.420128801874122
+  ),
+  Isomap2 = c(
+    -0.443724171391742, -0.407721529759647, 0.245721022395862,
+    3.112001672258, 0.0292770508011519
+  ),
+  Isomap3 = c(
+    0.761529345514676, 0.595015565588918, 1.59943072269788,
+    0.566884409484389, 1.53770327701819
+  )
+),
+.Names = c("Isomap1", "Isomap2", "Isomap3"),
+class = c("tbl_df", "tbl", "data.frame"),
+row.names = c(NA, -5L)
+)
 
 set.seed(1)
 dat1 <- matrix(rnorm(15), ncol = 3)
@@ -19,9 +28,9 @@ dat2 <- matrix(rnorm(15), ncol = 3)
 colnames(dat1) <- paste0("x", 1:3)
 colnames(dat2) <- paste0("x", 1:3)
 
-rec <- recipe( ~ ., data = dat1)
+rec <- recipe(~., data = dat1)
 
-test_that('correct Isomap values', {
+test_that("correct Isomap values", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -47,7 +56,7 @@ test_that('correct Isomap values', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -57,12 +66,13 @@ test_that('printing', {
 
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
-  expect_output(print(im_rec))
+  expect_snapshot(print(im_rec))
+  # Can't snapshot because of timestamps
   expect_output(prep(im_rec, training = dat1, verbose = TRUE))
 })
 
 
-test_that('No ISOmap', {
+test_that("No ISOmap", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -79,8 +89,7 @@ test_that('No ISOmap', {
     colnames(dat1)
   )
   expect_null(im_rec$steps[[1]]$res)
-  expect_output(print(im_rec),
-                regexp = "Isomap was not conducted")
+  expect_snapshot(print(im_rec))
   expect_equal(
     tidy(im_rec, 1),
     tibble::tibble(terms = unname(im_rec$steps[[1]]$columns), id = "")
@@ -88,7 +97,7 @@ test_that('No ISOmap', {
 })
 
 
-test_that('ISOmap fails gracefully', {
+test_that("ISOmap fails gracefully", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -96,6 +105,7 @@ test_that('ISOmap fails gracefully', {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
+  # Can't snapshot because of timestamps
   expect_error(
     recipe(Sepal.Length ~ ., data = iris) %>%
       step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%
@@ -103,14 +113,14 @@ test_that('ISOmap fails gracefully', {
       step_other(Species, threshold = .000000001) %>%
       step_isomap(all_numeric_predictors(), num_terms = 1, neighbors = 1) %>%
       prep(),
-    "eigen decomposition failed"
+    snapshot_accept('roll')
   )
 })
 
 
-test_that('tunable', {
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_isomap(all_predictors())
   rec_param <- tunable.step_isomap(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_terms", "neighbors"))
@@ -119,12 +129,11 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 2)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 
-test_that('keep_original_cols works', {
-
+test_that("keep_original_cols works", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -141,12 +150,14 @@ test_that('keep_original_cols works', {
 
   expect_equal(
     colnames(im_pred),
-    c("x1", "x2", "x3",
-      "Isomap1", "Isomap2", "Isomap3")
+    c(
+      "x1", "x2", "x3",
+      "Isomap1", "Isomap2", "Isomap3"
+    )
   )
 })
 
-test_that('can prep recipes with no keep_original_cols', {
+test_that("can prep recipes with no keep_original_cols", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -159,6 +170,7 @@ test_that('can prep recipes with no keep_original_cols', {
 
   im_rec$steps[[1]]$keep_original_cols <- NULL
 
+  # Can't snapshot because of timestamps
   expect_warning(
     im_trained <- prep(im_rec, training = dat1, verbose = FALSE),
     "'keep_original_cols' was added to"
@@ -168,7 +180,6 @@ test_that('can prep recipes with no keep_original_cols', {
     im_pred <- bake(im_trained, new_data = dat2, all_predictors()),
     NA
   )
-
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -198,6 +209,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_isomap(rec)
 

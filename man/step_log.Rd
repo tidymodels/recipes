@@ -39,8 +39,8 @@ logging (to avoid \code{log(0)}).}
 be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -59,10 +59,11 @@ sequence of any existing operations.
 \code{step_log} creates a \emph{specification} of a recipe step
 that will log transform data.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{base}.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the columns that will be affected) and \code{base}.
 }
+
 \examples{
 set.seed(313)
 examples <- matrix(exp(rnorm(40)), ncol = 2)
@@ -70,7 +71,7 @@ examples <- as.data.frame(examples)
 
 rec <- recipe(~ V1 + V2, data = examples)
 
-log_trans <- rec  \%>\%
+log_trans <- rec \%>\%
   step_log(all_numeric_predictors())
 
 log_obj <- prep(log_trans, training = examples)
@@ -95,7 +96,6 @@ recipe(~ V1 + V2, data = examples2) \%>\%
   step_log(all_numeric_predictors(), signed = TRUE) \%>\%
   prep(training = examples2) \%>\%
   bake(examples2)
-
 }
 \seealso{
 Other individual transformation steps: 
@@ -109,6 +109,7 @@ Other individual transformation steps:
 \code{\link{step_logit}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}

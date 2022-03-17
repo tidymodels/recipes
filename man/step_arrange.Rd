@@ -31,8 +31,8 @@ preprocessing have been estimated.}
 \item{inputs}{Quosure of values given by \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -53,14 +53,17 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
-contains the sorting variable(s) or expression(s) is returned. The
-expressions are text representations and are not parsable.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} which contains the sorting variable(s) or expression(s) is
+returned. The expressions are text representations and are not
+parsable.
+}
+
 \examples{
-rec <- recipe( ~ ., data = iris) \%>\%
-  step_arrange(desc(Sepal.Length), 1/Petal.Length)
+rec <- recipe(~., data = iris) \%>\%
+  step_arrange(desc(Sepal.Length), 1 / Petal.Length)
 
 prepped <- prep(rec, training = iris \%>\% slice(1:75))
 tidy(prepped, number = 1)
@@ -71,7 +74,7 @@ dplyr_train <-
   iris \%>\%
   as_tibble() \%>\%
   slice(1:75) \%>\%
-  dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
+  dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 
 rec_train <- bake(prepped, new_data = NULL)
 all.equal(dplyr_train, rec_train)
@@ -80,7 +83,7 @@ dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
   slice(76:150) \%>\%
-  dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
+  dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 rec_test <- bake(prepped, iris \%>\% slice(76:150))
 all.equal(dplyr_test, rec_test)
 
@@ -91,7 +94,7 @@ all.equal(dplyr_test, rec_test)
 sort_vars <- c("Sepal.Length", "Petal.Length")
 
 qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   # Embed the `values` object in the call using !!!
   step_arrange(!!!syms(sort_vars)) \%>\%
   prep(training = iris)

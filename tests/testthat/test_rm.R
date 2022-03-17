@@ -3,7 +3,6 @@ library(recipes)
 library(tibble)
 
 test_that("basics", {
-
   n <- 20
   set.seed(12)
   ex_dat <- data.frame(
@@ -75,9 +74,8 @@ test_that("basic rename", {
     recipe(~., data = iris) %>%
     step_rm(sepal_length = Sepal.Length)
 
-  expect_error(
-    prep(rec, training = iris %>% slice(1:75)),
-    "Can't rename variables in this context."
+  expect_snapshot(error = TRUE,
+    prep(rec, training = iris %>% slice(1:75))
   )
 })
 
@@ -164,7 +162,9 @@ test_that("remove with quasi-quotation", {
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 
   rm(sepal_vars)
-  expect_error(prep(rec_1, training = iris %>% slice(1:75)))
+  expect_snapshot(error = TRUE,
+    prep(rec_1, training = iris %>% slice(1:75))
+  )
   # expect_error(
   #   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
   #   regexp = NA
@@ -174,7 +174,6 @@ test_that("remove with quasi-quotation", {
 })
 
 test_that("printing", {
-
   n <- 20
   set.seed(12)
   ex_dat <- data.frame(
@@ -184,8 +183,8 @@ test_that("printing", {
 
   rec <- recipe(~., data = ex_dat) %>%
     step_rm(x1)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -215,6 +214,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_rm(rec)
 
@@ -224,4 +224,3 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
-

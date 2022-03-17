@@ -6,12 +6,14 @@
 #'
 #' @export
 #' @param x A numeric vector
-discretize <- function(x, ...)
+discretize <- function(x, ...) {
   UseMethod("discretize")
+}
 
 #' @rdname discretize
-discretize.default <- function(x, ...)
+discretize.default <- function(x, ...) {
   rlang::abort("Only numeric `x` is accepted")
+}
 
 #' @rdname discretize
 #' @param cuts An integer defining how many cuts to make of the
@@ -52,12 +54,12 @@ discretize.default <- function(x, ...)
 #'
 #' If `infs = FALSE` and a new value is greater than the
 #'  largest value of `x`, a missing value will result.
-#'@examples
+#' @examples
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' median(biomass_tr$carbon)
 #' discretize(biomass_tr$carbon, cuts = 2)
@@ -70,14 +72,6 @@ discretize.default <- function(x, ...)
 #'
 #' carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 #' predict(carbon_no_infs, c(50, 100))
-#'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
-#' rec <- rec %>% step_discretize(carbon, hydrogen)
-#' rec <- prep(rec, biomass_tr)
-#' binned_te <- bake(rec, biomass_te)
-#' table(binned_te$carbon)
-
 discretize.numeric <-
   function(x,
            cuts = 4,
@@ -90,23 +84,25 @@ discretize.numeric <-
     unique_vals <- length(unique(x))
     missing_lab <- "_missing"
 
-    if (cuts < 2)
+    if (cuts < 2) {
       rlang::abort("There should be at least 2 cuts")
+    }
 
     if (unique_vals / (cuts + 1) >= min_unique) {
       breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
-      if (num_breaks > length(breaks))
+      if (num_breaks > length(breaks)) {
         rlang::warn(
           paste0(
-          "Not enough data for ",
-          cuts,
-          " breaks. Only ",
-          length(breaks),
-          " breaks were used."
+            "Not enough data for ",
+            cuts,
+            " breaks. Only ",
+            length(breaks),
+            " breaks were used."
           )
         )
+      }
       if (infs) {
         breaks[1] <- -Inf
         breaks[length(breaks)] <- Inf
@@ -121,8 +117,8 @@ discretize.numeric <-
             prefix,
             "' is not a valid R name. It has been changed to '",
             make.names(prefix),
-            "'.")
-          )
+            "'."
+          ))
           prefix <- make.names(prefix)
         }
         labels <- names0(length(breaks) - 1, "")
@@ -131,10 +127,11 @@ discretize.numeric <-
         breaks = breaks,
         bins = length(breaks) - 1,
         prefix = prefix,
-        labels =  if (keep_na)
+        labels = if (keep_na) {
           labels <- c(missing_lab, labels)
-        else
-          labels,
+        } else {
+          labels
+        },
         keep_na = keep_na
       )
     } else {
@@ -156,27 +153,32 @@ discretize.numeric <-
 #' @export
 predict.discretize <- function(object, new_data, ...) {
   if (is.matrix(new_data) |
-      is.data.frame(new_data))
+    is.data.frame(new_data)) {
     new_data <- new_data[, 1]
+  }
   object$labels <- paste0(object$prefix, object$labels)
   if (object$bins >= 1) {
-    labs <- if (object$keep_na)
+    labs <- if (object$keep_na) {
       object$labels[-1]
-    else
+    } else {
       object$labels
+    }
     out <-
       cut(new_data,
-          object$breaks,
-          labels = labs,
-          include.lowest = TRUE)
+        object$breaks,
+        labels = labs,
+        include.lowest = TRUE
+      )
     if (object$keep_na) {
       out <- as.character(out)
-      if (any(is.na(new_data)))
+      if (any(is.na(new_data))) {
         out[is.na(new_data)] <- object$labels[1]
+      }
       out <- factor(out, levels = object$labels)
     }
-  } else
+  } else {
     out <- new_data
+  }
 
   out
 }
@@ -186,19 +188,23 @@ print.discretize <-
   function(x, digits = max(3L, getOption("digits") - 3L), ...) {
     if (length(x$breaks) > 0) {
       cat("Bins:", length(x$labels))
-      if (any(grepl("_missing", x$labels)))
+      if (any(grepl("_missing", x$labels))) {
         cat(" (includes missing category)")
+      }
       cat("\n")
 
       if (length(x$breaks) <= 6) {
-        cat("Breaks:",
-            paste(signif(x$breaks, digits = digits), collapse = ", "))
+        cat(
+          "Breaks:",
+          paste(signif(x$breaks, digits = digits), collapse = ", ")
+        )
       }
     } else {
-      if (x$bins == 0)
+      if (x$bins == 0) {
         cat("Too few unique data points. No binning.")
-      else
+      } else {
         cat("Non-numeric data. No binning was used.")
+      }
     }
   }
 
@@ -218,19 +224,41 @@ print.discretize <-
 #'  discretization takes place.
 #' @param objects The [discretize()] objects are stored
 #'  here once the recipe has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param options A list of options to [discretize()]. A
 #'  default is set for the argument `x`. Note that using
 #'  the options `prefix` and `labels` when more than one
 #'  variable is being transformed might be problematic as all
 #'  variables inherit those values.
 #' @template step-return
-#' @details  When you [`tidy()`] this step, a tibble
-#'  with columns `terms` (the selectors or variables selected)
-#'  and `value` (the breaks) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value`
+#' (the breaks) is returned.
 #' @family discretization steps
 #' @export
-
+#'
+#' @examples
+#' library(modeldata)
+#' data(biomass)
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' ) %>%
+#'   step_discretize(carbon, hydrogen)
+#'
+#' rec <- prep(rec, biomass_tr)
+#' binned_te <- bake(rec, biomass_te)
+#' table(binned_te$carbon)
+#'
+#' tidy(rec, 1)
 step_discretize <- function(recipe,
                             ...,
                             role = NA,
@@ -241,7 +269,6 @@ step_discretize <- function(recipe,
                             options = list(),
                             skip = FALSE,
                             id = rand_id("discretize")) {
-
   if (any(names(options) %in% c("cuts", "min_unique"))) {
     num_breaks <- options$cuts
     min_unique <- options$min_unique
@@ -320,9 +347,10 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
-  for (i in names(object$objects))
+  for (i in names(object$objects)) {
     new_data[, i] <-
       predict(object$objects[[i]], getElement(new_data, i))
+  }
   as_tibble(new_data)
 }
 
@@ -354,9 +382,6 @@ tidy.step_discretize <- function(x, ...) {
   res
 }
 
-
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_discretize <- function(x, ...) {
   tibble::tibble(

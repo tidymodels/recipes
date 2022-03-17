@@ -8,7 +8,7 @@ terms_select(terms, info, empty_fun = abort_selection)
 }
 \arguments{
 \item{terms}{A list of formulas whose right-hand side contains
-quoted expressions. See \code{\link[rlang:nse-defuse]{rlang::quos()}} for examples.}
+quoted expressions. See \code{\link[rlang:defusing-advanced]{rlang::quos()}} for examples.}
 
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source} that represent the current state of the data. The
@@ -34,12 +34,12 @@ useful when creating custom steps.
 library(rlang)
 library(modeldata)
 data(okc)
-rec <- recipe(~ ., data = okc)
+rec <- recipe(~., data = okc)
 info <- summary(rec)
 terms_select(info = info, quos(all_predictors()))
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=summary.recipe]{summary.recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=prep]{prep()}}
 }
 \keyword{internal}

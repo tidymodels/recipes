@@ -3,7 +3,6 @@ library(recipes)
 library(tidyr)
 
 test_that("step_naomit on all columns", {
-
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(everything()) %>%
     prep(airquality, verbose = FALSE) %>%
@@ -16,7 +15,6 @@ test_that("step_naomit on all columns", {
 })
 
 test_that("step_naomit on subset of columns", {
-
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(Ozone, Solar.R) %>%
     prep(airquality, verbose = FALSE) %>%
@@ -40,8 +38,8 @@ test_that("something prints", {
   rec <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(all_predictors())
 
-  expect_output(print(rec))
-  expect_output(prep(rec, training = airquality, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = airquality, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -71,6 +69,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_naomit(rec)
 
@@ -80,4 +79,3 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
-

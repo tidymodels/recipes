@@ -34,10 +34,11 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of ICA components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged.}
 
 \item{options}{A list of options to
 \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
@@ -49,7 +50,7 @@ running ICA.}
 
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -61,8 +62,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -103,11 +104,13 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
 If \code{num_comp = 101}, the names would be \code{IC001} -
 \code{IC101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the loading),
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{value} (the loading),
 and \code{component} is returned.
 }
+
 \examples{
 # from fastICA::fastICA
 set.seed(131)
@@ -118,9 +121,9 @@ X <- as.data.frame(S \%*\% A)
 tr <- X[1:100, ]
 te <- X[101:200, ]
 
-rec <- recipe( ~ ., data = tr)
+rec <- recipe(~., data = tr)
 
-ica_trans <- step_center(rec,  V1, V2)
+ica_trans <- step_center(rec, V1, V2)
 ica_trans <- step_scale(ica_trans, V1, V2)
 ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 
@@ -150,6 +153,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},

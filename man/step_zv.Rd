@@ -36,11 +36,11 @@ removal.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+until \code{\link[=prep]{prep()}} is called.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -60,22 +60,25 @@ This step can potentially remove columns from the data set. This may
 cause issues for subsequent steps in your recipe if the missing columns are
 specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be removed) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be removed) is returned.
+}
+
 \examples{
 library(modeldata)
 data(biomass)
 
 biomass$one_value <- 1
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-                    nitrogen + sulfur + one_value,
-              data = biomass_tr)
+  nitrogen + sulfur + one_value,
+data = biomass_tr
+)
 
 zv_filter <- rec \%>\%
   step_zv(all_predictors())

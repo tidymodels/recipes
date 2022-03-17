@@ -46,11 +46,11 @@ to \code{other}.}
 
 \item{objects}{A list of objects that contain the information
 to pool infrequent levels that is determined by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -74,7 +74,7 @@ whose individual proportion (or frequency) in the training set is less than
 
 If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of \code{strings_as_factors} in
-\code{\link[=prep.recipe]{prep.recipe()}}). Otherwise, a factor is always returned with
+\code{\link[=prep]{prep()}}). Otherwise, a factor is always returned with
 different factor levels.
 
 If \code{threshold} is less than the largest category proportion, all levels
@@ -89,11 +89,13 @@ pooling is needed, they will be placed into the other category.
 
 When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{retained} (the factor
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the columns that will be affected) and \code{retained} (the factor
 levels that were not pulled into "other") is returned.
 }
+
 \examples{
 library(modeldata)
 data(okc)
@@ -101,8 +103,8 @@ data(okc)
 set.seed(19)
 in_train <- sample(1:nrow(okc), size = 30000)
 
-okc_tr <- okc[ in_train,]
-okc_te <- okc[-in_train,]
+okc_tr <- okc[in_train, ]
+okc_te <- okc[-in_train, ]
 
 rec <- recipe(~ diet + location, data = okc_tr)
 
@@ -117,7 +119,7 @@ table(okc_te$diet, collapsed$diet, useNA = "always")
 tidy(rec, number = 1)
 
 # novel levels are also "othered"
-tahiti <- okc[1,]
+tahiti <- okc[1, ]
 tahiti$location <- "a magical place"
 bake(rec, tahiti)
 
@@ -140,6 +142,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},

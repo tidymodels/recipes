@@ -7,7 +7,7 @@
 #' @param new_level A single character value that will be assigned
 #'  to new factor levels.
 #' @param objects A list of objects that contain the information
-#'  on factor levels that will be determined by [prep.recipe()].
+#'  on factor levels that will be determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -22,8 +22,10 @@
 #' If `new_level` is already in the data given to `prep`, an error
 #'  is thrown.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `value` (the factor
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) and `value` (the factor
 #'  levels that is used for the new value) is returned.
 #'
 #' @examples
@@ -37,13 +39,13 @@
 #'   prep()
 #'
 #' table(bake(rec, new_data = NULL) %>% pull(diet),
-#'       okc %>% pull(diet),
-#'       useNA = "always") %>%
+#'   okc %>% pull(diet),
+#'   useNA = "always"
+#' ) %>%
 #'   as.data.frame() %>%
 #'   dplyr::filter(Freq > 0)
 #'
 #' tidy(rec, number = 1)
-
 step_unknown <-
   function(recipe,
            ...,
@@ -85,27 +87,30 @@ step_unknown_new <-
 prep.step_unknown <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   col_check <- dplyr::filter(info, variable %in% col_names)
-  if (any(col_check$type != "nominal"))
+  if (any(col_check$type != "nominal")) {
     rlang::abort(
       paste0(
         "Columns must be character or factor: ",
         paste0(col_check$variable[col_check$type != "nominal"],
-               collapse = ", ")
+          collapse = ", "
+        )
       )
     )
+  }
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
-  if (any(level_check))
+  if (any(level_check)) {
     rlang::abort(
       paste0(
         "Columns already contain a level '", x$new_level, "': ",
         paste0(names(level_check)[level_check], collapse = ", ")
       )
     )
+  }
 
   step_unknown_new(
     terms = x$terms,
@@ -130,15 +135,18 @@ bake.step_unknown <- function(object, new_data, ...) {
       warn_new_levels(
         new_data[[i]],
         new_levels,
-        paste0("\nNew levels will be coerced to `NA` by `step_unknown()`.",
-               "\nConsider using `step_novel()` before `step_unknown()`.")
+        paste0(
+          "\nNew levels will be coerced to `NA` by `step_unknown()`.",
+          "\nConsider using `step_novel()` before `step_unknown()`."
+        )
       )
     }
 
     new_data[[i]] <-
       factor(new_data[[i]],
-             levels = new_levels,
-             ordered = attributes(object$object[[i]])$is_ordered)
+        levels = new_levels,
+        ordered = attributes(object$object[[i]])$is_ordered
+      )
   }
   if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
@@ -157,12 +165,16 @@ print.step_unknown <-
 #' @export
 tidy.step_unknown <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$objects),
-                  value = rep(x$new_level, length(x$objects)))
+    res <- tibble(
+      terms = names(x$objects),
+      value = rep(x$new_level, length(x$objects))
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = rep(x$new_level, length(term_names)))
+    res <- tibble(
+      terms = term_names,
+      value = rep(x$new_level, length(term_names))
+    )
   }
   res$id <- x$id
   res

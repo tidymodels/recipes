@@ -2,7 +2,7 @@
 % Please edit documentation in R/nnmf.R
 \name{step_nnmf}
 \alias{step_nnmf}
-\title{NNMF Signal Extraction}
+\title{Non-Negative Matrix Factorization Signal Extraction}
 \usage{
 step_nnmf(
   recipe,
@@ -35,10 +35,11 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged.}
 
 \item{num_run}{A positive integer for the number of computations runs used
 to obtain a consensus projection.}
@@ -50,7 +51,7 @@ processing is turned off in favor of resample-level parallelization.}
 
 \item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has been trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -65,8 +66,8 @@ when computing the factorization.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -81,6 +82,10 @@ sequence of any existing operations.
 \code{step_nnmf} creates a \emph{specification} of a recipe step
 that will convert numeric data into one or more non-negative
 components.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+
+Please use \code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}} instead of this step function.
 }
 \details{
 Non-negative matrix factorization computes latent components that
@@ -95,10 +100,13 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
 If \code{num = 101}, the names would be \code{NNMF001} -
 \code{NNMF101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) and the number of components is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the selectors or variables selected) and the number of
+components is returned.
+}
+
 \examples{
 
 library(modeldata)
@@ -127,6 +135,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},
 \code{\link{step_ratio}()},

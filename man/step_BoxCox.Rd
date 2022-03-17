@@ -30,7 +30,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
@@ -39,8 +39,8 @@ compute the transformation parameter lambda.}
 values to evaluate for a transformation.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -74,14 +74,16 @@ variable distributions more symmetric.
 If the transformation parameters are estimated to be very
 closed to the bounds, or if the optimization fails, a value of
 \code{NA} is used and no transformation is applied.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the
 lambda estimate) is returned.
 }
+
 \examples{
 
-rec <- recipe(~ ., data = as.data.frame(state.x77))
+rec <- recipe(~., data = as.data.frame(state.x77))
 
 bc_trans <- step_BoxCox(rec, all_numeric())
 
@@ -111,6 +113,7 @@ Other individual transformation steps:
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}

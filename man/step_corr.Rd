@@ -43,11 +43,11 @@ to the \code{\link[stats:cor]{stats::cor()}} function.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+until \code{\link[=prep]{prep()}} is called.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -77,10 +77,12 @@ When a column has a single unique value, that column will be
 excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of \code{use}
 is chosen), some columns will also be excluded from the filter.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
-that will be removed) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be removed) is returned.
+}
+
 \examples{
 library(modeldata)
 data(biomass)
@@ -88,12 +90,13 @@ data(biomass)
 set.seed(3535)
 biomass$duplicate <- biomass$carbon + rnorm(nrow(biomass))
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-                    sulfur + duplicate,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + duplicate,
+  data = biomass_tr
+)
 
 corr_filter <- rec \%>\%
   step_corr(all_numeric_predictors(), threshold = .5)

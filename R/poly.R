@@ -24,18 +24,22 @@
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_poly_1` and so on.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `degree` is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the columns that will be affected) and `degree` is returned.
 #'
 #' @examples
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' quadratic <- rec %>%
 #'   step_poly(carbon, hydrogen)
@@ -53,9 +57,8 @@ step_poly <-
            objects = NULL,
            degree = 2,
            options = list(),
-        skip = FALSE,
-        id = rand_id("poly")) {
-
+           skip = FALSE,
+           id = rand_id("poly")) {
     if (!is_tune(degree) & !is_varying(degree)) {
       degree <- as.integer(degree)
     }
@@ -187,8 +190,6 @@ tidy.step_poly <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_poly <- function(x, ...) {
   tibble::tibble(

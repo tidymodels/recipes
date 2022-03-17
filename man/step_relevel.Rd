@@ -32,11 +32,11 @@ preprocessing have been estimated.}
 relevel the factor column(s) (if the level is present).}
 
 \item{objects}{A list of objects that contain the information
-on factor levels that will be determined by \code{\link[=prep.recipe]{prep.recipe()}}.}
+on factor levels that will be determined by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -79,6 +79,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},

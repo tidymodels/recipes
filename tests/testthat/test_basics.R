@@ -4,8 +4,8 @@ library(recipes)
 
 library(modeldata)
 data(biomass)
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 test_that("Recipe correctly identifies output variable", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
@@ -17,10 +17,18 @@ test_that("Recipe correctly identifies output variable", {
 })
 
 test_that("Recipe fails on in-line functions", {
-  expect_error(recipe(HHV ~ log(nitrogen), data = biomass))
-  expect_error(recipe(HHV ~ (.)^2, data = biomass))
-  expect_error(recipe(HHV ~ nitrogen  + sulfur  + nitrogen:sulfur, data = biomass))
-  expect_error(recipe(HHV ~ nitrogen^2, data = biomass))
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ log(nitrogen), data = biomass)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ (.)^2, data = biomass)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(HHV ~ nitrogen^2, data = biomass)
+  )
 })
 
 test_that("return character or factor values", {
@@ -40,31 +48,38 @@ test_that("return character or factor values", {
 
 
 test_that("Using prepare", {
-  expect_error(prepare(recipe(HHV ~ ., data = biomass),
-                       training = biomass),
-               paste0("As of version 0.0.1.9006, used `prep` ",
-                      "instead of `prepare`"))
+  expect_snapshot(error = TRUE,
+    prepare(recipe(HHV ~ ., data = biomass),
+      training = biomass
+    )
+  )
 })
 
 test_that("Multiple variables on lhs of formula", {
   # from issue #96
   expect_silent(multi_1 <- recipe(Petal.Width + Species ~ ., data = iris))
-  expect_equal(multi_1$var_info$variable[multi_1$var_info$role == "outcome"],
-               names(iris)[4:5])
-  expect_equal(multi_1$var_info$variable[multi_1$var_info$role == "predictor"],
-               names(iris)[1:3])
+  expect_equal(
+    multi_1$var_info$variable[multi_1$var_info$role == "outcome"],
+    names(iris)[4:5]
+  )
+  expect_equal(
+    multi_1$var_info$variable[multi_1$var_info$role == "predictor"],
+    names(iris)[1:3]
+  )
 
   iris$Species <- as.character(iris$Species)
   expect_silent(multi_2 <- recipe(Petal.Width + Species ~ ., data = iris))
-  expect_equal(multi_2$var_info$variable[multi_2$var_info$role == "outcome"],
-               names(iris)[4:5])
-  expect_equal(multi_2$var_info$variable[multi_2$var_info$role == "predictor"],
-               names(iris)[1:3])
-
+  expect_equal(
+    multi_2$var_info$variable[multi_2$var_info$role == "outcome"],
+    names(iris)[4:5]
+  )
+  expect_equal(
+    multi_2$var_info$variable[multi_2$var_info$role == "predictor"],
+    names(iris)[1:3]
+  )
 })
 
 test_that("detect_step function works", {
-
   rec <- recipe(Species ~ ., data = iris) %>%
     step_center(all_predictors()) %>%
     step_scale(Sepal.Width) %>%
@@ -95,32 +110,32 @@ test_that("detect_step function works", {
 })
 
 test_that("bake without prep", {
-  sp_signed <-  recipe(HHV ~ ., data = biomass) %>%
+  sp_signed <- recipe(HHV ~ ., data = biomass) %>%
     step_center(all_predictors()) %>%
     step_scale(all_predictors()) %>%
     step_spatialsign(all_predictors())
-  expect_error(
-    bake(sp_signed, new_data = biomass_te),
-    "At least one step has not been trained. Please run."
+  expect_snapshot(error = TRUE,
+    bake(sp_signed, new_data = biomass_te)
   )
-  expect_error(
-    juice(sp_signed),
-    "At least one step has not been trained. Please run."
+  expect_snapshot(error = TRUE,
+    juice(sp_signed)
   )
 })
 
 
 test_that("bake without newdata", {
-  rec <-  recipe(HHV ~ ., data = biomass) %>%
+  rec <- recipe(HHV ~ ., data = biomass) %>%
     step_center(all_numeric()) %>%
     step_scale(all_numeric()) %>%
     prep(training = biomass)
 
-  expect_error(bake(rec, newdata = biomass))
+  expect_snapshot(error = TRUE,
+    bake(rec, newdata = biomass)
+  )
 })
 
 test_that("`juice()` returns a 0 column / N row tibble when a selection returns no columns", {
-  rec <- recipe(~ ., data = iris)
+  rec <- recipe(~., data = iris)
   rec <- prep(rec, iris)
 
   expect_equal(
@@ -130,7 +145,7 @@ test_that("`juice()` returns a 0 column / N row tibble when a selection returns 
 })
 
 test_that("`bake()` returns a 0 column / N row tibble when a selection returns no columns", {
-  rec <- recipe(~ ., data = iris)
+  rec <- recipe(~., data = iris)
   rec <- prep(rec, iris)
 
   expect_equal(
@@ -140,23 +155,20 @@ test_that("`bake()` returns a 0 column / N row tibble when a selection returns n
 })
 
 test_that("tunable arguments at prep-time", {
- .tune <- function() rlang::call2("tune")
+  .tune <- function() rlang::call2("tune")
 
- expect_error(
-   recipe(Species ~ ., data = iris) %>%
-     step_ns(all_predictors(), deg_free = .tune()) %>%
-     prep(),
-   "'deg_free'. Do you want "
- )
+  expect_snapshot(error = TRUE,
+    recipe(Species ~ ., data = iris) %>%
+      step_ns(all_predictors(), deg_free = .tune()) %>%
+      prep()
+  )
 })
 
 test_that("logging", {
-
-  expect_output(
+  expect_snapshot(
     recipe(mpg ~ ., data = mtcars) %>%
       step_ns(disp, deg_free = 2, id = "splines!") %>%
-      prep(log_changes = TRUE),
-    "splines"
+      prep(log_changes = TRUE)
   )
 })
 
@@ -174,25 +186,24 @@ test_that("`bake(new_data = NULL)` same as `juice()`", {
   # make sure that filter is skipped on training data this way
   roasted <- bake(rec, new_data = mtcars)
   expect_equal(nrow(roasted), 32)
-
 })
 
 test_that("`retain flag in prep should return data when TRUE and zero rows when FALSE", {
-  rec <-  recipe(mpg ~ ., data = mtcars %>% head(20))
+  rec <- recipe(mpg ~ ., data = mtcars %>% head(20))
 
   # flag TRUE but no training data
   prec_1 <- prep(rec, retain = TRUE)
   expect_equal(nrow(prec_1$template), 20)
 
-  #flag FALSE and no training data
+  # flag FALSE and no training data
   prec_2 <- prep(rec, retain = FALSE)
   expect_equal(nrow(prec_2$template), 0)
 
-  #flag TRUE with training data
-  prec_3 <- prep(rec, training = mtcars %>% tail(12),retain = TRUE)
+  # flag TRUE with training data
+  prec_3 <- prep(rec, training = mtcars %>% tail(12), retain = TRUE)
   expect_equal(nrow(prec_3$template), 12)
 
-  #flag FALSE with training data
-  prec_4 <- prep(rec, training = mtcars %>% tail(12),retain = FALSE)
+  # flag FALSE with training data
+  prec_4 <- prep(rec, training = mtcars %>% tail(12), retain = FALSE)
   expect_equal(nrow(prec_4$template), 0)
 })

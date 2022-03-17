@@ -48,7 +48,7 @@ values are: \code{'max'}, \code{'mean'}, \code{'median'},
 
 \item{columns}{A character string that contains the names of
 columns that should be processed. These values are not
-determined until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+determined until \code{\link[=prep]{prep()}} is called.}
 
 \item{names}{An optional character string that is the same
 length of the number of terms selected by \code{terms}. If you
@@ -57,8 +57,8 @@ are not sure what columns will be selected, use the
 the names of the new columns created by the step.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -86,11 +86,13 @@ values are estimated by \code{median(x[1:5])} and the fourth
 uses \code{median(x[2:6])}.
 
 step will stop with a note about installing the package.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{statistic} (the
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{statistic} (the
 summary function name), and \code{size} is returned.
 }
+
 \examples{
 library(recipes)
 library(dplyr)
@@ -106,12 +108,15 @@ sim_dat$x2 <- runif(n)
 sim_dat$x3 <- rnorm(n)
 
 rec <- recipe(y1 + y2 ~ x1 + x2 + x3, data = sim_dat) \%>\%
-  step_window(starts_with("y"), size = 7, statistic = "median",
-              names = paste0("med_7pt_", 1:2),
-              role = "outcome") \%>\%
   step_window(starts_with("y"),
-              names = paste0("mean_3pt_", 1:2),
-              role = "outcome")
+    size = 7, statistic = "median",
+    names = paste0("med_7pt_", 1:2),
+    role = "outcome"
+  ) \%>\%
+  step_window(starts_with("y"),
+    names = paste0("mean_3pt_", 1:2),
+    role = "outcome"
+  )
 rec <- prep(rec, training = sim_dat)
 
 smoothed_dat <- bake(rec, sim_dat, everything())

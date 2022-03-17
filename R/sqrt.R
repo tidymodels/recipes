@@ -8,8 +8,12 @@
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#' columns that will be affected) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
 #' @export
 #' @examples
 #' set.seed(313)
@@ -18,7 +22,7 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' sqrt_trans <- rec  %>%
+#' sqrt_trans <- rec %>%
 #'   step_sqrt(all_numeric_predictors())
 #'
 #' sqrt_obj <- prep(sqrt_trans, training = examples)
@@ -77,9 +81,10 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
   col_names <- object$columns
-  for (i in seq_along(col_names))
+  for (i in seq_along(col_names)) {
     new_data[, col_names[i]] <-
       sqrt(getElement(new_data, col_names[i]))
+  }
   as_tibble(new_data)
 }
 
@@ -92,7 +97,7 @@ print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
 #' @rdname tidy.recipe
 #' @export
 tidy.step_sqrt <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

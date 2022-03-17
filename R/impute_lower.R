@@ -8,7 +8,7 @@
 #'
 #' @inheritParams step_center
 #' @param threshold A named numeric vector of lower bounds. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
@@ -17,12 +17,14 @@
 #'  `bake.recipe` then simulates a value for any data at the minimum
 #'  with a random uniform value between zero and the minimum.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` for the estimated
-#'  threshold is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_lowerimpute()`
 #'    to `step_impute_lower()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value` for the
+#' estimated threshold is returned.
 #'
 #' @examples
 #' library(recipes)
@@ -35,11 +37,13 @@
 #' biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)
 #' biomass$hydrogen <- ifelse(biomass$hydrogen > 5, biomass$carbon, 5)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' impute_rec <- rec %>%
 #'   step_impute_lower(carbon, hydrogen)
@@ -53,8 +57,8 @@
 #' transformed_te <- bake(impute_rec, biomass_te)
 #'
 #' plot(transformed_te$carbon, biomass_te$carbon,
-#'      ylab = "pre-imputation", xlab = "imputed")
-
+#'   ylab = "pre-imputation", xlab = "imputed"
+#' )
 step_impute_lower <-
   function(recipe,
            ...,
@@ -120,17 +124,15 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   threshold <-
-    vapply(training[, col_names],
-           min,
-           numeric(1),
-           na.rm = TRUE)
-  if (any(threshold < 0))
+    vapply(training[, col_names], min, numeric(1), na.rm = TRUE)
+  if (any(threshold < 0)) {
     rlang::abort(
       paste0(
         "Some columns have negative values. Lower bound ",
         "imputation is intended for data bounded at zero."
       )
     )
+  }
   step_impute_lower_new(
     terms = x$terms,
     role = x$role,
@@ -149,9 +151,12 @@ prep.step_lowerimpute <- prep.step_impute_lower
 bake.step_impute_lower <- function(object, new_data, ...) {
   for (i in names(object$threshold)) {
     affected <- which(new_data[[i]] <= object$threshold[[i]])
-    if (length(affected) > 0)
-      new_data[[i]][affected] <- runif(length(affected),
-                                      max = object$threshold[[i]])
+    if (length(affected) > 0) {
+      new_data[[i]][affected] <- runif(
+        length(affected),
+        max = object$threshold[[i]]
+      )
+    }
   }
   as_tibble(new_data)
 }
@@ -176,8 +181,10 @@ print.step_lowerimpute <- print.step_impute_lower
 #' @export
 tidy.step_impute_lower <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$threshold),
-                  value = unname(x$threshold))
+    res <- tibble(
+      terms = names(x$threshold),
+      value = unname(x$threshold)
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, value = na_dbl)

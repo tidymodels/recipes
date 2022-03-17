@@ -6,10 +6,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of ICA components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
 #' @param options A list of options to
 #'  [fastICA::fastICA()]. No defaults are set here.
 #'  **Note** that the arguments `X` and `n.comp` should
@@ -18,7 +14,7 @@
 #'  running ICA.
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return
@@ -49,9 +45,11 @@
 #'  If `num_comp = 101`, the names would be `IC001` -
 #'  `IC101`.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the loading),
-#'  and `component` is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `value` (the loading),
+#' and `component` is returned.
 #'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
 #'  component analysis: algorithms and applications. *Neural
@@ -67,9 +65,9 @@
 #' tr <- X[1:100, ]
 #' te <- X[101:200, ]
 #'
-#' rec <- recipe( ~ ., data = tr)
+#' rec <- recipe(~., data = tr)
 #'
-#' ica_trans <- step_center(rec,  V1, V2)
+#' ica_trans <- step_center(rec, V1, V2)
 #' ica_trans <- step_scale(ica_trans, V1, V2)
 #' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 #'
@@ -88,7 +86,7 @@ step_ica <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num_comp  = 5,
+           num_comp = 5,
            options = list(method = "C"),
            seed = sample.int(10000, 5),
            res = NULL,
@@ -97,8 +95,6 @@ step_ica <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("ica")) {
-
-
     recipes_pkg_check(required_pkgs.step_ica())
 
     add_step(
@@ -190,7 +186,8 @@ bake.step_ica <- function(object, new_data, ...) {
 
   if (object$num_comp > 0 && length(object$columns) > 0) {
     comps <- scale(as.matrix(new_data[, object$columns]),
-                   center = object$res$means, scale = FALSE)
+      center = object$res$means, scale = FALSE
+    )
     comps <- comps %*% object$res$K %*% object$res$W
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
@@ -245,9 +242,11 @@ tidy.step_ica <- function(x, ...) {
   } else {
     term_names <- sel2char(x$terms)
     comp_names <- names0(x$num_comp, x$prefix)
-    res <- tidyr::crossing(terms = term_names,
-                           value = na_dbl,
-                           component  = comp_names)
+    res <- tidyr::crossing(
+      terms = term_names,
+      value = na_dbl,
+      component = comp_names
+    )
     res$terms <- as.character(res$terms)
     res$component <- as.character(res$component)
     res <- as_tibble(res)
@@ -259,8 +258,6 @@ tidy.step_ica <- function(x, ...) {
   dplyr::select(res, terms, component, value, id)
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_ica <- function(x, ...) {
   tibble::tibble(

@@ -22,7 +22,6 @@
 #'   step_naomit(Solar.R) %>%
 #'   prep(airquality, verbose = FALSE) %>%
 #'   bake(new_data = NULL)
-#'
 step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
                         columns = NULL, skip = FALSE,
                         id = rand_id("naomit")) {
@@ -78,7 +77,7 @@ print.step_naomit <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_naomit <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

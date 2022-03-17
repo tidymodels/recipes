@@ -15,14 +15,16 @@
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the filtering indices is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` which contains the filtering indices is returned.
 #'
 #' @family row operation steps
 #' @family dplyr steps
 #' @export
 #' @examples
-#' rec <- recipe( ~ ., data = iris) %>%
+#' rec <- recipe(~., data = iris) %>%
 #'   step_slice(1:3)
 #'
 #' prepped <- prep(rec, training = iris %>% slice(1:75))
@@ -53,21 +55,18 @@
 #' keep_rows <- 1:6
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   # Embed `keep_rows` in the call using !!
 #'   step_slice(!!keep_rows) %>%
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
-step_slice <- function(
-  recipe, ...,
-  role = NA,
-  trained = FALSE,
-  inputs = NULL,
-  skip = TRUE,
-  id = rand_id("slice")
-) {
-
+step_slice <- function(recipe, ...,
+                       role = NA,
+                       trained = FALSE,
+                       inputs = NULL,
+                       skip = TRUE,
+                       id = rand_id("slice")) {
   inputs <- enquos(...)
 
   add_step(
@@ -117,7 +116,7 @@ bake.step_slice <- function(object, new_data, ...) {
 print.step_slice <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row filtering via position "
-    tr_obj = format_selectors(x$inputs, width)
+    tr_obj <- format_selectors(x$inputs, width)
     print_step(tr_obj, x$inputs, x$trained, title, width)
     invisible(x)
   }

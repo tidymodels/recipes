@@ -52,12 +52,12 @@
 #' @keywords internal
 #' @export
 step_downsample <-
-  function(recipe, ...,  under_ratio = 1, ratio = NA, role = NA, trained = FALSE,
+  function(recipe, ..., under_ratio = 1, ratio = NA, role = NA, trained = FALSE,
            column = NULL, target = NA, skip = TRUE,
            seed = sample.int(10^5, 1), id = rand_id("downsample")) {
-
-    lifecycle::deprecate_stop("0.1.13",
-                              "recipes::step_downsample()",
-                              "themis::step_downsample()")
+    lifecycle::deprecate_stop(
+      "0.1.13",
+      "recipes::step_downsample()",
+      "themis::step_downsample()"
+    )
   }
-

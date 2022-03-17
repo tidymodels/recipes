@@ -42,8 +42,8 @@ the result is a rescaled version of the original data.}
 which should not include \code{x} or \code{df}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -67,19 +67,23 @@ determined by the \code{df} or \code{knot} arguments of
 \code{\link[splines:ns]{splines::ns()}}. The original variables are removed
 from the data and new columns are added. The naming convention
 for the new variables is \code{varname_ns_1} and so on.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be affected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be affected) is returned.
+}
+
 \examples{
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 with_splines <- rec \%>\%
   step_ns(carbon, hydrogen)
@@ -100,6 +104,7 @@ Other individual transformation steps:
 \code{\link{step_logit}()},
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}

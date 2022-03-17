@@ -11,7 +11,7 @@ step_ratio(
   role = "predictor",
   trained = FALSE,
   denom = denom_vars(),
-  naming = function(numer, denom) make.names(paste(numer, denom, sep = "_o_")),
+  naming = function(numer, denom) {     make.names(paste(numer, denom, sep = "_o_")) },
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -48,15 +48,15 @@ listing.}
 new ratio columns.}
 
 \item{columns}{The column names used in the ratios. This
-argument is not populated until \code{\link[=prep.recipe]{prep.recipe()}} is
+argument is not populated until \code{\link[=prep]{prep()}} is
 executed.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -72,22 +72,24 @@ sequence of any existing operations.
 step that will create one or more ratios out of numeric
 variables.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{denom} is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{denom} is returned.
 }
+
 \examples{
 library(recipes)
 library(modeldata)
 data(biomass)
 
 biomass$total <- apply(biomass[, 3:7], 1, sum)
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-                    sulfur + total,
-              data = biomass_tr)
+  sulfur + total,
+data = biomass_tr
+)
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
@@ -111,6 +113,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},

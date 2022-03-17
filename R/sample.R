@@ -15,22 +15,26 @@
 #'  of the training set (or smaller for smaller `new_data`).
 #' @param replace Sample with or without replacement?
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns `size`,
-#' `replace`, and `id` is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `size`, `replace`, and `id` is returned.
 #' @family row operation steps
 #' @family dplyr steps
 #' @export
 #' @examples
 #'
 #' # Uses `sample_n`
-#' recipe( ~ ., data = mtcars) %>%
+#' recipe(~., data = mtcars) %>%
 #'   step_sample(size = 1) %>%
 #'   prep(training = mtcars) %>%
 #'   bake(new_data = NULL) %>%
 #'   nrow()
 #'
 #' # Uses `sample_frac`
-#' recipe( ~ ., data = mtcars) %>%
+#' recipe(~., data = mtcars) %>%
 #'   step_sample(size = 0.9999) %>%
 #'   prep(training = mtcars) %>%
 #'   bake(new_data = NULL) %>%
@@ -38,22 +42,19 @@
 #'
 #' # Uses `sample_n` and returns _at maximum_ 20 samples.
 #' smaller_cars <-
-#'   recipe( ~ ., data = mtcars) %>%
+#'   recipe(~., data = mtcars) %>%
 #'   step_sample() %>%
 #'   prep(training = mtcars %>% slice(1:20))
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-step_sample <- function(
-  recipe, ...,
-  role = NA,
-  trained = FALSE,
-  size = NULL,
-  replace = FALSE,
-  skip = TRUE,
-  id = rand_id("sample")
-) {
-
+step_sample <- function(recipe, ...,
+                        role = NA,
+                        trained = FALSE,
+                        size = NULL,
+                        replace = FALSE,
+                        skip = TRUE,
+                        id = rand_id("sample")) {
   if (length(list(...)) > 0) {
     rlang::warn("Selectors are not used for this step.")
   }

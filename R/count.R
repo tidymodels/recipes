@@ -21,18 +21,23 @@
 #'  variable. It should be a valid column name.
 #' @param input A single character value for the name of the
 #'  variable being searched. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `result` (the
-#'  new column name) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `result` (the
+#' new column name) is returned.
+#'
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples
 #' library(modeldata)
 #' data(covers)
 #'
-#' rec <- recipe(~ description, covers) %>%
+#' rec <- recipe(~description, covers) %>%
 #'   step_count(description, pattern = "(rock|stony)", result = "rocks") %>%
 #'   step_count(description, pattern = "famil", normalize = TRUE)
 #'
@@ -55,18 +60,24 @@ step_count <- function(recipe,
                        input = NULL,
                        skip = FALSE,
                        id = rand_id("count")) {
-  if (!is.character(pattern))
+  if (!is.character(pattern)) {
     rlang::abort("`pattern` should be a character string")
-  if (length(pattern) != 1)
+  }
+  if (length(pattern) != 1) {
     rlang::abort("`pattern` should be a single pattern")
-  valid_args <- names(formals(grepl))[- (1:2)]
-  if (any(!(names(options) %in% valid_args)))
-    rlang::abort(paste0("Valid options are: ",
-                        paste0(valid_args, collapse = ", ")))
+  }
+  valid_args <- names(formals(grepl))[-(1:2)]
+  if (any(!(names(options) %in% valid_args))) {
+    rlang::abort(paste0(
+      "Valid options are: ",
+      paste0(valid_args, collapse = ", ")
+    ))
+  }
 
   terms <- enquos(...)
-  if (length(terms) > 1)
+  if (length(terms) > 1) {
     rlang::abort("For this step, only a single selector can be used.")
+  }
 
   add_step(
     recipe,
@@ -105,10 +116,12 @@ step_count_new <-
 #' @export
 prep.step_count <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
-  if (length(col_name) > 1)
+  if (length(col_name) > 1) {
     rlang::abort("The selector should select at most a single variable")
-  if (any(info$type[info$variable %in% col_name] != "nominal"))
+  }
+  if (any(info$type[info$variable %in% col_name] != "nominal")) {
     rlang::abort("The regular expression input should be character or factor")
+  }
 
   step_count_new(
     terms = x$terms,
@@ -142,13 +155,14 @@ bake.step_count <- function(object, new_data, ...) {
       useBytes = FALSE
     )
   )
-  if (length(object$options) > 0)
+  if (length(object$options) > 0) {
     regex <- mod_call_args(regex, args = object$options)
+  }
 
   new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
-  if(object$normalize) {
+  if (object$normalize) {
     totals <- nchar(as.character(getElement(new_data, object$input)))
-    new_data[, object$result] <- new_data[, object$result]/totals
+    new_data[, object$result] <- new_data[, object$result] / totals
   }
   new_data
 }
@@ -170,11 +184,15 @@ tidy.step_count <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
-    res <- tibble(terms = term_names,
-                  result = rep(x$result, p))
+    res <- tibble(
+      terms = term_names,
+      result = rep(x$result, p)
+    )
   } else {
-    res <- tibble(terms = term_names,
-                  result = rep(na_chr, p))
+    res <- tibble(
+      terms = term_names,
+      result = rep(na_chr, p)
+    )
   }
   res$id <- x$id
   res

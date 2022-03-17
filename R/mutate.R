@@ -15,19 +15,21 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `values`, which
-#'  contains the `mutate()` expressions as character strings
-#'  (and are not reparsable), is returned.
-#'
 #'  If a preceding step removes a column that is selected by name in
-#'  `step_mutate()`, the recipe will error when being estimated with `prep()`.
+#'  `step_mutate()`, the recipe will error when being estimated with [prep()].
+#'
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `values`, which contains the `mutate()` expressions as character
+#'  strings (and are not reparsable), is returned.
 #'
 #' @family individual transformation steps
 #' @family dplyr steps
 #' @export
 #' @examples
 #' rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   step_mutate(
 #'     dbl_width = Sepal.Width * 2,
 #'     half_length = Sepal.Length / 2
@@ -64,7 +66,7 @@
 #' const <- 1.414
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   step_mutate(
 #'     bad_approach = Sepal.Width * const,
 #'     best_approach = Sepal.Width * !!const
@@ -75,16 +77,12 @@
 #'
 #' # The difference:
 #' tidy(qq_rec, number = 1)
-
-step_mutate <- function(
-  recipe, ...,
-  role = "predictor",
-  trained = FALSE,
-  inputs = NULL,
-  skip = FALSE,
-  id = rand_id("mutate")
-) {
-
+step_mutate <- function(recipe, ...,
+                        role = "predictor",
+                        trained = FALSE,
+                        inputs = NULL,
+                        skip = FALSE,
+                        id = rand_id("mutate")) {
   inputs <- enquos(...)
 
   add_step(

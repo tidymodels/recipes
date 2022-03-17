@@ -10,7 +10,7 @@
 #' @param ref_level A single character value that will be used to
 #'  relevel the factor column(s) (if the level is present).
 #' @param objects A list of objects that contain the information
-#'  on factor levels that will be determined by [prep.recipe()].
+#'  on factor levels that will be determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export

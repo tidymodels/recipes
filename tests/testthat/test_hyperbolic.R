@@ -4,43 +4,64 @@ library(tibble)
 
 
 n <- 20
-ex_dat <- data.frame(x1 = seq(0, 1, length = n),
-                     x2 = seq(1, 0, length = n))
+set.seed(1)
+ex_dat <- data.frame(
+  x1 = runif(n, min = -1, max = 1),
+  x2 = runif(n, min = -1, max = 1)
+)
 
-get_exp <- function(x, f)
+set.seed(2)
+ex_dat1 <- data.frame(
+  x1 = runif(n, min = 1, max = 5),
+  x2 = runif(n, min = 1, max = 5)
+)
+
+get_exp <- function(x, f) {
   as_tibble(lapply(x, f))
+}
 
 
-test_that('simple hyperbolic trans', {
+test_that("simple hyperbolic trans", {
 
-  for(func in c("sin", "cos", "tan")) {
-    for(invf in c(TRUE, FALSE)) {
-      rec <- recipe(~., data = ex_dat) %>%
-        step_hyperbolic(x1, x2, func = func, inverse = invf)
+  for (func in c("sinh", "cosh", "tanh")) {
+    rec <- recipe(~., data = ex_dat) %>%
+      step_hyperbolic(x1, x2, func = func, inverse = FALSE)
 
-      rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-      rec_trans <- bake(rec_trained, new_data = ex_dat)
+    rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+    rec_trans <- bake(rec_trained, new_data = ex_dat)
 
-      if(invf) {
-        foo <- get(paste0("a", func))
-      } else {
-        foo <- get(func)
-      }
-
-      exp_res <- get_exp(ex_dat, foo)
-
-      expect_equal(rec_trans, exp_res)
-    }
+    foo <- get(func)
+    exp_res <- get_exp(ex_dat, foo)
+    expect_equal(rec_trans, exp_res)
   }
+
+  for (func in c("sinh", "tanh")) {
+    rec <- recipe(~., data = ex_dat) %>%
+      step_hyperbolic(x1, x2, func = func, inverse = TRUE)
+
+    rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+    rec_trans <- bake(rec_trained, new_data = ex_dat)
+
+    foo <- get(paste0("a", func))
+    exp_res <- get_exp(ex_dat, foo)
+    expect_equal(rec_trans, exp_res)
+  }
+
+  rec <- recipe(~., data = ex_dat1) %>%
+    step_hyperbolic(x1, x2, func = "cosh", inverse = TRUE)
+  rec_trained <- prep(rec, training = ex_dat1, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = ex_dat1)
+  exp_res <- get_exp(ex_dat1, "acosh")
+  expect_equal(rec_trans, exp_res)
 
 })
 
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
-    step_hyperbolic(x1, x2, func = "sin", inverse = TRUE)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+    step_hyperbolic(x1, x2, func = "sinh", inverse = TRUE)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -75,6 +96,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_hyperbolic(rec)
 
@@ -83,4 +105,10 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("wrong function", {
+  skip_if(packageVersion("rlang") < "1.0.0")
+  rec <- recipe(mpg ~ ., mtcars)
+  expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
 })

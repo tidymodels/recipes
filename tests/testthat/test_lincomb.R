@@ -1,35 +1,41 @@
 library(testthat)
 library(recipes)
 
-dummies <- cbind(model.matrix( ~ block - 1, npk),
-                 model.matrix( ~ N - 1, npk),
-                 model.matrix( ~ P - 1, npk),
-                 model.matrix( ~ K - 1, npk),
-                 yield = npk$yield)
+dummies <- cbind(model.matrix(~ block - 1, npk),
+  model.matrix(~ N - 1, npk),
+  model.matrix(~ P - 1, npk),
+  model.matrix(~ K - 1, npk),
+  yield = npk$yield
+)
 
 dummies <- as.data.frame(dummies)
 
-dum_rec <- recipe(yield ~ . , data = dummies)
+dum_rec <- recipe(yield ~ ., data = dummies)
 
 ###################################################################
 
 library(modeldata)
 data(biomass)
-biomass$new_1 <- with(biomass,
-                      .1*carbon - .2*hydrogen + .6*sulfur)
-biomass$new_2 <- with(biomass,
-                      .5*carbon - .2*oxygen + .6*nitrogen)
+biomass$new_1 <- with(
+  biomass,
+  .1 * carbon - .2 * hydrogen + .6 * sulfur
+)
+biomass$new_2 <- with(
+  biomass,
+  .5 * carbon - .2 * oxygen + .6 * nitrogen
+)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 biomass_rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-                        sulfur + new_1 + new_2,
-                      data = biomass_tr)
+  sulfur + new_1 + new_2,
+data = biomass_tr
+)
 
 ###################################################################
 
-test_that('example 1', {
+test_that("example 1", {
   dum_filtered <- dum_rec %>%
     step_lincomb(all_predictors())
   dum_filtered <- prep(dum_filtered, training = dummies, verbose = FALSE)
@@ -37,7 +43,7 @@ test_that('example 1', {
   expect_equal(dum_filtered$steps[[1]]$removals, removed)
 })
 
-test_that('example 2', {
+test_that("example 2", {
   lincomb_filter <- biomass_rec %>%
     step_lincomb(all_predictors())
 
@@ -47,7 +53,7 @@ test_that('example 2', {
   expect_true(all(!(paste0("new_", 1:2) %in% colnames(test_res))))
 })
 
-test_that('no exclusions', {
+test_that("no exclusions", {
   biomass_rec_2 <- recipe(HHV ~ carbon + hydrogen, data = biomass_tr)
   lincomb_filter_2 <- biomass_rec_2 %>%
     step_lincomb(all_predictors())
@@ -60,11 +66,11 @@ test_that('no exclusions', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   dum_filtered <- dum_rec %>%
     step_lincomb(all_predictors())
-  expect_output(print(dum_filtered))
-  expect_output(prep(dum_filtered, training = dummies, verbose = TRUE))
+  expect_snapshot(print(dum_filtered))
+  expect_snapshot(prep(dum_filtered, training = dummies, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -94,6 +100,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_lincomb(rec)
 

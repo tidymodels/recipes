@@ -1,12 +1,13 @@
 ---
-title: "How are categorical predictors handled in `recipes`?"
+title: "Handling categorical predictors"
+output: rmarkdown::html_vignette
+description: |
+  This vignette describes different methods for encoding categorical 
+  predictors, with special attention to interaction terms and contrasts.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Dummy Variables and Interactions}
-  %\VignetteEncoding{UTF-8}  
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteIndexEntry{Handling categorical predictors}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -244,7 +245,7 @@ There are a bunch of steps related to going in-between factors and dummy variabl
  * [`step_zv`](https://recipes.tidymodels.org/reference/step_zv.html) can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).
  * [`step_bin2factor`](https://recipes.tidymodels.org/reference/step_bin2factor.html) takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models. 
  * `step_embed`, `step_lencode_glm`, `step_lencode_bayes` and others  in the [`embed`](https://github.com/tidymodels/embed) package can use one or more (non-binary) values to encode factor predictors into a numeric form. 
- 
+ * `step_dummy_extract` can create binary indicators from strings and is especially useful for multiple choice columns. 
  
 [`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html) also works with _ordered factors_. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:
 

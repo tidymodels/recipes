@@ -33,12 +33,14 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of PCA components to retain as new predictors.
+\item{num_comp}{The number of components to retain as new predictors.
 If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used.}
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
-preprocessing step has be trained by \code{\link[=prep.recipe]{prep()}}.}
+preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of variable names that will
 be populated elsewhere.}
@@ -55,8 +57,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -103,19 +105,23 @@ will have names that begin with \code{prefix} and a sequence of numbers. The
 variable names are padded with zeros. For example, if \code{num_comp < 10}, the
 new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names would be
 \code{kPC001} - \code{kPC101}.
-
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column \code{terms}
-(the selectors or variables selected) is returned.
 }
+\section{tidy() results}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the selectors or variables selected) is returned.
+}
+
 \examples{
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 kpca_trans <- rec \%>\%
   step_YeoJohnson(all_numeric_predictors()) \%>\%
@@ -128,8 +134,8 @@ if (require(kernlab) & require(ggplot2)) {
   kpca_te <- bake(kpca_estimates, biomass_te)
 
   ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
-   geom_point() +
-   coord_equal()
+    geom_point() +
+    coord_equal()
 
   tidy(kpca_trans, number = 3)
   tidy(kpca_estimates, number = 3)
@@ -154,6 +160,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},

@@ -36,8 +36,8 @@ be populated (eventually) by the terms argument.}
 resulting new variables. Defaults to "na_ind".}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -53,11 +53,12 @@ sequence of any existing operations.
 create and append additional binary columns to the dataset to indicate
 which observations are missing.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model} (the
 median value) is returned.
 }
+
 \examples{
 library(modeldata)
 data("credit_data")
@@ -68,7 +69,7 @@ purrr::map_dbl(credit_data, function(x) mean(is.na(x)))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 
 rec <- recipe(Price ~ ., data = credit_tr)
@@ -85,6 +86,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},

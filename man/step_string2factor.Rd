@@ -36,8 +36,8 @@ values present when \code{bake} is called will be used.}
 ordered?}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -61,10 +61,13 @@ Also, note that \code{prep} has an option \code{strings_as_factors} that
 defaults to \code{TRUE}. This should be changed so that raw character
 data will be applied to \code{step_string2factor}. However, this step
 can also take existing factors (but will leave them as-is).
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{ordered} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{ordered} is
+returned.
+}
+
 \examples{
 library(modeldata)
 data(okc)
@@ -74,12 +77,13 @@ rec <- recipe(~ diet + location, data = okc)
 make_factor <- rec \%>\%
   step_string2factor(diet)
 make_factor <- prep(make_factor,
-                    training = okc,
-                    strings_as_factors = FALSE)
+  training = okc,
+  strings_as_factors = FALSE
+)
 
 # note that `diet` is a factor
-bake(make_factor, new_data = NULL) \%>\% head
-okc \%>\% head
+bake(make_factor, new_data = NULL) \%>\% head()
+okc \%>\% head()
 tidy(make_factor, number = 1)
 }
 \seealso{
@@ -87,6 +91,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},

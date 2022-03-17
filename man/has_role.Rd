@@ -79,5 +79,4 @@ rec \%>\%
   step_center(all_predictors(), -carbon) \%>\%
   prep(training = biomass) \%>\%
   bake(new_data = NULL)
-
 }

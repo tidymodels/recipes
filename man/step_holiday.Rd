@@ -37,14 +37,14 @@ holiday supported by the \code{timeDate} package. See
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
+populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -64,16 +64,18 @@ indicator variables for common holidays.
 Unlike some other steps, \code{step_holiday} does \emph{not}
 remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms}
-(the columns that will be affected) and \code{holiday} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the columns that will be affected) and \code{holiday} is returned.
+}
+
 \examples{
 library(lubridate)
 
 examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
-holiday_rec <- recipe(~ someday, examples) \%>\%
-   step_holiday(all_predictors())
+holiday_rec <- recipe(~someday, examples) \%>\%
+  step_holiday(all_predictors())
 
 holiday_rec <- prep(holiday_rec, training = examples)
 holiday_values <- bake(holiday_rec, new_data = examples)
@@ -86,6 +88,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},

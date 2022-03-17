@@ -10,9 +10,9 @@
 #'  Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'  done up to the point of this imputation step. This is `NULL` until the step
-#'  is trained by [prep.recipe()].
+#'  is trained by [prep()].
 #' @param columns The column names that will be imputed and used for
-#'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
+#'  imputation. This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
@@ -30,12 +30,14 @@
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables for imputation), `predictors`
-#'  (those variables used to impute), and `neighbors` is returned.
-#'
 #' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
 #'    to `step_impute_knn()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables for imputation), `predictors`
+#' (those variables used to impute), and `neighbors` is returned.
 #'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
@@ -56,8 +58,10 @@
 #' biomass_te$carbon[carb_missing] <- NA
 #' biomass_te$nitrogen[nitro_missing] <- NA
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' ratio_recipe <- rec %>%
 #'   step_impute_knn(all_predictors(), neighbors = 3)
@@ -66,16 +70,19 @@
 #'
 #' # how well did it work?
 #' summary(biomass_te_whole$carbon)
-#' cbind(before = biomass_te_whole$carbon[carb_missing],
-#'       after = imputed$carbon[carb_missing])
+#' cbind(
+#'   before = biomass_te_whole$carbon[carb_missing],
+#'   after = imputed$carbon[carb_missing]
+#' )
 #'
 #' summary(biomass_te_whole$nitrogen)
-#' cbind(before = biomass_te_whole$nitrogen[nitro_missing],
-#'       after = imputed$nitrogen[nitro_missing])
+#' cbind(
+#'   before = biomass_te_whole$nitrogen[nitro_missing],
+#'   after = imputed$nitrogen[nitro_missing]
+#' )
 #'
 #' tidy(ratio_recipe, number = 1)
 #' tidy(ratio_recipe2, number = 1)
-
 step_impute_knn <-
   function(recipe,
            ...,
@@ -92,8 +99,9 @@ step_impute_knn <-
       rlang::abort("Please list some variables in `impute_with`")
     }
 
-    if (!is.list(options))
+    if (!is.list(options)) {
       rlang::abort("`options` should be a named list.")
+    }
     opt_nms <- names(options)
     if (length(options) > 0) {
       if (any(!(opt_nms %in% c("eps", "nthread")))) {
@@ -222,10 +230,11 @@ nn_pred <- function(index, dat) {
   dat <- dat[index, ]
   dat <- getElement(dat, names(dat))
   dat <- dat[!is.na(dat)]
-  est <- if (is.factor(dat) | is.character(dat))
+  est <- if (is.factor(dat) | is.character(dat)) {
     mode_est(dat)
-  else
+  } else {
     mean(dat)
+  }
   est
 }
 
@@ -233,8 +242,9 @@ nn_pred <- function(index, dat) {
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
-  if (!any(missing_rows))
+  if (!any(missing_rows)) {
     return(new_data)
+  }
 
   old_data <- new_data
   for (i in seq(along.with = object$columns)) {
@@ -248,10 +258,12 @@ bake.step_impute_knn <- function(object, new_data, ...) {
         rlang::warn("All predictors are missing; cannot impute")
       } else {
         imp_var_complete <- !is.na(object$ref_data[[imp_var]])
-        nn_ind <- nn_index(object$ref_data[imp_var_complete,],
-                           imp_data, preds,
-                           object$neighbors,
-                           object$options)
+        nn_ind <- nn_index(
+          object$ref_data[imp_var_complete, ],
+          imp_data, preds,
+          object$neighbors,
+          object$options
+        )
         pred_vals <-
           apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
         pred_vals <- cast(pred_vals, object$ref_data[[imp_var]])
@@ -291,7 +303,7 @@ tidy.step_impute_knn <- function(x, ...) {
     res <- tidyr::unchop(
       data = res,
       cols = tidyselect::all_of(c("terms", "predictors")),
-      ptype = tibble(terms = character(), predictors = character())
+      ptype = list(terms = character(), predictors = character())
     )
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
@@ -306,7 +318,6 @@ tidy.step_impute_knn <- function(x, ...) {
 #' @keywords internal
 tidy.step_knnimpute <- tidy.step_impute_knn
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(

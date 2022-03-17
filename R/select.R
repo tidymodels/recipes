@@ -13,9 +13,11 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the `select` expressions as character strings
-#'  (and are not reparsable) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` which contains the `select` expressions as character strings
+#' (and are not reparsable) is returned.
 #'
 #' @family variable filter steps
 #' @family dplyr steps
@@ -71,15 +73,15 @@ step_select <- function(recipe,
   )
 }
 step_select_new <- function(terms, role, trained, skip, id) {
-    step(
-      subclass = "select",
-      terms = terms,
-      role = role,
-      trained = trained,
-      skip = skip,
-      id = id
-    )
-  }
+  step(
+    subclass = "select",
+    terms = terms,
+    role = role,
+    trained = trained,
+    skip = skip,
+    id = id
+  )
+}
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {

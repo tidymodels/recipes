@@ -48,8 +48,8 @@ transformations.}
 be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -91,11 +91,13 @@ residuals only if they are within a certain margin of the decision boundary.
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 transformed_te <- rec \%>\%
   step_relu(carbon, shift = 40) \%>\%
@@ -117,6 +119,7 @@ Other individual transformation steps:
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_sqrt}()}
 }

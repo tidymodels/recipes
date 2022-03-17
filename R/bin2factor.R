@@ -10,7 +10,7 @@
 #' @param ref_first Logical. Should the first level, which replaces
 #' 1's, be the factor reference level?
 #' @param columns A vector with the selected variable names. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
@@ -20,8 +20,10 @@
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` (the columns that will be affected) is returned.
 #'
 #' @family dummy variable and encoding steps
 #' @export
@@ -29,10 +31,10 @@
 #' library(modeldata)
 #' data(covers)
 #'
-#' rec <- recipe(~ description, covers) %>%
-#'  step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
-#'  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
-#'  step_bin2factor(rocks)
+#' rec <- recipe(~description, covers) %>%
+#'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
+#'   step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
+#'   step_bin2factor(rocks)
 #'
 #' tidy(rec, number = 3)
 #'
@@ -52,8 +54,9 @@ step_bin2factor <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("bin2factor")) {
-    if (length(levels) != 2 | !is.character(levels))
+    if (length(levels) != 2 | !is.character(levels)) {
       rlang::abort("`levels` should be a two element character string")
+    }
     add_step(
       recipe,
       step_bin2factor_new(
@@ -106,14 +109,16 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
 
 bake.step_bin2factor <- function(object, new_data, ...) {
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (i in seq_along(object$columns))
+  for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       factor(ifelse(
         getElement(new_data, object$columns[i]) == 1,
         object$levels[1],
         object$levels[2]
       ),
-      levels = levs)
+      levels = levs
+      )
+  }
   new_data
 }
 
@@ -128,7 +133,7 @@ print.step_bin2factor <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_bin2factor <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

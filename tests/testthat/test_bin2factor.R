@@ -3,11 +3,11 @@ library(recipes)
 
 library(modeldata)
 data(covers)
-rec <- recipe(~ description, covers) %>%
+rec <- recipe(~description, covers) %>%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
   step_regex(description, pattern = "(rock|stony)", result = "more_rocks")
 
-test_that('default options', {
+test_that("default options", {
   rec1 <- rec %>% step_bin2factor(rocks)
   rec1 <- prep(rec1, training = covers)
   res1 <- bake(rec1, new_data = covers)
@@ -15,7 +15,7 @@ test_that('default options', {
 })
 
 
-test_that('nondefault options', {
+test_that("nondefault options", {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
   rec2 <- prep(rec2, training = covers)
   res2 <- bake(rec2, new_data = covers)
@@ -23,22 +23,28 @@ test_that('nondefault options', {
 })
 
 
-test_that('bad options', {
+test_that("bad options", {
   rec3 <- rec %>% step_bin2factor(description)
-  expect_error(prep(rec3, training = covers))
-  expect_error(rec %>% step_bin2factor(rocks, levels = letters[1:5]))
-  expect_error(rec %>% step_bin2factor(rocks, levels = 1:2))
+  expect_snapshot(error = TRUE,
+    prep(rec3, training = covers)
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_bin2factor(rocks, levels = letters[1:5])
+  )
+  expect_snapshot(error = TRUE,
+    rec %>% step_bin2factor(rocks, levels = 1:2)
+  )
 })
 
 
-test_that('printing', {
+test_that("printing", {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
-  expect_output(print(rec2))
-  expect_output(prep(rec2, training = covers, verbose = TRUE))
+  expect_snapshot(print(rec2))
+  expect_snapshot(prep(rec2, training = covers, verbose = TRUE))
 })
 
 
-test_that('choose reference level', {
+test_that("choose reference level", {
   rec4 <- rec %>% step_bin2factor(rocks, ref_first = FALSE)
   rec4 <- prep(rec4, training = covers)
   res4 <- bake(rec4, new_data = covers)
@@ -73,6 +79,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_bin2factor(rec)
 

@@ -1,4 +1,4 @@
-#'  Multiple Choice Dummy Variables Creation
+#' Handle levels in multiple predictors together
 #'
 #' `step_dummy_multi_choice()` creates a *specification* of a recipe
 #'  step that will convert multiple nominal data (e.g. character or factors)
@@ -10,7 +10,7 @@
 #' @inheritParams step_other
 #' @inheritParams step_pca
 #' @param input A character vector containing the names of the columns used.
-#'  This is `NULL` until the step is trained by [prep.recipe()].
+#'  This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
@@ -32,34 +32,35 @@
 #'   NA,         NA,        NA
 #' )
 #'
-#' dummy_multi_choice_rec <- recipe(~ ., data = languages) %>%
+#' dummy_multi_choice_rec <- recipe(~., data = languages) %>%
 #'   step_dummy_multi_choice(starts_with("lang")) %>%
 #'   prep()
 #'
 #' bake(dummy_multi_choice_rec, new_data = NULL)
 #' tidy(dummy_multi_choice_rec, number = 1)
 #'
-#' dummy_multi_choice_rec2 <- recipe(~ ., data = languages) %>%
-#'   step_dummy_multi_choice(starts_with("lang"), prefix = "lang",
-#'                          threshold = 0.2) %>%
+#' dummy_multi_choice_rec2 <- recipe(~., data = languages) %>%
+#'   step_dummy_multi_choice(starts_with("lang"),
+#'     prefix = "lang",
+#'     threshold = 0.2
+#'   ) %>%
 #'   prep()
 #'
 #' bake(dummy_multi_choice_rec2, new_data = NULL)
 #' tidy(dummy_multi_choice_rec2, number = 1)
 step_dummy_multi_choice <- function(recipe,
-                     ...,
-                     role = "predictor",
-                     trained = FALSE,
-                     threshold = 0,
-                     levels = NULL,
-                     input = NULL,
-                     other = "other",
-                     naming = dummy_names,
-                     prefix = NULL,
-                     keep_original_cols = FALSE,
-                     skip = FALSE,
-                     id = rand_id("dummy_multi_choice")) {
-
+                                    ...,
+                                    role = "predictor",
+                                    trained = FALSE,
+                                    threshold = 0,
+                                    levels = NULL,
+                                    input = NULL,
+                                    other = "other",
+                                    naming = dummy_names,
+                                    prefix = NULL,
+                                    keep_original_cols = FALSE,
+                                    skip = FALSE,
+                                    id = rand_id("dummy_multi_choice")) {
   if (!is_tune(threshold) & !is_varying(threshold)) {
     if (threshold < 0) {
       rlang::abort("`threshold` should be non-negative.")
@@ -90,7 +91,7 @@ step_dummy_multi_choice <- function(recipe,
 
 step_dummy_multi_choice_new <-
   function(terms, role, trained, threshold, levels, input, other, naming,
-           prefix,  keep_original_cols, skip, id) {
+           prefix, keep_original_cols, skip, id) {
     step(
       subclass = "dummy_multi_choice",
       terms = terms,
@@ -142,19 +143,20 @@ multi_dummy_check_type <- function(dat) {
 
   all_good <- vapply(dat, is_good, logical(1))
   label <- "factor, character, or NA"
-  if (!all(all_good))
+  if (!all(all_good)) {
     rlang::abort(
       paste0(
         "All columns selected for the step",
         " should be ",
-        label)
+        label
+      )
     )
+  }
   invisible(all_good)
 }
 
 #' @export
 bake.step_dummy_multi_choice <- function(object, new_data, ...) {
-
   col_names <- object$input
 
   indicators <- multi_dummy(new_data[, col_names], object$levels)
@@ -240,7 +242,6 @@ tidy.step_dummy_multi_choice <- function(x, ...) {
   res
 }
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_dummy_multi_choice <- function(x, ...) {
   tibble::tibble(

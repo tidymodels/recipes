@@ -16,9 +16,8 @@ example_data$x1[c(1, 5, 6)] <- NA
 example_data$x2[c(1:4, 10)] <- NA
 example_data <- as_tibble(example_data)
 
-test_that('imputation values with 7-pt median', {
-
-  seven_pt <- recipe(~ . , data = example_data) %>%
+test_that("imputation values with 7-pt median", {
+  seven_pt <- recipe(~., data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
     step_impute_roll(all_predictors(), window = 7, id = "") %>%
     prep(training = example_data)
@@ -42,12 +41,10 @@ test_that('imputation values with 7-pt median', {
       id = ""
     )
   expect_equal(seven_pt_tidy_tr, tidy(seven_pt, number = 1))
-
 })
 
-test_that('imputation values with 3-pt mean', {
-
-  three_pt <- recipe(~ . , data = example_data) %>%
+test_that("imputation values with 3-pt mean", {
+  three_pt <- recipe(~., data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
     step_impute_roll(all_predictors(), window = 3, id = "") %>%
     prep(training = example_data)
@@ -72,27 +69,26 @@ test_that('imputation values with 3-pt mean', {
       id = ""
     )
   expect_equal(three_pt_tidy_tr, tidy(three_pt, number = 1))
-
 })
 
 
-test_that('bad args', {
-  expect_error(
-    recipe( ~ . , data = example_data) %>%
+test_that("bad args", {
+  expect_snapshot(error = TRUE,
+    recipe(~., data = example_data) %>%
       step_impute_roll(all_predictors(), window = 3) %>%
       prep(training = example_data)
   )
 
-  expect_error(
-    recipe( ~ . , data = example_data) %>%
+  expect_snapshot(error = TRUE,
+    recipe(~., data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_impute_roll(all_predictors(), window = 4) %>%
       prep(training = example_data)
   )
 
   example_data$x4 <- 1:12
-  expect_error(
-    recipe( ~ . , data = example_data) %>%
+  expect_snapshot(error = TRUE,
+    recipe(~., data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_impute_roll(all_predictors(), window = 3) %>%
       prep(training = example_data)
@@ -101,18 +97,18 @@ test_that('bad args', {
 
 
 
-test_that('printing', {
-  seven_pt <- recipe(~ . , data = example_data) %>%
+test_that("printing", {
+  seven_pt <- recipe(~., data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
     step_impute_roll(all_predictors(), window = 7)
-  expect_output(print(seven_pt))
-  expect_output(prep(seven_pt, training = example_data, verbose = TRUE))
+  expect_snapshot(print(seven_pt))
+  expect_snapshot(prep(seven_pt, training = example_data, verbose = TRUE))
 })
 
 
-test_that('tunable', {
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_impute_roll(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_impute_roll(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "window"))
@@ -121,7 +117,7 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 2)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 
@@ -152,6 +148,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_impute_roll(rec)
 

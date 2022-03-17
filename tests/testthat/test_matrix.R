@@ -16,7 +16,7 @@ okc_te <- okc[(401:800), ]
 
 ###################################################################
 
-rec <- recipe( ~ ., data = okc_tr) %>%
+rec <- recipe(~., data = okc_tr) %>%
   step_impute_mode(all_nominal()) %>%
   step_impute_mean(all_numeric()) %>%
   step_dummy(location, diet) %>%
@@ -24,18 +24,20 @@ rec <- recipe( ~ ., data = okc_tr) %>%
 
 ###################################################################
 
-test_that('correct types', {
+test_that("correct types", {
   bake_default <- bake(rec, new_data = okc_te, all_numeric())
   bake_sparse <-
     bake(rec,
-         new_data = okc_te,
-         all_numeric(),
-         composition = "matrix")
+      new_data = okc_te,
+      all_numeric(),
+      composition = "matrix"
+    )
   bake_sparse_1d <-
     bake(rec,
-         new_data = okc_te,
-         age,
-         composition = "matrix")
+      new_data = okc_te,
+      age,
+      composition = "matrix"
+    )
   juice_default <- juice(rec, all_numeric())
   juice_sparse <-
     juice(rec, all_numeric(), composition = "matrix")
@@ -51,13 +53,21 @@ test_that('correct types', {
   expect_true(inherits(bake_sparse_1d, "matrix"))
   expect_true(inherits(juice_sparse_1d, "matrix"))
 
-  expect_equal(recipes:::convert_matrix(bake_default, sparse = FALSE),
-               bake_sparse)
-  expect_equal(recipes:::convert_matrix(juice_default, sparse = FALSE),
-               juice_sparse)
+  expect_equal(
+    recipes:::convert_matrix(bake_default, sparse = FALSE),
+    bake_sparse
+  )
+  expect_equal(
+    recipes:::convert_matrix(juice_default, sparse = FALSE),
+    juice_sparse
+  )
 })
 
-test_that('bad args', {
-  expect_error(bake(rec, new_data = okc_te, composition = "matrix"))
-  expect_error(juice(rec, composition = "matrix"))
+test_that("bad args", {
+  expect_snapshot(error = TRUE,
+    bake(rec, new_data = okc_te, composition = "matrix")
+  )
+  expect_snapshot(error = TRUE,
+    juice(rec, composition = "matrix")
+  )
 })

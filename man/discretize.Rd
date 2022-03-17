@@ -88,8 +88,8 @@ largest value of \code{x}, a missing value will result.
 library(modeldata)
 data(biomass)
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 median(biomass_tr$carbon)
 discretize(biomass_tr$carbon, cuts = 2)
@@ -102,11 +102,4 @@ table(predict(carbon_binned, biomass_tr$carbon))
 
 carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 predict(carbon_no_infs, c(50, 100))
-
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
-rec <- rec \%>\% step_discretize(carbon, hydrogen)
-rec <- prep(rec, biomass_tr)
-binned_te <- bake(rec, biomass_te)
-table(binned_te$carbon)
 }

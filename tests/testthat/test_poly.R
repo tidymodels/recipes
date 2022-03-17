@@ -4,19 +4,22 @@ library(modeldata)
 data(biomass)
 
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+  data = biomass_tr
+)
 
-test_that('correct basis functions', {
+test_that("correct basis functions", {
   with_poly <- rec %>%
     step_poly(carbon, hydrogen, id = "")
 
-  exp_tidy_un <- tibble(terms = c("carbon", "hydrogen"),
-                        degree = rep(2L, 2),
-                        id = "")
+  exp_tidy_un <- tibble(
+    terms = c("carbon", "hydrogen"),
+    degree = rep(2L, 2),
+    id = ""
+  )
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
 
@@ -59,17 +62,17 @@ test_that('correct basis functions', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   with_poly <- rec %>%
     step_poly(carbon, hydrogen)
-  expect_output(print(with_poly))
-  expect_output(prep(with_poly, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(with_poly))
+  expect_snapshot(prep(with_poly, training = biomass_tr, verbose = TRUE))
 })
 
 
-test_that('tunable', {
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_poly(all_predictors())
   rec_param <- tunable.step_poly(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
@@ -78,23 +81,25 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 1)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 
 
 
-test_that('old option argument', {
+test_that("old option argument", {
   expect_message(
     res <-
-      recipe(~ ., data = iris) %>%
+      recipe(~., data = iris) %>%
       step_poly(Sepal.Width, options = list(degree = 3)) %>%
       prep() %>%
       juice(),
     "The `degree` argument is now a main argument"
   )
-  exp_names <- c('Sepal.Length', 'Petal.Length', 'Petal.Width', 'Species',
-                 'Sepal.Width_poly_1', 'Sepal.Width_poly_2', 'Sepal.Width_poly_3')
+  exp_names <- c(
+    "Sepal.Length", "Petal.Length", "Petal.Width", "Species",
+    "Sepal.Width_poly_1", "Sepal.Width_poly_2", "Sepal.Width_poly_3"
+  )
   expect_equal(
     names(res),
     exp_names
@@ -128,6 +133,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_poly(rec)
 

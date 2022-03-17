@@ -10,7 +10,7 @@
 #' these dots indicate which variables are used to predict the missing data
 #' in each variable. See [selections()] for more details.
 #' @param models The [lm()] objects are stored here once the linear models
-#'  have been trained by [prep.recipe()].
+#'  have been trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
@@ -26,7 +26,9 @@
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
 #'
-#'  When you [`tidy()`] this step, a tibble with
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  bagged tree object) is returned.
 #'
@@ -54,13 +56,12 @@
 #'   bind_cols(ames_missing %>% dplyr::select(Longitude)) %>%
 #'   dplyr::filter(is.na(Longitude))
 #'
-#'library(ggplot2)
+#' library(ggplot2)
 #' ggplot(imputed, aes(x = original, y = imputed)) +
 #'   geom_abline(col = "green") +
 #'   geom_point(alpha = .3) +
 #'   coord_equal() +
 #'   labs(title = "Imputed Values")
-
 step_impute_linear <-
   function(recipe,
            ...,
@@ -70,8 +71,9 @@ step_impute_linear <-
            models = NULL,
            skip = FALSE,
            id = rand_id("impute_linear")) {
-    if (is.null(impute_with))
+    if (is.null(impute_with)) {
       rlang::abort("Please provide some variables to `impute_with`.")
+    }
 
     add_step(
       recipe,
@@ -108,17 +110,21 @@ lm_wrap <- function(vars, dat) {
   dat <- na.omit(dat)
   if (nrow(dat) == 0) {
     rlang::abort(
-      paste("The data used by step_impute_linear() did not have any rows",
-            "where the imputation values were all complete.")
+      paste(
+        "The data used by step_impute_linear() did not have any rows",
+        "where the imputation values were all complete."
+      )
     )
   }
 
-  if (!is.numeric(dat[[vars$y]]))
+  if (!is.numeric(dat[[vars$y]])) {
     rlang::abort(
       glue::glue(
         "Variable '{vars$y}' chosen for linear regression imputation ",
         "must be of type numeric."
-    ))
+      )
+    )
+  }
 
 
   out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, model = FALSE)
@@ -168,8 +174,9 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
   missing_rows <- !complete.cases(new_data)
-  if (!any(missing_rows))
+  if (!any(missing_rows)) {
     return(new_data)
+  }
 
   old_data <- new_data
   for (i in seq(along.with = object$models)) {
@@ -208,8 +215,10 @@ print.step_impute_linear <-
 #' @export
 tidy.step_impute_linear <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$models),
-                  model = unname(x$models))
+    res <- tibble(
+      terms = names(x$models),
+      model = unname(x$models)
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = list(NULL))

@@ -4,8 +4,10 @@ library(lubridate)
 library(tibble)
 
 
-examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
-                       Stefan = ymd("2006-01-13") + days(1:10))
+examples <- data.frame(
+  Dan = ymd("2002-03-04") + days(1:10),
+  Stefan = ymd("2006-01-13") + days(1:10)
+)
 
 examples$Dan <- as.POSIXct(examples$Dan)
 
@@ -14,7 +16,7 @@ date_rec <- recipe(~ Dan + Stefan, examples) %>%
 
 feats <- c("year", "doy", "week", "decimal", "semester", "quarter", "dow", "month")
 
-test_that('default option', {
+test_that("default option", {
   # because of https://github.com/tidyverse/lubridate/issues/928
   skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
 
@@ -53,7 +55,7 @@ test_that('default option', {
 })
 
 
-test_that('nondefault options', {
+test_that("nondefault options", {
   # because of https://github.com/tidyverse/lubridate/issues/928
   skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
 
@@ -76,7 +78,7 @@ test_that('nondefault options', {
 })
 
 
-test_that('ordinal values', {
+test_that("ordinal values", {
   # because of https://github.com/tidyverse/lubridate/issues/928
   skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
 
@@ -99,17 +101,17 @@ test_that('ordinal values', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   # because of https://github.com/tidyverse/lubridate/issues/928
   skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
 
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
-  expect_output(print(date_rec))
-  expect_output(prep(date_rec, training = examples, verbose = TRUE))
+  expect_snapshot(print(date_rec))
+  expect_snapshot(prep(date_rec, training = examples, verbose = TRUE))
 })
 
-test_that('keep_original_cols works', {
+test_that("keep_original_cols works", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
 
@@ -122,15 +124,14 @@ test_that('keep_original_cols works', {
   )
 })
 
-test_that('can prep recipes with no keep_original_cols', {
+test_that("can prep recipes with no keep_original_cols", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
 
   date_rec$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    date_rec <- prep(date_rec, training = examples, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    date_rec <- prep(date_rec, training = examples, verbose = FALSE)
   )
 
   expect_error(
@@ -166,6 +167,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_date(rec)
 

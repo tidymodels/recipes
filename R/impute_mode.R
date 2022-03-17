@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param modes A named character vector of modes. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @param ptype A data frame prototype to cast new data sets to. This is
 #'  commonly a 0-row slice of the training set.
 #' @template step-return
@@ -18,12 +18,14 @@
 #'  values to new data sets using these values. If the training set
 #'  data has more than one mode, one is selected at random.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `model` (the mode
-#'  value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_modeimpute()`
 #'    to `step_impute_mode()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `model` (the mode
+#' value) is returned.
 #'
 #' @examples
 #' library(modeldata)
@@ -35,7 +37,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -52,7 +54,6 @@
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-
 step_impute_mode <-
   function(recipe,
            ...,
@@ -147,10 +148,9 @@ prep.step_modeimpute <- prep.step_impute_mode
 
 #' @export
 bake.step_impute_mode <- function(object, new_data, ...) {
-
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
-      if(is.null(object$ptype)) {
+      if (is.null(object$ptype)) {
         rlang::warn(
           paste0(
             "'ptype' was added to `step_impute_mode()` after this recipe was created.\n",
@@ -195,8 +195,10 @@ mode_est <- function(x, wts = NULL) {
 #' @export
 tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$modes),
-                  model = unname(x$modes))
+    res <- tibble(
+      terms = names(x$modes),
+      model = unname(x$modes)
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_chr)

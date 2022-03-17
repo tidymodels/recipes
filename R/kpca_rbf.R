@@ -9,7 +9,7 @@
 #' @param sigma A numeric value for the radial basis function parameter.
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
-#'  [`prep()`][prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return
@@ -21,11 +21,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' kpca_trans <- rec %>%
 #'   step_YeoJohnson(all_numeric_predictors()) %>%
@@ -38,13 +40,12 @@
 #'   kpca_te <- bake(kpca_estimates, biomass_te)
 #'
 #'   ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
-#'    geom_point() +
-#'    coord_equal()
+#'     geom_point() +
+#'     coord_equal()
 #'
 #'   tidy(kpca_trans, number = 3)
 #'   tidy(kpca_estimates, number = 3)
 #' }
-#'
 step_kpca_rbf <-
   function(recipe,
            ...,
@@ -58,7 +59,6 @@ step_kpca_rbf <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("kpca_rbf")) {
-
     recipes_pkg_check(required_pkgs.step_kpca_rbf())
 
     add_step(
@@ -183,8 +183,6 @@ tidy.step_kpca_rbf <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_kpca_rbf <- function(x, ...) {
   tibble::tibble(

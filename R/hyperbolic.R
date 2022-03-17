@@ -6,15 +6,20 @@
 #'
 #' @inheritParams step_center
 #' @param func A character value for the function. Valid values
-#'  are "sin", "cos", or "tan".
+#'  are "sinh", "cosh", or "tanh".
 #' @param inverse A logical: should the inverse function be used?
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected), `inverse`, and `func` is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected), `inverse`, and `func` is
+#' returned.
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(rnorm(40), ncol = 2)
@@ -22,9 +27,11 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' cos_trans <- rec  %>%
-#'   step_hyperbolic(all_numeric_predictors(),
-#'                   func = "cos", inverse = FALSE)
+#' cos_trans <- rec %>%
+#'   step_hyperbolic(
+#'     all_numeric_predictors(),
+#'     func = "cosh", inverse = FALSE
+#'   )
 #'
 #' cos_obj <- prep(cos_trans, training = examples)
 #'
@@ -38,14 +45,14 @@ step_hyperbolic <-
            ...,
            role = NA,
            trained = FALSE,
-           func = "sin",
+           func = c("sinh", "cosh", "tanh"),
            inverse = TRUE,
            columns = NULL,
            skip = FALSE,
            id = rand_id("hyperbolic")) {
-    funcs <- c("sin", "cos", "tan")
-    if (!(func %in% funcs))
-      rlang::abort("`func` should be either `sin`, `cos`, or `tan`")
+
+    func <- rlang::arg_match(func)
+
     add_step(
       recipe,
       step_hyperbolic_new(
@@ -95,22 +102,25 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_hyperbolic <- function(object, new_data, ...) {
-  func <- if (object$inverse)
+  func <- if (object$inverse) {
     get(paste0("a", object$func))
-  else
+  } else {
     get(object$func)
+  }
   col_names <- object$columns
-  for (i in seq_along(col_names))
+  for (i in seq_along(col_names)) {
     new_data[, col_names[i]] <-
-    func(getElement(new_data, col_names[i]))
+      func(getElement(new_data, col_names[i]))
+  }
   as_tibble(new_data)
 }
 
 print.step_hyperbolic <-
   function(x, width = max(20, options()$width - 32), ...) {
-    ttl <- paste("Hyperbolic", x$func)
-    if (x$inverse)
+    ttl <- paste("Hyperbolic", substr(x$func, 1, 3))
+    if (x$inverse) {
       ttl <- paste(ttl, "(inv)")
+    }
     title <- glue::glue("{ttl} transformation on ")
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)

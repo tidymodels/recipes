@@ -33,11 +33,11 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{inputs}{A vector of column names populated by \code{prep()}.}
+\item{inputs}{A vector of column names populated by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -57,19 +57,21 @@ When using this flexible step, use extra care to avoid data leakage in your
 preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
 When applied to new data or testing data, this transformation would use the
 mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-column \code{terms} which contains the columns being transformed is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} which contains the columns being transformed is returned.
+}
+
 \examples{
 library(dplyr)
-recipe(~ ., data = iris) \%>\%
-  step_mutate_at(contains("Length"), fn = ~ 1/.) \%>\%
+recipe(~., data = iris) \%>\%
+  step_mutate_at(contains("Length"), fn = ~ 1 / .) \%>\%
   prep() \%>\%
   bake(new_data = NULL) \%>\%
   slice(1:10)
 
-recipe(~ ., data = iris) \%>\%
+recipe(~., data = iris) \%>\%
   # leads to more columns being created.
   step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) \%>\%
   prep() \%>\%
@@ -86,6 +88,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_poly}()},
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_kpca}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},

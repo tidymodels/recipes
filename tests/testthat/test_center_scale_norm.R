@@ -9,20 +9,23 @@ means <- vapply(biomass[, 3:7], mean, c(mean = 0))
 sds <- vapply(biomass[, 3:7], sd, c(sd = 0))
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass)
+  data = biomass
+)
 
 # Note: some tests convert to data frame prior to testing
 # https://github.com/tidyverse/dplyr/issues/2751
 
-test_that('correct means and std devs', {
+test_that("correct means and std devs", {
   standardized <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
 
   cent_tibble_un <-
-    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = rep(na_dbl, 5),
-           id = standardized$steps[[1]]$id)
+    tibble(
+      terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+      value = rep(na_dbl, 5),
+      id = standardized$steps[[1]]$id
+    )
   scal_tibble_un <- cent_tibble_un
   scal_tibble_un$id <- standardized$steps[[2]]$id
 
@@ -32,13 +35,17 @@ test_that('correct means and std devs', {
   standardized_trained <- prep(standardized, training = biomass)
 
   cent_tibble_tr <-
-    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = unname(means),
-           id = standardized$steps[[1]]$id)
+    tibble(
+      terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+      value = unname(means),
+      id = standardized$steps[[1]]$id
+    )
   scal_tibble_tr <-
-    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = sds,
-           id = standardized$steps[[2]]$id)
+    tibble(
+      terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+      value = sds,
+      id = standardized$steps[[2]]$id
+    )
 
   expect_equal(tidy(standardized_trained, 1), cent_tibble_tr)
   expect_equal(
@@ -50,30 +57,31 @@ test_that('correct means and std devs', {
   expect_equal(standardized_trained$steps[[2]]$sds, sds)
 })
 
-test_that('scale by factor of 1 or 2', {
+test_that("scale by factor of 1 or 2", {
   standardized <- rec %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale", factor = 2)
 
   standardized_trained <- prep(standardized, training = biomass)
 
   scal_tibble_tr <-
-    tibble(terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
-           value = unname(sds*2),
-           id = standardized$steps[[1]]$id)
+    tibble(
+      terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
+      value = unname(sds * 2),
+      id = standardized$steps[[1]]$id
+    )
 
   expect_equal(tidy(standardized_trained, 1), scal_tibble_tr)
 
-  expect_equal(standardized_trained$steps[[1]]$sds, 2*sds)
+  expect_equal(standardized_trained$steps[[1]]$sds, 2 * sds)
 
-  expect_warning(
+  expect_snapshot(
     not_recommended_standardized_input <- rec %>%
       step_scale(carbon, id = "scale", factor = 3) %>%
       prep(training = biomass)
   )
-
 })
 
-test_that('training in stages', {
+test_that("training in stages", {
   at_once <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "center") %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "scale")
@@ -95,7 +103,7 @@ test_that('training in stages', {
 })
 
 
-test_that('single predictor', {
+test_that("single predictor", {
   standardized <- rec %>%
     step_center(carbon) %>%
     step_scale(hydrogen)
@@ -111,34 +119,38 @@ test_that('single predictor', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   standardized <- rec %>%
     step_center(carbon) %>%
     step_scale(hydrogen)
-  expect_output(print(standardized))
-  expect_output(prep(standardized, training = biomass, verbose = TRUE))
+  expect_snapshot(print(standardized))
+  expect_snapshot(prep(standardized, training = biomass, verbose = TRUE))
 })
 
-test_that('correct means and std devs for step_norm', {
+test_that("correct means and std devs for step_norm", {
   standardized <- rec %>%
     step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "norm")
 
   vrs <- c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur")
   norm_tibble_un <-
-    tibble(terms = vrs,
-           statistic = rep(na_chr, 5),
-           value = rep(na_dbl, 5),
-           id = standardized$steps[[1]]$id)
+    tibble(
+      terms = vrs,
+      statistic = rep(na_chr, 5),
+      value = rep(na_dbl, 5),
+      id = standardized$steps[[1]]$id
+    )
 
   expect_equal(tidy(standardized, 1), norm_tibble_un)
 
   standardized_trained <- prep(standardized, training = biomass)
 
   norm_tibble_tr <-
-    tibble(terms = c(vrs, vrs),
-           statistic = rep(c("mean", "sd"), each = 5),
-           value = unname(c(means, sds)),
-           id = standardized$steps[[1]]$id)
+    tibble(
+      terms = c(vrs, vrs),
+      statistic = rep(c("mean", "sd"), each = 5),
+      value = unname(c(means, sds)),
+      id = standardized$steps[[1]]$id
+    )
 
   expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)
 })
@@ -174,6 +186,7 @@ test_that("center - empty selection tidy method works", {
 })
 
 test_that("center - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_center(rec)
 
@@ -211,6 +224,7 @@ test_that("scale - empty selection tidy method works", {
 })
 
 test_that("scale - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_scale(rec)
 
@@ -253,6 +267,7 @@ test_that("normalize - empty selection tidy method works", {
 })
 
 test_that("normalize - empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_normalize(rec)
 

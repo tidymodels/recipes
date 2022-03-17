@@ -8,30 +8,31 @@
 #' @param fn A function `fun`, a quosure style lambda `~ fun(.)`` or a list of
 #' either form (but containing only a single function, see [dplyr::rename_at()]).
 #' **Note that this argument must be named**.
-#' @param inputs A vector of column names populated by `prep()`.
+#' @param inputs A vector of column names populated by [prep()].
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with
-#'  columns `terms` which contains the columns being transformed is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` which contains the columns being transformed is returned.
 #' @family dplyr steps
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~ ., data = iris) %>%
+#' recipe(~., data = iris) %>%
 #'   step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) %>%
 #'   prep() %>%
 #'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #' @export
-step_rename_at <- function(
-  recipe, ...,
-  fn,
-  role = "predictor",
-  trained = FALSE,
-  inputs = NULL,
-  skip = FALSE,
-  id = rand_id("rename_at")
-) {
-
+step_rename_at <- function(recipe, ...,
+                           fn,
+                           role = "predictor",
+                           trained = FALSE,
+                           inputs = NULL,
+                           skip = FALSE,
+                           id = rand_id("rename_at")) {
   add_step(
     recipe,
     step_rename_at_new(
@@ -99,4 +100,3 @@ tidy.step_rename_at <- function(x, ...) {
   res$id <- x$id
   res
 }
-

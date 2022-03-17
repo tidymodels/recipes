@@ -10,13 +10,14 @@ biomass$hydrogen <- ifelse(biomass$hydrogen > 5, biomass$carbon, 5)
 biomass$has_neg <- runif(nrow(biomass), min = -2)
 
 rec <- recipe(HHV ~ carbon + hydrogen + has_neg,
-              data = biomass)
+  data = biomass
+)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 
-test_that('basic usage', {
+test_that("basic usage", {
   rec1 <- rec %>%
     step_impute_lower(carbon, hydrogen, id = "")
 
@@ -38,34 +39,35 @@ test_that('basic usage', {
 
   expect_equal(trained, tidy(rec1, number = 1))
 
-  expect_equal(c(carbon = 40, hydrogen = 5),
-               rec1$steps[[1]]$threshold)
+  expect_equal(
+    c(carbon = 40, hydrogen = 5),
+    rec1$steps[[1]]$threshold
+  )
 
   processed <- juice(rec1)
-  for(i in names(rec1$steps[[1]]$threshold)) {
+  for (i in names(rec1$steps[[1]]$threshold)) {
     affected <- biomass_tr[[i]] <= rec1$steps[[1]]$threshold[[i]]
     is_less <- processed[affected, i] < biomass_tr[affected, i]
     is_pos <- processed[affected, i] > 0
     expect_true(all(is_less))
     expect_true(all(is_pos))
   }
-
 })
 
-test_that('bad data', {
-  expect_error(
+test_that("bad data", {
+  expect_snapshot(error = TRUE,
     rec %>%
       step_impute_lower(carbon, hydrogen, has_neg) %>%
-      prep
+      prep()
   )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec2 <- rec %>%
     step_impute_lower(carbon, hydrogen)
 
-  expect_output(print(rec))
-  expect_output(prep(rec2, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec2, training = biomass_tr, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -95,6 +97,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_impute_lower(rec)
 

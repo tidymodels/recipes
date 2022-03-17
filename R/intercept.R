@@ -22,11 +22,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #' rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) %>%
 #'   step_intercept(value = 2) %>%
 #'   step_scale(carbon)
@@ -35,17 +37,19 @@
 #'
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
-#'
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept",
                            value = 1,
                            skip = FALSE, id = rand_id("intercept")) {
-  if (length(list(...)) > 0)
+  if (length(list(...)) > 0) {
     rlang::warn("Selectors are not used for this step.")
-  if (!is.numeric(value))
+  }
+  if (!is.numeric(value)) {
     rlang::abort("Intercept value must be numeric.")
-  if (!is.character(name) | length(name) != 1)
+  }
+  if (!is.character(name) | length(name) != 1) {
     rlang::abort("Intercept/constant column name must be a character value.")
+  }
   add_step(
     recipe,
     step_intercept_new(

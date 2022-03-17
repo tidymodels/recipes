@@ -1,3 +1,48 @@
+# out of bounds logit trans
+
+    Code
+      prep(rec, training = ex_dat, verbose = FALSE)
+    Condition
+      Error:
+      ! Value -0.77772 out of range (0, 1)
+
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          3
+      
+      Operations:
+      
+      Logit transformation on x1
+
+---
+
+    Code
+      prep(rec, training = ex_dat, verbose = TRUE)
+    Output
+      oper 1 step logit [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          3
+      
+      Training data contained 20 data points and no missing data.
+      
+      Operations:
+      
+      Logit transformation on x1 [trained]
+
 # empty printing
 
     Code

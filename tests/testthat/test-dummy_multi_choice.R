@@ -17,8 +17,8 @@ result <- tribble(
   0L,        0L,       0L,      0L,       0L
 )
 
-test_that('dummy variables with factor inputs', {
-  dummy <- recipe(~ ., data = languages) %>%
+test_that("dummy variables with factor inputs", {
+  dummy <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(all_predictors())
 
   dummy_prepped <- prep(dummy)
@@ -35,23 +35,21 @@ test_that('dummy variables with factor inputs', {
   )
 })
 
-test_that('dummy variables with non-factor inputs', {
-  dummy <- recipe(~ ., data = mtcars) %>%
+test_that("dummy variables with non-factor inputs", {
+  dummy <- recipe(~., data = mtcars) %>%
     step_dummy_multi_choice(all_predictors())
 
-  expect_error(
-    prep(dummy)
-  )
+  expect_snapshot(error = TRUE, prep(dummy))
 })
 
-test_that('printing', {
-  rec <- recipe(~ ., data = languages) %>%
+test_that("printing", {
+  rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(all_predictors())
-  expect_output(print(rec))
-  expect_output(prep(rec, training = languages, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = languages, verbose = TRUE))
 })
 
-test_that('no columns selected', {
+test_that("no columns selected", {
   zdat <- tibble(
     y = c(1, 2, 3),
     x = c("a", "a", "a"),
@@ -74,7 +72,7 @@ test_that('no columns selected', {
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
-test_that('one columns selected', {
+test_that("one columns selected", {
   zdat <- tibble(
     y = c(1, 2, 3),
     x = c("a", "a", "a"),
@@ -120,6 +118,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_dummy_multi_choice(rec)
 

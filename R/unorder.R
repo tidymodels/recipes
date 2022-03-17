@@ -11,19 +11,24 @@
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
 #'
 #' @examples
 #' lmh <- c("Low", "Med", "High")
 #'
-#' examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
-#'                        X2 = ordered(rep(lmh, each = 4),
-#'                                     levels = lmh))
+#' examples <- data.frame(
+#'   X1 = factor(rep(letters[1:4], each = 3)),
+#'   X2 = ordered(rep(lmh, each = 4),
+#'     levels = lmh
+#'   )
+#' )
 #'
 #' rec <- recipe(~ X1 + X2, data = examples)
 #'
-#' factor_trans <- rec  %>%
+#' factor_trans <- rec %>%
 #'   step_unorder(all_nominal_predictors())
 #'
 #' factor_obj <- prep(factor_trans, training = examples)
@@ -41,15 +46,17 @@ step_unorder <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("unorder")) {
-    add_step(recipe,
-             step_unorder_new(
-               terms = enquos(...),
-               role = role,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+    add_step(
+      recipe,
+      step_unorder_new(
+        terms = enquos(...),
+        role = role,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_unorder_new <-
@@ -68,10 +75,12 @@ step_unorder_new <-
 #' @export
 prep.step_unorder <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  order_check <- vapply(training[, col_names],
-                        is.ordered,
-                        logical(1L))
-  if(any(!order_check)) {
+  order_check <- vapply(
+    training[, col_names],
+    is.ordered,
+    logical(1L)
+  )
+  if (any(!order_check)) {
     bad_cols <- names(order_check)[!order_check]
     bad_cols <- paste0(bad_cols, collapse = ", ")
     rlang::warn(
@@ -96,10 +105,12 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unorder <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
+  for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       factor(as.character(getElement(new_data, object$columns[i])),
-             levels = levels(getElement(new_data, object$columns[i])))
+        levels = levels(getElement(new_data, object$columns[i]))
+      )
+  }
   as_tibble(new_data)
 }
 

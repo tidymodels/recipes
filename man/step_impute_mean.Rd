@@ -41,7 +41,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until computed
-by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers, the mean
+by \code{\link[=prep]{prep()}}. Note that, if the original data are integers, the mean
 will be converted to an integer to maintain the same data type.}
 
 \item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each
@@ -49,8 +49,8 @@ end of the variables before the mean is computed. Values of trim outside
 that range are taken as the nearest endpoint.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -71,13 +71,15 @@ those variables.
 in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies the
 new values to new data sets using these averages.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the mean
-value) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_meanimpute()}
 to \code{step_impute_mean()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model} (the mean
+value) is returned.
+}
+
 \examples{
 library(modeldata)
 data("credit_data")
@@ -88,7 +90,7 @@ vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 missing_examples <- c(14, 394, 565)
 
@@ -101,7 +103,7 @@ imp_models <- prep(impute_rec, training = credit_tr)
 
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
-credit_te[missing_examples,]
+credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)

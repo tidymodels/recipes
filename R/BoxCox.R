@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param lambdas A numeric vector of transformation values. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
 #' @param num_unique An integer to specify minimum required unique
@@ -32,15 +32,17 @@
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
-#'  lambda estimate) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value` (the
+#' lambda estimate) is returned.
 #'
 #' @references Sakia, R. M. (1992). The Box-Cox transformation technique:
 #'   A review. *The Statistician*, 169-178..
 #' @examples
 #'
-#' rec <- recipe(~ ., data = as.data.frame(state.x77))
+#' rec <- recipe(~., data = as.data.frame(state.x77))
 #'
 #' bc_trans <- step_BoxCox(rec, all_numeric())
 #'
@@ -146,19 +148,21 @@ print.step_BoxCox <-
 
 ## computes the new data
 bc_trans <- function(x, lambda, eps = .001) {
-
-  if (any(x <= 0))
+  if (any(x <= 0)) {
     rlang::warn(paste0(
       "Applying Box-Cox transformation to non-positive data in column `",
       names(lambda), "`"
-      ))
+    ))
+  }
 
-  if (is.na(lambda))
+  if (is.na(lambda)) {
     return(x)
-  if (abs(lambda) < eps)
+  }
+  if (abs(lambda) < eps) {
     log(x)
-  else
-    (x ^ lambda - 1) / lambda
+  } else {
+    (x^lambda - 1) / lambda
+  }
 }
 
 ## helper for the log-likelihood calc
@@ -166,13 +170,14 @@ bc_trans <- function(x, lambda, eps = .001) {
 # TODO case weights: Is there a weighted version of this likelihood?
 ll_bc <- function(lambda, y, gm, eps = .001) {
   n <- length(y)
-  gm0 <- gm ^ (lambda - 1)
-  z <- if (abs(lambda) <= eps)
+  gm0 <- gm^(lambda - 1)
+  z <- if (abs(lambda) <= eps) {
     log(y) / gm0
-  else
-    (y ^ lambda - 1) / (lambda * gm0)
+  } else {
+    (y^lambda - 1) / (lambda * gm0)
+  }
   var_z <- var(z) * (n - 1) / n
-  - .5 * n * log(var_z)
+  -.5 * n * log(var_z)
 }
 
 
@@ -206,8 +211,9 @@ estimate_bc <- function(dat,
     tol = .0001
   )
   lam <- res$maximum
-  if (abs(limits[1] - lam) <= eps | abs(limits[2] - lam) <= eps)
+  if (abs(limits[1] - lam) <= eps | abs(limits[2] - lam) <= eps) {
     lam <- NA
+  }
   lam
 }
 
@@ -216,12 +222,16 @@ estimate_bc <- function(dat,
 #' @export
 tidy.step_BoxCox <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$lambdas),
-                  value = unname(x$lambdas))
+    res <- tibble(
+      terms = names(x$lambdas),
+      value = unname(x$lambdas)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl
+    )
   }
   res$id <- x$id
   res

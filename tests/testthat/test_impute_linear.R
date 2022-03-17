@@ -13,13 +13,12 @@ tg_dat <- ToothGrowth %>%
 
 
 test_that("Does the imputation (no NAs), and does it correctly.", {
-
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
   imputed <- recipe(head(ames_dat)) %>%
     step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
     prep(ames_dat) %>%
-    juice %>%
+    juice() %>%
     pull(Lot_Frontage) %>%
     .[missing_ind]
 
@@ -29,11 +28,9 @@ test_that("Does the imputation (no NAs), and does it correctly.", {
 
   expect_equal(imputed, lm_predicted)
   expect_equal(sum(is.na(imputed)), 0)
-
 })
 
 test_that("All NA values", {
-
   imputed <- recipe(head(ames_dat)) %>%
     step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
     prep(ames_dat)
@@ -46,12 +43,10 @@ test_that("All NA values", {
 
   expect_equal(unname(imputed_te$Lot_Frontage), lm_predicted)
   expect_equal(sum(is.na(imputed_te$Lot_Frontage)), 0)
-
 })
 
 
 test_that("Returns correct models.", {
-
   imputed <- recipe(head(ames_dat)) %>%
     step_impute_linear(Lot_Frontage, Total_Bsmt_SF, impute_with = c("Lot_Area")) %>%
     prep(ames_dat)
@@ -61,16 +56,15 @@ test_that("Returns correct models.", {
     sort(names(imputed$steps[[1]]$models)),
     c("Lot_Frontage", "Total_Bsmt_SF")
   )
-
 })
 
 test_that("Fails when one of the variables to impute is non-numeric.", {
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(tg_dat) %>%
       step_impute_linear(supp, impute_with = c("len")) %>%
       prep(tg_dat)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(tg_dat) %>%
       step_impute_linear(supp, dose, impute_with = c("len")) %>%
       prep(tg_dat)
@@ -79,23 +73,23 @@ test_that("Fails when one of the variables to impute is non-numeric.", {
 
 
 test_that("Maintain data type", {
- ames_integer <- ames
- ames_integer$TotRms_AbvGrd[1:10] <- NA_integer_
- integer_rec <- recipe(~ ., data = ames_integer) %>%
-   step_impute_linear(TotRms_AbvGrd, impute_with = vars(Bedroom_AbvGr, Gr_Liv_Area)) %>%
-   prep()
- expect_true(
-   is.integer(bake(integer_rec, ames_integer, TotRms_AbvGrd) %>% pull(TotRms_AbvGrd))
- )
+  ames_integer <- ames
+  ames_integer$TotRms_AbvGrd[1:10] <- NA_integer_
+  integer_rec <- recipe(~., data = ames_integer) %>%
+    step_impute_linear(TotRms_AbvGrd, impute_with = vars(Bedroom_AbvGr, Gr_Liv_Area)) %>%
+    prep()
+  expect_true(
+    is.integer(bake(integer_rec, ames_integer, TotRms_AbvGrd) %>% pull(TotRms_AbvGrd))
+  )
 })
 
 
-test_that('Prints.', {
+test_that("Prints.", {
   imputed <- recipe(ames_dat) %>%
     step_impute_linear(Lot_Frontage, impute_with = imp_vars(Lot_Area))
 
-  expect_output(print(imputed))
-  expect_output(prep(imputed, training = ames_dat, verbose = TRUE))
+  expect_snapshot(print(imputed))
+  expect_snapshot(prep(imputed, training = ames_dat, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -125,6 +119,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_impute_linear(rec)
 

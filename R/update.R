@@ -20,8 +20,8 @@ stats::update
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' # Create a recipe using step_bs() with degree = 3
 #' rec <- recipe(
@@ -35,11 +35,11 @@ stats::update
 #' rec2$steps[[1]] <- update(rec2$steps[[1]], degree = 4)
 #'
 #' # Prep both recipes
-#' rec_prepped  <- prep(rec, training = biomass_tr)
+#' rec_prepped <- prep(rec, training = biomass_tr)
 #' rec2_prepped <- prep(rec2, training = biomass_tr)
 #'
 #' # Juice both to see what changed
-#' bake(rec_prepped,  new_data = NULL)
+#' bake(rec_prepped, new_data = NULL)
 #' bake(rec2_prepped, new_data = NULL)
 #'
 #' # Cannot update a recipe step that has been trained!
@@ -49,7 +49,6 @@ stats::update
 #'
 #' @export
 update.step <- function(object, ...) {
-
   changes <- list(...)
 
   validate_not_trained(object)
@@ -59,11 +58,9 @@ update.step <- function(object, ...) {
 
   # Call step() to construct a new step to ensure all new changes are validated
   reconstruct_step(object)
-
 }
 
 update_fields <- function(object, changes) {
-
   validate_has_unique_names(changes)
 
   new_nms <- names(changes)
@@ -71,8 +68,7 @@ update_fields <- function(object, changes) {
 
   step_type <- class(object)[1]
 
-  for(nm in new_nms) {
-
+  for (nm in new_nms) {
     if (!(nm %in% old_nms)) {
       rlang::abort(glue::glue(
         "The step you are trying to update, ",
@@ -100,13 +96,12 @@ reconstruct_step <- function(x) {
   call_step <- rlang::call2(
     .fn = "step",
     subclass = subclass,
-    !!! args,
+    !!!args,
     .prefix = "",
     .ns = "recipes"
   )
 
   rlang::eval_tidy(call_step)
-
 }
 
 has_unique_names <- function(x) {
@@ -131,17 +126,13 @@ validate_has_unique_names <- function(x) {
 }
 
 validate_not_trained <- function(x) {
-
   if (is_trained(x)) {
-
     step_type <- class(x)[1]
 
     rlang::abort(glue::glue(
       "To update '{step_type}', it must not be trained."
     ))
-
   }
 
   invisible(x)
-
 }

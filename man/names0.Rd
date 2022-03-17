@@ -3,11 +3,14 @@
 \name{names0}
 \alias{names0}
 \alias{dummy_names}
+\alias{dummy_extract_names}
 \title{Naming Tools}
 \usage{
 names0(num, prefix = "x")
 
 dummy_names(var, lvl, ordinal = FALSE, sep = "_")
+
+dummy_extract_names(var, lvl, ordinal = FALSE, sep = "_")
 }
 \arguments{
 \item{num}{A single integer for how many elements are created.}
@@ -50,9 +53,11 @@ suffixes such as "\verb{_1}", "\verb{_2}", etc.
 names0(9, "a")
 names0(10, "a")
 
-example <- data.frame(x = ordered(letters[1:5]),
-                      y = factor(LETTERS[1:5]),
-                      z = factor(paste(LETTERS[1:5], 1:5)))
+example <- data.frame(
+  x = ordered(letters[1:5]),
+  y = factor(LETTERS[1:5]),
+  z = factor(paste(LETTERS[1:5], 1:5))
+)
 
 dummy_names("y", levels(example$y)[-1])
 dummy_names("z", levels(example$z)[-1])

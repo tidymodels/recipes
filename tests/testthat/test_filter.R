@@ -4,11 +4,11 @@ library(dplyr)
 
 # ------------------------------------------------------------------------------
 
-iris_rec <- recipe( ~ ., data = iris)
+iris_rec <- recipe(~., data = iris)
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage - skip = FALSE', {
+test_that("basic usage - skip = FALSE", {
   rec <-
     iris_rec %>%
     step_filter(Sepal.Length > 4.5, Species == "setosa", skip = FALSE)
@@ -36,7 +36,7 @@ test_that('basic usage - skip = FALSE', {
 })
 
 
-test_that('skip = FALSE', {
+test_that("skip = FALSE", {
   rec <-
     iris_rec %>%
     step_filter(Sepal.Length > 4.5, Species == "setosa", skip = FALSE)
@@ -61,11 +61,11 @@ test_that('skip = FALSE', {
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that('quasiquotation', {
+test_that("quasiquotation", {
   values <- c("versicolor", "virginica")
   rec_1 <-
     iris_rec %>%
-    step_filter(Sepal.Length > 4.5, Species  %in% values)
+    step_filter(Sepal.Length > 4.5, Species %in% values)
 
   prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
@@ -73,19 +73,21 @@ test_that('quasiquotation', {
     iris %>%
     as_tibble() %>%
     slice(1:75) %>%
-    filter(Sepal.Length > 4.5, Species  %in% values)
+    filter(Sepal.Length > 4.5, Species %in% values)
 
   rec_1_train <- juice(prepped_1)
   expect_equal(dplyr_train, rec_1_train)
 
   rec_2 <-
     iris_rec %>%
-    step_filter(Sepal.Length > 4.5, Species  %in% !!values)
+    step_filter(Sepal.Length > 4.5, Species %in% !!values)
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 
   rm(values)
-  expect_error(prep(rec_1, training = iris %>% slice(1:75)))
+  expect_snapshot(error = TRUE,
+    prep(rec_1, training = iris %>% slice(1:75))
+  )
   expect_error(
     prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
     regexp = NA
@@ -94,7 +96,7 @@ test_that('quasiquotation', {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that('no input', {
+test_that("no input", {
   no_inputs <-
     iris_rec %>%
     step_filter() %>%
@@ -104,10 +106,10 @@ test_that('no input', {
 })
 
 
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_filter(Sepal.Length > 4.5)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -137,6 +139,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_filter(rec)
 
@@ -146,4 +149,3 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
-

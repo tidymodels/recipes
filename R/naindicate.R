@@ -11,9 +11,13 @@
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. Defaults to "na_ind".
 #' @template step-return
-#' @details  When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  median value) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `model` (the
+#' median value) is returned.
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples
@@ -26,7 +30,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #'
 #' rec <- recipe(Price ~ ., data = credit_tr)
@@ -37,7 +41,6 @@
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
 #' imputed_te <- bake(imp_models, new_data = credit_te, everything())
-
 step_indicate_na <-
   function(recipe,
            ...,
@@ -47,8 +50,7 @@ step_indicate_na <-
            prefix = "na_ind",
            skip = FALSE,
            id = rand_id("indicate_na")) {
-
-    terms = enquos(...)
+    terms <- enquos(...)
 
     add_step(
       recipe,
@@ -99,11 +101,11 @@ bake.step_indicate_na <- function(object, new_data, ...) {
 
   cols <- purrr::map(
     new_data[col_names],
-    ~ifelse(is.na(.x), 1L, 0L)
+    ~ ifelse(is.na(.x), 1L, 0L)
   )
 
   cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
-  cols <- dplyr::rename_with(cols, ~paste0(object$prefix, "_", .x))
+  cols <- dplyr::rename_with(cols, ~ paste0(object$prefix, "_", .x))
 
   new_data <- dplyr::bind_cols(new_data, cols)
 
@@ -128,4 +130,3 @@ tidy.step_indicate_na <- function(x, ...) {
   res$id <- x$id
   res
 }
-

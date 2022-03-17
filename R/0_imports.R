@@ -34,6 +34,8 @@ utils::globalVariables(
     "denom",                                                           # ratio.R
     "component", "denom", "id", "value",                                 # ica.R
     "training", "x_names", "y_names",                                    # pls.R
-    ".order_1", ".order_2", "role", "skip"                           # recipes.R
+    ".order_1", ".order_2", "role", "skip",                          # recipes.R
+    "call_info",                                                     # extract.R
+    "dat"                                                        # nnmf_sparse.R
   )
 )

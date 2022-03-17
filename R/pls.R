@@ -5,9 +5,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of pls dimensions to retain as new predictors.
-#'  If `num_comp` is greater than the number of columns or the number of
-#'  possible dimensions, a smaller value will be used.
 #' @param predictor_prop The maximum number of original predictors that can have
 #'  non-zero coefficients for each PLS component (via regularization).
 #' @param preserve Use `keep_original_cols` instead to specify whether the
@@ -19,7 +16,7 @@
 #' `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
 #' arguments).
 #' @param res A list of results are stored here once this preprocessing step
-#'  has been trained by [prep.recipe()].
+#'  has been trained by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @template step-return
@@ -46,7 +43,10 @@
 #' proportion to determine the `keepX` parameter in `mixOmics::spls()` and
 #' `mixOmics::splsda()`. See the references in `mixOmics::spls()` for details.
 #'
-#' The [`tidy()`] method returns the coefficients that are usually defined as
+#' # Tidying
+#'
+#' The [`tidy()`][tidy.recipe()] method returns the coefficients that are
+#' usually defined as
 #'
 #' \deqn{W(P'W)^{-1}}
 #'
@@ -70,11 +70,11 @@
 #' biom_tr <-
 #'   biomass %>%
 #'   dplyr::filter(dataset == "Training") %>%
-#'   dplyr::select(-dataset,-sample)
+#'   dplyr::select(-dataset, -sample)
 #' biom_te <-
 #'   biomass %>%
-#'   dplyr::filter(dataset == "Testing")  %>%
-#'   dplyr::select(-dataset,-sample,-HHV)
+#'   dplyr::filter(dataset == "Testing") %>%
+#'   dplyr::select(-dataset, -sample, -HHV)
 #'
 #' dense_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
@@ -82,7 +82,7 @@
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4/5)
+#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4 / 5)
 #'
 #' ## -----------------------------------------------------------------------------
 #' ## PLS discriminant analysis
@@ -95,8 +95,8 @@
 #'   dplyr::select(-case)
 #' cell_te <-
 #'   cells %>%
-#'   dplyr::filter(case == "Test")  %>%
-#'   dplyr::select(-case,-class)
+#'   dplyr::filter(case == "Test") %>%
+#'   dplyr::select(-case, -class)
 #'
 #' dense_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
@@ -104,14 +104,13 @@
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1/4)
-#'
+#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1 / 4)
 step_pls <-
   function(recipe,
            ...,
            role = "predictor",
            trained = FALSE,
-           num_comp  = 2,
+           num_comp = 2,
            predictor_prop = 1,
            outcome = NULL,
            options = list(scale = TRUE),
@@ -203,15 +202,15 @@ pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
   }
   if (is.factor(y)) {
     if (all(keepX == p)) {
-      cl  <- rlang::call2("plsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
+      cl <- rlang::call2("plsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
     } else {
-      cl  <- rlang::call2("splsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
+      cl <- rlang::call2("splsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
     }
   } else {
     if (all(keepX == p)) {
-      cl  <- rlang::call2("pls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
+      cl <- rlang::call2("pls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
     } else {
-      cl  <- rlang::call2("spls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
+      cl <- rlang::call2("spls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
     }
   }
   res <- rlang::eval_tidy(cl)
@@ -239,10 +238,10 @@ butcher_pls <- function(x) {
   }
   .mu <- attr(x$X, "scaled:center")
   .sd <- attr(x$X, "scaled:scale")
-  W <- x$loadings$X  # W matrix, P = X'rot
+  W <- x$loadings$X # W matrix, P = X'rot
   variates <- x$variates[["X"]]
   P <- crossprod(x$X, variates)
-  coefs <- W %*% solve(t(P) %*%  W)
+  coefs <- W %*% solve(t(P) %*% W)
 
   col_norms <- apply(variates, 2, get_norms)
 
@@ -268,9 +267,9 @@ old_pls_project <- function(object, x) {
   n <- nrow(x)
   input_data <- as.matrix(x[, pls_vars])
   if (!all(is.na(object$scale))) {
-    input_data <- sweep(input_data, 2, object$scale,  "/")
+    input_data <- sweep(input_data, 2, object$scale, "/")
   }
-  input_data <- sweep(input_data, 2, object$Xmeans,  "-")
+  input_data <- sweep(input_data, 2, object$Xmeans, "-")
   comps <- input_data %*% object$projection
   colnames(comps) <- paste0("pls", 1:ncol(comps))
   tibble::as_tibble(comps)
@@ -306,12 +305,12 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   y_names <- recipes_eval_select(x$outcome, training, info)
 
   check_type(training[, x_names])
-  if (length(y_names) > 1 ) {
+  if (length(y_names) > 1) {
     rlang::abort("`step_pls()` only supports univariate models.")
   }
 
   if (x$num_comp > 0 && length(x_names) > 0) {
-    ncomp <- min(x$num_comp,  length(x_names))
+    ncomp <- min(x$num_comp, length(x_names))
     # Convert proportion to number of terms
     x$predictor_prop <- max(x$predictor_prop, 0.00001)
     x$predictor_prop <- min(x$predictor_prop, 1)
@@ -325,7 +324,6 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     } else {
       res <- butcher_pls(res)
     }
-
   } else {
     res <- NULL
   }
@@ -351,7 +349,6 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
   if (object$num_comp > 0 && length(get_columns_pls(object)) > 0 && pls_worked(object$res)) {
-
     if (use_old_pls(object$res)) {
       comps <- old_pls_project(object$res, new_data)
     } else {
@@ -403,7 +400,7 @@ tidy.step_pls <- function(x, ...) {
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {
-      res <- tibble(terms = unname(get_columns_pls(x)), value = na_dbl, component  = na_chr)
+      res <- tibble(terms = unname(get_columns_pls(x)), value = na_dbl, component = na_chr)
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -413,8 +410,6 @@ tidy.step_pls <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_pls <- function(x, ...) {
   tibble::tibble(

@@ -1,3 +1,42 @@
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          4
+      
+      Operations:
+      
+      Zero variance filter on x1, x2, x3, x4
+
+---
+
+    Code
+      prep(rec, training = dat, verbose = TRUE)
+    Output
+      oper 1 step zv [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          4
+      
+      Training data contained 50 data points and no missing data.
+      
+      Operations:
+      
+      Zero variance filter removed x4 [trained]
+
 # empty printing
 
     Code

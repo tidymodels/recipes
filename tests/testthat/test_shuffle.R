@@ -10,9 +10,9 @@ dat <- data.frame(
   x3 = sort(factor(rep(letters[1:3], c(2, 2, 46)))),
   x4 = 1,
   y = sort(runif(n))
-  )
+)
 
-test_that('numeric data', {
+test_that("numeric data", {
   rec1 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(all_numeric())
 
@@ -21,13 +21,14 @@ test_that('numeric data', {
   dat1 <- bake(rec1, dat, all_predictors())
   exp1 <- c(FALSE, FALSE, TRUE, TRUE)
   obs1 <- rep(NA, 4)
-  for (i in 1:ncol(dat1))
+  for (i in 1:ncol(dat1)) {
     obs1[i] <-
-    isTRUE(all.equal(dat[, i], getElement(dat1, names(dat)[i])))
+      isTRUE(all.equal(dat[, i], getElement(dat1, names(dat)[i])))
+  }
   expect_equal(exp1, obs1)
 })
 
-test_that('nominal data', {
+test_that("nominal data", {
   rec2 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(all_nominal())
 
@@ -36,13 +37,14 @@ test_that('nominal data', {
   dat2 <- bake(rec2, dat, all_predictors())
   exp2 <- c(TRUE, TRUE, FALSE, TRUE)
   obs2 <- rep(NA, 4)
-  for (i in 1:ncol(dat2))
+  for (i in 1:ncol(dat2)) {
     obs2[i] <-
-    isTRUE(all.equal(dat[, i], getElement(dat2, names(dat)[i])))
+      isTRUE(all.equal(dat[, i], getElement(dat2, names(dat)[i])))
+  }
   expect_equal(exp2, obs2)
 })
 
-test_that('all data', {
+test_that("all data", {
   rec3 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
 
@@ -51,27 +53,28 @@ test_that('all data', {
   dat3 <- bake(rec3, dat, all_predictors())
   exp3 <- c(FALSE, FALSE, FALSE, TRUE)
   obs3 <- rep(NA, 4)
-  for (i in 1:ncol(dat3))
+  for (i in 1:ncol(dat3)) {
     obs3[i] <-
-    isTRUE(all.equal(dat[, i], getElement(dat3, names(dat)[i])))
+      isTRUE(all.equal(dat[, i], getElement(dat3, names(dat)[i])))
+  }
   expect_equal(exp3, obs3)
 })
 
 
-test_that('printing', {
+test_that("printing", {
   rec3 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
-  expect_output(print(rec3))
-  expect_output(prep(rec3, training = dat, verbose = TRUE))
+  expect_snapshot(print(rec3))
+  expect_snapshot(prep(rec3, training = dat, verbose = TRUE))
 })
 
-test_that('bake a single row', {
+test_that("bake a single row", {
   rec4 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
 
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
-  expect_warning(dat4 <- bake(rec4, dat[1,], everything()))
-  expect_equal(dat4, tibble(dat[1,]))
+  expect_snapshot(dat4 <- bake(rec4, dat[1, ], everything()))
+  expect_equal(dat4, tibble(dat[1, ]))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -101,6 +104,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_shuffle(rec)
 

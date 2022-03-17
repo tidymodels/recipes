@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param medians A named numeric vector of medians. This is `NULL` until
-#'  computed by [prep.recipe()]. Note that, if the original data are integers,
+#'  computed by [prep()]. Note that, if the original data are integers,
 #'  the median will be converted to an integer to maintain the same data type.
 #' @template step-return
 #' @family imputation steps
@@ -15,12 +15,14 @@
 #'  used in the `training` argument of `prep.recipe`. `bake.recipe` then applies
 #'  the new values to new data sets using these medians.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  median value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from
 #'    `step_medianimpute()` to `step_impute_median()`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
+#' columns `terms` (the selectors or variables selected) and `model`
+#' (themedian value) is returned.
 #'
 #' @examples
 #' library(modeldata)
@@ -32,7 +34,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -45,12 +47,11 @@
 #'
 #' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
-#' credit_te[missing_examples,]
+#' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-
 step_impute_median <-
   function(recipe,
            ...,
@@ -137,9 +138,10 @@ prep.step_medianimpute <- prep.step_impute_median
 #' @export
 bake.step_impute_median <- function(object, new_data, ...) {
   for (i in names(object$medians)) {
-    if (any(is.na(new_data[[i]])))
+    if (any(is.na(new_data[[i]]))) {
       new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])
-      new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
+    }
+    new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
   }
   as_tibble(new_data)
 }
@@ -164,8 +166,10 @@ print.step_medianimpute <- print.step_impute_median
 #' @export
 tidy.step_impute_median <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$medians),
-                  model = vctrs::vec_unchop(unname(x$medians), ptype = double()))
+    res <- tibble(
+      terms = names(x$medians),
+      model = vctrs::vec_unchop(unname(x$medians), ptype = double())
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)

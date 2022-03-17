@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param sds A named numeric vector of standard deviations. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to
@@ -24,8 +24,10 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the
 #'  standard deviations) is returned.
 #'
 #' @references Gelman, A. (2007) "Scaling regression inputs by
@@ -35,11 +37,13 @@
 #' library(modeldata)
 #' data(biomass)
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' scaled_trans <- rec %>%
 #'   step_scale(carbon, hydrogen)
@@ -52,7 +56,6 @@
 #' transformed_te
 #' tidy(scaled_trans, number = 1)
 #' tidy(scaled_obj, number = 1)
-#'
 step_scale <-
   function(recipe,
            ...,
@@ -140,12 +143,16 @@ print.step_scale <-
 #' @export
 tidy.step_scale <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$sds),
-                  value = unname(x$sds))
+    res <- tibble(
+      terms = names(x$sds),
+      value = unname(x$sds)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl
+    )
   }
   res$id <- x$id
   res

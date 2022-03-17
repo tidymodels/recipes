@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
@@ -15,8 +15,10 @@
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) is returned.
 #'
 #' @examples
 #' library(modeldata)
@@ -28,9 +30,11 @@
 #'   step_string2factor(diet)
 #'
 #' factor_test <- rec %>%
-#'   prep(training = okc,
-#'        strings_as_factors = FALSE) %>%
-#'   juice
+#'   prep(
+#'     training = okc,
+#'     strings_as_factors = FALSE
+#'   ) %>%
+#'   juice()
 #' # diet is a
 #' class(factor_test$diet)
 #'
@@ -38,9 +42,11 @@
 #'   step_factor2string(diet)
 #'
 #' string_test <- rec %>%
-#'   prep(training = okc,
-#'        strings_as_factors = FALSE) %>%
-#'   juice
+#'   prep(
+#'     training = okc,
+#'     strings_as_factors = FALSE
+#'   ) %>%
+#'   juice()
 #' # diet is a
 #' class(string_test$diet)
 #'
@@ -84,13 +90,14 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   fac_check <-
     vapply(training[, col_names], is.factor, logical(1))
-  if (any(!fac_check))
+  if (any(!fac_check)) {
     rlang::abort(
       paste0(
-      "The following variables are not factor vectors: ",
-      paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
+        "The following variables are not factor vectors: ",
+        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
       )
     )
+  }
 
   step_factor2string_new(
     terms = x$terms,
