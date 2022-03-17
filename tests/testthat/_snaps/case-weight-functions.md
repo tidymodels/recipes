@@ -2,6 +2,7 @@
 
     Code
       weighted_table(mtcars["vs"])
-    Error <rlang_error>
-      All columns in `.data` must be factors.
+    Condition
+      Error in `weighted_table()`:
+      ! All columns in `.data` must be factors.
 
