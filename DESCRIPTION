@@ -61,6 +61,8 @@ Suggests:
     xml2
 VignetteBuilder: 
     knitr
+Remotes: 
+    tidymodels/hardhat#190
 RdMacros: 
     lifecycle
 Config/Needs/website: tidyverse/tidytemplate
