@@ -179,6 +179,15 @@
 ---
 
     Code
+      recipe(mpg ~ ., data = mtcars) %>% add_role("disp", new_role = "case_weights")
+    Condition
+      Error in `add_role()`:
+      ! Roles of "case_weights" cannot be set using `add_role()`.
+      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+
+---
+
+    Code
       recipe(mpg ~ ., data = mtcars1) %>% remove_role(wt, old_role = "case_weights")
     Condition
       Error in `remove_role()`:
@@ -191,4 +200,12 @@
     Condition
       Error in `update_role()`:
       ! `update_role()` cannot be used on variables with role "case_weights".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars1) %>% add_role(wt)
+    Condition
+      Error in `add_role()`:
+      ! `add_role()` cannot be used on variables with role "case_weights".
 

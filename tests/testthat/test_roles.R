@@ -475,6 +475,11 @@ test_that("role functions handle case weights correctly", {
       update_role("disp", new_role = "case_weights")
   )
 
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      add_role("disp", new_role = "case_weights")
+  )
+
   mtcars1 <- mtcars %>%
     mutate(wt = importance_weights(wt))
 
@@ -486,5 +491,10 @@ test_that("role functions handle case weights correctly", {
   expect_snapshot(error = TRUE,
     recipe(mpg ~ ., data = mtcars1) %>%
       update_role(wt)
+  )
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars1) %>%
+      add_role(wt)
   )
 })

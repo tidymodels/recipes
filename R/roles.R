@@ -129,6 +129,18 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   terms <- quos(...)
 
+  if (new_role == "case_weights") {
+    rlang::abort(
+      c(
+        "Roles of \"case_weights\" cannot be set using `add_role()`.",
+        i = paste(
+          "Please use `frequency_weights()` or `importance_weights()`",
+          "to specify case weights before the data is passed to `recipe()`."
+        )
+      )
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
@@ -139,6 +151,14 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `add_role()`.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    rlang::abort(
+      "`add_role()` cannot be used on variables with role \"case_weights\"."
+    )
   }
 
   # Check to see if role already exists
