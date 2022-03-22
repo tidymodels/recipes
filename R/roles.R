@@ -243,6 +243,14 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
     return(recipe)
   }
 
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    rlang::abort(
+      "`update_role()` cannot be used on variables with role \"case_weights\"."
+    )
+  }
+
   # check to see if any variables have multiple roles
   if (is.null(old_role)) {
     var_counts <-

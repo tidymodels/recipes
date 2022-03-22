@@ -482,4 +482,9 @@ test_that("role functions handle case weights correctly", {
     recipe(mpg ~ ., data = mtcars1) %>%
       remove_role(wt, old_role = "case_weights")
   )
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars1) %>%
+      update_role(wt)
+  )
 })

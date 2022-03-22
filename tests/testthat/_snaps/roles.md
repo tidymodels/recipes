@@ -184,3 +184,11 @@
       Error in `remove_role()`:
       ! Roles of "case_weights" cannot removed using `remove_role()`.
 
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars1) %>% update_role(wt)
+    Condition
+      Error in `update_role()`:
+      ! `update_role()` cannot be used on variables with role "case_weights".
+
