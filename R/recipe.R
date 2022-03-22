@@ -159,6 +159,14 @@ recipe.data.frame <-
     var_info <- full_join(get_types(x), var_info, by = "variable")
     var_info$source <- "original"
 
+    # assign case weights
+    case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
+    case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+    if (case_weights_n > 1) {
+      too_many_case_weights(case_weights_n)
+    }
+    var_info$role[case_weights_cols] <- "case_weights"
+
     ## Return final object of class `recipe`
     out <- list(
       var_info = var_info,
