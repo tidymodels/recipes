@@ -152,7 +152,7 @@ recipe.data.frame <-
       }
       var_info$role <- roles
     } else {
-      var_info$role <- NA
+      var_info$role <- NA_character_
     }
 
     ## Add types

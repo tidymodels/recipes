@@ -10,7 +10,7 @@ test_that("default method", {
   exp_res <- tibble(
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
-    role = NA,
+    role = NA_character_,
     source = "original"
   )
   expect_equal(summary(rec, TRUE), exp_res)
