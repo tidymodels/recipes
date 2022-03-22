@@ -468,3 +468,10 @@ test_that("Roles are correcly selected in bake", {
   o <- recipes::bake(rec, x, recipes::has_role("id"))
   expect_equal(names(o), c("a", "b"))
 })
+
+test_that("update_role errors if new_role = case_weights", {
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      update_role("disp", new_role = "case_weights")
+  )
+})

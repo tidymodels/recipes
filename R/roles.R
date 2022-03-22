@@ -219,6 +219,18 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 
   terms <- quos(...)
 
+  if (new_role == "case_weights") {
+    rlang::abort(
+      c(
+        "Roles of \"case_weights\" cannot be set using `update_role()`.",
+        i = paste(
+          "Please use `frequency_weights()` or `importance_weights()`",
+          "to specify case weights before the data is passed to `recipe()`."
+        )
+      )
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template

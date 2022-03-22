@@ -167,3 +167,12 @@
       Error in `single_chr()`:
       ! `old_role` must have length 1.
 
+# update_role errors if new_role = case_weights
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% update_role("disp", new_role = "case_weights")
+    Condition
+      Error in `update_role()`:
+      ! Roles of "case_weights" cannot be set using `update_role()`.
+      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+
