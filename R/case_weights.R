@@ -95,6 +95,7 @@ averages <- function(x, wts = NULL) {
   if (is.null(wts)) {
     res <- colMeans(x, na.rm = TRUE)
   } else {
+    wts <- as.numeric(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
   }
   res

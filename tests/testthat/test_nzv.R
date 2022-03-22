@@ -134,9 +134,11 @@ test_that("nzv with case weights", {
   weighted_int_counts <- dat %>% count(x3, wt = x2, sort = TRUE)
   exp_freq_cut_int <- weighted_int_counts$n[1] / weighted_int_counts$n[2]
 
+  dat_caseweights_x2 <- dat %>%
+    mutate(x2 = importance_weights(x2))
+
   expect_equal(
-    recipe(~., dat) %>%
-      update_role(x2, new_role = "case_weights") %>%
+    recipe(~., dat_caseweights_x2) %>%
       step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
       prep() %>%
       tidy(1) %>%
@@ -145,8 +147,7 @@ test_that("nzv with case weights", {
   )
 
   expect_equal(
-    recipe(~., dat) %>%
-      update_role(x2, new_role = "case_weights") %>%
+    recipe(~., dat_caseweights_x2) %>%
       step_nzv(all_predictors(), freq_cut = exp_freq_cut_int - 0.0001) %>%
       prep() %>%
       tidy(1) %>%
@@ -157,9 +158,11 @@ test_that("nzv with case weights", {
   weighted_frag_counts <- dat %>% count(x3, wt = y, sort = TRUE)
   exp_freq_cut_frag <- weighted_frag_counts$n[1] / weighted_frag_counts$n[2]
 
+  dat_caseweights_y <- dat %>%
+    mutate(y = importance_weights(y))
+
   expect_equal(
-    recipe(~., dat) %>%
-      update_role(y, new_role = "case_weights") %>%
+    recipe(~., dat_caseweights_y) %>%
       step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag) %>%
       prep() %>%
       tidy(1) %>%
@@ -168,8 +171,7 @@ test_that("nzv with case weights", {
   )
 
   expect_equal(
-    recipe(~., dat) %>%
-      update_role(y, new_role = "case_weights") %>%
+    recipe(~., dat_caseweights_y) %>%
       step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag - 0.0001) %>%
       prep() %>%
       tidy(1) %>%
@@ -178,9 +180,8 @@ test_that("nzv with case weights", {
   )
 
   # Turning off case weights
-  rec <- recipe(~ ., data = dat)
+  rec <- recipe(~ ., data = dat_caseweights_y)
   filtering <- rec %>%
-    update_role(y, new_role = "case_weights") %>%
     step_nzv(x1, x2, x3, x4, id = "", case_weights = NULL)
 
   exp_tidy_un <- tibble(terms = c("x1", "x2", "x3", "x4"), id = "")

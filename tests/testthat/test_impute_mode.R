@@ -145,10 +145,9 @@ test_that("empty printing", {
 
 test_that('case weights', {
   fake_data <- tibble(x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
-                      x2 = 1:150)
+                      x2 = importance_weights(1:150))
 
   impute_rec <- recipe(~ ., data = fake_data) %>%
-    update_role(x2, new_role = "case_weights") %>%
     step_impute_mode(x1, id = "")
   imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = fake_data)
@@ -163,7 +162,6 @@ test_that('case weights', {
 
   # Skipping case weights
   impute_rec <- recipe(~ ., data = fake_data) %>%
-    update_role(x2, new_role = "case_weights") %>%
     step_impute_mode(x1, id = "", case_weights = NULL)
   imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = fake_data)

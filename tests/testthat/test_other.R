@@ -371,10 +371,11 @@ test_that("othering with case weights", {
     count(diet, wt = age, sort = TRUE) %>%
     mutate(prop = n / sum(n[!is.na(diet)])) %>%
     filter(!is.na(diet))
+  okc_tr_caseweights <- okc_tr %>%
+    mutate(age = importance_weights(age))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ diet + age, data = okc_tr) %>%
-      update_role(age, new_role = "case_weights") %>%
+    others <- recipe(~ diet + age, data = okc_tr_caseweights) %>%
       step_other(diet, other = "another", id = "",
                  threshold = weighted_props$prop[n_cols])
 

@@ -279,66 +279,37 @@ test_that("normalize - empty printing", {
 })
 
 test_that("centering with case weights", {
+  mtcars1 <- mtcars
+  mtcars1$wt <- importance_weights(mtcars1$wt)
+
   rec <-
-    recipe(mpg ~ ., mtcars) %>%
-    update_role(wt, new_role = "case_weights") %>%
+    recipe(mpg ~ ., mtcars1) %>%
     step_center(all_numeric_predictors()) %>%
     prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
-    unname(averages(mtcars[, -c(1, 6)], mtcars$wt))
+    unname(averages(mtcars1[, -c(1, 6)], mtcars1$wt))
   )
 
   rec <-
-    recipe(mpg ~ ., mtcars) %>%
-    update_role(wt, new_role = "case_weights") %>%
+    recipe(mpg ~ ., mtcars1) %>%
     step_center(all_numeric_predictors(), case_weights = NULL) %>%
     prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
-    unname(averages(mtcars[, -c(1, 6)], NULL))
+    unname(averages(mtcars1[, -c(1, 6)], NULL))
   )
 
-
   rec <-
-    recipe(mpg ~ ., mtcars) %>%
-    update_role(wt, new_role = "case_weights") %>%
+    recipe(mpg ~ ., mtcars1) %>%
     step_center(all_numeric_predictors(), case_weights = wt) %>%
     prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
-    unname(averages(mtcars[, -c(1, 6)], mtcars$wt))
-  )
-
-  # multiple columns
-  expect_error(
-    recipe(mpg ~ ., mtcars) %>%
-      update_role(wt, disp, new_role = "case_weights") %>%
-      step_center(all_numeric_predictors()) %>%
-      prep(),
-    "There should only be a single column with the role"
-  )
-
-  # wrong type
-  expect_error(
-    recipe(mpg ~ ., mtcars) %>%
-      step_mutate(wt = as.factor(wt)) %>%
-      update_role(wt, new_role = "case_weights") %>%
-      step_center(all_numeric_predictors()) %>%
-      prep(),
-    "is not numeric"
-  )
-
-  # failed selection
-  expect_error(
-    recipe(mpg ~ ., mtcars) %>%
-      update_role(wts, new_role = "case_weights") %>%
-      step_center(all_numeric_predictors()) %>%
-      prep(),
-    "doesn't exist"
+    unname(averages(mtcars1[, -c(1, 6)], mtcars1$wt))
   )
 })
 
