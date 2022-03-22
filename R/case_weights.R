@@ -20,6 +20,8 @@
 #' `correlations()`, the correlation matrix computation first removes rows
 #' with any missing values (equal to the "complete.obs" strategy in
 #' [stats::cor()]).
+#'
+#' `is_unsupervised_weights()`
 #' @export
 #' @name case-weight-helpers
 get_case_weights <- function(selection, info, .data) {
@@ -186,4 +188,14 @@ weighted_table <- function(.data, wts = NULL, useNA = "no") {
   tab[seq_along(tab)] <- data$n[data_order$.row_number]
 
   tab
+}
+
+#' @export
+#' @rdname case-weight-helpers
+is_unsupervised_weights <- function(wts) {
+  if (!hardhat::is_case_weights(wts)) {
+    rlang::abort("Must be be a case_weights variable")
+  }
+
+  hardhat::is_frequency_weights(wts)
 }

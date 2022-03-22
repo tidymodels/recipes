@@ -165,3 +165,10 @@ test_that('correct tables', {
 
   expect_equal(exp_table, calc_table)
 })
+
+test_that("is_unsupervised_weights works", {
+  expect_true(is_unsupervised_weights(frequency_weights(5)))
+  expect_false(is_unsupervised_weights(importance_weights(5)))
+
+  expect_snapshot(error = TRUE, is_unsupervised_weights(3))
+})

@@ -8,6 +8,7 @@
 \alias{correlations}
 \alias{pca_wts}
 \alias{weighted_table}
+\alias{is_unsupervised_weights}
 \title{Helpers for steps with case weights}
 \usage{
 get_case_weights(selection, info, .data)
@@ -21,6 +22,8 @@ correlations(x, wts = NULL)
 pca_wts(x, wts = NULL)
 
 weighted_table(.data, wts = NULL, useNA = "no")
+
+is_unsupervised_weights(wts)
 }
 \arguments{
 \item{selection}{A quosure}
@@ -52,4 +55,6 @@ case weights) only affect the calculations for those rows. For
 \code{correlations()}, the correlation matrix computation first removes rows
 with any missing values (equal to the "complete.obs" strategy in
 \code{\link[stats:cor]{stats::cor()}}).
+
+\code{is_unsupervised_weights()}
 }
