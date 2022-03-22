@@ -167,7 +167,7 @@
       Error in `single_chr()`:
       ! `old_role` must have length 1.
 
-# update_role errors if new_role = case_weights
+# role functions handle case weights correctly
 
     Code
       recipe(mpg ~ ., data = mtcars) %>% update_role("disp", new_role = "case_weights")
@@ -175,4 +175,12 @@
       Error in `update_role()`:
       ! Roles of "case_weights" cannot be set using `update_role()`.
       i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars1) %>% remove_role(wt, old_role = "case_weights")
+    Condition
+      Error in `remove_role()`:
+      ! Roles of "case_weights" cannot removed using `remove_role()`.
 

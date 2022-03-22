@@ -281,6 +281,12 @@ remove_role <- function(recipe, ..., old_role) {
 
   terms <- quos(...)
 
+  if (old_role == "case_weights") {
+    rlang::abort(
+      "Roles of \"case_weights\" cannot removed using `remove_role()`."
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template

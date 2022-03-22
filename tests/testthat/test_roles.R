@@ -469,9 +469,17 @@ test_that("Roles are correcly selected in bake", {
   expect_equal(names(o), c("a", "b"))
 })
 
-test_that("update_role errors if new_role = case_weights", {
+test_that("role functions handle case weights correctly", {
   expect_snapshot(error = TRUE,
     recipe(mpg ~ ., data = mtcars) %>%
       update_role("disp", new_role = "case_weights")
+  )
+
+  mtcars1 <- mtcars %>%
+    mutate(wt = importance_weights(wt))
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars1) %>%
+      remove_role(wt, old_role = "case_weights")
   )
 })
