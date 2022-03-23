@@ -67,6 +67,7 @@
 #' tidy(filter_obj, number = 1)
 step_corr <- function(recipe,
                       ...,
+                      case_weights = has_role("case_weights"),
                       role = NA,
                       trained = FALSE,
                       threshold = 0.9,
@@ -79,6 +80,7 @@ step_corr <- function(recipe,
     recipe,
     step_corr_new(
       terms = enquos(...),
+      case_weights = enquos(case_weights),
       role = role,
       trained = trained,
       threshold = threshold,
@@ -92,9 +94,11 @@ step_corr <- function(recipe,
 }
 
 step_corr_new <-
-  function(terms, role, trained, threshold, use, method, removals, skip, id) {
+  function(terms, case_weights, role, trained, threshold, use, method,
+           removals, skip, id) {
     step(
       subclass = "corr",
+      case_weights = case_weights,
       terms = terms,
       role = role,
       trained = trained,
@@ -111,10 +115,12 @@ step_corr_new <-
 prep.step_corr <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+  wts <- get_case_weights(x$case_weights, info, training)
 
   if (length(col_names) > 1) {
     filter <- corr_filter(
       x = training[, col_names],
+      wts = wts,
       cutoff = x$threshold,
       use = x$use,
       method = x$method
@@ -125,6 +131,7 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
 
   step_corr_new(
     terms = x$terms,
+    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     threshold = x$threshold,
@@ -151,15 +158,13 @@ print.step_corr <-
     invisible(x)
   }
 
-
-# TODO case weights: Use helper function
-
 corr_filter <-
   function(x,
+           wts = NULL,
            cutoff = .90,
            use = "pairwise.complete.obs",
            method = "pearson") {
-    x <- cor(x, use = use, method = method)
+    x <- correlations(x, wts = wts, use = use, method = method)
 
     if (any(!complete.cases(x))) {
       all_na <- apply(x, 2, function(x) all(is.na(x)))
