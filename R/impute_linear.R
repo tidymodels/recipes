@@ -65,6 +65,7 @@
 step_impute_linear <-
   function(recipe,
            ...,
+           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            impute_with = imp_vars(all_predictors()),
@@ -79,6 +80,7 @@ step_impute_linear <-
       recipe,
       step_impute_linear_new(
         terms = enquos(...),
+        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -90,11 +92,12 @@ step_impute_linear <-
   }
 
 step_impute_linear_new <-
-  function(terms, role, trained, models, impute_with,
+  function(terms, case_weights, role, trained, models, impute_with,
            skip, id) {
     step(
       subclass = "impute_linear",
       terms = terms,
+      case_weights = case_weights,
       role = role,
       trained = trained,
       impute_with = impute_with,
@@ -104,10 +107,11 @@ step_impute_linear_new <-
     )
   }
 
-# TODO pass case weights
-lm_wrap <- function(vars, dat) {
+lm_wrap <- function(vars, dat, wts = NULL) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
-  dat <- na.omit(dat)
+  missing_rows <- purrr::map(dat, is.na) %>% purrr::reduce(`|`)
+  dat <- dat[!missing_rows, ]
+  wts <- wts[!missing_rows]
   if (nrow(dat) == 0) {
     rlang::abort(
       paste(
@@ -126,8 +130,14 @@ lm_wrap <- function(vars, dat) {
     )
   }
 
+  if (is.null(wts)) {
+    wts <- rep(1, nrow(dat))
+  } else {
+    wts <- as.numeric(wts)
+  }
 
-  out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, model = FALSE)
+  out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, weights = wts,
+            model = FALSE)
   out$..imp_vars <- vars$x
   attr(out$terms, ".Environment") <- rlang::base_env()
 
@@ -145,6 +155,9 @@ lm_wrap <- function(vars, dat) {
 
 #' @export
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
+
+  wts <- get_case_weights(x$case_weights, info, training)
+
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -156,12 +169,15 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
   x$models <- lapply(
     var_lists,
     lm_wrap,
-    dat = training
+    dat = training,
+    wts = wts
   )
+
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
 
   step_impute_linear_new(
     terms = x$terms,
+    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     models = x$models,
