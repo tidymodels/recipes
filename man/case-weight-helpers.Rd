@@ -19,7 +19,7 @@ medians(x, wts = NULL)
 
 variances(x, wts = NULL)
 
-correlations(x, wts = NULL)
+correlations(x, wts = NULL, use = "everything", method = "pearson")
 
 pca_wts(x, wts = NULL)
 
@@ -35,6 +35,10 @@ is_unsupervised_weights(wts)
 \item{x}{A numeric vector or a data frame}
 
 \item{wts}{A vector of case weights}
+
+\item{use}{Used by \code{\link[=correlations]{correlations()}} to pass argument to \code{\link[=cor]{cor()}}}
+
+\item{method}{Used by \code{\link[=correlations]{correlations()}} to pass argument to \code{\link[=cor]{cor()}}}
 }
 \description{
 These functions can be used to do basic calculations with or without case

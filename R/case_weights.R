@@ -8,6 +8,8 @@
 #' @param .data The training data
 #' @param x A numeric vector or a data frame
 #' @param wts A vector of case weights
+#' @param use Used by [correlations()] to pass argument to [cor()]
+#' @param method Used by [correlations()] to pass argument to [cor()]
 #' @details
 #' [get_case_weights()] is designed for developers of recipe steps, to return
 #' a column with the role of "case weight" as a vector.
@@ -147,10 +149,11 @@ variances <- function(x, wts = NULL) {
 
 #' @export
 #' @rdname case-weight-helpers
-correlations <- function(x, wts = NULL) {
+correlations <- function(x, wts = NULL, use = "everything", method = "pearson") {
   if (is.null(wts)) {
-    res <- stats::cor(x, use = "pairwise.complete.obs")
+    res <- stats::cor(x, use = use, method = method)
   } else {
+    wts <- as.numeric(wts)
     res <- wt_calcs(x, wts, statistic = "cor")
   }
   res
