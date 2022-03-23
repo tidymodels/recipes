@@ -187,9 +187,6 @@
     <loc>https://recipes.tidymodels.org/dev/reference/step_discretize.html</loc>
   </url>
   <url>
-    <loc>https://recipes.tidymodels.org/dev/reference/step_downsample.html</loc>
-  </url>
-  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_dummy.html</loc>
   </url>
   <url>
@@ -392,9 +389,6 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_unorder.html</loc>
-  </url>
-  <url>
-    <loc>https://recipes.tidymodels.org/dev/reference/step_upsample.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_window.html</loc>
