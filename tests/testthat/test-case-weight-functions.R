@@ -28,6 +28,31 @@ test_that('correct means', {
 
 })
 
+test_that('correct medians', {
+  exp_medians <- apply(mtcars, 2, median)
+  calc_medians <- medians(mtcars)
+  expect_equal(exp_medians, calc_medians)
+
+  exp_medians <- map_dbl(mtcars, weighted_median_impl, wts = frac_wts)
+  calc_medians <- medians(mtcars, frac_wts)
+  expect_equal(exp_medians, calc_medians)
+
+  exp_medians <- map_dbl(mtcars, weighted_median_impl, wts = freq_wts)
+  calc_medians <- medians(mtcars, freq_wts)
+  expect_equal(exp_medians, calc_medians)
+
+  # Missing case weight
+  exp_medians <- map_dbl(mtcars[-1, ], weighted_median_impl, wts = freq_wts[-1])
+  calc_medians <- medians(mtcars, miss_wts)
+  expect_equal(exp_medians, calc_medians)
+
+  # Missing data in x
+  exp_medians <- map_dbl(mtcars, weighted_median_impl, wts = freq_wts)
+  exp_medians[2] <- weighted_median_impl(mtcar_mis[[2]][-1], freq_wts[-1])
+  exp_medians[3] <- weighted_median_impl(mtcar_mis[[3]][-2], freq_wts[-2])
+  calc_medians <- medians(mtcar_mis, freq_wts)
+  expect_equal(exp_medians, calc_medians)
+})
 
 test_that('correct variances', {
   exp_vars <- diag(var(mtcars))

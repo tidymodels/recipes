@@ -62,7 +62,7 @@ too_many_case_weights <- function(n) {
 # ------------------------------------------------------------------------------
 
 wt_calcs <- function(x, wts, statistic = "mean") {
-  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor", "pca"))
+  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor", "pca", "median"))
   if (!is.data.frame(x)) {
     x <- data.frame(x)
   }
@@ -78,6 +78,8 @@ wt_calcs <- function(x, wts, statistic = "mean") {
 
   if (statistic == "mean") {
     res <- unname(res[["center"]])
+  } else if (statistic == "median") {
+    res <- weighted_median_impl(x$x, wts)
   } else if (statistic == "var") {
     res <- unname(diag(res[["cov"]]))
   } else if (statistic == "pca") {
@@ -101,6 +103,32 @@ averages <- function(x, wts = NULL) {
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
   }
   res
+}
+
+#' @export
+#' @rdname case-weight-helpers
+medians <- function(x, wts = NULL) {
+  if (NCOL(x) == 0) {
+    return(vapply(x, median, c(median = 0), na.rm = TRUE))
+  }
+  if (is.null(wts)) {
+    res <- apply(x, 2, median)
+  } else {
+    wts <- as.numeric(wts)
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "median"))
+  }
+  res
+}
+
+weighted_median_impl <- function(x, wts) {
+  order_x <- order(x)
+
+  x <- x[order_x]
+  wts <- wts[order_x]
+
+  wts_norm <- cumsum(wts) / sum(wts)
+  ps <- min(which(wts_norm > 0.5))
+  x[ps]
 }
 
 #' @export

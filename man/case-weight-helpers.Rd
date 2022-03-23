@@ -4,6 +4,7 @@
 \alias{case-weight-helpers}
 \alias{get_case_weights}
 \alias{averages}
+\alias{medians}
 \alias{variances}
 \alias{correlations}
 \alias{pca_wts}
@@ -14,6 +15,8 @@
 get_case_weights(selection, info, .data)
 
 averages(x, wts = NULL)
+
+medians(x, wts = NULL)
 
 variances(x, wts = NULL)
 
