@@ -170,52 +170,16 @@ cov2pca <- function(cv_mat) {
   list(sdev = sqrt(res$values), rotation = res$vectors)
 }
 
-#' @param useNA whether to include NA values in the table.
-#'   Loosely mimics [table()].
-#' @export
-#' @rdname case-weight-helpers
-weighted_table <- function(.data, wts = NULL, useNA = "no") {
-  if (!is.data.frame(.data)) {
-    if (is.factor(.data)) {
-      .data <- data.frame(.data = .data)
-    } else {
-      .data <- data.frame(.data = factor(.data))
-    }
-  }
-
-  if (!all(purrr::map_lgl(.data, is.factor))) {
-    rlang::abort("All columns in `.data` must be factors.")
-  }
-
+weighted_table <- function(x, wts = NULL) {
   if (is.null(wts)) {
-    return(table(.data))
+    wts <- rep(1, length(x))
   }
 
-  data <- .data %>%
-    mutate(wts = wts) %>%
-    group_by(dplyr::across(c(-wts)), .drop = FALSE) %>%
-    summarise(n = sum(wts), .groups = "drop") %>%
-    ungroup()
-
-  if (useNA == "no") {
-    missing <- purrr::map(data, is.na) %>% purrr::reduce(`|`)
-    data <- data[!missing, ]
+  if (!is.factor(x)) {
+    x <- factor(x)
   }
 
-  var_names <- names(data)[seq_len(length(data) - 1)]
-  tab <- table(.data[var_names], dnn = var_names, useNA = useNA)
-  combinations <- expand.grid(attr(tab, "dimnames"))
-  names(combinations) <- var_names
-
-  data_order <- combinations %>%
-    dplyr::right_join(
-      by = var_names,
-      data %>% mutate(.row_number = dplyr::row_number())
-    )
-
-  tab[seq_along(tab)] <- data$n[data_order$.row_number]
-
-  tab
+  hardhat::weighted_table(x, weights = wts)
 }
 
 #' @export

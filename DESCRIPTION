@@ -62,7 +62,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
-    tidymodels/hardhat#190
+    tidymodels/hardhat
 RdMacros: 
     lifecycle
 Config/Needs/website: tidyverse/tidytemplate
