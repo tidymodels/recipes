@@ -126,7 +126,7 @@ step_pls <-
     }
 
     if (lifecycle::is_present(preserve)) {
-      lifecycle::deprecate_warn(
+      lifecycle::deprecate_stop(
         "0.1.16",
         "step_pls(preserve = )",
         "step_pls(keep_original_cols = )"

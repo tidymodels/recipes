@@ -89,7 +89,7 @@ step_lowerimpute <- function(recipe,
                              threshold = NULL,
                              skip = FALSE,
                              id = rand_id("impute_lower")) {
-  lifecycle::deprecate_warn(
+  lifecycle::deprecate_stop(
     when = "0.1.16",
     what = "recipes::step_lowerimpute()",
     with = "recipes::step_impute_lower()"

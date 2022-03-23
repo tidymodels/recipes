@@ -83,7 +83,7 @@ sequence of any existing operations.
 that will convert numeric data into one or more non-negative
 components.
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 Please use \code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}} instead of this step function.
 }
