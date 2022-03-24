@@ -73,7 +73,6 @@
 step_nzv <-
   function(recipe,
            ...,
-           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            freq_cut = 95 / 5,
@@ -97,7 +96,6 @@ step_nzv <-
       recipe,
       step_nzv_new(
         terms = enquos(...),
-        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         freq_cut = freq_cut,
@@ -111,12 +109,11 @@ step_nzv <-
   }
 
 step_nzv_new <-
-  function(terms, case_weights, role, trained, freq_cut, unique_cut, options,
+  function(terms, role, trained, freq_cut, unique_cut, options,
            removals, skip, id) {
     step(
       subclass = "nzv",
       terms = terms,
-      case_weights = case_weights,
       role = role,
       trained = trained,
       freq_cut = freq_cut,
@@ -143,7 +140,6 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
 
   step_nzv_new(
     terms = x$terms,
-    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     freq_cut = x$freq_cut,

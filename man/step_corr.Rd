@@ -7,7 +7,6 @@
 step_corr(
   recipe,
   ...,
-  case_weights = has_role("case_weights"),
   role = NA,
   trained = FALSE,
   threshold = 0.9,
@@ -24,10 +23,6 @@ sequence of operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
-
-\item{case_weights}{A selector that specifies a single numeric column that
-can be used for case weights. The default will choose a column with the
-role of \code{"case_weights"}.}
 
 \item{role}{Not used by this step since no new variables are
 created.}

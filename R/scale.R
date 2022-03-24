@@ -59,7 +59,6 @@
 step_scale <-
   function(recipe,
            ...,
-           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            sds = NULL,
@@ -71,7 +70,6 @@ step_scale <-
       recipe,
       step_scale_new(
         terms = enquos(...),
-        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         sds = sds,
@@ -84,11 +82,10 @@ step_scale <-
   }
 
 step_scale_new <-
-  function(terms, case_weights, role, trained, sds, factor, na_rm, skip, id) {
+  function(terms, role, trained, sds, factor, na_rm, skip, id) {
     step(
       subclass = "scale",
       terms = terms,
-      case_weights = case_weights,
       role = role,
       trained = trained,
       sds = sds,
@@ -115,7 +112,6 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
   step_scale_new(
     terms = x$terms,
-    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     sds = sds,

@@ -7,9 +7,6 @@
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose variables
 #'  for this step. See [selections()] for more details.
-#' @param case_weights A selector that specifies a single numeric column that
-#' can be used for case weights. The default will choose a column with the
-#' role of `"case_weights"`.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param trained A logical to indicate if the quantities for
@@ -68,7 +65,6 @@
 step_center <-
   function(recipe,
            ...,
-           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            means = NULL,
@@ -79,7 +75,6 @@ step_center <-
       recipe,
       step_center_new(
         terms = enquos(...),
-        case_weights = enquos(case_weights),
         trained = trained,
         role = role,
         means = means,
@@ -92,11 +87,10 @@ step_center <-
 
 ## Initializes a new object
 step_center_new <-
-  function(terms, case_weights, role, trained, means, na_rm, skip, id) {
+  function(terms, role, trained, means, na_rm, skip, id) {
     step(
       subclass = "center",
       terms = terms,
-      case_weights = case_weights,
       role = role,
       trained = trained,
       means = means,
@@ -116,7 +110,6 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
   step_center_new(
     terms = x$terms,
-    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     means = means,

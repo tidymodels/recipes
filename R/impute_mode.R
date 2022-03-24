@@ -57,7 +57,6 @@
 step_impute_mode <-
   function(recipe,
            ...,
-           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            modes = NULL,
@@ -68,7 +67,6 @@ step_impute_mode <-
       recipe,
       step_impute_mode_new(
         terms = enquos(...),
-        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         modes = modes,
@@ -108,11 +106,10 @@ step_modeimpute <-
   }
 
 step_impute_mode_new <-
-  function(terms, case_weights, role, trained, modes, ptype, skip, id) {
+  function(terms, role, trained, modes, ptype, skip, id) {
     step(
       subclass = "impute_mode",
       terms = terms,
-      case_weights = case_weights,
       role = role,
       trained = trained,
       modes = modes,
@@ -132,7 +129,6 @@ prep.step_impute_mode <- function(x, training, info = NULL, ...) {
   ptype <- vec_slice(training[, col_names], 0)
   step_impute_mode_new(
     terms = x$terms,
-    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     modes = modes,

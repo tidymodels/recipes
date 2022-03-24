@@ -67,7 +67,6 @@
 #' tidy(filter_obj, number = 1)
 step_corr <- function(recipe,
                       ...,
-                      case_weights = has_role("case_weights"),
                       role = NA,
                       trained = FALSE,
                       threshold = 0.9,
@@ -80,7 +79,6 @@ step_corr <- function(recipe,
     recipe,
     step_corr_new(
       terms = enquos(...),
-      case_weights = enquos(case_weights),
       role = role,
       trained = trained,
       threshold = threshold,
@@ -94,11 +92,10 @@ step_corr <- function(recipe,
 }
 
 step_corr_new <-
-  function(terms, case_weights, role, trained, threshold, use, method,
+  function(terms, role, trained, threshold, use, method,
            removals, skip, id) {
     step(
       subclass = "corr",
-      case_weights = case_weights,
       terms = terms,
       role = role,
       trained = trained,
@@ -131,7 +128,6 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
 
   step_corr_new(
     terms = x$terms,
-    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     threshold = x$threshold,

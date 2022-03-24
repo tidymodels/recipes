@@ -89,7 +89,6 @@
 step_other <-
   function(recipe,
            ...,
-           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            threshold = .05,
@@ -109,7 +108,6 @@ step_other <-
       recipe,
       step_other_new(
         terms = enquos(...),
-        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         threshold = threshold,
@@ -122,11 +120,10 @@ step_other <-
   }
 
 step_other_new <-
-  function(terms, case_weights, role, trained, threshold, other, objects, skip, id) {
+  function(terms, role, trained, threshold, other, objects, skip, id) {
     step(
       subclass = "other",
       terms = terms,
-      case_weights = case_weights,
       role = role,
       trained = trained,
       threshold = threshold,
@@ -151,7 +148,6 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 
   step_other_new(
     terms = x$terms,
-    case_weights = wts,
     role = x$role,
     trained = TRUE,
     threshold = x$threshold,

@@ -7,7 +7,6 @@
 step_impute_linear(
   recipe,
   ...,
-  case_weights = has_role("case_weights"),
   role = NA,
   trained = FALSE,
   impute_with = imp_vars(all_predictors()),
@@ -24,10 +23,6 @@ sequence of operations for this recipe.}
 these variables \strong{must} be of type \code{numeric}. When used with \code{imp_vars},
 these dots indicate which variables are used to predict the missing data
 in each variable. See \code{\link[=selections]{selections()}} for more details.}
-
-\item{case_weights}{A selector that specifies a single numeric column that
-can be used for case weights. The default will choose a column with the
-role of \code{"case_weights"}.}
 
 \item{role}{Not used by this step since no new variables are
 created.}

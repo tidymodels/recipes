@@ -65,7 +65,6 @@
 step_impute_linear <-
   function(recipe,
            ...,
-           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            impute_with = imp_vars(all_predictors()),
@@ -80,7 +79,6 @@ step_impute_linear <-
       recipe,
       step_impute_linear_new(
         terms = enquos(...),
-        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -92,12 +90,11 @@ step_impute_linear <-
   }
 
 step_impute_linear_new <-
-  function(terms, case_weights, role, trained, models, impute_with,
+  function(terms, role, trained, models, impute_with,
            skip, id) {
     step(
       subclass = "impute_linear",
       terms = terms,
-      case_weights = case_weights,
       role = role,
       trained = trained,
       impute_with = impute_with,
@@ -177,7 +174,6 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
   step_impute_linear_new(
     terms = x$terms,
-    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
     models = x$models,
