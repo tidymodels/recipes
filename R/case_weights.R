@@ -8,6 +8,8 @@
 #' @param .data The training data
 #' @param x A numeric vector or a data frame
 #' @param wts A vector of case weights
+#' @param na_rm A logical value indicating whether `NA`
+#'  values should be removed during computations.
 #' @param use Used by [correlations()] to pass argument to [cor()]
 #' @param method Used by [correlations()] to pass argument to [cor()]
 #' @details
@@ -135,14 +137,17 @@ weighted_median_impl <- function(x, wts) {
 
 #' @export
 #' @rdname case-weight-helpers
-variances <- function(x, wts = NULL) {
+variances <- function(x, wts = NULL, na_rm = TRUE) {
   if (NCOL(x) == 0) {
-    return(vapply(x, sd, c(sd = 0), na.rm = TRUE))
+    return(vapply(x, sd, c(sd = 0), na.rm = na_rm))
   }
   if (is.null(wts)) {
-    res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = TRUE))
+    res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = na_rm))
   } else {
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "var"))
+    if (!na_rm) {
+      res[map_lgl(x, ~any(is.na(.x)))] <- NA
+    }
   }
   res
 }

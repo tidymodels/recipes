@@ -17,7 +17,7 @@ averages(x, wts = NULL)
 
 medians(x, wts = NULL)
 
-variances(x, wts = NULL)
+variances(x, wts = NULL, na_rm = TRUE)
 
 correlations(x, wts = NULL, use = "everything", method = "pearson")
 
@@ -35,6 +35,9 @@ is_unsupervised_weights(wts)
 \item{x}{A numeric vector or a data frame}
 
 \item{wts}{A vector of case weights}
+
+\item{na_rm}{A logical value indicating whether \code{NA}
+values should be removed during computations.}
 
 \item{use}{Used by \code{\link[=correlations]{correlations()}} to pass argument to \code{\link[=cor]{cor()}}}
 

@@ -79,6 +79,13 @@ test_that('correct variances', {
   calc_vars <- variances(mtcar_mis, freq_wts)
   expect_equal(exp_vars, calc_vars)
 
+  # Missing data in x with na_rm = FALSE
+  exp_vars <- diag(cov.wt(mtcars, freq_wts)$cov)
+  exp_vars[map_lgl(mtcar_mis, ~any(is.na(.x)))] <- NA
+
+  calc_vars <- variances(mtcar_mis, freq_wts, na_rm = FALSE)
+  expect_equal(exp_vars, calc_vars)
+
 })
 
 
