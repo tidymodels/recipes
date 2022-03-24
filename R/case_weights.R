@@ -117,7 +117,7 @@ medians <- function(x, wts = NULL) {
     return(vapply(x, median, c(median = 0), na.rm = TRUE))
   }
   if (is.null(wts)) {
-    res <- apply(x, 2, median)
+    res <- apply(x, 2, median, na.rm = TRUE)
   } else {
     wts <- as.numeric(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "median"))

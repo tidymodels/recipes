@@ -115,10 +115,10 @@ step_impute_median_new <-
 #' @export
 prep.step_impute_median <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
+  wts <- get_case_weights(info, training)
 
-  medians <- lapply(training[, col_names], median, na.rm = TRUE)
+  medians <- medians(training[, col_names], wts = wts)
   medians <- purrr::map2(medians, training[, col_names], cast)
 
   step_impute_median_new(
