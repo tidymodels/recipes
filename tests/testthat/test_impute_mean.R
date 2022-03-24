@@ -157,3 +157,52 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("trim works", {
+  set.seed(1234)
+  x <- rnorm(1000)
+  x[sample(seq_along(x), 100)] <- NA
+
+  expect_equal(
+    purrr::map(seq(0, 1, by = 0.1), ~mean(x, trim = .x, na.rm = TRUE)),
+    purrr::map(seq(0, 1, by = 0.1), ~trim(x, trim = .x) %>% mean(na.rm = TRUE))
+  )
+})
+
+test_that("case weights", {
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = importance_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    select(Age, Assets, Income) %>%
+    averages(wts = credit_tr_cw$Amount) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  # Trimmed
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income, trim = 0.2) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    dplyr::select(Age, Assets, Income) %>%
+    purrr::map(trim, trim = 0.2) %>%
+    purrr::map(weighted.mean,
+               w = as.numeric(credit_tr_cw$Amount),
+               na.rm = TRUE) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+})
+

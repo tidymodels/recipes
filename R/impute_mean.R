@@ -120,16 +120,39 @@ step_impute_mean_new <-
     )
   }
 
+trim <- function(x, trim) {
+  if (trim == 0) {
+    return(x)
+  }
+  # Adapted from mean.default
+  x <- sort(x, na.last = TRUE)
+  na_ind <- is.na(x)
+  if (!is.numeric(trim) || length(trim) != 1L)
+    stop("'trim' must be numeric of length one")
+  n <- length(x[!na_ind])
+  if (trim > 0 && n) {
+    if (is.complex(x))
+      stop("trimmed means are not defined for complex data")
+    if (trim >= 0.5)
+      return(stats::median(x[!na_ind], na.rm = FALSE))
+    lo <- floor(n * trim) + 1
+    hi <- n + 1 - lo
+    x[seq(1, lo - 1)] <- NA
+    x[seq(hi + 1, n)] <- NA
+  }
+  x
+}
+
 #' @export
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
+  wts <- get_case_weights(info, training)
 
-  # TODO case weights use helper functions
+  trimmed <- purrr::map_dfc(training[, col_names], trim, x$trim)
 
-  means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
-  means <- purrr::map2(means, training[, col_names], cast)
+  means <- averages(trimmed, wts = wts)
+  means <- purrr::map2(means, trimmed, cast)
 
   step_impute_mean_new(
     terms = x$terms,
