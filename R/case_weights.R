@@ -9,8 +9,10 @@
 #' @param wts A vector of case weights
 #' @param na_rm A logical value indicating whether `NA`
 #'  values should be removed during computations.
-#' @param use Used by [correlations()] to pass argument to [cor()]
-#' @param method Used by [correlations()] to pass argument to [cor()]
+#' @param use Used by [correlations()] or [covariances()] to pass argument to
+#'   [cor()] or [cov()]
+#' @param method Used by [correlations()] or [covariances()] to pass argument to
+#'   [cor()] or [cov()]
 #' @details
 #' [get_case_weights()] is designed for developers of recipe steps, to return
 #' a column with the role of "case weight" as a vector.
@@ -63,7 +65,7 @@ too_many_case_weights <- function(n) {
 # ------------------------------------------------------------------------------
 
 wt_calcs <- function(x, wts, statistic = "mean") {
-  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor", "pca", "median"))
+  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor", "cov", "pca", "median"))
   if (!is.data.frame(x)) {
     x <- data.frame(x)
   }
@@ -85,6 +87,8 @@ wt_calcs <- function(x, wts, statistic = "mean") {
     res <- unname(diag(res[["cov"]]))
   } else if (statistic == "pca") {
     res <- cov2pca(res$cov)
+  } else if (statistic == "cov") {
+    res <- res[["cov"]]
   } else {
     res <- res[["cor"]]
   }
@@ -161,6 +165,19 @@ correlations <- function(x, wts = NULL, use = "everything", method = "pearson") 
   }
   res
 }
+
+#' @export
+#' @rdname case-weight-helpers
+covariances <- function(x, wts = NULL, use = "everything", method = "pearson") {
+  if (is.null(wts)) {
+    res <- stats::cov(x, use = use, method = method)
+  } else {
+    wts <- as.numeric(wts)
+    res <- wt_calcs(x, wts, statistic = "cov")
+  }
+  res
+}
+
 
 #' @export
 #' @rdname case-weight-helpers

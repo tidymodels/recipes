@@ -7,6 +7,7 @@
 \alias{medians}
 \alias{variances}
 \alias{correlations}
+\alias{covariances}
 \alias{pca_wts}
 \alias{is_unsupervised_weights}
 \title{Helpers for steps with case weights}
@@ -20,6 +21,8 @@ medians(x, wts = NULL)
 variances(x, wts = NULL, na_rm = TRUE)
 
 correlations(x, wts = NULL, use = "everything", method = "pearson")
+
+covariances(x, wts = NULL, use = "everything", method = "pearson")
 
 pca_wts(x, wts = NULL)
 
@@ -37,9 +40,11 @@ is_unsupervised_weights(wts)
 \item{na_rm}{A logical value indicating whether \code{NA}
 values should be removed during computations.}
 
-\item{use}{Used by \code{\link[=correlations]{correlations()}} to pass argument to \code{\link[=cor]{cor()}}}
+\item{use}{Used by \code{\link[=correlations]{correlations()}} or \code{\link[=covariances]{covariances()}} to pass argument to
+\code{\link[=cor]{cor()}} or \code{\link[=cov]{cov()}}}
 
-\item{method}{Used by \code{\link[=correlations]{correlations()}} to pass argument to \code{\link[=cor]{cor()}}}
+\item{method}{Used by \code{\link[=correlations]{correlations()}} or \code{\link[=covariances]{covariances()}} to pass argument to
+\code{\link[=cor]{cor()}} or \code{\link[=cov]{cov()}}}
 }
 \description{
 These functions can be used to do basic calculations with or without case

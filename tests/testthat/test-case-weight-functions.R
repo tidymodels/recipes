@@ -88,6 +88,30 @@ test_that('correct variances', {
 
 })
 
+test_that('correct covariances', {
+  exp_cors <- cov(mtcars)
+  calc_cors <- covariances(mtcars)
+  expect_equal(exp_cors, calc_cors)
+
+  exp_cors <- cov.wt(mtcars, frac_wts, cor = FALSE)$cov
+  calc_cors <- covariances(mtcars, frac_wts)
+  expect_equal(exp_cors, calc_cors)
+
+  exp_cors <- cov.wt(mtcars, freq_wts, cor = FALSE)$cov
+  calc_cors <- covariances(mtcars, freq_wts)
+  expect_equal(exp_cors, calc_cors)
+
+  # Missing case weight
+  exp_cors <- cov.wt(mtcars[-1,], freq_wts[-1], cor = FALSE)$cov
+  calc_cors <- covariances(mtcars, miss_wts)
+  expect_equal(exp_cors, calc_cors)
+
+  # Missing data in x
+  exp_cors <- cov.wt(mtcars[-(1:2), 1:3], freq_wts[-(1:2)], cor = FALSE)$cov
+  calc_cors <- covariances(mtcar_mis[, 1:3], freq_wts)
+  expect_equal(exp_cors, calc_cors)
+
+})
 
 test_that('correct correlations', {
   exp_cors <- cor(mtcars)
