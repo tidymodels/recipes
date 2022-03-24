@@ -109,9 +109,9 @@ step_impute_linear_new <-
 
 lm_wrap <- function(vars, dat, wts = NULL) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
-  missing_rows <- purrr::map(dat, is.na) %>% purrr::reduce(`|`)
-  dat <- dat[!missing_rows, ]
-  wts <- wts[!missing_rows]
+  complete <- stats::complete.cases(dat)
+  dat <- dat[complete, ]
+  wts <- wts[complete]
   if (nrow(dat) == 0) {
     rlang::abort(
       paste(
