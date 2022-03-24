@@ -144,6 +144,7 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
   if (is.null(wts)) {
     res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = na_rm))
   } else {
+    wts <- as.numeric(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "var"))
     if (!na_rm) {
       res[map_lgl(x, ~any(is.na(.x)))] <- NA

@@ -59,6 +59,7 @@
 step_scale <-
   function(recipe,
            ...,
+           case_weights = has_role("case_weights"),
            role = NA,
            trained = FALSE,
            sds = NULL,
@@ -70,6 +71,7 @@ step_scale <-
       recipe,
       step_scale_new(
         terms = enquos(...),
+        case_weights = enquos(case_weights),
         role = role,
         trained = trained,
         sds = sds,
@@ -82,10 +84,11 @@ step_scale <-
   }
 
 step_scale_new <-
-  function(terms, role, trained, sds, factor, na_rm, skip, id) {
+  function(terms, case_weights, role, trained, sds, factor, na_rm, skip, id) {
     step(
       subclass = "scale",
       terms = terms,
+      case_weights = case_weights,
       role = role,
       trained = trained,
       sds = sds,
@@ -100,21 +103,22 @@ step_scale_new <-
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+  wts <- get_case_weights(x$case_weights, info, training)
 
   if (x$factor != 1 & x$factor != 2) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
   }
-  # TODO case weights: use helper function
-  sds <-
-    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
+  sds <- sqrt(vars)
 
   sds <- sds * x$factor
 
   step_scale_new(
     terms = x$terms,
+    case_weights = x$case_weights,
     role = x$role,
     trained = TRUE,
-    sds,
+    sds = sds,
     factor = x$factor,
     na_rm = x$na_rm,
     skip = x$skip,
