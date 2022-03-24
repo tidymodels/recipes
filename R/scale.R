@@ -103,7 +103,7 @@ step_scale_new <-
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
-  wts <- get_case_weights(x$case_weights, info, training)
+  wts <- get_case_weights(info, training)
 
   if (x$factor != 1 & x$factor != 2) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")

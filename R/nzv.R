@@ -132,7 +132,7 @@ step_nzv_new <-
 prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
-  wts <- get_case_weights(x$case_weights, info, training)
+  wts <- get_case_weights(info, training)
 
   filter <- nzv(
     x = training[, col_names],

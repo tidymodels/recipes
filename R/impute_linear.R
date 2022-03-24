@@ -156,7 +156,7 @@ lm_wrap <- function(vars, dat, wts = NULL) {
 #' @export
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
-  wts <- get_case_weights(x$case_weights, info, training)
+  wts <- get_case_weights(info, training)
 
   var_lists <-
     impute_var_lists(

@@ -11,7 +11,7 @@
 \alias{is_unsupervised_weights}
 \title{Helpers for steps with case weights}
 \usage{
-get_case_weights(selection, info, .data)
+get_case_weights(info, .data)
 
 averages(x, wts = NULL)
 
@@ -26,8 +26,6 @@ pca_wts(x, wts = NULL)
 is_unsupervised_weights(wts)
 }
 \arguments{
-\item{selection}{A quosure}
-
 \item{info}{A data frame from the \code{info} argument within steps}
 
 \item{.data}{The training data}

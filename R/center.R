@@ -9,8 +9,7 @@
 #'  for this step. See [selections()] for more details.
 #' @param case_weights A selector that specifies a single numeric column that
 #' can be used for case weights. The default will choose a column with the
-#' role of `"case_weights"`. If the data set contains case weights but this
-#' step should not use them, set `case_weights = NULL`.
+#' role of `"case_weights"`.
 #' @param role Not used by this step since no new variables are
 #'  created.
 #' @param trained A logical to indicate if the quantities for
@@ -111,7 +110,7 @@ step_center_new <-
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
-  wts <- get_case_weights(x$case_weights, info, training)
+  wts <- get_case_weights(info, training)
 
   means <- averages(training[, col_names], wts)
 

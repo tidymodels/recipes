@@ -3,7 +3,6 @@
 #' These functions can be used to do basic calculations with or without case
 #' weights.
 #'
-#' @param selection A quosure
 #' @param info A data frame from the `info` argument within steps
 #' @param .data The training data
 #' @param x A numeric vector or a data frame
@@ -28,11 +27,9 @@
 #' `is_unsupervised_weights()`
 #' @export
 #' @name case-weight-helpers
-get_case_weights <- function(selection, info, .data) {
-  if (all(purrr::map_lgl(selection, quo_is_null))) {
-    return(NULL)
-  }
-  wt_col <- unname(recipes_eval_select(selection, .data, info))
+get_case_weights <- function(info, .data) {
+  wt_col <- info$variable[info$role == "case_weights" & !is.na(info$role)]
+
 
   if (length(wt_col) == 1) {
     res <- .data[[wt_col]]

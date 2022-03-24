@@ -126,7 +126,7 @@ step_impute_mode_new <-
 prep.step_impute_mode <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
-  wts <- get_case_weights(x$case_weights, info, training)
+  wts <- get_case_weights(info, training)
 
   modes <- vapply(training[, col_names], mode_est, c(mode = ""), wts = wts)
   ptype <- vec_slice(training[, col_names], 0)

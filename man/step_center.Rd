@@ -25,8 +25,7 @@ for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{case_weights}{A selector that specifies a single numeric column that
 can be used for case weights. The default will choose a column with the
-role of \code{"case_weights"}. If the data set contains case weights but this
-step should not use them, set \code{case_weights = NULL}.}
+role of \code{"case_weights"}.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
