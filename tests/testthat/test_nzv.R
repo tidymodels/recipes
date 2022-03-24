@@ -178,23 +178,4 @@ test_that("nzv with case weights", {
       pull(terms),
     c("x3", "x4")
   )
-
-  # Turning off case weights
-  rec <- recipe(~ ., data = dat_caseweights_y)
-  filtering <- rec %>%
-    step_nzv(x1, x2, x3, x4, id = "", case_weights = NULL)
-
-  exp_tidy_un <- tibble(terms = c("x1", "x2", "x3", "x4"), id = "")
-  expect_equal(exp_tidy_un, tidy(filtering, number = 1))
-
-  filtering_trained <- prep(filtering, training = dat, verbose = FALSE)
-
-  removed <- vars[
-    pct_uni <= filtering_trained$steps[[1]]$unique_cut &
-      f_ratio >= filtering_trained$steps[[1]]$freq_cut]
-
-  exp_tidy_tr <- tibble(terms = removed, id = "")
-  expect_equal(exp_tidy_tr, tidy(filtering_trained, number = 1))
-
-  expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })

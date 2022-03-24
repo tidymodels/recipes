@@ -153,14 +153,4 @@ test_that("case weights", {
   removed <- c("V3_dup", "V1", "V2")
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
-
-  # Turning off case weights
-  filtering <- recipe(~., data = dat_caseweights) %>%
-    step_corr(all_predictors(), case_weights = NULL)
-
-  filtering_trained <- prep(filtering)
-
-  removed <- c("V6", "V1", "V3")
-
-  expect_equal(filtering_trained$steps[[1]]$removals, removed)
 })

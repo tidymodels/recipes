@@ -159,18 +159,4 @@ test_that('case weights', {
     select(terms, model, id)
 
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
-
-  # Skipping case weights
-  impute_rec <- recipe(~ ., data = fake_data) %>%
-    step_impute_mode(x1, id = "", case_weights = NULL)
-  imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
-  te_imputed <- bake(imputed, new_data = fake_data)
-
-  imp_tibble_tr <- fake_data %>%
-    count(model = x1) %>%
-    slice_max(n, n = 1) %>%
-    mutate(terms = "x1", id = "") %>%
-    select(terms, model, id)
-
-  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 })

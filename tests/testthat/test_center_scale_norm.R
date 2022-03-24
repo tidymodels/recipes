@@ -294,16 +294,6 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars1) %>%
-    step_center(all_numeric_predictors(), case_weights = NULL) %>%
-    prep()
-
-  expect_equal(
-    tidy(rec, number = 1)[["value"]],
-    unname(averages(mtcars1[, -c(1, 6)], NULL))
-  )
-
-  rec <-
-    recipe(mpg ~ ., mtcars1) %>%
     step_center(all_numeric_predictors(), case_weights = wt) %>%
     prep()
 
@@ -325,16 +315,6 @@ test_that("scaling with case weights", {
   expect_equal(
     tidy(rec, number = 1)[["value"]],
     unname(sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt)))
-  )
-
-  rec <-
-    recipe(mpg ~ ., mtcars1) %>%
-    step_scale(all_numeric_predictors(), case_weights = NULL) %>%
-    prep()
-
-  expect_equal(
-    tidy(rec, number = 1)[["value"]],
-    unname(sqrt(variances(mtcars1[, -c(1, 6)], NULL)))
   )
 
   rec <-

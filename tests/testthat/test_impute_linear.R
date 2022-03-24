@@ -150,20 +150,4 @@ test_that("case weights", {
 
   expect_equal(imputed, lm_predicted)
   expect_equal(sum(is.na(imputed)), 0)
-
-  # Turning off case weight
-  imputed <- recipe(head(ames_dat_cw)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area"),
-                       case_weights = NULL) %>%
-    prep(ames_dat) %>%
-    juice() %>%
-    pull(Lot_Frontage) %>%
-    .[missing_ind]
-
-  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
-    predict(newdata = ames_dat[missing_ind, ]) %>%
-    unname()
-
-  expect_equal(imputed, lm_predicted)
-  expect_equal(sum(is.na(imputed)), 0)
 })
