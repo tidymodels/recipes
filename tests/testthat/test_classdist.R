@@ -179,6 +179,37 @@ test_that("case weights", {
     recipes:::get_both(mtcars, wts = wts, cfun = mad),
     "The variance function requested cannot be used with case weights"
   )
+
+  # ------------------------------------------------------------------------------
+
+  iris1 <- iris
+  iris1$wts <- importance_weights(iris1$Petal.Width)
+
+  rec_prep <- recipe(Species ~ ., data = iris1) %>%
+    step_classdist(all_predictors(), class = "Species") %>%
+    prep()
+
+  ref_objects <- split(iris1, ~Species) %>%
+    purrr::map(~get_both(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts)))
+
+  expect_equal(
+    rec_prep$steps[[1]]$objects,
+    ref_objects
+  )
+
+  rec_prep <- recipe(Species ~ ., data = iris1) %>%
+    step_classdist(all_predictors(), class = "Species", pool = TRUE) %>%
+    prep()
+
+  ref_objects_means <- split(iris1, ~Species) %>%
+    purrr::map(~averages(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts)))
+
+  ref_object_cov <- covariances(iris1[1:4], wts = iris1$wts)
+
+  expect_equal(
+    rec_prep$steps[[1]]$objects,
+    list(center = ref_objects_means, scale = ref_object_cov)
+  )
 })
 
 

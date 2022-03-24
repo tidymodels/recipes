@@ -157,17 +157,25 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, x_names])
+  wts <- get_case_weights(info, training)
 
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
+  if (is.null(wts)) {
+    wts_split <- map(x_dat, ~NULL)
+  } else {
+    wts_split <- split(as.numeric(wts), getElement(training, class_var))
+  }
   if (x$pool) {
     res <- list(
-      center = lapply(x_dat, get_center, mfun = x$mean_func),
-      scale = x$cov_func(training[, x_names])
+      center = purrr::map2(x_dat, wts_split, get_center, mfun = x$mean_func),
+      scale = covariances(training[, x_names], wts = wts)
     )
   } else {
     res <-
-      lapply(x_dat,
+      purrr::map2(
+        x_dat,
+        wts_split,
         get_both,
         mfun = x$mean_func,
         cfun = x$cov_func
