@@ -111,3 +111,18 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("case weights", {
+  dat_cw <- dat %>%
+    mutate(wts = importance_weights(rep(c(1, 0), c(20, 80))))
+
+  rec <- recipe(~., data = dat_cw)
+  filtering <- rec %>%
+    step_filter_missing(all_predictors(), threshold = .2)
+
+  filtering_trained <- prep(filtering)
+
+  removed <- c("dbl2", "dbl3", "dbl4", "dbl5", "chr1", "chr2")
+
+  expect_equal(filtering_trained$steps[[1]]$removals, removed)
+})

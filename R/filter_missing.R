@@ -78,11 +78,13 @@ step_filter_missing_new <-
 #' @export
 prep.step_filter_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  wts <- get_case_weights(info, training)
 
   if (length(col_names) > 1) {
     filter <- filter_missing_fun(
       x = training[, col_names],
-      threshold = x$threshold
+      threshold = x$threshold,
+      wts = wts
     )
   } else {
     filter <- character(0)
@@ -118,8 +120,9 @@ print.step_filter_missing <-
     invisible(x)
   }
 
-filter_missing_fun <- function(x, threshold) {
-  missing <- purrr::map_dbl(x, ~ mean(is.na(.x)))
+filter_missing_fun <- function(x, threshold, wts) {
+  x_na <- purrr::map_dfc(x, is.na)
+  missing <- averages(x_na, wts = wts)
   removal_ind <- which(missing > threshold)
   names(x)[removal_ind]
 }
