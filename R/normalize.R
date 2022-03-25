@@ -103,11 +103,13 @@ step_normalize_new <-
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
-  # TODO case weights: Use helper functions
-  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
-  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  wts <- get_case_weights(info, training)
+
+  means <- averages(training[, col_names], wts, na_rm = x$na_rm)
+  vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
+  sds <- sqrt(vars)
+
   step_normalize_new(
     terms = x$terms,
     role = x$role,

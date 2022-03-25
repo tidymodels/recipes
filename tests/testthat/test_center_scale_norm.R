@@ -307,3 +307,23 @@ test_that("scaling with case weights", {
     unname(sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt)))
   )
 })
+
+test_that("normalizing with case weights", {
+  mtcars1 <- mtcars
+  mtcars1$wt <- importance_weights(mtcars1$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars1) %>%
+    step_normalize(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rec$steps[[1]]$means,
+    averages(mtcars1[, -c(1, 6)], mtcars1$wt)
+  )
+
+  expect_equal(
+    rec$steps[[1]]$sds,
+    sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt))
+  )
+})
