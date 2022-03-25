@@ -122,7 +122,6 @@ step_classdist_new <-
     )
   }
 
-# TODO case weights: Compute these with helpers
 get_center <- function(x, wts = NULL, mfun = mean) {
   if (!is.null(wts) & !identical(mfun, mean)) {
     rlang::abort("The centering function requested cannot be used with case weights.")
