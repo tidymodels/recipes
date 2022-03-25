@@ -625,7 +625,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   info <- object$last_term_info
 
   # Now reduce to only user selected columns
-  out_names <- recipes_eval_select(terms, new_data, info)
+  out_names <- recipes_eval_select(terms, new_data, info,
+                                   check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
   ## The levels are not null when no nominal data are present or
@@ -791,7 +792,8 @@ juice <- function(object, ..., composition = "tibble") {
 
   # Get user requested columns
   new_data <- object$template
-  out_names <- recipes_eval_select(terms, new_data, object$term_info)
+  out_names <- recipes_eval_select(terms, new_data, object$term_info,
+                                   check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
   ## Since most models require factors, do the conversion from character

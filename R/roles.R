@@ -146,7 +146,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   data <- recipe$template
   info <- recipe$var_info
 
-  vars <- recipes_eval_select(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `add_role()`.")
@@ -256,7 +256,7 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   data <- recipe$template
   info <- recipe$var_info
 
-  vars <- recipes_eval_select(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `update_role()`.")
