@@ -201,6 +201,10 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
     abort("Can't rename variables in this context.")
   }
 
+  if (any(out %in% info$variable[info$role == "case_weights"])) {
+    abort("Cannot select case weights variable.")
+  }
+
   names(out) <- names
   out
 }
