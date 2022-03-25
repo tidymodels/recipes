@@ -14,7 +14,7 @@
 \usage{
 get_case_weights(info, .data)
 
-averages(x, wts = NULL)
+averages(x, wts = NULL, na_rm = TRUE)
 
 medians(x, wts = NULL)
 

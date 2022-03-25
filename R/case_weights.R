@@ -97,7 +97,7 @@ wt_calcs <- function(x, wts, statistic = "mean") {
 
 #' @export
 #' @rdname case-weight-helpers
-averages <- function(x, wts = NULL) {
+averages <- function(x, wts = NULL, na_rm = TRUE) {
   if (NCOL(x) == 0) {
     return(vapply(x, mean, c(mean = 0), na.rm = TRUE))
   }
@@ -106,6 +106,9 @@ averages <- function(x, wts = NULL) {
   } else {
     wts <- as.numeric(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
+  }
+  if (!na_rm) {
+    res[map_lgl(x, ~any(is.na(.x)))] <- NA
   }
   res
 }

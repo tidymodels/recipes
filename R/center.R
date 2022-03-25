@@ -106,7 +106,7 @@ prep.step_center <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
   wts <- get_case_weights(info, training)
 
-  means <- averages(training[, col_names], wts)
+  means <- averages(training[, col_names], wts, na_rm = x$na_rm)
 
   step_center_new(
     terms = x$terms,
