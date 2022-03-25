@@ -185,8 +185,12 @@ covariances <- function(x, wts = NULL, use = "everything", method = "pearson") {
 #' @export
 #' @rdname case-weight-helpers
 pca_wts <- function(x, wts = NULL) {
-  cv_mat <- variances(x, wts)
-  cov2pca(cv_mat)
+  wts <- as.numeric(wts)
+  res <- wt_calcs(x, wts, statistic = "pca")
+  res$center <- FALSE
+  res$scale <- FALSE
+  rownames(res$rotation) <- names(x)
+  res
 }
 
 cov2pca <- function(cv_mat) {
