@@ -74,6 +74,7 @@ step_percentile_new <-
 #' @export
 prep.step_percentile <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  wts <- get_case_weights(info, training)
 
   ## We'll use the names later so make sure they are available
   x$options$names <- TRUE
@@ -87,6 +88,7 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
   ref_dist <- purrr::map(
     training[, col_names],
     get_train_pctl,
+    wts = wts,
     args = x$options
   )
 
@@ -101,10 +103,28 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
   )
 }
 
-get_train_pctl <- function(x, args = NULL) {
-  res <- rlang::exec("quantile", x = x, !!!args)
+get_train_pctl <- function(x, wts, args = NULL) {
+  if (is.null(wts)) {
+    res <- rlang::exec("quantile", x = x, !!!args)
+  } else {
+    wts <- as.numeric(wts)
+    res <- rlang::exec("wrighted_quantile", x = x, wts = wts, !!!args)
+  }
+
   # Remove duplicate percentile values
   res[!duplicated(res)]
+}
+
+wrighted_quantile <- function(x, wts, probs, ...) {
+  order_x <- order(x)
+  x <- x[order_x]
+  wts <- wts[order_x]
+
+  wts_norm <- cumsum(wts) / sum(wts)
+  res <- purrr::map_dbl(probs, ~x[min(which(wts_norm >= .x))])
+
+  names(res) <- paste0(probs * 100, "%")
+  res
 }
 
 #' @export
@@ -125,7 +145,7 @@ pctl_by_approx <- function(x, ref) {
 }
 
 print.step_percentile <-
-  function(x, width = max(20, options()$width - 35), ...) {
+  function(x, width = max(20, options()$width - 35), wts, ...) {
     cat("Percentile transformation on ", sep = "")
     printer(x$terms, names(x$ref_dist), x$trained, width)
     invisible(x)
