@@ -120,14 +120,15 @@ step_dummy_extract <-
         levels = levels,
         keep_original_cols = keep_original_cols,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_dummy_extract_new <-
   function(terms, role, trained, sep, pattern, threshold, other, naming, levels,
-           keep_original_cols, skip, id) {
+           keep_original_cols, skip, id, case_weights) {
     step(
       subclass = "dummy_extract",
       terms = terms,
@@ -141,14 +142,16 @@ step_dummy_extract_new <-
       levels = levels,
       keep_original_cols = keep_original_cols,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
 #' @export
 prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  wts <- get_case_weights(info, training)
+  wts0 <- wts <- get_case_weights(info, training)
+
   if(!is.null(wts) && !is_unsupervised_weights(wts)) {
     wts <- NULL
   }
@@ -190,6 +193,8 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     levels <- NULL
   }
 
+  case_weights <- is_weights_used(wts0, "hardhat_frequency_weights")
+
   step_dummy_extract_new(
     terms = x$terms,
     role = x$role,
@@ -202,7 +207,8 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     levels = levels,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = case_weights
   )
 }
 
@@ -276,7 +282,8 @@ list_to_dummies <- function(x, dict, other = "other") {
 print.step_dummy_extract <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Extract patterns from "
-    print_step(names(x$levels), x$terms, x$trained, title, width)
+    print_step(names(x$levels), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
