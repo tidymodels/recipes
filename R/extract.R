@@ -148,6 +148,10 @@ step_dummy_extract_new <-
 #' @export
 prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  wts <- get_case_weights(info, training)
+  if(!is.null(wts) && !is_unsupervised_weights(wts)) {
+    wts <- NULL
+  }
 
   if (length(col_names) > 0) {
     col_names <- check_factor_vars(training, col_names, "step_dummy_extract")
@@ -161,10 +165,18 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
       )
 
       lvls <- map(elements, unique)
+      wts_tab <- purrr::map2(lvls, as.integer(wts), ~rep(.y, length(.x)))
       lvls <- unlist(lvls)
-      lvls <- sort(table(lvls), decreasing = TRUE)
+      wts_tab <- unlist(wts_tab)
+
+      lvls <- sort(weighted_table(lvls, wts = wts_tab), decreasing = TRUE)
 
       if (x$threshold < 1) {
+        if (is.null(wts)) {
+          wts_total <- length(elements)
+        } else {
+          wts_total <- sum(as.integer(wts))
+        }
         lvls <- lvls[(lvls / length(elements)) >= x$threshold]
       } else {
         lvls <- lvls[lvls >= x$threshold]
