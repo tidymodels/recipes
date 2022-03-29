@@ -18,8 +18,15 @@ print_step <- function(tr_obj = NULL,
                        untr_obj = NULL,
                        trained = FALSE,
                        title = NULL,
-                       width = max(20, options()$width - 30)) {
-  cat(title)
+                       width = max(20, options()$width - 30),
+                       case_weights = NULL) {
+
+  if (is.null(case_weights)) {
+    cat(title)
+  } else {
+    case_weights_ind <- ifelse(case_weights, "[Weighted]", "[Not weighted]")
+    cat(case_weights_ind, title)
+  }
 
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
