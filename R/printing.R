@@ -21,12 +21,7 @@ print_step <- function(tr_obj = NULL,
                        width = max(20, options()$width - 30),
                        case_weights = NULL) {
 
-  if (is.null(case_weights)) {
-    cat(title)
-  } else {
-    case_weights_ind <- ifelse(case_weights, "[Weighted]", "[Not weighted]")
-    cat(case_weights_ind, title)
-  }
+  cat(title)
 
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
@@ -41,7 +36,16 @@ print_step <- function(tr_obj = NULL,
   cat(txt)
 
   if (trained) {
-    cat(" [trained]\n")
+    if (is.null(case_weights)) {
+      cat(" [trained]\n")
+    } else {
+      case_weights_ind <- ifelse(case_weights, "weighted", "ignored weights")
+      trained_txt <- paste(case_weights_ind, "trained", sep = ", ")
+      trained_txt <- paste0(" [", trained_txt, "]\n")
+      cat(trained_txt)
+    }
+
+
   } else {
     cat("\n")
   }
