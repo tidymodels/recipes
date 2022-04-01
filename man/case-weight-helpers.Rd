@@ -10,7 +10,7 @@
 \alias{covariances}
 \alias{pca_wts}
 \alias{is_unsupervised_weights}
-\alias{is_weights_used}
+\alias{are_weights_used}
 \title{Helpers for steps with case weights}
 \usage{
 get_case_weights(info, .data)
@@ -29,7 +29,7 @@ pca_wts(x, wts = NULL)
 
 is_unsupervised_weights(wts)
 
-is_weights_used(wts, allowed = NULL)
+are_weights_used(wts, allowed = NULL)
 }
 \arguments{
 \item{info}{A data frame from the \code{info} argument within steps}
@@ -70,6 +70,6 @@ with any missing values (equal to the "complete.obs" strategy in
 
 \code{is_unsupervised_weights()}
 
-\code{is_weights_used()} is used inside print method to determine how
+\code{are_weights_used()} is used inside print method to determine how
 printing should be done.
 }

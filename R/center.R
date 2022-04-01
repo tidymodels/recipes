@@ -118,7 +118,7 @@ prep.step_center <- function(x, training, info = NULL, ...) {
     na_rm = x$na_rm,
     skip = x$skip,
     id = x$id,
-    case_weights = is_weights_used(wts)
+    case_weights = are_weights_used(wts)
   )
 }
 

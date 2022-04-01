@@ -193,7 +193,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     levels <- NULL
   }
 
-  case_weights <- is_weights_used(wts0, "hardhat_frequency_weights")
+  case_weights <- are_weights_used(wts0, "hardhat_frequency_weights")
 
   step_dummy_extract_new(
     terms = x$terms,

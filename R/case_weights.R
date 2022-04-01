@@ -29,7 +29,7 @@
 #'
 #' `is_unsupervised_weights()`
 #'
-#' `is_weights_used()` is used inside print method to determine how
+#' `are_weights_used()` is used inside print method to determine how
 #' printing should be done.
 #' @export
 #' @name case-weight-helpers
@@ -228,7 +228,7 @@ is_unsupervised_weights <- function(wts) {
 
 #' @export
 #' @rdname case-weight-helpers
-is_weights_used <- function(wts, allowed = NULL) {
+are_weights_used <- function(wts, allowed = NULL) {
   if (is.null(wts)) {
     return(NULL)
   }
