@@ -153,4 +153,6 @@ test_that("case weights", {
   removed <- c("V3_dup", "V1", "V2")
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
+
+  expect_snapshot(filtering_trained)
 })

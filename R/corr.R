@@ -86,14 +86,15 @@ step_corr <- function(recipe,
       method = method,
       removals = removals,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_corr_new <-
   function(terms, role, trained, threshold, use, method,
-           removals, skip, id) {
+           removals, skip, id, case_weights) {
     step(
       subclass = "corr",
       terms = terms,
@@ -104,7 +105,8 @@ step_corr_new <-
       method = method,
       removals = removals,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -112,7 +114,12 @@ step_corr_new <-
 prep.step_corr <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   if (length(col_names) > 1) {
     filter <- corr_filter(
@@ -135,7 +142,8 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
     method = x$method,
     removals = filter,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -150,7 +158,8 @@ bake.step_corr <- function(object, new_data, ...) {
 print.step_corr <-
   function(x, width = max(20, options()$width - 36), ...) {
     title <- "Correlation filter on "
-    print_step(x$removals, x$terms, x$trained, title, width)
+    print_step(x$removals, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
