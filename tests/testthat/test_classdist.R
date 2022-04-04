@@ -210,6 +210,8 @@ test_that("case weights", {
     rec_prep$steps[[1]]$objects,
     list(center = ref_objects_means, scale = ref_object_cov)
   )
+
+  expect_snapshot(rec_prep)
 })
 
 

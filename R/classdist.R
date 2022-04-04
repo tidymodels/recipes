@@ -97,14 +97,15 @@ step_classdist <- function(recipe,
       objects = objects,
       prefix = prefix,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_classdist_new <-
   function(terms, class, role, trained, mean_func,
-           cov_func, pool, log, objects, prefix, skip, id) {
+           cov_func, pool, log, objects, prefix, skip, id, case_weights) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -118,7 +119,8 @@ step_classdist_new <-
       objects = objects,
       prefix = prefix,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -156,7 +158,12 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   class_var <- x$class[1]
   x_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, x_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
@@ -192,7 +199,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     objects = res,
     prefix = x$prefix,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -255,7 +263,8 @@ print.step_classdist <-
     } else {
       x_names <- NULL
     }
-    print_step(x_names, x$terms, x$trained, title, width)
+    print_step(x_names, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
