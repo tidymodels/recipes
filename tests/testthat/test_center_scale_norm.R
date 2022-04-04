@@ -308,6 +308,8 @@ test_that("scaling with case weights", {
     tidy(rec, number = 1)[["value"]],
     unname(sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt)))
   )
+
+  expect_snapshot(rec)
 })
 
 test_that("normalizing with case weights", {

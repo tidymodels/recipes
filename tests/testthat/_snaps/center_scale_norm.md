@@ -177,3 +177,23 @@
       
       Centering for cyl, disp, hp, drat, qsec, vs, am, gear, carb [weighted, trained]
 
+# scaling with case weights
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor          9
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Scaling for cyl, disp, hp, drat, qsec, vs, am, gear, carb [weighted, trained]
+

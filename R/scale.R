@@ -76,13 +76,14 @@ step_scale <-
         factor = factor,
         na_rm = na_rm,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_scale_new <-
-  function(terms, role, trained, sds, factor, na_rm, skip, id) {
+  function(terms, role, trained, sds, factor, na_rm, skip, id, case_weights) {
     step(
       subclass = "scale",
       terms = terms,
@@ -92,7 +93,8 @@ step_scale_new <-
       factor = factor,
       na_rm = na_rm,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -100,7 +102,12 @@ step_scale_new <-
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   if (x$factor != 1 & x$factor != 2) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
@@ -118,7 +125,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     factor = x$factor,
     na_rm = x$na_rm,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -134,7 +142,8 @@ bake.step_scale <- function(object, new_data, ...) {
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Scaling for "
-    print_step(names(x$sds), x$terms, x$trained, title, width)
+    print_step(names(x$sds), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
