@@ -6,7 +6,7 @@
 #'  that will convert numeric data into one or more non-negative
 #'  components.
 #'
-#' `r lifecycle::badge("soft-deprecated")`
+#' `r lifecycle::badge("deprecated")`
 #'
 #' Please use [step_nnmf_sparse()] instead of this step function.
 #'
@@ -82,7 +82,7 @@ step_nnmf <-
            skip = FALSE,
            id = rand_id("nnmf")) {
     recipes_pkg_check(required_pkgs.step_nnmf())
-    lifecycle::deprecate_soft("0.2.0", "step_nnmf()", "step_nnmf_sparse()")
+    lifecycle::deprecate_warn("0.2.0", "step_nnmf()", "step_nnmf_sparse()")
     add_step(
       recipe,
       step_nnmf_new(

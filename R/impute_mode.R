@@ -88,7 +88,7 @@ step_modeimpute <-
            ptype = NULL,
            skip = FALSE,
            id = rand_id("impute_mode")) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.1.16",
       what = "recipes::step_modeimpute()",
       with = "recipes::step_impute_mode()"

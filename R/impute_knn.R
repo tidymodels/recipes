@@ -148,7 +148,7 @@ step_knnimpute <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("impute_knn")) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.1.16",
       what = "recipes::step_knnimpute()",
       with = "recipes::step_impute_knn()"

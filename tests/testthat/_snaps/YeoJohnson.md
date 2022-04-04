@@ -3,7 +3,7 @@
     Code
       prep(rec_false, training = ex_dat, verbose = FALSE)
     Condition
-      Error:
+      Error in `as_indices_impl()`:
       ! Must subset columns with a valid subscript vector.
       x Subscript has the wrong type `logical`.
       i It must be numeric or character.

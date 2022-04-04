@@ -2,6 +2,8 @@
 
 * Fixed bug in which functions `step_hyperbolic()` uses (#932).
 
+* Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
+
 # recipes 0.2.0
 
 # New Steps
