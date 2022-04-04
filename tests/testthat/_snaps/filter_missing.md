@@ -71,3 +71,22 @@
       
       Missing value column filter removed <none> [trained]
 
+# case weights
+
+    Code
+      filtering_trained
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          7
+      
+      Training data contained 100 data points and 100 incomplete rows. 
+      
+      Operations:
+      
+      Missing value column filter removed dbl2, dbl3, dbl4, dbl5, chr1, chr2 [weighted, trained]
+

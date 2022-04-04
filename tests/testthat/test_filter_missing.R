@@ -125,4 +125,6 @@ test_that("case weights", {
   removed <- c("dbl2", "dbl3", "dbl4", "dbl5", "chr1", "chr2")
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
+
+  expect_snapshot(filtering_trained)
 })
