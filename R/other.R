@@ -114,13 +114,15 @@ step_other <-
         other = other,
         objects = objects,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_other_new <-
-  function(terms, role, trained, threshold, other, objects, skip, id) {
+  function(terms, role, trained, threshold, other, objects, skip, id,
+           case_weights) {
     step(
       subclass = "other",
       terms = terms,
@@ -130,7 +132,8 @@ step_other_new <-
       other = other,
       objects = objects,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -139,6 +142,10 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   objects <- lapply(training[, col_names],
                     keep_levels,
@@ -154,7 +161,8 @@ prep.step_other <- function(x, training, info = NULL, ...) {
     other = x$other,
     objects = objects,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -200,7 +208,8 @@ print.step_other <-
     } else {
       columns <- names(x$objects)
     }
-    print_step(columns, x$terms, x$trained, title, width)
+    print_step(columns, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

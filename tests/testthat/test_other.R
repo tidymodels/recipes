@@ -382,4 +382,6 @@ test_that("othering with case weights", {
     others <- prep(others, training = okc_tr)
     expect_equal(n_cols, nrow(tidy(others, number = 1)))
   }
+
+  expect_snapshot(others)
 })
