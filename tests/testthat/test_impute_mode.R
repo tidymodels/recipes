@@ -159,4 +159,6 @@ test_that('case weights', {
     select(terms, model, id)
 
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+
+  expect_snapshot(imputed)
 })

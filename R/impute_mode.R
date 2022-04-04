@@ -72,7 +72,8 @@ step_impute_mode <-
         modes = modes,
         ptype = ptype,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
@@ -106,7 +107,7 @@ step_modeimpute <-
   }
 
 step_impute_mode_new <-
-  function(terms, role, trained, modes, ptype, skip, id) {
+  function(terms, role, trained, modes, ptype, skip, id, case_weights) {
     step(
       subclass = "impute_mode",
       terms = terms,
@@ -115,7 +116,8 @@ step_impute_mode_new <-
       modes = modes,
       ptype = ptype,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -124,6 +126,10 @@ prep.step_impute_mode <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   modes <- vapply(training[, col_names], mode_est, c(mode = ""), wts = wts)
   ptype <- vec_slice(training[, col_names], 0)
@@ -134,7 +140,8 @@ prep.step_impute_mode <- function(x, training, info = NULL, ...) {
     modes = modes,
     ptype = ptype,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -171,7 +178,8 @@ bake.step_modeimpute <- bake.step_impute_mode
 print.step_impute_mode <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Mode imputation for "
-    print_step(names(x$modes), x$terms, x$trained, title, width)
+    print_step(names(x$modes), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
