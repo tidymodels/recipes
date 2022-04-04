@@ -187,4 +187,6 @@ test_that("case weights", {
     rec_trained$steps[[1]]$ref_dist$sulfur,
     sulfur_quantiles
   )
+
+  expect_snapshot(rec_trained)
 })

@@ -52,13 +52,14 @@ step_percentile <-
         ref_dist = ref_dist,
         options = options,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_percentile_new <-
-  function(terms, role, trained, ref_dist, options, skip, id) {
+  function(terms, role, trained, ref_dist, options, skip, id, case_weights) {
     step(
       subclass = "percentile",
       terms = terms,
@@ -67,14 +68,20 @@ step_percentile_new <-
       ref_dist = ref_dist,
       options = options,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
 #' @export
 prep.step_percentile <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   ## We'll use the names later so make sure they are available
   x$options$names <- TRUE
@@ -99,7 +106,8 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
     ref_dist = ref_dist,
     options = x$options,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -145,9 +153,10 @@ pctl_by_approx <- function(x, ref) {
 }
 
 print.step_percentile <-
-  function(x, width = max(20, options()$width - 35), wts, ...) {
+  function(x, width = max(20, options()$width - 35), ...) {
     title <- "Percentile transformation on "
-    print_step(names(x$ref_dist), x$terms, x$trained, title, width)
+    print_step(names(x$ref_dist), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
