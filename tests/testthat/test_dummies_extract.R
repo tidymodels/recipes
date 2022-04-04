@@ -298,6 +298,8 @@ test_that("case weights", {
     )
   )
 
+  expect_snapshot(dummy_prepped)
+
   # importance weights are not considered
   mini_tate_cw <- mini_tate %>%
     mutate(wts = importance_weights(c(1, 1, 1, 5)))
@@ -322,4 +324,5 @@ test_that("case weights", {
     )
   )
 
+  expect_snapshot(dummy_prepped)
 })

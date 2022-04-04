@@ -150,9 +150,10 @@ step_dummy_extract_new <-
 #' @export
 prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  wts0 <- wts <- get_case_weights(info, training)
 
-  if(!is.null(wts) && !is_unsupervised_weights(wts)) {
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
     wts <- NULL
   }
 
@@ -193,8 +194,6 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     levels <- NULL
   }
 
-  case_weights <- are_weights_used(wts0, "hardhat_frequency_weights")
-
   step_dummy_extract_new(
     terms = x$terms,
     role = x$role,
@@ -208,7 +207,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id,
-    case_weights = case_weights
+    case_weights = were_weights_used
   )
 }
 
