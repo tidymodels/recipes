@@ -81,10 +81,64 @@ test_that("bad input", {
   )
 })
 
-
-
 test_that("printing", {
   rec <- iris_rec %>% step_sample()
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec, training = iris2, verbose = TRUE))
+})
+
+test_that("sample with case weights", {
+  mtcars1 <- mtcars
+  mtcars1$carb <- frequency_weights(mtcars1$carb)
+
+  # sample_n
+  set.seed(1234)
+  rec <-
+    recipe(~ ., mtcars1) %>%
+    step_sample(size = 10, id = "") %>%
+    prep()
+
+  set.seed(1234)
+  exp_res <- sample_n(
+    as_tibble(mtcars1),
+    size = 10,
+    weight = mtcars1$carb
+  )
+
+  expect_equal(
+    bake(rec, new_data = NULL),
+    exp_res
+  )
+
+  # sample_frac
+  set.seed(1234)
+  rec <-
+    recipe(~ ., mtcars1) %>%
+    step_sample(size = 0.5, id = "") %>%
+    prep()
+
+  set.seed(1234)
+  exp_res <- sample_frac(
+    as_tibble(mtcars1),
+    size = 0.5,
+    weight = mtcars1$carb
+  )
+
+  expect_equal(
+    bake(rec, new_data = NULL),
+    exp_res
+  )
+
+  expect_snapshot(rec)
+
+  # Wrong weights
+  mtcars2 <- mtcars
+  mtcars2$carb <- importance_weights(mtcars2$carb)
+
+  rec <-
+    recipe(~ ., mtcars1) %>%
+    step_sample(size = 10, id = "") %>%
+    prep()
+
+  expect_snapshot(rec)
 })
