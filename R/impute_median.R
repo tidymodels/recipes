@@ -68,7 +68,8 @@ step_impute_median <-
         trained = trained,
         medians = medians,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
@@ -100,7 +101,7 @@ step_medianimpute <-
   }
 
 step_impute_median_new <-
-  function(terms, role, trained, medians, skip, id) {
+  function(terms, role, trained, medians, skip, id, case_weights) {
     step(
       subclass = "impute_median",
       terms = terms,
@@ -108,7 +109,8 @@ step_impute_median_new <-
       trained = trained,
       medians = medians,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -116,7 +118,12 @@ step_impute_median_new <-
 prep.step_impute_median <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   medians <- medians(training[, col_names], wts = wts)
   medians <- purrr::map2(medians, training[, col_names], cast)
@@ -127,7 +134,8 @@ prep.step_impute_median <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     medians = medians,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -154,7 +162,8 @@ bake.step_medianimpute <- bake.step_impute_median
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Median imputation for "
-    print_step(names(x$medians), x$terms, x$trained, title, width)
+    print_step(names(x$medians), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

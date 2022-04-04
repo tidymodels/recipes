@@ -142,4 +142,6 @@ test_that("case weights", {
     impute_rec$steps[[1]]$medians,
     as.list(ref_medians)
   )
+
+  expect_snapshot(impute_rec)
 })
