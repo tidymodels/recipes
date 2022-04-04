@@ -84,14 +84,15 @@ step_impute_linear <-
         impute_with = impute_with,
         models = models,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_impute_linear_new <-
   function(terms, role, trained, models, impute_with,
-           skip, id) {
+           skip, id, case_weights) {
     step(
       subclass = "impute_linear",
       terms = terms,
@@ -100,7 +101,8 @@ step_impute_linear_new <-
       impute_with = impute_with,
       models = models,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -154,6 +156,10 @@ lm_wrap <- function(vars, dat, wts = NULL) {
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   var_lists <-
     impute_var_lists(
@@ -179,7 +185,8 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
     models = x$models,
     impute_with = x$impute_with,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -219,7 +226,8 @@ bake.step_impute_linear <- function(object, new_data, ...) {
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
     title <- "Linear regression imputation for "
-    print_step(names(x$models), x$terms, x$trained, title, width)
+    print_step(names(x$models), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

@@ -136,9 +136,11 @@ test_that("case weights", {
   ames_dat_cw <- ames_dat %>%
     mutate(Total_Bsmt_SF = importance_weights(Total_Bsmt_SF))
 
-  imputed <- recipe(head(ames_dat_cw)) %>%
+  rec_prepped <- recipe(head(ames_dat_cw)) %>%
     step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
-    prep(ames_dat) %>%
+    prep(ames_dat)
+
+  imputed <- rec_prepped %>%
     juice() %>%
     pull(Lot_Frontage) %>%
     .[missing_ind]
@@ -150,4 +152,6 @@ test_that("case weights", {
 
   expect_equal(imputed, lm_predicted)
   expect_equal(sum(is.na(imputed)), 0)
+
+  expect_snapshot(rec_prepped)
 })

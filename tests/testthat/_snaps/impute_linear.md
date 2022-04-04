@@ -87,3 +87,23 @@
       
       Linear regression imputation for <none> [trained]
 
+# case weights
+
+    Code
+      rec_prepped
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+      
+        2 variables with undeclared roles
+      
+      Training data contained 2930 data points and 556 incomplete rows. 
+      
+      Operations:
+      
+      Linear regression imputation for Lot_Frontage [weighted, trained]
+
