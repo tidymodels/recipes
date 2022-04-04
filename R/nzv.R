@@ -103,14 +103,15 @@ step_nzv <-
         options = options,
         removals = removals,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_nzv_new <-
   function(terms, role, trained, freq_cut, unique_cut, options,
-           removals, skip, id) {
+           removals, skip, id, case_weights) {
     step(
       subclass = "nzv",
       terms = terms,
@@ -121,7 +122,8 @@ step_nzv_new <-
       options = options,
       removals = removals,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -130,6 +132,10 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   filter <- nzv(
     x = training[, col_names],
@@ -147,7 +153,8 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
     options = x$options,
     removals = filter,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -166,7 +173,8 @@ print.step_nzv <-
     } else {
       title <- "Sparse, unbalanced variable filter on "
     }
-    print_step(x$removals, x$terms, x$trained, title, width)
+    print_step(x$removals, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

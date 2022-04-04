@@ -178,4 +178,10 @@ test_that("nzv with case weights", {
       pull(terms),
     c("x3", "x4")
   )
+
+  expect_snapshot(
+    recipe(~., dat_caseweights_y) %>%
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag - 0.0001) %>%
+      prep()
+  )
 })

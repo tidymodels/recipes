@@ -78,3 +78,23 @@
       
       Sparse, unbalanced variable filter removed <none> [trained]
 
+# nzv with case weights
+
+    Code
+      recipe(~., dat_caseweights_y) %>% step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag -
+        1e-04) %>% prep()
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          4
+      
+      Training data contained 50 data points and no missing data.
+      
+      Operations:
+      
+      Sparse, unbalanced variable filter removed x3, x4 [weighted, trained]
+
