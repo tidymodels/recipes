@@ -262,4 +262,6 @@ test_that("case weights", {
   colnames(pca_pred_exp) <- NULL
 
   expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
 })

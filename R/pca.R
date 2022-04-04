@@ -123,14 +123,15 @@ step_pca <- function(recipe,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_pca_new <-
   function(terms, role, trained, num_comp, threshold, options, res, columns,
-           prefix, keep_original_cols, skip, id) {
+           prefix, keep_original_cols, skip, id, case_weights) {
     step(
       subclass = "pca",
       terms = terms,
@@ -144,7 +145,8 @@ step_pca_new <-
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -152,7 +154,12 @@ step_pca_new <-
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     if (is.null(wts)) {
@@ -202,7 +209,8 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -237,7 +245,8 @@ print.step_pca <-
     } else {
       title <- "PCA extraction with "
     }
-    print_step(columns, x$terms, x$trained, title, width)
+    print_step(columns, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
