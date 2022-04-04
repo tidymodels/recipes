@@ -291,6 +291,8 @@ test_that("centering with case weights", {
     tidy(rec, number = 1)[["value"]],
     unname(averages(mtcars1[, -c(1, 6)], mtcars1$wt))
   )
+
+  expect_snapshot(rec)
 })
 
 test_that("scaling with case weights", {

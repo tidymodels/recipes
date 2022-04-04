@@ -106,7 +106,12 @@ step_center_new <-
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   means <- averages(training[, col_names], wts, na_rm = x$na_rm)
 
@@ -118,7 +123,7 @@ prep.step_center <- function(x, training, info = NULL, ...) {
     na_rm = x$na_rm,
     skip = x$skip,
     id = x$id,
-    case_weights = are_weights_used(wts)
+    case_weights = were_weights_used
   )
 }
 
