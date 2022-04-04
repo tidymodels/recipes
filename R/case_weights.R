@@ -27,10 +27,8 @@
 #' with any missing values (equal to the "complete.obs" strategy in
 #' [stats::cor()]).
 #'
-#' `is_unsupervised_weights()`
-#'
-#' `are_weights_used()` is used inside print method to determine how
-#' printing should be done.
+#' `are_weights_used()` is designed for developers of recipe steps and is used
+#' inside print method to determine how printing should be done.
 #' @export
 #' @name case-weight-helpers
 get_case_weights <- function(info, .data) {
@@ -216,8 +214,6 @@ weighted_table <- function(x, wts = NULL) {
   hardhat::weighted_table(x, weights = wts)
 }
 
-#' @export
-#' @rdname case-weight-helpers
 is_unsupervised_weights <- function(wts) {
   if (!hardhat::is_case_weights(wts)) {
     rlang::abort("Must be be a case_weights variable")

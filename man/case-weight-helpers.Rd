@@ -9,7 +9,6 @@
 \alias{correlations}
 \alias{covariances}
 \alias{pca_wts}
-\alias{is_unsupervised_weights}
 \alias{are_weights_used}
 \title{Helpers for steps with case weights}
 \usage{
@@ -26,8 +25,6 @@ correlations(x, wts = NULL, use = "everything", method = "pearson")
 covariances(x, wts = NULL, use = "everything", method = "pearson")
 
 pca_wts(x, wts = NULL)
-
-is_unsupervised_weights(wts)
 
 are_weights_used(wts, unsupervised = FALSE)
 }
@@ -68,8 +65,6 @@ case weights) only affect the calculations for those rows. For
 with any missing values (equal to the "complete.obs" strategy in
 \code{\link[stats:cor]{stats::cor()}}).
 
-\code{is_unsupervised_weights()}
-
-\code{are_weights_used()} is used inside print method to determine how
-printing should be done.
+\code{are_weights_used()} is designed for developers of recipe steps and is used
+inside print method to determine how printing should be done.
 }

@@ -44,6 +44,7 @@ reference:
     - selections
     - has_role
     - add_role
+    - get_case_weights
   - title: Step Functions - Imputation
     contents:
     - starts_with("step_impute_")
