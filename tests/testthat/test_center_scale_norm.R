@@ -330,4 +330,6 @@ test_that("normalizing with case weights", {
     rec$steps[[1]]$sds,
     sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt))
   )
+
+  expect_snapshot(rec)
 })
