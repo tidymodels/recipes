@@ -146,8 +146,8 @@ pctl_by_approx <- function(x, ref) {
 
 print.step_percentile <-
   function(x, width = max(20, options()$width - 35), wts, ...) {
-    cat("Percentile transformation on ", sep = "")
-    printer(x$terms, names(x$ref_dist), x$trained, width)
+    title <- "Percentile transformation on "
+    print_step(names(x$ref_dist), x$terms, x$trained, title, width)
     invisible(x)
   }
 
