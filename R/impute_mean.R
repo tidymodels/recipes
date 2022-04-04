@@ -73,7 +73,8 @@ step_impute_mean <-
         means = means,
         trim = trim,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
@@ -107,7 +108,7 @@ step_meanimpute <-
   }
 
 step_impute_mean_new <-
-  function(terms, role, trained, means, trim, skip, id) {
+  function(terms, role, trained, means, trim, skip, id, case_weights) {
     step(
       subclass = "impute_mean",
       terms = terms,
@@ -116,7 +117,8 @@ step_impute_mean_new <-
       means = means,
       trim = trim,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -147,7 +149,12 @@ trim <- function(x, trim) {
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
+
   wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   trimmed <- purrr::map_dfc(training[, col_names], trim, x$trim)
 
@@ -161,7 +168,8 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
     means,
     trim = x$trim,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -188,7 +196,8 @@ bake.step_meanimpute <- bake.step_impute_mean
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Mean imputation for "
-    print_step(names(x$means), x$terms, x$trained, title, width)
+    print_step(names(x$means), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

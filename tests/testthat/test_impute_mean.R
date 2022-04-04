@@ -204,5 +204,7 @@ test_that("case weights", {
     impute_rec$steps[[1]]$means,
     ref_means
   )
+
+  expect_snapshot(impute_rec)
 })
 
