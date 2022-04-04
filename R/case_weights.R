@@ -13,7 +13,7 @@
 #'   [cor()] or [cov()]
 #' @param method Used by [correlations()] or [covariances()] to pass argument to
 #'   [cor()] or [cov()]
-#' @param allowed A character vector of allowed case weights classes.
+#' @param unsupervised Can the step handle unsupervised weights
 #' @details
 #' [get_case_weights()] is designed for developers of recipe steps, to return
 #' a column with the role of "case weight" as a vector.
@@ -228,15 +228,14 @@ is_unsupervised_weights <- function(wts) {
 
 #' @export
 #' @rdname case-weight-helpers
-are_weights_used <- function(wts, allowed = NULL) {
+are_weights_used <- function(wts, unsupervised = FALSE) {
   if (is.null(wts)) {
     return(NULL)
   }
 
-  if (is.null(allowed)) {
-    allowed <- c("hardhat_importance_weights",
-                 "hardhat_frequency_weights")
+  if (unsupervised) {
+    return(is_unsupervised_weights(wts))
   }
 
-  any(class(wts) %in% allowed)
+  TRUE
 }

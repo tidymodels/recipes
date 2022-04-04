@@ -144,3 +144,13 @@ test_that("is_unsupervised_weights works", {
 
   expect_snapshot(error = TRUE, is_unsupervised_weights(3))
 })
+
+test_that("are_weights_used works", {
+  expect_null(are_weights_used(NULL))
+  expect_true(are_weights_used(frequency_weights(1)))
+  expect_true(are_weights_used(importance_weights(1)))
+
+  expect_null(are_weights_used(NULL, unsupervised = TRUE))
+  expect_false(are_weights_used(importance_weights(1), unsupervised = TRUE))
+  expect_true(are_weights_used(frequency_weights(1), unsupervised = TRUE))
+})

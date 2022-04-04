@@ -29,7 +29,7 @@ pca_wts(x, wts = NULL)
 
 is_unsupervised_weights(wts)
 
-are_weights_used(wts, allowed = NULL)
+are_weights_used(wts, unsupervised = FALSE)
 }
 \arguments{
 \item{info}{A data frame from the \code{info} argument within steps}
@@ -49,7 +49,7 @@ values should be removed during computations.}
 \item{method}{Used by \code{\link[=correlations]{correlations()}} or \code{\link[=covariances]{covariances()}} to pass argument to
 \code{\link[=cor]{cor()}} or \code{\link[=cov]{cov()}}}
 
-\item{allowed}{A character vector of allowed case weights classes.}
+\item{unsupervised}{Can the step handle unsupervised weights}
 }
 \description{
 These functions can be used to do basic calculations with or without case
