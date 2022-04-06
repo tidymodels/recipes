@@ -115,7 +115,7 @@ get_train_pctl <- function(x, wts, args = NULL) {
   if (is.null(wts)) {
     res <- rlang::exec("quantile", x = x, !!!args)
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
     res <- rlang::exec("wrighted_quantile", x = x, wts = wts, !!!args)
   }
 

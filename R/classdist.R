@@ -170,7 +170,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   if (is.null(wts)) {
     wts_split <- map(x_dat, ~NULL)
   } else {
-    wts_split <- split(as.numeric(wts), getElement(training, class_var))
+    wts_split <- split(as.double(wts), getElement(training, class_var))
   }
   if (x$pool) {
     res <- list(

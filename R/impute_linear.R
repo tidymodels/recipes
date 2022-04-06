@@ -132,7 +132,7 @@ lm_wrap <- function(vars, dat, wts = NULL) {
   if (is.null(wts)) {
     wts <- rep(1, nrow(dat))
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
   }
 
   out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, weights = wts,

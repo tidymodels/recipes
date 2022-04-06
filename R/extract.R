@@ -169,7 +169,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
       )
 
       lvls <- map(elements, unique)
-      wts_tab <- purrr::map2(lvls, as.integer(wts), ~rep(.y, length(.x)))
+      wts_tab <- purrr::map2(lvls, as.double(wts), ~rep(.y, length(.x)))
       lvls <- unlist(lvls)
       wts_tab <- unlist(wts_tab)
 
@@ -179,7 +179,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
         if (is.null(wts)) {
           wts_total <- length(elements)
         } else {
-          wts_total <- sum(as.integer(wts))
+          wts_total <- sum(as.double(wts))
         }
         lvls <- lvls[(lvls / length(elements)) >= x$threshold]
       } else {

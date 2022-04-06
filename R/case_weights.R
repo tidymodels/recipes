@@ -106,7 +106,7 @@ averages <- function(x, wts = NULL, na_rm = TRUE) {
   if (is.null(wts)) {
     res <- colMeans(x, na.rm = TRUE)
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
   }
   if (!na_rm) {
@@ -124,7 +124,7 @@ medians <- function(x, wts = NULL) {
   if (is.null(wts)) {
     res <- apply(x, 2, median, na.rm = TRUE)
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "median"))
   }
   res
@@ -150,7 +150,7 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
   if (is.null(wts)) {
     res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = na_rm))
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
     res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "var"))
     if (!na_rm) {
       res[map_lgl(x, ~any(is.na(.x)))] <- NA
@@ -165,7 +165,7 @@ correlations <- function(x, wts = NULL, use = "everything", method = "pearson") 
   if (is.null(wts)) {
     res <- stats::cor(x, use = use, method = method)
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
     res <- wt_calcs(x, wts, statistic = "cor")
   }
   res
@@ -177,7 +177,7 @@ covariances <- function(x, wts = NULL, use = "everything", method = "pearson") {
   if (is.null(wts)) {
     res <- stats::cov(x, use = use, method = method)
   } else {
-    wts <- as.numeric(wts)
+    wts <- as.double(wts)
     res <- wt_calcs(x, wts, statistic = "cov")
   }
   res
@@ -187,7 +187,7 @@ covariances <- function(x, wts = NULL, use = "everything", method = "pearson") {
 #' @export
 #' @rdname case-weight-helpers
 pca_wts <- function(x, wts = NULL) {
-  wts <- as.numeric(wts)
+  wts <- as.double(wts)
   res <- wt_calcs(x, wts, statistic = "pca")
   res$center <- FALSE
   res$scale <- FALSE
