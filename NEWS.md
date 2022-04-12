@@ -4,6 +4,8 @@
 
 * `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
  
+* Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
+
 # recipes 0.2.0
 
 # New Steps

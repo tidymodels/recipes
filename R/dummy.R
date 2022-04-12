@@ -117,7 +117,7 @@ step_dummy <-
            skip = FALSE,
            id = rand_id("dummy")) {
     if (lifecycle::is_present(preserve)) {
-      lifecycle::deprecate_warn(
+      lifecycle::deprecate_stop(
         "0.1.16",
         "step_dummy(preserve = )",
         "step_dummy(keep_original_cols = )"

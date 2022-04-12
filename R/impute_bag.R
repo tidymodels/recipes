@@ -142,7 +142,7 @@ step_bagimpute <-
            seed_val = sample.int(10^4, 1),
            skip = FALSE,
            id = rand_id("impute_bag")) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.1.16",
       what = "recipes::step_bagimpute()",
       with = "recipes::step_impute_bag()"
