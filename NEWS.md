@@ -6,6 +6,8 @@
  
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* `step_dummy()` has been made more robust to non-standard column names. (#879)
+
 # recipes 0.2.0
 
 # New Steps
