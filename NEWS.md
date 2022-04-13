@@ -6,6 +6,8 @@
  
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* `discretize()` and `step_discretize()` now defaults to returning factor levels similar to `cut()` by default, in line with `step_discretize_*()` steps from the embed package. (#674)
+
 # recipes 0.2.0
 
 # New Steps
