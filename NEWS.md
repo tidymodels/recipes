@@ -4,6 +4,8 @@
 
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
 # recipes 0.2.0
 
 # New Steps
