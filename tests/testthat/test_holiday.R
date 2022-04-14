@@ -8,9 +8,13 @@ exp_dates <- data.frame(
   stringsAsFactors = FALSE
 )
 test_data <- data.frame(
-  day = ymd("2017-01-01") + days(0:364),
+  day = c(ymd("2017-01-01") + days(0:364), NA),
   stringsAsFactors = FALSE
 )
+
+is_equal_1 <- function(x) {
+  x == 1 & !is.na(x)
+}
 
 test_that("Date class", {
   holiday_rec <- recipe(~day, test_data) %>%
@@ -20,16 +24,32 @@ test_that("Date class", {
   holiday_ind <- bake(holiday_rec, test_data)
 
   expect_equal(
-    holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
+    holiday_ind$day[is_equal_1(holiday_ind$day_USMemorialDay)],
     exp_dates$date[exp_dates$holiday == "USMemorialDay"]
   )
   expect_equal(
-    holiday_ind$day[holiday_ind$day_ChristmasDay == 1],
+    holiday_ind$day[is_equal_1(holiday_ind$day_ChristmasDay)],
     exp_dates$date[exp_dates$holiday == "ChristmasDay"]
   )
   expect_equal(
-    holiday_ind$day[holiday_ind$day_Easter == 1],
+    holiday_ind$day[is_equal_1(holiday_ind$day_Easter)],
     exp_dates$date[exp_dates$holiday == "Easter"]
+  )
+  expect_equal(
+    holiday_ind$day[is.na(test_data$day)],
+    NA_Date_
+  )
+  expect_equal(
+    holiday_ind$day_ChristmasDay[is.na(test_data$day)],
+    NA_integer_
+  )
+  expect_equal(
+    holiday_ind$day_USMemorialDay[is.na(test_data$day)],
+    NA_integer_
+  )
+  expect_equal(
+    holiday_ind$day_Easter[is.na(test_data$day)],
+    NA_integer_
   )
 })
 
@@ -44,22 +64,33 @@ test_that("POSIXct class", {
   holiday_rec <- prep(holiday_rec, training = test_data)
   holiday_ind <- bake(holiday_rec, test_data)
 
-  all.equal(
-    holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
-    exp_dates$date[exp_dates$holiday == "USMemorialDay"]
-  )
-
   expect_equal(
-    holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
+    holiday_ind$day[is_equal_1(holiday_ind$day_USMemorialDay)],
     exp_dates$date[exp_dates$holiday == "USMemorialDay"]
   )
   expect_equal(
-    holiday_ind$day[holiday_ind$day_ChristmasDay == 1],
+    holiday_ind$day[is_equal_1(holiday_ind$day_ChristmasDay)],
     exp_dates$date[exp_dates$holiday == "ChristmasDay"]
   )
   expect_equal(
-    holiday_ind$day[holiday_ind$day_Easter == 1],
+    holiday_ind$day[is_equal_1(holiday_ind$day_Easter)],
     exp_dates$date[exp_dates$holiday == "Easter"]
+  )
+  expect_equal(
+    holiday_ind$day[is.na(test_data$day)],
+    as.POSIXct(NA, tz = NULL)
+  )
+  expect_equal(
+    holiday_ind$day_ChristmasDay[is.na(test_data$day)],
+    NA_integer_
+  )
+  expect_equal(
+    holiday_ind$day_USMemorialDay[is.na(test_data$day)],
+    NA_integer_
+  )
+  expect_equal(
+    holiday_ind$day_Easter[is.na(test_data$day)],
+    NA_integer_
   )
 })
 
