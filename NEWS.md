@@ -6,6 +6,8 @@
  
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743) 
+
 # recipes 0.2.0
 
 # New Steps
