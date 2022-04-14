@@ -19,11 +19,6 @@ test_that("Date class", {
   holiday_rec <- prep(holiday_rec, training = test_data)
   holiday_ind <- bake(holiday_rec, test_data)
 
-  all.equal(
-    holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
-    exp_dates$date[exp_dates$holiday == "USMemorialDay"]
-  )
-
   expect_equal(
     holiday_ind$day[holiday_ind$day_USMemorialDay == 1],
     exp_dates$date[exp_dates$holiday == "USMemorialDay"]
