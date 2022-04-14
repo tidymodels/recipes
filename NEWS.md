@@ -6,6 +6,8 @@
  
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* `step_dummy()` no works correctly with recipes trained on version 0.1.17 or earlier. (#921)
+
 # recipes 0.2.0
 
 # New Steps
