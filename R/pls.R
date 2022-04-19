@@ -126,7 +126,7 @@ step_pls <-
     }
 
     if (lifecycle::is_present(preserve)) {
-      lifecycle::deprecate_warn(
+      lifecycle::deprecate_stop(
         "0.1.16",
         "step_pls(preserve = )",
         "step_pls(keep_original_cols = )"
@@ -217,16 +217,28 @@ pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
   res
 }
 
-make_pls_call <- function(ncomp, keepX, args = NULL) {
-  cl <-
-    rlang::call2(
-      "pls_fit",
-      x = rlang::expr(as.matrix(training[, x_names])),
-      y = rlang::expr(training[[y_names]]),
-      ncomp = ncomp,
-      keepX = keepX,
-      !!!args
-    )
+make_pls_call <- function(ncomp, keepX, y_names, args = NULL) {
+  if (length(y_names) == 1) {
+    cl <-
+      rlang::call2(
+        "pls_fit",
+        x = rlang::expr(as.matrix(training[, x_names])),
+        y = rlang::expr(training[[y_names]]),
+        ncomp = ncomp,
+        keepX = keepX,
+        !!!args
+      )
+  } else {
+    cl <-
+      rlang::call2(
+        "pls_fit",
+        x = rlang::expr(as.matrix(training[, x_names])),
+        y = rlang::expr(as.matrix(training[, y_names])),
+        ncomp = ncomp,
+        keepX = keepX,
+        !!!args
+      )
+  }
   cl
 }
 
@@ -305,8 +317,10 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   y_names <- recipes_eval_select(x$outcome, training, info)
 
   check_type(training[, x_names])
-  if (length(y_names) > 1) {
-    rlang::abort("`step_pls()` only supports univariate models.")
+  if (length(y_names) > 1 && any(!map_lgl(training[y_names], is.numeric))) {
+    rlang::abort(
+      "`step_pls()` only supports multivariate models for numeric outcomes."
+    )
   }
 
   if (x$num_comp > 0 && length(x_names) > 0) {
@@ -316,7 +330,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     x$predictor_prop <- min(x$predictor_prop, 1)
     nterm <- prop2int(x$predictor_prop, length(x_names))
 
-    cl <- make_pls_call(ncomp, nterm, x$options)
+    cl <- make_pls_call(ncomp, nterm, y_names, x$options)
     res <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(res, "try-error")) {
       rlang::warn(paste0("`step_pls()` failed: ", as.character(res)))

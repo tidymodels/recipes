@@ -12,7 +12,7 @@
       
       Operations:
       
-      Percentile transformation on <none>
+      Percentile transformation on carbon, sulfur
 
 ---
 
@@ -33,7 +33,7 @@
       
       Operations:
       
-      Percentile transformation on ~carbon, ~sulfur [trained]
+      Percentile transformation on carbon, sulfur [trained]
 
 # empty printing
 

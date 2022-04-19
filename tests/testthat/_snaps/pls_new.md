@@ -1,3 +1,19 @@
+# PLS-DA, dense loadings, multiple outcomes
+
+    Code
+      prep(rec)
+    Condition
+      Error in `prep()`:
+      ! `step_pls()` only supports multivariate models for numeric outcomes.
+
+# PLS-DA, sparse loadings, multiple outcomes
+
+    Code
+      prep(rec)
+    Condition
+      Error in `prep()`:
+      ! `step_pls()` only supports multivariate models for numeric outcomes.
+
 # print method
 
     Code

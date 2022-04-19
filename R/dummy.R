@@ -117,7 +117,7 @@ step_dummy <-
            skip = FALSE,
            id = rand_id("dummy")) {
     if (lifecycle::is_present(preserve)) {
-      lifecycle::deprecate_warn(
+      lifecycle::deprecate_stop(
         "0.1.16",
         "step_dummy(preserve = )",
         "step_dummy(keep_original_cols = )"
@@ -173,11 +173,10 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (i in seq_along(col_names)) {
-      form_chr <- paste0("~", col_names[i])
+      form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form_chr <- paste0(form_chr, "-1")
+        form <- stats::update.formula(form, ~ . -1)
       }
-      form <- as.formula(form_chr)
       terms <- model.frame(
         formula = form,
         data = training[1, ],
@@ -302,7 +301,7 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     indicators <-
       model.frame(
-        as.formula(paste0("~", orig_var)),
+        rlang::new_formula(lhs = NULL, rhs = rlang::sym(orig_var)),
         data = new_data[, orig_var],
         xlev = attr(object$levels[[i]], "values"),
         na.action = na.pass
@@ -323,7 +322,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     }
 
     ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
+    used_lvl <- gsub(paste0("^\\`?", col_names[i], "\\`?"), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
     new_data <- bind_cols(new_data, as_tibble(indicators))
     if (any(!object$preserve, !keep_original_cols)) {
