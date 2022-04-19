@@ -8,6 +8,11 @@
 
 * `step_naomit()` now actually had their defaults for `skip` changed to `TRUE` as was stated in release  0.1.13. (934)
 
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
+* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+
 # recipes 0.2.0
 
 # New Steps
