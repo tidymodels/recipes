@@ -8,6 +8,11 @@
 
 * Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743) 
 
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
+* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+
 # recipes 0.2.0
 
 # New Steps
