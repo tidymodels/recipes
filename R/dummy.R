@@ -173,7 +173,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (i in seq_along(col_names)) {
-      form <- rlang::new_formula(NULL, rlang::sym(col_names[i]))
+      form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
         form <- stats::update.formula(form, ~ . -1)
       }
@@ -301,7 +301,7 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     indicators <-
       model.frame(
-        rlang::new_formula(NULL, rlang::sym(orig_var)),
+        rlang::new_formula(lhs = NULL, rhs = rlang::sym(orig_var)),
         data = new_data[, orig_var],
         xlev = attr(object$levels[[i]], "values"),
         na.action = na.pass
