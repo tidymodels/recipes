@@ -64,6 +64,27 @@
       
       No PCA components were extracted from carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
 
+# backwards compatible with 0.1.17
+
+    Code
+      pca_extract
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          5
+      
+      Training data contained 456 data points and no missing data.
+      
+      Operations:
+      
+      Centering for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+      PCA extraction with carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+
 # can prep recipes with no keep_original_cols
 
     Code

@@ -84,7 +84,7 @@ test_that("missing data", {
   expect_error(prep(rec_true, training = ex_dat, verbose = FALSE), NA)
 
   rec_false <- recipe(~., data = ex_dat) %>%
-    step_YeoJohnson(x1, x2, x3, x4, na.rm = FALSE)
+    step_YeoJohnson(x1, x2, x3, x4, na_rm = FALSE)
 
   expect_snapshot(error = TRUE,
     prep(rec_false, training = ex_dat, verbose = FALSE)

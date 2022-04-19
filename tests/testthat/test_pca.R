@@ -141,6 +141,31 @@ test_that("No PCA comps", {
   expect_true(all(is.na(tidy(pca_extract_trained, 1)$value)))
 })
 
+test_that("backwards compatible with 0.1.17", {
+  pca_extract <- rec %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
+             options = list(retx = TRUE), id = ""
+    ) %>%
+    prep()
+
+  exp_res <- bake(pca_extract, biomass_tr)
+
+  # Simulate what would have happened in 0.1.17
+  pca_extract$steps[[3]]$columns <- NULL
+
+  new_res <- bake(pca_extract, biomass_tr)
+
+  expect_equal(
+    exp_res,
+    new_res
+  )
+
+  expect_snapshot(pca_extract)
+})
+
+
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
