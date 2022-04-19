@@ -1,6 +1,8 @@
 # recipes (development version)
 
-* Fixed bug in which functions `step_hyperbolic()` uses (#932).
+
+* Fixed bug in which functions that `step_hyperbolic()` uses (#932).
+
 
 * `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
  
@@ -11,6 +13,8 @@
 * `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
 
 * Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+* `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
 
 
 # recipes 0.2.0
