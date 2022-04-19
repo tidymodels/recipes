@@ -4,6 +4,26 @@
 
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* Added support for case weights in the following steps
+    - `step_center()`
+    - `step_classdist()`
+    - `step_corr()`
+    - `step_dummy_extract()`
+    - `step_filter_missing()`
+    - `step_impute_linear()`
+    - `step_impute_mean()`
+    - `step_impute_median()`
+    - `step_impute_mode()`
+    - `step_normalize()`
+    - `step_nzv()`
+    - `step_other()`
+    - `step_percentile()`
+    - `step_pca()`
+    - `step_sample()`
+    - `step_scale()`
+
+* A number of developer focused functions to deal with case weights are added: `are_weights_used()`, `get_case_weights()`, `averages()`, `medians()`, `variances()`, `correlations()`, `covariances()`, and `pca_wts()`
+
 # recipes 0.2.0
 
 # New Steps
