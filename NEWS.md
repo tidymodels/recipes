@@ -8,6 +8,8 @@
  
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* `step_naomit()` now actually had their defaults for `skip` changed to `TRUE` as was stated in release  0.1.13. (934)
+
 * `step_dummy()` has been made more robust to non-standard column names. (#879)
 
 * `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)

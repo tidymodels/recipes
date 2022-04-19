@@ -23,7 +23,7 @@
 #'   prep(airquality, verbose = FALSE) %>%
 #'   bake(new_data = NULL)
 step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
-                        columns = NULL, skip = FALSE,
+                        columns = NULL, skip = TRUE,
                         id = rand_id("naomit")) {
   add_step(
     recipe,
