@@ -236,7 +236,27 @@ test_that("tests for issue #301", {
   expect_equal(bake(dummies, new_data = iris), bake(saved_dummies, new_data = iris))
 })
 
+test_that("works with non-standard column names", {
+  df <- tibble(`with space` = factor(letters[1:3]))
 
+  expect_equal(
+    recipe(~., data = df) %>%
+      step_dummy(all_predictors()) %>%
+      prep() %>%
+      bake(new_data = NULL) %>%
+      colnames(),
+    c("with space_b", "with space_c")
+  )
+
+  expect_equal(
+    recipe(~., data = df) %>%
+      step_dummy(all_predictors(), one_hot = TRUE) %>%
+      prep() %>%
+      bake(new_data = NULL) %>%
+      colnames(),
+    c("with space_a", "with space_b", "with space_c")
+  )
+})
 
 test_that("naming function", {
   expect_equal(dummy_names("x", letters[1:3]), c("x_a", "x_b", "x_c"))
