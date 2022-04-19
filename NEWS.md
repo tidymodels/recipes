@@ -6,7 +6,10 @@
  
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
 * Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
 
 # recipes 0.2.0
 

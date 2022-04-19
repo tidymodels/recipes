@@ -47,10 +47,30 @@ test_that("PLS, dense loadings", {
 })
 
 
+test_that("PLS, dense loadings, multiple outcomes", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV + carbon ~ ., data = biom_tr) %>%
+    step_pls(all_predictors(), outcome = c("HHV", "carbon"), num_comp = 3)
+
+  rec <- prep(rec)
+
+  expect_equal(
+    names(rec$steps[[1]]$res),
+    c("mu", "sd", "coefs", "col_norms")
+  )
+
+  tr_new <- juice(rec, all_predictors())
+  expect_equal(tr_new, bm_pls_multi_tr)
+  te_new <- bake(rec, biom_te %>% select(-carbon))
+  expect_equal(te_new, bm_pls_multi_te)
+})
+
+
 test_that("PLS, sparse loadings", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 3 / 5)
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3,
+             predictor_prop = 3 / 5)
 
   rec <- prep(rec)
 
@@ -63,6 +83,26 @@ test_that("PLS, sparse loadings", {
   expect_equal(tr_new, bm_spls_tr)
   te_new <- bake(rec, biom_te)
   expect_equal(te_new, bm_spls_te)
+})
+
+
+test_that("PLS, dense loadings, multiple outcomes", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV + carbon ~ ., data = biom_tr) %>%
+    step_pls(all_predictors(), outcome = c("HHV", "carbon"), num_comp = 3,
+             predictor_prop = 3 / 5)
+
+  rec <- prep(rec)
+
+  expect_equal(
+    names(rec$steps[[1]]$res),
+    c("mu", "sd", "coefs", "col_norms")
+  )
+
+  tr_new <- juice(rec, all_predictors())
+  expect_equal(tr_new, bm_spls_multi_tr)
+  te_new <- bake(rec, biom_te %>% select(-carbon))
+  expect_equal(te_new, bm_spls_multi_te)
 })
 
 ## -----------------------------------------------------------------------------
@@ -86,10 +126,20 @@ test_that("PLS-DA, dense loadings", {
 })
 
 
+test_that("PLS-DA, dense loadings, multiple outcomes", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(class + case ~ ., data = cells) %>%
+    step_pls(all_predictors(), outcome = c("class", "case"), num_comp = 3)
+
+  expect_snapshot(error = TRUE, prep(rec))
+})
+
+
 test_that("PLS-DA, sparse loadings", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(class ~ ., data = cell_tr) %>%
-    step_pls(all_predictors(), outcome = "class", num_comp = 3, predictor_prop = 50 / 56)
+    step_pls(all_predictors(), outcome = "class", num_comp = 3,
+             predictor_prop = 50 / 56)
 
   rec <- prep(rec)
 
@@ -102,6 +152,16 @@ test_that("PLS-DA, sparse loadings", {
   expect_equal(tr_new, cell_splsda_tr)
   te_new <- bake(rec, cell_te)
   expect_equal(te_new, cell_splsda_te)
+})
+
+
+test_that("PLS-DA, sparse loadings, multiple outcomes", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(class + case ~ ., data = cells) %>%
+    step_pls(all_predictors(), outcome = c("class", "case"), num_comp = 3,
+             predictor_prop = 50 / 56)
+
+  expect_snapshot(error = TRUE, prep(rec))
 })
 
 ## -----------------------------------------------------------------------------
