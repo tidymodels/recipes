@@ -127,8 +127,7 @@
       prep(rec1)
     Condition
       Warning:
-      Column(s) have zero variance so scaling is not defined: `zero_variance`
-      i Consider `step_zv()` to remove those columns before scaling
+      Column(s) have zero variance so scaling cannot be used: `zero_variance`. Consider using `step_zv()` to remove those columns before normalizing
     Output
       Recipe
       
@@ -142,7 +141,7 @@
       
       Operations:
       
-      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
 
 # normalize - empty printing
 
@@ -186,8 +185,7 @@
       prep(rec1)
     Condition
       Warning:
-      Column(s) have zero variance so normalization is not defined: `zero_variance`
-      i Consider `step_zv()` to remove those columns before normalizing
+      Column(s) have zero variance so scaling cannot be used: `zero_variance`. Consider using `step_zv()` to remove those columns before normalizing
     Output
       Recipe
       
@@ -201,5 +199,5 @@
       
       Operations:
       
-      Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+      Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
 

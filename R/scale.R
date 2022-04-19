@@ -5,8 +5,8 @@
 #'  deviation of one.
 #'
 #' @inheritParams step_center
-#' @param sds A named numeric vector of standard deviations. This
-#'  is `NULL` until computed by [prep()].
+#' @param sds A named numeric vector of standard deviations. This is `NULL`
+#'  until computed by [prep()].
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to
@@ -105,28 +105,10 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
   }
 
-  sds <-
-    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
-
-
-  which_sd <- which(sds < .Machine$double.eps)
+  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  sds <- sd_check(sds)
 
   sds <- sds * x$factor
-
-
-  if (length(which_sd) > 0) {
-    glue_cols <- glue::glue_collapse(
-      glue::glue("`{names(which_sd)}`"), sep = ", ", last = " and "
-    )
-    rlang::warn(c(
-      glue::glue(
-        "Column(s) have zero variance so scaling is not defined: {glue_cols}"
-      ),
-      "i" = "Consider `step_zv()` to remove those columns before scaling"
-    ))
-
-    sds <- sds[-which_sd]
-  }
 
   step_scale_new(
     terms = x$terms,

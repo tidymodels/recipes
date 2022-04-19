@@ -5,12 +5,12 @@
 #'  deviation of one and a mean of zero.
 #'
 #' @inheritParams step_center
-#' @param means A named numeric vector of means. This is
-#'  `NULL` until computed by [prep()].
-#' @param sds A named numeric vector of standard deviations This
-#'  is `NULL` until computed by [prep()].
-#' @param na_rm A logical value indicating whether `NA`
-#'  values should be removed when computing the standard deviation and mean.
+#' @param means A named numeric vector of means. This is `NULL` until computed
+#'  by [prep()].
+#' @param sds A named numeric vector of standard deviations This is `NULL` until
+#'  computed by [prep()].
+#' @param na_rm A logical value indicating whether `NA` values should be removed
+#'  when computing the standard deviation and mean.
 #' @template step-return
 #' @family normalization steps
 #' @export
@@ -100,6 +100,23 @@ step_normalize_new <-
     )
   }
 
+sd_check <- function(x) {
+  zero_sd <- which(x < .Machine$double.eps)
+  if (length(zero_sd) > 0) {
+    glue_cols <- glue::glue_collapse(
+      glue::glue("`{names(zero_sd)}`"), sep = ", ", last = " and "
+    )
+    rlang::warn(
+      glue::glue(
+        "Column(s) have zero variance so scaling cannot be used: {glue_cols}. ",
+        "Consider using `step_zv()` to remove those columns before normalizing"
+      )
+    )
+    x[zero_sd] <- 1
+  }
+  x
+}
+
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
@@ -107,22 +124,8 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
-  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
-
-  which_sd <- which(sds < .Machine$double.eps)
-  if (length(which_sd) > 0) {
-    glue_cols <- glue::glue_collapse(
-      glue::glue("`{names(which_sd)}`"), sep = ", ", last = " and "
-    )
-    rlang::warn(c(
-      glue::glue(
-        "Column(s) have zero variance so normalization is not defined: {glue_cols}"
-      ),
-      "i" = "Consider `step_zv()` to remove those columns before normalizing"
-    ))
-
-    sds <- sds[-which_sd]
-  }
+  sds   <- vapply(training[, col_names], sd,   c(sd = 0),   na.rm = x$na_rm)
+  sds <- sd_check(sds)
 
   step_normalize_new(
     terms = x$terms,

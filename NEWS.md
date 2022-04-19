@@ -1,6 +1,6 @@
 # recipes (development version)
 
-* `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest using `step_zv()` (#920).
+* `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
 
 # recipes 0.2.0
 
