@@ -77,6 +77,9 @@ When a column has a single unique value, that column will be
 excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of \code{use}
 is chosen), some columns will also be excluded from the filter.
+
+The arguments \code{use} and \code{method} don't take effect if case weights
+are used in the recipe.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column

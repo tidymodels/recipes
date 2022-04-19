@@ -34,6 +34,9 @@
 #'  has sporadic missing values (and an inappropriate value of `use`
 #'  is chosen), some columns will also be excluded from the filter.
 #'
+#' The arguments `use` and `method` don't take effect if case weights
+#' are used in the recipe.
+#'
 #' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
