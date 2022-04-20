@@ -203,6 +203,11 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
+
+  if (is.null(object$columns)) {
+    object$columns <- stats::setNames(nm = rownames(object$res$rotation))
+  }
+
   if (length(object$columns) > 0 && !all(is.na(object$res$rotation))) {
     pca_vars <- rownames(object$res$rotation)
     comps <- predict(object$res, newdata = new_data[, pca_vars])
@@ -221,6 +226,10 @@ bake.step_pca <- function(object, new_data, ...) {
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
     if (x$trained) {
+      if (is.null(x$columns)) {
+        x$columns <- stats::setNames(nm = rownames(x$res$rotation))
+      }
+
       if (length(x$columns) == 0 || all(is.na(x$res$rotation))) {
         title <- "No PCA components were extracted from "
         columns <- names(x$columns)

@@ -5,8 +5,8 @@
 #'  deviation of one.
 #'
 #' @inheritParams step_center
-#' @param sds A named numeric vector of standard deviations. This
-#'  is `NULL` until computed by [prep()].
+#' @param sds A named numeric vector of standard deviations. This is `NULL`
+#'  until computed by [prep()].
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to
@@ -105,8 +105,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
   }
 
-  sds <-
-    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  sds <- sd_check(sds)
 
   sds <- sds * x$factor
 
