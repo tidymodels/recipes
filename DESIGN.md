@@ -54,6 +54,10 @@ test_that("empty printing", {
 
 Care should be taken when using factor/character variables. Use `levels()` whenever possible.
 
+## Type checking
+
+All steps should check typing whenever possible. `check_type()` can be used in most cases.
+
 # Step arguments
 
 ## order of arguments
