@@ -160,6 +160,90 @@ test_that("correct means and std devs for step_norm", {
   expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)
 })
 
+test_that("na_rm argument works for step_scale", {
+  mtcars_na <- mtcars
+  mtcars_na[1, 1:4] <- NA
+
+  rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
+    step_scale(all_predictors(), na_rm = FALSE) %>%
+    prep()
+
+  rec_na_rm <- recipe(~., data = mtcars_na) %>%
+    step_scale(all_predictors(), na_rm = TRUE) %>%
+    prep()
+
+  exp_no_na_rm <- vapply(mtcars_na, FUN = sd, FUN.VALUE = numeric(1))
+  exp_na_rm <- vapply(mtcars_na, FUN = sd, FUN.VALUE = numeric(1), na.rm = TRUE)
+
+  expect_equal(
+    tidy(rec_no_na_rm, 1)$value,
+    unname(exp_no_na_rm)
+  )
+
+  expect_equal(
+    tidy(rec_na_rm, 1)$value,
+    unname(exp_na_rm)
+  )
+})
+
+test_that("na_rm argument works for step_center", {
+  mtcars_na <- mtcars
+  mtcars_na[1, 1:4] <- NA
+
+  rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
+    step_center(all_predictors(), na_rm = FALSE) %>%
+    prep()
+
+  rec_na_rm <- recipe(~., data = mtcars_na) %>%
+    step_center(all_predictors(), na_rm = TRUE) %>%
+    prep()
+
+  exp_no_na_rm <- vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1))
+  exp_na_rm <- vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1), na.rm = TRUE)
+
+  expect_equal(
+    tidy(rec_no_na_rm, 1)$value,
+    unname(exp_no_na_rm)
+  )
+
+  expect_equal(
+    tidy(rec_na_rm, 1)$value,
+    unname(exp_na_rm)
+  )
+})
+
+test_that("na_rm argument works for step_normalize", {
+  mtcars_na <- mtcars
+  mtcars_na[1, 1:4] <- NA
+
+  rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
+    step_normalize(all_predictors(), na_rm = FALSE) %>%
+    prep()
+
+  rec_na_rm <- recipe(~., data = mtcars_na) %>%
+    step_normalize(all_predictors(), na_rm = TRUE) %>%
+    prep()
+
+  exp_no_na_rm <- c(
+    vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1)),
+    vapply(mtcars_na, FUN = sd, FUN.VALUE = numeric(1))
+  )
+  exp_na_rm <- c(
+    vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1), na.rm = TRUE),
+    vapply(mtcars_na, FUN = sd, FUN.VALUE = numeric(1), na.rm = TRUE)
+  )
+
+  expect_equal(
+    tidy(rec_no_na_rm, 1)$value,
+    unname(exp_no_na_rm)
+  )
+
+  expect_equal(
+    tidy(rec_na_rm, 1)$value,
+    unname(exp_na_rm)
+  )
+})
+
 test_that("center - empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_center(rec1)

@@ -25,23 +25,35 @@ test_that("spatial sign", {
 })
 
 test_that("Missing values", {
-  sp_sign <- rec %>%
-    step_spatialsign(carbon, hydrogen)
-
-  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
-
   with_na <- head(biomass)
   with_na$carbon[1] <- NA
   with_na$hydrogen[2] <- NA
   rownames(with_na) <- NULL
 
-  sp_sign_pred <- bake(sp_sign_trained, new_data = with_na)
-  sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
+  sp_sign_rm_na <- rec %>%
+    step_spatialsign(carbon, hydrogen) %>%
+    prep() %>%
+    bake(
+      new_data = with_na,
+      one_of(c("carbon", "hydrogen")),
+      composition = "matrix"
+    )
+
+  sp_sign_no_rm_na <- rec %>%
+    step_spatialsign(carbon, hydrogen, na_rm = FALSE) %>%
+    prep() %>%
+    bake(
+      new_data = with_na,
+      one_of(c("carbon", "hydrogen")),
+      composition = "matrix"
+    )
 
   x <- as.matrix(with_na[, 3:4])
-  x <- t(apply(x, 1, function(x) x / sqrt(sum(x^2, na.rm = TRUE))))
+  exp_rm_na <- t(apply(x, 1, function(x) x / sqrt(sum(x^2, na.rm = TRUE))))
+  exp_no_rm_na <- t(apply(x, 1, function(x) x / sqrt(sum(x^2, na.rm = FALSE))))
 
-  expect_equal(sp_sign_pred, x)
+  expect_equal(sp_sign_rm_na, exp_rm_na)
+  expect_equal(sp_sign_no_rm_na, exp_no_rm_na)
 })
 
 
