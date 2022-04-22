@@ -51,7 +51,7 @@ test_that("printing", {
   )
 
   expect_snapshot(kpca_rec)
-  expect_snapshot(prep(kpca_rec, training = tr_dat, verbose = TRUE))
+  expect_snapshot(prep(kpca_rec))
 })
 
 

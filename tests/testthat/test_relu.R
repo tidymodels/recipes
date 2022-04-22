@@ -94,7 +94,7 @@ test_that("prints something", {
   rec <- recipe(~., data = df) %>%
     step_relu(val1)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = df, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {

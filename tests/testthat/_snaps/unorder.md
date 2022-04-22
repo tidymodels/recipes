@@ -59,11 +59,8 @@
 ---
 
     Code
-      prep(rec4, training = examples, verbose = TRUE)
+      prep(rec4)
     Output
-      oper 1 step unorder [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

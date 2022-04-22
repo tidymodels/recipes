@@ -198,5 +198,5 @@ test_that("printing", {
       log = FALSE
     )
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = rand_data, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })

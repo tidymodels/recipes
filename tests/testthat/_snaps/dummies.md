@@ -114,11 +114,8 @@
 ---
 
     Code
-      prep(dummy, training = okc_fac, verbose = TRUE)
+      prep(dummy)
     Output
-      oper 1 step dummy [training] 
-      The retained training set is ~ 70.29 Mb  in memory.
-      
       Recipe
       
       Inputs:

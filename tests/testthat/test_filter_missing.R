@@ -51,7 +51,7 @@ test_that("printing", {
   filtering <- rec %>%
     step_filter_missing(all_predictors(), threshold = .5)
   expect_snapshot(print(filtering))
-  expect_snapshot(prep(filtering, training = dat, verbose = TRUE))
+  expect_snapshot(prep(filtering))
 })
 
 

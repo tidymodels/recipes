@@ -120,7 +120,7 @@ test_that("printing", {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12)
   expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(standardized))
 })
 
 test_that("empty selection prep/bake is a no-op", {

@@ -118,7 +118,7 @@ test_that("printing", {
   rec <- recipe(~., data = iris) %>%
     step_select(Species, starts_with("Sepal"), petal_width = Petal.Width)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("tidying", {

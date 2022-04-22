@@ -73,7 +73,7 @@ test_that("printing", {
   holiday_rec <- recipe(~day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
   expect_snapshot(print(holiday_rec))
-  expect_snapshot(prep(holiday_rec, training = test_data, verbose = TRUE))
+  expect_snapshot(prep(holiday_rec))
 })
 
 test_that("keep_original_cols works", {

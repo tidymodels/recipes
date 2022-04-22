@@ -108,7 +108,7 @@ test_that("printing", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
   expect_snapshot(print(date_rec))
-  expect_snapshot(prep(date_rec, training = examples, verbose = TRUE))
+  expect_snapshot(prep(date_rec))
 })
 
 test_that("keep_original_cols works", {

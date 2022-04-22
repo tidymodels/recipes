@@ -53,7 +53,7 @@ test_that("printing", {
     step_num2factor(z, levels = letters) %>%
     prep(ex_dat, strings_as_factors = FALSE)
   expect_snapshot(print(ex_3))
-  expect_snapshot(prep(ex_3, training = ex_dat, verbose = TRUE))
+  expect_snapshot(prep(ex_3))
 })
 
 test_that("empty selection prep/bake is a no-op", {

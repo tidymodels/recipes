@@ -102,7 +102,7 @@ test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_impute_mode(Status, Home, Marital)
   expect_snapshot(print(impute_rec))
-  expect_snapshot(prep(impute_rec, training = credit_tr, verbose = TRUE))
+  expect_snapshot(prep(impute_rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {

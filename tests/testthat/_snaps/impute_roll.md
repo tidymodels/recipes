@@ -45,11 +45,8 @@
 ---
 
     Code
-      prep(seven_pt, training = example_data, verbose = TRUE)
+      prep(seven_pt)
     Output
-      oper 1 step impute roll [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

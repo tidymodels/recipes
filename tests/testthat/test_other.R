@@ -231,7 +231,7 @@ test_that("'other' already in use", {
 test_that("printing", {
   rec <- rec %>% step_other(diet, location)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = okc_tr, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that(

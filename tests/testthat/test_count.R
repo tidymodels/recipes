@@ -57,7 +57,7 @@ test_that("printing", {
   rec5 <- rec %>%
     step_count(description, pattern = "(rock|stony)")
   expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5, training = covers, verbose = TRUE))
+  expect_snapshot(prep(rec5))
 })
 
 test_that("empty selection prep/bake adds an NA column", {

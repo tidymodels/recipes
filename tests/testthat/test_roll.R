@@ -89,7 +89,7 @@ test_that("printing", {
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
   expect_snapshot(print(new_names))
-  expect_snapshot(prep(new_names, training = sim_dat, verbose = TRUE))
+  expect_snapshot(prep(new_names))
 })
 
 

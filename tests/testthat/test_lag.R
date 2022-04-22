@@ -75,7 +75,7 @@ test_that("something prints", {
     step_lag(t)
 
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = df, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 rm(n, start, end)

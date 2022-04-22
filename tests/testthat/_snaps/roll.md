@@ -108,11 +108,8 @@
 ---
 
     Code
-      prep(new_names, training = sim_dat, verbose = TRUE)
+      prep(new_names)
     Output
-      oper 1 step window [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

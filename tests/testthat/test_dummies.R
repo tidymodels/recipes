@@ -270,7 +270,7 @@ test_that("printing", {
   rec <- recipe(age ~ ., data = okc_fac)
   dummy <- rec %>% step_dummy(diet, location)
   expect_snapshot(print(dummy))
-  expect_snapshot(prep(dummy, training = okc_fac, verbose = TRUE))
+  expect_snapshot(prep(dummy))
 })
 
 

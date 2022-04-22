@@ -107,7 +107,7 @@ test_that("printing", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {
