@@ -1,40 +1,3 @@
-# printing and tidys
-
-    Code
-      print(rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Operations:
-      
-      Discretize numeric variables from x1
-
----
-
-    Code
-      prep(rec, training = ex_tr, verbose = TRUE)
-    Output
-      oper 1 step discretize [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Training data contained 100 data points and no missing data.
-      
-      Operations:
-      
-      Discretize numeric variables from x1 [trained]
-
 # bad args
 
     Code
@@ -105,11 +68,8 @@
 ---
 
     Code
-      prep(rec, training = ex_tr, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step discretize [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

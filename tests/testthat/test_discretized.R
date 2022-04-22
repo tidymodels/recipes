@@ -60,11 +60,9 @@ test_that("NA values with step_discretize (issue #127)", {
   expect_equal(rec$steps[[1]]$objects$sepal_na, disc_values)
 })
 
-test_that("printing and tidys", {
+test_that("tidys", {
   rec <- recipe(~., data = ex_tr) %>%
     step_discretize(x1, id = "")
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = ex_tr, verbose = TRUE))
 
   tidy_exp_un <- tibble(
     terms = "x1",
@@ -103,12 +101,11 @@ test_that("bad args", {
 })
 
 
-
 test_that("printing", {
   rec <- recipe(~., data = ex_tr) %>%
     step_discretize(x1, id = "")
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = ex_tr, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 
