@@ -37,6 +37,13 @@ test_that("check_col works in the bake stage", {
   )
 })
 
+test_that("printing", {
+  rec <- rp1 %>%
+    check_cols(everything())
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- check_cols(rec1)
