@@ -230,7 +230,7 @@ estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5, na_rm = TRUE) {
     if (na_rm) {
       dat <- dat[-na_rows]
     } else {
-      rlang::abort("Missing values in data. See `na_rm` option")
+      rlang::abort("Missing values are not allowed for the YJ transformation. See `na_rm` option")
     }
   }
 

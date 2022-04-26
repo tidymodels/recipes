@@ -122,6 +122,32 @@ test_that("bake without prep", {
   )
 })
 
+test_that("prep with fresh = TRUE", {
+  test_data <- data.frame(x = factor(c(1, 2)), y = c(1, 2))
+
+  rec <-
+    recipe(y ~ ., data = test_data) %>%
+    step_dummy(x, id = "") %>%
+    prep()
+
+  new_rec <- prep(rec, training = test_data, fresh = TRUE)
+
+  expect_identical(rec, new_rec)
+
+  expect_equal(
+    tidy(new_rec, 1),
+    tibble(terms = "x", columns = "2", id = "")
+  )
+
+  test_data2 <- data.frame(x = factor(c(1, 3)), y = c(1, 2))
+
+  new_rec2 <- prep(rec, training = test_data2, fresh = TRUE)
+
+  expect_equal(
+    tidy(new_rec2, 1),
+    tibble(terms = "x", columns = "3", id = "")
+  )
+})
 
 test_that("bake without newdata", {
   rec <- recipe(HHV ~ ., data = biomass) %>%

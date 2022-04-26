@@ -1,9 +1,5 @@
 # recipes (development version)
 
-* Fixed bug in which functions `step_hyperbolic()` uses (#932).
-
-* Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
-
 * Added support for case weights in the following steps
     - `step_center()`
     - `step_classdist()`
@@ -23,6 +19,24 @@
     - `step_scale()`
 
 * A number of developer focused functions to deal with case weights are added: `are_weights_used()`, `get_case_weights()`, `averages()`, `medians()`, `variances()`, `correlations()`, `covariances()`, and `pca_wts()`
+
+* Fixed bug in which functions that `step_hyperbolic()` uses (#932).
+
+* `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
+ 
+* Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
+
+* `step_dummy()` no works correctly with recipes trained on version 0.1.17 or earlier. (#921)
+
+* `step_naomit()` now actually had their defaults for `skip` changed to `TRUE` as was stated in release  0.1.13. (934)
+
+* `step_dummy()` has been made more robust to non-standard column names. (#879)
+
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
+* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+* `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
 
 # recipes 0.2.0
 

@@ -12,6 +12,11 @@ rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass
 )
 
+biomass['zero_variance'] <- 1
+rec_zv <- recipe(HHV ~  + carbon + hydrogen + oxygen + nitrogen + sulfur + zero_variance,
+data = biomass)
+
+
 # Note: some tests convert to data frame prior to testing
 # https://github.com/tidyverse/dplyr/issues/2751
 
@@ -235,6 +240,11 @@ test_that("scale - empty printing", {
   expect_snapshot(rec)
 })
 
+test_that("scale - warns on zv",{
+  rec1 <- step_scale(rec_zv, all_numeric_predictors())
+  expect_snapshot(prep(rec1))
+})
+
 test_that("normalize - empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_normalize(rec1)
@@ -276,6 +286,11 @@ test_that("normalize - empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("normalize - warns on zv",{
+  rec1 <- step_normalize(rec_zv,all_numeric_predictors())
+  expect_snapshot(prep(rec1))
 })
 
 test_that("centering with case weights", {

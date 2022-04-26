@@ -383,8 +383,12 @@ prep.recipe <-
       )
     }
 
+    if (fresh) {
+      x$term_info <- x$var_info
+    }
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
+
     for (i in seq(along.with = x$steps)) {
       needs_tuning <- map_lgl(x$steps[[i]], is_tune)
       if (any(needs_tuning)) {
