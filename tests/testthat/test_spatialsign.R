@@ -91,3 +91,20 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("centering with case weights", {
+  mtcars1 <- mtcars
+  mtcars1$wt <- importance_weights(mtcars1$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars1) %>%
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),
+    as.numeric(mtcars1$wt)
+  )
+
+  expect_snapshot(rec)
+})
