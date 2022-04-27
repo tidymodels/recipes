@@ -156,7 +156,7 @@ lm_wrap <- function(vars, dat, wts = NULL) {
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
   wts <- get_case_weights(info, training)
-  were_weights_used <- are_weights_used(wts)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
   }

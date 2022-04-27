@@ -156,7 +156,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   wts <- get_case_weights(info, training)
-  were_weights_used <- are_weights_used(wts)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
   }

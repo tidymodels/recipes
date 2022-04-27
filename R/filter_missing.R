@@ -82,7 +82,7 @@ prep.step_filter_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   wts <- get_case_weights(info, training)
-  were_weights_used <- are_weights_used(wts)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
   }

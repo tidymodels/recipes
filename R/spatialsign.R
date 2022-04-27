@@ -103,7 +103,7 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   wts <- get_case_weights(info, training)
-  were_weights_used <- are_weights_used(wts)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
   }
@@ -143,7 +143,8 @@ bake.step_spatialsign <- function(object, new_data, ...) {
 print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
     title <- "Spatial sign on  "
-    print_step(x$columns, x$terms, x$trained, title, width)
+    print_step(x$columns, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
