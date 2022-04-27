@@ -70,20 +70,20 @@ returned.
 
 \examples{
 library(modeldata)
-data(okc)
+data(Sacramento)
 
-rec <- recipe(~ diet + location, data = okc)
+rec <- recipe(~ city + zip, data = Sacramento)
 
 make_factor <- rec \%>\%
-  step_string2factor(diet)
+  step_string2factor(city)
 make_factor <- prep(make_factor,
-  training = okc,
+  training = Sacramento,
   strings_as_factors = FALSE
 )
 
-# note that `diet` is a factor
+# note that `city` is a factor
 bake(make_factor, new_data = NULL) \%>\% head()
-okc \%>\% head()
+Sacramento \%>\% head()
 tidy(make_factor, number = 1)
 }
 \seealso{

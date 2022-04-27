@@ -22,33 +22,33 @@
 #'
 #' @examples
 #' library(modeldata)
-#' data(okc)
+#' data(Sacramento)
 #'
-#' rec <- recipe(~ diet + location, data = okc)
+#' rec <- recipe(~ city + zip, data = Sacramento)
 #'
 #' rec <- rec %>%
-#'   step_string2factor(diet)
+#'   step_string2factor(city)
 #'
 #' factor_test <- rec %>%
 #'   prep(
-#'     training = okc,
+#'     training = Sacramento,
 #'     strings_as_factors = FALSE
 #'   ) %>%
 #'   juice()
-#' # diet is a
-#' class(factor_test$diet)
+#' # city is a
+#' class(factor_test$city)
 #'
 #' rec <- rec %>%
-#'   step_factor2string(diet)
+#'   step_factor2string(city)
 #'
 #' string_test <- rec %>%
 #'   prep(
-#'     training = okc,
+#'     training = Sacramento,
 #'     strings_as_factors = FALSE
 #'   ) %>%
 #'   juice()
-#' # diet is a
-#' class(string_test$diet)
+#' # city is a
+#' class(string_test$city)
 #'
 #' tidy(rec, number = 1)
 step_factor2string <-

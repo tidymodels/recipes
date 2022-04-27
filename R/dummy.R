@@ -70,35 +70,35 @@
 #'
 #' @examples
 #' library(modeldata)
-#' data(okc)
-#' okc <- okc[complete.cases(okc), ]
+#' data(Sacramento)
+#' Sacramento <- Sacramento[complete.cases(Sacramento), ]
 #'
-#' # Original data: diet has 18 levels
-#' length(unique(okc$diet))
-#' unique(okc$diet) %>% sort()
+#' # Original data: city has 18 levels
+#' length(unique(Sacramento$city))
+#' unique(Sacramento$city) %>% sort()
 #'
-#' rec <- recipe(~ diet + age + height, data = okc)
+#' rec <- recipe(~ city + sqft + price, data = Sacramento)
 #'
 #' # Default dummy coding: 17 dummy variables
 #' dummies <- rec %>%
-#'   step_dummy(diet) %>%
-#'   prep(training = okc)
+#'   step_dummy(city) %>%
+#'   prep(training = Sacramento)
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
 #'
 #' dummy_data %>%
-#'   select(starts_with("diet")) %>%
+#'   select(starts_with("city")) %>%
 #'   names() # level "anything" is the reference level
 #'
 #' # Obtain the full set of 18 dummy variables using `one_hot` option
 #' dummies_one_hot <- rec %>%
-#'   step_dummy(diet, one_hot = TRUE) %>%
-#'   prep(training = okc)
+#'   step_dummy(city, one_hot = TRUE) %>%
+#'   prep(training = Sacramento)
 #'
 #' dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 #'
 #' dummy_data_one_hot %>%
-#'   select(starts_with("diet")) %>%
+#'   select(starts_with("city")) %>%
 #'   names() # no reference level
 #'
 #'

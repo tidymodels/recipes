@@ -5,33 +5,33 @@ library(testthat)
 # ----------------------------------------------------------------
 
 library(modeldata)
-data("okc")
+data("Sacramento")
 
-okc_chr <-
-  okc %>%
-  mutate(Class = as.character(Class))
+Sacramento_chr <-
+  Sacramento %>%
+  mutate(type = as.character(type))
 
-okc_fac <-
-  okc %>%
-  mutate(diet = as.factor(diet))
+Sacramento_fac <-
+  Sacramento %>%
+  mutate(city = as.factor(city))
 
-okc_all_fac <-
-  okc_fac %>%
-  mutate(location = as.factor(location))
+Sacramento_all_fac <-
+  Sacramento_fac %>%
+  mutate(zip = as.factor(zip))
 
 # ----------------------------------------------------------------
 
 test_that("factors all the way down", {
   tr <-
-    okc_all_fac %>%
+    Sacramento_all_fac %>%
     slice(1:500)
 
   te <-
-    okc_all_fac %>%
+    Sacramento_all_fac %>%
     slice(501:1000)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_silent(check_nominal_type(te, rec$orig_lvls))
@@ -40,16 +40,16 @@ test_that("factors all the way down", {
 
 test_that("factors all the way down with skipping", {
   tr <-
-    okc_all_fac %>%
+    Sacramento_all_fac %>%
     slice(1:500)
 
   te <-
-    okc_all_fac %>%
+    Sacramento_all_fac %>%
     slice(501:1000) %>%
     select(-Class)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_silent(check_nominal_type(te, rec$orig_lvls))
@@ -59,14 +59,14 @@ test_that("factors all the way down with skipping", {
 
 test_that("mixed nominal data", {
   tr <-
-    okc_fac %>%
+    Sacramento_fac %>%
     slice(1:500)
   te <-
-    okc_fac %>%
+    Sacramento_fac %>%
     slice(501:1000)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_silent(check_nominal_type(te, rec$orig_lvls))
@@ -75,15 +75,15 @@ test_that("mixed nominal data", {
 
 test_that("mixed nominal data with skipping", {
   tr <-
-    okc_fac %>%
+    Sacramento_fac %>%
     slice(1:500)
   te <-
-    okc_fac %>%
+    Sacramento_fac %>%
     slice(501:1000) %>%
     select(-Class)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_silent(check_nominal_type(te, rec$orig_lvls))
@@ -94,14 +94,14 @@ test_that("mixed nominal data with skipping", {
 
 test_that("no factors", {
   tr <-
-    okc_chr %>%
+    Sacramento_chr %>%
     slice(1:500)
   te <-
-    okc_chr %>%
+    Sacramento_chr %>%
     slice(501:1000)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_silent(check_nominal_type(te, rec$orig_lvls))
@@ -110,15 +110,15 @@ test_that("no factors", {
 
 test_that("no factors with skipping", {
   tr <-
-    okc_chr %>%
+    Sacramento_chr %>%
     slice(1:500)
   te <-
-    okc_chr %>%
+    Sacramento_chr %>%
     slice(501:1000) %>%
     select(-Class)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_silent(check_nominal_type(te, rec$orig_lvls))
@@ -129,14 +129,14 @@ test_that("no factors with skipping", {
 
 test_that("missing factors", {
   tr <-
-    okc_fac %>%
+    Sacramento_fac %>%
     slice(1:500)
   te <-
-    okc_chr %>%
+    Sacramento_chr %>%
     slice(501:1000)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_snapshot(check_nominal_type(te, rec$orig_lvls))
@@ -144,15 +144,15 @@ test_that("missing factors", {
 
 test_that("missing factors with skipping", {
   tr <-
-    okc_fac %>%
+    Sacramento_fac %>%
     slice(1:500)
   te <-
-    okc_chr %>%
+    Sacramento_chr %>%
     slice(501:1000) %>%
     select(-Class)
 
   rec <-
-    recipe(Class ~ ., data = tr) %>%
+    recipe(type ~ ., data = tr) %>%
     prep(training = tr)
 
   expect_snapshot(check_nominal_type(te, rec$orig_lvls))

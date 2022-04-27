@@ -38,20 +38,20 @@
 #' @examples
 #' library(dplyr)
 #' library(modeldata)
-#' data(okc)
+#' data(Sacramento)
 #'
 #' # Learn the classes on the train set
-#' train <- okc[1:1000, ]
-#' test <- okc[1001:2000, ]
-#' recipe(train, age ~ .) %>%
+#' train <- Sacramento[1:1000, ]
+#' test <- Sacramento[1001:2000, ]
+#' recipe(train, sqft ~ .) %>%
 #'   check_class(everything()) %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)
 #'
 #' # Manual specification
-#' recipe(train, age ~ .) %>%
-#'   check_class(age, class_nm = "integer") %>%
-#'   check_class(diet, location, class_nm = "character") %>%
+#' recipe(train, sqft ~ .) %>%
+#'   check_class(sqft, class_nm = "integer") %>%
+#'   check_class(city, zip, class_nm = "character") %>%
 #'   check_class(date, class_nm = "Date") %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)

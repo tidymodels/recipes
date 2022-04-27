@@ -3,7 +3,7 @@ library(recipes)
 library(dplyr)
 
 library(modeldata)
-data(okc)
+data(Sacramento)
 
 x1 <- rnorm(3)
 x2 <- as.POSIXct(1:3, origin = "1970-01-01", tz = "CET")
@@ -76,32 +76,32 @@ test_that("check_class works when class is provided", {
 
 # recipes has internal coercion to character >> factor
 test_that("characters are handled correctly", {
-  rec5_NULL <- recipe(okc[1:10, ], age ~ .) %>%
+  rec5_NULL <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
     check_class(everything()) %>%
-    prep(okc[1:10, ], strings_as_factors = FALSE)
+    prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
-  expect_error(bake(rec5_NULL, okc[11:20, ]), NA)
+  expect_error(bake(rec5_NULL, Sacramento[11:20, ]), NA)
 
-  rec5_man <- recipe(okc[1:10, ], age ~ .) %>%
-    check_class(diet, location) %>%
-    prep(okc[1:10, ], strings_as_factors = FALSE)
+  rec5_man <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
+    check_class(city, zip) %>%
+    prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
-  expect_error(bake(rec5_man, okc[11:20, ]), NA)
+  expect_error(bake(rec5_man, Sacramento[11:20, ]), NA)
 
-  rec6_NULL <- recipe(okc[1:10, ], age ~ .) %>%
+  rec6_NULL <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
     check_class(everything()) %>%
-    prep(okc[1:10, ], strings_as_factors = TRUE)
+    prep(Sacramento[1:10, ], strings_as_factors = TRUE)
 
   expect_snapshot(error = TRUE,
-    bake(rec6_NULL, okc[11:20, ])
+    bake(rec6_NULL, Sacramento[11:20, ])
   )
 
-  rec6_man <- recipe(okc[1:10, ], age ~ .) %>%
-    check_class(diet) %>%
-    prep(okc[1:10, ], strings_as_factors = TRUE)
+  rec6_man <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
+    check_class(price) %>%
+    prep(Sacramento[1:10, ], strings_as_factors = TRUE)
 
   expect_snapshot(error = TRUE,
-    bake(rec6_man, okc[11:20, ])
+    bake(rec6_man, Sacramento[11:20, ])
   )
 })
 

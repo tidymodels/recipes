@@ -5,19 +5,19 @@ library(tidyselect)
 library(rlang)
 
 library(modeldata)
-data(okc)
-rec1 <- recipe(~., data = okc)
+data(Sacramento)
+rec1 <- recipe(~., data = Sacramento)
 info1 <- summary(rec1)
 
 library(modeldata)
 data(biomass)
 rec2 <- recipe(biomass) %>%
-  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  upbeds_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
     new_role = "predictor"
   ) %>%
-  update_role(HHV, new_role = "outcome") %>%
-  update_role(sample, new_role = "id variable") %>%
-  update_role(dataset, new_role = "splitting indicator")
+  upbeds_role(HHV, new_role = "outcome") %>%
+  upbeds_role(sample, new_role = "id variable") %>%
+  upbeds_role(dataset, new_role = "splitting indicator")
 info2 <- summary(rec2)
 
 test_that("terms_select() is deprecated", {
@@ -50,15 +50,15 @@ test_that("simple type selections", {
 
   expect_equal(
     terms_select(info = info1, quos(all_numeric())),
-    c("age", "height")
+    c("sqft", "price")
   )
   expect_equal(
-    terms_select(info = info1, quos(has_type("date"))),
-    "date"
+    terms_select(info = info1, quos(has_type("beds"))),
+    "beds"
   )
   expect_equal(
     terms_select(info = info1, quos(all_nominal())),
-    c("diet", "location", "Class")
+    c("city", "zip", "type")
   )
 })
 
@@ -68,7 +68,7 @@ test_that("simple name selections", {
 
   expect_equal(
     terms_select(info = info1, quos(matches("e$"))),
-    c("age", "date")
+    c("sqft", "beds")
   )
   expect_equal(
     terms_select(info = info2, quos(contains("gen"))),
@@ -79,26 +79,26 @@ test_that("simple name selections", {
     c("hydrogen", "oxygen")
   )
   expect_equal(
-    terms_select(info = info1, quos(date, age)),
-    c("date", "age")
+    terms_select(info = info1, quos(beds, sqft)),
+    c("beds", "sqft")
   )
 
   expect_equal(
-    terms_select(info = info1, quos(-age, date)),
-    c("diet", "height", "location", "date", "Class")
+    terms_select(info = info1, quos(-sqft, beds)),
+    c("city", "price", "zip", "beds", "type")
   )
   expect_equal(
-    terms_select(info = info1, quos(date, -age)),
-    "date"
+    terms_select(info = info1, quos(beds, -sqft)),
+    "beds"
   )
   expect_snapshot(error = TRUE,
-    terms_select(info = info1, quos(log(date)))
+    terms_select(info = info1, quos(log(beds)))
   )
   expect_snapshot(error = TRUE,
-    terms_select(info = info1, quos(date:age))
+    terms_select(info = info1, quos(beds:sqft))
   )
   expect_snapshot(error = TRUE,
-    terms_select(info = info1, quos(I(date:age)))
+    terms_select(info = info1, quos(I(beds:sqft)))
   )
   expect_snapshot(error = TRUE,
     terms_select(info = info1, quos(matches("blahblahblah")))

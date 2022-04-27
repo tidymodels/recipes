@@ -6,44 +6,44 @@ library(Matrix)
 ###################################################################
 
 library(modeldata)
-data(okc)
+data(Sacramento)
 
-okc$diet <- as.factor(okc$diet)
-okc$date <- as.Date(okc$date)
-okc$location <- as.factor(okc$location)
+Sacramento$city <- as.factor(Sacramento$city)
+Sacramento$beds <- as.Date(Sacramento$beds)
+Sacramento$zip <- as.factor(Sacramento$zip)
 
-okc_tr <- okc[1:400, ]
-okc_te <- okc[(401:800), ]
+sacr_tr <- Sacramento[1:400, ]
+sacr_te <- Sacramento[(401:800), ]
 
 ###################################################################
 
-rec <- recipe(~., data = okc_tr) %>%
+rec <- recipe(~., data = sacr_tr) %>%
   step_impute_mode(all_nominal()) %>%
   step_impute_mean(all_numeric()) %>%
-  step_dummy(location, diet) %>%
-  prep(training = okc_tr)
+  step_dummy(zip, city) %>%
+  prep(training = sacr_tr)
 
 ###################################################################
 
 test_that("correct types", {
-  bake_default <- bake(rec, new_data = okc_te, all_numeric())
+  bake_default <- bake(rec, new_data = sacr_te, all_numeric())
   bake_sparse <-
     bake(rec,
-      new_data = okc_te,
+      new_data = sacr_te,
       all_numeric(),
       composition = "dgCMatrix"
     )
   bake_sparse_1d <-
     bake(rec,
-      new_data = okc_te,
-      age,
+      new_data = sacr_te,
+      sqft,
       composition = "dgCMatrix"
     )
   juice_default <- juice(rec, all_numeric())
   juice_sparse <-
     juice(rec, all_numeric(), composition = "dgCMatrix")
   juice_sparse_1d <-
-    juice(rec, age, composition = "dgCMatrix")
+    juice(rec, sqft, composition = "dgCMatrix")
 
   expect_equal(class(bake_default), class(tibble()))
   expect_equal(class(juice_default), class(tibble()))
@@ -66,7 +66,7 @@ test_that("correct types", {
 
 test_that("bad args", {
   expect_snapshot(error = TRUE,
-    bake(rec, new_data = okc_te, composition = "dgCMatrix")
+    bake(rec, new_data = sacr_te, composition = "dgCMatrix")
   )
   expect_snapshot(error = TRUE,
     juice(rec, composition = "dgCMatrix")
