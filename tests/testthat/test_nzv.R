@@ -135,7 +135,7 @@ test_that("nzv with case weights", {
   exp_freq_cut_int <- weighted_int_counts$n[1] / weighted_int_counts$n[2]
 
   dat_caseweights_x2 <- dat %>%
-    mutate(x2 = importance_weights(x2))
+    mutate(x2 = frequency_weights(x2))
 
   expect_equal(
     recipe(~., dat_caseweights_x2) %>%
@@ -158,6 +158,41 @@ test_that("nzv with case weights", {
   weighted_frag_counts <- dat %>% count(x3, wt = y, sort = TRUE)
   exp_freq_cut_frag <- weighted_frag_counts$n[1] / weighted_frag_counts$n[2]
 
+  expect_snapshot(
+    recipe(~., dat_caseweights_x2) %>%
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
+      prep()
+  )
+
+  # ----------------------------------------------------------------------------
+
+  weighted_int_counts <- dat %>% count(x3, wt = x2, sort = TRUE)
+  exp_freq_cut_int <- weighted_int_counts$n[1] / weighted_int_counts$n[2]
+
+  dat_caseweights_x2 <- dat %>%
+    mutate(x2 = importance_weights(x2))
+
+  expect_equal(
+    recipe(~., dat_caseweights_x2) %>%
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
+      prep() %>%
+      tidy(1) %>%
+      pull(terms),
+    c("x4")
+  )
+
+  expect_equal(
+    recipe(~., dat_caseweights_x2) %>%
+      step_nzv(all_predictors(), freq_cut = exp_freq_cut_int - 0.0001) %>%
+      prep() %>%
+      tidy(1) %>%
+      pull(terms),
+    c("x4")
+  )
+
+  weighted_frag_counts <- dat %>% count(x3, wt = y, sort = TRUE)
+  exp_freq_cut_frag <- weighted_frag_counts$n[1] / weighted_frag_counts$n[2]
+
   dat_caseweights_y <- dat %>%
     mutate(y = importance_weights(y))
 
@@ -167,7 +202,7 @@ test_that("nzv with case weights", {
       prep() %>%
       tidy(1) %>%
       pull(terms),
-    c("x4")
+    c("x3", "x4")
   )
 
   expect_equal(

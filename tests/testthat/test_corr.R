@@ -132,7 +132,7 @@ test_that("case weights", {
   dat_caseweights <- dat %>%
     mutate(V3_dup = V3 + rep(c(0, 1), c(50, 50)),
            wts = rep(c(1, 2), c(50, 50)),
-           wts = importance_weights(wts))
+           wts = frequency_weights(wts))
 
   # low filter
   filtering <- recipe(~., data = dat_caseweights) %>%
@@ -151,6 +151,34 @@ test_that("case weights", {
   filtering_trained <- prep(filtering)
 
   removed <- c("V3_dup", "V1", "V2")
+
+  expect_equal(filtering_trained$steps[[1]]$removals, removed)
+
+  expect_snapshot(filtering_trained)
+
+  # ----------------------------------------------------------------------------
+  dat_caseweights <- dat %>%
+    mutate(V3_dup = V3 + rep(c(0, 1), c(50, 50)),
+           wts = rep(c(1, 2), c(50, 50)),
+           wts = importance_weights(wts))
+
+  # low filter
+  filtering <- recipe(~., data = dat_caseweights) %>%
+    step_corr(all_predictors(), threshold = 0.92)
+
+  filtering_trained <- prep(filtering)
+
+  removed <- c("V6", "V1")
+
+  expect_equal(filtering_trained$steps[[1]]$removals, removed)
+
+  # high filter
+  filtering <- recipe(~., data = dat_caseweights) %>%
+    step_corr(all_predictors(), threshold = 0.9)
+
+  filtering_trained <- prep(filtering)
+
+  removed <- c("V6", "V1", "V3")
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 

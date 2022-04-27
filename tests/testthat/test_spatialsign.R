@@ -93,17 +93,34 @@ test_that("empty printing", {
 })
 
 test_that("centering with case weights", {
-  mtcars1 <- mtcars
-  mtcars1$wt <- importance_weights(mtcars1$wt)
+  mtcars_freq <- mtcars
+  mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars1) %>%
+    recipe(mpg ~ ., mtcars_freq) %>%
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rowSums(bake(rec, new_data = NULL, -c(cyl, mpg))^2),
+    as.numeric(mtcars_freq$cyl)
+  )
+
+  expect_snapshot(rec)
+
+  # ----------------------------------------------------------------------------
+
+  mtcars_imp <- mtcars
+  mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_imp) %>%
     step_spatialsign(all_numeric_predictors()) %>%
     prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),
-    as.numeric(mtcars1$wt)
+    rep(1, nrow(mtcars_imp))
   )
 
   expect_snapshot(rec)

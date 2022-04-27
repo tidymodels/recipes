@@ -294,56 +294,106 @@ test_that("normalize - warns on zv",{
 })
 
 test_that("centering with case weights", {
-  mtcars1 <- mtcars
-  mtcars1$wt <- importance_weights(mtcars1$wt)
+  mtcars_freq <- mtcars
+  mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars1) %>%
+    recipe(mpg ~ ., mtcars_freq) %>%
     step_center(all_numeric_predictors()) %>%
     prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
-    unname(averages(mtcars1[, -c(1, 6)], mtcars1$wt))
+    unname(averages(mtcars_freq[, -c(1, 2)], mtcars_freq$cyl))
+  )
+
+  expect_snapshot(rec)
+
+  mtcars_imp <- mtcars
+  mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_imp) %>%
+    step_center(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    tidy(rec, number = 1)[["value"]],
+    unname(averages(mtcars_imp[, -c(1, 6)], NULL))
   )
 
   expect_snapshot(rec)
 })
 
 test_that("scaling with case weights", {
-  mtcars1 <- mtcars
-  mtcars1$wt <- importance_weights(mtcars1$wt)
+  mtcars_freq <- mtcars
+  mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars1) %>%
+    recipe(mpg ~ ., mtcars_freq) %>%
     step_scale(all_numeric_predictors()) %>%
     prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
-    unname(sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt)))
+    unname(sqrt(variances(mtcars_freq[, -c(1, 2)], mtcars_freq$cyl)))
+  )
+
+  expect_snapshot(rec)
+
+  mtcars_imp <- mtcars
+  mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_imp) %>%
+    step_scale(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    tidy(rec, number = 1)[["value"]],
+    unname(sqrt(variances(mtcars_imp[, -c(1, 6)], NULL)))
   )
 
   expect_snapshot(rec)
 })
 
 test_that("normalizing with case weights", {
-  mtcars1 <- mtcars
-  mtcars1$wt <- importance_weights(mtcars1$wt)
+  mtcars_freq <- mtcars
+  mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
 
   rec <-
-    recipe(mpg ~ ., mtcars1) %>%
+    recipe(mpg ~ ., mtcars_freq) %>%
     step_normalize(all_numeric_predictors()) %>%
     prep()
 
   expect_equal(
     rec$steps[[1]]$means,
-    averages(mtcars1[, -c(1, 6)], mtcars1$wt)
+    averages(mtcars_freq[, -c(1, 2)], mtcars_freq$cyl)
   )
 
   expect_equal(
     rec$steps[[1]]$sds,
-    sqrt(variances(mtcars1[, -c(1, 6)], mtcars1$wt))
+    sqrt(variances(mtcars_freq[, -c(1, 2)], mtcars_freq$cyl))
+  )
+
+  expect_snapshot(rec)
+
+  mtcars_imp <- mtcars
+  mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_imp) %>%
+    step_normalize(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rec$steps[[1]]$means,
+    averages(mtcars_imp[, -c(1, 6)], NULL)
+  )
+
+  expect_equal(
+    rec$steps[[1]]$sds,
+    sqrt(variances(mtcars_imp[, -c(1, 6)], NULL))
   )
 
   expect_snapshot(rec)

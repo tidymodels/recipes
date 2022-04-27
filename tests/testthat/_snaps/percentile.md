@@ -90,3 +90,22 @@
       
       Percentile transformation on carbon, sulfur [weighted, trained]
 
+---
+
+    Code
+      rec_trained
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          8
+      
+      Training data contained 456 data points and no missing data.
+      
+      Operations:
+      
+      Percentile transformation on carbon, sulfur [ignored weights, trained]
+

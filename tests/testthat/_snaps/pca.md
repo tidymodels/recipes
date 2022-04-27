@@ -150,3 +150,23 @@
       
       PCA extraction with carbon, hydrogen, oxygen, sulfur [weighted, trained]
 
+---
+
+    Code
+      pca_extract_trained
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor          4
+      
+      Training data contained 456 data points and no missing data.
+      
+      Operations:
+      
+      PCA extraction with carbon, hydrogen, oxygen, sulfur [ignored weights, trained]
+

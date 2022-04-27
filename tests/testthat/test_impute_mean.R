@@ -171,7 +171,7 @@ test_that("trim works", {
 
 test_that("case weights", {
   credit_tr_cw <- credit_tr %>%
-    mutate(Amount = importance_weights(Amount))
+    mutate(Amount = frequency_weights(Amount))
 
   impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
     step_impute_mean(Age, Assets, Income) %>%
@@ -198,6 +198,43 @@ test_that("case weights", {
     purrr::map(weighted.mean,
                w = as.numeric(credit_tr_cw$Amount),
                na.rm = TRUE) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  expect_snapshot(impute_rec)
+
+  # ----------------------------------------------------------------------------
+
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = importance_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    select(Age, Assets, Income) %>%
+    averages(wts = NULL) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  # Trimmed
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income, trim = 0.2) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    dplyr::select(Age, Assets, Income) %>%
+    purrr::map(trim, trim = 0.2) %>%
+    purrr::map(~weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) %>%
     purrr::map(round, 0)
 
   expect_equal(

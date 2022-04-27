@@ -109,3 +109,22 @@
       
       Mode imputation for x1 [weighted, trained]
 
+---
+
+    Code
+      imputed
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 150 data points and 10 incomplete rows. 
+      
+      Operations:
+      
+      Mode imputation for x1 [ignored weights, trained]
+

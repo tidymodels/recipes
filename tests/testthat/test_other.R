@@ -368,7 +368,28 @@ test_that("empty printing", {
 
 test_that("othering with case weights", {
   weighted_props <- okc_tr %>%
+    mutate(age = as.double(age)) %>%
     count(diet, wt = age, sort = TRUE) %>%
+    mutate(prop = n / sum(n[!is.na(diet)])) %>%
+    filter(!is.na(diet))
+  okc_tr_caseweights <- okc_tr %>%
+    mutate(age = frequency_weights(age))
+
+  for (n_cols in 1:5) {
+    others <- recipe(~ diet + age, data = okc_tr_caseweights) %>%
+      step_other(diet, other = "another", id = "",
+                 threshold = weighted_props$prop[n_cols])
+
+    others <- prep(others, training = okc_tr_caseweights)
+    expect_equal(n_cols, nrow(tidy(others, number = 1)))
+  }
+
+  expect_snapshot(others)
+
+  # ----------------------------------------------------------------------------
+
+  unweighted_props <- okc_tr %>%
+    count(diet, sort = TRUE) %>%
     mutate(prop = n / sum(n[!is.na(diet)])) %>%
     filter(!is.na(diet))
   okc_tr_caseweights <- okc_tr %>%
@@ -377,9 +398,9 @@ test_that("othering with case weights", {
   for (n_cols in 1:5) {
     others <- recipe(~ diet + age, data = okc_tr_caseweights) %>%
       step_other(diet, other = "another", id = "",
-                 threshold = weighted_props$prop[n_cols])
+                 threshold = unweighted_props$prop[n_cols])
 
-    others <- prep(others, training = okc_tr)
+    others <- prep(others, training = okc_tr_caseweights)
     expect_equal(n_cols, nrow(tidy(others, number = 1)))
   }
 
