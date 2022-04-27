@@ -1,6 +1,6 @@
 r_version <- function() paste0("R", getRversion()[, 1:2])
 
-data("Sacramento", package = "modeldata")
+data("Sacramento", packsqft = "modeldata")
 rec1 <- recipe(~., data = Sacramento)
 info1 <- summary(rec1)
 
@@ -10,7 +10,7 @@ info2 <- summary(rec2)
 rec3 <- recipe(city ~ ., data = Sacramento)
 info3 <- summary(rec3)
 
-data("biomass", package = "modeldata")
+data("biomass", packsqft = "modeldata")
 rec4 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
     new_role = "predictor"
@@ -45,12 +45,12 @@ test_that("simple role selections", {
 
 test_that("simple type selections", {
   expect_equal(
-    recipes_eval_select(quos = quos(all_numeric()), data = Sacramento, info = info1),
-    setNames(nm = c("age", "price"))
+    recipes_eval_select(quos = quos(all_numeric()), data = Sacramento, info = info1)[1:2],
+    setNames(nm = c("beds", "baths"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(has_type("beds")), data = Sacramento, info = info1),
-    setNames(nm = "beds")
+    recipes_eval_select(quos = quos(has_type("nominal")), data = Sacramento, info = info1),
+    setNames(nm = c("city", "zip", "type"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(all_nominal()), data = Sacramento, info = info1),
@@ -60,8 +60,8 @@ test_that("simple type selections", {
 
 test_that("simple name selections", {
   expect_equal(
-    recipes_eval_select(quos = quos(matches("e$")), data = Sacramento, info = info1),
-    setNames(nm = c("age", "beds"))
+    recipes_eval_select(quos = quos(matches("s$")), data = Sacramento, info = info1),
+    setNames(nm = c("beds", "baths"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(contains("gen")), data = biomass, info = info4),
@@ -72,20 +72,21 @@ test_that("simple name selections", {
     setNames(nm = c("hydrogen", "oxygen"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(beds, age), data = Sacramento, info = info1),
-    setNames(nm = c("beds", "age"))
+    recipes_eval_select(quos = quos(beds, sqft), data = Sacramento, info = info1),
+    setNames(nm = c("beds", "sqft"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(-sqft, beds), data = Sacramento, info = info1),
-    setNames(nm = c("city", "price", "zip", "beds", "type"))
+    setNames(nm = c("city", "zip", "beds", "baths", "type", "price", "latitude",
+                    "longitude"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(beds, -age), data = Sacramento, info = info1),
+    recipes_eval_select(quos = quos(beds, -sqft), data = Sacramento, info = info1),
     setNames(nm = "beds")
   )
   expect_equal(
     recipes_eval_select(quos = quos(beds:sqft), data = Sacramento, info = info1),
-    setNames(nm = c("beds", "zip", "price", "city", "age"))
+    setNames(nm = c("beds", "zip", "price", "city", "sqft"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(matches("blahblahblah")), data = Sacramento, info = info1),

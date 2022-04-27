@@ -50,11 +50,11 @@ test_that("simple type selections", {
 
   expect_equal(
     terms_select(info = info1, quos(all_numeric())),
-    c("sqft", "price")
+    c("beds", "baths", "sqft", "price", "latitude", "longitude")
   )
   expect_equal(
-    terms_select(info = info1, quos(has_type("beds"))),
-    "beds"
+    terms_select(info = info1, quos(has_type("nominal"))),
+    c("city", "zip", "type")
   )
   expect_equal(
     terms_select(info = info1, quos(all_nominal())),
@@ -67,8 +67,8 @@ test_that("simple name selections", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   expect_equal(
-    terms_select(info = info1, quos(matches("e$"))),
-    c("sqft", "beds")
+    terms_select(info = info1, quos(matches("s$"))),
+    c("beds", "baths")
   )
   expect_equal(
     terms_select(info = info2, quos(contains("gen"))),
@@ -85,7 +85,7 @@ test_that("simple name selections", {
 
   expect_equal(
     terms_select(info = info1, quos(-sqft, beds)),
-    c("city", "price", "zip", "beds", "type")
+    c("city", "zip", "beds", "baths", "type", "price", "latitude", "longitude")
   )
   expect_equal(
     terms_select(info = info1, quos(beds, -sqft)),

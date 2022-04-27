@@ -25,7 +25,7 @@ test_that("numeric profile", {
   expect_true(inherits(num_rec$city, "factor"))
   expect_true(inherits(num_rec$price, "integer"))
   expect_true(inherits(num_rec$zip, "factor"))
-  expect_true(inherits(num_rec$beds, "Date"))
+  expect_true(inherits(num_rec$beds, "integer"))
   expect_true(inherits(num_rec$int, "integer"))
   expect_true(inherits(num_rec$sqft, "integer"))
 })
@@ -118,12 +118,12 @@ test_that("printing", {
 
 test_that("tidy", {
   num_rec_3 <- sacr_rec %>%
-    step_profile(-sqft, profile = vars(contains("age")), id = "")
+    step_profile(-sqft, profile = vars(contains("sqft")), id = "")
   num_rec_4 <- prep(num_rec_3, Sacramento)
 
   tidy_3 <- tidy(num_rec_3, 1)
   exp_3 <- tibble(
-    terms = c("-age", "contains(\"age\")"),
+    terms = c("-sqft", "contains(\"sqft\")"),
     type = c("fixed", "profiled"),
     id = ""
   )
@@ -131,8 +131,9 @@ test_that("tidy", {
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
-    terms = c("city", "price", "zip", "beds", "Class", "int", "age"),
-    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "fixed", "profiled"),
+    terms = c("city", "zip", "beds", "baths", "type", "price", "latitude",
+              "longitude", "int", "sqft"),
+    type = c(rep("fixed", 9), "profiled"),
     id = ""
   )
   expect_equal(tidy_4, exp_4)

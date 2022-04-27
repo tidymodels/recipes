@@ -45,7 +45,7 @@ test_that("factors all the way down with skipping", {
   te <-
     Sacramento_all_fac %>%
     slice(501:932) %>%
-    select(-Class)
+    select(-type)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -79,7 +79,7 @@ test_that("mixed nominal data with skipping", {
   te <-
     Sacramento_fac %>%
     slice(501:932) %>%
-    select(-Class)
+    select(-type)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -114,7 +114,7 @@ test_that("no factors with skipping", {
   te <-
     Sacramento_chr %>%
     slice(501:932) %>%
-    select(-Class)
+    select(-type)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -148,7 +148,7 @@ test_that("missing factors with skipping", {
   te <-
     Sacramento_chr %>%
     slice(501:932) %>%
-    select(-Class)
+    select(-type)
 
   rec <-
     recipe(type ~ ., data = tr) %>%

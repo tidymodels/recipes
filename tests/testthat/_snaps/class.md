@@ -54,22 +54,6 @@
       Error:
       ! x2 has the class(es) POSIXct, POSIXt, Julian, but only the following is/are asked POSIXct, POSIXt, allow_additional is FALSE.
 
-# characters are handled correctly
-
-    Code
-      bake(rec6_NULL, okc[11:20, ])
-    Condition
-      Error:
-      ! diet should have the class(es) factor but has the class(es) character.
-
----
-
-    Code
-      bake(rec6_man, okc[11:20, ])
-    Condition
-      Error:
-      ! diet should have the class(es) factor but has the class(es) character.
-
 # printing
 
     Code

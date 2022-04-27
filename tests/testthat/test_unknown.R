@@ -64,7 +64,7 @@ test_that("bad args", {
   )
   expect_snapshot(error = TRUE,
     recipe(~., data = sacr_tr) %>%
-      step_unknown(city, new_level = "anything") %>%
+      step_unknown(city, new_level = "FAIR_OAKS") %>%
       prep()
   )
 })
