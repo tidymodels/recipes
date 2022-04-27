@@ -1,11 +1,3 @@
-# 'other' already in use
-
-    Code
-      prep(others, training = okc_tr, strings_as_factors = FALSE)
-    Condition
-      Error in `FUN()`:
-      ! The level other is already a factor level that will be retained. Please choose a different value.
-
 # printing
 
     Code
@@ -20,15 +12,15 @@
       
       Operations:
       
-      Collapsing factor levels for diet, location
+      Collapsing factor levels for city, zip
 
 ---
 
     Code
-      prep(rec, training = okc_tr, verbose = TRUE)
+      prep(rec, training = sacr_tr, verbose = TRUE)
     Output
       oper 1 step other [training] 
-      The retained training set is ~ 0.46 Mb  in memory.
+      The retained training set is ~ 0.01 Mb  in memory.
       
       Recipe
       
@@ -37,16 +29,16 @@
             role #variables
        predictor          2
       
-      Training data contained 59655 data points and 24288 incomplete rows. 
+      Training data contained 732 data points and no missing data.
       
       Operations:
       
-      Collapsing factor levels for diet, location [trained]
+      Collapsing factor levels for city, zip [trained]
 
 # if the threshold argument is greather than one then it should be an integer(ish)
 
     Code
-      rec %>% step_other(diet, location, threshold = 3.14)
+      rec %>% step_other(city, zip, threshold = 3.14)
     Condition
       Error in `step_other()`:
       ! If `threshold` is greater than one it should be an integer.

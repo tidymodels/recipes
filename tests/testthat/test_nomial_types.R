@@ -9,15 +9,14 @@ data("Sacramento")
 
 Sacramento_chr <-
   Sacramento %>%
-  mutate(type = as.character(type))
+  mutate(across(where(is.factor), as.character))
 
 Sacramento_fac <-
   Sacramento %>%
-  mutate(city = as.factor(city))
+  mutate(type = as.character(type))
 
 Sacramento_all_fac <-
-  Sacramento_fac %>%
-  mutate(zip = as.factor(zip))
+  Sacramento
 
 # ----------------------------------------------------------------
 
@@ -28,7 +27,7 @@ test_that("factors all the way down", {
 
   te <-
     Sacramento_all_fac %>%
-    slice(501:1000)
+    slice(501:932)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -45,7 +44,7 @@ test_that("factors all the way down with skipping", {
 
   te <-
     Sacramento_all_fac %>%
-    slice(501:1000) %>%
+    slice(501:932) %>%
     select(-Class)
 
   rec <-
@@ -63,7 +62,7 @@ test_that("mixed nominal data", {
     slice(1:500)
   te <-
     Sacramento_fac %>%
-    slice(501:1000)
+    slice(501:932)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -79,7 +78,7 @@ test_that("mixed nominal data with skipping", {
     slice(1:500)
   te <-
     Sacramento_fac %>%
-    slice(501:1000) %>%
+    slice(501:932) %>%
     select(-Class)
 
   rec <-
@@ -98,7 +97,7 @@ test_that("no factors", {
     slice(1:500)
   te <-
     Sacramento_chr %>%
-    slice(501:1000)
+    slice(501:932)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -114,7 +113,7 @@ test_that("no factors with skipping", {
     slice(1:500)
   te <-
     Sacramento_chr %>%
-    slice(501:1000) %>%
+    slice(501:932) %>%
     select(-Class)
 
   rec <-
@@ -133,7 +132,7 @@ test_that("missing factors", {
     slice(1:500)
   te <-
     Sacramento_chr %>%
-    slice(501:1000)
+    slice(501:932)
 
   rec <-
     recipe(type ~ ., data = tr) %>%
@@ -148,7 +147,7 @@ test_that("missing factors with skipping", {
     slice(1:500)
   te <-
     Sacramento_chr %>%
-    slice(501:1000) %>%
+    slice(501:932) %>%
     select(-Class)
 
   rec <-

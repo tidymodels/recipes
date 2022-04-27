@@ -9,7 +9,7 @@ library(modeldata)
 data(Sacramento)
 
 Sacramento$city <- as.factor(Sacramento$city)
-Sacramento$beds <- as.Date(Sacramento$beds)
+Sacramento$beds <- as.factor(Sacramento$beds)
 Sacramento$zip <- as.factor(Sacramento$zip)
 
 sacr_tr <- Sacramento[1:400, ]

@@ -12,12 +12,12 @@ info1 <- summary(rec1)
 library(modeldata)
 data(biomass)
 rec2 <- recipe(biomass) %>%
-  upbeds_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
+  update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
     new_role = "predictor"
   ) %>%
-  upbeds_role(HHV, new_role = "outcome") %>%
-  upbeds_role(sample, new_role = "id variable") %>%
-  upbeds_role(dataset, new_role = "splitting indicator")
+  update_role(HHV, new_role = "outcome") %>%
+  update_role(sample, new_role = "id variable") %>%
+  update_role(dataset, new_role = "splitting indicator")
 info2 <- summary(rec2)
 
 test_that("terms_select() is deprecated", {

@@ -72,15 +72,15 @@ test_that("simple name selections", {
     setNames(nm = c("hydrogen", "oxygen"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(date, age), data = Sacramento, info = info1),
+    recipes_eval_select(quos = quos(beds, age), data = Sacramento, info = info1),
     setNames(nm = c("beds", "age"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(-sqft, date), data = Sacramento, info = info1),
+    recipes_eval_select(quos = quos(-sqft, beds), data = Sacramento, info = info1),
     setNames(nm = c("city", "price", "zip", "beds", "type"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(date, -age), data = Sacramento, info = info1),
+    recipes_eval_select(quos = quos(beds, -age), data = Sacramento, info = info1),
     setNames(nm = "beds")
   )
   expect_equal(
@@ -93,7 +93,7 @@ test_that("simple name selections", {
   )
 
   expect_snapshot(
-    recipes_eval_select(quos = quos(log(date)), data = Sacramento, info = info1),
+    recipes_eval_select(quos = quos(log(beds)), data = Sacramento, info = info1),
     error = TRUE
   )
   expect_snapshot(
@@ -199,7 +199,7 @@ test_that("new dplyr selectors", {
 test_that("predictor specific role selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_numeric_predictors()), data = Sacramento, info = info2),
-    setNames(nm = "price")
+    setNames(nm = c("beds", "baths", "price", "latitude", "longitude"))
   )
 
   expect_equal(

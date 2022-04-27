@@ -5,6 +5,8 @@ library(testthat)
 library(modeldata)
 data(Sacramento)
 
+Sacramento$city <- as.character(Sacramento$city)
+
 sacr_tr <- Sacramento[(1:800), ]
 sacr_te <- Sacramento[-(1:800), ]
 

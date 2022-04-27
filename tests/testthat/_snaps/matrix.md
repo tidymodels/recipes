@@ -1,10 +1,10 @@
 # bad args
 
     Code
-      bake(rec, new_data = okc_te, composition = "matrix")
+      bake(rec, new_data = sacr_te, composition = "matrix")
     Condition
       Error in `convert_matrix()`:
-      ! Columns (`date`, `Class`) are not numeric; cannot convert to matrix.
+      ! Columns (`beds`, `type`) are not numeric; cannot convert to matrix.
 
 ---
 
@@ -12,5 +12,5 @@
       juice(rec, composition = "matrix")
     Condition
       Error in `convert_matrix()`:
-      ! Columns (`date`, `Class`) are not numeric; cannot convert to matrix.
+      ! Columns (`beds`, `type`) are not numeric; cannot convert to matrix.
 

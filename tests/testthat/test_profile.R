@@ -44,16 +44,16 @@ test_that("factor profile", {
 })
 
 
-test_that("date profile", {
-  date_rec <- sacr_rec %>%
-    step_profile(-date, profile = vars(date)) %>%
+test_that("beds profile", {
+  beds_rec <- sacr_rec %>%
+    step_profile(-beds, profile = vars(beds)) %>%
     prep(Sacramento) %>%
     juice()
-  expect_true(is_unq(date_rec$city))
-  expect_true(is_unq(date_rec$price))
-  expect_true(is_unq(date_rec$zip))
-  expect_false(is_unq(date_rec$beds))
-  expect_true(is_unq(date_rec$sqft))
+  expect_true(is_unq(beds_rec$city))
+  expect_true(is_unq(beds_rec$price))
+  expect_true(is_unq(beds_rec$zip))
+  expect_false(is_unq(beds_rec$beds))
+  expect_true(is_unq(beds_rec$sqft))
 })
 
 test_that("character profile", {
@@ -82,7 +82,7 @@ test_that("bad values", {
   )
   expect_snapshot(error = TRUE,
     sacr_rec %>%
-      step_profile(sqft, date, price, profile = vars(zip, date)) %>%
+      step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
       prep(data = Sacramento)
   )
   expect_snapshot(error = TRUE,
@@ -131,7 +131,7 @@ test_that("tidy", {
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
-    terms = c("city", "price", "zip", "date", "Class", "int", "age"),
+    terms = c("city", "price", "zip", "beds", "Class", "int", "age"),
     type = c("fixed", "fixed", "fixed", "fixed", "fixed", "fixed", "profiled"),
     id = ""
   )

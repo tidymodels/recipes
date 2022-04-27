@@ -7,7 +7,8 @@
       `terms_select()` was deprecated in recipes 0.1.17.
       Please use `recipes_eval_select()` instead.
     Output
-      [1] "age"      "diet"     "height"   "location" "date"     "Class"   
+      [1] "city"      "zip"       "beds"      "baths"     "sqft"      "type"     
+      [7] "price"     "latitude"  "longitude"
 
 # simple role selections
 
@@ -20,7 +21,7 @@
 # simple name selections
 
     Code
-      terms_select(info = info1, quos(log(date)))
+      terms_select(info = info1, quos(log(beds)))
     Condition
       Error in `FUN()`:
       ! Not all functions are allowed in step function selectors (e.g. `log`). See ?selections.
@@ -28,7 +29,7 @@
 ---
 
     Code
-      terms_select(info = info1, quos(date:age))
+      terms_select(info = info1, quos(beds:sqft))
     Condition
       Error in `FUN()`:
       ! Not all functions are allowed in step function selectors (e.g. `:`). See ?selections.
@@ -36,7 +37,7 @@
 ---
 
     Code
-      terms_select(info = info1, quos(I(date:age)))
+      terms_select(info = info1, quos(I(beds:sqft)))
     Condition
       Error in `FUN()`:
       ! Not all functions are allowed in step function selectors (e.g. `I`, `:`). See ?selections.

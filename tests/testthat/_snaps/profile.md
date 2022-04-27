@@ -1,7 +1,7 @@
 # bad values
 
     Code
-      okc_rec %>% step_profile(everything(), profile = vars(age)) %>% prep(data = okc)
+      sacr_rec %>% step_profile(everything(), profile = vars(sqft)) %>% prep(data = Sacramento)
     Condition
       Error in `prep()`:
       ! The profiled variable cannot be in the list of variables to be fixed.
@@ -9,7 +9,7 @@
 ---
 
     Code
-      okc_rec %>% step_profile(everything(), profile = age) %>% prep(data = okc)
+      sacr_rec %>% step_profile(everything(), profile = age) %>% prep(data = Sacramento)
     Condition
       Error in `structure()`:
       ! object 'age' not found
@@ -17,8 +17,8 @@
 ---
 
     Code
-      okc_rec %>% step_profile(age, date, height, profile = vars(location, date)) %>%
-        prep(data = okc)
+      sacr_rec %>% step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
+        prep(data = Sacramento)
     Condition
       Error in `prep()`:
       ! Only one variable should be profiled
@@ -26,7 +26,7 @@
 ---
 
     Code
-      okc_rec %>% step_profile(diet, profile = vars(age), pct = -1) %>% prep(data = okc)
+      sacr_rec %>% step_profile(city, profile = vars(sqft), pct = -1) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `pct should be on [0, 1]`
@@ -34,7 +34,8 @@
 ---
 
     Code
-      okc_rec %>% step_profile(diet, profile = vars(age), grid = 1:3) %>% prep(data = okc)
+      sacr_rec %>% step_profile(city, profile = vars(sqft), grid = 1:3) %>% prep(
+        data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `grid` should have two named elements. See ?step_profile
@@ -42,8 +43,8 @@
 ---
 
     Code
-      okc_rec %>% step_profile(diet, profile = vars(age), grid = list(pctl = 1, len = 2)) %>%
-        prep(data = okc)
+      sacr_rec %>% step_profile(city, profile = vars(sqft), grid = list(pctl = 1,
+        len = 2)) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `grid$pctl should be logical.`
@@ -66,11 +67,11 @@
       Inputs:
       
             role #variables
-       predictor          7
+       predictor         10
       
       Operations:
       
-      Profiling data set for age
+      Profiling data set for sqft
 
 ---
 
@@ -82,13 +83,13 @@
       Inputs:
       
             role #variables
-       predictor          7
+       predictor         10
       
-      Training data contained 20 data points and 4 incomplete rows. 
+      Training data contained 20 data points and no missing data.
       
       Operations:
       
-      Profiling data set for age [trained]
+      Profiling data set for sqft [trained]
 
 # empty printing
 
