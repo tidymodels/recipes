@@ -6,6 +6,7 @@ library(modeldata)
 data(Sacramento)
 
 Sacramento$city <- as.character(Sacramento$city)
+Sacramento$zip <- as.character(Sacramento$zip)
 
 sacr_tr <- Sacramento[(1:800), ]
 sacr_te <- Sacramento[-(1:800), ]

@@ -54,6 +54,22 @@
       Error:
       ! x2 has the class(es) POSIXct, POSIXt, Julian, but only the following is/are asked POSIXct, POSIXt, allow_additional is FALSE.
 
+# characters are handled correctly
+
+    Code
+      bake(rec6_NULL, sacr_fac[11:20, ])
+    Condition
+      Error:
+      ! city should have the class(es) factor but has the class(es) character.
+
+---
+
+    Code
+      bake(rec6_man, sacr_fac[11:20, ])
+    Condition
+      Error:
+      ! type should have the class(es) factor but has the class(es) character.
+
 # printing
 
     Code

@@ -1,6 +1,6 @@
 r_version <- function() paste0("R", getRversion()[, 1:2])
 
-data("Sacramento", packsqft = "modeldata")
+data("Sacramento", package = "modeldata")
 rec1 <- recipe(~., data = Sacramento)
 info1 <- summary(rec1)
 
@@ -10,7 +10,7 @@ info2 <- summary(rec2)
 rec3 <- recipe(city ~ ., data = Sacramento)
 info3 <- summary(rec3)
 
-data("biomass", packsqft = "modeldata")
+data("biomass", package = "modeldata")
 rec4 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
     new_role = "predictor"
@@ -86,7 +86,7 @@ test_that("simple name selections", {
   )
   expect_equal(
     recipes_eval_select(quos = quos(beds:sqft), data = Sacramento, info = info1),
-    setNames(nm = c("beds", "zip", "price", "city", "sqft"))
+    setNames(nm = c("beds", "baths", "sqft"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(matches("blahblahblah")), data = Sacramento, info = info1),

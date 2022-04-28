@@ -88,20 +88,28 @@ test_that("characters are handled correctly", {
 
   expect_error(bake(rec5_man, Sacramento[11:20, ]), NA)
 
-  rec6_NULL <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
+  sacr_fac <-
+    dplyr::mutate(
+      Sacramento,
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
+
+  rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
     check_class(everything()) %>%
-    prep(Sacramento[1:10, ], strings_as_factors = TRUE)
+    prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
   expect_snapshot(error = TRUE,
-    bake(rec6_NULL, Sacramento[11:20, ])
+    bake(rec6_NULL, sacr_fac[11:20, ])
   )
 
-  rec6_man <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
-    check_class(price) %>%
-    prep(Sacramento[1:10, ], strings_as_factors = TRUE)
+  rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
+    check_class(type) %>%
+    prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
   expect_snapshot(error = TRUE,
-    bake(rec6_man, Sacramento[11:20, ])
+    bake(rec6_man, sacr_fac[11:20, ])
   )
 })
 

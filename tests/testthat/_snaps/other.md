@@ -1,3 +1,11 @@
+# 'other' already in use
+
+    Code
+      prep(others, training = sacr_tr_chr, strings_as_factors = FALSE)
+    Condition
+      Error in `FUN()`:
+      ! The level other is already a factor level that will be retained. Please choose a different value.
+
 # printing
 
     Code

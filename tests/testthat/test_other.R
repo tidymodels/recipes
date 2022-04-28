@@ -29,12 +29,8 @@ test_that("default inputs", {
   others_te <- bake(others, new_data = sacr_te)
 
   tidy_exp_tr <- tibble(
-    terms = rep(c("city", "zip"), c(4, 3)),
-    retained = c(
-      "anything", "mostly anything", "mostly vegetarian",
-      "strictly anything", "berkeley",
-      "oakland", "san francisco"
-    ),
+    terms = rep(c("city", "zip"), c(3, 1)),
+    retained = c("ELK_GROVE", "ROSEVILLE", "SACRAMENTO", "z95823"),
     id = ""
   )
   expect_equal(tidy_exp_tr, tidy(others, number = 1))
@@ -109,27 +105,41 @@ test_that("high threshold - much removals", {
 
 
 test_that("low threshold - no removals", {
+  sacr_te_chr <- sacr_te %>%
+    dplyr::mutate(
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
+
   others <- rec %>% step_other(city, zip, threshold = 10^-30, other = "another")
-  others <- prep(others, training = sacr_tr, strings_as_factors = FALSE)
-  others_te <- bake(others, new_data = sacr_te)
+  others <- prep(others, training = sacr_te_chr, strings_as_factors = FALSE)
+  others_te <- bake(others, new_data = sacr_te_chr)
 
-  expect_equal(is.na(sacr_te$city), is.na(others_te$city))
-  expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
+  expect_equal(is.na(sacr_te_chr$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te_chr$zip), is.na(others_te$zip))
 
-  expect_equal(sacr_te$city, as.character(others_te$city))
-  expect_equal(sacr_te$zip, as.character(others_te$zip))
+  expect_equal(sacr_te_chr$city, as.character(others_te$city))
+  expect_equal(sacr_te_chr$zip, as.character(others_te$zip))
 })
 
 test_that("zero threshold - no removals", {
+  sacr_te_chr <- sacr_te %>%
+    dplyr::mutate(
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
+
   others <- rec %>% step_other(city, zip, threshold = 0, other = "another")
-  others <- prep(others, training = sacr_tr, strings_as_factors = FALSE)
-  others_te <- bake(others, new_data = sacr_te)
+  others <- prep(others, training = sacr_te_chr, strings_as_factors = FALSE)
+  others_te <- bake(others, new_data = sacr_te_chr)
 
-  expect_equal(is.na(sacr_te$city), is.na(others_te$city))
-  expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
+  expect_equal(is.na(sacr_te_chr$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te_chr$zip), is.na(others_te$zip))
 
-  expect_equal(sacr_te$city, as.character(others_te$city))
-  expect_equal(sacr_te$zip, as.character(others_te$zip))
+  expect_equal(sacr_te_chr$city, as.character(others_te$city))
+  expect_equal(sacr_te_chr$zip, as.character(others_te$zip))
 })
 
 
@@ -222,9 +232,20 @@ test_that("novel levels", {
 })
 
 test_that("'other' already in use", {
+  sacr_tr_chr <- sacr_tr %>%
+    dplyr::mutate(
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
+
+  sacr_tr_chr$city[1] <- "other"
+
+  rec <- recipe(~ city + zip, data = sacr_tr_chr)
+
   others <- rec %>% step_other(city, zip, threshold = 10^-10)
   expect_snapshot(error = TRUE,
-    prep(others, training = sacr_tr, strings_as_factors = FALSE)
+    prep(others, training = sacr_tr_chr, strings_as_factors = FALSE)
   )
 })
 
@@ -251,12 +272,8 @@ test_that(
     others <- prep(others, training = sacr_tr)
 
     tidy_exp_tr <- tibble(
-      terms = rep(c("city", "zip"), c(4, 3)),
-      retained = c(
-        "anything", "mostly anything", "mostly vegetarian",
-        "strictly anything", "berkeley",
-        "oakland", "san francisco"
-      ),
+      terms = c("city", "zip"),
+      retained = c("SACRAMENTO", "z95823"),
       id = ""
     )
     expect_equal(tidy_exp_tr, tidy(others, number = 1))

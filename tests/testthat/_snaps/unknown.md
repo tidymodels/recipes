@@ -7,6 +7,10 @@
       There are new levels in a factor: WEST_SACRAMENTO
       New levels will be coerced to `NA` by `step_unknown()`.
       Consider using `step_novel()` before `step_unknown()`.
+      Warning:
+      There are new levels in a factor: z95691
+      New levels will be coerced to `NA` by `step_unknown()`.
+      Consider using `step_novel()` before `step_unknown()`.
 
 # bad args
 
@@ -15,6 +19,15 @@
     Condition
       Error in `prep()`:
       ! Columns must be character or factor: sqft
+
+---
+
+    Code
+      recipe(~., data = sacr_tr) %>% step_unknown(city, new_level = "FAIR_OAKS") %>%
+        prep()
+    Condition
+      Error in `prep()`:
+      ! Columns already contain a level 'FAIR_OAKS': city
 
 # printing
 
