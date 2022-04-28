@@ -41,8 +41,8 @@
 #' data(Sacramento)
 #'
 #' # Learn the classes on the train set
-#' train <- Sacramento[1:1000, ]
-#' test <- Sacramento[1001:2000, ]
+#' train <- Sacramento[1:500, ]
+#' test <- Sacramento[500:nrow(Sacramento), ]
 #' recipe(train, sqft ~ .) %>%
 #'   check_class(everything()) %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
@@ -51,8 +51,8 @@
 #' # Manual specification
 #' recipe(train, sqft ~ .) %>%
 #'   check_class(sqft, class_nm = "integer") %>%
-#'   check_class(city, zip, class_nm = "character") %>%
-#'   check_class(date, class_nm = "Date") %>%
+#'   check_class(city, zip, type, class_nm = "factor") %>%
+#'   check_class(latitude, longitude, class_nm = "numeric") %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)
 #'

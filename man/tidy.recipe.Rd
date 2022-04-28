@@ -327,10 +327,9 @@ data(Sacramento)
 
 Sacramento_rec <- recipe(~., data = Sacramento) \%>\%
   step_other(all_nominal(), threshold = 0.05, other = "another") \%>\%
-  step_date(date, features = "dow") \%>\%
   step_center(all_numeric()) \%>\%
   step_dummy(all_nominal()) \%>\%
-  check_cols(starts_with("date"), age, price)
+  check_cols(ends_with("ude"), sqft, price)
 
 tidy(Sacramento_rec)
 
@@ -341,4 +340,5 @@ Sacramento_rec_trained <- prep(Sacramento_rec, training = Sacramento)
 
 tidy(Sacramento_rec_trained)
 tidy(Sacramento_rec_trained, number = 3)
+tidy(Sacramento_rec_trained, number = 4)
 }
