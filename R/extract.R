@@ -38,6 +38,8 @@
 #'  (the list of corresponding columns) is returned. The `columns` is
 #'  is ordered according the frequency in the training data set.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(tate_text)

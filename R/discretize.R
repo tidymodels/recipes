@@ -238,6 +238,9 @@ print.discretize <-
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `value`
 #' (the breaks) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family discretization steps
 #' @export
 #'

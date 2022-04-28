@@ -34,6 +34,9 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
 #' `is_lat_lon`, `name`, and `id` is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #'
 #' library(modeldata)

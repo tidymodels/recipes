@@ -113,6 +113,14 @@ for the variable loadings per component or \code{type = "variance"} for how
 much variance each component accounts for.
 }
 
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+To use them, see the documentation in case_weights and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 rec <- recipe(~., data = USArrests)
 pca_trans <- rec \%>\%

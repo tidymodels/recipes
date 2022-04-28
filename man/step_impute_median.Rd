@@ -74,6 +74,14 @@ columns \code{terms} (the selectors or variables selected) and \code{model}
 (themedian value) is returned.
 }
 
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+To use them, see the documentation in case_weights and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 library(modeldata)
 data("credit_data")

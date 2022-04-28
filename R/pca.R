@@ -66,6 +66,8 @@
 #' for the variable loadings per component or `type = "variance"` for how
 #' much variance each component accounts for.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.
 #'

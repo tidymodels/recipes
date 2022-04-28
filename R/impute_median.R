@@ -24,6 +24,8 @@
 #' columns `terms` (the selectors or variables selected) and `model`
 #' (themedian value) is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data("credit_data")

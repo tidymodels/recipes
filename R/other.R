@@ -48,6 +48,8 @@
 #' `terms` (the columns that will be affected) and `retained` (the factor
 #' levels that were not pulled into "other") is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(okc)

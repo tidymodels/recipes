@@ -14,6 +14,8 @@
 #' @export
 #' @rdname step_percentile
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

@@ -91,6 +91,12 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 names), and \code{ordinal} (a logical) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(lubridate)
 

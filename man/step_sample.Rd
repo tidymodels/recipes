@@ -70,6 +70,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{size}, \code{replace}, and \code{id} is returned.
 }
 
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+To use them, see the documentation in case_weights and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 
 # Uses `sample_n`

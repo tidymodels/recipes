@@ -36,6 +36,8 @@
 #' `terms` (the selectors or variables selected) and `value`
 #' (a _list column_ with the conversion key) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(okc)

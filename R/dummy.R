@@ -68,6 +68,8 @@
 #'  `terms` (the selectors or original variables selected) and `columns`
 #'  (the list of corresponding binary columns) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(okc)

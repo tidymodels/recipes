@@ -51,6 +51,8 @@
 #' `terms` (the selectors or variables selected), `value` (the loading),
 #' and `component` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
 #'  component analysis: algorithms and applications. *Neural
 #'  Networks*, 13(4-5), 411-430.

@@ -27,6 +27,8 @@
 #'  `terms` (the selectors or variables selected) and `ordered` is
 #'  returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(okc)

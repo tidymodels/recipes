@@ -38,6 +38,8 @@
 #' `terms` (the selectors or variables selected) and `value` (the
 #' lambda estimate) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Sakia, R. M. (1992). The Box-Cox transformation technique:
 #'   A review. *The Statistician*, 169-178..
 #' @examples

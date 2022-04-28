@@ -62,6 +62,12 @@ position.
 Note that if the original columns are character, they will be
 converted to factors by this step.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 
 library(modeldata)

@@ -28,6 +28,8 @@
 #'  deviations and means), and `statistic` for the type of value is
 #'  returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

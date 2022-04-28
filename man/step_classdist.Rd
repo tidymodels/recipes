@@ -92,6 +92,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 of the class), and \code{class} is returned.
 }
 
+\section{Case weights}{
+
+
+This step performs an supervised operation that can utilize case weights.
+To use them, see the documentation in case_weights and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 
 # in case of missing data...

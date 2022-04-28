@@ -38,6 +38,8 @@
 #' `terms` (the columns that will be affected) and `value` (the factor
 #' levels that is used for the new value) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(okc)

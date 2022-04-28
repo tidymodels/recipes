@@ -29,8 +29,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{sds}{A named numeric vector of standard deviations. This
-is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{sds}{A named numeric vector of standard deviations. This is \code{NULL}
+until computed by \code{\link[=prep]{prep()}}.}
 
 \item{factor}{A numeric value of either 1 or 2 that scales the
 numeric inputs by one or two standard deviations. By dividing
@@ -71,6 +71,14 @@ using these standard deviations.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{value} (the
 standard deviations) is returned.
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+To use them, see the documentation in case_weights and the examples on
+\code{tidymodels.org}.
 }
 
 \examples{

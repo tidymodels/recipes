@@ -37,6 +37,8 @@
 #'  `terms` (the selectors or variables selected) and the number of
 #'  components is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' if (rlang::is_installed("RcppML")) {
 #'   library(Matrix)

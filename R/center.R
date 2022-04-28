@@ -38,6 +38,8 @@
 #'  `terms` (the selectors or variables selected) and `value` (the means)
 #'  is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

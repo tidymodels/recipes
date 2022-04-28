@@ -53,6 +53,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the interaction effects) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(penguins)

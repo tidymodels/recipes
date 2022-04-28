@@ -30,6 +30,8 @@
 #'  `terms` (the selectors or variables selected) and `value` (the
 #'  standard deviations) is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @references Gelman, A. (2007) "Scaling regression inputs by
 #'  dividing by two standard deviations." Unpublished. Source:
 #'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.

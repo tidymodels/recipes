@@ -111,6 +111,12 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 and \code{component} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 # from fastICA::fastICA
 set.seed(131)

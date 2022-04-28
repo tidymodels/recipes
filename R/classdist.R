@@ -39,6 +39,8 @@
 #' `terms` (the selectors or variables selected), `value` (the centroid
 #' of the class), and `class` is returned.
 #'
+#' @template case-weights-supervised
+#'
 #' @examples
 #'
 #' # in case of missing data...

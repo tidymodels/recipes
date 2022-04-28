@@ -21,6 +21,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `size`, `replace`, and `id` is returned.
+#'
+#' @template case-weights-unsupervised
+#'
 #' @family row operation steps
 #' @family dplyr steps
 #' @export
