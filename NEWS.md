@@ -22,7 +22,7 @@
 
 # recipes 0.2.0
 
-# New Steps
+## New Steps
 
 * `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
 
@@ -63,7 +63,6 @@
 * `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
 
 * `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
-
 
 ## Developer
 
