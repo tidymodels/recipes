@@ -80,6 +80,36 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="recipes-020">recipes 0.2.0<a class="anchor" aria-label="anchor" href="#recipes-020"></a></h2><p class="text-muted">CRAN release: 2022-02-18</p>
+<div class="section level3">
+<h3 id="new-steps-0-2-0">New Steps<a class="anchor" aria-label="anchor" href="#new-steps-0-2-0"></a></h3>
+<ul><li><p><code><a href="../reference/step_nnmf_sparse.html">step_nnmf_sparse()</a></code> uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (<a href="https://github.com/tidymodels/recipes/issues/790" class="external-link">#790</a>)</p></li>
+<li><p><code><a href="../reference/step_dummy_extract.html">step_dummy_extract()</a></code> creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.</p></li>
+<li><p><code><a href="../reference/step_filter_missing.html">step_filter_missing()</a></code> can filter columns based on proportion of missingness (<a href="https://github.com/tidymodels/recipes/issues/270" class="external-link">#270</a>).</p></li>
+<li><p><code><a href="../reference/step_percentile.html">step_percentile()</a></code> replaces the value of a variable with its percentile from the training set. (<a href="https://github.com/tidymodels/recipes/issues/765" class="external-link">#765</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-and-other-changes-0-2-0">Improvements and Other Changes<a class="anchor" aria-label="anchor" href="#improvements-and-other-changes-0-2-0"></a></h3>
+<ul><li><p>All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (<a href="https://github.com/tidymodels/recipes/issues/603" class="external-link">#603</a>, <a href="https://github.com/tidymodels/recipes/issues/531" class="external-link">#531</a>). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of <code><a href="../reference/step_mutate.html">step_mutate()</a></code>). The documentation in <code><a href="../reference/selections.html">?selections</a></code> has been updated with advice for writing selectors when filtering steps are used. (<a href="https://github.com/tidymodels/recipes/issues/813" class="external-link">#813</a>)</p></li>
+<li><p>Fixed bug in <code><a href="../reference/step_harmonic.html">step_harmonic()</a></code> printing and changed defaults to <code>role = "predictor"</code> and <code>keep_original_cols = FALSE</code> (<a href="https://github.com/tidymodels/recipes/issues/822" class="external-link">#822</a>).</p></li>
+<li><p>Improved the efficiency of computations for the Box-Cox transformation (<a href="https://github.com/tidymodels/recipes/issues/820" class="external-link">#820</a>).</p></li>
+<li><p>When a feature extraction step (e.g., <code><a href="../reference/step_pca.html">step_pca()</a></code>, <code><a href="../reference/step_ica.html">step_ica()</a></code>, etc.) has zero components specified, the <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method now lists the selected columns in the <code>terms</code> column.</p></li>
+<li><p>Deprecation has started for <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> in favor of <code><a href="../reference/step_nnmf_sparse.html">step_nnmf_sparse()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/790" class="external-link">#790</a>)</p></li>
+<li><p>Steps now have a dedicated subsection detailing what happens when <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> is applied. (<a href="https://github.com/tidymodels/recipes/issues/876" class="external-link">#876</a>)</p></li>
+<li><p><code><a href="../reference/step_ica.html">step_ica()</a></code> now runs <code>fastICA()</code> using a specific set of random numbers so that initialization is reproducible.</p></li>
+<li><p><code><a href="../reference/tidy.recipe.html">tidy.recipe()</a></code> now returns a zero row tibble instead of an error when applied to a empty recipe. (<a href="https://github.com/tidymodels/recipes/issues/867" class="external-link">#867</a>)</p></li>
+<li><p><code><a href="../reference/step_zv.html">step_zv()</a></code> now has a <code>group</code> argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (<a href="https://github.com/tidymodels/recipes/issues/711" class="external-link">#711</a>)</p></li>
+<li><p><code><a href="../reference/detect_step.html">detect_step()</a></code> is no longer restricted to steps created in recipes (<a href="https://github.com/tidymodels/recipes/issues/869" class="external-link">#869</a>).</p></li>
+<li><p>New <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_parameter_set_dials()</a></code> and <code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_parameter_dials()</a></code> methods to extract parameter sets and single parameters from <code>recipe</code> objects.</p></li>
+<li><p><code><a href="../reference/step_other.html">step_other()</a></code> now allow for setting <code>threshold = 0</code> which will result in no othering. (<a href="https://github.com/tidymodels/recipes/issues/904" class="external-link">#904</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-0-2-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h3>
+<ul><li><p><code><a href="../reference/step_ica.html">step_ica()</a></code> now indirectly uses the <code>fastICA</code> package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (<a href="https://github.com/tidymodels/recipes/issues/823" class="external-link">#823</a>)</p></li>
+<li><p><code>step_kpca*()</code> now directly use the <code>kernlab</code> package. Recipe objects from previous versions will error when applied to new data.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="developer-0-2-0">Developer<a class="anchor" aria-label="anchor" href="#developer-0-2-0"></a></h3>
+<ul><li>The print methods have been internally changes to use <code><a href="../reference/recipes-internal.html">print_step()</a></code> instead of <code><a href="../reference/recipes-internal.html">printer()</a></code>. This is done for a smoother transition to use <code>cli</code> in the next version. (<a href="https://github.com/tidymodels/recipes/issues/871" class="external-link">#871</a>)</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.17" id="recipes-0117">recipes 0.1.17<a class="anchor" aria-label="anchor" href="#recipes-0117"></a></h2><p class="text-muted">CRAN release: 2021-09-27</p>
@@ -182,26 +212,22 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.12" id="recipes-0112">recipes 0.1.12<a class="anchor" aria-label="anchor" href="#recipes-0112"></a></h2><p class="text-muted">CRAN release: 2020-05-01</p>
-<ul><li>Some S3 methods were not being registered previously. This caused issues in R 4.0.</li>
-</ul></div>
+<ul><li>Some S3 methods were not being registered previously. This caused issues in R 4.0.</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.11" id="recipes-0111">recipes 0.1.11<a class="anchor" aria-label="anchor" href="#recipes-0111"></a></h2><p class="text-muted">CRAN release: 2020-04-30</p>
 <div class="section level3">
 <h3 id="other-changes-0-1-11">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-11"></a></h3>
-<ul><li>While <code>recipes</code> does not directly depend on <code>dials</code>, it has several S3 methods for generics in <code>dials</code>. Version 0.0.5 of <code>dials</code> added stricter validation for these methods, so changes were required for <code>recipes</code>.</li>
-</ul></div>
+<ul><li>While <code>recipes</code> does not directly depend on <code>dials</code>, it has several S3 methods for generics in <code>dials</code>. Version 0.0.5 of <code>dials</code> added stricter validation for these methods, so changes were required for <code>recipes</code>.</li></ul></div>
 <div class="section level3">
 <h3 id="new-operations-0-1-11">New Operations<a class="anchor" aria-label="anchor" href="#new-operations-0-1-11"></a></h3>
 <ul><li>
-<code><a href="../reference/step_cut.html">step_cut()</a></code> enables you to create a factor from a numeric based on provided break (contributed by Edwin Thoen)</li>
-</ul></div>
+<code><a href="../reference/step_cut.html">step_cut()</a></code> enables you to create a factor from a numeric based on provided break (contributed by Edwin Thoen)</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.10" id="recipes-0110">recipes 0.1.10<a class="anchor" aria-label="anchor" href="#recipes-0110"></a></h2><p class="text-muted">CRAN release: 2020-03-18</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-1-10">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-10"></a></h3>
-<ul><li>renamed <code>yj_trans()</code> to <code><a href="../reference/recipes-internal.html">yj_transform()</a></code> to avoid conflicts.</li>
-</ul></div>
+<ul><li>renamed <code>yj_trans()</code> to <code><a href="../reference/recipes-internal.html">yj_transform()</a></code> to avoid conflicts.</li></ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-1-10">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-10"></a></h3>
 <ul><li><p>Added flexible naming options for new columns created by <code><a href="../reference/step_depth.html">step_depth()</a></code> and <code><a href="../reference/step_classdist.html">step_classdist()</a></code> (<a href="https://github.com/tidymodels/recipes/issues/262" class="external-link">#262</a>).</p></li>
@@ -243,8 +269,7 @@
 <div class="section level3">
 <h3 id="new-operations-0-1-7">New Operations<a class="anchor" aria-label="anchor" href="#new-operations-0-1-7"></a></h3>
 <ul><li>
-<code><a href="../reference/step_mutate_at.html">step_mutate_at()</a></code>, <code><a href="../reference/step_rename.html">step_rename()</a></code>, and <code><a href="../reference/step_rename_at.html">step_rename_at()</a></code> were added.</li>
-</ul></div>
+<code><a href="../reference/step_mutate_at.html">step_mutate_at()</a></code>, <code><a href="../reference/step_rename.html">step_rename()</a></code>, and <code><a href="../reference/step_rename_at.html">step_rename_at()</a></code> were added.</li></ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-1-7">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-7"></a></h3>
 <ul><li><p>The use of <code><a href="https://parsnip.tidymodels.org/reference/varying.html" class="external-link">varying()</a></code> will be deprecated in favor of an upcoming function <code><a href="https://rdrr.io/pkg/hardhat/man/tune.html" class="external-link">tune()</a></code>. No changes are need in this version, but subsequent versions will work with <code><a href="https://rdrr.io/pkg/hardhat/man/tune.html" class="external-link">tune()</a></code>.</p></li>
@@ -267,9 +292,7 @@
 <h3 id="breaking-changes-0-1-6">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-6"></a></h3>
 <ul><li><p>Since 2018, a warning has been issued when the wrong argument was used in <code>bake(recipe, newdata)</code>. The depredation period is over and <code>new_data</code> is officially required.</p></li>
 <li><p>Previously, if <code><a href="../reference/step_other.html">step_other()</a></code> did <em>not</em> collapse any levels, it would still add an “other” level to the factor. This would lump new factor levels into “other” when data were baked (as <code><a href="../reference/step_novel.html">step_novel()</a></code> does). This no longer occurs since it was inconsistent with <code><a href="../reference/step_other.html">?step_other</a></code>, which said that</p></li>
-</ul><blockquote>
-<p>“If no pooling is done the data are unmodified”.</p>
-</blockquote>
+</ul><blockquote><p>“If no pooling is done the data are unmodified”.</p></blockquote>
 </div>
 <div class="section level3">
 <h3 id="new-operations-0-1-6">New Operations<a class="anchor" aria-label="anchor" href="#new-operations-0-1-6"></a></h3>
@@ -303,12 +326,10 @@
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-1-5">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-5"></a></h3>
-<ul><li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li>
-</ul></div>
+<ul><li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-5">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-5"></a></h3>
-<ul><li>Updating the role of new columns generated by a recipe step no longer also updates <code>NA</code> roles of existing columns (<a href="https://github.com/tidymodels/recipes/issues/296" class="external-link">#296</a>).</li>
-</ul></div>
+<ul><li>Updating the role of new columns generated by a recipe step no longer also updates <code>NA</code> roles of existing columns (<a href="https://github.com/tidymodels/recipes/issues/296" class="external-link">#296</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.4" id="recipes-014">
@@ -429,8 +450,7 @@
 <div class="section level3">
 <h3 id="other-changes-0-1-2">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-2"></a></h3>
 <ul><li>
-<code>step_spatialsign</code> now has the option of removing missing data prior to computing the norm.</li>
-</ul></div>
+<code>step_spatialsign</code> now has the option of removing missing data prior to computing the norm.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="recipes-011">
@@ -470,14 +490,12 @@
 <code>recipes</code> 0.1.0<a class="anchor" aria-label="anchor" href="#recipes-010"></a></h2><p class="text-muted">CRAN release: 2017-07-27</p>
 <p>First CRAN release.</p>
 <ul><li>Changed <code>prepare</code> to <code>prep</code> per <a href="https://github.com/tidymodels/recipes/issues/59" class="external-link">issue </a><a href="https://github.com/tidymodels/recipes/issues/59" class="external-link">#59</a>
-</li>
-</ul></div>
+</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.1.9003" id="recipes-0019003">
 <code>recipes</code> 0.0.1.9003<a class="anchor" aria-label="anchor" href="#recipes-0019003"></a></h2>
 <ul><li>Two of the main functions <a href="https://github.com/tidymodels/recipes/issues/57" class="external-link">changed names</a>. <code>learn</code> has become <code>prepare</code> and <code>process</code> has become <code>bake</code>
-</li>
-</ul></div>
+</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.1.9002" id="recipes-0019002">
 <code>recipes</code> 0.0.1.9002<a class="anchor" aria-label="anchor" href="#recipes-0019002"></a></h2>
@@ -492,8 +510,7 @@
 <div class="section level3">
 <h3 id="other-changes-0-0-1-9002">Other changes<a class="anchor" aria-label="anchor" href="#other-changes-0-0-1-9002"></a></h3>
 <ul><li>
-<code>step_dummy</code> and <code>step_interact</code> do a better job of respecting missing values in the data set.</li>
-</ul></div>
+<code>step_dummy</code> and <code>step_interact</code> do a better job of respecting missing values in the data set.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.1.9001" id="recipes-0019001">
@@ -514,7 +531,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
   </div></footer></body></html>
