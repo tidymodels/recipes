@@ -56,7 +56,7 @@ replaces the value of a variable with its percentile from the training set.
 
 
 This step performs an unsupervised operation that can utilize case weights.
-To use them, see the documentation in case_weights and the examples on
+To use them, see the documentation in \link{case_weights} and the examples on
 \code{tidymodels.org}.
 }
 

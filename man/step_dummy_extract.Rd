@@ -108,7 +108,7 @@ is ordered according the frequency in the training data set.
 
 
 This step performs an unsupervised operation that can utilize case weights.
-To use them, see the documentation in case_weights and the examples on
+To use them, see the documentation in \link{case_weights} and the examples on
 \code{tidymodels.org}.
 }
 
