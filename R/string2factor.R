@@ -31,19 +31,25 @@
 #' library(modeldata)
 #' data(Sacramento)
 #'
+#' # convert factor to string to demonstrate
+#' Sacramento$city <- as.character(Sacramento$city)
+#'
 #' rec <- recipe(~ city + zip, data = Sacramento)
 #'
 #' make_factor <- rec %>%
 #'   step_string2factor(city)
+#'
 #' make_factor <- prep(make_factor,
-#'   training = Sacramento,
-#'   strings_as_factors = FALSE
+#'   training = Sacramento
 #' )
 #'
-#' # note that `city` is a factor
+#' make_factor
+#'
+#' # note that `city` is a factor in recipe output
 #' bake(make_factor, new_data = NULL) %>% head()
+#'
+#' # ...but remains a string in the data
 #' Sacramento %>% head()
-#' tidy(make_factor, number = 1)
 step_string2factor <-
   function(recipe,
            ...,

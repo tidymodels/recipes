@@ -121,15 +121,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \examples{
 library(modeldata)
 data(Sacramento)
-Sacramento <- Sacramento[complete.cases(Sacramento), ]
 
-# Original data: city has 18 levels
+# Original data: city has 37 levels
 length(unique(Sacramento$city))
 unique(Sacramento$city) \%>\% sort()
 
 rec <- recipe(~ city + sqft + price, data = Sacramento)
 
-# Default dummy coding: 17 dummy variables
+# Default dummy coding: 36 dummy variables
 dummies <- rec \%>\%
   step_dummy(city) \%>\%
   prep(training = Sacramento)
@@ -140,7 +139,7 @@ dummy_data \%>\%
   select(starts_with("city")) \%>\%
   names() # level "anything" is the reference level
 
-# Obtain the full set of 18 dummy variables using `one_hot` option
+# Obtain the full set of 37 dummy variables using `one_hot` option
 dummies_one_hot <- rec \%>\%
   step_dummy(city, one_hot = TRUE) \%>\%
   prep(training = Sacramento)

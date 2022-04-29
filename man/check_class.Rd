@@ -83,7 +83,7 @@ data(Sacramento)
 
 # Learn the classes on the train set
 train <- Sacramento[1:500, ]
-test <- Sacramento[500:nrow(Sacramento), ]
+test <- Sacramento[501:nrow(Sacramento), ]
 recipe(train, sqft ~ .) \%>\%
   check_class(everything()) \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%

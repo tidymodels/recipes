@@ -40,14 +40,12 @@
 #' library(modeldata)
 #' data(Sacramento)
 #'
-#' Sacramento$zip <- factor(Sacramento$zip)
-#'
 #' sacr_tr <- Sacramento[1:100, ]
 #' sacr_tr$sqft[1] <- NA
 #'
 #' sacr_te <- Sacramento[101:105, ]
 #' sacr_te$sqft[1] <- NA
-#' sacr_te$city[1] <- "fast food"
+#' sacr_te$city[1] <- "whoville"
 #' sacr_te$city[2] <- NA
 #'
 #' rec <- recipe(type ~ ., data = sacr_tr) %>%
