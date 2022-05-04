@@ -176,37 +176,39 @@ levels that is used for the new value) is returned.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">okc_tr</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30000</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">okc_te</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">30001</span><span class="op">:</span><span class="fl">30006</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">okc_te</span><span class="op">$</span><span class="va">diet</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"cannibalism"</span></span>
-<span class="r-in"><span class="va">okc_te</span><span class="op">$</span><span class="va">diet</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"vampirism"</span></span>
+<span class="r-in"><span class="va">sacr_tr</span> <span class="op">&lt;-</span> <span class="va">Sacramento</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">800</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">sacr_te</span> <span class="op">&lt;-</span> <span class="va">Sacramento</span><span class="op">[</span><span class="fl">801</span><span class="op">:</span><span class="fl">806</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">sacr_te</span><span class="op">$</span><span class="va">city</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"beeptown"</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid factor level, NA generated</span>
+<span class="r-in"><span class="va">sacr_te</span><span class="op">$</span><span class="va">city</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"boopville"</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>invalid factor level, NA generated</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_novel</span><span class="op">(</span><span class="va">diet</span>, <span class="va">location</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">step_novel</span><span class="op">(</span><span class="va">city</span>, <span class="va">zip</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">processed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">okc_te</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>old <span class="op">=</span> <span class="va">okc_te</span><span class="op">$</span><span class="va">diet</span>, new <span class="op">=</span> <span class="va">processed</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">processed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">sacr_te</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>old <span class="op">=</span> <span class="va">sacr_te</span><span class="op">$</span><span class="va">city</span>, new <span class="op">=</span> <span class="va">processed</span><span class="op">$</span><span class="va">city</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   old               new              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> vegetarian        vegetarian       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> strictly anything strictly anything</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> cannibalism       new              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> vampirism         new              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span>               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span>               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   old        new       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> SACRAMENTO SACRAMENTO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AUBURN     AUBURN    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> SACRAMENTO SACRAMENTO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> ROSEVILLE  ROSEVILLE </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   terms    value id         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> diet     new   novel_3AY0w</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> location new   novel_3AY0w</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   terms value id         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> city  new   novel_3AY0w</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> zip   new   novel_3AY0w</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

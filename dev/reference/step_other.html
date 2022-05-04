@@ -187,105 +187,100 @@ levels that were not pulled into "other") is returned.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">19</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">in_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">30000</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">in_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">800</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">okc_tr</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="va">in_train</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">okc_te</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="op">-</span><span class="va">in_train</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">sacr_tr</span> <span class="op">&lt;-</span> <span class="va">Sacramento</span><span class="op">[</span><span class="va">in_train</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">sacr_te</span> <span class="op">&lt;-</span> <span class="va">Sacramento</span><span class="op">[</span><span class="op">-</span><span class="va">in_train</span>, <span class="op">]</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_other</span><span class="op">(</span><span class="va">diet</span>, <span class="va">location</span>, threshold <span class="op">=</span> <span class="fl">.1</span>, other <span class="op">=</span> <span class="st">"other values"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">step_other</span><span class="op">(</span><span class="va">city</span>, <span class="va">zip</span>, threshold <span class="op">=</span> <span class="fl">.1</span>, other <span class="op">=</span> <span class="st">"other values"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">okc_te</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">okc_te</span><span class="op">$</span><span class="va">diet</span>, <span class="va">collapsed</span><span class="op">$</span><span class="va">diet</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       anything mostly anything strictly anything</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   anything                3128               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   halal                      0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   kosher                     0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly anything            0            8226                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly halal               0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly kosher              0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly other               0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly vegan               0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly vegetarian          0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   other                      0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly anything          0               0              2562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly halal             0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly kosher            0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly other             0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly vegan             0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly vegetarian        0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vegan                      0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vegetarian                 0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;NA&gt;                       0               0                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       other values  &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   anything                       0     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   halal                          4     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   kosher                         5     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly anything                0     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly halal                  23     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly kosher                 36     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly other                 509     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly vegan                 164     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mostly vegetarian           1715     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   other                        172     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly anything              0     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly halal                 7     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly kosher                7     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly other               209     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly vegan               104     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   strictly vegetarian          442     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vegan                         66     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   vegetarian                   331     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;NA&gt;                           0 12145</span>
+<span class="r-in"><span class="va">collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">sacr_te</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">sacr_te</span><span class="op">$</span><span class="va">city</span>, <span class="va">collapsed</span><span class="op">$</span><span class="va">city</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   ELK_GROVE SACRAMENTO other values &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ANTELOPE                0          0            3    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AUBURN                  0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   CAMERON_PARK            0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   CARMICHAEL              0          0            2    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   CITRUS_HEIGHTS          0          0            6    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   COOL                    0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   DIAMOND_SPRINGS         0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   EL_DORADO               0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   EL_DORADO_HILLS         0          0            4    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ELK_GROVE              16          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ELVERTA                 0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FAIR_OAKS               0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FOLSOM                  0          0            3    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FORESTHILL              0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   GALT                    0          0            2    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   GARDEN_VALLEY           0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   GOLD_RIVER              0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   GRANITE_BAY             0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   GREENWOOD               0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   LINCOLN                 0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   LOOMIS                  0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   MATHER                  0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   MEADOW_VISTA            0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   NORTH_HIGHLANDS         0          0            4    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ORANGEVALE              0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   PENRYN                  0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   PLACERVILLE             0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   POLLOCK_PINES           0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RANCHO_CORDOVA          0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RANCHO_MURIETA          0          0            1    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RIO_LINDA               0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ROCKLIN                 0          0            2    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ROSEVILLE               0          0            9    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SACRAMENTO              0         71            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   WALNUT_GROVE            0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   WEST_SACRAMENTO         0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   WILTON                  0          0            0    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;NA&gt;                    0          0            0    0</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   terms    retained          id         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> diet     anything          other_ez6XT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> diet     mostly anything   other_ez6XT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> diet     strictly anything other_ez6XT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> location oakland           other_ez6XT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> location san francisco     other_ez6XT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   terms retained   id         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> city  ELK_GROVE  other_HsPSC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> city  SACRAMENTO other_HsPSC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> zip   z95823     other_HsPSC</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># novel levels are also "othered"</span></span>
-<span class="r-in"><span class="va">tahiti</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">tahiti</span><span class="op">$</span><span class="va">location</span> <span class="op">&lt;-</span> <span class="st">"a magical place"</span></span>
+<span class="r-in"><span class="va">tahiti</span> <span class="op">&lt;-</span> <span class="va">Sacramento</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="va">tahiti</span><span class="op">$</span><span class="va">zip</span> <span class="op">&lt;-</span> <span class="st">"a magical place"</span></span>
 <span class="r-in"><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">tahiti</span><span class="op">)</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span> There was 1 column that was a factor when the recipe was prepped:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>  'zip'.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>  This may cause errors when processing new data.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   diet              location    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> strictly anything other values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   city       zip         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> SACRAMENTO other values</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># threshold as a frequency</span></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_other</span><span class="op">(</span><span class="va">diet</span>, <span class="va">location</span>, threshold <span class="op">=</span> <span class="fl">2000</span>, other <span class="op">=</span> <span class="st">"other values"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">okc_tr</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">step_other</span><span class="op">(</span><span class="va">city</span>, <span class="va">zip</span>, threshold <span class="op">=</span> <span class="fl">2000</span>, other <span class="op">=</span> <span class="st">"other values"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">sacr_tr</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   terms    retained          id         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> diet     anything          other_p2QWY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> diet     mostly anything   other_p2QWY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> diet     strictly anything other_p2QWY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> location berkeley          other_p2QWY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> location oakland           other_p2QWY</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> location san francisco     other_p2QWY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   terms retained   id         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> city  SACRAMENTO other_2VUP1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> zip   z95823     other_2VUP1</span>
 <span class="r-in"><span class="co"># compare it to</span></span>
-<span class="r-in"><span class="co"># okc_tr %&gt;% count(diet, sort = TRUE) %&gt;% top_n(4)</span></span>
-<span class="r-in"><span class="co"># okc_tr %&gt;% count(location, sort = TRUE) %&gt;% top_n(3)</span></span>
+<span class="r-in"><span class="co"># sacr_tr %&gt;% count(city, sort = TRUE) %&gt;% top_n(4)</span></span>
+<span class="r-in"><span class="co"># sacr_tr %&gt;% count(zip, sort = TRUE) %&gt;% top_n(3)</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

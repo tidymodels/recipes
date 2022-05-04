@@ -214,106 +214,104 @@ and interactions has more information.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">okc</span> <span class="op">&lt;-</span> <span class="va">okc</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span>, <span class="op">]</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Original data: diet has 18 levels</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">okc</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 18</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">okc</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "anything"            "halal"               "kosher"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "mostly anything"     "mostly halal"        "mostly kosher"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "mostly other"        "mostly vegan"        "mostly vegetarian"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "other"               "strictly anything"   "strictly halal"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "strictly kosher"     "strictly other"      "strictly vegan"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "strictly vegetarian" "vegan"               "vegetarian"         </span>
+<span class="r-in"><span class="co"># Original data: city has 37 levels</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">$</span><span class="va">city</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 37</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">$</span><span class="va">city</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] ANTELOPE        AUBURN          CAMERON_PARK    CARMICHAEL     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] CITRUS_HEIGHTS  COOL            DIAMOND_SPRINGS EL_DORADO      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] EL_DORADO_HILLS ELK_GROVE       ELVERTA         FAIR_OAKS      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] FOLSOM          FORESTHILL      GALT            GARDEN_VALLEY  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] GOLD_RIVER      GRANITE_BAY     GREENWOOD       LINCOLN        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] LOOMIS          MATHER          MEADOW_VISTA    NORTH_HIGHLANDS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] ORANGEVALE      PENRYN          PLACERVILLE     POLLOCK_PINES  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] RANCHO_CORDOVA  RANCHO_MURIETA  RIO_LINDA       ROCKLIN        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [33] ROSEVILLE       SACRAMENTO      WALNUT_GROVE    WEST_SACRAMENTO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] WILTON         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37 Levels: ANTELOPE AUBURN CAMERON_PARK CARMICHAEL ... WILTON</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">height</span>, data <span class="op">=</span> <span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">sqft</span> <span class="op">+</span> <span class="va">price</span>, data <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Default dummy coding: 17 dummy variables</span></span>
+<span class="r-in"><span class="co"># Default dummy coding: 36 dummy variables</span></span>
 <span class="r-in"><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_dummy</span><span class="op">(</span><span class="va">diet</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">step_dummy</span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummies</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"diet"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"city"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># level "anything" is the reference level</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "diet_halal"               "diet_kosher"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "diet_mostly.anything"     "diet_mostly.halal"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "diet_mostly.kosher"       "diet_mostly.other"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "diet_mostly.vegan"        "diet_mostly.vegetarian"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "diet_other"               "diet_strictly.anything"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "diet_strictly.halal"      "diet_strictly.kosher"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "diet_strictly.other"      "diet_strictly.vegan"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "diet_strictly.vegetarian" "diet_vegan"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "diet_vegetarian"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "city_AUBURN"          "city_CAMERON_PARK"    "city_CARMICHAEL"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "city_CITRUS_HEIGHTS"  "city_COOL"            "city_DIAMOND_SPRINGS"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "city_EL_DORADO"       "city_EL_DORADO_HILLS" "city_ELK_GROVE"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "city_ELVERTA"         "city_FAIR_OAKS"       "city_FOLSOM"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "city_FORESTHILL"      "city_GALT"            "city_GARDEN_VALLEY"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "city_GOLD_RIVER"      "city_GRANITE_BAY"     "city_GREENWOOD"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "city_LINCOLN"         "city_LOOMIS"          "city_MATHER"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "city_MEADOW_VISTA"    "city_NORTH_HIGHLANDS" "city_ORANGEVALE"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "city_PENRYN"          "city_PLACERVILLE"     "city_POLLOCK_PINES"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "city_RANCHO_CORDOVA"  "city_RANCHO_MURIETA"  "city_RIO_LINDA"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "city_ROCKLIN"         "city_ROSEVILLE"       "city_SACRAMENTO"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "city_WALNUT_GROVE"    "city_WEST_SACRAMENTO" "city_WILTON"         </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Obtain the full set of 18 dummy variables using `one_hot` option</span></span>
+<span class="r-in"><span class="co"># Obtain the full set of 37 dummy variables using `one_hot` option</span></span>
 <span class="r-in"><span class="va">dummies_one_hot</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_dummy</span><span class="op">(</span><span class="va">diet</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">step_dummy</span><span class="op">(</span><span class="va">city</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data_one_hot</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">dummies_one_hot</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummy_data_one_hot</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"diet"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"city"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># no reference level</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "diet_anything"            "diet_halal"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "diet_kosher"              "diet_mostly.anything"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "diet_mostly.halal"        "diet_mostly.kosher"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "diet_mostly.other"        "diet_mostly.vegan"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "diet_mostly.vegetarian"   "diet_other"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "diet_strictly.anything"   "diet_strictly.halal"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "diet_strictly.kosher"     "diet_strictly.other"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "diet_strictly.vegan"      "diet_strictly.vegetarian"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "diet_vegan"               "diet_vegetarian"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "city_ANTELOPE"        "city_AUBURN"          "city_CAMERON_PARK"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "city_CARMICHAEL"      "city_CITRUS_HEIGHTS"  "city_COOL"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "city_DIAMOND_SPRINGS" "city_EL_DORADO"       "city_EL_DORADO_HILLS"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "city_ELK_GROVE"       "city_ELVERTA"         "city_FAIR_OAKS"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "city_FOLSOM"          "city_FORESTHILL"      "city_GALT"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "city_GARDEN_VALLEY"   "city_GOLD_RIVER"      "city_GRANITE_BAY"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "city_GREENWOOD"       "city_LINCOLN"         "city_LOOMIS"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "city_MATHER"          "city_MEADOW_VISTA"    "city_NORTH_HIGHLANDS"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "city_ORANGEVALE"      "city_PENRYN"          "city_PLACERVILLE"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "city_POLLOCK_PINES"   "city_RANCHO_CORDOVA"  "city_RANCHO_MURIETA" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "city_RIO_LINDA"       "city_ROCKLIN"         "city_ROSEVILLE"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "city_SACRAMENTO"      "city_WALNUT_GROVE"    "city_WEST_SACRAMENTO"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "city_WILTON"         </span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">dummies</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    terms columns             id         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> diet  halal               dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> diet  kosher              dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> diet  mostly anything     dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> diet  mostly halal        dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> diet  mostly kosher       dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> diet  mostly other        dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> diet  mostly vegan        dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> diet  mostly vegetarian   dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> diet  other               dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> diet  strictly anything   dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> diet  strictly halal      dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> diet  strictly kosher     dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> diet  strictly other      dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> diet  strictly vegan      dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> diet  strictly vegetarian dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> diet  vegan               dummy_ypfCg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> diet  vegetarian          dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 36 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    terms columns         id         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> city  AUBURN          dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> city  CAMERON_PARK    dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> city  CARMICHAEL      dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> city  CITRUS_HEIGHTS  dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> city  COOL            dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> city  DIAMOND_SPRINGS dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> city  EL_DORADO       dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> city  EL_DORADO_HILLS dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> city  ELK_GROVE       dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> city  ELVERTA         dummy_ypfCg</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 26 more rows</span></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">dummies_one_hot</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    terms columns             id         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> diet  anything            dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> diet  halal               dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> diet  kosher              dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> diet  mostly anything     dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> diet  mostly halal        dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> diet  mostly kosher       dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> diet  mostly other        dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> diet  mostly vegan        dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> diet  mostly vegetarian   dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> diet  other               dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> diet  strictly anything   dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> diet  strictly halal      dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> diet  strictly kosher     dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> diet  strictly other      dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> diet  strictly vegan      dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> diet  strictly vegetarian dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> diet  vegan               dummy_ONQD4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> diet  vegetarian          dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 37 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    terms columns         id         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> city  ANTELOPE        dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> city  AUBURN          dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> city  CAMERON_PARK    dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> city  CARMICHAEL      dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> city  CITRUS_HEIGHTS  dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> city  COOL            dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> city  DIAMOND_SPRINGS dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> city  EL_DORADO       dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> city  EL_DORADO_HILLS dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> city  ELK_GROVE       dummy_ONQD4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 27 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

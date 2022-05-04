@@ -166,46 +166,64 @@ levels that is used for the new value) is returned.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">okc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_unknown</span><span class="op">(</span><span class="va">diet</span>, new_level <span class="op">=</span> <span class="st">"unknown diet"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_unknown</span><span class="op">(</span><span class="va">location</span>, new_level <span class="op">=</span> <span class="st">"unknown location"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">step_unknown</span><span class="op">(</span><span class="va">city</span>, new_level <span class="op">=</span> <span class="st">"unknown city"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">step_unknown</span><span class="op">(</span><span class="va">zip</span>, new_level <span class="op">=</span> <span class="st">"unknown zip"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">diet</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="va">okc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">diet</span><span class="op">)</span>,</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">city</span><span class="op">)</span>,</span>
+<span class="r-in">  <span class="va">Sacramento</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">city</span><span class="op">)</span>,</span>
 <span class="r-in">  useNA <span class="op">=</span> <span class="st">"always"</span></span>
 <span class="r-in"><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Freq</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   Var1                Var2  Freq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1             anything            anything  6174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                halal               halal    11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3               kosher              kosher    11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      mostly anything     mostly anything 16562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         mostly halal        mostly halal    48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        mostly kosher       mostly kosher    86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         mostly other        mostly other  1004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         mostly vegan        mostly vegan   335</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    mostly vegetarian   mostly vegetarian  3438</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               other               other   331</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   strictly anything   strictly anything  5107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      strictly halal      strictly halal    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     strictly kosher     strictly kosher    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      strictly other      strictly other   450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      strictly vegan      strictly vegan   227</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 strictly vegetarian strictly vegetarian   874</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17               vegan               vegan   136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18          vegetarian          vegetarian   665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19        unknown diet                &lt;NA&gt; 24360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Var1            Var2 Freq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         ANTELOPE        ANTELOPE   33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           AUBURN          AUBURN    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     CAMERON_PARK    CAMERON_PARK    9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       CARMICHAEL      CARMICHAEL   20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   CITRUS_HEIGHTS  CITRUS_HEIGHTS   35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             COOL            COOL    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  DIAMOND_SPRINGS DIAMOND_SPRINGS    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        EL_DORADO       EL_DORADO    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  EL_DORADO_HILLS EL_DORADO_HILLS   23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       ELK_GROVE       ELK_GROVE  114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11         ELVERTA         ELVERTA    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       FAIR_OAKS       FAIR_OAKS    9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13          FOLSOM          FOLSOM   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      FORESTHILL      FORESTHILL    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15            GALT            GALT   21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   GARDEN_VALLEY   GARDEN_VALLEY    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17      GOLD_RIVER      GOLD_RIVER    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     GRANITE_BAY     GRANITE_BAY    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19       GREENWOOD       GREENWOOD    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20         LINCOLN         LINCOLN   22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21          LOOMIS          LOOMIS    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22          MATHER          MATHER    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    MEADOW_VISTA    MEADOW_VISTA    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 NORTH_HIGHLANDS NORTH_HIGHLANDS   21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25      ORANGEVALE      ORANGEVALE   11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26          PENRYN          PENRYN    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     PLACERVILLE     PLACERVILLE   10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28   POLLOCK_PINES   POLLOCK_PINES    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  RANCHO_CORDOVA  RANCHO_CORDOVA   28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  RANCHO_MURIETA  RANCHO_MURIETA    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31       RIO_LINDA       RIO_LINDA   13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32         ROCKLIN         ROCKLIN   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33       ROSEVILLE       ROSEVILLE   48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34      SACRAMENTO      SACRAMENTO  438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    WALNUT_GROVE    WALNUT_GROVE    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36 WEST_SACRAMENTO WEST_SACRAMENTO    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37          WILTON          WILTON    5</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms value        id           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> diet  unknown diet unknown_ZB2lW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> city  unknown city unknown_ZB2lW</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

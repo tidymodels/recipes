@@ -167,21 +167,27 @@ converted to factors by this step.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">okc</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">diet</span> <span class="op">+</span> <span class="va">location</span>, data <span class="op">=</span> <span class="va">okc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="step_unknown.html">step_unknown</a></span><span class="op">(</span><span class="va">diet</span>, new_level <span class="op">=</span> <span class="st">"UNKNOWN"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">step_relevel</span><span class="op">(</span><span class="va">diet</span>, ref_level <span class="op">=</span> <span class="st">"UNKNOWN"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Sacramento</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">zip</span>, data <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu"><a href="step_unknown.html">step_unknown</a></span><span class="op">(</span><span class="va">city</span>, new_level <span class="op">=</span> <span class="st">"UNKNOWN"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span class="r-in">  <span class="fu">step_relevel</span><span class="op">(</span><span class="va">city</span>, ref_level <span class="op">=</span> <span class="st">"UNKNOWN"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">okc</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">diet</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "UNKNOWN"             "anything"            "halal"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "kosher"              "mostly anything"     "mostly halal"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "mostly kosher"       "mostly other"        "mostly vegan"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "mostly vegetarian"   "other"               "strictly anything"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "strictly halal"      "strictly kosher"     "strictly other"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "strictly vegan"      "strictly vegetarian" "vegan"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "vegetarian"         </span>
+<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">Sacramento</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">city</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "UNKNOWN"         "ANTELOPE"        "AUBURN"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "CAMERON_PARK"    "CARMICHAEL"      "CITRUS_HEIGHTS" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "COOL"            "DIAMOND_SPRINGS" "EL_DORADO"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "EL_DORADO_HILLS" "ELK_GROVE"       "ELVERTA"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "FAIR_OAKS"       "FOLSOM"          "FORESTHILL"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "GALT"            "GARDEN_VALLEY"   "GOLD_RIVER"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "GRANITE_BAY"     "GREENWOOD"       "LINCOLN"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "LOOMIS"          "MATHER"          "MEADOW_VISTA"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "NORTH_HIGHLANDS" "ORANGEVALE"      "PENRYN"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "PLACERVILLE"     "POLLOCK_PINES"   "RANCHO_CORDOVA" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "RANCHO_MURIETA"  "RIO_LINDA"       "ROCKLIN"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "ROSEVILLE"       "SACRAMENTO"      "WALNUT_GROVE"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "WEST_SACRAMENTO" "WILTON"         </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
