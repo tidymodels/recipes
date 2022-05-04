@@ -29,14 +29,14 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{means}{A named numeric vector of means. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{means}{A named numeric vector of means. This is \code{NULL} until computed
+by \code{\link[=prep]{prep()}}.}
 
-\item{sds}{A named numeric vector of standard deviations This
-is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{sds}{A named numeric vector of standard deviations This is \code{NULL} until
+computed by \code{\link[=prep]{prep()}}.}
 
-\item{na_rm}{A logical value indicating whether \code{NA}
-values should be removed when computing the standard deviation and mean.}
+\item{na_rm}{A logical value indicating whether \code{NA} values should be removed
+when computing the standard deviation and mean.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

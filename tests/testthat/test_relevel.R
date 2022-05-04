@@ -2,53 +2,53 @@ library(recipes)
 library(testthat)
 
 library(modeldata)
-data(okc)
+data(Sacramento)
 
-okc_tr <- okc[(1:30000), ]
-okc_te <- okc[-(1:30000), ]
+sacr_tr <- Sacramento[(1:800), ]
+sacr_te <- Sacramento[-(1:800), ]
 
-rec <- recipe(~., data = okc_tr)
+rec <- recipe(~., data = sacr_tr)
 
 test_that("basic functionality", {
   rec_1 <- rec %>%
-    step_relevel(location, ref_level = "oakland") %>%
+    step_relevel(zip, ref_level = "z95838") %>%
     prep()
 
   tr_1 <- juice(rec_1)
-  expect_equal(levels(tr_1$location)[[1]], "oakland")
+  expect_equal(levels(tr_1$zip)[[1]], "z95838")
 
-  te_1 <- bake(rec_1, okc_te)
-  expect_equal(levels(te_1$location)[[1]], "oakland")
+  te_1 <- bake(rec_1, sacr_te)
+  expect_equal(levels(te_1$zip)[[1]], "z95838")
 })
 
 test_that("bad args", {
   expect_snapshot(error = TRUE,
     rec %>%
-      step_relevel(age, ref_level = 23) %>%
+      step_relevel(sqft, ref_level = 23) %>%
       prep()
   )
   expect_snapshot(error = TRUE,
     rec %>%
-      step_relevel(diet, ref_level = "missing_level") %>%
+      step_relevel(city, ref_level = "missing_level") %>%
       prep()
   )
 })
 
 test_that("printing", {
-  expect_snapshot(print(rec %>% step_relevel(location, ref_level = "oakland")))
-  expect_snapshot(print(rec %>% step_relevel(location, ref_level = "oakland") %>% prep()))
+  expect_snapshot(print(rec %>% step_relevel(zip, ref_level = "z95838")))
+  expect_snapshot(print(rec %>% step_relevel(zip, ref_level = "z95838") %>% prep()))
 })
 
 
 test_that("tidy methods", {
-  rec_raw <- rec %>% step_relevel(location, ref_level = "oakland", id = "city")
+  rec_raw <- rec %>% step_relevel(zip, ref_level = "z95838", id = "city")
   expect_equal(
     tidy(rec_raw, 1),
-    tibble(terms = "location", value = "oakland", id = "city")
+    tibble(terms = "zip", value = "z95838", id = "city")
   )
   expect_equal(
     tidy(prep(rec_raw), 1),
-    tibble(terms = "location", value = "oakland", id = "city")
+    tibble(terms = "zip", value = "z95838", id = "city")
   )
 })
 

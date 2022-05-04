@@ -1,10 +1,7 @@
 # trained
 
     Code
-      trained <- prep(okc_rec, training = okc)
-    Condition
-      Warning:
-      There are new levels in a factor: NA
+      trained <- prep(Sacramento_rec, training = Sacramento)
 
 # bad args
 

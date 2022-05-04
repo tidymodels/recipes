@@ -70,16 +70,16 @@ levels that is used for the new value) is returned.
 
 \examples{
 library(modeldata)
-data(okc)
+data(Sacramento)
 
 rec <-
-  recipe(~ diet + location, data = okc) \%>\%
-  step_unknown(diet, new_level = "unknown diet") \%>\%
-  step_unknown(location, new_level = "unknown location") \%>\%
+  recipe(~ city + zip, data = Sacramento) \%>\%
+  step_unknown(city, new_level = "unknown city") \%>\%
+  step_unknown(zip, new_level = "unknown zip") \%>\%
   prep()
 
-table(bake(rec, new_data = NULL) \%>\% pull(diet),
-  okc \%>\% pull(diet),
+table(bake(rec, new_data = NULL) \%>\% pull(city),
+  Sacramento \%>\% pull(city),
   useNA = "always"
 ) \%>\%
   as.data.frame() \%>\%

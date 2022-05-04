@@ -1,7 +1,7 @@
 # bad args
 
     Code
-      rec %>% step_relevel(age, ref_level = 23) %>% prep()
+      rec %>% step_relevel(sqft, ref_level = 23) %>% prep()
     Condition
       Error in `prep()`:
       ! Columns must be character or factor: 
@@ -9,7 +9,7 @@
 ---
 
     Code
-      rec %>% step_relevel(diet, ref_level = "missing_level") %>% prep()
+      rec %>% step_relevel(city, ref_level = "missing_level") %>% prep()
     Condition
       Error in `error_cnd()`:
       ! Conditions must have named data fields
@@ -17,36 +17,36 @@
 # printing
 
     Code
-      print(rec %>% step_relevel(location, ref_level = "oakland"))
+      print(rec %>% step_relevel(zip, ref_level = "z95838"))
     Output
       Recipe
       
       Inputs:
       
             role #variables
-       predictor          6
+       predictor          9
       
       Operations:
       
-      Re-order factor level to ref_level for location
+      Re-order factor level to ref_level for zip
 
 ---
 
     Code
-      print(rec %>% step_relevel(location, ref_level = "oakland") %>% prep())
+      print(rec %>% step_relevel(zip, ref_level = "z95838") %>% prep())
     Output
       Recipe
       
       Inputs:
       
             role #variables
-       predictor          6
+       predictor          9
       
-      Training data contained 30000 data points and 12077 incomplete rows. 
+      Training data contained 800 data points and no missing data.
       
       Operations:
       
-      Re-order factor level to ref_level for location [trained]
+      Re-order factor level to ref_level for zip [trained]
 
 # empty printing
 

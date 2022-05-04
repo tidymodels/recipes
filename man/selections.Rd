@@ -150,7 +150,7 @@ recipe(mpg ~ ., data = mtcars)  \%>\%
   step_rm(wt) \%>\% 
   step_log(!!!some_vars) \%>\% 
   prep()
-}\if{html}{\out{</div>}}\preformatted{## Error in `stop_subscript()`:
+}\if{html}{\out{</div>}}\preformatted{## Error in `chr_as_locations()`:
 ## ! Can't subset columns that don't exist.
 ## x Column `wt` doesn't exist.
 }\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Best for filters (using any_of()) and when

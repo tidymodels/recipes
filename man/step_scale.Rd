@@ -29,8 +29,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{sds}{A named numeric vector of standard deviations. This
-is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{sds}{A named numeric vector of standard deviations. This is \code{NULL}
+until computed by \code{\link[=prep]{prep()}}.}
 
 \item{factor}{A numeric value of either 1 or 2 that scales the
 numeric inputs by one or two standard deviations. By dividing
