@@ -13,26 +13,45 @@ ex_tr_mis$x3[10] <- NA
 
 ex_te <- data.frame(x1 = c(1, 50, 101, NA))
 
-lvls_breaks_4 <- c("bin_missing", "bin1", "bin2", "bin3", "bin4")
+lvls_breaks_4 <- c("[missing]", "[-Inf,25.8]", "(25.8,50.5]", "(50.5,75.2]", "(75.2, Inf]")
+lvls_breaks_4_bin <- c("bin_missing", "bin1", "bin2", "bin3", "bin4")
 
 test_that("default args", {
   bin_1 <- discretize(ex_tr$x1)
   pred_1 <- predict(bin_1, ex_te$x1)
-  exp_1 <- factor(c("bin1", "bin2", "bin4", "bin_missing"), levels = lvls_breaks_4)
+  exp_1 <- factor(lvls_breaks_4[c(2, 3, 5, 1)], levels = lvls_breaks_4)
+  expect_equal(pred_1, exp_1)
+
+  bin_1 <- discretize(ex_tr$x1, prefix = "bin")
+  pred_1 <- predict(bin_1, ex_te$x1)
+  exp_1 <- factor(c("bin1", "bin2", "bin4", "bin_missing"), levels = lvls_breaks_4_bin)
   expect_equal(pred_1, exp_1)
 })
 
 test_that("NA values", {
   bin_2 <- discretize(ex_tr$x1, keep_na = FALSE)
   pred_2 <- predict(bin_2, ex_te$x1)
-  exp_2 <- factor(c("bin1", "bin2", "bin4", NA), levels = lvls_breaks_4[-1])
+  exp_2 <- factor(lvls_breaks_4[c(2, 3, 5, NA)], levels = lvls_breaks_4[-1])
+  expect_equal(pred_2, exp_2)
+
+  bin_2 <- discretize(ex_tr$x1, keep_na = FALSE, prefix = "bin")
+  pred_2 <- predict(bin_2, ex_te$x1)
+  exp_2 <- factor(c("bin1", "bin2", "bin4", NA), levels = lvls_breaks_4_bin[-1])
   expect_equal(pred_2, exp_2)
 })
 
 test_that("NA values from out of range", {
   bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE)
   pred_3 <- predict(bin_3, ex_te$x1)
-  exp_3 <- factor(c("bin1", "bin2", NA, NA), levels = lvls_breaks_4[-1])
+  exp_3 <- factor(
+    c("[1,25.8]", "(25.8,50.5]", NA, NA),
+    levels = c("[1,25.8]", "(25.8,50.5]", "(50.5,75.2]", "(75.2,100]")
+  )
+  expect_equal(pred_3, exp_3)
+
+  bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE, prefix = "bin")
+  pred_3 <- predict(bin_3, ex_te$x1)
+  exp_3 <- factor(c("bin1", "bin2", NA, NA), levels = lvls_breaks_4_bin[-1])
   expect_equal(pred_3, exp_3)
 })
 

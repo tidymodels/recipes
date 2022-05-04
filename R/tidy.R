@@ -28,24 +28,24 @@
 #'
 #' @examples
 #' library(modeldata)
-#' data(okc)
+#' data(Sacramento)
 #'
-#' okc_rec <- recipe(~., data = okc) %>%
+#' Sacramento_rec <- recipe(~., data = Sacramento) %>%
 #'   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-#'   step_date(date, features = "dow") %>%
 #'   step_center(all_numeric()) %>%
 #'   step_dummy(all_nominal()) %>%
-#'   check_cols(starts_with("date"), age, height)
+#'   check_cols(ends_with("ude"), sqft, price)
 #'
-#' tidy(okc_rec)
+#' tidy(Sacramento_rec)
 #'
-#' tidy(okc_rec, number = 2)
-#' tidy(okc_rec, number = 3)
+#' tidy(Sacramento_rec, number = 2)
+#' tidy(Sacramento_rec, number = 3)
 #'
-#' okc_rec_trained <- prep(okc_rec, training = okc)
+#' Sacramento_rec_trained <- prep(Sacramento_rec, training = Sacramento)
 #'
-#' tidy(okc_rec_trained)
-#' tidy(okc_rec_trained, number = 3)
+#' tidy(Sacramento_rec_trained)
+#' tidy(Sacramento_rec_trained, number = 3)
+#' tidy(Sacramento_rec_trained, number = 4)
 NULL
 
 #' @rdname tidy.recipe

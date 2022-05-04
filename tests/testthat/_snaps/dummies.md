@@ -1,22 +1,21 @@
 # dummy variables with non-factor inputs
 
     Code
-      prep(dummy, training = okc, verbose = FALSE, strings_as_factors = FALSE)
+      prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
     Condition
       Warning:
-      The following variables are not factor vectors and will be ignored: `diet`, `location`
+      The following variables are not factor vectors and will be ignored: `city`, `zip`
       Error in `check_factor_vars()`:
       ! The `terms` argument in `step_dummy` did not select any factor columns.
 
 ---
 
     Code
-      recipe(age ~ location + height + diet, data = okc_fac_ish) %>% step_dummy(diet,
-        location, height) %>% prep(training = okc_fac_ish, verbose = FALSE,
-        strings_as_factors = FALSE)
+      recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>% step_dummy(city, zip,
+        price) %>% prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
     Condition
       Warning:
-      The following variables are not factor vectors and will be ignored: `diet`, `height`
+      The following variables are not factor vectors and will be ignored: `city`, `price`
     Output
       Recipe
       
@@ -26,16 +25,16 @@
          outcome          1
        predictor          3
       
-      Training data contained 59853 data points and no missing data.
+      Training data contained 932 data points and no missing data.
       
       Operations:
       
-      Dummy variables from location [trained]
+      Dummy variables from zip [trained]
 
 # tests for NA values in factor
 
     Code
-      factors <- prep(factors, training = okc_missing)
+      factors <- prep(factors, training = sacr_missing)
     Condition
       Warning:
       There are new levels in a factor: NA
@@ -43,7 +42,7 @@
 ---
 
     Code
-      factors_data_1 <- bake(factors, new_data = okc_missing)
+      factors_data_1 <- bake(factors, new_data = sacr_missing)
     Condition
       Warning:
       There are new levels in a factor: NA
@@ -51,7 +50,7 @@
 # tests for NA values in ordered factor
 
     Code
-      factors <- prep(factors, training = okc_ordered)
+      factors <- prep(factors, training = sacr_ordered)
     Condition
       Warning:
       There are new levels in a factor: NA
@@ -59,7 +58,7 @@
 ---
 
     Code
-      factors_data_1 <- bake(factors, new_data = okc_ordered)
+      factors_data_1 <- bake(factors, new_data = sacr_ordered)
     Condition
       Warning:
       There are new levels in a factor: NA
@@ -105,11 +104,11 @@
       
             role #variables
          outcome          1
-       predictor          4
+       predictor          7
       
       Operations:
       
-      Dummy variables from diet, location
+      Dummy variables from city, zip
 
 ---
 
@@ -122,13 +121,13 @@
       
             role #variables
          outcome          1
-       predictor          4
+       predictor          7
       
-      Training data contained 59853 data points and no missing data.
+      Training data contained 932 data points and no missing data.
       
       Operations:
       
-      Dummy variables from diet, location [trained]
+      Dummy variables from city, zip [trained]
 
 # no columns selected
 
@@ -153,7 +152,7 @@
 # can prep recipes with no keep_original_cols
 
     Code
-      dummy_trained <- prep(dummy, training = okc_fac, verbose = FALSE)
+      dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE)
     Condition
       Warning:
       'keep_original_cols' was added to `step_dummy()` after this recipe was created.

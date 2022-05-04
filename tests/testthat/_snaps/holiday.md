@@ -26,7 +26,7 @@
             role #variables
        predictor          1
       
-      Training data contained 365 data points and no missing data.
+      Training data contained 366 data points and 1 incomplete row. 
       
       Operations:
       

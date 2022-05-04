@@ -259,10 +259,15 @@ applies the estimated steps to any data set.\if{html}{\out{<div class="sourceCod
 In general, the workflow interface to recipes is recommended for most
 applications.
 
-[biomass$dataset == "Training",]: R:biomass$dataset\%20==\%20\%22Training\%22,
-[biomass$dataset == "Testing",]: R:biomass$dataset\%20==\%20\%22Testing\%22,
+[biomass![dataset == "Training",]: R:biomass](https://latex.codecogs.com/png.image?\%5Cdpi\%7B110\%7D&space;\%5Cbg_white&space;dataset\%20\%3D\%3D\%20\%22Training\%22\%2C\%5D\%3A\%20R\%3Abiomass "dataset == "Training",]: R:biomass")dataset\%20==\%20\%22Training\%22,
+[biomass![dataset == "Testing",]: R:biomass](https://latex.codecogs.com/png.image?\%5Cdpi\%7B110\%7D&space;\%5Cbg_white&space;dataset\%20\%3D\%3D\%20\%22Testing\%22\%2C\%5D\%3A\%20R\%3Abiomass "dataset == "Testing",]: R:biomass")dataset\%20==\%20\%22Testing\%22,
 \code{\link[=prep]{prep()}}: R:prep() \code{\link[=prep]{prep()}}: R:prep()
 [tidy.recipe()]: R:tidy.recipe() [bake()]: R:bake()
+
+[dataset == "Training",]: R:dataset\%20==\%20\%22Training\%22,\%5C
+[dataset == "Testing",]: R:dataset\%20==\%20\%22Testing\%22,\%5C
+\code{\link[=prep]{prep()}}: R:prep()
+\code{\link[=prep]{prep()}}: R:prep()
 }
 
 }
