@@ -77,6 +77,7 @@
 <li><p><code><a href="../reference/step_pls.html">step_pls()</a></code> now allows you use use multiple outcomes if they are numeric. (<a href="https://github.com/tidymodels/recipes/issues/651" class="external-link">#651</a>)</p></li>
 <li><p>Fixed a bug where setting <code>fresh = TRUE</code> in <code><a href="../reference/prep.html">prep()</a></code> wouldn’t result in re-prepping the recipe. (<a href="https://github.com/tidymodels/recipes/issues/492" class="external-link">#492</a>)</p></li>
 <li><p><code><a href="../reference/step_normalize.html">step_normalize()</a></code> and <code><a href="../reference/step_scale.html">step_scale()</a></code> ignore columns with zero variance, generate a warning and suggest to use <code><a href="../reference/step_zv.html">step_zv()</a></code> (<a href="https://github.com/tidymodels/recipes/issues/920" class="external-link">#920</a>).</p></li>
+<li><p>Bug was fixed in <code><a href="../reference/step_holiday.html">step_holiday()</a></code> which used to error when it was applied to variable with missing values. (<a href="https://github.com/tidymodels/recipes/issues/743" class="external-link">#743</a>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="recipes-020">recipes 0.2.0<a class="anchor" aria-label="anchor" href="#recipes-020"></a></h2><p class="text-muted">CRAN release: 2022-02-18</p>
