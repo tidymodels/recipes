@@ -15,7 +15,7 @@ discretize(x, ...)
   x,
   cuts = 4,
   labels = NULL,
-  prefix = "bin",
+  prefix = NULL,
   keep_na = TRUE,
   infs = TRUE,
   min_unique = 10,
@@ -41,7 +41,9 @@ for missing (see \code{keep_na} below).}
 
 \item{prefix}{A single parameter value to be used as a prefix
 for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
-the string is not a valid R name, it is coerced to one.}
+the string is not a valid R name, it is coerced to one.
+If \code{prefix = NULL} then the factor levels will be labelled
+according to the output of \code{cut()}. Defaults to \code{NULL}.}
 
 \item{keep_na}{A logical for whether a factor level should be
 created to identify missing values in \code{x}.}
