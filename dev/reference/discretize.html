@@ -89,7 +89,7 @@ on a training set).</p>
   <span class="va">x</span>,
   cuts <span class="op">=</span> <span class="fl">4</span>,
   labels <span class="op">=</span> <span class="cn">NULL</span>,
-  prefix <span class="op">=</span> <span class="st">"bin"</span>,
+  prefix <span class="op">=</span> <span class="cn">NULL</span>,
   keep_na <span class="op">=</span> <span class="cn">TRUE</span>,
   infs <span class="op">=</span> <span class="cn">TRUE</span>,
   min_unique <span class="op">=</span> <span class="fl">10</span>,
@@ -119,7 +119,9 @@ for missing (see <code>keep_na</code> below).</p></dd>
 <dt>prefix</dt>
 <dd><p>A single parameter value to be used as a prefix
 for the factor levels (e.g. <code>bin1</code>, <code>bin2</code>, ...). If
-the string is not a valid R name, it is coerced to one.</p></dd>
+the string is not a valid R name, it is coerced to one.
+If <code>prefix = NULL</code> then the factor levels will be labelled
+according to the output of <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>. Defaults to <code>NULL</code>.</p></dd>
 <dt>keep_na</dt>
 <dd><p>A logical for whether a factor level should be
 created to identify missing values in <code>x</code>.</p></dd>
@@ -184,13 +186,13 @@ largest value of <code>x</code>, a missing value will result.</p>
 <span class="r-in"><span class="va">carbon_binned</span> <span class="op">&lt;-</span> <span class="fu">discretize</span><span class="op">(</span><span class="va">biomass_tr</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">carbon_binned</span>, <span class="va">biomass_tr</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> bin_missing        bin1        bin2        bin3        bin4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0         114         115         113         114 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [-Inf,44.7] (44.7,47.1] (47.1,49.7] (49.7, Inf] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         114         115         113         114 </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">carbon_no_infs</span> <span class="op">&lt;-</span> <span class="fu">discretize</span><span class="op">(</span><span class="va">biomass_tr</span><span class="op">$</span><span class="va">carbon</span>, infs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">carbon_no_infs</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] bin4 &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: bin_missing bin1 bin2 bin3 bin4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] (49.7,97.2] &lt;NA&gt;       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: [14.6,44.7] (44.7,47.1] (47.1,49.7] (49.7,97.2]</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
