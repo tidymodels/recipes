@@ -19,6 +19,7 @@
 
 * `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
 
+* Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743)
 
 # recipes 0.2.0
 
