@@ -19,12 +19,8 @@
 ---
 
     Code
-      prep(ica_extract, training = biomass_tr, verbose = TRUE)
+      prep(ica_extract)
     Output
-      oper 1 step normalize [training] 
-      oper 2 step ica [training] 
-      The retained training set is ~ 0.02 Mb  in memory.
-      
       Recipe
       
       Inputs:

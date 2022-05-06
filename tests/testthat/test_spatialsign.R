@@ -63,7 +63,7 @@ test_that("printing", {
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
   expect_snapshot(print(sp_sign))
-  expect_snapshot(prep(sp_sign, training = biomass, verbose = TRUE))
+  expect_snapshot(prep(sp_sign))
 })
 
 test_that("empty selection prep/bake is a no-op", {

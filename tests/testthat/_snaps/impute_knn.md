@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(discr_rec, training = biomass_tr, verbose = TRUE)
+      prep(discr_rec)
     Output
-      oper 1 step impute knn [training] 
-      The retained training set is ~ 0.02 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -31,7 +28,7 @@
          outcome          1
        predictor          5
       
-      Training data contained 456 data points and no missing data.
+      Training data contained 536 data points and no missing data.
       
       Operations:
       

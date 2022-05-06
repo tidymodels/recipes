@@ -41,11 +41,8 @@
 ---
 
     Code
-      prep(rec3, training = ex_dat, verbose = TRUE)
+      prep(rec3)
     Output
-      oper 1 step ratio [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

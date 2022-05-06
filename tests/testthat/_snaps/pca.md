@@ -26,11 +26,8 @@
 ---
 
     Code
-      prep(pca_extract, training = biomass_tr, verbose = TRUE)
+      prep(pca_extract)
     Output
-      oper 1 step pca [training] 
-      The retained training set is ~ 0.02 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(with_bs, training = biomass_tr, verbose = TRUE)
+      prep(with_bs)
     Output
-      oper 1 step bs [training] 
-      The retained training set is ~ 0.04 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -102,7 +102,7 @@ test_that("printing", {
   ex_3 <- rec %>%
     step_novel(all_predictors())
   expect_snapshot(print(ex_3))
-  expect_snapshot(print(prep(ex_3, training = tr_dat, verbose = TRUE)))
+  expect_snapshot(print(prep(ex_3)))
 })
 
 test_that("empty selection prep/bake is a no-op", {

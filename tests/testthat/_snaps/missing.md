@@ -54,6 +54,38 @@
       Error in `bake()`:
       ! The following columns contain missing values: `a`.
 
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+        11 variables (no declared roles)
+      
+      Operations:
+      
+      Check missing values for all_numeric()
+
+---
+
+    Code
+      prep(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+        11 variables (no declared roles)
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Check missing values for mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gea... [trained]
+
 # empty printing
 
     Code

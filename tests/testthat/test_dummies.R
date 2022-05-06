@@ -279,7 +279,7 @@ test_that("printing", {
   rec <- recipe(sqft ~ ., data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip)
   expect_snapshot(print(dummy))
-  expect_snapshot(prep(dummy, training = sacr_fac, verbose = TRUE))
+  expect_snapshot(prep(dummy))
 })
 
 

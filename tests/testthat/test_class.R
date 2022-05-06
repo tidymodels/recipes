@@ -116,7 +116,7 @@ test_that("characters are handled correctly", {
 test_that("printing", {
   rec7 <- recipe(x) %>% check_class(everything())
   expect_snapshot(print(rec7))
-  expect_snapshot(prep(rec7, training = x, verbose = TRUE))
+  expect_snapshot(prep(rec7))
 })
 
 test_that("empty selection prep/bake is a no-op", {

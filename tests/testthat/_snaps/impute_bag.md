@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(imputed, training = biomass, verbose = TRUE)
+      prep(imputed)
     Output
-      oper 1 step impute bag [training] 
-      The retained training set is ~ 0.03 Mb  in memory.
-      
       Recipe
       
       Inputs:

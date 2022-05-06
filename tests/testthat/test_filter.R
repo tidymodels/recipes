@@ -109,7 +109,7 @@ test_that("no input", {
 test_that("printing", {
   rec <- iris_rec %>% step_filter(Sepal.Length > 4.5)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {

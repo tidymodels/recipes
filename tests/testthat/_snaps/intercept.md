@@ -54,11 +54,8 @@
 ---
 
     Code
-      prep(rec, training = ex_dat, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step intercept [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

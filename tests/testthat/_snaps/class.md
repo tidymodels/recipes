@@ -88,11 +88,8 @@
 ---
 
     Code
-      prep(rec7, training = x, verbose = TRUE)
+      prep(rec7)
     Output
-      oper 1 check class [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

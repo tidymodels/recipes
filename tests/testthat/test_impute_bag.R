@@ -96,7 +96,7 @@ test_that("printing", {
     )
 
   expect_snapshot(print(imputed))
-  expect_snapshot(prep(imputed, training = biomass, verbose = TRUE))
+  expect_snapshot(prep(imputed))
 })
 
 test_that("tunable", {

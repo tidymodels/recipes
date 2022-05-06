@@ -22,11 +22,8 @@
 ---
 
     Code
-      prep(rec2, training = biomass_tr, verbose = TRUE)
+      prep(rec2)
     Output
-      oper 1 step impute lower [training] 
-      The retained training set is ~ 0.02 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -35,7 +32,7 @@
          outcome          1
        predictor          3
       
-      Training data contained 456 data points and no missing data.
+      Training data contained 536 data points and no missing data.
       
       Operations:
       

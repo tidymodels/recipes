@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(rec, training = airquality, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step naomit [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -123,7 +123,7 @@ test_that("printing", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
   expect_snapshot(print(pca_extract))
-  expect_snapshot(prep(pca_extract, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(pca_extract))
 })
 
 

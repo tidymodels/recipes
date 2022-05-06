@@ -78,7 +78,7 @@ test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species", log = FALSE)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("prefix", {

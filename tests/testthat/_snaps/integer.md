@@ -17,11 +17,8 @@
 ---
 
     Code
-      prep(ints, training = tr_dat, verbose = TRUE)
+      prep(ints)
     Output
-      oper 1 step integer [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

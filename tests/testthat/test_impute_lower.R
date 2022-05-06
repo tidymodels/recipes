@@ -67,7 +67,7 @@ test_that("printing", {
     step_impute_lower(carbon, hydrogen)
 
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec2, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(rec2))
 })
 
 test_that("empty selection prep/bake is a no-op", {

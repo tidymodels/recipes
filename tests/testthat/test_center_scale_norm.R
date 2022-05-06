@@ -127,9 +127,10 @@ test_that("single predictor", {
 test_that("printing", {
   standardized <- rec %>%
     step_center(carbon) %>%
-    step_scale(hydrogen)
+    step_scale(hydrogen) %>%
+    step_normalize(nitrogen, carbon)
   expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized, training = biomass, verbose = TRUE))
+  expect_snapshot(prep(standardized))
 })
 
 test_that("correct means and std devs for step_norm", {

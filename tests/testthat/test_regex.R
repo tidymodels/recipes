@@ -50,7 +50,7 @@ test_that("printing", {
   rec1 <- rec %>%
     step_regex(description, pattern = "(rock|stony)")
   expect_snapshot(print(rec1))
-  expect_snapshot(prep(rec1, training = covers, verbose = TRUE))
+  expect_snapshot(prep(rec1))
 })
 
 test_that("empty selection prep/bake adds a 0 column", {

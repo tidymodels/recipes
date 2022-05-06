@@ -113,11 +113,8 @@
 ---
 
     Code
-      prep(dummy, training = sacr_fac, verbose = TRUE)
+      prep(dummy)
     Output
-      oper 1 step dummy [training] 
-      The retained training set is ~ 0.88 Mb  in memory.
-      
       Recipe
       
       Inputs:

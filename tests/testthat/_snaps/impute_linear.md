@@ -16,7 +16,7 @@
       Error in `FUN()`:
       ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
 
-# Prints.
+# Printing
 
     Code
       print(imputed)
@@ -34,11 +34,8 @@
 ---
 
     Code
-      prep(imputed, training = ames_dat, verbose = TRUE)
+      prep(imputed)
     Output
-      oper 1 step impute linear [training] 
-      The retained training set is ~ 0.06 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -46,7 +46,7 @@ test_that("printing", {
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(all_predictors())
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = languages, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("no columns selected", {

@@ -33,11 +33,8 @@
 ---
 
     Code
-      prep(filtering, training = dat, verbose = TRUE)
+      prep(filtering)
     Output
-      oper 1 step corr [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

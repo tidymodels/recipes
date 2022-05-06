@@ -33,11 +33,8 @@
 ---
 
     Code
-      print(prep(ex_3, training = tr_dat, verbose = TRUE))
+      print(prep(ex_3))
     Output
-      oper 1 step novel [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

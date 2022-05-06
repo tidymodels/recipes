@@ -48,7 +48,7 @@ test_that("printing", {
     step_kpca_poly(X2, X3, X4, X5, X6)
   skip_if(packageVersion("rlang") < "1.0.0")
   expect_snapshot(kpca_rec)
-  expect_snapshot(prep(kpca_rec, training = tr_dat, verbose = TRUE))
+  expect_snapshot(prep(kpca_rec))
 })
 
 

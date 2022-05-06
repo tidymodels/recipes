@@ -76,7 +76,7 @@ test_that("printing", {
   rec5 <- recipe(~., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
   expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5, training = ex_dat, verbose = TRUE))
+  expect_snapshot(prep(rec5))
 })
 
 test_that("empty selection prep/bake is a no-op", {

@@ -25,11 +25,8 @@
 ---
 
     Code
-      prep(rec, training = sacr_tr, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step other [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

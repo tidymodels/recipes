@@ -234,3 +234,10 @@ test_that("`retain flag in prep should return data when TRUE and zero rows when 
   expect_equal(nrow(prec_4$template), 0)
 })
 
+test_that("verbose when printing", {
+  standardized <- recipe(~., mtcars) %>%
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    step_normalize(all_predictors())
+  expect_snapshot(tmp <- prep(standardized, verbose = TRUE))
+})

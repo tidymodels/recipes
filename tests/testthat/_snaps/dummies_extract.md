@@ -25,11 +25,8 @@
 ---
 
     Code
-      prep(rec, training = tate_text, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step dummy extract [training] 
-      The retained training set is ~ 50.39 Mb  in memory.
-      
       Recipe
       
       Inputs:

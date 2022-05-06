@@ -252,7 +252,7 @@ test_that("'other' already in use", {
 test_that("printing", {
   rec <- rec %>% step_other(city, zip)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = sacr_tr, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that(

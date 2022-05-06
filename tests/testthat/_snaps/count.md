@@ -33,11 +33,8 @@
 ---
 
     Code
-      prep(rec5, training = covers, verbose = TRUE)
+      prep(rec5)
     Output
-      oper 1 step count [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

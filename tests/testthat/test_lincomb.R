@@ -70,7 +70,7 @@ test_that("printing", {
   dum_filtered <- dum_rec %>%
     step_lincomb(all_predictors())
   expect_snapshot(print(dum_filtered))
-  expect_snapshot(prep(dum_filtered, training = dummies, verbose = TRUE))
+  expect_snapshot(prep(dum_filtered))
 })
 
 test_that("empty selection prep/bake is a no-op", {

@@ -139,7 +139,7 @@ test_that("printing", {
   rec3 <- rec %>%
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
   expect_snapshot(print(rec3))
-  expect_snapshot(prep(rec3, training = ex_dat, verbose = TRUE))
+  expect_snapshot(prep(rec3))
 })
 
 test_that("keep_original_cols works", {

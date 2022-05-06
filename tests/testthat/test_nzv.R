@@ -73,7 +73,7 @@ test_that("printing", {
   rec <- recipe(y ~ ., data = dat) %>%
     step_nzv(x1, x2, x3, x4)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = dat, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 
