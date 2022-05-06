@@ -24,6 +24,9 @@
 #'  remove the original time variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
+#'  See [step_date()] if you want to calculate features that are larger than
+#'  hours.
+#'
 #'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns

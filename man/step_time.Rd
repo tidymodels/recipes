@@ -64,6 +64,9 @@ numeric variables.
 Unlike some other steps, \code{step_time} does \emph{not}
 remove the original time variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
+
+See \code{\link[=step_date]{step_date()}} if you want to calculate features that are larger than
+hours.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
