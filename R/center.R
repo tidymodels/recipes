@@ -120,11 +120,11 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
-  res <-
-    sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$means)] <- res
-  as_tibble(new_data)
+  for (column in names(object$means)) {
+    mean <- object$means[column]
+    new_data[[column]] <- new_data[[column]] - mean
+  }
+  new_data
 }
 
 print.step_center <-
