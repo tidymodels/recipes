@@ -27,7 +27,7 @@ Imports:
     hardhat (>= 0.1.6.9001),
     ipred (>= 0.9-12),
     lifecycle,
-    lubridate,
+    lubridate (>= 1.8.0),
     magrittr,
     Matrix,
     purrr (>= 0.2.3),

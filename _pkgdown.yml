@@ -89,6 +89,7 @@ reference:
     - step_regex
     - step_relevel
     - step_string2factor
+    - step_time
     - step_unknown
     - step_unorder
   - title: Step Functions - Interactions
