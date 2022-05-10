@@ -32,7 +32,7 @@
       
       Operations:
       
-      K-nearest neighbor imputation for hydrogen, oxygen, nitrogen [trained]
+      K-nearest neighbor imputation for carbon, nitrogen [trained]
 
 # options
 
