@@ -385,6 +385,9 @@
     <loc>https://recipes.tidymodels.org/dev/reference/step_string2factor.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_time.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_unknown.html</loc>
   </url>
   <url>
