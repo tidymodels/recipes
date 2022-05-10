@@ -12,7 +12,7 @@ examples <- data.frame(
 date_rec <- recipe(~ times, examples) %>%
   step_time(all_predictors())
 
-feats <- c("ampm", "hour24", "hour12", "minute", "second", "decimal_day")
+feats <- c("ampm", "hour", "hour12", "minute", "second", "decimal_day")
 
 test_that("default option", {
   # because of https://github.com/tidyverse/lubridate/issues/928
@@ -27,7 +27,7 @@ test_that("default option", {
   date_exp <- tibble(
     times = examples$times,
     times_ampm = factor(am(examples$times), c(TRUE, FALSE), c("AM", "PM")),
-    times_hour24 = hour(examples$times),
+    times_hour = hour(examples$times),
     times_hour12 = as.integer(format(examples$times, "%I")),
     times_minute = minute(examples$times),
     times_second = second(examples$times),

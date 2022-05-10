@@ -10,7 +10,7 @@
 #'  for this step. The selected variables should have class
 #'  `POSIXct` or `POSIXlt`. See [selections()] for more details.
 #' @param features A character string that includes at least one
-#'  of the following values: `ampm` (AM or PM), `hour24`, `hour12`,
+#'  of the following values: `ampm` (AM or PM), `hour`, `hour12`,
 #'  `minute`, `second`, `decimal_day`.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
@@ -56,7 +56,7 @@ step_time <-
            ...,
            role = "predictor",
            trained = FALSE,
-           features = c("hour24", "minute", "second"),
+           features = c("hour", "minute", "second"),
            columns = NULL,
            keep_original_cols = TRUE,
            skip = FALSE,
@@ -64,7 +64,7 @@ step_time <-
     feat <-
       c(
         "ampm",
-        "hour24",
+        "hour",
         "hour12",
         "minute",
         "second",
@@ -160,7 +160,7 @@ get_time_features <- function(dt, feats) {
 
   features <- list(
     ampm = function(x) format(x, "%p"),
-    hour24 = hour,
+    hour = hour,
     hour12 = function(x) as.integer(format(x, "%I")),
     minute = minute,
     second = second,
