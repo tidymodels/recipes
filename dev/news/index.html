@@ -79,6 +79,7 @@
 <li><p>Fixed a bug where setting <code>fresh = TRUE</code> in <code><a href="../reference/prep.html">prep()</a></code> wouldn’t result in re-prepping the recipe. (<a href="https://github.com/tidymodels/recipes/issues/492" class="external-link">#492</a>)</p></li>
 <li><p><code><a href="../reference/step_normalize.html">step_normalize()</a></code> and <code><a href="../reference/step_scale.html">step_scale()</a></code> ignore columns with zero variance, generate a warning and suggest to use <code><a href="../reference/step_zv.html">step_zv()</a></code> (<a href="https://github.com/tidymodels/recipes/issues/920" class="external-link">#920</a>).</p></li>
 <li><p>Bug was fixed in <code><a href="../reference/step_holiday.html">step_holiday()</a></code> which used to error when it was applied to variable with missing values. (<a href="https://github.com/tidymodels/recipes/issues/743" class="external-link">#743</a>)</p></li>
+<li><p>A bug was fixed in <code><a href="../reference/step_normalize.html">step_normalize()</a></code> which used to error if 1 variable was selected. (<a href="https://github.com/tidymodels/recipes/issues/963" class="external-link">#963</a>)</p></li>
 <li><p><code><a href="../reference/step_time.html">step_time()</a></code> has been added that extracts time features such as hour, minute, or second. (<a href="https://github.com/tidymodels/recipes/issues/968" class="external-link">#968</a>)</p></li>
 </ul></div>
     <div class="section level2">
