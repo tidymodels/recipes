@@ -189,6 +189,22 @@ test_that("bad args", {
       step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, log = exp(1)) %>%
       prep(training = rand_data_2)
   )
+  expect_snapshot(error = TRUE,
+   recipe(~ x + y, data = rand_data) %>%
+     step_geodist(x, y,
+                  ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = "no",
+                  log = FALSE
+     ) %>%
+     prep(training = rand_data)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(~ x + y, data = rand_data) %>%
+      step_geodist(x, y,
+                   ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = c(TRUE, TRUE),
+                   log = FALSE
+      ) %>%
+      prep(training = rand_data)
+  )
 })
 
 test_that("printing", {
