@@ -25,6 +25,7 @@
 
 * A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
 
+* `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
 
 # recipes 0.2.0
 
