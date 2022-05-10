@@ -6,6 +6,44 @@
       Error in `discretize()`:
       ! Only numeric `x` is accepted
 
+# printing of discretize()
+
+    Code
+      discretize(1:100)
+    Output
+      Bins: 5 (includes missing category)
+      Breaks: -Inf, 25.75, 50.5, 75.25, Inf
+
+---
+
+    Code
+      discretize(1:100, cuts = 6)
+    Output
+      Bins: 7 (includes missing category)
+
+---
+
+    Code
+      discretize(1:100, keep_na = FALSE)
+    Output
+      Bins: 4
+      Breaks: -Inf, 25.75, 50.5, 75.25, Inf
+
+---
+
+    Code
+      res <- discretize(1:2)
+    Condition
+      Warning:
+      Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
+
+---
+
+    Code
+      res
+    Output
+      Too few unique data points. No binning.
+
 # bad args
 
     Code

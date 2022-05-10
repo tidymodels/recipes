@@ -44,6 +44,17 @@ test_that("bad values", {
   expect_snapshot(error = TRUE, discretize(letters))
 })
 
+test_that("printing of discretize()", {
+  expect_snapshot(discretize(1:100))
+  expect_snapshot(discretize(1:100, cuts = 6))
+  expect_snapshot(discretize(1:100, keep_na = FALSE))
+
+  expect_snapshot(
+    res <- discretize(1:2)
+  )
+  expect_snapshot(res)
+})
+
 test_that("NA values from out of range", {
   bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE)
   pred_3 <- predict(bin_3, ex_te$x1)
