@@ -15,9 +15,6 @@ date_rec <- recipe(~ times, examples) %>%
 feats <- c("ampm", "hour", "hour12", "minute", "second", "decimal_day")
 
 test_that("default option", {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
   date_rec <- recipe(~ times, examples) %>%
     step_time(all_predictors(), features = feats)
 
@@ -39,9 +36,6 @@ test_that("default option", {
 
 
 test_that("nondefault options", {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
   date_rec <- recipe(~ times, examples) %>%
     step_time(all_predictors(), features = c( "minute", "second"))
 
@@ -58,9 +52,6 @@ test_that("nondefault options", {
 })
 
 test_that("custom hour12 metric is correct", {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
   full_day <- tibble(
     time = ymd_hms("2000-01-01 00:00:00") + seconds(seq(0, 60 * 60 * 24))
   )
@@ -84,9 +75,6 @@ test_that("custom hour12 metric is correct", {
 })
 
 test_that("printing", {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
   date_rec <- recipe(~ times, examples) %>%
     step_time(all_predictors(), features = feats)
   expect_snapshot(print(date_rec))
