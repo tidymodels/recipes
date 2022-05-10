@@ -57,6 +57,32 @@ test_that("nondefault options", {
   expect_equal(date_res, date_exp)
 })
 
+test_that("custom hour12 metric is correct", {
+  # because of https://github.com/tidyverse/lubridate/issues/928
+  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
+
+  full_day <- tibble(
+    time = ymd_hms("2000-01-01 00:00:00") + seconds(seq(0, 60 * 60 * 24))
+  )
+
+  date_rec <- recipe(~ time, full_day) %>%
+    step_time(all_predictors(), features = c( "hour12"))
+
+  date_rec <- prep(date_rec, training = full_day)
+  date_res <- bake(date_rec, new_data = full_day)
+
+  hour12old <- function(x) {
+    as.integer(format(x, "%I"))
+  }
+
+  date_exp <- tibble(
+    time = full_day$time,
+    time_hour12 = as.integer(format(full_day$time, "%I"))
+  )
+
+  expect_equal(date_res, date_exp)
+})
+
 test_that("printing", {
   # because of https://github.com/tidyverse/lubridate/issues/928
   skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")

@@ -166,7 +166,12 @@ get_time_features <- function(dt, feats) {
   features <- list(
     ampm = am,
     hour = hour,
-    hour12 = function(x) as.integer(format(x, "%I")),
+    hour12 = function(x) {
+      out <- hour(x)
+      out <- ifelse(out == 0L, 12L, out)
+      out <- ifelse(out > 12L, out - 12L, out)
+      out
+    },
     minute = minute,
     second = second,
     decimal_day = function(x) hour(x) + (second(x) + minute(x) * 60) / 3600
