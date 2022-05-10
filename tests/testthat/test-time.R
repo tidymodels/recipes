@@ -94,22 +94,6 @@ test_that("keep_original_cols works", {
   )
 })
 
-test_that("can prep recipes with no keep_original_cols", {
-  date_rec <- recipe(~ times, examples) %>%
-    step_time(all_predictors(), features = feats, keep_original_cols = FALSE)
-
-  date_rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    date_rec <- prep(date_rec, training = examples, verbose = FALSE)
-  )
-
-  expect_error(
-    date_res <- bake(date_rec, new_data = examples, all_predictors()),
-    NA
-  )
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_time(rec1)
