@@ -23,6 +23,8 @@
 
 * Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743)
 
+* A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
+
 * `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
 
 # recipes 0.2.0

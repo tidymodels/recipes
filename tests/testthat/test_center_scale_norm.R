@@ -161,6 +161,23 @@ test_that("correct means and std devs for step_norm", {
   expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)
 })
 
+test_that("step_normalize works with 1 column (#963)", {
+  standardized <- rec %>%
+    step_normalize(carbon, id = "norm")
+
+  standardized_trained <- prep(standardized, training = biomass)
+
+  norm_tibble_tr <-
+    tibble(
+      terms = c("carbon", "carbon"),
+      statistic = c("mean", "sd"),
+      value = unname(c(means[["carbon"]], sds[["carbon"]])),
+      id = standardized$steps[[1]]$id
+    )
+
+  expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)
+})
+
 test_that("na_rm argument works for step_scale", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
