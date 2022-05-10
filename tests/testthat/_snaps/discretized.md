@@ -1,3 +1,11 @@
+# bad values
+
+    Code
+      discretize(letters)
+    Condition
+      Error in `discretize()`:
+      ! Only numeric `x` is accepted
+
 # bad args
 
     Code

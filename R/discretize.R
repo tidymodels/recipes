@@ -10,6 +10,7 @@ discretize <- function(x, ...) {
   UseMethod("discretize")
 }
 
+#' @export
 #' @rdname discretize
 discretize.default <- function(x, ...) {
   rlang::abort("Only numeric `x` is accepted")

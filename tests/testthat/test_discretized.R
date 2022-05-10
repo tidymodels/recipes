@@ -40,6 +40,10 @@ test_that("NA values", {
   expect_equal(pred_2, exp_2)
 })
 
+test_that("bad values", {
+  expect_snapshot(error = TRUE, discretize(letters))
+})
+
 test_that("NA values from out of range", {
   bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE)
   pred_3 <- predict(bin_3, ex_te$x1)
