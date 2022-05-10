@@ -24,6 +24,11 @@
 #'  remove the original time variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
+#'  `decimal_day` return time of day as a decimal number between 0 and 24. for
+#'  example `"07:15:00"` would be transformed to `7.25`  and `"03:59:59"` would
+#'  be transformed to `3.999722`. The formula for these calculations are
+#'  `hour(x) + (second(x) + minute(x) * 60) / 3600`.
+#'
 #'  See [step_date()] if you want to calculate features that are larger than
 #'  hours.
 #'
@@ -37,7 +42,7 @@
 #' library(lubridate)
 #'
 #' examples <- data.frame(
-#'   times = ymd_hms("2022-05-06 10:01:07") +
+#'   times = ymd_hms("2022-05-06 23:51:07") +
 #'   hours(1:5) + minutes(1:5) + seconds(1:5)
 #' )
 #' time_rec <- recipe(~ times, examples) %>%
