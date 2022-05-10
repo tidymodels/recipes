@@ -8,8 +8,8 @@
     Code
       tidy(trained, number = NULL)
     Condition
-      Error in `tidy()`:
-      ! object 'trained' not found
+      Error in `if (is.na(number)) ...`:
+      ! argument is of length zero
 
 ---
 
@@ -17,7 +17,7 @@
       tidy(trained, number = 100)
     Condition
       Error in `tidy()`:
-      ! object 'trained' not found
+      ! `number` should be a single value between 1 and 4.
 
 ---
 
@@ -25,7 +25,7 @@
       tidy(trained, number = 1, id = "id")
     Condition
       Error in `tidy()`:
-      ! object 'trained' not found
+      ! You may specify `number` or `id`, but not both.
 
 ---
 
@@ -33,5 +33,5 @@
       tidy(trained, id = "id")
     Condition
       Error in `tidy()`:
-      ! object 'trained' not found
+      ! Supplied `id` not found in the recipe.
 

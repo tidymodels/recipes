@@ -67,6 +67,8 @@ test_that("empty recipe", {
 
 
 test_that("bad args", {
+  trained <- prep(Sacramento_rec, training = Sacramento)
+
   expect_snapshot(error = TRUE, tidy(trained, number = NULL))
   expect_snapshot(error = TRUE, tidy(trained, number = 100))
   expect_snapshot(error = TRUE, tidy(trained, number = 1, id = "id"))
