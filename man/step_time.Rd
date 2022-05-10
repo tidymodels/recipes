@@ -9,7 +9,7 @@ step_time(
   ...,
   role = "predictor",
   trained = FALSE,
-  features = c("hour24", "minute", "second"),
+  features = c("hour", "minute", "second"),
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -32,8 +32,8 @@ the original variables will be used as \emph{predictors} in a model.}
 preprocessing have been estimated.}
 
 \item{features}{A character string that includes at least one
-of the following values: \code{ampm} (AM or PM), \code{hour24}, \code{hour12},
-\code{minute},\code{second}, \code{decimal_day}.}
+of the following values: \code{am} (is is AM), \code{hour}, \code{hour12}, \code{minute},
+\code{second}, \code{decimal_day}.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
@@ -56,14 +56,19 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_time} creates a \emph{specification} of a recipe
+\code{step_time()} creates a \emph{specification} of a recipe
 step that will convert date-time data into one or more factor or
 numeric variables.
 }
 \details{
-Unlike some other steps, \code{step_time} does \emph{not}
+Unlike some other steps, \code{step_time()} does \emph{not}
 remove the original time variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
+
+\code{decimal_day} return time of day as a decimal number between 0 and 24. for
+example \code{"07:15:00"} would be transformed to \code{7.25}  and \code{"03:59:59"} would
+be transformed to \code{3.999722}. The formula for these calculations are
+\code{hour(x) + (second(x) + minute(x) * 60) / 3600}.
 
 See \code{\link[=step_date]{step_date()}} if you want to calculate features that are larger than
 hours.
@@ -78,7 +83,7 @@ names).
 library(lubridate)
 
 examples <- data.frame(
-  times = ymd_hms("2022-05-06 10:01:07") +
+  times = ymd_hms("2022-05-06 23:51:07") +
   hours(1:5) + minutes(1:5) + seconds(1:5)
 )
 time_rec <- recipe(~ times, examples) \%>\%

@@ -85,7 +85,7 @@ Unlike some other steps, \code{step_date} does \emph{not}
 remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
 
-See \code{\link[=step_time]{step_time()}} if you want to calculate features that are small than
+See \code{\link[=step_time]{step_time()}} if you want to calculate features that are smaller than
 days.
 }
 \section{Tidying}{
