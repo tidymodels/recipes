@@ -68,7 +68,7 @@ step_time <-
            id = rand_id("time")) {
     feat <-
       c(
-        "ampm",
+        "am",
         "hour",
         "hour12",
         "minute",
@@ -164,7 +164,7 @@ bake.step_time <- function(object, new_data, ...) {
 get_time_features <- function(dt, feats) {
 
   features <- list(
-    ampm = am,
+    am = am,
     hour = hour,
     hour12 = function(x) {
       out <- hour(x)
