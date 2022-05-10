@@ -39,7 +39,7 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  See [step_time()] if you want to calculate features that are small than
+#'  See [step_time()] if you want to calculate features that are smaller than
 #'  days.
 #'
 #'  # Tidying

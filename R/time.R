@@ -1,6 +1,6 @@
 #' Time Feature Generator
 #'
-#' `step_time` creates a *specification* of a recipe
+#' `step_time()` creates a *specification* of a recipe
 #'  step that will convert date-time data into one or more factor or
 #'  numeric variables.
 #'
@@ -11,7 +11,7 @@
 #'  `POSIXct` or `POSIXlt`. See [selections()] for more details.
 #' @param features A character string that includes at least one
 #'  of the following values: `ampm` (AM or PM), `hour24`, `hour12`,
-#'  `minute`,`second`, `decimal_day`.
+#'  `minute`, `second`, `decimal_day`.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep()] is used.
@@ -20,7 +20,7 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details Unlike some other steps, `step_time` does *not*
+#' @details Unlike some other steps, `step_time()` does *not*
 #'  remove the original time variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
@@ -140,7 +140,7 @@ bake.step_time <- function(object, new_data, ...) {
 
   for (column in object$columns) {
     time_values <- get_time_features(
-      dt = getElement(new_data, column),
+      dt = new_data[[column]],
       feats = object$features
     )
 
