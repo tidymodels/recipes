@@ -35,3 +35,11 @@
       Error in `tidy()`:
       ! Supplied `id` not found in the recipe.
 
+---
+
+    Code
+      tidy(trained, id = c("id", "id2"))
+    Condition
+      Error in `tidy()`:
+      ! If `id` is provided, it must be a length 1 character vector.
+

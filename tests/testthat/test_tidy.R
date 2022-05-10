@@ -73,4 +73,5 @@ test_that("bad args", {
   expect_snapshot(error = TRUE, tidy(trained, number = 100))
   expect_snapshot(error = TRUE, tidy(trained, number = 1, id = "id"))
   expect_snapshot(error = TRUE, tidy(trained, id = "id"))
+  expect_snapshot(error = TRUE, tidy(trained, id = c("id", "id2")))
 })
