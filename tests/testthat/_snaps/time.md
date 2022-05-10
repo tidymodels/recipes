@@ -32,15 +32,6 @@
       
       Time features from times [trained]
 
-# can prep recipes with no keep_original_cols
-
-    Code
-      date_rec <- prep(date_rec, training = examples, verbose = FALSE)
-    Condition
-      Warning:
-      'keep_original_cols' was added to `step_time()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
-
 # empty printing
 
     Code
