@@ -384,6 +384,7 @@ test_that("empty printing", {
 })
 
 test_that("othering with case weights", {
+  skip("remove okc")
   weighted_props <- okc_tr %>%
     mutate(age = as.double(age)) %>%
     count(diet, wt = age, sort = TRUE) %>%
