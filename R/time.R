@@ -10,8 +10,8 @@
 #'  for this step. The selected variables should have class
 #'  `POSIXct` or `POSIXlt`. See [selections()] for more details.
 #' @param features A character string that includes at least one
-#'  of the following values: `ampm` (AM or PM), `hour`, `hour12`,
-#'  `minute`, `second`, `decimal_day`.
+#'  of the following values: `am` (is is AM), `hour`, `hour12`, `minute`,
+#'  `second`, `decimal_day`.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep()] is used.
@@ -164,7 +164,7 @@ bake.step_time <- function(object, new_data, ...) {
 get_time_features <- function(dt, feats) {
 
   features <- list(
-    ampm = function(x) format(x, "%p"),
+    ampm = am,
     hour = hour,
     hour12 = function(x) as.integer(format(x, "%I")),
     minute = minute,

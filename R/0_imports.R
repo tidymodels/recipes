@@ -5,7 +5,7 @@
 #' @importFrom ipred ipredbagg
 #' @importFrom lifecycle deprecated
 #' @importFrom lubridate decimal_date is.Date month quarter semester wday week
-#' @importFrom lubridate yday year hour minute second
+#' @importFrom lubridate yday year hour minute second am
 #' @importFrom Matrix Matrix
 #' @importFrom purrr map map_chr map_dbl map_dfr map_if map_lgl reduce
 #' @importFrom rlang !! as_character call2 exec expr f_lhs f_rhs is_empty

@@ -26,7 +26,7 @@ test_that("default option", {
 
   date_exp <- tibble(
     times = examples$times,
-    times_ampm = factor(am(examples$times), c(TRUE, FALSE), c("AM", "PM")),
+    times_ampm = am(examples$times),
     times_hour = hour(examples$times),
     times_hour12 = as.integer(format(examples$times, "%I")),
     times_minute = minute(examples$times),
