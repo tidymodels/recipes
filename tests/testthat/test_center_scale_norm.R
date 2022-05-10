@@ -161,7 +161,7 @@ test_that("correct means and std devs for step_norm", {
   expect_equal(tidy(standardized_trained, 1), norm_tibble_tr)
 })
 
-test_that("step_norm works with 1 column", {
+test_that("step_normalize works with 1 column (#963)", {
   standardized <- rec %>%
     step_normalize(carbon, id = "norm")
 

@@ -144,7 +144,7 @@ bake.step_normalize <- function(object, new_data, ...) {
   for (column in names(object$means)) {
     mean <- object$means[column]
     sd <- object$sds[column]
-    new_data[[column]] <- (getElement(new_data, column) - mean) / sd
+    new_data[[column]] <- (new_data[[column]] - mean) / sd
   }
   new_data
 }
