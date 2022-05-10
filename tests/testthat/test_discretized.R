@@ -115,6 +115,25 @@ test_that("tidys", {
   expect_equal(tidy(rec_trained, 1), tidy_exp_tr)
 })
 
+test_that("multiple column prefix", {
+  set.seed(1234)
+  example_data <- tibble(
+    x1 = rnorm(1000),
+    x2 = rnorm(1000)
+  )
+  expect_snapshot(
+    recipe(~., data = example_data) %>%
+      step_discretize(x1, x2, options = list(prefix = "hello")) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    recipe(~., data = example_data) %>%
+      step_discretize(x1, x2, options = list(labels = "hello")) %>%
+      prep()
+  )
+})
+
 
 test_that("bad args", {
   expect_snapshot(error = TRUE,

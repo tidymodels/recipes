@@ -44,6 +44,50 @@
     Output
       Too few unique data points. No binning.
 
+# multiple column prefix
+
+    Code
+      recipe(~., data = example_data) %>% step_discretize(x1, x2, options = list(
+        prefix = "hello")) %>% prep()
+    Condition
+      Warning:
+      Note that the options `prefix` and `labels`will be applied to all variables
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Training data contained 1000 data points and no missing data.
+      
+      Operations:
+      
+      Discretize numeric variables from x1, x2 [trained]
+
+---
+
+    Code
+      recipe(~., data = example_data) %>% step_discretize(x1, x2, options = list(
+        labels = "hello")) %>% prep()
+    Condition
+      Warning:
+      Note that the options `prefix` and `labels`will be applied to all variables
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Training data contained 1000 data points and no missing data.
+      
+      Operations:
+      
+      Discretize numeric variables from x1, x2 [trained]
+
 # bad args
 
     Code
