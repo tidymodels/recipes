@@ -117,7 +117,8 @@ much variance each component accounts for.
 
 
 This step performs an unsupervised operation that can utilize case weights.
-To use them, see the documentation in \link{case_weights} and the examples on
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
 \code{tidymodels.org}.
 }
 

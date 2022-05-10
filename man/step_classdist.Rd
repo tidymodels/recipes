@@ -96,8 +96,9 @@ of the class), and \code{class} is returned.
 
 
 This step performs an supervised operation that can utilize case weights.
-To use them, see the documentation in \link{case_weights} and the examples on
-\code{tidymodels.org}.
+As a result, case weights are used with frequency weights as well as
+importance weights. For more information,, see the documentation in
+\link{case_weights} and the examples on \code{tidymodels.org}.
 }
 
 \examples{
