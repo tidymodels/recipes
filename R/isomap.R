@@ -206,9 +206,6 @@ bake.step_isomap <- function(object, new_data, ...) {
     if (!keep_original_cols) {
       new_data <- new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
     }
-    if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
-    }
   }
   new_data
 }

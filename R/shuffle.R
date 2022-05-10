@@ -89,7 +89,7 @@ bake.step_shuffle <- function(object, new_data, ...) {
         sample(getElement(new_data, object$columns[i]))
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_shuffle <-

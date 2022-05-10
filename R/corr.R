@@ -141,7 +141,7 @@ bake.step_corr <- function(object, new_data, ...) {
   if (length(object$removals) > 0) {
     new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_corr <-

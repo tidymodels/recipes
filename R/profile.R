@@ -214,7 +214,7 @@ bake.step_profile <- function(object, new_data, ...) {
     new_data[[i]] <- rep(object$columns[[i]], n)
   }
   new_data[[names(object$profile)]] <- object$profile[[1]]
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_profile <-

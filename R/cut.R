@@ -148,7 +148,7 @@ bake.step_cut <- function(object, new_data, ...) {
     )
     new_data[, col_name] <- res
   }
-  as_tibble(new_data)
+  new_data
 }
 
 cut_var <- function(var, breaks, include_outside_range) {

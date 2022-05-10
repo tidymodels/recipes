@@ -192,7 +192,7 @@ bake.check_class <- function(object,
     MoreArgs = list(aa = object$allow_additional)
   )
 
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_class <-

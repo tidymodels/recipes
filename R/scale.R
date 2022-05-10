@@ -128,7 +128,7 @@ bake.step_scale <- function(object, new_data, ...) {
     sweep(as.matrix(new_data[, names(object$sds)]), 2, object$sds, "/")
   res <- tibble::as_tibble(res)
   new_data[, names(object$sds)] <- res
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_scale <-

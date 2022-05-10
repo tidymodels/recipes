@@ -117,7 +117,8 @@ bake.step_lag <- function(object, new_data, ...) {
   newname <- as.character(glue::glue("{object$prefix}{grid$lag_val}_{grid$col}"))
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
-  as_tibble(mutate(new_data, !!!calls))
+  new_data <- mutate(new_data, !!!calls)
+  new_data
 }
 
 print.step_lag <-

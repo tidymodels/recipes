@@ -167,9 +167,6 @@ bake.step_ns <- function(object, new_data, ...) {
     new_data[, orig_var] <- NULL
   }
   new_data <- bind_cols(new_data, as_tibble(ns_values))
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

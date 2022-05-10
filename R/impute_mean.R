@@ -152,7 +152,7 @@ bake.step_impute_mean <- function(object, new_data, ...) {
     }
     new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

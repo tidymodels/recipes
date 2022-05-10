@@ -183,9 +183,6 @@ bake.step_other <- function(object, new_data, ...) {
       new_data[, i] <- tmp
     }
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

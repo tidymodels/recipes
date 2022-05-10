@@ -111,7 +111,7 @@ bake.step_unorder <- function(object, new_data, ...) {
         levels = levels(getElement(new_data, object$columns[i]))
       )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

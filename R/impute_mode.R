@@ -157,7 +157,7 @@ bake.step_impute_mode <- function(object, new_data, ...) {
       new_data[is.na(new_data[[i]]), i] <- mode_val
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

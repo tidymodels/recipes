@@ -124,7 +124,7 @@ bake.step_center <- function(object, new_data, ...) {
     sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
   res <- tibble::as_tibble(res)
   new_data[, names(object$means)] <- res
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_center <-

@@ -124,7 +124,7 @@ bake.step_range <- function(object, new_data, ...) {
 
   tmp <- tibble::as_tibble(tmp)
   new_data[, colnames(object$ranges)] <- tmp
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_range <-

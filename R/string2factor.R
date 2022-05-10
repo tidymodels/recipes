@@ -164,10 +164,6 @@ bake.step_string2factor <- function(object, new_data, ...) {
         ord = object$ordered[1]
       )
   }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

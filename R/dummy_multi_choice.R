@@ -176,7 +176,7 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
     new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
   }
 
-  as_tibble(new_data)
+  new_data
 }
 
 multi_dummy <- function(x, y) {

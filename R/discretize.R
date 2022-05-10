@@ -362,7 +362,7 @@ bake.step_discretize <- function(object, new_data, ...) {
     new_data[, i] <-
       predict(object$objects[[i]], getElement(new_data, i))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_discretize <-

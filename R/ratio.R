@@ -164,10 +164,6 @@ bake.step_ratio <- function(object, new_data, ...) {
     union_cols <- union(object$columns$top, object$columns$bottom)
     new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
   }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

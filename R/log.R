@@ -141,7 +141,7 @@ bake.step_log <- function(object, new_data, ...) {
         )
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_log <-
