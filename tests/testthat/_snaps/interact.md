@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(int_rec, training = dat_tr, verbose = TRUE)
+      prep(int_rec)
     Output
-      oper 1 step interact [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

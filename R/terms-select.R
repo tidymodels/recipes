@@ -25,8 +25,8 @@
 #' @examples
 #' library(rlang)
 #' library(modeldata)
-#' data(okc)
-#' rec <- recipe(~., data = okc)
+#' data(Sacramento)
+#' rec <- recipe(~., data = Sacramento)
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
 terms_select <- function(terms, info, empty_fun = abort_selection) {

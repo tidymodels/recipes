@@ -17,11 +17,8 @@
 ---
 
     Code
-      prep(date_rec, training = examples, verbose = TRUE)
+      prep(date_rec)
     Output
-      oper 1 step date [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

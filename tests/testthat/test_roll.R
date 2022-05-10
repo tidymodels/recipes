@@ -85,11 +85,38 @@ test_that("creating new variables", {
   expect_equal(new_names_res$new2, simple_ma_res$y2)
 })
 
+test_that("na_rm argument works for step_window", {
+
+  sim_dat_na <- sim_dat
+  sim_dat_na[7, 2:3] <- NA
+
+  simple_ma_no_rm_na <- recipe(~., data = sim_dat_na) %>%
+    step_window(starts_with("y"), na_rm = FALSE) %>%
+    prep() %>%
+    bake(new_data = NULL)
+
+  simple_ma_rm_na <- recipe(~., data = sim_dat_na) %>%
+    step_window(starts_with("y"), na_rm = TRUE) %>%
+    prep() %>%
+    bake(new_data = NULL)
+
+  expect_false(any(is.na(simple_ma_rm_na$y1)))
+  expect_false(any(is.na(simple_ma_rm_na$y2)))
+
+  exp_rm_na <- simple_ma_rm_na
+  exp_rm_na[6:8, 2:3] <- NA
+
+  expect_equal(
+    simple_ma_no_rm_na,
+    exp_rm_na
+  )
+})
+
 test_that("printing", {
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
   expect_snapshot(print(new_names))
-  expect_snapshot(prep(new_names, training = sim_dat, verbose = TRUE))
+  expect_snapshot(prep(new_names))
 })
 
 

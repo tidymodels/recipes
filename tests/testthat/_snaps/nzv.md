@@ -23,11 +23,8 @@
 ---
 
     Code
-      prep(rec, training = dat, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step nzv [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

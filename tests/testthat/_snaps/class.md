@@ -57,18 +57,18 @@
 # characters are handled correctly
 
     Code
-      bake(rec6_NULL, okc[11:20, ])
+      bake(rec6_NULL, sacr_fac[11:20, ])
     Condition
       Error:
-      ! diet should have the class(es) factor but has the class(es) character.
+      ! city should have the class(es) factor but has the class(es) character.
 
 ---
 
     Code
-      bake(rec6_man, okc[11:20, ])
+      bake(rec6_man, sacr_fac[11:20, ])
     Condition
       Error:
-      ! diet should have the class(es) factor but has the class(es) character.
+      ! type should have the class(es) factor but has the class(es) character.
 
 # printing
 
@@ -88,11 +88,8 @@
 ---
 
     Code
-      prep(rec7, training = x, verbose = TRUE)
+      prep(rec7)
     Output
-      oper 1 check class [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

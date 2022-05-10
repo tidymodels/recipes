@@ -56,5 +56,5 @@ test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_intercept()
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })

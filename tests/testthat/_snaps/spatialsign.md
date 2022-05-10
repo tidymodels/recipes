@@ -20,13 +20,8 @@
 ---
 
     Code
-      prep(sp_sign, training = biomass, verbose = TRUE)
+      prep(sp_sign)
     Output
-      oper 1 step center [training] 
-      oper 2 step scale [training] 
-      oper 3 step spatialsign [training] 
-      The retained training set is ~ 0.03 Mb  in memory.
-      
       Recipe
       
       Inputs:

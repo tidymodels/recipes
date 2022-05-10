@@ -13,7 +13,7 @@
 # printing
 
     Code
-      rec
+      print(rec)
     Output
       Recipe
       
@@ -29,7 +29,7 @@
 ---
 
     Code
-      prep(rec, training = ex_dat)
+      prep(rec)
     Condition
       Warning:
       Non-positive values in selected variable.

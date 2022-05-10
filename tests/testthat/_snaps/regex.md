@@ -33,11 +33,8 @@
 ---
 
     Code
-      prep(rec1, training = covers, verbose = TRUE)
+      prep(rec1)
     Output
-      oper 1 step regex [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -84,7 +84,7 @@ test_that("bad input", {
 test_that("printing", {
   rec <- iris_rec %>% step_sample()
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris2, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("sample with case weights", {

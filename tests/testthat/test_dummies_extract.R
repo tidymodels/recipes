@@ -232,7 +232,7 @@ test_that("printing", {
   rec <- recipe(~medium, data = tate_text) %>%
     step_dummy_extract(all_predictors(), sep = ", ")
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = tate_text, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {

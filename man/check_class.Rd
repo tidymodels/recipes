@@ -85,21 +85,21 @@ The underlying operation does not allow for case weights.
 \examples{
 library(dplyr)
 library(modeldata)
-data(okc)
+data(Sacramento)
 
 # Learn the classes on the train set
-train <- okc[1:1000, ]
-test <- okc[1001:2000, ]
-recipe(train, age ~ .) \%>\%
+train <- Sacramento[1:500, ]
+test <- Sacramento[501:nrow(Sacramento), ]
+recipe(train, sqft ~ .) \%>\%
   check_class(everything()) \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
 
 # Manual specification
-recipe(train, age ~ .) \%>\%
-  check_class(age, class_nm = "integer") \%>\%
-  check_class(diet, location, class_nm = "character") \%>\%
-  check_class(date, class_nm = "Date") \%>\%
+recipe(train, sqft ~ .) \%>\%
+  check_class(sqft, class_nm = "integer") \%>\%
+  check_class(city, zip, type, class_nm = "factor") \%>\%
+  check_class(latitude, longitude, class_nm = "numeric") \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
 

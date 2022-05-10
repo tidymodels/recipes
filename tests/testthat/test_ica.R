@@ -83,7 +83,7 @@ test_that("printing", {
   ica_extract <- rec %>%
     step_ica(carbon, hydrogen, num_comp = 2)
   expect_snapshot(print(ica_extract))
-  expect_snapshot(prep(ica_extract, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(ica_extract))
 })
 
 

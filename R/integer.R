@@ -40,23 +40,21 @@
 #'
 #' @examples
 #' library(modeldata)
-#' data(okc)
+#' data(Sacramento)
 #'
-#' okc$location <- factor(okc$location)
+#' sacr_tr <- Sacramento[1:100, ]
+#' sacr_tr$sqft[1] <- NA
 #'
-#' okc_tr <- okc[1:100, ]
-#' okc_tr$age[1] <- NA
+#' sacr_te <- Sacramento[101:105, ]
+#' sacr_te$sqft[1] <- NA
+#' sacr_te$city[1] <- "whoville"
+#' sacr_te$city[2] <- NA
 #'
-#' okc_te <- okc[101:105, ]
-#' okc_te$age[1] <- NA
-#' okc_te$diet[1] <- "fast food"
-#' okc_te$diet[2] <- NA
-#'
-#' rec <- recipe(Class ~ ., data = okc_tr) %>%
+#' rec <- recipe(type ~ ., data = sacr_tr) %>%
 #'   step_integer(all_predictors()) %>%
-#'   prep(training = okc_tr)
+#'   prep(training = sacr_tr)
 #'
-#' bake(rec, okc_te, all_predictors())
+#' bake(rec, sacr_te, all_predictors())
 #' tidy(rec, number = 1)
 step_integer <-
   function(recipe,

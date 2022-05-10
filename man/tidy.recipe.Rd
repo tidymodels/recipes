@@ -14,7 +14,7 @@
 %   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/profile.R, R/range.R,
 %   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
 %   R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R,
-%   R/slice.R, R/spatialsign.R, R/sqrt.R, R/string2factor.R, R/tidy.R,
+%   R/slice.R, R/spatialsign.R, R/sqrt.R, R/string2factor.R, R/tidy.R, R/time.R,
 %   R/unknown.R, R/unorder.R, R/window.R, R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
@@ -102,6 +102,7 @@
 \alias{tidy.recipe}
 \alias{tidy.step}
 \alias{tidy.check}
+\alias{tidy.step_time}
 \alias{tidy.step_unknown}
 \alias{tidy.step_unorder}
 \alias{tidy.step_window}
@@ -278,6 +279,8 @@
 
 \method{tidy}{check}(x, ...)
 
+\method{tidy}{step_time}(x, ...)
+
 \method{tidy}{step_unknown}(x, ...)
 
 \method{tidy}{step_unorder}(x, ...)
@@ -323,22 +326,22 @@ method for the operation exists).
 }
 \examples{
 library(modeldata)
-data(okc)
+data(Sacramento)
 
-okc_rec <- recipe(~., data = okc) \%>\%
+Sacramento_rec <- recipe(~., data = Sacramento) \%>\%
   step_other(all_nominal(), threshold = 0.05, other = "another") \%>\%
-  step_date(date, features = "dow") \%>\%
   step_center(all_numeric()) \%>\%
   step_dummy(all_nominal()) \%>\%
-  check_cols(starts_with("date"), age, height)
+  check_cols(ends_with("ude"), sqft, price)
 
-tidy(okc_rec)
+tidy(Sacramento_rec)
 
-tidy(okc_rec, number = 2)
-tidy(okc_rec, number = 3)
+tidy(Sacramento_rec, number = 2)
+tidy(Sacramento_rec, number = 3)
 
-okc_rec_trained <- prep(okc_rec, training = okc)
+Sacramento_rec_trained <- prep(Sacramento_rec, training = Sacramento)
 
-tidy(okc_rec_trained)
-tidy(okc_rec_trained, number = 3)
+tidy(Sacramento_rec_trained)
+tidy(Sacramento_rec_trained, number = 3)
+tidy(Sacramento_rec_trained, number = 4)
 }

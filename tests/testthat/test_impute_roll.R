@@ -102,7 +102,7 @@ test_that("printing", {
     update_role(day, new_role = "time_index") %>%
     step_impute_roll(all_predictors(), window = 7)
   expect_snapshot(print(seven_pt))
-  expect_snapshot(prep(seven_pt, training = example_data, verbose = TRUE))
+  expect_snapshot(prep(seven_pt))
 })
 
 

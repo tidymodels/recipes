@@ -109,7 +109,7 @@ test_that("no input", {
 test_that("printing", {
   rec <- iris_rec %>% step_mutate(x = 5)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("tidying allows for named and unnamed expressions", {
@@ -210,7 +210,7 @@ test_that("no input", {
 test_that("printing", {
   rec <- iris_rec %>% step_mutate_at(contains("Sepal"), fn = log)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("mutate_at - empty selection prep/bake is a no-op", {

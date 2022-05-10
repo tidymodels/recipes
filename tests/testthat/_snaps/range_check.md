@@ -120,11 +120,8 @@
 ---
 
     Code
-      prep(check_range_extract, training = mtcars, verbose = TRUE)
+      prep(check_range_extract)
     Output
-      oper 1 check range [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

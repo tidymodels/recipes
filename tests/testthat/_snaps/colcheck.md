@@ -14,6 +14,42 @@
       Error in `bake()`:
       ! The following cols are missing from `new_data`: `mpg`.
 
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         10
+      
+      Operations:
+      
+      Check if the following columns are present: everything()
+
+---
+
+    Code
+      prep(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         10
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Check if the following columns are present: mpg, disp, hp, drat, wt, qsec, vs, am, gear, ca... [trained]
+
 # empty printing
 
     Code

@@ -30,6 +30,13 @@ colnames(dat2) <- paste0("x", 1:3)
 
 rec <- recipe(~., data = dat1)
 
+scrub_timestamp <- function(x) {
+  if (grepl("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}", x[1])) {
+    return(NULL)
+  }
+  x
+}
+
 test_that("correct Isomap values", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
@@ -57,6 +64,7 @@ test_that("correct Isomap values", {
 
 
 test_that("printing", {
+
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -67,8 +75,7 @@ test_that("printing", {
   im_rec <- rec %>%
     step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
   expect_snapshot(print(im_rec))
-  # Can't snapshot because of timestamps
-  expect_output(prep(im_rec, training = dat1, verbose = TRUE))
+  expect_snapshot(prep(im_rec), transform = scrub_timestamp)
 })
 
 
@@ -105,15 +112,14 @@ test_that("ISOmap fails gracefully", {
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  # Can't snapshot because of timestamps
-  expect_error(
+  expect_snapshot(error = TRUE,
     recipe(Sepal.Length ~ ., data = iris) %>%
       step_bs(Sepal.Width, deg_free = 1, degree = 1) %>%
       step_bs(Sepal.Length, deg_free = 1, degree = 1) %>%
       step_other(Species, threshold = .000000001) %>%
       step_isomap(all_numeric_predictors(), num_terms = 1, neighbors = 1) %>%
       prep(),
-    snapshot_accept('roll')
+    transform = scrub_timestamp
   )
 })
 
@@ -170,10 +176,9 @@ test_that("can prep recipes with no keep_original_cols", {
 
   im_rec$steps[[1]]$keep_original_cols <- NULL
 
-  # Can't snapshot because of timestamps
-  expect_warning(
+  expect_snapshot(
     im_trained <- prep(im_rec, training = dat1, verbose = FALSE),
-    "'keep_original_cols' was added to"
+    transform = scrub_timestamp
   )
 
   expect_error(

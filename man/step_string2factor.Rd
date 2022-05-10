@@ -76,21 +76,27 @@ The underlying operation does not allow for case weights.
 
 \examples{
 library(modeldata)
-data(okc)
+data(Sacramento)
 
-rec <- recipe(~ diet + location, data = okc)
+# convert factor to string to demonstrate
+Sacramento$city <- as.character(Sacramento$city)
+
+rec <- recipe(~ city + zip, data = Sacramento)
 
 make_factor <- rec \%>\%
-  step_string2factor(diet)
+  step_string2factor(city)
+
 make_factor <- prep(make_factor,
-  training = okc,
-  strings_as_factors = FALSE
+  training = Sacramento
 )
 
-# note that `diet` is a factor
+make_factor
+
+# note that `city` is a factor in recipe output
 bake(make_factor, new_data = NULL) \%>\% head()
-okc \%>\% head()
-tidy(make_factor, number = 1)
+
+# ...but remains a string in the data
+Sacramento \%>\% head()
 }
 \seealso{
 Other dummy variable and encoding steps: 
@@ -110,6 +116,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_other}()},
 \code{\link{step_regex}()},
 \code{\link{step_relevel}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

@@ -111,3 +111,14 @@
       Error in `too_many_case_weights()`:
       ! There should only be a single column with the role 'case_weights'. In these data, there are 2 columns.
 
+# verbose when printing
+
+    Code
+      tmp <- prep(standardized, verbose = TRUE)
+    Output
+      oper 1 step center [training] 
+      oper 2 step scale [training] 
+      oper 3 step normalize [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+

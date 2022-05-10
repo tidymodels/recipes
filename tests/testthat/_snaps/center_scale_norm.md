@@ -24,16 +24,13 @@
       
       Centering for carbon
       Scaling for hydrogen
+      Centering and scaling for nitrogen, carbon
 
 ---
 
     Code
-      prep(standardized, training = biomass, verbose = TRUE)
+      prep(standardized)
     Output
-      oper 1 step center [training] 
-      oper 2 step scale [training] 
-      The retained training set is ~ 0.03 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -48,6 +45,7 @@
       
       Centering for carbon [trained]
       Scaling for hydrogen [trained]
+      Centering and scaling for nitrogen, carbon [trained]
 
 # center - empty printing
 

@@ -66,7 +66,7 @@ test_that("printing", {
   with_poly <- rec %>%
     step_poly(carbon, hydrogen)
   expect_snapshot(print(with_poly))
-  expect_snapshot(prep(with_poly, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(with_poly))
 })
 
 

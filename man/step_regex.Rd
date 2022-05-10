@@ -110,6 +110,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_other}()},
 \code{\link{step_relevel}()},
 \code{\link{step_string2factor}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

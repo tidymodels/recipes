@@ -101,7 +101,7 @@ test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_impute_mean(Age, Assets, Income)
   expect_snapshot(print(impute_rec))
-  expect_snapshot(prep(impute_rec, training = credit_tr, verbose = TRUE))
+  expect_snapshot(prep(impute_rec))
 })
 
 

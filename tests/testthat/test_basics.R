@@ -284,4 +284,15 @@ test_that("case weights are being infered correctly for x interface", {
   expect_snapshot(error = TRUE,
     recipe(mtcars2)
   )
+
+})
+
+
+test_that("verbose when printing", {
+  standardized <- recipe(~., mtcars) %>%
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    step_normalize(all_predictors())
+  expect_snapshot(tmp <- prep(standardized, verbose = TRUE))
+
 })

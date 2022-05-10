@@ -25,11 +25,8 @@
 ---
 
     Code
-      prep(rec5, training = ex_dat, verbose = TRUE)
+      prep(rec5)
     Output
-      oper 1 step ordinalscore [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

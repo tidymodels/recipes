@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(rec3, training = dat, verbose = TRUE)
+      prep(rec3)
     Output
-      oper 1 step shuffle [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -4,53 +4,51 @@ library(tibble)
 
 
 library(modeldata)
-data(okc)
+data(Sacramento)
 
 set.seed(131)
-okc_rec <- recipe(~., data = okc) %>%
+Sacramento_rec <- recipe(~., data = Sacramento) %>%
   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-  step_date(date, features = "dow", id = "date_dow") %>%
   step_center(all_numeric()) %>%
   step_dummy(all_nominal()) %>%
-  check_cols(starts_with("date"))
+  check_cols(starts_with("beds"))
 
 test_that("untrained", {
   exp_res_1 <- tibble(
-    number = 1:5,
-    operation = c("step", "step", "step", "step", "check"),
-    type = c("other", "date", "center", "dummy", "cols"),
-    trained = rep(FALSE, 5),
-    skip = rep(FALSE, 5),
-    id = vapply(okc_rec$steps, function(x) x$id, character(1))
+    number = 1:4,
+    operation = c("step", "step", "step", "check"),
+    type = c("other", "center", "dummy", "cols"),
+    trained = rep(FALSE, 4),
+    skip = rep(FALSE, 4),
+    id = vapply(Sacramento_rec$steps, function(x) x$id, character(1))
   )
-  expect_equal(tidy(okc_rec), exp_res_1)
+  expect_equal(tidy(Sacramento_rec), exp_res_1)
 })
 
 
 test_that("trained", {
   exp_res_2 <- tibble(
-    number = 1:5,
-    operation = c("step", "step", "step", "step", "check"),
-    type = c("other", "date", "center", "dummy", "cols"),
-    trained = rep(TRUE, 5),
-    skip = rep(FALSE, 5),
-    id = vapply(okc_rec$steps, function(x) x$id, character(1))
+    number = 1:4,
+    operation = c("step", "step", "step", "check"),
+    type = c("other", "center", "dummy", "cols"),
+    trained = rep(TRUE, 4),
+    skip = rep(FALSE, 4),
+    id = vapply(Sacramento_rec$steps, function(x) x$id, character(1))
   )
   expect_snapshot(
-    trained <- prep(okc_rec, training = okc)
+    trained <- prep(Sacramento_rec, training = Sacramento)
   )
   expect_equal(tidy(trained), exp_res_2)
 })
 
 test_that("select step", {
   exp_res_3 <- tibble(
-    terms = "date",
-    value = "dow",
-    ordinal = FALSE,
-    id = okc_rec$steps[[2]][["id"]]
+    terms = "all_numeric()",
+    value = NA_real_,
+    id = Sacramento_rec$steps[[2]][["id"]]
   )
-  expect_equal(tidy(okc_rec, number = 2), exp_res_3)
-  expect_equal(tidy(okc_rec, id = "date_dow"), exp_res_3)
+  expect_equal(tidy(Sacramento_rec, number = 2), exp_res_3)
+  expect_equal(tidy(Sacramento_rec, id = Sacramento_rec$steps[[2]][["id"]]), exp_res_3)
 })
 
 test_that("empty recipe", {

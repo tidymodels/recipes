@@ -26,11 +26,8 @@
 ---
 
     Code
-      prep(impute_rec, training = credit_tr, verbose = TRUE)
+      prep(impute_rec)
     Output
-      oper 1 step impute median [training] 
-      The retained training set is ~ 0.11 Mb  in memory.
-      
       Recipe
       
       Inputs:

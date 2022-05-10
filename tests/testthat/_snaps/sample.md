@@ -41,11 +41,8 @@
 ---
 
     Code
-      prep(rec, training = iris2, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step sample [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

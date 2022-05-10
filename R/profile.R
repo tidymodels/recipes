@@ -51,12 +51,12 @@
 #' @export
 #' @examples
 #' library(modeldata)
-#' data(okc)
+#' data(Sacramento)
 #'
-#' # Setup a grid across date but keep the other values fixed
-#' recipe(~ diet + height + date, data = okc) %>%
-#'   step_profile(-date, profile = vars(date)) %>%
-#'   prep(training = okc) %>%
+#' # Setup a grid across beds but keep the other values fixed
+#' recipe(~ city + price + beds, data = Sacramento) %>%
+#'   step_profile(-beds, profile = vars(beds)) %>%
+#'   prep(training = Sacramento) %>%
 #'   juice()
 #'
 #'

@@ -101,11 +101,8 @@
 ---
 
     Code
-      prep(with_harmonic, training = mtcars, verbose = TRUE)
+      prep(with_harmonic)
     Output
-      oper 1 step harmonic [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

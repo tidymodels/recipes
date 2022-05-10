@@ -30,6 +30,42 @@
       Warning:
       In step_cut: this will create a factor with one value only.
 
+# printing
+
+    Code
+      print(rec5)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         10
+      
+      Operations:
+      
+      Cut numeric for disp
+
+---
+
+    Code
+      prep(rec5)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         10
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Cut numeric for disp [trained]
+
 # empty printing
 
     Code

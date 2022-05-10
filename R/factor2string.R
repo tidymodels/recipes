@@ -24,35 +24,25 @@
 #'
 #' @examples
 #' library(modeldata)
-#' data(okc)
+#' data(Sacramento)
 #'
-#' rec <- recipe(~ diet + location, data = okc)
+#' rec <- recipe(~ city + zip, data = Sacramento)
 #'
-#' rec <- rec %>%
-#'   step_string2factor(diet)
+#' make_string <- rec %>%
+#'   step_factor2string(city)
 #'
-#' factor_test <- rec %>%
-#'   prep(
-#'     training = okc,
-#'     strings_as_factors = FALSE
-#'   ) %>%
-#'   juice()
-#' # diet is a
-#' class(factor_test$diet)
+#' make_string <- prep(make_string,
+#'   training = Sacramento,
+#'   strings_as_factors = FALSE
+#' )
 #'
-#' rec <- rec %>%
-#'   step_factor2string(diet)
+#' make_string
 #'
-#' string_test <- rec %>%
-#'   prep(
-#'     training = okc,
-#'     strings_as_factors = FALSE
-#'   ) %>%
-#'   juice()
-#' # diet is a
-#' class(string_test$diet)
+#' # note that `city` is a string in recipe output
+#' bake(make_string, new_data = NULL) %>% head()
 #'
-#' tidy(rec, number = 1)
+#' # ...but remains a factor in the original data
+#' Sacramento %>% head()
 step_factor2string <-
   function(recipe,
            ...,

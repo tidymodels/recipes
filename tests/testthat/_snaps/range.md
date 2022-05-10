@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(standardized, training = biomass_tr, verbose = TRUE)
+      prep(standardized)
     Output
-      oper 1 step range [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

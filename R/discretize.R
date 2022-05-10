@@ -25,6 +25,8 @@ discretize.default <- function(x, ...) {
 #' @param prefix A single parameter value to be used as a prefix
 #'  for the factor levels (e.g. `bin1`, `bin2`, ...). If
 #'  the string is not a valid R name, it is coerced to one.
+#'  If `prefix = NULL` then the factor levels will be labelled
+#'  according to the output of `cut()`. Defaults to `NULL`.
 #' @param keep_na A logical for whether a factor level should be
 #'  created to identify missing values in `x`.
 #' @param infs A logical indicating whether the smallest and
@@ -76,7 +78,7 @@ discretize.numeric <-
   function(x,
            cuts = 4,
            labels = NULL,
-           prefix = "bin",
+           prefix = NULL,
            keep_na = TRUE,
            infs = TRUE,
            min_unique = 10,
@@ -111,7 +113,7 @@ discretize.numeric <-
 
       if (is.null(labels)) {
         prefix <- prefix[1]
-        if (make.names(prefix) != prefix) {
+        if (make.names(prefix) != prefix && !is.null(prefix)) {
           rlang::warn(paste0(
             "The prefix '",
             prefix,
@@ -156,7 +158,11 @@ predict.discretize <- function(object, new_data, ...) {
     is.data.frame(new_data)) {
     new_data <- new_data[, 1]
   }
-  object$labels <- paste0(object$prefix, object$labels)
+  object$labels <- if (is.null(object$prefix)) {
+    object$prefix
+  } else {
+    paste0(object$prefix, object$labels)
+  }
   if (object$bins >= 1) {
     labs <- if (object$keep_na) {
       object$labels[-1]
@@ -169,12 +175,17 @@ predict.discretize <- function(object, new_data, ...) {
         labels = labs,
         include.lowest = TRUE
       )
+
     if (object$keep_na) {
+      out_levels <- levels(out)
       out <- as.character(out)
       if (any(is.na(new_data))) {
-        out[is.na(new_data)] <- object$labels[1]
+        missing_label <- object$labels[1] %||% "[missing]"
+
+        out[is.na(new_data)] <- missing_label
+        out_levels <- c(missing_label, out_levels)
       }
-      out <- factor(out, levels = object$labels)
+      out <- factor(out, levels = out_levels)
     }
   } else {
     out <- new_data
