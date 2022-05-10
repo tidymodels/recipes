@@ -10,7 +10,7 @@
       Warning:
       No Box-Cox transformation could be estimated for: `x2`, `x3`
 
-# Errors
+# warnings
 
     Code
       recipe(~., data = exp_dat) %>% step_BoxCox(x1) %>% prep()
@@ -36,7 +36,7 @@
 # printing
 
     Code
-      rec
+      print(rec)
     Output
       Recipe
       
@@ -52,7 +52,7 @@
 ---
 
     Code
-      prep(rec, training = ex_dat)
+      prep(rec)
     Condition
       Warning:
       Non-positive values in selected variable.

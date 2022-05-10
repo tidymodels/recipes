@@ -109,7 +109,7 @@ test_that("printing", {
       id = ""
     )
   expect_snapshot(print(discr_rec))
-  expect_snapshot(prep(discr_rec, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(prep(discr_rec))
 })
 
 

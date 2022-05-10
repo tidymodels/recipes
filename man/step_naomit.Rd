@@ -10,7 +10,7 @@ step_naomit(
   role = NA,
   trained = FALSE,
   columns = NULL,
-  skip = FALSE,
+  skip = TRUE,
   id = rand_id("naomit")
 )
 }

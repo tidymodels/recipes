@@ -40,7 +40,7 @@ test_that("bad options", {
 test_that("printing", {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
   expect_snapshot(print(rec2))
-  expect_snapshot(prep(rec2, training = covers, verbose = TRUE))
+  expect_snapshot(prep(rec2))
 })
 
 

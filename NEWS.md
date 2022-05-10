@@ -1,8 +1,35 @@
 # recipes (development version)
 
+
+* Fixed bug in which functions that `step_hyperbolic()` uses (#932).
+
+* `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
+ 
+* Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
+
+* `discretize()` and `step_discretize()` now defaults to returning factor levels similar to `cut()` by default, in line with `step_discretize_*()` steps from the embed package. (#674)
+
+* `step_dummy()` no works correctly with recipes trained on version 0.1.17 or earlier. (#921)
+
+* `step_naomit()` now actually had their defaults for `skip` changed to `TRUE` as was stated in release  0.1.13. (934)
+
+* `step_dummy()` has been made more robust to non-standard column names. (#879)
+
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
+* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+* `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
+
+* Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743)
+
+* A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
+
+* `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
+
 # recipes 0.2.0
 
-# New Steps
+## New Steps
 
 * `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
 
@@ -43,7 +70,6 @@
 * `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
 
 * `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
-
 
 ## Developer
 

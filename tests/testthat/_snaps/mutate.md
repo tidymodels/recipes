@@ -27,11 +27,8 @@
 ---
 
     Code
-      prep(rec, training = iris, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step mutate [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -64,11 +61,8 @@
 ---
 
     Code
-      prep(rec, training = iris, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step mutate at [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

@@ -43,13 +43,8 @@
 ---
 
     Code
-      prep(rec2, training = covers, verbose = TRUE)
+      prep(rec2)
     Output
-      oper 1 step regex [training] 
-      oper 2 step regex [training] 
-      oper 3 step bin2factor [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

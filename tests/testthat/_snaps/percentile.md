@@ -12,16 +12,13 @@
       
       Operations:
       
-      Percentile transformation on <none>
+      Percentile transformation on carbon, sulfur
 
 ---
 
     Code
-      prep(rec, training = biomass_tr, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step percentile [training] 
-      The retained training set is ~ 0.06 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -33,7 +30,7 @@
       
       Operations:
       
-      Percentile transformation on ~carbon, ~sulfur [trained]
+      Percentile transformation on carbon, sulfur [trained]
 
 # empty printing
 

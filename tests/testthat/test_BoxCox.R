@@ -94,8 +94,8 @@ test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_BoxCox(x1, x2, x3, x4)
 
-  expect_snapshot(rec)
-  expect_snapshot(prep(rec, training = ex_dat))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {

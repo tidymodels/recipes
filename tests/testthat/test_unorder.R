@@ -35,7 +35,7 @@ test_that("wrong vars", {
 test_that("printing", {
   rec4 <- rec %>% step_unorder(X2)
   expect_snapshot(print(rec4))
-  expect_snapshot(prep(rec4, training = examples, verbose = TRUE))
+  expect_snapshot(prep(rec4))
 })
 
 test_that("empty selection prep/bake is a no-op", {

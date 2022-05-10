@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(with_poly, training = biomass_tr, verbose = TRUE)
+      prep(with_poly)
     Output
-      oper 1 step poly [training] 
-      The retained training set is ~ 0.03 Mb  in memory.
-      
       Recipe
       
       Inputs:

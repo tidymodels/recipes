@@ -2,180 +2,190 @@ library(testthat)
 library(recipes)
 
 library(modeldata)
-data(okc)
+data(Sacramento)
 
 set.seed(19)
 in_test <- 1:200
 
-okc_tr <- okc[-in_test, ]
-okc_te <- okc[in_test, ]
+sacr_tr <- Sacramento[-in_test, ]
+sacr_te <- Sacramento[in_test, ]
 
-rec <- recipe(~ diet + location, data = okc_tr)
+rec <- recipe(~ city + zip, data = sacr_tr)
 
 # assume no novel levels here but test later:
-# all(sort(unique(okc_tr$location)) == sort(unique(okc$location)))
+# all(sort(unique(sacr_tr$zip)) == sort(unique(Sacramento$zip)))
 
 test_that("default inputs", {
-  others <- rec %>% step_other(diet, location, other = "another", id = "")
+  others <- rec %>% step_other(city, zip, other = "another", id = "")
 
   tidy_exp_un <- tibble(
-    terms = c("diet", "location"),
+    terms = c("city", "zip"),
     retained = rep(NA_character_, 2),
     id = ""
   )
   expect_equal(tidy_exp_un, tidy(others, number = 1))
 
-  others <- prep(others, training = okc_tr)
-  others_te <- bake(others, new_data = okc_te)
+  others <- prep(others, training = sacr_tr)
+  others_te <- bake(others, new_data = sacr_te)
 
   tidy_exp_tr <- tibble(
-    terms = rep(c("diet", "location"), c(4, 3)),
-    retained = c(
-      "anything", "mostly anything", "mostly vegetarian",
-      "strictly anything", "berkeley",
-      "oakland", "san francisco"
-    ),
+    terms = rep(c("city", "zip"), c(3, 1)),
+    retained = c("ELK_GROVE", "ROSEVILLE", "SACRAMENTO", "z95823"),
     id = ""
   )
   expect_equal(tidy_exp_tr, tidy(others, number = 1))
 
-  diet_props <- table(okc_tr$diet) / sum(!is.na(okc_tr$diet))
-  diet_props <- sort(diet_props, decreasing = TRUE)
-  diet_levels <- names(diet_props)[diet_props >= others$step[[1]]$threshold]
-  for (i in diet_levels) {
+  city_props <- table(sacr_tr$city) / sum(!is.na(sacr_tr$city))
+  city_props <- sort(city_props, decreasing = TRUE)
+  city_levels <- names(city_props)[city_props >= others$step[[1]]$threshold]
+  for (i in city_levels) {
     expect_equal(
-      sum(others_te$diet == i, na.rm = TRUE),
-      sum(okc_te$diet == i, na.rm = TRUE)
+      sum(others_te$city == i, na.rm = TRUE),
+      sum(sacr_te$city == i, na.rm = TRUE)
     )
   }
 
-  diet_levels <- c(diet_levels, others$step[[1]]$objects[["diet"]]$other)
-  expect_true(all(levels(others_te$diet) %in% diet_levels))
-  expect_true(all(diet_levels %in% levels(others_te$diet)))
+  city_levels <- c(city_levels, others$step[[1]]$objects[["city"]]$other)
+  expect_true(all(levels(others_te$city) %in% city_levels))
+  expect_true(all(city_levels %in% levels(others_te$city)))
 
-  location_props <- table(okc_tr$location) / sum(!is.na(okc_tr$location))
-  location_props <- sort(location_props, decreasing = TRUE)
-  location_levels <- names(location_props)[location_props >= others$step[[1]]$threshold]
-  for (i in location_levels) {
+  zip_props <- table(sacr_tr$zip) / sum(!is.na(sacr_tr$zip))
+  zip_props <- sort(zip_props, decreasing = TRUE)
+  zip_levels <- names(zip_props)[zip_props >= others$step[[1]]$threshold]
+  for (i in zip_levels) {
     expect_equal(
-      sum(others_te$location == i, na.rm = TRUE),
-      sum(okc_te$location == i, na.rm = TRUE)
+      sum(others_te$zip == i, na.rm = TRUE),
+      sum(sacr_te$zip == i, na.rm = TRUE)
     )
   }
 
-  location_levels <- c(location_levels, others$step[[1]]$objects[["location"]]$other)
-  expect_true(all(levels(others_te$location) %in% location_levels))
-  expect_true(all(location_levels %in% levels(others_te$location)))
+  zip_levels <- c(zip_levels, others$step[[1]]$objects[["zip"]]$other)
+  expect_true(all(levels(others_te$zip) %in% zip_levels))
+  expect_true(all(zip_levels %in% levels(others_te$zip)))
 
-  expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
-  expect_equal(is.na(okc_te$location), is.na(others_te$location))
+  expect_equal(is.na(sacr_te$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
 })
 
 
 test_that("high threshold - much removals", {
-  others <- rec %>% step_other(diet, location, threshold = .5)
-  others <- prep(others, training = okc_tr)
-  others_te <- bake(others, new_data = okc_te)
+  others <- rec %>% step_other(city, zip, threshold = .5)
+  others <- prep(others, training = sacr_tr)
+  others_te <- bake(others, new_data = sacr_te)
 
-  diet_props <- table(okc_tr$diet)
-  diet_levels <- others$steps[[1]]$objects$diet$keep
-  for (i in diet_levels) {
+  city_props <- table(sacr_tr$city)
+  city_levels <- others$steps[[1]]$objects$city$keep
+  for (i in city_levels) {
     expect_equal(
-      sum(others_te$diet == i, na.rm = TRUE),
-      sum(okc_te$diet == i, na.rm = TRUE)
+      sum(others_te$city == i, na.rm = TRUE),
+      sum(sacr_te$city == i, na.rm = TRUE)
     )
   }
 
-  diet_levels <- c(diet_levels, others$step[[1]]$objects[["diet"]]$other)
-  expect_true(all(levels(others_te$diet) %in% diet_levels))
-  expect_true(all(diet_levels %in% levels(others_te$diet)))
+  city_levels <- c(city_levels, others$step[[1]]$objects[["city"]]$other)
+  expect_true(all(levels(others_te$city) %in% city_levels))
+  expect_true(all(city_levels %in% levels(others_te$city)))
 
-  location_props <- table(okc_tr$location)
-  location_levels <- others$steps[[1]]$objects$location$keep
-  for (i in location_levels) {
+  zip_props <- table(sacr_tr$zip)
+  zip_levels <- others$steps[[1]]$objects$zip$keep
+  for (i in zip_levels) {
     expect_equal(
-      sum(others_te$location == i, na.rm = TRUE),
-      sum(okc_te$location == i, na.rm = TRUE)
+      sum(others_te$zip == i, na.rm = TRUE),
+      sum(sacr_te$zip == i, na.rm = TRUE)
     )
   }
 
-  location_levels <- c(location_levels, others$step[[1]]$objects[["location"]]$other)
-  expect_true(all(levels(others_te$location) %in% location_levels))
-  expect_true(all(location_levels %in% levels(others_te$location)))
+  zip_levels <- c(zip_levels, others$step[[1]]$objects[["zip"]]$other)
+  expect_true(all(levels(others_te$zip) %in% zip_levels))
+  expect_true(all(zip_levels %in% levels(others_te$zip)))
 
-  expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
-  expect_equal(is.na(okc_te$location), is.na(others_te$location))
+  expect_equal(is.na(sacr_te$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
 })
 
 
 test_that("low threshold - no removals", {
-  others <- rec %>% step_other(diet, location, threshold = 10^-30, other = "another")
-  others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
-  others_te <- bake(others, new_data = okc_te)
+  sacr_te_chr <- sacr_te %>%
+    dplyr::mutate(
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
 
-  expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
-  expect_equal(is.na(okc_te$location), is.na(others_te$location))
+  others <- rec %>% step_other(city, zip, threshold = 10^-30, other = "another")
+  others <- prep(others, training = sacr_te_chr, strings_as_factors = FALSE)
+  others_te <- bake(others, new_data = sacr_te_chr)
 
-  expect_equal(okc_te$diet, as.character(others_te$diet))
-  expect_equal(okc_te$location, as.character(others_te$location))
+  expect_equal(is.na(sacr_te_chr$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te_chr$zip), is.na(others_te$zip))
+
+  expect_equal(sacr_te_chr$city, as.character(others_te$city))
+  expect_equal(sacr_te_chr$zip, as.character(others_te$zip))
 })
 
 test_that("zero threshold - no removals", {
-  others <- rec %>% step_other(diet, location, threshold = 0, other = "another")
-  others <- prep(others, training = okc_tr, strings_as_factors = FALSE)
-  others_te <- bake(others, new_data = okc_te)
+  sacr_te_chr <- sacr_te %>%
+    dplyr::mutate(
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
 
-  expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
-  expect_equal(is.na(okc_te$location), is.na(others_te$location))
+  others <- rec %>% step_other(city, zip, threshold = 0, other = "another")
+  others <- prep(others, training = sacr_te_chr, strings_as_factors = FALSE)
+  others_te <- bake(others, new_data = sacr_te_chr)
 
-  expect_equal(okc_te$diet, as.character(others_te$diet))
-  expect_equal(okc_te$location, as.character(others_te$location))
+  expect_equal(is.na(sacr_te_chr$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te_chr$zip), is.na(others_te$zip))
+
+  expect_equal(sacr_te_chr$city, as.character(others_te$city))
+  expect_equal(sacr_te_chr$zip, as.character(others_te$zip))
 })
 
 
 test_that("factor inputs", {
-  okc$diet <- as.factor(okc$diet)
-  okc$location <- as.factor(okc$location)
+  Sacramento$city <- as.factor(Sacramento$city)
+  Sacramento$zip <- as.factor(Sacramento$zip)
 
-  okc_tr <- okc[-in_test, ]
-  okc_te <- okc[in_test, ]
+  sacr_tr <- Sacramento[-in_test, ]
+  sacr_te <- Sacramento[in_test, ]
 
-  rec <- recipe(~ diet + location, data = okc_tr)
+  rec <- recipe(~ city + zip, data = sacr_tr)
 
-  others <- rec %>% step_other(diet, location)
-  others <- prep(others, training = okc_tr)
-  others_te <- bake(others, new_data = okc_te)
+  others <- rec %>% step_other(city, zip)
+  others <- prep(others, training = sacr_tr)
+  others_te <- bake(others, new_data = sacr_te)
 
-  diet_props <- table(okc_tr$diet) / sum(!is.na(okc_tr$diet))
-  diet_props <- sort(diet_props, decreasing = TRUE)
-  diet_levels <- names(diet_props)[diet_props >= others$step[[1]]$threshold]
-  for (i in diet_levels) {
+  city_props <- table(sacr_tr$city) / sum(!is.na(sacr_tr$city))
+  city_props <- sort(city_props, decreasing = TRUE)
+  city_levels <- names(city_props)[city_props >= others$step[[1]]$threshold]
+  for (i in city_levels) {
     expect_equal(
-      sum(others_te$diet == i, na.rm = TRUE),
-      sum(okc_te$diet == i, na.rm = TRUE)
+      sum(others_te$city == i, na.rm = TRUE),
+      sum(sacr_te$city == i, na.rm = TRUE)
     )
   }
 
-  diet_levels <- c(diet_levels, others$step[[1]]$objects[["diet"]]$other)
-  expect_true(all(levels(others_te$diet) %in% diet_levels))
-  expect_true(all(diet_levels %in% levels(others_te$diet)))
+  city_levels <- c(city_levels, others$step[[1]]$objects[["city"]]$other)
+  expect_true(all(levels(others_te$city) %in% city_levels))
+  expect_true(all(city_levels %in% levels(others_te$city)))
 
-  location_props <- table(okc_tr$location) / sum(!is.na(okc_tr$location))
-  location_props <- sort(location_props, decreasing = TRUE)
-  location_levels <- names(location_props)[location_props >= others$step[[1]]$threshold]
-  for (i in location_levels) {
+  zip_props <- table(sacr_tr$zip) / sum(!is.na(sacr_tr$zip))
+  zip_props <- sort(zip_props, decreasing = TRUE)
+  zip_levels <- names(zip_props)[zip_props >= others$step[[1]]$threshold]
+  for (i in zip_levels) {
     expect_equal(
-      sum(others_te$location == i, na.rm = TRUE),
-      sum(okc_te$location == i, na.rm = TRUE)
+      sum(others_te$zip == i, na.rm = TRUE),
+      sum(sacr_te$zip == i, na.rm = TRUE)
     )
   }
 
-  location_levels <- c(location_levels, others$step[[1]]$objects[["location"]]$other)
-  expect_true(all(levels(others_te$location) %in% location_levels))
-  expect_true(all(location_levels %in% levels(others_te$location)))
+  zip_levels <- c(zip_levels, others$step[[1]]$objects[["zip"]]$other)
+  expect_true(all(levels(others_te$zip) %in% zip_levels))
+  expect_true(all(zip_levels %in% levels(others_te$zip)))
 
-  expect_equal(is.na(okc_te$diet), is.na(others_te$diet))
-  expect_equal(is.na(okc_te$location), is.na(others_te$location))
+  expect_equal(is.na(sacr_te$city), is.na(others_te$city))
+  expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
 })
 
 
@@ -222,41 +232,48 @@ test_that("novel levels", {
 })
 
 test_that("'other' already in use", {
-  others <- rec %>% step_other(diet, location, threshold = 10^-10)
+  sacr_tr_chr <- sacr_tr %>%
+    dplyr::mutate(
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
+
+  sacr_tr_chr$city[1] <- "other"
+
+  rec <- recipe(~ city + zip, data = sacr_tr_chr)
+
+  others <- rec %>% step_other(city, zip, threshold = 10^-10)
   expect_snapshot(error = TRUE,
-    prep(others, training = okc_tr, strings_as_factors = FALSE)
+    prep(others, training = sacr_tr_chr, strings_as_factors = FALSE)
   )
 })
 
 test_that("printing", {
-  rec <- rec %>% step_other(diet, location)
+  rec <- rec %>% step_other(city, zip)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = okc_tr, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that(
   desc = "if threshold argument is an integer greater than one
           then it's treated as a frequency",
   code = {
-    others <- rec %>% step_other(diet, location, threshold = 3000, other = "another", id = "")
+    others <- rec %>% step_other(city, zip, threshold = 80, other = "another", id = "")
 
     tidy_exp_un <- tibble(
-      terms = c("diet", "location"),
+      terms = c("city", "zip"),
       retained = rep(NA_character_, 2),
       id = ""
     )
 
     expect_equal(tidy_exp_un, tidy(others, number = 1))
 
-    others <- prep(others, training = okc_tr)
+    others <- prep(others, training = sacr_tr)
 
     tidy_exp_tr <- tibble(
-      terms = rep(c("diet", "location"), c(4, 3)),
-      retained = c(
-        "anything", "mostly anything", "mostly vegetarian",
-        "strictly anything", "berkeley",
-        "oakland", "san francisco"
-      ),
+      terms = c("city", "zip"),
+      retained = c("SACRAMENTO", "z95823"),
       id = ""
     )
     expect_equal(tidy_exp_tr, tidy(others, number = 1))
@@ -267,7 +284,7 @@ test_that(
   desc = "if the threshold argument is greather than one then it should be an integer(ish)",
   code = {
     expect_snapshot(error = TRUE,
-      rec %>% step_other(diet, location, threshold = 3.14)
+      rec %>% step_other(city, zip, threshold = 3.14)
     )
   }
 )

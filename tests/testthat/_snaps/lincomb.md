@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(dum_filtered, training = dummies, verbose = TRUE)
+      prep(dum_filtered)
     Output
-      oper 1 step lincomb [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

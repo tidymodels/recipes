@@ -17,11 +17,8 @@
 ---
 
     Code
-      prep(holiday_rec, training = test_data, verbose = TRUE)
+      prep(holiday_rec)
     Output
-      oper 1 step holiday [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -29,7 +26,7 @@
             role #variables
        predictor          1
       
-      Training data contained 365 data points and no missing data.
+      Training data contained 366 data points and 1 incomplete row. 
       
       Operations:
       

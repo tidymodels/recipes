@@ -25,12 +25,12 @@
 #' @examples
 #' library(rlang)
 #' library(modeldata)
-#' data(okc)
-#' rec <- recipe(~., data = okc)
+#' data(Sacramento)
+#' rec <- recipe(~., data = Sacramento)
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))
 terms_select <- function(terms, info, empty_fun = abort_selection) {
-  lifecycle::deprecate_soft("0.1.17", "terms_select()", "recipes_eval_select()")
+  lifecycle::deprecate_warn("0.1.17", "terms_select()", "recipes_eval_select()")
 
   # unique in case a variable has multiple roles
   vars <- unique(info$variable)

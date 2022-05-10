@@ -95,3 +95,14 @@
       
       Natural splines on disp [trained]
 
+# verbose when printing
+
+    Code
+      tmp <- prep(standardized, verbose = TRUE)
+    Output
+      oper 1 step center [training] 
+      oper 2 step scale [training] 
+      oper 3 step normalize [training] 
+      The retained training set is ~ 0 Mb  in memory.
+      
+

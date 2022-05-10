@@ -1,4 +1,4 @@
-# something prints
+# printing
 
     Code
       print(rec)
@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(rec, training = airquality, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step indicate na [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

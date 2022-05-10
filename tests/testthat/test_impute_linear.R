@@ -84,12 +84,12 @@ test_that("Maintain data type", {
 })
 
 
-test_that("Prints.", {
+test_that("Printing", {
   imputed <- recipe(ames_dat) %>%
     step_impute_linear(Lot_Frontage, impute_with = imp_vars(Lot_Area))
 
   expect_snapshot(print(imputed))
-  expect_snapshot(prep(imputed, training = ames_dat, verbose = TRUE))
+  expect_snapshot(prep(imputed))
 })
 
 test_that("empty selection prep/bake is a no-op", {

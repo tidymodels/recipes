@@ -17,11 +17,8 @@
 ---
 
     Code
-      prep(rec, training = ex_dat, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step hyperbolic [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -70,4 +67,9 @@
       Operations:
       
       Hyperbolic sin (inv) transformation on <none> [trained]
+
+# wrong function
+
+    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
+    i Did you mean "cosh"?
 

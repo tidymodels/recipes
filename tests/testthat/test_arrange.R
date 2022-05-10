@@ -87,5 +87,5 @@ test_that("empty printing", {
 test_that("printing", {
   rec <- iris_rec %>% step_arrange(Sepal.Length)
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = iris, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })

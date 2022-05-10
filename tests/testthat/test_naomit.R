@@ -39,7 +39,7 @@ test_that("something prints", {
     step_naomit(all_predictors())
 
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = airquality, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {

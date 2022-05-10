@@ -35,11 +35,8 @@
 ---
 
     Code
-      prep(ex_3, training = ex_dat, verbose = TRUE)
+      prep(ex_3)
     Output
-      oper 1 step string2factor [pre-trained]
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

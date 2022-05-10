@@ -48,7 +48,7 @@ test_that("printing", {
   kpca_rec <- rec %>%
     step_kpca_rbf(X2, X3, X4, X5, X6)
   expect_snapshot(kpca_rec)
-  expect_snapshot(prep(kpca_rec, training = tr_dat, verbose = TRUE))
+  expect_snapshot(prep(kpca_rec))
 })
 
 

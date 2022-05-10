@@ -65,14 +65,14 @@ converted to factors by this step.
 \examples{
 
 library(modeldata)
-data(okc)
-rec <- recipe(~ diet + location, data = okc) \%>\%
-  step_unknown(diet, new_level = "UNKNOWN") \%>\%
-  step_relevel(diet, ref_level = "UNKNOWN") \%>\%
+data(Sacramento)
+rec <- recipe(~ city + zip, data = Sacramento) \%>\%
+  step_unknown(city, new_level = "UNKNOWN") \%>\%
+  step_relevel(city, ref_level = "UNKNOWN") \%>\%
   prep()
 
-data <- bake(rec, okc)
-levels(data$diet)
+data <- bake(rec, Sacramento)
+levels(data$city)
 }
 \seealso{
 Other dummy variable and encoding steps: 
@@ -92,6 +92,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_other}()},
 \code{\link{step_regex}()},
 \code{\link{step_string2factor}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

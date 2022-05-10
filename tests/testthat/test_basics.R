@@ -122,6 +122,32 @@ test_that("bake without prep", {
   )
 })
 
+test_that("prep with fresh = TRUE", {
+  test_data <- data.frame(x = factor(c(1, 2)), y = c(1, 2))
+
+  rec <-
+    recipe(y ~ ., data = test_data) %>%
+    step_dummy(x, id = "") %>%
+    prep()
+
+  new_rec <- prep(rec, training = test_data, fresh = TRUE)
+
+  expect_identical(rec, new_rec)
+
+  expect_equal(
+    tidy(new_rec, 1),
+    tibble(terms = "x", columns = "2", id = "")
+  )
+
+  test_data2 <- data.frame(x = factor(c(1, 3)), y = c(1, 2))
+
+  new_rec2 <- prep(rec, training = test_data2, fresh = TRUE)
+
+  expect_equal(
+    tidy(new_rec2, 1),
+    tibble(terms = "x", columns = "3", id = "")
+  )
+})
 
 test_that("bake without newdata", {
   rec <- recipe(HHV ~ ., data = biomass) %>%
@@ -206,4 +232,12 @@ test_that("`retain flag in prep should return data when TRUE and zero rows when 
   # flag FALSE with training data
   prec_4 <- prep(rec, training = mtcars %>% tail(12), retain = FALSE)
   expect_equal(nrow(prec_4$template), 0)
+})
+
+test_that("verbose when printing", {
+  standardized <- recipe(~., mtcars) %>%
+    step_center(all_predictors()) %>%
+    step_scale(all_predictors()) %>%
+    step_normalize(all_predictors())
+  expect_snapshot(tmp <- prep(standardized, verbose = TRUE))
 })

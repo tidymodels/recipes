@@ -23,11 +23,8 @@
 ---
 
     Code
-      prep(kpca_rec, training = tr_dat, verbose = TRUE)
+      prep(kpca_rec)
     Output
-      oper 1 step kpca [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:

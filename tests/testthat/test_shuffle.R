@@ -65,7 +65,7 @@ test_that("printing", {
   rec3 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
   expect_snapshot(print(rec3))
-  expect_snapshot(prep(rec3, training = dat, verbose = TRUE))
+  expect_snapshot(prep(rec3))
 })
 
 test_that("bake a single row", {

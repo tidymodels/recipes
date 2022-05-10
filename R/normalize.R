@@ -5,12 +5,12 @@
 #'  deviation of one and a mean of zero.
 #'
 #' @inheritParams step_center
-#' @param means A named numeric vector of means. This is
-#'  `NULL` until computed by [prep()].
-#' @param sds A named numeric vector of standard deviations This
-#'  is `NULL` until computed by [prep()].
-#' @param na_rm A logical value indicating whether `NA`
-#'  values should be removed when computing the standard deviation and mean.
+#' @param means A named numeric vector of means. This is `NULL` until computed
+#'  by [prep()].
+#' @param sds A named numeric vector of standard deviations This is `NULL` until
+#'  computed by [prep()].
+#' @param na_rm A logical value indicating whether `NA` values should be removed
+#'  when computing the standard deviation and mean.
 #' @template step-return
 #' @family normalization steps
 #' @export
@@ -100,6 +100,23 @@ step_normalize_new <-
     )
   }
 
+sd_check <- function(x) {
+  zero_sd <- which(x < .Machine$double.eps)
+  if (length(zero_sd) > 0) {
+    glue_cols <- glue::glue_collapse(
+      glue::glue("`{names(zero_sd)}`"), sep = ", ", last = " and "
+    )
+    rlang::warn(
+      glue::glue(
+        "Column(s) have zero variance so scaling cannot be used: {glue_cols}. ",
+        "Consider using `step_zv()` to remove those columns before normalizing"
+      )
+    )
+    x[zero_sd] <- 1
+  }
+  x
+}
+
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
@@ -107,7 +124,9 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
-  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  sds   <- vapply(training[, col_names], sd,   c(sd = 0),   na.rm = x$na_rm)
+  sds <- sd_check(sds)
+
   step_normalize_new(
     terms = x$terms,
     role = x$role,
@@ -122,11 +141,12 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
-  res <- sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
-  res <- sweep(res, 2, object$sds, "/")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$sds)] <- res
-  as_tibble(new_data)
+  for (column in names(object$means)) {
+    mean <- object$means[column]
+    sd <- object$sds[column]
+    new_data[[column]] <- (new_data[[column]] - mean) / sd
+  }
+  new_data
 }
 
 print.step_normalize <-

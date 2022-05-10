@@ -70,35 +70,34 @@
 #'
 #' @examples
 #' library(modeldata)
-#' data(okc)
-#' okc <- okc[complete.cases(okc), ]
+#' data(Sacramento)
 #'
-#' # Original data: diet has 18 levels
-#' length(unique(okc$diet))
-#' unique(okc$diet) %>% sort()
+#' # Original data: city has 37 levels
+#' length(unique(Sacramento$city))
+#' unique(Sacramento$city) %>% sort()
 #'
-#' rec <- recipe(~ diet + age + height, data = okc)
+#' rec <- recipe(~ city + sqft + price, data = Sacramento)
 #'
-#' # Default dummy coding: 17 dummy variables
+#' # Default dummy coding: 36 dummy variables
 #' dummies <- rec %>%
-#'   step_dummy(diet) %>%
-#'   prep(training = okc)
+#'   step_dummy(city) %>%
+#'   prep(training = Sacramento)
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
 #'
 #' dummy_data %>%
-#'   select(starts_with("diet")) %>%
+#'   select(starts_with("city")) %>%
 #'   names() # level "anything" is the reference level
 #'
-#' # Obtain the full set of 18 dummy variables using `one_hot` option
+#' # Obtain the full set of 37 dummy variables using `one_hot` option
 #' dummies_one_hot <- rec %>%
-#'   step_dummy(diet, one_hot = TRUE) %>%
-#'   prep(training = okc)
+#'   step_dummy(city, one_hot = TRUE) %>%
+#'   prep(training = Sacramento)
 #'
 #' dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 #'
 #' dummy_data_one_hot %>%
-#'   select(starts_with("diet")) %>%
+#'   select(starts_with("city")) %>%
 #'   names() # no reference level
 #'
 #'
@@ -117,7 +116,7 @@ step_dummy <-
            skip = FALSE,
            id = rand_id("dummy")) {
     if (lifecycle::is_present(preserve)) {
-      lifecycle::deprecate_warn(
+      lifecycle::deprecate_stop(
         "0.1.16",
         "step_dummy(preserve = )",
         "step_dummy(keep_original_cols = )"
@@ -173,11 +172,10 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (i in seq_along(col_names)) {
-      form_chr <- paste0("~", col_names[i])
+      form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form_chr <- paste0(form_chr, "-1")
+        form <- stats::update.formula(form, ~ . -1)
       }
-      form <- as.formula(form_chr)
       terms <- model.frame(
         formula = form,
         data = training[1, ],
@@ -302,7 +300,7 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     indicators <-
       model.frame(
-        as.formula(paste0("~", orig_var)),
+        rlang::new_formula(lhs = NULL, rhs = rlang::sym(orig_var)),
         data = new_data[, orig_var],
         xlev = attr(object$levels[[i]], "values"),
         na.action = na.pass
@@ -323,7 +321,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     }
 
     ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
+    used_lvl <- gsub(paste0("^\\`?", col_names[i], "\\`?"), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
     new_data <- bind_cols(new_data, as_tibble(indicators))
     if (any(!object$preserve, !keep_original_cols)) {

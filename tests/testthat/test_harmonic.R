@@ -447,7 +447,7 @@ test_that("printing", {
   rec <- recipe(mpg ~ ., mtcars)
   with_harmonic <- rec %>% step_harmonic(hp, frequency = 1 / 11, cycle_size = 1)
   expect_snapshot(print(with_harmonic))
-  expect_snapshot(prep(with_harmonic, training = mtcars, verbose = TRUE))
+  expect_snapshot(prep(with_harmonic))
 })
 
 test_that("empty printing", {

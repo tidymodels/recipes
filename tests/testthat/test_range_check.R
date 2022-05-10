@@ -65,7 +65,7 @@ test_that("printing", {
   check_range_extract <- recipe(mtcars) %>%
     check_range(drat, cyl, am)
   expect_snapshot(print(check_range_extract))
-  expect_snapshot(prep(check_range_extract, training = mtcars, verbose = TRUE))
+  expect_snapshot(prep(check_range_extract))
 })
 
 test_that("empty selection prep/bake is a no-op", {

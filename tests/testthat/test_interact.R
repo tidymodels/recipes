@@ -166,7 +166,7 @@ test_that("using all_of() works", {
 test_that("printing", {
   int_rec <- rec %>% step_interact(~ x1:x2)
   expect_snapshot(print(int_rec))
-  expect_snapshot(prep(int_rec, training = dat_tr, verbose = TRUE))
+  expect_snapshot(prep(int_rec))
 })
 
 # more missing data tests

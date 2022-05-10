@@ -25,11 +25,8 @@
 ---
 
     Code
-      prep(rec, training = languages, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step dummy multi choice [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:

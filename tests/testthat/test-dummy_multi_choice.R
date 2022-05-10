@@ -46,7 +46,7 @@ test_that("printing", {
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(all_predictors())
   expect_snapshot(print(rec))
-  expect_snapshot(prep(rec, training = languages, verbose = TRUE))
+  expect_snapshot(prep(rec))
 })
 
 test_that("no columns selected", {
@@ -127,4 +127,25 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("factor levels are preserved", {
+  # old data
+  tr <- data.frame(x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+
+  # new data
+  te <- data.frame(x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+  data1 <- tr %>%
+    recipe() %>%
+    step_dummy(x, one_hot = T) %>%
+    prep() %>%
+    bake(new_data = te)
+
+  data2 <- tr %>%
+    recipe() %>%
+    step_dummy_multi_choice(x, threshold = 0) %>%
+    prep() %>%
+    bake(new_data = te)
+
+  expect_identical(ncol(data1), ncol(data2))
 })

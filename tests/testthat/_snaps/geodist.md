@@ -147,11 +147,8 @@
 ---
 
     Code
-      prep(rec, training = rand_data, verbose = TRUE)
+      prep(rec)
     Output
-      oper 1 step geodist [training] 
-      The retained training set is ~ 0 Mb  in memory.
-      
       Recipe
       
       Inputs:
