@@ -41,7 +41,6 @@ test_that("check existing steps for `skip` arg", {
   step_check <- step_check[step_check != "check_nominal_type"]
   step_check <- step_check[step_check != "check_factor_vars"]
   step_check <- step_check[step_check != "check_name"]
-  step_check <- step_check[step_check != "step_type"]
   step_check <- step_check[step_check != "check_training_set"]
   step_check <- step_check[step_check != "check_is_lat_lon"]
   has_skip_arg <- function(x) {
