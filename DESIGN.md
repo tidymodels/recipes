@@ -58,6 +58,10 @@ Care should be taken when using factor/character variables. Use `levels()` whene
 
 All steps should check typing whenever possible. `check_type()` can be used in most cases.
 
+## Checking for name collision
+
+All steps that create new variables should use `check_name()` to avoid name collisions.
+
 # Step arguments
 
 ## order of arguments
