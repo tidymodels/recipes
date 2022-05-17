@@ -88,6 +88,13 @@ test_that("All NA values", {
   expect_equal(sum(is.na(imputed_te$carbon)), 0)
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_bagimpute()
+  )
+})
+
 test_that("printing", {
   imputed <- rec %>%
     step_impute_bag(carbon,

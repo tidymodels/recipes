@@ -62,6 +62,13 @@ test_that("bad data", {
   )
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_lowerimpute()
+  )
+})
+
 test_that("printing", {
   rec2 <- rec %>%
     step_impute_lower(carbon, hydrogen)
