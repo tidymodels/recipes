@@ -330,11 +330,9 @@ step_discretize_new <-
   }
 
 bin_wrapper <- function(x, args) {
-  bin_call <-
-    quote(discretize(x, cuts, labels, prefix, keep_na, infs, min_unique, ...))
-  args <- sub_args(discretize.numeric, args, "x")
-  args$x <- x
-  rlang::exec(discretize, !!!args)
+  cl <- rlang::call2("discretize", .ns = "recipes", x = x)
+  cl <- rlang::call_modify(cl, !!!args)
+  rlang::eval_tidy(cl)
 }
 
 #' @export
