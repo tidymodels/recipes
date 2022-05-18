@@ -90,8 +90,20 @@ discretize.numeric <-
       rlang::abort("There should be at least 2 cuts")
     }
 
+    dots <- list(...)
+    if (keep_na) {
+      dots$na.rm <- TRUE
+    }
+
     if (unique_vals / (cuts + 1) >= min_unique) {
-      breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)
+      cl <- rlang::call2(
+        "quantile",
+        .ns = "stats",
+        x = x,
+        probs = seq(0, 1, length = cuts + 1)
+      )
+      cl <- rlang::call_modify(cl, !!!dots)
+      breaks <- rlang::eval_tidy(cl)
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
       if (num_breaks > length(breaks)) {
