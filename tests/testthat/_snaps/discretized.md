@@ -3,7 +3,7 @@
     Code
       recipe(~., data = ex_tr) %>% step_discretize(x1, num_breaks = 1) %>% prep()
     Condition
-      Error:
+      Error in `recipes::discretize()`:
       ! There should be at least 2 cuts
 
 ---
