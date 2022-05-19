@@ -46,6 +46,8 @@
 
 * `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
 
+* printing for `step_impute_knn()` now show variables that were imputed instead of variables used for imputing. (#837)
+
 
 # recipes 0.2.0
 

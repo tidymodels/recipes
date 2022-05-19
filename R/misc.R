@@ -78,11 +78,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   predictor_names
 }
 
-get_lhs_terms <- function(x) x
-get_rhs_terms <- function(x) x
-
-
-
 terms.recipe <- function(x, ...) {
   x$term_info
 }
@@ -470,15 +465,6 @@ detect_step <- function(recipe, name) {
 # to be used in a recipe
 is_skipable <- function(x) {
   if (all("skip" != names(x))) {
-    return(FALSE)
-  } else {
-    return(x$skip)
-  }
-}
-
-# to be used within a step
-skip_me <- function(x) {
-  if (!exists("skip")) {
     return(FALSE)
   } else {
     return(x$skip)

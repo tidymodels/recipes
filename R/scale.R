@@ -135,11 +135,11 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
-  res <-
-    sweep(as.matrix(new_data[, names(object$sds)]), 2, object$sds, "/")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$sds)] <- res
-  as_tibble(new_data)
+  for (column in names(object$sds)) {
+    sd <- object$sds[column]
+    new_data[[column]] <- new_data[[column]] / sd
+  }
+  new_data
 }
 
 print.step_scale <-

@@ -820,6 +820,8 @@ juice <- function(object, ..., composition = "tibble") {
     new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
     new_data <- base::as.data.frame(new_data)
+  } else if (composition == "tibble") {
+    new_data <- tibble::as_tibble(new_data)
   }
 
   new_data
