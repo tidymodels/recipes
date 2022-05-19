@@ -1,5 +1,4 @@
 library(testthat)
-source(test_path("helper-case-weights.R"))
 
 test_that('correct means', {
   exp_means <- colMeans(mtcars)
