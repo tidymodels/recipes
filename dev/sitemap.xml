@@ -52,6 +52,12 @@
     <loc>https://recipes.tidymodels.org/dev/reference/bake.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/case-weight-helpers.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/case_weights.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/check_class.html</loc>
   </url>
   <url>

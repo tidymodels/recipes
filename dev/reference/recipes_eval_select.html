@@ -18,7 +18,7 @@ This is a developer tool that is only useful for creating new recipes steps."><m
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,14 @@ for more information about the unique recipes selectors.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">recipes_eval_select</span><span class="op">(</span><span class="va">quos</span>, <span class="va">data</span>, <span class="va">info</span>, <span class="va">...</span>, allow_rename <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">recipes_eval_select</span><span class="op">(</span>
+  <span class="va">quos</span>,
+  <span class="va">data</span>,
+  <span class="va">info</span>,
+  <span class="va">...</span>,
+  allow_rename <span class="op">=</span> <span class="cn">FALSE</span>,
+  check_case_weights <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -108,6 +115,10 @@ data passed to the <code><a href="prep.html">prep()</a></code> method of your st
 <dd><p>Should the renaming syntax <code>c(foo = bar)</code> be allowed?
 This is rarely required, and is currently only used by <code><a href="step_select.html">step_select()</a></code>.
 It is unlikely that your step will need renaming capabilities.</p></dd>
+<dt>check_case_weights</dt>
+<dd><p>Should selecting case weights throw an error?
+Defaults to <code>TRUE</code>. This is rarely changed and only needed in <code><a href="juice.html">juice()</a></code>,
+<code><a href="bake.html">bake.recipe()</a></code>, <code><a href="roles.html">update_role()</a></code>, and <code><a href="roles.html">add_role()</a></code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

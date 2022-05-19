@@ -14,7 +14,7 @@ absolute correlations with other variables."><meta property="og:image" content="
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,11 +150,23 @@ largest absolute correlation between the variables less than
 excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of <code>use</code>
 is chosen), some columns will also be excluded from the filter.</p>
+<p>The arguments <code>use</code> and <code>method</code> don't take effect if case weights
+are used in the recipe.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
     <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with column
 <code>terms</code> (the columns that will be removed) is returned.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
+    
+
+
+<p>This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in <a href="case_weights.html">case_weights</a> and the examples on
+<code>tidymodels.org</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

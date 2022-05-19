@@ -16,7 +16,7 @@ class variable."><meta property="og:image" content="https://recipes.tidymodels.o
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,6 +181,13 @@ naming format can be changed using the <code>prefix</code> argument.</p>
 <code>terms</code> (the selectors or variables selected) and <code>class</code> is returned.</p>
     </div>
     <div class="section level2">
+    <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
+    
+
+
+<p>The underlying operation does not allow for case weights.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other multivariate transformation steps: 
 <code><a href="step_classdist.html">step_classdist</a>()</code>,
@@ -230,7 +237,7 @@ naming format can be changed using the <code>prefix</code> argument.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>          4.6         3.4          1.4         0.3 setosa         0.020<span style="text-decoration: underline;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>          5           3.4          1.5         0.2 setosa         0.645 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>          4.4         2.9          1.4         0.2 setosa         0.020<span style="text-decoration: underline;">0</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>          4.9         3.1          1.5         0.1 setosa         0.02  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>          4.9         3.1          1.5         0.1 setosa         0.020<span style="text-decoration: underline;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 140 more rows, and 2 more variables: zonoid_versicolor &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   zonoid_virginica &lt;dbl&gt;</span></span>
 <span class="r-in"></span>
