@@ -20,6 +20,8 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` which contains the filtering indices is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @family dplyr steps
 #' @export

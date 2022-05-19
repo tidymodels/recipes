@@ -39,6 +39,8 @@
 #' `terms` (the selectors or variables for imputation), `predictors`
 #' (those variables used to impute), and `neighbors` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
 #' @examples

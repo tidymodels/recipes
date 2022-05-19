@@ -54,6 +54,12 @@ that it is by default called in the bake step. Be careful to avoid
 unintentional transformations when calling steps with
 \code{all_predictors}.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(modeldata)
 data(biomass)

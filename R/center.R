@@ -38,6 +38,8 @@
 #'  `terms` (the selectors or variables selected) and `value` (the means)
 #'  is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)
@@ -80,14 +82,15 @@ step_center <-
         means = means,
         na_rm = na_rm,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 ## Initializes a new object
 step_center_new <-
-  function(terms, role, trained, means, na_rm, skip, id) {
+  function(terms, role, trained, means, na_rm, skip, id, case_weights) {
     step(
       subclass = "center",
       terms = terms,
@@ -96,7 +99,8 @@ step_center_new <-
       means = means,
       na_rm = na_rm,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -105,8 +109,14 @@ prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
-  means <-
-    vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
+  means <- averages(training[, col_names], wts, na_rm = x$na_rm)
+
   step_center_new(
     terms = x$terms,
     role = x$role,
@@ -114,7 +124,8 @@ prep.step_center <- function(x, training, info = NULL, ...) {
     means = means,
     na_rm = x$na_rm,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -130,7 +141,8 @@ bake.step_center <- function(object, new_data, ...) {
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Centering for "
-    print_step(names(x$means), x$terms, x$trained, title, width)
+    print_step(names(x$means), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

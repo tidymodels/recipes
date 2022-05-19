@@ -129,3 +129,54 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("case weights", {
+  missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
+
+  ames_dat_cw <- ames_dat %>%
+    mutate(Total_Bsmt_SF = frequency_weights(Total_Bsmt_SF))
+
+  rec_prepped <- recipe(head(ames_dat_cw)) %>%
+    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    prep(ames_dat_cw)
+
+  imputed <- rec_prepped %>%
+    juice() %>%
+    pull(Lot_Frontage) %>%
+    .[missing_ind]
+
+  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat,
+                     weights = Total_Bsmt_SF) %>%
+    predict(newdata = ames_dat[missing_ind, ]) %>%
+    unname()
+
+  expect_equal(imputed, lm_predicted)
+  expect_equal(sum(is.na(imputed)), 0)
+
+  expect_snapshot(rec_prepped)
+
+  # ----------------------------------------------------------------------------
+
+  missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
+
+  ames_dat_cw <- ames_dat %>%
+    mutate(Total_Bsmt_SF = importance_weights(Total_Bsmt_SF))
+
+  rec_prepped <- recipe(head(ames_dat_cw)) %>%
+    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    prep(ames_dat_cw)
+
+  imputed <- rec_prepped %>%
+    juice() %>%
+    pull(Lot_Frontage) %>%
+    .[missing_ind]
+
+  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat) %>%
+    predict(newdata = ames_dat[missing_ind, ]) %>%
+    unname()
+
+  expect_equal(imputed, lm_predicted)
+  expect_equal(sum(is.na(imputed)), 0)
+
+  expect_snapshot(rec_prepped)
+})

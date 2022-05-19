@@ -73,6 +73,12 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the breaks) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(modeldata)
 data(biomass)

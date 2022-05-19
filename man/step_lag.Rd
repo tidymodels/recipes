@@ -67,6 +67,12 @@ argument.
 The step assumes that the data are already \emph{in the proper sequential
 order} for lagging.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 n <- 10
 start <- as.Date("1999/01/01")

@@ -120,6 +120,12 @@ above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
 selectors or variables selected), \code{components}, and \code{values} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 # requires the Bioconductor mixOmics package
 data(biomass, package = "modeldata")

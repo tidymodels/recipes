@@ -57,6 +57,8 @@
 #' above. When you `tidy()` this step, a tibble with columns `terms` (the
 #' selectors or variables selected), `components`, and `values` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references
 #' \url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}
 #'

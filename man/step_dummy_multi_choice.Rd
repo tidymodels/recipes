@@ -93,6 +93,12 @@ new variable called \code{x_b}. The naming format can be changed using
 the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
 default.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(tibble)
 languages <- tribble(

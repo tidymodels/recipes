@@ -262,3 +262,58 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("case weights", {
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
+    select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  pca_extract <- recipe(HHV ~ .,
+                        data = biomass_tr_cw) %>%
+    step_pca(all_numeric_predictors())
+
+  pca_extract_trained <- prep(pca_extract)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- pca_wts(biomass_tr[, c(3, 4, 5, 7)],
+                     wts = as.numeric(biomass_tr_cw$nitrogen))
+  pca_pred_exp <- as.matrix(biomass_te[, c(3, 4, 5, 7)]) %*% pca_exp$rotation
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  colnames(pca_pred) <- NULL
+  colnames(pca_pred_exp) <- NULL
+
+  expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
+
+  # ----------------------------------------------------------------------------
+
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(nitrogen = importance_weights(nitrogen)) %>%
+    select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  pca_extract <- recipe(HHV ~ .,
+                        data = biomass_tr_cw) %>%
+    step_pca(all_numeric_predictors())
+
+  pca_extract_trained <- prep(pca_extract)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- prcomp(biomass_tr[, c(3, 4, 5, 7)], center = FALSE, scale. = FALSE, retx = FALSE)
+  pca_pred_exp <- predict(pca_exp, biomass_te[, c(3, 4, 5, 7)])[, 1:4]
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  colnames(pca_pred) <- NULL
+  colnames(pca_pred_exp) <- NULL
+
+  expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
+})

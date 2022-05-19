@@ -61,6 +61,12 @@ returned. The expressions are text representations and are not
 parsable.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 rec <- recipe(~., data = iris) \%>\%
   step_arrange(desc(Sepal.Length), 1 / Petal.Length)

@@ -35,6 +35,8 @@
 #'  `terms` (the selectors or variables selected) and `value` (the type)
 #'  is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(dplyr)
 #' library(modeldata)

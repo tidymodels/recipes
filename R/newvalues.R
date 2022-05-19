@@ -20,6 +20,8 @@
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
 #'  `terms` (the selectors or variables selected) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(credit_data)

@@ -18,6 +18,8 @@
 #' @template step-return
 #' @export
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

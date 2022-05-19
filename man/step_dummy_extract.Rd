@@ -104,6 +104,15 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 is ordered according the frequency in the training data set.
 }
 
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 library(modeldata)
 data(tate_text)

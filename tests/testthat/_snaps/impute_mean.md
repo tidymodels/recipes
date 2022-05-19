@@ -78,3 +78,43 @@
       
       Mean imputation for <none> [trained]
 
+# case weights
+
+    Code
+      impute_rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor         12
+      
+      Training data contained 2000 data points and 186 incomplete rows. 
+      
+      Operations:
+      
+      Mean imputation for Age, Assets, Income [weighted, trained]
+
+---
+
+    Code
+      impute_rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor         12
+      
+      Training data contained 2000 data points and 186 incomplete rows. 
+      
+      Operations:
+      
+      Mean imputation for Age, Assets, Income [ignored weights, trained]
+

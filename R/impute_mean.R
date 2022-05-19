@@ -27,6 +27,8 @@
 #' `terms` (the selectors or variables selected) and `model` (the mean
 #' value) is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data("credit_data")
@@ -73,7 +75,8 @@ step_impute_mean <-
         means = means,
         trim = trim,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
@@ -107,7 +110,7 @@ step_meanimpute <-
   }
 
 step_impute_mean_new <-
-  function(terms, role, trained, means, trim, skip, id) {
+  function(terms, role, trained, means, trim, skip, id, case_weights) {
     step(
       subclass = "impute_mean",
       terms = terms,
@@ -116,18 +119,49 @@ step_impute_mean_new <-
       means = means,
       trim = trim,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
+
+trim <- function(x, trim) {
+  if (trim == 0) {
+    return(x)
+  }
+  # Adapted from mean.default
+  x <- sort(x, na.last = TRUE)
+  na_ind <- is.na(x)
+  if (!is.numeric(trim) || length(trim) != 1L)
+    stop("'trim' must be numeric of length one")
+  n <- length(x[!na_ind])
+  if (trim > 0 && n) {
+    if (is.complex(x))
+      stop("trimmed means are not defined for complex data")
+    if (trim >= 0.5)
+      return(stats::median(x[!na_ind], na.rm = FALSE))
+    lo <- floor(n * trim) + 1
+    hi <- n + 1 - lo
+    x[seq(1, lo - 1)] <- NA
+    x[seq(hi + 1, n)] <- NA
+  }
+  x
+}
 
 #' @export
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
 
-  means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
-  means <- purrr::map2(means, training[, col_names], cast)
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
+  trimmed <- purrr::map_dfc(training[, col_names], trim, x$trim)
+
+  means <- averages(trimmed, wts = wts)
+  means <- purrr::map2(means, trimmed, cast)
 
   step_impute_mean_new(
     terms = x$terms,
@@ -136,7 +170,8 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
     means,
     trim = x$trim,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -163,7 +198,8 @@ bake.step_meanimpute <- bake.step_impute_mean
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Mean imputation for "
-    print_step(names(x$means), x$terms, x$trained, title, width)
+    print_step(names(x$means), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
