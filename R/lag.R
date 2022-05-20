@@ -19,6 +19,9 @@
 #' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @export
 #' @rdname step_lag

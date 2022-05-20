@@ -26,6 +26,8 @@
 #' `terms` (the selectors or variables selected) and `value` for the
 #' estimated threshold is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(recipes)
 #' library(modeldata)

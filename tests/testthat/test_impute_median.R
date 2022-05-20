@@ -125,3 +125,43 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("case weights", {
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = frequency_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_median(Age, Assets, Income, id = "") %>%
+    prep()
+
+  ref_medians <- credit_tr_cw %>%
+    select(Age, Assets, Income) %>%
+    medians(credit_tr_cw$Amount)
+
+  expect_equal(
+    impute_rec$steps[[1]]$medians,
+    as.list(ref_medians)
+  )
+
+  expect_snapshot(impute_rec)
+
+  # ----------------------------------------------------------------------------
+
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = importance_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_median(Age, Assets, Income, id = "") %>%
+    prep()
+
+  ref_medians <- credit_tr_cw %>%
+    select(Age, Assets, Income) %>%
+    medians(wts = NULL)
+
+  expect_equal(
+    impute_rec$steps[[1]]$medians,
+    as.list(ref_medians)
+  )
+
+  expect_snapshot(impute_rec)
+})

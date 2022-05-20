@@ -17,7 +17,8 @@ get_types <- function(x) {
       Date = "date",
       POSIXct = "date",
       list = "list",
-      textrecipes_tokenlist = "tokenlist"
+      textrecipes_tokenlist = "tokenlist",
+      hardhat_case_weights = "case_weights"
     )
 
   classes <- lapply(x, class)
@@ -76,11 +77,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   }
   predictor_names
 }
-
-get_lhs_terms <- function(x) x
-get_rhs_terms <- function(x) x
-
-
 
 terms.recipe <- function(x, ...) {
   x$term_info
@@ -475,15 +471,6 @@ is_skipable <- function(x) {
   }
 }
 
-# to be used within a step
-skip_me <- function(x) {
-  if (!exists("skip")) {
-    return(FALSE)
-  } else {
-    return(x$skip)
-  }
-}
-
 is_qual <- function(x) {
   is.factor(x) | is.character(x)
 }
@@ -780,6 +767,7 @@ is_tune <- function(x) {
   }
   FALSE
 }
+
 
 # ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:

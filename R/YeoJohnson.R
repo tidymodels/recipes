@@ -37,6 +37,8 @@
 #' `terms` (the selectors or variables selected) and `value` (the
 #' lambda estimate) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. *Biometrika*.
 #' @examples
@@ -168,7 +170,7 @@ yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
       x <- as.vector(x)
     }
   }
-
+  # TODO case weights: can we use weights here?
   if (is.null(ind_neg)) {
     dat_neg <- x < 0
     ind_neg <- list(is = which(dat_neg), not = which(!dat_neg))

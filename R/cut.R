@@ -19,6 +19,8 @@
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' df <- data.frame(x = 1:10, y = 5:14)
 #' rec <- recipe(df)

@@ -18,6 +18,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` which contains the columns being transformed is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family multivariate transformation steps
 #' @family dplyr steps
 #' @export

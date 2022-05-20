@@ -10,7 +10,7 @@ test_that("default method", {
   exp_res <- tibble(
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
-    role = NA,
+    role = NA_character_,
     source = "original"
   )
   expect_equal(summary(rec, TRUE), exp_res)
@@ -467,4 +467,34 @@ test_that("Roles are correcly selected in bake", {
 
   o <- recipes::bake(rec, x, recipes::has_role("id"))
   expect_equal(names(o), c("a", "b"))
+})
+
+test_that("role functions handle case weights correctly", {
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      update_role("disp", new_role = "case_weights")
+  )
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      add_role("disp", new_role = "case_weights")
+  )
+
+  mtcars1 <- mtcars %>%
+    mutate(wt = importance_weights(wt))
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars1) %>%
+      remove_role(wt, old_role = "case_weights")
+  )
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars1) %>%
+      update_role(wt)
+  )
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ ., data = mtcars1) %>%
+      add_role(wt)
+  )
 })

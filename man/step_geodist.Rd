@@ -81,6 +81,12 @@ echoing the values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon},
 \code{is_lat_lon}, \code{name}, and \code{id} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 
 library(modeldata)

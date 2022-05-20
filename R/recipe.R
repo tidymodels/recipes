@@ -152,12 +152,20 @@ recipe.data.frame <-
       }
       var_info$role <- roles
     } else {
-      var_info$role <- NA
+      var_info$role <- NA_character_
     }
 
     ## Add types
     var_info <- full_join(get_types(x), var_info, by = "variable")
     var_info$source <- "original"
+
+    # assign case weights
+    case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
+    case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+    if (case_weights_n > 1) {
+      too_many_case_weights(case_weights_n)
+    }
+    var_info$role[case_weights_cols] <- "case_weights"
 
     ## Return final object of class `recipe`
     out <- list(
@@ -230,6 +238,14 @@ form2args <- function(formula, data, ...) {
   if (length(outcomes) > 0) {
     roles <- c(roles, rep("outcome", length(outcomes)))
   }
+
+  # assign case weights
+  case_weights_cols <- map_lgl(data, hardhat::is_case_weights)
+  case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+  if (case_weights_n > 1) {
+    too_many_case_weights(case_weights_n)
+  }
+  roles[case_weights_cols] <- "case_weights"
 
   ## pass to recipe.default with vars and roles
 
@@ -613,7 +629,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   info <- object$last_term_info
 
   # Now reduce to only user selected columns
-  out_names <- recipes_eval_select(terms, new_data, info)
+  out_names <- recipes_eval_select(terms, new_data, info,
+                                   check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
   ## The levels are not null when no nominal data are present or
@@ -779,7 +796,8 @@ juice <- function(object, ..., composition = "tibble") {
 
   # Get user requested columns
   new_data <- object$template
-  out_names <- recipes_eval_select(terms, new_data, object$term_info)
+  out_names <- recipes_eval_select(terms, new_data, object$term_info,
+                                   check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
   ## Since most models require factors, do the conversion from character
@@ -802,6 +820,8 @@ juice <- function(object, ..., composition = "tibble") {
     new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
     new_data <- base::as.data.frame(new_data)
+  } else if (composition == "tibble") {
+    new_data <- tibble::as_tibble(new_data)
   }
 
   new_data

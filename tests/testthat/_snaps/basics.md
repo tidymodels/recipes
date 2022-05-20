@@ -95,6 +95,22 @@
       
       Natural splines on disp [trained]
 
+# case weights are being infered correctly for formula interface
+
+    Code
+      recipe(mpg ~ cyl + disp, data = mtcars2)
+    Condition
+      Error in `too_many_case_weights()`:
+      ! There should only be a single column with the role 'case_weights'. In these data, there are 2 columns.
+
+# case weights are being infered correctly for x interface
+
+    Code
+      recipe(mtcars2)
+    Condition
+      Error in `too_many_case_weights()`:
+      ! There should only be a single column with the role 'case_weights'. In these data, there are 2 columns.
+
 # verbose when printing
 
     Code

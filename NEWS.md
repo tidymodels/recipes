@@ -1,5 +1,24 @@
 # recipes (development version)
 
+* Added support for case weights in the following steps
+    - `step_center()`
+    - `step_classdist()`
+    - `step_corr()`
+    - `step_dummy_extract()`
+    - `step_filter_missing()`
+    - `step_impute_linear()`
+    - `step_impute_mean()`
+    - `step_impute_median()`
+    - `step_impute_mode()`
+    - `step_normalize()`
+    - `step_nzv()`
+    - `step_other()`
+    - `step_percentile()`
+    - `step_pca()`
+    - `step_sample()`
+    - `step_scale()`
+
+* A number of developer focused functions to deal with case weights are added: `are_weights_used()`, `get_case_weights()`, `averages()`, `medians()`, `variances()`, `correlations()`, `covariances()`, and `pca_wts()`
 
 * Fixed bug in which functions that `step_hyperbolic()` uses (#932).
 
@@ -26,6 +45,9 @@
 * A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
 
 * `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
+
+* printing for `step_impute_knn()` now show variables that were imputed instead of variables used for imputing. (#837)
+
 
 # recipes 0.2.0
 

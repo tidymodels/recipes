@@ -48,6 +48,8 @@
 #'  `terms` (the selectors or variables selected), `value` (the feature
 #'  names), and `ordinal` (a logical) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(lubridate)
 #'

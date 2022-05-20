@@ -44,6 +44,8 @@
 #'  `terms` (the selectors or variables selected) and `window`
 #'  (the window size) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(lubridate)
 #'

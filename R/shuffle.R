@@ -15,6 +15,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be permuted) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @export
 #' @examples

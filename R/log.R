@@ -21,6 +21,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected) and `base`.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(exp(rnorm(40)), ncol = 2)

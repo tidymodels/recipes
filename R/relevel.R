@@ -21,6 +21,7 @@
 #' Note that if the original columns are character, they will be
 #'  converted to factors by this step.
 #'
+#' @template case-weights-not-supported
 #'
 #' @examples
 #'

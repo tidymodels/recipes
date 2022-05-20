@@ -35,7 +35,8 @@ print_step(
   untr_obj = NULL,
   trained = FALSE,
   title = NULL,
-  width = max(20, options()$width - 30)
+  width = max(20, options()$width - 30),
+  case_weights = NULL
 )
 }
 \arguments{

@@ -12,6 +12,8 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #'
+#' @template case-weights-not-supported
+#'
 #' @template step-return
 #' @family row operation steps
 #' @export

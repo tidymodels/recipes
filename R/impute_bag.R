@@ -46,6 +46,9 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `model`
 #'  (the bagged tree object) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
 #'  Springer Verlag.
 #' @examples

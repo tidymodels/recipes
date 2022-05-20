@@ -84,3 +84,41 @@
       
       Collapsing factor levels for <none> [trained]
 
+# othering with case weights
+
+    Code
+      others
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 59655 data points and 24288 incomplete rows. 
+      
+      Operations:
+      
+      Collapsing factor levels for diet [weighted, trained]
+
+---
+
+    Code
+      others
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 59655 data points and 24288 incomplete rows. 
+      
+      Operations:
+      
+      Collapsing factor levels for diet [ignored weights, trained]
+

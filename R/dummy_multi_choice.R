@@ -22,6 +22,8 @@
 #'
 #' @template dummy-naming
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(tibble)
 #' languages <- tribble(

@@ -48,6 +48,8 @@
 #' `terms` (the selectors or variables selected), `statistic` (the
 #' summary function name), and `size` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(recipes)
 #' library(dplyr)

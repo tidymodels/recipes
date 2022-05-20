@@ -39,6 +39,8 @@
 #' `terms` (the selectors or variables for imputation), `predictors`
 #' (those variables used to impute), and `neighbors` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
 #' @examples
@@ -282,10 +284,10 @@ bake.step_knnimpute <- bake.step_impute_knn
 #' @export
 print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
-    all_x_vars <- lapply(x$columns, function(x) x$x)
-    all_x_vars <- unique(unlist(all_x_vars))
+    all_y_vars <- lapply(x$columns, function(x) x$y)
+    all_y_vars <- unique(unlist(all_y_vars))
     title <- "K-nearest neighbor imputation for "
-    print_step(all_x_vars, x$terms, x$trained, title, width)
+    print_step(all_y_vars, x$terms, x$trained, title, width)
     invisible(x)
   }
 

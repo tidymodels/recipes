@@ -26,6 +26,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be removed) is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @examples
 #' library(modeldata)
 #' data(credit_data)
@@ -56,13 +58,14 @@ step_filter_missing <- function(recipe,
       threshold = threshold,
       removals = removals,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_filter_missing_new <-
-  function(terms, role, trained, threshold, removals, skip, id) {
+  function(terms, role, trained, threshold, removals, skip, id, case_weights) {
     step(
       subclass = "filter_missing",
       terms = terms,
@@ -71,7 +74,8 @@ step_filter_missing_new <-
       threshold = threshold,
       removals = removals,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -79,10 +83,17 @@ step_filter_missing_new <-
 prep.step_filter_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   if (length(col_names) > 1) {
     filter <- filter_missing_fun(
       x = training[, col_names],
-      threshold = x$threshold
+      threshold = x$threshold,
+      wts = wts
     )
   } else {
     filter <- character(0)
@@ -95,7 +106,8 @@ prep.step_filter_missing <- function(x, training, info = NULL, ...) {
     threshold = x$threshold,
     removals = filter,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -114,12 +126,14 @@ print.step_filter_missing <-
     } else {
       title <- "Missing value column filter on "
     }
-    print_step(x$removals, x$terms, x$trained, title, width)
+    print_step(x$removals, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
-filter_missing_fun <- function(x, threshold) {
-  missing <- purrr::map_dbl(x, ~ mean(is.na(.x)))
+filter_missing_fun <- function(x, threshold, wts) {
+  x_na <- purrr::map_dfc(x, is.na)
+  missing <- averages(x_na, wts = wts)
   removal_ind <- which(missing > threshold)
   names(x)[removal_ind]
 }

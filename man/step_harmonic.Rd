@@ -105,6 +105,12 @@ frequency, for example, a \code{POSIXct} input column given a \code{frequency} o
 24 and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of
 1.0 with \code{cycle_size} equal to 3600.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(ggplot2, quietly = TRUE)
 library(dplyr)

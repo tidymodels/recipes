@@ -21,6 +21,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `size`, `replace`, and `id` is returned.
+#'
+#' @template case-weights-unsupervised
+#'
 #' @family row operation steps
 #' @family dplyr steps
 #' @export
@@ -79,13 +82,14 @@ step_sample <- function(recipe, ...,
       size = size,
       replace = replace,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_sample_new <-
-  function(terms, role, trained, size, replace, skip, id) {
+  function(terms, role, trained, size, replace, skip, id, case_weights) {
     step(
       subclass = "sample",
       terms = terms,
@@ -94,7 +98,8 @@ step_sample_new <-
       size = size,
       replace = replace,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -103,6 +108,13 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
   if (is.null(x$size)) {
     x$size <- nrow(training)
   }
+
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   step_sample_new(
     terms = x$terms,
     trained = TRUE,
@@ -110,20 +122,34 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
     size = x$size,
     replace = x$replace,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 
 #' @export
 bake.step_sample <- function(object, new_data, ...) {
+
+  if (isTRUE(object$case_weights)) {
+    wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)
+    wts <- getElement(new_data, names(which(wts_col)))
+    wts <- as.double(wts)
+  } else {
+    wts <- NULL
+  }
+
   if (object$size >= 1) {
     n <- min(object$size, nrow(new_data))
     new_data <-
-      dplyr::sample_n(new_data, size = floor(n), replace = object$replace)
+      dplyr::sample_n(
+        new_data, size = floor(n), replace = object$replace, weight = wts
+      )
   } else {
     new_data <-
-      dplyr::sample_frac(new_data, size = object$size, replace = object$replace)
+      dplyr::sample_frac(
+        new_data, size = object$size, replace = object$replace, weight = wts
+      )
   }
   new_data
 }
@@ -135,7 +161,8 @@ print.step_sample <-
     if (x$replace) {
       title <- paste(title, "with replacement ")
     }
-    print_step(NULL, NULL, x$trained, title, width)
+    print_step(NULL, NULL, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

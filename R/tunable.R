@@ -16,8 +16,6 @@ tunable.step <- function(x, ...) {
   no_param
 }
 
-step_type <- function(.step) class(.step)[class(.step) != "step"][1]
-
 no_param <-
   tibble::tibble(
     name = NA_character_,
