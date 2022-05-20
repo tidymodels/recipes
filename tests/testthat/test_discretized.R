@@ -70,7 +70,8 @@ test_that("NA values with step_discretize (issue #127)", {
       na.rm = TRUE
     )
 
-  opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = TRUE)
+  # We expect na.rm to be overwritten
+  opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = FALSE)
 
   rec <- recipe(~., data = iris_na) %>%
     step_discretize(sepal_na, options = opts) %>%
