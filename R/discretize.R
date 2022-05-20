@@ -28,7 +28,9 @@ discretize.default <- function(x, ...) {
 #'  If `prefix = NULL` then the factor levels will be labelled
 #'  according to the output of `cut()`. Defaults to `NULL`.
 #' @param keep_na A logical for whether a factor level should be
-#'  created to identify missing values in `x`.
+#'  created to identify missing values in `x`. If `keep_na` is
+#'  set to `TRUE` then `na.rm = TRUE` is used when calling
+#'  [stats::quantile()].
 #' @param infs A logical indicating whether the smallest and
 #'  largest cut point should be infinite.
 #' @param min_unique An integer defining a sample size line of

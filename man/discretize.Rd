@@ -46,7 +46,9 @@ If \code{prefix = NULL} then the factor levels will be labelled
 according to the output of \code{cut()}. Defaults to \code{NULL}.}
 
 \item{keep_na}{A logical for whether a factor level should be
-created to identify missing values in \code{x}.}
+created to identify missing values in \code{x}. If \code{keep_na} is
+set to \code{TRUE} then \code{na.rm = TRUE} is used when calling
+\code{\link[stats:quantile]{stats::quantile()}}.}
 
 \item{infs}{A logical indicating whether the smallest and
 largest cut point should be infinite.}
