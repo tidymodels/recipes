@@ -84,3 +84,41 @@
       
       Correlation filter on <none> [trained]
 
+# case weights
+
+    Code
+      filtering_trained
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          8
+      
+      Training data contained 100 data points and no missing data.
+      
+      Operations:
+      
+      Correlation filter on V3_dup, V1, V2 [weighted, trained]
+
+---
+
+    Code
+      filtering_trained
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          8
+      
+      Training data contained 100 data points and no missing data.
+      
+      Operations:
+      
+      Correlation filter on V6, V1, V3 [ignored weights, trained]
+

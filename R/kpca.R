@@ -28,6 +28,8 @@
 #'
 #' @template kpca-info
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

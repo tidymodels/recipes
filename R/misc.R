@@ -17,7 +17,8 @@ get_types <- function(x) {
       Date = "date",
       POSIXct = "date",
       list = "list",
-      textrecipes_tokenlist = "tokenlist"
+      textrecipes_tokenlist = "tokenlist",
+      hardhat_case_weights = "case_weights"
     )
 
   classes <- lapply(x, class)
@@ -766,6 +767,7 @@ is_tune <- function(x) {
   }
   FALSE
 }
+
 
 # ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:

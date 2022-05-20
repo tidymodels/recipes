@@ -52,6 +52,15 @@ sequence of any existing operations.
 \code{step_percentile} creates a \emph{specification} of a recipe step that
 replaces the value of a variable with its percentile from the training set.
 }
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 library(modeldata)
 data(biomass)

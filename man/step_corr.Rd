@@ -77,10 +77,22 @@ When a column has a single unique value, that column will be
 excluded from the correlation analysis. Also, if the data set
 has sporadic missing values (and an inappropriate value of \code{use}
 is chosen), some columns will also be excluded from the filter.
+
+The arguments \code{use} and \code{method} don't take effect if case weights
+are used in the recipe.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
 }
 
 \examples{

@@ -16,6 +16,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' lmh <- c("Low", "Med", "High")
 #'

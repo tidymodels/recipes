@@ -26,6 +26,8 @@
 #'  `terms` (the selectors or variables selected), `min`, and `max` is
 #'  returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

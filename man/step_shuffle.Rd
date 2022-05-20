@@ -54,6 +54,12 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be permuted) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
 

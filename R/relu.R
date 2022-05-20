@@ -40,6 +40,8 @@
 #' in the loss function of Support Vector Machines, where it penalizes
 #' residuals only if they are within a certain margin of the decision boundary.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(modeldata)
 #' data(biomass)

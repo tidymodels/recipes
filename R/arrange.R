@@ -22,6 +22,8 @@
 #'  returned. The expressions are text representations and are not
 #'  parsable.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @family dplyr steps
 #' @export

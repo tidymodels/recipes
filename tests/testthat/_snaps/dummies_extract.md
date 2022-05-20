@@ -76,3 +76,41 @@
       
       Extract patterns from <none> [trained]
 
+# case weights
+
+    Code
+      dummy_prepped
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 4 data points and no missing data.
+      
+      Operations:
+      
+      Extract patterns from medium [weighted, trained]
+
+---
+
+    Code
+      dummy_prepped
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 4 data points and no missing data.
+      
+      Operations:
+      
+      Extract patterns from medium [ignored weights, trained]
+

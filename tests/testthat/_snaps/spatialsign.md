@@ -74,3 +74,43 @@
       
       Spatial sign on  <none> [trained]
 
+# centering with case weights
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor          9
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Spatial sign on  disp, hp, drat, wt, qsec, vs, am, gear, carb [weighted, trained]
+
+---
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor          9
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Spatial sign on  cyl, disp, hp, drat, qsec, vs, am, gear, carb [ignored weights, trained]
+

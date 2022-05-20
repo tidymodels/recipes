@@ -31,6 +31,8 @@
 #' `terms` (the selectors or variables selected) and `result` (the
 #' new column name) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples

@@ -56,3 +56,41 @@
       
       Row sampling <none> [trained]
 
+# sample with case weights
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor         10
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Row sampling <none> [weighted, trained]
+
+---
+
+    Code
+      rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor         10
+      
+      Training data contained 32 data points and no missing data.
+      
+      Operations:
+      
+      Row sampling <none> [weighted, trained]
+

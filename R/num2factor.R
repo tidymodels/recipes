@@ -21,6 +21,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `ordered` is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family dummy variable and encoding steps
 #' @export
 #' @examples

@@ -34,6 +34,9 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
 #' `is_lat_lon`, `name`, and `id` is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #'
 #' library(modeldata)
@@ -176,6 +179,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   )
 }
 
+# TODO case weights for distances
 geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
   sqrt((x_1 - x_2)^2L + (y_1 - y_2)^2L)
 }

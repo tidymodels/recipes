@@ -69,6 +69,12 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} which contains the filtering indices is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 rec <- recipe(~., data = iris) \%>\%
   step_slice(1:3)

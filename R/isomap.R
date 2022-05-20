@@ -50,6 +50,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the selectors or variables selected) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.
 #'  *Advances in Neural Information Processing Systems*.

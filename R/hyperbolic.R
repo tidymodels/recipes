@@ -20,6 +20,9 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected), `inverse`, and `func` is
 #' returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(rnorm(40), ncol = 2)

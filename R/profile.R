@@ -45,6 +45,8 @@
 #'  `terms` (which is the columns that will be affected) and `type` (fixed
 #'  or profiled) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @template step-return
 #' @export
 #' @examples

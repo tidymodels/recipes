@@ -26,6 +26,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.
 #'  (2006). Spatial sign preprocessing: a simple way to impart
 #'  moderate robustness to multivariate estimators. *Journal of
@@ -76,13 +78,14 @@ step_spatialsign <-
         trained = trained,
         columns = columns,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_spatialsign_new <-
-  function(terms, role, na_rm, trained, columns, skip, id) {
+  function(terms, role, na_rm, trained, columns, skip, id, case_weights) {
     step(
       subclass = "spatialsign",
       terms = terms,
@@ -91,15 +94,21 @@ step_spatialsign_new <-
       trained = trained,
       columns = columns,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
 #' @export
 prep.step_spatialsign <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
+
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
   step_spatialsign_new(
     terms = x$terms,
@@ -108,7 +117,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     columns = col_names,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -116,8 +126,16 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 bake.step_spatialsign <- function(object, new_data, ...) {
   col_names <- object$columns
 
+  if (isTRUE(object$case_weights)) {
+    wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)
+    wts <- getElement(new_data, names(which(wts_col)))
+    wts <- as.double(wts)
+  } else {
+    wts <- 1
+  }
+
   res <- as.matrix(new_data[, col_names])
-  res <- res / sqrt(rowSums(res^2, na.rm = object$na_rm))
+  res <- res / sqrt(rowSums((sqrt(1/wts) * res)^2, na.rm = object$na_rm))
 
   res <- tibble::as_tibble(res)
   new_data[, col_names] <- res
@@ -127,7 +145,8 @@ bake.step_spatialsign <- function(object, new_data, ...) {
 print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
     title <- "Spatial sign on  "
-    print_step(x$columns, x$terms, x$trained, title, width)
+    print_step(x$columns, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

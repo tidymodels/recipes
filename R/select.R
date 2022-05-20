@@ -19,6 +19,8 @@
 #' `terms` which contains the `select` expressions as character strings
 #' (and are not reparsable) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family variable filter steps
 #' @family dplyr steps
 #' @template filter-steps

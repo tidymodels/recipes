@@ -58,6 +58,7 @@
 #'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
 #'  1.0 with `cycle_size` equal to 3600.
 #'
+#' @template case-weights-not-supported
 #'
 #' @references Doran, H. E., & Quilkey, J. J. (1972).
 #'   Harmonic analysis of seasonal data: some important properties.

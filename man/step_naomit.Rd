@@ -58,6 +58,12 @@ not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 
 recipe(Ozone ~ ., data = airquality) \%>\%

@@ -142,3 +142,44 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that('case weights', {
+  fake_data <- tibble(x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
+                      x2 = frequency_weights(1:150))
+
+  impute_rec <- recipe(~ ., data = fake_data) %>%
+    step_impute_mode(x1, id = "")
+  imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
+  te_imputed <- bake(imputed, new_data = fake_data)
+
+  imp_tibble_tr <- fake_data %>%
+    mutate(x2 = as.double(x2)) %>%
+    count(model = x1, wt = x2) %>%
+    slice_max(n, n = 1) %>%
+    mutate(terms = "x1", id = "") %>%
+    select(terms, model, id)
+
+  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+
+  expect_snapshot(imputed)
+
+  # ----------------------------------------------------------------------------
+
+  fake_data <- tibble(x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
+                      x2 = importance_weights(1:150))
+
+  impute_rec <- recipe(~ ., data = fake_data) %>%
+    step_impute_mode(x1, id = "")
+  imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
+  te_imputed <- bake(imputed, new_data = fake_data)
+
+  imp_tibble_tr <- fake_data %>%
+    count(model = x1) %>%
+    slice_max(n, n = 1) %>%
+    mutate(terms = "x1", id = "") %>%
+    select(terms, model, id)
+
+  expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
+
+  expect_snapshot(imputed)
+})
