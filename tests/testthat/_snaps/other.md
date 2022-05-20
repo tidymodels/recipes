@@ -97,11 +97,11 @@
        case_weights          1
           predictor          1
       
-      Training data contained 59655 data points and 24288 incomplete rows. 
+      Training data contained 732 data points and no missing data.
       
       Operations:
       
-      Collapsing factor levels for diet [weighted, trained]
+      Collapsing factor levels for city [weighted, trained]
 
 ---
 
@@ -116,9 +116,9 @@
        case_weights          1
           predictor          1
       
-      Training data contained 59655 data points and 24288 incomplete rows. 
+      Training data contained 732 data points and no missing data.
       
       Operations:
       
-      Collapsing factor levels for diet [ignored weights, trained]
+      Collapsing factor levels for city [ignored weights, trained]
 
