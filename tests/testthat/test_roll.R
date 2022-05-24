@@ -54,6 +54,7 @@ test_that("error checks", {
 })
 
 test_that("basic moving average", {
+  skip_if_not_installed("RcppRoll")
   simple_ma <- rec %>%
     step_window(starts_with("y"))
   simple_ma <- prep(simple_ma, training = sim_dat)
@@ -71,6 +72,7 @@ test_that("basic moving average", {
 })
 
 test_that("creating new variables", {
+  skip_if_not_installed("RcppRoll")
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
   new_names <- prep(new_names, training = sim_dat)
@@ -86,6 +88,7 @@ test_that("creating new variables", {
 })
 
 test_that("na_rm argument works for step_window", {
+  skip_if_not_installed("RcppRoll")
 
   sim_dat_na <- sim_dat
   sim_dat_na[7, 2:3] <- NA
@@ -113,6 +116,7 @@ test_that("na_rm argument works for step_window", {
 })
 
 test_that("printing", {
+  skip_if_not_installed("RcppRoll")
   new_names <- rec %>%
     step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
   expect_snapshot(print(new_names))
