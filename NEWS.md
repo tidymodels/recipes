@@ -48,6 +48,8 @@
 
 * printing for `step_impute_knn()` now show variables that were imputed instead of variables used for imputing. (#837)
 
+* `step_discretize()` and `discretize()` will automatically remove missing values if `keep_na = TRUE`, removing the need to specify `keep_na = TRUE` and `na.rm = TRUE`. (#982)
+
 
 # recipes 0.2.0
 

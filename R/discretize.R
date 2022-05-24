@@ -28,7 +28,9 @@ discretize.default <- function(x, ...) {
 #'  If `prefix = NULL` then the factor levels will be labelled
 #'  according to the output of `cut()`. Defaults to `NULL`.
 #' @param keep_na A logical for whether a factor level should be
-#'  created to identify missing values in `x`.
+#'  created to identify missing values in `x`. If `keep_na` is
+#'  set to `TRUE` then `na.rm = TRUE` is used when calling
+#'  [stats::quantile()].
 #' @param infs A logical indicating whether the smallest and
 #'  largest cut point should be infinite.
 #' @param min_unique An integer defining a sample size line of
@@ -90,8 +92,20 @@ discretize.numeric <-
       rlang::abort("There should be at least 2 cuts")
     }
 
+    dots <- list(...)
+    if (keep_na) {
+      dots$na.rm <- TRUE
+    }
+
     if (unique_vals / (cuts + 1) >= min_unique) {
-      breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)
+      cl <- rlang::call2(
+        "quantile",
+        .ns = "stats",
+        x = x,
+        probs = seq(0, 1, length = cuts + 1)
+      )
+      cl <- rlang::call_modify(cl, !!!dots)
+      breaks <- rlang::eval_tidy(cl)
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
       if (num_breaks > length(breaks)) {
@@ -321,11 +335,9 @@ step_discretize_new <-
   }
 
 bin_wrapper <- function(x, args) {
-  bin_call <-
-    quote(discretize(x, cuts, labels, prefix, keep_na, infs, min_unique, ...))
-  args <- sub_args(discretize.numeric, args, "x")
-  args$x <- x
-  rlang::exec(discretize, !!!args)
+  cl <- rlang::call2("discretize", .ns = "recipes", x = x)
+  cl <- rlang::call_modify(cl, !!!args)
+  rlang::eval_tidy(cl)
 }
 
 #' @export
