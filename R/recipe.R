@@ -418,6 +418,9 @@ prep.recipe <-
             info = x$term_info
           )
         training <- bake(x$steps[[i]], new_data = training)
+        if (!is_tibble(training)) {
+          training <- as_tibble(training)
+        }
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
 
