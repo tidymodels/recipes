@@ -384,21 +384,19 @@ test_that("empty printing", {
 })
 
 test_that("othering with case weights", {
-  skip("remove okc")
-  weighted_props <- okc_tr %>%
-    mutate(age = as.double(age)) %>%
-    count(diet, wt = age, sort = TRUE) %>%
-    mutate(prop = n / sum(n[!is.na(diet)])) %>%
-    filter(!is.na(diet))
-  okc_tr_caseweights <- okc_tr %>%
-    mutate(age = frequency_weights(age))
+  weighted_props <- sacr_tr %>%
+    mutate(sqft = as.double(sqft)) %>%
+    count(city, wt = sqft, sort = TRUE) %>%
+    mutate(prop = n / sum(n))
+  sacr_tr_caseweights <- sacr_tr %>%
+    mutate(sqft = frequency_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ diet + age, data = okc_tr_caseweights) %>%
-      step_other(diet, other = "another", id = "",
+    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+      step_other(city, other = "another", id = "",
                  threshold = weighted_props$prop[n_cols])
 
-    others <- prep(others, training = okc_tr_caseweights)
+    others <- prep(others, training = sacr_tr_caseweights)
     expect_equal(n_cols, nrow(tidy(others, number = 1)))
   }
 
@@ -406,19 +404,18 @@ test_that("othering with case weights", {
 
   # ----------------------------------------------------------------------------
 
-  unweighted_props <- okc_tr %>%
-    count(diet, sort = TRUE) %>%
-    mutate(prop = n / sum(n[!is.na(diet)])) %>%
-    filter(!is.na(diet))
-  okc_tr_caseweights <- okc_tr %>%
-    mutate(age = importance_weights(age))
+  unweighted_props <- sacr_tr %>%
+    count(city, sort = TRUE) %>%
+    mutate(prop = n / sum(n))
+  sacr_tr_caseweights <- sacr_tr %>%
+    mutate(sqft = importance_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ diet + age, data = okc_tr_caseweights) %>%
-      step_other(diet, other = "another", id = "",
+    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+      step_other(city, other = "another", id = "",
                  threshold = unweighted_props$prop[n_cols])
 
-    others <- prep(others, training = okc_tr_caseweights)
+    others <- prep(others, training = sacr_tr_caseweights)
     expect_equal(n_cols, nrow(tidy(others, number = 1)))
   }
 
