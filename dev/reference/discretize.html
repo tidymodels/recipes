@@ -124,7 +124,9 @@ If <code>prefix = NULL</code> then the factor levels will be labelled
 according to the output of <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>. Defaults to <code>NULL</code>.</p></dd>
 <dt>keep_na</dt>
 <dd><p>A logical for whether a factor level should be
-created to identify missing values in <code>x</code>.</p></dd>
+created to identify missing values in <code>x</code>. If <code>keep_na</code> is
+set to <code>TRUE</code> then <code>na.rm = TRUE</code> is used when calling
+<code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">stats::quantile()</a></code>.</p></dd>
 <dt>infs</dt>
 <dd><p>A logical indicating whether the smallest and
 largest cut point should be infinite.</p></dd>
