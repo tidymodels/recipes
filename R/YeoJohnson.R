@@ -142,7 +142,7 @@ bake.step_YeoJohnson <- function(object, new_data, ...) {
         lambda = object$lambdas[param[i]]
       )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_YeoJohnson <-

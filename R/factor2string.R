@@ -105,10 +105,6 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 bake.step_factor2string <- function(object, new_data, ...) {
   new_data[, object$columns] <- map(new_data[, object$columns], as.character)
 
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
-
   new_data
 }
 

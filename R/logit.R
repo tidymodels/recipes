@@ -107,7 +107,7 @@ bake.step_logit <- function(object, new_data, ...) {
         pre_logit(new_data[[object$columns[i]]], object$offset)
       )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

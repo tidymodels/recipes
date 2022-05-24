@@ -126,9 +126,6 @@ bake.step_relevel <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
     new_data[[i]] <- stats::relevel(as.factor(new_data[[i]]), ref = object$ref_level)
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

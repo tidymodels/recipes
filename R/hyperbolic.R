@@ -115,7 +115,7 @@ bake.step_hyperbolic <- function(object, new_data, ...) {
     new_data[, col_names[i]] <-
       func(getElement(new_data, col_names[i]))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_hyperbolic <-

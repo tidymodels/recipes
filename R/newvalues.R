@@ -144,7 +144,7 @@ bake.check_new_values <- function(object,
       ignore_NA = object$ignore_NA
     )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_new_values <-

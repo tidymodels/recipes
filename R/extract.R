@@ -244,9 +244,6 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
       new_data[, col_names[i]] <- NULL
     }
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

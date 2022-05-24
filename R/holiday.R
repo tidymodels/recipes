@@ -151,10 +151,6 @@ bake.step_holiday <- function(object, new_data, ...) {
   if (!keep_original_cols) {
     new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
   }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

@@ -170,9 +170,6 @@ bake.step_novel <- function(object, new_data, ...) {
         ordered = attributes(object$object[[i]])$is_ordered
       )
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

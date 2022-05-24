@@ -190,7 +190,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

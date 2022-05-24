@@ -289,8 +289,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
       }
     }
   }
-  ## changes character to factor!
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

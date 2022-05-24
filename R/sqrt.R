@@ -88,7 +88,7 @@ bake.step_sqrt <- function(object, new_data, ...) {
     new_data[, col_names[i]] <-
       sqrt(getElement(new_data, col_names[i]))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {

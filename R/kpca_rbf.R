@@ -161,7 +161,7 @@ bake.step_kpca_rbf <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_kpca_rbf <- function(x, width = max(20, options()$width - 40), ...) {

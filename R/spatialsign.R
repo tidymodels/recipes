@@ -139,7 +139,7 @@ bake.step_spatialsign <- function(object, new_data, ...) {
 
   res <- tibble::as_tibble(res)
   new_data[, col_names] <- res
-  tibble::as_tibble(new_data)
+  new_data
 }
 
 print.step_spatialsign <-

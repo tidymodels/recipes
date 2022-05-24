@@ -94,7 +94,7 @@ bake.step_invlogit <- function(object, new_data, ...) {
         use.names = FALSE
       ))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

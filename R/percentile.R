@@ -144,7 +144,7 @@ bake.step_percentile <- function(object, new_data, ...) {
   new_data[, vars] <-
     purrr::map2_dfc(new_data[, vars], object$ref_dist, pctl_by_approx)
 
-  tibble::as_tibble(new_data)
+  new_data
 }
 
 pctl_by_approx <- function(x, ref) {

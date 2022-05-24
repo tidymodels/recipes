@@ -220,7 +220,7 @@ bake.step_impute_roll <- function(object, new_data, ...) {
       impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)
     new_data[missing_ind[[i]], imp_var] <- estimates
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

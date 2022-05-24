@@ -134,7 +134,7 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
   for (i in object$columns) {
     new_data[, i] <- scores[[i]]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_ordinalscore <-

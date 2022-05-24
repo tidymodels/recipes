@@ -388,10 +388,6 @@ bake.step_pls <- function(object, new_data, ...) {
       keep_vars <- !(colnames(new_data) %in% pls_vars)
       new_data <- new_data[, keep_vars, drop = FALSE]
     }
-
-    if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
-    }
   }
   new_data
 }

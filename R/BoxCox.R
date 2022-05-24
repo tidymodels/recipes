@@ -138,7 +138,7 @@ bake.step_BoxCox <- function(object, new_data, ...) {
     new_data[, param[i]] <- bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
   }
 
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_BoxCox <-

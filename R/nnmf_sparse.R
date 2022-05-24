@@ -199,7 +199,7 @@ bake.step_nnmf_sparse <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% object$res$x_vars), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

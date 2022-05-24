@@ -153,7 +153,7 @@ bake.step_impute_median <- function(object, new_data, ...) {
     }
     new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

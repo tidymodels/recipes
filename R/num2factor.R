@@ -183,10 +183,6 @@ bake.step_num2factor <- function(object, new_data, ...) {
       ord = object$ordered[1],
       foo = object$transform
     )
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

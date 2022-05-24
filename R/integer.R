@@ -152,9 +152,6 @@ bake.step_integer <- function(object, new_data, ...) {
     new_data[[i]] <-
       map_key_to_int(new_data[[i]], object$key[[i]], object$strict, object$zero_based)
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

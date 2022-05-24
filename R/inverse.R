@@ -97,7 +97,7 @@ bake.step_inverse <- function(object, new_data, ...) {
     new_data[, object$columns[i]] <-
       1 / (new_data[[object$columns[i]]] + object$offset)
   }
-  as_tibble(new_data)
+  new_data
 }
 
 
