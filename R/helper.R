@@ -1,4 +1,4 @@
-#' This step is created solely for testing purposes
+# This step is created solely for testing purposes
 step_testthat_helper <-
   function(recipe,
            ...,
