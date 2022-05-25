@@ -419,7 +419,7 @@ prep.recipe <-
           )
         training <- bake(x$steps[[i]], new_data = training)
         if (!is_tibble(training)) {
-          training <- as_tibble(training)
+          abort("bake() methods should always return tibbles")
         }
         x$term_info <-
           merge_term_info(get_types(training), x$term_info)
@@ -621,7 +621,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     new_data <- bake(step, new_data = new_data)
 
     if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
+      abort("bake() methods should always return tibbles")
     }
   }
 
