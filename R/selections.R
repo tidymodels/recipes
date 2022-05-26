@@ -277,47 +277,10 @@ has_role <- function(match = "predictor") {
 
 #' @export
 #' @rdname has_role
-all_predictors <- function() {
-  has_role("predictor")
-}
-
-#' @export
-#' @rdname has_role
-all_numeric_predictors <- function() {
-  intersect(has_role("predictor"), has_type("numeric"))
-}
-
-#' @export
-#' @rdname has_role
-all_nominal_predictors <- function() {
-  intersect(has_role("predictor"), has_type("nominal"))
-}
-
-
-#' @export
-#' @rdname has_role
-all_outcomes <- function() {
-  has_role("outcome")
-}
-
-#' @export
-#' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
   lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
   which(lgl_matches)
-}
-
-#' @export
-#' @rdname has_role
-all_numeric <- function() {
-  has_type("numeric")
-}
-
-#' @export
-#' @rdname has_role
-all_nominal <- function() {
-  has_type("nominal")
 }
 
 peek_roles <- function() {
@@ -331,6 +294,42 @@ peek_types <- function() {
 peek_info <- function(col) {
   .data <- current_info()$data
   purrr::map(.data, ~ .x[[col]])
+}
+
+#' @export
+#' @rdname has_role
+all_outcomes <- function() {
+  has_role("outcome")
+}
+
+#' @export
+#' @rdname has_role
+all_predictors <- function() {
+  has_role("predictor")
+}
+
+#' @export
+#' @rdname has_role
+all_nominal <- function() {
+  has_type("nominal")
+}
+
+#' @export
+#' @rdname has_role
+all_nominal_predictors <- function() {
+  intersect(has_role("predictor"), has_type("nominal"))
+}
+
+#' @export
+#' @rdname has_role
+all_numeric <- function() {
+  has_type("numeric")
+}
+
+#' @export
+#' @rdname has_role
+all_numeric_predictors <- function() {
+  intersect(has_role("predictor"), has_type("numeric"))
 }
 
 ## functions to get current variable info for selectors modeled after

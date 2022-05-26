@@ -2,31 +2,31 @@
 % Please edit documentation in R/selections.R
 \name{has_role}
 \alias{has_role}
-\alias{all_predictors}
-\alias{all_numeric_predictors}
-\alias{all_nominal_predictors}
-\alias{all_outcomes}
 \alias{has_type}
-\alias{all_numeric}
+\alias{all_outcomes}
+\alias{all_predictors}
 \alias{all_nominal}
+\alias{all_nominal_predictors}
+\alias{all_numeric}
+\alias{all_numeric_predictors}
 \alias{current_info}
 \title{Role Selection}
 \usage{
 has_role(match = "predictor")
 
-all_predictors()
-
-all_numeric_predictors()
-
-all_nominal_predictors()
+has_type(match = "numeric")
 
 all_outcomes()
 
-has_type(match = "numeric")
+all_predictors()
+
+all_nominal()
+
+all_nominal_predictors()
 
 all_numeric()
 
-all_nominal()
+all_numeric_predictors()
 
 current_info()
 }
