@@ -37,7 +37,7 @@
 #' @references Kuhn, M. and Johnson, K. (2013).
 #' *Feature Engineering and Selection*
 #' \url{https://bookdown.org/max/FES/handling-missing-data.html}
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #' set.seed(393)
 #' ames_missing <- ames

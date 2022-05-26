@@ -22,10 +22,9 @@
 #'   [prep()]
 #' @export
 #' @keywords internal
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(rlang)
-#' library(modeldata)
-#' data(Sacramento)
+#' data(Sacramento, package = "modeldata")
 #' rec <- recipe(~., data = Sacramento)
 #' info <- summary(rec)
 #' terms_select(info = info, quos(all_predictors()))

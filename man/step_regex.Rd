@@ -77,8 +77,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(covers)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(covers, package = "modeldata")
 
 rec <- recipe(~description, covers) \%>\%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
@@ -91,6 +91,7 @@ with_dummies <- bake(rec2, new_data = covers)
 with_dummies
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

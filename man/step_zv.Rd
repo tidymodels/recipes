@@ -73,8 +73,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass$one_value <- 1
 
@@ -96,6 +96,7 @@ any(names(filtered_te) == "one_value")
 
 tidy(zv_filter, number = 1)
 tidy(filter_obj, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other variable filter steps: 

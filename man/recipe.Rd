@@ -114,7 +114,9 @@ used.
 The best way to use use a recipe for modeling is via the \code{workflows}
 package. This bundles a model and preprocessor (e.g. a recipe) together
 and gives the user a fluent way to train the model/recipe and make
-predictions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
+predictions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
 library(workflows)
 library(recipes)
 library(parsnip)
@@ -135,7 +137,9 @@ sp_signed <-
   step_normalize(all_numeric_predictors()) \%>\%
   step_spatialsign(all_numeric_predictors())
 sp_signed
-}\if{html}{\out{</div>}}\preformatted{## Recipe
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Recipe
 ## 
 ## Inputs:
 ## 
@@ -147,10 +151,12 @@ sp_signed
 ## 
 ## Centering and scaling for all_numeric_predictors()
 ## Spatial sign on  all_numeric_predictors()
-}
+}\if{html}{\out{</div>}}
 
 We can create a \code{parsnip} model, and then build a workflow with the
-model and recipe:\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_mod <- linear_reg()
+model and recipe:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_mod <- linear_reg()
 
 linear_sp_sign_wflow <- 
   workflow() \%>\% 
@@ -158,7 +164,9 @@ linear_sp_sign_wflow <-
   add_recipe(sp_signed)
 
 linear_sp_sign_wflow
-}\if{html}{\out{</div>}}\preformatted{## == Workflow ==========================================================
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## == Workflow ==========================================================
 ## Preprocessor: Recipe
 ## Model: linear_reg()
 ## 
@@ -172,16 +180,22 @@ linear_sp_sign_wflow
 ## Linear Regression Model Specification (regression)
 ## 
 ## Computational engine: lm
-}
+}\if{html}{\out{</div>}}
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to \code{fit()} is used:\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
+single call to \code{fit()} is used:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 }\if{html}{\out{</div>}}
 
 When predicting, there is no need to do anything other than call
 \code{predict()}. This preprocesses the new data in the same manner as the
-training set, then gives the data to the linear model prediction code:\if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 1
+training set, then gives the data to the linear model prediction code:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 x 1
 ##   .pred
 ##   <dbl>
 ## 1  18.1
@@ -190,7 +204,7 @@ training set, then gives the data to the linear model prediction code:\if{html}{
 ## 4  18.8
 ## 5  19.6
 ## 6  14.6
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Stand-alone use of recipes}{
@@ -203,16 +217,22 @@ Once a recipe has been defined, the \code{\link[=prep]{prep()}} function can be
 used to estimate quantities required for the operations using a data set
 (a.k.a. the training data). \code{\link[=prep]{prep()}} returns a recipe.
 
-As an example of using PCA (perhaps to produce a plot):\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Define the recipe
+As an example of using PCA (perhaps to produce a plot):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Define the recipe
 pca_rec <- 
   rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_pca(all_numeric_predictors())
 }\if{html}{\out{</div>}}
 
-Now to estimate the normalization statistics and the PCA loadings:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
+Now to estimate the normalization statistics and the PCA loadings:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
 pca_rec
-}\if{html}{\out{</div>}}\preformatted{## Recipe
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Recipe
 ## 
 ## Inputs:
 ## 
@@ -226,26 +246,34 @@ pca_rec
 ## 
 ## Centering and scaling for carbon, hydrogen, oxygen, nitrogen, s... [trained]
 ## PCA extraction with carbon, hydrogen, oxygen, nitrogen, su... [trained]
-}
+}\if{html}{\out{</div>}}
 
 Note that the estimated recipe shows the actual column names captured by
 the selectors.
 
 You can [tidy.recipe()] a recipe, either when it is prepped or
-unprepped, to learn more about its components.\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 2 x 6
+unprepped, to learn more about its components.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2 x 6
 ##   number operation type      trained skip  id             
 ##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
 ## 1      1 step      normalize TRUE    FALSE normalize_AeYA4
 ## 2      2 step      pca       TRUE    FALSE pca_Zn1yz
-}
+}\if{html}{\out{</div>}}
 
 You can also \code{tidy()} recipe \emph{steps} with a \code{number} or \code{id} argument.
 
 To apply the prepped recipe to a data set, the [bake()] function is
 used in the same manner that \code{predict()} would be for models. This
-applies the estimated steps to any data set.\if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 6 x 6
+applies the estimated steps to any data set.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 x 6
 ##     HHV    PC1    PC2     PC3     PC4     PC5
 ##   <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
 ## 1  18.3 0.730   0.412  0.495   0.333   0.253 
@@ -254,29 +282,24 @@ applies the estimated steps to any data set.\if{html}{\out{<div class="sourceCod
 ## 4  18.9 0.0400 -0.950 -0.158   0.405  -0.143 
 ## 5  20.5 0.792   0.732 -0.204   0.465  -0.148 
 ## 6  18.5 0.433   0.127  0.354  -0.0168 -0.0888
-}
+}\if{html}{\out{</div>}}
 
 In general, the workflow interface to recipes is recommended for most
 applications.
 
-[biomass![dataset == "Training",]: R:biomass](https://latex.codecogs.com/png.image?\%5Cdpi\%7B110\%7D&space;\%5Cbg_white&space;dataset\%20\%3D\%3D\%20\%22Training\%22\%2C\%5D\%3A\%20R\%3Abiomass "dataset == "Training",]: R:biomass")dataset\%20==\%20\%22Training\%22,
-[biomass![dataset == "Testing",]: R:biomass](https://latex.codecogs.com/png.image?\%5Cdpi\%7B110\%7D&space;\%5Cbg_white&space;dataset\%20\%3D\%3D\%20\%22Testing\%22\%2C\%5D\%3A\%20R\%3Abiomass "dataset == "Testing",]: R:biomass")dataset\%20==\%20\%22Testing\%22,
+[biomass$dataset == "Training",]: R:biomass$dataset\%20==\%20\%22Training\%22,
+[biomass$dataset == "Testing",]: R:biomass$dataset\%20==\%20\%22Testing\%22,
 \code{\link[=prep]{prep()}}: R:prep() \code{\link[=prep]{prep()}}: R:prep()
 [tidy.recipe()]: R:tidy.recipe() [bake()]: R:bake()
-
-[dataset == "Training",]: R:dataset\%20==\%20\%22Training\%22,\%5C
-[dataset == "Testing",]: R:dataset\%20==\%20\%22Testing\%22,\%5C
-\code{\link[=prep]{prep()}}: R:prep()
-\code{\link[=prep]{prep()}}: R:prep()
 }
 
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # formula example with single outcome:
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 # split data
 biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -317,4 +340,5 @@ rec <- recipe(biomass_tr) \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting indicator")
 rec
+\dontshow{\}) # examplesIf}
 }
