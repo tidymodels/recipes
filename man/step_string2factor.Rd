@@ -55,7 +55,7 @@ vectors to factors (ordered or unordered).
 \details{
 In most cases, if you are planning to use \code{step_string2factor()}
 without setting \code{levels}, you will be better off by converting
-those variables outside the recipe.
+those character variables to factor variables outside the recipe.
 
 This can be done using dplyr with the following code
 
