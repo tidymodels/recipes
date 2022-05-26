@@ -536,7 +536,7 @@ bake <- function(object, ...) {
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
 #' @rdname bake
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
