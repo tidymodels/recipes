@@ -5,6 +5,8 @@ Sacramento$lgl1 <- Sacramento$beds >= 1
 Sacramento$lgl2 <- Sacramento$beds >= 2
 Sacramento$ord1 <- as.ordered(Sacramento$type)
 Sacramento$ord2 <- as.ordered(Sacramento$type)
+Sacramento$date1 <- as.Date(Sacramento$sqft, "2000-01-01")
+Sacramento$date2 <- as.Date(Sacramento$sqft, "2000-01-01")
 
 rec_sac <- recipe(~., data = Sacramento)
 info_sac <- summary(rec_sac)
@@ -75,6 +77,10 @@ test_that("simple type selections", {
     recipes_eval_select(quos = quos(all_unordered()), data = Sacramento, info = info_sac),
     setNames(nm = c("city", "zip", "type"))
   )
+  expect_equal(
+    recipes_eval_select(quos = quos(all_date()), data = Sacramento, info = info_sac),
+    setNames(nm = c("date1", "date2"))
+  )
 })
 
 test_that("simple name selections", {
@@ -97,7 +103,7 @@ test_that("simple name selections", {
   expect_equal(
     recipes_eval_select(quos = quos(-sqft, beds), data = Sacramento, info = info_sac),
     setNames(nm = c("city", "zip", "beds", "baths", "type", "price", "latitude",
-                    "longitude", "lgl1", "lgl2", "ord1", "ord2"))
+                    "longitude", "lgl1", "lgl2", "ord1", "ord2", "date1", "date2"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(beds, -sqft), data = Sacramento, info = info_sac),
@@ -264,5 +270,12 @@ test_that("predictor specific role selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_unordered_predictors()), data = Sacramento, info = info),
     setNames(nm = c("zip", "type"))
+  )
+
+  rec <- recipe(city ~ ., data = Sacramento)
+  info <- summary(rec)
+  expect_equal(
+    recipes_eval_select(quos = quos(all_date_predictors()), data = Sacramento, info = info),
+    setNames(nm = c("date1", "date2"))
   )
 })

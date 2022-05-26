@@ -5,6 +5,8 @@
 \alias{has_type}
 \alias{all_outcomes}
 \alias{all_predictors}
+\alias{all_date}
+\alias{all_date_predictors}
 \alias{all_double}
 \alias{all_double_predictors}
 \alias{all_integer}
@@ -29,6 +31,10 @@ has_type(match = "numeric")
 all_outcomes()
 
 all_predictors()
+
+all_date()
+
+all_date_predictors()
 
 all_double()
 
