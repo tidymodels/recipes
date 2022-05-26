@@ -4,13 +4,12 @@ library(tibble)
 library(tidyselect)
 library(rlang)
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 rec1 <- recipe(~., data = Sacramento)
 info1 <- summary(rec1)
 
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 rec2 <- recipe(biomass) %>%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
     new_role = "predictor"

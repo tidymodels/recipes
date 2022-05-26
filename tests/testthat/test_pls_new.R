@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
 library(dplyr)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
 ## -----------------------------------------------------------------------------
 

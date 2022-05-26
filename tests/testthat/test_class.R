@@ -2,8 +2,8 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 x1 <- rnorm(3)
 x2 <- as.POSIXct(1:3, origin = "1970-01-01", tz = "CET")

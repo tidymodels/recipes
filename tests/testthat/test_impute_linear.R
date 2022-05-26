@@ -1,7 +1,7 @@
 library(testthat)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data(ames)
+data(ames, package = "modeldata")
 
 ames_dat <- ames %>%
   select(Lot_Frontage, Lot_Area, Total_Bsmt_SF) %>%
