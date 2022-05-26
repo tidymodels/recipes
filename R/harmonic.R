@@ -206,7 +206,11 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
   harmonic_data <- info[info$variable %in% col_names, ]
 
   # check input columns
-  if (any(harmonic_data$type != "date" & harmonic_data$type != "numeric")) {
+  if (any(harmonic_data$type != "date" &
+          harmonic_data$type != "datetime" &
+          harmonic_data$type != "numeric" &
+          harmonic_data$type != "double" &
+          harmonic_data$type != "integer")) {
     rlang::abort(
       paste0(
         "All variables for `step_harmonic` should be either `Date` ",
