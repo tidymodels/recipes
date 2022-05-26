@@ -26,8 +26,9 @@
 #' @family variable filter steps
 #' @export
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass$one_value <- 1
 #'

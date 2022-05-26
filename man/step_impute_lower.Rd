@@ -83,9 +83,9 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 ## Truncate some values to emulate what a lower limit of
 ## the measurement system might look like
@@ -115,7 +115,6 @@ transformed_te <- bake(impute_rec, biomass_te)
 plot(transformed_te$carbon, biomass_te$carbon,
   ylab = "pre-imputation", xlab = "imputed"
 )
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other imputation steps: 

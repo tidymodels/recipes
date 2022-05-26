@@ -44,8 +44,9 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(Sacramento, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(Sacramento)
 #'
 #' # convert factor to string to demonstrate
 #' Sacramento$city <- as.character(Sacramento$city)

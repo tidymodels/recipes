@@ -325,8 +325,8 @@ regarding a recipe or operation within the recipe (when a \code{tidy}
 method for the operation exists).
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(Sacramento, package = "modeldata")
+library(modeldata)
+data(Sacramento)
 
 Sacramento_rec <- recipe(~., data = Sacramento) \%>\%
   step_other(all_nominal(), threshold = 0.05, other = "another") \%>\%
@@ -344,5 +344,4 @@ Sacramento_rec_trained <- prep(Sacramento_rec, training = Sacramento)
 tidy(Sacramento_rec_trained)
 tidy(Sacramento_rec_trained, number = 3)
 tidy(Sacramento_rec_trained, number = 4)
-\dontshow{\}) # examplesIf}
 }

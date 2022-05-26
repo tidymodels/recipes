@@ -40,8 +40,9 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(tate_text, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(tate_text)
 #'
 #' dummies <- recipe(~ artist + medium, data = tate_text) %>%
 #'   step_dummy_extract(artist, medium, sep = ", ") %>%

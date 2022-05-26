@@ -23,8 +23,9 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examplesIf rlang::is_installed("modeldata")
-#' data("credit_data", package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data("credit_data")
 #'
 #' ## missing data per column
 #' purrr::map_dbl(credit_data, function(x) mean(is.na(x)))

@@ -35,8 +35,9 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(covers, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(covers)
 #'
 #' rec <- recipe(~description, covers) %>%
 #'   step_count(description, pattern = "(rock|stony)", result = "rocks") %>%

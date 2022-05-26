@@ -85,7 +85,6 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 set.seed(393)
 ames_missing <- ames
@@ -112,7 +111,6 @@ ggplot(imputed, aes(x = original, y = imputed)) +
   geom_point(alpha = .3) +
   coord_equal() +
   labs(title = "Imputed Values")
-\dontshow{\}) # examplesIf}
 }
 \references{
 Kuhn, M. and Johnson, K. (2013).

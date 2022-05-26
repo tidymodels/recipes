@@ -40,8 +40,9 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(Sacramento, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(Sacramento)
 #'
 #' sacr_tr <- Sacramento[1:800, ]
 #' sacr_te <- Sacramento[801:806, ]

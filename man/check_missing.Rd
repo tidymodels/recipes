@@ -58,8 +58,8 @@ When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with column
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(credit_data, package = "modeldata")
+library(modeldata)
+data(credit_data)
 is.na(credit_data) \%>\% colSums()
 
 # If the test passes, `new_data` is returned unaltered
@@ -88,7 +88,6 @@ bake(rp, train_data)
 \dontrun{
 bake(rp, test_data)
 }
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

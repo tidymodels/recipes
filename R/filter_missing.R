@@ -28,8 +28,9 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(credit_data, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(credit_data)
 #'
 #' rec <- recipe(Status ~ ., data = credit_data) %>%
 #'   step_filter_missing(all_predictors(), threshold = 0)

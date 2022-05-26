@@ -50,9 +50,9 @@ for more information about the unique recipes selectors.
 This is a developer tool that is only useful for creating new recipes steps.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(rlang)
-data(scat, package = "modeldata")
+library(modeldata)
+data(scat)
 
 rec <- recipe(Species ~ ., data = scat)
 
@@ -62,5 +62,4 @@ info
 quos <- quos(all_numeric_predictors(), where(is.factor))
 
 recipes_eval_select(quos, scat, info)
-\dontshow{\}) # examplesIf}
 }

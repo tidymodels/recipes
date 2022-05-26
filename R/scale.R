@@ -35,8 +35,9 @@
 #' @references Gelman, A. (2007) "Scaling regression inputs by
 #'  dividing by two standard deviations." Unpublished. Source:
 #'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]

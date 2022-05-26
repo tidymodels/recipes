@@ -22,8 +22,9 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(credit_data, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(credit_data)
 #'
 #' # If the test passes, `new_data` is returned unaltered
 #' recipe(credit_data) %>%

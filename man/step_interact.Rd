@@ -101,8 +101,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(penguins, package = "modeldata")
+library(modeldata)
+data(penguins)
 penguins <- penguins \%>\% na.omit()
 
 rec <- recipe(flipper_length_mm ~ ., data = penguins)
@@ -126,5 +126,4 @@ names(dat_2)
 
 tidy(int_mod_1, number = 1)
 tidy(int_mod_2, number = 2)
-\dontshow{\}) # examplesIf}
 }

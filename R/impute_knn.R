@@ -43,9 +43,10 @@
 #'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examples
 #' library(recipes)
-#' data(biomass, package = "modeldata")
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]

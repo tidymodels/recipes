@@ -104,28 +104,29 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed(c("modeldata", "RcppML"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-library(Matrix)
-data(biomass, package = "modeldata")
+if (rlang::is_installed("RcppML")) {
+  library(Matrix)
+  library(modeldata)
+  data(biomass)
 
-rec <- recipe(HHV ~ ., data = biomass) \%>\%
-  update_role(sample, new_role = "id var") \%>\%
-  update_role(dataset, new_role = "split variable") \%>\%
-  step_nnmf_sparse(
-    all_numeric_predictors(),
-    num_comp = 2,
-    seed = 473,
-    penalty = 0.01
-  ) \%>\%
-  prep(training = biomass)
+  rec <- recipe(HHV ~ ., data = biomass) \%>\%
+    update_role(sample, new_role = "id var") \%>\%
+    update_role(dataset, new_role = "split variable") \%>\%
+    step_nnmf_sparse(
+      all_numeric_predictors(),
+      num_comp = 2,
+      seed = 473,
+      penalty = 0.01
+    ) \%>\%
+    prep(training = biomass)
 
-bake(rec, new_data = NULL)
-#'
-library(ggplot2)
-bake(rec, new_data = NULL) \%>\%
-  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
-  geom_point()
-\dontshow{\}) # examplesIf}
+  bake(rec, new_data = NULL)
+  #'
+  library(ggplot2)
+  bake(rec, new_data = NULL) \%>\%
+    ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
+    geom_point()
+}
 }
 \seealso{
 Other multivariate transformation steps: 

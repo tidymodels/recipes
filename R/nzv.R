@@ -48,8 +48,9 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass$sparse <- c(1, rep(0, nrow(biomass) - 1))
 #'

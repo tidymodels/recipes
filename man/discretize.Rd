@@ -89,8 +89,8 @@ If \code{infs = FALSE} and a new value is greater than the
 largest value of \code{x}, a missing value will result.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -106,5 +106,4 @@ table(predict(carbon_binned, biomass_tr$carbon))
 
 carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 predict(carbon_no_infs, c(50, 100))
-\dontshow{\}) # examplesIf}
 }

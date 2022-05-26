@@ -53,7 +53,6 @@ data when \code{\link[=bake]{bake()}} is invoked with a data set in \code{new_da
 \code{bake(object, new_data = NULL)} will always have all of the steps applied.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 
 ames <- mutate(ames, Sale_Price = log10(Sale_Price))
@@ -76,7 +75,6 @@ bake(ames_rec, new_data = head(ames))
 # only return selected variables:
 bake(ames_rec, new_data = head(ames), all_numeric_predictors())
 bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}

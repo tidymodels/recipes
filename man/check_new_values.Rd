@@ -72,8 +72,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(credit_data, package = "modeldata")
+library(modeldata)
+data(credit_data)
 
 # If the test passes, `new_data` is returned unaltered
 recipe(credit_data) \%>\%
@@ -104,7 +104,6 @@ recipe(credit_data \%>\% dplyr::filter(!is.na(Home))) \%>\%
   prep() \%>\%
   bake(credit_data)
 }
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

@@ -11,10 +11,7 @@ step_ratio(
   role = "predictor",
   trained = FALSE,
   denom = denom_vars(),
-  naming = function(numer, denom) {
-     make.names(paste(numer, denom, sep = "_o_"))
-
-    },
+  naming = function(numer, denom) {     make.names(paste(numer, denom, sep = "_o_")) },
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -87,9 +84,9 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 biomass$total <- apply(biomass[, 3:7], 1, sum)
 biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -110,7 +107,6 @@ ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 

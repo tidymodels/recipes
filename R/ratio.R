@@ -35,9 +35,10 @@
 #'
 #' @family multivariate transformation steps
 #' @export
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examples
 #' library(recipes)
-#' data(biomass, package = "modeldata")
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]

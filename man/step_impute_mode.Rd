@@ -90,8 +90,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data("credit_data", package = "modeldata")
+library(modeldata)
+data("credit_data")
 
 ## missing data per column
 vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -116,7 +116,6 @@ table(credit_te$Home, imputed_te$Home, useNA = "always")
 
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other imputation steps: 

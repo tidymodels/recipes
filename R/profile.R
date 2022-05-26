@@ -49,8 +49,9 @@
 #'
 #' @template step-return
 #' @export
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(Sacramento, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(Sacramento)
 #'
 #' # Setup a grid across beds but keep the other values fixed
 #' recipe(~ city + price + beds, data = Sacramento) %>%

@@ -37,8 +37,10 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(Smithsonian, package = "modeldata")
+#' @examples
+#'
+#' library(modeldata)
+#' data(Smithsonian)
 #'
 #' # How close are the museums to Union Station?
 #' near_station <- recipe(~., data = Smithsonian) %>%

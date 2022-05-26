@@ -27,8 +27,9 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass$new_1 <- with(
 #'   biomass,

@@ -71,9 +71,9 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
-data(attrition, package = "modeldata")
+library(modeldata)
+data(attrition)
 
 attrition \%>\%
   group_by(StockOptionLevel) \%>\%
@@ -126,7 +126,6 @@ ceo <- attrition \%>\%
   mutate(MonthlyIncome = 10^10)
 
 bake(rec, ceo)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

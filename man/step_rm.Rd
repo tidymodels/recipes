@@ -66,8 +66,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -87,7 +87,6 @@ filtered_te <- bake(smaller_set, biomass_te)
 filtered_te
 
 tidy(smaller_set, number = 1)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other variable filter steps: 

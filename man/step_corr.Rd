@@ -96,8 +96,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 set.seed(3535)
 biomass$duplicate <- biomass$carbon + rnorm(nrow(biomass))
@@ -121,7 +121,6 @@ round(abs(cor(filtered_te)), 2)
 
 tidy(corr_filter, number = 1)
 tidy(filter_obj, number = 1)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other variable filter steps: 

@@ -44,8 +44,9 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(biomass)
 #'
 #' set.seed(3535)
 #' biomass$duplicate <- biomass$carbon + rnorm(nrow(biomass))

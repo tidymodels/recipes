@@ -66,8 +66,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(Sacramento, package = "modeldata")
+library(modeldata)
+data(Sacramento)
 
 rec <- recipe(~ city + zip, data = Sacramento)
 
@@ -86,7 +86,6 @@ bake(make_string, new_data = NULL) \%>\% head()
 
 # ...but remains a factor in the original data
 Sacramento \%>\% head()
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

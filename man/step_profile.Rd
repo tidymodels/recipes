@@ -102,8 +102,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(Sacramento, package = "modeldata")
+library(modeldata)
+data(Sacramento)
 
 # Setup a grid across beds but keep the other values fixed
 recipe(~ city + price + beds, data = Sacramento) \%>\%
@@ -154,5 +154,4 @@ library(ggplot2)
 ggplot(plot_data, aes(x = disp, y = pred)) +
   geom_point(alpha = .5, cex = 1) +
   facet_wrap(~method)
-\dontshow{\}) # examplesIf}
 }

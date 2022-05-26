@@ -26,8 +26,9 @@
 #'  column called `trained` for whether the operation has been
 #'  estimated using `prep`, a logical for `skip`, and a character column `id`.
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(Sacramento, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(Sacramento)
 #'
 #' Sacramento_rec <- recipe(~., data = Sacramento) %>%
 #'   step_other(all_nominal(), threshold = 0.05, other = "another") %>%

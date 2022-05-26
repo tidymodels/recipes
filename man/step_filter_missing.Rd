@@ -80,8 +80,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(credit_data, package = "modeldata")
+library(modeldata)
+data(credit_data)
 
 rec <- recipe(Status ~ ., data = credit_data) \%>\%
   step_filter_missing(all_predictors(), threshold = 0)
@@ -92,7 +92,6 @@ filtered_te <- bake(filter_obj, new_data = NULL)
 
 tidy(rec, number = 1)
 tidy(filter_obj, number = 1)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other variable filter steps: 

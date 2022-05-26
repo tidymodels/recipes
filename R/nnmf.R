@@ -52,8 +52,10 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#'
+#' library(modeldata)
+#' data(biomass)
 #'
 #' # rec <- recipe(HHV ~ ., data = biomass) %>%
 #' #   update_role(sample, new_role = "id var") %>%

@@ -32,8 +32,9 @@
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with column
 #'  `terms` (the selectors or variables selected) is returned.
 #'
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(credit_data, package = "modeldata")
+#' @examples
+#' library(modeldata)
+#' data(credit_data)
 #' is.na(credit_data) %>% colSums()
 #'
 #' # If the test passes, `new_data` is returned unaltered

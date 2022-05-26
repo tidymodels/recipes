@@ -111,9 +111,9 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -142,7 +142,6 @@ if (FALSE) {
   tidy(im_estimates, number = 3)
 }
 }
-\dontshow{\}) # examplesIf}
 }
 \references{
 De Silva, V., and Tenenbaum, J. B. (2003). Global

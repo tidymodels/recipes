@@ -76,8 +76,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data(biomass, package = "modeldata")
+library(modeldata)
+data(biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -99,7 +99,6 @@ transformed_te
 
 tidy(ranged_trans, number = 1)
 tidy(ranged_obj, number = 1)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other normalization steps: 

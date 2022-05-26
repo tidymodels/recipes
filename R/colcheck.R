@@ -17,8 +17,10 @@
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `value` (the type)
 #'  is returned.
-#' @examplesIf rlang::is_installed("modeldata")
-#' data(biomass, package = "modeldata")
+#' @examples
+#'
+#' library(modeldata)
+#' data(biomass)
 #'
 #' biomass_rec <- recipe(HHV ~ ., data = biomass) %>%
 #'   step_rm(sample, dataset) %>%
