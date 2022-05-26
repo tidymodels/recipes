@@ -85,13 +85,24 @@ Selector functions return an integer vector.
 \code{has_role()}, \code{all_predictors()}, and \code{all_outcomes()} can be used to
 select variables in a formula that have certain roles.
 
-Similarly, \code{has_type()}, \code{all_numeric()}, and \code{all_nominal()} are used to
-select columns based on their data type. Nominal variables include both
-character and factor.
+Similarly, \code{has_type()}, \code{all_numeric()}, \code{all_integer()}, \code{all_double()},
+\code{all_nominal()}, \code{all_ordered()}, \code{all_unordered()}, \code{all_date()} and
+\code{all_datetime()} are used to select columns based on their data type.
 
-\strong{In most cases}, the selectors \code{all_numeric_predictors()} and
-\code{all_nominal_predictors()}, which select on role and type, will be the right
-approach for users.
+\code{all_ordered()} captures ordered factors, \code{all_unordered()} captures
+unordered factors and characters, \code{all_nomical()} captures characters,
+unordered and ordered factors.
+
+\code{all_integer()} captures integers, \code{all_double()} captures doubles,
+\code{all_numeric()} captures all kinds of numeric,
+
+\code{all_date()} captures \code{\link[=Date]{Date()}} variables, \code{all_datetime()} captures
+\code{\link[=POSIXct]{POSIXct()}} variables.
+
+\strong{In most cases}, the right approach for users will be use to use the
+predictor specific selectors such as \code{all_numeric_predictors()} and
+\code{all_nominal_predictors()}. In general you should be careful about using
+\code{-all_outcomes()} if a \verb{*_predictors()} selector would do what you want.
 
 See \link{selections} for more details.
 
