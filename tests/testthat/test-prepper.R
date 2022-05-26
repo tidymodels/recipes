@@ -1,6 +1,5 @@
-library(rsample)
-
 test_that("prepper uses fresh = TRUE", {
+  skip_if_not_installed("rsample")
   set.seed(123)
 
   train1 <- mtcars[1:20, ]
@@ -11,7 +10,7 @@ test_that("prepper uses fresh = TRUE", {
 
   prepped_rec <- prep(rec, train1)
 
-  split2 <- initial_split(train2)
+  split2 <- rsample::initial_split(train2)
   prepped_rec2 <- prepper(split2, prepped_rec)
 
   expect_equal(
