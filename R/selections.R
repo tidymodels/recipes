@@ -322,6 +322,18 @@ all_date_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_datetime <- function() {
+  has_type("datetime")
+}
+
+#' @export
+#' @rdname has_role
+all_datetime_predictors <- function() {
+  intersect(has_role("predictor"), has_type("datetime"))
+}
+
+#' @export
+#' @rdname has_role
 all_double <- function() {
   has_type("double")
 }

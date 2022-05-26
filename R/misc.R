@@ -15,7 +15,7 @@ get_types <- function(x) {
       Surv = "censored",
       logical = "logical",
       Date = "date",
-      POSIXct = "date",
+      POSIXct = "datetime",
       list = "list",
       textrecipes_tokenlist = "tokenlist",
       hardhat_case_weights = "case_weights"
