@@ -48,7 +48,7 @@ test_that("simple type selections", {
     setNames(nm = c("baths", "latitude", "longitude", "beds", "sqft", "price"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(has_type("nominal")), data = Sacramento, info = info_sac),
+    recipes_eval_select(quos = quos(has_type("unordered")), data = Sacramento, info = info_sac),
     setNames(nm = c("city", "zip", "type"))
   )
   expect_equal(
@@ -70,6 +70,10 @@ test_that("simple type selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_double()), data = Sacramento, info = info_sac),
     setNames(nm = c("baths", "latitude", "longitude"))
+  )
+  expect_equal(
+    recipes_eval_select(quos = quos(all_unordered()), data = Sacramento, info = info_sac),
+    setNames(nm = c("city", "zip", "type"))
   )
 })
 
@@ -253,5 +257,12 @@ test_that("predictor specific role selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_double_predictors()), data = Sacramento, info = info),
     setNames(nm = c("latitude", "longitude"))
+  )
+
+  rec <- recipe(city ~ ., data = Sacramento)
+  info <- summary(rec)
+  expect_equal(
+    recipes_eval_select(quos = quos(all_unordered_predictors()), data = Sacramento, info = info),
+    setNames(nm = c("zip", "type"))
   )
 })

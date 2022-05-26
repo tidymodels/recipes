@@ -17,6 +17,8 @@
 \alias{all_numeric_predictors}
 \alias{all_ordered}
 \alias{all_ordered_predictors}
+\alias{all_unordered}
+\alias{all_unordered_predictors}
 \alias{current_info}
 \title{Role Selection}
 \usage{
@@ -51,6 +53,10 @@ all_numeric_predictors()
 all_ordered()
 
 all_ordered_predictors()
+
+all_unordered()
+
+all_unordered_predictors()
 
 current_info()
 }

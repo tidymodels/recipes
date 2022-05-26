@@ -6,9 +6,9 @@ filter_terms <- function(x, ...) {
 get_types <- function(x) {
   var_types <-
     c(
-      character = "nominal",
+      character = "unordered",
       ordered = "ordered",
-      factor = "nominal",
+      factor = "unordered",
       integer = "integer",
       numeric = "double",
       double = "double",
