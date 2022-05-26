@@ -9,7 +9,7 @@ get_types <- function(x) {
       character = "nominal",
       ordered = "ordered",
       factor = "nominal",
-      integer = "numeric",
+      integer = "integer",
       numeric = "numeric",
       double = "numeric",
       Surv = "censored",

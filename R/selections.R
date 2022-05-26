@@ -310,6 +310,18 @@ all_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_integer <- function() {
+  has_type("integer")
+}
+
+#' @export
+#' @rdname has_role
+all_integer_predictors <- function() {
+  intersect(has_role("predictor"), has_type("integer"))
+}
+
+#' @export
+#' @rdname has_role
 all_logical <- function() {
   has_type("logical")
 }
@@ -344,13 +356,22 @@ all_nominal_predictors <- function() {
 #' @export
 #' @rdname has_role
 all_numeric <- function() {
-  has_type("numeric")
+  union(
+    has_type("numeric"),
+    has_type("integer")
+  )
 }
 
 #' @export
 #' @rdname has_role
 all_numeric_predictors <- function() {
-  intersect(has_role("predictor"), has_type("numeric"))
+  intersect(
+    has_role("predictor"),
+    union(
+      has_type("numeric"),
+      has_type("integer")
+    )
+  )
 }
 
 #' @export
