@@ -67,6 +67,10 @@ test_that("simple type selections", {
     recipes_eval_select(quos = quos(all_integer()), data = Sacramento, info = info_sac),
     setNames(nm = c("beds", "sqft", "price"))
   )
+  expect_equal(
+    recipes_eval_select(quos = quos(all_double()), data = Sacramento, info = info_sac),
+    setNames(nm = c("baths", "latitude", "longitude"))
+  )
 })
 
 test_that("simple name selections", {
@@ -242,5 +246,12 @@ test_that("predictor specific role selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_integer_predictors()), data = Sacramento, info = info),
     setNames(nm = c("beds", "sqft"))
+  )
+
+  rec <- recipe(baths ~ ., data = Sacramento)
+  info <- summary(rec)
+  expect_equal(
+    recipes_eval_select(quos = quos(all_double_predictors()), data = Sacramento, info = info),
+    setNames(nm = c("latitude", "longitude"))
   )
 })

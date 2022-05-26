@@ -310,6 +310,18 @@ all_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_double <- function() {
+  has_type("double")
+}
+
+#' @export
+#' @rdname has_role
+all_double_predictors <- function() {
+  intersect(has_role("predictor"), has_type("double"))
+}
+
+#' @export
+#' @rdname has_role
 all_integer <- function() {
   has_type("integer")
 }
@@ -358,7 +370,10 @@ all_nominal_predictors <- function() {
 all_numeric <- function() {
   union(
     has_type("numeric"),
-    has_type("integer")
+    union(
+      has_type("double"),
+      has_type("integer")
+    )
   )
 }
 
@@ -369,7 +384,10 @@ all_numeric_predictors <- function() {
     has_role("predictor"),
     union(
       has_type("numeric"),
-      has_type("integer")
+      union(
+        has_type("double"),
+        has_type("integer")
+      )
     )
   )
 }
