@@ -50,10 +50,10 @@ test_that("simple type selections", {
 
   expect_equal(
     terms_select(info = info1, quos(all_numeric())),
-    c("beds", "baths", "sqft", "price", "latitude", "longitude")
+    c("baths", "latitude", "longitude", "beds", "sqft", "price")
   )
   expect_equal(
-    terms_select(info = info1, quos(has_type("nominal"))),
+    terms_select(info = info1, quos(has_type("unordered"))),
     c("city", "zip", "type")
   )
   expect_equal(
