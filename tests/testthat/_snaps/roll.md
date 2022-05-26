@@ -70,8 +70,8 @@
     Code
       prep(rec %>% step_window(fac), training = sim_dat)
     Condition
-      Error in `prep()`:
-      ! The selected variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 ---
 

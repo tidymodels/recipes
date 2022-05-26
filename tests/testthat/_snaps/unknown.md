@@ -17,8 +17,8 @@
     Code
       recipe(~., data = sacr_tr) %>% step_unknown(sqft) %>% prep()
     Condition
-      Error in `prep()`:
-      ! Columns must be character or factor: sqft
+      Error in `check_type()`:
+      ! All columns selected for the step should be factor or character
 
 ---
 

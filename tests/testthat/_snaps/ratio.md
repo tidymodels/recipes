@@ -3,24 +3,24 @@
     Code
       prep(rec4, ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! The ratio variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 ---
 
     Code
       prep(rec5, ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! The ratio variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 ---
 
     Code
       prep(rec6, ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! The ratio variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 # printing
 
@@ -54,7 +54,7 @@
       
       Operations:
       
-      Ratios from x2, x3, x4, x1, x1, x2, x3, x4 [trained]
+      Ratios from x1, x3, x4, x2, x2, x1, x3, x4 [trained]
 
 # can prep recipes with no keep_original_cols
 
