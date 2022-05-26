@@ -12,7 +12,22 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details If `levels` is given, `step_string2factor` will
+#' @details
+#'  In most cases, if you are planning to use `step_string2factor()`
+#'  without setting `levels`, you will be better off by converting
+#'  those variables outside the recipe.
+#'
+#'  This can be done using dplyr with the following code
+#'
+#'  ```r
+#'  df <- mutate(df, across(where(is.character), as.factor))
+#'  ```
+#'
+#'  During resampling, the complete set of values might
+#'  not be in the character data. Converting them to factors with
+#'  `step_string2factor()`  then will misconfigure the levels.
+#'
+#'  If `levels` is given, `step_string2factor` will
 #'  convert all variables affected by this step to have the same
 #'  levels.
 #'

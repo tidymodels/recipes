@@ -53,6 +53,19 @@ sequence of any existing operations.
 vectors to factors (ordered or unordered).
 }
 \details{
+In most cases, if you are planning to use \code{step_string2factor()}
+without setting \code{levels}, you will be better off by converting
+those variables outside the recipe.
+
+This can be done using dplyr with the following code
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{df <- mutate(df, across(where(is.character), as.factor))
+}\if{html}{\out{</div>}}
+
+During resampling, the complete set of values might
+not be in the character data. Converting them to factors with
+\code{step_string2factor()}  then will misconfigure the levels.
+
 If \code{levels} is given, \code{step_string2factor} will
 convert all variables affected by this step to have the same
 levels.
