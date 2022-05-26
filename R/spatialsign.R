@@ -33,9 +33,8 @@
 #'  moderate robustness to multivariate estimators. *Journal of
 #'  Chemical Information and Modeling*, 46(3), 1402-1409.
 
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]

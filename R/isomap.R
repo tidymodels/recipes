@@ -60,10 +60,9 @@
 #' \pkg{dimRed}, a framework for dimensionality reduction,
 #'   https://github.com/gdkrmr
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' \donttest{
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]

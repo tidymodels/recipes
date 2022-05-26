@@ -83,8 +83,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -100,6 +100,7 @@ with_splines <- prep(with_splines, training = biomass_tr)
 
 expanded <- bake(with_splines, biomass_te)
 expanded
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other individual transformation steps: 

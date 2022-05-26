@@ -85,8 +85,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(Sacramento)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 sacr_tr <- Sacramento[1:800, ]
 sacr_te <- Sacramento[801:806, ]
@@ -103,6 +103,7 @@ processed <- bake(rec, sacr_te)
 tibble(old = sacr_te$city, new = processed$city)
 
 tidy(rec, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}

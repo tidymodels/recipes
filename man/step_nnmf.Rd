@@ -114,9 +114,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 # rec <- recipe(HHV ~ ., data = biomass) \%>\%
 #   update_role(sample, new_role = "id var") \%>\%
@@ -129,6 +128,7 @@ data(biomass)
 # library(ggplot2)
 # bake(rec, new_data = NULL) \%>\%
 #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 

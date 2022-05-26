@@ -48,11 +48,10 @@ recipe.default <- function(x, ...) {
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #'
 #' # formula example with single outcome:
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # split data
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -325,7 +324,7 @@ prep <- function(x, ...) {
 #'   data, the step for scaling is given the centered data.
 #'
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' library(dplyr)
@@ -537,7 +536,7 @@ bake <- function(object, ...) {
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
 #' @rdname bake
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
