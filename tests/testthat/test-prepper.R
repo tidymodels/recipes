@@ -15,6 +15,6 @@ test_that("prepper uses fresh = TRUE", {
 
   expect_equal(
     prepped_rec2$steps[[1]]$means,
-    c(mpg = mean(training(split2)$mpg))
+    c(mpg = mean(rsample::training(split2)$mpg))
   )
 })
