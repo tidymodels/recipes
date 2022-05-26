@@ -310,6 +310,18 @@ all_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_logical <- function() {
+  has_type("logical")
+}
+
+#' @export
+#' @rdname has_role
+all_logical_predictors <- function() {
+  intersect(has_role("predictor"), has_type("logical"))
+}
+
+#' @export
+#' @rdname has_role
 all_nominal <- function() {
   has_type("nominal")
 }

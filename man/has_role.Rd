@@ -5,6 +5,8 @@
 \alias{has_type}
 \alias{all_outcomes}
 \alias{all_predictors}
+\alias{all_logical}
+\alias{all_logical_predictors}
 \alias{all_nominal}
 \alias{all_nominal_predictors}
 \alias{all_numeric}
@@ -19,6 +21,10 @@ has_type(match = "numeric")
 all_outcomes()
 
 all_predictors()
+
+all_logical()
+
+all_logical_predictors()
 
 all_nominal()
 

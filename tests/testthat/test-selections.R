@@ -1,6 +1,8 @@
 r_version <- function() paste0("R", getRversion()[, 1:2])
 
 data("Sacramento", package = "modeldata")
+Sacramento$lgl1 <- Sacramento$beds >= 1
+Sacramento$lgl2 <- Sacramento$beds >= 2
 rec1 <- recipe(~., data = Sacramento)
 info1 <- summary(rec1)
 
@@ -9,6 +11,9 @@ info2 <- summary(rec2)
 
 rec3 <- recipe(city ~ ., data = Sacramento)
 info3 <- summary(rec3)
+
+rec5 <- recipe(lgl1 ~ ., data = Sacramento)
+info5 <- summary(rec5)
 
 data("biomass", package = "modeldata")
 rec4 <- recipe(biomass) %>%
@@ -56,6 +61,10 @@ test_that("simple type selections", {
     recipes_eval_select(quos = quos(all_nominal()), data = Sacramento, info = info1),
     setNames(nm = c("city", "zip", "type"))
   )
+  expect_equal(
+    recipes_eval_select(quos = quos(all_logical()), data = Sacramento, info = info1),
+    setNames(nm = c("lgl1", "lgl2"))
+  )
 })
 
 test_that("simple name selections", {
@@ -78,7 +87,7 @@ test_that("simple name selections", {
   expect_equal(
     recipes_eval_select(quos = quos(-sqft, beds), data = Sacramento, info = info1),
     setNames(nm = c("city", "zip", "beds", "baths", "type", "price", "latitude",
-                    "longitude"))
+                    "longitude", "lgl1", "lgl2"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(beds, -sqft), data = Sacramento, info = info1),
@@ -202,9 +211,12 @@ test_that("predictor specific role selections", {
     recipes_eval_select(quos = quos(all_numeric_predictors()), data = Sacramento, info = info2),
     setNames(nm = c("beds", "baths", "price", "latitude", "longitude"))
   )
-
   expect_equal(
     recipes_eval_select(quos = quos(all_nominal_predictors()), data = Sacramento, info = info3),
     setNames(nm = c("zip", "type"))
+  )
+  expect_equal(
+    recipes_eval_select(quos = quos(all_logical_predictors()), data = Sacramento, info = info5),
+    setNames(nm = c("lgl2"))
   )
 })
