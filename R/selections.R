@@ -323,13 +323,22 @@ all_logical_predictors <- function() {
 #' @export
 #' @rdname has_role
 all_nominal <- function() {
-  has_type("nominal")
+  union(
+    has_type("nominal"),
+    has_type("ordered")
+  )
 }
 
 #' @export
 #' @rdname has_role
 all_nominal_predictors <- function() {
-  intersect(has_role("predictor"), has_type("nominal"))
+  intersect(
+    has_role("predictor"),
+    union(
+      has_type("nominal"),
+      has_type("ordered")
+    )
+  )
 }
 
 #' @export
@@ -342,6 +351,18 @@ all_numeric <- function() {
 #' @rdname has_role
 all_numeric_predictors <- function() {
   intersect(has_role("predictor"), has_type("numeric"))
+}
+
+#' @export
+#' @rdname has_role
+all_ordered <- function() {
+  has_type("ordered")
+}
+
+#' @export
+#' @rdname has_role
+all_ordered_predictors <- function() {
+  intersect(has_role("predictor"), has_type("ordered"))
 }
 
 ## functions to get current variable info for selectors modeled after

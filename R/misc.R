@@ -7,8 +7,8 @@ get_types <- function(x) {
   var_types <-
     c(
       character = "nominal",
+      ordered = "ordered",
       factor = "nominal",
-      ordered = "nominal",
       integer = "numeric",
       numeric = "numeric",
       double = "numeric",
