@@ -55,6 +55,7 @@ test_that("printing", {
 
 
 test_that("No kPCA comps", {
+  skip_if_not_installed("kernlab")
   suppressWarnings(
     pca_extract <- rec %>%
       step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
