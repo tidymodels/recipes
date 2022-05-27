@@ -68,7 +68,7 @@
 #'   The harmonic analysis of tidal model time series.
 #'   Advances in water resources, 12(3), 109-120.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("ggplot2")
 #' library(ggplot2, quietly = TRUE)
 #' library(dplyr)
 #'

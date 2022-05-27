@@ -49,7 +49,7 @@
 #'
 #' @template step-return
 #' @export
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' data(Sacramento, package = "modeldata")
 #'
 #' # Setup a grid across beds but keep the other values fixed

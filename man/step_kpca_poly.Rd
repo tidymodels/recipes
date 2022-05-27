@@ -110,7 +110,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2","kernlab"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]

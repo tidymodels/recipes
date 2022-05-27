@@ -52,7 +52,7 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' data(biomass, package = "modeldata")
 #'
 #' # rec <- recipe(HHV ~ ., data = biomass) %>%

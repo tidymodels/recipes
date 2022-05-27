@@ -85,7 +85,7 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 set.seed(393)
 ames_missing <- ames
