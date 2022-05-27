@@ -100,6 +100,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("RcppML")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
 library(dplyr)
 library(rlang)
@@ -146,4 +147,5 @@ smoothed_dat <- bake(rec, sim_dat, everything())
 ggplot(smoothed_dat, aes(x = original, y = y1)) +
   geom_point() +
   theme_bw()
+\dontshow{\}) # examplesIf}
 }
