@@ -188,7 +188,8 @@ used.</p><div class="section">
 <p>The best way to use use a recipe for modeling is via the <code>workflows</code>
 package. This bundles a model and preprocessor (e.g. a recipe) together
 and gives the user a fluent way to train the model/recipe and make
-predictions.</p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
+predictions.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/workflows" class="external-link">workflows</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/parsnip" class="external-link">parsnip</a></span><span class="op">)</span>
@@ -208,56 +209,27 @@ predictions.</p><div class="sourceCode r"><pre><code><span class="kw"><a href="h
   <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_spatialsign.html">step_spatialsign</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="va">sp_signed</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Recipe</span>
-<span class="co">## </span>
-<span class="co">## Inputs:</span>
-<span class="co">## </span>
-<span class="co">##       role #variables</span>
-<span class="co">##    outcome          1</span>
-<span class="co">##  predictor          5</span>
-<span class="co">## </span>
-<span class="co">## Operations:</span>
-<span class="co">## </span>
-<span class="co">## Centering and scaling for all_numeric_predictors()</span>
-<span class="co">## Spatial sign on  all_numeric_predictors()</span></code></pre></div>
-
+<span class="va">sp_signed</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>We can create a <code>parsnip</code> model, and then build a workflow with the
-model and recipe:</p><div class="sourceCode r"><pre><code><span class="va">linear_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span>
+model and recipe:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">linear_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">linear_sp_sign_wflow</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="https://workflows.tidymodels.org/reference/workflow.html" class="external-link">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_model.html" class="external-link">add_model</a></span><span class="op">(</span><span class="va">linear_mod</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_recipe.html" class="external-link">add_recipe</a></span><span class="op">(</span><span class="va">sp_signed</span><span class="op">)</span>
 
-<span class="va">linear_sp_sign_wflow</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## == Workflow ==========================================================</span>
-<span class="co">## Preprocessor: Recipe</span>
-<span class="co">## Model: linear_reg()</span>
-<span class="co">## </span>
-<span class="co">## -- Preprocessor ------------------------------------------------------</span>
-<span class="co">## 2 Recipe Steps</span>
-<span class="co">## </span>
-<span class="co">## * step_normalize()</span>
-<span class="co">## * step_spatialsign()</span>
-<span class="co">## </span>
-<span class="co">## -- Model -------------------------------------------------------------</span>
-<span class="co">## Linear Regression Model Specification (regression)</span>
-<span class="co">## </span>
-<span class="co">## Computational engine: lm</span></code></pre></div>
-
+<span class="va">linear_sp_sign_wflow</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>To estimate the preprocessing steps and then fit the linear model, a
-single call to <code>fit()</code> is used:</p><div class="sourceCode r"><pre><code><span class="va">linear_sp_sign_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">linear_sp_sign_wflow</span>, data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></code></pre><p></p></div>
+single call to <code>fit()</code> is used:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">linear_sp_sign_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">linear_sp_sign_wflow</span>, data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></code></pre><p></p></div>
 <p>When predicting, there is no need to do anything other than call
 <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>. This preprocesses the new data in the same manner as the
-training set, then gives the data to the linear model prediction code:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">linear_sp_sign_fit</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 x 1</span>
-<span class="co">##   .pred</span>
-<span class="co">##   &lt;dbl&gt;</span>
-<span class="co">## 1  18.1</span>
-<span class="co">## 2  17.9</span>
-<span class="co">## 3  17.2</span>
-<span class="co">## 4  18.8</span>
-<span class="co">## 5  19.6</span>
-<span class="co">## 6  14.6</span></code></pre></div>
-
+training set, then gives the data to the linear model prediction code:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">linear_sp_sign_fit</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -270,59 +242,34 @@ be used to estimate the recipe and apply it to new data manually.</p>
 <p>Once a recipe has been defined, the <code><a href="prep.html">prep()</a></code> function can be
 used to estimate quantities required for the operations using a data set
 (a.k.a. the training data). <code><a href="prep.html">prep()</a></code> returns a recipe.</p>
-<p>As an example of using PCA (perhaps to produce a plot):</p><div class="sourceCode r"><pre><code><span class="co"># Define the recipe</span>
+<p>As an example of using PCA (perhaps to produce a plot):</p>
+<p></p><div class="sourceCode r"><pre><code><span class="co"># Define the recipe</span>
 <span class="va">pca_rec</span> <span class="op">&lt;-</span> 
   <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/step_pca.html">step_pca</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
-<p>Now to estimate the normalization statistics and the PCA loadings:</p><div class="sourceCode r"><pre><code><span class="va">pca_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">pca_rec</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span>
-<span class="va">pca_rec</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Recipe</span>
-<span class="co">## </span>
-<span class="co">## Inputs:</span>
-<span class="co">## </span>
-<span class="co">##       role #variables</span>
-<span class="co">##    outcome          1</span>
-<span class="co">##  predictor          5</span>
-<span class="co">## </span>
-<span class="co">## Training data contained 456 data points and no missing data.</span>
-<span class="co">## </span>
-<span class="co">## Operations:</span>
-<span class="co">## </span>
-<span class="co">## Centering and scaling for carbon, hydrogen, oxygen, nitrogen, s... [trained]</span>
-<span class="co">## PCA extraction with carbon, hydrogen, oxygen, nitrogen, su... [trained]</span></code></pre></div>
-
+<p>Now to estimate the normalization statistics and the PCA loadings:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">pca_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">pca_rec</span>, training <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span>
+<span class="va">pca_rec</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>Note that the estimated recipe shows the actual column names captured by
 the selectors.</p>
 <p>You can [tidy.recipe()] a recipe, either when it is prepped or
-unprepped, to learn more about its components.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_rec</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 2 x 6</span>
-<span class="co">##   number operation type      trained skip  id             </span>
-<span class="co">##    &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;          </span>
-<span class="co">## 1      1 step      normalize TRUE    FALSE normalize_AeYA4</span>
-<span class="co">## 2      2 step      pca       TRUE    FALSE pca_Zn1yz</span></code></pre></div>
-
+unprepped, to learn more about its components.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_rec</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>You can also <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> recipe <em>steps</em> with a <code>number</code> or <code>id</code> argument.</p>
 <p>To apply the prepped recipe to a data set, the [bake()] function is
 used in the same manner that <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> would be for models. This
-applies the estimated steps to any data set.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## # A tibble: 6 x 6</span>
-<span class="co">##     HHV    PC1    PC2     PC3     PC4     PC5</span>
-<span class="co">##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">## 1  18.3 0.730   0.412  0.495   0.333   0.253 </span>
-<span class="co">## 2  17.6 0.617  -1.41  -0.118  -0.466   0.815 </span>
-<span class="co">## 3  17.2 0.761  -1.10   0.0550 -0.397   0.747 </span>
-<span class="co">## 4  18.9 0.0400 -0.950 -0.158   0.405  -0.143 </span>
-<span class="co">## 5  20.5 0.792   0.732 -0.204   0.465  -0.148 </span>
-<span class="co">## 6  18.5 0.433   0.127  0.354  -0.0168 -0.0888</span></code></pre></div>
-
+applies the estimated steps to any data set.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>In general, the workflow interface to recipes is recommended for most
 applications.</p>
-<p>[biomass![dataset == "Training",]: R:biomass](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;dataset%20%3D%3D%20%22Training%22%2C%5D%3A%20R%3Abiomass "dataset == "Training",]: R:biomass")dataset%20==%20%22Training%22,
-[biomass![dataset == "Testing",]: R:biomass](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;dataset%20%3D%3D%20%22Testing%22%2C%5D%3A%20R%3Abiomass "dataset == "Testing",]: R:biomass")dataset%20==%20%22Testing%22,
+<p>[biomass$dataset == "Training",]: R:biomass$dataset%20==%20%22Training%22,
+[biomass$dataset == "Testing",]: R:biomass$dataset%20==%20%22Testing%22,
 <code><a href="prep.html">prep()</a></code>: R:prep() <code><a href="prep.html">prep()</a></code>: R:prep()
 [tidy.recipe()]: R:tidy.recipe() [bake()]: R:bake()</p>
-<p>[dataset == "Training",]: R:dataset%20==%20%22Training%22,%5C
-[dataset == "Testing",]: R:dataset%20==%20%22Testing%22,%5C
-<code><a href="prep.html">prep()</a></code>: R:prep()
-<code><a href="prep.html">prep()</a></code>: R:prep()</p>
 </div>
 
 

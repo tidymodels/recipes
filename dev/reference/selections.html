@@ -170,7 +170,8 @@ a binary object to use in another R session, try to avoid referring
 to a vector in your workspace.</p><ul><li><p>Preferred: <code>any_of(!!var_names)</code></p></li>
 <li><p>Avoid: <code>any_of(var_names)</code></p></li>
 </ul></li>
-</ul><p>Some examples:</p><div class="sourceCode r"><pre><code><span class="va">some_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
+</ul><p>Some examples:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">some_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
 
 <span class="co"># No filter steps, OK for not saving the recipe</span>
 <span class="va">rec_1</span> <span class="op">&lt;-</span>
@@ -188,9 +189,9 @@ to a vector in your workspace.</p><ul><li><p>Preferred: <code>any_of(!!var_names
 <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/step_rm.html">step_rm</a></span><span class="op">(</span><span class="va">wt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/step_log.html">step_log</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">some_vars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error in `chr_as_locations()`:</span>
-<span class="co">## ! Can't subset columns that don't exist.</span>
-<span class="co">## x Column `wt` doesn't exist.</span></code></pre></div><p></p><div class="sourceCode r"><pre><code><span class="co"># Best for filters (using any_of()) and when</span>
+  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span class="co"># Best for filters (using any_of()) and when</span>
 <span class="co"># saving the recipe</span>
 <span class="va">rec_4</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
