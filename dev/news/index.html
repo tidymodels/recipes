@@ -103,6 +103,7 @@
 <li><p><code><a href="../reference/step_time.html">step_time()</a></code> has been added that extracts time features such as hour, minute, or second. (<a href="https://github.com/tidymodels/recipes/issues/968" class="external-link">#968</a>)</p></li>
 <li><p>printing for <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> now show variables that were imputed instead of variables used for imputing. (<a href="https://github.com/tidymodels/recipes/issues/837" class="external-link">#837</a>)</p></li>
 <li><p><code><a href="../reference/step_discretize.html">step_discretize()</a></code> and <code><a href="../reference/discretize.html">discretize()</a></code> will automatically remove missing values if <code>keep_na = TRUE</code>, removing the need to specify <code>keep_na = TRUE</code> and <code>na.rm = TRUE</code>. (<a href="https://github.com/tidymodels/recipes/issues/982" class="external-link">#982</a>)</p></li>
+<li><p><code><a href="../reference/prep.html">prep()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> checks and errors if output of <code>bake.bake_*()</code> isn’t a tibble.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="recipes-020">recipes 0.2.0<a class="anchor" aria-label="anchor" href="#recipes-020"></a></h2><p class="text-muted">CRAN release: 2022-02-18</p>
