@@ -50,6 +50,7 @@
 
 * `step_discretize()` and `discretize()` will automatically remove missing values if `keep_na = TRUE`, removing the need to specify `keep_na = TRUE` and `na.rm = TRUE`. (#982)
 
+* `prep()` and `bake()` checks and errors if output of `bake.bake_*()` isn't a tibble.
 
 # recipes 0.2.0
 
