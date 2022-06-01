@@ -5,7 +5,7 @@ filter_terms <- function(x, ...) {
 ## Buckets variables into discrete, mutally exclusive types
 get_types <- function(x) {
   var_types <-
-    c(
+    list(
       character = "string",
       ordered = "ordered",
       factor = "factor",
@@ -29,7 +29,7 @@ get_types <- function(x) {
         # not sure what to do with multiple matches; right now
         ## pick the first match which favors "factor" over "ordered"
         out <-
-          unname(types[min(which(names(types) %in% x))])
+          unname(types[min(which(names(types) %in% x))])[[1]]
       } else {
         out <- "other"
       }
@@ -37,7 +37,7 @@ get_types <- function(x) {
     },
     types = var_types
   )
-  res <- unlist(res)
+  #res <- unlist(res)
   tibble(variable = names(res), type = unname(res))
 }
 

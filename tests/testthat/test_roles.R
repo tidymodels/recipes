@@ -9,7 +9,7 @@ test_that("default method", {
   rec <- recipe(x = biomass)
   exp_res <- tibble(
     variable = colnames(biomass),
-    type = rep(c("string", "double"), c(2, 6)),
+    type = as.list(rep(c("string", "double"), c(2, 6))),
     role = NA_character_,
     source = "original"
   )
@@ -21,7 +21,7 @@ test_that("changing roles", {
   rec <- update_role(rec, sample, new_role = "some other role")
   exp_res <- tibble(
     variable = colnames(biomass),
-    type = rep(c("string", "double"), c(2, 6)),
+    type = as.list(rep(c("string", "double"), c(2, 6))),
     role = rep(c("some other role", NA), c(1, 7)),
     source = "original"
   )
@@ -40,7 +40,7 @@ test_that("change existing role", {
 
   exp_res <- tibble(
     variable = colnames(biomass),
-    type = rep(c("string", "double"), c(2, 6)),
+    type = as.list(rep(c("string", "double"), c(2, 6))),
     role = rep(c("other other role", NA), c(1, 7)),
     source = "original"
   )
@@ -93,7 +93,7 @@ test_that("new role for existing NA role", {
 
   exp_res <- tibble(
     variable = colnames(biomass),
-    type = rep(c("string", "double"), c(2, 6)),
+    type = as.list(rep(c("string", "double"), c(2, 6))),
     role = rep(c("some other role", NA), c(1, length(colnames(biomass)) - 1)),
     source = "original"
   )
@@ -107,7 +107,7 @@ test_that("new role with specified type", {
 
   exp_res <- tibble(
     variable = c("sample", colnames(biomass)),
-    type = c("string", "new type", "string", rep("double", 6)),
+    type = as.list(c("string", "new type", "string", rep("double", 6))),
     role = rep(c("blah", "some other role", NA), c(1, 1, 7)),
     source = "original"
   )
@@ -124,7 +124,7 @@ test_that("add new role when two already exist with different types", {
 
   exp_res <- tibble(
     variable = c("sample", "sample", colnames(biomass)),
-    type = c("string", "new type", "string", "string", rep("double", 6)),
+    type = as.list(c("string", "new type", "string", "string", rep("double", 6))),
     role = c("blah", "some other role", "another role", rep(NA, 7)),
     source = "original"
   )
@@ -144,7 +144,7 @@ test_that("existing role is skipped", {
   # also tests the order, new roles come directly after old ones
   exp_res <- tibble(
     variable = c("sample", colnames(biomass)),
-    type = rep(c("string", "double"), c(3, 6)),
+    type = as.list(rep(c("string", "double"), c(3, 6))),
     role = rep(c("blah", "some other role", NA), c(1, 1, 7)),
     source = "original"
   )
@@ -166,7 +166,7 @@ test_that("existing role is skipped, but new one is added", {
       rep(c("sample", "dataset"), c(2, 2)),
       setdiff(colnames(biomass), c("sample", "dataset"))
     ),
-    type = rep(c("string", "double"), c(4, 6)),
+    type = as.list(rep(c("string", "double"), c(4, 6))),
     role = c("blah", "some other role", NA, "some other role", rep(NA, 6)),
     source = "original"
   )
@@ -219,7 +219,7 @@ test_that("remove roles", {
 
   exp_res <- tibble(
     variable = colnames(biomass),
-    type = rep(c("string", "double"), c(2, 6)),
+    type = as.list(rep(c("string", "double"), c(2, 6))),
     role = NA_character_,
     source = "original"
   )
@@ -233,7 +233,7 @@ test_that("New type for an existing role can be added", {
 
   exp_res <- tibble(
     variable = c("sample", colnames(biomass)),
-    type = c(c("string", "text", "string"), rep("double", 6)),
+    type = as.list(c(c("string", "text", "string"), rep("double", 6))),
     role = c("role1", "role1", rep(NA, 7)),
     source = "original"
   )
@@ -418,7 +418,7 @@ test_that("Existing `NA` roles are not modified in prep() when new columns are g
     filter(new, grepl("Species", variable)),
     tibble(
       variable = c("Species_versicolor", "Species_virginica"),
-      type = rep("double", times = 2),
+      type = as.list(rep("double", times = 2)),
       role = rep("predictor", times = 2),
       source = rep("derived", times = 2)
     )

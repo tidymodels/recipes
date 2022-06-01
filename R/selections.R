@@ -306,7 +306,7 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~ .x[[col]])
+  purrr::map(.data, ~ unlist(.x[[col]]))
 }
 
 #' @export
