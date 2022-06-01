@@ -1,9 +1,9 @@
 #' Convert Strings to Factors
 #'
 #' `step_string2factor` will convert one or more character
-#'  vectors to factors (ordered or unordered). This step should only be
-#'  used in special cases. Factors should generally be created before using
-#'  any tidymodels functions.
+#'  vectors to factors (ordered or unordered). Use this step only 
+#'  in special cases (see Details) and instead convert strings to 
+#'  factors before using any tidymodels functions.
 #'
 #' @inheritParams step_center
 #' @param levels An options specification of the levels to be used
