@@ -50,7 +50,7 @@ test_that("simple type selections", {
 
   expect_equal(
     terms_select(info = info1, quos(all_numeric())),
-    c("baths", "latitude", "longitude", "beds", "sqft", "price")
+    c("beds", "baths", "sqft", "price", "latitude", "longitude")
   )
   expect_equal(
     terms_select(info = info1, quos(has_type("factor"))),

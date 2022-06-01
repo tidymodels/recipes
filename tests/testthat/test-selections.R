@@ -49,15 +49,15 @@ test_that("simple role selections", {
 test_that("simple type selections", {
   expect_equal(
     recipes_eval_select(quos = quos(all_numeric()), data = Sacramento, info = info_sac),
-    setNames(nm = c("baths", "latitude", "longitude", "beds", "sqft", "price"))
+    setNames(nm = c("beds", "baths", "sqft", "price", "latitude", "longitude"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(has_type("factor")), data = Sacramento, info = info_sac),
-    setNames(nm = c("city", "zip", "type"))
+    recipes_eval_select(quos = quos(has_type("numeric")), data = Sacramento, info = info_sac),
+    setNames(nm = c("beds", "baths", "sqft", "price", "latitude", "longitude"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(all_nominal()), data = Sacramento, info = info_sac),
-    setNames(nm = c("ord1", "ord2", "city", "zip", "type"))
+    setNames(nm = c("city", "zip", "type", "ord1", "ord2"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(all_logical()), data = Sacramento, info = info_sac),

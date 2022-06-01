@@ -396,67 +396,25 @@ all_logical_predictors <- function() {
 #' @export
 #' @rdname has_role
 all_nominal <- function() {
-  union(
-    has_type("nominal"),
-    union(
-      has_type("ordered"),
-      union(
-        has_type("unordered"),
-        union(
-          has_type("string"),
-          has_type("factor")
-        )
-      )
-    )
-  )
+  has_type("nominal")
 }
 
 #' @export
 #' @rdname has_role
 all_nominal_predictors <- function() {
-  intersect(
-    has_role("predictor"),
-    union(
-      has_type("nominal"),
-      union(
-        has_type("ordered"),
-        union(
-          has_type("unordered"),
-          union(
-            has_type("string"),
-            has_type("factor")
-          )
-        )
-      )
-    )
-  )
+  intersect(has_role("predictor"), has_type("nominal"))
 }
 
 #' @export
 #' @rdname has_role
 all_numeric <- function() {
-  union(
-    has_type("numeric"),
-    union(
-      has_type("double"),
-      has_type("integer")
-    )
-  )
+  has_type("numeric")
 }
 
 #' @export
 #' @rdname has_role
 all_numeric_predictors <- function() {
-  intersect(
-    has_role("predictor"),
-    union(
-      has_type("numeric"),
-      union(
-        has_type("double"),
-        has_type("integer")
-      )
-    )
-  )
+  intersect(has_role("predictor"), has_type("numeric"))
 }
 
 #' @export
@@ -486,28 +444,13 @@ all_string_predictors <- function() {
 #' @export
 #' @rdname has_role
 all_unordered <- function() {
-  union(
-    has_type("unordered"),
-    union(
-      has_type("string"),
-      has_type("factor")
-    )
-  )
+  has_type("unordered")
 }
 
 #' @export
 #' @rdname has_role
 all_unordered_predictors <- function() {
-  intersect(
-    has_role("predictor"),
-    union(
-      has_type("unordered"),
-      union(
-        has_type("string"),
-        has_type("factor")
-      )
-    )
-  )
+  intersect(has_role("predictor"), has_type("unordered"))
 }
 
 ## functions to get current variable info for selectors modeled after

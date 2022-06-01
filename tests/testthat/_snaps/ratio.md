@@ -54,7 +54,7 @@
       
       Operations:
       
-      Ratios from x1, x3, x4, x2, x2, x1, x3, x4 [trained]
+      Ratios from x2, x3, x4, x1, x1, x2, x3, x4 [trained]
 
 # can prep recipes with no keep_original_cols
 

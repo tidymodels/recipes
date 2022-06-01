@@ -6,12 +6,12 @@ filter_terms <- function(x, ...) {
 get_types <- function(x) {
   var_types <-
     list(
-      character = "string",
-      ordered = "ordered",
-      factor = "factor",
-      integer = "integer",
-      numeric = "double",
-      double = "double",
+      character = c("string", "unordered", "nominal"),
+      ordered = c("ordered", "nominal"),
+      factor = c("factor", "unordered", "nominal"),
+      integer = c("integer", "numeric"),
+      numeric = c("double", "numeric"),
+      double = c("double", "numeric"),
       Surv = "censored",
       logical = "logical",
       Date = "date",
