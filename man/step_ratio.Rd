@@ -11,7 +11,10 @@ step_ratio(
   role = "predictor",
   trained = FALSE,
   denom = denom_vars(),
-  naming = function(numer, denom) {     make.names(paste(numer, denom, sep = "_o_")) },
+  naming = function(numer, denom) {
+     make.names(paste(numer, denom, sep = "_o_"))
+
+    },
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,

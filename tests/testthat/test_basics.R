@@ -296,3 +296,39 @@ test_that("verbose when printing", {
   expect_snapshot(tmp <- prep(standardized, verbose = TRUE))
 
 })
+
+test_that("`internal data is kept as tibbles when prepping", {
+  rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_testthat_helper()
+
+  expect_true(
+    tibble::is_tibble(prep(rec_spec)$template)
+  )
+
+  expect_true(
+    tibble::is_tibble(rec_spec %>% prep() %>% bake(new_data = NULL))
+  )
+
+  expect_true(
+    tibble::is_tibble(rec_spec %>% prep() %>% bake(new_data = mtcars))
+  )
+
+  rec_prepped <- prep(rec_spec)
+
+  # Pretending that the outcome will be a data.frame
+  rec_prepped$steps[[1]]$output <- mtcars
+
+  expect_true(
+    tibble::is_tibble(bake(rec_prepped, new_data = NULL))
+  )
+
+  # Will ignore new_data and return `output`
+  expect_snapshot(error = TRUE,
+    bake(rec_prepped, new_data = as_tibble(mtcars))
+  )
+
+  rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_testthat_helper(output = mtcars)
+
+  expect_snapshot(error = TRUE, prep(rec_spec))
+})

@@ -50,6 +50,8 @@
 
 * `step_discretize()` and `discretize()` will automatically remove missing values if `keep_na = TRUE`, removing the need to specify `keep_na = TRUE` and `na.rm = TRUE`. (#982)
 
+* `prep()` and `bake()` checks and errors if output of `bake.bake_*()` isn't a tibble.
+
 * Types of variables have been made granular. `"nominal"` has been split into `"ordered"` and `"unordered"` and `"numeric"` has been split into `"double"` and `"integer"`. Using `has_type("nominal")` will no longer work, and `all_nominal()` will keep old behaviour. (#993)
 
 * New selectors are added. `all_numeric()` and `all_nominal()` will behave as before. New selectors are: `all_double()`, `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`. All selectors comes with a `*_predictors()` variant. (#993)
