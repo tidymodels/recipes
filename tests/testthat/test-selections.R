@@ -52,12 +52,12 @@ test_that("simple type selections", {
     setNames(nm = c("baths", "latitude", "longitude", "beds", "sqft", "price"))
   )
   expect_equal(
-    recipes_eval_select(quos = quos(has_type("unordered")), data = Sacramento, info = info_sac),
+    recipes_eval_select(quos = quos(has_type("factor")), data = Sacramento, info = info_sac),
     setNames(nm = c("city", "zip", "type"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(all_nominal()), data = Sacramento, info = info_sac),
-    setNames(nm = c("city", "zip", "type", "ord1", "ord2"))
+    setNames(nm = c("ord1", "ord2", "city", "zip", "type"))
   )
   expect_equal(
     recipes_eval_select(quos = quos(all_logical()), data = Sacramento, info = info_sac),

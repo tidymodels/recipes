@@ -11,6 +11,8 @@
 \alias{all_datetime_predictors}
 \alias{all_double}
 \alias{all_double_predictors}
+\alias{all_factor}
+\alias{all_factor_predictors}
 \alias{all_integer}
 \alias{all_integer_predictors}
 \alias{all_logical}
@@ -21,6 +23,8 @@
 \alias{all_numeric_predictors}
 \alias{all_ordered}
 \alias{all_ordered_predictors}
+\alias{all_string}
+\alias{all_string_predictors}
 \alias{all_unordered}
 \alias{all_unordered_predictors}
 \alias{current_info}
@@ -46,6 +50,10 @@ all_double()
 
 all_double_predictors()
 
+all_factor()
+
+all_factor_predictors()
+
 all_integer()
 
 all_integer_predictors()
@@ -65,6 +73,10 @@ all_numeric_predictors()
 all_ordered()
 
 all_ordered_predictors()
+
+all_string()
+
+all_string_predictors()
 
 all_unordered()
 
@@ -86,12 +98,14 @@ Selector functions return an integer vector.
 select variables in a formula that have certain roles.
 
 Similarly, \code{has_type()}, \code{all_numeric()}, \code{all_integer()}, \code{all_double()},
-\code{all_nominal()}, \code{all_ordered()}, \code{all_unordered()}, \code{all_date()} and
-\code{all_datetime()} are used to select columns based on their data type.
+\code{all_nominal()}, \code{all_ordered()}, \code{all_unordered()}, \code{all_factor()},
+\code{all_string()}, \code{all_date()} and \code{all_datetime()} are used to select columns
+based on their data type.
 
-\code{all_ordered()} captures ordered factors, \code{all_unordered()} captures
-unordered factors and characters, \code{all_nomical()} captures characters,
-unordered and ordered factors.
+\code{all_factor()} captures unordered factors, \code{all_string} captures characters,
+\code{all_unordered()} captures unordered factors and characters, \code{all_ordered()}
+captures ordered factors, \code{all_nomical()} captures characters, unordered and
+ordered factors.
 
 \code{all_integer()} captures integers, \code{all_double()} captures doubles,
 \code{all_numeric()} captures all kinds of numeric,

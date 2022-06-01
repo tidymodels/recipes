@@ -223,12 +223,14 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #'  select variables in a formula that have certain roles.
 #'
 #' Similarly, `has_type()`, `all_numeric()`, `all_integer()`, `all_double()`,
-#'  `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_date()` and
-#'  `all_datetime()` are used to select columns based on their data type.
+#' `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_factor()`,
+#' `all_string()`, `all_date()` and `all_datetime()` are used to select columns
+#' based on their data type.
 #'
-#'  `all_ordered()` captures ordered factors, `all_unordered()` captures
-#'  unordered factors and characters, `all_nomical()` captures characters,
-#'  unordered and ordered factors.
+#'  `all_factor()` captures unordered factors, `all_string` captures characters,
+#'  `all_unordered()` captures unordered factors and characters, `all_ordered()`
+#'  captures ordered factors, `all_nomical()` captures characters, unordered and
+#'  ordered factors.
 #'
 #'  `all_integer()` captures integers, `all_double()` captures doubles,
 #'  `all_numeric()` captures all kinds of numeric,
@@ -357,6 +359,18 @@ all_double_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_factor <- function() {
+  has_type("factor")
+}
+
+#' @export
+#' @rdname has_role
+all_factor_predictors <- function() {
+  intersect(has_role("predictor"), has_type("factor"))
+}
+
+#' @export
+#' @rdname has_role
 all_integer <- function() {
   has_type("integer")
 }
@@ -385,8 +399,14 @@ all_nominal <- function() {
   union(
     has_type("nominal"),
     union(
-      has_type("unordered"),
-      has_type("ordered")
+      has_type("ordered"),
+      union(
+        has_type("unordered"),
+        union(
+          has_type("string"),
+          has_type("factor")
+        )
+      )
     )
   )
 }
@@ -399,8 +419,14 @@ all_nominal_predictors <- function() {
     union(
       has_type("nominal"),
       union(
-        has_type("unordered"),
-        has_type("ordered")
+        has_type("ordered"),
+        union(
+          has_type("unordered"),
+          union(
+            has_type("string"),
+            has_type("factor")
+          )
+        )
       )
     )
   )
@@ -447,14 +473,41 @@ all_ordered_predictors <- function() {
 
 #' @export
 #' @rdname has_role
+all_string <- function() {
+  has_type("string")
+}
+
+#' @export
+#' @rdname has_role
+all_string_predictors <- function() {
+  intersect(has_role("predictor"), has_type("string"))
+}
+
+#' @export
+#' @rdname has_role
 all_unordered <- function() {
-  has_type("unordered")
+  union(
+    has_type("unordered"),
+    union(
+      has_type("string"),
+      has_type("factor")
+    )
+  )
 }
 
 #' @export
 #' @rdname has_role
 all_unordered_predictors <- function() {
-  intersect(has_role("predictor"), has_type("unordered"))
+  intersect(
+    has_role("predictor"),
+    union(
+      has_type("unordered"),
+      union(
+        has_type("string"),
+        has_type("factor")
+      )
+    )
+  )
 }
 
 ## functions to get current variable info for selectors modeled after
