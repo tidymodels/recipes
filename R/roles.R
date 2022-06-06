@@ -46,6 +46,8 @@
 #' on all of the variables that have a custom role with the selector
 #' [has_role()].
 #'
+#' @includeRmd man/rmd/bake_dependent_roles.Rmd details
+#'
 #' @examples
 #' library(recipes)
 #' library(modeldata)
