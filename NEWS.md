@@ -52,6 +52,8 @@
 
 * `prep()` and `bake()` checks and errors if output of `bake.bake_*()` isn't a tibble.
 
+* `step_date()` now has a locale argument that can be used to control how the `month` and `dow` features are returned. (#1000)
+
 # recipes 0.2.0
 
 ## New Steps
