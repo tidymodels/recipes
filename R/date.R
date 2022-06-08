@@ -253,7 +253,7 @@ bake.step_date <- function(object, new_data, ...) {
     tmp <- get_date_features(
       dt = getElement(new_data, object$columns[i]),
       feats = object$features,
-      locale = object$locale,
+      locale = object$locale %||% Sys.getlocale("LC_TIME"),
       abbr = object$abbr,
       label = object$label,
       ord = object$ordinal

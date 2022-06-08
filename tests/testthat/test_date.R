@@ -149,6 +149,19 @@ test_that("locale argument works when specified", {
   Sys.setlocale("LC_TIME", old_locale)
 })
 
+test_that("can bake and recipes with no locale", {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  date_rec$steps[[1]]$locale <- NULL
+
+  expect_error(
+    date_res <- bake(date_rec, new_data = examples, all_predictors()),
+    NA
+  )
+})
+
 test_that("can prep recipes with no keep_original_cols", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
