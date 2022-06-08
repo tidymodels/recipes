@@ -56,7 +56,7 @@ number.}
 \item{ordinal}{A logical: should factors be ordered? Only
 available for features \code{month} or \code{dow}.}
 
-\item{locale}{locale to be used for \code{month} and \code{dow}, see \link{locales}.
+\item{locale}{Locale to be used for \code{month} and \code{dow}, see \link{locales}.
 On Linux systems you can use \code{system("locale -a")} to list all the
 installed locales. Defaults to \code{Sys.getlocale("LC_TIME")}.}
 
