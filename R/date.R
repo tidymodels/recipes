@@ -27,7 +27,7 @@
 #'  FALSE`.
 #' @param ordinal A logical: should factors be ordered? Only
 #'  available for features `month` or `dow`.
-#' @param locale locale to be used for `month` and `dow`, see [locales].
+#' @param locale Locale to be used for `month` and `dow`, see [locales].
 #'  On Linux systems you can use `system("locale -a")` to list all the
 #'  installed locales. Defaults to `Sys.getlocale("LC_TIME")`.
 #' @param columns A character string of variables that will be
