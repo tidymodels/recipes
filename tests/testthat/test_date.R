@@ -114,6 +114,7 @@ test_that("keep_original_cols works", {
 
 test_that("locale argument have recipe work in different locale", {
   old_locale <- Sys.getlocale("LC_TIME")
+  withr::defer(Sys.setlocale("LC_TIME", old_locale))
   Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
 
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
@@ -131,6 +132,7 @@ test_that("locale argument have recipe work in different locale", {
 
 test_that("locale argument works when specified", {
   old_locale <- Sys.getlocale("LC_TIME")
+  withr::defer(Sys.setlocale("LC_TIME", old_locale))
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors()) %>%
     prep()
@@ -146,7 +148,6 @@ test_that("locale argument works when specified", {
   new_res <- bake(date_rec, new_data = examples)
 
   expect_equal(ref_res, new_res)
-  Sys.setlocale("LC_TIME", old_locale)
 })
 
 test_that("can bake and recipes with no locale", {
