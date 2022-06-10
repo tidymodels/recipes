@@ -1,0 +1,214 @@
+#' Natural Splines
+#'
+#' `step_spline_natural` creates a *specification* of a recipe
+#'  step that creates natural spline features.
+#'
+#' @inheritParams step_center
+#' @param deg_free The degrees of freedom for the natural spline. As the
+#'  degrees of freedom for a natural spline increase, more flexible and
+#'  complex curves can be generated. When a single degree of freedom is used,
+#'  the result is a rescaled version of the original data.
+#' @param results A list of objects created once the step has been trained.
+#' @param options A list of options for [splines2::naturalSplines()]
+#'  which should not include `x` or `df`.
+#' @param keep_original_cols A logical to keep the original variables in the
+#'  output. Defaults to `FALSE`.
+#' @param role For model terms created by this step, what analysis role should
+#'  they be assigned? By default, the new columns created by this step from
+#'  the original variables will be used as _predictors_ in a model.
+#' @return An object with classes `"step_spline_natural"` and `"step"`.
+#' @export
+#' @details
+#'
+#' # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` (the columns that will be affected) is returned.
+#'
+#' @examples
+#' library(tidyr)
+#' library(dplyr)
+#'
+#' if (rlang::is_installed(c("modeldata", "ggplot2"))) {
+#'   library(ggplot2)
+#'   data(ames, package = "modeldata")
+#'
+#'   spline_rec <- recipe(Sale_Price ~ Longitude, data = ames) %>%
+#'     step_spline_natural(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
+#'     prep()
+#'
+#'   tidy(spline_rec, number = 1)
+#'
+#'   # Show where each feature is active
+#'   spline_rec %>%
+#'     bake(new_data =  NULL,-Sale_Price) %>%
+#'     pivot_longer(c(starts_with("Longitude_")), names_to = "feature", values_to = "value") %>%
+#'     mutate(feature = gsub("Longitude_", "feature ", feature)) %>%
+#'     filter(value > 0) %>%
+#'     ggplot(aes(x = Longitude, y = value)) +
+#'     geom_line() +
+#'     facet_wrap(~ feature)
+#' }
+#' @template case-weights-not-supported
+#' @seealso [splines2::naturalSplines()]
+step_spline_natural <-
+    function(recipe,
+             ...,
+             role = NA,
+             trained = FALSE,
+             deg_free = 10,
+             options = NULL,
+             keep_original_cols = FALSE,
+             results = NULL,
+             skip = FALSE,
+             id = rand_id("spline_natural")) {
+
+      recipes_pkg_check(required_pkgs.step_spline_natural())
+
+      add_step(
+        recipe,
+        step_spline_natural_new(
+          terms = enquos(...),
+          trained = trained,
+          role = role,
+          deg_free = deg_free,
+          options = options,
+          keep_original_cols = keep_original_cols,
+          results = results,
+          skip = skip,
+          id = id
+        )
+      )
+    }
+
+step_spline_natural_new <-
+  function(terms, trained, role, deg_free, options, keep_original_cols, results, na_rm, skip, id) {
+    step(
+      subclass = "spline_natural",
+      terms = terms,
+      role = role,
+      trained = trained,
+      deg_free = deg_free,
+      options = options,
+      keep_original_cols = keep_original_cols,
+      results = results,
+      skip = skip,
+      id = id
+    )
+  }
+
+# ------------------------------------------------------------------------------
+
+spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, fn_opts = NULL) {
+  vals <- c("bSpline", "cSpline", "iSpline", "mSpline", "naturalSpline", "bernsteinPoly")
+  .fn <- rlang::arg_match(.fn, vals)
+  df <- max(df, 3)
+
+  .cl <- rlang::call2(.fn, .ns = "splines2", x = rlang::expr(x), df = df, !!!fn_opts)
+  res <- try(rlang::eval_tidy(.cl), silent = TRUE)
+  if (inherits(res, "try-error")) {
+    return(NULL)
+  }
+  res <- attributes(res)
+  res$x <- NULL
+  res$class <- NULL
+  res$dimnames <- NULL
+  res$.fn <- .fn
+  res$.ns = "splines2"
+  res$nm <- nm
+  res
+}
+
+spline2_apply <- function(object, new_data) {
+  .ns <- object$.ns
+  .fn <- object$.fn
+  nm <- object$nm
+  object$.ns <- NULL
+  object$.fn <- NULL
+  object$nm <- NULL
+  .cl <- rlang::call2(.ns = .ns, .fn = .fn, !!!object, x = rlang::expr(new_data))
+  res <- rlang::eval_tidy(.cl)
+  res <- apply(res, 2, I)
+  colnames(res) <- names0(ncol(res), paste0(nm, "_"))
+  tibble::as_tibble(res)
+}
+
+# ------------------------------------------------------------------------------
+
+prep.step_spline_natural <- function(x, training, info = NULL, ...) {
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], quant = TRUE)
+
+  res <-
+    purrr::map2(
+      training[, col_names],
+      col_names,
+      ~ spline2_create(
+        .x,
+        nm = .y,
+        .fn = "naturalSpline",
+        df = x$deg_free,
+        fn_opts = x$options
+      )
+    )
+  # check for errors
+  bas_res <- purrr::map_lgl(res, is.null)
+  res <- res[!bas_res]
+  col_names <- col_names[!bas_res]
+  names(res) <- col_names
+
+  step_spline_natural_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    deg_free = x$deg_free,
+    options = x$options,
+    keep_original_cols = x$keep_original_cols,
+    results = res,
+    skip = x$skip,
+    id = x$id
+  )
+}
+
+bake.step_spline_natural <- function(object, new_data, ...) {
+  orig_names <- names(object$results)
+  if (length(orig_names) > 0) {
+    new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
+    new_data <- bind_cols(new_data, new_cols)
+    keep_original_cols <- get_keep_original_cols(object)
+    if (!keep_original_cols) {
+      new_data <- new_data[, !(colnames(new_data) %in% orig_names), drop = FALSE]
+    }
+  }
+  as_tibble(new_data)
+}
+
+print.step_spline_natural <-
+  function(x, width = max(20, options()$width - 30), ...) {
+    title <- "Natural spline expansion "
+    print_step(names(x$results), x$terms, x$trained, title, width)
+    invisible(x)
+  }
+
+#' @rdname step_spline_natural
+#' @param x A `step_spline_natural` object.
+#' @export
+tidy.step_spline_natural <- function(x, ...) {
+  if (is_trained(x)) {
+    terms <- names(x$results)
+  } else {
+    terms <- sel2char(x$terms)
+  }
+  tibble(terms = terms, id = x$id)
+}
+
+# ------------------------------------------------------------------------------
+
+
+#' @rdname required_pkgs.recipe
+#' @export
+required_pkgs.step_spline_natural <- function(x, ...) {
+  c("splines2")
+}
+
+
