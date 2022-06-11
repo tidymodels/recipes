@@ -52,6 +52,8 @@
 
 * `prep()` and `bake()` checks and errors if output of `bake.bake_*()` isn't a tibble.
 
+* A new set of spline functions were added: `step_spline_natural()`, ...
+
 # recipes 0.2.0
 
 ## New Steps

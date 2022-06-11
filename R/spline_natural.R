@@ -6,10 +6,10 @@
 #' @inheritParams step_center
 #' @param deg_free The degrees of freedom for the natural spline. As the
 #'  degrees of freedom for a natural spline increase, more flexible and
-#'  complex curves can be generated. When a single degree of freedom is used,
-#'  the result is a rescaled version of the original data.
+#'  complex curves can be generated. This step requires at least two degrees of
+#'  freedom.
 #' @param results A list of objects created once the step has been trained.
-#' @param options A list of options for [splines2::naturalSplines()]
+#' @param options A list of options for [splines2::naturalSpline()]
 #'  which should not include `x` or `df`.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
@@ -19,6 +19,18 @@
 #' @return An object with classes `"step_spline_natural"` and `"step"`.
 #' @export
 #' @details
+#'
+#' Spline transformations take a numeric column and create multiple features
+#' that, when used in a model, can estimate nonlinear trends between the column
+#' and some outcome. The degrees of freedom determines how many new features
+#' are added to the data.
+#'
+#' If a single degree of freedom is requested, two degrees of freedom will be
+#' used.
+#'
+#' If the spline expansion fails for a selected column, the step will silently
+#' remove that column's results (but will retain the original data). Use the
+#' `tidy()` method to determine which columns were used.
 #'
 #' # Tidying
 #'
@@ -50,7 +62,7 @@
 #'     facet_wrap(~ feature)
 #' }
 #' @template case-weights-not-supported
-#' @seealso [splines2::naturalSplines()]
+#' @seealso [splines2::naturalSpline()]
 step_spline_natural <-
     function(recipe,
              ...,
@@ -102,7 +114,7 @@ step_spline_natural_new <-
 spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, fn_opts = NULL) {
   vals <- c("bSpline", "cSpline", "iSpline", "mSpline", "naturalSpline", "bernsteinPoly")
   .fn <- rlang::arg_match(.fn, vals)
-  df <- max(df, 3)
+  df <- max(df, 2)
 
   .cl <- rlang::call2(.fn, .ns = "splines2", x = rlang::expr(x), df = df, !!!fn_opts)
   res <- try(rlang::eval_tidy(.cl), silent = TRUE)
@@ -183,10 +195,16 @@ bake.step_spline_natural <- function(object, new_data, ...) {
   as_tibble(new_data)
 }
 
+# ------------------------------------------------------------------------------
+
 print.step_spline_natural <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Natural spline expansion "
-    print_step(names(x$results), x$terms, x$trained, title, width)
+    cols_used <- names(x$results)
+    if (length(cols_used) == 0) {
+      cols_used <- "<none>"
+    }
+    print_step(cols_used, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -196,6 +214,9 @@ print.step_spline_natural <-
 tidy.step_spline_natural <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
+    if (length(terms) == 0) {
+      terms <- "<none>"
+    }
   } else {
     terms <- sel2char(x$terms)
   }
@@ -204,11 +225,23 @@ tidy.step_spline_natural <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-
 #' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_spline_natural <- function(x, ...) {
   c("splines2")
 }
 
+# ------------------------------------------------------------------------------
 
+#' @export
+tunable.step_spline_natural <- function(x, ...) {
+  tibble::tibble(
+    name = c("deg_free"),
+    call_info = list(
+      list(pkg = "dials", fun = "spline_degree", range = c(2L, 15L))
+    ),
+    source = "recipe",
+    component = "step_spline_natural",
+    component_id = x$id
+  )
+}

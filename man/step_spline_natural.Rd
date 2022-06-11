@@ -36,10 +36,10 @@ preprocessing have been estimated.}
 
 \item{deg_free}{The degrees of freedom for the natural spline. As the
 degrees of freedom for a natural spline increase, more flexible and
-complex curves can be generated. When a single degree of freedom is used,
-the result is a rescaled version of the original data.}
+complex curves can be generated. This step requires at least two degrees of
+freedom.}
 
-\item{options}{A list of options for \code{\link[splines2:naturalSplines]{splines2::naturalSplines()}}
+\item{options}{A list of options for \code{\link[splines2:naturalSpline]{splines2::naturalSpline()}}
 which should not include \code{x} or \code{df}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
@@ -64,6 +64,19 @@ An object with classes \code{"step_spline_natural"} and \code{"step"}.
 \description{
 \code{step_spline_natural} creates a \emph{specification} of a recipe
 step that creates natural spline features.
+}
+\details{
+Spline transformations take a numeric column and create multiple features
+that, when used in a model, can estimate nonlinear trends between the column
+and some outcome. The degrees of freedom determines how many new features
+are added to the data.
+
+If a single degree of freedom is requested, two degrees of freedom will be
+used.
+
+If the spline expansion fails for a selected column, the step will silently
+remove that column's results (but will retain the original data). Use the
+\code{tidy()} method to determine which columns were used.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
@@ -102,5 +115,5 @@ if (rlang::is_installed(c("modeldata", "ggplot2"))) {
 }
 }
 \seealso{
-\code{\link[splines2:naturalSplines]{splines2::naturalSplines()}}
+\code{\link[splines2:naturalSpline]{splines2::naturalSpline()}}
 }
