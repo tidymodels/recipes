@@ -60,7 +60,7 @@ will be removed from the latter and not used to impute itself.}
 \item{trees}{An integer for the number of bagged trees to use in each model.}
 
 \item{models}{The \code{\link[ipred:bagging]{ipred::ipredbagg()}} objects are stored here once this
-bagged trees have be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+bagged trees have be trained by \code{\link[=prep]{prep()}}.}
 
 \item{options}{A list of options to \code{\link[ipred:bagging]{ipred::ipredbagg()}}. Defaults are set
 for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \strong{Note}
@@ -70,8 +70,8 @@ that the arguments \code{X} and \code{y} should not be passed here.}
 is used across all imputation models.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -101,15 +101,24 @@ this variable will be ignored.
 It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the selectors
-or variables selected) and \code{model} (the bagged tree object) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_bagimpute()}
 to \code{step_impute_bag()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model}
+(the bagged tree object) is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data("credit_data")
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data("credit_data", package = "modeldata")
 
 ## missing data per column
 vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -117,7 +126,7 @@ vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 missing_examples <- c(14, 394, 565)
 
@@ -130,7 +139,7 @@ imp_models <- prep(impute_rec, training = credit_tr)
 
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
-credit_te[missing_examples,]
+credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
@@ -138,22 +147,24 @@ tidy(imp_models, number = 1)
 
 ## Specifying which variables to imputate with
 
- impute_rec <- rec \%>\%
+impute_rec <- rec \%>\%
   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
-                 impute_with = imp_vars(Time, Age, Expenses),
-                 # for quick execution, nbagg lowered
-                 options = list(nbagg = 5, keepX = FALSE))
+    impute_with = imp_vars(Time, Age, Expenses),
+    # for quick execution, nbagg lowered
+    options = list(nbagg = 5, keepX = FALSE)
+  )
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
-credit_te[missing_examples,]
+credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}.

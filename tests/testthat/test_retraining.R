@@ -1,14 +1,14 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass)
+  data = biomass
+)
 
-test_that('training in stages', {
-
+test_that("training in stages", {
   whole_recipe <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_rm(sulfur) %>%
@@ -32,7 +32,7 @@ test_that('training in stages', {
   sequentially <- prep(scale_last)
 
 
-  in_stages <- center_first_trained  %>%
+  in_stages <- center_first_trained %>%
     step_rm(sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen)
   in_stages_trained <-
@@ -77,5 +77,4 @@ test_that('training in stages', {
       prep(training = biomass),
     regexp = NA
   )
-
 })

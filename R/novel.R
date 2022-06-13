@@ -8,7 +8,7 @@
 #' @param new_level A single character value that will be assigned
 #'  to new factor levels.
 #' @param objects A list of objects that contain the information
-#'  on factor levels that will be determined by [prep.recipe()].
+#'  on factor levels that will be determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -32,30 +32,32 @@
 #'  [hardhat::default_recipe_blueprint()]. This will allow your model to handle
 #'  new levels at prediction time, instead of throwing warnings or errors.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `value` (the factor
-#'  levels that is used for the new value) is returned.
+#' # Tidying
 #'
-#' @examples
-#' library(modeldata)
-#' data(okc)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) and `value` (the factor
+#' levels that is used for the new value) is returned.
 #'
-#' okc_tr <- okc[1:30000,]
-#' okc_te <- okc[30001:30006,]
-#' okc_te$diet[3] <- "cannibalism"
-#' okc_te$diet[4] <- "vampirism"
+#' @template case-weights-not-supported
 #'
-#' rec <- recipe(~ diet + location, data = okc_tr)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
+#'
+#' sacr_tr <- Sacramento[1:800, ]
+#' sacr_te <- Sacramento[801:806, ]
+#' sacr_te$city[3] <- "beeptown"
+#' sacr_te$city[4] <- "boopville"
+#'
+#' rec <- recipe(~ city + zip, data = sacr_tr)
 #'
 #' rec <- rec %>%
-#'   step_novel(diet, location)
-#' rec <- prep(rec, training = okc_tr)
+#'   step_novel(city, zip)
+#' rec <- prep(rec, training = sacr_tr)
 #'
-#' processed <- bake(rec, okc_te)
-#' tibble(old = okc_te$diet, new = processed$diet)
+#' processed <- bake(rec, sacr_te)
+#' tibble(old = sacr_te$city, new = processed$city)
 #'
 #' tidy(rec, number = 1)
-
 step_novel <-
   function(recipe,
            ...,
@@ -101,9 +103,9 @@ get_existing_values <- function(x) {
     if (is.factor(x)) {
       out <- levels(x)
       attr(out, "is_ordered") <- is.ordered(x)
-    }
-    else
+    } else {
       rlang::abort("Data should be either character or factor")
+    }
   }
   out
 }
@@ -114,25 +116,30 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
   col_check <- dplyr::filter(info, variable %in% col_names)
 
-  if (any(col_check$type != "nominal"))
+  if (any(col_check$type != "nominal")) {
     rlang::abort(
-      paste0("Columns must be character or factor: ",
-             paste0(col_check$variable[col_check$type != "nominal"],
-                    collapse = ", "))
+      paste0(
+        "Columns must be character or factor: ",
+        paste0(col_check$variable[col_check$type != "nominal"],
+          collapse = ", "
+        )
+      )
     )
+  }
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
-  if (any(level_check))
+  if (any(level_check)) {
     rlang::abort(
       paste0(
         "Columns already contain the new level: ",
         paste0(names(level_check)[level_check], collapse = ", ")
       )
     )
+  }
 
   step_novel_new(
     terms = x$terms,
@@ -158,18 +165,17 @@ bake.step_novel <- function(object, new_data, ...) {
 
     new_data[[i]] <-
       factor(new_data[[i]],
-             levels = c(object$object[[i]], object$new_level),
-             ordered = attributes(object$object[[i]])$is_ordered)
+        levels = c(object$object[[i]], object$new_level),
+        ordered = attributes(object$object[[i]])$is_ordered
+      )
   }
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
   new_data
 }
 
 print.step_novel <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Novel factor level assignment for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Novel factor level assignment for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -177,14 +183,17 @@ print.step_novel <-
 #' @export
 tidy.step_novel <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$objects),
-                  value = rep(x$new_level, length(x$objects)))
+    res <- tibble(
+      terms = names(x$objects),
+      value = rep(x$new_level, length(x$objects))
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = rep(x$new_level, length(term_names)))
+    res <- tibble(
+      terms = term_names,
+      value = rep(x$new_level, length(term_names))
+    )
   }
   res$id <- x$id
   res
 }
-

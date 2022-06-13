@@ -55,8 +55,8 @@ create_documentation <- function(name,
 #'  preprocessing have been estimated.
 #' <additional args here>
 #' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  recipe is baked by [bake()]? While all operations are baked
+#'  when [prep()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations
@@ -65,6 +65,11 @@ create_documentation <- function(name,
 #'
 #' @export
 #' @details <describe details>
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' <describe tidying> is returned.
 #'
 #' @examples
 
@@ -150,8 +155,8 @@ create_print_method <- function(name, which) {
   glue('
 print.{which}_{name} <-
   function(x, width = max(20, options()$width - 30), ...) {{
-    cat("<describe action here> ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "<describe action here> "
+    print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }}
 

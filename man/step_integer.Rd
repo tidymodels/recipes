@@ -39,11 +39,11 @@ new values be appended as the largest integer.}
 \item{key}{A list that contains the information needed to
 create integer variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -72,37 +72,45 @@ ordered by \code{sort}.
 
 Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the selectors or
-variables selected) and \code{value} (a \emph{list column} with the
-conversion key) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value}
+(a \emph{list column} with the conversion key) is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
-okc$location <- factor(okc$location)
+sacr_tr <- Sacramento[1:100, ]
+sacr_tr$sqft[1] <- NA
 
-okc_tr <- okc[1:100, ]
-okc_tr$age[1] <- NA
+sacr_te <- Sacramento[101:105, ]
+sacr_te$sqft[1] <- NA
+sacr_te$city[1] <- "whoville"
+sacr_te$city[2] <- NA
 
-okc_te <- okc[101:105, ]
-okc_te$age[1] <- NA
-okc_te$diet[1] <- "fast food"
-okc_te$diet[2] <- NA
-
-rec <- recipe(Class ~ ., data = okc_tr) \%>\%
+rec <- recipe(type ~ ., data = sacr_tr) \%>\%
   step_integer(all_predictors()) \%>\%
-  prep(training = okc_tr)
+  prep(training = sacr_tr)
 
-bake(rec, okc_te, all_predictors())
+bake(rec, sacr_te, all_predictors())
 tidy(rec, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
@@ -115,6 +123,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_regex}()},
 \code{\link{step_relevel}()},
 \code{\link{step_string2factor}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

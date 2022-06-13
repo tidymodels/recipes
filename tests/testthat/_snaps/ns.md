@@ -1,3 +1,39 @@
+# printing
+
+    Code
+      print(with_ns)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          5
+      
+      Operations:
+      
+      Natural splines on carbon, hydrogen
+
+---
+
+    Code
+      prep(with_ns)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          5
+      
+      Training data contained 456 data points and no missing data.
+      
+      Operations:
+      
+      Natural splines on carbon, hydrogen [trained]
+
 # empty printing
 
     Code
@@ -13,7 +49,7 @@
       
       Operations:
       
-      Natural Splines on <none>
+      Natural splines on <none>
 
 ---
 
@@ -32,5 +68,5 @@
       
       Operations:
       
-      Natural Splines on <none> [trained]
+      Natural splines on <none> [trained]
 

@@ -35,8 +35,8 @@ range in the train set should be included in the lowest or highest bucket.
 Defaults to \code{FALSE}, values outside the original range will be set to \code{NA}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -60,6 +60,12 @@ points will end up in the last.
 \code{step_cut()} will call \code{base::cut()} in the baking step with
 \code{include.lowest} set to \code{TRUE}.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 df <- data.frame(x = 1:10, y = 5:14)
 rec <- recipe(df)

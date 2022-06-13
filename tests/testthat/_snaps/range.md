@@ -1,3 +1,39 @@
+# printing
+
+    Code
+      print(standardized)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          2
+      
+      Operations:
+      
+      Range scaling to [-12,1] for carbon, hydrogen
+
+---
+
+    Code
+      prep(standardized)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          2
+      
+      Training data contained 10 data points and no missing data.
+      
+      Operations:
+      
+      Range scaling to [-12,1] for carbon, hydrogen [trained]
+
 # empty printing
 
     Code

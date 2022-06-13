@@ -6,9 +6,9 @@
 #' square. This nonlinear mapping is used during the PCA analysis and can
 #' potentially help find better representations of the original data.
 #'
-#' This step requires the \pkg{dimRed} and \pkg{kernlab} packages.
+#' This step requires the \pkg{kernlab} package.
 #' If not installed, the step will stop with a prompt about installing
-#' these packages.
+#' the package.
 #'
 #' As with ordinary PCA, it is important to center and scale the variables
 #' prior to computing PCA components ([step_normalize()] can be used for
@@ -22,8 +22,10 @@
 #' new names will be `kPC1` - `kPC9`. If `num_comp = 101`, the names would be
 #' `kPC001` - `kPC101`.
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column `terms`
-#' (the selectors or variables selected) is returned.
+#' # tidy() results
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the selectors or variables selected) is returned.
 #'
 #' @references Scholkopf, B., Smola, A., and Muller, K. (1997).
 #'  Kernel principal component analysis. *Lecture Notes in

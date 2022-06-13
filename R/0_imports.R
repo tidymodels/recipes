@@ -5,7 +5,7 @@
 #' @importFrom ipred ipredbagg
 #' @importFrom lifecycle deprecated
 #' @importFrom lubridate decimal_date is.Date month quarter semester wday week
-#' @importFrom lubridate yday year
+#' @importFrom lubridate yday year hour minute second am
 #' @importFrom Matrix Matrix
 #' @importFrom purrr map map_chr map_dbl map_dfr map_if map_lgl reduce
 #' @importFrom rlang !! as_character call2 exec expr f_lhs f_rhs is_empty
@@ -14,7 +14,7 @@
 #' @importFrom splines bs ns
 #' @importFrom stats as.formula binomial complete.cases cor cov lm mahalanobis
 #' @importFrom stats median model.frame model.matrix na.omit na.pass optimize
-#' @importFrom stats poly prcomp predict quantile runif sd terms var
+#' @importFrom stats poly prcomp predict quantile runif sd terms var cov.wt
 #' @importFrom tibble add_column as_tibble is_tibble tibble
 #' @importFrom tidyselect everything
 #' @importFrom utils globalVariables install.packages object.size packageVersion
@@ -34,6 +34,8 @@ utils::globalVariables(
     "denom",                                                           # ratio.R
     "component", "denom", "id", "value",                                 # ica.R
     "training", "x_names", "y_names",                                    # pls.R
-    ".order_1", ".order_2", "role", "skip"                           # recipes.R
+    ".order_1", ".order_2", "role", "skip",                          # recipes.R
+    "call_info",                                                     # extract.R
+    "dat"                                                        # nnmf_sparse.R
   )
 )

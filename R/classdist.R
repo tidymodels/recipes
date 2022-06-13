@@ -17,7 +17,7 @@
 #' @param log A logical: should the distances be transformed by
 #'  the natural log function?
 #' @param objects Statistics are stored here once this step has
-#'  been trained by [prep.recipe()].
+#'  been trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -33,9 +33,13 @@
 #'  there must be at least as many data points are variables
 #'  overall.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected), `value` (the centroid of
-#'  the class), and `class` is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `value` (the centroid
+#' of the class), and `class` is returned.
+#'
+#' @template case-weights-supervised
 #'
 #' @examples
 #'
@@ -44,13 +48,17 @@
 #'
 #' # define naming convention
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(all_numeric_predictors(), class = "Species",
-#'                  pool = FALSE, mean_func = mean2, prefix = "centroid_")
+#'   step_classdist(all_numeric_predictors(),
+#'     class = "Species",
+#'     pool = FALSE, mean_func = mean2, prefix = "centroid_"
+#'   )
 #'
 #' # default naming
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_classdist(all_numeric_predictors(), class = "Species",
-#'                  pool = FALSE, mean_func = mean2)
+#'   step_classdist(all_numeric_predictors(),
+#'     class = "Species",
+#'     pool = FALSE, mean_func = mean2
+#'   )
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
@@ -74,8 +82,9 @@ step_classdist <- function(recipe,
                            prefix = "classdist_",
                            skip = FALSE,
                            id = rand_id("classdist")) {
-  if (!is.character(class) || length(class) != 1)
+  if (!is.character(class) || length(class) != 1) {
     rlang::abort("`class` should be a single character value.")
+  }
   add_step(
     recipe,
     step_classdist_new(
@@ -90,14 +99,15 @@ step_classdist <- function(recipe,
       objects = objects,
       prefix = prefix,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_classdist_new <-
   function(terms, class, role, trained, mean_func,
-           cov_func, pool, log, objects, prefix, skip, id) {
+           cov_func, pool, log, objects, prefix, skip, id, case_weights) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -111,17 +121,38 @@ step_classdist_new <-
       objects = objects,
       prefix = prefix,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
-get_center <- function(x, mfun = mean) {
+get_center <- function(x, wts = NULL, mfun = mean) {
+  if (!is.null(wts) & !identical(mfun, mean)) {
+    rlang::abort("The centering function requested cannot be used with case weights.")
+  }
   x <- tibble::as_tibble(x)
-  vapply(x, FUN = mfun, FUN.VALUE = numeric(1))
+  if (is.null(wts)) {
+    res <- vapply(x, FUN = mfun, FUN.VALUE = numeric(1))
+  } else {
+    res <- averages(x, wts)
+  }
+  res
 }
-get_both <- function(x, mfun = mean, cfun = cov) {
-  list(center = get_center(x, mfun),
-       scale = cfun(x))
+
+get_both <- function(x, wts = NULL, mfun = mean, cfun = cov) {
+  if (!is.null(wts) & !identical(mfun, mean)) {
+    rlang::abort("The centering function requested cannot be used with case weights.")
+  }
+  if (!is.null(wts) & !identical(cfun, cov)) {
+    rlang::abort("The variance function requested cannot be used with case weights.")
+  }
+
+  if (is.null(wts)) {
+    res <- list(center = get_center(x, wts = wts, mfun = mfun), scale = cfun(x))
+  } else {
+    res <- list(center = averages(x, wts), scale = cov.wt(x, wts)$cov)
+  }
+  res
 }
 
 #' @export
@@ -130,20 +161,33 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, x_names])
 
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   x_dat <-
     split(training[, x_names], getElement(training, class_var))
+  if (is.null(wts)) {
+    wts_split <- map(x_dat, ~NULL)
+  } else {
+    wts_split <- split(as.double(wts), getElement(training, class_var))
+  }
   if (x$pool) {
     res <- list(
-      center = lapply(x_dat, get_center, mfun = x$mean_func),
-      scale = x$cov_func(training[, x_names])
+      center = purrr::map2(x_dat, wts_split, get_center, mfun = x$mean_func),
+      scale = covariances(training[, x_names], wts = wts)
     )
-
   } else {
     res <-
-      lapply(x_dat,
-             get_both,
-             mfun = x$mean_func,
-             cfun = x$cov_func)
+      purrr::map2(
+        x_dat,
+        wts_split,
+        get_both,
+        mfun = x$mean_func,
+        cfun = x$cov_func
+      )
   }
   step_classdist_new(
     terms = x$terms,
@@ -157,7 +201,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     objects = res,
     prefix = x$prefix,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -195,35 +240,40 @@ bake.step_classdist <- function(object, new_data, ...) {
     res <-
       lapply(object$objects, mah_by_class, x = new_data[, x_cols])
   }
-  if (object$log)
+  if (object$log) {
     res <- lapply(res, log)
+  }
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
-    res <- as_tibble(res)
   res
 }
 
 print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Distances to", x$class, "for ")
+    title <- glue::glue("Distances to {x$class} for ")
     if (x$trained) {
-      x_names <- if (x$pool)
+      x_names <- if (x$pool) {
         names(x$objects[["center"]][[1]])
-      else
+      } else {
         names(x$objects[[1]]$center)
-    } else x_names <- NULL
-    printer(x_names, x$terms, x$trained, width = width)
+      }
+    } else {
+      x_names <- NULL
+    }
+    print_step(x_names, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
 
 
 get_centroid <- function(x) {
-  tibble(terms = names(x$center),
-         value = unname(x$center))
+  tibble(
+    terms = names(x$center),
+    value = unname(x$center)
+  )
 }
 get_centroid_pool <- function(x) {
   tibble(terms = names(x), value = unname(x))
@@ -244,9 +294,11 @@ tidy.step_classdist <- function(x, ...) {
     res$class <- classes
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl,
-                  class = na_chr)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl,
+      class = na_chr
+    )
   }
   res$id <- x$id
   res

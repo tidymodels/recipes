@@ -46,10 +46,9 @@
 #' on all of the variables that have a custom role with the selector
 #' [has_role()].
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # Using the formula method, roles are created for any outcomes and predictors:
 #' recipe(HHV ~ ., data = biomass) %>%
@@ -111,7 +110,6 @@
 #' # If the formula method is not used, all columns have a missing role:
 #' recipe(biomass) %>%
 #'   summary()
-#'
 #' @name roles
 NULL
 
@@ -130,16 +128,36 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   terms <- quos(...)
 
+  if (new_role == "case_weights") {
+    rlang::abort(
+      c(
+        "Roles of \"case_weights\" cannot be set using `add_role()`.",
+        i = paste(
+          "Please use `frequency_weights()` or `importance_weights()`",
+          "to specify case weights before the data is passed to `recipe()`."
+        )
+      )
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
 
-  vars <- recipes_eval_select(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `add_role()`.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    rlang::abort(
+      "`add_role()` cannot be used on variables with role \"case_weights\"."
+    )
   }
 
   # Check to see if role already exists
@@ -183,7 +201,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   # Pull in first type we come across if unspecified
   if (is.null(new_type)) {
-    new_type <- purrr::map_chr(vars, ~{
+    new_type <- purrr::map_chr(vars, ~ {
       first_row_with_var <- which(recipe$var_info$variable == .x)[1]
       recipe$var_info$type[first_row_with_var]
     })
@@ -191,7 +209,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     new_type <- rep(new_type, times = length(vars))
   }
 
-  source <- purrr::map_chr(vars, ~{
+  source <- purrr::map_chr(vars, ~ {
     first_row_with_var <- which(recipe$var_info$variable == .x)[1]
     recipe$var_info$source[first_row_with_var]
   })
@@ -210,7 +228,6 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   recipe$term_info <- recipe$var_info
   recipe
-
 }
 
 #' @export
@@ -221,16 +238,36 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 
   terms <- quos(...)
 
+  if (new_role == "case_weights") {
+    rlang::abort(
+      c(
+        "Roles of \"case_weights\" cannot be set using `update_role()`.",
+        i = paste(
+          "Please use `frequency_weights()` or `importance_weights()`",
+          "to specify case weights before the data is passed to `recipe()`."
+        )
+      )
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
 
-  vars <- recipes_eval_select(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `update_role()`.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    rlang::abort(
+      "`update_role()` cannot be used on variables with role \"case_weights\"."
+    )
   }
 
   # check to see if any variables have multiple roles
@@ -271,6 +308,12 @@ remove_role <- function(recipe, ..., old_role) {
 
   terms <- quos(...)
 
+  if (old_role == "case_weights") {
+    rlang::abort(
+      "Roles of \"case_weights\" cannot removed using `remove_role()`."
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
@@ -310,16 +353,16 @@ role_rm_machine <- function(x, role, var) {
     role <- glue::single_quote(role)
 
     rlang::warn(
-      glue::glue("Column, {var}, does not have role, {role}."))
+      glue::glue("Column, {var}, does not have role, {role}.")
+    )
 
     return(x)
   }
 
   if (nrow(x) == 1) {
     x$role <- NA_character_
-  }
-  else {
-    x <- x[x$role != role,]
+  } else {
+    x <- x[x$role != role, ]
   }
 
   x

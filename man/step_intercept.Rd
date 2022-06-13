@@ -34,8 +34,8 @@ have been estimated. Again included only for consistency.}
 \item{value}{A numeric constant to fill the intercept column. Defaults to 1.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -54,15 +54,23 @@ that it is by default called in the bake step. Be careful to avoid
 unintentional transformations when calling steps with
 \code{all_predictors}.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) \%>\%
   step_intercept(value = 2) \%>\%
   step_scale(carbon)
@@ -71,5 +79,5 @@ rec_obj <- prep(rec_trans, training = biomass_tr)
 
 with_intercept <- bake(rec_obj, biomass_te)
 with_intercept
-
+\dontshow{\}) # examplesIf}
 }

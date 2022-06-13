@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @param group An optional character string or call to [dplyr::vars()]
 #'  that can be used to specify a group(s) within which to identify
 #'  variables that contain only a single value. If the grouping variables
@@ -14,24 +14,30 @@
 #'  removal.
 #' @template step-return
 #' @template filter-steps
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be removed) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be removed) is returned.
+#'
+#' @template case-weights-not-supported
 #'
 #' @family variable filter steps
 #' @export
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass$one_value <- 1
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-#'                     nitrogen + sulfur + one_value,
-#'               data = biomass_tr)
+#'   nitrogen + sulfur + one_value,
+#' data = biomass_tr
+#' )
 #'
 #' zv_filter <- rec %>%
 #'   step_zv(all_predictors())
@@ -119,27 +125,20 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_zv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
+  if (length(object$removals) > 0) {
     new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+  }
+  new_data
 }
 
 print.step_zv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Zero variance filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Zero variance filter removed no terms")
+      title <- "Zero variance filter removed "
     } else {
-      cat("Zero variance filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
+      title <- "Zero variance filter on "
     }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 

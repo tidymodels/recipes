@@ -5,7 +5,7 @@ tunable.recipe <- function(x, ...) {
   } else {
     res <- purrr::map_dfr(x$steps, tunable)
     if (nrow(res) > 0) {
-      res <- res[!is.na(res$name),]
+      res <- res[!is.na(res$name), ]
     }
   }
   res
@@ -15,8 +15,6 @@ tunable.recipe <- function(x, ...) {
 tunable.step <- function(x, ...) {
   no_param
 }
-
-step_type <- function(.step) class(.step)[class(.step) != "step"][1]
 
 no_param <-
   tibble::tibble(

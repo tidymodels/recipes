@@ -17,7 +17,6 @@ test <-
   )
 
 test_that("step_indicate_na populates binaries correctly", {
-
   rec1 <- recipe(train) %>%
     step_indicate_na(col1) %>%
     prep(train, verbose = FALSE, retain = TRUE)
@@ -41,11 +40,9 @@ test_that("step_indicate_na populates binaries correctly", {
 
   expect_equal(bake(rec2, test)$na_ind_col2, c(0, 0, 0))
   expect_equal(bake(rec2, test)$na_ind_col3, c(0, 0, 1))
-
 })
 
 test_that("step_indicate_na on all columns", {
-
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(everything()) %>%
     prep(airquality, verbose = FALSE, retain = TRUE) %>%
@@ -53,15 +50,15 @@ test_that("step_indicate_na on all columns", {
 
   expect_named(
     baked,
-    c("Solar.R", "Wind", "Temp", "Month", "Day", "Ozone",
+    c(
+      "Solar.R", "Wind", "Temp", "Month", "Day", "Ozone",
       "na_ind_Solar.R", "na_ind_Wind", "na_ind_Temp",
       "na_ind_Month", "na_ind_Day", "na_ind_Ozone"
-      )
     )
+  )
 })
 
 test_that("step_indicate_na on subset of columns", {
-
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(Ozone, Solar.R) %>%
     prep(airquality, verbose = FALSE, retain = TRUE) %>%
@@ -69,10 +66,11 @@ test_that("step_indicate_na on subset of columns", {
 
   expect_named(
     baked,
-    c("Solar.R", "Wind", "Temp", "Month", "Day",
+    c(
+      "Solar.R", "Wind", "Temp", "Month", "Day",
       "Ozone", "na_ind_Ozone", "na_ind_Solar.R"
-      )
     )
+  )
 
   baked2 <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(Solar.R) %>%
@@ -81,18 +79,19 @@ test_that("step_indicate_na on subset of columns", {
 
   expect_named(
     baked2,
-    c("Solar.R", "Wind", "Temp", "Month", "Day",
+    c(
+      "Solar.R", "Wind", "Temp", "Month", "Day",
       "Ozone", "na_ind_Solar.R"
-      )
     )
+  )
 })
 
-test_that("something prints", {
+test_that("printing", {
   rec <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(all_predictors())
 
-  expect_output(print(rec))
-  expect_output(prep(rec, training = airquality, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -122,6 +121,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_indicate_na(rec)
 

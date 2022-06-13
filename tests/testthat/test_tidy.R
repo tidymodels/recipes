@@ -2,63 +2,72 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-
-library(modeldata)
-data(okc)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 set.seed(131)
-okc_rec <- recipe(~ ., data = okc) %>%
+Sacramento_rec <- recipe(~., data = Sacramento) %>%
   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-  step_date(date, features = "dow", id = "date_dow") %>%
   step_center(all_numeric()) %>%
   step_dummy(all_nominal()) %>%
-  check_cols(starts_with("date"))
+  check_cols(starts_with("beds"))
 
-test_that('untrained', {
+test_that("untrained", {
   exp_res_1 <- tibble(
-    number = 1:5,
-    operation = c("step", "step", "step", "step", "check"),
-    type = c("other", "date", "center", "dummy", "cols"),
-    trained = rep(FALSE, 5),
-    skip = rep(FALSE, 5),
-    id = vapply(okc_rec$steps, function(x) x$id, character(1))
+    number = 1:4,
+    operation = c("step", "step", "step", "check"),
+    type = c("other", "center", "dummy", "cols"),
+    trained = rep(FALSE, 4),
+    skip = rep(FALSE, 4),
+    id = vapply(Sacramento_rec$steps, function(x) x$id, character(1))
   )
-  expect_equal(tidy(okc_rec), exp_res_1)
+  expect_equal(tidy(Sacramento_rec), exp_res_1)
 })
 
 
-test_that('trained', {
+test_that("trained", {
   exp_res_2 <- tibble(
-    number = 1:5,
-    operation = c("step", "step", "step", "step", "check"),
-    type = c("other", "date", "center", "dummy", "cols"),
-    trained = rep(TRUE, 5),
-    skip = rep(FALSE, 5),
-    id = vapply(okc_rec$steps, function(x) x$id, character(1))
+    number = 1:4,
+    operation = c("step", "step", "step", "check"),
+    type = c("other", "center", "dummy", "cols"),
+    trained = rep(TRUE, 4),
+    skip = rep(FALSE, 4),
+    id = vapply(Sacramento_rec$steps, function(x) x$id, character(1))
   )
-  expect_warning(
-    trained <- prep(okc_rec, training = okc)
+  expect_snapshot(
+    trained <- prep(Sacramento_rec, training = Sacramento)
   )
   expect_equal(tidy(trained), exp_res_2)
 })
 
-test_that('select step', {
+test_that("select step", {
   exp_res_3 <- tibble(
-   terms = "date",
-   value = "dow",
-   ordinal = FALSE,
-   id = okc_rec$steps[[2]][["id"]]
+    terms = "all_numeric()",
+    value = NA_real_,
+    id = Sacramento_rec$steps[[2]][["id"]]
   )
-  expect_equal(tidy(okc_rec, number = 2), exp_res_3)
-  expect_equal(tidy(okc_rec, id = "date_dow"), exp_res_3)
+  expect_equal(tidy(Sacramento_rec, number = 2), exp_res_3)
+  expect_equal(tidy(Sacramento_rec, id = Sacramento_rec$steps[[2]][["id"]]), exp_res_3)
+})
+
+test_that("empty recipe", {
+  expect_equal(
+    tidy(recipe(x = mtcars)),
+    tibble(
+      number = integer(),
+      operation = character(),
+      type = character(),
+      trained = logical(),
+      skip = logical(),
+      id = character()
+    )
+  )
 })
 
 
-test_that('bad args', {
-  expect_error(tidy(trained, number = NULL))
-  expect_error(tidy(trained, number = 100))
-  expect_error(tidy(trained, number = 1, id = "id"))
-  expect_error(tidy(trained, id = "id"))
-  expect_error(tidy(recipe(x = iris)))
+test_that("bad args", {
+  expect_snapshot(error = TRUE, tidy(trained, number = NULL))
+  expect_snapshot(error = TRUE, tidy(trained, number = 100))
+  expect_snapshot(error = TRUE, tidy(trained, number = 1, id = "id"))
+  expect_snapshot(error = TRUE, tidy(trained, id = "id"))
 })
-

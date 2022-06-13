@@ -18,11 +18,8 @@
 ---
 
     Code
-      prep(kpca_rec, training = tr_dat, verbose = TRUE)
+      prep(kpca_rec)
     Output
-      oper 1 step kpca rbf [training] 
-      The retained training set is ~ 0.01 Mb  in memory.
-      
       Recipe
       
       Inputs:
@@ -54,14 +51,14 @@
       
       Operations:
       
-      No kPCA components were extracted.
-       [trained]
+      RBF kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
 
 # can prep recipes with no keep_original_cols
 
     Code
       kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
-    Warning <warning>
+    Condition
+      Warning:
       'keep_original_cols' was added to `step_kpca_poly()` after this recipe was created.
       Regenerate your recipe to avoid this warning.
 
@@ -80,7 +77,7 @@
       
       Operations:
       
-      RBF kernel PCA extraction with 
+      RBF kernel PCA extraction with <none>
 
 ---
 
@@ -99,5 +96,5 @@
       
       Operations:
       
-      RBF kernel PCA extraction with  [trained]
+      RBF kernel PCA extraction with <none> [trained]
 

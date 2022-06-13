@@ -1,3 +1,53 @@
+# bad selector(s)
+
+    Code
+      rec %>% step_regex(description, rows, pattern = "(rock|stony)")
+    Condition
+      Error in `step_regex()`:
+      ! For this step, at most a single selector can be used.
+
+---
+
+    Code
+      prep(rec4, training = covers)
+    Condition
+      Error in `prep()`:
+      ! The regular expression input should be character or factor
+
+# printing
+
+    Code
+      print(rec1)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          3
+      
+      Operations:
+      
+      Regular expression dummy variable using "(rock|stony)"
+
+---
+
+    Code
+      prep(rec1)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          3
+      
+      Training data contained 40 data points and no missing data.
+      
+      Operations:
+      
+      Regular expression dummy variable using "(rock|stony)" [trained]
+
 # empty printing
 
     Code
@@ -13,7 +63,7 @@
       
       Operations:
       
-      Regular expression dummy variable using `.`
+      Regular expression dummy variable using "."
 
 ---
 
@@ -32,5 +82,5 @@
       
       Operations:
       
-      Regular expression dummy variable using `.` [trained]
+      Regular expression dummy variable using "." [trained]
 

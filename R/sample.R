@@ -15,22 +15,29 @@
 #'  of the training set (or smaller for smaller `new_data`).
 #' @param replace Sample with or without replacement?
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns `size`,
-#' `replace`, and `id` is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `size`, `replace`, and `id` is returned.
+#'
+#' @template case-weights-unsupervised
+#'
 #' @family row operation steps
 #' @family dplyr steps
 #' @export
 #' @examples
 #'
 #' # Uses `sample_n`
-#' recipe( ~ ., data = mtcars) %>%
+#' recipe(~., data = mtcars) %>%
 #'   step_sample(size = 1) %>%
 #'   prep(training = mtcars) %>%
 #'   bake(new_data = NULL) %>%
 #'   nrow()
 #'
 #' # Uses `sample_frac`
-#' recipe( ~ ., data = mtcars) %>%
+#' recipe(~., data = mtcars) %>%
 #'   step_sample(size = 0.9999) %>%
 #'   prep(training = mtcars) %>%
 #'   bake(new_data = NULL) %>%
@@ -38,22 +45,19 @@
 #'
 #' # Uses `sample_n` and returns _at maximum_ 20 samples.
 #' smaller_cars <-
-#'   recipe( ~ ., data = mtcars) %>%
+#'   recipe(~., data = mtcars) %>%
 #'   step_sample() %>%
 #'   prep(training = mtcars %>% slice(1:20))
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-step_sample <- function(
-  recipe, ...,
-  role = NA,
-  trained = FALSE,
-  size = NULL,
-  replace = FALSE,
-  skip = TRUE,
-  id = rand_id("sample")
-) {
-
+step_sample <- function(recipe, ...,
+                        role = NA,
+                        trained = FALSE,
+                        size = NULL,
+                        replace = FALSE,
+                        skip = TRUE,
+                        id = rand_id("sample")) {
   if (length(list(...)) > 0) {
     rlang::warn("Selectors are not used for this step.")
   }
@@ -78,13 +82,14 @@ step_sample <- function(
       size = size,
       replace = replace,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_sample_new <-
-  function(terms, role, trained, size, replace, skip, id) {
+  function(terms, role, trained, size, replace, skip, id, case_weights) {
     step(
       subclass = "sample",
       terms = terms,
@@ -93,7 +98,8 @@ step_sample_new <-
       size = size,
       replace = replace,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -102,6 +108,13 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
   if (is.null(x$size)) {
     x$size <- nrow(training)
   }
+
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   step_sample_new(
     terms = x$terms,
     trained = TRUE,
@@ -109,20 +122,34 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
     size = x$size,
     replace = x$replace,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 
 #' @export
 bake.step_sample <- function(object, new_data, ...) {
+
+  if (isTRUE(object$case_weights)) {
+    wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)
+    wts <- getElement(new_data, names(which(wts_col)))
+    wts <- as.double(wts)
+  } else {
+    wts <- NULL
+  }
+
   if (object$size >= 1) {
     n <- min(object$size, nrow(new_data))
     new_data <-
-      dplyr::sample_n(new_data, size = floor(n), replace = object$replace)
+      dplyr::sample_n(
+        new_data, size = floor(n), replace = object$replace, weight = wts
+      )
   } else {
     new_data <-
-      dplyr::sample_frac(new_data, size = object$size, replace = object$replace)
+      dplyr::sample_frac(
+        new_data, size = object$size, replace = object$replace, weight = wts
+      )
   }
   new_data
 }
@@ -130,14 +157,12 @@ bake.step_sample <- function(object, new_data, ...) {
 
 print.step_sample <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Row sampling")
-    if (x$replace)
-      cat(" with replacement")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
+    title <- "Row sampling "
+    if (x$replace) {
+      title <- paste(title, "with replacement ")
     }
+    print_step(NULL, NULL, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

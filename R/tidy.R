@@ -26,26 +26,25 @@
 #'  column called `trained` for whether the operation has been
 #'  estimated using `prep`, a logical for `skip`, and a character column `id`.
 #'
-#' @examples
-#' library(modeldata)
-#' data(okc)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
-#' okc_rec <- recipe(~ ., data = okc) %>%
+#' Sacramento_rec <- recipe(~., data = Sacramento) %>%
 #'   step_other(all_nominal(), threshold = 0.05, other = "another") %>%
-#'   step_date(date, features = "dow") %>%
 #'   step_center(all_numeric()) %>%
 #'   step_dummy(all_nominal()) %>%
-#'   check_cols(starts_with("date"), age, height)
+#'   check_cols(ends_with("ude"), sqft, price)
 #'
-#' tidy(okc_rec)
+#' tidy(Sacramento_rec)
 #'
-#' tidy(okc_rec, number = 2)
-#' tidy(okc_rec, number = 3)
+#' tidy(Sacramento_rec, number = 2)
+#' tidy(Sacramento_rec, number = 3)
 #'
-#' okc_rec_trained <- prep(okc_rec, training = okc)
+#' Sacramento_rec_trained <- prep(Sacramento_rec, training = Sacramento)
 #'
-#' tidy(okc_rec_trained)
-#' tidy(okc_rec_trained, number = 3)
+#' tidy(Sacramento_rec_trained)
+#' tidy(Sacramento_rec_trained, number = 3)
+#' tidy(Sacramento_rec_trained, number = 4)
 NULL
 
 #' @rdname tidy.recipe
@@ -55,16 +54,16 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   # If number is NA and ID is not, select the step with the corresponding
   # ID. Only a single ID is allowed, as this follows the convention for number
   num_oper <- length(x$steps)
-  if (num_oper == 0)
-    rlang::abort("No steps in recipe.")
   pattern <- "(^step_)|(^check_)"
   if (!is.na(id)) {
-    if (!is.na(number))
+    if (!is.na(number)) {
       rlang::abort("You may specify `number` or `id`, but not both.")
-    if (length(id) != 1L && !is.character(id))
+    }
+    if (length(id) != 1L && !is.character(id)) {
       rlang::abort("If `id` is provided, it must be a length 1 character vector.")
+    }
     step_ids <- vapply(x$steps, function(x) x$id, character(1))
-    if(!(id %in% step_ids)) {
+    if (!(id %in% step_ids)) {
       rlang::abort("Supplied `id` not found in the recipe.")
     }
     number <- which(id == step_ids)
@@ -80,24 +79,29 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
     oper <- vapply(oper, function(x) x[1], character(1))
 
     oper_types <- gsub(pattern, "", oper_classes)
-    is_trained <- vapply(x$steps,
-                         function(x) x$trained,
-                         logical(1))
-    res <- tibble(number = seq_along(x$steps),
-                  operation = oper,
-                  type = oper_types,
-                  trained = is_trained,
-                  skip = skipped,
-                  id = ids)
+    is_trained <- vapply(
+      x$steps,
+      function(x) x$trained,
+      logical(1)
+    )
+    res <- tibble(
+      number = seq_along(x$steps),
+      operation = oper,
+      type = oper_types,
+      trained = is_trained,
+      skip = skipped,
+      id = ids
+    )
   } else {
-    if (number > num_oper || length(number) > 1)
+    if (number > num_oper || length(number) > 1) {
       rlang::abort(
         paste0(
           "`number` should be a single value between 1 and ",
-           num_oper,
+          num_oper,
           "."
-          )
+        )
       )
+    }
 
     res <- tidy(x$steps[[number]], ...)
   }
@@ -120,8 +124,8 @@ tidy.step <- function(x, ...) {
 tidy.check <- function(x, ...) {
   rlang::abort(
     paste0(
-       "No `tidy` method for a check with classes: ",
-       paste0(class(x), collapse = ", ")
+      "No `tidy` method for a check with classes: ",
+      paste0(class(x), collapse = ", ")
     )
   )
 }

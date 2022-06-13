@@ -1,16 +1,17 @@
 library(testthat)
 library(tibble)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-test_that('basic steps', {
+test_that("basic steps", {
   rec_1 <-
     recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           data = biomass_tr) %>%
-    step_mutate(hydrogen = hydrogen/2) %>%
+      data = biomass_tr
+    ) %>%
+    step_mutate(hydrogen = hydrogen / 2) %>%
     step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
     step_corr(all_predictors(), threshold = .6) %>%
     prep()
@@ -37,11 +38,12 @@ test_that('basic steps', {
 })
 
 
-test_that('skipped steps', {
+test_that("skipped steps", {
   rec_2 <-
     recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           data = biomass_tr) %>%
-    step_mutate(hydrogen = hydrogen/2) %>%
+      data = biomass_tr
+    ) %>%
+    step_mutate(hydrogen = hydrogen / 2) %>%
     step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
     step_corr(all_predictors(), threshold = .6, skip = TRUE) %>%
     prep()
@@ -89,10 +91,11 @@ test_that('skipped steps', {
 })
 
 
-test_that('remove and add a column', {
+test_that("remove and add a column", {
   rec_3 <-
     recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           data = biomass_tr) %>%
+      data = biomass_tr
+    ) %>%
     step_rm(HHV) %>%
     step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
     step_corr(all_predictors(), threshold = .6) %>%
@@ -120,10 +123,11 @@ test_that('remove and add a column', {
   )
 })
 
-test_that('extra roles', {
+test_that("extra roles", {
   rec_4 <-
     recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           data = biomass_tr) %>%
+      data = biomass_tr
+    ) %>%
     add_role(nitrogen, new_role = "drummer") %>%
     step_rm(HHV) %>%
     step_ratio(hydrogen, oxygen, nitrogen, denom = vars(carbon)) %>%
@@ -151,10 +155,3 @@ test_that('extra roles', {
     cols_3[cols_3 != "HHV"]
   )
 })
-
-
-
-
-
-
-

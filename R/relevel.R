@@ -10,7 +10,7 @@
 #' @param ref_level A single character value that will be used to
 #'  relevel the factor column(s) (if the level is present).
 #' @param objects A list of objects that contain the information
-#'  on factor levels that will be determined by [prep.recipe()].
+#'  on factor levels that will be determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
@@ -21,18 +21,17 @@
 #' Note that if the original columns are character, they will be
 #'  converted to factors by this step.
 #'
+#' @template case-weights-not-supported
 #'
-#' @examples
-#'
-#' library(modeldata)
-#' data(okc)
-#' rec <- recipe(~ diet + location, data = okc) %>%
-#'   step_unknown(diet, new_level = "UNKNOWN") %>%
-#'   step_relevel(diet, ref_level = "UNKNOWN") %>%
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
+#' rec <- recipe(~ city + zip, data = Sacramento) %>%
+#'   step_unknown(city, new_level = "UNKNOWN") %>%
+#'   step_relevel(city, ref_level = "UNKNOWN") %>%
 #'   prep()
 #'
-#' data <- bake(rec, okc)
-#' levels(data$diet)
+#' data <- bake(rec, Sacramento)
+#' levels(data$city)
 step_relevel <-
   function(recipe,
            ...,
@@ -125,16 +124,13 @@ bake.step_relevel <- function(object, new_data, ...) {
   for (i in names(object$objects)) {
     new_data[[i]] <- stats::relevel(as.factor(new_data[[i]]), ref = object$ref_level)
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 
 print.step_relevel <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Re-order factor level to ref_level for ", sep = "")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Re-order factor level to ref_level for "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 

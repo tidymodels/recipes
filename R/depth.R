@@ -22,7 +22,7 @@
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
 #' @param data The training data are stored here once after
-#'  [prep.recipe()] is executed.
+#'  [prep()] is executed.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -52,10 +52,14 @@
 #'  replace the original values and by default have the prefix `depth_`. The
 #'  naming format can be changed using the `prefix` argument.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `class` is returned.
+#'  # Tidying
 #'
-#' @examples
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `class` is returned.
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("ddalpha")
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
@@ -64,8 +68,10 @@
 #' # use zonoid metric instead
 #' # also, define naming convention for new columns
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_numeric_predictors(), class = "Species",
-#'              metric = "zonoid", prefix = "zonoid_")
+#'   step_depth(all_numeric_predictors(),
+#'     class = "Species",
+#'     metric = "zonoid", prefix = "zonoid_"
+#'   )
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
@@ -74,21 +80,21 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec_dists, number = 1)
-
 step_depth <-
   function(recipe,
            ...,
            class,
            role = "predictor",
            trained = FALSE,
-           metric =  "halfspace",
+           metric = "halfspace",
            options = list(),
            data = NULL,
            prefix = "depth_",
            skip = FALSE,
            id = rand_id("depth")) {
-    if (!is.character(class) || length(class) != 1)
+    if (!is.character(class) || length(class) != 1) {
       rlang::abort("`class` should be a single character value.")
+    }
 
     recipes_pkg_check(required_pkgs.step_depth())
 
@@ -156,8 +162,9 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
     return(rep(NA_real_, nrow(new_dat)))
   }
 
-  if (!is.matrix(new_dat))
+  if (!is.matrix(new_dat)) {
     new_dat <- as.matrix(new_dat)
+  }
   opts$data <- tr_dat
   opts$x <- new_dat
   dd_call <- call2(paste0("depth.", metric), !!!opts, .ns = "ddalpha")
@@ -179,23 +186,20 @@ bake.step_depth <- function(object, new_data, ...) {
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
-    res <- as_tibble(res)
   res
 }
 
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Data depth by", x$class, "for ")
+    title <- glue::glue("Data depth by {x$class} for ")
 
     if (x$trained) {
       x_names <- colnames(x$data[[1]])
-      cat(format_ch_vec(x_names, width = width))
     } else {
       x_names <- character()
     }
 
-    printer(x_names, x$terms, x$trained, width = width)
+    print_step(x_names, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -205,12 +209,16 @@ print.step_depth <-
 #' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$data[[1]]) %||% character(),
-                  class = x$class)
+    res <- tibble(
+      terms = colnames(x$data[[1]]) %||% character(),
+      class = x$class
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  class = na_chr)
+    res <- tibble(
+      terms = term_names,
+      class = na_chr
+    )
   }
   res$id <- x$id
   res

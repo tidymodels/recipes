@@ -34,11 +34,11 @@ exceeds the threshold.}
 
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+until \code{\link[=prep]{prep()}} is called.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -64,13 +64,24 @@ This step will remove variables if the proportion of missing
 values exceeds the \code{threshold}.
 
 All variables with missing values will be removed for \code{threshold = 0}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
-that will be removed) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be removed) is returned.
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
-library(modeldata)
-data(credit_data)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(credit_data, package = "modeldata")
 
 rec <- recipe(Status ~ ., data = credit_data) \%>\%
   step_filter_missing(all_predictors(), threshold = 0)
@@ -81,6 +92,7 @@ filtered_te <- bake(filter_obj, new_data = NULL)
 
 tidy(rec, number = 1)
 tidy(filter_obj, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other variable filter steps: 

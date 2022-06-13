@@ -4,24 +4,29 @@ library(dplyr)
 
 n <- 50
 set.seed(424)
-dat <- data.frame(x1 = rnorm(n),
-                  x2 = rep(1:5, each = 10),
-                  x3 = factor(rep(letters[1:3], c(2, 2, 46))),
-                  x4 = 1,
-                  y = runif(n))
+dat <- data.frame(
+  x1 = rnorm(n),
+  x2 = rep(1:5, each = 10),
+  x3 = factor(rep(letters[1:3], c(2, 2, 46))),
+  x4 = 1,
+  y = runif(n)
+)
 
 
 ratios <- function(x) {
   tab <- sort(table(x), decreasing = TRUE)
-  if(length(tab) > 1)
-    tab[1]/tab[2] else Inf
+  if (length(tab) > 1) {
+    tab[1] / tab[2]
+  } else {
+    Inf
+  }
 }
 
-pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0))/nrow(dat)*100
+pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) / nrow(dat) * 100
 f_ratio <- vapply(dat[, -5], ratios, c(val = 0))
 vars <- names(pct_uni)
 
-test_that('zv filtering', {
+test_that("zv filtering", {
   rec <- recipe(y ~ ., data = dat)
   filtering <- rec %>%
     step_zv(x1, x2, x3, x4)
@@ -31,25 +36,27 @@ test_that('zv filtering', {
   expect_equal(filtering_trained$steps[[1]]$removals, "x4")
 })
 
-test_that('group-wise zv filtering', {
+test_that("group-wise zv filtering", {
   mtcars0 <- mtcars %>%
-    mutate(const = 0,
-           group1 = am,
-           group2 = vs)
+    mutate(
+      const = 0,
+      group1 = am,
+      group2 = vs
+    )
 
-  rec_group1 <- recipe(~ ., data = mtcars0) %>%
+  rec_group1 <- recipe(~., data = mtcars0) %>%
     step_zv(all_predictors(), group = "group1") %>%
     prep()
 
   expect_equal(rec_group1$steps[[1]]$removals, c("am", "const"))
 
-  rec_group2 <- recipe(~ ., data = mtcars0) %>%
+  rec_group2 <- recipe(~., data = mtcars0) %>%
     step_zv(all_predictors(), group = "group2") %>%
     prep()
 
   expect_equal(rec_group2$steps[[1]]$removals, c("vs", "const"))
 
-  rec_group12 <- recipe(~ ., data = mtcars0) %>%
+  rec_group12 <- recipe(~., data = mtcars0) %>%
     step_zv(all_predictors(), group = c("group1", "group2")) %>%
     prep()
 
@@ -58,7 +65,7 @@ test_that('group-wise zv filtering', {
     c("cyl", "vs", "am", "gear", "const")
   )
 
-  rec_group12_vars <- recipe(~ ., data = mtcars0) %>%
+  rec_group12_vars <- recipe(~., data = mtcars0) %>%
     step_zv(all_predictors(), group = vars(group1, group2)) %>%
     prep()
 
@@ -68,16 +75,15 @@ test_that('group-wise zv filtering', {
   )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(y ~ ., data = dat) %>%
     step_zv(x1, x2, x3, x4)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
 
 
-test_that('mssing values in zero-variance screen', {
-
+test_that("mssing values in zero-variance screen", {
   x <- rep(1, 5)
   y <- c(NA, x)
   z <- rep(NA, 5)
@@ -85,7 +91,6 @@ test_that('mssing values in zero-variance screen', {
   expect_true(recipes:::one_unique(x))
   expect_true(recipes:::one_unique(y))
   expect_true(recipes:::one_unique(z))
-
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -118,6 +123,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_zv(rec)
 

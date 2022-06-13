@@ -37,11 +37,11 @@ included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.}
 
 \item{models}{The \code{\link[=lm]{lm()}} objects are stored here once the linear models
-have been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+have been trained by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -68,12 +68,24 @@ coerced to integer as needed).
 
 Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
 columns \code{terms} (the selectors or variables selected) and \code{model} (the
 bagged tree object) is returned.
 }
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 set.seed(393)
 ames_missing <- ames
@@ -100,6 +112,7 @@ ggplot(imputed, aes(x = original, y = imputed)) +
   geom_point(alpha = .3) +
   coord_equal() +
   labs(title = "Imputed Values")
+\dontshow{\}) # examplesIf}
 }
 \references{
 Kuhn, M. and Johnson, K. (2013).

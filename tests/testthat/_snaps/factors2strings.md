@@ -1,3 +1,47 @@
+# bad args
+
+    Code
+      rec %>% step_factor2string(w, x) %>% prep(ex_dat, strings_as_factors = FALSE)
+    Condition
+      Error in `prep()`:
+      ! The following variables are not factor vectors: `w`, `x`
+
+# printing
+
+    Code
+      print(ex_3)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          4
+      
+      Training data contained 200 data points and no missing data.
+      
+      Operations:
+      
+      Character variables from y, z [trained]
+
+---
+
+    Code
+      prep(ex_3)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          4
+      
+      Training data contained 200 data points and no missing data.
+      
+      Operations:
+      
+      Character variables from y, z [trained]
+
 # empty printing
 
     Code

@@ -50,14 +50,14 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 \code{\link[ddalpha:depth.zonoid]{ddalpha::depth.zonoid()}}.}
 
 \item{data}{The training data are stored here once after
-\code{\link[=prep.recipe]{prep.recipe()}} is executed.}
+\code{\link[=prep]{prep()}} is executed.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -100,11 +100,20 @@ The function will create a new column for every unique value of
 the \code{class} variable. The resulting variables will not
 replace the original values and by default have the prefix \code{depth_}. The
 naming format can be changed using the \code{prefix} argument.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{class} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{class} is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("ddalpha")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
@@ -113,8 +122,10 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 # use zonoid metric instead
 # also, define naming convention for new columns
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(all_numeric_predictors(), class = "Species",
-             metric = "zonoid", prefix = "zonoid_")
+  step_depth(all_numeric_predictors(),
+    class = "Species",
+    metric = "zonoid", prefix = "zonoid_"
+  )
 
 rec_dists <- prep(rec, training = iris)
 
@@ -123,6 +134,7 @@ dists_to_species
 
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 
@@ -134,6 +146,7 @@ Other multivariate transformation steps:
 \code{\link{step_kpca_rbf}()},
 \code{\link{step_kpca}()},
 \code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
 \code{\link{step_nnmf}()},
 \code{\link{step_pca}()},
 \code{\link{step_pls}()},

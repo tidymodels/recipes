@@ -19,6 +19,8 @@
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' df <- data.frame(x = 1:10, y = 5:14)
 #' rec <- recipe(df)
@@ -58,27 +60,27 @@
 #'   prep() %>%
 #'   bake(new_df)
 step_cut <-
-    function(recipe,
-             ...,
-             role = NA,
-             trained = FALSE,
-             breaks,
-             include_outside_range = FALSE,
-             skip = FALSE,
-             id = rand_id("cut")) {
-      add_step(
-        recipe,
-        step_cut_new(
-          terms = enquos(...),
-          trained = trained,
-          role = role,
-          breaks = breaks,
-          include_outside_range = include_outside_range,
-          skip = skip,
-          id = id
-        )
+  function(recipe,
+           ...,
+           role = NA,
+           trained = FALSE,
+           breaks,
+           include_outside_range = FALSE,
+           skip = FALSE,
+           id = rand_id("cut")) {
+    add_step(
+      recipe,
+      step_cut_new(
+        terms = enquos(...),
+        trained = trained,
+        role = role,
+        breaks = breaks,
+        include_outside_range = include_outside_range,
+        skip = skip,
+        id = id
       )
-    }
+    )
+  }
 
 step_cut_new <-
   function(terms, role, trained,
@@ -104,7 +106,7 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   names(all_breaks) <- col_names
   for (col_name in col_names) {
     all_breaks[[col_name]] <-
-      create_full_breaks(training[ ,col_name, drop = TRUE], breaks = x$breaks)
+      create_full_breaks(training[, col_name, drop = TRUE], breaks = x$breaks)
     full_breaks_check(all_breaks[[col_name]])
   }
 
@@ -141,12 +143,14 @@ full_breaks_check <- function(breaks) {
 
 bake.step_cut <- function(object, new_data, ...) {
   for (col_name in names(object$breaks)) {
-    res <- cut_var(new_data[, col_name, drop = TRUE],
-              object$breaks[[col_name]],
-              object$include_outside_range)
+    res <- cut_var(
+      new_data[, col_name, drop = TRUE],
+      object$breaks[[col_name]],
+      object$include_outside_range
+    )
     new_data[, col_name] <- res
   }
-  as_tibble(new_data)
+  new_data
 }
 
 cut_var <- function(var, breaks, include_outside_range) {
@@ -189,8 +193,8 @@ adjust_levels_min_max <- function(x) {
 
 print.step_cut <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Cut numeric for ", sep = "")
-    printer(names(x$breaks), x$terms, x$trained, width = width)
+    title <- "Cut numeric for "
+    print_step(names(x$breaks), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -212,4 +216,3 @@ tidy.step_cut <- function(x, ...) {
   res$id <- x$id
   res
 }
-

@@ -22,11 +22,11 @@ conflicting information can arise between the data returned from
 \code{bake(object, new_data = NULL)} and the information in the step.
 }
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 # Create a recipe using step_bs() with degree = 3
 rec <- recipe(
@@ -40,16 +40,16 @@ rec2 <- rec
 rec2$steps[[1]] <- update(rec2$steps[[1]], degree = 4)
 
 # Prep both recipes
-rec_prepped  <- prep(rec, training = biomass_tr)
+rec_prepped <- prep(rec, training = biomass_tr)
 rec2_prepped <- prep(rec2, training = biomass_tr)
 
 # Juice both to see what changed
-bake(rec_prepped,  new_data = NULL)
+bake(rec_prepped, new_data = NULL)
 bake(rec2_prepped, new_data = NULL)
 
 # Cannot update a recipe step that has been trained!
 \dontrun{
 update(rec_prepped$steps[[1]], degree = 4)
 }
-
+\dontshow{\}) # examplesIf}
 }

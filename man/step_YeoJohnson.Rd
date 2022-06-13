@@ -31,7 +31,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
@@ -43,8 +43,8 @@ values will not be evaluated for a transformation.}
 values should be removed during computations.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -77,23 +77,32 @@ variable distributions more symmetric.
 If the transformation parameters are estimated to be very
 closed to the bounds, or if the optimization fails, a value of
 \code{NA} is used and no transformation is applied.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the
 lambda estimate) is returned.
 }
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-library(modeldata)
-data(biomass)
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
-
-yj_transform <- step_YeoJohnson(rec,  all_numeric())
+yj_transform <- step_YeoJohnson(rec, all_numeric())
 
 yj_estimates <- prep(yj_transform, training = biomass_tr)
 
@@ -104,6 +113,7 @@ plot(density(yj_te$sulfur), main = "after")
 
 tidy(yj_transform, number = 1)
 tidy(yj_estimates, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Yeo, I. K., and Johnson, R. A. (2000). A new family of power
@@ -121,6 +131,7 @@ Other individual transformation steps:
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}

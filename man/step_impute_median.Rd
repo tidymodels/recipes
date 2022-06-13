@@ -39,12 +39,12 @@ created.}
 preprocessing have been estimated.}
 
 \item{medians}{A named numeric vector of medians. This is \code{NULL} until
-computed by \code{\link[=prep.recipe]{prep.recipe()}}. Note that, if the original data are integers,
+computed by \code{\link[=prep]{prep()}}. Note that, if the original data are integers,
 the median will be converted to an integer to maintain the same data type.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -65,16 +65,27 @@ those variables.
 used in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies
 the new values to new data sets using these medians.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
-median value) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from
 \code{step_medianimpute()} to \code{step_impute_median()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
+columns \code{terms} (the selectors or variables selected) and \code{model}
+(themedian value) is returned.
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
-library(modeldata)
-data("credit_data")
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data("credit_data", package = "modeldata")
 
 ## missing data per column
 vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -82,7 +93,7 @@ vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 missing_examples <- c(14, 394, 565)
 
@@ -95,11 +106,12 @@ imp_models <- prep(impute_rec, training = credit_tr)
 
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
 
-credit_te[missing_examples,]
+credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other imputation steps: 

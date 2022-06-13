@@ -15,7 +15,7 @@ discretize(x, ...)
   x,
   cuts = 4,
   labels = NULL,
-  prefix = "bin",
+  prefix = NULL,
   keep_na = TRUE,
   infs = TRUE,
   min_unique = 10,
@@ -41,10 +41,14 @@ for missing (see \code{keep_na} below).}
 
 \item{prefix}{A single parameter value to be used as a prefix
 for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
-the string is not a valid R name, it is coerced to one.}
+the string is not a valid R name, it is coerced to one.
+If \code{prefix = NULL} then the factor levels will be labelled
+according to the output of \code{cut()}. Defaults to \code{NULL}.}
 
 \item{keep_na}{A logical for whether a factor level should be
-created to identify missing values in \code{x}.}
+created to identify missing values in \code{x}. If \code{keep_na} is
+set to \code{TRUE} then \code{na.rm = TRUE} is used when calling
+\code{\link[stats:quantile]{stats::quantile()}}.}
 
 \item{infs}{A logical indicating whether the smallest and
 largest cut point should be infinite.}
@@ -85,11 +89,11 @@ If \code{infs = FALSE} and a new value is greater than the
 largest value of \code{x}, a missing value will result.
 }
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 median(biomass_tr$carbon)
 discretize(biomass_tr$carbon, cuts = 2)
@@ -102,11 +106,5 @@ table(predict(carbon_binned, biomass_tr$carbon))
 
 carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 predict(carbon_no_infs, c(50, 100))
-
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
-rec <- rec \%>\% step_discretize(carbon, hydrogen)
-rec <- prep(rec, biomass_tr)
-binned_te <- bake(rec, biomass_te)
-table(binned_te$carbon)
+\dontshow{\}) # examplesIf}
 }

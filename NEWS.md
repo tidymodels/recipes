@@ -1,18 +1,109 @@
 # recipes (development version)
 
+* Added support for case weights in the following steps
+    - `step_center()`
+    - `step_classdist()`
+    - `step_corr()`
+    - `step_dummy_extract()`
+    - `step_filter_missing()`
+    - `step_impute_linear()`
+    - `step_impute_mean()`
+    - `step_impute_median()`
+    - `step_impute_mode()`
+    - `step_normalize()`
+    - `step_nzv()`
+    - `step_other()`
+    - `step_percentile()`
+    - `step_pca()`
+    - `step_sample()`
+    - `step_scale()`
+
+* A number of developer focused functions to deal with case weights are added: `are_weights_used()`, `get_case_weights()`, `averages()`, `medians()`, `variances()`, `correlations()`, `covariances()`, and `pca_wts()`
+
+* Fixed bug in which functions that `step_hyperbolic()` uses (#932).
+
+* `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
+ 
+* Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
+
+* `discretize()` and `step_discretize()` now defaults to returning factor levels similar to `cut()` by default, in line with `step_discretize_*()` steps from the embed package. (#674)
+
+* `step_dummy()` no works correctly with recipes trained on version 0.1.17 or earlier. (#921)
+
+* `step_naomit()` now actually had their defaults for `skip` changed to `TRUE` as was stated in release  0.1.13. (934)
+
+* `step_dummy()` has been made more robust to non-standard column names. (#879)
+
+* `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
+
+* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+* `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
+
+* Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743)
+
+* A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
+
+* `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
+
+* printing for `step_impute_knn()` now show variables that were imputed instead of variables used for imputing. (#837)
+
+* `step_discretize()` and `discretize()` will automatically remove missing values if `keep_na = TRUE`, removing the need to specify `keep_na = TRUE` and `na.rm = TRUE`. (#982)
+
+* `prep()` and `bake()` checks and errors if output of `bake.bake_*()` isn't a tibble.
+
+* `step_date()` now has a locale argument that can be used to control how the `month` and `dow` features are returned. (#1000)
+
+# recipes 0.2.0
+
+## New Steps
+
+* `step_nnmf_sparse()` uses a different implementation of non-negative matrix factorization that is much faster and enables regularized estimation. (#790)
+
+* `step_dummy_extract()` creates multiple variables from a character variable by extracting elements using regular expressions and counting those elements.
+
+* `step_filter_missing()` can filter columns based on proportion of missingness (#270).
+
+* `step_percentile()` replaces the value of a variable with its percentile from the training set. (#765)
+
 ## Improvements and Other Changes
-
-* Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
-
-* Added a new step called `step_filter_missing()`, which can filter columns based on proportion of missingness (#270).
-
-* Improved the efficiency of computations for the Box-Cox transformation (#820).
 
 * All recipe steps now officially support empty selections to be more aligned with dplyr and other packages that use tidyselect (#603, #531). For example, if a previous step removed all of the columns need for a later step, the recipe does not fail when it is estimated (with the exception of `step_mutate()`). The documentation in `?selections` has been updated with advice for writing selectors when filtering steps are used. (#813) 
 
+* Fixed bug in `step_harmonic()` printing and changed defaults to `role = "predictor"` and `keep_original_cols = FALSE` (#822).
+
+* Improved the efficiency of computations for the Box-Cox transformation (#820).
+
+* When a feature extraction step (e.g., `step_pca()`, `step_ica()`, etc.) has zero components specified, the `tidy()` method now lists the selected columns in the `terms` column.
+
+* Deprecation has started for `step_nnmf()` in favor of `step_nnmf_sparse()`. (#790)
+
+* Steps now have a dedicated subsection detailing what happens when `tidy()` is applied. (#876)
+
+* `step_ica()` now runs `fastICA()` using a specific set of random numbers so that initialization is reproducible. 
+
+* `tidy.recipe()` now returns a zero row tibble instead of an error when applied to a empty recipe. (#867)
+
 * `step_zv()` now has a `group` argument. The same filter is applied but looks for zero-variance within 1 or more columns that define groups. (#711)
 
-* `bake()` will now error if `new_data` doesn't contain all the original predictors. (#491)
+* `detect_step()` is no longer restricted to steps created in recipes (#869).
+
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to extract parameter sets and single parameters from `recipe` objects. 
+
+* `step_other()` now allow for setting `threshold = 0` which will result in no othering. (#904)
+
+## Breaking Changes
+
+* `step_ica()` now indirectly uses the `fastICA` package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (#823)
+
+* `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
+
+* `bake()` will now error if `new_data` doesn't contain all the required columns. (#491)
+
+## Developer
+
+* The print methods have been internally changes to use `print_step()` instead of `printer()`. This is done for a smoother transition to use `cli` in the next version. (#871)
+
 
 # recipes 0.1.17
 
@@ -59,7 +150,6 @@
 * `step_logit()` gained an offset argument for cases where the input is either zero or one (#784)
 
 * The `tidy()` methods for objects from `check_new_values()`, `check_class()` and `step_nnmf()` are now exported.
-
 
 # recipes 0.1.16
 

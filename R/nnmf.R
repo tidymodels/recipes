@@ -1,15 +1,17 @@
-#' NNMF Signal Extraction
+#' Non-Negative Matrix Factorization Signal Extraction
+#'
+#' @description
 #'
 #' `step_nnmf` creates a *specification* of a recipe step
 #'  that will convert numeric data into one or more non-negative
 #'  components.
 #'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Please use [step_nnmf_sparse()] instead of this step function.
+#'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_comp The number of components to retain as new
-#'  predictors. If `num_comp` is greater than the number of columns
-#'  or the number of possible components, a smaller value will be
-#'  used.
 #' @param num_run A positive integer for the number of computations runs used
 #'  to obtain a consensus projection.
 #' @param options A list of options to `nmf()` in the NMF package by way of the
@@ -18,7 +20,7 @@
 #'  processing is turned off in favor of resample-level parallelization.
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @param prefix A character string that will be the prefix to the
@@ -41,13 +43,17 @@
 #'  If `num = 101`, the names would be `NNMF001` -
 #'  `NNMF101`.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) and the number of components is returned.
 #'
-#' @examples
+#' # Tidying
 #'
-#' library(modeldata)
-#' data(biomass)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the selectors or variables selected) and the number of
+#' components is returned.
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
+#' data(biomass, package = "modeldata")
 #'
 #' # rec <- recipe(HHV ~ ., data = biomass) %>%
 #' #   update_role(sample, new_role = "id var") %>%
@@ -65,7 +71,7 @@ step_nnmf <-
            ...,
            role = "predictor",
            trained = FALSE,
-           num_comp  = 2,
+           num_comp = 2,
            num_run = 30,
            options = list(),
            res = NULL,
@@ -74,9 +80,9 @@ step_nnmf <-
            seed = sample.int(10^5, 1),
            keep_original_cols = FALSE,
            skip = FALSE,
-           id = rand_id("nnmf")
-           ) {
+           id = rand_id("nnmf")) {
     recipes_pkg_check(required_pkgs.step_nnmf())
+    lifecycle::deprecate_warn("0.2.0", "step_nnmf()", "step_nnmf_sparse()")
     add_step(
       recipe,
       step_nnmf_new(
@@ -125,20 +131,24 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names])
 
   if (x$num_comp > 0 && length(col_names) > 0) {
-
     x$num_comp <- min(x$num_comp, length(col_names))
 
-    opts <- list(options = x$options)
-    opts$ndim <- x$num_comp
-    opts$nrun <- x$num_run
-    opts$seed <- x$seed
-    opts$.mute <- c("message", "output")
-    opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
-    opts$.method <- "NNMF"
     nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
-    opts$options <- list(.options = nmf_opts)
 
-    nnm <- try(do.call(dimRed::embed, opts), silent = TRUE)
+    nnm <- try(
+      eval_dimred_call(
+        "embed",
+        .method = "NNMF",
+        .data = dimred_data(training[, col_names, drop = FALSE]),
+        ndim = x$num_comp,
+        nrun = x$num_run,
+        seed = x$seed,
+        .mute = c("message", "output"),
+        options = x$options,
+        .options = nmf_opts
+      ),
+      silent = TRUE
+    )
     if (inherits(nnm, "try-error")) {
       rlang::abort(paste0("`step_nnmf` failed with error:\n", as.character(nnm)))
     }
@@ -168,11 +178,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
   if (object$num_comp > 0 && length(object$columns) > 0) {
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-
-      object$res@apply(
-        dimRed::dimRedData(
-          as.data.frame(new_data[, nnmf_vars, drop = FALSE])
-        )
-      )@data
+      object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
@@ -182,17 +188,13 @@ bake.step_nnmf <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 
 print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
-  if (x$num_comp == 0 || length(x$columns) == 0) {
-    cat("Non-negative matrix factorization was not done.\n")
-  } else {
-    cat("Non-negative matrix factorization for ")
-    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
-  }
+  title <- "Non-negative matrix factorization for "
+  print_step(colnames(x$res@org.data), x$terms, x$trained, title, width)
   invisible(x)
 }
 
@@ -206,16 +208,18 @@ tidy.step_nnmf <- function(x, ...) {
       var_nms <- rownames(res)
       res <- tibble::as_tibble(res)
       res$terms <- var_nms
-      res <- tidyr::pivot_longer(res, cols = c(-terms),
-                                 names_to = "component", values_to = "value")
-      res <- res[,c("terms", "value", "component")]
-      res <- res[order(res$component, res$terms),]
+      res <- tidyr::pivot_longer(res,
+        cols = c(-terms),
+        names_to = "component", values_to = "value"
+      )
+      res <- res[, c("terms", "value", "component")]
+      res <- res[order(res$component, res$terms), ]
     } else {
-      res <- tibble(terms = unname(x$columns), value = na_dbl, component  = na_dbl)
+      res <- tibble(terms = unname(x$columns), value = na_dbl, component = na_dbl)
     }
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, value = na_dbl, component  = x$num_comp)
+    res <- tibble(terms = term_names, value = na_dbl, component = x$num_comp)
   }
   res$id <- x$id
   res
@@ -223,7 +227,6 @@ tidy.step_nnmf <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_nnmf <- function(x, ...) {
   tibble::tibble(
@@ -243,4 +246,3 @@ tunable.step_nnmf <- function(x, ...) {
 required_pkgs.step_nnmf <- function(x, ...) {
   c("dimRed", "NMF")
 }
-

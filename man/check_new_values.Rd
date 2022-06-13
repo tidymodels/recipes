@@ -39,8 +39,8 @@ values as value or not. Defaults to \code{TRUE}.}
 This is \code{NULL} until computed by prep.recipe().}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -59,13 +59,21 @@ operation that will check if variables contain new values.
 This check will break the \code{bake} function if any of the checked
 columns does contain values it did not contain when \code{prep} was called
 on the recipe. If the check passes, nothing is changed to the data.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(credit_data)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(credit_data, package = "modeldata")
 
 # If the test passes, `new_data` is returned unaltered
 recipe(credit_data) \%>\%
@@ -73,8 +81,8 @@ recipe(credit_data) \%>\%
   prep() \%>\%
   bake(new_data = credit_data)
 
-# If `new_data` contains values not in `x` at the `prep()` function,
-# the `bake()` function will break.
+# If `new_data` contains values not in `x` at the [prep()] function,
+# the [bake()] function will break.
 \dontrun{
 recipe(credit_data \%>\% dplyr::filter(Home != "rent")) \%>\%
   check_new_values(Home) \%>\%
@@ -96,6 +104,7 @@ recipe(credit_data \%>\% dplyr::filter(!is.na(Home))) \%>\%
   prep() \%>\%
   bake(credit_data)
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

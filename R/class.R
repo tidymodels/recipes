@@ -10,7 +10,7 @@
 #' @param allow_additional If `TRUE` a variable is allowed to
 #'  have additional classes to the one(s) that are checked.
 #' @param class_list A named list of column classes. This is
-#'  `NULL` until computed by [prep.recipe()].
+#'  `NULL` until computed by [prep()].
 #' @template check-return
 #'
 #' @family checks
@@ -29,27 +29,31 @@
 #'  the check will be break `bake` when `strings_as_factors` is
 #'  `TRUE`.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the type) is returned.
+#'  # Tidying
 #'
-#' @examples
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the type)
+#'  is returned.
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(okc)
+#' data(Sacramento, package = "modeldata")
 #'
 #' # Learn the classes on the train set
-#' train <- okc[1:1000, ]
-#' test  <- okc[1001:2000, ]
-#' recipe(train, age ~ . ) %>%
+#' train <- Sacramento[1:500, ]
+#' test <- Sacramento[501:nrow(Sacramento), ]
+#' recipe(train, sqft ~ .) %>%
 #'   check_class(everything()) %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)
 #'
 #' # Manual specification
-#' recipe(train, age ~ .) %>%
-#'   check_class(age, class_nm = "integer") %>%
-#'   check_class(diet, location, class_nm = "character") %>%
-#'   check_class(date, class_nm = "Date") %>%
+#' recipe(train, sqft ~ .) %>%
+#'   check_class(sqft, class_nm = "integer") %>%
+#'   check_class(city, zip, type, class_nm = "factor") %>%
+#'   check_class(latitude, longitude, class_nm = "numeric") %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)
 #'
@@ -69,12 +73,11 @@
 #'   check_class(time, class_nm = "POSIXt", allow_additional = TRUE) %>%
 #'   prep(x_df) %>%
 #'   bake(x_df)
-#'
 check_class <-
   function(recipe,
            ...,
            role = NA,
-           trained  = FALSE,
+           trained = FALSE,
            class_nm = NULL,
            allow_additional = FALSE,
            skip = FALSE,
@@ -123,7 +126,7 @@ prep.check_class <- function(x,
   # class can give back multiple values, return shape
   # is not predetermined. Thats why we use lapply instead.
   if (is.null(x$class_nm)) {
-    class_list <- lapply(training[ ,col_names], class)
+    class_list <- lapply(training[, col_names], class)
   } else {
     class_list <- rep(list(x$class_nm), length(col_names))
     names(class_list) <- col_names
@@ -160,7 +163,7 @@ bake_check_class_core <- function(x,
         " but has the class(es) ",
         paste(classes, collapse = ", "),
         "."
-    )
+      )
     )
   }
 
@@ -182,21 +185,21 @@ bake_check_class_core <- function(x,
 bake.check_class <- function(object,
                              new_data,
                              ...) {
-
   col_names <- names(object$class_list)
   mapply(bake_check_class_core,
-         new_data[ ,col_names],
-         object$class_list,
-         col_names,
-         MoreArgs = list(aa = object$allow_additional))
+    new_data[, col_names],
+    object$class_list,
+    col_names,
+    MoreArgs = list(aa = object$allow_additional)
+  )
 
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_class <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking the class(es) for ", sep = "")
-    printer(names(x$class_list), x$terms, x$trained, width = width)
+    title <- "Checking the class(es) for "
+    print_step(names(x$class_list), x$terms, x$trained, title, width)
     invisible(x)
   }
 

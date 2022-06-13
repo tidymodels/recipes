@@ -22,9 +22,6 @@
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with columns echoing the
-#'  values of `lat`, `lon`, `ref_lat`, `ref_lon`, `is_lat_lon`, `name`, and `id`
-#'  is returned.
 #' @family multivariate transformation steps
 #' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
@@ -32,17 +29,25 @@
 #'  distances if `is_lat_lon` is FALSE. If `is_lat_lon` is TRUE, the Haversine
 #'  formula is used to calculate the great-circle distance in meters.
 #'
-#' @examples
+#' # Tidying
 #'
-#' library(modeldata)
-#' data(Smithsonian)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
+#' `is_lat_lon`, `name`, and `id` is returned.
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Smithsonian, package = "modeldata")
 #'
 #' # How close are the museums to Union Station?
-#' near_station <- recipe( ~ ., data = Smithsonian) %>%
+#' near_station <- recipe(~., data = Smithsonian) %>%
 #'   update_role(name, new_role = "location") %>%
-#'   step_geodist(lat = latitude, lon = longitude, log = FALSE,
-#'                ref_lat = 38.8986312, ref_lon = -77.0062457,
-#'                is_lat_lon = TRUE) %>%
+#'   step_geodist(
+#'     lat = latitude, lon = longitude, log = FALSE,
+#'     ref_lat = 38.8986312, ref_lon = -77.0062457,
+#'     is_lat_lon = TRUE
+#'   ) %>%
 #'   prep(training = Smithsonian)
 #'
 #' bake(near_station, new_data = NULL) %>%
@@ -62,21 +67,28 @@ step_geodist <- function(recipe,
                          columns = NULL,
                          skip = FALSE,
                          id = rand_id("geodist")) {
-  if (length(ref_lon) != 1 || !is.numeric(ref_lon))
+  if (length(ref_lon) != 1 || !is.numeric(ref_lon)) {
     rlang::abort("`ref_lon` should be a single numeric value.")
-  if (length(ref_lat) != 1 || !is.numeric(ref_lat))
+  }
+  if (length(ref_lat) != 1 || !is.numeric(ref_lat)) {
     rlang::abort("`ref_lat` should be a single numeric value.")
-  if (length(is_lat_lon) != 1 || !is.logical(is_lat_lon))
+  }
+  if (length(is_lat_lon) != 1 || !is.logical(is_lat_lon)) {
     rlang::abort("`is_lat_lon` should be a single logical value.")
-  if (length(log) != 1 || !is.logical(log))
+  }
+  if (length(log) != 1 || !is.logical(log)) {
     rlang::abort("`log` should be a single logical value.")
-  if (length(name) != 1 || !is.character(name))
+  }
+  if (length(name) != 1 || !is.character(name)) {
     rlang::abort("`name` should be a single character value.")
+  }
 
-  if (is_lat_lon && abs(ref_lat) > 90.0)
+  if (is_lat_lon && abs(ref_lat) > 90.0) {
     rlang::abort("`ref_lat` should be between -90 and 90")
-  if (is_lat_lon && abs(ref_lon) > 180.0)
+  }
+  if (is_lat_lon && abs(ref_lon) > 180.0) {
     rlang::abort("`ref_lon` should be between -180 and 180")
+  }
 
 
   add_step(
@@ -120,7 +132,7 @@ step_geodist_new <-
 
 # for backward compatibility
 check_is_lat_lon <- function(x) {
-  if (!'is_lat_lon' %in% names(x)) {
+  if (!"is_lat_lon" %in% names(x)) {
     x$is_lat_lon <- FALSE
   }
   x
@@ -134,17 +146,20 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
 
   x <- check_is_lat_lon(x)
 
-  if (length(lon_name) > 1)
+  if (length(lon_name) > 1) {
     rlang::abort("`lon` should resolve to a single column name.")
+  }
   check_type(training[, lon_name])
 
-  if (length(lat_name) > 1)
+  if (length(lat_name) > 1) {
     rlang::abort("`lat` should resolve to a single column name.")
+  }
   check_type(training[, lat_name])
 
 
-  if (any(names(training) == x$name))
+  if (any(names(training) == x$name)) {
     rlang::abort("'", x$name, "' is already used in the data.")
+  }
 
   step_geodist_new(
     lon = x$lon,
@@ -162,19 +177,19 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   )
 }
 
+# TODO case weights for distances
 geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
-  sqrt((x_1 - x_2) ^ 2L + (y_1 - y_2) ^ 2L)
+  sqrt((x_1 - x_2)^2L + (y_1 - y_2)^2L)
 }
 
 
 # earth_radius = 6371e3 in meters
 geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3) {
-
-  if(any(abs(x_1) > 180.0)) {
+  if (any(abs(x_1) > 180.0)) {
     rlang::abort("All `lon` values should be between -180 and 180")
   }
 
-  if(any(abs(y_1) > 90.0)) {
+  if (any(abs(y_1) > 90.0)) {
     rlang::abort("All `lat` values should be between -90 and 90")
   }
 
@@ -189,31 +204,33 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3) {
   delta_lat <- (y_2 - y_1) / 2.0
   delta_lon <- (x_2 - x_1) / 2.0
 
-  a <- sin(delta_lat) ^ 2L + cos(y_1) * cos(y_2) * sin(delta_lon) ^ 2L
-  c <- 2.0 * atan2(sqrt(a), sqrt(1-a))
+  a <- sin(delta_lat)^2L + cos(y_1) * cos(y_2) * sin(delta_lon)^2L
+  c <- 2.0 * atan2(sqrt(a), sqrt(1 - a))
 
   earth_radius * c
-
 }
 
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
-
   object <- check_is_lat_lon(object)
 
-  if(object$is_lat_lon) {
+  if (object$is_lat_lon) {
     dist_vals <-
-      geo_dist_calc_lat_lon(new_data[[object$columns[2]]], # lon
-                            new_data[[object$columns[1]]], # lat
-                            object$ref_lon,
-                            object$ref_lat)
+      geo_dist_calc_lat_lon(
+        new_data[[object$columns[2]]], # lon
+        new_data[[object$columns[1]]], # lat
+        object$ref_lon,
+        object$ref_lat
+      )
   } else {
     dist_vals <-
-      geo_dist_calc_xy(new_data[[object$columns[2]]], # lon
-                       new_data[[object$columns[1]]], # lat
-                       object$ref_lon,
-                       object$ref_lat)
+      geo_dist_calc_xy(
+        new_data[[object$columns[2]]], # lon
+        new_data[[object$columns[1]]], # lat
+        object$ref_lon,
+        object$ref_lat
+      )
   }
 
   if (object$log) {
@@ -227,9 +244,12 @@ bake.step_geodist <- function(object, new_data, ...) {
 
 print.step_geodist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Geographical distances from",
-        format(x$ref_lat, digits = 10), "x",
-        format(x$ref_lon, digits = 10), "\n")
+    title <- paste(
+      "Geographical distances from",
+      format(x$ref_lat, digits = 10), "x",
+      format(x$ref_lon, digits = 10), "using "
+    )
+    print_step(x$columns, c(x$lat, x$lon), x$trained, title, width)
     invisible(x)
   }
 
@@ -238,7 +258,6 @@ print.step_geodist <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_geodist <- function(x, ...) {
-
   x <- check_is_lat_lon(x)
 
   if (is_trained(x)) {

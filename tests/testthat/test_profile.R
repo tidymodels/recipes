@@ -1,134 +1,129 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(okc)
-okc <- okc[1:20,]
-okc$diet <- factor(okc$diet)
-okc$int <- 1:20
-okc_rec <- recipe(~ ., data = okc)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
+Sacramento <- Sacramento[1:20, ]
+Sacramento$city <- factor(Sacramento$city)
+Sacramento$int <- 1:20
+sacr_rec <- recipe(~., data = Sacramento)
 
 is_unq <- function(x) length(unique(x)) == 1
 
-test_that('numeric profile', {
-  num_rec <- okc_rec %>%
-    step_profile(-age, profile = vars(age)) %>%
-    prep(okc) %>%
+test_that("numeric profile", {
+  num_rec <- sacr_rec %>%
+    step_profile(-sqft, profile = vars(sqft)) %>%
+    prep(Sacramento) %>%
     juice()
-  expect_true(is_unq(num_rec$diet))
-  expect_true(is_unq(num_rec$height))
-  expect_true(is_unq(num_rec$location))
-  expect_true(is_unq(num_rec$date))
+  expect_true(is_unq(num_rec$city))
+  expect_true(is_unq(num_rec$price))
+  expect_true(is_unq(num_rec$zip))
+  expect_true(is_unq(num_rec$beds))
   expect_true(is_unq(num_rec$int))
-  expect_false(is_unq(num_rec$age))
+  expect_false(is_unq(num_rec$sqft))
 
-  expect_true(inherits(num_rec$diet,     "factor"))
-  expect_true(inherits(num_rec$height,   "integer"))
-  expect_true(inherits(num_rec$location, "factor"))
-  expect_true(inherits(num_rec$date,     "Date"))
-  expect_true(inherits(num_rec$int,      "integer"))
-  expect_true(inherits(num_rec$age,      "integer"))
-
+  expect_true(inherits(num_rec$city, "factor"))
+  expect_true(inherits(num_rec$price, "integer"))
+  expect_true(inherits(num_rec$zip, "factor"))
+  expect_true(inherits(num_rec$beds, "integer"))
+  expect_true(inherits(num_rec$int, "integer"))
+  expect_true(inherits(num_rec$sqft, "integer"))
 })
 
 
-test_that('factor profile', {
-  fact_rec <- okc_rec %>%
-    step_profile(-diet, profile = vars(diet)) %>%
-    prep(okc) %>%
+test_that("factor profile", {
+  fact_rec <- sacr_rec %>%
+    step_profile(-city, profile = vars(city)) %>%
+    prep(Sacramento) %>%
     juice()
-  expect_false(is_unq(fact_rec$diet))
-  expect_true(is_unq(fact_rec$height))
-  expect_true(is_unq(fact_rec$location))
-  expect_true(is_unq(fact_rec$date))
-  expect_true(is_unq(fact_rec$age))
-
+  expect_false(is_unq(fact_rec$city))
+  expect_true(is_unq(fact_rec$price))
+  expect_true(is_unq(fact_rec$zip))
+  expect_true(is_unq(fact_rec$beds))
+  expect_true(is_unq(fact_rec$sqft))
 })
 
 
-test_that('date profile', {
-  date_rec <- okc_rec %>%
-    step_profile(-date, profile = vars(date)) %>%
-    prep(okc) %>%
+test_that("beds profile", {
+  beds_rec <- sacr_rec %>%
+    step_profile(-beds, profile = vars(beds)) %>%
+    prep(Sacramento) %>%
     juice()
-  expect_true(is_unq(date_rec$diet))
-  expect_true(is_unq(date_rec$height))
-  expect_true(is_unq(date_rec$location))
-  expect_false(is_unq(date_rec$date))
-  expect_true(is_unq(date_rec$age))
-
+  expect_true(is_unq(beds_rec$city))
+  expect_true(is_unq(beds_rec$price))
+  expect_true(is_unq(beds_rec$zip))
+  expect_false(is_unq(beds_rec$beds))
+  expect_true(is_unq(beds_rec$sqft))
 })
 
-test_that('character profile', {
-  chr_rec <- okc_rec %>%
-    step_profile(-location, profile = vars(location)) %>%
-    prep(okc, strings_as_factors = FALSE) %>%
+test_that("character profile", {
+  chr_rec <- sacr_rec %>%
+    step_profile(-zip, profile = vars(zip)) %>%
+    prep(Sacramento, strings_as_factors = FALSE) %>%
     juice()
-  expect_true(is_unq(chr_rec$diet))
-  expect_true(is_unq(chr_rec$height))
-  expect_false(is_unq(chr_rec$location))
-  expect_true(is_unq(chr_rec$date))
-  expect_true(is_unq(chr_rec$age))
-
+  expect_true(is_unq(chr_rec$city))
+  expect_true(is_unq(chr_rec$price))
+  expect_false(is_unq(chr_rec$zip))
+  expect_true(is_unq(chr_rec$beds))
+  expect_true(is_unq(chr_rec$sqft))
 })
 
 
-test_that('bad values', {
-  expect_error(
-    okc_rec %>%
-      step_profile(everything(), profile = vars(age)) %>%
-      prep(data = okc)
+test_that("bad values", {
+  expect_snapshot(error = TRUE,
+    sacr_rec %>%
+      step_profile(everything(), profile = vars(sqft)) %>%
+      prep(data = Sacramento)
   )
-  expect_error(
-    okc_rec %>%
+  expect_snapshot(error = TRUE,
+    sacr_rec %>%
       step_profile(everything(), profile = age) %>%
-      prep(data = okc)
+      prep(data = Sacramento)
   )
-  expect_error(
-    okc_rec %>%
-      step_profile(age, date, height, profile = vars(location, date)) %>%
-      prep(data = okc)
+  expect_snapshot(error = TRUE,
+    sacr_rec %>%
+      step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
+      prep(data = Sacramento)
   )
-  expect_error(
-    okc_rec %>%
-      step_profile(diet, profile = vars(age), pct = -1) %>%
-      prep(data = okc)
+  expect_snapshot(error = TRUE,
+    sacr_rec %>%
+      step_profile(city, profile = vars(sqft), pct = -1) %>%
+      prep(data = Sacramento)
   )
-  expect_error(
-    okc_rec %>%
-      step_profile(diet, profile = vars(age), grid = 1:3) %>%
-      prep(data = okc)
+  expect_snapshot(error = TRUE,
+    sacr_rec %>%
+      step_profile(city, profile = vars(sqft), grid = 1:3) %>%
+      prep(data = Sacramento)
   )
-  expect_error(
-    okc_rec %>%
-      step_profile(diet, profile = vars(age), grid = list(pctl = 1, len = 2)) %>%
-      prep(data = okc)
+  expect_snapshot(error = TRUE,
+    sacr_rec %>%
+      step_profile(city, profile = vars(sqft), grid = list(pctl = 1, len = 2)) %>%
+      prep(data = Sacramento)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     fixed(rep(c(TRUE, FALSE), each = 5))
   )
-
 })
 
-test_that('printing', {
-  num_rec_1 <- okc_rec %>%
-    step_profile(-age, profile = vars(age))
-  num_rec_2 <- prep(num_rec_1, okc)
+test_that("printing", {
+  num_rec_1 <- sacr_rec %>%
+    step_profile(-sqft, profile = vars(sqft))
+  num_rec_2 <- prep(num_rec_1, Sacramento)
 
-  expect_output(print(num_rec_1))
-  expect_output(print(num_rec_2))
+  expect_snapshot(print(num_rec_1))
+  expect_snapshot(print(num_rec_2))
 })
 
 
 
-test_that('tidy', {
-  num_rec_3 <- okc_rec %>%
-    step_profile(-age, profile = vars(contains("age")), id = "")
-  num_rec_4 <- prep(num_rec_3, okc)
+test_that("tidy", {
+  num_rec_3 <- sacr_rec %>%
+    step_profile(-sqft, profile = vars(contains("sqft")), id = "")
+  num_rec_4 <- prep(num_rec_3, Sacramento)
 
   tidy_3 <- tidy(num_rec_3, 1)
   exp_3 <- tibble(
-    terms = c("-age", "contains(\"age\")"),
+    terms = c("-sqft", "contains(\"sqft\")"),
     type = c("fixed", "profiled"),
     id = ""
   )
@@ -136,8 +131,9 @@ test_that('tidy', {
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
-    terms = c("diet", "height", "location", "date", "Class", "int", "age"),
-    type = c("fixed", "fixed", "fixed", "fixed", "fixed", "fixed", "profiled"),
+    terms = c("city", "zip", "beds", "baths", "type", "price", "latitude",
+              "longitude", "int", "sqft"),
+    type = c(rep("fixed", 9), "profiled"),
     id = ""
   )
   expect_equal(tidy_4, exp_4)
@@ -172,6 +168,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_profile(rec, profile = vars(mpg))
 

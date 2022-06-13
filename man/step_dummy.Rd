@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy.R
 \name{step_dummy}
 \alias{step_dummy}
-\title{Dummy Variables Creation}
+\title{Create traditional dummy variables}
 \usage{
 step_dummy(
   recipe,
@@ -45,14 +45,14 @@ new dummy columns. See Details below.}
 \item{levels}{A list that contains the information needed to
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -101,7 +101,7 @@ contained in the training set), a missing value is assigned to
 the results. See \code{\link[=step_other]{step_other()}} for an alternative.
 
 If no columns are selected (perhaps due to an earlier \code{step_zv()}),
-\code{bake()} will return the data as-is (e.g. with no dummy variables).
+\code{\link[=bake]{bake()}} will return the data as-is (e.g. with no dummy variables).
 
 Note that, by default, the new dummy variable column names obey the naming
 rules for columns. If there are levels such as "0", \code{\link[=dummy_names]{dummy_names()}} will put
@@ -111,47 +111,55 @@ this step.
 
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or original variables selected) and \code{columns} (the
-list of corresponding binary columns) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or original variables selected) and \code{columns}
+(the list of corresponding binary columns) is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
-okc <- okc[complete.cases(okc),]
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
-# Original data: diet has 18 levels
-length(unique(okc$diet))
-unique(okc$diet) \%>\% sort()
+# Original data: city has 37 levels
+length(unique(Sacramento$city))
+unique(Sacramento$city) \%>\% sort()
 
-rec <- recipe(~ diet + age + height, data = okc)
+rec <- recipe(~ city + sqft + price, data = Sacramento)
 
-# Default dummy coding: 17 dummy variables
+# Default dummy coding: 36 dummy variables
 dummies <- rec \%>\%
-    step_dummy(diet) \%>\%
-    prep(training = okc)
+  step_dummy(city) \%>\%
+  prep(training = Sacramento)
 
 dummy_data <- bake(dummies, new_data = NULL)
 
 dummy_data \%>\%
-    select(starts_with("diet")) \%>\%
-    names() # level "anything" is the reference level
+  select(starts_with("city")) \%>\%
+  names() # level "anything" is the reference level
 
-# Obtain the full set of 18 dummy variables using `one_hot` option
+# Obtain the full set of 37 dummy variables using `one_hot` option
 dummies_one_hot <- rec \%>\%
-    step_dummy(diet, one_hot = TRUE) \%>\%
-    prep(training = okc)
+  step_dummy(city, one_hot = TRUE) \%>\%
+  prep(training = Sacramento)
 
 dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 
 dummy_data_one_hot \%>\%
-    select(starts_with("diet")) \%>\%
-    names() # no reference level
+  select(starts_with("city")) \%>\%
+  names() # no reference level
 
 
 tidy(dummies, number = 1)
 tidy(dummies_one_hot, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}
@@ -160,6 +168,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_factor2string}()},
 \code{\link{step_holiday}()},
@@ -172,6 +181,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_regex}()},
 \code{\link{step_relevel}()},
 \code{\link{step_string2factor}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

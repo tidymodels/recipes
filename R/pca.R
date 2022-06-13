@@ -7,9 +7,11 @@
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned? By default, the new columns created by this step from
 #'  the original variables will be used as _predictors_ in a model.
-#' @param num_comp The number of PCA components to retain as new predictors.
+#' @param num_comp The number of components to retain as new predictors.
 #'  If `num_comp` is greater than the number of columns or the number of
-#'  possible components, a smaller value will be used.
+#'  possible components, a smaller value will be used. If `num_comp = 0`
+#'  is set then no transformation is done and selected variables will
+#'  stay unchanged.
 #' @param threshold A fraction of the total variance that should be covered by
 #'  the components. For example, `threshold = .75` means that `step_pca` should
 #'  generate enough components to capture 75 percent of the variability in the
@@ -20,7 +22,7 @@
 #'  FALSE`, `scale. = FALSE`, and `tol = NULL`. **Note** that the argument `x`
 #'  should not be passed here (or at all).
 #' @param res The [stats::prcomp.default()] object is stored here once this
-#'  preprocessing step has be trained by [prep.recipe()].
+#'  preprocessing step has be trained by [prep()].
 #' @param columns A character string of variable names that will
 #'  be populated elsewhere.
 #' @param prefix A character string for the prefix of the resulting new
@@ -58,15 +60,19 @@
 #'  number of components that are required to capture a specified
 #'  fraction of the total variance in the variables.
 #'
-#' When you [`tidy()`] this step, use either `type = "coef"` for the variable
-#'  loadings per component or `type = "variance"` for how much variance each
-#'  component accounts for.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
+#' for the variable loadings per component or `type = "variance"` for how
+#' much variance each component accounts for.
+#'
+#' @template case-weights-unsupervised
 #'
 #' @references Jolliffe, I. T. (2010). *Principal Component
 #'  Analysis*. Springer.
 #'
 #' @examples
-#' rec <- recipe( ~ ., data = USArrests)
+#' rec <- recipe(~., data = USArrests)
 #' pca_trans <- rec %>%
 #'   step_normalize(all_numeric()) %>%
 #'   step_pca(all_numeric(), num_comp = 3)
@@ -75,7 +81,8 @@
 #'
 #' rng <- extendrange(c(pca_data$PC1, pca_data$PC2))
 #' plot(pca_data$PC1, pca_data$PC2,
-#'      xlim = rng, ylim = rng)
+#'   xlim = rng, ylim = rng
+#' )
 #'
 #' with_thresh <- rec %>%
 #'   step_normalize(all_numeric()) %>%
@@ -89,7 +96,7 @@ step_pca <- function(recipe,
                      ...,
                      role = "predictor",
                      trained = FALSE,
-                     num_comp  = 5,
+                     num_comp = 5,
                      threshold = NA,
                      options = list(),
                      res = NULL,
@@ -98,7 +105,6 @@ step_pca <- function(recipe,
                      keep_original_cols = FALSE,
                      skip = FALSE,
                      id = rand_id("pca")) {
-
   if (!is_tune(threshold) & !is_varying(threshold)) {
     if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
       rlang::abort("`threshold` should be on (0, 1].")
@@ -119,14 +125,15 @@ step_pca <- function(recipe,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = NULL
     )
   )
 }
 
 step_pca_new <-
   function(terms, role, trained, num_comp, threshold, options, res, columns,
-           prefix,  keep_original_cols, skip, id) {
+           prefix, keep_original_cols, skip, id, case_weights) {
     step(
       subclass = "pca",
       terms = terms,
@@ -140,41 +147,53 @@ step_pca_new <-
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
 
-  if (x$num_comp > 0 && length(col_names) > 0) {
-    prc_call <-
-      expr(prcomp(
-        retx = FALSE,
-        center = FALSE,
-        scale. = FALSE,
-        tol = NULL
-      ))
-    if (length(x$options) > 0)
-      prc_call <- mod_call_args(prc_call, args = x$options)
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
-    prc_call$x <- expr(training[, col_names, drop = FALSE])
-    prc_obj <- eval(prc_call)
+  if (x$num_comp > 0 && length(col_names) > 0) {
+    if (is.null(wts)) {
+      prc_call <-
+        expr(prcomp(
+          retx = FALSE,
+          center = FALSE,
+          scale. = FALSE,
+          tol = NULL
+        ))
+      if (length(x$options) > 0) {
+        prc_call <- mod_call_args(prc_call, args = x$options)
+      }
+
+      prc_call$x <- expr(training[, col_names, drop = FALSE])
+      prc_obj <- eval(prc_call)
+      ## decide on removing prc elements that aren't used in new projections
+      ## e.g. `sdev` etc.
+    } else {
+      prc_obj <- pca_wts(training[, col_names, drop = FALSE], wts = wts)
+    }
 
     x$num_comp <- min(x$num_comp, length(col_names))
     if (!is.na(x$threshold)) {
-      total_var <- sum(prc_obj$sdev ^ 2)
+      total_var <- sum(prc_obj$sdev^2)
       num_comp <-
-        which.max(cumsum(prc_obj$sdev ^ 2 / total_var) >= x$threshold)
-      if (length(num_comp) == 0)
+        which.max(cumsum(prc_obj$sdev^2 / total_var) >= x$threshold)
+      if (length(num_comp) == 0) {
         num_comp <- length(prc_obj$sdev)
+      }
       x$num_comp <- num_comp
     }
-    ## decide on removing prc elements that aren't used in new projections
-    ## e.g. `sdev` etc.
 
   } else {
     prc_obj <- NULL
@@ -192,15 +211,22 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
+
+  if (is.null(object$columns)) {
+    object$columns <- stats::setNames(nm = rownames(object$res$rotation))
+  }
+
   if (length(object$columns) > 0 && !all(is.na(object$res$rotation))) {
     pca_vars <- rownames(object$res$rotation)
-    comps <- predict(object$res, newdata = new_data[, pca_vars])
+    comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
+      object$res$rotation
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
@@ -210,18 +236,28 @@ bake.step_pca <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
-    if (length(x$columns) == 0 || all(is.na(x$res$rotation))) {
-      cat("No PCA components were extracted.\n")
-    } else {
-      cat("PCA extraction with ")
-      printer(rownames(x$res$rotation), x$terms, x$trained, width = width)
-    }
+    if (x$trained) {
+      if (is.null(x$columns)) {
+        x$columns <- stats::setNames(nm = rownames(x$res$rotation))
+      }
 
+      if (length(x$columns) == 0 || all(is.na(x$res$rotation))) {
+        title <- "No PCA components were extracted from "
+        columns <- names(x$columns)
+      } else {
+        title <- glue::glue("PCA extraction with ")
+        columns <- rownames(x$res$rotation)
+      }
+    } else {
+      title <- "PCA extraction with "
+    }
+    print_step(columns, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
@@ -235,21 +271,25 @@ pca_coefs <- function(x) {
     res$terms <- rep(unname(x$columns), npc)
     res <- as_tibble(res)[, c("terms", "value", "component")]
   } else {
-    res <- tibble::tibble(terms = unname(x$columns), value = rlang::na_dbl,
-                          component = rlang::na_chr)
+    res <- tibble::tibble(
+      terms = unname(x$columns), value = rlang::na_dbl,
+      component = rlang::na_chr
+    )
   }
   res
 }
 
 pca_variances <- function(x) {
   if (x$num_comp > 0 && length(x$columns) > 0) {
-    variances <- x$res$sdev ^ 2
+    variances <- x$res$sdev^2
     p <- length(variances)
     tot <- sum(variances)
-    y <- c(variances,
-           cumsum(variances),
-           variances / tot * 100,
-           cumsum(variances) / tot * 100)
+    y <- c(
+      variances,
+      cumsum(variances),
+      variances / tot * 100,
+      cumsum(variances) / tot * 100
+    )
     x <-
       rep(
         c(
@@ -261,9 +301,11 @@ pca_variances <- function(x) {
         each = p
       )
 
-    res <- tibble::tibble(terms = x,
-                          value = y,
-                          component = rep(1:p, 4))
+    res <- tibble::tibble(
+      terms = x,
+      value = y,
+      component = rep(1:p, 4)
+    )
   } else {
     res <- tibble::tibble(
       terms = unname(x$columns),
@@ -284,9 +326,11 @@ pca_variances <- function(x) {
 tidy.step_pca <- function(x, type = "coef", ...) {
   if (!is_trained(x)) {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl,
-                  component  = na_chr)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl,
+      component = na_chr
+    )
   } else {
     type <- match.arg(type, c("coef", "variance"))
     if (type == "coef") {
@@ -299,9 +343,6 @@ tidy.step_pca <- function(x, type = "coef", ...) {
   res
 }
 
-
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_pca <- function(x, ...) {
   tibble::tibble(

@@ -1,3 +1,55 @@
+# bad args
+
+    Code
+      rec %>% step_string2factor(w, n) %>% prep(ex_dat)
+    Condition
+      Error in `prep()`:
+      ! The following variables are not character vectors: `n`
+
+---
+
+    Code
+      rec %>% step_string2factor(n, ordered = "yes") %>% prep(ex_dat)
+    Condition
+      Error in `step_string2factor()`:
+      ! `ordered` should be a single logical variable
+
+# printing
+
+    Code
+      print(ex_3)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Training data contained 200 data points and no missing data.
+      
+      Operations:
+      
+      Factor variables from w, x [trained]
+
+---
+
+    Code
+      prep(ex_3)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Training data contained 200 data points and no missing data.
+      
+      Operations:
+      
+      Factor variables from w, x [trained]
+
 # empty printing
 
     Code

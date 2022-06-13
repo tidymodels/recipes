@@ -54,8 +54,8 @@ output. Defaults to \code{FALSE}.}
 be populated elsewhere.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -105,15 +105,24 @@ frequency, for example, a \code{POSIXct} input column given a \code{frequency} o
 24 and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of
 1.0 with \code{cycle_size} equal to 3600.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("ggplot2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2, quietly = TRUE)
 library(dplyr)
 
 data(sunspot.year)
 sunspots <-
-  tibble(year = 1700:1988,
-         n_sunspot = sunspot.year,
-         type = "measured") \%>\%
+  tibble(
+    year = 1700:1988,
+    n_sunspot = sunspot.year,
+    type = "measured"
+  ) \%>\%
   slice(1:75)
 
 # sunspots period is around 11 years, sample spacing is one year
@@ -124,9 +133,11 @@ dat <- recipe(n_sunspot ~ year, data = sunspots) \%>\%
 
 fit <- lm(n_sunspot ~ year_sin_1 + year_cos_1, data = dat)
 
-preds <- tibble(year = sunspots$year,
-                n_sunspot = fit$fitted.values,
-                type = 'predicted')
+preds <- tibble(
+  year = sunspots$year,
+  n_sunspot = fit$fitted.values,
+  type = "predicted"
+)
 
 bind_rows(sunspots, preds) \%>\%
   ggplot(aes(x = year, y = n_sunspot, color = type)) +
@@ -138,34 +149,41 @@ bind_rows(sunspots, preds) \%>\%
 
 date_time <-
   as.POSIXct(
-    paste0(rep(1959:1997, each = 12), '-', rep(1:12, length(1959:1997)), '-01'),
-    tz = 'UTC')
+    paste0(rep(1959:1997, each = 12), "-", rep(1:12, length(1959:1997)), "-01"),
+    tz = "UTC"
+  )
 
-carbon_dioxide <- tibble(date_time = date_time,
-                         co2 = as.numeric(co2),
-                         type = "measured")
+carbon_dioxide <- tibble(
+  date_time = date_time,
+  co2 = as.numeric(co2),
+  type = "measured"
+)
 
 # yearly co2 fluctuations
 dat <-
   recipe(co2 ~ date_time,
-         data = carbon_dioxide) \%>\%
+    data = carbon_dioxide
+  ) \%>\%
   step_mutate(date_time_num = as.numeric(date_time)) \%>\%
   step_ns(date_time_num, deg_free = 3) \%>\%
   step_harmonic(date_time, frequency = 1, cycle_size = 86400 * 365.24) \%>\%
   prep() \%>\%
   bake(new_data = NULL)
 
- fit <- lm(co2 ~ date_time_num_ns_1 + date_time_num_ns_2 +
-                 date_time_num_ns_3 + date_time_sin_1 +
-                 date_time_cos_1, data = dat)
+fit <- lm(co2 ~ date_time_num_ns_1 + date_time_num_ns_2 +
+  date_time_num_ns_3 + date_time_sin_1 +
+  date_time_cos_1, data = dat)
 
- preds <- tibble(date_time = date_time,
-                 co2 = fit$fitted.values,
-                 type = 'predicted')
+preds <- tibble(
+  date_time = date_time,
+  co2 = fit$fitted.values,
+  type = "predicted"
+)
 
- bind_rows(carbon_dioxide, preds) \%>\%
-   ggplot(aes(x = date_time, y = co2, color = type)) +
-   geom_line()
+bind_rows(carbon_dioxide, preds) \%>\%
+  ggplot(aes(x = date_time, y = co2, color = type)) +
+  geom_line()
+\dontshow{\}) # examplesIf}
 }
 \references{
 Doran, H. E., & Quilkey, J. J. (1972).
@@ -188,6 +206,7 @@ Other individual transformation steps:
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}

@@ -7,7 +7,7 @@
 #' @inheritParams step_center
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return
@@ -21,17 +21,24 @@
 #'  a linear scale (1, 2, 3, ... `C`) but custom score
 #'  functions can also be used (see the example below).
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#'  # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
+#'
+#' @template case-weights-not-supported
 #'
 #' @examples
 #' fail_lvls <- c("meh", "annoying", "really_bad")
 #'
 #' ord_data <-
-#'   data.frame(item = c("paperclip", "twitter", "airbag"),
-#'              fail_severity = factor(fail_lvls,
-#'                                     levels = fail_lvls,
-#'                                     ordered = TRUE))
+#'   data.frame(
+#'     item = c("paperclip", "twitter", "airbag"),
+#'     fail_severity = factor(fail_lvls,
+#'       levels = fail_lvls,
+#'       ordered = TRUE
+#'     )
+#'   )
 #'
 #' model.matrix(~fail_severity, data = ord_data)
 #'
@@ -59,7 +66,6 @@
 #' bake(nonlin_scores, new_data = NULL, everything())
 #'
 #' tidy(nonlin_scores, number = 2)
-
 step_ordinalscore <-
   function(recipe,
            ...,
@@ -103,13 +109,14 @@ prep.step_ordinalscore <-
     col_names <- recipes_eval_select(x$terms, training, info)
     ord_check <-
       vapply(training[, col_names], is.ordered, c(logic = TRUE))
-    if (!all(ord_check))
+    if (!all(ord_check)) {
       rlang::abort(
         paste0(
           "Ordinal factor variables should be selected as ",
-           "inputs into this step."
-          )
+          "inputs into this step."
         )
+      )
+    }
     step_ordinalscore_new(
       terms = x$terms,
       role = x$role,
@@ -124,15 +131,16 @@ prep.step_ordinalscore <-
 #' @export
 bake.step_ordinalscore <- function(object, new_data, ...) {
   scores <- lapply(new_data[, object$columns], object$convert)
-  for (i in object$columns)
+  for (i in object$columns) {
     new_data[, i] <- scores[[i]]
-  as_tibble(new_data)
+  }
+  new_data
 }
 
 print.step_ordinalscore <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Scoring for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Scoring for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

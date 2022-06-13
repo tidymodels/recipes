@@ -37,14 +37,14 @@ Can contain more than one class.}
 have additional classes to the one(s) that are checked.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{class_list}{A named list of column classes. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -69,28 +69,37 @@ that in \code{prep} the argument \code{strings_as_factors} defaults to
 \code{TRUE}. If the train set contains character variables
 the check will be break \code{bake} when \code{strings_as_factors} is
 \code{TRUE}.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the type) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the type)
+is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
-library(modeldata)
-data(okc)
+data(Sacramento, package = "modeldata")
 
 # Learn the classes on the train set
-train <- okc[1:1000, ]
-test  <- okc[1001:2000, ]
-recipe(train, age ~ . ) \%>\%
+train <- Sacramento[1:500, ]
+test <- Sacramento[501:nrow(Sacramento), ]
+recipe(train, sqft ~ .) \%>\%
   check_class(everything()) \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
 
 # Manual specification
-recipe(train, age ~ .) \%>\%
-  check_class(age, class_nm = "integer") \%>\%
-  check_class(diet, location, class_nm = "character") \%>\%
-  check_class(date, class_nm = "Date") \%>\%
+recipe(train, sqft ~ .) \%>\%
+  check_class(sqft, class_nm = "integer") \%>\%
+  check_class(city, zip, type, class_nm = "factor") \%>\%
+  check_class(latitude, longitude, class_nm = "numeric") \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
 
@@ -110,7 +119,7 @@ recipe(x_df) \%>\%
   check_class(time, class_nm = "POSIXt", allow_additional = TRUE) \%>\%
   prep(x_df) \%>\%
   bake(x_df)
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

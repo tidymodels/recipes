@@ -10,9 +10,9 @@
 #' @param warn If `TRUE` the check will throw a warning instead
 #'   of an error when failing.
 #' @param lower A named numeric vector of minimum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @param upper A named numeric vector of maximum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @template check-return
 #' @family checks
 #' @export
@@ -24,57 +24,60 @@
 #'   is used to compute the allowed slack at the lower end,
 #'   the second to compute the allowed slack at the upper end.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the means) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the means)
+#'  is returned.
 #'
 #' @examples
-#'   slack_df <- data_frame(x = 0:100)
-#'   slack_new_data <- data_frame(x = -10:110)
+#' slack_df <- data_frame(x = 0:100)
+#' slack_new_data <- data_frame(x = -10:110)
 #'
-#'   # this will fail the check both ends
+#' # this will fail the check both ends
 #' \dontrun{
-#'   recipe(slack_df) %>%
-#'     check_range(x) %>%
-#'     prep() %>%
-#'     bake(slack_new_data)
-#'  }
-#'
-#'   # this will fail the check only at the upper end
-#' \dontrun{
-#'   recipe(slack_df) %>%
-#'     check_range(x, slack_prop = c(0.1, 0.05)) %>%
-#'     prep() %>%
-#'     bake(slack_new_data)
+#' recipe(slack_df) %>%
+#'   check_range(x) %>%
+#'   prep() %>%
+#'   bake(slack_new_data)
 #' }
 #'
-#'   # give a warning instead of an error
+#' # this will fail the check only at the upper end
 #' \dontrun{
-#'   recipe(slack_df) %>%
-#'     check_range(x, warn = TRUE) %>%
-#'     prep() %>%
-#'     bake(slack_new_data)
+#' recipe(slack_df) %>%
+#'   check_range(x, slack_prop = c(0.1, 0.05)) %>%
+#'   prep() %>%
+#'   bake(slack_new_data)
+#' }
+#'
+#' # give a warning instead of an error
+#' \dontrun{
+#' recipe(slack_df) %>%
+#'   check_range(x, warn = TRUE) %>%
+#'   prep() %>%
+#'   bake(slack_new_data)
 #' }
 check_range <-
   function(recipe,
            ...,
-           role       = NA,
-           skip       = FALSE,
-           trained    = FALSE,
+           role = NA,
+           skip = FALSE,
+           trained = FALSE,
            slack_prop = 0.05,
-           warn       = FALSE,
-           lower      = NULL,
-           upper      = NULL,
+           warn = FALSE,
+           lower = NULL,
+           upper = NULL,
            id = rand_id("range_check_")) {
     add_check(
       recipe,
       check_range_new(
-        terms   = enquos(...),
-        role    = role,
-        skip    = skip,
+        terms = enquos(...),
+        role = role,
+        skip = skip,
         trained = trained,
-        warn    = warn,
-        lower   = lower,
-        upper   = upper,
+        warn = warn,
+        lower = lower,
+        upper = upper,
         slack_prop = slack_prop,
         id = id
       )
@@ -86,15 +89,15 @@ check_range_new <-
   function(terms, role, skip, trained, slack_prop, warn, lower, upper, id) {
     check(
       subclass = "range",
-      terms    = terms,
-      role     = role,
-      skip     = skip,
-      trained  = trained,
-      warn     = warn,
-      lower    = lower,
-      upper    = upper,
+      terms = terms,
+      role = role,
+      skip = skip,
+      trained = trained,
+      warn = warn,
+      lower = lower,
+      upper = upper,
       slack_prop = slack_prop,
-      id       = id
+      id = id
     )
   }
 
@@ -106,10 +109,12 @@ prep.check_range <- function(x,
 
   ## TODO add informative error for nonnumerics
 
-  lower_vals <- vapply(training[ ,col_names], min, c(min = 1),
-                       na.rm = TRUE)
-  upper_vals <- vapply(training[ ,col_names], max, c(max = 1),
-                       na.rm = TRUE)
+  lower_vals <- vapply(training[, col_names], min, c(min = 1),
+    na.rm = TRUE
+  )
+  upper_vals <- vapply(training[, col_names], max, c(max = 1),
+    na.rm = TRUE
+  )
   check_range_new(
     terms      = x$terms,
     role       = x$role,
@@ -127,10 +132,12 @@ range_check_func <- function(x,
                              lower,
                              upper,
                              slack_prop = 0.05,
-                             warn       = FALSE,
-                             colname    = "x") {
-  stopifnot(is.numeric(slack_prop),
-            is.numeric(x))
+                             warn = FALSE,
+                             colname = "x") {
+  stopifnot(
+    is.numeric(slack_prop),
+    is.numeric(x)
+  )
   min_x <- min(x)
   max_x <- max(x)
   msg <- NULL
@@ -145,15 +152,21 @@ range_check_func <- function(x,
   }
 
   if (min_x < lower_allowed & max_x > upper_allowed) {
-    msg <- paste0("min ", colname, " is ", min_x, ", lower bound is ",
-                  lower_allowed,", max x is ", max_x, ", upper bound is ",
-                  upper_allowed)
+    msg <- paste0(
+      "min ", colname, " is ", min_x, ", lower bound is ",
+      lower_allowed, ", max x is ", max_x, ", upper bound is ",
+      upper_allowed
+    )
   } else if (min_x < lower_allowed) {
-    msg <- paste0("min ", colname, " is ", min_x, ", lower bound is ",
-                  lower_allowed)
+    msg <- paste0(
+      "min ", colname, " is ", min_x, ", lower bound is ",
+      lower_allowed
+    )
   } else if (max_x > upper_allowed) {
-    msg <- paste0("max ", colname, " is ", max_x, ", upper bound is ",
-                  upper_allowed)
+    msg <- paste0(
+      "max ", colname, " is ", max_x, ", upper bound is ",
+      upper_allowed
+    )
   }
   if (warn & !is.null(msg)) {
     rlang::warn(msg)
@@ -165,24 +178,25 @@ range_check_func <- function(x,
 bake.check_range <- function(object,
                              new_data,
                              ...) {
-
   col_names <- names(object$lower)
   for (i in seq_along(col_names)) {
     colname <- col_names[i]
-    range_check_func(new_data[[ colname ]],
-                     object$lower[colname],
-                     object$upper[colname],
-                     object$slack_prop,
-                     object$warn,
-                     colname)
+    range_check_func(
+      new_data[[colname]],
+      object$lower[colname],
+      object$upper[colname],
+      object$slack_prop,
+      object$warn,
+      colname
+    )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_range <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking range of ", sep = "")
-    printer(names(x$lower), x$terms, x$trained, width = width)
+    title <- "Checking range of "
+    print_step(names(x$lower), x$terms, x$trained, title, width)
     invisible(x)
   }
 

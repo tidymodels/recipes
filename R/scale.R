@@ -5,8 +5,8 @@
 #'  deviation of one.
 #'
 #' @inheritParams step_center
-#' @param sds A named numeric vector of standard deviations. This
-#'  is `NULL` until computed by [prep.recipe()].
+#' @param sds A named numeric vector of standard deviations. This is `NULL`
+#'  until computed by [prep()].
 #' @param factor A numeric value of either 1 or 2 that scales the
 #'  numeric inputs by one or two standard deviations. By dividing
 #'  by two standard deviations, the coefficients attached to
@@ -24,22 +24,27 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the
 #'  standard deviations) is returned.
+#'
+#' @template case-weights-unsupervised
 #'
 #' @references Gelman, A. (2007) "Scaling regression inputs by
 #'  dividing by two standard deviations." Unpublished. Source:
 #'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' scaled_trans <- rec %>%
 #'   step_scale(carbon, hydrogen)
@@ -52,7 +57,6 @@
 #' transformed_te
 #' tidy(scaled_trans, number = 1)
 #' tidy(scaled_obj, number = 1)
-#'
 step_scale <-
   function(recipe,
            ...,
@@ -73,13 +77,14 @@ step_scale <-
         factor = factor,
         na_rm = na_rm,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_scale_new <-
-  function(terms, role, trained, sds, factor, na_rm, skip, id) {
+  function(terms, role, trained, sds, factor, na_rm, skip, id, case_weights) {
     step(
       subclass = "scale",
       terms = terms,
@@ -89,7 +94,8 @@ step_scale_new <-
       factor = factor,
       na_rm = na_rm,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -98,40 +104,48 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   if (x$factor != 1 & x$factor != 2) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
   }
 
-  sds <-
-    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
-
+  vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
+  sds <- sqrt(vars)
+  sds <- sd_check(sds)
   sds <- sds * x$factor
 
   step_scale_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    sds,
+    sds = sds,
     factor = x$factor,
     na_rm = x$na_rm,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
-  res <-
-    sweep(as.matrix(new_data[, names(object$sds)]), 2, object$sds, "/")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$sds)] <- res
-  as_tibble(new_data)
+  for (column in names(object$sds)) {
+    sd <- object$sds[column]
+    new_data[[column]] <- new_data[[column]] / sd
+  }
+  new_data
 }
 
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Scaling for ", sep = "")
-    printer(names(x$sds), x$terms, x$trained, width = width)
+    title <- "Scaling for "
+    print_step(names(x$sds), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
@@ -140,12 +154,16 @@ print.step_scale <-
 #' @export
 tidy.step_scale <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$sds),
-                  value = unname(x$sds))
+    res <- tibble(
+      terms = names(x$sds),
+      value = unname(x$sds)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl
+    )
   }
   res$id <- x$id
   res

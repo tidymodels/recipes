@@ -1,12 +1,13 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass)
+  data = biomass
+)
 
-test_that('spatial sign', {
+test_that("spatial sign", {
   sp_sign <- rec %>%
     step_center(carbon, hydrogen) %>%
     step_scale(carbon, hydrogen) %>%
@@ -18,39 +19,51 @@ test_that('spatial sign', {
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
 
   x <- as.matrix(scale(biomass[, 3:4], center = TRUE, scale = TRUE))
-  x <- t(apply(x, 1, function(x) x/sqrt(sum(x^2))))
+  x <- t(apply(x, 1, function(x) x / sqrt(sum(x^2))))
 
   expect_equal(sp_sign_pred, x)
 })
 
-test_that('Missing values', {
-  sp_sign <- rec %>%
-    step_spatialsign(carbon, hydrogen)
-
-  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
-
+test_that("Missing values", {
   with_na <- head(biomass)
   with_na$carbon[1] <- NA
   with_na$hydrogen[2] <- NA
   rownames(with_na) <- NULL
 
-  sp_sign_pred <- bake(sp_sign_trained, new_data = with_na)
-  sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
+  sp_sign_rm_na <- rec %>%
+    step_spatialsign(carbon, hydrogen) %>%
+    prep() %>%
+    bake(
+      new_data = with_na,
+      one_of(c("carbon", "hydrogen")),
+      composition = "matrix"
+    )
+
+  sp_sign_no_rm_na <- rec %>%
+    step_spatialsign(carbon, hydrogen, na_rm = FALSE) %>%
+    prep() %>%
+    bake(
+      new_data = with_na,
+      one_of(c("carbon", "hydrogen")),
+      composition = "matrix"
+    )
 
   x <- as.matrix(with_na[, 3:4])
-  x <- t(apply(x, 1, function(x) x/sqrt(sum(x^2, na.rm = TRUE))))
+  exp_rm_na <- t(apply(x, 1, function(x) x / sqrt(sum(x^2, na.rm = TRUE))))
+  exp_no_rm_na <- t(apply(x, 1, function(x) x / sqrt(sum(x^2, na.rm = FALSE))))
 
-  expect_equal(sp_sign_pred, x)
+  expect_equal(sp_sign_rm_na, exp_rm_na)
+  expect_equal(sp_sign_no_rm_na, exp_no_rm_na)
 })
 
 
-test_that('printing', {
+test_that("printing", {
   sp_sign <- rec %>%
     step_center(carbon, hydrogen) %>%
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
-  expect_output(print(sp_sign))
-  expect_output(prep(sp_sign, training = biomass, verbose = TRUE))
+  expect_snapshot(print(sp_sign))
+  expect_snapshot(prep(sp_sign))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -80,12 +93,47 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_spatialsign(rec)
 
   expect_snapshot(rec)
 
   rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("centering with case weights", {
+  mtcars_freq <- mtcars
+  mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_freq) %>%
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rowSums(bake(rec, new_data = NULL, -c(cyl, mpg))^2),
+    as.numeric(mtcars_freq$cyl)
+  )
+
+  expect_snapshot(rec)
+
+  # ----------------------------------------------------------------------------
+
+  mtcars_imp <- mtcars
+  mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_imp) %>%
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),
+    rep(1, nrow(mtcars_imp))
+  )
 
   expect_snapshot(rec)
 })

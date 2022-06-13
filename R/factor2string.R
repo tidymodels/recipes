@@ -6,7 +6,7 @@
 #' @inheritParams step_center
 #' @param columns A character string of variables that will be
 #'  converted. This is `NULL` until computed by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
@@ -15,36 +15,33 @@
 #'  option, the string(s() produced by this step will be converted
 #'  to factors after all of the steps have been prepped.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) is returned.
+#' # Tidying
 #'
-#' @examples
-#' library(modeldata)
-#' data(okc)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) is returned.
 #'
-#' rec <- recipe(~ diet + location, data = okc)
+#' @template case-weights-not-supported
 #'
-#' rec <- rec %>%
-#'   step_string2factor(diet)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
-#' factor_test <- rec %>%
-#'   prep(training = okc,
-#'        strings_as_factors = FALSE) %>%
-#'   juice
-#' # diet is a
-#' class(factor_test$diet)
+#' rec <- recipe(~ city + zip, data = Sacramento)
 #'
-#' rec <- rec %>%
-#'   step_factor2string(diet)
+#' make_string <- rec %>%
+#'   step_factor2string(city)
 #'
-#' string_test <- rec %>%
-#'   prep(training = okc,
-#'        strings_as_factors = FALSE) %>%
-#'   juice
-#' # diet is a
-#' class(string_test$diet)
+#' make_string <- prep(make_string,
+#'   training = Sacramento,
+#'   strings_as_factors = FALSE
+#' )
 #'
-#' tidy(rec, number = 1)
+#' make_string
+#'
+#' # note that `city` is a string in recipe output
+#' bake(make_string, new_data = NULL) %>% head()
+#'
+#' # ...but remains a factor in the original data
+#' Sacramento %>% head()
 step_factor2string <-
   function(recipe,
            ...,
@@ -84,13 +81,14 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   fac_check <-
     vapply(training[, col_names], is.factor, logical(1))
-  if (any(!fac_check))
+  if (any(!fac_check)) {
     rlang::abort(
       paste0(
-      "The following variables are not factor vectors: ",
-      paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
+        "The following variables are not factor vectors: ",
+        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
       )
     )
+  }
 
   step_factor2string_new(
     terms = x$terms,
@@ -106,17 +104,13 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 bake.step_factor2string <- function(object, new_data, ...) {
   new_data[, object$columns] <- map(new_data[, object$columns], as.character)
 
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
-
   new_data
 }
 
 print.step_factor2string <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Character variables from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Character variables from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

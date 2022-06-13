@@ -2,8 +2,8 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-library(modeldata)
-data(okc)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 x1 <- rnorm(3)
 x2 <- as.POSIXct(1:3, origin = "1970-01-01", tz = "CET")
@@ -14,44 +14,46 @@ x3 <- x2
 class(x3) <- c(class(x3), "Julian")
 x_newdata_2 <- tibble(x1 = x1, x2 = x3)
 
-err1 <- "x1 should have the class(es) character but has the class(es) numeric." #nolint
-err2 <- "x2 should have the class(es) POSIXct, Julian but has the class(es) POSIXct, POSIXt." #nolint
-err3 <- "x2 has the class(es) POSIXct, POSIXt, but only the following is/are asked POSIXct, allow_additional is FALSE." #nolint
-err4 <- "x1 should have the class(es) numeric but has the class(es) character." #nolint
-err5 <- "x2 has the class(es) POSIXct, POSIXt, Julian, but only the following is/are asked POSIXct, POSIXt, allow_additional is FALSE." #nolint
-err6 <- "diet should have the class(es) factor but has the class(es) character."
-
 test_that("bake_check_class helper function gives expected output", {
-
   expect_error(bake_check_class_core(x1, "numeric", "x1"), NA)
   expect_error(bake_check_class_core(x2, c("POSIXct", "POSIXt"), "x1"), NA)
-  expect_error(bake_check_class_core(x1, "character", "x1"),
-               err1, fixed = TRUE)
-  expect_error(bake_check_class_core(x2, c("POSIXct", "Julian"), "x2"),
-               err2, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake_check_class_core(x1, "character", "x1")
+  )
+  expect_snapshot(error = TRUE,
+    bake_check_class_core(x2, c("POSIXct", "Julian"), "x2")
+  )
   expect_error(bake_check_class_core(x2, "POSIXct", "x2", TRUE), NA)
-  expect_error(bake_check_class_core(x2, "POSIXct", "x2"),
-               err3, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake_check_class_core(x2, "POSIXct", "x2")
+  )
 })
 
 test_that("check_class works when class is learned", {
-  rec1 <- recipe(x) %>% check_class(everything()) %>% prep()
+  rec1 <- recipe(x) %>%
+    check_class(everything()) %>%
+    prep()
 
   expect_error(bake(rec1, x), NA)
   expect_equal(bake(rec1, x), x)
-  expect_error(bake(rec1, x_newdata),
-               err4, fixed = TRUE)
-  expect_error(bake(rec1, x_newdata_2),
-               err5, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake(rec1, x_newdata)
+  )
+  expect_snapshot(error = TRUE,
+    bake(rec1, x_newdata_2)
+  )
 })
 
 test_that("check_class works when class is provided", {
-  rec2 <- recipe(x) %>% check_class(x1, class_nm = "numeric") %>% prep()
+  rec2 <- recipe(x) %>%
+    check_class(x1, class_nm = "numeric") %>%
+    prep()
 
   expect_error(bake(rec2, x), NA)
   expect_equal(bake(rec2, x), x)
-  expect_error(bake(rec2, x_newdata),
-               err4, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake(rec2, x_newdata)
+  )
 
   rec3 <- recipe(x) %>%
     check_class(x2, class_nm = c("POSIXct", "POSIXt")) %>%
@@ -59,49 +61,62 @@ test_that("check_class works when class is provided", {
 
   expect_error(bake(rec3, x), NA)
   expect_equal(bake(rec3, x), x)
-  expect_error(bake(rec3, x_newdata_2),
-               err5, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake(rec3, x_newdata_2)
+  )
 
   rec4 <- recipe(x) %>%
     check_class(x2,
-                class_nm = c("POSIXct", "POSIXt"),
-                allow_additional = TRUE) %>% prep()
+      class_nm = c("POSIXct", "POSIXt"),
+      allow_additional = TRUE
+    ) %>%
+    prep()
   expect_error(bake(rec4, x_newdata_2), NA)
 })
 
 # recipes has internal coercion to character >> factor
-test_that('characters are handled correctly' ,{
-  rec5_NULL <- recipe(okc[1:10,], age ~ .) %>%
+test_that("characters are handled correctly", {
+  rec5_NULL <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
     check_class(everything()) %>%
-    prep(okc[1:10, ], strings_as_factors = FALSE)
+    prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
-  expect_error(bake(rec5_NULL, okc[11:20, ]), NA)
+  expect_error(bake(rec5_NULL, Sacramento[11:20, ]), NA)
 
-  rec5_man <- recipe(okc[1:10,], age ~ .) %>%
-    check_class(diet, location) %>%
-    prep(okc[1:10,], strings_as_factors = FALSE)
+  rec5_man <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
+    check_class(city, zip) %>%
+    prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
-  expect_error(bake(rec5_man, okc[11:20, ]), NA)
+  expect_error(bake(rec5_man, Sacramento[11:20, ]), NA)
 
-  rec6_NULL <- recipe(okc[1:10,], age ~ .) %>%
+  sacr_fac <-
+    dplyr::mutate(
+      Sacramento,
+      city = as.character(city),
+      zip = as.character(zip),
+      type = as.character(type)
+    )
+
+  rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
     check_class(everything()) %>%
-    prep(okc[1:10, ], strings_as_factors = TRUE)
+    prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
-  expect_error(bake(rec6_NULL, okc[11:20, ]),
-               err6, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake(rec6_NULL, sacr_fac[11:20, ])
+  )
 
-  rec6_man <- recipe(okc[1:10,], age ~ .) %>%
-    check_class(diet) %>%
-    prep(okc[1:10, ], strings_as_factors = TRUE)
+  rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
+    check_class(type) %>%
+    prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
-  expect_error(bake(rec6_man, okc[11:20, ]),
-               err6, fixed = TRUE)
+  expect_snapshot(error = TRUE,
+    bake(rec6_man, sacr_fac[11:20, ])
+  )
 })
 
-test_that('printing', {
+test_that("printing", {
   rec7 <- recipe(x) %>% check_class(everything())
-  expect_output(print(rec7))
-  expect_output(prep(rec7, training = x, verbose = TRUE))
+  expect_snapshot(print(rec7))
+  expect_snapshot(prep(rec7))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -135,6 +150,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- check_class(rec)
 

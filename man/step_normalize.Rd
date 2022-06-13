@@ -29,18 +29,18 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{means}{A named numeric vector of means. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{means}{A named numeric vector of means. This is \code{NULL} until computed
+by \code{\link[=prep]{prep()}}.}
 
-\item{sds}{A named numeric vector of standard deviations This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{sds}{A named numeric vector of standard deviations This is \code{NULL} until
+computed by \code{\link[=prep]{prep()}}.}
 
-\item{na_rm}{A logical value indicating whether \code{NA}
-values should be removed when computing the standard deviation and mean.}
+\item{na_rm}{A logical value indicating whether \code{NA} values should be removed
+when computing the standard deviation and mean.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -63,20 +63,34 @@ is divided out of the data. \code{step_normalize} estimates the variable standar
 deviations and means from the data used in the \code{training} argument of
 \code{prep.recipe}. \code{\link{bake.recipe}} then applies the scaling to new data sets using
 these estimates.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the standard deviations and
-means), and \code{statistic} for the type of value is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{value} (the standard
+deviations and means), and \code{statistic} for the type of value is
+returned.
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 norm_trans <- rec \%>\%
   step_normalize(carbon, hydrogen)
@@ -98,7 +112,7 @@ norm_keep_orig <- rec \%>\%
 keep_orig_obj <- prep(norm_keep_orig, training = biomass_tr)
 keep_orig_te <- bake(keep_orig_obj, biomass_te)
 keep_orig_te
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other normalization steps: 

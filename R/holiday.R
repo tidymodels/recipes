@@ -12,7 +12,7 @@
 #'  [timeDate::listHolidays()] for a complete list.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep.recipe()] is used.
+#'  populated once [prep()] is used.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
@@ -21,53 +21,55 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms`
-#'  (the columns that will be affected) and `holiday` is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the columns that will be affected) and `holiday` is returned.
+#'
+#' @template case-weights-not-supported
 #'
 #' @examples
 #' library(lubridate)
 #'
 #' examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
-#' holiday_rec <- recipe(~ someday, examples) %>%
-#'    step_holiday(all_predictors())
+#' holiday_rec <- recipe(~someday, examples) %>%
+#'   step_holiday(all_predictors())
 #'
 #' holiday_rec <- prep(holiday_rec, training = examples)
 #' holiday_values <- bake(holiday_rec, new_data = examples)
 #' holiday_values
 #' @import timeDate
 step_holiday <-
-  function(
-    recipe,
-    ...,
-    role = "predictor",
-    trained = FALSE,
-    holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-    columns = NULL,
-    keep_original_cols = TRUE,
-    skip = FALSE,
-    id = rand_id("holiday")
-  ) {
-
+  function(recipe,
+           ...,
+           role = "predictor",
+           trained = FALSE,
+           holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
+           columns = NULL,
+           keep_original_cols = TRUE,
+           skip = FALSE,
+           id = rand_id("holiday")) {
     if (!is_tune(holidays) & !is_varying(holidays)) {
       all_days <- listHolidays()
-      if (!all(holidays %in% all_days))
+      if (!all(holidays %in% all_days)) {
         rlang::abort("Invalid `holidays` value. See timeDate::listHolidays")
+      }
     }
 
-  add_step(
-    recipe,
-    step_holiday_new(
-      terms = enquos(...),
-      role = role,
-      trained = trained,
-      holidays = holidays,
-      columns = columns,
-      keep_original_cols = keep_original_cols,
-      skip = skip,
-      id = id
+    add_step(
+      recipe,
+      step_holiday_new(
+        terms = enquos(...),
+        role = role,
+        trained = trained,
+        holidays = holidays,
+        columns = columns,
+        keep_original_cols = keep_original_cols,
+        skip = skip,
+        id = id
+      )
     )
-  )
-}
+  }
 
 step_holiday_new <-
   function(terms, role, trained, holidays, columns, keep_original_cols, skip, id) {
@@ -89,13 +91,14 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   holiday_data <- info[info$variable %in% col_names, ]
-  if (any(holiday_data$type != "date"))
+  if (any(holiday_data$type != "date")) {
     rlang::abort(
       paste0(
         "All variables for `step_holiday` should be either `Date` ",
         "or `POSIXct` classes."
-         )
+      )
     )
+  }
 
   step_holiday_new(
     terms = x$terms,
@@ -109,12 +112,15 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
   )
 }
 
-
 is_holiday <- function(hol, dt) {
-  hdate <- holiday(year = unique(year(dt)), Holiday = hol)
+  years <- unique(year(dt))
+  na_year <- which(is.na(years))
+  years <- years[-na_year]
+  hdate <- holiday(year = years, Holiday = hol)
   hdate <- as.Date(hdate)
   out <- rep(0, length(dt))
   out[dt %in% hdate] <- 1
+  out[is.na(dt)] <- NA
   out
 }
 
@@ -132,8 +138,10 @@ get_holiday_features <- function(dt, hdays) {
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
   for (i in seq_along(object$columns)) {
-    tmp <- get_holiday_features(dt = new_data[[ object$columns[i] ]],
-                                hdays = object$holidays)
+    tmp <- get_holiday_features(
+      dt = new_data[[object$columns[i]]],
+      hdays = object$holidays
+    )
 
     names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
     new_data <- bind_cols(new_data, tmp)
@@ -143,17 +151,13 @@ bake.step_holiday <- function(object, new_data, ...) {
   if (!keep_original_cols) {
     new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
   }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 
 print.step_holiday <-
   function(x, width = max(20, options()$width - 29), ...) {
-    cat("Holiday features from ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Holiday features from "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

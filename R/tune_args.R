@@ -1,7 +1,6 @@
 
 # Lazily registered in .onLoad()
 tune_args_recipe <- function(object, full = FALSE, ...) {
-
   steps <- object$steps
 
   if (length(steps) == 0L) {
@@ -22,7 +21,6 @@ tune_args_recipe <- function(object, full = FALSE, ...) {
 
 # @export - lazily and conditionally registered in .onLoad()
 tune_args_step <- function(object, full = FALSE, ...) {
-
   step_id <- object$id
   # Grab the step class before the subset, as that removes the class
   step_type <- class(object)[1]
@@ -67,14 +65,14 @@ tune_tbl <- function(name = character(),
                      component = character(),
                      component_id = character(),
                      full = FALSE) {
-
-
   complete_id <- id[!is.na(id)]
   dups <- duplicated(complete_id)
   if (any(dups)) {
     stop("There are duplicate `id` values listed in [tune()]: ",
-         paste0("'", unique(complete_id[dups]), "'", collapse = ", "),
-         ".", sep = "", call. = FALSE)
+      paste0("'", unique(complete_id[dups]), "'", collapse = ", "),
+      ".",
+      sep = "", call. = FALSE
+    )
   }
 
   vry_tbl <- tibble::tibble(
@@ -87,7 +85,7 @@ tune_tbl <- function(name = character(),
   )
 
   if (!full) {
-    vry_tbl <- vry_tbl[vry_tbl$tunable,]
+    vry_tbl <- vry_tbl[vry_tbl$tunable, ]
   }
 
   vry_tbl
@@ -182,7 +180,8 @@ find_tune_id <- function(x) {
       "The current argument has: `",
       paste0(deparse(x), collapse = ""),
       "`.",
-      call. = FALSE)
+      call. = FALSE
+    )
   }
 
   return(tunable_elems)

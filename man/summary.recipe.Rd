@@ -32,7 +32,7 @@ It is possible for variables to have multiple roles by adding them with
 row in the summary tibble.
 }
 \examples{
-rec <- recipe( ~ ., data = USArrests)
+rec <- recipe(~., data = USArrests)
 summary(rec)
 rec <- step_pca(rec, all_numeric(), num_comp = 3)
 summary(rec) # still the same since not yet trained
@@ -40,5 +40,5 @@ rec <- prep(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep]{prep()}}
 }

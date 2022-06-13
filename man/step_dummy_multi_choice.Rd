@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy_multi_choice.R
 \name{step_dummy_multi_choice}
 \alias{step_dummy_multi_choice}
-\title{Multiple Choice Dummy Variables Creation}
+\title{Handle levels in multiple predictors together}
 \usage{
 step_dummy_multi_choice(
   recipe,
@@ -45,10 +45,10 @@ to \code{other}.}
 \item{levels}{A list that contains the information needed to
 create dummy variables for each variable contained in
 \code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{input}{A character vector containing the names of the columns used.
-This is \code{NULL} until the step is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+This is \code{NULL} until the step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{other}{A single character value for the "other" category.}
 
@@ -62,8 +62,8 @@ variables. See notes below.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -93,6 +93,12 @@ new variable called \code{x_b}. The naming format can be changed using
 the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
 default.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(tibble)
 languages <- tribble(
@@ -103,16 +109,18 @@ languages <- tribble(
   NA,         NA,        NA
 )
 
-dummy_multi_choice_rec <- recipe(~ ., data = languages) \%>\%
+dummy_multi_choice_rec <- recipe(~., data = languages) \%>\%
   step_dummy_multi_choice(starts_with("lang")) \%>\%
   prep()
 
 bake(dummy_multi_choice_rec, new_data = NULL)
 tidy(dummy_multi_choice_rec, number = 1)
 
-dummy_multi_choice_rec2 <- recipe(~ ., data = languages) \%>\%
-  step_dummy_multi_choice(starts_with("lang"), prefix = "lang",
-                         threshold = 0.2) \%>\%
+dummy_multi_choice_rec2 <- recipe(~., data = languages) \%>\%
+  step_dummy_multi_choice(starts_with("lang"),
+    prefix = "lang",
+    threshold = 0.2
+  ) \%>\%
   prep()
 
 bake(dummy_multi_choice_rec2, new_data = NULL)
@@ -123,6 +131,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
 \code{\link{step_holiday}()},
@@ -135,6 +144,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_regex}()},
 \code{\link{step_relevel}()},
 \code{\link{step_string2factor}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

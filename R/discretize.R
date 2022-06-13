@@ -6,12 +6,14 @@
 #'
 #' @export
 #' @param x A numeric vector
-discretize <- function(x, ...)
+discretize <- function(x, ...) {
   UseMethod("discretize")
+}
 
 #' @rdname discretize
-discretize.default <- function(x, ...)
+discretize.default <- function(x, ...) {
   rlang::abort("Only numeric `x` is accepted")
+}
 
 #' @rdname discretize
 #' @param cuts An integer defining how many cuts to make of the
@@ -23,8 +25,12 @@ discretize.default <- function(x, ...)
 #' @param prefix A single parameter value to be used as a prefix
 #'  for the factor levels (e.g. `bin1`, `bin2`, ...). If
 #'  the string is not a valid R name, it is coerced to one.
+#'  If `prefix = NULL` then the factor levels will be labelled
+#'  according to the output of `cut()`. Defaults to `NULL`.
 #' @param keep_na A logical for whether a factor level should be
-#'  created to identify missing values in `x`.
+#'  created to identify missing values in `x`. If `keep_na` is
+#'  set to `TRUE` then `na.rm = TRUE` is used when calling
+#'  [stats::quantile()].
 #' @param infs A logical indicating whether the smallest and
 #'  largest cut point should be infinite.
 #' @param min_unique An integer defining a sample size line of
@@ -52,12 +58,11 @@ discretize.default <- function(x, ...)
 #'
 #' If `infs = FALSE` and a new value is greater than the
 #'  largest value of `x`, a missing value will result.
-#'@examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' median(biomass_tr$carbon)
 #' discretize(biomass_tr$carbon, cuts = 2)
@@ -70,19 +75,11 @@ discretize.default <- function(x, ...)
 #'
 #' carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 #' predict(carbon_no_infs, c(50, 100))
-#'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
-#' rec <- rec %>% step_discretize(carbon, hydrogen)
-#' rec <- prep(rec, biomass_tr)
-#' binned_te <- bake(rec, biomass_te)
-#' table(binned_te$carbon)
-
 discretize.numeric <-
   function(x,
            cuts = 4,
            labels = NULL,
-           prefix = "bin",
+           prefix = NULL,
            keep_na = TRUE,
            infs = TRUE,
            min_unique = 10,
@@ -90,23 +87,37 @@ discretize.numeric <-
     unique_vals <- length(unique(x))
     missing_lab <- "_missing"
 
-    if (cuts < 2)
+    if (cuts < 2) {
       rlang::abort("There should be at least 2 cuts")
+    }
+
+    dots <- list(...)
+    if (keep_na) {
+      dots$na.rm <- TRUE
+    }
 
     if (unique_vals / (cuts + 1) >= min_unique) {
-      breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)
+      cl <- rlang::call2(
+        "quantile",
+        .ns = "stats",
+        x = x,
+        probs = seq(0, 1, length = cuts + 1)
+      )
+      cl <- rlang::call_modify(cl, !!!dots)
+      breaks <- rlang::eval_tidy(cl)
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
-      if (num_breaks > length(breaks))
+      if (num_breaks > length(breaks)) {
         rlang::warn(
           paste0(
-          "Not enough data for ",
-          cuts,
-          " breaks. Only ",
-          length(breaks),
-          " breaks were used."
+            "Not enough data for ",
+            cuts,
+            " breaks. Only ",
+            length(breaks),
+            " breaks were used."
           )
         )
+      }
       if (infs) {
         breaks[1] <- -Inf
         breaks[length(breaks)] <- Inf
@@ -115,14 +126,14 @@ discretize.numeric <-
 
       if (is.null(labels)) {
         prefix <- prefix[1]
-        if (make.names(prefix) != prefix) {
+        if (make.names(prefix) != prefix && !is.null(prefix)) {
           rlang::warn(paste0(
             "The prefix '",
             prefix,
             "' is not a valid R name. It has been changed to '",
             make.names(prefix),
-            "'.")
-          )
+            "'."
+          ))
           prefix <- make.names(prefix)
         }
         labels <- names0(length(breaks) - 1, "")
@@ -131,10 +142,11 @@ discretize.numeric <-
         breaks = breaks,
         bins = length(breaks) - 1,
         prefix = prefix,
-        labels =  if (keep_na)
+        labels = if (keep_na) {
           labels <- c(missing_lab, labels)
-        else
-          labels,
+        } else {
+          labels
+        },
         keep_na = keep_na
       )
     } else {
@@ -156,27 +168,41 @@ discretize.numeric <-
 #' @export
 predict.discretize <- function(object, new_data, ...) {
   if (is.matrix(new_data) |
-      is.data.frame(new_data))
+    is.data.frame(new_data)) {
     new_data <- new_data[, 1]
-  object$labels <- paste0(object$prefix, object$labels)
+  }
+  object$labels <- if (is.null(object$prefix)) {
+    object$prefix
+  } else {
+    paste0(object$prefix, object$labels)
+  }
   if (object$bins >= 1) {
-    labs <- if (object$keep_na)
+    labs <- if (object$keep_na) {
       object$labels[-1]
-    else
+    } else {
       object$labels
+    }
     out <-
       cut(new_data,
-          object$breaks,
-          labels = labs,
-          include.lowest = TRUE)
+        object$breaks,
+        labels = labs,
+        include.lowest = TRUE
+      )
+
     if (object$keep_na) {
+      out_levels <- levels(out)
       out <- as.character(out)
-      if (any(is.na(new_data)))
-        out[is.na(new_data)] <- object$labels[1]
-      out <- factor(out, levels = object$labels)
+      if (any(is.na(new_data))) {
+        missing_label <- object$labels[1] %||% "[missing]"
+
+        out[is.na(new_data)] <- missing_label
+        out_levels <- c(missing_label, out_levels)
+      }
+      out <- factor(out, levels = out_levels)
     }
-  } else
+  } else {
     out <- new_data
+  }
 
   out
 }
@@ -186,19 +212,23 @@ print.discretize <-
   function(x, digits = max(3L, getOption("digits") - 3L), ...) {
     if (length(x$breaks) > 0) {
       cat("Bins:", length(x$labels))
-      if (any(grepl("_missing", x$labels)))
+      if (any(grepl("_missing", x$labels))) {
         cat(" (includes missing category)")
+      }
       cat("\n")
 
       if (length(x$breaks) <= 6) {
-        cat("Breaks:",
-            paste(signif(x$breaks, digits = digits), collapse = ", "))
+        cat(
+          "Breaks:",
+          paste(signif(x$breaks, digits = digits), collapse = ", ")
+        )
       }
     } else {
-      if (x$bins == 0)
+      if (x$bins == 0) {
         cat("Too few unique data points. No binning.")
-      else
+      } else {
         cat("Non-numeric data. No binning was used.")
+      }
     }
   }
 
@@ -218,19 +248,43 @@ print.discretize <-
 #'  discretization takes place.
 #' @param objects The [discretize()] objects are stored
 #'  here once the recipe has be trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param options A list of options to [discretize()]. A
 #'  default is set for the argument `x`. Note that using
 #'  the options `prefix` and `labels` when more than one
 #'  variable is being transformed might be problematic as all
 #'  variables inherit those values.
 #' @template step-return
-#' @details  When you [`tidy()`] this step, a tibble
-#'  with columns `terms` (the selectors or variables selected)
-#'  and `value` (the breaks) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `value`
+#' (the breaks) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family discretization steps
 #' @export
-
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' ) %>%
+#'   step_discretize(carbon, hydrogen)
+#'
+#' rec <- prep(rec, biomass_tr)
+#' binned_te <- bake(rec, biomass_te)
+#' table(binned_te$carbon)
+#'
+#' tidy(rec, 1)
 step_discretize <- function(recipe,
                             ...,
                             role = NA,
@@ -241,7 +295,6 @@ step_discretize <- function(recipe,
                             options = list(),
                             skip = FALSE,
                             id = rand_id("discretize")) {
-
   if (any(names(options) %in% c("cuts", "min_unique"))) {
     num_breaks <- options$cuts
     min_unique <- options$min_unique
@@ -280,11 +333,9 @@ step_discretize_new <-
   }
 
 bin_wrapper <- function(x, args) {
-  bin_call <-
-    quote(discretize(x, cuts, labels, prefix, keep_na, infs, min_unique, ...))
-  args <- sub_args(discretize.numeric, args, "x")
-  args$x <- x
-  rlang::exec(discretize, !!!args)
+  cl <- rlang::call2("discretize", .ns = "recipes", x = x)
+  cl <- rlang::call_modify(cl, !!!args)
+  rlang::eval_tidy(cl)
 }
 
 #' @export
@@ -320,16 +371,17 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
-  for (i in names(object$objects))
+  for (i in names(object$objects)) {
     new_data[, i] <-
       predict(object$objects[[i]], getElement(new_data, i))
-  as_tibble(new_data)
+  }
+  new_data
 }
 
 print.step_discretize <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Dummy variables from ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Discretize numeric variables from "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -354,9 +406,6 @@ tidy.step_discretize <- function(x, ...) {
   res
 }
 
-
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_discretize <- function(x, ...) {
   tibble::tibble(

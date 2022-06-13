@@ -6,7 +6,7 @@
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed
-#'  by [prep.recipe()]. Note that, if the original data are integers, the mean
+#'  by [prep()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside
@@ -18,16 +18,19 @@
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
 #'  new values to new data sets using these averages.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the mean
-#'  value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
 #'    to `step_impute_mean()`.
 #'
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `model` (the mean
+#' value) is returned.
+#'
+#' @template case-weights-unsupervised
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -35,7 +38,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -48,12 +51,11 @@
 #'
 #' imputed_te <- bake(imp_models, new_data = credit_te, everything())
 #'
-#' credit_te[missing_examples,]
+#' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-
 step_impute_mean <-
   function(recipe,
            ...,
@@ -72,7 +74,8 @@ step_impute_mean <-
         means = means,
         trim = trim,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
@@ -88,7 +91,7 @@ step_meanimpute <-
            trim = 0,
            skip = FALSE,
            id = rand_id("impute_mean")) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.1.16",
       what = "recipes::step_meanimpute()",
       with = "recipes::step_impute_mean()"
@@ -106,7 +109,7 @@ step_meanimpute <-
   }
 
 step_impute_mean_new <-
-  function(terms, role, trained, means, trim, skip, id) {
+  function(terms, role, trained, means, trim, skip, id, case_weights) {
     step(
       subclass = "impute_mean",
       terms = terms,
@@ -115,18 +118,49 @@ step_impute_mean_new <-
       means = means,
       trim = trim,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
+
+trim <- function(x, trim) {
+  if (trim == 0) {
+    return(x)
+  }
+  # Adapted from mean.default
+  x <- sort(x, na.last = TRUE)
+  na_ind <- is.na(x)
+  if (!is.numeric(trim) || length(trim) != 1L)
+    stop("'trim' must be numeric of length one")
+  n <- length(x[!na_ind])
+  if (trim > 0 && n) {
+    if (is.complex(x))
+      stop("trimmed means are not defined for complex data")
+    if (trim >= 0.5)
+      return(stats::median(x[!na_ind], na.rm = FALSE))
+    lo <- floor(n * trim) + 1
+    hi <- n + 1 - lo
+    x[seq(1, lo - 1)] <- NA
+    x[seq(hi + 1, n)] <- NA
+  }
+  x
+}
 
 #' @export
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
 
-  means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
-  means <- purrr::map2(means, training[, col_names], cast)
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
+  trimmed <- purrr::map_dfc(training[, col_names], trim, x$trim)
+
+  means <- averages(trimmed, wts = wts)
+  means <- purrr::map2(means, trimmed, cast)
 
   step_impute_mean_new(
     terms = x$terms,
@@ -135,7 +169,8 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
     means,
     trim = x$trim,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -146,11 +181,12 @@ prep.step_meanimpute <- prep.step_impute_mean
 #' @export
 bake.step_impute_mean <- function(object, new_data, ...) {
   for (i in names(object$means)) {
-    if (any(is.na(new_data[[i]])))
+    if (any(is.na(new_data[[i]]))) {
       new_data[[i]] <- vec_cast(new_data[[i]], object$means[[i]])
-      new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
+    }
+    new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export
@@ -160,8 +196,9 @@ bake.step_meanimpute <- bake.step_impute_mean
 #' @export
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Mean Imputation for ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "Mean imputation for "
+    print_step(names(x$means), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
@@ -173,8 +210,10 @@ print.step_meanimpute <- print.step_impute_mean
 #' @export
 tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$means),
-                  model = vctrs::vec_unchop(unname(x$means), ptype = double()))
+    res <- tibble(
+      terms = names(x$means),
+      model = vctrs::vec_unchop(unname(x$means), ptype = double())
+    )
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names, model = na_dbl)
@@ -187,7 +226,6 @@ tidy.step_impute_mean <- function(x, ...) {
 #' @keywords internal
 tidy.step_meanimpute <- tidy.step_impute_mean
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_impute_mean <- function(x, ...) {
   tibble::tibble(

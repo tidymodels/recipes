@@ -7,10 +7,17 @@
 #' @inheritParams step_center
 #' @param columns A character string that contains the names of
 #'  columns that should be shuffled. These values are not determined
-#'  until [prep.recipe()] is called.
+#'  until [prep()] is called.
 #' @template step-return
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#' columns that will be permuted) is returned.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be permuted) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @export
 #' @examples
@@ -27,7 +34,6 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rand_set, number = 1)
-
 step_shuffle <- function(recipe,
                          ...,
                          role = NA,
@@ -35,15 +41,17 @@ step_shuffle <- function(recipe,
                          columns = NULL,
                          skip = FALSE,
                          id = rand_id("shuffle")) {
-  add_step(recipe,
-           step_shuffle_new(
-             terms = enquos(...),
-             role = role,
-             trained = trained,
-             columns = columns,
-             skip = skip,
-             id = id
-           ))
+  add_step(
+    recipe,
+    step_shuffle_new(
+      terms = enquos(...),
+      role = role,
+      trained = trained,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  )
 }
 
 step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
@@ -78,24 +86,26 @@ bake.step_shuffle <- function(object, new_data, ...) {
     return(new_data)
   }
 
-  if (length(object$columns) > 0)
-    for (i in seq_along(object$columns))
+  if (length(object$columns) > 0) {
+    for (i in seq_along(object$columns)) {
       new_data[, object$columns[i]] <-
         sample(getElement(new_data, object$columns[i]))
-    as_tibble(new_data)
+    }
+  }
+  new_data
 }
 
 print.step_shuffle <-
   function(x, width = max(20, options()$width - 22), ...) {
-    cat("Shuffled ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Shuffled "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
 #' @export
 tidy.step_shuffle <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

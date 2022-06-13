@@ -1,11 +1,13 @@
 ---
-title: "Selecting Variables"
+title: "Selecting variables"
+output: rmarkdown::html_vignette
+description: |
+  You can select which variables or features  should be used in recipes. This 
+  vignette goes over the basics of using selection functions.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Selecting Variables}
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteIndexEntry{Selecting variables}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r ex_setup, include=FALSE}
@@ -13,7 +15,8 @@ knitr::opts_chunk$set(
   message = FALSE,
   digits = 3,
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = requireNamespace("modeldata", quietly = TRUE)
   )
 options(digits = 3)
 ```

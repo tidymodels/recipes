@@ -1,23 +1,25 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+  data = biomass_tr
+)
 
 # Note: some tests convert to data frame prior to testing
 # https://github.com/tidyverse/dplyr/issues/2751
 
-test_that('correct PCA values', {
+test_that("correct PCA values", {
   pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
-             options = list(retx = TRUE), id = "")
+      options = list(retx = TRUE), id = ""
+    )
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
@@ -33,7 +35,7 @@ test_that('correct PCA values', {
   expect_equal(pca_pred, pca_pred_exp)
 
   tidy_exp_un <- tibble(
-    terms = c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur"),
+    terms = c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur"),
     value = rep(NA_real_, 5),
     component = rep(NA_character_, 5),
     id = ""
@@ -41,8 +43,9 @@ test_that('correct PCA values', {
   expect_equal(tidy_exp_un, tidy(pca_extract, number = 3))
 
   pca_obj <- prcomp(
-    x = biomass_tr[, c("carbon", "hydrogen", "oxygen" ,"nitrogen", "sulfur")],
-    scale. = TRUE)
+    x = biomass_tr[, c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur")],
+    scale. = TRUE
+  )
   variances <- pca_obj$sdev^2
   pca_obj <- pca_obj$rotation
   pca_obj <- as.data.frame(pca_obj)
@@ -76,15 +79,15 @@ test_that('correct PCA values', {
     var_obj$value[var_obj$terms == "cumulative percent variance"],
     cumsum(variances) / sum(variances) * 100
   )
-  expect_error(tidy(pca_extract_trained, number = 3, type = "variances"),
-               "variance")
-
+  expect_snapshot(error = TRUE,
+    tidy(pca_extract_trained, number = 3, type = "variances")
+  )
 })
 
-test_that('correct PCA values with threshold', {
+test_that("correct PCA values with threshold", {
   pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, threshold = .5)
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
@@ -95,10 +98,10 @@ test_that('correct PCA values with threshold', {
 })
 
 
-test_that('Reduced rotation size', {
+test_that("Reduced rotation size", {
   pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 3)
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
@@ -116,15 +119,15 @@ test_that('Reduced rotation size', {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
-test_that('printing', {
+test_that("printing", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  expect_output(print(pca_extract))
-  expect_output(prep(pca_extract, training = biomass_tr, verbose = TRUE))
+  expect_snapshot(print(pca_extract))
+  expect_snapshot(prep(pca_extract))
 })
 
 
-test_that('No PCA comps', {
+test_that("No PCA comps", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
 
@@ -134,14 +137,38 @@ test_that('No PCA comps', {
     names(biomass_tr)[-(1:2)]
   )
   expect_true(all(is.na(pca_extract_trained$steps[[1]]$res$rotation)))
-  expect_output(print(pca_extract_trained),
-                regexp = "No PCA components were extracted")
+  expect_snapshot(print(pca_extract_trained))
   expect_true(all(is.na(tidy(pca_extract_trained, 1)$value)))
 })
 
-test_that('tunable', {
+test_that("backwards compatible with 0.1.17", {
+  pca_extract <- rec %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
+             options = list(retx = TRUE), id = ""
+    ) %>%
+    prep()
+
+  exp_res <- bake(pca_extract, biomass_tr)
+
+  # Simulate what would have happened in 0.1.17
+  pca_extract$steps[[3]]$columns <- NULL
+
+  new_res <- bake(pca_extract, biomass_tr)
+
+  expect_equal(
+    exp_res,
+    new_res
+  )
+
+  expect_snapshot(pca_extract)
+})
+
+
+test_that("tunable", {
   rec <-
-    recipe(~ ., data = iris) %>%
+    recipe(~., data = iris) %>%
     step_pca(all_predictors())
   rec_param <- tunable.step_pca(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "threshold"))
@@ -150,16 +177,17 @@ test_that('tunable', {
   expect_equal(nrow(rec_param), 2)
   expect_equal(
     names(rec_param),
-    c('name', 'call_info', 'source', 'component', 'component_id')
+    c("name", "call_info", "source", "component", "component_id")
   )
 })
 
-test_that('keep_original_cols works', {
+test_that("keep_original_cols works", {
   pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
-             options = list(retx = TRUE), id = "", keep_original_cols = TRUE)
+      options = list(retx = TRUE), id = "", keep_original_cols = TRUE
+    )
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
@@ -167,29 +195,29 @@ test_that('keep_original_cols works', {
 
   expect_equal(
     colnames(pca_pred),
-    c("carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
-      "PC1", "PC2", "PC3", "PC4", "PC5")
+    c(
+      "carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
+      "PC1", "PC2", "PC3", "PC4", "PC5"
+    )
   )
 })
 
-test_that('can prep recipes with no keep_original_cols', {
+test_that("can prep recipes with no keep_original_cols", {
   pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen ,nitrogen, sulfur) %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 3)
 
   pca_extract$steps[[3]]$keep_original_cols <- NULL
 
-  expect_warning(
-    pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
   )
 
   expect_error(
     pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors()),
     NA
   )
-
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -224,6 +252,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_pca(rec)
 
@@ -232,4 +261,59 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("case weights", {
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
+    select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  pca_extract <- recipe(HHV ~ .,
+                        data = biomass_tr_cw) %>%
+    step_pca(all_numeric_predictors())
+
+  pca_extract_trained <- prep(pca_extract)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- pca_wts(biomass_tr[, c(3, 4, 5, 7)],
+                     wts = as.numeric(biomass_tr_cw$nitrogen))
+  pca_pred_exp <- as.matrix(biomass_te[, c(3, 4, 5, 7)]) %*% pca_exp$rotation
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  colnames(pca_pred) <- NULL
+  colnames(pca_pred_exp) <- NULL
+
+  expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
+
+  # ----------------------------------------------------------------------------
+
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(nitrogen = importance_weights(nitrogen)) %>%
+    select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  pca_extract <- recipe(HHV ~ .,
+                        data = biomass_tr_cw) %>%
+    step_pca(all_numeric_predictors())
+
+  pca_extract_trained <- prep(pca_extract)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- prcomp(biomass_tr[, c(3, 4, 5, 7)], center = FALSE, scale. = FALSE, retx = FALSE)
+  pca_pred_exp <- predict(pca_exp, biomass_te[, c(3, 4, 5, 7)])[, 1:4]
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  colnames(pca_pred) <- NULL
+  colnames(pca_pred_exp) <- NULL
+
+  expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
 })

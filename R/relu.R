@@ -40,15 +40,18 @@
 #' in the loss function of Support Vector Machines, where it penalizes
 #' residuals only if they are within a certain margin of the decision boundary.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @template case-weights-not-supported
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' transformed_te <- rec %>%
 #'   step_relu(carbon, shift = 40) %>%
@@ -153,19 +156,16 @@ bake.step_relu <- function(object, new_data, ...) {
 
 print.step_relu <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Adding relu transform for ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Adding relu transform for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
-}
+  }
 
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
-  if (!is.numeric(x))
+  if (!is.numeric(x)) {
     rlang::abort("step_relu can only be applied to numeric data.")
+  }
 
   if (reverse) {
     shifted <- shift - x
@@ -174,7 +174,7 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   }
 
   if (smooth) {
-    out <- log1p(exp(shifted))  # use log1p for numerical accuracy
+    out <- log1p(exp(shifted)) # use log1p for numerical accuracy
   } else {
     out <- pmax(shifted, rep(0, length(shifted)))
   }

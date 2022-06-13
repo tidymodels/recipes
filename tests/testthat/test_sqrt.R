@@ -3,28 +3,28 @@ library(recipes)
 library(tibble)
 
 n <- 20
-ex_dat <- data.frame(x1 = seq(0, 1, length = n),
-                     x2 = rep(1:5, 4))
+ex_dat <- data.frame(
+  x1 = seq(0, 1, length = n),
+  x2 = rep(1:5, 4)
+)
 
-test_that('simple sqrt trans', {
+test_that("simple sqrt trans", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_sqrt(x1, x2)
 
-      rec <- recipe(~., data = ex_dat) %>%
-        step_sqrt(x1, x2)
+  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
 
-      rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-      rec_trans <- bake(rec_trained, new_data = ex_dat)
-
-      exp_res <- as_tibble(lapply(ex_dat, sqrt))
-      expect_equal(rec_trans, exp_res)
-
+  exp_res <- as_tibble(lapply(ex_dat, sqrt))
+  expect_equal(rec_trans, exp_res)
 })
 
 
-test_that('printing', {
+test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_sqrt(x1, x2)
-  expect_output(print(rec))
-  expect_output(prep(rec, training = ex_dat, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -54,6 +54,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_sqrt(rec)
 

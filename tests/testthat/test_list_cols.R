@@ -18,8 +18,8 @@ cmplt_ex_3$y[[2]] <- NA_real_
 
 
 
-test_that('number of complete records', {
+test_that("number of complete records", {
   expect_equal(n_complete_rows(cmplt_ex_1), 10)
-  expect_equal(n_complete_rows(cmplt_ex_2),  9)
-  expect_equal(n_complete_rows(cmplt_ex_3),  9)
+  expect_equal(n_complete_rows(cmplt_ex_2), 9)
+  expect_equal(n_complete_rows(cmplt_ex_3), 9)
 })

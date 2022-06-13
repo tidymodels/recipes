@@ -15,8 +15,15 @@
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `base`.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the columns that will be affected) and `base`.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(exp(rnorm(40)), ncol = 2)
@@ -24,7 +31,7 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' log_trans <- rec  %>%
+#' log_trans <- rec %>%
 #'   step_log(all_numeric_predictors())
 #'
 #' log_obj <- prep(log_trans, training = examples)
@@ -49,7 +56,6 @@
 #'   step_log(all_numeric_predictors(), signed = TRUE) %>%
 #'   prep(training = examples2) %>%
 #'   bake(examples2)
-#'
 step_log <-
   function(recipe,
            ...,
@@ -60,8 +66,7 @@ step_log <-
            columns = NULL,
            skip = FALSE,
            signed = FALSE,
-           id = rand_id("log")
-           ) {
+           id = rand_id("log")) {
     add_step(
       recipe,
       step_log_new(
@@ -117,31 +122,36 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 bake.step_log <- function(object, new_data, ...) {
   col_names <- object$columns
   # for backward compat
-  if(all(names(object) != "offset"))
+  if (all(names(object) != "offset")) {
     object$offset <- 0
-
-  if (!object$signed){
-    for (i in seq_along(col_names))
-      new_data[, col_names[i]] <-
-        log(new_data[[ col_names[i] ]] + object$offset, base = object$base)
-  } else {
-    if (object$offset != 0)
-      rlang::warn("When signed is TRUE, offset will be ignored")
-     for (i in seq_along(col_names))
-       new_data[, col_names[i]] <-
-         ifelse(abs(new_data[[ col_names[i] ]]) < 1,
-                0,
-                sign(new_data[[ col_names[i] ]]) *
-                  log(abs(new_data[[ col_names[i] ]]), base = object$base ))
   }
-  as_tibble(new_data)
+
+  if (!object$signed) {
+    for (i in seq_along(col_names)) {
+      new_data[, col_names[i]] <-
+        log(new_data[[col_names[i]]] + object$offset, base = object$base)
+    }
+  } else {
+    if (object$offset != 0) {
+      rlang::warn("When signed is TRUE, offset will be ignored")
+    }
+    for (i in seq_along(col_names)) {
+      new_data[, col_names[i]] <-
+        ifelse(abs(new_data[[col_names[i]]]) < 1,
+          0,
+          sign(new_data[[col_names[i]]]) *
+            log(abs(new_data[[col_names[i]]]), base = object$base)
+        )
+    }
+  }
+  new_data
 }
 
 print.step_log <-
   function(x, width = max(20, options()$width - 31), ...) {
-    msg <- ifelse(x$signed, "Signed log ", "Log ")
-    cat(msg, "transformation on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    msg <- ifelse(x$signed, "Signed log", "Log")
+    title <- glue::glue("{msg} transformation on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 

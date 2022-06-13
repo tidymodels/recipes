@@ -4,8 +4,10 @@ library(lubridate)
 library(tibble)
 
 
-examples <- data.frame(Dan = ymd("2002-03-04") + days(1:10),
-                       Stefan = ymd("2006-01-13") + days(1:10))
+examples <- data.frame(
+  Dan = ymd("2002-03-04") + days(1:10),
+  Stefan = ymd("2006-01-13") + days(1:10)
+)
 
 examples$Dan <- as.POSIXct(examples$Dan)
 
@@ -14,10 +16,7 @@ date_rec <- recipe(~ Dan + Stefan, examples) %>%
 
 feats <- c("year", "doy", "week", "decimal", "semester", "quarter", "dow", "month")
 
-test_that('default option', {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
+test_that("default option", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
 
@@ -53,10 +52,7 @@ test_that('default option', {
 })
 
 
-test_that('nondefault options', {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
+test_that("nondefault options", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
 
@@ -76,10 +72,7 @@ test_that('nondefault options', {
 })
 
 
-test_that('ordinal values', {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
+test_that("ordinal values", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = c("dow", "month"), ordinal = TRUE)
 
@@ -99,17 +92,14 @@ test_that('ordinal values', {
 })
 
 
-test_that('printing', {
-  # because of https://github.com/tidyverse/lubridate/issues/928
-  skip_if(utils::packageVersion("lubridate") <= "1.7.9.9000")
-
+test_that("printing", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats)
-  expect_output(print(date_rec))
-  expect_output(prep(date_rec, training = examples, verbose = TRUE))
+  expect_snapshot(print(date_rec))
+  expect_snapshot(prep(date_rec))
 })
 
-test_that('keep_original_cols works', {
+test_that("keep_original_cols works", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
 
@@ -122,15 +112,65 @@ test_that('keep_original_cols works', {
   )
 })
 
-test_that('can prep recipes with no keep_original_cols', {
+test_that("locale argument have recipe work in different locale", {
+  old_locale <- Sys.getlocale("LC_TIME")
+  withr::defer(Sys.setlocale("LC_TIME", old_locale))
+  Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
+
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  ref_res <- bake(date_rec, new_data = examples)
+
+  Sys.setlocale("LC_TIME", old_locale)
+
+  new_res <- bake(date_rec, new_data = examples)
+
+  expect_equal(ref_res, new_res)
+})
+
+test_that("locale argument works when specified", {
+  old_locale <- Sys.getlocale("LC_TIME")
+  withr::defer(Sys.setlocale("LC_TIME", old_locale))
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  ref_res <- bake(date_rec, new_data = examples)
+
+  Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
+
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), locale = old_locale) %>%
+    prep()
+
+  new_res <- bake(date_rec, new_data = examples)
+
+  expect_equal(ref_res, new_res)
+})
+
+test_that("can bake and recipes with no locale", {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  date_rec$steps[[1]]$locale <- NULL
+
+  expect_error(
+    date_res <- bake(date_rec, new_data = examples, all_predictors()),
+    NA
+  )
+})
+
+test_that("can prep recipes with no keep_original_cols", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
 
   date_rec$steps[[1]]$keep_original_cols <- NULL
 
-  expect_warning(
-    date_rec <- prep(date_rec, training = examples, verbose = FALSE),
-    "'keep_original_cols' was added to"
+  expect_snapshot(
+    date_rec <- prep(date_rec, training = examples, verbose = FALSE)
   )
 
   expect_error(
@@ -166,6 +206,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_date(rec)
 

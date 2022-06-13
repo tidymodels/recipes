@@ -13,9 +13,13 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the `select` expressions as character strings
-#'  (and are not reparsable) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` which contains the `select` expressions as character strings
+#' (and are not reparsable) is returned.
+#'
+#' @template case-weights-not-supported
 #'
 #' @family variable filter steps
 #' @family dplyr steps
@@ -71,15 +75,15 @@ step_select <- function(recipe,
   )
 }
 step_select_new <- function(terms, role, trained, skip, id) {
-    step(
-      subclass = "select",
-      terms = terms,
-      role = role,
-      trained = trained,
-      skip = skip,
-      id = id
-    )
-  }
+  step(
+    subclass = "select",
+    terms = terms,
+    role = role,
+    trained = trained,
+    skip = skip,
+    id = id
+  )
+}
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {
@@ -102,22 +106,8 @@ bake.step_select <- function(object, new_data, ...) {
 
 print.step_select <-
   function(x, width = max(20, options()$width - 35), ...) {
-    if (x$trained) {
-      cat(
-        "Variables selected ",
-        paste0(names(x$terms), collapse = ", ")
-      )
-    } else {
-      cat(
-        "Terms selected ",
-        paste0(x$terms, collapse = ", ")
-      )
-    }
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variables selected "
+    print_step(names(x$terms), x$terms, x$trained, title, width)
     invisible(x)
   }
 

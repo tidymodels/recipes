@@ -43,8 +43,8 @@ left by lagging (defaults to NA).}
 be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -67,16 +67,24 @@ argument.
 The step assumes that the data are already \emph{in the proper sequential
 order} for lagging.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 n <- 10
-start <- as.Date('1999/01/01')
-end <- as.Date('1999/01/10')
+start <- as.Date("1999/01/01")
+end <- as.Date("1999/01/10")
 
-df <- data.frame(x = runif(n),
-                 index = 1:n,
-                 day = seq(start, end, by = "day"))
+df <- data.frame(
+  x = runif(n),
+  index = 1:n,
+  day = seq(start, end, by = "day")
+)
 
-recipe(~ ., data = df) \%>\%
+recipe(~., data = df) \%>\%
   step_lag(index, day, lag = 2:3) \%>\%
   prep(df) \%>\%
   bake(df)

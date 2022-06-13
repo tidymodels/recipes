@@ -35,8 +35,8 @@ preprocessing have been estimated.}
 be populated (eventually) by the \code{terms} argument.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -55,10 +55,18 @@ step that will logit transform the data.
 The logit transformation takes values between
 zero and one and translates them to be on the real line using
 the function \code{f(p) = log(p/(1-p))}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms}
-(the columns that will be affected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the columns that will be affected) is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 set.seed(313)
 examples <- matrix(runif(40), ncol = 2)
@@ -66,7 +74,7 @@ examples <- data.frame(examples)
 
 rec <- recipe(~ X1 + X2, data = examples)
 
-logit_trans <- rec  \%>\%
+logit_trans <- rec \%>\%
   step_logit(all_numeric_predictors())
 
 logit_obj <- prep(logit_trans, training = examples)
@@ -89,6 +97,7 @@ Other individual transformation steps:
 \code{\link{step_log}()},
 \code{\link{step_mutate}()},
 \code{\link{step_ns}()},
+\code{\link{step_percentile}()},
 \code{\link{step_poly}()},
 \code{\link{step_relu}()},
 \code{\link{step_sqrt}()}

@@ -36,8 +36,8 @@ values present when \code{bake} is called will be used.}
 ordered?}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -51,42 +51,80 @@ sequence of any existing operations.
 \description{
 \code{step_string2factor} will convert one or more character
 vectors to factors (ordered or unordered).
+
+\emph{Use this step only in special cases} (see Details) and instead convert
+strings to factors before using any tidymodels functions.
 }
 \details{
-If \code{levels} is given, \code{step_string2factor} will
+\subsection{When should you use this step?}{
+
+In most cases, if you are planning to use \code{step_string2factor()}
+without setting \code{levels}, you will be better off converting
+those character variables to factor variables \strong{before using a recipe}.
+
+This can be done using \pkg{dplyr} with the following code
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{df <- mutate(df, across(where(is.character), as.factor))
+}\if{html}{\out{</div>}}
+
+During resampling, the complete set of values might
+not be in the character data. Converting them to factors with
+\code{step_string2factor()}  then will misconfigure the levels.
+
+If the \code{levels} argument to \code{step_string2factor()}is used, it will
 convert all variables affected by this step to have the same
-levels.
+levels. Because of this, you will need to know the full set of level
+when you define the recipe.
 
-Also, note that \code{prep} has an option \code{strings_as_factors} that
+Also, note that \code{\link[=prep]{prep()}} has an option \code{strings_as_factors} that
 defaults to \code{TRUE}. This should be changed so that raw character
-data will be applied to \code{step_string2factor}. However, this step
+data will be applied to \code{step_string2factor()}. However, this step
 can also take existing factors (but will leave them as-is).
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{ordered} is returned.
 }
-\examples{
-library(modeldata)
-data(okc)
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{ordered} is
+returned.
+}
 
-rec <- recipe(~ diet + location, data = okc)
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
+\examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
+
+# convert factor to string to demonstrate
+Sacramento$city <- as.character(Sacramento$city)
+
+rec <- recipe(~ city + zip, data = Sacramento)
 
 make_factor <- rec \%>\%
-  step_string2factor(diet)
-make_factor <- prep(make_factor,
-                    training = okc,
-                    strings_as_factors = FALSE)
+  step_string2factor(city)
 
-# note that `diet` is a factor
-bake(make_factor, new_data = NULL) \%>\% head
-okc \%>\% head
-tidy(make_factor, number = 1)
+make_factor <- prep(make_factor,
+  training = Sacramento
+)
+
+make_factor
+
+# note that `city` is a factor in recipe output
+bake(make_factor, new_data = NULL) \%>\% head()
+
+# ...but remains a string in the data
+Sacramento \%>\% head()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
@@ -99,6 +137,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_other}()},
 \code{\link{step_regex}()},
 \code{\link{step_relevel}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

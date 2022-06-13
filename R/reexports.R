@@ -15,6 +15,22 @@ generics::tunable
 #' @export
 generics::tune_args
 
+#' @importFrom hardhat extract_parameter_set_dials
+#' @export
+hardhat::extract_parameter_set_dials
+
+#' @importFrom hardhat extract_parameter_dials
+#' @export
+hardhat::extract_parameter_dials
+
+#' @importFrom hardhat importance_weights
+#' @export
+hardhat::importance_weights
+
+#' @importFrom hardhat frequency_weights
+#' @export
+hardhat::frequency_weights
+
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`

@@ -26,18 +26,23 @@
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_bs_1` and so on.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#'  # Tidying
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#'  `terms` (the columns that will be affected) is returned.
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' @template case-weights-not-supported
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' with_splines <- rec %>%
 #'   step_bs(carbon, hydrogen)
@@ -56,7 +61,6 @@ step_bs <-
            options = list(),
            skip = FALSE,
            id = rand_id("bs")) {
-
     add_step(
       recipe,
       step_bs_new(
@@ -172,16 +176,14 @@ bake.step_bs <- function(object, new_data, ...) {
     new_data[, orig_var] <- NULL
   }
   new_data <- bind_cols(new_data, as_tibble(bs_values))
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
   new_data
 }
 
 
 print.step_bs <-
   function(x, width = max(20, options()$width - 28), ...) {
-    cat("B-Splines on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "B-splines on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -200,7 +202,6 @@ tidy.step_bs <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.recipe
 #' @export
 tunable.step_bs <- function(x, ...) {
   tibble::tibble(

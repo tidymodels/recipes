@@ -5,11 +5,11 @@ library(dplyr)
 # ------------------------------------------------------------------------------
 
 iris2 <- iris %>% mutate(row = 1:150)
-iris_rec <- recipe( ~ ., data = iris2)
+iris_rec <- recipe(~., data = iris2)
 
 # ------------------------------------------------------------------------------
 
-test_that('basic usage', {
+test_that("basic usage", {
   single_sample <-
     iris_rec %>%
     step_sample(size = 1) %>%
@@ -69,17 +69,76 @@ test_that('basic usage', {
   expect_equal(sum(boot_sample), 150)
 })
 
-test_that('bad input', {
-  expect_error(iris_rec %>% step_sample(size = -1))
-  expect_error(iris_rec %>% step_sample(size = "a"))
-  expect_error(iris_rec %>% step_sample(replace = "a"))
+test_that("bad input", {
+  expect_snapshot(error = TRUE,
+    iris_rec %>% step_sample(size = -1)
+  )
+  expect_snapshot(error = TRUE,
+    iris_rec %>% step_sample(size = "a")
+  )
+  expect_snapshot(error = TRUE,
+    iris_rec %>% step_sample(replace = "a")
+  )
 })
 
-
-
-test_that('printing', {
+test_that("printing", {
   rec <- iris_rec %>% step_sample()
-  expect_output(print(rec))
-  expect_output(prep(rec, training = iris2, verbose = TRUE))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
 
+test_that("sample with case weights", {
+  mtcars1 <- mtcars
+  mtcars1$carb <- frequency_weights(mtcars1$carb)
+
+  # sample_n
+  set.seed(1234)
+  rec <-
+    recipe(~ ., mtcars1) %>%
+    step_sample(size = 10, id = "") %>%
+    prep()
+
+  set.seed(1234)
+  exp_res <- sample_n(
+    as_tibble(mtcars1),
+    size = 10,
+    weight = mtcars1$carb
+  )
+
+  expect_equal(
+    bake(rec, new_data = NULL),
+    exp_res
+  )
+
+  # sample_frac
+  set.seed(1234)
+  rec <-
+    recipe(~ ., mtcars1) %>%
+    step_sample(size = 0.5, id = "") %>%
+    prep()
+
+  set.seed(1234)
+  exp_res <- sample_frac(
+    as_tibble(mtcars1),
+    size = 0.5,
+    weight = mtcars1$carb
+  )
+
+  expect_equal(
+    bake(rec, new_data = NULL),
+    exp_res
+  )
+
+  expect_snapshot(rec)
+
+  # Wrong weights
+  mtcars2 <- mtcars
+  mtcars2$carb <- importance_weights(mtcars2$carb)
+
+  rec <-
+    recipe(~ ., mtcars1) %>%
+    step_sample(size = 10, id = "") %>%
+    prep()
+
+  expect_snapshot(rec)
+})

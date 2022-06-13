@@ -1,3 +1,47 @@
+# non-numeric
+
+    Code
+      prep(impute_rec, training = credit_tr, verbose = FALSE)
+    Condition
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
+
+# printing
+
+    Code
+      print(impute_rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         13
+      
+      Operations:
+      
+      Median imputation for Age, Assets, Income
+
+---
+
+    Code
+      prep(impute_rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor         13
+      
+      Training data contained 2000 data points and 186 incomplete rows. 
+      
+      Operations:
+      
+      Median imputation for Age, Assets, Income [trained]
+
 # empty printing
 
     Code
@@ -13,7 +57,7 @@
       
       Operations:
       
-      Median Imputation for <none>
+      Median imputation for <none>
 
 ---
 
@@ -32,5 +76,45 @@
       
       Operations:
       
-      Median Imputation for <none> [trained]
+      Median imputation for <none> [trained]
+
+# case weights
+
+    Code
+      impute_rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor         12
+      
+      Training data contained 2000 data points and 186 incomplete rows. 
+      
+      Operations:
+      
+      Median imputation for Age, Assets, Income [weighted, trained]
+
+---
+
+    Code
+      impute_rec
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+            outcome          1
+          predictor         12
+      
+      Training data contained 2000 data points and 186 incomplete rows. 
+      
+      Operations:
+      
+      Median imputation for Age, Assets, Income [ignored weights, trained]
 

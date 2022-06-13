@@ -3,6 +3,42 @@
     The `options` argument of `step_nzv()` was deprecated in recipes 0.1.7 and is now defunct.
     Please use the arguments `freq_cut` and `unique_cut` instead.
 
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          4
+      
+      Operations:
+      
+      Sparse, unbalanced variable filter on x1, x2, x3, x4
+
+---
+
+    Code
+      prep(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          4
+      
+      Training data contained 50 data points and no missing data.
+      
+      Operations:
+      
+      Sparse, unbalanced variable filter removed x3, x4 [trained]
+
 # empty printing
 
     Code
@@ -18,7 +54,7 @@
       
       Operations:
       
-      Sparse, unbalanced variable filter on 
+      Sparse, unbalanced variable filter on <none>
 
 ---
 
@@ -37,5 +73,45 @@
       
       Operations:
       
-      Sparse, unbalanced variable filter removed no terms [trained]
+      Sparse, unbalanced variable filter removed <none> [trained]
+
+# nzv with case weights
+
+    Code
+      recipe(~., dat_caseweights_x2) %>% step_nzv(all_predictors(), freq_cut = exp_freq_cut_int) %>%
+        prep()
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          4
+      
+      Training data contained 50 data points and no missing data.
+      
+      Operations:
+      
+      Sparse, unbalanced variable filter removed x4 [weighted, trained]
+
+---
+
+    Code
+      recipe(~., dat_caseweights_y) %>% step_nzv(all_predictors(), freq_cut = exp_freq_cut_frag -
+        1e-04) %>% prep()
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          4
+      
+      Training data contained 50 data points and no missing data.
+      
+      Operations:
+      
+      Sparse, unbalanced variable filter removed x3, x4 [ignored weights, trained]
 

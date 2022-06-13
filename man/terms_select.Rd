@@ -8,7 +8,7 @@ terms_select(terms, info, empty_fun = abort_selection)
 }
 \arguments{
 \item{terms}{A list of formulas whose right-hand side contains
-quoted expressions. See \code{\link[rlang:nse-defuse]{rlang::quos()}} for examples.}
+quoted expressions. See \code{\link[rlang:defusing-advanced]{rlang::quos()}} for examples.}
 
 \item{info}{A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source} that represent the current state of the data. The
@@ -31,15 +31,16 @@ This function bakes the step function selectors and might be
 useful when creating custom steps.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(rlang)
-library(modeldata)
-data(okc)
-rec <- recipe(~ ., data = okc)
+data(Sacramento, package = "modeldata")
+rec <- recipe(~., data = Sacramento)
 info <- summary(rec)
 terms_select(info = info, quos(all_predictors()))
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=summary.recipe]{summary.recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=prep]{prep()}}
 }
 \keyword{internal}

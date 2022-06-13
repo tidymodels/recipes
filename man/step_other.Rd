@@ -40,11 +40,11 @@ to \code{other}.}
 
 \item{objects}{A list of objects that contain the information
 to pool infrequent levels that is determined by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
@@ -68,7 +68,7 @@ whose individual proportion (or frequency) in the training set is less than
 
 If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of \code{strings_as_factors} in
-\code{\link[=prep.recipe]{prep.recipe()}}). Otherwise, a factor is always returned with
+\code{\link[=prep]{prep()}}). Otherwise, a factor is always returned with
 different factor levels.
 
 If \code{threshold} is less than the largest category proportion, all levels
@@ -83,49 +83,61 @@ pooling is needed, they will be placed into the other category.
 
 When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{retained} (the factor
+}
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the columns that will be affected) and \code{retained} (the factor
 levels that were not pulled into "other") is returned.
 }
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 set.seed(19)
-in_train <- sample(1:nrow(okc), size = 30000)
+in_train <- sample(1:nrow(Sacramento), size = 800)
 
-okc_tr <- okc[ in_train,]
-okc_te <- okc[-in_train,]
+sacr_tr <- Sacramento[in_train, ]
+sacr_te <- Sacramento[-in_train, ]
 
-rec <- recipe(~ diet + location, data = okc_tr)
+rec <- recipe(~ city + zip, data = sacr_tr)
 
 
 rec <- rec \%>\%
-  step_other(diet, location, threshold = .1, other = "other values")
-rec <- prep(rec, training = okc_tr)
+  step_other(city, zip, threshold = .1, other = "other values")
+rec <- prep(rec, training = sacr_tr)
 
-collapsed <- bake(rec, okc_te)
-table(okc_te$diet, collapsed$diet, useNA = "always")
+collapsed <- bake(rec, sacr_te)
+table(sacr_te$city, collapsed$city, useNA = "always")
 
 tidy(rec, number = 1)
 
 # novel levels are also "othered"
-tahiti <- okc[1,]
-tahiti$location <- "a magical place"
+tahiti <- Sacramento[1, ]
+tahiti$zip <- "a magical place"
 bake(rec, tahiti)
 
 # threshold as a frequency
-rec <- recipe(~ diet + location, data = okc_tr)
+rec <- recipe(~ city + zip, data = sacr_tr)
 
 rec <- rec \%>\%
-  step_other(diet, location, threshold = 2000, other = "other values")
-rec <- prep(rec, training = okc_tr)
+  step_other(city, zip, threshold = 2000, other = "other values")
+rec <- prep(rec, training = sacr_tr)
 
 tidy(rec, number = 1)
 # compare it to
-# okc_tr \%>\% count(diet, sort = TRUE) \%>\% top_n(4)
-# okc_tr \%>\% count(location, sort = TRUE) \%>\% top_n(3)
+# sacr_tr \%>\% count(city, sort = TRUE) \%>\% top_n(4)
+# sacr_tr \%>\% count(zip, sort = TRUE) \%>\% top_n(3)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}
@@ -134,6 +146,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
 \code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
@@ -146,6 +159,7 @@ Other dummy variable and encoding steps:
 \code{\link{step_regex}()},
 \code{\link{step_relevel}()},
 \code{\link{step_string2factor}()},
+\code{\link{step_time}()},
 \code{\link{step_unknown}()},
 \code{\link{step_unorder}()}
 }

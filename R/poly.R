@@ -24,18 +24,23 @@
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_poly_1` and so on.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `degree` is returned.
+#'  # Tidying
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the columns that will be affected) and `degree` is returned.
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' @template case-weights-not-supported
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' quadratic <- rec %>%
 #'   step_poly(carbon, hydrogen)
@@ -53,9 +58,8 @@ step_poly <-
            objects = NULL,
            degree = 2,
            options = list(),
-        skip = FALSE,
-        id = rand_id("poly")) {
-
+           skip = FALSE,
+           id = rand_id("poly")) {
     if (!is_tune(degree) & !is_varying(degree)) {
       degree <- as.integer(degree)
     }
@@ -169,8 +173,8 @@ bake.step_poly <- function(object, new_data, ...) {
 
 print.step_poly <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Orthogonal polynomials on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Orthogonal polynomials on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -187,8 +191,6 @@ tidy.step_poly <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.recipe
 #' @export
 tunable.step_poly <- function(x, ...) {
   tibble::tibble(

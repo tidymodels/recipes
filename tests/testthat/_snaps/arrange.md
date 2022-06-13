@@ -13,7 +13,7 @@
       
       Operations:
       
-      Row arrangement
+      Row arrangement using <none>
 
 ---
 
@@ -32,5 +32,39 @@
       
       Operations:
       
-      Row arrangement [trained]
+      Row arrangement using <none> [trained]
+
+# printing
+
+    Code
+      print(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Operations:
+      
+      Row arrangement using Sepal.Length
+
+---
+
+    Code
+      prep(rec)
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          5
+      
+      Training data contained 150 data points and no missing data.
+      
+      Operations:
+      
+      Row arrangement using ~Sepal.Length [trained]
 

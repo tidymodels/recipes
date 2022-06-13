@@ -141,16 +141,19 @@ NULL
 #'   This is rarely required, and is currently only used by [step_select()].
 #'   It is unlikely that your step will need renaming capabilities.
 #'
+#' @param check_case_weights Should selecting case weights throw an error?
+#'   Defaults to `TRUE`. This is rarely changed and only needed in [juice()],
+#'   [bake.recipe()], [update_role()], and [add_role()].
+#'
 #' @return
 #' A named character vector containing the evaluated selection. The names are
 #' always the same as the values, except when `allow_rename = TRUE`, in which
 #' case the names reflect the new names chosen by the user.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(rlang)
-#' library(modeldata)
-#' data(scat)
+#' data(scat, package = "modeldata")
 #'
 #' rec <- recipe(Species ~ ., data = scat)
 #'
@@ -160,7 +163,8 @@ NULL
 #' quos <- quos(all_numeric_predictors(), where(is.factor))
 #'
 #' recipes_eval_select(quos, scat, info)
-recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
+recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
+                                check_case_weights = TRUE) {
   ellipsis::check_dots_empty()
 
   # Maintain ordering between `data` column names and `info$variable` so
@@ -201,6 +205,11 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
     abort("Can't rename variables in this context.")
   }
 
+  if (check_case_weights &&
+      any(out %in% info$variable[info$role == "case_weights"])) {
+    abort("Cannot select case weights variable.")
+  }
+
   names(out) <- names
   out
 }
@@ -236,9 +245,8 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
 #'
 #' `current_info()` returns an environment with objects `vars` and `data`.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' rec <- recipe(biomass) %>%
 #'   update_role(
@@ -257,12 +265,11 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE) {
 #'   step_center(all_predictors(), -carbon) %>%
 #'   prep(training = biomass) %>%
 #'   bake(new_data = NULL)
-#'
 #' @export
 has_role <- function(match = "predictor") {
   roles <- peek_roles()
   # roles is potentially a list columns so we unlist `.x` below.
-  lgl_matches <- purrr::map_lgl(roles, ~any(unlist(.x) %in% match))
+  lgl_matches <- purrr::map_lgl(roles, ~ any(unlist(.x) %in% match))
   which(lgl_matches)
 }
 
@@ -295,7 +302,7 @@ all_outcomes <- function() {
 #' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
-  lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
+  lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
   which(lgl_matches)
 }
 
@@ -321,7 +328,7 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~.x[[col]])
+  purrr::map(.data, ~ .x[[col]])
 }
 
 ## functions to get current variable info for selectors modeled after

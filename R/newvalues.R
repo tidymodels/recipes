@@ -15,12 +15,15 @@
 #'  columns does contain values it did not contain when `prep` was called
 #'  on the recipe. If the check passes, nothing is changed to the data.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) is returned.
+#'  # Tidying
 #'
-#' @examples
-#' library(modeldata)
-#' data(credit_data)
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) is returned.
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(credit_data, package = "modeldata")
 #'
 #' # If the test passes, `new_data` is returned unaltered
 #' recipe(credit_data) %>%
@@ -28,8 +31,8 @@
 #'   prep() %>%
 #'   bake(new_data = credit_data)
 #'
-#' # If `new_data` contains values not in `x` at the `prep()` function,
-#' # the `bake()` function will break.
+#' # If `new_data` contains values not in `x` at the [prep()] function,
+#' # the [bake()] function will break.
 #' \dontrun{
 #' recipe(credit_data %>% dplyr::filter(Home != "rent")) %>%
 #'   check_new_values(Home) %>%
@@ -64,8 +67,8 @@ check_new_values <-
     add_check(
       recipe,
       check_new_values_new(
-        terms   = enquos(...),
-        role    = role,
+        terms = enquos(...),
+        role = role,
         trained = trained,
         columns = columns,
         ignore_NA = ignore_NA,
@@ -78,16 +81,18 @@ check_new_values <-
 
 check_new_values_new <-
   function(terms, role, trained, columns, skip, id, values, ignore_NA) {
-    check(subclass  = "new_values",
-          prefix    = "check_",
-          terms     = terms,
-          role      = role,
-          trained   = trained,
-          columns   = columns,
-          skip      = skip,
-          id        = id,
-          values    = values,
-          ignore_NA = ignore_NA)
+    check(
+      subclass = "new_values",
+      prefix = "check_",
+      terms = terms,
+      role = role,
+      trained = trained,
+      columns = columns,
+      skip = skip,
+      id = id,
+      values = values,
+      ignore_NA = ignore_NA
+    )
   }
 
 new_values_func <- function(x,
@@ -95,8 +100,12 @@ new_values_func <- function(x,
                             colname = "x",
                             ignore_NA = TRUE) {
   new_vals <- setdiff(as.character(x), as.character(allowed_values))
-  if (length(new_vals) == 0) return()
-  if (all(is.na(new_vals)) && ignore_NA) return()
+  if (length(new_vals) == 0) {
+    return()
+  }
+  if (all(is.na(new_vals)) && ignore_NA) {
+    return()
+  }
   if (ignore_NA) new_vals <- new_vals[!is.na(new_vals)]
   rlang::abort(paste0(
     colname,
@@ -108,16 +117,16 @@ new_values_func <- function(x,
 prep.check_new_values <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
-  values <- lapply(training[ ,col_names], unique)
+  values <- lapply(training[, col_names], unique)
 
   check_new_values_new(
-    terms   = x$terms,
-    role    = x$role,
+    terms = x$terms,
+    role = x$role,
     trained = TRUE,
     columns = col_names,
-    skip    = x$skip,
-    id      = x$id,
-    values  = values,
+    skip = x$skip,
+    id = x$id,
+    values = values,
     ignore_NA = x$ignore_NA
   )
 }
@@ -128,18 +137,19 @@ bake.check_new_values <- function(object,
   col_names <- names(object$values)
   for (i in seq_along(col_names)) {
     colname <- col_names[i]
-    new_values_func(new_data[[ colname ]],
-                    object$values[[colname]],
-                    colname,
-                    ignore_NA = object$ignore_NA)
+    new_values_func(new_data[[colname]],
+      object$values[[colname]],
+      colname,
+      ignore_NA = object$ignore_NA
+    )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_new_values <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking no new_values for ", sep = "")
-    printer(names(x$values), x$terms, x$trained, width = width)
+    title <- "Checking no new_values for "
+    print_step(names(x$values), x$terms, x$trained, title, width)
     invisible(x)
   }
 

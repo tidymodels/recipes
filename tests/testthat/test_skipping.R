@@ -1,7 +1,7 @@
 library(recipes)
 library(testthat)
 
-test_that('simple skip', {
+test_that("simple skip", {
   rec_1 <- recipe(Sepal.Length ~ ., data = iris) %>%
     step_log(Sepal.Length, skip = TRUE) %>%
     step_dummy(Species) %>%
@@ -10,17 +10,17 @@ test_that('simple skip', {
   prepped_1 <- prep(rec_1, training = iris)
 
   juiced_1 <- juice(prepped_1)
-  baked_1  <- bake(prepped_1, new_data = iris)
+  baked_1 <- bake(prepped_1, new_data = iris)
 
   expect_equal(baked_1$Sepal.Length, iris$Sepal.Length)
   expect_equal(juiced_1$Sepal.Length, log(iris$Sepal.Length))
 
-  expect_warning(
+  expect_snapshot(
     prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
   )
 
-  baked_2  <- bake(prepped_2, new_data = iris[, -1])
-  baked_3  <- bake(prepped_2, new_data = iris)
+  baked_2 <- bake(prepped_2, new_data = iris[, -1])
+  baked_3 <- bake(prepped_2, new_data = iris)
   expect_false(
     isTRUE(
       all.equal(juiced_1$Sepal.Width, baked_3$Sepal.Length)
@@ -30,17 +30,17 @@ test_that('simple skip', {
   expect_equal(setdiff(names(baked_1), names(baked_2)), "Sepal.Length")
   expect_equal(setdiff(names(baked_2), names(baked_3)), character(0))
 
-  expect_warning(prep(rec_1, training = iris, retain = FALSE))
+  expect_snapshot(prep(rec_1, training = iris, retain = FALSE))
 })
 
 
-test_that('check existing steps for `skip` arg', {
+test_that("check existing steps for `skip` arg", {
   step_check <- grep(pattern = "(^step_)|(^check_)", x = names(asNamespace("recipes")), value = TRUE)
   # These ones are not operations
   step_check <- step_check[step_check != "check_type"]
   step_check <- step_check[step_check != "check_nominal_type"]
+  step_check <- step_check[step_check != "check_factor_vars"]
   step_check <- step_check[step_check != "check_name"]
-  step_check <- step_check[step_check != "step_type"]
   step_check <- step_check[step_check != "check_training_set"]
   step_check <- step_check[step_check != "check_is_lat_lon"]
   step_check <- step_check[step_check != "check_new_data_columns"]
@@ -50,15 +50,17 @@ test_that('check existing steps for `skip` arg', {
     "skip" %in% x_args
   }
   has_skip <- vapply(step_check, has_skip_arg, logical(1))
-  if(any(!has_skip))
+  if (any(!has_skip)) {
     print(names(has_skip)[!has_skip])
+  }
 
-  for(i in names(has_skip))
+  for (i in names(has_skip)) {
     expect_true(has_skip[i])
+  }
 })
 
 
-test_that('skips for steps that remove columns (#239)', {
+test_that("skips for steps that remove columns (#239)", {
   simple_ex <-
     recipe(Species ~ ., data = iris) %>%
     step_interact(terms = ~ Sepal.Length:Sepal.Width) %>%
@@ -131,19 +133,19 @@ test_that('skips for steps that remove columns (#239)', {
 
   expect_equal(
     names(corr_juiced),
-    c('Sepal.Length', 'Petal.Width', 'dup_2', 'Species')
+    c("Sepal.Length", "Petal.Width", "dup_2", "Species")
   )
 
   expect_equal(
     names(corr_baked),
     c(
-      'Sepal.Length',
-      'Sepal.Width',
-      'Petal.Length',
-      'Petal.Width',
-      'dup_1',
-      'dup_2',
-      'Species'
+      "Sepal.Length",
+      "Sepal.Width",
+      "Petal.Length",
+      "Petal.Width",
+      "dup_1",
+      "dup_2",
+      "Species"
     )
   )
 
@@ -152,4 +154,3 @@ test_that('skips for steps that remove columns (#239)', {
     sort(names(iris_dups))
   )
 })
-

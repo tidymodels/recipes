@@ -12,14 +12,16 @@
 #' @export
 step <- function(subclass, ..., .prefix = "step_") {
   structure(list(...),
-            class = c(paste0(.prefix, subclass), "step"))
+    class = c(paste0(.prefix, subclass), "step")
+  )
 }
 
 #' @rdname step
 #' @export
 check <- function(subclass, ..., .prefix = "check_") {
   structure(list(...),
-            class = c(paste0(.prefix, subclass), "check"))
+    class = c(paste0(.prefix, subclass), "check")
+  )
 }
 
 #' Add a New Operation to the Current Recipe
@@ -43,4 +45,3 @@ add_check <- function(rec, object) {
   rec$steps[[length(rec$steps) + 1]] <- object
   rec
 }
-
