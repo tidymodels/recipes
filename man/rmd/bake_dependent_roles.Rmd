@@ -1,9 +1,9 @@
 ## Effects of non-standard roles
 
 
-Recipes steps can keep column(s) of your data set that should not be treated as outcomes or predictors. For example, a unique identifier column or some other ancillary data that can be used to troubleshoot issues during model development. 
+Recipes can label and retain column(s) of your data set that should not be treated as outcomes or predictors. For example, a unique identifier column or some other ancillary data that can be used to troubleshoot issues during model development.
 
-As an example, you might have a date column that is transformed into features using [step_date()] and.or [step_holiday()]. 
+As an example, you might have a date column that is transformed into features using [step_date()] or [step_holiday()]. 
 
 ```{r, results = "hide", message = FALSE, warning = FALSE}
   library(tidymodels)
@@ -17,9 +17,9 @@ As an example, you might have a date column that is transformed into features us
     step_date(date)
 ```
 
-At this pont, `date` is kept in the dataset as-is, and will be treated as a predictor (and will probably be converted to an integer column by the modeling function). 
+At this point, `date` is kept in the dataset as-is, and will be treated as a predictor (and will probably be converted to an integer column by the modeling function). 
 
-One option is to remove date since it is not directly used as a model term. [step_rm()] is a good way to accomplish this. 
+One option is to remove `date` since it is not directly used as a model term. [step_rm()] is a good way to accomplish this. 
 
 ```{r}
   chi_rec_rm <- chi_rec %>% step_rm(date)
@@ -31,11 +31,11 @@ Another approach, especially helpful during model development, is to change the 
   chi_rec_role <- chi_rec %>% update_role(date, new_role = "date")
 ```
 
-In this case, the column is still available in the data and will be carried through the analysis (e.g. during resampling). This can be helpful since, it there is a poor prediction, this column may be helpful in diagnosing the problem. 
+In this case, the column is still available in the data and will be carried through the analysis (e.g. during resampling). This can be helpful since, if there is a poor prediction, this column may be helpful in diagnosing the problem. 
 
 The downside to chaining the role of the column is that it is needed at prediction-time. This can impact development tools (such as tuning functions) and would also be required to be in the data being predicted once the model is deployed. 
 
-If using a non-standard role for a column, it highly recommended that you use the recipe within a workflow and specify `bake_dependent_roles` as described in [hardhat::default_recipe_blueprint()]. This will allow tuning and prediction functions to run without error. 
+If using a non-standard role for a column, it is highly recommended that you use the recipe within a workflow and specify `bake_dependent_roles` as described in [hardhat::default_recipe_blueprint()]. This will allow tuning and prediction functions to run without error. 
 
 With the example above:
 
