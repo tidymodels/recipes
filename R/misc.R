@@ -505,7 +505,42 @@ check_type <- function(dat, quant = TRUE) {
   invisible(all_good)
 }
 
+#' Check columns are available for bake steps
+#'
+#' This internal function is to be used in the bake function to ensure that
+#'   needed columns are present in the data set.
+#' @param data A tibble of the training data.
+#' @param col_names names of columns that are checked.
+#' @param step_name name of step this function is applied to. For error message.
+#' @export
+#' @keywords internal
+check_bake_cols <- function(data, col_names, step_name) {
+  if (all(col_names %in% names(data))) {
+    return(data)
+  }
 
+  missing_vars <- setdiff(col_names, names(data))
+  num_viol <- length(missing_vars)
+
+  if (num_viol < 5) {
+    rlang::abort(
+      paste0(
+        "Columns (",
+        paste0("`", missing_vars, "`", collapse = ", "),
+        ") are not present in new_data for ",
+        step_name
+      )
+    )
+  } else {
+    rlang::abort(
+      paste0(
+        num_viol,
+        " columns are not present in new_data for ",
+        step_name
+      )
+    )
+  }
+}
 
 ## Support functions
 
