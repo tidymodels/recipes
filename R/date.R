@@ -224,6 +224,8 @@ get_date_features <-
 
 #' @export
 bake.step_date <- function(object, new_data, ...) {
+  check_bake_cols(new_data, names(object$columns), "step_date()")
+
   new_cols <- rep(
     length(object$features),
     each = length(object$columns)

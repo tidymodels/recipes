@@ -137,6 +137,8 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
+  check_bake_cols(new_data, names(object$columns), "step_holiday()")
+
   for (i in seq_along(object$columns)) {
     tmp <- get_holiday_features(
       dt = new_data[[object$columns[i]]],
