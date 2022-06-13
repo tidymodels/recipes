@@ -63,13 +63,13 @@ on all of the variables that have a custom role with the selector
 
 \subsection{Effects of non-standard roles}{
 
-Recipes steps can keep column(s) of your data set that should not be
-treated as outcomes or predictors. For example, a unique identifier
+Recipes can label and retain column(s) of your data set that should not
+be treated as outcomes or predictors. For example, a unique identifier
 column or some other ancillary data that can be used to troubleshoot
 issues during model development.
 
 As an example, you might have a date column that is transformed into
-features using \code{\link[=step_date]{step_date()}} and.or
+features using \code{\link[=step_date]{step_date()}} or
 \code{\link[=step_holiday]{step_holiday()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{  library(tidymodels)
@@ -83,11 +83,11 @@ features using \code{\link[=step_date]{step_date()}} and.or
     step_date(date)
 }\if{html}{\out{</div>}}
 
-At this pont, \code{date} is kept in the dataset as-is, and will be treated
+At this point, \code{date} is kept in the dataset as-is, and will be treated
 as a predictor (and will probably be converted to an integer column by
 the modeling function).
 
-One option is to remove date since it is not directly used as a model
+One option is to remove \code{date} since it is not directly used as a model
 term. \code{\link[=step_rm]{step_rm()}} is a good way to accomplish this.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{  chi_rec_rm <- chi_rec \%>\% step_rm(date)
@@ -102,7 +102,7 @@ change the role of the column to some other value via
 
 In this case, the column is still available in the data and will be
 carried through the analysis (e.g. during resampling). This can be
-helpful since, it there is a poor prediction, this column may be helpful
+helpful since, if there is a poor prediction, this column may be helpful
 in diagnosing the problem.
 
 The downside to chaining the role of the column is that it is needed at
@@ -110,7 +110,7 @@ prediction-time. This can impact development tools (such as tuning
 functions) and would also be required to be in the data being predicted
 once the model is deployed.
 
-If using a non-standard role for a column, it highly recommended that
+If using a non-standard role for a column, it is highly recommended that
 you use the recipe within a workflow and specify \code{bake_dependent_roles}
 as described in
 \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}.
