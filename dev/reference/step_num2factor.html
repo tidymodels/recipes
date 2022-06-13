@@ -97,27 +97,41 @@ integers.</p>
     <dl><dt>recipe</dt>
 <dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+
+
 <dt>role</dt>
 <dd><p>Not used by this step since no new variables are
 created.</p></dd>
+
+
 <dt>transform</dt>
 <dd><p>A function taking a single argument <code>x</code> that can be used
 to modify the numeric values prior to determining the levels (perhaps using
 <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">base::as.integer()</a></code>). The output of a function should be an integer that
 corresponds to the value of <code>levels</code> that should be assigned. If not an
 integer, the value will be converted to an integer during <code><a href="bake.html">bake()</a></code>.</p></dd>
+
+
 <dt>trained</dt>
 <dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
+
+
 <dt>levels</dt>
 <dd><p>A character vector of values that will be used as the levels.
 These are the numeric data converted to character and ordered. This is
 modified once <code><a href="prep.html">prep()</a></code> is executed.</p></dd>
+
+
 <dt>ordered</dt>
 <dd><p>A single logical value; should the factor(s) be ordered?</p></dd>
+
+
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
@@ -125,12 +139,17 @@ when <code><a href="prep.html">prep()</a></code> is run, some operations may not
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>A character string that is unique to this step to identify it.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An updated version of <code>recipe</code> with the new step added to the
+    
+
+<p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
     </div>
     <div class="section level2">
@@ -172,8 +191,7 @@ sequence of any existing operations.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">attrition</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">attrition</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">attrition</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">StockOptionLevel</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -262,7 +280,7 @@ sequence of any existing operations.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>

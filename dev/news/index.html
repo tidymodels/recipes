@@ -263,7 +263,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.9" id="recipes-019">recipes 0.1.9<a class="anchor" aria-label="anchor" href="#recipes-019"></a></h2><p class="text-muted">CRAN release: 2020-01-07</p>
-<ul><li><p>Delayed S3 method registration for <code>tune::tunable()</code> methods that live in recipes will now work correctly on R &gt;=4.0.0 (<a href="https://github.com/tidymodels/recipes/issues/439" class="external-link">#439</a>, <a href="https://github.com/tidymodels/tune/issues/146" class="external-link">tidymodels/tune#146</a>).</p></li>
+<ul><li><p>Delayed S3 method registration for <code>tune::tunable()</code> methods that live in recipes will now work correctly on R &gt;=4.0.0 (<a href="https://github.com/tidymodels/recipes/issues/439" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/439" class="external-link">#439</a>, <a href="https://github.com/tidymodels/tune/issues/146" class="external-link">tidymodels/tune#146</a>).</p></li>
 <li><p><code><a href="../reference/step_relevel.html">step_relevel()</a></code> added.</p></li>
 </ul></div>
     <div class="section level2">
@@ -273,16 +273,16 @@
 <h3 id="breaking-changes-0-1-8">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-8"></a></h3>
 <ul><li><p>The imputation steps do not change the data type being imputed now. Previously, if the data were integer, the data would be changed to numeric (for some step types). The change is breaking since the underlying data of imputed values are now saved as a list instead of a vector (for some step types).</p></li>
 <li><p>The data sets were moved to the new <code>modeldata</code> package.</p></li>
-<li><p><code><a href="../reference/step_num2factor.html">step_num2factor()</a></code> was rewritten due to a bug that ignored the user-supplied levels (<a href="https://github.com/tidymodels/recipes/issues/425" class="external-link">#425</a>). The results of the <code>transform</code> argument are now required to be a function and <code>levels</code> must now be supplied.</p></li>
+<li><p><code><a href="../reference/step_num2factor.html">step_num2factor()</a></code> was rewritten due to a bug that ignored the user-supplied levels (<a href="https://github.com/tidymodels/recipes/issues/425" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/425" class="external-link">#425</a>). The results of the <code>transform</code> argument are now required to be a function and <code>levels</code> must now be supplied.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-1-8">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-8"></a></h3>
 <ul><li><p>Using a minus in the formula to <code><a href="../reference/recipes.html">recipes()</a></code> is no longer allowed (it didn’t remove variables anyway). <code><a href="../reference/step_rm.html">step_rm()</a></code> or <code><a href="../reference/roles.html">update_role()</a></code> can be used instead.</p></li>
-<li><p>When using a selector that returns no columns, <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> will now return a tibble with as many rows as the original template data or the <code>new_data</code> respectively. This is more consistent with how selectors work in dplyr (<a href="https://github.com/tidymodels/recipes/issues/411" class="external-link">#411</a>).</p></li>
+<li><p>When using a selector that returns no columns, <code><a href="../reference/juice.html">juice()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> will now return a tibble with as many rows as the original template data or the <code>new_data</code> respectively. This is more consistent with how selectors work in dplyr (<a href="https://github.com/tidymodels/recipes/issues/411" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/411" class="external-link">#411</a>).</p></li>
 <li><p>Code was added to explicitly register <code>tunable</code> methods when <code>recipes</code> is loaded. This is required because of changes occurring in R 4.0.</p></li>
 <li><p><code><a href="../reference/check_class.html">check_class()</a></code> checks if a variable is of the designated class. Class is either learned from the train set or provided in the check. (contributed by Edwin Thoen)</p></li>
-<li><p><code><a href="../reference/step_normalize.html">step_normalize()</a></code> and <code><a href="../reference/step_scale.html">step_scale()</a></code> gained a <code>factor</code> argument with values of 1 or 2 that can scale the standard deviations used to transform the data. (<a href="https://github.com/tidymodels/recipes/issues/380" class="external-link">#380</a>)</p></li>
-<li><p><code><a href="../reference/bake.html">bake()</a></code> now produces a tibble with columns in the same order as <code><a href="../reference/juice.html">juice()</a></code> (<a href="https://github.com/tidymodels/recipes/issues/365" class="external-link">#365</a>)</p></li>
+<li><p><code><a href="../reference/step_normalize.html">step_normalize()</a></code> and <code><a href="../reference/step_scale.html">step_scale()</a></code> gained a <code>factor</code> argument with values of 1 or 2 that can scale the standard deviations used to transform the data. (<a href="https://github.com/tidymodels/recipes/issues/380" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/380" class="external-link">#380</a>)</p></li>
+<li><p><code><a href="../reference/bake.html">bake()</a></code> now produces a tibble with columns in the same order as <code><a href="../reference/juice.html">juice()</a></code> (<a href="https://github.com/tidymodels/recipes/issues/365" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/365" class="external-link">#365</a>)</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -291,7 +291,7 @@
 <p>Release driven by changes in <code>tidyr</code> (v 1.0.0).</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-1-7">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-7"></a></h3>
-<p><code>format_selector()</code>’s <code>wdth</code> argument has been renamed to <code>width</code> (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link">#250</a>).</p>
+<p><code>format_selector()</code>’s <code>wdth</code> argument has been renamed to <code>width</code> (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/250" class="external-link">#250</a>).</p>
 </div>
 <div class="section level3">
 <h3 id="new-operations-0-1-7">New Operations<a class="anchor" aria-label="anchor" href="#new-operations-0-1-7"></a></h3>
@@ -300,9 +300,9 @@
 <div class="section level3">
 <h3 id="other-changes-0-1-7">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-7"></a></h3>
 <ul><li><p>The use of <code><a href="https://parsnip.tidymodels.org/reference/varying.html" class="external-link">varying()</a></code> will be deprecated in favor of an upcoming function <code><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune()</a></code>. No changes are need in this version, but subsequent versions will work with <code><a href="https://hardhat.tidymodels.org/reference/tune.html" class="external-link">tune()</a></code>.</p></li>
-<li><p><code><a href="../reference/format_ch_vec.html">format_ch_vec()</a></code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link">#250</a>).</p></li>
+<li><p><code><a href="../reference/format_ch_vec.html">format_ch_vec()</a></code> and <code>format_selector()</code> are now exported (<a href="https://github.com/tidymodels/recipes/issues/250" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/250" class="external-link">#250</a>).</p></li>
 <li><p><code>check_new_values</code> breaks <code>bake</code> if variable contains values that were not observed in the train set (contributed by Edwin Thoen)</p></li>
-<li><p>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298" class="external-link">#298</a>). This will also occur when the selectors select no columns.</p></li>
+<li><p>When no outcomes are in the recipe, using <code>juice(object, all_outcomes()</code> and <code>bake(object, new_data, all_outcomes()</code> will return a tibble with zero rows and zero columns (instead of failing). (<a href="https://github.com/tidymodels/recipes/issues/298" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/298" class="external-link">#298</a>). This will also occur when the selectors select no columns.</p></li>
 <li><p>As alternatives to <code><a href="../reference/step_kpca.html">step_kpca()</a></code>, two separate steps were added called <code><a href="../reference/step_kpca_rbf.html">step_kpca_rbf()</a></code> and <code><a href="../reference/step_kpca_poly.html">step_kpca_poly()</a></code>. The use of <code><a href="../reference/step_kpca.html">step_kpca()</a></code> will print a deprecation message that it will be going away.</p></li>
 <li><p><code><a href="../reference/step_nzv.html">step_nzv()</a></code> and <code><a href="../reference/step_poly.html">step_poly()</a></code> had arguments promoted out of their <code>options</code> slot. <code>options</code> can be used in the short term but is deprecated.</p></li>
 <li><p><code>step_downsample()</code> will replace the <code>ratio</code> argument with <code>under_ratio</code> and <code>step_upsample()</code> will replace it with <code>over_ratio</code>. <code>ratio</code> still works (for now) but issues a deprecation message.</p></li>
@@ -330,12 +330,12 @@
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-1-6">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-1-6"></a></h3>
-<ul><li><p>If <code>threshold</code> argument of <code>step_other</code> is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the “other” category. <a href="https://github.com/tidymodels/recipes/issues/289" class="external-link">#289</a></p></li>
-<li><p><code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323" class="external-link">#323</a>).</p></li>
+<ul><li><p>If <code>threshold</code> argument of <code>step_other</code> is greater than one then it specifies the minimum sample size before the levels of the factor are collapsed into the “other” category. <a href="https://github.com/tidymodels/recipes/issues/289" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/289" class="external-link">#289</a></p></li>
+<li><p><code><a href="../reference/step_impute_knn.html">step_knnimpute()</a></code> can now pass two options to the underlying knn code, including the number of threads (<a href="https://github.com/tidymodels/recipes/issues/323" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/323" class="external-link">#323</a>).</p></li>
 <li><p>Due to changes by CRAN, <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code> only works on versions of R &gt;= 3.6.0 due to dependency issues.</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> and <code><a href="../reference/step_other.html">step_other()</a></code> are now tolerant to cases where that step’s selectors do not capture any columns. In this case, no modifications to the data are made. (<a href="https://github.com/tidymodels/recipes/issues/290" class="external-link">#290</a>, <a href="https://github.com/tidymodels/recipes/issues/348" class="external-link">#348</a>)</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> can now retain the original columns that are used to make the dummy variables. (<a href="https://github.com/tidymodels/recipes/issues/328" class="external-link">#328</a>)</p></li>
-<li><p><code><a href="../reference/step_other.html">step_other()</a></code>’s print method only reports the variables with collapsed levels (as opposed to any column that was <em>tested</em> to see if it needed collapsing). (<a href="https://github.com/tidymodels/recipes/issues/338" class="external-link">#338</a>)</p></li>
+<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> and <code><a href="../reference/step_other.html">step_other()</a></code> are now tolerant to cases where that step’s selectors do not capture any columns. In this case, no modifications to the data are made. (<a href="https://github.com/tidymodels/recipes/issues/290" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/290" class="external-link">#290</a>, <a href="https://github.com/tidymodels/recipes/issues/348" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/348" class="external-link">#348</a>)</p></li>
+<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> can now retain the original columns that are used to make the dummy variables. (<a href="https://github.com/tidymodels/recipes/issues/328" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/328" class="external-link">#328</a>)</p></li>
+<li><p><code><a href="../reference/step_other.html">step_other()</a></code>’s print method only reports the variables with collapsed levels (as opposed to any column that was <em>tested</em> to see if it needed collapsing). (<a href="https://github.com/tidymodels/recipes/issues/338" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/338" class="external-link">#338</a>)</p></li>
 <li><p><code><a href="../reference/step_pca.html">step_pca()</a></code>, <code><a href="../reference/step_kpca.html">step_kpca()</a></code>, <code><a href="../reference/step_ica.html">step_ica()</a></code>, <code><a href="../reference/step_nnmf.html">step_nnmf()</a></code>, <code><a href="../reference/step_pls.html">step_pls()</a></code>, and <code><a href="../reference/step_isomap.html">step_isomap()</a></code> now accept zero components. In this case, the original data are returned.</p></li>
 </ul></div>
 </div>
@@ -356,7 +356,7 @@
 <ul><li>The <code>tidy</code> method for <code>step_dummy</code> now returns the original variable <em>and</em> the levels of the future dummy variables.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-1-5">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-5"></a></h3>
-<ul><li>Updating the role of new columns generated by a recipe step no longer also updates <code>NA</code> roles of existing columns (<a href="https://github.com/tidymodels/recipes/issues/296" class="external-link">#296</a>).</li></ul></div>
+<ul><li>Updating the role of new columns generated by a recipe step no longer also updates <code>NA</code> roles of existing columns (<a href="https://github.com/tidymodels/recipes/issues/296" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/296" class="external-link">#296</a>).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.4" id="recipes-014">
@@ -382,14 +382,14 @@
 <li>
 <code>prep</code> and a few steps had <code>stringsAsFactors</code> changed to <code>strings_as_factors</code>.</li>
 </ul></li>
-<li><p><code><a href="../reference/roles.html">add_role()</a></code> can now only add <em>new</em> additional roles. To alter existing roles, use <code><a href="../reference/roles.html">update_role()</a></code>. This change also allows for the possibility of having multiple roles/types for one variable. <a href="https://github.com/tidymodels/recipes/issues/221" class="external-link">#221</a></p></li>
+<li><p><code><a href="../reference/roles.html">add_role()</a></code> can now only add <em>new</em> additional roles. To alter existing roles, use <code><a href="../reference/roles.html">update_role()</a></code>. This change also allows for the possibility of having multiple roles/types for one variable. <a href="https://github.com/tidymodels/recipes/issues/221" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/221" class="external-link">#221</a></p></li>
 <li><p>All steps gain an <code>id</code> field that will be used in the future to reference other steps.</p></li>
-<li><p>The <code>retain</code> option to <code>prep</code> is now defaulted to <code>TRUE</code>. If <code>verbose = TRUE</code>, the approximate size of the data set is printed. <a href="https://github.com/tidymodels/recipes/issues/207" class="external-link">#207</a></p></li>
+<li><p>The <code>retain</code> option to <code>prep</code> is now defaulted to <code>TRUE</code>. If <code>verbose = TRUE</code>, the approximate size of the data set is printed. <a href="https://github.com/tidymodels/recipes/issues/207" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/207" class="external-link">#207</a></p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-operations-0-1-4">New Operations<a class="anchor" aria-label="anchor" href="#new-operations-0-1-4"></a></h3>
 <ul><li>
-<code>step_integer</code> converts data to ordered integers similar to <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" class="external-link"><code>LabelEncoder</code></a> <a href="https://github.com/tidymodels/recipes/issues/123" class="external-link">#123</a> and <a href="https://github.com/tidymodels/recipes/issues/185" class="external-link">#185</a>
+<code>step_integer</code> converts data to ordered integers similar to <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" class="external-link"><code>LabelEncoder</code></a> <a href="https://github.com/tidymodels/recipes/issues/123" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/123" class="external-link">#123</a> and <a href="https://github.com/tidymodels/recipes/issues/185" class="external-link"></a><a href="https://github.com/tidymodels/recipes/issues/185" class="external-link">#185</a>
 </li>
 <li>
 <code>step_geodist</code> can be used to calculate the distance between geocodes and a single reference location.</li>
@@ -558,7 +558,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>

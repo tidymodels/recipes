@@ -101,23 +101,35 @@ into one or more integer model terms for the extracted levels.</p>
     <dl><dt>recipe</dt>
 <dd><p>A recipe object. The step will be added to the
 sequence of operations for this recipe.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>One or more selector functions to choose variables
 for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+
+
 <dt>role</dt>
 <dd><p>Not used by this step since no new variables are
 created.</p></dd>
+
+
 <dt>trained</dt>
 <dd><p>A logical to indicate if the quantities for
 preprocessing have been estimated.</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>Character vector containing a regular expression to use
 for splitting. <code><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit()</a></code> is used to perform the split. <code>sep</code> takes
 priority if <code>pattern</code> is also specified.</p></dd>
+
+
 <dt>pattern</dt>
 <dd><p>Character vector containing a regular expression used
 for extraction. <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gregexpr()</a></code> and <code><a href="https://rdrr.io/r/base/regmatches.html" class="external-link">regmatches()</a></code> are used to perform
 pattern extraction using <code>perl = TRUE</code>.</p></dd>
+
+
 <dt>threshold</dt>
 <dd><p>A numeric value between 0 and 1, or an integer greater or
 equal to one.  If less than one, then factor levels with a rate of
@@ -125,19 +137,29 @@ occurrence in the training set below <code>threshold</code> will be pooled to <c
 If greater or equal to one, then this value is treated as a frequency
 and factor levels that occur less than <code>threshold</code> times will be pooled
 to <code>other</code>.</p></dd>
+
+
 <dt>other</dt>
 <dd><p>A single character value for the "other" category.</p></dd>
+
+
 <dt>naming</dt>
 <dd><p>A function that defines the naming convention for
 new dummy columns. See Details below.</p></dd>
+
+
 <dt>levels</dt>
 <dd><p>A list that contains the information needed to
 create dummy variables for each variable contained in
 <code>terms</code>. This is <code>NULL</code> until the step is trained by
 <code><a href="prep.html">prep()</a></code>.</p></dd>
+
+
 <dt>keep_original_cols</dt>
 <dd><p>A logical to keep the original variables in the
 output. Defaults to <code>FALSE</code>.</p></dd>
+
+
 <dt>skip</dt>
 <dd><p>A logical. Should the step be skipped when the
 recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
@@ -145,12 +167,17 @@ when <code><a href="prep.html">prep()</a></code> is run, some operations may not
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using <code>skip = TRUE</code> as it may affect
 the computations for subsequent operations.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>A character string that is unique to this step to identify it.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An updated version of <code>recipe</code> with the new step added to the
+    
+
+<p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
     </div>
     <div class="section level2">
@@ -214,8 +241,7 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tate_text</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tate_text</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">artist</span> <span class="op">+</span> <span class="va">medium</span>, data <span class="op">=</span> <span class="va">tate_text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">artist</span>, <span class="va">medium</span>, sep <span class="op">=</span> <span class="st">", "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -3057,7 +3083,7 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>
