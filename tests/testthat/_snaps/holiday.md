@@ -1,3 +1,11 @@
+# error with missing cols
+
+    Code
+      bake(holiday_rec, test_data %>% select(-day))
+    Condition
+      Error in `check_bake_cols()`:
+      ! Columns (`day`) are not present in new_data for step_holiday()
+
 # printing
 
     Code

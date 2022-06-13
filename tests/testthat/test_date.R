@@ -91,6 +91,20 @@ test_that("ordinal values", {
   expect_equal(date_res, date_exp)
 })
 
+test_that("error with missing cols", {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), features = feats)
+
+  date_rec <- prep(date_rec, training = examples)
+
+  expect_snapshot(error = TRUE,
+    bake(date_rec, new_data = examples %>% select(-Dan))
+  )
+
+  expect_snapshot(error = TRUE,
+    bake(date_rec, new_data = examples %>% select(-Dan, -Stefan))
+  )
+})
 
 test_that("printing", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%

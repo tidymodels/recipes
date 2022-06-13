@@ -74,6 +74,22 @@ test_that("custom hour12 metric is correct", {
   expect_equal(date_res, date_exp)
 })
 
+test_that("error with missing cols", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  date_rec <- recipe(~ times, examples) %>%
+    step_date(all_predictors())
+
+  date_rec <- prep(date_rec, training = examples)
+
+  expect_snapshot(error = TRUE,
+    bake(date_rec, new_data = examples %>% select(-times))
+  )
+})
+
 test_that("printing", {
   examples <- data.frame(
     times = lubridate::ymd_hms("2022-05-06 10:01:07") +

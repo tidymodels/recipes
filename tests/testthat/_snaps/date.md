@@ -1,3 +1,19 @@
+# error with missing cols
+
+    Code
+      bake(date_rec, new_data = examples %>% select(-Dan))
+    Condition
+      Error in `check_bake_cols()`:
+      ! Columns (`Dan`) are not present in new_data for step_date()
+
+---
+
+    Code
+      bake(date_rec, new_data = examples %>% select(-Dan, -Stefan))
+    Condition
+      Error in `check_bake_cols()`:
+      ! Columns (`Dan`, `Stefan`) are not present in new_data for step_date()
+
 # printing
 
     Code

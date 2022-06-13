@@ -1,3 +1,11 @@
+# error with missing cols
+
+    Code
+      bake(date_rec, new_data = examples %>% select(-times))
+    Condition
+      Error in `check_bake_cols()`:
+      ! Columns (`times`) are not present in new_data for step_date()
+
 # printing
 
     Code

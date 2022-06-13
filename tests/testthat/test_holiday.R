@@ -94,6 +94,19 @@ test_that("POSIXct class", {
   )
 })
 
+test_that("error with missing cols", {
+  holiday_rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+
+  expect_snapshot(error = TRUE,
+    bake(holiday_rec, test_data %>% select(-day))
+  )
+})
+
+
+
 
 test_that("printing", {
   holiday_rec <- recipe(~day, test_data) %>%
