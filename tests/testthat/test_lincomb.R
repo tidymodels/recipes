@@ -14,8 +14,8 @@ dum_rec <- recipe(yield ~ ., data = dummies)
 
 ###################################################################
 
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 biomass$new_1 <- with(
   biomass,
   .1 * carbon - .2 * hydrogen + .6 * sulfur

@@ -75,8 +75,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass$new_1 <- with(
   biomass,
@@ -103,6 +103,7 @@ lincomb_filter_trained
 
 tidy(lincomb_filter, number = 1)
 tidy(lincomb_filter_trained, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other variable filter steps: 

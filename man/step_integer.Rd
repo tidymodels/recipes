@@ -86,8 +86,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(Sacramento)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 sacr_tr <- Sacramento[1:100, ]
 sacr_tr$sqft[1] <- NA
@@ -103,6 +103,7 @@ rec <- recipe(type ~ ., data = sacr_tr) \%>\%
 
 bake(rec, sacr_te, all_predictors())
 tidy(rec, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 set.seed(19)
 in_test <- 1:200

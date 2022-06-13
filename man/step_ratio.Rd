@@ -87,9 +87,9 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 biomass$total <- apply(biomass[, 3:7], 1, sum)
 biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -110,6 +110,7 @@ ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 

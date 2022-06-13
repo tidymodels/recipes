@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data(biomass)
+data(biomass, package = "modeldata")
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ][1:5, ]
 

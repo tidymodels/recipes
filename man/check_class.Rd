@@ -83,9 +83,9 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
-library(modeldata)
-data(Sacramento)
+data(Sacramento, package = "modeldata")
 
 # Learn the classes on the train set
 train <- Sacramento[1:500, ]
@@ -119,6 +119,7 @@ recipe(x_df) \%>\%
   check_class(time, class_nm = "POSIXt", allow_additional = TRUE) \%>\%
   prep(x_df) \%>\%
   bake(x_df)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

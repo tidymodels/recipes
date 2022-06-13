@@ -52,10 +52,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#'
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
+#' data(biomass, package = "modeldata")
 #'
 #' # rec <- recipe(HHV ~ ., data = biomass) %>%
 #' #   update_role(sample, new_role = "id var") %>%

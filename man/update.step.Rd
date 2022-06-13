@@ -22,8 +22,8 @@ conflicting information can arise between the data returned from
 \code{bake(object, new_data = NULL)} and the information in the step.
 }
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -51,5 +51,5 @@ bake(rec2_prepped, new_data = NULL)
 \dontrun{
 update(rec_prepped$steps[[1]], degree = 4)
 }
-
+\dontshow{\}) # examplesIf}
 }

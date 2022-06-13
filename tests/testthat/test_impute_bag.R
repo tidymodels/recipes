@@ -3,8 +3,8 @@ library(ipred)
 library(rpart)
 library(recipes)
 
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 biomass$fac <- factor(sample(letters[1:2], size = nrow(biomass), replace = TRUE))
 
@@ -116,7 +116,7 @@ test_that("tunable", {
 
 
 test_that("non-factor imputation", {
-  data(scat)
+  data(scat, package = "modeldata")
   scat$Location <- as.character(scat$Location)
   scat$Location[1] <- NA
   rec <-

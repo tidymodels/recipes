@@ -114,8 +114,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-library(modeldata)
-data(tate_text)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(tate_text, package = "modeldata")
 
 dummies <- recipe(~ artist + medium, data = tate_text) \%>\%
   step_dummy_extract(artist, medium, sep = ", ") \%>\%
@@ -158,6 +158,7 @@ dommies_data_color <- dummies_color \%>\%
   bake(new_data = NULL)
 
 dommies_data_color
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_extract_names]{dummy_extract_names()}}

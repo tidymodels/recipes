@@ -1,8 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-library(modeldata)
-data(credit_data)
+skip_if_not_installed("modeldata")
+data(credit_data, package = "modeldata")
 
 
 set.seed(342)
