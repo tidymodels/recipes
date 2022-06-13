@@ -46,10 +46,9 @@
 #' on all of the variables that have a custom role with the selector
 #' [has_role()].
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # Using the formula method, roles are created for any outcomes and predictors:
 #' recipe(HHV ~ ., data = biomass) %>%

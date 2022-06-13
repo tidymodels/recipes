@@ -122,3 +122,19 @@
       The retained training set is ~ 0 Mb  in memory.
       
 
+# `internal data is kept as tibbles when prepping
+
+    Code
+      bake(rec_prepped, new_data = as_tibble(mtcars))
+    Condition
+      Error in `bake()`:
+      ! bake() methods should always return tibbles
+
+---
+
+    Code
+      prep(rec_spec)
+    Condition
+      Error in `prep()`:
+      ! bake() methods should always return tibbles
+

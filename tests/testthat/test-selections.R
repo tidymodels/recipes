@@ -1,5 +1,7 @@
 r_version <- function() paste0("R", getRversion()[, 1:2])
 
+skip_if_not_installed("modeldata")
+
 data("Sacramento", package = "modeldata")
 rec1 <- recipe(~., data = Sacramento)
 info1 <- summary(rec1)

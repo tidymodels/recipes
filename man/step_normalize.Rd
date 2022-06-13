@@ -81,8 +81,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -112,6 +112,7 @@ norm_keep_orig <- rec \%>\%
 keep_orig_obj <- prep(norm_keep_orig, training = biomass_tr)
 keep_orig_te <- bake(keep_orig_obj, biomass_te)
 keep_orig_te
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other normalization steps: 

@@ -23,10 +23,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#'
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #' rec <- recipe(~ city + zip, data = Sacramento) %>%
 #'   step_unknown(city, new_level = "UNKNOWN") %>%
 #'   step_relevel(city, ref_level = "UNKNOWN") %>%

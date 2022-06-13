@@ -30,9 +30,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2", "kernlab"))
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]

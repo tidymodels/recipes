@@ -1,5 +1,4 @@
 library(testthat)
-library(kernlab)
 library(recipes)
 
 set.seed(131)
@@ -21,7 +20,7 @@ test_that("correct kernel PCA values", {
   pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
-  pca_exp <- kpca(as.matrix(tr_dat[, -1]),
+  pca_exp <- kernlab::kpca(as.matrix(tr_dat[, -1]),
     kernel = "rbfdot",
     kpar = list(sigma = 0.2)
   )

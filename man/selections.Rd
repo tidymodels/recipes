@@ -131,7 +131,9 @@ to a vector in your workspace.
 }
 }
 
-Some examples:\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_vars <- names(mtcars)[4:6]
+Some examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_vars <- names(mtcars)[4:6]
 
 # No filter steps, OK for not saving the recipe
 rec_1 <-
@@ -150,10 +152,14 @@ recipe(mpg ~ ., data = mtcars)  \%>\%
   step_rm(wt) \%>\% 
   step_log(!!!some_vars) \%>\% 
   prep()
-}\if{html}{\out{</div>}}\preformatted{## Error in `chr_as_locations()`:
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `chr_as_locations()`:
 ## ! Can't subset columns that don't exist.
 ## x Column `wt` doesn't exist.
-}\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Best for filters (using any_of()) and when
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Best for filters (using any_of()) and when
 # saving the recipe
 rec_4 <- 
   recipe(mpg ~ ., data = mtcars) \%>\% 

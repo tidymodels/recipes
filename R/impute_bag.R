@@ -51,9 +51,8 @@
 #'
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
 #'  Springer Verlag.
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))

@@ -82,8 +82,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(covers)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(covers, package = "modeldata")
 
 rec <- recipe(~description, covers) \%>\%
   step_count(description, pattern = "(rock|stony)", result = "rocks") \%>\%
@@ -97,6 +97,7 @@ count_values
 
 tidy(rec, number = 1)
 tidy(rec2, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

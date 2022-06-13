@@ -88,9 +88,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-
-library(modeldata)
-data(Smithsonian)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Smithsonian, package = "modeldata")
 
 # How close are the museums to Union Station?
 near_station <- recipe(~., data = Smithsonian) \%>\%
@@ -106,6 +105,7 @@ bake(near_station, new_data = NULL) \%>\%
   arrange(geo_dist)
 
 tidy(near_station, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \references{
 https://en.wikipedia.org/wiki/Haversine_formula

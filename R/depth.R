@@ -59,7 +59,7 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("ddalpha")
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%

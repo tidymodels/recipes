@@ -50,9 +50,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' set.seed(19)
 #' in_train <- sample(1:nrow(Sacramento), size = 800)

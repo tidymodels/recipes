@@ -77,8 +77,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -103,6 +103,7 @@ plot(transformed_te$carbon, transformed_te$hydrogen)
 
 tidy(ss_trans, number = 3)
 tidy(ss_obj, number = 3)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Serneels, S., De Nolf, E., and Van Espen, P.

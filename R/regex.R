@@ -32,9 +32,8 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(covers)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(covers, package = "modeldata")
 #'
 #' rec <- recipe(~description, covers) %>%
 #'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%

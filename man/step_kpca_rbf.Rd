@@ -108,8 +108,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2", "kernlab"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -136,6 +136,7 @@ if (require(ggplot2) & require(kernlab)) {
   tidy(kpca_trans, number = 3)
   tidy(kpca_estimates, number = 3)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 Scholkopf, B., Smola, A., and Muller, K. (1997).
