@@ -88,6 +88,7 @@ numeric variables.</p>
   abbr <span class="op">=</span> <span class="cn">TRUE</span>,
   label <span class="op">=</span> <span class="cn">TRUE</span>,
   ordinal <span class="op">=</span> <span class="cn">FALSE</span>,
+  locale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale</a></span><span class="op">(</span><span class="st">"LC_TIME"</span><span class="op">)</span>,
   columns <span class="op">=</span> <span class="cn">NULL</span>,
   keep_original_cols <span class="op">=</span> <span class="cn">TRUE</span>,
   skip <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -146,6 +147,12 @@ number.</p></dd>
 <dt>ordinal</dt>
 <dd><p>A logical: should factors be ordered? Only
 available for features <code>month</code> or <code>dow</code>.</p></dd>
+
+
+<dt>locale</dt>
+<dd><p>Locale to be used for <code>month</code> and <code>dow</code>, see <a href="https://rdrr.io/r/base/locales.html" class="external-link">locales</a>.
+On Linux systems you can use <code>system("locale -a")</code> to list all the
+installed locales. Defaults to <code>Sys.getlocale("LC_TIME")</code>.</p></dd>
 
 
 <dt>columns</dt>
