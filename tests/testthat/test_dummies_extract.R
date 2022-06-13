@@ -1,6 +1,7 @@
 library(testthat)
 library(recipes)
 
+skip_if_not_installed("modeldata")
 data(tate_text, package = "modeldata")
 
 color_examples <- tibble(

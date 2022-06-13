@@ -38,9 +38,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' sacr_tr <- Sacramento[1:100, ]
 #' sacr_tr$sqft[1] <- NA

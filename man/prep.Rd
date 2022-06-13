@@ -80,6 +80,7 @@ if the first step is to center the data and the second is to scale the
 data, the step for scaling is given the centered data.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 
 library(dplyr)
@@ -99,4 +100,5 @@ ames_rec <-
 prep(ames_rec, verbose = TRUE)
 
 prep(ames_rec, log_changes = TRUE)
+\dontshow{\}) # examplesIf}
 }

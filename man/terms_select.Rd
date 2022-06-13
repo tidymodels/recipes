@@ -31,12 +31,13 @@ This function bakes the step function selectors and might be
 useful when creating custom steps.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(rlang)
-library(modeldata)
-data(Sacramento)
+data(Sacramento, package = "modeldata")
 rec <- recipe(~., data = Sacramento)
 info <- summary(rec)
 terms_select(info = info, quos(all_predictors()))
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=summary.recipe]{summary.recipe()}}

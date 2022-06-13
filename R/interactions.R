@@ -56,9 +56,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#' library(modeldata)
-#' data(penguins)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(penguins, package = "modeldata")
 #' penguins <- penguins %>% na.omit()
 #'
 #' rec <- recipe(flipper_length_mm ~ ., data = penguins)

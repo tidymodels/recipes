@@ -1,9 +1,8 @@
 library(testthat)
 library(recipes)
 
-
-library(modeldata)
-data("Sacramento")
+skip_if_not_installed("modeldata")
+data("Sacramento", package = "modeldata")
 
 sacr <- Sacramento
 

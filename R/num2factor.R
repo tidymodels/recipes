@@ -26,10 +26,9 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(attrition)
+#' data(attrition, package = "modeldata")
 #'
 #' attrition %>%
 #'   group_by(StockOptionLevel) %>%

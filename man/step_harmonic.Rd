@@ -112,6 +112,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("ggplot2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2, quietly = TRUE)
 library(dplyr)
 
@@ -182,6 +183,7 @@ preds <- tibble(
 bind_rows(carbon_dioxide, preds) \%>\%
   ggplot(aes(x = date_time, y = co2, color = type)) +
   geom_line()
+\dontshow{\}) # examplesIf}
 }
 \references{
 Doran, H. E., & Quilkey, J. J. (1972).

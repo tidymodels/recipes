@@ -28,10 +28,9 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' ## Truncate some values to emulate what a lower limit of
 #' ## the measurement system might look like

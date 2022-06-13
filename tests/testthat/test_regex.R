@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(covers)
+skip_if_not_installed("modeldata")
+data(covers, package = "modeldata")
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
 

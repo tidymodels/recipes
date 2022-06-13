@@ -300,10 +300,10 @@ R:predict()
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # formula example with single outcome:
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 # split data
 biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -344,4 +344,5 @@ rec <- recipe(biomass_tr) \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting indicator")
 rec
+\dontshow{\}) # examplesIf}
 }

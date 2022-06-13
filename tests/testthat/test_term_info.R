@@ -149,9 +149,8 @@ test_that("issue #", {
 
 # tests based on the results of this code before the update:
 
-library(modeldata)
-library(modeldata)
-data(credit_data)
+skip_if_not_installed("modeldata")
+data(credit_data, package = "modeldata")
 #
 # recipe(Status ~ Seniority + Job + Price + Age, data = credit_data) %>%
 #   step_dummy(Job) %>%

@@ -2,8 +2,8 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)
 biomass$hydrogen <- ifelse(biomass$hydrogen > 5, biomass$carbon, 5)

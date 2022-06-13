@@ -27,6 +27,9 @@
 #'  FALSE`.
 #' @param ordinal A logical: should factors be ordered? Only
 #'  available for features `month` or `dow`.
+#' @param locale Locale to be used for `month` and `dow`, see [locales].
+#'  On Linux systems you can use `system("locale -a")` to list all the
+#'  installed locales. Defaults to `Sys.getlocale("LC_TIME")`.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep()] is used.
@@ -77,6 +80,7 @@ step_date <-
            abbr = TRUE,
            label = TRUE,
            ordinal = FALSE,
+           locale = Sys.getlocale("LC_TIME"),
            columns = NULL,
            keep_original_cols = TRUE,
            skip = FALSE,
@@ -110,6 +114,7 @@ step_date <-
         abbr = abbr,
         label = label,
         ordinal = ordinal,
+        locale = locale,
         columns = columns,
         keep_original_cols = keep_original_cols,
         skip = skip,
@@ -119,8 +124,8 @@ step_date <-
   }
 
 step_date_new <-
-  function(terms, role, trained, features, abbr, label, ordinal, columns,
-           keep_original_cols, skip, id) {
+  function(terms, role, trained, features, abbr, label, ordinal, locale,
+           columns, keep_original_cols, skip, id) {
     step(
       subclass = "date",
       terms = terms,
@@ -130,6 +135,7 @@ step_date_new <-
       abbr = abbr,
       label = label,
       ordinal = ordinal,
+      locale = locale,
       columns = columns,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -160,6 +166,7 @@ prep.step_date <- function(x, training, info = NULL, ...) {
     abbr = x$abbr,
     label = x$label,
     ordinal = x$ordinal,
+    locale = x$locale,
     columns = col_names,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -177,6 +184,7 @@ ord2fac <- function(x, what) {
 get_date_features <-
   function(dt,
            feats,
+           locale,
            abbr = TRUE,
            label = TRUE,
            ord = FALSE) {
@@ -205,7 +213,7 @@ get_date_features <-
     }
     if ("dow" %in% feats) {
       res[, grepl("dow$", names(res))] <-
-        wday(dt, abbr = abbr, label = label)
+        wday(dt, abbr = abbr, label = label, locale = locale)
       if (!ord & label == TRUE) {
         res[, grepl("dow$", names(res))] <-
           ord2fac(res, grep("dow$", names(res), value = TRUE))
@@ -213,7 +221,7 @@ get_date_features <-
     }
     if ("month" %in% feats) {
       res[, grepl("month$", names(res))] <-
-        month(dt, abbr = abbr, label = label)
+        month(dt, abbr = abbr, label = label, locale = locale)
       if (!ord & label == TRUE) {
         res[, grepl("month$", names(res))] <-
           ord2fac(res, grep("month$", names(res), value = TRUE))
@@ -245,6 +253,7 @@ bake.step_date <- function(object, new_data, ...) {
     tmp <- get_date_features(
       dt = getElement(new_data, object$columns[i]),
       feats = object$features,
+      locale = object$locale %||% Sys.getlocale("LC_TIME"),
       abbr = object$abbr,
       label = object$label,
       ord = object$ordinal

@@ -48,10 +48,9 @@
 #'
 #' @includeRmd man/rmd/bake_dependent_roles.Rmd details
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # Using the formula method, roles are created for any outcomes and predictors:
 #' recipe(HHV ~ ., data = biomass) %>%

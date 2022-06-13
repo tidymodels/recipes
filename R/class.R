@@ -37,10 +37,9 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(Sacramento)
+#' data(Sacramento, package = "modeldata")
 #'
 #' # Learn the classes on the train set
 #' train <- Sacramento[1:500, ]

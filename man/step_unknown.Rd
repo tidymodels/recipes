@@ -75,8 +75,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(Sacramento)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 rec <-
   recipe(~ city + zip, data = Sacramento) \%>\%
@@ -92,6 +92,7 @@ table(bake(rec, new_data = NULL) \%>\% pull(city),
   dplyr::filter(Freq > 0)
 
 tidy(rec, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}

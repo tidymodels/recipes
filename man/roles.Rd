@@ -145,9 +145,9 @@ With the example above:
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 # Using the formula method, roles are created for any outcomes and predictors:
 recipe(HHV ~ ., data = biomass) \%>\%
@@ -209,4 +209,5 @@ recipe(HHV ~ ., data = biomass) \%>\%
 # If the formula method is not used, all columns have a missing role:
 recipe(biomass) \%>\%
   summary()
+\dontshow{\}) # examplesIf}
 }

@@ -50,7 +50,7 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("RcppML", "ggplot2"))
 #' library(recipes)
 #' library(dplyr)
 #' library(rlang)
