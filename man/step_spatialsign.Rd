@@ -74,6 +74,13 @@ This step performs an unsupervised operation that can utilize case weights.
 As a result, case weights are only used with frequency weights. For more
 information, see the documentation in \link{case_weights} and the examples on
 \code{tidymodels.org}.
+
+This step requires the case weights to be available when the recipe is being
+baked. If you are using this step with a workflow, you need to pass A
+blueprint to the \code{blueprint} argument of \code{workflows::add_recipe()} letting
+the workflow know that case weights are required at bake time. The blueprint
+can be created with
+\code{hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")}.
 }
 
 \examples{
