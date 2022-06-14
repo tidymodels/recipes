@@ -713,7 +713,7 @@ check_training_set <- function(x, rec, fresh) {
 
 check_new_data_columns <-
   function(object, new_data, exclusions = c("case_weights", "outcome")) {
-    # TODO how do exclusions work with non-standard blueprints?
+
     original_var_data <- object$var_info %>%
       dplyr::filter(source == "original", is.na(role) | !(role %in% exclusions))
     original_vars <- original_var_data %>%  dplyr::pull(variable)

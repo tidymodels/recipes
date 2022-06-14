@@ -164,10 +164,13 @@ test_that("non-standard roles during bake/predict", {
 
   role_wts_wflow <-
     base_wflow %>%
-    add_recipe(role_rec, blueprint = bp) %>%
+    add_recipe(role_wts_rec, blueprint = bp) %>%
     add_case_weights(wts)
 
-  # TODO add tests here
+  role_wts_fit <- fit(role_wts_wflow, data = Chicago)
+
+  # This should require 'date' but not 'wts' to predict
+  expect_error(predict(role_wts_fit, head(Chicago)), regexp = NA)
 
   # ----------------------------------------------------------------------------
   # Removing variable after use
