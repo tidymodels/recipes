@@ -144,6 +144,88 @@ roles are added.</p>
 don't fall in the standard <code>"predictor"</code> bucket. You can perform a step
 on all of the variables that have a custom role with the selector
 <code><a href="has_role.html">has_role()</a></code>.</p>
+<div class="section">
+<h3 id="effects-of-non-standard-roles">Effects of non-standard roles<a class="anchor" aria-label="anchor" href="#effects-of-non-standard-roles"></a></h3>
+
+
+<p>Recipes can label and retain column(s) of your data set that should not
+be treated as outcomes or predictors. A unique identifier column or some
+other ancillary data could be used to troubleshoot issues during model
+development but may not be either an outcome or predictor.</p>
+<p>For example, the <a href="https://modeldata.tidymodels.org/reference/biomass.html" class="external-link">modeldata::biomass</a> data have a
+column called <code>sample</code> with information about the specific sample type.
+We can change that role:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span>
+
+  <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"id variable"</span><span class="op">)</span></code></pre><p></p></div>
+<p>This means that the <code>sample</code> column will not be used in the analysis but
+will be retained in the data set (see more in the Examples section
+below).</p>
+<p>As another example, you might have a date column that is transformed
+into features using <code><a href="step_date.html">step_date()</a></code> or
+<code><a href="step_holiday.html">step_holiday()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org" class="external-link">tidymodels</a></span><span class="op">)</span>
+  <span class="fu">tidymodels_prefer</span><span class="op">(</span><span class="op">)</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Chicago</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span>
+  <span class="va">chi_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">ridership</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Chicago</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="co"># Since `date` is symbolically on the right-hand side of the formula, it</span>
+    <span class="co"># is treated as a predictor (i.e., has a role of "predictor")</span>
+    <span class="fu"><a href="../reference/step_holiday.html">step_holiday</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="../reference/step_date.html">step_date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></code></pre><p></p></div>
+<p>At this point, <code>date</code> is kept in the dataset as-is, and will be treated
+as a predictor (and will probably be converted to an integer column by
+the modeling function).</p>
+<p>One option is to remove <code>date</code> since it is not directly used as a model
+term. <code><a href="step_rm.html">step_rm()</a></code> is a good way to accomplish this.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">chi_rec_rm</span> <span class="op">&lt;-</span> <span class="va">chi_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_rm.html">step_rm</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></code></pre><p></p></div>
+<p>Another approach, especially helpful during model development, is to
+change the role of the column to some other value via
+<code>update_role()</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">chi_rec_role</span> <span class="op">&lt;-</span> <span class="va">chi_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">date</span>, new_role <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span></code></pre><p></p></div>
+<p>In this case, the column is still available in the data and will be
+carried through the analysis (e.g. during resampling). This can be
+helpful since, if there is a poor prediction, this column may be helpful
+in diagnosing the problem.</p>
+<p>The downside to chaining the role of the column is that it is needed at
+prediction-time. This can impact development tools (such as tuning
+functions) and would also be required to be in the data being predicted
+once the model is deployed.</p>
+<p>If using a non-standard role for a column, it is highly recommended that
+you use the recipe within a workflow and specify <code>bake_dependent_roles</code>
+as described in
+<code><a href="https://hardhat.tidymodels.org/reference/default_recipe_blueprint.html" class="external-link">hardhat::default_recipe_blueprint()</a></code>.
+This will allow tuning and prediction functions to run without error.</p>
+<p>With the example above:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/hardhat" class="external-link">hardhat</a></span><span class="op">)</span> <span class="co"># require hardhat version &gt;= 1.0.0</span>
+  <span class="co"># Make a new blueprint:</span>
+  <span class="va">date_bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/default_recipe_blueprint.html" class="external-link">default_recipe_blueprint</a></span><span class="op">(</span>bake_dependent_roles <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span>
+
+  <span class="va">chi_wflow</span> <span class="op">&lt;-</span> 
+    <span class="fu"><a href="https://workflows.tidymodels.org/reference/workflow.html" class="external-link">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_model.html" class="external-link">add_model</a></span><span class="op">(</span><span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://workflows.tidymodels.org/reference/add_recipe.html" class="external-link">add_recipe</a></span><span class="op">(</span><span class="va">chi_rec_role</span>, blueprint <span class="op">=</span> <span class="va">date_bp</span><span class="op">)</span> 
+
+  <span class="va">chi_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">chi_wflow</span>, <span class="va">Chicago</span><span class="op">)</span>
+  <span class="co"># This line will fail without the added blueprint:</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">chi_fit</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Chicago</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   .pred</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 12.4 </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 14.3 </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 13.7 </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 13.6 </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 12.8 </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  1.68</span></span></code></pre><p></p></div>
+<p>It is also worth noting that
+<code><a href="https://workflows.tidymodels.org/reference/augment.workflow.html" class="external-link">workflows::augment.workflow()</a></code> can be
+used to attach predictions to the data (including columns with
+non-standard roles):</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">chi_fit</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Chicago</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+</div>
+
     </div>
 
     <div class="section level2">
