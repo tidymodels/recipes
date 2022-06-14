@@ -71,16 +71,18 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 
 
 This step performs an unsupervised operation that can utilize case weights.
-As a result, case weights are only used with frequency weights. For more
+As a result, only frequency weights are allowed. For more
 information, see the documentation in \link{case_weights} and the examples on
 \code{tidymodels.org}.
 
-This step requires the case weights to be available when the recipe is being
-baked. If you are using this step with a workflow, you need to pass A
+Unlike most, this step requires the case weights to be available when new
+samples are processed (e.g., when \code{bake()} is used or \code{predict()} with a
+workflow). If you are using this step with a workflow, you need to pass a
 blueprint to the \code{blueprint} argument of \code{workflows::add_recipe()} letting
 the workflow know that case weights are required at bake time. The blueprint
 can be created with
 \code{hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")}.
+See \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} as well as \code{\link[=update_roles]{update_roles()}}.
 }
 
 \examples{
