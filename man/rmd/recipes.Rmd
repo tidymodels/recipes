@@ -22,13 +22,13 @@ There are two different types of operations that can be sequentially added to a 
 
 - **Checks** are operations that conduct specific tests of the data. When the test is satisfied, the data are returned without issue or modification. Otherwise, an error is thrown.
 
-If you have defined a recipe and want to see which steps are included, use the `tidy()` method on the recipe object.
+If you have defined a recipe and want to see which steps are included, use the [`tidy()`][tidy.recipe()] method on the recipe object.
 
-Note that the data passed to `recipe()` need not be the complete data that will be used to train the steps (by [prep()]). The recipe only needs to know the names and types of data that will be used. For large data sets, `head()` could be used to pass a smaller data set to save time and memory.
+Note that the data passed to [recipe()] need not be the complete data that will be used to train the steps (by [prep()]). The recipe only needs to know the names and types of data that will be used. For large data sets, [head()] could be used to pass a smaller data set to save time and memory.
 
 ## Using recipes
 
-Once a recipe is defined, it needs to be _estimated_ before being applied to data. Most recipe steps have specific quantities that must be calculated or estimated. For example, `step_normalize()` needs to compute the training set's mean for the selected columns, while `step_dummy()` needs to determine the factor levels of selected columns in order to make the appropriate indicator columns. 
+Once a recipe is defined, it needs to be _estimated_ before being applied to data. Most recipe steps have specific quantities that must be calculated or estimated. For example, [step_normalize()] needs to compute the training set's mean for the selected columns, while [step_dummy()] needs to determine the factor levels of selected columns in order to make the appropriate indicator columns. 
 
 The two most common application of recipes are modeling and stand-alone preprocessing. How the recipe is estimated depends on how it is being used. 
 
@@ -73,13 +73,13 @@ linear_sp_sign_wflow <-
 linear_sp_sign_wflow
 ```
 
-To estimate the preprocessing steps and then fit the linear model, a single call to `fit()` is used:
+To estimate the preprocessing steps and then fit the linear model, a single call to [`fit()`][fit.model_spec()] is used:
 
 ```{r}
 linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 ```
 
-When predicting, there is no need to do anything other than call `predict()`. This preprocesses the new data in the same manner as the training set, then gives the data to the linear model prediction code: 
+When predicting, there is no need to do anything other than call [`predict()`][predict.model_fit()]. This preprocesses the new data in the same manner as the training set, then gives the data to the linear model prediction code: 
 
 ```{r}
 predict(linear_sp_sign_fit, new_data = head(biomass_te))
@@ -116,9 +116,9 @@ You can [tidy.recipe()] a recipe, either when it is prepped or unprepped, to lea
 tidy(pca_rec)
 ```
 
-You can also `tidy()` recipe *steps* with a `number` or `id` argument.
+You can also [`tidy()`][tidy.recipe()] recipe *steps* with a `number` or `id` argument.
 
-To apply the prepped recipe to a data set, the [bake()] function is used in the same manner that `predict()` would be for models. This applies the estimated steps to any data set.
+To apply the prepped recipe to a data set, the [bake()] function is used in the same manner that [`predict()`][predict.model_fit()] would be for models. This applies the estimated steps to any data set.
 
 ```{r}
 bake(pca_rec, head(biomass_te))
