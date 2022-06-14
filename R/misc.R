@@ -711,23 +711,26 @@ check_training_set <- function(x, rec, fresh) {
   x
 }
 
-check_new_data_columns <- function(object, new_data) {
-  original_vars <- object$var_info %>%
-    dplyr::filter(source == "original", is.na(role) | role != "outcome") %>%
-    dplyr::pull(variable)
+check_new_data_columns <-
+  function(object, new_data, exclusions = c("case_weights", "outcome")) {
+    # TODO how do exclusions work with non-standard blueprints?
+    original_vars <- object$var_info %>%
+      dplyr::filter(source == "original", is.na(role) | !(role %in% exclusions)) %>%
+      dplyr::pull(variable)
 
-  if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
-    missing_vars <- setdiff(original_vars, colnames(new_data))
+    if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
+      missing_vars <- setdiff(original_vars, colnames(new_data))
 
-    vars_print <- format_ch_vec(
-      missing_vars,
-      width = options()$width - 55
-    )
-    rlang::abort(
-      glue::glue("The following cols are missing from `new_data`: {vars_print}")
-    )
+      vars_print <- format_ch_vec(
+        missing_vars,
+        width = options()$width - 55
+      )
+      # TODO check role and refer to `?`bake-dpoendent-roles`
+      rlang::abort(
+        glue::glue("The following cols are missing from `new_data`: {vars_print}")
+      )
+    }
   }
-}
 
 #' Get the `keep_original_cols` value of a recipe step
 #'
