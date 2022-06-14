@@ -1,7 +1,7 @@
 ## Effects of non-standard roles
 
 
-Recipes can label and retain column(s) of your data set that should not be treated as outcomes or predictors. For example, a unique identifier column or some other ancillary data that can be used to troubleshoot issues during model development.
+Recipes can label and retain column(s) of your data set that should not be treated as outcomes or predictors. A unique identifier column or some other ancillary data could be used to troubleshoot issues during model development but may not be either an outcome or predictor.
 
 As an example, you might have a date column that is transformed into features using [step_date()] or [step_holiday()]. 
 
