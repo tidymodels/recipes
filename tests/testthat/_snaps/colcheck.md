@@ -3,16 +3,16 @@
     Code
       rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1])
     Condition
-      Error in `bake()`:
-      ! The following cols are missing from `new_data`: `mpg`.
+      Error:
+      ! The following cols are missing from `new_data`: mpg.
 
 ---
 
     Code
       rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars[, c(2, 5)])
     Condition
-      Error in `bake()`:
-      ! The following cols are missing from `new_data`: `mpg`.
+      Error:
+      ! The following cols are missing from `new_data`: mpg.
 
 # printing
 
@@ -85,4 +85,22 @@
       Operations:
       
       Check if the following columns are present: <none> [trained]
+
+# non-standard roles during bake/predict
+
+    The following cols are missing from `new_data`: date.
+    i There are also non-standard recipe roles for the column(s).
+    i See `?update_role` for more information on how use non-standard recipe roles during prediction.
+
+---
+
+    The following required columns are missing: 'date'.
+
+---
+
+    The following required columns are missing: 'date'.
+
+---
+
+    The following required columns are missing: 'date'.
 
