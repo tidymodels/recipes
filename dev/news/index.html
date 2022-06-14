@@ -134,6 +134,7 @@
 <h3 id="breaking-changes-0-2-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h3>
 <ul><li><p><code><a href="../reference/step_ica.html">step_ica()</a></code> now indirectly uses the <code>fastICA</code> package since that package has increased their R version requirement. Recipe objects from previous versions will error when applied to new data. (<a href="https://github.com/tidymodels/recipes/issues/823" class="external-link">#823</a>)</p></li>
 <li><p><code>step_kpca*()</code> now directly use the <code>kernlab</code> package. Recipe objects from previous versions will error when applied to new data.</p></li>
+<li><p><code><a href="../reference/bake.html">bake()</a></code> will now error if <code>new_data</code> doesn’t contain all the required columns. (<a href="https://github.com/tidymodels/recipes/issues/491" class="external-link">#491</a>)</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="developer-0-2-0">Developer<a class="anchor" aria-label="anchor" href="#developer-0-2-0"></a></h3>
