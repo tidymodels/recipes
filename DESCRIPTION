@@ -24,7 +24,7 @@ Imports:
     generics (>= 0.1.0.9000),
     glue,
     gower,
-    hardhat (>= 1.0.0),
+    hardhat (>= 1.1.0),
     ipred (>= 0.9-12),
     lifecycle,
     lubridate (>= 1.8.0),

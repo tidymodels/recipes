@@ -98,9 +98,12 @@
 
 * `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
 
+* `bake()` will now error if `new_data` doesn't contain all the required columns. (#491)
+
 ## Developer
 
 * The print methods have been internally changes to use `print_step()` instead of `printer()`. This is done for a smoother transition to use `cli` in the next version. (#871)
+
 
 # recipes 0.1.17
 
