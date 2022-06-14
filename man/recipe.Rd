@@ -88,7 +88,7 @@ modification. Otherwise, an error is thrown.
 }
 
 If you have defined a recipe and want to see which steps are included,
-use the \code{\link[=tidy]{tidy()}} method on the recipe object.
+use the \code{\link[=tidy.recipe]{tidy()}} method on the recipe object.
 
 Note that the data passed to \code{\link[=recipe]{recipe()}} need not be the
 complete data that will be used to train the steps (by
@@ -184,14 +184,15 @@ linear_sp_sign_wflow
 }\if{html}{\out{</div>}}
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to [fit()] is used:
+single call to [\code{fit()}][fit.model_spec()] is used:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 }\if{html}{\out{</div>}}
 
 When predicting, there is no need to do anything other than call
-[predict()]. This preprocesses the new data in the same manner as the
-training set, then gives the data to the linear model prediction code:
+[\code{predict()}][predict.model_fit()]. This preprocesses the new data
+in the same manner as the training set, then gives the data to the
+linear model prediction code:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
 }\if{html}{\out{</div>}}
@@ -252,8 +253,8 @@ pca_rec
 Note that the estimated recipe shows the actual column names captured by
 the selectors.
 
-You can [tidy.recipe()] a recipe, either when it is prepped or
-unprepped, to learn more about its components.
+You can \code{\link[=tidy.recipe]{tidy.recipe()}} a recipe, either when it is
+prepped or unprepped, to learn more about its components.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
 }\if{html}{\out{</div>}}
@@ -265,12 +266,12 @@ unprepped, to learn more about its components.
 ## 2      2 step      pca       TRUE    FALSE pca_Zn1yz
 }\if{html}{\out{</div>}}
 
-You can also \code{\link[=tidy]{tidy()}} recipe \emph{steps} with a \code{number} or \code{id}
-argument.
+You can also \code{\link[=tidy.recipe]{tidy()}} recipe \emph{steps} with a \code{number}
+or \code{id} argument.
 
 To apply the prepped recipe to a data set, the [bake()] function is
-used in the same manner that [predict()] would be for models. This
-applies the estimated steps to any data set.
+used in the same manner that [\code{predict()}][predict.model_fit()]
+would be for models. This applies the estimated steps to any data set.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
 }\if{html}{\out{</div>}}
@@ -291,10 +292,11 @@ applications.
 
 [biomass$dataset == "Training",]: R:biomass$dataset\%20==\%20\%22Training\%22,
 [biomass$dataset == "Testing",]: R:biomass$dataset\%20==\%20\%22Testing\%22,
-[fit()]: R:fit() [predict()]: R:predict() \code{\link[=prep]{prep()}}:
-R:prep() \code{\link[=prep]{prep()}}: R:prep() [tidy.recipe()]: R:tidy.recipe()
-\code{\link[=tidy]{tidy()}}: R:tidy() [bake()]: R:bake() [predict()]:
-R:predict()
+[fit.model_spec()]: R:fit.model_spec() [predict.model_fit()]:
+R:predict.model_fit() \code{\link[=prep]{prep()}}: R:prep() \code{\link[=prep]{prep()}}:
+R:prep() \code{\link[=tidy.recipe]{tidy.recipe()}}: R:tidy.recipe()
+\code{\link[=tidy.recipe]{tidy.recipe()}}: R:tidy.recipe() [bake()]: R:bake()
+[predict.model_fit()]: R:predict.model_fit()
 }
 
 }

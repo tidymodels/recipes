@@ -64,12 +64,26 @@ on all of the variables that have a custom role with the selector
 \subsection{Effects of non-standard roles}{
 
 Recipes can label and retain column(s) of your data set that should not
-be treated as outcomes or predictors. For example, a unique identifier
-column or some other ancillary data that can be used to troubleshoot
-issues during model development.
+be treated as outcomes or predictors. A unique identifier column or some
+other ancillary data could be used to troubleshoot issues during model
+development but may not be either an outcome or predictor.
 
-As an example, you might have a date column that is transformed into
-features using \code{\link[=step_date]{step_date()}} or
+For example, the \link[modeldata:biomass]{modeldata::biomass} data have a
+column called \code{sample} with information about the specific sample type.
+We can change that role:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  data(biomass, package = "modeldata")
+
+  recipe(HHV ~ ., data = biomass) \%>\%
+    update_role(sample, new_role = "id variable")
+}\if{html}{\out{</div>}}
+
+This means that the \code{sample} column will not be used in the analysis but
+will be retained in the data set (see more in the Examples section
+below).
+
+As another example, you might have a date column that is transformed
+into features using \code{\link[=step_date]{step_date()}} or
 \code{\link[=step_holiday]{step_holiday()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{  library(tidymodels)
@@ -141,6 +155,14 @@ With the example above:
 ## 4 13.6 
 ## 5 12.8 
 ## 6  1.68
+}\if{html}{\out{</div>}}
+
+It is also worth noting that
+\code{\link[workflows:augment.workflow]{workflows::augment.workflow()}} can be
+used to attach predictions to the data (including columns with
+non-standard roles):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  augment(chi_fit, head(Chicago))
 }\if{html}{\out{</div>}}
 }
 }
