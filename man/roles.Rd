@@ -60,6 +60,111 @@ Adding or updating roles is a useful way to group certain variables that
 don't fall in the standard \code{"predictor"} bucket. You can perform a step
 on all of the variables that have a custom role with the selector
 \code{\link[=has_role]{has_role()}}.
+
+\subsection{Effects of non-standard roles}{
+
+Recipes can label and retain column(s) of your data set that should not
+be treated as outcomes or predictors. A unique identifier column or some
+other ancillary data could be used to troubleshoot issues during model
+development but may not be either an outcome or predictor.
+
+For example, the \link[modeldata:biomass]{modeldata::biomass} data have a
+column called \code{sample} with information about the specific sample type.
+We can change that role:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  data(biomass, package = "modeldata")
+
+  recipe(HHV ~ ., data = biomass) \%>\%
+    update_role(sample, new_role = "id variable")
+}\if{html}{\out{</div>}}
+
+This means that the \code{sample} column will not be used in the analysis but
+will be retained in the data set (see more in the Examples section
+below).
+
+As another example, you might have a date column that is transformed
+into features using \code{\link[=step_date]{step_date()}} or
+\code{\link[=step_holiday]{step_holiday()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  library(tidymodels)
+  tidymodels_prefer()
+
+  data(Chicago, package = "modeldata")
+  chi_rec <- recipe(ridership ~ ., data = Chicago) \%>\% 
+    # Since `date` is symbolically on the right-hand side of the formula, it
+    # is treated as a predictor (i.e., has a role of "predictor")
+    step_holiday(date) \%>\% 
+    step_date(date)
+}\if{html}{\out{</div>}}
+
+At this point, \code{date} is kept in the dataset as-is, and will be treated
+as a predictor (and will probably be converted to an integer column by
+the modeling function).
+
+One option is to remove \code{date} since it is not directly used as a model
+term. \code{\link[=step_rm]{step_rm()}} is a good way to accomplish this.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  chi_rec_rm <- chi_rec \%>\% step_rm(date)
+}\if{html}{\out{</div>}}
+
+Another approach, especially helpful during model development, is to
+change the role of the column to some other value via
+\code{\link[=update_role]{update_role()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  chi_rec_role <- chi_rec \%>\% update_role(date, new_role = "date")
+}\if{html}{\out{</div>}}
+
+In this case, the column is still available in the data and will be
+carried through the analysis (e.g. during resampling). This can be
+helpful since, if there is a poor prediction, this column may be helpful
+in diagnosing the problem.
+
+The downside to chaining the role of the column is that it is needed at
+prediction-time. This can impact development tools (such as tuning
+functions) and would also be required to be in the data being predicted
+once the model is deployed.
+
+If using a non-standard role for a column, it is highly recommended that
+you use the recipe within a workflow and specify \code{bake_dependent_roles}
+as described in
+\code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}.
+This will allow tuning and prediction functions to run without error.
+
+With the example above:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  library(hardhat) # require hardhat version >= 1.0.0
+  # Make a new blueprint:
+  date_bp <- default_recipe_blueprint(bake_dependent_roles = "date")
+
+  chi_wflow <- 
+    workflow() \%>\% 
+    add_model(linear_reg()) \%>\% 
+    add_recipe(chi_rec_role, blueprint = date_bp) 
+
+  chi_fit <- fit(chi_wflow, Chicago)
+  # This line will fail without the added blueprint:
+  predict(chi_fit, head(Chicago))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 x 1
+##   .pred
+##   <dbl>
+## 1 12.4 
+## 2 14.3 
+## 3 13.7 
+## 4 13.6 
+## 5 12.8 
+## 6  1.68
+}\if{html}{\out{</div>}}
+
+It is also worth noting that
+\code{\link[workflows:augment.workflow]{workflows::augment.workflow()}} can be
+used to attach predictions to the data (including columns with
+non-standard roles):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{  augment(chi_fit, head(Chicago))
+}\if{html}{\out{</div>}}
+}
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

@@ -24,7 +24,7 @@ Imports:
     generics (>= 0.1.0.9000),
     glue,
     gower,
-    hardhat (>= 0.1.6.9001),
+    hardhat (>= 1.0.0),
     ipred (>= 0.9-12),
     lifecycle,
     lubridate (>= 1.8.0),
@@ -61,8 +61,6 @@ Suggests:
     xml2
 VignetteBuilder: 
     knitr
-Remotes: 
-    tidymodels/hardhat
 RdMacros: 
     lifecycle
 Config/Needs/website: tidyverse/tidytemplate
