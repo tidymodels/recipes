@@ -82,7 +82,7 @@ blueprint to the \code{blueprint} argument of \code{workflows::add_recipe()} let
 the workflow know that case weights are required at bake time. The blueprint
 can be created with
 \code{hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")}.
-See \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} as well as \code{\link[=update_roles]{update_roles()}}.
+See \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} as well as \code{\link[=update_role]{update_role()}}.
 }
 
 \examples{
