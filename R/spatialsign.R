@@ -26,7 +26,21 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
 #'
-#' @template case-weights-unsupervised
+#' @section Case weights:
+#'
+#' This step performs an unsupervised operation that can utilize case weights.
+#' As a result, only frequency weights are allowed. For more
+#' information, see the documentation in [case_weights] and the examples on
+#' `tidymodels.org`.
+#'
+#' Unlike most, this step requires the case weights to be available when new
+#' samples are processed (e.g., when `bake()` is used or `predict()` with a
+#' workflow). If you are using this step with a workflow, you need to pass a
+#' blueprint to the `blueprint` argument of `workflows::add_recipe()` letting
+#' the workflow know that case weights are required at bake time. The blueprint
+#' can be created with
+#' `hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")`.
+#' See [hardhat::default_recipe_blueprint()] as well as [update_role()].
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.
 #'  (2006). Spatial sign preprocessing: a simple way to impart
