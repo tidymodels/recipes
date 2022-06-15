@@ -164,9 +164,17 @@ computations.</p>
 
 
 <p>This step performs an unsupervised operation that can utilize case weights.
-As a result, case weights are only used with frequency weights. For more
+As a result, only frequency weights are allowed. For more
 information, see the documentation in <a href="case_weights.html">case_weights</a> and the examples on
 <code>tidymodels.org</code>.</p>
+<p>Unlike most, this step requires the case weights to be available when new
+samples are processed (e.g., when <code><a href="bake.html">bake()</a></code> is used or <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> with a
+workflow). If you are using this step with a workflow, you need to pass a
+blueprint to the <code>blueprint</code> argument of <code><a href="https://workflows.tidymodels.org/reference/add_recipe.html" class="external-link">workflows::add_recipe()</a></code> letting
+the workflow know that case weights are required at bake time. The blueprint
+can be created with
+<code>hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")</code>.
+See <code><a href="https://hardhat.tidymodels.org/reference/default_recipe_blueprint.html" class="external-link">hardhat::default_recipe_blueprint()</a></code> as well as <code><a href="roles.html">update_role()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
