@@ -1,6 +1,6 @@
 #' @importFrom dplyr arrange bind_cols bind_rows count desc do filter full_join
 #' @importFrom dplyr group_by mutate mutate_at rename sample_frac sample_n
-#' @importFrom dplyr select slice summarise ungroup
+#' @importFrom dplyr select slice summarise ungroup collect
 #' @importFrom gower gower_topn
 #' @importFrom ipred ipredbagg
 #' @importFrom lifecycle deprecated
@@ -18,7 +18,7 @@
 #' @importFrom tibble add_column as_tibble is_tibble tibble
 #' @importFrom tidyselect everything
 #' @importFrom utils globalVariables install.packages object.size packageVersion
-#' @importFrom utils stack
+#' @importFrom utils stack head
 #' @importFrom vctrs vec_cast vec_slice
 #' @importFrom withr with_seed
 
