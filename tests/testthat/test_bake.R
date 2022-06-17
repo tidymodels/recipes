@@ -43,7 +43,8 @@ test_that("bake errors if predictor cols are missing from new_data", {
   expect_error(rec2 %>% prep() %>% bake(mtcars_mat[, -(2:6)]), error26)
 
   mtcars_mat <- as.matrix(mtcars)
-  rec3 <- recipe(x = mtcars_mat)
+  rec3 <- recipe(x = mtcars_mat) %>%
+    update_role(mpg, cyl, disp, hp, drat, wt, new_role = "predictor")
 
   expect_error(rec3 %>% prep() %>% bake(mtcars_mat), NA)
   expect_error(rec3 %>% prep() %>% bake(mtcars_mat[, -1]), error1)
