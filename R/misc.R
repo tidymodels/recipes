@@ -715,7 +715,7 @@ check_new_data_columns <-
   function(object, new_data, exclusions = c("case_weights", "outcome")) {
 
     original_var_data <- object$var_info %>%
-      dplyr::filter(source == "original", is.na(role) | !(role %in% exclusions))
+      dplyr::filter(source == "original", !is.na(role), !(role %in% exclusions))
     original_vars <- original_var_data %>%  dplyr::pull(variable)
 
     if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
