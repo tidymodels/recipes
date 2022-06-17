@@ -98,7 +98,7 @@
 
 * `step_kpca*()` now directly use the `kernlab` package. Recipe objects from previous versions will error when applied to new data. 
 
-* `bake()` will now error if `new_data` doesn't contain all the required columns. (#491)
+* `bake()` will now error if `new_data` doesn't contain all the required columns. (#491, #1009)
 
 ## Developer
 
