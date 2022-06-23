@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* recipes now checks that all columns in the `data` supplied to `recipe()` are also present in the `new_data` supplied to `bake()`. An exception is made for columns with roles of either `"outcome"` or `"case_weights"`, which are typically not required at `bake()` time. The new `update_role_requirements()` function can be used to adjust whether or not columns of a particular role are required at `bake()` time if you need to opt out of this check (#1011).
+
 * Added support for case weights in the following steps
     - `step_center()`
     - `step_classdist()`
