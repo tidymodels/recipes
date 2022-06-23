@@ -96,6 +96,8 @@ test_that("empty printing", {
 })
 
 test_that("non-standard roles during bake/predict", {
+  skip("Until hardhat is updated with new roles behavior")
+
   skip_if_not_installed("modeldata")
   skip_if_not_installed("workflows")
   skip_if_not_installed("parsnip")
