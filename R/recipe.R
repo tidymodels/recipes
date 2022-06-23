@@ -166,6 +166,10 @@ recipe.data.frame <-
     }
     var_info$role[case_weights_cols] <- "case_weights"
 
+    requirements <- list(
+      bake = default_bake_role_requirements()
+    )
+
     ## Return final object of class `recipe`
     out <- list(
       var_info = var_info,
@@ -173,7 +177,8 @@ recipe.data.frame <-
       steps = NULL,
       template = x,
       levels = NULL,
-      retained = NA
+      retained = NA,
+      requirements = requirements
     )
     class(out) <- "recipe"
     out
@@ -565,8 +570,6 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
   }
 
-  check_new_data_columns(object, new_data)
-
   if (is.null(new_data)) {
     return(juice(object, ..., composition = composition))
   }
@@ -601,6 +604,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
   }
+
+  check_role_requirements(object, new_data)
 
   check_nominal_type(new_data, object$orig_lvls)
 
