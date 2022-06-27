@@ -77,12 +77,10 @@ information, see the documentation in \link{case_weights} and the examples on
 
 Unlike most, this step requires the case weights to be available when new
 samples are processed (e.g., when \code{bake()} is used or \code{predict()} with a
-workflow). If you are using this step with a workflow, you need to pass a
-blueprint to the \code{blueprint} argument of \code{workflows::add_recipe()} letting
-the workflow know that case weights are required at bake time. The blueprint
-can be created with
-\code{hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")}.
-See \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} as well as \code{\link[=update_role]{update_role()}}.
+workflow). To tell recipes that the case weights are required at bake time,
+use
+\code{recipe \%>\% update_role_requirements(role = "case_weights", bake = TRUE)}.
+See \code{\link[=update_role_requirements]{update_role_requirements()}} for more information.
 }
 
 \examples{
