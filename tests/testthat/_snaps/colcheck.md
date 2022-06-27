@@ -88,21 +88,3 @@
       
       Check if the following columns are present: <none> [trained]
 
-# non-standard roles during bake/predict
-
-    The following required columns are missing from `new_data`: "date".
-    i These columns have one of the following roles, which are required at `bake()` time: "date".
-    i If these roles are not required at `bake()` time, use `update_role_requirements(role = "your_role", bake = FALSE)`.
-
----
-
-    The following required columns are missing: 'date'.
-
----
-
-    The following required columns are missing: 'date'.
-
----
-
-    The following required columns are missing: 'date'.
-
