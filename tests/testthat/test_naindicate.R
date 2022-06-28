@@ -131,3 +131,12 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec1 <- recipe(train) %>%
+    step_indicate_na(col1) %>%
+    prep(train, verbose = FALSE, retain = TRUE)
+
+  expect_error(bake(rec1, new_data = test[, 2:3]),
+               class = "check_new_data")
+})

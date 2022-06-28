@@ -124,3 +124,13 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec_1 <- rec %>%
+    step_unknown(city, zip) %>%
+    prep()
+
+  expect_error(bake(rec_1, sacr_te[3:ncol(sacr_te)]),
+               class = "check_new_data")
+})

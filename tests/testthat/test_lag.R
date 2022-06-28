@@ -121,3 +121,16 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  set.seed(27)
+  df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
+
+  # lags numeric data
+  rec <- recipe(~., data = df) %>%
+    step_lag(t, lag = 2) %>%
+    prep(df)
+
+  expect_error(bake(rec, new_data = df[, 1, drop = FALSE]),
+               class = "check_new_data")
+})

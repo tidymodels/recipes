@@ -317,3 +317,15 @@ test_that("case weights", {
 
   expect_snapshot(pca_extract_trained)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  pca_extract <- rec %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
+             options = list(retx = TRUE), id = ""
+    )
+
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(pca_extract_trained, new_data = biomass_te[, c(1:2, 4:ncol(biomass_te))]),
+               class = "check_new_data")
+})

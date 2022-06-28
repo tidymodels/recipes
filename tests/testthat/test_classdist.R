@@ -214,4 +214,12 @@ test_that("case weights", {
   expect_snapshot(rec_prep)
 })
 
+test_that("bake method errors when needed new_data columns are missing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = "Species", log = FALSE)
 
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[,1:3]),
+               class = "check_new_data")
+})

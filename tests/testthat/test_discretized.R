@@ -182,3 +182,12 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_discretize(rec, mpg, min_unique = 3)
+  rec <- prep(rec, mtcars)
+
+  expect_error(bake(rec, new_data = mtcars[, 2:ncol(mtcars)]),
+               class = "check_new_data")
+})

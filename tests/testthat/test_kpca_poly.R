@@ -169,3 +169,15 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>%
+    step_kpca_poly(X2, X3, X4, X5, X6, degree = 3, scale_factor = .1)
+
+  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+
+  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
+               class = "check_new_data")
+})

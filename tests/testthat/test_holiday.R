@@ -175,3 +175,13 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  holiday_rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+
+  expect_error(bake(holiday_rec, exp_dates[, 2, drop = FALSE]),
+               class = "check_new_data")
+})

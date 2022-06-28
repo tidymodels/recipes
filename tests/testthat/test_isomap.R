@@ -224,3 +224,21 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed new_data columns are missing", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
+
+  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
+
+  expect_error(bake(im_trained, new_data = dat2[, 1:2]),
+               class = "check_new_data")
+})

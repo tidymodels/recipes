@@ -131,3 +131,13 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  with_ns <- rec %>%
+    step_ns(carbon, hydrogen)
+
+  with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(with_ns, new_data = biomass_tr[, c(1:2, 4:ncol(biomass_tr))]),
+               class = "check_new_data")
+})

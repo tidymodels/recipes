@@ -116,3 +116,14 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec1 <- recipe(~., data = ex_dat) %>%
+    step_ordinalscore(starts_with("ord"))
+  rec1 <- prep(rec1,
+               training = ex_dat,
+               strings_as_factors = FALSE, verbose = FALSE)
+
+  expect_error(bake(rec1, new_data = ex_dat[, 1:3]),
+               class = "check_new_data")
+})
