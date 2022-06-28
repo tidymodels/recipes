@@ -26,7 +26,7 @@ test_that("`bake = NULL` won't alter anything", {
 
   expect_identical(
     get_bake_role_requirements(rec),
-    default_bake_role_requirements()
+    new_bake_role_requirements()
   )
 })
 
@@ -57,13 +57,13 @@ test_that("can't update the outcome role", {
   })
 })
 
-test_that("default requirements are correct", {
+test_that("initial requirements are empty", {
   df <- tibble(y = 1, x = 2)
   rec <- recipe(y ~ ., df)
 
   expect_identical(
     rec$requirements$bake,
-    default_bake_role_requirements()
+    new_bake_role_requirements()
   )
 })
 

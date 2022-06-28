@@ -99,6 +99,12 @@ update_role_requirements <- function(recipe,
   recipe
 }
 
+new_role_requirements <- function() {
+  list(
+    bake = new_bake_role_requirements()
+  )
+}
+
 check_role_requirements <- function(recipe,
                                     new_data,
                                     ...,
@@ -109,7 +115,7 @@ check_role_requirements <- function(recipe,
 }
 
 get_role_requirements <- function(recipe) {
-  recipe$requirements %||% set_names(list(), nm = character())
+  recipe$requirements %||% new_role_requirements()
 }
 
 set_role_requirements <- function(recipe, requirements) {
@@ -160,6 +166,10 @@ update_bake_role_requirements <- function(recipe,
   recipe
 }
 
+new_bake_role_requirements <- function() {
+  set_names(logical(), nms = character())
+}
+
 check_bake_role_requirements <- function(recipe,
                                          new_data,
                                          ...,
@@ -171,25 +181,20 @@ check_bake_role_requirements <- function(recipe,
   var_roles <- var_info$role
   var_roles <- chr_explicit_na(var_roles)
 
-  bake <- get_bake_role_requirements(recipe)
-
-  # Update with nonstandard roles in the recipe, which are always required
-  nonstandard_roles <- unique(var_roles)
-  nonstandard_roles <- nonstandard_roles[!nonstandard_roles %in% names(bake)]
-  bake[nonstandard_roles] <- TRUE
+  requirements <- compute_bake_role_requirements(recipe)
 
   # Filter down to the roles that are actually required
-  bake <- bake[bake]
-  bake <- names(bake)
+  requirements <- requirements[requirements]
+  requirement_roles <- names(requirements)
 
   # Find columns that match those roles
   names <- colnames(new_data)
-  bake_names <- var_names[var_roles %in% bake]
+  requirement_names <- var_names[var_roles %in% requirement_roles]
 
-  exists <- bake_names %in% names
+  exists <- requirement_names %in% names
 
   if (any(!exists)) {
-    names <- bake_names[!exists]
+    names <- requirement_names[!exists]
     roles <- unique(var_roles[var_names %in% names])
 
     standard <- roles == "predictor"
@@ -219,9 +224,32 @@ check_bake_role_requirements <- function(recipe,
   invisible(recipe)
 }
 
+compute_bake_role_requirements <- function(recipe) {
+  var_info <- recipe$var_info
+  var_roles <- var_info$role
+  var_roles <- chr_explicit_na(var_roles)
+  var_roles <- unique(var_roles)
+
+  # Start with default requirements
+  requirements <- default_bake_role_requirements()
+
+  # Drop unused default requirements
+  requirements <- requirements[names(requirements) %in% var_roles]
+
+  # Update with nonstandard roles in the recipe, which are required by default
+  nonstandard_roles <- var_roles[!var_roles %in% names(requirements)]
+  requirements[nonstandard_roles] <- TRUE
+
+  # Override with `update_role_requirements()` changes
+  user_requirements <- get_bake_role_requirements(recipe)
+  requirements[names(user_requirements)] <- user_requirements
+
+  requirements
+}
+
 get_bake_role_requirements <- function(recipe) {
   requirements <- get_role_requirements(recipe)
-  requirements$bake %||% default_bake_role_requirements()
+  requirements$bake
 }
 
 set_bake_role_requirements <- function(recipe, bake) {

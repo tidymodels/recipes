@@ -166,9 +166,7 @@ recipe.data.frame <-
     }
     var_info$role[case_weights_cols] <- "case_weights"
 
-    requirements <- list(
-      bake = default_bake_role_requirements()
-    )
+    requirements <- new_role_requirements()
 
     ## Return final object of class `recipe`
     out <- list(
