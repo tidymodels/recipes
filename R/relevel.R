@@ -121,6 +121,7 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relevel <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     new_data[[i]] <- stats::relevel(as.factor(new_data[[i]]), ref = object$ref_level)
   }
