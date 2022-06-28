@@ -43,6 +43,7 @@ test_that("check existing steps for `skip` arg", {
   step_check <- step_check[step_check != "check_name"]
   step_check <- step_check[step_check != "check_training_set"]
   step_check <- step_check[step_check != "check_is_lat_lon"]
+  step_check <- step_check[step_check != "check_new_data"]
   step_check <- step_check[step_check != "check_new_data_columns"]
   has_skip_arg <- function(x) {
     x_code <- getFromNamespace(x, "recipes")

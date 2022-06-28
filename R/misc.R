@@ -885,6 +885,16 @@ uses_dim_red <- function(x) {
 
 # ------------------------------------------------------------------------------
 
+#' Check for required column at bake-time
+#'
+#' When baking a step, create an information error message when a column that
+#' is used by the step is not present in `new_data`.
+#'
+#' @param req A character vector of required characters.
+#' @param object A step object.
+#' @param new_data A tibble of data being baked.
+#' @return Invisible NULL. Side effects are the focus of the function.
+#' @keywords internal
 check_new_data <- function(req, object, new_data) {
   if (is.null(req) || length(req) == 0L) {
     return(invisible(NULL))
