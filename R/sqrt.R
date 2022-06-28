@@ -83,6 +83,8 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
   for (i in seq_along(col_names)) {
     new_data[, col_names[i]] <-

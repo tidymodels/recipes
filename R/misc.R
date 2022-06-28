@@ -882,3 +882,22 @@ uses_dim_red <- function(x) {
   }
   invisible(NULL)
 }
+
+# ------------------------------------------------------------------------------
+
+check_new_data <- function(req, object, new_data) {
+  if (is.null(req) || length(req) == 0L) {
+    return(invisible(NULL))
+  }
+  col_diff <- setdiff(req, names(new_data))
+  if (length(col_diff) == 0) {
+    return(invisible(NULL))
+  }
+  step_cls <- class(object)[1]
+  step_id <- object$id
+  col_diff <- paste0("'", col_diff, "'")
+  col_diff <- glue::glue_collapse(col_diff, last = " and ")
+  msg <- glue::glue("In {step_cls} (id='{step_id}') the following required columns are missing from `new_data`: {col_diff}.")
+  rlang::abort(msg)
+}
+

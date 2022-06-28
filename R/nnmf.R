@@ -175,6 +175,8 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   if (object$num_comp > 0 && length(object$columns) > 0) {
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-

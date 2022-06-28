@@ -101,6 +101,8 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_lag <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   if (!all(object$lag == as.integer(object$lag))) {
     rlang::abort("step_lag requires 'lag' argument to be integer valued.")
   }

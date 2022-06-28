@@ -144,6 +144,8 @@ prep.step_relu <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relu <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   make_relu_call <- function(col) {
     call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
