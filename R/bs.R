@@ -158,6 +158,8 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bs <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
+
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   bs_values <-
