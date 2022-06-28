@@ -185,9 +185,10 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
   uses_dim_red(object)
-  check_new_data(names(object$columns), object, new_data)
 
   if (object$num_comp > 0 && length(object$columns) > 0) {
+    check_new_data(object$columns, object, new_data)
+
     comps <- scale(as.matrix(new_data[, object$columns]),
       center = object$res$means, scale = FALSE
     )
