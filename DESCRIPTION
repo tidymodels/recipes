@@ -31,7 +31,7 @@ Imports:
     magrittr,
     Matrix,
     purrr (>= 0.2.3),
-    rlang (>= 1.0.0),
+    rlang (>= 1.0.3),
     stats,
     tibble,
     tidyr (>= 1.0.0),
