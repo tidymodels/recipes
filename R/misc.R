@@ -741,7 +741,7 @@ check_new_data_columns <-
           )
       }
 
-      rlang::abort(msg, call = NULL)
+      # rlang::abort(msg, call = NULL)
     }
   }
 
@@ -905,9 +905,10 @@ check_new_data <- function(req, object, new_data) {
   }
   step_cls <- class(object)[1]
   step_id <- object$id
-  col_diff <- paste0("'", col_diff, "'")
-  col_diff <- glue::glue_collapse(col_diff, last = " and ")
-  msg <- glue::glue("In {step_cls} (id='{step_id}') the following required columns are missing from `new_data`: {col_diff}.")
-  rlang::abort(msg)
+  cli::cli_abort(
+    "The following required {cli::qty(col_diff)} column{?s} {?is/are} \
+    missing from `new_data` in step '{step_id}': {col_diff}.",
+    call = rlang::call2(step_cls)
+  )
 }
 
