@@ -213,3 +213,13 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec1 <- rec %>%
+    step_ratio(x1, denom = denom_vars(all_numeric()))
+
+  rec1 <- prep(rec1, ex_dat, verbose = FALSE)
+
+  expect_error(bake(rec1, ex_dat[, 2:4]),
+               class = "check_new_data")
+})

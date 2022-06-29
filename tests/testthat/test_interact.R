@@ -272,3 +272,19 @@ test_that("missing columns", {
 #
 #   all.equal(te_og, te_new)
 # })
+
+
+test_that("bake method errors when needed new_data columns are missing", {
+  int_rec <- rec %>%
+    step_interact(~ starts_with("z"):x1, id = "")
+
+  suppressWarnings(
+    int_rec_trained <-
+      prep(int_rec, training = dat_tr, verbose = FALSE)
+  )
+
+  expect_error(bake(int_rec_trained, dat_tr[, 4:6]),
+               class = "check_new_data")
+
+  expect_snapshot(bake(int_rec_trained, dat_tr[, 4:6]), error = TRUE)
+})

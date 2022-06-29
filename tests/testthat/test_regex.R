@@ -90,3 +90,16 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  mt_tibble <- mtcars %>%
+    tibble::rownames_to_column(var = "make_model")
+
+  rec <-
+    recipe(mpg ~ ., data = mt_tibble) %>%
+    step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
+    prep(mt_tibble)
+
+  expect_error(bake(rec, new_data = mt_tibble[, 2:4]),
+               class = "check_new_data")
+})

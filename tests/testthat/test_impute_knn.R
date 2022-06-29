@@ -230,3 +230,15 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  imputed <- rec %>%
+    step_impute_knn(carbon, fac,
+                    impute_with = imp_vars(hydrogen, oxygen)
+    )
+
+  imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
+
+  expect_error(bake(imputed_trained, new_data = biomass[, 1:3]),
+               class = "check_new_data")
+})

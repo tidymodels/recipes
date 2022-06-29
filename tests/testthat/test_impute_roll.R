@@ -158,3 +158,14 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed new_data columns are missing", {
+  seven_pt <- recipe(~., data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_impute_roll(all_predictors(), window = 7) %>%
+    prep(training = example_data)
+
+  expect_error(bake(seven_pt, new_data = example_data[, 1:2]),
+               class = "check_new_data")
+})

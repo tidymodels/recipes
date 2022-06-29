@@ -139,6 +139,7 @@ wrighted_quantile <- function(x, wts, probs, ...) {
 #' @export
 bake.step_percentile <- function(object, new_data, ...) {
   vars <- names(object$ref_dist)
+  check_new_data(vars, object, new_data)
 
   new_data[, vars] <-
     purrr::map2_dfc(new_data[, vars], object$ref_dist, pctl_by_approx)

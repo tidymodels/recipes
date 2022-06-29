@@ -114,6 +114,8 @@ prep.step_range <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_range <- function(object, new_data, ...) {
+  check_new_data(colnames(object$ranges), object, new_data)
+
   for (column in colnames(object$ranges)) {
     min <- object$ranges["mins", column]
     max <- object$ranges["maxs", column]

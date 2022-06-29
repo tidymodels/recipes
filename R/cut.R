@@ -142,6 +142,8 @@ full_breaks_check <- function(breaks) {
 }
 
 bake.step_cut <- function(object, new_data, ...) {
+  check_new_data(names(object$breaks), object, new_data)
+
   for (col_name in names(object$breaks)) {
     res <- cut_var(
       new_data[, col_name, drop = TRUE],

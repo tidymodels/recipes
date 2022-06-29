@@ -180,3 +180,12 @@ test_that("case weights", {
 
   expect_snapshot(rec_prepped)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec <- recipe(head(ames_dat)) %>%
+    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    prep(ames_dat)
+
+  expect_error(bake(rec, new_data = ames_dat[, 2:3]),
+               class = "check_new_data")
+})

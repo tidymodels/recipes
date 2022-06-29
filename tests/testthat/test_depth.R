@@ -130,3 +130,12 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_depth(all_predictors(), class = "Species", metric = "spatial")
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[, 1:2]),
+               class = "check_new_data")
+})

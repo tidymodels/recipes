@@ -130,6 +130,8 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_YeoJohnson <- function(object, new_data, ...) {
+  check_new_data(names(object$lambdas), object, new_data)
+
   if (length(object$lambdas) == 0) {
     return(as_tibble(new_data))
   }

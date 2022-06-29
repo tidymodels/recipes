@@ -147,6 +147,8 @@ map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
 
 #' @export
 bake.step_integer <- function(object, new_data, ...) {
+  check_new_data(names(object$key), object, new_data)
+
   for (i in names(object$key)) {
     new_data[[i]] <-
       map_key_to_int(new_data[[i]], object$key[[i]], object$strict, object$zero_based)

@@ -198,3 +198,17 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  df <- data.frame(x = 1:10, y = 5:14)
+  rec <- recipe(df)
+
+  # The min and max of the variable are used as boundaries
+  # if they exceed the breaks
+  prepped <- rec %>%
+    step_cut(x, breaks = 5) %>%
+    prep()
+
+  expect_error(bake(prepped, df[, 2, drop = FALSE]),
+               class = "check_new_data")
+})

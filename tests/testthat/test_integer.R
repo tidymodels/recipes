@@ -120,3 +120,14 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+    step_integer(all_predictors())
+  rec_trained <- prep(rec, traning = tr_dat)
+
+  tr_int <- juice(rec_trained, all_predictors())
+
+  expect_error(bake(rec_trained, te_dat[, 1:2], all_predictors()),
+               class = "check_new_data")
+})

@@ -311,3 +311,15 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed new_data columns are missing", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
+
+  rec <- prep(rec)
+
+  expect_error(bake(rec, new_data = biom_tr[, 1:3]),
+               class = "check_new_data")
+})

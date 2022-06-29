@@ -134,6 +134,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
+  check_new_data(names(object$sds), object, new_data)
+
   for (column in names(object$sds)) {
     sd <- object$sds[column]
     new_data[[column]] <- new_data[[column]] / sd

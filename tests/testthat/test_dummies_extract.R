@@ -327,3 +327,13 @@ test_that("case weights", {
 
   expect_snapshot(dummy_prepped)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  dummy <- recipe(~medium, data = mini_tate) %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "")
+
+  dummy_prepped <- prep(dummy)
+
+  expect_error(bake(dummy_prepped, new_data = mini_tate[, 1:3]),
+               class = "check_new_data")
+})

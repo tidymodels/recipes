@@ -145,3 +145,12 @@ test_that("tidying", {
     tidy(prepped, number = 2)
   })
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_select(cyl, disp, hp) %>%
+    prep(training = mtcars)
+
+  expect_error(bake(rec, new_data = mtcars[, 4:5]),
+               class = "check_new_data")
+})

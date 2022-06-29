@@ -172,6 +172,8 @@ make_factor_num <- function(x, lvl, ord, foo) {
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
+  check_new_data(col_names, object, new_data)
+
   lvls <- object$levels[names(object$levels) == "..levels"]
   object$levels <- object$levels[names(object$levels) != "..levels"]
 

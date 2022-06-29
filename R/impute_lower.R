@@ -150,6 +150,8 @@ prep.step_lowerimpute <- prep.step_impute_lower
 
 #' @export
 bake.step_impute_lower <- function(object, new_data, ...) {
+  check_new_data(names(object$threshold), object, new_data)
+
   for (i in names(object$threshold)) {
     affected <- which(new_data[[i]] <= object$threshold[[i]])
     if (length(affected) > 0) {

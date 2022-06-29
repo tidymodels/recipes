@@ -461,3 +461,22 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed new_data columns are missing", {
+  harmonic_dat_mult <- tibble(
+    osc = sin(2 * pi * x_second / (3600 * 6)),
+    time_var_1 = x_second,
+    time_var_2 = x_second * 2
+  )
+
+  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) %>%
+    step_harmonic(time_var_1, time_var_2,
+                  frequency = c(5, 10),
+                  cycle_size = 1
+    ) %>%
+    prep()
+
+  expect_error(bake(rec, new_data = harmonic_dat_mult[, 1:2]),
+               class = "check_new_data")
+})
+

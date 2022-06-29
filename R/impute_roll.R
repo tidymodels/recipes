@@ -205,6 +205,8 @@ impute_rolling <- function(inds, x, statfun) {
 
 #' @export
 bake.step_impute_roll <- function(object, new_data, ...) {
+  check_new_data(unname(object$columns), object, new_data)
+
   n <- nrow(new_data)
   missing_ind <- lapply(
     new_data[, object$columns],

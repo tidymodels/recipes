@@ -364,6 +364,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
+  check_new_data(get_columns_pls(object), object, new_data)
+
   if (object$num_comp > 0 && length(get_columns_pls(object)) > 0 && pls_worked(object$res)) {
     if (use_old_pls(object$res)) {
       comps <- old_pls_project(object$res, new_data)

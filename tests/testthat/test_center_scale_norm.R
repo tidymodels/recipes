@@ -500,3 +500,24 @@ test_that("normalizing with case weights", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed new_data columns are missing (center)", {
+  std <- rec %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  std_trained <- prep(std, training = biomass)
+
+  expect_error(bake(std_trained, new_data = biomass[, 1:2]),
+               class = "check_new_data")
+})
+
+test_that("bake method errors when needed new_data columns are missing (scale)", {
+  std <- rec %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  std_trained <- prep(std, training = biomass)
+
+  expect_error(bake(std_trained, new_data = biomass[, 1:2]),
+               class = "check_new_data")
+})
