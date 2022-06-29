@@ -60,110 +60,56 @@ Adding or updating roles is a useful way to group certain variables that
 don't fall in the standard \code{"predictor"} bucket. You can perform a step
 on all of the variables that have a custom role with the selector
 \code{\link[=has_role]{has_role()}}.
-
 \subsection{Effects of non-standard roles}{
 
-Recipes can label and retain column(s) of your data set that should not
-be treated as outcomes or predictors. A unique identifier column or some
-other ancillary data could be used to troubleshoot issues during model
-development but may not be either an outcome or predictor.
+Recipes can label and retain column(s) of your data set that should not be treated as outcomes or predictors. A unique identifier column or some other ancillary data could be used to troubleshoot issues during model development but may not be either an outcome or predictor.
 
-For example, the \link[modeldata:biomass]{modeldata::biomass} data have a
-column called \code{sample} with information about the specific sample type.
-We can change that role:
+For example, the \code{modeldata::biomass} dataset has a column named \code{sample} with information about the specific sample type. We can change that role:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{  data(biomass, package = "modeldata")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(recipes)
 
-  recipe(HHV ~ ., data = biomass) \%>\%
-    update_role(sample, new_role = "id variable")
+data(biomass, package = "modeldata")
+biomass_train <- biomass[1:100,]
+biomass_test <- biomass[101:200,]
+
+rec <- recipe(HHV ~ ., data = biomass_train) \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  step_center(carbon)
+
+rec <- prep(rec, biomass_train)
 }\if{html}{\out{</div>}}
 
-This means that the \code{sample} column will not be used in the analysis but
-will be retained in the data set (see more in the Examples section
-below).
+This means that \code{sample} is no longer treated as a \code{"predictor"} (the default role for columns on the right-hand side of the formula supplied to \code{recipe()}) and won't be used in model fitting or analysis, but will still be retained in the data set.
 
-As another example, you might have a date column that is transformed
-into features using \code{\link[=step_date]{step_date()}} or
-\code{\link[=step_holiday]{step_holiday()}}.
+If you really aren't using \code{sample} in your recipe, we recommend that you instead remove \code{sample} from your dataset before passing it to \code{recipe()}. The reason for this is because recipes assumes that all non-standard roles are required at \code{bake()} time (or \code{predict()} time, if you are using a workflow). Since you didn't use \code{sample} in any steps of the recipe, you might think that you don't need to pass it to \code{bake()}, but this isn't true because recipes doesn't know that you didn't use it:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{  library(tidymodels)
-  tidymodels_prefer()
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{biomass_test$sample <- NULL
 
-  data(Chicago, package = "modeldata")
-  chi_rec <- recipe(ridership ~ ., data = Chicago) \%>\% 
-    # Since `date` is symbolically on the right-hand side of the formula, it
-    # is treated as a predictor (i.e., has a role of "predictor")
-    step_holiday(date) \%>\% 
-    step_date(date)
+bake(rec, biomass_test)
 }\if{html}{\out{</div>}}
 
-At this point, \code{date} is kept in the dataset as-is, and will be treated
-as a predictor (and will probably be converted to an integer column by
-the modeling function).
-
-One option is to remove \code{date} since it is not directly used as a model
-term. \code{\link[=step_rm]{step_rm()}} is a good way to accomplish this.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{  chi_rec_rm <- chi_rec \%>\% step_rm(date)
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> Error in `bake()`:
+#> ! The following required columns are missing from `new_data`: "sample".
+#> i These columns have one of the following roles, which are required at `bake()` time: "id variable".
+#> i If these roles are not required at `bake()` time, use `update_role_requirements(role = "your_role", bake = FALSE)`.
 }\if{html}{\out{</div>}}
 
-Another approach, especially helpful during model development, is to
-change the role of the column to some other value via
-\code{\link[=update_role]{update_role()}}.
+As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the \code{sample} column from \code{biomass} before calling \code{recipe()}. In general, predictors and non-standard roles that are supplied to \code{recipe()} should be present at both \code{prep()} and \code{bake()} time.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{  chi_rec_role <- chi_rec \%>\% update_role(date, new_role = "date")
+If you can't remove \code{sample} for some reason, then the second best way to get around this issue is to tell recipes that the \code{"id variable"} role isn't required at \code{bake()} time. You can do that by using \code{update_role_requirements()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rec <- recipe(HHV ~ ., data = biomass_train) \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  update_role_requirements("id variable", bake = FALSE) \%>\%
+  step_center(carbon)
+
+rec <- prep(rec, biomass_train)
+
+# No errors!
+biomass_test_baked <- bake(rec, biomass_test)
 }\if{html}{\out{</div>}}
 
-In this case, the column is still available in the data and will be
-carried through the analysis (e.g. during resampling). This can be
-helpful since, if there is a poor prediction, this column may be helpful
-in diagnosing the problem.
-
-The downside to chaining the role of the column is that it is needed at
-prediction-time. This can impact development tools (such as tuning
-functions) and would also be required to be in the data being predicted
-once the model is deployed.
-
-If using a non-standard role for a column, it is highly recommended that
-you use the recipe within a workflow and specify \code{bake_dependent_roles}
-as described in
-\code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}.
-This will allow tuning and prediction functions to run without error.
-
-With the example above:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{  library(hardhat) # require hardhat version >= 1.0.0
-  # Make a new blueprint:
-  date_bp <- default_recipe_blueprint(bake_dependent_roles = "date")
-
-  chi_wflow <- 
-    workflow() \%>\% 
-    add_model(linear_reg()) \%>\% 
-    add_recipe(chi_rec_role, blueprint = date_bp) 
-
-  chi_fit <- fit(chi_wflow, Chicago)
-  # This line will fail without the added blueprint:
-  predict(chi_fit, head(Chicago))
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 x 1
-##   .pred
-##   <dbl>
-## 1 12.4 
-## 2 14.3 
-## 3 13.7 
-## 4 13.6 
-## 5 12.8 
-## 6  1.68
-}\if{html}{\out{</div>}}
-
-It is also worth noting that
-\code{\link[workflows:augment.workflow]{workflows::augment.workflow()}} can be
-used to attach predictions to the data (including columns with
-non-standard roles):
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{  augment(chi_fit, head(Chicago))
-}\if{html}{\out{</div>}}
+It should be very rare that you need this feature.
 }
 }
 \examples{

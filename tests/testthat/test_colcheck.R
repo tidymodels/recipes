@@ -109,7 +109,7 @@ test_that("non-standard roles during bake/predict", {
 
   # ----------------------------------------------------------------------------
 
-  data(Chicago, package = "modeldata")
+  data(Chicago, package = "modeldata", envir = current_env())
 
   Chicago <- Chicago %>% select(ridership, date, Austin, Belmont)
 
@@ -123,13 +123,13 @@ test_that("non-standard roles during bake/predict", {
     add_model(linear_reg())
 
   # ----------------------------------------------------------------------------
-  # non-standard roles, no additional blueprint
+  # non-standard role used in a step
 
   ## no case weights, default blueprint
   role_rec <-
     recipe(ridership ~ date + Austin + Belmont, data = Chicago) %>%
-    step_date(date) %>%
-    update_role(date, new_role = "date")
+    update_role(date, new_role = "date") %>%
+    step_date(date)
 
   role_wflow <-
     base_wflow %>%
@@ -137,40 +137,31 @@ test_that("non-standard roles during bake/predict", {
 
   role_fit <- fit(role_wflow, data = Chicago)
 
-  expect_snapshot_error(predict(role_fit, head(Chicago)))
+  expect_error(predict(role_fit, head(Chicago)), NA)
+
+  # This should require 'date' to predict.
+  # The error comes from hardhat, so we don't snapshot it because we don't own it.
+  expect_error(predict(role_fit, Chicago %>% select(-date)))
 
   # ----------------------------------------------------------------------------
-  # non-standard roles, additional blueprint
-
-  bp <- default_recipe_blueprint(bake_dependent_roles = "date")
-
-  role_bp_wflow <-
-    base_wflow %>%
-    add_recipe(role_rec, blueprint = bp)
-
-  role_bp_fit <- fit(role_bp_wflow, data = Chicago)
-
-  # This should require 'date' to predict
-  expect_snapshot_error(predict(role_bp_fit, Chicago %>% select(-date)))
-  expect_error(predict(role_bp_fit, head(Chicago)), regexp = NA)
-
-  # ----------------------------------------------------------------------------
-  # non-standard roles, case weights, additional blueprint
+  # non-standard role used in a step and case weights
 
   role_wts_rec <-
     recipe(ridership ~ ., data = Chicago) %>%
-    step_date(date) %>%
-    update_role(date, new_role = "date")
+    update_role(date, new_role = "date") %>%
+    step_date(date)
 
   role_wts_wflow <-
     base_wflow %>%
-    add_recipe(role_wts_rec, blueprint = bp) %>%
+    add_recipe(role_wts_rec) %>%
     add_case_weights(wts)
 
   role_wts_fit <- fit(role_wts_wflow, data = Chicago)
 
   # This should require 'date' but not 'wts' to predict
-  expect_error(predict(role_wts_fit, head(Chicago)), regexp = NA)
+  expect_error(predict(role_wts_fit, head(Chicago)), NA)
+  expect_error(predict(role_wts_fit, head(Chicago) %>% select(-wts)), NA)
+  expect_error(predict(role_wts_fit, head(Chicago) %>% select(-date)))
 
   # ----------------------------------------------------------------------------
   # Removing variable after use
@@ -186,7 +177,7 @@ test_that("non-standard roles during bake/predict", {
   rm_fit <- fit(rm_wflow, data = Chicago)
 
   # This should require 'date' to predict
-  expect_snapshot_error(predict(rm_fit, Chicago %>% select(-date)))
+  expect_error(predict(rm_fit, Chicago %>% select(-date)))
 
   # ----------------------------------------------------------------------------
   # Removing variable after use, with case weights
@@ -203,8 +194,8 @@ test_that("non-standard roles during bake/predict", {
   rm_wts_fit <- fit(rm_wts_wflow, data = Chicago)
 
   # This should require 'date' but not 'wts' to predict
-  expect_snapshot_error(predict(rm_fit, Chicago %>% select(-date)))
-
+  expect_error(predict(rm_fit, Chicago %>% select(-wts)), NA)
+  expect_error(predict(rm_fit, Chicago %>% select(-date)))
 })
 
 

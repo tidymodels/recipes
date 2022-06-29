@@ -46,7 +46,8 @@
 #' on all of the variables that have a custom role with the selector
 #' [has_role()].
 #'
-#' @includeRmd man/rmd/bake_dependent_roles.Rmd details
+#' ```{r, child = "man/rmd/non-standard-roles.Rmd"}
+#' ```
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)

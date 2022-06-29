@@ -35,12 +35,10 @@
 #'
 #' Unlike most, this step requires the case weights to be available when new
 #' samples are processed (e.g., when `bake()` is used or `predict()` with a
-#' workflow). If you are using this step with a workflow, you need to pass a
-#' blueprint to the `blueprint` argument of `workflows::add_recipe()` letting
-#' the workflow know that case weights are required at bake time. The blueprint
-#' can be created with
-#' `hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")`.
-#' See [hardhat::default_recipe_blueprint()] as well as [update_role()].
+#' workflow). To tell recipes that the case weights are required at bake time,
+#' use
+#' `recipe %>% update_role_requirements(role = "case_weights", bake = TRUE)`.
+#' See [update_role_requirements()] for more information.
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.
 #'  (2006). Spatial sign preprocessing: a simple way to impart
