@@ -233,7 +233,7 @@ test_that("empty printing", {
 
 test_that("bake method errors when needed new_data columns are missing", {
   imputed <- rec %>%
-    step_impute_knn(carbon, fac,
+    step_impute_knn(carbon,
                     impute_with = imp_vars(hydrogen, oxygen)
     )
 

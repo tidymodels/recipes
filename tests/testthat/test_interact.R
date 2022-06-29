@@ -227,6 +227,8 @@ test_that("replacing selectors in formulas", {
 })
 
 test_that("missing columns", {
+  skip("redundant with check_new_data checks")
+
   no_fail <-
     rec %>%
     step_rm(x1) %>%

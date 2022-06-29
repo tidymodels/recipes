@@ -224,12 +224,18 @@ test_that("empty printing", {
 })
 
 test_that("bake method errors when needed new_data columns are missing", {
-  ica_extract <- rec %>%
-    step_ica(carbon, um_comp = 2, seed = 1, id = "")
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
 
-  set.seed(12)
+  ica_extract <-
+    recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+           data = biomass_tr
+    ) %>%
+    step_ica(carbon, hydrogen, num_comp = 2, seed = 1)
+
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
-  expect_error(bake(rec_trained, new_data = biomass_tr[, c(-3)]),
+  expect_error(bake(ica_extract_trained, new_data = biomass_tr[, c(-3)]),
                class = "check_new_data")
 })

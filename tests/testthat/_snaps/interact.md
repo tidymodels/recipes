@@ -50,3 +50,11 @@
       Warning:
       Interaction specification failed for: ~x1:x2. No interactions will be created.
 
+# bake method errors when needed new_data columns are missing
+
+    Code
+      bake(int_rec_trained, dat_tr[, 4:6])
+    Condition
+      Error in `step_interact()`:
+      ! The following required columns are missing from `new_data` in step '': z and x1.
+

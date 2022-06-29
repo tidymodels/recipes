@@ -124,6 +124,11 @@ test_that("empty printing", {
 
 test_that("bake method errors when needed new_data columns are missing", {
   set.seed(27)
+
+  n <- 10
+  start <- as.Date("1999/01/01")
+  end <- as.Date("2000/01/01")
+
   df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
 
   # lags numeric data

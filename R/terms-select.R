@@ -117,5 +117,5 @@ element_check <- function(x) {
 }
 
 abort_selection <- exiting(function(cnd) {
-  abort("No variables or terms were selected.")
+  abort("No variables or terms were selected.", call = NULL)
 })
