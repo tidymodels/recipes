@@ -434,5 +434,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   others <- prep(others, training = sacr_tr)
 
   expect_error(bake(others, new_data = sacr_te[, 3:9]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

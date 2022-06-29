@@ -235,5 +235,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   rec_trained <- prep(rec)
 
   expect_error(bake(rec_trained, new_data = biomass_tr[, 1:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

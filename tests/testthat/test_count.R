@@ -112,5 +112,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   rec_trained <- prep(rec, training = mt_tibble)
 
   expect_error(bake(rec_trained, new_data = mt_tibble[,c(-1)]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

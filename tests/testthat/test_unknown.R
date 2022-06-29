@@ -132,5 +132,5 @@ test_that("bake method errors when needed new_data columns are missing", {
     prep()
 
   expect_error(bake(rec_1, sacr_te[3:ncol(sacr_te)]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

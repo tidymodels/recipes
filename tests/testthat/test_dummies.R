@@ -389,6 +389,6 @@ test_that("bake method errors when needed new_data columns are missing", {
   dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
 
   expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })
 

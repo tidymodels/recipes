@@ -7,7 +7,7 @@
 check_new_data(req, object, new_data)
 }
 \arguments{
-\item{req}{A character vector of required characters.}
+\item{req}{A character vector of required columns.}
 
 \item{object}{A step object.}
 

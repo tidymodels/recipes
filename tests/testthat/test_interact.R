@@ -286,7 +286,7 @@ test_that("bake method errors when needed new_data columns are missing", {
   )
 
   expect_error(bake(int_rec_trained, dat_tr[, 4:6]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 
   expect_snapshot(bake(int_rec_trained, dat_tr[, 4:6]), error = TRUE)
 })

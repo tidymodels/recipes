@@ -890,11 +890,12 @@ uses_dim_red <- function(x) {
 #' When baking a step, create an information error message when a column that
 #' is used by the step is not present in `new_data`.
 #'
-#' @param req A character vector of required characters.
+#' @param req A character vector of required columns.
 #' @param object A step object.
 #' @param new_data A tibble of data being baked.
 #' @return Invisible NULL. Side effects are the focus of the function.
 #' @keywords internal
+#' @export
 check_new_data <- function(req, object, new_data) {
   if (is.null(req) || length(req) == 0L) {
     return(invisible(NULL))
@@ -908,7 +909,7 @@ check_new_data <- function(req, object, new_data) {
   cli::cli_abort(
     "The following required {cli::qty(col_diff)} column{?s} {?is/are} \
     missing from `new_data` in step '{step_id}': {col_diff}.",
-    class = "check_new_data",
+    class = "new_data_missing_column",
     call = rlang::call2(step_cls)
   )
 }

@@ -168,6 +168,6 @@ test_that("bake method errors when needed new_data columns are missing", {
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
   expect_error(bake(standardized_trained, new_data = biomass_te[, 1:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })
 

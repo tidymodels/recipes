@@ -335,5 +335,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   dummy_prepped <- prep(dummy)
 
   expect_error(bake(dummy_prepped, new_data = mini_tate[, 1:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

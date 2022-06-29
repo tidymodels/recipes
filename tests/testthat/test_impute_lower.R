@@ -115,5 +115,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
 
   expect_error(bake(imputed_trained, new_data = biomass[, 4:7]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

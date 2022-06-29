@@ -509,7 +509,7 @@ test_that("bake method errors when needed new_data columns are missing (center)"
   std_trained <- prep(std, training = biomass)
 
   expect_error(bake(std_trained, new_data = biomass[, 1:2]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })
 
 test_that("bake method errors when needed new_data columns are missing (scale)", {
@@ -519,5 +519,5 @@ test_that("bake method errors when needed new_data columns are missing (scale)",
   std_trained <- prep(std, training = biomass)
 
   expect_error(bake(std_trained, new_data = biomass[, 1:2]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

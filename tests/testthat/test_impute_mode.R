@@ -191,5 +191,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
   expect_error(bake(imputed, new_data = credit_te[, 7:10]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

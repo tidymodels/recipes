@@ -225,6 +225,6 @@ test_that("bake method errors when needed new_data columns are missing", {
   date_res <- bake(date_rec, new_data = examples)
 
   expect_error(bake(date_rec, new_data = examples[, 2, drop = FALSE]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })
 

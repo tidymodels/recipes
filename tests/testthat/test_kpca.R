@@ -169,5 +169,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
   expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

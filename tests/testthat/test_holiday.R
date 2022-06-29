@@ -183,5 +183,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   holiday_rec <- prep(holiday_rec, training = test_data)
 
   expect_error(bake(holiday_rec, exp_dates[, 2, drop = FALSE]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

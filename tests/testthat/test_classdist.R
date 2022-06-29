@@ -221,5 +221,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   trained <- prep(rec, training = iris, verbose = FALSE)
 
   expect_error(bake(trained, new_data = iris[,1:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

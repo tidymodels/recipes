@@ -187,5 +187,5 @@ test_that("bake method errors when needed new_data columns are missing", {
     prep(ames_dat)
 
   expect_error(bake(rec, new_data = ames_dat[, 2:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

@@ -129,5 +129,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   tr_int <- juice(rec_trained, all_predictors())
 
   expect_error(bake(rec_trained, te_dat[, 1:2], all_predictors()),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

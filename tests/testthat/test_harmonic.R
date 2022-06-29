@@ -477,6 +477,6 @@ test_that("bake method errors when needed new_data columns are missing", {
     prep()
 
   expect_error(bake(rec, new_data = harmonic_dat_mult[, 1:2]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })
 

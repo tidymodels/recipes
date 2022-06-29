@@ -146,5 +146,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
 
   expect_error(bake(sp_sign_trained, new_data = biomass[,c(-3)]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

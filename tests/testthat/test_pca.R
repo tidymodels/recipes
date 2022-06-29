@@ -327,5 +327,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
   expect_error(bake(pca_extract_trained, new_data = biomass_te[, c(-3)]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })

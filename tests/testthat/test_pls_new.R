@@ -321,5 +321,5 @@ test_that("bake method errors when needed new_data columns are missing", {
   rec <- prep(rec)
 
   expect_error(bake(rec, new_data = biom_tr[, 1:3]),
-               class = "check_new_data")
+               class = "new_data_missing_column")
 })
