@@ -60,7 +60,7 @@ Suggests:
     workflows,
     xml2
 Remotes:
-    tidymodels/hardhat#207
+    tidymodels/hardhat
 VignetteBuilder: 
     knitr
 RdMacros: 
