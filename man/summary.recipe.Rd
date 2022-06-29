@@ -17,7 +17,9 @@ used).}
 }
 \value{
 A tibble with columns \code{variable}, \code{type}, \code{role},
-and \code{source}.
+and \code{source}. When \code{original = TRUE}, an additional column is included
+named \verb{required to bake} (based on the results of
+\code{\link[=update_role_requirements]{update_role_requirements()}}).
 }
 \description{
 This function prints the current set of variables/features and some of their
