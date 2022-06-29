@@ -230,6 +230,6 @@ test_that("bake method errors when needed new_data columns are missing", {
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
-  expect_error(bake(rec_trained, new_data = biomass_tr[, c(1:2, 4:ncol(biomass_tr))]),
+  expect_error(bake(rec_trained, new_data = biomass_tr[, c(-3)]),
                class = "check_new_data")
 })
