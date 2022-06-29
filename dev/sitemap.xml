@@ -417,4 +417,7 @@
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/update.step.html</loc>
   </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/update_role_requirements.html</loc>
+  </url>
 </urlset>

@@ -40,7 +40,7 @@ basic usage, steps, selectors, and checks.
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,24 +124,24 @@ basic usage, steps, selectors, and checks.
 </h2>
 <p>The packages contains a data set used to predict whether a person will pay back a bank loan. It has 13 predictor columns and a factor variable <code>Status</code> (the outcome). We will first separate the data into a training and test set:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org" class="external-link">rsample</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"credit_data"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">55</span><span class="op">)</span>
-<span class="va">train_test_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">initial_split</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span>
-
-<span class="va">credit_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">training</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span>
-<span class="va">credit_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">testing</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org" class="external-link">rsample</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"credit_data"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">55</span><span class="op">)</span></span>
+<span><span class="va">train_test_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">initial_split</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">credit_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">training</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></span>
+<span><span class="va">credit_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">testing</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></span></code></pre></div>
 <p>Note that there are some missing values in these data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span>
-<span class="co">#&gt;     1.000     1.000     0.998     1.000     1.000     1.000     1.000 </span>
-<span class="co">#&gt;       Job  Expenses    Income    Assets      Debt    Amount     Price </span>
-<span class="co">#&gt;     0.999     1.000     0.910     0.989     0.996     1.000     1.000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">credit_train</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Status Seniority      Home      Time       Age   Marital   Records </span></span>
+<span><span class="co">#&gt;     1.000     1.000     0.998     1.000     1.000     1.000     1.000 </span></span>
+<span><span class="co">#&gt;       Job  Expenses    Income    Assets      Debt    Amount     Price </span></span>
+<span><span class="co">#&gt;     0.999     1.000     0.910     0.989     0.996     1.000     1.000</span></span></code></pre></div>
 <p>Rather than remove these, their values will be imputed.</p>
 <p>The idea is that the preprocessing operations will all be created using the training set and then these steps will be applied to both the training and test set.</p>
 </div>
@@ -152,15 +152,15 @@ basic usage, steps, selectors, and checks.
 <p>Recipes can be created manually by sequentially adding roles to variables in a data set.</p>
 <p>If the analysis only requires <strong>outcomes</strong> and <strong>predictors</strong>, the easiest way to create the initial recipe is to use the standard formula method:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
-<span class="va">rec_obj</span>
-<span class="co">#&gt; Recipe</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Inputs:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       role #variables</span>
-<span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor         13</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
+<span><span class="va">rec_obj</span></span>
+<span><span class="co">#&gt; Recipe</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Inputs:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       role #variables</span></span>
+<span><span class="co">#&gt;    outcome          1</span></span>
+<span><span class="co">#&gt;  predictor         13</span></span></code></pre></div>
 <p>The data contained in the <code>data</code> argument need not be the training set; this data is only used to catalog the names of the variables and their types (e.g. numeric, etc.).</p>
 <p>(Note that the formula method is used here to declare the variables, their roles and nothing else. If you use inline functions (e.g. <code>log</code>) it will complain. These types of operations can be added later.)</p>
 </div>
@@ -184,174 +184,174 @@ basic usage, steps, selectors, and checks.
 <p>Note that the methods listed above are the only ones that can be used to select variables inside the steps. Also, minus signs can be used to deselect variables.</p>
 <p>For our data, we can add an operation to impute the predictors. There are many ways to do this and <code>recipes</code> includes a few steps for this purpose:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"impute_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="st">"package:recipes"</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] "step_impute_bag"    "step_impute_knn"    "step_impute_linear"</span>
-<span class="co">#&gt; [4] "step_impute_lower"  "step_impute_mean"   "step_impute_median"</span>
-<span class="co">#&gt; [7] "step_impute_mode"   "step_impute_roll"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"impute_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="st">"package:recipes"</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "step_impute_bag"    "step_impute_knn"    "step_impute_linear"</span></span>
+<span><span class="co">#&gt; [4] "step_impute_lower"  "step_impute_mean"   "step_impute_median"</span></span>
+<span><span class="co">#&gt; [7] "step_impute_mode"   "step_impute_roll"</span></span></code></pre></div>
 <p>Here, <em>K</em>-nearest neighbor imputation will be used. This works for both numeric and non-numeric predictors and defaults <em>K</em> to five To do this, it selects all predictors and then removes those that are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_impute_knn.html">step_impute_knn</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
-<span class="va">imputed</span>
-<span class="co">#&gt; Recipe</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Inputs:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       role #variables</span>
-<span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor         13</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Operations:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_impute_knn.html">step_impute_knn</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">imputed</span></span>
+<span><span class="co">#&gt; Recipe</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Inputs:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       role #variables</span></span>
+<span><span class="co">#&gt;    outcome          1</span></span>
+<span><span class="co">#&gt;  predictor         13</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Operations:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have not been declared yet (as shown when the recipe is printed above). In some preprocessing steps, variables will be added or removed from the current list of possible variables.</p>
 <p>Since some predictors are categorical in nature (i.e. nominal), it would make sense to convert these factor predictors into numeric dummy variables (aka indicator variables) using <code><a href="../reference/step_dummy.html">step_dummy()</a></code>. To do this, the step selects all non-numeric predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
-<span class="va">ind_vars</span>
-<span class="co">#&gt; Recipe</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Inputs:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       role #variables</span>
-<span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor         13</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Operations:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
-<span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">ind_vars</span></span>
+<span><span class="co">#&gt; Recipe</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Inputs:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       role #variables</span></span>
+<span><span class="co">#&gt;    outcome          1</span></span>
+<span><span class="co">#&gt;  predictor         13</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Operations:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></span>
+<span><span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> 
-<span class="va">standardized</span>
-<span class="co">#&gt; Recipe</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Inputs:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       role #variables</span>
-<span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor         13</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Operations:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span>
-<span class="co">#&gt; Dummy variables from all_nominal_predictors()</span>
-<span class="co">#&gt; Centering for all_numeric_predictors()</span>
-<span class="co">#&gt; Scaling for all_numeric_predictors()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">standardized</span></span>
+<span><span class="co">#&gt; Recipe</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Inputs:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       role #variables</span></span>
+<span><span class="co">#&gt;    outcome          1</span></span>
+<span><span class="co">#&gt;  predictor         13</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Operations:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></span>
+<span><span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></span>
+<span><span class="co">#&gt; Centering for all_numeric_predictors()</span></span>
+<span><span class="co">#&gt; Scaling for all_numeric_predictors()</span></span></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can now estimate the means and standard deviations from the training set. The <code>prep</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
-<span class="va">trained_rec</span>
-<span class="co">#&gt; Recipe</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Inputs:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       role #variables</span>
-<span class="co">#&gt;    outcome          1</span>
-<span class="co">#&gt;  predictor         13</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Training data contained 3340 data points and 322 incomplete rows. </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Operations:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; K-nearest neighbor imputation for Seniority, Home, Time, Age, Marital, Rec... [trained]</span>
-<span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span>
-<span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, A... [trained]</span>
-<span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, A... [trained]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
+<span><span class="va">trained_rec</span></span>
+<span><span class="co">#&gt; Recipe</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Inputs:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       role #variables</span></span>
+<span><span class="co">#&gt;    outcome          1</span></span>
+<span><span class="co">#&gt;  predictor         13</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Training data contained 3340 data points and 322 incomplete rows. </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Operations:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; K-nearest neighbor imputation for Seniority, Home, Time, Age, Marital, Rec... [trained]</span></span>
+<span><span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span></span>
+<span><span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, A... [trained]</span></span>
+<span><span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, A... [trained]</span></span></code></pre></div>
 <p>Note that the real variables are listed (e.g. <code>Home</code> etc.) instead of the selectors (<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be <em>applied</em> to the training and test set:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span>
-<span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_test</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
+<span><span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">trained_rec</span>, new_data <span class="op">=</span> <span class="va">credit_test</span><span class="op">)</span></span></code></pre></div>
 <p><code>bake</code> returns a tibble that, by default, includes all of the variables:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span>
-<span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
-<span class="va">test_data</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,114 × 23</span></span>
-<span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span>
-<span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1.09   0.924  1.88    -<span style="color: #BB0000;">0.385</span> -<span style="color: #BB0000;">0.131</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.297  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    -<span style="color: #BB0000;">0.977</span>  0.924 -<span style="color: #BB0000;">0.459</span>    1.77  -<span style="color: #BB0000;">0.437</span>   0.845 -<span style="color: #BB0000;">0.295</span>  0.333   0.760  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    -<span style="color: #BB0000;">0.977</span>  0.103  0.349    1.77  -<span style="color: #BB0000;">0.783</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.333   0.002<span style="text-decoration: underline;">54</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    -<span style="color: #BB0000;">0.247</span>  0.103 -<span style="color: #BB0000;">0.280</span>    0.231 -<span style="color: #BB0000;">0.207</span>  -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  0.229   0.171  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    -<span style="color: #BB0000;">0.125</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">0.729</span>    0.231 -<span style="color: #BB0000;">0.258</span>  -<span style="color: #BB0000;">0.222</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.807</span>  -<span style="color: #BB0000;">0.854</span>  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    -<span style="color: #BB0000;">0.855</span>  0.924 -<span style="color: #BB0000;">0.549</span>   -<span style="color: #BB0000;">1.05</span>  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">9</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.436  -<span style="color: #BB0000;">0.331</span>  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     2.31   0.924  0.349    0.949 -<span style="color: #BB0000;">0.015</span><span style="color: #BB0000; text-decoration: underline;">5</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span>   0.047<span style="text-decoration: underline;">5</span> </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.848 -<span style="color: #BB0000;">0.718</span>  0.529    1.00   1.40   -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  1.58    1.69   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    -<span style="color: #BB0000;">0.977</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">1.27</span>    -<span style="color: #BB0000;">0.538</span> -<span style="color: #BB0000;">0.246</span>  -<span style="color: #BB0000;">0.266</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">1.32</span>   -<span style="color: #BB0000;">1.65</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    -<span style="color: #BB0000;">0.855</span>  0.514 -<span style="color: #BB0000;">0.100</span>    0.744 -<span style="color: #BB0000;">0.540</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span>  -<span style="color: #BB0000;">0.800</span>  </span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 1,104 more rows, and 14 more variables: Status &lt;fct&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   Job_partime &lt;dbl&gt;</span></span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">test_data</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;         Seniority              Time               Age          Expenses </span>
-<span class="co">#&gt;                 1                 1                 1                 1 </span>
-<span class="co">#&gt;            Income            Assets              Debt            Amount </span>
-<span class="co">#&gt;                 1                 1                 1                 1 </span>
-<span class="co">#&gt;             Price            Status        Home_other        Home_owner </span>
-<span class="co">#&gt;                 1                 1                 1                 1 </span>
-<span class="co">#&gt;      Home_parents         Home_priv         Home_rent   Marital_married </span>
-<span class="co">#&gt;                 1                 1                 1                 1 </span>
-<span class="co">#&gt; Marital_separated    Marital_single     Marital_widow       Records_yes </span>
-<span class="co">#&gt;                 1                 1                 1                 1 </span>
-<span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span>
-<span class="co">#&gt;                 1                 1                 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span>
+<span><span class="va">test_data</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,114 × 23</span></span></span>
+<span><span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1.09   0.924  1.88    -<span style="color: #BB0000;">0.385</span> -<span style="color: #BB0000;">0.131</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.297  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    -<span style="color: #BB0000;">0.977</span>  0.924 -<span style="color: #BB0000;">0.459</span>    1.77  -<span style="color: #BB0000;">0.437</span>   0.845 -<span style="color: #BB0000;">0.295</span>  0.333   0.760  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    -<span style="color: #BB0000;">0.977</span>  0.103  0.349    1.77  -<span style="color: #BB0000;">0.783</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.333   0.002<span style="text-decoration: underline;">54</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    -<span style="color: #BB0000;">0.247</span>  0.103 -<span style="color: #BB0000;">0.280</span>    0.231 -<span style="color: #BB0000;">0.207</span>  -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  0.229   0.171  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    -<span style="color: #BB0000;">0.125</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">0.729</span>    0.231 -<span style="color: #BB0000;">0.258</span>  -<span style="color: #BB0000;">0.222</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.807</span>  -<span style="color: #BB0000;">0.854</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    -<span style="color: #BB0000;">0.855</span>  0.924 -<span style="color: #BB0000;">0.549</span>   -<span style="color: #BB0000;">1.05</span>  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">9</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.436  -<span style="color: #BB0000;">0.331</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     2.31   0.924  0.349    0.949 -<span style="color: #BB0000;">0.015</span><span style="color: #BB0000; text-decoration: underline;">5</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span>   0.047<span style="text-decoration: underline;">5</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.848 -<span style="color: #BB0000;">0.718</span>  0.529    1.00   1.40   -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  1.58    1.69   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    -<span style="color: #BB0000;">0.977</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">1.27</span>    -<span style="color: #BB0000;">0.538</span> -<span style="color: #BB0000;">0.246</span>  -<span style="color: #BB0000;">0.266</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">1.32</span>   -<span style="color: #BB0000;">1.65</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    -<span style="color: #BB0000;">0.855</span>  0.514 -<span style="color: #BB0000;">0.100</span>    0.744 -<span style="color: #BB0000;">0.540</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span>  -<span style="color: #BB0000;">0.800</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 1,104 more rows, and 14 more variables: Status &lt;fct&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Job_partime &lt;dbl&gt;</span></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">test_data</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         Seniority              Time               Age          Expenses </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;            Income            Assets              Debt            Amount </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;             Price            Status        Home_other        Home_owner </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;      Home_parents         Home_priv         Home_rent   Marital_married </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt; Marital_separated    Marital_single     Marital_widow       Records_yes </span></span>
+<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span></span>
+<span><span class="co">#&gt;                 1                 1                 1</span></span></code></pre></div>
 <p>Selectors can also be used. For example, if only the predictors are needed, you can use <code>bake(object, new_data, all_predictors())</code>.</p>
 <p>There are a number of other steps included in the package:</p>
-<pre><code><span class="co">#&gt;  [1] "step_arrange"            "step_bagimpute"         </span>
-<span class="co">#&gt;  [3] "step_bin2factor"         "step_BoxCox"            </span>
-<span class="co">#&gt;  [5] "step_bs"                 "step_center"            </span>
-<span class="co">#&gt;  [7] "step_classdist"          "step_corr"              </span>
-<span class="co">#&gt;  [9] "step_count"              "step_cut"               </span>
-<span class="co">#&gt; [11] "step_date"               "step_depth"             </span>
-<span class="co">#&gt; [13] "step_discretize"         "step_dummy"             </span>
-<span class="co">#&gt; [15] "step_dummy_extract"      "step_dummy_multi_choice"</span>
-<span class="co">#&gt; [17] "step_factor2string"      "step_filter"            </span>
-<span class="co">#&gt; [19] "step_filter_missing"     "step_geodist"           </span>
-<span class="co">#&gt; [21] "step_harmonic"           "step_holiday"           </span>
-<span class="co">#&gt; [23] "step_hyperbolic"         "step_ica"               </span>
-<span class="co">#&gt; [25] "step_impute_bag"         "step_impute_knn"        </span>
-<span class="co">#&gt; [27] "step_impute_linear"      "step_impute_lower"      </span>
-<span class="co">#&gt; [29] "step_impute_mean"        "step_impute_median"     </span>
-<span class="co">#&gt; [31] "step_impute_mode"        "step_impute_roll"       </span>
-<span class="co">#&gt; [33] "step_indicate_na"        "step_integer"           </span>
-<span class="co">#&gt; [35] "step_interact"           "step_intercept"         </span>
-<span class="co">#&gt; [37] "step_inverse"            "step_invlogit"          </span>
-<span class="co">#&gt; [39] "step_isomap"             "step_knnimpute"         </span>
-<span class="co">#&gt; [41] "step_kpca"               "step_kpca_poly"         </span>
-<span class="co">#&gt; [43] "step_kpca_rbf"           "step_lag"               </span>
-<span class="co">#&gt; [45] "step_lincomb"            "step_log"               </span>
-<span class="co">#&gt; [47] "step_logit"              "step_lowerimpute"       </span>
-<span class="co">#&gt; [49] "step_meanimpute"         "step_medianimpute"      </span>
-<span class="co">#&gt; [51] "step_modeimpute"         "step_mutate"            </span>
-<span class="co">#&gt; [53] "step_mutate_at"          "step_naomit"            </span>
-<span class="co">#&gt; [55] "step_nnmf"               "step_nnmf_sparse"       </span>
-<span class="co">#&gt; [57] "step_normalize"          "step_novel"             </span>
-<span class="co">#&gt; [59] "step_ns"                 "step_num2factor"        </span>
-<span class="co">#&gt; [61] "step_nzv"                "step_ordinalscore"      </span>
-<span class="co">#&gt; [63] "step_other"              "step_pca"               </span>
-<span class="co">#&gt; [65] "step_percentile"         "step_pls"               </span>
-<span class="co">#&gt; [67] "step_poly"               "step_profile"           </span>
-<span class="co">#&gt; [69] "step_range"              "step_ratio"             </span>
-<span class="co">#&gt; [71] "step_regex"              "step_relevel"           </span>
-<span class="co">#&gt; [73] "step_relu"               "step_rename"            </span>
-<span class="co">#&gt; [75] "step_rename_at"          "step_rm"                </span>
-<span class="co">#&gt; [77] "step_rollimpute"         "step_sample"            </span>
-<span class="co">#&gt; [79] "step_scale"              "step_select"            </span>
-<span class="co">#&gt; [81] "step_shuffle"            "step_slice"             </span>
-<span class="co">#&gt; [83] "step_spatialsign"        "step_sqrt"              </span>
-<span class="co">#&gt; [85] "step_string2factor"      "step_time"              </span>
-<span class="co">#&gt; [87] "step_unknown"            "step_unorder"           </span>
-<span class="co">#&gt; [89] "step_window"             "step_YeoJohnson"        </span>
-<span class="co">#&gt; [91] "step_zv"</span></code></pre>
+<pre><code><span><span class="co">#&gt;  [1] "step_arrange"            "step_bagimpute"         </span></span>
+<span><span class="co">#&gt;  [3] "step_bin2factor"         "step_BoxCox"            </span></span>
+<span><span class="co">#&gt;  [5] "step_bs"                 "step_center"            </span></span>
+<span><span class="co">#&gt;  [7] "step_classdist"          "step_corr"              </span></span>
+<span><span class="co">#&gt;  [9] "step_count"              "step_cut"               </span></span>
+<span><span class="co">#&gt; [11] "step_date"               "step_depth"             </span></span>
+<span><span class="co">#&gt; [13] "step_discretize"         "step_dummy"             </span></span>
+<span><span class="co">#&gt; [15] "step_dummy_extract"      "step_dummy_multi_choice"</span></span>
+<span><span class="co">#&gt; [17] "step_factor2string"      "step_filter"            </span></span>
+<span><span class="co">#&gt; [19] "step_filter_missing"     "step_geodist"           </span></span>
+<span><span class="co">#&gt; [21] "step_harmonic"           "step_holiday"           </span></span>
+<span><span class="co">#&gt; [23] "step_hyperbolic"         "step_ica"               </span></span>
+<span><span class="co">#&gt; [25] "step_impute_bag"         "step_impute_knn"        </span></span>
+<span><span class="co">#&gt; [27] "step_impute_linear"      "step_impute_lower"      </span></span>
+<span><span class="co">#&gt; [29] "step_impute_mean"        "step_impute_median"     </span></span>
+<span><span class="co">#&gt; [31] "step_impute_mode"        "step_impute_roll"       </span></span>
+<span><span class="co">#&gt; [33] "step_indicate_na"        "step_integer"           </span></span>
+<span><span class="co">#&gt; [35] "step_interact"           "step_intercept"         </span></span>
+<span><span class="co">#&gt; [37] "step_inverse"            "step_invlogit"          </span></span>
+<span><span class="co">#&gt; [39] "step_isomap"             "step_knnimpute"         </span></span>
+<span><span class="co">#&gt; [41] "step_kpca"               "step_kpca_poly"         </span></span>
+<span><span class="co">#&gt; [43] "step_kpca_rbf"           "step_lag"               </span></span>
+<span><span class="co">#&gt; [45] "step_lincomb"            "step_log"               </span></span>
+<span><span class="co">#&gt; [47] "step_logit"              "step_lowerimpute"       </span></span>
+<span><span class="co">#&gt; [49] "step_meanimpute"         "step_medianimpute"      </span></span>
+<span><span class="co">#&gt; [51] "step_modeimpute"         "step_mutate"            </span></span>
+<span><span class="co">#&gt; [53] "step_mutate_at"          "step_naomit"            </span></span>
+<span><span class="co">#&gt; [55] "step_nnmf"               "step_nnmf_sparse"       </span></span>
+<span><span class="co">#&gt; [57] "step_normalize"          "step_novel"             </span></span>
+<span><span class="co">#&gt; [59] "step_ns"                 "step_num2factor"        </span></span>
+<span><span class="co">#&gt; [61] "step_nzv"                "step_ordinalscore"      </span></span>
+<span><span class="co">#&gt; [63] "step_other"              "step_pca"               </span></span>
+<span><span class="co">#&gt; [65] "step_percentile"         "step_pls"               </span></span>
+<span><span class="co">#&gt; [67] "step_poly"               "step_profile"           </span></span>
+<span><span class="co">#&gt; [69] "step_range"              "step_ratio"             </span></span>
+<span><span class="co">#&gt; [71] "step_regex"              "step_relevel"           </span></span>
+<span><span class="co">#&gt; [73] "step_relu"               "step_rename"            </span></span>
+<span><span class="co">#&gt; [75] "step_rename_at"          "step_rm"                </span></span>
+<span><span class="co">#&gt; [77] "step_rollimpute"         "step_sample"            </span></span>
+<span><span class="co">#&gt; [79] "step_scale"              "step_select"            </span></span>
+<span><span class="co">#&gt; [81] "step_shuffle"            "step_slice"             </span></span>
+<span><span class="co">#&gt; [83] "step_spatialsign"        "step_sqrt"              </span></span>
+<span><span class="co">#&gt; [85] "step_string2factor"      "step_time"              </span></span>
+<span><span class="co">#&gt; [87] "step_unknown"            "step_unorder"           </span></span>
+<span><span class="co">#&gt; [89] "step_window"             "step_YeoJohnson"        </span></span>
+<span><span class="co">#&gt; [91] "step_zv"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="checks">Checks<a class="anchor" aria-label="anchor" href="#checks"></a>
@@ -359,12 +359,12 @@ basic usage, steps, selectors, and checks.
 <p>Another type of operation that can be added to a recipes is a <em>check</em>. Checks conduct some sort of data validation and, if no issue is found, returns the data as-is; otherwise, an error is thrown.</p>
 <p>For example, <code>check_missing</code> will fail if any of the variables selected for validation have missing values. This check is done when the recipe is prepared as well as when any data are baked. Checks are added in the same way as steps:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="va">trained_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/check_missing.html">check_missing</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Marital"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Currently, <code>recipes</code> includes:</p>
-<pre><code><span class="co">#&gt; [1] "check_class"      "check_cols"       "check_missing"   </span>
-<span class="co">#&gt; [4] "check_name"       "check_new_values" "check_range"     </span>
-<span class="co">#&gt; [7] "check_type"</span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "check_class"      "check_cols"       "check_missing"   </span></span>
+<span><span class="co">#&gt; [4] "check_name"       "check_new_values" "check_range"     </span></span>
+<span><span class="co">#&gt; [7] "check_type"</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -381,7 +381,7 @@ basic usage, steps, selectors, and checks.
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer>
