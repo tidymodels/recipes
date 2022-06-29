@@ -1,0 +1,57 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = "#>")
+```
+
+## Effects of non-standard roles
+
+Recipes can label and retain column(s) of your data set that should not be treated as outcomes or predictors. A unique identifier column or some other ancillary data could be used to troubleshoot issues during model development but may not be either an outcome or predictor.
+
+For example, the `modeldata::biomass` dataset has a column named `sample` with information about the specific sample type. We can change that role: 
+
+```{r, message = FALSE, warning = FALSE}
+library(recipes)
+
+data(biomass, package = "modeldata")
+biomass_train <- biomass[1:100,]
+biomass_test <- biomass[101:200,]
+
+rec <- recipe(HHV ~ ., data = biomass_train) %>%
+  update_role(sample, new_role = "id variable") %>%
+  step_center(carbon)
+
+rec <- prep(rec, biomass_train)
+```
+
+This means that `sample` is no longer treated as a `"predictor"` (the default role for columns on the right-hand side of the formula supplied to `recipe()`) and won't be used in model fitting or analysis, but will still be retained in the data set.
+
+If you really aren't using `sample` in your recipe, we recommend that you instead remove `sample` from your dataset before passing it to `recipe()`. The reason for this is because recipes assumes that all non-standard roles are required at `bake()` time (or `predict()` time, if you are using a workflow). Since you didn't use `sample` in any steps of the recipe, you might think that you don't need to pass it to `bake()`, but this isn't true because recipes doesn't know that you didn't use it:
+
+```{r, error=TRUE}
+biomass_test$sample <- NULL
+
+bake(rec, biomass_test)
+```
+
+As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the `sample` column from `biomass` before calling `recipe()`. In general, predictors and non-standard roles that are supplied to `recipe()` should be present at both `prep()` and `bake()` time.
+
+If you can't remove `sample` for some reason, then the second best way to get around this issue is to tell recipes that the `"id variable"` role isn't required at `bake()` time. You can do that by using `update_role_requirements()`:
+
+```{r}
+rec <- recipe(HHV ~ ., data = biomass_train) %>%
+  update_role(sample, new_role = "id variable") %>%
+  update_role_requirements("id variable", bake = FALSE) %>%
+  step_center(carbon)
+
+rec <- prep(rec, biomass_train)
+
+# No errors!
+biomass_test_baked <- bake(rec, biomass_test)
+```
+
+It should be very rare that you need this feature.

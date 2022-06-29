@@ -711,40 +711,6 @@ check_training_set <- function(x, rec, fresh) {
   x
 }
 
-check_new_data_columns <-
-  function(object, new_data, exclusions = c("case_weights", "outcome")) {
-
-    original_var_data <- object$var_info %>%
-      dplyr::filter(source == "original", is.na(role) | !(role %in% exclusions))
-    original_vars <- original_var_data %>%  dplyr::pull(variable)
-
-    if (!is.null(new_data) && !all(original_vars %in% colnames(new_data))) {
-      missing_vars <- setdiff(original_vars, colnames(new_data))
-
-      vars_print <- format_ch_vec(
-        missing_vars,
-        width = options()$width - 55
-      )
-
-      msg <- glue::glue("The following cols are missing from `new_data`: {vars_print}.")
-
-      missing_var_roles <-
-        original_var_data %>%
-        dplyr::filter(variable %in% missing_vars & role != "predictor")
-
-      if (nrow(missing_var_roles) > 0) {
-        msg <-
-          c(
-            msg,
-            "i" = "There are also non-standard recipe roles for the column(s).",
-            "i" = "See `?update_role` for more information on how use non-standard recipe roles during prediction."
-          )
-      }
-
-      # rlang::abort(msg, call = NULL)
-    }
-  }
-
 #' Get the `keep_original_cols` value of a recipe step
 #'
 #' @export

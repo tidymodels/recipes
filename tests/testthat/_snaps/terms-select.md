@@ -15,7 +15,7 @@
     Code
       terms_select(info = info1, quos(all_outcomes()))
     Condition
-      Error:
+      Error in `value[[3L]]()`:
       ! No variables or terms were selected.
 
 # simple name selections
@@ -47,7 +47,7 @@
     Code
       terms_select(info = info1, quos(matches("blahblahblah")))
     Condition
-      Error:
+      Error in `value[[3L]]()`:
       ! No variables or terms were selected.
 
 ---
