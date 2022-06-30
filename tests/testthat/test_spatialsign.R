@@ -139,9 +139,11 @@ test_that("centering with case weights", {
 })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   sp_sign <- rec %>%
-    step_spatialsign(carbon, hydrogen)
+    step_spatialsign(carbon, hydrogen) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
 

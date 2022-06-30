@@ -143,9 +143,11 @@ test_that("empty printing", {
 })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = ex_dat) %>%
-    step_YeoJohnson(x1, x2, x3, x4, id = "")
+    step_YeoJohnson(x1, x2, x3, x4, id = "") %>%
+    update_role(x1, x2, x3, x4, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
 

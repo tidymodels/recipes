@@ -199,7 +199,7 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   df <- data.frame(x = 1:10, y = 5:14)
   rec <- recipe(df)
 
@@ -207,6 +207,8 @@ test_that("bake method errors when needed new_data columns are missing", {
   # if they exceed the breaks
   prepped <- rec %>%
     step_cut(x, breaks = 5) %>%
+    update_role(x, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep()
 
   expect_error(bake(prepped, df[, 2, drop = FALSE]),

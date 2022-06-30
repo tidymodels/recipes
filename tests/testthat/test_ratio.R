@@ -214,9 +214,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- rec %>%
-    step_ratio(x1, denom = denom_vars(all_numeric()))
+    step_ratio(x1, denom = denom_vars(all_numeric())) %>%
+    update_role(x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   rec1 <- prep(rec1, ex_dat, verbose = FALSE)
 

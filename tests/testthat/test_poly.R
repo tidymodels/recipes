@@ -144,9 +144,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   with_poly <- rec %>%
-    step_poly(carbon, hydrogen, id = "")
+    step_poly(carbon, hydrogen, id = "") %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   exp_tidy_un <- tibble(
     terms = c("carbon", "hydrogen"),

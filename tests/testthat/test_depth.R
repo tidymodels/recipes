@@ -131,9 +131,12 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = "Species", metric = "spatial")
+    step_depth(all_predictors(), class = "Species", metric = "spatial") %>%
+    update_role(all_predictors(), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
   trained <- prep(rec, training = iris, verbose = FALSE)
 
   expect_error(bake(trained, new_data = iris[, 1:2]),

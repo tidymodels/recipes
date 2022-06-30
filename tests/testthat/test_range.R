@@ -161,9 +161,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12)
+    step_range(carbon, hydrogen, min = -12) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 

@@ -176,9 +176,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   holiday_rec <- recipe(~day, test_data) %>%
-    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+    step_holiday(all_predictors(), holidays = exp_dates$holiday) %>%
+    update_role(all_predictors(), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   holiday_rec <- prep(holiday_rec, training = test_data)
 

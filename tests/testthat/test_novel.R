@@ -144,9 +144,11 @@ test_that("empty printing", {
 })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   ex_1 <- rec %>%
     step_novel(all_predictors()) %>%
+    update_role(all_predictors(), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)%>%
     prep(tr_dat, strings_as_factors = FALSE)
 
   expect_error(bake(ex_1, new_data = tr_dat[, 2:5]),

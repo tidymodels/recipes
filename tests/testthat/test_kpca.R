@@ -161,10 +161,12 @@ test_that("empty printing", {
 })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
+  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6) %>%
+    update_role(X2, X3, X4, X5, X6, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 

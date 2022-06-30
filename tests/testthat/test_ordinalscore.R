@@ -117,9 +117,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- recipe(~., data = ex_dat) %>%
-    step_ordinalscore(starts_with("ord"))
+    step_ordinalscore(starts_with("ord")) %>%
+    update_role(starts_with("ord"), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
   rec1 <- prep(rec1,
                training = ex_dat,
                strings_as_factors = FALSE, verbose = FALSE

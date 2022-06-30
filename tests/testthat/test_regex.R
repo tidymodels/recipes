@@ -91,13 +91,15 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   mt_tibble <- mtcars %>%
     tibble::rownames_to_column(var = "make_model")
 
   rec <-
     recipe(mpg ~ ., data = mt_tibble) %>%
     step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
+    update_role(make_model, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(mt_tibble)
 
   expect_error(bake(rec, new_data = mt_tibble[, 2:4]),

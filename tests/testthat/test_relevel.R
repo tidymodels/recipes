@@ -91,9 +91,11 @@ test_that("empty printing", {
 })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec_1 <- rec %>%
     step_relevel(zip, ref_level = "z95838") %>%
+    update_role(zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep()
 
   expect_error(bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]),

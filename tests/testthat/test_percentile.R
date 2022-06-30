@@ -228,9 +228,11 @@ test_that("case weights", {
   expect_snapshot(rec_trained)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = biomass_tr) %>%
-    step_percentile(carbon, sulfur)
+    step_percentile(carbon, sulfur) %>%
+    update_role(carbon, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec)
 

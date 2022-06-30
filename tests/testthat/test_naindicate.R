@@ -132,9 +132,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- recipe(train) %>%
     step_indicate_na(col1) %>%
+    update_role(col1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)%>%
     prep(train, verbose = FALSE, retain = TRUE)
 
   expect_error(bake(rec1, new_data = test[, 2:3]),

@@ -146,9 +146,11 @@ test_that("tidying", {
   })
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = mtcars) %>%
     step_select(cyl, disp, hp) %>%
+    update_role(cyl, disp, hp, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(training = mtcars)
 
   expect_error(bake(rec, new_data = mtcars[, 4:5]),

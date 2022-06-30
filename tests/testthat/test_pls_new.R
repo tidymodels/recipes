@@ -313,10 +313,12 @@ test_that("empty printing", {
 })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3) %>%
+    update_role(all_predictors(), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   rec <- prep(rec)
 

@@ -276,9 +276,11 @@ test_that("missing columns", {
 # })
 
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   int_rec <- rec %>%
-    step_interact(~ starts_with("z"):x1, id = "")
+    step_interact(~ starts_with("z"):x1, id = "") %>%
+    update_role(starts_with("z"):x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   suppressWarnings(
     int_rec_trained <-

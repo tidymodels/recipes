@@ -134,9 +134,11 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
-test_that("bake method errors when needed new_data columns are missing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   with_bs <- rec %>%
-    step_bs(carbon, hydrogen, deg_free = 5, degree = 2)
+    step_bs(carbon, hydrogen, deg_free = 5, degree = 2) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   with_bs <- prep(with_bs, training = biomass_tr, verbose = FALSE)
 
