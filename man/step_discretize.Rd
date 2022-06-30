@@ -12,7 +12,7 @@ step_discretize(
   num_breaks = 4,
   min_unique = 10,
   objects = NULL,
-  options = list(),
+  options = list(prefix = "bin"),
   skip = FALSE,
   id = rand_id("discretize")
 )

@@ -26,7 +26,7 @@ discretize.default <- function(x, ...) {
 #'  for the factor levels (e.g. `bin1`, `bin2`, ...). If
 #'  the string is not a valid R name, it is coerced to one.
 #'  If `prefix = NULL` then the factor levels will be labelled
-#'  according to the output of `cut()`. Defaults to `NULL`.
+#'  according to the output of `cut()`.
 #' @param keep_na A logical for whether a factor level should be
 #'  created to identify missing values in `x`. If `keep_na` is
 #'  set to `TRUE` then `na.rm = TRUE` is used when calling
@@ -79,7 +79,7 @@ discretize.numeric <-
   function(x,
            cuts = 4,
            labels = NULL,
-           prefix = NULL,
+           prefix = "bin",
            keep_na = TRUE,
            infs = TRUE,
            min_unique = 10,
@@ -292,7 +292,7 @@ step_discretize <- function(recipe,
                             num_breaks = 4,
                             min_unique = 10,
                             objects = NULL,
-                            options = list(),
+                            options = list(prefix = "bin"),
                             skip = FALSE,
                             id = rand_id("discretize")) {
   if (any(names(options) %in% c("cuts", "min_unique"))) {
