@@ -70,6 +70,9 @@
     <loc>https://recipes.tidymodels.org/dev/reference/check_name.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/check_new_data.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/check_new_values.html</loc>
   </url>
   <url>
