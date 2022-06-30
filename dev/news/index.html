@@ -69,6 +69,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
 <ul><li><p>recipes now checks that all columns in the <code>data</code> supplied to <code><a href="../reference/recipe.html">recipe()</a></code> are also present in the <code>new_data</code> supplied to <code><a href="../reference/bake.html">bake()</a></code>. An exception is made for columns with roles of either <code>"outcome"</code> or <code>"case_weights"</code>, which are typically not required at <code><a href="../reference/bake.html">bake()</a></code> time. The new <code><a href="../reference/update_role_requirements.html">update_role_requirements()</a></code> function can be used to adjust whether or not columns of a particular role are required at <code><a href="../reference/bake.html">bake()</a></code> time if you need to opt out of this check (<a href="https://github.com/tidymodels/recipes/issues/1011" class="external-link">#1011</a>).</p></li>
+<li><p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for recipe objects now contains an extra column to indicate which columns are required when <code><a href="../reference/bake.html">bake()</a></code> is used.</p></li>
 <li>
 <p>Added support for case weights in the following steps</p>
 <ul><li><code><a href="../reference/step_center.html">step_center()</a></code></li>

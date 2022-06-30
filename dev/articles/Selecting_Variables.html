@@ -153,14 +153,14 @@ vignette goes over the basics of using selection functions.
 <p>Before any steps are used the information on the original variables is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
-<span><span class="co">#&gt;   variable  type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Seniority numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Time      numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Age       numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Records   nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Status    nominal outcome   original</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
+<span><span class="co">#&gt;   variable  type    role      source   required_to_bake</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Seniority numeric predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Time      numeric predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Age       numeric predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Records   nominal predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Status    nominal outcome   original FALSE</span></span></code></pre></div>
 <p>We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
