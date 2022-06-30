@@ -730,7 +730,9 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
-#'   and `source`.
+#'   and `source`. When `original = TRUE`, an additional column is included
+#'   named `required_to_bake` (based on the results of
+#'   [update_role_requirements()]).
 #' @details
 #' Note that, until the recipe has been trained,
 #' the current and original variables are the same.
@@ -750,11 +752,22 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @seealso [recipe()] [prep()]
 summary.recipe <- function(object, original = FALSE, ...) {
   if (original) {
-    object$var_info
+    res <- object$var_info
+    res <- dplyr::left_join(res, bake_req_tibble(object), by = "role")
   } else {
-    object$term_info
+    res <- object$term_info
   }
+  res
 }
+
+bake_req_tibble <- function(x) {
+  req <- compute_bake_role_requirements(x)
+  req <-
+    tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
+    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+  req
+}
+
 
 
 #' Extract transformed training set

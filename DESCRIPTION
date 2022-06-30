@@ -21,7 +21,7 @@ Depends:
     R (>= 3.4)
 Imports: 
     ellipsis,
-    generics (>= 0.1.0.9000),
+    generics (>= 0.1.2),
     glue,
     gower,
     hardhat (>= 1.1.0.9000),
