@@ -138,6 +138,8 @@ test_that("empty printing", {
 test_that("bake method errors when needed new_data columns are missing", {
   rec <- recipe(~., data = df) %>%
     step_relu(val1) %>%
+    update_role(val1, new_role = "potato") %>%
+    update_role_requirements("potato", bake = FALSE) %>%
     prep(df, verbose = FALSE)
 
   expect_error(bake(rec, df[, 2, drop = FALSE]),
