@@ -12,7 +12,7 @@ test_that("default method", {
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = NA_character_,
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -25,7 +25,7 @@ test_that("changing roles", {
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = rep(c("some other role", NA), c(1, 7)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -45,7 +45,7 @@ test_that("change existing role", {
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = rep(c("other other role", NA), c(1, 7)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -64,7 +64,7 @@ test_that("change only 1 role of variable with multiple roles", {
 
   exp_res <- summary(orig_roles)
   exp_res$role[exp_res$role == "role 1"] <- "role 3"
-  exp_res$`required to bake` <- TRUE
+  exp_res$required_to_bake <- TRUE
   expect_equal(summary(rec, TRUE), exp_res)
 })
 
@@ -76,7 +76,7 @@ test_that("change every role of 2 variables", {
 
   exp_res <- orig_roles
   exp_res$role[exp_res$role == "role 1"] <- "role 2"
-  exp_res$`required to bake` <- TRUE
+  exp_res$required_to_bake <- TRUE
 
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -88,7 +88,7 @@ test_that("update only NA role", {
 
   exp_res <- orig_rec %>% arrange(variable)
   exp_res$role[exp_res$variable %in% c("sample", "dataset")] <- "some other role"
-  exp_res$`required to bake` <- TRUE
+  exp_res$required_to_bake <- TRUE
 
   expect_equal(summary(rec, TRUE) %>% arrange(variable), exp_res)
 })
@@ -102,7 +102,7 @@ test_that("new role for existing NA role", {
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = rep(c("some other role", NA), c(1, length(colnames(biomass)) - 1)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -117,7 +117,7 @@ test_that("new role with specified type", {
     type = c("nominal", "new type", "nominal", rep("numeric", 6)),
     role = rep(c("blah", "some other role", NA), c(1, 1, 7)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -135,7 +135,7 @@ test_that("add new role when two already exist with different types", {
     type = c("nominal", "new type", "nominal", "nominal", rep("numeric", 6)),
     role = c("blah", "some other role", "another role", rep(NA, 7)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -156,7 +156,7 @@ test_that("existing role is skipped", {
     type = rep(c("nominal", "numeric"), c(3, 6)),
     role = rep(c("blah", "some other role", NA), c(1, 1, 7)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -179,7 +179,7 @@ test_that("existing role is skipped, but new one is added", {
     type = rep(c("nominal", "numeric"), c(4, 6)),
     role = c("blah", "some other role", NA, "some other role", rep(NA, 6)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -233,7 +233,7 @@ test_that("remove roles", {
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = NA_character_,
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -248,7 +248,7 @@ test_that("New type for an existing role can be added", {
     type = c(c("nominal", "text", "nominal"), rep("numeric", 6)),
     role = c("role1", "role1", rep(NA, 7)),
     source = "original",
-    `required to bake` = TRUE
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })

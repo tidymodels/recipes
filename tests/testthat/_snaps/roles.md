@@ -215,19 +215,19 @@
       summary(rec_roles, original = TRUE)
     Output
       # A tibble: 11 x 5
-         variable type    role      source   `required to bake`
-         <chr>    <chr>   <chr>     <chr>    <lgl>             
-       1 mpg      numeric outcome   original FALSE             
-       2 cyl      numeric predictor original TRUE              
-       3 disp     numeric predictor original TRUE              
-       4 hp       numeric predictor original TRUE              
-       5 drat     numeric predictor original TRUE              
-       6 wt       numeric predictor original TRUE              
-       7 qsec     numeric predictor original TRUE              
-       8 vs       numeric predictor original TRUE              
-       9 am       numeric predictor original TRUE              
-      10 gear     numeric id        original TRUE              
-      11 carb     numeric important original TRUE              
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric predictor original TRUE            
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric predictor original TRUE            
+       5 drat     numeric predictor original TRUE            
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric predictor original TRUE            
+       8 vs       numeric predictor original TRUE            
+       9 am       numeric predictor original TRUE            
+      10 gear     numeric id        original TRUE            
+      11 carb     numeric important original TRUE            
 
 ---
 
@@ -235,19 +235,19 @@
       summary(req_roles, original = TRUE)
     Output
       # A tibble: 11 x 5
-         variable type    role      source   `required to bake`
-         <chr>    <chr>   <chr>     <chr>    <lgl>             
-       1 mpg      numeric outcome   original FALSE             
-       2 cyl      numeric predictor original TRUE              
-       3 disp     numeric predictor original TRUE              
-       4 hp       numeric predictor original TRUE              
-       5 drat     numeric predictor original TRUE              
-       6 wt       numeric predictor original TRUE              
-       7 qsec     numeric predictor original TRUE              
-       8 vs       numeric predictor original TRUE              
-       9 am       numeric predictor original TRUE              
-      10 gear     numeric id        original TRUE              
-      11 carb     numeric important original FALSE             
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric predictor original TRUE            
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric predictor original TRUE            
+       5 drat     numeric predictor original TRUE            
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric predictor original TRUE            
+       8 vs       numeric predictor original TRUE            
+       9 am       numeric predictor original TRUE            
+      10 gear     numeric id        original TRUE            
+      11 carb     numeric important original FALSE           
 
 ---
 
@@ -255,19 +255,19 @@
       summary(na_rec, original = TRUE)
     Output
       # A tibble: 11 x 5
-         variable type    role      source   `required to bake`
-         <chr>    <chr>   <chr>     <chr>    <lgl>             
-       1 mpg      numeric outcome   original FALSE             
-       2 cyl      numeric <NA>      original TRUE              
-       3 disp     numeric predictor original TRUE              
-       4 hp       numeric <NA>      original TRUE              
-       5 drat     numeric <NA>      original TRUE              
-       6 wt       numeric predictor original TRUE              
-       7 qsec     numeric <NA>      original TRUE              
-       8 vs       numeric <NA>      original TRUE              
-       9 am       numeric <NA>      original TRUE              
-      10 gear     numeric <NA>      original TRUE              
-      11 carb     numeric other     original TRUE              
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric <NA>      original TRUE            
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric <NA>      original TRUE            
+       5 drat     numeric <NA>      original TRUE            
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric <NA>      original TRUE            
+       8 vs       numeric <NA>      original TRUE            
+       9 am       numeric <NA>      original TRUE            
+      10 gear     numeric <NA>      original TRUE            
+      11 carb     numeric other     original TRUE            
 
 ---
 
@@ -275,17 +275,17 @@
       summary(na_req_rec, original = TRUE)
     Output
       # A tibble: 11 x 5
-         variable type    role      source   `required to bake`
-         <chr>    <chr>   <chr>     <chr>    <lgl>             
-       1 mpg      numeric outcome   original FALSE             
-       2 cyl      numeric <NA>      original FALSE             
-       3 disp     numeric predictor original TRUE              
-       4 hp       numeric <NA>      original FALSE             
-       5 drat     numeric <NA>      original FALSE             
-       6 wt       numeric predictor original TRUE              
-       7 qsec     numeric <NA>      original FALSE             
-       8 vs       numeric <NA>      original FALSE             
-       9 am       numeric <NA>      original FALSE             
-      10 gear     numeric <NA>      original FALSE             
-      11 carb     numeric other     original TRUE              
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric <NA>      original FALSE           
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric <NA>      original FALSE           
+       5 drat     numeric <NA>      original FALSE           
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric <NA>      original FALSE           
+       8 vs       numeric <NA>      original FALSE           
+       9 am       numeric <NA>      original FALSE           
+      10 gear     numeric <NA>      original FALSE           
+      11 carb     numeric other     original TRUE            
 

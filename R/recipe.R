@@ -731,7 +731,7 @@ print.recipe <- function(x, form_width = 30, ...) {
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
 #'   and `source`. When `original = TRUE`, an additional column is included
-#'   named `required to bake` (based on the results of
+#'   named `required_to_bake` (based on the results of
 #'   [update_role_requirements()]).
 #' @details
 #' Note that, until the recipe has been trained,
@@ -763,7 +763,7 @@ summary.recipe <- function(object, original = FALSE, ...) {
 bake_req_tibble <- function(x) {
   req <- compute_bake_role_requirements(x)
   req <-
-    tibble::tibble(role = names(req), `required to bake` = unname(req)) %>%
+    tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
     dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
   req
 }
