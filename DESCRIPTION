@@ -22,10 +22,10 @@ Depends:
 Imports: 
     cli,
     ellipsis,
-    generics (>= 0.1.0.9000),
+    generics (>= 0.1.2),
     glue,
     gower,
-    hardhat (>= 1.1.0.9000),
+    hardhat (>= 1.2.0),
     ipred (>= 0.9-12),
     lifecycle,
     lubridate (>= 1.8.0),
@@ -60,8 +60,6 @@ Suggests:
     testthat (>= 3.0.0),
     workflows,
     xml2
-Remotes:
-    tidymodels/hardhat
 VignetteBuilder: 
     knitr
 RdMacros: 
