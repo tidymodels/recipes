@@ -132,6 +132,8 @@ test_that("empty printing", {
 })
 
 test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("ddalpha")
+
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(starts_with("Sepal"), class = "Species", metric = "spatial") %>%
     update_role(starts_with("Sepal"), new_role = "potato") %>%
