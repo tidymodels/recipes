@@ -146,6 +146,8 @@ prep.step_medianimpute <- prep.step_impute_median
 
 #' @export
 bake.step_impute_median <- function(object, new_data, ...) {
+  check_new_data(names(object$medians), object, new_data)
+
   for (i in names(object$medians)) {
     if (any(is.na(new_data[[i]]))) {
       new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])

@@ -185,6 +185,8 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf_sparse <- function(object, new_data, ...) {
+  check_new_data(object$res$x_vars, object, new_data)
+
   if (object$num_comp > 0) {
     proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
     proj_data <- proj_data %*% object$res$w

@@ -151,6 +151,8 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
+  check_new_data(names(object$means), object, new_data)
+
   for (column in names(object$means)) {
     mean <- object$means[column]
     sd <- object$sds[column]

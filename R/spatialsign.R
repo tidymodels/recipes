@@ -135,6 +135,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_spatialsign <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
 
   if (isTRUE(object$case_weights)) {

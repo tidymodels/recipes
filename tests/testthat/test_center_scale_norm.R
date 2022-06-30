@@ -500,3 +500,28 @@ test_that("normalizing with case weights", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed non-standard role columns are missing (center)", {
+  std <- rec %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    update_role(carbon, hydrogen, oxygen, nitrogen, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  std_trained <- prep(std, training = biomass)
+
+  expect_error(bake(std_trained, new_data = biomass[, 1:2]),
+               class = "new_data_missing_column")
+})
+
+test_that("bake method errors when needed non-standard role columns are missing (scale)", {
+  std <- rec %>%
+    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
+    update_role(carbon, hydrogen, oxygen, nitrogen, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  std_trained <- prep(std, training = biomass)
+
+  expect_error(bake(std_trained, new_data = biomass[, 1:2]),
+               class = "new_data_missing_column")
+})

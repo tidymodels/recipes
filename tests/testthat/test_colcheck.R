@@ -111,7 +111,7 @@ test_that("non-standard roles during bake/predict", {
 
   data(Chicago, package = "modeldata", envir = current_env())
 
-  Chicago <- Chicago %>% select(ridership, date, Austin, Belmont)
+  Chicago <- Chicago %>% dplyr::select(ridership, date, Austin, Belmont)
 
   set.seed(1)
   Chicago$wts <- importance_weights(runif(nrow(Chicago)))

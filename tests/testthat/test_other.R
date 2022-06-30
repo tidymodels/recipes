@@ -421,3 +421,20 @@ test_that("othering with case weights", {
 
   expect_snapshot(others)
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  others <- rec %>% step_other(city, zip, other = "another", id = "") %>%
+    update_role(city, zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  tidy_exp_un <- tibble(
+    terms = c("city", "zip"),
+    retained = rep(NA_character_, 2),
+    id = ""
+  )
+
+  others <- prep(others, training = sacr_tr)
+
+  expect_error(bake(others, new_data = sacr_te[, 3:9]),
+               class = "new_data_missing_column")
+})

@@ -193,6 +193,8 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_isomap <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   if (object$num_terms > 0 && length(object$columns) > 0L) {
     isomap_vars <- colnames(environment(object$res@apply)$indata)
     suppressMessages({

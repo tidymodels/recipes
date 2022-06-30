@@ -105,6 +105,8 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_hyperbolic <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   func <- if (object$inverse) {
     get(paste0("a", object$func))
   } else {

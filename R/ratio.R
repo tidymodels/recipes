@@ -145,6 +145,8 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
+  check_new_data(unname(object$columns$top), object, new_data)
+
   res <- purrr::map2(
     new_data[, object$columns$top],
     new_data[, object$columns$bottom],

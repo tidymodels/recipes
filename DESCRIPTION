@@ -20,6 +20,7 @@ Depends:
     dplyr,
     R (>= 3.4)
 Imports: 
+    cli,
     ellipsis,
     generics (>= 0.1.2),
     glue,

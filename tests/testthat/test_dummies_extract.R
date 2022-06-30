@@ -327,3 +327,15 @@ test_that("case weights", {
 
   expect_snapshot(dummy_prepped)
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  dummy <- recipe(~medium, data = mini_tate) %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "") %>%
+    update_role(medium, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  dummy_prepped <- prep(dummy)
+
+  expect_error(bake(dummy_prepped, new_data = mini_tate[, 1:3]),
+               class = "new_data_missing_column")
+})

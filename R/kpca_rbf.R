@@ -142,6 +142,7 @@ bake.step_kpca_rbf <- function(object, new_data, ...) {
   uses_dim_red(object)
 
   if (object$num_comp > 0 && length(object$columns) > 0) {
+    check_new_data(object$columns, object, new_data)
     cl <-
       rlang::call2(
         "predict",

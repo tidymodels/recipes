@@ -140,6 +140,8 @@ bake.step_regex <- function(object, new_data, ...) {
     return(new_data)
   }
 
+  check_new_data(object$input, object, new_data)
+
   ## sub in options
   regex <- expr(
     grepl(

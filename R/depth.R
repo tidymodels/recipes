@@ -174,6 +174,8 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
   x_names <- colnames(object$data[[1]])
+  check_new_data(x_names, object, new_data)
+
   x_data <- as.matrix(new_data[, x_names])
   res <- lapply(
     object$data,

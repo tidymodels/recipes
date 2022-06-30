@@ -101,6 +101,8 @@ pre_logit <- function(x, eps = 0) {
 
 #' @export
 bake.step_logit <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       binomial()$linkfun(

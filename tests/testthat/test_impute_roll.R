@@ -158,3 +158,16 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  seven_pt <- recipe(~., data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_impute_roll(x1, window = 7) %>%
+    update_role(x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(training = example_data)
+
+  expect_error(bake(seven_pt, new_data = example_data[, c(-2)]),
+               class = "new_data_missing_column")
+})

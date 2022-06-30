@@ -194,6 +194,8 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
+  check_new_data(names(object$models), object, new_data)
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)

@@ -99,6 +99,8 @@ prep.step_indicate_na <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_indicate_na <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
 
   cols <- purrr::map(

@@ -242,6 +242,11 @@ nn_pred <- function(index, dat) {
 
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
+  col_names <- purrr::map(object$columns, function(x) unname(x$x)) %>%
+    purrr::flatten_chr() %>%
+    unique()
+  check_new_data(col_names, object, new_data)
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)

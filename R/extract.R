@@ -214,6 +214,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_dummy_extract <- function(object, new_data, ...) {
+  check_new_data(names(object$levels), object, new_data)
 
   # If no terms were selected
   if (length(object$levels) == 0) {

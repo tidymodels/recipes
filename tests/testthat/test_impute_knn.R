@@ -230,3 +230,16 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  imputed <-
+    recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) %>%
+    step_impute_knn(carbon, impute_with = imp_vars(hydrogen, oxygen)) %>%
+    update_role(hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
+
+  expect_error(bake(imputed_trained, new_data = biomass[, c(-4)]),
+               class = "new_data_missing_column")
+})
