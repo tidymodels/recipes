@@ -109,7 +109,7 @@ test_that("empty printing", {
 })
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  imputed <- rec %>%
+  imputed <- recipe(HHV ~ carbon + hydrogen, data = biomass) %>%
     step_impute_lower(carbon) %>%
     update_role(carbon, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)

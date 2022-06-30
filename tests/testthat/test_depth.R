@@ -133,12 +133,12 @@ test_that("empty printing", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = "Species", metric = "spatial") %>%
-    update_role(all_predictors(), new_role = "potato") %>%
+    step_depth(starts_with("Sepal"), class = "Species", metric = "spatial") %>%
+    update_role(starts_with("Sepal"), new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   trained <- prep(rec, training = iris, verbose = FALSE)
 
-  expect_error(bake(trained, new_data = iris[, 1:2]),
+  expect_error(bake(trained, new_data = iris[, 2:5]),
                class = "new_data_missing_column")
 })

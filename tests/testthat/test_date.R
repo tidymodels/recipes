@@ -219,8 +219,8 @@ test_that("empty printing", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = feats) %>%
-    update_role(all_predictors(), new_role = "potato") %>%
+    step_date(Dan, features = feats) %>%
+    update_role(Dan, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   date_rec <- prep(date_rec, training = examples)

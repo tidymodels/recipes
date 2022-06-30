@@ -50,7 +50,7 @@
       Warning:
       Interaction specification failed for: ~x1:x2. No interactions will be created.
 
-# bake method errors when needed new_data columns are missing
+# bake method errors when needed non-standard role columns are missing
 
     Code
       bake(int_rec_trained, dat_tr[, 4:6])

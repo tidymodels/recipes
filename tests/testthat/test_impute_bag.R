@@ -175,6 +175,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
 
-  expect_error(bake(imputed_trained, new_data = biomass[, 1:3]),
+  expect_error(bake(imputed_trained, new_data = biomass[, c(-3, -9)]),
                class = "new_data_missing_column")
 })

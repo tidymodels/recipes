@@ -70,7 +70,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec <- recipe(~., data = ex_dat) %>%
     step_sqrt(x1, x2) %>%
     update_role(x1, x2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(ex_dat)
 
   expect_error(bake(rec, new_data = ex_dat[, 2, drop = FALSE]),

@@ -248,12 +248,12 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
-    step_impute_mean(Age, Assets, Income) %>%
-    update_role(Age, Assets, Income, new_role = "potato") %>%
+    step_impute_mean(Age) %>%
+    update_role(Age, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
-  expect_error(bake(imputed, new_data = credit_te[, 5:10]),
+  expect_error(bake(imputed, new_data = credit_te[, c(-5)]),
                class = "new_data_missing_column")
 })
 

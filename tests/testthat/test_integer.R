@@ -123,13 +123,13 @@ test_that("empty printing", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
-    step_integer(all_predictors()) %>%
-    update_role(all_predictors(), new_role = "potato") %>%
+    step_integer(x) %>%
+    update_role(x, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
   rec_trained <- prep(rec, traning = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
 
-  expect_error(bake(rec_trained, te_dat[, 1:2], all_predictors()),
+  expect_error(bake(rec_trained, te_dat[, 2:3], all_predictors()),
                class = "new_data_missing_column")
 })
