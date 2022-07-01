@@ -17,8 +17,8 @@ predictors, with special attention to interaction terms and contrasts.
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet">
-<link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.1/font.css" rel="stylesheet">
+<link href="../deps/_Source%20Code%20Pro-0.4.1/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Handling categorical predictors">
@@ -39,7 +39,7 @@ predictors, with special attention to interaction terms and contrasts.
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,7 +99,7 @@ predictors, with special attention to interaction terms and contrasts.
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Handling categorical predictors</h1>
             
       
@@ -115,94 +115,94 @@ predictors, with special attention to interaction terms and contrasts.
 </h2>
 <p>Let’s start, of course, with <code>iris</code> data. This has four numeric columns and a single factor column with three levels: <code>'setosa'</code>, <code>'versicolor'</code>, and <code>'virginica'</code>. Our initial recipe will have no outcome:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span>
-
-<span class="co"># make a copy for use below</span>
-<span class="va">iris</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>original <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>
-
-<span class="va">iris_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_rec</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span>
-<span class="co">#&gt;   variable     type    role      source  </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original     nominal predictor original</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># make a copy for use below</span></span>
+<span><span class="va">iris</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>original <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">iris_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_rec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   variable     type    role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original     nominal predictor original</span></span></code></pre></div>
 <p>A <a href="https://en.wikipedia.org/wiki/Contrast_(statistics)" class="external-link">contrast function</a> in R is a method for translating a column with categorical values into one or more numeric columns that take the place of the original. This can also be known as an encoding method or a parameterization function.</p>
 <p>The default approach is to create dummy variables using the “reference cell” parameterization. This means that, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created and all but the first factor level are made into new columns:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ref_cell</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ref_cell</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span>
-<span class="co">#&gt;   variable           type    role      source  </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length       numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width        numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length       numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width        numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original           nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor numeric predictor derived </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica  numeric predictor derived</span>
-
-<span class="co"># Get a row for each factor level</span>
-<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">ref_cell</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="co">#&gt;   original   Species_versicolor Species_virginica</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                      0                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor                  1                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica                   0                 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ref_cell</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ref_cell</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
+<span><span class="co">#&gt;   variable           type    role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length       numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width        numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length       numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width        numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original           nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor numeric predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica  numeric predictor derived</span></span>
+<span></span>
+<span><span class="co"># Get a row for each factor level</span></span>
+<span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">ref_cell</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
+<span><span class="co">#&gt;   original   Species_versicolor Species_virginica</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                      0                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor                  1                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica                   0                 1</span></span></code></pre></div>
 <p>Note that the column that was used to make the new columns (<code>Species</code>) is no longer there. See the section below on obtaining the entire set of <em>C</em> columns.</p>
 <p>There are different types of contrasts that can be used for different types of factors. The defaults are:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"contrasts"</span><span class="op">)</span>
-<span class="va">param</span>
-<span class="co">#&gt;         unordered           ordered </span>
-<span class="co">#&gt; "contr.treatment"      "contr.poly"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"contrasts"</span><span class="op">)</span></span>
+<span><span class="va">param</span></span>
+<span><span class="co">#&gt;         unordered           ordered </span></span>
+<span><span class="co">#&gt; "contr.treatment"      "contr.poly"</span></span></code></pre></div>
 <p>Looking at <code>?contrast</code>, there are other options. One alternative is the little known Helmert contrast:</p>
 <blockquote>
 <p><code>contr.helmert</code> returns Helmert contrasts, which contrast the second level with the first, the third with the average of the first two, and so on.</p>
 </blockquote>
 <p>To get this encoding, the global option for the contrasts can be changed and saved. <a href="https://recipes.tidymodels.org/reference/step_dummy.html"><code>step_dummy</code></a> picks up on this and makes the correct calculations:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># change it:</span>
-<span class="va">go_helmert</span> <span class="op">&lt;-</span> <span class="va">param</span>
-<span class="va">go_helmert</span><span class="op">[</span><span class="st">"unordered"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"contr.helmert"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">go_helmert</span><span class="op">)</span>
-
-<span class="co"># now make dummy variables with new parameterization</span>
-<span class="va">helmert</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">helmert</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span>
-<span class="co">#&gt;   variable     type    role      source  </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original     nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_X1   numeric predictor derived </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_X2   numeric predictor derived</span>
-
-<span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">helmert</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="co">#&gt;   original   Species_X1 Species_X2</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa             -<span style="color: #BB0000;">1</span>         -<span style="color: #BB0000;">1</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor          1         -<span style="color: #BB0000;">1</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica           0          2</span>
-
-<span class="co"># Yuk; go back to the original method</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">param</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># change it:</span></span>
+<span><span class="va">go_helmert</span> <span class="op">&lt;-</span> <span class="va">param</span></span>
+<span><span class="va">go_helmert</span><span class="op">[</span><span class="st">"unordered"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"contr.helmert"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">go_helmert</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># now make dummy variables with new parameterization</span></span>
+<span><span class="va">helmert</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">helmert</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
+<span><span class="co">#&gt;   variable     type    role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original     nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_X1   numeric predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_X2   numeric predictor derived</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">helmert</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
+<span><span class="co">#&gt;   original   Species_X1 Species_X2</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa             -<span style="color: #BB0000;">1</span>         -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor          1         -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica           0          2</span></span>
+<span></span>
+<span><span class="co"># Yuk; go back to the original method</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">param</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn’t make sense.</p>
 <p>If no columns are selected (perhaps due to an earlier <code><a href="../reference/step_zv.html">step_zv()</a></code>), the <code><a href="../reference/bake.html">bake()</a></code> function will return the data as-is (e.g. with no dummy variables).</p>
 <p>Finally, <code><a href="../reference/step_dummy.html">step_dummy()</a></code> has an option called <code>keep_original_cols</code> that can be used to keep the original columns that are being used to create the dummy variables.</p>
@@ -212,87 +212,87 @@ predictors, with special attention to interaction terms and contrasts.
 </h2>
 <p>Creating interactions with recipes requires the use of a model formula, such as</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris_int</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Sepal.Width</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span>
-<span class="co">#&gt;   variable                   type    role      source  </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length               numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length               numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                    nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                   nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Sepal.Width_x_Sepal.Length numeric predictor derived</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris_int</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Sepal.Width</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
+<span><span class="co">#&gt;   variable                   type    role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length               numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length               numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                    nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                   nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Sepal.Width_x_Sepal.Length numeric predictor derived</span></span></code></pre></div>
 <p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link">R model formulae</a>, using a <code>*</code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://recipes.tidymodels.org/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code>*</code>, but only the interactions are recorded as columns that needs to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span><span class="op">*</span><span class="va">Sepal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="co"># show a few specific rows</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">51</span>, <span class="fl">101</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;     (Intercept) Speciesversicolor Speciesvirginica Sepal.Length</span>
-<span class="co">#&gt; 1             1                 0                0          5.1</span>
-<span class="co">#&gt; 51            1                 1                0          7.0</span>
-<span class="co">#&gt; 101           1                 0                1          6.3</span>
-<span class="co">#&gt;     Speciesversicolor:Sepal.Length Speciesvirginica:Sepal.Length</span>
-<span class="co">#&gt; 1                                0                           0.0</span>
-<span class="co">#&gt; 51                               7                           0.0</span>
-<span class="co">#&gt; 101                              0                           6.3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span><span class="op">*</span><span class="va">Sepal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="co"># show a few specific rows</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">51</span>, <span class="fl">101</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     (Intercept) Speciesversicolor Speciesvirginica Sepal.Length</span></span>
+<span><span class="co">#&gt; 1             1                 0                0          5.1</span></span>
+<span><span class="co">#&gt; 51            1                 1                0          7.0</span></span>
+<span><span class="co">#&gt; 101           1                 0                1          6.3</span></span>
+<span><span class="co">#&gt;     Speciesversicolor:Sepal.Length Speciesvirginica:Sepal.Length</span></span>
+<span><span class="co">#&gt; 1                                0                           0.0</span></span>
+<span><span class="co">#&gt; 51                               7                           0.0</span></span>
+<span><span class="co">#&gt; 101                              0                           6.3</span></span></code></pre></div>
 <p>With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variable?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Must I do this?</span>
-<span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species_versicolor</span><span class="op">:</span><span class="va">Sepal.Length</span> <span class="op">+</span> 
-                   <span class="va">Species_virginica</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> </code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Must I do this?</span></span>
+<span><span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species_versicolor</span><span class="op">:</span><span class="va">Sepal.Length</span> <span class="op">+</span> </span>
+<span>                   <span class="va">Species_virginica</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> </span></code></pre></div>
 <p>Note only is this a pain, but it may not be obvious what dummy variables are available (especially when <a href="https://recipes.tidymodels.org/reference/step_other.html"><code>step_other</code></a> is used).</p>
 <p>The solution is to use a selector:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris_int</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 4</span></span>
-<span class="co">#&gt;   variable                          type    role      source  </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                      numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                       numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                      numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                       numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original                          nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor                numeric predictor derived </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica                 numeric predictor derived </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Species_versicolor_x_Sepal.Length numeric predictor derived </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Species_virginica_x_Sepal.Length  numeric predictor derived</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris_int</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 4</span></span></span>
+<span><span class="co">#&gt;   variable                          type    role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                      numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                       numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                      numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                       numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original                          nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor                numeric predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica                 numeric predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Species_versicolor_x_Sepal.Length numeric predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Species_virginica_x_Sepal.Length  numeric predictor derived</span></span></code></pre></div>
 <p>What happens here is that <code>starts_with("Species")</code> is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selectors are then translated to an additive function of the results. In this case, that means that</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p>becomes</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">Species_versicolor</span> <span class="op">+</span> <span class="va">Species_virginica</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">Species_versicolor</span> <span class="op">+</span> <span class="va">Species_virginica</span><span class="op">)</span></span></code></pre></div>
 <p>The entire interaction formula is shown here:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris_int</span>
-<span class="co">#&gt; Recipe</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Inputs:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;       role #variables</span>
-<span class="co">#&gt;  predictor          6</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Training data contained 150 data points and no missing data.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Operations:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Dummy variables from Species [trained]</span>
-<span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sep... [trained]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris_int</span></span>
+<span><span class="co">#&gt; Recipe</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Inputs:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;       role #variables</span></span>
+<span><span class="co">#&gt;  predictor          6</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Training data contained 150 data points and no missing data.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Operations:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Dummy variables from Species [trained]</span></span>
+<span><span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sep... [trained]</span></span></code></pre></div>
 <p>For interactions between multiple sets of dummy variables, the formula could include multiple selectors (e.g. <code>starts_with("x_"):starts_with("y_")</code>).</p>
 </div>
 <div class="section level2">
@@ -300,26 +300,26 @@ predictors, with special attention to interaction terms and contrasts.
 </h2>
 <p>Would it work if I didn’t convert species to a factor and used the interactions step?</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris_int</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Categorical variables used in `step_interact` should probably be</span>
-<span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are</span>
-<span class="co">#&gt; produced by `step_dummy`. Please convert all involved variables to dummy</span>
-<span class="co">#&gt; variables first.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span>
-<span class="co">#&gt;   variable                         type    role      source  </span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                     numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                      numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                     numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                      numeric predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                          nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                         nominal predictor original</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Speciesversicolor_x_Sepal.Length numeric predictor derived </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Speciesvirginica_x_Sepal.Length  numeric predictor derived</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris_int</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Categorical variables used in `step_interact` should probably be</span></span>
+<span><span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are</span></span>
+<span><span class="co">#&gt; produced by `step_dummy`. Please convert all involved variables to dummy</span></span>
+<span><span class="co">#&gt; variables first.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
+<span><span class="co">#&gt;   variable                         type    role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                     numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                      numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                     numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                      numeric predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                          nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                         nominal predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Speciesversicolor_x_Sepal.Length numeric predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Speciesvirginica_x_Sepal.Length  numeric predictor derived</span></span></code></pre></div>
 <p>The columns <code>Species</code> isn’t affected and a warning is issued. Basically, you only get half of what <code>model.matrix</code> does and that could really be problematic in subsequent steps.</p>
 </div>
 <div class="section level2">
@@ -329,53 +329,53 @@ predictors, with special attention to interaction terms and contrasts.
 <p>Historically, <em>C</em> - 1 are used so that a linear dependency is avoided in the design matrix; all <em>C</em> dummy variables would add up row-wise to the intercept column and the inverse matrix for linear regression can’t be computed. This technical term for a the design matrix like this is “less than full rank”.</p>
 <p>There are models (e.g. <code>glmnet</code> and others) that can avoid this issue so you might want to get all of the columns. To do this, <code>step_dummy</code> has an option called <code>one_hot</code> that will make sure that all <em>C</em> are produced:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span>
-<span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
+<span><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></span></code></pre></div>
 <p>The option is named that way since this is that the computer scientists call <a href="https://www.google.com/search?q=one-hot+encoding" class="external-link">“one-hot encoding”</a>.</p>
 <p><strong><em>Warning!</em></strong> (again)</p>
 <p>This will give you the full set of indicators and, when you use the typical contrast function, it does. It might do some seemingly weird (but legitimate) things when used with other contrasts:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">hot_reference</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">hot_reference</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span>
-<span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span>
-
-<span class="co"># from above</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">go_helmert</span><span class="op">)</span>
-
-<span class="va">hot_helmert</span> <span class="op">&lt;-</span> 
-  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">hot_helmert</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span>
-<span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hot_reference</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">hot_reference</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
+<span><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></span>
+<span></span>
+<span><span class="co"># from above</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">go_helmert</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">hot_helmert</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">hot_helmert</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
+<span><span class="co">#&gt;   original   Species_setosa Species_versicolor Species_virginica</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></span></code></pre></div>
 <p>Since this contrast doesn’t make sense using all <em>C</em> columns, it reverts back to the default encoding.</p>
 </div>
 <div class="section level2">
@@ -433,7 +433,7 @@ predictors, with special attention to interaction terms and contrasts.
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer>
