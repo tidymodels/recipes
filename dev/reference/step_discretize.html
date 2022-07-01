@@ -16,7 +16,7 @@ on a training set)."><meta property="og:image" content="https://recipes.tidymode
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +90,7 @@ on a training set).</p>
 <span>  num_breaks <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  min_unique <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  objects <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"bin"</span><span class="op">)</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"discretize"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -197,11 +197,12 @@ sequence of any existing operations.</p>
 <span class="r-in"><span>  <span class="fu">step_discretize</span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_tr</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Note that the options `prefix` and `labels`will be applied to all variables</span>
 <span class="r-in"><span><span class="va">binned_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_te</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">binned_te</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [-Inf,44.7] (44.7,47.1] (47.1,49.7] (49.7, Inf] </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          22          17          25          16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bin1 bin2 bin3 bin4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   22   17   25   16 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 3</span></span>

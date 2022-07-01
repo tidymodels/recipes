@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,48 +66,7 @@
       <small>Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
-<ul><li><p>recipes now checks that all columns in the <code>data</code> supplied to <code><a href="../reference/recipe.html">recipe()</a></code> are also present in the <code>new_data</code> supplied to <code><a href="../reference/bake.html">bake()</a></code>. An exception is made for columns with roles of either <code>"outcome"</code> or <code>"case_weights"</code>, which are typically not required at <code><a href="../reference/bake.html">bake()</a></code> time. The new <code><a href="../reference/update_role_requirements.html">update_role_requirements()</a></code> function can be used to adjust whether or not columns of a particular role are required at <code><a href="../reference/bake.html">bake()</a></code> time if you need to opt out of this check (<a href="https://github.com/tidymodels/recipes/issues/1011" class="external-link">#1011</a>).</p></li>
-<li><p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for recipe objects now contains an extra column to indicate which columns are required when <code><a href="../reference/bake.html">bake()</a></code> is used.</p></li>
-<li>
-<p>Added support for case weights in the following steps</p>
-<ul><li><code><a href="../reference/step_center.html">step_center()</a></code></li>
-<li><code><a href="../reference/step_classdist.html">step_classdist()</a></code></li>
-<li><code><a href="../reference/step_corr.html">step_corr()</a></code></li>
-<li><code><a href="../reference/step_dummy_extract.html">step_dummy_extract()</a></code></li>
-<li><code><a href="../reference/step_filter_missing.html">step_filter_missing()</a></code></li>
-<li><code><a href="../reference/step_impute_linear.html">step_impute_linear()</a></code></li>
-<li><code><a href="../reference/step_impute_mean.html">step_impute_mean()</a></code></li>
-<li><code><a href="../reference/step_impute_median.html">step_impute_median()</a></code></li>
-<li><code><a href="../reference/step_impute_mode.html">step_impute_mode()</a></code></li>
-<li><code><a href="../reference/step_normalize.html">step_normalize()</a></code></li>
-<li><code><a href="../reference/step_nzv.html">step_nzv()</a></code></li>
-<li><code><a href="../reference/step_other.html">step_other()</a></code></li>
-<li><code><a href="../reference/step_percentile.html">step_percentile()</a></code></li>
-<li><code><a href="../reference/step_pca.html">step_pca()</a></code></li>
-<li><code><a href="../reference/step_sample.html">step_sample()</a></code></li>
-<li><code><a href="../reference/step_scale.html">step_scale()</a></code></li>
-</ul></li>
-<li><p>A number of developer focused functions to deal with case weights are added: <code><a href="../reference/case-weight-helpers.html">are_weights_used()</a></code>, <code><a href="../reference/case-weight-helpers.html">get_case_weights()</a></code>, <code><a href="../reference/case-weight-helpers.html">averages()</a></code>, <code><a href="../reference/case-weight-helpers.html">medians()</a></code>, <code><a href="../reference/case-weight-helpers.html">variances()</a></code>, <code><a href="../reference/case-weight-helpers.html">correlations()</a></code>, <code><a href="../reference/case-weight-helpers.html">covariances()</a></code>, and <code><a href="../reference/case-weight-helpers.html">pca_wts()</a></code></p></li>
-<li><p>Fixed bug in which functions that <code><a href="../reference/step_hyperbolic.html">step_hyperbolic()</a></code> uses (<a href="https://github.com/tidymodels/recipes/issues/932" class="external-link">#932</a>).</p></li>
-<li><p><code><a href="../reference/step_dummy_multi_choice.html">step_dummy_multi_choice()</a></code> now respects factor-levels of the selected variables when creating dummies. (<a href="https://github.com/tidymodels/recipes/issues/916" class="external-link">#916</a>)</p></li>
-<li><p>Finally removed <code>step_upsample()</code> and <code>step_downsample()</code> in recipes as they are now available in the themis package.</p></li>
-<li><p><code><a href="../reference/discretize.html">discretize()</a></code> and <code><a href="../reference/step_discretize.html">step_discretize()</a></code> now defaults to returning factor levels similar to <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> by default, in line with <code>step_discretize_*()</code> steps from the embed package. (<a href="https://github.com/tidymodels/recipes/issues/674" class="external-link">#674</a>)</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> no works correctly with recipes trained on version 0.1.17 or earlier. (<a href="https://github.com/tidymodels/recipes/issues/921" class="external-link">#921</a>)</p></li>
-<li><p><code><a href="../reference/step_naomit.html">step_naomit()</a></code> now actually had their defaults for <code>skip</code> changed to <code>TRUE</code> as was stated in release 0.1.13. (934)</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> has been made more robust to non-standard column names. (<a href="https://github.com/tidymodels/recipes/issues/879" class="external-link">#879</a>)</p></li>
-<li><p><code><a href="../reference/step_pls.html">step_pls()</a></code> now allows you use use multiple outcomes if they are numeric. (<a href="https://github.com/tidymodels/recipes/issues/651" class="external-link">#651</a>)</p></li>
-<li><p>Fixed a bug where setting <code>fresh = TRUE</code> in <code><a href="../reference/prep.html">prep()</a></code> wouldn’t result in re-prepping the recipe. (<a href="https://github.com/tidymodels/recipes/issues/492" class="external-link">#492</a>)</p></li>
-<li><p><code><a href="../reference/step_normalize.html">step_normalize()</a></code> and <code><a href="../reference/step_scale.html">step_scale()</a></code> ignore columns with zero variance, generate a warning and suggest to use <code><a href="../reference/step_zv.html">step_zv()</a></code> (<a href="https://github.com/tidymodels/recipes/issues/920" class="external-link">#920</a>).</p></li>
-<li><p>Bug was fixed in <code><a href="../reference/step_holiday.html">step_holiday()</a></code> which used to error when it was applied to variable with missing values. (<a href="https://github.com/tidymodels/recipes/issues/743" class="external-link">#743</a>)</p></li>
-<li><p>A bug was fixed in <code><a href="../reference/step_normalize.html">step_normalize()</a></code> which used to error if 1 variable was selected. (<a href="https://github.com/tidymodels/recipes/issues/963" class="external-link">#963</a>)</p></li>
-<li><p><code><a href="../reference/step_time.html">step_time()</a></code> has been added that extracts time features such as hour, minute, or second. (<a href="https://github.com/tidymodels/recipes/issues/968" class="external-link">#968</a>)</p></li>
-<li><p>printing for <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> now show variables that were imputed instead of variables used for imputing. (<a href="https://github.com/tidymodels/recipes/issues/837" class="external-link">#837</a>)</p></li>
-<li><p><code><a href="../reference/step_discretize.html">step_discretize()</a></code> and <code><a href="../reference/discretize.html">discretize()</a></code> will automatically remove missing values if <code>keep_na = TRUE</code>, removing the need to specify <code>keep_na = TRUE</code> and <code>na.rm = TRUE</code>. (<a href="https://github.com/tidymodels/recipes/issues/982" class="external-link">#982</a>)</p></li>
-<li><p><code><a href="../reference/prep.html">prep()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> checks and errors if output of <code>bake.bake_*()</code> isn’t a tibble.</p></li>
-<li><p><code><a href="../reference/step_date.html">step_date()</a></code> now has a locale argument that can be used to control how the <code>month</code> and <code>dow</code> features are returned. (<a href="https://github.com/tidymodels/recipes/issues/1000" class="external-link">#1000</a>)</p></li>
-</ul></div>
+    <div class="section level2"><h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="recipes-020">recipes 0.2.0<a class="anchor" aria-label="anchor" href="#recipes-020"></a></h2><p class="text-muted">CRAN release: 2022-02-18</p>
 <div class="section level3">
