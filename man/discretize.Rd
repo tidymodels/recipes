@@ -43,7 +43,7 @@ for missing (see \code{keep_na} below).}
 for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
 the string is not a valid R name, it is coerced to one.
 If \code{prefix = NULL} then the factor levels will be labelled
-according to the output of \code{cut()}. Defaults to \code{NULL}.}
+according to the output of \code{cut()}.}
 
 \item{keep_na}{A logical for whether a factor level should be
 created to identify missing values in \code{x}. If \code{keep_na} is
