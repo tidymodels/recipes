@@ -115,7 +115,9 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
 is_holiday <- function(hol, dt) {
   years <- unique(year(dt))
   na_year <- which(is.na(years))
-  years <- years[-na_year]
+  if (length(na_year) > 0) {
+    years <- years[-na_year]
+  }
   hdate <- holiday(year = years, Holiday = hol)
   hdate <- as.Date(hdate)
   out <- rep(0, length(dt))

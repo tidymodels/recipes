@@ -53,6 +53,28 @@ test_that("Date class", {
   )
 })
 
+test_that("works with no missing values - Date class", {
+  test_data <- na.omit(test_data)
+
+  holiday_rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+  holiday_ind <- bake(holiday_rec, test_data)
+
+  expect_equal(
+    holiday_ind$day[is_equal_1(holiday_ind$day_USMemorialDay)],
+    exp_dates$date[exp_dates$holiday == "USMemorialDay"]
+  )
+  expect_equal(
+    holiday_ind$day[is_equal_1(holiday_ind$day_ChristmasDay)],
+    exp_dates$date[exp_dates$holiday == "ChristmasDay"]
+  )
+  expect_equal(
+    holiday_ind$day[is_equal_1(holiday_ind$day_Easter)],
+    exp_dates$date[exp_dates$holiday == "Easter"]
+  )
+})
 
 test_that("POSIXct class", {
   test_data$day <- as.POSIXct(test_data$day)
@@ -94,6 +116,31 @@ test_that("POSIXct class", {
   )
 })
 
+test_that("works with no missing values - POSIXct class", {
+  test_data <- na.omit(test_data)
+
+  test_data$day <- as.POSIXct(test_data$day)
+  exp_dates$date <- as.POSIXct(exp_dates$date)
+
+  holiday_rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+  holiday_ind <- bake(holiday_rec, test_data)
+
+  expect_equal(
+    holiday_ind$day[is_equal_1(holiday_ind$day_USMemorialDay)],
+    exp_dates$date[exp_dates$holiday == "USMemorialDay"]
+  )
+  expect_equal(
+    holiday_ind$day[is_equal_1(holiday_ind$day_ChristmasDay)],
+    exp_dates$date[exp_dates$holiday == "ChristmasDay"]
+  )
+  expect_equal(
+    holiday_ind$day[is_equal_1(holiday_ind$day_Easter)],
+    exp_dates$date[exp_dates$holiday == "Easter"]
+  )
+})
 
 test_that("printing", {
   holiday_rec <- recipe(~day, test_data) %>%
