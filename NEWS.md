@@ -1,8 +1,6 @@
-# recipes (development version)
+# recipes (1.0.0
 
-* recipes now checks that all columns in the `data` supplied to `recipe()` are also present in the `new_data` supplied to `bake()`. An exception is made for columns with roles of either `"outcome"` or `"case_weights"`, which are typically not required at `bake()` time. The new `update_role_requirements()` function can be used to adjust whether or not columns of a particular role are required at `bake()` time if you need to opt out of this check (#1011).
-
-* The `summary()` method for recipe objects now contains an extra column to indicate which columns are required when `bake()` is used. 
+## Improvements and Other Changes
 
 * Added support for case weights in the following steps
     - `step_center()`
@@ -24,15 +22,33 @@
 
 * A number of developer focused functions to deal with case weights are added: `are_weights_used()`, `get_case_weights()`, `averages()`, `medians()`, `variances()`, `correlations()`, `covariances()`, and `pca_wts()`
 
+* recipes now checks that all columns in the `data` supplied to `recipe()` are also present in the `new_data` supplied to `bake()`. An exception is made for columns with roles of either `"outcome"` or `"case_weights"`, which are typically not required at `bake()` time. The new `update_role_requirements()` function can be used to adjust whether or not columns of a particular role are required at `bake()` time if you need to opt out of this check (#1011).
+
+* The `summary()` method for recipe objects now contains an extra column to indicate which columns are required when `bake()` is used. 
+
+## New Steps
+
+* `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
+
+## Bug Fixes
+
 * Fixed bug in which functions that `step_hyperbolic()` uses (#932).
 
 * `step_dummy_multi_choice()` now respects factor-levels of the selected variables when creating dummies. (#916)
  
+* `step_dummy()` no works correctly with recipes trained on version 0.1.17 or earlier. (#921)
+
+* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
+
+* Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743)
+
+* A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
+
+## Improvements and Other Changes
+ 
 * Finally removed `step_upsample()` and `step_downsample()` in recipes as they are now available in the themis package.
 
-* `discretize()` and `step_discretize()` now defaults to returning factor levels similar to `cut()` by default, in line with `step_discretize_*()` steps from the embed package. (#674)
-
-* `step_dummy()` no works correctly with recipes trained on version 0.1.17 or earlier. (#921)
+* `discretize()` and `step_discretize()` now can return factor levels similar to `cut()`. (#674)
 
 * `step_naomit()` now actually had their defaults for `skip` changed to `TRUE` as was stated in release  0.1.13. (934)
 
@@ -40,15 +56,7 @@
 
 * `step_pls()` now allows you use use multiple outcomes if they are numeric. (#651)
 
-* Fixed a bug where setting `fresh = TRUE` in `prep()` wouldn't result in re-prepping the recipe. (#492)
-
 * `step_normalize()` and `step_scale()` ignore columns with zero variance, generate a warning and suggest to use `step_zv()` (#920).
-
-* Bug was fixed in `step_holiday()` which used to error when it was applied to variable with missing values. (#743)
-
-* A bug was fixed in `step_normalize()` which used to error if 1 variable was selected. (#963)
-
-* `step_time()` has been added that extracts time features such as hour, minute, or second. (#968)
 
 * printing for `step_impute_knn()` now show variables that were imputed instead of variables used for imputing. (#837)
 

@@ -18,7 +18,7 @@ used).}
 \value{
 A tibble with columns \code{variable}, \code{type}, \code{role},
 and \code{source}. When \code{original = TRUE}, an additional column is included
-named \verb{required to bake} (based on the results of
+named \code{required_to_bake} (based on the results of
 \code{\link[=update_role_requirements]{update_role_requirements()}}).
 }
 \description{

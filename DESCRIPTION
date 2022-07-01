@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 0.2.0.9002
+Version: 1.0.0
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
@@ -44,7 +44,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dials (>= 0.0.10.9001),
+    dials (>= 1.0.0),
     ggplot2,
     igraph,
     kernlab,

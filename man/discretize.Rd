@@ -15,7 +15,7 @@ discretize(x, ...)
   x,
   cuts = 4,
   labels = NULL,
-  prefix = NULL,
+  prefix = "bin",
   keep_na = TRUE,
   infs = TRUE,
   min_unique = 10,
