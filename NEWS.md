@@ -1,4 +1,4 @@
-# recipes (development version)
+# recipes 1.0.1
 
 * Fixed bug where `step_holiday()` didn't work if it isn't have any missing values. (#1019)
 
