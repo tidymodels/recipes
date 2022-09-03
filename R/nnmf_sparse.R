@@ -37,30 +37,29 @@
 #'  `terms` (the selectors or variables selected) and the number of
 #'  components is returned.
 #'
-#' @examples
-#' if (rlang::is_installed("RcppML")) {
-#'   library(Matrix)
-#'   library(modeldata)
-#'   data(biomass)
+#' @template case-weights-not-supported
 #'
-#'   rec <- recipe(HHV ~ ., data = biomass) %>%
-#'     update_role(sample, new_role = "id var") %>%
-#'     update_role(dataset, new_role = "split variable") %>%
-#'     step_nnmf_sparse(
-#'       all_numeric_predictors(),
-#'       num_comp = 2,
-#'       seed = 473,
-#'       penalty = 0.01
-#'     ) %>%
-#'     prep(training = biomass)
+#' @examplesIf rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))
+#' library(Matrix)
+#' data(biomass, package = "modeldata")
 #'
-#'   bake(rec, new_data = NULL)
-#'   #'
-#'   library(ggplot2)
-#'   bake(rec, new_data = NULL) %>%
-#'     ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
-#'     geom_point()
-#' }
+#' rec <- recipe(HHV ~ ., data = biomass) %>%
+#'   update_role(sample, new_role = "id var") %>%
+#'   update_role(dataset, new_role = "split variable") %>%
+#'   step_nnmf_sparse(
+#'     all_numeric_predictors(),
+#'     num_comp = 2,
+#'     seed = 473,
+#'     penalty = 0.01
+#'   ) %>%
+#'   prep(training = biomass)
+#'
+#' bake(rec, new_data = NULL)
+#' #'
+#' library(ggplot2)
+#' bake(rec, new_data = NULL) %>%
+#'   ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
+#'   geom_point()
 step_nnmf_sparse <-
   function(recipe,
            ...,
@@ -186,6 +185,8 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf_sparse <- function(object, new_data, ...) {
+  check_new_data(object$res$x_vars, object, new_data)
+
   if (object$num_comp > 0) {
     proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
     proj_data <- proj_data %*% object$res$w
@@ -197,7 +198,7 @@ bake.step_nnmf_sparse <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% object$res$x_vars), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

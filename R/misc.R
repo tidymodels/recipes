@@ -17,7 +17,8 @@ get_types <- function(x) {
       Date = "date",
       POSIXct = "date",
       list = "list",
-      textrecipes_tokenlist = "tokenlist"
+      textrecipes_tokenlist = "tokenlist",
+      hardhat_case_weights = "case_weights"
     )
 
   classes <- lapply(x, class)
@@ -76,11 +77,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   }
   predictor_names
 }
-
-get_lhs_terms <- function(x) x
-get_rhs_terms <- function(x) x
-
-
 
 terms.recipe <- function(x, ...) {
   x$term_info
@@ -475,15 +471,6 @@ is_skipable <- function(x) {
   }
 }
 
-# to be used within a step
-skip_me <- function(x) {
-  if (!exists("skip")) {
-    return(FALSE)
-  } else {
-    return(x$skip)
-  }
-}
-
 is_qual <- function(x) {
   is.factor(x) | is.character(x)
 }
@@ -781,6 +768,7 @@ is_tune <- function(x) {
   FALSE
 }
 
+
 # ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:
 # vctrs's cast functions would be better but we'll deal with the known cases
@@ -860,3 +848,35 @@ uses_dim_red <- function(x) {
   }
   invisible(NULL)
 }
+
+# ------------------------------------------------------------------------------
+
+#' Check for required column at bake-time
+#'
+#' When baking a step, create an information error message when a column that
+#' is used by the step is not present in `new_data`.
+#'
+#' @param req A character vector of required columns.
+#' @param object A step object.
+#' @param new_data A tibble of data being baked.
+#' @return Invisible NULL. Side effects are the focus of the function.
+#' @keywords internal
+#' @export
+check_new_data <- function(req, object, new_data) {
+  if (is.null(req) || length(req) == 0L) {
+    return(invisible(NULL))
+  }
+  col_diff <- setdiff(req, names(new_data))
+  if (length(col_diff) == 0) {
+    return(invisible(NULL))
+  }
+  step_cls <- class(object)[1]
+  step_id <- object$id
+  cli::cli_abort(
+    "The following required {cli::qty(col_diff)} column{?s} {?is/are} \
+    missing from `new_data` in step '{step_id}': {col_diff}.",
+    class = "new_data_missing_column",
+    call = rlang::call2(step_cls)
+  )
+}
+

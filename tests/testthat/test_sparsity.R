@@ -5,8 +5,8 @@ library(Matrix)
 
 ###################################################################
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 Sacramento$city <- as.factor(Sacramento$city)
 Sacramento$beds <- as.factor(Sacramento$beds)

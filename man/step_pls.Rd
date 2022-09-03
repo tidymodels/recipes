@@ -120,7 +120,14 @@ above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
 selectors or variables selected), \code{components}, and \code{values} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # requires the Bioconductor mixOmics package
 data(biomass, package = "modeldata")
 
@@ -162,6 +169,7 @@ dense_plsda <-
 sparse_plsda <-
   recipe(class ~ ., data = cell_tr) \%>\%
   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1 / 4)
+\dontshow{\}) # examplesIf}
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}

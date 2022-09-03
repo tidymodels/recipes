@@ -46,10 +46,12 @@
 #' on all of the variables that have a custom role with the selector
 #' [has_role()].
 #'
-#' @examples
+#' ```{r, child = "man/rmd/non-standard-roles.Rmd"}
+#' ```
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # Using the formula method, roles are created for any outcomes and predictors:
 #' recipe(HHV ~ ., data = biomass) %>%
@@ -129,16 +131,36 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   terms <- quos(...)
 
+  if (new_role == "case_weights") {
+    rlang::abort(
+      c(
+        "Roles of \"case_weights\" cannot be set using `add_role()`.",
+        i = paste(
+          "Please use `frequency_weights()` or `importance_weights()`",
+          "to specify case weights before the data is passed to `recipe()`."
+        )
+      )
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
 
-  vars <- recipes_eval_select(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `add_role()`.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    rlang::abort(
+      "`add_role()` cannot be used on variables with role \"case_weights\"."
+    )
   }
 
   # Check to see if role already exists
@@ -219,16 +241,36 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 
   terms <- quos(...)
 
+  if (new_role == "case_weights") {
+    rlang::abort(
+      c(
+        "Roles of \"case_weights\" cannot be set using `update_role()`.",
+        i = paste(
+          "Please use `frequency_weights()` or `importance_weights()`",
+          "to specify case weights before the data is passed to `recipe()`."
+        )
+      )
+    )
+  }
+
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
 
-  vars <- recipes_eval_select(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
     rlang::warn("No columns were selected in `update_role()`.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    rlang::abort(
+      "`update_role()` cannot be used on variables with role \"case_weights\"."
+    )
   }
 
   # check to see if any variables have multiple roles
@@ -268,6 +310,12 @@ remove_role <- function(recipe, ..., old_role) {
   single_chr(old_role, "old_")
 
   terms <- quos(...)
+
+  if (old_role == "case_weights") {
+    rlang::abort(
+      "Roles of \"case_weights\" cannot removed using `remove_role()`."
+    )
+  }
 
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe

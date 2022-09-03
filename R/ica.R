@@ -51,6 +51,8 @@
 #' `terms` (the selectors or variables selected), `value` (the loading),
 #' and `component` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
 #'  component analysis: algorithms and applications. *Neural
 #'  Networks*, 13(4-5), 411-430.
@@ -185,6 +187,8 @@ bake.step_ica <- function(object, new_data, ...) {
   uses_dim_red(object)
 
   if (object$num_comp > 0 && length(object$columns) > 0) {
+    check_new_data(object$columns, object, new_data)
+
     comps <- scale(as.matrix(new_data[, object$columns]),
       center = object$res$means, scale = FALSE
     )
@@ -198,7 +202,7 @@ bake.step_ica <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

@@ -25,9 +25,10 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be removed) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass$new_1 <- with(
 #'   biomass,
@@ -118,7 +119,7 @@ bake.step_lincomb <- function(object, new_data, ...) {
   if (length(object$removals) > 0) {
     new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_lincomb <-

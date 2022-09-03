@@ -1,8 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-library(modeldata)
-data(credit_data)
+skip_if_not_installed("modeldata")
+data(credit_data, package = "modeldata")
 
 
 set.seed(342)
@@ -130,4 +129,57 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("case weights", {
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = frequency_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_median(Age, Assets, Income, id = "") %>%
+    prep()
+
+  ref_medians <- credit_tr_cw %>%
+    select(Age, Assets, Income) %>%
+    medians(credit_tr_cw$Amount)
+
+  expect_equal(
+    impute_rec$steps[[1]]$medians,
+    as.list(ref_medians)
+  )
+
+  expect_snapshot(impute_rec)
+
+  # ----------------------------------------------------------------------------
+
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = importance_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_median(Age, Assets, Income, id = "") %>%
+    prep()
+
+  ref_medians <- credit_tr_cw %>%
+    select(Age, Assets, Income) %>%
+    medians(wts = NULL)
+
+  expect_equal(
+    impute_rec$steps[[1]]$medians,
+    as.list(ref_medians)
+  )
+
+  expect_snapshot(impute_rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_median(Age) %>%
+    update_role(Age, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+
+  expect_error(bake(imputed, new_data = credit_te[, c(-5)]),
+               class = "new_data_missing_column")
 })

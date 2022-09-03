@@ -1,9 +1,8 @@
 library(testthat)
 library(recipes)
-library(ddalpha)
-
 
 test_that("defaults", {
+  skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(all_predictors(), class = "Species", metric = "spatial", id = "")
   trained <- prep(rec, training = iris, verbose = FALSE)
@@ -41,6 +40,7 @@ test_that("defaults", {
 })
 
 test_that("alt args", {
+  skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(all_predictors(),
       class = "Species",
@@ -54,7 +54,7 @@ test_that("alt args", {
 
   split_up <- split(iris[, 1:4], iris$Species)
   Mahalanobis <- function(x, y) {
-    depth.Mahalanobis(x = y, data = x, mah.estimate = "MCD", mah.parMcd = .75)
+    ddalpha::depth.Mahalanobis(x = y, data = x, mah.estimate = "MCD", mah.parMcd = .75)
   }
 
   exp_res <- lapply(split_up, Mahalanobis, y = iris[, 1:4])
@@ -70,6 +70,7 @@ test_that("alt args", {
 
 
 test_that("printing", {
+  skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(all_predictors(), class = "Species", metric = "spatial")
   expect_snapshot(print(rec))
@@ -77,6 +78,7 @@ test_that("printing", {
 })
 
 test_that("prefix", {
+  skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(all_predictors(),
       class = "Species",
@@ -89,6 +91,7 @@ test_that("prefix", {
 })
 
 test_that("empty selection prep/bake adds NA columns", {
+  skip_if_not_installed("ddalpha")
   rec1 <- recipe(Species ~ ., iris)
   rec2 <- step_depth(rec1, class = "Species")
 
@@ -102,6 +105,7 @@ test_that("empty selection prep/bake adds NA columns", {
 })
 
 test_that("empty selection tidy method works", {
+  skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., iris)
   rec <- step_depth(rec, class = "Species")
 
@@ -115,6 +119,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
+  skip_if_not_installed("ddalpha")
   skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(Species ~ ., iris)
   rec <- step_depth(rec, class = "Species")
@@ -124,4 +129,18 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("ddalpha")
+
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_depth(starts_with("Sepal"), class = "Species", metric = "spatial") %>%
+    update_role(starts_with("Sepal"), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[, 2:5]),
+               class = "new_data_missing_column")
 })

@@ -118,9 +118,15 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the list of corresponding binary columns) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(Sacramento)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 # Original data: city has 37 levels
 length(unique(Sacramento$city))
@@ -153,6 +159,7 @@ dummy_data_one_hot \%>\%
 
 tidy(dummies, number = 1)
 tidy(dummies_one_hot, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}

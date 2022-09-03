@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -261,4 +261,73 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("case weights", {
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
+    select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  pca_extract <- recipe(HHV ~ .,
+                        data = biomass_tr_cw) %>%
+    step_pca(all_numeric_predictors())
+
+  pca_extract_trained <- prep(pca_extract)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- pca_wts(biomass_tr[, c(3, 4, 5, 7)],
+                     wts = as.numeric(biomass_tr_cw$nitrogen))
+  pca_pred_exp <- as.matrix(biomass_te[, c(3, 4, 5, 7)]) %*% pca_exp$rotation
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  colnames(pca_pred) <- NULL
+  colnames(pca_pred_exp) <- NULL
+
+  expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
+
+  # ----------------------------------------------------------------------------
+
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(nitrogen = importance_weights(nitrogen)) %>%
+    select(HHV, carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  pca_extract <- recipe(HHV ~ .,
+                        data = biomass_tr_cw) %>%
+    step_pca(all_numeric_predictors())
+
+  pca_extract_trained <- prep(pca_extract)
+
+  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
+  pca_pred <- as.matrix(pca_pred)
+
+  pca_exp <- prcomp(biomass_tr[, c(3, 4, 5, 7)], center = FALSE, scale. = FALSE, retx = FALSE)
+  pca_pred_exp <- predict(pca_exp, biomass_te[, c(3, 4, 5, 7)])[, 1:4]
+
+  rownames(pca_pred) <- NULL
+  rownames(pca_pred_exp) <- NULL
+  colnames(pca_pred) <- NULL
+  colnames(pca_pred_exp) <- NULL
+
+  expect_equal(pca_pred, pca_pred_exp)
+
+  expect_snapshot(pca_extract_trained)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  pca_extract <- rec %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
+             options = list(retx = TRUE), id = ""
+    ) %>%
+    update_role(carbon, hydrogen, oxygen, nitrogen, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(pca_extract_trained, new_data = biomass_te[, c(-3)]),
+               class = "new_data_missing_column")
 })

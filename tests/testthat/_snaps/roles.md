@@ -167,3 +167,125 @@
       Error in `single_chr()`:
       ! `old_role` must have length 1.
 
+# role functions handle case weights correctly
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% update_role("disp", new_role = "case_weights")
+    Condition
+      Error in `update_role()`:
+      ! Roles of "case_weights" cannot be set using `update_role()`.
+      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% add_role("disp", new_role = "case_weights")
+    Condition
+      Error in `add_role()`:
+      ! Roles of "case_weights" cannot be set using `add_role()`.
+      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars1) %>% remove_role(wt, old_role = "case_weights")
+    Condition
+      Error in `remove_role()`:
+      ! Roles of "case_weights" cannot removed using `remove_role()`.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars1) %>% update_role(wt)
+    Condition
+      Error in `update_role()`:
+      ! `update_role()` cannot be used on variables with role "case_weights".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars1) %>% add_role(wt)
+    Condition
+      Error in `add_role()`:
+      ! `add_role()` cannot be used on variables with role "case_weights".
+
+# role information from summary()
+
+    Code
+      summary(rec_roles, original = TRUE)
+    Output
+      # A tibble: 11 x 5
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric predictor original TRUE            
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric predictor original TRUE            
+       5 drat     numeric predictor original TRUE            
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric predictor original TRUE            
+       8 vs       numeric predictor original TRUE            
+       9 am       numeric predictor original TRUE            
+      10 gear     numeric id        original TRUE            
+      11 carb     numeric important original TRUE            
+
+---
+
+    Code
+      summary(req_roles, original = TRUE)
+    Output
+      # A tibble: 11 x 5
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric predictor original TRUE            
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric predictor original TRUE            
+       5 drat     numeric predictor original TRUE            
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric predictor original TRUE            
+       8 vs       numeric predictor original TRUE            
+       9 am       numeric predictor original TRUE            
+      10 gear     numeric id        original TRUE            
+      11 carb     numeric important original FALSE           
+
+---
+
+    Code
+      summary(na_rec, original = TRUE)
+    Output
+      # A tibble: 11 x 5
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric <NA>      original TRUE            
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric <NA>      original TRUE            
+       5 drat     numeric <NA>      original TRUE            
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric <NA>      original TRUE            
+       8 vs       numeric <NA>      original TRUE            
+       9 am       numeric <NA>      original TRUE            
+      10 gear     numeric <NA>      original TRUE            
+      11 carb     numeric other     original TRUE            
+
+---
+
+    Code
+      summary(na_req_rec, original = TRUE)
+    Output
+      # A tibble: 11 x 5
+         variable type    role      source   required_to_bake
+         <chr>    <chr>   <chr>     <chr>    <lgl>           
+       1 mpg      numeric outcome   original FALSE           
+       2 cyl      numeric <NA>      original FALSE           
+       3 disp     numeric predictor original TRUE            
+       4 hp       numeric <NA>      original FALSE           
+       5 drat     numeric <NA>      original FALSE           
+       6 wt       numeric predictor original TRUE            
+       7 qsec     numeric <NA>      original FALSE           
+       8 vs       numeric <NA>      original FALSE           
+       9 am       numeric <NA>      original FALSE           
+      10 gear     numeric <NA>      original FALSE           
+      11 carb     numeric other     original TRUE            
+

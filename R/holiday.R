@@ -26,6 +26,8 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the columns that will be affected) and `holiday` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(lubridate)
 #'
@@ -113,7 +115,9 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
 is_holiday <- function(hol, dt) {
   years <- unique(year(dt))
   na_year <- which(is.na(years))
-  years <- years[-na_year]
+  if (length(na_year) > 0) {
+    years <- years[-na_year]
+  }
   hdate <- holiday(year = years, Holiday = hol)
   hdate <- as.Date(hdate)
   out <- rep(0, length(dt))
@@ -135,6 +139,8 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   for (i in seq_along(object$columns)) {
     tmp <- get_holiday_features(
       dt = new_data[[object$columns[i]]],
@@ -148,10 +154,6 @@ bake.step_holiday <- function(object, new_data, ...) {
   keep_original_cols <- get_keep_original_cols(object)
   if (!keep_original_cols) {
     new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-  }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
   }
   new_data
 }

@@ -2,8 +2,8 @@ library(testthat)
 library(tibble)
 library(recipes)
 
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
@@ -234,10 +234,101 @@ test_that("`retain flag in prep should return data when TRUE and zero rows when 
   expect_equal(nrow(prec_4$template), 0)
 })
 
+test_that("case weights are being infered correctly for formula interface", {
+  mtcars1 <- mtcars
+  mtcars1$disp <- importance_weights(mtcars1$disp)
+
+  rec <- recipe(mpg ~ cyl + disp, data = mtcars1)
+
+  ref_summary <- tibble(
+    variable = c("cyl", "disp", "mpg"),
+    type = c("numeric", "case_weights", "numeric"),
+    role = c("predictor", "case_weights", "outcome"),
+    source = "original"
+  )
+  expect_equal(
+    summary(rec),
+    ref_summary
+  )
+
+  mtcars2 <- mtcars
+  mtcars2$disp <- importance_weights(mtcars2$disp)
+  mtcars2$cyl <- importance_weights(mtcars2$cyl)
+
+  expect_snapshot(error = TRUE,
+    recipe(mpg ~ cyl + disp, data = mtcars2)
+  )
+})
+
+test_that("case weights are being infered correctly for x interface", {
+  mtcars1 <- mtcars[c(2, 3, 1)]
+  mtcars1$disp <- importance_weights(mtcars1$disp)
+
+  rec <- recipe(mtcars1)
+
+  ref_summary <- tibble(
+    variable = c("cyl", "disp", "mpg"),
+    type = c("numeric", "case_weights", "numeric"),
+    role = c(NA, "case_weights", NA),
+    source = "original"
+  )
+  expect_equal(
+    summary(rec),
+    ref_summary
+  )
+
+  mtcars2 <- mtcars
+  mtcars2$disp <- importance_weights(mtcars2$disp)
+  mtcars2$cyl <- importance_weights(mtcars2$cyl)
+
+  expect_snapshot(error = TRUE,
+    recipe(mtcars2)
+  )
+
+})
+
+
 test_that("verbose when printing", {
   standardized <- recipe(~., mtcars) %>%
     step_center(all_predictors()) %>%
     step_scale(all_predictors()) %>%
     step_normalize(all_predictors())
   expect_snapshot(tmp <- prep(standardized, verbose = TRUE))
+
+})
+
+test_that("`internal data is kept as tibbles when prepping", {
+  rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_testthat_helper()
+
+  expect_true(
+    tibble::is_tibble(prep(rec_spec)$template)
+  )
+
+  expect_true(
+    tibble::is_tibble(rec_spec %>% prep() %>% bake(new_data = NULL))
+  )
+
+  expect_true(
+    tibble::is_tibble(rec_spec %>% prep() %>% bake(new_data = mtcars))
+  )
+
+  rec_prepped <- prep(rec_spec)
+
+  # Pretending that the outcome will be a data.frame
+  rec_prepped$steps[[1]]$output <- mtcars
+
+  expect_true(
+    tibble::is_tibble(bake(rec_prepped, new_data = NULL))
+  )
+
+  # Will ignore new_data and return `output`
+  expect_snapshot(error = TRUE,
+    bake(rec_prepped, new_data = as_tibble(mtcars))
+  )
+
+  rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_testthat_helper(output = mtcars)
+
+  expect_snapshot(error = TRUE, prep(rec_spec))
 })

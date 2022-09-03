@@ -29,9 +29,10 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the columns that will be affected) and `degree` is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -146,6 +147,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
   new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
 
   # Start with n-row, 0-col tibble for the empty selection case

@@ -1,8 +1,8 @@
 library(recipes)
 library(testthat)
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 sacr_tr <- Sacramento[(1:800), ]
 sacr_te <- Sacramento[-(1:800), ]
@@ -88,4 +88,16 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec_1 <- rec %>%
+    step_relevel(zip, ref_level = "z95838") %>%
+    update_role(zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]),
+               class = "new_data_missing_column")
 })

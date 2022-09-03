@@ -112,3 +112,15 @@ test_that("wrong function", {
   rec <- recipe(mpg ~ ., mtcars)
   expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_hyperbolic(x1, x2, func = "sinh", inverse = FALSE) %>%
+    update_role(x1, x2, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+
+  expect_error(bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})

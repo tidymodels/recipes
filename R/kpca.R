@@ -28,9 +28,10 @@
 #'
 #' @template kpca-info
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2", "kernlab"))
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -154,6 +155,8 @@ bake.step_kpca <- function(object, new_data, ...) {
   uses_dim_red(object)
 
   if (object$num_comp > 0 && length(object$columns) > 0) {
+    check_new_data(object$columns, object, new_data)
+
     cl <-
       rlang::call2(
         "predict",
@@ -172,7 +175,7 @@ bake.step_kpca <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {

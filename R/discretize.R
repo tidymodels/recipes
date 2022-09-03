@@ -27,9 +27,11 @@ discretize.default <- function(x, ...) {
 #'  for the factor levels (e.g. `bin1`, `bin2`, ...). If
 #'  the string is not a valid R name, it is coerced to one.
 #'  If `prefix = NULL` then the factor levels will be labelled
-#'  according to the output of `cut()`. Defaults to `NULL`.
+#'  according to the output of `cut()`.
 #' @param keep_na A logical for whether a factor level should be
-#'  created to identify missing values in `x`.
+#'  created to identify missing values in `x`. If `keep_na` is
+#'  set to `TRUE` then `na.rm = TRUE` is used when calling
+#'  [stats::quantile()].
 #' @param infs A logical indicating whether the smallest and
 #'  largest cut point should be infinite.
 #' @param min_unique An integer defining a sample size line of
@@ -57,9 +59,8 @@ discretize.default <- function(x, ...) {
 #'
 #' If `infs = FALSE` and a new value is greater than the
 #'  largest value of `x`, a missing value will result.
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -79,7 +80,7 @@ discretize.numeric <-
   function(x,
            cuts = 4,
            labels = NULL,
-           prefix = NULL,
+           prefix = "bin",
            keep_na = TRUE,
            infs = TRUE,
            min_unique = 10,
@@ -91,8 +92,20 @@ discretize.numeric <-
       rlang::abort("There should be at least 2 cuts")
     }
 
+    dots <- list(...)
+    if (keep_na) {
+      dots$na.rm <- TRUE
+    }
+
     if (unique_vals / (cuts + 1) >= min_unique) {
-      breaks <- quantile(x, probs = seq(0, 1, length = cuts + 1), ...)
+      cl <- rlang::call2(
+        "quantile",
+        .ns = "stats",
+        x = x,
+        probs = seq(0, 1, length = cuts + 1)
+      )
+      cl <- rlang::call_modify(cl, !!!dots)
+      breaks <- rlang::eval_tidy(cl)
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
       if (num_breaks > length(breaks)) {
@@ -250,12 +263,14 @@ print.discretize <-
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `value`
 #' (the breaks) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family discretization steps
 #' @export
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -278,7 +293,7 @@ step_discretize <- function(recipe,
                             num_breaks = 4,
                             min_unique = 10,
                             objects = NULL,
-                            options = list(),
+                            options = list(prefix = "bin"),
                             skip = FALSE,
                             id = rand_id("discretize")) {
   if (any(names(options) %in% c("cuts", "min_unique"))) {
@@ -319,11 +334,9 @@ step_discretize_new <-
   }
 
 bin_wrapper <- function(x, args) {
-  bin_call <-
-    quote(discretize(x, cuts, labels, prefix, keep_na, infs, min_unique, ...))
-  args <- sub_args(discretize.numeric, args, "x")
-  args$x <- x
-  rlang::exec(discretize, !!!args)
+  cl <- rlang::call2("discretize", .ns = "recipes", x = x)
+  cl <- rlang::call_modify(cl, !!!args)
+  rlang::eval_tidy(cl)
 }
 
 #' @export
@@ -359,11 +372,12 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     new_data[, i] <-
       predict(object$objects[[i]], getElement(new_data, i))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_discretize <-

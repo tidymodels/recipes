@@ -26,10 +26,11 @@
 #' `terms` (the selectors or variables selected) and `value` for the
 #' estimated threshold is returned.
 #'
-#' @examples
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' ## Truncate some values to emulate what a lower limit of
 #' ## the measurement system might look like
@@ -149,6 +150,8 @@ prep.step_lowerimpute <- prep.step_impute_lower
 
 #' @export
 bake.step_impute_lower <- function(object, new_data, ...) {
+  check_new_data(names(object$threshold), object, new_data)
+
   for (i in names(object$threshold)) {
     affected <- which(new_data[[i]] <= object$threshold[[i]])
     if (length(affected) > 0) {
@@ -158,7 +161,7 @@ bake.step_impute_lower <- function(object, new_data, ...) {
       )
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

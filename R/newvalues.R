@@ -20,9 +20,10 @@
 #'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
 #'  `terms` (the selectors or variables selected) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(credit_data)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(credit_data, package = "modeldata")
 #'
 #' # If the test passes, `new_data` is returned unaltered
 #' recipe(credit_data) %>%
@@ -142,7 +143,7 @@ bake.check_new_values <- function(object,
       ignore_NA = object$ignore_NA
     )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_new_values <-

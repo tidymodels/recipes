@@ -48,9 +48,10 @@
 #' `terms` (the columns that will be affected) and `retained` (the factor
 #' levels that were not pulled into "other") is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @template case-weights-unsupervised
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' set.seed(19)
 #' in_train <- sample(1:nrow(Sacramento), size = 800)
@@ -114,13 +115,15 @@ step_other <-
         other = other,
         objects = objects,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_other_new <-
-  function(terms, role, trained, threshold, other, objects, skip, id) {
+  function(terms, role, trained, threshold, other, objects, skip, id,
+           case_weights) {
     step(
       subclass = "other",
       terms = terms,
@@ -130,7 +133,8 @@ step_other_new <-
       other = other,
       objects = objects,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -138,11 +142,17 @@ step_other_new <-
 prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   objects <- lapply(training[, col_names],
-    keep_levels,
-    threshold = x$threshold,
-    other = x$other
-  )
+                    keep_levels,
+                    threshold = x$threshold,
+                    other = x$other,
+                    wts = wts)
 
   step_other_new(
     terms = x$terms,
@@ -152,12 +162,14 @@ prep.step_other <- function(x, training, info = NULL, ...) {
     other = x$other,
     objects = objects,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
 bake.step_other <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
       tmp <- if (!is.character(new_data[, i])) {
@@ -183,9 +195,6 @@ bake.step_other <- function(object, new_data, ...) {
       new_data[, i] <- tmp
     }
   }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 
@@ -198,19 +207,24 @@ print.step_other <-
     } else {
       columns <- names(x$objects)
     }
-    print_step(columns, x$terms, x$trained, title, width)
+    print_step(columns, x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 
-keep_levels <- function(x, threshold = .1, other = "other") {
+keep_levels <- function(x, threshold = .1, other = "other", wts = NULL) {
   if (!is.factor(x)) {
     x <- factor(x)
   }
 
-  xtab <- sort(table(x, useNA = "no"), decreasing = TRUE)
+  xtab <- sort(weighted_table(x, wts = wts), decreasing = TRUE)
 
   if (threshold < 1) {
-    xtab <- xtab / sum(!is.na(x))
+    if (is.null(wts)) {
+        xtab <- xtab / sum(!is.na(x))
+    } else {
+        xtab <- xtab / sum(as.double(wts)[!is.na(x)])
+    }
   }
 
   dropped <- which(xtab < threshold)

@@ -26,6 +26,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' fail_lvls <- c("meh", "annoying", "really_bad")
 #'
@@ -128,11 +130,13 @@ prep.step_ordinalscore <-
 
 #' @export
 bake.step_ordinalscore <- function(object, new_data, ...) {
+  check_new_data(object$columns, object, new_data)
+
   scores <- lapply(new_data[, object$columns], object$convert)
   for (i in object$columns) {
     new_data[, i] <- scores[[i]]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_ordinalscore <-

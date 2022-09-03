@@ -19,6 +19,8 @@
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' df <- data.frame(x = 1:10, y = 5:14)
 #' rec <- recipe(df)
@@ -47,7 +49,7 @@
 #'
 #' # It is up to you if you want values outside the
 #' # range learned at prep to be included
-#' new_df <- data.frame(x = 1:11)
+#' new_df <- data.frame(x = 1:11, y = 5:15)
 #' rec %>%
 #'   step_cut(x, breaks = 5, include_outside_range = TRUE) %>%
 #'   prep() %>%
@@ -140,6 +142,8 @@ full_breaks_check <- function(breaks) {
 }
 
 bake.step_cut <- function(object, new_data, ...) {
+  check_new_data(names(object$breaks), object, new_data)
+
   for (col_name in names(object$breaks)) {
     res <- cut_var(
       new_data[, col_name, drop = TRUE],
@@ -148,7 +152,7 @@ bake.step_cut <- function(object, new_data, ...) {
     )
     new_data[, col_name] <- res
   }
-  as_tibble(new_data)
+  new_data
 }
 
 cut_var <- function(var, breaks, include_outside_range) {

@@ -68,9 +68,10 @@
 #'  `terms` (the selectors or original variables selected) and `columns`
 #'  (the list of corresponding binary columns) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' # Original data: city has 37 levels
 #' length(unique(Sacramento$city))
@@ -253,6 +254,7 @@ warn_new_levels <- function(dat, lvl, details = NULL) {
 
 #' @export
 bake.step_dummy <- function(object, new_data, ...) {
+  check_new_data(names(object$levels), object, new_data)
 
   # If no terms were selected
   if (length(object$levels) == 0) {
@@ -327,9 +329,6 @@ bake.step_dummy <- function(object, new_data, ...) {
     if (any(!object$preserve, !keep_original_cols)) {
       new_data[, col_names[i]] <- NULL
     }
-  }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
   }
   new_data
 }

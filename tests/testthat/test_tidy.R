@@ -2,9 +2,8 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 set.seed(131)
 Sacramento_rec <- recipe(~., data = Sacramento) %>%

@@ -9,6 +9,8 @@
 \alias{tune_args}
 \alias{extract_parameter_set_dials}
 \alias{extract_parameter_dials}
+\alias{importance_weights}
+\alias{frequency_weights}
 \alias{\%>\%}
 \alias{update}
 \title{Objects exported from other packages}
@@ -20,7 +22,7 @@ below to see their documentation.
 \describe{
   \item{generics}{\code{\link[generics]{required_pkgs}}, \code{\link[generics]{tidy}}, \code{\link[generics]{tunable}}, \code{\link[generics]{tune_args}}}
 
-  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}}
+  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}, \code{\link[hardhat]{frequency_weights}}, \code{\link[hardhat]{importance_weights}}}
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 

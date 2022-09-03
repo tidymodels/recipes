@@ -32,10 +32,12 @@
 #'  columns `terms` (the selectors or variables selected) and `model` (the
 #'  bagged tree object) is returned.
 #'
+#' @template case-weights-unsupervised
+#'
 #' @references Kuhn, M. and Johnson, K. (2013).
 #' *Feature Engineering and Selection*
 #' \url{https://bookdown.org/max/FES/handling-missing-data.html}
-#' @examples
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' data(ames, package = "modeldata")
 #' set.seed(393)
 #' ames_missing <- ames
@@ -84,14 +86,15 @@ step_impute_linear <-
         impute_with = impute_with,
         models = models,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_impute_linear_new <-
   function(terms, role, trained, models, impute_with,
-           skip, id) {
+           skip, id, case_weights) {
     step(
       subclass = "impute_linear",
       terms = terms,
@@ -100,14 +103,16 @@ step_impute_linear_new <-
       impute_with = impute_with,
       models = models,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
-
-lm_wrap <- function(vars, dat) {
+lm_wrap <- function(vars, dat, wts = NULL) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
-  dat <- na.omit(dat)
+  complete <- stats::complete.cases(dat)
+  dat <- dat[complete, ]
+  wts <- wts[complete]
   if (nrow(dat) == 0) {
     rlang::abort(
       paste(
@@ -126,8 +131,14 @@ lm_wrap <- function(vars, dat) {
     )
   }
 
+  if (is.null(wts)) {
+    wts <- rep(1, nrow(dat))
+  } else {
+    wts <- as.double(wts)
+  }
 
-  out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, model = FALSE)
+  out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, weights = wts,
+            model = FALSE)
   out$..imp_vars <- vars$x
   attr(out$terms, ".Environment") <- rlang::base_env()
 
@@ -145,6 +156,13 @@ lm_wrap <- function(vars, dat) {
 
 #' @export
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
+
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -156,8 +174,10 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
   x$models <- lapply(
     var_lists,
     lm_wrap,
-    dat = training
+    dat = training,
+    wts = wts
   )
+
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
 
   step_impute_linear_new(
@@ -167,12 +187,15 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
     models = x$models,
     impute_with = x$impute_with,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
+  check_new_data(names(object$models), object, new_data)
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)
@@ -199,15 +222,15 @@ bake.step_impute_linear <- function(object, new_data, ...) {
       }
     }
   }
-
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
     title <- "Linear regression imputation for "
-    print_step(names(x$models), x$terms, x$trained, title, width)
+    print_step(names(x$models), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

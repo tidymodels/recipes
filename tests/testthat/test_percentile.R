@@ -1,9 +1,9 @@
 library(testthat)
 library(recipes)
 library(tibble)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data(biomass)
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -150,4 +150,92 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("case weights", {
+  test_wts <- rep(c(1, 0), c(200, 256))
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(wts = frequency_weights(test_wts))
+
+  rec <- recipe(~., data = biomass_tr_cw) %>%
+    step_percentile(carbon, sulfur)
+
+  rec_trained <- prep(rec)
+  biomass_tr_baked <- bake(rec_trained, new_data = biomass_tr)
+  biomass_te_baked <- bake(rec_trained, new_data = biomass_te)
+
+  carbon_quantiles <- wrighted_quantile(
+    biomass_tr$carbon[test_wts == 1],
+    wts = rep(1, sum(test_wts)),
+    probs = (0:100) / 100
+  )
+  sulfur_quantiles <- wrighted_quantile(
+    biomass_tr$sulfur[test_wts == 1],
+    wts = rep(1, sum(test_wts)),
+    probs = (0:100) / 100
+  )
+
+  carbon_quantiles <- carbon_quantiles[!duplicated(carbon_quantiles)]
+  sulfur_quantiles <- sulfur_quantiles[!duplicated(sulfur_quantiles)]
+
+  expect_equal(
+    rec_trained$steps[[1]]$ref_dist$carbon,
+    carbon_quantiles
+  )
+
+  expect_equal(
+    rec_trained$steps[[1]]$ref_dist$sulfur,
+    sulfur_quantiles
+  )
+
+  expect_snapshot(rec_trained)
+
+  # ----------------------------------------------------------------------------
+
+  test_wts <- rep(c(1, 0), c(200, 256))
+  biomass_tr_cw <- biomass_tr %>%
+    mutate(wts = importance_weights(test_wts))
+
+  rec <- recipe(~., data = biomass_tr_cw) %>%
+    step_percentile(carbon, sulfur)
+
+  rec_trained <- prep(rec)
+  biomass_tr_baked <- bake(rec_trained, new_data = biomass_tr)
+  biomass_te_baked <- bake(rec_trained, new_data = biomass_te)
+
+  carbon_quantiles <- quantile(
+    biomass_tr$carbon,
+    probs = (0:100) / 100
+  )
+  sulfur_quantiles <- quantile(
+    biomass_tr$sulfur,
+    probs = (0:100) / 100
+  )
+
+  carbon_quantiles <- carbon_quantiles[!duplicated(carbon_quantiles)]
+  sulfur_quantiles <- sulfur_quantiles[!duplicated(sulfur_quantiles)]
+
+  expect_equal(
+    rec_trained$steps[[1]]$ref_dist$carbon,
+    carbon_quantiles
+  )
+
+  expect_equal(
+    rec_trained$steps[[1]]$ref_dist$sulfur,
+    sulfur_quantiles
+  )
+
+  expect_snapshot(rec_trained)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~., data = biomass_tr) %>%
+    step_percentile(carbon, sulfur) %>%
+    update_role(carbon, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec)
+
+  expect_error(bake(rec_trained, new_data = biomass_tr[, c(-3, -7)]),
+               class = "new_data_missing_column")
 })

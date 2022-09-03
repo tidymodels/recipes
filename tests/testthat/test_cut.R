@@ -85,8 +85,8 @@ test_that("adjust_levels_min_max gives correct output", {
 
 test_that("step_cut integration test", {
   tb <- tibble(x = c(2, 5, 7), y = c(1, 8, 12))
-  tb2 <- tibble(x = c(5, 9))
-  tb3 <- tibble(x = c(-1, 6))
+  tb2 <- tibble(x = c(5, 9), y = c(1, 1))
+  tb3 <- tibble(x = c(-1, 6), y = c(1, 1))
 
   expect_equal(
     recipe(tb) %>%
@@ -197,4 +197,20 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  df <- data.frame(x = 1:10, y = 5:14)
+  rec <- recipe(df)
+
+  # The min and max of the variable are used as boundaries
+  # if they exceed the breaks
+  prepped <- rec %>%
+    step_cut(x, breaks = 5) %>%
+    update_role(x, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(prepped, df[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
 })

@@ -45,11 +45,12 @@
 #'  `terms` (which is the columns that will be affected) and `type` (fixed
 #'  or profiled) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @template step-return
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
+#' data(Sacramento, package = "modeldata")
 #'
 #' # Setup a grid across beds but keep the other values fixed
 #' recipe(~ city + price + beds, data = Sacramento) %>%
@@ -214,7 +215,7 @@ bake.step_profile <- function(object, new_data, ...) {
     new_data[[i]] <- rep(object$columns[[i]], n)
   }
   new_data[[names(object$profile)]] <- object$profile[[1]]
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_profile <-

@@ -106,7 +106,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{class} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("ddalpha")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
@@ -127,6 +134,7 @@ dists_to_species
 
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 

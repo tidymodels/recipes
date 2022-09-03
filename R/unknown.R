@@ -28,9 +28,10 @@
 #' `terms` (the columns that will be affected) and `value` (the factor
 #'  levels that is used for the new value) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' rec <-
 #'   recipe(~ city + zip, data = Sacramento) %>%
@@ -125,6 +126,7 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unknown <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     new_data[[i]] <-
       ifelse(is.na(new_data[[i]]), object$new_level, as.character(new_data[[i]]))
@@ -147,9 +149,6 @@ bake.step_unknown <- function(object, new_data, ...) {
         levels = new_levels,
         ordered = attributes(object$object[[i]])$is_ordered
       )
-  }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
   }
   new_data
 }

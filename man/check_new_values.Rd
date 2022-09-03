@@ -65,9 +65,15 @@ When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
 \code{terms} (the selectors or variables selected) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(credit_data)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(credit_data, package = "modeldata")
 
 # If the test passes, `new_data` is returned unaltered
 recipe(credit_data) \%>\%
@@ -98,6 +104,7 @@ recipe(credit_data \%>\% dplyr::filter(!is.na(Home))) \%>\%
   prep() \%>\%
   bake(credit_data)
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

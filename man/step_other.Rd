@@ -90,9 +90,18 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 levels that were not pulled into "other") is returned.
 }
 
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
-library(modeldata)
-data(Sacramento)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 set.seed(19)
 in_train <- sample(1:nrow(Sacramento), size = 800)
@@ -128,6 +137,7 @@ tidy(rec, number = 1)
 # compare it to
 # sacr_tr \%>\% count(city, sort = TRUE) \%>\% top_n(4)
 # sacr_tr \%>\% count(zip, sort = TRUE) \%>\% top_n(3)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=dummy_names]{dummy_names()}}

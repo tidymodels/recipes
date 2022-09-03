@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 set.seed(19)
 in_test <- 1:200
@@ -381,4 +381,60 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("othering with case weights", {
+  weighted_props <- sacr_tr %>%
+    mutate(sqft = as.double(sqft)) %>%
+    count(city, wt = sqft, sort = TRUE) %>%
+    mutate(prop = n / sum(n))
+  sacr_tr_caseweights <- sacr_tr %>%
+    mutate(sqft = frequency_weights(sqft))
+
+  for (n_cols in 1:5) {
+    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+      step_other(city, other = "another", id = "",
+                 threshold = weighted_props$prop[n_cols])
+
+    others <- prep(others, training = sacr_tr_caseweights)
+    expect_equal(n_cols, nrow(tidy(others, number = 1)))
+  }
+
+  expect_snapshot(others)
+
+  # ----------------------------------------------------------------------------
+
+  unweighted_props <- sacr_tr %>%
+    count(city, sort = TRUE) %>%
+    mutate(prop = n / sum(n))
+  sacr_tr_caseweights <- sacr_tr %>%
+    mutate(sqft = importance_weights(sqft))
+
+  for (n_cols in 1:5) {
+    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
+      step_other(city, other = "another", id = "",
+                 threshold = unweighted_props$prop[n_cols])
+
+    others <- prep(others, training = sacr_tr_caseweights)
+    expect_equal(n_cols, nrow(tidy(others, number = 1)))
+  }
+
+  expect_snapshot(others)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  others <- rec %>% step_other(city, zip, other = "another", id = "") %>%
+    update_role(city, zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  tidy_exp_un <- tibble(
+    terms = c("city", "zip"),
+    retained = rep(NA_character_, 2),
+    id = ""
+  )
+
+  others <- prep(others, training = sacr_tr)
+
+  expect_error(bake(others, new_data = sacr_te[, 3:9]),
+               class = "new_data_missing_column")
 })

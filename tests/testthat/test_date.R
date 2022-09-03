@@ -112,6 +112,57 @@ test_that("keep_original_cols works", {
   )
 })
 
+test_that("locale argument have recipe work in different locale", {
+  old_locale <- Sys.getlocale("LC_TIME")
+  withr::defer(Sys.setlocale("LC_TIME", old_locale))
+  Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
+
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  ref_res <- bake(date_rec, new_data = examples)
+
+  Sys.setlocale("LC_TIME", old_locale)
+
+  new_res <- bake(date_rec, new_data = examples)
+
+  expect_equal(ref_res, new_res)
+})
+
+test_that("locale argument works when specified", {
+  old_locale <- Sys.getlocale("LC_TIME")
+  withr::defer(Sys.setlocale("LC_TIME", old_locale))
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  ref_res <- bake(date_rec, new_data = examples)
+
+  Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
+
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), locale = old_locale) %>%
+    prep()
+
+  new_res <- bake(date_rec, new_data = examples)
+
+  expect_equal(ref_res, new_res)
+})
+
+test_that("can bake and recipes with no locale", {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors()) %>%
+    prep()
+
+  date_rec$steps[[1]]$locale <- NULL
+
+  expect_error(
+    date_res <- bake(date_rec, new_data = examples, all_predictors()),
+    NA
+  )
+})
+
 test_that("can prep recipes with no keep_original_cols", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
@@ -165,3 +216,17 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(Dan, features = feats) %>%
+    update_role(Dan, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  date_rec <- prep(date_rec, training = examples)
+  date_res <- bake(date_rec, new_data = examples)
+
+  expect_error(bake(date_rec, new_data = examples[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+

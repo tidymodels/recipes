@@ -107,10 +107,16 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (those variables used to impute), and \code{neighbors} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -149,6 +155,7 @@ cbind(
 
 tidy(ratio_recipe, number = 1)
 tidy(ratio_recipe2, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Gower, C. (1971) "A general coefficient of similarity and some

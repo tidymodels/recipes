@@ -64,10 +64,16 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{ordered} is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
-library(modeldata)
-data(attrition)
+data(attrition, package = "modeldata")
 
 attrition \%>\%
   group_by(StockOptionLevel) \%>\%
@@ -120,6 +126,7 @@ ceo <- attrition \%>\%
   mutate(MonthlyIncome = 10^10)
 
 bake(rec, ceo)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

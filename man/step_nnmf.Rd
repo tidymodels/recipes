@@ -107,10 +107,15 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 components is returned.
 }
 
-\examples{
+\section{Case weights}{
 
-library(modeldata)
-data(biomass)
+
+The underlying operation does not allow for case weights.
+}
+
+\examples{
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 # rec <- recipe(HHV ~ ., data = biomass) \%>\%
 #   update_role(sample, new_role = "id var") \%>\%
@@ -123,6 +128,7 @@ data(biomass)
 # library(ggplot2)
 # bake(rec, new_data = NULL) \%>\%
 #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 

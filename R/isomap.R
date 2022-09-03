@@ -50,6 +50,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the selectors or variables selected) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.
 #'  *Advances in Neural Information Processing Systems*.
@@ -58,10 +60,9 @@
 #' \pkg{dimRed}, a framework for dimensionality reduction,
 #'   https://github.com/gdkrmr
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' \donttest{
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -192,6 +193,8 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_isomap <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   if (object$num_terms > 0 && length(object$columns) > 0L) {
     isomap_vars <- colnames(environment(object$res@apply)$indata)
     suppressMessages({
@@ -205,9 +208,6 @@ bake.step_isomap <- function(object, new_data, ...) {
     keep_original_cols <- get_keep_original_cols(object)
     if (!keep_original_cols) {
       new_data <- new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
-    }
-    if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
     }
   }
   new_data

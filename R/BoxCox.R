@@ -38,6 +38,8 @@
 #' `terms` (the selectors or variables selected) and `value` (the
 #' lambda estimate) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Sakia, R. M. (1992). The Box-Cox transformation technique:
 #'   A review. *The Statistician*, 169-178..
 #' @examples
@@ -131,12 +133,13 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_BoxCox <- function(object, new_data, ...) {
   param <- names(object$lambdas)
+  check_new_data(param, object, new_data)
 
   for (i in seq_along(object$lambdas)) {
     new_data[, param[i]] <- bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
   }
 
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_BoxCox <-
@@ -167,6 +170,7 @@ bc_trans <- function(x, lambda, eps = .001) {
 
 ## helper for the log-likelihood calc
 
+# TODO case weights: Is there a weighted version of this likelihood?
 ll_bc <- function(lambda, y, gm, eps = .001) {
   n <- length(y)
   gm0 <- gm^(lambda - 1)

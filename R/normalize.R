@@ -28,9 +28,10 @@
 #'  deviations and means), and `statistic` for the type of value is
 #'  returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @template case-weights-unsupervised
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -80,13 +81,14 @@ step_normalize <-
         sds = sds,
         na_rm = na_rm,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_normalize_new <-
-  function(terms, role, trained, means, sds, na_rm, skip, id) {
+  function(terms, role, trained, means, sds, na_rm, skip, id, case_weights) {
     step(
       subclass = "normalize",
       terms = terms,
@@ -96,7 +98,8 @@ step_normalize_new <-
       sds = sds,
       na_rm = na_rm,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
@@ -120,11 +123,17 @@ sd_check <- function(x) {
 #' @export
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
 
-  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
-  sds   <- vapply(training[, col_names], sd,   c(sd = 0),   na.rm = x$na_rm)
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
+  means <- averages(training[, col_names], wts, na_rm = x$na_rm)
+  vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
+  sds <- sqrt(vars)
   sds <- sd_check(sds)
 
   step_normalize_new(
@@ -135,12 +144,15 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
     sds = sds,
     na_rm = x$na_rm,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
+  check_new_data(names(object$means), object, new_data)
+
   for (column in names(object$means)) {
     mean <- object$means[column]
     sd <- object$sds[column]
@@ -152,7 +164,8 @@ bake.step_normalize <- function(object, new_data, ...) {
 print.step_normalize <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Centering and scaling for "
-    print_step(names(x$sds), x$terms, x$trained, title, width)
+    print_step(names(x$sds), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

@@ -4,7 +4,7 @@
 [![R-CMD-check](https://github.com/tidymodels/recipes/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/recipes/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/recipes/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/recipes?branch=main)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/recipes)](https://CRAN.R-project.org/package=recipes)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/recipes)](https://CRAN.R-project.org/package=recipes)
 [![Downloads](https://cranlogs.r-pkg.org/badges/recipes)](https://CRAN.R-project.org/package=recipes)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 
@@ -67,10 +67,6 @@ devtools::install_github("tidymodels/recipes")
 ```
 
 ## Contributing
-
-This project is released with a [Contributor Code of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
 
 -   For questions and discussions about tidymodels packages, modeling,
     and machine learning, please [post on RStudio

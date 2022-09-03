@@ -34,10 +34,11 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
 #' `is_lat_lon`, `name`, and `id` is returned.
-#' @examples
 #'
-#' library(modeldata)
-#' data(Smithsonian)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Smithsonian, package = "modeldata")
 #'
 #' # How close are the museums to Union Station?
 #' near_station <- recipe(~., data = Smithsonian) %>%
@@ -176,6 +177,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   )
 }
 
+# TODO case weights for distances
 geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
   sqrt((x_1 - x_2)^2L + (y_1 - y_2)^2L)
 }
@@ -211,6 +213,8 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3) {
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   object <- check_is_lat_lon(object)
 
   if (object$is_lat_lon) {

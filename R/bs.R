@@ -31,9 +31,10 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -157,6 +158,8 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bs <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
+
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   bs_values <-
@@ -175,9 +178,6 @@ bake.step_bs <- function(object, new_data, ...) {
     new_data[, orig_var] <- NULL
   }
   new_data <- bind_cols(new_data, as_tibble(bs_values))
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

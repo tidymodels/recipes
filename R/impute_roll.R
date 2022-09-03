@@ -44,6 +44,8 @@
 #'  `terms` (the selectors or variables selected) and `window`
 #'  (the window size) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(lubridate)
 #'
@@ -203,6 +205,8 @@ impute_rolling <- function(inds, x, statfun) {
 
 #' @export
 bake.step_impute_roll <- function(object, new_data, ...) {
+  check_new_data(unname(object$columns), object, new_data)
+
   n <- nrow(new_data)
   missing_ind <- lapply(
     new_data[, object$columns],
@@ -218,7 +222,7 @@ bake.step_impute_roll <- function(object, new_data, ...) {
       impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)
     new_data[missing_ind[[i]], imp_var] <- estimates
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

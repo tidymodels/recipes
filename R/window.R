@@ -48,7 +48,9 @@
 #' `terms` (the selectors or variables selected), `statistic` (the
 #' summary function name), and `size` is returned.
 #'
-#' @examples
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed(c("RcppML", "ggplot2"))
 #' library(recipes)
 #' library(dplyr)
 #' library(rlang)
@@ -247,6 +249,8 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
 #' @export
 bake.step_window <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   for (i in seq(along.with = object$columns)) {
     if (!is.null(object$names)) {
       new_data[, object$names[i]] <-

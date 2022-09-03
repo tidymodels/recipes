@@ -84,3 +84,41 @@
       
       Collapsing factor levels for <none> [trained]
 
+# othering with case weights
+
+    Code
+      others
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 732 data points and no missing data.
+      
+      Operations:
+      
+      Collapsing factor levels for city [weighted, trained]
+
+---
+
+    Code
+      others
+    Output
+      Recipe
+      
+      Inputs:
+      
+               role #variables
+       case_weights          1
+          predictor          1
+      
+      Training data contained 732 data points and no missing data.
+      
+      Operations:
+      
+      Collapsing factor levels for city [ignored weights, trained]
+

@@ -71,9 +71,15 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(covers)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(covers, package = "modeldata")
 
 rec <- recipe(~description, covers) \%>\%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
@@ -88,6 +94,7 @@ results <- bake(rec, new_data = covers)
 table(results$rocks, results$more_rocks)
 
 tidy(rec, number = 3)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

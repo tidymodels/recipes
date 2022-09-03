@@ -19,6 +19,9 @@
 #' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @export
 #' @rdname step_lag
@@ -98,6 +101,8 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_lag <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   if (!all(object$lag == as.integer(object$lag))) {
     rlang::abort("step_lag requires 'lag' argument to be integer valued.")
   }
@@ -117,7 +122,8 @@ bake.step_lag <- function(object, new_data, ...) {
   newname <- as.character(glue::glue("{object$prefix}{grid$lag_val}_{grid$col}"))
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
-  as_tibble(mutate(new_data, !!!calls))
+  new_data <- mutate(new_data, !!!calls)
+  new_data
 }
 
 print.step_lag <-

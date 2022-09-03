@@ -15,6 +15,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be permuted) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family row operation steps
 #' @export
 #' @examples
@@ -78,6 +81,8 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_shuffle <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   if (nrow(new_data) == 1) {
     rlang::warn("`new_data` contains a single row; unable to shuffle")
     return(new_data)
@@ -89,7 +94,7 @@ bake.step_shuffle <- function(object, new_data, ...) {
         sample(getElement(new_data, object$columns[i]))
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_shuffle <-

@@ -22,6 +22,8 @@
 #'
 #' @template dummy-naming
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' library(tibble)
 #' languages <- tribble(
@@ -159,6 +161,8 @@ multi_dummy_check_type <- function(dat) {
 bake.step_dummy_multi_choice <- function(object, new_data, ...) {
   col_names <- object$input
 
+  check_new_data(col_names, object, new_data)
+
   indicators <- multi_dummy(new_data[, col_names], object$levels)
 
   prefix <- object$prefix
@@ -176,7 +180,7 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
     new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
   }
 
-  as_tibble(new_data)
+  new_data
 }
 
 multi_dummy <- function(x, y) {

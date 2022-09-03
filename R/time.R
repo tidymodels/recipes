@@ -142,6 +142,7 @@ prep.step_time <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_time <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
 
   for (column in object$columns) {
     time_values <- get_time_features(

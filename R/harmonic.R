@@ -58,6 +58,7 @@
 #'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
 #'  1.0 with `cycle_size` equal to 3600.
 #'
+#' @template case-weights-not-supported
 #'
 #' @references Doran, H. E., & Quilkey, J. J. (1972).
 #'   Harmonic analysis of seasonal data: some important properties.
@@ -67,7 +68,7 @@
 #'   The harmonic analysis of tidal model time series.
 #'   Advances in water resources, 12(3), 109-120.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("ggplot2")
 #' library(ggplot2, quietly = TRUE)
 #' library(dplyr)
 #'
@@ -298,6 +299,7 @@ sin_cos <- function(x,
 #' @export
 bake.step_harmonic <- function(object, new_data, ...) {
   col_names <- names(object$starting_val)
+  check_new_data(col_names, object, new_data)
 
   # calculate sin and cos columns
   for (i in seq_along(col_names)) {
@@ -323,8 +325,7 @@ bake.step_harmonic <- function(object, new_data, ...) {
     new_data <-
       new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
   }
-
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export

@@ -190,7 +190,7 @@ bake.check_range <- function(object,
       colname
     )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_range <-

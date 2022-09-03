@@ -18,11 +18,13 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `model` (the
 #' median value) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' purrr::map_dbl(credit_data, function(x) mean(is.na(x)))
@@ -97,6 +99,8 @@ prep.step_indicate_na <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_indicate_na <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
 
   cols <- purrr::map(
@@ -108,8 +112,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
   cols <- dplyr::rename_with(cols, ~ paste0(object$prefix, "_", .x))
 
   new_data <- dplyr::bind_cols(new_data, cols)
-
-  tibble::as_tibble(new_data)
+  new_data
 }
 
 print.step_indicate_na <-

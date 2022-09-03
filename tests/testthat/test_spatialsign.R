@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass
@@ -102,4 +102,51 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("centering with case weights", {
+  mtcars_freq <- mtcars
+  mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_freq) %>%
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rowSums(bake(rec, new_data = NULL, -c(cyl, mpg))^2),
+    as.numeric(mtcars_freq$cyl)
+  )
+
+  expect_snapshot(rec)
+
+  # ----------------------------------------------------------------------------
+
+  mtcars_imp <- mtcars
+  mtcars_imp$wt <- importance_weights(mtcars_imp$wt)
+
+  rec <-
+    recipe(mpg ~ ., mtcars_imp) %>%
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
+
+  expect_equal(
+    rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),
+    rep(1, nrow(mtcars_imp))
+  )
+
+  expect_snapshot(rec)
+})
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  sp_sign <- rec %>%
+    step_spatialsign(carbon, hydrogen) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
+
+  expect_error(bake(sp_sign_trained, new_data = biomass[,c(-3)]),
+               class = "new_data_missing_column")
 })

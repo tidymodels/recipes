@@ -4,7 +4,14 @@
 \alias{recipes_eval_select}
 \title{Evaluate a selection with tidyselect semantics specific to recipes}
 \usage{
-recipes_eval_select(quos, data, info, ..., allow_rename = FALSE)
+recipes_eval_select(
+  quos,
+  data,
+  info,
+  ...,
+  allow_rename = FALSE,
+  check_case_weights = TRUE
+)
 }
 \arguments{
 \item{quos}{A list of quosures describing the selection. This is generally
@@ -24,6 +31,10 @@ data passed to the \code{\link[=prep]{prep()}} method of your step.}
 \item{allow_rename}{Should the renaming syntax \code{c(foo = bar)} be allowed?
 This is rarely required, and is currently only used by \code{\link[=step_select]{step_select()}}.
 It is unlikely that your step will need renaming capabilities.}
+
+\item{check_case_weights}{Should selecting case weights throw an error?
+Defaults to \code{TRUE}. This is rarely changed and only needed in \code{\link[=juice]{juice()}},
+\code{\link[=bake.recipe]{bake.recipe()}}, \code{\link[=update_role]{update_role()}}, and \code{\link[=add_role]{add_role()}}.}
 }
 \value{
 A named character vector containing the evaluated selection. The names are
@@ -39,9 +50,9 @@ for more information about the unique recipes selectors.
 This is a developer tool that is only useful for creating new recipes steps.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(rlang)
-library(modeldata)
-data(scat)
+data(scat, package = "modeldata")
 
 rec <- recipe(Species ~ ., data = scat)
 
@@ -51,4 +62,5 @@ info
 quos <- quos(all_numeric_predictors(), where(is.factor))
 
 recipes_eval_select(quos, scat, info)
+\dontshow{\}) # examplesIf}
 }

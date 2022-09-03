@@ -57,13 +57,15 @@
 #' above. When you `tidy()` this step, a tibble with columns `terms` (the
 #' selectors or variables selected), `components`, and `values` is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references
 #' \url{https://en.wikipedia.org/wiki/Partial_least_squares_regression}
 #'
 #' Rohart F, Gautier B, Singh A, Lê Cao K-A (2017) _mixOmics: An R package for
 #' 'omics feature selection and multiple data integration_. PLoS Comput Biol
 #' 13(11): e1005752. \doi{10.1371/journal.pcbi.1005752}
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' # requires the Bioconductor mixOmics package
 #' data(biomass, package = "modeldata")
 #'
@@ -362,6 +364,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
+  check_new_data(get_columns_pls(object), object, new_data)
+
   if (object$num_comp > 0 && length(get_columns_pls(object)) > 0 && pls_worked(object$res)) {
     if (use_old_pls(object$res)) {
       comps <- old_pls_project(object$res, new_data)
@@ -385,10 +389,6 @@ bake.step_pls <- function(object, new_data, ...) {
       pls_vars <- names(object$res$mu)
       keep_vars <- !(colnames(new_data) %in% pls_vars)
       new_data <- new_data[, keep_vars, drop = FALSE]
-    }
-
-    if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
     }
   }
   new_data

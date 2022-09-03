@@ -27,11 +27,13 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `result` (the
 #' new column name) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(covers)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(covers, package = "modeldata")
 #'
 #' rec <- recipe(~description, covers) %>%
 #'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
@@ -137,6 +139,8 @@ bake.step_regex <- function(object, new_data, ...) {
     new_data[[object$result]] <- rep(0, times = nrow(new_data))
     return(new_data)
   }
+
+  check_new_data(object$input, object, new_data)
 
   ## sub in options
   regex <- expr(

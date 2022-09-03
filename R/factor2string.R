@@ -20,9 +20,10 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' rec <- recipe(~ city + zip, data = Sacramento)
 #'
@@ -101,11 +102,9 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_factor2string <- function(object, new_data, ...) {
-  new_data[, object$columns] <- map(new_data[, object$columns], as.character)
+  check_new_data(names(object$columns), object, new_data)
 
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
+  new_data[, object$columns] <- map(new_data[, object$columns], as.character)
 
   new_data
 }

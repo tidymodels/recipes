@@ -30,12 +30,14 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `denom` is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family multivariate transformation steps
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -143,6 +145,8 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
+  check_new_data(unname(object$columns$top), object, new_data)
+
   res <- purrr::map2(
     new_data[, object$columns$top],
     new_data[, object$columns$bottom],
@@ -163,10 +167,6 @@ bake.step_ratio <- function(object, new_data, ...) {
   if (!keep_original_cols) {
     union_cols <- union(object$columns$top, object$columns$bottom)
     new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
-  }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
   }
   new_data
 }

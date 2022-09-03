@@ -24,9 +24,10 @@
 #' columns `terms` (the selectors or variables selected) and `model`
 #' (themedian value) is returned.
 #'
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @template case-weights-unsupervised
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -68,7 +69,8 @@ step_impute_median <-
         trained = trained,
         medians = medians,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
@@ -100,7 +102,7 @@ step_medianimpute <-
   }
 
 step_impute_median_new <-
-  function(terms, role, trained, medians, skip, id) {
+  function(terms, role, trained, medians, skip, id, case_weights) {
     step(
       subclass = "impute_median",
       terms = terms,
@@ -108,17 +110,23 @@ step_impute_median_new <-
       trained = trained,
       medians = medians,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
 #' @export
 prep.step_impute_median <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
   check_type(training[, col_names])
 
-  medians <- lapply(training[, col_names], median, na.rm = TRUE)
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
+  medians <- medians(training[, col_names], wts = wts)
   medians <- purrr::map2(medians, training[, col_names], cast)
 
   step_impute_median_new(
@@ -127,7 +135,8 @@ prep.step_impute_median <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     medians = medians,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
@@ -137,13 +146,15 @@ prep.step_medianimpute <- prep.step_impute_median
 
 #' @export
 bake.step_impute_median <- function(object, new_data, ...) {
+  check_new_data(names(object$medians), object, new_data)
+
   for (i in names(object$medians)) {
     if (any(is.na(new_data[[i]]))) {
       new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])
     }
     new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
   }
-  as_tibble(new_data)
+  new_data
 }
 
 #' @export
@@ -154,7 +165,8 @@ bake.step_medianimpute <- bake.step_impute_median
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Median imputation for "
-    print_step(names(x$medians), x$terms, x$trained, title, width)
+    print_step(names(x$medians), x$terms, x$trained, title, width,
+               case_weights = x$case_weights)
     invisible(x)
   }
 

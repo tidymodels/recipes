@@ -17,24 +17,24 @@ lvls_breaks_4 <- c("[missing]", "[-Inf,25.8]", "(25.8,50.5]", "(50.5,75.2]", "(7
 lvls_breaks_4_bin <- c("bin_missing", "bin1", "bin2", "bin3", "bin4")
 
 test_that("default args", {
-  bin_1 <- discretize(ex_tr$x1)
+  bin_1 <- discretize(ex_tr$x1, prefix = NULL)
   pred_1 <- predict(bin_1, ex_te$x1)
   exp_1 <- factor(lvls_breaks_4[c(2, 3, 5, 1)], levels = lvls_breaks_4)
   expect_equal(pred_1, exp_1)
 
-  bin_1 <- discretize(ex_tr$x1, prefix = "bin")
+  bin_1 <- discretize(ex_tr$x1)
   pred_1 <- predict(bin_1, ex_te$x1)
   exp_1 <- factor(c("bin1", "bin2", "bin4", "bin_missing"), levels = lvls_breaks_4_bin)
   expect_equal(pred_1, exp_1)
 })
 
 test_that("NA values", {
-  bin_2 <- discretize(ex_tr$x1, keep_na = FALSE)
+  bin_2 <- discretize(ex_tr$x1, keep_na = FALSE, prefix = NULL)
   pred_2 <- predict(bin_2, ex_te$x1)
   exp_2 <- factor(lvls_breaks_4[c(2, 3, 5, NA)], levels = lvls_breaks_4[-1])
   expect_equal(pred_2, exp_2)
 
-  bin_2 <- discretize(ex_tr$x1, keep_na = FALSE, prefix = "bin")
+  bin_2 <- discretize(ex_tr$x1, keep_na = FALSE)
   pred_2 <- predict(bin_2, ex_te$x1)
   exp_2 <- factor(c("bin1", "bin2", "bin4", NA), levels = lvls_breaks_4_bin[-1])
   expect_equal(pred_2, exp_2)
@@ -56,7 +56,7 @@ test_that("printing of discretize()", {
 })
 
 test_that("NA values from out of range", {
-  bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE)
+  bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE, prefix = NULL)
   pred_3 <- predict(bin_3, ex_te$x1)
   exp_3 <- factor(
     c("[1,25.8]", "(25.8,50.5]", NA, NA),
@@ -64,7 +64,7 @@ test_that("NA values from out of range", {
   )
   expect_equal(pred_3, exp_3)
 
-  bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE, prefix = "bin")
+  bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE)
   pred_3 <- predict(bin_3, ex_te$x1)
   exp_3 <- factor(c("bin1", "bin2", NA, NA), levels = lvls_breaks_4_bin[-1])
   expect_equal(pred_3, exp_3)
@@ -85,7 +85,8 @@ test_that("NA values with step_discretize (issue #127)", {
       na.rm = TRUE
     )
 
-  opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = TRUE)
+  # We expect na.rm to be overwritten
+  opts <- list(min.unique = 2, cuts = 2, keep_na = TRUE, na.rm = FALSE)
 
   rec <- recipe(~., data = iris_na) %>%
     step_discretize(sepal_na, options = opts) %>%
@@ -137,9 +138,9 @@ test_that("multiple column prefix", {
 
 test_that("bad args", {
   expect_snapshot(error = TRUE,
-    recipe(~., data = ex_tr) %>%
-      step_discretize(x1, num_breaks = 1) %>%
-      prep()
+                  recipe(~., data = ex_tr) %>%
+                    step_discretize(x1, num_breaks = 1) %>%
+                    prep()
   )
   expect_snapshot(
     recipe(~., data = ex_tr) %>%
@@ -214,4 +215,15 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(cyl ~ ., mtcars)
+  rec <- step_discretize(rec, mpg, min_unique = 3) %>%
+    update_role(mpg, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  rec <- prep(rec, mtcars)
+
+  expect_error(bake(rec, new_data = mtcars[, 2:ncol(mtcars)]),
+               class = "new_data_missing_column")
 })

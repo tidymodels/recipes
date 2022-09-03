@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
 library(dplyr)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
 ## -----------------------------------------------------------------------------
 
@@ -317,4 +317,18 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+    step_pls(carbon, outcome = "HHV", num_comp = 3) %>%
+    update_role(carbon, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec <- prep(rec)
+
+  expect_error(bake(rec, new_data = biom_tr[, c(-1)]),
+               class = "new_data_missing_column")
 })

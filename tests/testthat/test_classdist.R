@@ -143,3 +143,85 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("case weights", {
+  set.seed(1)
+  wts <- runif(32)
+
+  means_exp <- colMeans(mtcars)
+  means_wts <- recipes:::get_center(mtcars, wts = wts)
+  means_no  <- recipes:::get_center(mtcars)
+  means_wts_exp <- purrr::map_dbl(mtcars, weighted.mean, w = wts)
+
+  expect_equal(means_wts, means_wts_exp)
+  expect_equal(means_no, means_exp)
+  expect_error(
+    recipes:::get_center(mtcars, wts = wts, mfun = median),
+    "The centering function requested cannot be used with case weights"
+  )
+
+  # ------------------------------------------------------------------------------
+
+  cov_exp <- cov(mtcars)
+  cov_wts <- recipes:::get_both(mtcars, wts = wts)
+  cov_no  <- recipes:::get_both(mtcars)
+  cov_wts_exp <- cov.wt(mtcars, wt = wts)$cov
+  expect_equal(cov_wts$scale, cov_wts_exp)
+  expect_equal(cov_no$scale, cov_exp)
+  expect_equal(cov_wts$center, means_wts_exp)
+  expect_equal(cov_no$center, means_exp)
+  expect_error(
+    recipes:::get_both(mtcars, wts = wts, mfun = median),
+    "The centering function requested cannot be used with case weights"
+  )
+  expect_error(
+    recipes:::get_both(mtcars, wts = wts, cfun = mad),
+    "The variance function requested cannot be used with case weights"
+  )
+
+  # ------------------------------------------------------------------------------
+
+  iris1 <- iris
+  iris1$wts <- importance_weights(iris1$Petal.Width)
+
+  rec_prep <- recipe(Species ~ ., data = iris1) %>%
+    step_classdist(all_predictors(), class = "Species") %>%
+    prep()
+
+  ref_objects <- split(iris1, ~Species) %>%
+    purrr::map(~get_both(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts)))
+
+  expect_equal(
+    rec_prep$steps[[1]]$objects,
+    ref_objects
+  )
+
+  rec_prep <- recipe(Species ~ ., data = iris1) %>%
+    step_classdist(all_predictors(), class = "Species", pool = TRUE) %>%
+    prep()
+
+  ref_objects_means <- split(iris1, ~Species) %>%
+    purrr::map(~averages(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts)))
+
+  ref_object_cov <- covariances(iris1[1:4], wts = iris1$wts)
+
+  expect_equal(
+    rec_prep$steps[[1]]$objects,
+    list(center = ref_objects_means, scale = ref_object_cov)
+  )
+
+  expect_snapshot(rec_prep)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(Petal.Length, class = "Species", log = FALSE)  %>%
+    update_role(Petal.Length, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[,c(-3)]),
+               class = "new_data_missing_column")
+})

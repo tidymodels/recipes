@@ -1,5 +1,4 @@
 library(testthat)
-library(kernlab)
 library(recipes)
 
 
@@ -21,7 +20,7 @@ test_that("correct kernel PCA values", {
   pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
-  pca_exp <- kpca(as.matrix(tr_dat[, -1]),
+  pca_exp <- kernlab::kpca(as.matrix(tr_dat[, -1]),
     kernel = kpca_rec$steps[[1]]$options$kernel,
     kpar = kpca_rec$steps[[1]]$options$kpar
   )
@@ -56,6 +55,7 @@ test_that("printing", {
 
 
 test_that("No kPCA comps", {
+  skip_if_not_installed("kernlab")
   suppressWarnings(
     pca_extract <- rec %>%
       step_kpca(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
@@ -158,4 +158,18 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6) %>%
+    update_role(X2, X3, X4, X5, X6, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+
+  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
+               class = "new_data_missing_column")
 })

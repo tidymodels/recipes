@@ -21,12 +21,14 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `ordered` is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(attrition)
+#' data(attrition, package = "modeldata")
 #'
 #' attrition %>%
 #'   group_by(StockOptionLevel) %>%
@@ -170,6 +172,8 @@ make_factor_num <- function(x, lvl, ord, foo) {
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
+  check_new_data(col_names, object, new_data)
+
   lvls <- object$levels[names(object$levels) == "..levels"]
   object$levels <- object$levels[names(object$levels) != "..levels"]
 
@@ -180,10 +184,6 @@ bake.step_num2factor <- function(object, new_data, ...) {
       ord = object$ordered[1],
       foo = object$transform
     )
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

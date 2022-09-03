@@ -53,9 +53,11 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the interaction effects) is returned.
-#' @examples
-#' library(modeldata)
-#' data(penguins)
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(penguins, package = "modeldata")
 #' penguins <- penguins %>% na.omit()
 #'
 #' rec <- recipe(flipper_length_mm ~ ., data = penguins)
@@ -196,6 +198,8 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_interact <- function(object, new_data, ...) {
+  col_names <- unlist(lapply(object$objects, function(x) all.vars(rlang::f_rhs(x))))
+  check_new_data(col_names, object, new_data)
 
   # When the interaction specification failed, just move on
   if (isTRUE(all(is.na(object$object)))) {
@@ -229,9 +233,6 @@ bake.step_interact <- function(object, new_data, ...) {
   colnames(out) <-
     gsub(":", object$sep, unlist(lapply(res, colnames)))
   new_data <- bind_cols(new_data, as_tibble(out))
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
   new_data
 }
 

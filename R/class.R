@@ -35,10 +35,11 @@
 #'  `terms` (the selectors or variables selected) and `value` (the type)
 #'  is returned.
 #'
-#' @examples
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(Sacramento)
+#' data(Sacramento, package = "modeldata")
 #'
 #' # Learn the classes on the train set
 #' train <- Sacramento[1:500, ]
@@ -192,7 +193,7 @@ bake.check_class <- function(object,
     MoreArgs = list(aa = object$allow_additional)
   )
 
-  as_tibble(new_data)
+  new_data
 }
 
 print.check_class <-

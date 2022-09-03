@@ -20,6 +20,9 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected), `inverse`, and `func` is
 #' returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(rnorm(40), ncol = 2)
@@ -102,6 +105,8 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_hyperbolic <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   func <- if (object$inverse) {
     get(paste0("a", object$func))
   } else {
@@ -112,7 +117,7 @@ bake.step_hyperbolic <- function(object, new_data, ...) {
     new_data[, col_names[i]] <-
       func(getElement(new_data, col_names[i]))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_hyperbolic <-

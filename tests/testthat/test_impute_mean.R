@@ -1,8 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-library(modeldata)
-data(credit_data)
+skip_if_not_installed("modeldata")
+data(credit_data, package = "modeldata")
 
 
 set.seed(342)
@@ -163,3 +162,104 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("trim works", {
+  set.seed(1234)
+  x <- rnorm(1000)
+  x[sample(seq_along(x), 100)] <- NA
+
+  expect_equal(
+    purrr::map(seq(0, 1, by = 0.1), ~mean(x, trim = .x, na.rm = TRUE)),
+    purrr::map(seq(0, 1, by = 0.1), ~trim(x, trim = .x) %>% mean(na.rm = TRUE))
+  )
+})
+
+test_that("case weights", {
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = frequency_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    select(Age, Assets, Income) %>%
+    averages(wts = credit_tr_cw$Amount) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  # Trimmed
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income, trim = 0.2) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    dplyr::select(Age, Assets, Income) %>%
+    purrr::map(trim, trim = 0.2) %>%
+    purrr::map(weighted.mean,
+               w = as.numeric(credit_tr_cw$Amount),
+               na.rm = TRUE) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  expect_snapshot(impute_rec)
+
+  # ----------------------------------------------------------------------------
+
+  credit_tr_cw <- credit_tr %>%
+    mutate(Amount = importance_weights(Amount))
+
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    select(Age, Assets, Income) %>%
+    averages(wts = NULL) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  # Trimmed
+  impute_rec <- recipe(Price ~ ., data = credit_tr_cw) %>%
+    step_impute_mean(Age, Assets, Income, trim = 0.2) %>%
+    prep()
+
+  ref_means <- credit_tr %>%
+    dplyr::select(Age, Assets, Income) %>%
+    purrr::map(trim, trim = 0.2) %>%
+    purrr::map(~weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) %>%
+    purrr::map(round, 0)
+
+  expect_equal(
+    impute_rec$steps[[1]]$means,
+    ref_means
+  )
+
+  expect_snapshot(impute_rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_mean(Age) %>%
+    update_role(Age, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+
+  expect_error(bake(imputed, new_data = credit_te[, c(-5)]),
+               class = "new_data_missing_column")
+})
+

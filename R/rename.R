@@ -20,6 +20,8 @@
 #'  columns `values` which contains the `rename` expressions as character
 #'  strings (and are not reparsable) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family dplyr steps
 #' @export
 #' @examples

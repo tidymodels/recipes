@@ -14,6 +14,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
+#'
+#' @template case-weights-not-supported
+#'
 #' @export
 #' @examples
 #' set.seed(313)
@@ -80,12 +83,14 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
   for (i in seq_along(col_names)) {
     new_data[, col_names[i]] <-
       sqrt(getElement(new_data, col_names[i]))
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {

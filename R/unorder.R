@@ -16,6 +16,8 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' lmh <- c("Low", "Med", "High")
 #'
@@ -105,13 +107,15 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unorder <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       factor(as.character(getElement(new_data, object$columns[i])),
         levels = levels(getElement(new_data, object$columns[i]))
       )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 

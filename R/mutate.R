@@ -24,6 +24,8 @@
 #'  `values`, which contains the `mutate()` expressions as character
 #'  strings (and are not reparsable), is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @family individual transformation steps
 #' @family dplyr steps
 #' @export

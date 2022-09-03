@@ -76,10 +76,16 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 estimated threshold is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 ## Truncate some values to emulate what a lower limit of
 ## the measurement system might look like
@@ -109,6 +115,7 @@ transformed_te <- bake(impute_rec, biomass_te)
 plot(transformed_te$carbon, biomass_te$carbon,
   ylab = "pre-imputation", xlab = "imputed"
 )
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other imputation steps: 

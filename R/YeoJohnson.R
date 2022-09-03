@@ -37,12 +37,12 @@
 #' `terms` (the selectors or variables selected) and `value` (the
 #' lambda estimate) is returned.
 #'
+#' @template case-weights-not-supported
+#'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. *Biometrika*.
-#' @examples
-#'
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -130,6 +130,8 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_YeoJohnson <- function(object, new_data, ...) {
+  check_new_data(names(object$lambdas), object, new_data)
+
   if (length(object$lambdas) == 0) {
     return(as_tibble(new_data))
   }
@@ -140,7 +142,7 @@ bake.step_YeoJohnson <- function(object, new_data, ...) {
         lambda = object$lambdas[param[i]]
       )
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_YeoJohnson <-
@@ -168,7 +170,7 @@ yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
       x <- as.vector(x)
     }
   }
-
+  # TODO case weights: can we use weights here?
   if (is.null(ind_neg)) {
     dat_neg <- x < 0
     ind_neg <- list(is = which(dat_neg), not = which(!dat_neg))

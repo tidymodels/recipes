@@ -1,6 +1,7 @@
 library(testthat)
 library(recipes)
 
+skip_if_not_installed("modeldata")
 data(tate_text, package = "modeldata")
 
 color_examples <- tibble(
@@ -271,4 +272,70 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("case weights", {
+  mini_tate_cw <- mini_tate %>%
+    mutate(wts = frequency_weights(c(1, 1, 1, 5)))
+
+  dummy <- recipe(~medium + wts, data = mini_tate_cw) %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "", threshold = 6)
+
+  dummy_prepped <- prep(dummy)
+  dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
+
+  exp_results <- tibble(
+    medium_paper = c(1, 1, 1, 1),
+    medium_other = c(2, 1, 1, 2)
+  )
+
+  expect_identical(dummy_pred, exp_results)
+  expect_identical(
+    tidy(dummy_prepped, 1),
+    tibble(
+      terms = "medium",
+      columns = "paper",
+      id = ""
+    )
+  )
+
+  expect_snapshot(dummy_prepped)
+
+  # importance weights are not considered
+  mini_tate_cw <- mini_tate %>%
+    mutate(wts = importance_weights(c(1, 1, 1, 5)))
+
+  dummy <- recipe(~medium + wts, data = mini_tate_cw) %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "", threshold = 6)
+
+  dummy_prepped <- prep(dummy)
+  dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
+
+  exp_results <- tibble(
+    medium_other = c(3, 2, 2, 3)
+  )
+
+  expect_identical(dummy_pred, exp_results)
+  expect_identical(
+    tidy(dummy_prepped, 1),
+    tibble(
+      terms = character(),
+      columns = character(),
+      id = character()
+    )
+  )
+
+  expect_snapshot(dummy_prepped)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  dummy <- recipe(~medium, data = mini_tate) %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", id = "") %>%
+    update_role(medium, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  dummy_prepped <- prep(dummy)
+
+  expect_error(bake(dummy_prepped, new_data = mini_tate[, 1:3]),
+               class = "new_data_missing_column")
 })

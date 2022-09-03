@@ -87,9 +87,15 @@ in the loss function of Support Vector Machines, where it penalizes
 residuals only if they are within a certain margin of the decision boundary.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -105,6 +111,7 @@ transformed_te <- rec \%>\%
   bake(biomass_te)
 
 transformed_te
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other individual transformation steps: 

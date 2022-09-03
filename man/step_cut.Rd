@@ -60,6 +60,12 @@ points will end up in the last.
 \code{step_cut()} will call \code{base::cut()} in the baking step with
 \code{include.lowest} set to \code{TRUE}.
 }
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 df <- data.frame(x = 1:10, y = 5:14)
 rec <- recipe(df)
@@ -88,7 +94,7 @@ rec \%>\%
 
 # It is up to you if you want values outside the
 # range learned at prep to be included
-new_df <- data.frame(x = 1:11)
+new_df <- data.frame(x = 1:11, y = 5:15)
 rec \%>\%
   step_cut(x, breaks = 5, include_outside_range = TRUE) \%>\%
   prep() \%>\%

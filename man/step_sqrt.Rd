@@ -52,6 +52,12 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 set.seed(313)
 examples <- matrix(rnorm(40)^2, ncol = 2)

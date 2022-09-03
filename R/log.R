@@ -21,6 +21,9 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected) and `base`.
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(exp(rnorm(40)), ncol = 2)
@@ -117,6 +120,8 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_log <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
   # for backward compat
   if (all(names(object) != "offset")) {
@@ -141,7 +146,7 @@ bake.step_log <- function(object, new_data, ...) {
         )
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 print.step_log <-

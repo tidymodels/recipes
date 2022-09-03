@@ -59,9 +59,15 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 median value) is returned.
 }
 
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data("credit_data")
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data("credit_data", package = "modeldata")
 
 ## missing data per column
 purrr::map_dbl(credit_data, function(x) mean(is.na(x)))
@@ -80,6 +86,7 @@ impute_rec <- rec \%>\%
 imp_models <- prep(impute_rec, training = credit_tr)
 
 imputed_te <- bake(imp_models, new_data = credit_te, everything())
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

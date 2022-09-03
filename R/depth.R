@@ -57,7 +57,9 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `class` is returned.
 #'
-#' @examples
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("ddalpha")
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
@@ -172,6 +174,8 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
   x_names <- colnames(object$data[[1]])
+  check_new_data(x_names, object, new_data)
+
   x_data <- as.matrix(new_data[, x_names])
   res <- lapply(
     object$data,
@@ -184,9 +188,6 @@ bake.step_depth <- function(object, new_data, ...) {
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- bind_cols(new_data, res)
-  if (!is_tibble(res)) {
-    res <- as_tibble(res)
-  }
   res
 }
 

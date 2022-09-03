@@ -5,7 +5,7 @@
     Condition
       Error in `dplyr::mutate()`:
       ! Problem while computing `new_var = Sepal.Width * const`.
-      Caused by error:
+      Caused by error in `mask$eval_all_mutate()`:
       ! object 'const' not found
 
 # printing
