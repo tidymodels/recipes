@@ -72,7 +72,7 @@ test_that("bad args", {
     juice(rec, composition = "dgCMatrix")
   )
 
-  data("ames")
+  data("ames", package = "modeldata")
   expect_snapshot(error = TRUE,
     recipe(~., data = ames) %>%
       prep() %>%
