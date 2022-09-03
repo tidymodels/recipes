@@ -51,7 +51,7 @@
         prefix = "hello")) %>% prep()
     Condition
       Warning:
-      Note that the options `prefix` and `labels`will be applied to all variables
+      Note that the options `prefix` and `labels` will be applied to all variables
     Output
       Recipe
       
@@ -73,20 +73,9 @@
         labels = "hello")) %>% prep()
     Condition
       Warning:
-      Note that the options `prefix` and `labels`will be applied to all variables
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          2
-      
-      Training data contained 1000 data points and no missing data.
-      
-      Operations:
-      
-      Discretize numeric variables from x1, x2 [trained]
+      Note that the options `prefix` and `labels` will be applied to all variables
+      Error in `cut.default()`:
+      ! lengths of 'breaks' and 'labels' differ
 
 # bad args
 

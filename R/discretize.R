@@ -347,7 +347,7 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     rlang::warn(
       paste0(
-        "Note that the options `prefix` and `labels`",
+        "Note that the options `prefix` and `labels` ",
         "will be applied to all variables"
       )
     )

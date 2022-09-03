@@ -128,7 +128,7 @@ test_that("multiple column prefix", {
       prep()
   )
 
-  expect_snapshot(
+  expect_snapshot(error = TRUE,
     recipe(~., data = example_data) %>%
       step_discretize(x1, x2, options = list(labels = "hello")) %>%
       prep()
