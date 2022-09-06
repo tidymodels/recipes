@@ -2,6 +2,8 @@ library(testthat)
 library(recipes)
 library(tibble)
 
+r_version <- function() paste0("R", getRversion()[, 1:2])
+
 skip_if_not_installed("modeldata")
 data(Sacramento, package = "modeldata")
 
@@ -81,10 +83,16 @@ test_that("bag args", {
   single_step <- trained$steps[[1]]
   attr(single_step, "class") <- c("step_notidy", "step")
 
-  expect_snapshot(error = TRUE, tidy(single_step))
+  expect_snapshot(error = TRUE,
+    tidy(single_step),
+    variant = r_version()
+  )
 
   single_check <- trained$steps[[4]]
   attr(single_check, "class") <- c("check_notidy", "check")
 
-  expect_snapshot(error = TRUE, tidy(single_check))
+  expect_snapshot(error = TRUE,
+    tidy(single_check),
+    variant = r_version()
+  )
 })
