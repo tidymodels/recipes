@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-18.04,   r: 'release'}
+          - {os: ubuntu-20.04,   r: 'release'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -51,6 +51,7 @@ jobs:
             any::knitr
             any::rmarkdown
           needs: check
+          pak-version: devel
 
       - uses: r-lib/actions/check-r-package@v2
         with:
