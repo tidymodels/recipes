@@ -165,8 +165,7 @@ print.{which}_{name} <-
 
 create_tidy_method <- function(name, which) {
   glue("
-#' @rdname {which}_{name}
-#' @param x A `{which}_{name}` object.
+#' @rdname tidy.recipe
 #' @export
 tidy.{which}_{name} <- function(x, ...) {{
   if (is_trained(x)) {{
