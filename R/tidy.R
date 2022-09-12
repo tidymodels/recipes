@@ -61,7 +61,7 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   }
 
   if (length(number) != 1L) {
-    rlang::abort("If `number` is provided, it must be a length 1 character integer")
+    rlang::abort("If `number` is provided, it must be a length 1 integer vector.")
   }
 
   if (!is.na(id)) {
