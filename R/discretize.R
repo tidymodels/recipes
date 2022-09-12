@@ -226,7 +226,7 @@ print.discretize <-
       }
     } else {
       if (x$bins == 0) {
-        cat("Too few unique data points. No binning.")
+        cat("Too few unique data points. No binning was used.")
       } else {
         cat("Non-numeric data. No binning was used.")
       }

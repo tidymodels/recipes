@@ -42,7 +42,7 @@
     Code
       res
     Output
-      Too few unique data points. No binning.
+      Too few unique data points. No binning was used.
 
 # multiple column prefix
 
