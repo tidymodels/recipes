@@ -9,7 +9,7 @@
       tidy(trained, number = NULL)
     Condition
       Error in `tidy()`:
-      ! If `number` is provided, it must be a length 1 character integer
+      ! If `number` is provided, it must be a length 1 integer vector.
 
 ---
 
