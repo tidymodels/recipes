@@ -95,7 +95,12 @@ test_that("bad args", {
   )
 })
 
-
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_rollimpute()
+  )
+})
 
 test_that("printing", {
   seven_pt <- recipe(~., data = example_data) %>%

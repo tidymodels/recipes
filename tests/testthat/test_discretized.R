@@ -40,6 +40,21 @@ test_that("NA values", {
   expect_equal(pred_2, exp_2)
 })
 
+test_that("bad values", {
+  expect_snapshot(error = TRUE, discretize(letters))
+})
+
+test_that("printing of discretize()", {
+  expect_snapshot(discretize(1:100))
+  expect_snapshot(discretize(1:100, cuts = 6))
+  expect_snapshot(discretize(1:100, keep_na = FALSE))
+
+  expect_snapshot(
+    res <- discretize(1:2)
+  )
+  expect_snapshot(res)
+})
+
 test_that("NA values from out of range", {
   bin_3 <- discretize(ex_tr$x1, keep_na = FALSE, infs = FALSE, prefix = NULL)
   pred_3 <- predict(bin_3, ex_te$x1)
@@ -99,6 +114,25 @@ test_that("tidys", {
     id = ""
   )
   expect_equal(tidy(rec_trained, 1), tidy_exp_tr)
+})
+
+test_that("multiple column prefix", {
+  set.seed(1234)
+  example_data <- tibble(
+    x1 = rnorm(1000),
+    x2 = rnorm(1000)
+  )
+  expect_snapshot(
+    recipe(~., data = example_data) %>%
+      step_discretize(x1, x2, options = list(prefix = "hello")) %>%
+      prep()
+  )
+
+  expect_snapshot(error = TRUE,
+    recipe(~., data = example_data) %>%
+      step_discretize(x1, x2, options = list(labels = "hello")) %>%
+      prep()
+  )
 })
 
 

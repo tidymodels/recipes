@@ -93,6 +93,15 @@
        9 1        NA
       10 0         0
 
+# Deprecation warning
+
+    Code
+      recipe(~., data = mtcars) %>% step_dummy(preserve = TRUE)
+    Condition
+      Error:
+      ! The `preserve` argument of `step_dummy()` was deprecated in recipes 0.1.16 and is now defunct.
+      Please use the `keep_original_cols` argument instead.
+
 # printing
 
     Code

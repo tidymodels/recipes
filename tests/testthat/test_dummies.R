@@ -274,6 +274,13 @@ test_that("naming function", {
   )
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_dummy(preserve = TRUE)
+  )
+})
+
 test_that("printing", {
   rec <- recipe(sqft ~ ., data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip)

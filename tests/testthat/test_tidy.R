@@ -66,8 +66,25 @@ test_that("empty recipe", {
 
 
 test_that("bad args", {
+  trained <- prep(Sacramento_rec, training = Sacramento)
+
   expect_snapshot(error = TRUE, tidy(trained, number = NULL))
   expect_snapshot(error = TRUE, tidy(trained, number = 100))
   expect_snapshot(error = TRUE, tidy(trained, number = 1, id = "id"))
   expect_snapshot(error = TRUE, tidy(trained, id = "id"))
+  expect_snapshot(error = TRUE, tidy(trained, id = c("id", "id2")))
+})
+
+test_that("bag args", {
+  trained <- prep(Sacramento_rec, training = Sacramento)
+
+  single_step <- trained$steps[[1]]
+  attr(single_step, "class") <- c("step_notidy", "step")
+
+  expect_snapshot(error = TRUE, tidy(single_step))
+
+  single_check <- trained$steps[[4]]
+  attr(single_check, "class") <- c("check_notidy", "check")
+
+  expect_snapshot(error = TRUE, tidy(single_check))
 })

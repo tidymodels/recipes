@@ -81,6 +81,13 @@ test_that("simple Box Cox", {
   )
 })
 
+test_that("warnings", {
+  expect_snapshot(
+    recipe(~., data = exp_dat) %>%
+      step_BoxCox(x1) %>%
+      prep()
+  )
+})
 
 test_that("printing", {
   skip_if(packageVersion("rlang") < "1.0.0")

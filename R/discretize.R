@@ -10,6 +10,7 @@ discretize <- function(x, ...) {
   UseMethod("discretize")
 }
 
+#' @export
 #' @rdname discretize
 discretize.default <- function(x, ...) {
   rlang::abort("Only numeric `x` is accepted")
@@ -225,7 +226,7 @@ print.discretize <-
       }
     } else {
       if (x$bins == 0) {
-        cat("Too few unique data points. No binning.")
+        cat("Too few unique data points. No binning was used.")
       } else {
         cat("Non-numeric data. No binning was used.")
       }
@@ -346,7 +347,7 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     rlang::warn(
       paste0(
-        "Note that the options `prefix` and `labels`",
+        "Note that the options `prefix` and `labels` ",
         "will be applied to all variables"
       )
     )

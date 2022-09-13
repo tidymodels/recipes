@@ -224,6 +224,13 @@ test_that("tidy method", {
 
 ## -----------------------------------------------------------------------------
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_pls(outcome = "mpg", preserve = TRUE)
+  )
+})
+
 test_that("print method", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%

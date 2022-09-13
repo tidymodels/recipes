@@ -55,12 +55,18 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   # ID. Only a single ID is allowed, as this follows the convention for number
   num_oper <- length(x$steps)
   pattern <- "(^step_)|(^check_)"
+
+  if (length(id) != 1L) {
+    rlang::abort("If `id` is provided, it must be a length 1 character vector.")
+  }
+
+  if (length(number) != 1L) {
+    rlang::abort("If `number` is provided, it must be a length 1 integer vector.")
+  }
+
   if (!is.na(id)) {
     if (!is.na(number)) {
       rlang::abort("You may specify `number` or `id`, but not both.")
-    }
-    if (length(id) != 1L && !is.character(id)) {
-      rlang::abort("If `id` is provided, it must be a length 1 character vector.")
     }
     step_ids <- vapply(x$steps, function(x) x$id, character(1))
     if (!(id %in% step_ids)) {

@@ -71,6 +71,13 @@ test_that("bad args", {
   expect_snapshot(error = TRUE,
     juice(rec, composition = "dgCMatrix")
   )
+
+  data("ames", package = "modeldata")
+  expect_snapshot(error = TRUE,
+    recipe(~., data = ames) %>%
+      prep() %>%
+      bake(new_data = NULL, composition = "dgCMatrix")
+  )
 })
 
 test_that("issue 206 - NA values are kept when requesting matrix composition", {

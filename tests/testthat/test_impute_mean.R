@@ -95,6 +95,12 @@ test_that("all NA values", {
   expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$means$Age)
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_meanimpute()
+  )
+})
 
 test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%

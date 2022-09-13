@@ -99,6 +99,12 @@ test_that("All NA values", {
   expect_equal(sum(is.na(imputed_te$carbon)), 0)
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_knnimpute()
+  )
+})
 
 test_that("printing", {
   discr_rec <- rec %>%

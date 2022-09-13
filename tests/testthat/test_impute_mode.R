@@ -96,6 +96,12 @@ test_that("can bake recipes with no ptype", {
   )
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_modeimpute()
+  )
+})
 
 test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
