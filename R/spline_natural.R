@@ -208,8 +208,7 @@ print.step_spline_natural <-
     invisible(x)
   }
 
-#' @rdname step_spline_natural
-#' @param x A `step_spline_natural` object.
+#' @rdname tidy.recipe
 #' @export
 tidy.step_spline_natural <- function(x, ...) {
   if (is_trained(x)) {
