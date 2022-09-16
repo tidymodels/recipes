@@ -214,4 +214,14 @@ test_that("case weights", {
   expect_snapshot(rec_prep)
 })
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(Petal.Length, class = "Species", log = FALSE)  %>%
+    update_role(Petal.Length, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[,c(-3)]),
+               class = "new_data_missing_column")
+})

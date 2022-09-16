@@ -23,9 +23,8 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' purrr::map_dbl(credit_data, function(x) mean(is.na(x)))
@@ -100,6 +99,8 @@ prep.step_indicate_na <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_indicate_na <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
 
   cols <- purrr::map(

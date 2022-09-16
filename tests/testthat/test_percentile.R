@@ -1,9 +1,9 @@
 library(testthat)
 library(recipes)
 library(tibble)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data(biomass)
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -226,4 +226,16 @@ test_that("case weights", {
   )
 
   expect_snapshot(rec_trained)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~., data = biomass_tr) %>%
+    step_percentile(carbon, sulfur) %>%
+    update_role(carbon, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec)
+
+  expect_error(bake(rec_trained, new_data = biomass_tr[, c(-3, -7)]),
+               class = "new_data_missing_column")
 })

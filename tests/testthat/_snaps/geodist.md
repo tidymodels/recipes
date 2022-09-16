@@ -128,6 +128,24 @@
       Error in `step_geodist()`:
       ! `log` should be a single logical value.
 
+---
+
+    Code
+      recipe(~ x + y, data = rand_data) %>% step_geodist(x, y, ref_lat = 0.5,
+        ref_lon = 0.25, is_lat_lon = "no", log = FALSE) %>% prep(training = rand_data)
+    Condition
+      Error in `step_geodist()`:
+      ! `is_lat_lon` should be a single logical value.
+
+---
+
+    Code
+      recipe(~ x + y, data = rand_data) %>% step_geodist(x, y, ref_lat = 0.5,
+        ref_lon = 0.25, is_lat_lon = c(TRUE, TRUE), log = FALSE) %>% prep(training = rand_data)
+    Condition
+      Error in `step_geodist()`:
+      ! `is_lat_lon` should be a single logical value.
+
 # printing
 
     Code

@@ -224,3 +224,23 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) %>%
+    update_role(x1, x2, x3, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
+
+  expect_error(bake(im_trained, new_data = dat2[, 1:2]),
+               class = "new_data_missing_column")
+})

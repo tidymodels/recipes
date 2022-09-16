@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
-library(modeldata)
 library(splines)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 # ------------------------------------------------------------------------------
 
@@ -130,4 +130,16 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  with_ns <- rec %>%
+    step_ns(carbon, hydrogen) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(with_ns, new_data = biomass_tr[, c(-3)]),
+               class = "new_data_missing_column")
 })

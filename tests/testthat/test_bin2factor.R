@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(covers)
+skip_if_not_installed("modeldata")
+data(covers, package = "modeldata")
 rec <- recipe(~description, covers) %>%
   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
   step_regex(description, pattern = "(rock|stony)", result = "more_rocks")
@@ -88,4 +88,17 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  mtcars_bin <- mtcars %>% mutate(bin = c(1, rep(0, nrow(mtcars) - 1)))
+
+  rec <- recipe(mpg ~ ., mtcars_bin)
+  rec <- step_bin2factor(rec, "bin") %>%
+    update_role(bin, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec <- prep(rec, mtcars_bin)
+
+  expect_error(bake(rec, mtcars), class = "new_data_missing_column")
 })

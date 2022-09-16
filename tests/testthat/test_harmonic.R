@@ -461,3 +461,24 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  harmonic_dat_mult <- tibble(
+    osc = sin(2 * pi * x_second / (3600 * 6)),
+    time_var_1 = x_second,
+    time_var_2 = x_second * 2
+  )
+
+  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) %>%
+    step_harmonic(time_var_1, time_var_2,
+                  frequency = c(5, 10),
+                  cycle_size = 1
+    ) %>%
+    update_role(time_var_1, time_var_2, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(rec, new_data = harmonic_dat_mult[, 1:2]),
+               class = "new_data_missing_column")
+})
+

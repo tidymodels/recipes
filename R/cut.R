@@ -49,7 +49,7 @@
 #'
 #' # It is up to you if you want values outside the
 #' # range learned at prep to be included
-#' new_df <- data.frame(x = 1:11)
+#' new_df <- data.frame(x = 1:11, y = 5:15)
 #' rec %>%
 #'   step_cut(x, breaks = 5, include_outside_range = TRUE) %>%
 #'   prep() %>%
@@ -142,6 +142,8 @@ full_breaks_check <- function(breaks) {
 }
 
 bake.step_cut <- function(object, new_data, ...) {
+  check_new_data(names(object$breaks), object, new_data)
+
   for (col_name in names(object$breaks)) {
     res <- cut_var(
       new_data[, col_name, drop = TRUE],

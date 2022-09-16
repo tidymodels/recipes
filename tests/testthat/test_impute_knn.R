@@ -2,8 +2,8 @@ library(testthat)
 library(gower)
 library(recipes)
 library(dplyr)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
@@ -99,6 +99,12 @@ test_that("All NA values", {
   expect_equal(sum(is.na(imputed_te$carbon)), 0)
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_knnimpute()
+  )
+})
 
 test_that("printing", {
   discr_rec <- rec %>%
@@ -229,4 +235,17 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  imputed <-
+    recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) %>%
+    step_impute_knn(carbon, impute_with = imp_vars(hydrogen, oxygen)) %>%
+    update_role(hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
+
+  expect_error(bake(imputed_trained, new_data = biomass[, c(-4)]),
+               class = "new_data_missing_column")
 })

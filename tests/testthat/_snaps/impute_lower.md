@@ -6,6 +6,15 @@
       Error in `prep()`:
       ! Some columns have negative values. Lower bound imputation is intended for data bounded at zero.
 
+# Deprecation warning
+
+    Code
+      recipe(~., data = mtcars) %>% step_lowerimpute()
+    Condition
+      Error:
+      ! `step_lowerimpute()` was deprecated in recipes 0.1.16 and is now defunct.
+      Please use `step_impute_lower()` instead.
+
 # printing
 
     Code

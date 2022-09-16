@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -316,4 +316,18 @@ test_that("case weights", {
   expect_equal(pca_pred, pca_pred_exp)
 
   expect_snapshot(pca_extract_trained)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  pca_extract <- rec %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
+             options = list(retx = TRUE), id = ""
+    ) %>%
+    update_role(carbon, hydrogen, oxygen, nitrogen, sulfur, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(pca_extract_trained, new_data = biomass_te[, c(-3)]),
+               class = "new_data_missing_column")
 })

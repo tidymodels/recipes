@@ -22,9 +22,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' rec <- recipe(~ city + zip, data = Sacramento)
 #'
@@ -103,6 +102,8 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_factor2string <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   new_data[, object$columns] <- map(new_data[, object$columns], as.character)
 
   new_data

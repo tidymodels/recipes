@@ -121,3 +121,23 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  set.seed(27)
+
+  n <- 10
+  start <- as.Date("1999/01/01")
+  end <- as.Date("2000/01/01")
+
+  df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
+
+  # lags numeric data
+  rec <- recipe(~., data = df) %>%
+    step_lag(t, lag = 2) %>%
+    update_role(t, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)%>%
+    prep(df)
+
+  expect_error(bake(rec, new_data = df[, 1, drop = FALSE]),
+               class = "new_data_missing_column")
+})

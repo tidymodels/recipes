@@ -12,7 +12,7 @@ step_discretize(
   num_breaks = 4,
   min_unique = 10,
   objects = NULL,
-  options = list(),
+  options = list(prefix = "bin"),
   skip = FALSE,
   id = rand_id("discretize")
 )
@@ -80,8 +80,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -97,6 +97,7 @@ binned_te <- bake(rec, biomass_te)
 table(binned_te$carbon)
 
 tidy(rec, 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other discretization steps: 

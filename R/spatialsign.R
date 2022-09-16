@@ -26,16 +26,27 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be affected) is returned.
 #'
-#' @template case-weights-unsupervised
+#' @section Case weights:
+#'
+#' This step performs an unsupervised operation that can utilize case weights.
+#' As a result, only frequency weights are allowed. For more
+#' information, see the documentation in [case_weights] and the examples on
+#' `tidymodels.org`.
+#'
+#' Unlike most, this step requires the case weights to be available when new
+#' samples are processed (e.g., when `bake()` is used or `predict()` with a
+#' workflow). To tell recipes that the case weights are required at bake time,
+#' use
+#' `recipe %>% update_role_requirements(role = "case_weights", bake = TRUE)`.
+#' See [update_role_requirements()] for more information.
 #'
 #' @references Serneels, S., De Nolf, E., and Van Espen, P.
 #'  (2006). Spatial sign preprocessing: a simple way to impart
 #'  moderate robustness to multivariate estimators. *Journal of
 #'  Chemical Information and Modeling*, 46(3), 1402-1409.
-
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -124,6 +135,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_spatialsign <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
 
   if (isTRUE(object$case_weights)) {

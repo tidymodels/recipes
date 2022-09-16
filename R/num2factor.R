@@ -26,10 +26,9 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(attrition)
+#' data(attrition, package = "modeldata")
 #'
 #' attrition %>%
 #'   group_by(StockOptionLevel) %>%
@@ -172,6 +171,8 @@ make_factor_num <- function(x, lvl, ord, foo) {
 #' @export
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
+
+  check_new_data(col_names, object, new_data)
 
   lvls <- object$levels[names(object$levels) == "..levels"]
   object$levels <- object$levels[names(object$levels) != "..levels"]

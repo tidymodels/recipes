@@ -1,7 +1,7 @@
 library(testthat)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data(ames)
+data(ames, package = "modeldata")
 
 ames_dat <- ames %>%
   select(Lot_Frontage, Lot_Area, Total_Bsmt_SF) %>%
@@ -179,4 +179,15 @@ test_that("case weights", {
   expect_equal(sum(is.na(imputed)), 0)
 
   expect_snapshot(rec_prepped)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(head(ames_dat)) %>%
+    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    update_role(Lot_Frontage, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(ames_dat)
+
+  expect_error(bake(rec, new_data = ames_dat[, 2:3]),
+               class = "new_data_missing_column")
 })

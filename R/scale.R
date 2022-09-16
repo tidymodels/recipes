@@ -35,9 +35,8 @@
 #' @references Gelman, A. (2007) "Scaling regression inputs by
 #'  dividing by two standard deviations." Unpublished. Source:
 #'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -135,6 +134,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
+  check_new_data(names(object$sds), object, new_data)
+
   for (column in names(object$sds)) {
     sd <- object$sds[column]
     new_data[[column]] <- new_data[[column]] / sd

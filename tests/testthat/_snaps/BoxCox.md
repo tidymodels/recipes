@@ -10,6 +10,29 @@
       Warning:
       No Box-Cox transformation could be estimated for: `x2`, `x3`
 
+# warnings
+
+    Code
+      recipe(~., data = exp_dat) %>% step_BoxCox(x1) %>% prep()
+    Condition
+      Warning:
+      Non-positive values in selected variable.
+      Warning:
+      No Box-Cox transformation could be estimated for: `x1`
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          4
+      
+      Training data contained 20 data points and no missing data.
+      
+      Operations:
+      
+      Box-Cox transformation on <none> [trained]
+
 # printing
 
     Code

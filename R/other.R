@@ -50,9 +50,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' set.seed(19)
 #' in_train <- sample(1:nrow(Sacramento), size = 800)
@@ -170,6 +169,7 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_other <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
       tmp <- if (!is.character(new_data[, i])) {

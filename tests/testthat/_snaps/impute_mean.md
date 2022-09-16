@@ -6,6 +6,15 @@
       Error in `check_type()`:
       ! All columns selected for the step should be numeric
 
+# Deprecation warning
+
+    Code
+      recipe(~., data = mtcars) %>% step_meanimpute()
+    Condition
+      Error:
+      ! `step_meanimpute()` was deprecated in recipes 0.1.16 and is now defunct.
+      Please use `step_impute_mean()` instead.
+
 # printing
 
     Code

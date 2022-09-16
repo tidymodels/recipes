@@ -68,7 +68,7 @@
 #'   The harmonic analysis of tidal model time series.
 #'   Advances in water resources, 12(3), 109-120.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("ggplot2")
 #' library(ggplot2, quietly = TRUE)
 #' library(dplyr)
 #'
@@ -299,6 +299,7 @@ sin_cos <- function(x,
 #' @export
 bake.step_harmonic <- function(object, new_data, ...) {
   col_names <- names(object$starting_val)
+  check_new_data(col_names, object, new_data)
 
   # calculate sin and cos columns
   for (i in seq_along(col_names)) {

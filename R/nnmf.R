@@ -52,10 +52,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#'
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
+#' data(biomass, package = "modeldata")
 #'
 #' # rec <- recipe(HHV ~ ., data = biomass) %>%
 #' #   update_role(sample, new_role = "id var") %>%
@@ -177,7 +175,9 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf <- function(object, new_data, ...) {
+
   if (object$num_comp > 0 && length(object$columns) > 0) {
+    check_new_data(object$columns, object, new_data)
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-
       object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data

@@ -48,11 +48,10 @@ recipe.default <- function(x, ...) {
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #'
 #' # formula example with single outcome:
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # split data
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -167,6 +166,8 @@ recipe.data.frame <-
     }
     var_info$role[case_weights_cols] <- "case_weights"
 
+    requirements <- new_role_requirements()
+
     ## Return final object of class `recipe`
     out <- list(
       var_info = var_info,
@@ -174,7 +175,8 @@ recipe.data.frame <-
       steps = NULL,
       template = x,
       levels = NULL,
-      retained = NA
+      retained = NA,
+      requirements = requirements
     )
     class(out) <- "recipe"
     out
@@ -325,7 +327,7 @@ prep <- function(x, ...) {
 #'   data, the step for scaling is given the centered data.
 #'
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' library(dplyr)
@@ -537,7 +539,7 @@ bake <- function(object, ...) {
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
 #' @rdname bake
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
@@ -565,6 +567,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
     rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
   }
+
   if (is.null(new_data)) {
     return(juice(object, ..., composition = composition))
   }
@@ -599,6 +602,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
   }
+
+  check_role_requirements(object, new_data)
 
   check_nominal_type(new_data, object$orig_lvls)
 
@@ -725,7 +730,9 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
-#'   and `source`.
+#'   and `source`. When `original = TRUE`, an additional column is included
+#'   named `required_to_bake` (based on the results of
+#'   [update_role_requirements()]).
 #' @details
 #' Note that, until the recipe has been trained,
 #' the current and original variables are the same.
@@ -745,11 +752,22 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @seealso [recipe()] [prep()]
 summary.recipe <- function(object, original = FALSE, ...) {
   if (original) {
-    object$var_info
+    res <- object$var_info
+    res <- dplyr::left_join(res, bake_req_tibble(object), by = "role")
   } else {
-    object$term_info
+    res <- object$term_info
   }
+  res
 }
+
+bake_req_tibble <- function(x) {
+  req <- compute_bake_role_requirements(x)
+  req <-
+    tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
+    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+  req
+}
+
 
 
 #' Extract transformed training set

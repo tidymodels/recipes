@@ -1,7 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass
@@ -136,4 +136,17 @@ test_that("centering with case weights", {
   )
 
   expect_snapshot(rec)
+})
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  sp_sign <- rec %>%
+    step_spatialsign(carbon, hydrogen) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
+
+  expect_error(bake(sp_sign_trained, new_data = biomass[,c(-3)]),
+               class = "new_data_missing_column")
 })

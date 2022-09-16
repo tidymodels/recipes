@@ -229,6 +229,7 @@ mah_pooled <- function(means, x, cov_mat) {
 bake.step_classdist <- function(object, new_data, ...) {
   if (object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
+    check_new_data(x_cols, object, new_data)
     res <- lapply(
       object$objects$center,
       mah_pooled,
@@ -237,6 +238,7 @@ bake.step_classdist <- function(object, new_data, ...) {
     )
   } else {
     x_cols <- names(object$objects[[1]]$center)
+    check_new_data(x_cols, object, new_data)
     res <-
       lapply(object$objects, mah_by_class, x = new_data[, x_cols])
   }

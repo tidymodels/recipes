@@ -35,9 +35,8 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(covers)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(covers, package = "modeldata")
 #'
 #' rec <- recipe(~description, covers) %>%
 #'   step_count(description, pattern = "(rock|stony)", result = "rocks") %>%
@@ -140,6 +139,8 @@ prep.step_count <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_count <- function(object, new_data, ...) {
+  check_new_data(names(object$input), object, new_data)
+
   if (length(object$input) == 0L) {
     # Empty selection, but still return the new column
     new_data[, object$result] <- if (object$normalize) NA_real_ else NA_integer_

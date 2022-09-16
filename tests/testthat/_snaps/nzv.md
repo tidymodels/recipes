@@ -3,6 +3,16 @@
     The `options` argument of `step_nzv()` was deprecated in recipes 0.1.7 and is now defunct.
     Please use the arguments `freq_cut` and `unique_cut` instead.
 
+# Deprecation warning
+
+    Code
+      recipe(~., data = mtcars) %>% step_nzv(options = list(freq_cut = 95 / 5,
+      unique_cut = 20))
+    Condition
+      Error:
+      ! The `options` argument of `step_nzv()` was deprecated in recipes 0.1.7 and is now defunct.
+      Please use the arguments `freq_cut` and `unique_cut` instead.
+
 # printing
 
     Code

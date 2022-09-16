@@ -2,8 +2,8 @@ library(testthat)
 library(recipes)
 library(tibble)
 
-library(modeldata)
-data(biomass)
+skip_if_not_installed("modeldata")
+data(biomass, package = "modeldata")
 
 test_that("default method", {
   rec <- recipe(x = biomass)
@@ -11,7 +11,8 @@ test_that("default method", {
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = NA_character_,
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -23,7 +24,8 @@ test_that("changing roles", {
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = rep(c("some other role", NA), c(1, 7)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -42,7 +44,8 @@ test_that("change existing role", {
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = rep(c("other other role", NA), c(1, 7)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -61,6 +64,7 @@ test_that("change only 1 role of variable with multiple roles", {
 
   exp_res <- summary(orig_roles)
   exp_res$role[exp_res$role == "role 1"] <- "role 3"
+  exp_res$required_to_bake <- TRUE
   expect_equal(summary(rec, TRUE), exp_res)
 })
 
@@ -72,6 +76,7 @@ test_that("change every role of 2 variables", {
 
   exp_res <- orig_roles
   exp_res$role[exp_res$role == "role 1"] <- "role 2"
+  exp_res$required_to_bake <- TRUE
 
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -83,6 +88,7 @@ test_that("update only NA role", {
 
   exp_res <- orig_rec %>% arrange(variable)
   exp_res$role[exp_res$variable %in% c("sample", "dataset")] <- "some other role"
+  exp_res$required_to_bake <- TRUE
 
   expect_equal(summary(rec, TRUE) %>% arrange(variable), exp_res)
 })
@@ -95,7 +101,8 @@ test_that("new role for existing NA role", {
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = rep(c("some other role", NA), c(1, length(colnames(biomass)) - 1)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -109,7 +116,8 @@ test_that("new role with specified type", {
     variable = c("sample", colnames(biomass)),
     type = c("nominal", "new type", "nominal", rep("numeric", 6)),
     role = rep(c("blah", "some other role", NA), c(1, 1, 7)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -126,7 +134,8 @@ test_that("add new role when two already exist with different types", {
     variable = c("sample", "sample", colnames(biomass)),
     type = c("nominal", "new type", "nominal", "nominal", rep("numeric", 6)),
     role = c("blah", "some other role", "another role", rep(NA, 7)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -146,7 +155,8 @@ test_that("existing role is skipped", {
     variable = c("sample", colnames(biomass)),
     type = rep(c("nominal", "numeric"), c(3, 6)),
     role = rep(c("blah", "some other role", NA), c(1, 1, 7)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -168,7 +178,8 @@ test_that("existing role is skipped, but new one is added", {
     ),
     type = rep(c("nominal", "numeric"), c(4, 6)),
     role = c("blah", "some other role", NA, "some other role", rep(NA, 6)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -221,7 +232,8 @@ test_that("remove roles", {
     variable = colnames(biomass),
     type = rep(c("nominal", "numeric"), c(2, 6)),
     role = NA_character_,
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -235,7 +247,8 @@ test_that("New type for an existing role can be added", {
     variable = c("sample", colnames(biomass)),
     type = c(c("nominal", "text", "nominal"), rep("numeric", 6)),
     role = c("role1", "role1", rep(NA, 7)),
-    source = "original"
+    source = "original",
+    required_to_bake = TRUE
   )
   expect_equal(summary(rec, TRUE), exp_res)
 })
@@ -498,3 +511,47 @@ test_that("role functions handle case weights correctly", {
       add_role(wt)
   )
 })
+
+
+test_that("role information from summary()", {
+
+  # ----------------------------------------------------------------------------
+  # non-formula method
+
+  rec_roles <- recipe(mtcars) %>%
+    update_role(-mpg, new_role = "predictor") %>%
+    update_role(mpg, new_role = "outcome") %>%
+    update_role(gear, new_role = "id") %>%
+    update_role(carb, new_role = "important") %>%
+    prep()
+
+  req_roles <-
+    rec_roles %>%
+    update_role_requirements("important", bake = FALSE) %>%
+    prep()
+
+  expect_snapshot(summary(rec_roles, original = TRUE))
+  expect_snapshot(summary(req_roles, original = TRUE))
+
+  # ----------------------------------------------------------------------------
+  # missing role values
+
+  na_rec <-
+    mtcars %>%
+    recipe() %>%
+    update_role(mpg, new_role = "outcome") %>%
+    update_role(disp, wt, new_role = "predictor") %>%
+    update_role(carb, new_role = "other") %>%
+    prep()
+
+  na_req_rec <-
+    na_rec %>%
+    update_role_requirements("NA", bake = FALSE) %>%
+    prep()
+
+  expect_snapshot(summary(na_rec, original = TRUE))
+  expect_snapshot(summary(na_req_rec, original = TRUE))
+
+})
+
+

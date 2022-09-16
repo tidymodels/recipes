@@ -3,7 +3,7 @@
     Code
       prep(rec, training = ex_dat, verbose = FALSE)
     Condition
-      Error:
+      Error in `binomial()$linkfun()`:
       ! Value -0.77772 out of range (0, 1)
 
 # printing

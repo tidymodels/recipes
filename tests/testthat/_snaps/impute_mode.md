@@ -15,6 +15,15 @@
       'ptype' was added to `step_impute_mode()` after this recipe was created.
       Regenerate your recipe to avoid this warning.
 
+# Deprecation warning
+
+    Code
+      recipe(~., data = mtcars) %>% step_modeimpute()
+    Condition
+      Error:
+      ! `step_modeimpute()` was deprecated in recipes 0.1.16 and is now defunct.
+      Please use `step_impute_mode()` instead.
+
 # printing
 
     Code

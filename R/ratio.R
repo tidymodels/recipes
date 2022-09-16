@@ -35,10 +35,9 @@
 #'
 #' @family multivariate transformation steps
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -146,6 +145,8 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
+  check_new_data(unname(object$columns$top), object, new_data)
+
   res <- purrr::map2(
     new_data[, object$columns$top],
     new_data[, object$columns$bottom],
