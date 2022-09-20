@@ -1,21 +1,21 @@
-#' Basis Splines
+#' Convex Splines
 #'
-#' `step_spline_basis` creates a *specification* of a recipe
-#'  step that creates basis spline features.
+#' `step_spline_convex` creates a *specification* of a recipe
+#'  step that creates convex spline features.
 #'
 #' @inheritParams step_center
-#' @param deg_free The degrees of freedom for the basis spline. As the
-#'  degrees of freedom for a basis spline increase, more flexible and
+#' @param deg_free The degrees of freedom for the convex spline. As the
+#'  degrees of freedom for a convex spline increase, more flexible and
 #'  complex curves can be generated.
 #' @param results A list of objects created once the step has been trained.
-#' @param options A list of options for [splines2::bSpline()]
+#' @param options A list of options for [splines2::cSpline()]
 #'  which should not include `x` or `df`.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned? By default, the new columns created by this step from
 #'  the original variables will be used as _predictors_ in a model.
-#' @return An object with classes `"step_spline_basis"` and `"step"`.
+#' @return An object with classes `"step_spline_convex"` and `"step"`.
 #' @export
 #' @details
 #'
@@ -45,7 +45,7 @@
 #'   data(ames, package = "modeldata")
 #'
 #'   spline_rec <- recipe(Sale_Price ~ Longitude, data = ames) %>%
-#'     step_spline_basis(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
+#'     step_spline_convex(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
 #'     prep()
 #'
 #'   tidy(spline_rec, number = 1)
@@ -61,8 +61,8 @@
 #'     facet_wrap(~ feature)
 #' }
 #' @template case-weights-not-supported
-#' @seealso [splines2::bSpline()]
-step_spline_basis <-
+#' @seealso [splines2::cSpline()]
+step_spline_convex <-
   function(recipe,
            ...,
            role = NA,
@@ -72,13 +72,13 @@ step_spline_basis <-
            keep_original_cols = FALSE,
            results = NULL,
            skip = FALSE,
-           id = rand_id("spline_basis")) {
+           id = rand_id("spline_convex")) {
 
-    recipes_pkg_check(required_pkgs.step_spline_basis())
+    recipes_pkg_check(required_pkgs.step_spline_convex())
 
     add_step(
       recipe,
-      step_spline_basis_new(
+      step_spline_convex_new(
         terms = enquos(...),
         trained = trained,
         role = role,
@@ -92,10 +92,10 @@ step_spline_basis <-
     )
   }
 
-step_spline_basis_new <-
+step_spline_convex_new <-
   function(terms, trained, role, deg_free, options, keep_original_cols, results, na_rm, skip, id) {
     step(
-      subclass = "spline_basis",
+      subclass = "spline_convex",
       terms = terms,
       role = role,
       trained = trained,
@@ -110,7 +110,7 @@ step_spline_basis_new <-
 
 # ------------------------------------------------------------------------------
 
-prep.step_spline_basis <- function(x, training, info = NULL, ...) {
+prep.step_spline_convex <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], quant = TRUE)
 
@@ -121,7 +121,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
       ~ spline2_create(
         .x,
         nm = .y,
-        .fn = "bSpline",
+        .fn = "cSpline",
         df = x$deg_free,
         fn_opts = x$options
       )
@@ -132,7 +132,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!bas_res]
   names(res) <- col_names
 
-  step_spline_basis_new(
+  step_spline_convex_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -145,7 +145,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
   )
 }
 
-bake.step_spline_basis <- function(object, new_data, ...) {
+bake.step_spline_convex <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {
     new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
@@ -160,9 +160,9 @@ bake.step_spline_basis <- function(object, new_data, ...) {
 
 # ------------------------------------------------------------------------------
 
-print.step_spline_basis <-
+print.step_spline_convex <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- "Basis spline expansion "
+    title <- "Convex spline expansion "
     cols_used <- names(x$results)
     if (length(cols_used) == 0) {
       cols_used <- "<none>"
@@ -173,7 +173,7 @@ print.step_spline_basis <-
 
 #' @rdname tidy.recipe
 #' @export
-tidy.step_spline_basis <- function(x, ...) {
+tidy.step_spline_convex <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
     if (length(terms) == 0) {
@@ -189,21 +189,21 @@ tidy.step_spline_basis <- function(x, ...) {
 
 #' @rdname required_pkgs.recipe
 #' @export
-required_pkgs.step_spline_basis <- function(x, ...) {
+required_pkgs.step_spline_convex <- function(x, ...) {
   c("splines2")
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-tunable.step_spline_basis <- function(x, ...) {
+tunable.step_spline_convex <- function(x, ...) {
   tibble::tibble(
     name = c("deg_free"),
     call_info = list(
       list(pkg = "dials", fun = "spline_degree", range = c(2L, 15L))
     ),
     source = "recipe",
-    component = "step_spline_basis",
+    component = "step_spline_convex",
     component_id = x$id
   )
 }

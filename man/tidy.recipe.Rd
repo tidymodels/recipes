@@ -14,9 +14,9 @@
 %   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/profile.R, R/range.R,
 %   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
 %   R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R,
-%   R/slice.R, R/spatialsign.R, R/spline_basis.R, R/spline_natural.R, R/sqrt.R,
-%   R/string2factor.R, R/tidy.R, R/time.R, R/unknown.R, R/unorder.R, R/window.R,
-%   R/zv.R
+%   R/slice.R, R/spatialsign.R, R/spline_basis.R, R/spline_convex.R,
+%   R/spline_natural.R, R/sqrt.R, R/string2factor.R, R/tidy.R, R/time.R,
+%   R/unknown.R, R/unorder.R, R/window.R, R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
@@ -99,6 +99,7 @@
 \alias{tidy.step_slice}
 \alias{tidy.step_spatialsign}
 \alias{tidy.step_spline_basis}
+\alias{tidy.step_spline_convex}
 \alias{tidy.step_spline_natural}
 \alias{tidy.step_sqrt}
 \alias{tidy.step_string2factor}
@@ -273,6 +274,8 @@
 \method{tidy}{step_spatialsign}(x, ...)
 
 \method{tidy}{step_spline_basis}(x, ...)
+
+\method{tidy}{step_spline_convex}(x, ...)
 
 \method{tidy}{step_spline_natural}(x, ...)
 
