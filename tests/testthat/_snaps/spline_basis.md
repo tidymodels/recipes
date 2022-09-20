@@ -13,7 +13,7 @@
       
       Operations:
       
-      basis spline expansion carbon, hydrogen
+      Basis spline expansion carbon, hydrogen
 
 ---
 
@@ -32,7 +32,7 @@
       
       Operations:
       
-      basis spline expansion carbon, hydrogen [trained]
+      Basis spline expansion carbon, hydrogen [trained]
 
 # empty printing
 
@@ -49,7 +49,7 @@
       
       Operations:
       
-      basis spline expansion <none>
+      Basis spline expansion <none>
 
 ---
 
@@ -68,5 +68,5 @@
       
       Operations:
       
-      basis spline expansion <none> [trained]
+      Basis spline expansion <none> [trained]
 
