@@ -2,7 +2,7 @@
 % Please edit documentation in R/depth.R, R/ica.R, R/isomap.R, R/kpca.R,
 %   R/kpca_poly.R, R/kpca_rbf.R, R/nnmf.R, R/nnmf_sparse.R, R/pls.R,
 %   R/recipe.R, R/spline_basis.R, R/spline_convex.R, R/spline_monotone.R,
-%   R/spline_natural.R, R/window.R
+%   R/spline_natural.R, R/spline_nonnegative.R, R/window.R
 \name{required_pkgs.step_depth}
 \alias{required_pkgs.step_depth}
 \alias{required_pkgs.step_ica}
@@ -20,6 +20,7 @@
 \alias{required_pkgs.step_spline_convex}
 \alias{required_pkgs.step_spline_monotone}
 \alias{required_pkgs.step_spline_natural}
+\alias{required_pkgs.step_spline_nonnegative}
 \alias{required_pkgs.step_window}
 \title{S3 methods for tracking which additional packages are needed for steps.}
 \usage{
@@ -54,6 +55,8 @@
 \method{required_pkgs}{step_spline_monotone}(x, ...)
 
 \method{required_pkgs}{step_spline_natural}(x, ...)
+
+\method{required_pkgs}{step_spline_nonnegative}(x, ...)
 
 \method{required_pkgs}{step_window}(x, ...)
 }

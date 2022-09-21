@@ -15,8 +15,9 @@
 %   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
 %   R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R,
 %   R/slice.R, R/spatialsign.R, R/spline_basis.R, R/spline_convex.R,
-%   R/spline_monotone.R, R/spline_natural.R, R/sqrt.R, R/string2factor.R,
-%   R/tidy.R, R/time.R, R/unknown.R, R/unorder.R, R/window.R, R/zv.R
+%   R/spline_monotone.R, R/spline_natural.R, R/spline_nonnegative.R, R/sqrt.R,
+%   R/string2factor.R, R/tidy.R, R/time.R, R/unknown.R, R/unorder.R, R/window.R,
+%   R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
@@ -102,6 +103,7 @@
 \alias{tidy.step_spline_convex}
 \alias{tidy.step_spline_monotone}
 \alias{tidy.step_spline_natural}
+\alias{tidy.step_spline_nonnegative}
 \alias{tidy.step_sqrt}
 \alias{tidy.step_string2factor}
 \alias{tidy.recipe}
@@ -281,6 +283,8 @@
 \method{tidy}{step_spline_monotone}(x, ...)
 
 \method{tidy}{step_spline_natural}(x, ...)
+
+\method{tidy}{step_spline_nonnegative}(x, ...)
 
 \method{tidy}{step_sqrt}(x, ...)
 
