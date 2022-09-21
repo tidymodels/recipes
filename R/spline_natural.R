@@ -37,30 +37,28 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' library(tidyr)
 #' library(dplyr)
 #'
-#' if (rlang::is_installed(c("modeldata", "ggplot2"))) {
-#'   library(ggplot2)
-#'   data(ames, package = "modeldata")
+#' library(ggplot2)
+#' data(ames, package = "modeldata")
 #'
-#'   spline_rec <- recipe(Sale_Price ~ Longitude, data = ames) %>%
-#'     step_spline_natural(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
-#'     prep()
+#' spline_rec <- recipe(Sale_Price ~ Longitude, data = ames) %>%
+#'   step_spline_natural(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
+#'   prep()
 #'
-#'   tidy(spline_rec, number = 1)
+#' tidy(spline_rec, number = 1)
 #'
-#'   # Show where each feature is active
-#'   spline_rec %>%
-#'     bake(new_data =  NULL,-Sale_Price) %>%
-#'     pivot_longer(c(starts_with("Longitude_")), names_to = "feature", values_to = "value") %>%
-#'     mutate(feature = gsub("Longitude_", "feature ", feature)) %>%
-#'     filter(value > 0) %>%
-#'     ggplot(aes(x = Longitude, y = value)) +
-#'     geom_line() +
-#'     facet_wrap(~ feature)
-#' }
+#' # Show where each feature is active
+#' spline_rec %>%
+#'   bake(new_data =  NULL,-Sale_Price) %>%
+#'   pivot_longer(c(starts_with("Longitude_")), names_to = "feature", values_to = "value") %>%
+#'   mutate(feature = gsub("Longitude_", "feature ", feature)) %>%
+#'   filter(value > 0) %>%
+#'   ggplot(aes(x = Longitude, y = value)) +
+#'   geom_line() +
+#'   facet_wrap(~ feature)
 #' @template case-weights-not-supported
 #' @seealso [splines2::naturalSpline()]
 step_spline_natural <-
