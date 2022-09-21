@@ -153,7 +153,7 @@ bake.step_spline_monotone <- function(object, new_data, ...) {
       new_data <- new_data[, !(colnames(new_data) %in% orig_names), drop = FALSE]
     }
   }
-  as_tibble(new_data)
+  new_data
 }
 
 # ------------------------------------------------------------------------------
