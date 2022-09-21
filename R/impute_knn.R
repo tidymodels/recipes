@@ -43,10 +43,9 @@
 #'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -243,6 +242,11 @@ nn_pred <- function(index, dat) {
 
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
+  col_names <- purrr::map(object$columns, function(x) unname(x$x)) %>%
+    purrr::flatten_chr() %>%
+    unique()
+  check_new_data(col_names, object, new_data)
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)

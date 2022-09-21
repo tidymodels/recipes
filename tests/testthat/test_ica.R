@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
-library(modeldata)
+skip_if_not_installed("modeldata")
 
-data(biomass)
+data(biomass, package = "modeldata")
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ][1:5, ]
 
@@ -221,4 +221,23 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  ica_extract <-
+    recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+           data = biomass_tr
+    ) %>%
+    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(ica_extract_trained, new_data = biomass_tr[, c(-3)]),
+               class = "new_data_missing_column")
 })

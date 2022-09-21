@@ -51,9 +51,8 @@
 #'
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
 #'  Springer Verlag.
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -266,6 +265,8 @@ prep.step_bagimpute <- prep.step_impute_bag
 
 #' @export
 bake.step_impute_bag <- function(object, new_data, ...) {
+  check_new_data(names(object$models), object, new_data)
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)

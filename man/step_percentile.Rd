@@ -62,8 +62,8 @@ information, see the documentation in \link{case_weights} and the examples on
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -81,6 +81,7 @@ prepped_rec \%>\%
 
 tidy(rec, 1)
 tidy(prepped_rec, 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other individual transformation steps: 

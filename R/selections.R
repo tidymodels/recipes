@@ -151,10 +151,9 @@ NULL
 #' case the names reflect the new names chosen by the user.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(rlang)
-#' library(modeldata)
-#' data(scat)
+#' data(scat, package = "modeldata")
 #'
 #' rec <- recipe(Species ~ ., data = scat)
 #'
@@ -259,9 +258,8 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #'
 #' `current_info()` returns an environment with objects `vars` and `data`.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' rec <- recipe(biomass) %>%
 #'   update_role(

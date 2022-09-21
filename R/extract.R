@@ -40,9 +40,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data(tate_text)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(tate_text, package = "modeldata")
 #'
 #' dummies <- recipe(~ artist + medium, data = tate_text) %>%
 #'   step_dummy_extract(artist, medium, sep = ", ") %>%
@@ -215,6 +214,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_dummy_extract <- function(object, new_data, ...) {
+  check_new_data(names(object$levels), object, new_data)
 
   # If no terms were selected
   if (length(object$levels) == 0) {

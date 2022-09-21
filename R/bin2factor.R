@@ -29,9 +29,8 @@
 #'
 #' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(covers)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(covers, package = "modeldata")
 #'
 #' rec <- recipe(~description, covers) %>%
 #'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
@@ -107,6 +106,8 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_bin2factor <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   levs <- if (object$ref_first) object$levels else rev(object$levels)
   for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-

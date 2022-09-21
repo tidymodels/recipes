@@ -115,7 +115,9 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
 is_holiday <- function(hol, dt) {
   years <- unique(year(dt))
   na_year <- which(is.na(years))
-  years <- years[-na_year]
+  if (length(na_year) > 0) {
+    years <- years[-na_year]
+  }
   hdate <- holiday(year = years, Holiday = hol)
   hdate <- as.Date(hdate)
   out <- rep(0, length(dt))
@@ -137,6 +139,8 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   for (i in seq_along(object$columns)) {
     tmp <- get_holiday_features(
       dt = new_data[[object$columns[i]]],

@@ -1,5 +1,7 @@
 r_version <- function() paste0("R", getRversion()[, 1:2])
 
+skip_if_not_installed("modeldata")
+
 data("Sacramento", package = "modeldata")
 Sacramento$lgl1 <- Sacramento$beds >= 1
 Sacramento$lgl2 <- Sacramento$beds >= 2

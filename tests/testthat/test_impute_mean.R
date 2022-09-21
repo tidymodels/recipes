@@ -1,8 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-library(modeldata)
-data(credit_data)
+skip_if_not_installed("modeldata")
+data(credit_data, package = "modeldata")
 
 
 set.seed(342)
@@ -96,6 +95,12 @@ test_that("all NA values", {
   expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$means$Age)
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_meanimpute()
+  )
+})
 
 test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
@@ -243,5 +248,18 @@ test_that("case weights", {
   )
 
   expect_snapshot(impute_rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_mean(Age) %>%
+    update_role(Age, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+
+  expect_error(bake(imputed, new_data = credit_te[, c(-5)]),
+               class = "new_data_missing_column")
 })
 

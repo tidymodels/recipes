@@ -71,14 +71,21 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 
 
 This step performs an unsupervised operation that can utilize case weights.
-As a result, case weights are only used with frequency weights. For more
+As a result, only frequency weights are allowed. For more
 information, see the documentation in \link{case_weights} and the examples on
 \code{tidymodels.org}.
+
+Unlike most, this step requires the case weights to be available when new
+samples are processed (e.g., when \code{bake()} is used or \code{predict()} with a
+workflow). To tell recipes that the case weights are required at bake time,
+use
+\code{recipe \%>\% update_role_requirements(role = "case_weights", bake = TRUE)}.
+See \code{\link[=update_role_requirements]{update_role_requirements()}} for more information.
 }
 
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -103,6 +110,7 @@ plot(transformed_te$carbon, transformed_te$hydrogen)
 
 tidy(ss_trans, number = 3)
 tidy(ss_obj, number = 3)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Serneels, S., De Nolf, E., and Van Espen, P.

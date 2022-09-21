@@ -68,6 +68,13 @@ test_that("altered freq_cut and unique_cut", {
   )
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_nzv(options = list(freq_cut = 95 / 5, unique_cut = 20))
+  )
+})
+
 
 test_that("printing", {
   rec <- recipe(y ~ ., data = dat) %>%

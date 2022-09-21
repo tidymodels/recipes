@@ -29,9 +29,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -153,6 +152,8 @@ prep.step_modeimpute <- prep.step_impute_mode
 
 #' @export
 bake.step_impute_mode <- function(object, new_data, ...) {
+  check_new_data(names(object$modes), object, new_data)
+
   for (i in names(object$modes)) {
     if (any(is.na(new_data[, i]))) {
       if (is.null(object$ptype)) {

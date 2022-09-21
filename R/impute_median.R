@@ -26,9 +26,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -147,6 +146,8 @@ prep.step_medianimpute <- prep.step_impute_median
 
 #' @export
 bake.step_impute_median <- function(object, new_data, ...) {
+  check_new_data(names(object$medians), object, new_data)
+
   for (i in names(object$medians)) {
     if (any(is.na(new_data[[i]]))) {
       new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])

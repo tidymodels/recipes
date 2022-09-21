@@ -13,6 +13,7 @@ step_date(
   abbr = TRUE,
   label = TRUE,
   ordinal = FALSE,
+  locale = Sys.getlocale("LC_TIME"),
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -54,6 +55,10 @@ number.}
 
 \item{ordinal}{A logical: should factors be ordered? Only
 available for features \code{month} or \code{dow}.}
+
+\item{locale}{Locale to be used for \code{month} and \code{dow}, see \link{locales}.
+On Linux systems you can use \code{system("locale -a")} to list all the
+installed locales. Defaults to \code{Sys.getlocale("LC_TIME")}.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be

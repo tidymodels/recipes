@@ -1,8 +1,8 @@
 library(testthat)
 library(recipes)
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 Sacramento <- Sacramento[1:20, ]
 Sacramento$city <- factor(Sacramento$city)
 Sacramento$int <- 1:20

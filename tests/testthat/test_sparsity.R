@@ -5,8 +5,8 @@ library(Matrix)
 
 ###################################################################
 
-library(modeldata)
-data(Sacramento)
+skip_if_not_installed("modeldata")
+data(Sacramento, package = "modeldata")
 
 Sacramento$city <- as.factor(Sacramento$city)
 Sacramento$beds <- as.factor(Sacramento$beds)
@@ -70,6 +70,13 @@ test_that("bad args", {
   )
   expect_snapshot(error = TRUE,
     juice(rec, composition = "dgCMatrix")
+  )
+
+  data("ames", package = "modeldata")
+  expect_snapshot(error = TRUE,
+    recipe(~., data = ames) %>%
+      prep() %>%
+      bake(new_data = NULL, composition = "dgCMatrix")
   )
 })
 

@@ -21,9 +21,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -88,6 +87,8 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_invlogit <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
       binomial()$linkinv(unlist(getElement(new_data, object$columns[i]),

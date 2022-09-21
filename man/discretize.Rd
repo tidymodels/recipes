@@ -15,7 +15,7 @@ discretize(x, ...)
   x,
   cuts = 4,
   labels = NULL,
-  prefix = NULL,
+  prefix = "bin",
   keep_na = TRUE,
   infs = TRUE,
   min_unique = 10,
@@ -43,7 +43,7 @@ for missing (see \code{keep_na} below).}
 for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
 the string is not a valid R name, it is coerced to one.
 If \code{prefix = NULL} then the factor levels will be labelled
-according to the output of \code{cut()}. Defaults to \code{NULL}.}
+according to the output of \code{cut()}.}
 
 \item{keep_na}{A logical for whether a factor level should be
 created to identify missing values in \code{x}. If \code{keep_na} is
@@ -89,8 +89,8 @@ If \code{infs = FALSE} and a new value is greater than the
 largest value of \code{x}, a missing value will result.
 }
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -106,4 +106,5 @@ table(predict(carbon_binned, biomass_tr$carbon))
 
 carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 predict(carbon_no_infs, c(50, 100))
+\dontshow{\}) # examplesIf}
 }

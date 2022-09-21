@@ -120,6 +120,8 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_log <- function(object, new_data, ...) {
+  check_new_data(names(object$columns), object, new_data)
+
   col_names <- object$columns
   # for backward compat
   if (all(names(object) != "offset")) {

@@ -126,8 +126,8 @@ All of these functions have have limited utility outside of column selection
 in step functions.
 }
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 rec <- recipe(biomass) \%>\%
   update_role(
@@ -146,4 +146,5 @@ rec \%>\%
   step_center(all_predictors(), -carbon) \%>\%
   prep(training = biomass) \%>\%
   bake(new_data = NULL)
+\dontshow{\}) # examplesIf}
 }

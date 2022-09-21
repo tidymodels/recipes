@@ -40,9 +40,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examples
-#' library(modeldata)
-#' data(Sacramento)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
 #' sacr_tr <- Sacramento[1:800, ]
 #' sacr_te <- Sacramento[801:806, ]
@@ -143,6 +142,7 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_novel <- function(object, new_data, ...) {
+  check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     new_data[[i]] <- ifelse(
       # Preserve NA values by adding them to the list of existing

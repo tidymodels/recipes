@@ -91,9 +91,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -114,6 +113,7 @@ plot(density(yj_te$sulfur), main = "after")
 
 tidy(yj_transform, number = 1)
 tidy(yj_estimates, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Yeo, I. K., and Johnson, R. A. (2000). A new family of power

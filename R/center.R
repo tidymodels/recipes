@@ -40,9 +40,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -131,6 +130,8 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
+  check_new_data(names(object$means), object, new_data)
+
   for (column in names(object$means)) {
     mean <- object$means[column]
     new_data[[column]] <- new_data[[column]] - mean

@@ -1,5 +1,5 @@
-library(modeldata)
-data("credit_data")
+skip_if_not_installed("modeldata")
+data("credit_data", package = "modeldata")
 
 x <- rep(letters[1:3], 2)
 x_na <- c(rep(letters[1:3], 2), NA)

@@ -81,6 +81,13 @@ test_that("simple Box Cox", {
   )
 })
 
+test_that("warnings", {
+  expect_snapshot(
+    recipe(~., data = exp_dat) %>%
+      step_BoxCox(x1) %>%
+      prep()
+  )
+})
 
 test_that("printing", {
   skip_if(packageVersion("rlang") < "1.0.0")
@@ -131,4 +138,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_BoxCox(x1, x2, x3, x4) %>%
+    update_role(x1, x2, x3, x4, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  # Capture warnings
+  suppressWarnings(
+    rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+  )
+
+  expect_error(bake(rec_trained, new_data = ex_dat[, 1:2]),
+               class = "new_data_missing_column")
 })

@@ -44,6 +44,7 @@ reference:
     - selections
     - has_role
     - add_role
+    - update_role_requirements
     - get_case_weights
     - case_weights
   - title: Step Functions - Imputation

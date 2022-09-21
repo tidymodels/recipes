@@ -14,6 +14,15 @@
       Error in `prep()`:
       ! `step_pls()` only supports multivariate models for numeric outcomes.
 
+# Deprecation warning
+
+    Code
+      recipe(~., data = mtcars) %>% step_pls(outcome = "mpg", preserve = TRUE)
+    Condition
+      Error:
+      ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
+      Please use the `keep_original_cols` argument instead.
+
 # print method
 
     Code

@@ -16,9 +16,8 @@
 #'
 #' @template case-weights-unsupervised
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -140,6 +139,7 @@ wrighted_quantile <- function(x, wts, probs, ...) {
 #' @export
 bake.step_percentile <- function(object, new_data, ...) {
   vars <- names(object$ref_dist)
+  check_new_data(vars, object, new_data)
 
   new_data[, vars] <-
     purrr::map2_dfc(new_data[, vars], object$ref_dist, pctl_by_approx)

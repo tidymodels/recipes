@@ -69,9 +69,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-
-library(modeldata)
-data(Sacramento)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 rec <- recipe(~ city + zip, data = Sacramento) \%>\%
   step_unknown(city, new_level = "UNKNOWN") \%>\%
   step_relevel(city, ref_level = "UNKNOWN") \%>\%
@@ -79,6 +78,7 @@ rec <- recipe(~ city + zip, data = Sacramento) \%>\%
 
 data <- bake(rec, Sacramento)
 levels(data$city)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dummy variable and encoding steps: 

@@ -56,9 +56,8 @@ is returned.
 }
 
 \examples{
-
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_rec <- recipe(HHV ~ ., data = biomass) \%>\%
   step_rm(sample, dataset) \%>\%
@@ -67,6 +66,7 @@ biomass_rec <- recipe(HHV ~ ., data = biomass) \%>\%
 \dontrun{
 bake(biomass_rec, biomass[, c("carbon", "HHV")])
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other checks: 

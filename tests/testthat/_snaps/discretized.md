@@ -1,3 +1,82 @@
+# bad values
+
+    Code
+      discretize(letters)
+    Condition
+      Error in `discretize()`:
+      ! Only numeric `x` is accepted
+
+# printing of discretize()
+
+    Code
+      discretize(1:100)
+    Output
+      Bins: 5 (includes missing category)
+      Breaks: -Inf, 25.75, 50.5, 75.25, Inf
+
+---
+
+    Code
+      discretize(1:100, cuts = 6)
+    Output
+      Bins: 7 (includes missing category)
+
+---
+
+    Code
+      discretize(1:100, keep_na = FALSE)
+    Output
+      Bins: 4
+      Breaks: -Inf, 25.75, 50.5, 75.25, Inf
+
+---
+
+    Code
+      res <- discretize(1:2)
+    Condition
+      Warning:
+      Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
+
+---
+
+    Code
+      res
+    Output
+      Too few unique data points. No binning was used.
+
+# multiple column prefix
+
+    Code
+      recipe(~., data = example_data) %>% step_discretize(x1, x2, options = list(
+        prefix = "hello")) %>% prep()
+    Condition
+      Warning:
+      Note that the options `prefix` and `labels` will be applied to all variables
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+       predictor          2
+      
+      Training data contained 1000 data points and no missing data.
+      
+      Operations:
+      
+      Discretize numeric variables from x1, x2 [trained]
+
+---
+
+    Code
+      recipe(~., data = example_data) %>% step_discretize(x1, x2, options = list(
+        labels = "hello")) %>% prep()
+    Condition
+      Warning:
+      Note that the options `prefix` and `labels` will be applied to all variables
+      Error in `cut.default()`:
+      ! lengths of 'breaks' and 'labels' differ
+
 # bad args
 
     Code

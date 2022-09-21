@@ -227,6 +227,8 @@ test_that("replacing selectors in formulas", {
 })
 
 test_that("missing columns", {
+  skip("redundant with check_new_data checks")
+
   no_fail <-
     rec %>%
     step_rm(x1) %>%
@@ -272,3 +274,21 @@ test_that("missing columns", {
 #
 #   all.equal(te_og, te_new)
 # })
+
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  int_rec <- rec %>%
+    step_interact(~ starts_with("z"):x1, id = "") %>%
+    update_role(starts_with("z"):x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  suppressWarnings(
+    int_rec_trained <-
+      prep(int_rec, training = dat_tr, verbose = FALSE)
+  )
+
+  expect_error(bake(int_rec_trained, dat_tr[, 4:6]),
+               class = "new_data_missing_column")
+
+  expect_snapshot(bake(int_rec_trained, dat_tr[, 4:6]), error = TRUE)
+})

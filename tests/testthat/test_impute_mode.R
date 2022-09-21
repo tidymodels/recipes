@@ -1,8 +1,7 @@
 library(testthat)
 library(recipes)
-library(modeldata)
-library(modeldata)
-data(credit_data)
+skip_if_not_installed("modeldata")
+data(credit_data, package = "modeldata")
 
 
 set.seed(342)
@@ -97,6 +96,12 @@ test_that("can bake recipes with no ptype", {
   )
 })
 
+test_that("Deprecation warning", {
+  expect_snapshot(error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_modeimpute()
+  )
+})
 
 test_that("printing", {
   impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
@@ -182,4 +187,17 @@ test_that('case weights', {
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
   expect_snapshot(imputed)
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Price ~ ., data = credit_tr)
+
+  impute_rec <- rec %>%
+    step_impute_mode(Marital) %>%
+    update_role(Marital, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
+
+  expect_error(bake(imputed, new_data = credit_te[, c(-6)]),
+               class = "new_data_missing_column")
 })

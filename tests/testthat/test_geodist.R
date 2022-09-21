@@ -189,6 +189,22 @@ test_that("bad args", {
       step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, log = exp(1)) %>%
       prep(training = rand_data_2)
   )
+  expect_snapshot(error = TRUE,
+   recipe(~ x + y, data = rand_data) %>%
+     step_geodist(x, y,
+                  ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = "no",
+                  log = FALSE
+     ) %>%
+     prep(training = rand_data)
+  )
+  expect_snapshot(error = TRUE,
+    recipe(~ x + y, data = rand_data) %>%
+      step_geodist(x, y,
+                   ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = c(TRUE, TRUE),
+                   log = FALSE
+      ) %>%
+      prep(training = rand_data)
+  )
 })
 
 test_that("printing", {
@@ -199,4 +215,17 @@ test_that("printing", {
     )
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~ x + y, data = rand_data) %>%
+    step_geodist(x, y,
+                 ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
+                 log = FALSE
+    ) %>%
+    update_role(x, y, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  rec_trained <- prep(rec, rand_data)
+  expect_error(bake(rec_trained, new_data = rand_data[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
 })
