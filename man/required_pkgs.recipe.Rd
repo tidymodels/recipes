@@ -13,7 +13,7 @@
 \alias{required_pkgs.step_nnmf}
 \alias{required_pkgs.step_nnmf_sparse}
 \alias{required_pkgs.step_pls}
-\alias{required_pkgs.step_poly_Bernstein}
+\alias{required_pkgs.step_poly_bernstein}
 \alias{required_pkgs.recipe}
 \alias{required_pkgs.step}
 \alias{required_pkgs.check}
@@ -43,7 +43,7 @@
 
 \method{required_pkgs}{step_pls}(x, ...)
 
-\method{required_pkgs}{step_poly_Bernstein}(x, ...)
+\method{required_pkgs}{step_poly_bernstein}(x, ...)
 
 \method{required_pkgs}{recipe}(x, infra = TRUE, ...)
 

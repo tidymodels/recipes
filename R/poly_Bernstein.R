@@ -1,7 +1,7 @@
 #' Generalized Bernstein Polynomial Basis
 #'
-#' `step_poly_Bernstein` creates a *specification* of a recipe
-#'  step that creates Bernstein polynomial features.
+#' `step_poly_bernstein` creates a *specification* of a recipe
+#'  step that creates bernstein polynomial features.
 #'
 #' @inheritParams step_center
 #' @param degree The degrees of the polynomial. As the degrees for a polynomial
@@ -14,7 +14,7 @@
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned? By default, the new columns created by this step from
 #'  the original variables will be used as _predictors_ in a model.
-#' @return An object with classes `"step_poly_Bernstein"` and `"step"`.
+#' @return An object with classes `"step_poly_bernstein"` and `"step"`.
 #' @export
 #' @details
 #'
@@ -41,7 +41,7 @@
 #'   data(ames, package = "modeldata")
 #'
 #'   spline_rec <- recipe(Sale_Price ~ Longitude, data = ames) %>%
-#'     step_poly_Bernstein(Longitude, degree = 6, keep_original_cols = TRUE) %>%
+#'     step_poly_bernstein(Longitude, degree = 6, keep_original_cols = TRUE) %>%
 #'     prep()
 #'
 #'   tidy(spline_rec, number = 1)
@@ -58,7 +58,7 @@
 #' }
 #' @template case-weights-not-supported
 #' @seealso [splines2::bernsteinPoly()]
-step_poly_Bernstein <-
+step_poly_bernstein <-
   function(recipe,
            ...,
            role = NA,
@@ -68,13 +68,13 @@ step_poly_Bernstein <-
            keep_original_cols = FALSE,
            results = NULL,
            skip = FALSE,
-           id = rand_id("poly_Bernstein")) {
+           id = rand_id("poly_bernstein")) {
 
-    recipes_pkg_check(required_pkgs.step_poly_Bernstein())
+    recipes_pkg_check(required_pkgs.step_poly_bernstein())
 
     add_step(
       recipe,
-      step_poly_Bernstein_new(
+      step_poly_bernstein_new(
         terms = enquos(...),
         trained = trained,
         role = role,
@@ -88,10 +88,10 @@ step_poly_Bernstein <-
     )
   }
 
-step_poly_Bernstein_new <-
+step_poly_bernstein_new <-
   function(terms, trained, role, degree, options, keep_original_cols, results, na_rm, skip, id) {
     step(
-      subclass = "poly_Bernstein",
+      subclass = "poly_bernstein",
       terms = terms,
       role = role,
       trained = trained,
@@ -106,7 +106,7 @@ step_poly_Bernstein_new <-
 
 # ------------------------------------------------------------------------------
 
-prep.step_poly_Bernstein <- function(x, training, info = NULL, ...) {
+prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], quant = TRUE)
 
@@ -130,7 +130,7 @@ prep.step_poly_Bernstein <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!bas_res]
   names(res) <- col_names
 
-  step_poly_Bernstein_new(
+  step_poly_bernstein_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -143,7 +143,7 @@ prep.step_poly_Bernstein <- function(x, training, info = NULL, ...) {
   )
 }
 
-bake.step_poly_Bernstein <- function(object, new_data, ...) {
+bake.step_poly_bernstein <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {
     new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
@@ -158,7 +158,7 @@ bake.step_poly_Bernstein <- function(object, new_data, ...) {
 
 # ------------------------------------------------------------------------------
 
-print.step_poly_Bernstein <-
+print.step_poly_bernstein <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Bernstein polynomial expansion "
     cols_used <- names(x$results)
@@ -171,7 +171,7 @@ print.step_poly_Bernstein <-
 
 #' @rdname tidy.recipe
 #' @export
-tidy.step_poly_Bernstein <- function(x, ...) {
+tidy.step_poly_bernstein <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
     if (length(terms) == 0) {
@@ -187,21 +187,21 @@ tidy.step_poly_Bernstein <- function(x, ...) {
 
 #' @rdname required_pkgs.recipe
 #' @export
-required_pkgs.step_poly_Bernstein <- function(x, ...) {
+required_pkgs.step_poly_bernstein <- function(x, ...) {
   c("splines2")
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-tunable.step_poly_Bernstein <- function(x, ...) {
+tunable.step_poly_bernstein <- function(x, ...) {
   tibble::tibble(
     name = c("degree"),
     call_info = list(
       list(pkg = "dials", fun = "degree_int")
     ),
     source = "recipe",
-    component = "step_poly_Bernstein",
+    component = "step_poly_bernstein",
     component_id = x$id
   )
 }

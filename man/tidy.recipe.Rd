@@ -83,7 +83,7 @@
 \alias{tidy.step_percentile}
 \alias{tidy.step_pls}
 \alias{tidy.step_poly}
-\alias{tidy.step_poly_Bernstein}
+\alias{tidy.step_poly_bernstein}
 \alias{tidy.step_profile}
 \alias{tidy.step_range}
 \alias{tidy.check_range}
@@ -245,7 +245,7 @@
 
 \method{tidy}{step_poly}(x, ...)
 
-\method{tidy}{step_poly_Bernstein}(x, ...)
+\method{tidy}{step_poly_bernstein}(x, ...)
 
 \method{tidy}{step_profile}(x, ...)
 
