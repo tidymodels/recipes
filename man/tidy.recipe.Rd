@@ -11,7 +11,7 @@
 %   R/logit.R, R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R,
 %   R/naomit.R, R/newvalues.R, R/nnmf.R, R/nnmf_sparse.R, R/normalize.R,
 %   R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R, R/other.R,
-%   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/poly_Bernstein.R,
+%   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/poly_bernstein.R,
 %   R/profile.R, R/range.R, R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R,
 %   R/relu.R, R/rename.R, R/rename_at.R, R/rm.R, R/sample.R, R/scale.R,
 %   R/select.R, R/shuffle.R, R/slice.R, R/spatialsign.R, R/spline_basis.R,
