@@ -1,3 +1,9 @@
+## Buckets variables into discrete, mutally exclusive types
+get_types <- function(x) {
+  res <- lapply(x, get_types_recipes)
+  tibble(variable = names(res), type = unname(res))
+}
+
 #' Get types for use in recipes
 #'
 #' The `get_types_recipes()` generic is used internally to supply types to

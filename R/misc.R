@@ -2,12 +2,6 @@ filter_terms <- function(x, ...) {
   UseMethod("filter_terms")
 }
 
-## Buckets variables into discrete, mutally exclusive types
-get_types <- function(x) {
-  res <- lapply(x, get_types_recipes)
-  tibble(variable = names(res), type = unname(res))
-}
-
 ## get variables from formulas
 is_formula <- function(x) {
   isTRUE(inherits(x, "formula"))
