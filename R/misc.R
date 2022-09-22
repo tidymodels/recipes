@@ -4,40 +4,7 @@ filter_terms <- function(x, ...) {
 
 ## Buckets variables into discrete, mutally exclusive types
 get_types <- function(x) {
-  var_types <-
-    list(
-      character = c("string", "unordered", "nominal"),
-      ordered = c("ordered", "nominal"),
-      factor = c("factor", "unordered", "nominal"),
-      integer = c("integer", "numeric"),
-      numeric = c("double", "numeric"),
-      double = c("double", "numeric"),
-      Surv = "censored",
-      logical = "logical",
-      Date = "date",
-      POSIXct = "datetime",
-      list = "list",
-      textrecipes_tokenlist = "tokenlist",
-      hardhat_case_weights = "case_weights"
-    )
-
-  classes <- lapply(x, class)
-  res <- lapply(classes,
-    function(x, types) {
-      in_types <- x %in% names(types)
-      if (sum(in_types) > 0) {
-        # not sure what to do with multiple matches; right now
-        ## pick the first match which favors "factor" over "ordered"
-        out <-
-          unname(types[min(which(names(types) %in% x))])[[1]]
-      } else {
-        out <- "other"
-      }
-      out
-    },
-    types = var_types
-  )
-  #res <- unlist(res)
+  res <- lapply(x, get_types_recipes)
   tibble(variable = names(res), type = unname(res))
 }
 
