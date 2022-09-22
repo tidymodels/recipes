@@ -4,6 +4,8 @@
 
 * New selectors are added. `all_numeric()` and `all_nominal()` will behave as before. New selectors are: `all_double()`, `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`. All selectors comes with a `*_predictors()` variant. (#993)
 
+* Developer focused `get_types_recipes()` generic have been added to designate types of columns. Exported to use in extension packages that deal with types not supported in recipes directly. (#993)
+
 # recipes 1.0.1
 
 * Fixed bug where `step_holiday()` didn't work if it isn't have any missing values. (#1019)
