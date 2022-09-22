@@ -155,6 +155,7 @@ reference:
     - add_step
     - detect_step
     - fully_trained
+    - get_types_recipes
     - names0
     - prepper
     - recipes_eval_select
