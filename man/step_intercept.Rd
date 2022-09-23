@@ -10,7 +10,7 @@ step_intercept(
   role = "predictor",
   trained = FALSE,
   name = "intercept",
-  value = 1,
+  value = 1L,
   skip = FALSE,
   id = rand_id("intercept")
 )
