@@ -14,20 +14,20 @@ color_examples <- tibble(
 
 color_result <- tribble(
   ~colors_blue, ~colors_red, ~colors_white, ~colors_other,
-  1,            1,           0,             0,
-  1,            1,           1,             0,
-  3,            0,           0,             0
+  1L,            1L,           0L,             0L,
+  1L,            1L,           1L,             0L,
+  3L,            0L,           0L,             0L
 )
 
 mini_tate <- tate_text[c(101, 102, 105, 108), ]
 
 mini_tate_result <- tibble(
-  medium_Charcoal = c(0, 0, 0, 1),
-  medium_Etching =  c(1, 1, 1, 0),
-  medium_aquatint = c(1, 0, 0, 0),
-  medium_gouache =  c(0, 0, 0, 1),
-  medium_paper =    c(1, 1, 1, 1),
-  medium_other =    c(0, 0, 0, 0)
+  medium_Charcoal = c(0L, 0L, 0L, 1L),
+  medium_Etching =  c(1L, 1L, 1L, 0L),
+  medium_aquatint = c(1L, 0L, 0L, 0L),
+  medium_gouache =  c(0L, 0L, 0L, 1L),
+  medium_paper =    c(1L, 1L, 1L, 1L),
+  medium_other =    c(0L, 0L, 0L, 0L)
 )
 
 test_that("dummy variables", {
@@ -285,8 +285,8 @@ test_that("case weights", {
   dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
 
   exp_results <- tibble(
-    medium_paper = c(1, 1, 1, 1),
-    medium_other = c(2, 1, 1, 2)
+    medium_paper = c(1L, 1L, 1L, 1L),
+    medium_other = c(2L, 1L, 1L, 2L)
   )
 
   expect_identical(dummy_pred, exp_results)
@@ -312,7 +312,7 @@ test_that("case weights", {
   dummy_pred <- bake(dummy_prepped, new_data = mini_tate)
 
   exp_results <- tibble(
-    medium_other = c(3, 2, 2, 3)
+    medium_other = c(3L, 2L, 2L, 3L)
   )
 
   expect_identical(dummy_pred, exp_results)
