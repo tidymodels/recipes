@@ -12,7 +12,6 @@ counts <- gregexpr(pattern = "(rock|stony)", text = covers$description)
 counts <- vapply(counts, function(x) length(x[x > 0]), integer(1))
 chars <- nchar(covers$description)
 
-
 test_that("default options", {
   rec1 <- rec %>%
     step_count(description, pattern = "(rock|stony)") %>%
@@ -26,6 +25,10 @@ test_that("default options", {
   expect_equal(res1$X.rock.stony., counts)
   expect_equal(res1$`every thing`, chars)
   expect_equal(res1$pct, counts / chars)
+
+  expect_true(is.integer(res1$X.rock.stony.))
+  expect_true(is.integer(res1$`every thing`))
+  expect_false(is.integer(res1$pct))
 })
 
 
