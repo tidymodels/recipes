@@ -314,6 +314,9 @@ bake.step_dummy <- function(object, new_data, ...) {
         data = indicators
       )
     indicators <- as_tibble(indicators)
+    if (fac_type != "ordered") {
+      indicators <- purrr::map_dfc(indicators, vec_cast, integer())
+    }
 
     options(na.action = old_opt)
     on.exit(expr = NULL)
