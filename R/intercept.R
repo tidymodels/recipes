@@ -40,7 +40,7 @@
 #' with_intercept
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept",
-                           value = 1,
+                           value = 1L,
                            skip = FALSE, id = rand_id("intercept")) {
   if (length(list(...)) > 0) {
     rlang::warn("Selectors are not used for this step.")
