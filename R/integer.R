@@ -60,7 +60,7 @@ step_integer <-
            ...,
            role = "predictor",
            trained = FALSE,
-           strict = FALSE,
+           strict = TRUE,
            zero_based = FALSE,
            key = NULL,
            skip = FALSE,

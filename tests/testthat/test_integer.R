@@ -39,7 +39,7 @@ test_that("basic functionality", {
   expect_equal(te_int$y, exp_y)
   expect_equal(te_int$z, exp_z)
   expect_true(all(vapply(te_int, is.numeric, logical(1))))
-  expect_true(all(!vapply(te_int, is.integer, logical(1))))
+  expect_true(all(vapply(te_int, is.integer, logical(1))))
 })
 
 
@@ -59,21 +59,21 @@ test_that("zero-based", {
   expect_equal(te_int$y, exp_y)
   expect_equal(te_int$z, exp_z)
   expect_true(all(vapply(te_int, is.numeric, logical(1))))
-  expect_true(all(!vapply(te_int, is.integer, logical(1))))
+  expect_true(all(vapply(te_int, is.integer, logical(1))))
 })
 
-test_that("integers", {
+test_that("not integers", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
-    step_integer(all_predictors(), strict = TRUE)
+    step_integer(all_predictors(), strict = FALSE)
   rec_trained <- prep(rec, traning = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
   expect_true(all(vapply(te_int, is.numeric, logical(1))))
-  expect_true(all(vapply(te_int, is.integer, logical(1))))
+  expect_true(!all(vapply(te_int, is.integer, logical(1))))
   expect_true(all(vapply(tr_int, is.numeric, logical(1))))
-  expect_true(all(vapply(tr_int, is.integer, logical(1))))
+  expect_true(!all(vapply(tr_int, is.integer, logical(1))))
 })
 
 test_that("printing", {
