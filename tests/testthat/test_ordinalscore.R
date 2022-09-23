@@ -35,12 +35,12 @@ test_that("linear scores", {
   rec1_scores <- bake(rec1, new_data = ex_dat)
   rec1_scores_NA <- bake(rec1, new_data = ex_miss)
 
-  expect_equal(as.numeric(ex_dat$ord1), rec1_scores$ord1)
-  expect_equal(as.numeric(ex_dat$ord2), rec1_scores$ord2)
-  expect_equal(as.numeric(ex_dat$ord3), rec1_scores$ord3)
+  expect_identical(as.integer(ex_dat$ord1), rec1_scores$ord1)
+  expect_identical(as.integer(ex_dat$ord2), rec1_scores$ord2)
+  expect_identical(as.integer(ex_dat$ord3), rec1_scores$ord3)
 
-  expect_equal(as.numeric(ex_miss$ord1), rec1_scores_NA$ord1)
-  expect_equal(as.numeric(ex_miss$ord3), rec1_scores_NA$ord3)
+  expect_identical(as.integer(ex_miss$ord1), rec1_scores_NA$ord1)
+  expect_identical(as.integer(ex_miss$ord3), rec1_scores_NA$ord3)
 })
 
 test_that("nonlinear scores", {
