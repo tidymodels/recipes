@@ -4,6 +4,8 @@
 
 * Fixed bug where `step_holiday()` didn't work if it isn't have any missing values. (#1019)
 
+* `step_date()`, `step_dummy()`, `step_dummy_extract()`, `step_holiday()`, `step_ordinalscore()`, and `step_regex()` now returns integer results when appropriate. (#766)
+
 * `step_integer()` has a new default `strict = TRUE` returning integers by default. (#766)
 
 * `step_intercept()` has a new default `value = 1L` returning an integer intercept by default. (#766)
