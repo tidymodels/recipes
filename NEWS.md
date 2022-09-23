@@ -4,6 +4,10 @@
 
 * Fixed bug where `step_holiday()` didn't work if it isn't have any missing values. (#1019)
 
+* `step_integer()` has a new default `strict = TRUE` returning integers by default. (#766)
+
+* `step_intercept()` has a new default `value = 1L` returning an integer intercept by default. (#766)
+
 # recipes 1.0.0
 
 ## Improvements and Other Changes
