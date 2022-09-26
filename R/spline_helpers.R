@@ -1,7 +1,9 @@
-spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, fn_opts = NULL) {
+spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, degree = NULL, fn_opts = NULL) {
   vals <- c("bSpline", "cSpline", "iSpline", "mSpline", "naturalSpline", "bernsteinPoly")
   .fn <- rlang::arg_match(.fn, vals)
   df <- max(df, 2)
+
+  fn_opts <- c(fn_opts, degree = degree)
 
   .cl <- rlang::call2(.fn, .ns = "splines2", x = rlang::expr(x), df = df, !!!fn_opts)
   res <- try(rlang::eval_tidy(.cl), silent = TRUE)
