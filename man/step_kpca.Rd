@@ -119,6 +119,7 @@ The underlying operation does not allow for case weights.
 
 \examples{
 \dontshow{if (rlang::is_installed(c("modeldata", "ggplot2", "kernlab"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(ggplot2)
 data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -134,18 +135,16 @@ kpca_trans <- rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_kpca(all_numeric_predictors())
 
-if (require(kernlab) & require(ggplot2)) {
-  kpca_estimates <- prep(kpca_trans, training = biomass_tr)
+kpca_estimates <- prep(kpca_trans, training = biomass_tr)
 
-  kpca_te <- bake(kpca_estimates, biomass_te)
+kpca_te <- bake(kpca_estimates, biomass_te)
 
-  ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
-    geom_point() +
-    coord_equal()
+ggplot(kpca_te, aes(x = kPC1, y = kPC2)) +
+  geom_point() +
+  coord_equal()
 
-  tidy(kpca_trans, number = 3)
-  tidy(kpca_estimates, number = 3)
-}
+tidy(kpca_trans, number = 3)
+tidy(kpca_estimates, number = 3)
 \dontshow{\}) # examplesIf}
 }
 \references{
