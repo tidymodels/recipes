@@ -206,7 +206,7 @@ get_date_features <-
       res[, grepl("decimal$", names(res))] <- decimal_date(dt)
     }
     if ("quarter" %in% feats) {
-      res[, grepl("quarter$", names(res))] <- vec_cast( quarter(dt), integer())
+      res[, grepl("quarter$", names(res))] <- vec_cast(quarter(dt), integer())
     }
     if ("semester" %in% feats) {
       res[, grepl("semester$", names(res))] <- vec_cast(semester(dt), integer())
