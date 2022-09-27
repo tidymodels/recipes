@@ -10,6 +10,7 @@ step_spline_convex(
   role = NA,
   trained = FALSE,
   deg_free = 10,
+  degree = 3,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -34,6 +35,11 @@ preprocessing have been estimated.}
 \item{deg_free}{The degrees of freedom for the convex spline. As the
 degrees of freedom for a convex spline increase, more flexible and
 complex curves can be generated.}
+
+\item{degree}{The degree of C-spline defined to be the degree of the
+associated M-spline instead of actual polynomial degree. For example,
+C-spline basis of degree 2 is defined as the scaled double integral of
+associated M-spline basis of degree 2.}
 
 \item{options}{A list of options for \code{\link[splines2:cSpline]{splines2::cSpline()}}
 which should not include \code{x} or \code{df}.}

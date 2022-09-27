@@ -10,6 +10,7 @@ step_spline_nonnegative(
   role = NA,
   trained = FALSE,
   deg_free = 10,
+  degree = 3,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -34,6 +35,10 @@ preprocessing have been estimated.}
 \item{deg_free}{The degrees of freedom for the non-negative spline. As the
 degrees of freedom for a non-negative spline increase, more flexible and
 complex curves can be generated.}
+
+\item{degree}{A nonnegative integer specifying the degree of the piecewise
+polynomial. The default value is 3 for cubic splines. Zero degree is allowed
+for piecewise constant basis functions.}
 
 \item{options}{A list of options for \code{\link[splines2:mSpline]{splines2::mSpline()}}
 which should not include \code{x} or \code{df}.}

@@ -10,6 +10,7 @@ step_spline_basis(
   role = NA,
   trained = FALSE,
   deg_free = 10,
+  degree = 3,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -34,6 +35,10 @@ preprocessing have been estimated.}
 \item{deg_free}{The degrees of freedom for the basis spline. As the
 degrees of freedom for a basis spline increase, more flexible and
 complex curves can be generated.}
+
+\item{degree}{A non-negative integer specifying the degree of the piece-wise
+polynomial. The default value is 3 for cubic splines. Zero degree is allowed
+for piece-wise constant basis functions.}
 
 \item{options}{A list of options for \code{\link[splines2:bSpline]{splines2::bSpline()}}
 which should not include \code{x} or \code{df}.}

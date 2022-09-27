@@ -7,6 +7,9 @@
 #' @param deg_free The degrees of freedom for the basis spline. As the
 #'  degrees of freedom for a basis spline increase, more flexible and
 #'  complex curves can be generated.
+#' @param degree A non-negative integer specifying the degree of the piece-wise
+#' polynomial. The default value is 3 for cubic splines. Zero degree is allowed
+#' for piece-wise constant basis functions.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::bSpline()]
 #'  which should not include `x` or `df`.
@@ -66,6 +69,7 @@ step_spline_basis <-
            role = NA,
            trained = FALSE,
            deg_free = 10,
+           degree = 3,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -81,6 +85,7 @@ step_spline_basis <-
         trained = trained,
         role = role,
         deg_free = deg_free,
+        degree = degree,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -91,13 +96,15 @@ step_spline_basis <-
   }
 
 step_spline_basis_new <-
-  function(terms, trained, role, deg_free, options, keep_original_cols, results, na_rm, skip, id) {
+  function(terms, trained, role, deg_free, degree, options, keep_original_cols,
+           results, na_rm, skip, id) {
     step(
       subclass = "spline_basis",
       terms = terms,
       role = role,
       trained = trained,
       deg_free = deg_free,
+      degree = degree,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -121,6 +128,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "bSpline",
         df = x$deg_free,
+        degree = x$degree,
         fn_opts = x$options
       )
     )
@@ -135,6 +143,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     deg_free = x$deg_free,
+    degree = x$degree,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

@@ -7,6 +7,10 @@
 #' @param deg_free The degrees of freedom for the monotone spline. As the
 #'  degrees of freedom for a monotone spline increase, more flexible and
 #'  complex curves can be generated.
+#' @param degree The degree of I-spline defined to be the degree of the
+#'  associated M-spline instead of actual polynomial degree. For example,
+#'  I-spline basis of degree 2 is defined as the integral of associated M-spline
+#'  basis of degree 2.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::iSpline()]
 #'  which should not include `x` or `df`.
@@ -66,6 +70,7 @@ step_spline_monotone <-
            role = NA,
            trained = FALSE,
            deg_free = 10,
+           degree = 3,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -81,6 +86,7 @@ step_spline_monotone <-
         trained = trained,
         role = role,
         deg_free = deg_free,
+        degree = degree,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -91,13 +97,15 @@ step_spline_monotone <-
   }
 
 step_spline_monotone_new <-
-  function(terms, trained, role, deg_free, options, keep_original_cols, results, na_rm, skip, id) {
+  function(terms, trained, role, deg_free, degree, options, keep_original_cols,
+           results, na_rm, skip, id) {
     step(
       subclass = "spline_monotone",
       terms = terms,
       role = role,
       trained = trained,
       deg_free = deg_free,
+      degree = degree,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -121,6 +129,7 @@ prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "iSpline",
         df = x$deg_free,
+        degree = x$degree,
         fn_opts = x$options
       )
     )
@@ -135,6 +144,7 @@ prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     deg_free = x$deg_free,
+    degree = x$degree,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

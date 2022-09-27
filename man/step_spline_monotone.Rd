@@ -10,6 +10,7 @@ step_spline_monotone(
   role = NA,
   trained = FALSE,
   deg_free = 10,
+  degree = 3,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -34,6 +35,11 @@ preprocessing have been estimated.}
 \item{deg_free}{The degrees of freedom for the monotone spline. As the
 degrees of freedom for a monotone spline increase, more flexible and
 complex curves can be generated.}
+
+\item{degree}{The degree of I-spline defined to be the degree of the
+associated M-spline instead of actual polynomial degree. For example,
+I-spline basis of degree 2 is defined as the integral of associated M-spline
+basis of degree 2.}
 
 \item{options}{A list of options for \code{\link[splines2:iSpline]{splines2::iSpline()}}
 which should not include \code{x} or \code{df}.}
