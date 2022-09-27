@@ -11,6 +11,7 @@ step_spline_basis(
   trained = FALSE,
   deg_free = 10,
   degree = 3,
+  intercept = TRUE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -39,6 +40,9 @@ complex curves can be generated.}
 \item{degree}{A non-negative integer specifying the degree of the piece-wise
 polynomial. The default value is 3 for cubic splines. Zero degree is allowed
 for piece-wise constant basis functions.}
+
+\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output.}
 
 \item{options}{A list of options for \code{\link[splines2:bSpline]{splines2::bSpline()}}
 which should not include \code{x} or \code{df}.}

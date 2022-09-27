@@ -10,6 +10,8 @@
 #' @param degree A nonnegative integer specifying the degree of the piecewise
 #'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
 #'  for piecewise constant basis functions.
+#' @param intercept If `TRUE`, the complete basis matrix will be returned.
+#'  Otherwise, the first basis will be excluded from the output.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::mSpline()]
 #'  which should not include `x` or `df`.
@@ -70,6 +72,7 @@ step_spline_nonnegative <-
            trained = FALSE,
            deg_free = 10,
            degree = 3,
+           intercept = TRUE,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -86,6 +89,7 @@ step_spline_nonnegative <-
         role = role,
         deg_free = deg_free,
         degree = degree,
+        intercept = intercept,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -96,8 +100,8 @@ step_spline_nonnegative <-
   }
 
 step_spline_nonnegative_new <-
-  function(terms, trained, role, deg_free, degree, options, keep_original_cols,
-           results, na_rm, skip, id) {
+  function(terms, trained, role, deg_free, degree, intercept, options,
+           keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_nonnegative",
       terms = terms,
@@ -105,6 +109,7 @@ step_spline_nonnegative_new <-
       trained = trained,
       deg_free = deg_free,
       degree = degree,
+      intercept = intercept,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -128,6 +133,7 @@ prep.step_spline_nonnegative <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "mSpline",
         df = x$deg_free,
+        intercept = x$intercept,
         degree = x$degree,
         fn_opts = x$options
       )
@@ -144,6 +150,7 @@ prep.step_spline_nonnegative <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     deg_free = x$deg_free,
     degree = x$degree,
+    intercept = x$intercept,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

@@ -11,6 +11,8 @@
 #'  associated M-spline instead of actual polynomial degree. For example,
 #'  C-spline basis of degree 2 is defined as the scaled double integral of
 #'  associated M-spline basis of degree 2.
+#' @param intercept If `TRUE`, the complete basis matrix will be returned.
+#'  Otherwise, the first basis will be excluded from the output.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::cSpline()]
 #'  which should not include `x` or `df`.
@@ -71,6 +73,7 @@ step_spline_convex <-
            trained = FALSE,
            deg_free = 10,
            degree = 3,
+           intercept = TRUE,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -87,6 +90,7 @@ step_spline_convex <-
         role = role,
         deg_free = deg_free,
         degree = degree,
+        intercept = intercept,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -97,8 +101,8 @@ step_spline_convex <-
   }
 
 step_spline_convex_new <-
-  function(terms, trained, role, deg_free, degree, options, keep_original_cols,
-           results, na_rm, skip, id) {
+  function(terms, trained, role, deg_free, degree, intercept, options,
+           keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_convex",
       terms = terms,
@@ -106,6 +110,7 @@ step_spline_convex_new <-
       trained = trained,
       deg_free = deg_free,
       degree = degree,
+      intercept = intercept,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -130,6 +135,7 @@ prep.step_spline_convex <- function(x, training, info = NULL, ...) {
         .fn = "cSpline",
         df = x$deg_free,
         degree = x$degree,
+        intercept = x$intercept,
         fn_opts = x$options
       )
     )
@@ -145,6 +151,7 @@ prep.step_spline_convex <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     deg_free = x$deg_free,
     degree = x$degree,
+    intercept = x$intercept,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

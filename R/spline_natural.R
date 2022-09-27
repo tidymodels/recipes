@@ -8,6 +8,8 @@
 #'  degrees of freedom for a natural spline increase, more flexible and
 #'  complex curves can be generated. This step requires at least two degrees of
 #'  freedom.
+#' @param intercept If `TRUE`, the complete basis matrix will be returned.
+#'  Otherwise, the first basis will be excluded from the output.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::naturalSpline()]
 #'  which should not include `x` or `df`.
@@ -67,6 +69,7 @@ step_spline_natural <-
              role = NA,
              trained = FALSE,
              deg_free = 10,
+             intercept = TRUE,
              options = NULL,
              keep_original_cols = FALSE,
              results = NULL,
@@ -82,6 +85,7 @@ step_spline_natural <-
           trained = trained,
           role = role,
           deg_free = deg_free,
+          intercept = intercept,
           options = options,
           keep_original_cols = keep_original_cols,
           results = results,
@@ -92,13 +96,15 @@ step_spline_natural <-
     }
 
 step_spline_natural_new <-
-  function(terms, trained, role, deg_free, options, keep_original_cols, results, na_rm, skip, id) {
+  function(terms, trained, role, deg_free, intercept, options,
+           keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_natural",
       terms = terms,
       role = role,
       trained = trained,
       deg_free = deg_free,
+      intercept = intercept,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -120,6 +126,7 @@ prep.step_spline_natural <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "naturalSpline",
         df = max(x$deg_free, 2),
+        intercept = x$intercept,
         fn_opts = x$options
       )
     )
@@ -134,6 +141,7 @@ prep.step_spline_natural <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     deg_free = x$deg_free,
+    intercept = x$intercept,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

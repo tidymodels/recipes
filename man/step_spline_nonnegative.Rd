@@ -11,6 +11,7 @@ step_spline_nonnegative(
   trained = FALSE,
   deg_free = 10,
   degree = 3,
+  intercept = TRUE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -39,6 +40,9 @@ complex curves can be generated.}
 \item{degree}{A nonnegative integer specifying the degree of the piecewise
 polynomial. The default value is 3 for cubic splines. Zero degree is allowed
 for piecewise constant basis functions.}
+
+\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output.}
 
 \item{options}{A list of options for \code{\link[splines2:mSpline]{splines2::mSpline()}}
 which should not include \code{x} or \code{df}.}

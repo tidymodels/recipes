@@ -11,6 +11,7 @@ step_spline_monotone(
   trained = FALSE,
   deg_free = 10,
   degree = 3,
+  intercept = TRUE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -40,6 +41,9 @@ complex curves can be generated.}
 associated M-spline instead of actual polynomial degree. For example,
 I-spline basis of degree 2 is defined as the integral of associated M-spline
 basis of degree 2.}
+
+\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output.}
 
 \item{options}{A list of options for \code{\link[splines2:iSpline]{splines2::iSpline()}}
 which should not include \code{x} or \code{df}.}

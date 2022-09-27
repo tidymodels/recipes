@@ -1,4 +1,5 @@
-spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, degree = NULL, fn_opts = NULL) {
+spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, intercept = TRUE,
+                           degree = NULL, fn_opts = NULL) {
   vals <- c("bSpline", "cSpline", "iSpline", "mSpline", "naturalSpline", "bernsteinPoly")
   .fn <- rlang::arg_match(.fn, vals)
   fn_opts <- c(fn_opts, degree = degree)

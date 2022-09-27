@@ -10,6 +10,7 @@ step_poly_bernstein(
   role = NA,
   trained = FALSE,
   degree = 10,
+  intercept = TRUE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -33,6 +34,9 @@ preprocessing have been estimated.}
 
 \item{degree}{The degrees of the polynomial. As the degrees for a polynomial
 increase, more flexible and complex curves can be generated.}
+
+\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output.}
 
 \item{options}{A list of options for \code{\link[splines2:bernsteinPoly]{splines2::bernsteinPoly()}}
 which should not include \code{x} or \code{degree}.}

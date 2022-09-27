@@ -8,8 +8,10 @@
 #'  degrees of freedom for a basis spline increase, more flexible and
 #'  complex curves can be generated.
 #' @param degree A non-negative integer specifying the degree of the piece-wise
-#' polynomial. The default value is 3 for cubic splines. Zero degree is allowed
-#' for piece-wise constant basis functions.
+#'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
+#'  for piece-wise constant basis functions.
+#' @param intercept If `TRUE`, the complete basis matrix will be returned.
+#'  Otherwise, the first basis will be excluded from the output.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::bSpline()]
 #'  which should not include `x` or `df`.
@@ -70,6 +72,7 @@ step_spline_basis <-
            trained = FALSE,
            deg_free = 10,
            degree = 3,
+           intercept = TRUE,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -86,6 +89,7 @@ step_spline_basis <-
         role = role,
         deg_free = deg_free,
         degree = degree,
+        intercept = intercept,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -96,8 +100,8 @@ step_spline_basis <-
   }
 
 step_spline_basis_new <-
-  function(terms, trained, role, deg_free, degree, options, keep_original_cols,
-           results, na_rm, skip, id) {
+  function(terms, trained, role, deg_free, degree, intercept, options,
+           keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_basis",
       terms = terms,
@@ -105,6 +109,7 @@ step_spline_basis_new <-
       trained = trained,
       deg_free = deg_free,
       degree = degree,
+      intercept = intercept,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -128,6 +133,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "bSpline",
         df = x$deg_free,
+        intercept = x$intercept,
         degree = x$degree,
         fn_opts = x$options
       )
@@ -144,6 +150,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     deg_free = x$deg_free,
     degree = x$degree,
+    intercept = x$intercept,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

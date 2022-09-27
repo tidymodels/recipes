@@ -10,6 +10,7 @@ step_spline_natural(
   role = NA,
   trained = FALSE,
   deg_free = 10,
+  intercept = TRUE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -35,6 +36,9 @@ preprocessing have been estimated.}
 degrees of freedom for a natural spline increase, more flexible and
 complex curves can be generated. This step requires at least two degrees of
 freedom.}
+
+\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output.}
 
 \item{options}{A list of options for \code{\link[splines2:naturalSpline]{splines2::naturalSpline()}}
 which should not include \code{x} or \code{df}.}

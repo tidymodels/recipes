@@ -6,6 +6,8 @@
 #' @inheritParams step_center
 #' @param degree The degrees of the polynomial. As the degrees for a polynomial
 #'  increase, more flexible and complex curves can be generated.
+#' @param intercept If `TRUE`, the complete basis matrix will be returned.
+#'  Otherwise, the first basis will be excluded from the output.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::bernsteinPoly()]
 #'  which should not include `x` or `degree`.
@@ -62,6 +64,7 @@ step_poly_bernstein <-
            role = NA,
            trained = FALSE,
            degree = 10,
+           intercept = TRUE,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -77,6 +80,7 @@ step_poly_bernstein <-
         trained = trained,
         role = role,
         degree = degree,
+        intercept = intercept,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -87,13 +91,15 @@ step_poly_bernstein <-
   }
 
 step_poly_bernstein_new <-
-  function(terms, trained, role, degree, options, keep_original_cols, results, na_rm, skip, id) {
+  function(terms, trained, role, degree, intercept, options, keep_original_cols,
+           results, na_rm, skip, id) {
     step(
       subclass = "poly_bernstein",
       terms = terms,
       role = role,
       trained = trained,
       degree = degree,
+      intercept = intercept,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -119,6 +125,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "bernsteinPoly",
         df = NULL,
+        intercept = x$intercept,
         fn_opts = x$options
       )
     )
@@ -133,6 +140,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     degree = x$degree,
+    intercept = x$intercept,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,
