@@ -57,7 +57,7 @@
 #'  component analysis: algorithms and applications. *Neural
 #'  Networks*, 13(4-5), 411-430.
 #'
-#' @examples
+#' @examplesIf FALSE
 #' # from fastICA::fastICA
 #' set.seed(131)
 #' S <- matrix(runif(400), 200, 2)
@@ -73,16 +73,14 @@
 #' ica_trans <- step_scale(ica_trans, V1, V2)
 #' ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 #'
-#' if (FALSE) {
-#'   ica_estimates <- prep(ica_trans, training = tr)
-#'   ica_data <- bake(ica_estimates, te)
+#' ica_estimates <- prep(ica_trans, training = tr)
+#' ica_data <- bake(ica_estimates, te)
 #'
-#'   plot(te$V1, te$V2)
-#'   plot(ica_data$IC1, ica_data$IC2)
+#' plot(te$V1, te$V2)
+#' plot(ica_data$IC1, ica_data$IC2)
 #'
-#'   tidy(ica_trans, number = 3)
-#'   tidy(ica_estimates, number = 3)
-#' }
+#' tidy(ica_trans, number = 3)
+#' tidy(ica_estimates, number = 3)
 step_ica <-
   function(recipe,
            ...,
