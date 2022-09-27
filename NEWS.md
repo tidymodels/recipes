@@ -6,9 +6,9 @@
 
 * `step_date()`, `step_dummy()`, `step_dummy_extract()`, `step_holiday()`, `step_ordinalscore()`, and `step_regex()` now returns integer results when appropriate. (#766)
 
-* `step_integer()` has a new default `strict = TRUE` returning integers by default. (#766)
+* The default for the `strict` argument in `step_integer()` has been changed from `FALSE` to `TRUE`. The function will thus return integers, rather than whole-number numerics, by default. (#766)
 
-* `step_intercept()` has a new default `value = 1L` returning an integer intercept by default. (#766)
+* The default for the `value` argument in `step_intercept()` has been changed from `1` to `1L`. (#766)
 
 # recipes 1.0.0
 
