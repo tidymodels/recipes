@@ -119,7 +119,7 @@ prep.step_spline_natural <- function(x, training, info = NULL, ...) {
         .x,
         nm = .y,
         .fn = "naturalSpline",
-        df = x$deg_free,
+        df = max(x$deg_free, 2),
         fn_opts = x$options
       )
     )
