@@ -14,7 +14,8 @@
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included only for consistency.
 #' @param name Character name for newly added column
-#' @param value A numeric constant to fill the intercept column. Defaults to 1.
+#' @param value A numeric constant to fill the intercept column. Defaults to
+#'   `1L`.
 #' @template step-return
 #' @export
 #'
