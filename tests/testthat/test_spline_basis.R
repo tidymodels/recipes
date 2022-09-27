@@ -20,7 +20,7 @@ test_that("correct basis functions", {
   )
 
   with_ns <- rec %>%
-    step_spline_basis(carbon, hydrogen, deg_free = 5)
+    step_spline_b(carbon, hydrogen, deg_free = 5)
 
   with_ns <- prep(with_ns, training = biomass_tr, verbose = FALSE)
 
@@ -85,7 +85,7 @@ test_that("printing", {
                 data = biomass_tr
   )
 
-  with_ns <- rec %>% step_spline_basis(carbon, hydrogen)
+  with_ns <- rec %>% step_spline_b(carbon, hydrogen)
   expect_snapshot(print(with_ns))
   expect_snapshot(prep(with_ns))
 })
@@ -102,8 +102,8 @@ test_that("tunable", {
 
   rec <-
     recipe(~., data = iris) %>%
-    step_spline_basis(all_predictors())
-  rec_param <- tunable.step_spline_basis(rec$steps[[1]])
+    step_spline_b(all_predictors())
+  rec_param <- tunable.step_spline_b(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free"))
   expect_true(all(rec_param$source == "recipe"))
   expect_true(is.list(rec_param$call_info))
@@ -116,7 +116,7 @@ test_that("tunable", {
 
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_spline_basis(rec1)
+  rec2 <- step_spline_b(rec1)
 
   rec1 <- prep(rec1, mtcars)
   rec2 <- prep(rec2, mtcars)
@@ -129,7 +129,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_spline_basis(rec)
+  rec <- step_spline_b(rec)
 
   expect <- tibble(terms = "<none>", id = character())
 
@@ -143,7 +143,7 @@ test_that("empty selection tidy method works", {
 test_that("empty printing", {
   skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_spline_basis(rec)
+  rec <- step_spline_b(rec)
 
   expect_snapshot(rec)
 

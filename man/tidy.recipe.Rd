@@ -100,7 +100,7 @@
 \alias{tidy.step_shuffle}
 \alias{tidy.step_slice}
 \alias{tidy.step_spatialsign}
-\alias{tidy.step_spline_basis}
+\alias{tidy.step_spline_b}
 \alias{tidy.step_spline_convex}
 \alias{tidy.step_spline_monotone}
 \alias{tidy.step_spline_natural}
@@ -279,7 +279,7 @@
 
 \method{tidy}{step_spatialsign}(x, ...)
 
-\method{tidy}{step_spline_basis}(x, ...)
+\method{tidy}{step_spline_b}(x, ...)
 
 \method{tidy}{step_spline_convex}(x, ...)
 

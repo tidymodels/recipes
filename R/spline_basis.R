@@ -1,11 +1,11 @@
 #' Basis Splines
 #'
-#' `step_spline_basis` creates a *specification* of a recipe
-#'  step that creates basis spline features.
+#' `step_spline_b` creates a *specification* of a recipe
+#'  step that creates b-spline features.
 #'
 #' @inheritParams step_center
-#' @param deg_free The degrees of freedom for the basis spline. As the
-#'  degrees of freedom for a basis spline increase, more flexible and
+#' @param deg_free The degrees of freedom for the b-spline. As the
+#'  degrees of freedom for a b-spline increase, more flexible and
 #'  complex curves can be generated.
 #' @param degree A non-negative integer specifying the degree of the piece-wise
 #'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
@@ -20,7 +20,7 @@
 #' @param role For model terms created by this step, what analysis role should
 #'  they be assigned? By default, the new columns created by this step from
 #'  the original variables will be used as _predictors_ in a model.
-#' @return An object with classes `"step_spline_basis"` and `"step"`.
+#' @return An object with classes `"step_spline_b"` and `"step"`.
 #' @export
 #' @details
 #'
@@ -49,7 +49,7 @@
 #' data(ames, package = "modeldata")
 #'
 #' spline_rec <- recipe(Sale_Price ~ Longitude, data = ames) %>%
-#'   step_spline_basis(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
+#'   step_spline_b(Longitude, deg_free = 6, keep_original_cols = TRUE) %>%
 #'   prep()
 #'
 #' tidy(spline_rec, number = 1)
@@ -65,7 +65,7 @@
 #'   facet_wrap(~ feature)
 #' @template case-weights-not-supported
 #' @seealso [splines2::bSpline()]
-step_spline_basis <-
+step_spline_b <-
   function(recipe,
            ...,
            role = NA,
@@ -77,13 +77,13 @@ step_spline_basis <-
            keep_original_cols = FALSE,
            results = NULL,
            skip = FALSE,
-           id = rand_id("spline_basis")) {
+           id = rand_id("spline_b")) {
 
-    recipes_pkg_check(required_pkgs.step_spline_basis())
+    recipes_pkg_check(required_pkgs.step_spline_b())
 
     add_step(
       recipe,
-      step_spline_basis_new(
+      step_spline_b_new(
         terms = enquos(...),
         trained = trained,
         role = role,
@@ -99,11 +99,11 @@ step_spline_basis <-
     )
   }
 
-step_spline_basis_new <-
+step_spline_b_new <-
   function(terms, trained, role, deg_free, degree, intercept, options,
            keep_original_cols, results, na_rm, skip, id) {
     step(
-      subclass = "spline_basis",
+      subclass = "spline_b",
       terms = terms,
       role = role,
       trained = trained,
@@ -120,7 +120,7 @@ step_spline_basis_new <-
 
 # ------------------------------------------------------------------------------
 
-prep.step_spline_basis <- function(x, training, info = NULL, ...) {
+prep.step_spline_b <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], quant = TRUE)
 
@@ -144,7 +144,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!bas_res]
   names(res) <- col_names
 
-  step_spline_basis_new(
+  step_spline_b_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
@@ -159,7 +159,7 @@ prep.step_spline_basis <- function(x, training, info = NULL, ...) {
   )
 }
 
-bake.step_spline_basis <- function(object, new_data, ...) {
+bake.step_spline_b <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {
     new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
@@ -174,7 +174,7 @@ bake.step_spline_basis <- function(object, new_data, ...) {
 
 # ------------------------------------------------------------------------------
 
-print.step_spline_basis <-
+print.step_spline_b <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Basis spline expansion "
     cols_used <- names(x$results)
@@ -187,7 +187,7 @@ print.step_spline_basis <-
 
 #' @rdname tidy.recipe
 #' @export
-tidy.step_spline_basis <- function(x, ...) {
+tidy.step_spline_b <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
     if (length(terms) == 0) {
@@ -203,21 +203,21 @@ tidy.step_spline_basis <- function(x, ...) {
 
 #' @rdname required_pkgs.recipe
 #' @export
-required_pkgs.step_spline_basis <- function(x, ...) {
+required_pkgs.step_spline_b <- function(x, ...) {
   c("splines2")
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-tunable.step_spline_basis <- function(x, ...) {
+tunable.step_spline_b <- function(x, ...) {
   tibble::tibble(
     name = c("deg_free"),
     call_info = list(
       list(pkg = "dials", fun = "spline_degree", range = c(2L, 15L))
     ),
     source = "recipe",
-    component = "step_spline_basis",
+    component = "step_spline_b",
     component_id = x$id
   )
 }

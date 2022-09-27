@@ -17,7 +17,7 @@
 \alias{required_pkgs.recipe}
 \alias{required_pkgs.step}
 \alias{required_pkgs.check}
-\alias{required_pkgs.step_spline_basis}
+\alias{required_pkgs.step_spline_b}
 \alias{required_pkgs.step_spline_convex}
 \alias{required_pkgs.step_spline_monotone}
 \alias{required_pkgs.step_spline_natural}
@@ -51,7 +51,7 @@
 
 \method{required_pkgs}{check}(x, ...)
 
-\method{required_pkgs}{step_spline_basis}(x, ...)
+\method{required_pkgs}{step_spline_b}(x, ...)
 
 \method{required_pkgs}{step_spline_convex}(x, ...)
 
