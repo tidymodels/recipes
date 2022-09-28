@@ -28,6 +28,23 @@ test_that("default option", {
   expect_equal(date_res, date_exp)
 })
 
+test_that("returns integers", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  feats <- c("hour", "hour12", "minute")
+
+  date_rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors(), features = feats, keep_original_cols = FALSE)
+
+  date_rec <- prep(date_rec, training = examples)
+  date_res <- bake(date_rec, new_data = examples)
+
+  expect_true(all(vapply(date_res, is.integer, logical(1))))
+})
+
 
 test_that("nondefault options", {
   examples <- data.frame(

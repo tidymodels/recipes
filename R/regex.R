@@ -157,7 +157,7 @@ bake.step_regex <- function(object, new_data, ...) {
     regex <- mod_call_args(regex, args = object$options)
   }
 
-  new_data[, object$result] <- ifelse(eval(regex), 1, 0)
+  new_data[, object$result] <- ifelse(eval(regex), 1L, 0L)
   new_data
 }
 
