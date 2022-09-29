@@ -1,6 +1,7 @@
 # recipes (development version)
 
-* A new set of spline functions were added: `step_spline_natural()`, ...
+* A new set of basis functions were added: `step_spline_b()`, `step_spline_convex()`,  `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and 
+`step_poly_bernstein()`.
 
 # recipes 1.0.1
 
