@@ -15,6 +15,7 @@ spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, complete_set
     )
   res <- try(rlang::eval_tidy(.cl), silent = TRUE)
   if (inherits(res, "try-error")) {
+    spline_msg(res)
     return(NULL)
   }
   res <- attributes(res)
@@ -25,6 +26,13 @@ spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, complete_set
   res$.ns = "splines2"
   res$nm <- nm
   res
+}
+
+spline_msg <- function(x) {
+  x <- as.character(x)
+  x <- strsplit(x, "\\n")[[1]]
+  x <- paste0(x[-1], collapse = ". ")
+  rlang::warn(trimws(x, which = "left"))
 }
 
 spline2_apply <- function(object, new_data) {

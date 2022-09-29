@@ -88,6 +88,11 @@ test_that("printing", {
   with_ns <- rec %>% step_spline_b(carbon, hydrogen)
   expect_snapshot(print(with_ns))
   expect_snapshot(prep(with_ns))
+
+  expect_snapshot(
+    rec %>% step_spline_b(carbon, hydrogen, deg_free = -1) %>% prep()
+  )
+
 })
 
 

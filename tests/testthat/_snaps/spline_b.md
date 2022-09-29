@@ -34,6 +34,30 @@
       
       Basis spline expansion carbon, hydrogen [trained]
 
+---
+
+    Code
+      rec %>% step_spline_b(carbon, hydrogen, deg_free = -1) %>% prep()
+    Condition
+      Warning:
+      The 'df' must be a nonnegative integer.
+      Warning:
+      The 'df' must be a nonnegative integer.
+    Output
+      Recipe
+      
+      Inputs:
+      
+            role #variables
+         outcome          1
+       predictor          5
+      
+      Training data contained 456 data points and no missing data.
+      
+      Operations:
+      
+      Basis spline expansion <none> [trained]
+
 # empty printing
 
     Code

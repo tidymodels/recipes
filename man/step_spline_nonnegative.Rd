@@ -79,7 +79,7 @@ are added to the data.
 Setting \code{periodic = TRUE} in the list passed to \code{options}, a periodic version
 of the spline is used.
 
-If the spline expansion fails for a selected column, the step will silently
+If the spline expansion fails for a selected column, the step will
 remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.
 }
