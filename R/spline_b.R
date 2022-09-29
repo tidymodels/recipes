@@ -31,9 +31,6 @@
 #' and some outcome. The degrees of freedom determines how many new features
 #' are added to the data.
 #'
-#' If a single degree of freedom is requested, two degrees of freedom will be
-#' used.
-#'
 #' If the spline expansion fails for a selected column, the step will silently
 #' remove that column's results (but will retain the original data). Use the
 #' `tidy()` method to determine which columns were used.
