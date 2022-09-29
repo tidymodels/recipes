@@ -7,7 +7,7 @@
 step_spline_natural(
   recipe,
   ...,
-  role = NA,
+  role = "predictor",
   trained = FALSE,
   deg_free = 10,
   intercept = TRUE,

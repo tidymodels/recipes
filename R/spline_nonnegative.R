@@ -68,7 +68,7 @@
 step_spline_nonnegative <-
   function(recipe,
            ...,
-           role = NA,
+           role = "predictor",
            trained = FALSE,
            deg_free = 10,
            degree = 3,

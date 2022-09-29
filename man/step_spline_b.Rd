@@ -7,7 +7,7 @@
 step_spline_b(
   recipe,
   ...,
-  role = NA,
+  role = "predictor",
   trained = FALSE,
   deg_free = 10,
   degree = 3,

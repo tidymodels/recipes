@@ -7,7 +7,7 @@
 step_spline_convex(
   recipe,
   ...,
-  role = NA,
+  role = "predictor",
   trained = FALSE,
   deg_free = 10,
   degree = 3,

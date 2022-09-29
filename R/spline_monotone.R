@@ -69,7 +69,7 @@
 step_spline_monotone <-
   function(recipe,
            ...,
-           role = NA,
+           role = "predictor",
            trained = FALSE,
            deg_free = 10,
            degree = 3,
