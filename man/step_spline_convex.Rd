@@ -11,7 +11,7 @@ step_spline_convex(
   trained = FALSE,
   deg_free = 10,
   degree = 3,
-  intercept = TRUE,
+  complete_set = TRUE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -33,8 +33,8 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{deg_free}{The degrees of freedom for the convex spline. As the
-degrees of freedom for a convex spline increase, more flexible and
+\item{deg_free}{The degrees of freedom for the b-spline. As the
+degrees of freedom for a b-spline increase, more flexible and
 complex curves can be generated.}
 
 \item{degree}{The degree of C-spline defined to be the degree of the
@@ -42,11 +42,13 @@ associated M-spline instead of actual polynomial degree. For example,
 C-spline basis of degree 2 is defined as the scaled double integral of
 associated M-spline basis of degree 2.}
 
-\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
-Otherwise, the first basis will be excluded from the output.}
+\item{complete_set}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output. This maps to
+the \code{intercept} argument of the corresponding function from the
+\pkg{splines2} package and has the same default value.}
 
 \item{options}{A list of options for \code{\link[splines2:cSpline]{splines2::cSpline()}}
-which should not include \code{x} or \code{df}.}
+which should not include \code{x}, \code{df}, \code{degree}, or \code{intercept}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}

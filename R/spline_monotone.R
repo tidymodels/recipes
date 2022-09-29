@@ -3,24 +3,13 @@
 #' `step_spline_monotone` creates a *specification* of a recipe
 #'  step that creates monotone spline features.
 #'
-#' @inheritParams step_center
-#' @param deg_free The degrees of freedom for the monotone spline. As the
-#'  degrees of freedom for a monotone spline increase, more flexible and
-#'  complex curves can be generated.
+#' @inheritParams step_spline_b
 #' @param degree The degree of I-spline defined to be the degree of the
 #'  associated M-spline instead of actual polynomial degree. For example,
 #'  I-spline basis of degree 2 is defined as the integral of associated M-spline
 #'  basis of degree 2.
-#' @param intercept If `TRUE`, the complete basis matrix will be returned.
-#'  Otherwise, the first basis will be excluded from the output.
-#' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::iSpline()]
-#'  which should not include `x` or `df`.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the new columns created by this step from
-#'  the original variables will be used as _predictors_ in a model.
+#'  which should not include `x`, `df`, `degree`, `periodic`, or `intercept`.
 #' @return An object with classes `"step_spline_monotone"` and `"step"`.
 #' @export
 #' @details
@@ -73,7 +62,7 @@ step_spline_monotone <-
            trained = FALSE,
            deg_free = 10,
            degree = 3,
-           intercept = TRUE,
+           complete_set = TRUE,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -90,7 +79,7 @@ step_spline_monotone <-
         role = role,
         deg_free = deg_free,
         degree = degree,
-        intercept = intercept,
+        complete_set = complete_set,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -101,7 +90,7 @@ step_spline_monotone <-
   }
 
 step_spline_monotone_new <-
-  function(terms, trained, role, deg_free, degree, intercept, options,
+  function(terms, trained, role, deg_free, degree, complete_set, options,
            keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_monotone",
@@ -110,7 +99,7 @@ step_spline_monotone_new <-
       trained = trained,
       deg_free = deg_free,
       degree = degree,
-      intercept = intercept,
+      complete_set = complete_set,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -135,7 +124,7 @@ prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
         .fn = "iSpline",
         df = x$deg_free,
         degree = x$degree,
-        intercept = x$intercept,
+        complete_set = x$complete_set,
         fn_opts = x$options
       )
     )
@@ -151,7 +140,7 @@ prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     deg_free = x$deg_free,
     degree = x$degree,
-    intercept = x$intercept,
+    complete_set = x$complete_set,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

@@ -10,11 +10,13 @@
 #' @param degree A non-negative integer specifying the degree of the piece-wise
 #'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
 #'  for piece-wise constant basis functions.
-#' @param intercept If `TRUE`, the complete basis matrix will be returned.
-#'  Otherwise, the first basis will be excluded from the output.
+#' @param complete_set If `TRUE`, the complete basis matrix will be returned.
+#'  Otherwise, the first basis will be excluded from the output. This maps to
+#'  the `intercept` argument of the corresponding function from the
+#'  \pkg{splines2} package and has the same default value.
 #' @param results A list of objects created once the step has been trained.
 #' @param options A list of options for [splines2::bSpline()]
-#'  which should not include `x` or `df`.
+#'  which should not include `x`, `df`, `degree`, or `intercept`.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `FALSE`.
 #' @param role For model terms created by this step, what analysis role should
@@ -72,7 +74,7 @@ step_spline_b <-
            trained = FALSE,
            deg_free = 10,
            degree = 3,
-           intercept = TRUE,
+           complete_set = FALSE,
            options = NULL,
            keep_original_cols = FALSE,
            results = NULL,
@@ -89,7 +91,7 @@ step_spline_b <-
         role = role,
         deg_free = deg_free,
         degree = degree,
-        intercept = intercept,
+        complete_set = complete_set,
         options = options,
         keep_original_cols = keep_original_cols,
         results = results,
@@ -100,7 +102,7 @@ step_spline_b <-
   }
 
 step_spline_b_new <-
-  function(terms, trained, role, deg_free, degree, intercept, options,
+  function(terms, trained, role, deg_free, degree, complete_set, options,
            keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_b",
@@ -109,7 +111,7 @@ step_spline_b_new <-
       trained = trained,
       deg_free = deg_free,
       degree = degree,
-      intercept = intercept,
+      complete_set = complete_set,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -133,7 +135,7 @@ prep.step_spline_b <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "bSpline",
         df = x$deg_free,
-        intercept = x$intercept,
+        complete_set = x$complete_set,
         degree = x$degree,
         fn_opts = x$options
       )
@@ -150,7 +152,7 @@ prep.step_spline_b <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     deg_free = x$deg_free,
     degree = x$degree,
-    intercept = x$intercept,
+    complete_set = x$complete_set,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

@@ -3,21 +3,13 @@
 #' `step_spline_natural` creates a *specification* of a recipe
 #'  step that creates natural spline features.
 #'
-#' @inheritParams step_center
+#' @inheritParams step_spline_b
 #' @param deg_free The degrees of freedom for the natural spline. As the
 #'  degrees of freedom for a natural spline increase, more flexible and
 #'  complex curves can be generated. This step requires at least two degrees of
 #'  freedom.
-#' @param intercept If `TRUE`, the complete basis matrix will be returned.
-#'  Otherwise, the first basis will be excluded from the output.
-#' @param results A list of objects created once the step has been trained.
-#' @param options A list of options for [splines2::naturalSpline()]
-#'  which should not include `x` or `df`.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the new columns created by this step from
-#'  the original variables will be used as _predictors_ in a model.
+#' @param options A list of options for [splines2::mSpline()]
+#'  which should not include `x`, `df`, or `intercept`.
 #' @return An object with classes `"step_spline_natural"` and `"step"`.
 #' @export
 #' @details
@@ -69,7 +61,7 @@ step_spline_natural <-
              role = "predictor",
              trained = FALSE,
              deg_free = 10,
-             intercept = TRUE,
+             complete_set = FALSE,
              options = NULL,
              keep_original_cols = FALSE,
              results = NULL,
@@ -85,7 +77,7 @@ step_spline_natural <-
           trained = trained,
           role = role,
           deg_free = deg_free,
-          intercept = intercept,
+          complete_set = complete_set,
           options = options,
           keep_original_cols = keep_original_cols,
           results = results,
@@ -96,7 +88,7 @@ step_spline_natural <-
     }
 
 step_spline_natural_new <-
-  function(terms, trained, role, deg_free, intercept, options,
+  function(terms, trained, role, deg_free, complete_set, options,
            keep_original_cols, results, na_rm, skip, id) {
     step(
       subclass = "spline_natural",
@@ -104,7 +96,7 @@ step_spline_natural_new <-
       role = role,
       trained = trained,
       deg_free = deg_free,
-      intercept = intercept,
+      complete_set = complete_set,
       options = options,
       keep_original_cols = keep_original_cols,
       results = results,
@@ -126,7 +118,7 @@ prep.step_spline_natural <- function(x, training, info = NULL, ...) {
         nm = .y,
         .fn = "naturalSpline",
         df = max(x$deg_free, 2),
-        intercept = x$intercept,
+        complete_set = x$complete_set,
         fn_opts = x$options
       )
     )
@@ -141,7 +133,7 @@ prep.step_spline_natural <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     deg_free = x$deg_free,
-    intercept = x$intercept,
+    complete_set = x$complete_set,
     options = x$options,
     keep_original_cols = x$keep_original_cols,
     results = res,

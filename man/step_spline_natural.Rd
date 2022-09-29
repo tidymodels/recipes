@@ -10,7 +10,7 @@ step_spline_natural(
   role = "predictor",
   trained = FALSE,
   deg_free = 10,
-  intercept = TRUE,
+  complete_set = FALSE,
   options = NULL,
   keep_original_cols = FALSE,
   results = NULL,
@@ -37,11 +37,13 @@ degrees of freedom for a natural spline increase, more flexible and
 complex curves can be generated. This step requires at least two degrees of
 freedom.}
 
-\item{intercept}{If \code{TRUE}, the complete basis matrix will be returned.
-Otherwise, the first basis will be excluded from the output.}
+\item{complete_set}{If \code{TRUE}, the complete basis matrix will be returned.
+Otherwise, the first basis will be excluded from the output. This maps to
+the \code{intercept} argument of the corresponding function from the
+\pkg{splines2} package and has the same default value.}
 
-\item{options}{A list of options for \code{\link[splines2:naturalSpline]{splines2::naturalSpline()}}
-which should not include \code{x} or \code{df}.}
+\item{options}{A list of options for \code{\link[splines2:mSpline]{splines2::mSpline()}}
+which should not include \code{x}, \code{df}, or \code{intercept}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
