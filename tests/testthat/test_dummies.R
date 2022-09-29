@@ -84,6 +84,14 @@ test_that("dummy variables with non-factor inputs", {
   )
 })
 
+test_that("create integer dummy variables", {
+  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
+  dummy <- rec %>% step_dummy(city, zip, id = "")
+  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
+  expect_true(all(vapply(dummy_pred, is.integer, logical(1))))
+})
+
 test_that("create all dummy variables", {
   rec <- recipe(sqft ~ zip + city + price, data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip, one_hot = TRUE, id = "")

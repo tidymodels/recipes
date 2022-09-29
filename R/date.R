@@ -189,27 +189,27 @@ get_date_features <-
            label = TRUE,
            ord = FALSE) {
     ## pre-allocate values
-    res <- matrix(NA, nrow = length(dt), ncol = length(feats))
+    res <- matrix(NA_integer_, nrow = length(dt), ncol = length(feats))
     colnames(res) <- feats
     res <- as_tibble(res)
 
     if ("year" %in% feats) {
-      res[, grepl("year$", names(res))] <- year(dt)
+      res[, grepl("year$", names(res))] <- vec_cast(year(dt), integer())
     }
     if ("doy" %in% feats) {
-      res[, grepl("doy$", names(res))] <- yday(dt)
+      res[, grepl("doy$", names(res))] <- vec_cast(yday(dt), integer())
     }
     if ("week" %in% feats) {
-      res[, grepl("week$", names(res))] <- week(dt)
+      res[, grepl("week$", names(res))] <- vec_cast(week(dt), integer())
     }
     if ("decimal" %in% feats) {
       res[, grepl("decimal$", names(res))] <- decimal_date(dt)
     }
     if ("quarter" %in% feats) {
-      res[, grepl("quarter$", names(res))] <- quarter(dt)
+      res[, grepl("quarter$", names(res))] <- vec_cast(quarter(dt), integer())
     }
     if ("semester" %in% feats) {
-      res[, grepl("semester$", names(res))] <- semester(dt)
+      res[, grepl("semester$", names(res))] <- vec_cast(semester(dt), integer())
     }
     if ("dow" %in% feats) {
       res[, grepl("dow$", names(res))] <-

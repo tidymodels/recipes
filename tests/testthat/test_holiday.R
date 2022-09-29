@@ -53,6 +53,18 @@ test_that("Date class", {
   )
 })
 
+test_that("Date class", {
+  holiday_rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(),
+                 holidays = exp_dates$holiday,
+                 keep_original_cols = FALSE)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+  holiday_ind <- bake(holiday_rec, test_data, all_predictors())
+
+  expect_true(all(vapply(holiday_ind, is.integer, logical(1))))
+})
+
 test_that("works with no missing values - Date class", {
   test_data <- na.omit(test_data)
 
@@ -115,6 +127,22 @@ test_that("POSIXct class", {
     NA_integer_
   )
 })
+
+test_that("Date class", {
+  test_data$day <- as.POSIXct(test_data$day)
+  exp_dates$date <- as.POSIXct(exp_dates$date)
+
+  holiday_rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(),
+                 holidays = exp_dates$holiday,
+                 keep_original_cols = FALSE)
+
+  holiday_rec <- prep(holiday_rec, training = test_data)
+  holiday_ind <- bake(holiday_rec, test_data, all_predictors())
+
+  expect_true(all(vapply(holiday_ind, is.integer, logical(1))))
+})
+
 
 test_that("works with no missing values - POSIXct class", {
   test_data <- na.omit(test_data)

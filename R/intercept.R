@@ -14,7 +14,8 @@
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included only for consistency.
 #' @param name Character name for newly added column
-#' @param value A numeric constant to fill the intercept column. Defaults to 1.
+#' @param value A numeric constant to fill the intercept column. Defaults to
+#'   `1L`.
 #' @template step-return
 #' @export
 #'
@@ -40,7 +41,7 @@
 #' with_intercept
 step_intercept <- function(recipe, ..., role = "predictor",
                            trained = FALSE, name = "intercept",
-                           value = 1,
+                           value = 1L,
                            skip = FALSE, id = rand_id("intercept")) {
   if (length(list(...)) > 0) {
     rlang::warn("Selectors are not used for this step.")

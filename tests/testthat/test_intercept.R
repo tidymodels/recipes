@@ -14,9 +14,9 @@ test_that("add appropriate column with default settings", {
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   rec_trans <- bake(rec_trained, new_data = ex_dat)
 
-  exp_res <- tibble::add_column(ex_dat, "intercept" = 1, .before = TRUE)
+  exp_res <- tibble::add_column(ex_dat, "intercept" = 1L, .before = TRUE)
 
-  expect_equal(rec_trans, exp_res)
+  expect_identical(rec_trans, exp_res)
 })
 
 test_that("adds arbitrary numeric column", {
@@ -28,7 +28,7 @@ test_that("adds arbitrary numeric column", {
 
   exp_res <- tibble::add_column(ex_dat, "(Intercept)" = 2.5, .before = TRUE)
 
-  expect_equal(rec_trans, exp_res)
+  expect_identical(rec_trans, exp_res)
 })
 
 
