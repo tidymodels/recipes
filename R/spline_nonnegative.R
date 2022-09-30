@@ -18,6 +18,11 @@
 #' and some outcome. The degrees of freedom determines how many new features
 #' are added to the data.
 #'
+#' This function generates M-splines (Curry, and Schoenberg 1988) which are
+#' non-negative and have interesting statistical properties (such as integrating
+#' to one). A zero-degree M-spline generates box/step functions while a first
+#' degree basis function is triangular.
+#'
 #' Setting `periodic = TRUE` in the list passed to `options`, a periodic version
 #' of the spline is used.
 #'
@@ -30,6 +35,14 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
 #'
+#' @references
+#' Curry, H.B., Schoenberg, I.J. (1988). On Polya Frequency Functions IV: The
+#' Fundamental Spline Functions and their Limits. In: de Boor, C. (eds) I. J.
+#' Schoenberg Selected Papers. Contemporary Mathematicians. Birkhäuser, Boston,
+#' MA
+#'
+#' Ramsay, J. O. "Monotone Regression Splines in Action." Statistical Science,
+#' vol. 3, no. 4, 1988, pp. 425–41
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' library(tidyr)
 #' library(dplyr)

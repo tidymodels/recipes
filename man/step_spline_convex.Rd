@@ -77,6 +77,9 @@ that, when used in a model, can estimate nonlinear trends between the column
 and some outcome. The degrees of freedom determines how many new features
 are added to the data.
 
+These particular spline functions have forms that are guaranteed to be
+convex.
+
 If the spline expansion fails for a selected column, the step will
 remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.

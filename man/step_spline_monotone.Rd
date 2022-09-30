@@ -77,6 +77,10 @@ that, when used in a model, can estimate nonlinear trends between the column
 and some outcome. The degrees of freedom determines how many new features
 are added to the data.
 
+These splines are integrated forms of M-splines and are non-negative and
+monotonic. This means that, when used with a fitting function that produces
+non-negative regression coefficients, the resulting fit is monotonic.
+
 If the spline expansion fails for a selected column, the step will
 remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.

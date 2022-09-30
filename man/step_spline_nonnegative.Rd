@@ -76,6 +76,11 @@ that, when used in a model, can estimate nonlinear trends between the column
 and some outcome. The degrees of freedom determines how many new features
 are added to the data.
 
+This function generates M-splines (Curry, and Schoenberg 1988) which are
+non-negative and have interesting statistical properties (such as integrating
+to one). A zero-degree M-spline generates box/step functions while a first
+degree basis function is triangular.
+
 Setting \code{periodic = TRUE} in the list passed to \code{options}, a periodic version
 of the spline is used.
 
@@ -118,6 +123,15 @@ spline_rec \%>\%
   geom_line() +
   facet_wrap(~ feature)
 \dontshow{\}) # examplesIf}
+}
+\references{
+Curry, H.B., Schoenberg, I.J. (1988). On Polya Frequency Functions IV: The
+Fundamental Spline Functions and their Limits. In: de Boor, C. (eds) I. J.
+Schoenberg Selected Papers. Contemporary Mathematicians. Birkhäuser, Boston,
+MA
+
+Ramsay, J. O. "Monotone Regression Splines in Action." Statistical Science,
+vol. 3, no. 4, 1988, pp. 425–41
 }
 \seealso{
 \code{\link[splines2:mSpline]{splines2::mSpline()}}

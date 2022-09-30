@@ -19,6 +19,9 @@
 #' and some outcome. The degrees of freedom determines how many new features
 #' are added to the data.
 #'
+#' These particular spline functions have forms that are guaranteed to be
+#' convex.
+#'
 #' If the spline expansion fails for a selected column, the step will
 #' remove that column's results (but will retain the original data). Use the
 #' `tidy()` method to determine which columns were used.

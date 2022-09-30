@@ -1,7 +1,7 @@
 #' Generalized Bernstein Polynomial Basis
 #'
 #' `step_poly_bernstein` creates a *specification* of a recipe
-#'  step that creates bernstein polynomial features.
+#'  step that creates Bernstein polynomial features.
 #'
 #' @inheritParams step_spline_b
 #' @param degree The degrees of the polynomial. As the degrees for a polynomial
