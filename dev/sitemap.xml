@@ -343,6 +343,9 @@
     <loc>https://recipes.tidymodels.org/dev/reference/step_poly.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_poly_bernstein.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_profile.html</loc>
   </url>
   <url>
@@ -386,6 +389,21 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_spatialsign.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_spline_b.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_spline_convex.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_spline_monotone.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_spline_natural.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_spline_nonnegative.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_sqrt.html</loc>
