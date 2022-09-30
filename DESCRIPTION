@@ -57,6 +57,7 @@ Suggests:
     rpart,
     rsample,
     RSpectra,
+    splines2,
     testthat (>= 3.0.0),
     workflows,
     xml2
