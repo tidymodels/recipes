@@ -62,7 +62,7 @@ An object with classes \code{"step_poly_bernstein"} and \code{"step"}.
 }
 \description{
 \code{step_poly_bernstein} creates a \emph{specification} of a recipe
-step that creates bernstein polynomial features.
+step that creates Bernstein polynomial features.
 }
 \details{
 Polynomial transformations take a numeric column and create multiple features

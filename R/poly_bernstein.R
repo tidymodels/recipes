@@ -196,7 +196,7 @@ tunable.step_poly_bernstein <- function(x, ...) {
   tibble::tibble(
     name = c("degree"),
     call_info = list(
-      list(pkg = "dials", fun = "degree_int")
+      list(pkg = "dials", fun = "degree_int", range = c(1L, 15L))
     ),
     source = "recipe",
     component = "step_poly_bernstein",

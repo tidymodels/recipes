@@ -214,9 +214,10 @@ required_pkgs.step_spline_nonnegative <- function(x, ...) {
 #' @export
 tunable.step_spline_nonnegative <- function(x, ...) {
   tibble::tibble(
-    name = c("deg_free"),
+    name = c("deg_free", "degree"),
     call_info = list(
-      list(pkg = "dials", fun = "spline_degree", range = c(2L, 15L))
+      list(pkg = "dials", fun = "spline_degree", range = c(2L, 15L)),
+      list(pkg = "dials", fun = "degree", range = c(0L, 3L))
     ),
     source = "recipe",
     component = "step_spline_nonnegative",
