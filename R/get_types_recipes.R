@@ -10,10 +10,10 @@ get_types <- function(x) {
 #' columns used in recipes. These functions underlie the work that the user sees
 #' in [selections].
 #'
-#' This function acts a extended recipes-specific version of [class()]. By
+#' This function acts as an extended recipes-specific version of [class()]. By
 #' ignoring differences in similar types ("double" and "numeric") and allowing
 #' each element to have multiple types ("factor" returns "factor", "unordered",
-#' and "nominal". And "character" returns "string", "unordered", and
+#' and "nominal", and "character" returns "string", "unordered", and
 #' "nominal") we are able to create more natural selectors such as
 #' [all_nominal()], [all_string()] and [all_integer()].
 #'

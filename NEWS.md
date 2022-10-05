@@ -2,9 +2,9 @@
 
 * Types of variables have been made granular. `"nominal"` has been split into `"ordered"` and `"unordered"` and `"numeric"` has been split into `"double"` and `"integer"`. (#993)
 
-* New selectors are added. `all_numeric()` and `all_nominal()` will behave as before. New selectors are: `all_double()`, `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`. All selectors comes with a `*_predictors()` variant. (#993)
+* New selectors: `all_double()`, `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`, in addition to the existing `all_numeric()` and `all_nominal()`. All selectors come with a `*_predictors()` variant. (#993)
 
-* Developer focused `get_types_recipes()` generic have been added to designate types of columns. Exported to use in extension packages that deal with types not supported in recipes directly. (#993)
+* Developer focused `get_types_recipes()` generic has been added to designate types of columns. Exported for use in extension packages that deal with types not supported in recipes directly. (#993)
 
 # recipes 1.0.1
 

@@ -232,13 +232,13 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #'  ordered factors.
 #'
 #'  `all_integer()` captures integers, `all_double()` captures doubles,
-#'  `all_numeric()` captures all kinds of numeric,
+#'  `all_numeric()` captures all kinds of numeric.
 #'
 #'  `all_date()` captures [Date()] variables, `all_datetime()` captures
 #'  [POSIXct()] variables.
 #'
 #' **In most cases**, the right approach for users will be use to use the
-#'  predictor specific selectors such as `all_numeric_predictors()` and
+#'  predictor-specific selectors such as `all_numeric_predictors()` and
 #'  `all_nominal_predictors()`. In general you should be careful about using
 #'  `-all_outcomes()` if a `*_predictors()` selector would do what you want.
 #'
