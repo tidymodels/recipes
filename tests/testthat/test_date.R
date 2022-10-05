@@ -3,7 +3,6 @@ library(recipes)
 library(lubridate)
 library(tibble)
 
-
 examples <- data.frame(
   Dan = ymd("2002-03-04") + days(1:10),
   Stefan = ymd("2006-01-13") + days(1:10)
@@ -26,20 +25,20 @@ test_that("default option", {
   date_exp <- tibble(
     Dan = examples$Dan,
     Stefan = examples$Stefan,
-    Dan_year = year(examples$Dan),
-    Dan_doy = yday(examples$Dan),
-    Dan_week = week(examples$Dan),
+    Dan_year = vec_cast(year(examples$Dan), integer()),
+    Dan_doy = vec_cast(yday(examples$Dan), integer()),
+    Dan_week = vec_cast(week(examples$Dan), integer()),
     Dan_decimal = decimal_date(examples$Dan),
-    Dan_semester = semester(examples$Dan),
-    Dan_quarter = quarter(examples$Dan),
+    Dan_semester = vec_cast(semester(examples$Dan), integer()),
+    Dan_quarter = vec_cast(quarter(examples$Dan), integer()),
     Dan_dow = wday(examples$Dan, label = TRUE, abbr = TRUE),
     Dan_month = month(examples$Dan, label = TRUE, abbr = TRUE),
-    Stefan_year = year(examples$Stefan),
-    Stefan_doy = yday(examples$Stefan),
-    Stefan_week = week(examples$Stefan),
+    Stefan_year = vec_cast(year(examples$Stefan), integer()),
+    Stefan_doy = vec_cast(yday(examples$Stefan), integer()),
+    Stefan_week = vec_cast(week(examples$Stefan), integer()),
     Stefan_decimal = decimal_date(examples$Stefan),
-    Stefan_semester = semester(examples$Stefan),
-    Stefan_quarter = quarter(examples$Stefan),
+    Stefan_semester = vec_cast(semester(examples$Stefan), integer()),
+    Stefan_quarter = vec_cast(quarter(examples$Stefan), integer()),
     Stefan_dow = wday(examples$Stefan, label = TRUE, abbr = TRUE),
     Stefan_month = month(examples$Stefan, label = TRUE, abbr = TRUE)
   )
@@ -48,7 +47,7 @@ test_that("default option", {
   date_exp$Stefan_dow <- factor(as.character(date_exp$Stefan_dow), levels = levels(date_exp$Stefan_dow))
   date_exp$Stefan_month <- factor(as.character(date_exp$Stefan_month), levels = levels(date_exp$Stefan_month))
 
-  expect_equal(date_res, date_exp)
+  expect_identical(date_res, date_exp)
 })
 
 

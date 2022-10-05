@@ -64,7 +64,9 @@ reference:
     - step_mutate
     - step_ns
     - step_poly
+    - step_poly_bernstein
     - step_relu
+    - starts_with("step_spline_")
     - step_sqrt
     - step_YeoJohnson
   - title: Step Functions - Discretization

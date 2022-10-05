@@ -21,14 +21,14 @@ test_that("step_indicate_na populates binaries correctly", {
     step_indicate_na(col1) %>%
     prep(train, verbose = FALSE, retain = TRUE)
 
-  expect_equal(
+  expect_identical(
     bake(rec1, train)$na_ind_col1,
-    c(0, 0, 0)
+    c(0L, 0L, 0L)
   )
 
-  expect_equal(
+  expect_identical(
     bake(rec1, test)$na_ind_col1,
-    c(1, 1, 1)
+    c(1L, 1L, 1L)
   )
 
   rec2 <- recipe(train) %>%

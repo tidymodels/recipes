@@ -11,11 +11,13 @@
 %   R/logit.R, R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R,
 %   R/naomit.R, R/newvalues.R, R/nnmf.R, R/nnmf_sparse.R, R/normalize.R,
 %   R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R, R/other.R,
-%   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/profile.R, R/range.R,
-%   R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R, R/rename.R,
-%   R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R, R/shuffle.R,
-%   R/slice.R, R/spatialsign.R, R/sqrt.R, R/string2factor.R, R/tidy.R, R/time.R,
-%   R/unknown.R, R/unorder.R, R/window.R, R/zv.R
+%   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/poly_bernstein.R, R/profile.R,
+%   R/range.R, R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R,
+%   R/rename.R, R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R,
+%   R/shuffle.R, R/slice.R, R/spatialsign.R, R/spline_b.R, R/spline_convex.R,
+%   R/spline_monotone.R, R/spline_natural.R, R/spline_nonnegative.R, R/sqrt.R,
+%   R/string2factor.R, R/tidy.R, R/time.R, R/unknown.R, R/unorder.R, R/window.R,
+%   R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
@@ -81,6 +83,7 @@
 \alias{tidy.step_percentile}
 \alias{tidy.step_pls}
 \alias{tidy.step_poly}
+\alias{tidy.step_poly_bernstein}
 \alias{tidy.step_profile}
 \alias{tidy.step_range}
 \alias{tidy.check_range}
@@ -97,6 +100,11 @@
 \alias{tidy.step_shuffle}
 \alias{tidy.step_slice}
 \alias{tidy.step_spatialsign}
+\alias{tidy.step_spline_b}
+\alias{tidy.step_spline_convex}
+\alias{tidy.step_spline_monotone}
+\alias{tidy.step_spline_natural}
+\alias{tidy.step_spline_nonnegative}
 \alias{tidy.step_sqrt}
 \alias{tidy.step_string2factor}
 \alias{tidy.recipe}
@@ -237,6 +245,8 @@
 
 \method{tidy}{step_poly}(x, ...)
 
+\method{tidy}{step_poly_bernstein}(x, ...)
+
 \method{tidy}{step_profile}(x, ...)
 
 \method{tidy}{step_range}(x, ...)
@@ -268,6 +278,16 @@
 \method{tidy}{step_slice}(x, ...)
 
 \method{tidy}{step_spatialsign}(x, ...)
+
+\method{tidy}{step_spline_b}(x, ...)
+
+\method{tidy}{step_spline_convex}(x, ...)
+
+\method{tidy}{step_spline_monotone}(x, ...)
+
+\method{tidy}{step_spline_natural}(x, ...)
+
+\method{tidy}{step_spline_nonnegative}(x, ...)
 
 \method{tidy}{step_sqrt}(x, ...)
 

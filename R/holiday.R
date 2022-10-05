@@ -148,6 +148,8 @@ bake.step_holiday <- function(object, new_data, ...) {
     )
 
     names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
+    tmp <- purrr::map_dfc(tmp, vec_cast, integer())
+
     new_data <- bind_cols(new_data, tmp)
   }
 

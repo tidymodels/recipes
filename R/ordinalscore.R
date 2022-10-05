@@ -133,6 +133,8 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
   check_new_data(object$columns, object, new_data)
 
   scores <- lapply(new_data[, object$columns], object$convert)
+  scores <- lapply(scores, vec_cast, integer())
+
   for (i in object$columns) {
     new_data[, i] <- scores[[i]]
   }

@@ -19,6 +19,8 @@ test_that("default options", {
     as.numeric(grepl("(rock|stony)", covers$description))
   )
   expect_equal(res1$`all ones`, rep(1, nrow(covers)))
+  expect_true(is.integer(res1$X.rock.stony.))
+  expect_true(is.integer(res1$`all ones`))
 })
 
 

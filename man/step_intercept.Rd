@@ -10,7 +10,7 @@ step_intercept(
   role = "predictor",
   trained = FALSE,
   name = "intercept",
-  value = 1,
+  value = 1L,
   skip = FALSE,
   id = rand_id("intercept")
 )
@@ -31,7 +31,8 @@ have been estimated. Again included only for consistency.}
 
 \item{name}{Character name for newly added column}
 
-\item{value}{A numeric constant to fill the intercept column. Defaults to 1.}
+\item{value}{A numeric constant to fill the intercept column. Defaults to
+\code{1L}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
