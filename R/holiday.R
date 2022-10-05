@@ -94,7 +94,7 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
   if (any(!holiday_data$type %in% c("date", "datetime"))) {
     rlang::abort(
       paste0(
-        "All variables for `step_date` should be either `Date` or",
+        "All variables for `step_holiday` should be either `Date` or",
         "`POSIXct` classes."
       )
     )
