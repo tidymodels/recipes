@@ -221,26 +221,26 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
 #'
-#' Similarly, `has_type()`, `all_numeric()`, `all_integer()`, `all_double()`,
-#' `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_factor()`,
-#' `all_string()`, `all_date()` and `all_datetime()` are used to select columns
-#' based on their data type.
+#'  **In most cases**, the right approach for users will be use to use the
+#'  predictor-specific selectors such as `all_numeric_predictors()` and
+#'  `all_nominal_predictors()`. In general you should be careful about using
+#'  `-all_outcomes()` if a `*_predictors()` selector would do what you want.
 #'
-#'  `all_factor()` captures unordered factors, `all_string` captures characters,
-#'  `all_unordered()` captures unordered factors and characters, `all_ordered()`
-#'  captures ordered factors, `all_nomical()` captures characters, unordered and
-#'  ordered factors.
+#'  Similarly, `has_type()`, `all_numeric()`, `all_integer()`, `all_double()`,
+#'  `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_factor()`,
+#'  `all_string()`, `all_date()` and `all_datetime()` are used to select columns
+#'  based on their data type.
+#'
+#'  `all_factor()` captures unordered factors, `all_string()` captures
+#'  characters, `all_unordered()` captures unordered factors and characters,
+#'  `all_ordered()` captures ordered factors, `all_nomical()` captures
+#'  characters, unordered and ordered factors.
 #'
 #'  `all_integer()` captures integers, `all_double()` captures doubles,
 #'  `all_numeric()` captures all kinds of numeric.
 #'
 #'  `all_date()` captures [Date()] variables, `all_datetime()` captures
 #'  [POSIXct()] variables.
-#'
-#' **In most cases**, the right approach for users will be use to use the
-#'  predictor-specific selectors such as `all_numeric_predictors()` and
-#'  `all_nominal_predictors()`. In general you should be careful about using
-#'  `-all_outcomes()` if a `*_predictors()` selector would do what you want.
 #'
 #'  See [selections] for more details.
 #'
