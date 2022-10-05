@@ -57,10 +57,10 @@ columns used in recipes. These functions underlie the work that the user sees
 in \link{selections}.
 }
 \details{
-This function acts a extended recipes-specific version of \code{\link[=class]{class()}}. By
+This function acts as an extended recipes-specific version of \code{\link[=class]{class()}}. By
 ignoring differences in similar types ("double" and "numeric") and allowing
 each element to have multiple types ("factor" returns "factor", "unordered",
-and "nominal". And "character" returns "string", "unordered", and
+and "nominal", and "character" returns "string", "unordered", and
 "nominal") we are able to create more natural selectors such as
 \code{\link[=all_nominal]{all_nominal()}}, \code{\link[=all_string]{all_string()}} and \code{\link[=all_integer]{all_integer()}}.
 }

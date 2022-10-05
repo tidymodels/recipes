@@ -111,20 +111,20 @@ will not work.
 
 When creating variable selections:
 \itemize{
-\item If you are using column filtering steps, such as \code{step_corr()}, try
-to avoid hardcoding specific variable names in downstream steps in
-case those columns are removed by the filter. Instead, use
+\item If you are using column filtering steps, such as \code{step_corr()}, try to
+avoid hardcoding specific variable names in downstream steps in case
+those columns are removed by the filter. Instead, use
 \code{\link[dplyr:reexports]{dplyr::any_of()}} and
 \code{\link[dplyr:reexports]{dplyr::all_of()}}.
 \itemize{
-\item \code{\link[dplyr:reexports]{dplyr::any_of()}} will be tolerant if a
-column has been removed.
+\item \code{\link[dplyr:reexports]{dplyr::any_of()}} will be tolerant if a column
+has been removed.
 \item \code{\link[dplyr:reexports]{dplyr::all_of()}} will fail unless all of the
 columns are present in the data.
 }
-\item For both of these functions, if you are going to save the recipe as
-a binary object to use in another R session, try to avoid referring
-to a vector in your workspace.
+\item For both of these functions, if you are going to save the recipe as a
+binary object to use in another R session, try to avoid referring to a
+vector in your workspace.
 \itemize{
 \item Preferred: \code{any_of(!!var_names)}
 \item Avoid: \code{any_of(var_names)}
@@ -154,7 +154,7 @@ recipe(mpg ~ ., data = mtcars)  \%>\%
   prep()
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `chr_as_locations()`:
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `recipes_eval_select()` at recipes/R/log.R:104:2:
 ## ! Can't subset columns that don't exist.
 ## x Column `wt` doesn't exist.
 }\if{html}{\out{</div>}}
