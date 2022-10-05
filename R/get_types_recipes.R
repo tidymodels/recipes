@@ -18,7 +18,7 @@ get_types <- function(x) {
 #' [all_nominal()], [all_string()] and [all_integer()].
 #'
 #' @export
-#' @param x A character vector
+#' @param x An object
 #' @examplesIf rlang::is_installed("modeldata")
 #'
 #' data(Sacramento, package = "modeldata")

@@ -49,7 +49,7 @@ get_types_recipes(x)
 \method{get_types_recipes}{hardhat_case_weights}(x)
 }
 \arguments{
-\item{x}{A character vector}
+\item{x}{An object}
 }
 \description{
 The \code{get_types_recipes()} generic is used internally to supply types to
