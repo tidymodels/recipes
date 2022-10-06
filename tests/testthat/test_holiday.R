@@ -111,6 +111,7 @@ test_that("POSIXct class", {
     exp_dates$date[exp_dates$holiday == "Easter"]
   )
 
+  # https://developer.r-project.org/blosxom.cgi/R-devel/2022/10/05#n2022-10-05
   if (getRversion() > "4.2.1") {
     na_posixct <- as.POSIXct(NA)
   } else {
