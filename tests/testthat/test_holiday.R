@@ -110,9 +110,15 @@ test_that("POSIXct class", {
     holiday_ind$day[is_equal_1(holiday_ind$day_Easter)],
     exp_dates$date[exp_dates$holiday == "Easter"]
   )
+
+  if (getRversion() > "4.2.1") {
+    na_posixct <- as.POSIXct(NA)
+  } else {
+    na_posixct <- as.POSIXct(NA, tz = NULL)
+  }
   expect_equal(
     holiday_ind$day[is.na(test_data$day)],
-    as.POSIXct(NA, tz = NULL)
+    na_posixct
   )
   expect_equal(
     holiday_ind$day_ChristmasDay[is.na(test_data$day)],
