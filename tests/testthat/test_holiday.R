@@ -89,8 +89,8 @@ test_that("works with no missing values - Date class", {
 })
 
 test_that("POSIXct class", {
-  test_data$day <- as.POSIXct(test_data$day)
-  exp_dates$date <- as.POSIXct(exp_dates$date)
+  test_data$day <- lubridate::as_datetime(test_data$day, tz = "UTC")
+  exp_dates$date <- lubridate::as_datetime(exp_dates$date, tz = "UTC")
 
   holiday_rec <- recipe(~day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
@@ -112,7 +112,7 @@ test_that("POSIXct class", {
   )
   expect_equal(
     holiday_ind$day[is.na(test_data$day)],
-    as.POSIXct(NA, tz = NULL)
+    as.POSIXct(NA, tz = "UTC")
   )
   expect_equal(
     holiday_ind$day_ChristmasDay[is.na(test_data$day)],
