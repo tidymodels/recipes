@@ -4,7 +4,7 @@
 
 * New selectors: `all_double()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`, in addition to the existing `all_numeric()` and `all_nominal()`. All selectors come with a `*_predictors()` variant. (#993)
 
-* Developer focused `get_types_recipes()` generic has been added to designate types of columns. Exported for use in extension packages that deal with types not supported in recipes directly. (#993)
+* Developer focused `.get_data_types()` generic has been added to designate types of columns. Exported for use in extension packages that deal with types not supported in recipes directly. (#993)
 
 * A new set of basis functions were added: `step_spline_b()`, `step_spline_convex()`,  `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and 
 `step_poly_bernstein()`.

@@ -1,12 +1,12 @@
 ## Buckets variables into discrete, mutally exclusive types
 get_types <- function(x) {
-  res <- lapply(x, get_types_recipes)
+  res <- lapply(x, .get_data_types)
   tibble(variable = names(res), type = unname(res))
 }
 
 #' Get types for use in recipes
 #'
-#' The `get_types_recipes()` generic is used internally to supply types to
+#' The `.get_data_types()` generic is used internally to supply types to
 #' columns used in recipes. These functions underlie the work that the user sees
 #' in [selections].
 #'
@@ -17,97 +17,97 @@ get_types <- function(x) {
 #' "nominal") we are able to create more natural selectors such as
 #' [all_nominal()], [all_string()] and [all_integer()].
 #'
+#' @rdname get_data_types
 #' @export
-#' @keywords internal
 #' @param x An object
 #' @examplesIf rlang::is_installed("modeldata")
 #'
 #' data(Sacramento, package = "modeldata")
-#' lapply(Sacramento, get_types_recipes)
-get_types_recipes <- function(x) {
-  UseMethod("get_types_recipes")
+#' lapply(Sacramento, .get_data_types)
+.get_data_types <- function(x) {
+  UseMethod(".get_data_types")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.default <- function(x) {
+#' @rdname get_data_types
+.get_data_types.default <- function(x) {
   "other"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.character <- function(x) {
+#' @rdname get_data_types
+.get_data_types.character <- function(x) {
   c("string", "unordered", "nominal")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.ordered <- function(x) {
+#' @rdname get_data_types
+.get_data_types.ordered <- function(x) {
   c("ordered", "nominal")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.factor <- function(x) {
+#' @rdname get_data_types
+.get_data_types.factor <- function(x) {
   c("factor", "unordered", "nominal")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.integer <- function(x) {
+#' @rdname get_data_types
+.get_data_types.integer <- function(x) {
   c("integer", "numeric")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.numeric <- function(x) {
+#' @rdname get_data_types
+.get_data_types.numeric <- function(x) {
   c("double", "numeric")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.double <- function(x) {
+#' @rdname get_data_types
+.get_data_types.double <- function(x) {
   c("double", "numeric")
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.Surv <- function(x) {
+#' @rdname get_data_types
+.get_data_types.Surv <- function(x) {
   "surv"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.logical <- function(x) {
+#' @rdname get_data_types
+.get_data_types.logical <- function(x) {
   "logical"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.Date <- function(x) {
+#' @rdname get_data_types
+.get_data_types.Date <- function(x) {
   "date"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.POSIXct <- function(x) {
+#' @rdname get_data_types
+.get_data_types.POSIXct <- function(x) {
   "datetime"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.list <- function(x) {
+#' @rdname get_data_types
+.get_data_types.list <- function(x) {
   "list"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.textrecipes_tokenlist <- function(x) {
+#' @rdname get_data_types
+.get_data_types.textrecipes_tokenlist <- function(x) {
   "tokenlist"
 }
 
 #' @export
-#' @rdname get_types_recipes
-get_types_recipes.hardhat_case_weights <- function(x) {
+#' @rdname get_data_types
+.get_data_types.hardhat_case_weights <- function(x) {
   "case_weights"
 }
