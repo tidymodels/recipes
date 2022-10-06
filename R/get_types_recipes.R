@@ -18,6 +18,7 @@ get_types <- function(x) {
 #' [all_nominal()], [all_string()] and [all_integer()].
 #'
 #' @export
+#' @keywords internal
 #' @param x An object
 #' @examplesIf rlang::is_installed("modeldata")
 #'
