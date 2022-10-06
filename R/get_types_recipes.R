@@ -72,7 +72,7 @@ get_types_recipes.double <- function(x) {
 #' @export
 #' @rdname get_types_recipes
 get_types_recipes.Surv <- function(x) {
-  "censored"
+  "surv"
 }
 
 #' @export
