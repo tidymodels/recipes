@@ -231,10 +231,10 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #'  `all_string()`, `all_date()` and `all_datetime()` are used to select columns
 #'  based on their data type.
 #'
-#'  `all_factor()` captures unordered factors, `all_string()` captures
-#'  characters, `all_unordered()` captures unordered factors and characters,
-#'  `all_ordered()` captures ordered factors, `all_nominal()` captures
-#'  characters, unordered and ordered factors.
+#'  `all_factor()` captures ordered and unordered factors, `all_string()`
+#'  captures characters, `all_unordered()` captures unordered factors and
+#'  characters, `all_ordered()` captures ordered factors, `all_nominal()`
+#'  captures characters, unordered and ordered factors.
 #'
 #'  `all_integer()` captures integers, `all_double()` captures doubles,
 #'  `all_numeric()` captures all kinds of numeric.

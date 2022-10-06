@@ -107,10 +107,10 @@ Similarly, \code{has_type()}, \code{all_numeric()}, \code{all_integer()}, \code{
 \code{all_string()}, \code{all_date()} and \code{all_datetime()} are used to select columns
 based on their data type.
 
-\code{all_factor()} captures unordered factors, \code{all_string()} captures
-characters, \code{all_unordered()} captures unordered factors and characters,
-\code{all_ordered()} captures ordered factors, \code{all_nominal()} captures
-characters, unordered and ordered factors.
+\code{all_factor()} captures ordered and unordered factors, \code{all_string()}
+captures characters, \code{all_unordered()} captures unordered factors and
+characters, \code{all_ordered()} captures ordered factors, \code{all_nominal()}
+captures characters, unordered and ordered factors.
 
 \code{all_integer()} captures integers, \code{all_double()} captures doubles,
 \code{all_numeric()} captures all kinds of numeric.
