@@ -91,6 +91,8 @@ test_that("works with no missing values - Date class", {
 test_that("POSIXct class", {
   test_data$day <- as.POSIXct(test_data$day)
   exp_dates$date <- as.POSIXct(exp_dates$date)
+  lubridate::tz(test_data$day) <- ""
+  lubridate::tz(exp_dates$date) <- ""
 
   holiday_rec <- recipe(~day, test_data) %>%
     step_holiday(all_predictors(), holidays = exp_dates$holiday)
@@ -110,16 +112,9 @@ test_that("POSIXct class", {
     holiday_ind$day[is_equal_1(holiday_ind$day_Easter)],
     exp_dates$date[exp_dates$holiday == "Easter"]
   )
-
-  # https://developer.r-project.org/blosxom.cgi/R-devel/2022/10/05#n2022-10-05
-  if (getRversion() > "4.2.1") {
-    na_posixct <- as.POSIXct(NA, tz = "UTC")
-  } else {
-    na_posixct <- as.POSIXct(NA, tz = NULL)
-  }
   expect_equal(
     holiday_ind$day[is.na(test_data$day)],
-    na_posixct
+    as.POSIXct(NA, tz = "")
   )
   expect_equal(
     holiday_ind$day_ChristmasDay[is.na(test_data$day)],
