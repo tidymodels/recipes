@@ -233,7 +233,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #'
 #'  `all_factor()` captures unordered factors, `all_string()` captures
 #'  characters, `all_unordered()` captures unordered factors and characters,
-#'  `all_ordered()` captures ordered factors, `all_nomical()` captures
+#'  `all_ordered()` captures ordered factors, `all_nominal()` captures
 #'  characters, unordered and ordered factors.
 #'
 #'  `all_integer()` captures integers, `all_double()` captures doubles,
