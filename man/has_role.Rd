@@ -109,7 +109,7 @@ based on their data type.
 
 \code{all_factor()} captures unordered factors, \code{all_string()} captures
 characters, \code{all_unordered()} captures unordered factors and characters,
-\code{all_ordered()} captures ordered factors, \code{all_nomical()} captures
+\code{all_ordered()} captures ordered factors, \code{all_nominal()} captures
 characters, unordered and ordered factors.
 
 \code{all_integer()} captures integers, \code{all_double()} captures doubles,
