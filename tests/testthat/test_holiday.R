@@ -113,7 +113,7 @@ test_that("POSIXct class", {
 
   # https://developer.r-project.org/blosxom.cgi/R-devel/2022/10/05#n2022-10-05
   if (getRversion() > "4.2.1") {
-    na_posixct <- as.POSIXct(NA, tz = "")
+    na_posixct <- as.POSIXct(NA, tz = "UTC")
   } else {
     na_posixct <- as.POSIXct(NA, tz = NULL)
   }
