@@ -295,3 +295,23 @@ test_that("predictor specific role selections", {
     setNames(nm = c("datetime2"))
   )
 })
+
+test_that("old recipes from 1.0.1 work with new get_types", {
+  load(test_path("old-get_types.RData"))
+
+  expect_identical(
+    lapply(summary(old_rec_sac), class),
+    list(
+      variable = "character",
+      type = "character",
+      role = "character",
+      source = 'character'
+    )
+  )
+  expect_false(identical(old_rec_sac, rec_sac))
+
+  expect_identical(
+    prep(old_rec_sac),
+    prep(rec_sac)
+  )
+})
