@@ -314,4 +314,14 @@ test_that("old recipes from 1.0.1 work with new get_types", {
     prep(old_rec_sac),
     prep(rec_sac)
   )
+
+  expect_equal(
+    old_pca_rec_sac %>%
+      bake(new_data = Sacramento),
+    rec_sac %>%
+      step_normalize(all_numeric_predictors()) %>%
+      step_pca(beds, baths, sqft) %>%
+      prep() %>%
+      bake(new_data = Sacramento)
+  )
 })

@@ -13,9 +13,15 @@ Sacramento$datetime2 <- as.POSIXct(Sacramento$sqft, origin = "2000-01-01 00:00:0
 
 old_rec_sac <- recipe(~., data = Sacramento)
 
+old_pca_rec_sac <- old_rec_sac %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_pca(beds, baths, sqft) %>%
+  prep()
+
 # Saving -----------------------------------------------------------------------
 save(
   old_rec_sac,
+  old_pca_rec_sac,
   file = testthat::test_path("old-get_types.RData"),
   version = 2
 )
