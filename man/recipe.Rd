@@ -6,6 +6,7 @@
 \alias{recipe.formula}
 \alias{recipe.data.frame}
 \alias{recipe.matrix}
+\alias{recipe.tbl_lazy}
 \title{Create a recipe for preprocessing data}
 \usage{
 recipe(x, ...)
@@ -17,6 +18,8 @@ recipe(x, ...)
 \method{recipe}{formula}(formula, data, ...)
 
 \method{recipe}{matrix}(x, ...)
+
+\method{recipe}{tbl_lazy}(x, formula = NULL, ..., vars = NULL, roles = NULL)
 }
 \arguments{
 \item{x, data}{A data frame or tibble of the \emph{template} data set

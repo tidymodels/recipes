@@ -1,9 +1,15 @@
-filter_terms <- function(x, ...) {
-  UseMethod("filter_terms")
+#' Translates into accepted recipes data types
+#' @details This function should be used for integration with other types of
+#' data sources. It is expected that this method will be used by other packages
+#' to provide a translation of the data types.
+#' @param x Table object used to determine data types
+#' @export
+recipes_translate_types <- function(x) {
+  UseMethod("recipes_translate_types")
 }
 
 ## Buckets variables into discrete, mutally exclusive types
-get_types <- function(x) {
+recipes_translate_types.data.frame <- function(x) {
   var_types <-
     c(
       character = "nominal",
@@ -39,6 +45,16 @@ get_types <- function(x) {
   )
   res <- unlist(res)
   tibble(variable = names(res), type = unname(res))
+}
+
+recipes_translate_types.tbl_lazy <- function(x) {
+  top10 <- head(x, 10)
+  x <- collect(top10)
+  recipes_translate_types.data.frame(x)
+}
+
+filter_terms <- function(x, ...) {
+  UseMethod("filter_terms")
 }
 
 ## get variables from formulas

@@ -124,7 +124,7 @@ recipe.data.frame <-
       vars <- colnames(x)
     }
 
-    if (!is_tibble(x)) {
+    if (is.data.frame(x)) {
       x <- as_tibble(x)
     }
 
@@ -135,7 +135,7 @@ recipe.data.frame <-
       rlang::abort("1+ elements of `vars` are not in `x`")
     }
 
-    x <- x[, vars]
+    x <- select(x, !! vars)
 
     var_info <- tibble(variable = vars)
 
@@ -155,16 +155,23 @@ recipe.data.frame <-
     }
 
     ## Add types
-    var_info <- full_join(get_types(x), var_info, by = "variable")
+    var_info <- full_join(
+      recipes_translate_types(x),
+      var_info,
+      by = "variable"
+      )
+
     var_info$source <- "original"
 
     # assign case weights
-    case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
-    case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
-    if (case_weights_n > 1) {
-      too_many_case_weights(case_weights_n)
+    if(is_tibble(x)) {
+      case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
+      case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+      if (case_weights_n > 1) {
+        too_many_case_weights(case_weights_n)
+      }
+      var_info$role[case_weights_cols] <- "case_weights"
     }
-    var_info$role[case_weights_cols] <- "case_weights"
 
     requirements <- new_role_requirements()
 
@@ -268,6 +275,9 @@ inline_check <- function(x) {
   invisible(x)
 }
 
+#' @rdname recipe
+#' @export
+recipe.tbl_lazy <- recipe.data.frame
 
 #' @aliases prep prep.recipe
 #' @param x an object
@@ -424,7 +434,7 @@ prep.recipe <-
           abort("bake() methods should always return tibbles")
         }
         x$term_info <-
-          merge_term_info(get_types(training), x$term_info)
+          merge_term_info(recipes_translate_types(training), x$term_info)
 
         # Update the roles and the term source
         if (!is.na(x$steps[[i]]$role)) {

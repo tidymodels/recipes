@@ -186,7 +186,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   # tidyselect::eval_select().
   allow_rename_compat <- TRUE
 
-  sel <- tidyselect::eval_select(
+  sel <- select_variables(
     expr = expr,
     data = data,
     allow_rename = allow_rename_compat
@@ -195,7 +195,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   # Return names not positions, as these names are
   # used for both the training and test set and their positions
   # may have changed. If renaming is allowed, add the new names.
-  out <- names(data)[sel]
+  out <- extract_names(data)[sel]
   names <- names(sel)
 
   # FIXME: Remove this check when the following issue is fixed,
@@ -213,6 +213,38 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   names(out) <- names
   out
 }
+
+select_variables <- function(data, expr, allow_rename) {
+  UseMethod("select_variables")
+}
+
+select_variables.data.frame <- function(data, expr, allow_rename) {
+  tidyselect::eval_select(
+    expr = expr,
+    data = data,
+    allow_rename = allow_rename
+  )
+}
+
+select_variables.tbl_lazy <- function(data, expr, allow_rename) {
+  res <- select(data, !! expr)
+  vars_sel <- colnames(res)
+
+  vars_all <- colnames(data)
+
+  vars_nbr <- NULL
+  for(i in seq_along(vars_sel)) {
+    vars_nbr <- c(vars_nbr, which(vars_all == vars_sel[[i]]))
+  }
+  names(vars_nbr) <- vars_sel
+  vars_nbr
+}
+
+extract_names <- function(x) UseMethod("extract_names")
+
+extract_names.default <- function(x) names(x)
+
+extract_names.tbl_lazy <- function(x) colnames(x)
 
 #' Role Selection
 #'
