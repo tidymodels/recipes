@@ -27,7 +27,7 @@ Imports:
     gower,
     hardhat (>= 1.2.0),
     ipred (>= 0.9-12),
-    lifecycle,
+    lifecycle (>= 1.0.3),
     lubridate (>= 1.8.0),
     magrittr,
     Matrix,
