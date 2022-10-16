@@ -1,17 +1,17 @@
-# recipes (development version)
+# recipes 1.0.2
 
 * A new set of basis functions were added: `step_spline_b()`, `step_spline_convex()`,  `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and 
 `step_poly_bernstein()`.
-
-# recipes 1.0.1
-
-* Fixed bug where `step_holiday()` didn't work if it isn't have any missing values. (#1019)
 
 * `step_date()`, `step_dummy()`, `step_dummy_extract()`, `step_holiday()`, `step_ordinalscore()`, and `step_regex()` now returns integer results when appropriate. (#766)
 
 * The default for the `strict` argument in `step_integer()` has been changed from `FALSE` to `TRUE`. The function will thus return integers, rather than whole-number numerics, by default. (#766)
 
 * The default for the `value` argument in `step_intercept()` has been changed from `1` to `1L`. (#766)
+
+# recipes 1.0.1
+
+* Fixed bug where `step_holiday()` didn't work if it isn't have any missing values. (#1019)
 
 # recipes 1.0.0
 

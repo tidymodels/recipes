@@ -11,7 +11,9 @@
     Code
       prep(rec_1, training = iris %>% slice(1:75))
     Condition
-      Error in `all_of()`:
+      Error in `recipes_eval_select()`:
+      ! Problem while evaluating `all_of(sepal_vars)`.
+      Caused by error in `as_indices_impl()`:
       ! object 'sepal_vars' not found
 
 # printing
