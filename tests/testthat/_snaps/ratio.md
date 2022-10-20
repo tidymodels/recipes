@@ -3,24 +3,24 @@
     Code
       prep(rec4, ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! The ratio variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 ---
 
     Code
       prep(rec5, ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! The ratio variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 ---
 
     Code
       prep(rec6, ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! The ratio variables should be numeric
+      Error in `check_type()`:
+      ! All columns selected for the step should be numeric
 
 # printing
 

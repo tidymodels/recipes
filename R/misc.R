@@ -2,45 +2,6 @@ filter_terms <- function(x, ...) {
   UseMethod("filter_terms")
 }
 
-## Buckets variables into discrete, mutally exclusive types
-get_types <- function(x) {
-  var_types <-
-    c(
-      character = "nominal",
-      factor = "nominal",
-      ordered = "nominal",
-      integer = "numeric",
-      numeric = "numeric",
-      double = "numeric",
-      Surv = "censored",
-      logical = "logical",
-      Date = "date",
-      POSIXct = "date",
-      list = "list",
-      textrecipes_tokenlist = "tokenlist",
-      hardhat_case_weights = "case_weights"
-    )
-
-  classes <- lapply(x, class)
-  res <- lapply(classes,
-    function(x, types) {
-      in_types <- x %in% names(types)
-      if (sum(in_types) > 0) {
-        # not sure what to do with multiple matches; right now
-        ## pick the first match which favors "factor" over "ordered"
-        out <-
-          unname(types[min(which(names(types) %in% x))])
-      } else {
-        out <- "other"
-      }
-      out
-    },
-    types = var_types
-  )
-  res <- unlist(res)
-  tibble(variable = names(res), type = unname(res))
-}
-
 ## get variables from formulas
 is_formula <- function(x) {
   isTRUE(inherits(x, "formula"))

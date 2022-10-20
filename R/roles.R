@@ -204,12 +204,12 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   # Pull in first type we come across if unspecified
   if (is.null(new_type)) {
-    new_type <- purrr::map_chr(vars, ~ {
+    new_type <- purrr::map(vars, ~ {
       first_row_with_var <- which(recipe$var_info$variable == .x)[1]
-      recipe$var_info$type[first_row_with_var]
+      recipe$var_info$type[[first_row_with_var]]
     })
   } else {
-    new_type <- rep(new_type, times = length(vars))
+    new_type <- as.list(rep(new_type, times = length(vars)))
   }
 
   source <- purrr::map_chr(vars, ~ {
@@ -222,7 +222,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     recipe$var_info <- tibble::add_row(
       .data = recipe$var_info,
       variable = unname(vars[i]),
-      type = unname(new_type[i]),
+      type = list(unname(new_type[[i]])),
       role = new_role,
       source = unname(source[i]),
       .after = last_row_with_var

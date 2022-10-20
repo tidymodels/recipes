@@ -52,7 +52,7 @@ test_that("simple type selections", {
     c("beds", "baths", "sqft", "price", "latitude", "longitude")
   )
   expect_equal(
-    terms_select(info = info1, quos(has_type("nominal"))),
+    terms_select(info = info1, quos(has_type("factor"))),
     c("city", "zip", "type")
   )
   expect_equal(

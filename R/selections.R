@@ -221,13 +221,26 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
 #'
-#' Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used to
-#'  select columns based on their data type. Nominal variables include both
-#'  character and factor.
+#'  **In most cases**, the right approach for users will be use to use the
+#'  predictor-specific selectors such as `all_numeric_predictors()` and
+#'  `all_nominal_predictors()`. In general you should be careful about using
+#'  `-all_outcomes()` if a `*_predictors()` selector would do what you want.
 #'
-#' **In most cases**, the selectors `all_numeric_predictors()` and
-#'  `all_nominal_predictors()`, which select on role and type, will be the right
-#'  approach for users.
+#'  Similarly, `has_type()`, `all_numeric()`, `all_integer()`, `all_double()`,
+#'  `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_factor()`,
+#'  `all_string()`, `all_date()` and `all_datetime()` are used to select columns
+#'  based on their data type.
+#'
+#'  `all_factor()` captures ordered and unordered factors, `all_string()`
+#'  captures characters, `all_unordered()` captures unordered factors and
+#'  characters, `all_ordered()` captures ordered factors, `all_nominal()`
+#'  captures characters, unordered and ordered factors.
+#'
+#'  `all_integer()` captures integers, `all_double()` captures doubles,
+#'  `all_numeric()` captures all kinds of numeric.
+#'
+#'  `all_date()` captures [Date()] variables, `all_datetime()` captures
+#'  [POSIXct()] variables.
 #'
 #'  See [selections] for more details.
 #'
@@ -275,47 +288,10 @@ has_role <- function(match = "predictor") {
 
 #' @export
 #' @rdname has_role
-all_predictors <- function() {
-  has_role("predictor")
-}
-
-#' @export
-#' @rdname has_role
-all_numeric_predictors <- function() {
-  intersect(has_role("predictor"), has_type("numeric"))
-}
-
-#' @export
-#' @rdname has_role
-all_nominal_predictors <- function() {
-  intersect(has_role("predictor"), has_type("nominal"))
-}
-
-
-#' @export
-#' @rdname has_role
-all_outcomes <- function() {
-  has_role("outcome")
-}
-
-#' @export
-#' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
   lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
   which(lgl_matches)
-}
-
-#' @export
-#' @rdname has_role
-all_numeric <- function() {
-  has_type("numeric")
-}
-
-#' @export
-#' @rdname has_role
-all_nominal <- function() {
-  has_type("nominal")
 }
 
 peek_roles <- function() {
@@ -328,7 +304,151 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~ .x[[col]])
+  purrr::map(.data, ~ unlist(.x[[col]]))
+}
+
+#' @export
+#' @rdname has_role
+all_outcomes <- function() {
+  has_role("outcome")
+}
+
+#' @export
+#' @rdname has_role
+all_predictors <- function() {
+  has_role("predictor")
+}
+
+#' @export
+#' @rdname has_role
+all_date <- function() {
+  has_type("date")
+}
+
+#' @export
+#' @rdname has_role
+all_date_predictors <- function() {
+  intersect(has_role("predictor"), has_type("date"))
+}
+
+#' @export
+#' @rdname has_role
+all_datetime <- function() {
+  has_type("datetime")
+}
+
+#' @export
+#' @rdname has_role
+all_datetime_predictors <- function() {
+  intersect(has_role("predictor"), has_type("datetime"))
+}
+
+#' @export
+#' @rdname has_role
+all_double <- function() {
+  has_type("double")
+}
+
+#' @export
+#' @rdname has_role
+all_double_predictors <- function() {
+  intersect(has_role("predictor"), has_type("double"))
+}
+
+#' @export
+#' @rdname has_role
+all_factor <- function() {
+  has_type("factor")
+}
+
+#' @export
+#' @rdname has_role
+all_factor_predictors <- function() {
+  intersect(has_role("predictor"), has_type("factor"))
+}
+
+#' @export
+#' @rdname has_role
+all_integer <- function() {
+  has_type("integer")
+}
+
+#' @export
+#' @rdname has_role
+all_integer_predictors <- function() {
+  intersect(has_role("predictor"), has_type("integer"))
+}
+
+#' @export
+#' @rdname has_role
+all_logical <- function() {
+  has_type("logical")
+}
+
+#' @export
+#' @rdname has_role
+all_logical_predictors <- function() {
+  intersect(has_role("predictor"), has_type("logical"))
+}
+
+#' @export
+#' @rdname has_role
+all_nominal <- function() {
+  has_type("nominal")
+}
+
+#' @export
+#' @rdname has_role
+all_nominal_predictors <- function() {
+  intersect(has_role("predictor"), has_type("nominal"))
+}
+
+#' @export
+#' @rdname has_role
+all_numeric <- function() {
+  has_type("numeric")
+}
+
+#' @export
+#' @rdname has_role
+all_numeric_predictors <- function() {
+  intersect(has_role("predictor"), has_type("numeric"))
+}
+
+#' @export
+#' @rdname has_role
+all_ordered <- function() {
+  has_type("ordered")
+}
+
+#' @export
+#' @rdname has_role
+all_ordered_predictors <- function() {
+  intersect(has_role("predictor"), has_type("ordered"))
+}
+
+#' @export
+#' @rdname has_role
+all_string <- function() {
+  has_type("string")
+}
+
+#' @export
+#' @rdname has_role
+all_string_predictors <- function() {
+  intersect(has_role("predictor"), has_type("string"))
+}
+
+#' @export
+#' @rdname has_role
+all_unordered <- function() {
+  has_type("unordered")
+}
+
+#' @export
+#' @rdname has_role
+all_unordered_predictors <- function() {
+  intersect(has_role("predictor"), has_type("unordered"))
 }
 
 ## functions to get current variable info for selectors modeled after

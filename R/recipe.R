@@ -385,6 +385,23 @@ prep.recipe <-
       )
     }
 
+    # Recalculate types of old recipes (>= 1.0.1) if possible and necessary
+    if (all(x$var_info$source == "original") &
+        inherits(x$var_info$type, "character")) {
+      x$var_info <- x$var_info %>%
+        dplyr::select(-type) %>%
+        dplyr::left_join(get_types(training), by = "variable") %>%
+        dplyr::select(variable, type, role, source)
+    }
+
+    if (all(x$term_info$source == "original") &
+        inherits(x$term_info$type, "character")) {
+      x$term_info <- x$term_info %>%
+        dplyr::select(-type) %>%
+        dplyr::left_join(get_types(training), by = "variable") %>%
+        dplyr::select(variable, type, role, source)
+    }
+
     if (fresh) {
       x$term_info <- x$var_info
     }
@@ -486,7 +503,7 @@ prep.recipe <-
       group_by(variable) %>%
       arrange(desc(number)) %>%
       summarise(
-        type = dplyr::first(type),
+        type = list(dplyr::first(type)),
         role = as.list(unique(unlist(role))),
         source = dplyr::first(source),
         number = dplyr::first(number),

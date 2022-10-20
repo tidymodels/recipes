@@ -72,17 +72,7 @@ step_relevel_new <-
 #' @export
 prep.step_relevel <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  col_check <- dplyr::filter(info, .data$variable %in% col_names)
-
-  if (any(col_check$type != "nominal")) {
-    rlang::abort(
-      "Columns must be character or factor: ",
-      paste0(col_check$variable[col_check$type != "nominal"],
-        collapse = ", "
-      )
-    )
-  }
+  check_type(training[, col_names], quant = FALSE)
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)

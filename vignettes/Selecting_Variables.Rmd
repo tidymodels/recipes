@@ -61,7 +61,7 @@ This will capture _any_ variables that are either character strings or factors: 
 ```{r dummy_2}
 dummied <- rec %>% step_dummy(Records) # or
 dummied <- rec %>% step_dummy(all_nominal(), - Status) # or
-dummied <- rec %>% step_dummy(all_nominal(), - all_outcomes()) 
+dummied <- rec %>% step_dummy(all_nominal_predictors()) 
 ```
 
 Using the last definition: 

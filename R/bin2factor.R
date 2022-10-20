@@ -91,10 +91,7 @@ step_bin2factor_new <-
 #' @export
 prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  if (any(info$type[info$variable %in% col_names] != "numeric")) {
-    rlang::abort("The variables should be numeric")
-  }
+  check_type(training[, col_names])
 
   step_bin2factor_new(
     terms = x$terms,

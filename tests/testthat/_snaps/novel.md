@@ -3,8 +3,8 @@
     Code
       recipe(~., data = iris) %>% step_novel(all_predictors()) %>% prep(iris)
     Condition
-      Error in `prep()`:
-      ! Columns must be character or factor: Sepal.Length, Sepal.Width, Petal.Length, Petal.Width
+      Error in `check_type()`:
+      ! All columns selected for the step should be factor or character
 
 ---
 

@@ -123,12 +123,8 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- tibble::as_tibble(col_names)
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
-  if (any(info$type[info$variable %in% col_names$top] != "numeric")) {
-    rlang::abort("The ratio variables should be numeric")
-  }
-  if (any(info$type[info$variable %in% col_names$bottom] != "numeric")) {
-    rlang::abort("The ratio variables should be numeric")
-  }
+  check_type(training[, col_names$top])
+  check_type(training[, col_names$bottom])
 
   step_ratio_new(
     terms = x$terms,

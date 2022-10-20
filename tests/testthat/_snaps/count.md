@@ -11,8 +11,8 @@
     Code
       prep(rec2, training = covers)
     Condition
-      Error in `prep()`:
-      ! The regular expression input should be character or factor
+      Error in `check_type()`:
+      ! All columns selected for the step should be factor or character
 
 # printing
 

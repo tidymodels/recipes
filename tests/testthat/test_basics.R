@@ -242,7 +242,7 @@ test_that("case weights are being infered correctly for formula interface", {
 
   ref_summary <- tibble(
     variable = c("cyl", "disp", "mpg"),
-    type = c("numeric", "case_weights", "numeric"),
+    type = list(c("double", "numeric"), "case_weights", c("double", "numeric")),
     role = c("predictor", "case_weights", "outcome"),
     source = "original"
   )
@@ -268,7 +268,7 @@ test_that("case weights are being infered correctly for x interface", {
 
   ref_summary <- tibble(
     variable = c("cyl", "disp", "mpg"),
-    type = c("numeric", "case_weights", "numeric"),
+    type = list(c("double", "numeric"), "case_weights", c("double", "numeric")),
     role = c(NA, "case_weights", NA),
     source = "original"
   )

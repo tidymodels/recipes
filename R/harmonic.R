@@ -205,8 +205,10 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   harmonic_data <- info[info$variable %in% col_names, ]
 
+
   # check input columns
-  if (any(harmonic_data$type != "date" & harmonic_data$type != "numeric")) {
+  allowed_types <- c("date", "datetime", "numeric")
+  if (any(!map_lgl(harmonic_data$type, ~any(.x %in% allowed_types)))) {
     rlang::abort(
       paste0(
         "All variables for `step_harmonic` should be either `Date` ",

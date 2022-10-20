@@ -3,8 +3,8 @@
     Code
       rec %>% step_relevel(sqft, ref_level = 23) %>% prep()
     Condition
-      Error in `prep()`:
-      ! Columns must be character or factor: 
+      Error in `check_type()`:
+      ! All columns selected for the step should be factor or character
 
 ---
 
