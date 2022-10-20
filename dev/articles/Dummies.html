@@ -124,14 +124,14 @@ predictors, with special attention to interaction terms and contrasts.
 <span><span class="va">iris_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_rec</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
-<span><span class="co">#&gt;   variable     type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original     nominal predictor original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable     type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original     <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span></code></pre></div>
 <p>A <a href="https://en.wikipedia.org/wiki/Contrast_(statistics)" class="external-link">contrast function</a> in R is a method for translating a column with categorical values into one or more numeric columns that take the place of the original. This can also be known as an encoding method or a parameterization function.</p>
 <p>The default approach is to create dummy variables using the “reference cell” parameterization. This means that, if there are <em>C</em> levels of the factor, there will be <em>C</em> - 1 dummy variables created and all but the first factor level are made into new columns:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -141,15 +141,15 @@ predictors, with special attention to interaction terms and contrasts.
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ref_cell</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
-<span><span class="co">#&gt;   variable           type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length       numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width        numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length       numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width        numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original           nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor numeric predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica  numeric predictor derived</span></span>
+<span><span class="co">#&gt;   variable           type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width        <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width        <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original           <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span>
 <span></span>
 <span><span class="co"># Get a row for each factor level</span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">ref_cell</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -184,15 +184,15 @@ predictors, with special attention to interaction terms and contrasts.
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">helmert</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
-<span><span class="co">#&gt;   variable     type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original     nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_X1   numeric predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_X2   numeric predictor derived</span></span>
+<span><span class="co">#&gt;   variable     type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original     <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_X1   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_X2   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">helmert</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
@@ -219,15 +219,15 @@ predictors, with special attention to interaction terms and contrasts.
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
-<span><span class="co">#&gt;   variable                   type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length               numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length               numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                    nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                   nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Sepal.Width_x_Sepal.Length numeric predictor derived</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable                   type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length               <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length               <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                    <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Sepal.Width_x_Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span></code></pre></div>
 <p>In <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link">R model formulae</a>, using a <code>*</code> between two variables would expand to <code>a*b = a + b + a:b</code> so that the main effects are included. In <a href="https://recipes.tidymodels.org/reference/step_interact.html"><code>step_interact</code></a>, you can do use <code>*</code>, but only the interactions are recorded as columns that needs to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:</p>
@@ -261,17 +261,17 @@ predictors, with special attention to interaction terms and contrasts.
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 4</span></span></span>
-<span><span class="co">#&gt;   variable                          type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                      numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                       numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                      numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                       numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original                          nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor                numeric predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica                 numeric predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Species_versicolor_x_Sepal.Length numeric predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Species_virginica_x_Sepal.Length  numeric predictor derived</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable                          type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                      <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                      <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original                          <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor                <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica                 <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Species_versicolor_x_Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Species_virginica_x_Sepal.Length  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span></code></pre></div>
 <p>What happens here is that <code>starts_with("Species")</code> is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selectors are then translated to an additive function of the results. In this case, that means that</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
@@ -305,22 +305,18 @@ predictors, with special attention to interaction terms and contrasts.
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Categorical variables used in `step_interact` should probably be</span></span>
-<span><span class="co">#&gt; avoided; This can lead to differences in dummy variable values that are</span></span>
-<span><span class="co">#&gt; produced by `step_dummy`. Please convert all involved variables to dummy</span></span>
-<span><span class="co">#&gt; variables first.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">iris_int</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
-<span><span class="co">#&gt;   variable                         type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                     numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                      numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                     numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                      numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                          nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                         nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Speciesversicolor_x_Sepal.Length numeric predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Speciesvirginica_x_Sepal.Length  numeric predictor derived</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable                         type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length                     <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width                      <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length                     <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width                      <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species                          <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> original                         <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Speciesversicolor_x_Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Speciesvirginica_x_Sepal.Length  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span></code></pre></div>
 <p>The columns <code>Species</code> isn’t affected and a warning is issued. Basically, you only get half of what <code>model.matrix</code> does and that could really be problematic in subsequent steps.</p>
 </div>
 <div class="section level2">

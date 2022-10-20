@@ -160,18 +160,18 @@ will not work.</p>
 <h3 id="tips-for-saving-recipes-and-filtering-columns">Tips for saving recipes and filtering columns<a class="anchor" aria-label="anchor" href="#tips-for-saving-recipes-and-filtering-columns"></a></h3>
 
 
-<p>When creating variable selections:</p><ul><li><p>If you are using column filtering steps, such as <code><a href="step_corr.html">step_corr()</a></code>, try
-to avoid hardcoding specific variable names in downstream steps in
-case those columns are removed by the filter. Instead, use
+<p>When creating variable selections:</p><ul><li><p>If you are using column filtering steps, such as <code><a href="step_corr.html">step_corr()</a></code>, try to
+avoid hardcoding specific variable names in downstream steps in case
+those columns are removed by the filter. Instead, use
 <code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::any_of()</a></code> and
-<code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::all_of()</a></code>.</p><ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::any_of()</a></code> will be tolerant if a
-column has been removed.</p></li>
+<code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::all_of()</a></code>.</p><ul><li><p><code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::any_of()</a></code> will be tolerant if a column
+has been removed.</p></li>
 <li><p><code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">dplyr::all_of()</a></code> will fail unless all of the
 columns are present in the data.</p></li>
 </ul></li>
-<li><p>For both of these functions, if you are going to save the recipe as
-a binary object to use in another R session, try to avoid referring
-to a vector in your workspace.</p><ul><li><p>Preferred: <code>any_of(!!var_names)</code></p></li>
+<li><p>For both of these functions, if you are going to save the recipe as a
+binary object to use in another R session, try to avoid referring to a
+vector in your workspace.</p><ul><li><p>Preferred: <code>any_of(!!var_names)</code></p></li>
 <li><p>Avoid: <code>any_of(var_names)</code></p></li>
 </ul></li>
 </ul><p>Some examples:</p>

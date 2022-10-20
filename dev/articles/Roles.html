@@ -118,29 +118,29 @@
 <span></span>
 <span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
-<span><span class="co">#&gt;   variable     type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      nominal outcome   original</span></span>
+<span><span class="co">#&gt;   variable     type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      <span style="color: #949494;">&lt;chr [3]&gt;</span> outcome   original</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Species  nominal predictor original</span></span>
+<span><span class="co">#&gt;   variable type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Species  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
-<span><span class="co">#&gt;   variable     type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Petal.Length numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Petal.Width  numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Species      nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Sepal.Length numeric outcome   original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Sepal.Width  numeric outcome   original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable     type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Petal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Petal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Species      <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Sepal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span></span></code></pre></div>
 <p>These roles can be updated despite this initial assignment. <code><a href="../reference/roles.html">update_role()</a></code> can modify a single existing role:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
@@ -151,32 +151,32 @@
 <span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"sample ID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role                   source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   nominal sample ID              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  nominal dataset split variable original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      numeric outcome                original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable type      role                   source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> sample ID              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> dataset split variable original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome                original</span></span></code></pre></div>
 <p>When you want to get rid of a role for a column, use <code><a href="../reference/roles.html">remove_role()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/roles.html">remove_role</a></span><span class="op">(</span><span class="va">sample</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   nominal <span style="color: #BB0000;">NA</span>        original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  nominal predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   numeric predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      numeric outcome   original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> <span style="color: #BB0000;">NA</span>        original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span></span></code></pre></div>
 <p>It represents the lack of a role as <code>NA</code>, which means that the variable is used in the recipe, but does not yet have a declared role. Setting the role manually to <code>NA</code> is not allowed:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -194,34 +194,34 @@
 <span><span class="va">multi_role</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role                   source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   nominal sample ID              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> sample   nominal jellyfish              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> dataset  nominal dataset split variable original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> carbon   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> hydrogen numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> oxygen   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> nitrogen numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> sulfur   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> HHV      numeric outcome                original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable type      role                   source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> sample ID              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> jellyfish              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> dataset split variable original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome                original</span></span></code></pre></div>
 <p>If a variable has multiple existing roles and you want to update one of them, the additional <code>old_role</code> argument to <code><a href="../reference/roles.html">update_role()</a></code> must be used to resolve any ambiguity.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_role</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="st">"flounder"</span>, old_role <span class="op">=</span> <span class="st">"jellyfish"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role                   source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   nominal sample ID              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> sample   nominal flounder               original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> dataset  nominal dataset split variable original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> carbon   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> hydrogen numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> oxygen   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> nitrogen numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> sulfur   numeric predictor              original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> HHV      numeric outcome                original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable type      role                   source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> sample ID              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> flounder               original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> dataset split variable original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor              original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome                original</span></span></code></pre></div>
 <p>Additional variable roles allow you to use <code><a href="../reference/has_role.html">has_role()</a></code> in combination with other selection methods (see <code><a href="../reference/selections.html">?selections</a></code>) to target specific variables in subsequent processing steps. For example, in the following recipe, by adding the role <code>"nocenter"</code> to the <code>HHV</code> predictor, you can use <code>-has_role("nocenter")</code> to exclude <code>HHV</code> when centering <code><a href="../reference/has_role.html">all_predictors()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multi_role</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -250,16 +250,16 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role  source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   nominal <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  nominal <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   numeric <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen numeric <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   numeric <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen numeric <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   numeric <span style="color: #BB0000;">NA</span>    original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      numeric <span style="color: #BB0000;">NA</span>    original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable type      role  source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span></span></code></pre></div>
 <p>and roles can be added in bulk as needed:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -267,16 +267,16 @@
 <span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">sample</span>, <span class="va">HHV</span>, new_role <span class="op">=</span> <span class="st">"snail"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
-<span><span class="co">#&gt;   variable type    role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   nominal snail     original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  nominal <span style="color: #BB0000;">NA</span>        original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   numeric <span style="color: #BB0000;">NA</span>        original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen numeric lunchroom original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   numeric lunchroom original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen numeric lunchroom original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   numeric <span style="color: #BB0000;">NA</span>        original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      numeric snail     original</span></span></code></pre></div>
+<span><span class="co">#&gt;   variable type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> snail     original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> <span style="color: #BB0000;">NA</span>        original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>        original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> lunchroom original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> lunchroom original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> lunchroom original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>        original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> snail     original</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="role-inheritance">Role Inheritance<a class="anchor" aria-label="anchor" href="#role-inheritance"></a>
