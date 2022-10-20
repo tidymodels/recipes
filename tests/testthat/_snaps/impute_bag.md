@@ -5,7 +5,7 @@
     Condition
       Error:
       ! `step_bagimpute()` was deprecated in recipes 0.1.16 and is now defunct.
-      Please use `step_impute_bag()` instead.
+      i Please use `step_impute_bag()` instead.
 
 # printing
 

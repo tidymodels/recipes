@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 1.0.1.9000
+Version: 1.0.2.9000
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
@@ -27,7 +27,7 @@ Imports:
     gower,
     hardhat (>= 1.2.0),
     ipred (>= 0.9-12),
-    lifecycle,
+    lifecycle (>= 1.0.3),
     lubridate (>= 1.8.0),
     magrittr,
     Matrix,
@@ -36,7 +36,7 @@ Imports:
     stats,
     tibble,
     tidyr (>= 1.0.0),
-    tidyselect (>= 1.1.2),
+    tidyselect (>= 1.2.0),
     timeDate,
     utils,
     vctrs,

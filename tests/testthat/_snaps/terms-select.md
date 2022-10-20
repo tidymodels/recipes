@@ -5,7 +5,7 @@
     Condition
       Warning:
       `terms_select()` was deprecated in recipes 0.1.17.
-      Please use `recipes_eval_select()` instead.
+      i Please use `recipes_eval_select()` instead.
     Output
       [1] "city"      "zip"       "beds"      "baths"     "sqft"      "type"     
       [7] "price"     "latitude"  "longitude"

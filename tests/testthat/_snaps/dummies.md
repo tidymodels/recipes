@@ -100,7 +100,7 @@
     Condition
       Error:
       ! The `preserve` argument of `step_dummy()` was deprecated in recipes 0.1.16 and is now defunct.
-      Please use the `keep_original_cols` argument instead.
+      i Please use the `keep_original_cols` argument instead.
 
 # printing
 
