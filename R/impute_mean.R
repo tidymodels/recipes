@@ -214,7 +214,7 @@ tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$means),
-      model = vctrs::vec_unchop(unname(x$means), ptype = double())
+      model = vctrs::list_unchop(unname(x$means), ptype = double())
     )
   } else {
     term_names <- sel2char(x$terms)

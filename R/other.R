@@ -265,7 +265,7 @@ tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {
     values <- purrr::map(x$objects, function(x) x$keep)
     n <- vapply(values, length, integer(1))
-    values <- vctrs::vec_unchop(values, ptype = character(), name_spec = rlang::zap())
+    values <- vctrs::list_unchop(values, ptype = character(), name_spec = rlang::zap())
     res <- tibble(
       terms = rep(names(n), n),
       retained = values
