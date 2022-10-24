@@ -112,7 +112,7 @@ step_regex_new <-
 #' @export
 prep.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_name], quant = FALSE)
+  check_type(training[, col_name], types = "nominal")
 
   if (length(col_name) > 1) {
     rlang::abort("The selector should select at most a single variable")

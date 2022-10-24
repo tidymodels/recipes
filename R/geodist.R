@@ -143,6 +143,7 @@ check_is_lat_lon <- function(x) {
 prep.step_geodist <- function(x, training, info = NULL, ...) {
   lon_name <- recipes_eval_select(x$lon, training, info)
   lat_name <- recipes_eval_select(x$lat, training, info)
+  check_type(training[, c(lon_name, lat_name)], types = "numeric")
 
   x <- check_is_lat_lon(x)
 

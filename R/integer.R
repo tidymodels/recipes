@@ -112,6 +112,7 @@ get_unique_values <- function(x, zero = FALSE) {
 #' @export
 prep.step_integer <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = "nominal")
 
   step_integer_new(
     terms = x$terms,

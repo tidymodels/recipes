@@ -108,8 +108,7 @@ step_kpca_poly_new <-
 #' @export
 prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = "numeric")
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-

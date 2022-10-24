@@ -79,16 +79,7 @@ step_factor2string_new <-
 #' @export
 prep.step_factor2string <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  fac_check <-
-    vapply(training[, col_names], is.factor, logical(1))
-  if (any(!fac_check)) {
-    rlang::abort(
-      paste0(
-        "The following variables are not factor vectors: ",
-        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
-      )
-    )
-  }
+  check_type(training[, col_names], types = "factor")
 
   step_factor2string_new(
     terms = x$terms,
