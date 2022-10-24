@@ -443,17 +443,34 @@ is_qual <- function(x) {
 #'   check fails.
 #' @param dat A data frame or tibble of the training data.
 #' @param quant A logical indicating whether the data is expected to be numeric
-#'   (TRUE) or a factor/character (FALSE).
+#'   (TRUE) or a factor/character (FALSE). Is ignored if `types` is specified.
+#' @param types Character vector of allowed types. Following the same types as
+#'   [has_role()]. See details for more.
+#'
+#' @details
+#' Using `types` is a more fine-tuned way to use this function compared to using
+#' `quant`. `types` should specify all allowed types as designated by
+#' [get_data_types]. Suppose you want to allow doubles, integers, characters,
+#' factors and ordered factors, then you can specify
+#' `types = c("numeric", "nominal")` as doubles and integers are both
+#' `"numeric"` and characters, factors and ordered factors are `"nominal"`.
+#'
 #' @export
 #' @keywords internal
-check_type <- function(dat, quant = TRUE) {
-  if (quant) {
-    all_good <- vapply(dat, is.numeric, logical(1))
-    label <- "numeric"
+check_type <- function(dat, quant = TRUE, types = NULL) {
+  if (is.null(types)) {
+    if (quant) {
+      all_good <- vapply(dat, is.numeric, logical(1))
+      label <- "numeric"
+    } else {
+      all_good <- vapply(dat, is_qual, logical(1))
+      label <- "factor or character"
+    }
   } else {
-    all_good <- vapply(dat, is_qual, logical(1))
-    label <- "factor or character"
+    all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
+    label <- glue::glue_collapse(types, sep = ", ", last = ", or ")
   }
+
   if (!all(all_good)) {
     rlang::abort(
       paste0(
@@ -463,10 +480,9 @@ check_type <- function(dat, quant = TRUE) {
       )
     )
   }
+
   invisible(all_good)
 }
-
-
 
 ## Support functions
 
