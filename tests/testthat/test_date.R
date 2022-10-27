@@ -149,6 +149,33 @@ test_that("locale argument works when specified", {
   expect_equal(ref_res, new_res)
 })
 
+test_that("locale argument works with clock locale", {
+  labels_fr <- clock::clock_locale(labels = "fr")$labels
+
+  date_rec <- recipe(~ Stefan, examples) %>%
+    step_date(all_predictors(), locale = labels_fr, ordinal = TRUE) %>%
+    prep()
+
+  ref_res <- bake(date_rec, new_data = examples)
+
+  expect_identical(
+    ref_res$Stefan_dow,
+    clock::date_weekday_factor(
+      examples$Stefan,
+      labels = labels_fr
+    )
+  )
+
+  expect_identical(
+    ref_res$Stefan_month,
+    clock::date_month_factor(
+      examples$Stefan,
+      labels = labels_fr,
+      abbreviate = TRUE
+    )
+  )
+})
+
 test_that("can bake and recipes with no locale", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors()) %>%
@@ -228,4 +255,3 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(date_rec, new_data = examples[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
