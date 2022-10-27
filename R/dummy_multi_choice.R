@@ -118,7 +118,7 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   multi_dummy_check_type(training[, col_names])
 
   levels <- purrr::map(training[, col_names], levels)
-  levels <- vctrs::vec_unchop(levels, ptype = character(), name_spec = rlang::zap())
+  levels <- vctrs::list_unchop(levels, ptype = character(), name_spec = rlang::zap())
   levels <- levels[!is.na(levels)]
   levels <- keep_levels(levels, x$threshold, other = x$other)
 
@@ -185,7 +185,7 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
 multi_dummy <- function(x, y) {
   row_id <- rep(seq_len(nrow(x)), times = ncol(x))
-  values <- vctrs::vec_unchop(
+  values <- vctrs::list_unchop(
     purrr::map(x, as.character),
     ptype = character(),
     name_spec = rlang::zap()
