@@ -80,7 +80,7 @@ step_date <-
            abbr = TRUE,
            label = TRUE,
            ordinal = FALSE,
-           locale = Sys.getlocale("LC_TIME"),
+           locale = clock::clock_locale()$labels,
            columns = NULL,
            keep_original_cols = TRUE,
            skip = FALSE,
@@ -212,16 +212,36 @@ get_date_features <-
       res[, grepl("semester$", names(res))] <- vec_cast(semester(dt), integer())
     }
     if ("dow" %in% feats) {
-      res[, grepl("dow$", names(res))] <-
-        wday(dt, abbr = abbr, label = label, locale = locale)
+      if (inherits(locale, "clock_labels")) {
+        dow <- clock::date_weekday_factor(
+          x = dt, abbreviate = abbr, labels = locale
+        )
+        if (!label) {
+          dow <- as.integer(dow)
+        }
+        res[, grepl("dow$", names(res))] <- dow
+      } else {
+        res[, grepl("dow$", names(res))] <-
+          wday(dt, abbr = abbr, label = label, locale = locale)
+      }
       if (!ord & label == TRUE) {
         res[, grepl("dow$", names(res))] <-
           ord2fac(res, grep("dow$", names(res), value = TRUE))
       }
     }
     if ("month" %in% feats) {
-      res[, grepl("month$", names(res))] <-
-        month(dt, abbr = abbr, label = label, locale = locale)
+      if (inherits(locale, "clock_labels")) {
+        month <- clock::date_month_factor(
+          dt, abbreviate = abbr, labels = locale
+        )
+        if (!label) {
+          month <- as.integer(month)
+        }
+        res[, grepl("month$", names(res))] <- month
+      } else {
+        res[, grepl("month$", names(res))] <-
+          month(dt, abbr = abbr, label = label, locale = locale)
+      }
       if (!ord & label == TRUE) {
         res[, grepl("month$", names(res))] <-
           ord2fac(res, grep("month$", names(res), value = TRUE))

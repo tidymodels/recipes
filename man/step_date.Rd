@@ -13,7 +13,7 @@ step_date(
   abbr = TRUE,
   label = TRUE,
   ordinal = FALSE,
-  locale = Sys.getlocale("LC_TIME"),
+  locale = clock::clock_locale()$labels,
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
