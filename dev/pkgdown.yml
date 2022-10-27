@@ -1,4 +1,4 @@
-pandoc: 2.14.2
+pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
@@ -8,7 +8,7 @@ articles:
   Selecting_Variables: Selecting_Variables.html
   Skipping: Skipping.html
   recipes: recipes.html
-last_built: 2022-10-20T20:14Z
+last_built: 2022-10-27T00:14Z
 urls:
   reference: https://recipes.tidymodels.org/reference
   article: https://recipes.tidymodels.org/articles
