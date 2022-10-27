@@ -29,7 +29,8 @@
 #'  available for features `month` or `dow`.
 #' @param locale Locale to be used for `month` and `dow`, see [locales].
 #'  On Linux systems you can use `system("locale -a")` to list all the
-#'  installed locales. Defaults to `Sys.getlocale("LC_TIME")`.
+#'  installed locales. Can be a locales string, or a [clock::clock_labels()]
+#'  object. Defaults to `clock::clock_locale()$labels`.
 #' @param columns A character string of variables that will be
 #'  used as inputs. This field is a placeholder and will be
 #'  populated once [prep()] is used.
