@@ -1,5 +1,8 @@
 # recipes (development version)
 
+* Fixed a 0-length recycling bug in `step_dummy_extract()` exposed by the
+  development version of purrr (#1052).
+
 * Types of variables have been made granular. `"nominal"` has been split into `"ordered"` and `"unordered"` and `"numeric"` has been split into `"double"` and `"integer"`. (#993)
 
 * New selectors: `all_double()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`, in addition to the existing `all_numeric()` and `all_nominal()`. All selectors come with a `*_predictors()` variant. (#993)
