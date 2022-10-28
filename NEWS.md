@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where `step_dummy()` would error if the contrast for unordered factors was set to `contr.poly`.
+
 * Fixed a 0-length recycling bug in `step_dummy_extract()` exposed by the
   development version of purrr (#1052).
 

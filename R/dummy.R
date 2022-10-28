@@ -314,7 +314,9 @@ bake.step_dummy <- function(object, new_data, ...) {
         data = indicators
       )
     indicators <- as_tibble(indicators)
-    if (fac_type != "ordered") {
+    fac_type <- dplyr::if_else(fac_type != "ordered", "unordered", "ordered")
+    contrast <- options("contrasts")$contrasts[[fac_type]]
+    if (contrast != "contr.poly") {
       indicators <- purrr::map_dfc(indicators, vec_cast, integer())
     }
 
