@@ -9,6 +9,9 @@
 #'  range.
 #' @param max A single numeric value for the largest value in the
 #'  range.
+#' @param clipping A single logical value for determining whether
+#'  application of transformation onto new data should be forced
+#'  to be inside `min` and `max`. Defaults to TRUE.
 #' @param ranges A character vector of variables that will be
 #'  normalized. Note that this is ignored until the values are
 #'  determined by [prep()]. Setting this value will
@@ -58,6 +61,7 @@ step_range <-
            trained = FALSE,
            min = 0,
            max = 1,
+           clipping = TRUE,
            ranges = NULL,
            skip = FALSE,
            id = rand_id("range")) {
@@ -69,6 +73,7 @@ step_range <-
         trained = trained,
         min = min,
         max = max,
+        clipping = clipping,
         ranges = ranges,
         skip = skip,
         id = id
@@ -77,7 +82,7 @@ step_range <-
   }
 
 step_range_new <-
-  function(terms, role, trained, min, max, ranges, skip, id) {
+  function(terms, role, trained, min, max, clipping, ranges, skip, id) {
     step(
       subclass = "range",
       terms = terms,
@@ -85,6 +90,7 @@ step_range_new <-
       trained = trained,
       min = min,
       max = max,
+      clipping = clipping,
       ranges = ranges,
       skip = skip,
       id = id
@@ -106,6 +112,7 @@ prep.step_range <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     min = x$min,
     max = x$max,
+    clipping = x$clipping,
     ranges = rbind(mins, maxs),
     skip = x$skip,
     id = x$id
@@ -123,8 +130,10 @@ bake.step_range <- function(object, new_data, ...) {
     new_data[[column]] <- (new_data[[column]] - min) *
       (object$max - object$min) / (max - min) + object$min
 
-    new_data[[column]] <- pmax(new_data[[column]], object$min)
-    new_data[[column]] <- pmin(new_data[[column]], object$max)
+    if (object$clipping) {
+      new_data[[column]] <- pmax(new_data[[column]], object$min)
+      new_data[[column]] <- pmin(new_data[[column]], object$max)
+    }
   }
   new_data
 }

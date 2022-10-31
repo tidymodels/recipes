@@ -6,6 +6,8 @@
 
 * Developer focused `.get_data_types()` generic has been added to designate types of columns. Exported for use in extension packages that deal with types not supported in recipes directly. (#993)
 
+* `step_range()` has gained a argument `clipping` that when set to `FALSE` no longer clips the data to be between `min` and `max`.
+
 # recipes 1.0.2
 
 * A new set of basis functions were added: `step_spline_b()`, `step_spline_convex()`,  `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and 
