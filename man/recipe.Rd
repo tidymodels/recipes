@@ -80,8 +80,8 @@ added to a recipe.
 \itemize{
 \item \strong{Steps} can include operations like scaling a variable, creating
 dummy variables or interactions, and so on. More computationally
-complex actions such as dimension reduction or imputation can also
-be specified.
+complex actions such as dimension reduction or imputation can also be
+specified.
 \item \strong{Checks} are operations that conduct specific tests of the data.
 When the test is satisfied, the data are returned without issue or
 modification. Otherwise, an error is thrown.
@@ -184,15 +184,15 @@ linear_sp_sign_wflow
 }\if{html}{\out{</div>}}
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to \code{\link[=fit.model_spec]{fit()}} is used:
+single call to \code{\link[parsnip:fit]{fit()}} is used:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 }\if{html}{\out{</div>}}
 
 When predicting, there is no need to do anything other than call
-\code{\link[=predict.model_fit]{predict()}}. This preprocesses the new data in
-the same manner as the training set, then gives the data to the linear
-model prediction code:
+\code{\link[parsnip:predict.model_fit]{predict()}}. This preprocesses the new
+data in the same manner as the training set, then gives the data to the
+linear model prediction code:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
 }\if{html}{\out{</div>}}
@@ -271,8 +271,8 @@ or \code{id} argument.
 
 To apply the prepped recipe to a data set, the \code{\link[=bake]{bake()}}
 function is used in the same manner that
-\code{\link[=predict.model_fit]{predict()}} would be for models. This applies
-the estimated steps to any data set.
+\code{\link[parsnip:predict.model_fit]{predict()}} would be for models. This
+applies the estimated steps to any data set.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
 }\if{html}{\out{</div>}}
