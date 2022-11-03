@@ -11,6 +11,7 @@ step_range(
   trained = FALSE,
   min = 0,
   max = 1,
+  clipping = TRUE,
   ranges = NULL,
   skip = FALSE,
   id = rand_id("range")
@@ -34,6 +35,10 @@ range.}
 
 \item{max}{A single numeric value for the largest value in the
 range.}
+
+\item{clipping}{A single logical value for determining whether
+application of transformation onto new data should be forced
+to be inside \code{min} and \code{max}. Defaults to TRUE.}
 
 \item{ranges}{A character vector of variables that will be
 normalized. Note that this is ignored until the values are

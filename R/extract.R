@@ -170,9 +170,15 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
       )
 
       lvls <- map(elements, unique)
-      wts_tab <- purrr::map2(lvls, as.double(wts), ~rep(.y, length(.x)))
+
+      if (is.null(wts)) {
+        wts_tab <- NULL
+      } else {
+        wts_tab <- purrr::map2(lvls, as.double(wts), ~rep(.y, length(.x)))
+        wts_tab <- unlist(wts_tab)
+      }
+
       lvls <- unlist(lvls)
-      wts_tab <- unlist(wts_tab)
 
       lvls <- sort(weighted_table(lvls, wts = wts_tab), decreasing = TRUE)
 
