@@ -80,8 +80,8 @@ added to a recipe.
 \itemize{
 \item \strong{Steps} can include operations like scaling a variable, creating
 dummy variables or interactions, and so on. More computationally
-complex actions such as dimension reduction or imputation can also be
-specified.
+complex actions such as dimension reduction or imputation can also
+be specified.
 \item \strong{Checks} are operations that conduct specific tests of the data.
 When the test is satisfied, the data are returned without issue or
 modification. Otherwise, an error is thrown.
@@ -125,8 +125,8 @@ library(parsnip)
 data(biomass, package = "modeldata")
 
 # split data
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass \%>\% filter(dataset == "Training")
+biomass_te <- biomass \%>\% filter(dataset == "Testing")
 
 # With only predictors and outcomes, use a formula:
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
@@ -184,15 +184,15 @@ linear_sp_sign_wflow
 }\if{html}{\out{</div>}}
 
 To estimate the preprocessing steps and then fit the linear model, a
-single call to [\code{fit()}][fit.model_spec()] is used:
+single call to \code{\link[=fit.model_spec]{fit()}} is used:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 }\if{html}{\out{</div>}}
 
 When predicting, there is no need to do anything other than call
-[\code{predict()}][predict.model_fit()]. This preprocesses the new data
-in the same manner as the training set, then gives the data to the
-linear model prediction code:
+\code{\link[=predict.model_fit]{predict()}}. This preprocesses the new data in
+the same manner as the training set, then gives the data to the linear
+model prediction code:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
 }\if{html}{\out{</div>}}
@@ -269,9 +269,10 @@ prepped or unprepped, to learn more about its components.
 You can also \code{\link[=tidy.recipe]{tidy()}} recipe \emph{steps} with a \code{number}
 or \code{id} argument.
 
-To apply the prepped recipe to a data set, the [bake()] function is
-used in the same manner that [\code{predict()}][predict.model_fit()]
-would be for models. This applies the estimated steps to any data set.
+To apply the prepped recipe to a data set, the \code{\link[=bake]{bake()}}
+function is used in the same manner that
+\code{\link[=predict.model_fit]{predict()}} would be for models. This applies
+the estimated steps to any data set.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
 }\if{html}{\out{</div>}}
@@ -289,14 +290,6 @@ would be for models. This applies the estimated steps to any data set.
 
 In general, the workflow interface to recipes is recommended for most
 applications.
-
-[biomass$dataset == "Training",]: R:biomass$dataset\%20==\%20\%22Training\%22,
-[biomass$dataset == "Testing",]: R:biomass$dataset\%20==\%20\%22Testing\%22,
-[fit.model_spec()]: R:fit.model_spec() [predict.model_fit()]:
-R:predict.model_fit() \code{\link[=prep]{prep()}}: R:prep() \code{\link[=prep]{prep()}}:
-R:prep() \code{\link[=tidy.recipe]{tidy.recipe()}}: R:tidy.recipe()
-\code{\link[=tidy.recipe]{tidy.recipe()}}: R:tidy.recipe() [bake()]: R:bake()
-[predict.model_fit()]: R:predict.model_fit()
 }
 
 }

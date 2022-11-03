@@ -45,8 +45,8 @@ library(parsnip)
 data(biomass, package = "modeldata")
 
 # split data
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass %>% filter(dataset == "Training")
+biomass_te <- biomass %>% filter(dataset == "Testing")
 
 # With only predictors and outcomes, use a formula:
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,

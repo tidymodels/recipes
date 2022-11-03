@@ -39,6 +39,7 @@
 #' @template dummy-naming
 #'
 #' @details
+#'
 #' To change the type of contrast being used, change the global
 #' contrast option via `options`.
 #'
@@ -58,6 +59,9 @@
 #' a leading "X" in front of the level (since it uses [make.names()]). This can
 #' be changed by passing in a different function to the `naming` argument for
 #' this step.
+#'
+#' Also, there are a number of contrast methods that return fractional values.
+#' The columns returned by this step are doubles (not integers).
 #'
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
