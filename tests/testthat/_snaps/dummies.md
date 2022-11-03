@@ -81,7 +81,7 @@
     Output
       # A tibble: 10 x 2
          y      x1_B
-         <fct> <int>
+         <fct> <dbl>
        1 0         0
        2 0         1
        3 1         0
