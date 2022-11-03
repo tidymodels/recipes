@@ -104,7 +104,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed(c("modeldata", "RcppML", "ggplot2")) && .Platform$OS.type != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("modeldata", "RcppML", "ggplot2")) && .Platform$OS.type[1] != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(Matrix)
 data(biomass, package = "modeldata")
 
