@@ -88,7 +88,7 @@ numeric variables.</p>
 <span>  abbr <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ordinal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  locale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/locales.html" class="external-link">Sys.getlocale</a></span><span class="op">(</span><span class="st">"LC_TIME"</span><span class="op">)</span>,</span>
+<span>  locale <span class="op">=</span> <span class="fu">clock</span><span class="fu">::</span><span class="fu"><a href="https://clock.r-lib.org/reference/clock_locale.html" class="external-link">clock_locale</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">labels</span>,</span>
 <span>  columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_original_cols <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -152,7 +152,8 @@ available for features <code>month</code> or <code>dow</code>.</p></dd>
 <dt>locale</dt>
 <dd><p>Locale to be used for <code>month</code> and <code>dow</code>, see <a href="https://rdrr.io/r/base/locales.html" class="external-link">locales</a>.
 On Linux systems you can use <code>system("locale -a")</code> to list all the
-installed locales. Defaults to <code>Sys.getlocale("LC_TIME")</code>.</p></dd>
+installed locales. Can be a locales string, or a <code><a href="https://clock.r-lib.org/reference/clock_labels.html" class="external-link">clock::clock_labels()</a></code>
+object. Defaults to <code>clock::clock_locale()$labels</code>.</p></dd>
 
 
 <dt>columns</dt>
