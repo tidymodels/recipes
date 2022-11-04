@@ -55,7 +55,7 @@
 #'   prep(training = biomass)
 #'
 #' bake(rec, new_data = NULL)
-#' #'
+#'
 #' library(ggplot2)
 #' bake(rec, new_data = NULL) %>%
 #'   ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
