@@ -39,7 +39,7 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf .Platform$OS.type != "windows"
+#' @examplesIf (.Platform$OS.type != "windows") && rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))
 #' library(Matrix)
 #' data(biomass, package = "modeldata")
 #'
