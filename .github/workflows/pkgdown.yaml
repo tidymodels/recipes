@@ -33,6 +33,14 @@ jobs:
           extra-packages: any::pkgdown, local::., any::mixOmics, r-lib/downlit
           needs: website
 
+      - name: debugging 1
+        run: all(rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))) && all(.Platform$OS.type!= "windows")
+        shell: Rscript {0}
+
+      - name: debugging 2
+        run: getRversion() >= "3.4"
+        shell: Rscript {0}
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
