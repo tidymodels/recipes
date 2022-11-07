@@ -109,6 +109,9 @@ a leading "X" in front of the level (since it uses \code{\link[=make.names]{make
 be changed by passing in a different function to the \code{naming} argument for
 this step.
 
+Also, there are a number of contrast methods that return fractional values.
+The columns returned by this step are doubles (not integers).
+
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
 }

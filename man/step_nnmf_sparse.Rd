@@ -104,7 +104,8 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (.Platform$OS.type!= "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+if (rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))) {
 library(Matrix)
 data(biomass, package = "modeldata")
 
@@ -120,11 +121,12 @@ rec <- recipe(HHV ~ ., data = biomass) \%>\%
   prep(training = biomass)
 
 bake(rec, new_data = NULL)
-#'
+
 library(ggplot2)
 bake(rec, new_data = NULL) \%>\%
   ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
   geom_point()
+}
 \dontshow{\}) # examplesIf}
 }
 \seealso{

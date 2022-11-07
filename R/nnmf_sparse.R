@@ -39,7 +39,8 @@
 #'
 #' @template case-weights-not-supported
 #'
-#' @examplesIf rlang::is_installed(c("modeldata", "RcppML", "ggplot2")) && .Platform$OS.type != "windows"
+#' @examplesIf .Platform$OS.type!= "windows"
+#' if (rlang::is_installed(c("modeldata", "RcppML", "ggplot2"))) {
 #' library(Matrix)
 #' data(biomass, package = "modeldata")
 #'
@@ -55,11 +56,12 @@
 #'   prep(training = biomass)
 #'
 #' bake(rec, new_data = NULL)
-#' #'
+#'
 #' library(ggplot2)
 #' bake(rec, new_data = NULL) %>%
 #'   ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) +
 #'   geom_point()
+#' }
 step_nnmf_sparse <-
   function(recipe,
            ...,

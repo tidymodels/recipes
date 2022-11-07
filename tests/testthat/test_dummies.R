@@ -84,12 +84,12 @@ test_that("dummy variables with non-factor inputs", {
   )
 })
 
-test_that("create integer dummy variables", {
+test_that("create double dummy variables", {
   rec <- recipe(sqft ~ zip + city, data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip, id = "")
   dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
-  expect_true(all(vapply(dummy_pred, is.integer, logical(1))))
+  expect_true(all(vapply(dummy_pred, is.double, logical(1))))
 })
 
 test_that("create all dummy variables", {
@@ -408,4 +408,3 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
                class = "new_data_missing_column")
 })
-

@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `step_dummy()` no longer returns integer columns as there are a number of contrast methods that return fractional values. (#1053)
+
 * Fixed a 0-length recycling bug in `step_dummy_extract()` exposed by the
   development version of purrr (#1052).
 

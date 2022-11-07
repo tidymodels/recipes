@@ -45,8 +45,8 @@ library(parsnip)
 data(biomass, package = "modeldata")
 
 # split data
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass %>% filter(dataset == "Training")
+biomass_te <- biomass %>% filter(dataset == "Testing")
 
 # With only predictors and outcomes, use a formula:
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
@@ -73,13 +73,13 @@ linear_sp_sign_wflow <-
 linear_sp_sign_wflow
 ```
 
-To estimate the preprocessing steps and then fit the linear model, a single call to [`fit()`][fit.model_spec()] is used:
+To estimate the preprocessing steps and then fit the linear model, a single call to [`fit()`][parsnip::fit.model_spec()] is used:
 
 ```{r}
 linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
 ```
 
-When predicting, there is no need to do anything other than call [`predict()`][predict.model_fit()]. This preprocesses the new data in the same manner as the training set, then gives the data to the linear model prediction code: 
+When predicting, there is no need to do anything other than call [`predict()`][parsnip::predict.model_fit()]. This preprocesses the new data in the same manner as the training set, then gives the data to the linear model prediction code: 
 
 ```{r}
 predict(linear_sp_sign_fit, new_data = head(biomass_te))
@@ -118,7 +118,7 @@ tidy(pca_rec)
 
 You can also [`tidy()`][tidy.recipe()] recipe *steps* with a `number` or `id` argument.
 
-To apply the prepped recipe to a data set, the [bake()] function is used in the same manner that [`predict()`][predict.model_fit()] would be for models. This applies the estimated steps to any data set.
+To apply the prepped recipe to a data set, the [bake()] function is used in the same manner that [`predict()`][parsnip::predict.model_fit()] would be for models. This applies the estimated steps to any data set.
 
 ```{r}
 bake(pca_rec, head(biomass_te))
