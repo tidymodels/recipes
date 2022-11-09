@@ -16,7 +16,7 @@ the original data."><meta property="og:image" content="https://recipes.tidymodel
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -201,6 +201,8 @@ rules for columns. If there are levels such as "0", <code><a href="names0.html">
 a leading "X" in front of the level (since it uses <code><a href="https://rdrr.io/r/base/make.names.html" class="external-link">make.names()</a></code>). This can
 be changed by passing in a different function to the <code>naming</code> argument for
 this step.</p>
+<p>Also, there are a number of contrast methods that return fractional values.
+The columns returned by this step are doubles (not integers).</p>
 <p>The <a href="https://recipes.tidymodels.org/articles/Dummies.html">package vignette for dummy variables</a>
 and interactions has more information.</p>
     </div>

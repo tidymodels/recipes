@@ -12,7 +12,7 @@ order to prepare it for data analysis."><meta property="og:image" content="https
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,8 +170,8 @@ formula method is memory-inefficient with many variables.</p>
 <p>There are two different types of operations that can be sequentially
 added to a recipe.</p><ul><li><p><strong>Steps</strong> can include operations like scaling a variable, creating
 dummy variables or interactions, and so on. More computationally
-complex actions such as dimension reduction or imputation can also
-be specified.</p></li>
+complex actions such as dimension reduction or imputation can also be
+specified.</p></li>
 <li><p><strong>Checks</strong> are operations that conduct specific tests of the data.
 When the test is satisfied, the data are returned without issue or
 modification. Otherwise, an error is thrown.</p></li>
@@ -213,8 +213,8 @@ predictions.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># split data</span></span>
-<span><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span>,<span class="op">]</span></span>
-<span><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span><span class="op">[</span><span class="va">biomass</span><span class="op">$</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span>,<span class="op">]</span></span>
+<span><span class="va">biomass_tr</span> <span class="op">&lt;-</span> <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Training"</span><span class="op">)</span></span>
+<span><span class="va">biomass_te</span> <span class="op">&lt;-</span> <span class="va">biomass</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dataset</span> <span class="op">==</span> <span class="st">"Testing"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># With only predictors and outcomes, use a formula:</span></span>
 <span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">carbon</span> <span class="op">+</span> <span class="va">hydrogen</span> <span class="op">+</span> <span class="va">oxygen</span> <span class="op">+</span> <span class="va">nitrogen</span> <span class="op">+</span> <span class="va">sulfur</span>,</span>
@@ -263,11 +263,11 @@ model and recipe:</p>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Computational engine: lm</span></span></code></pre><p></p></div>
 <p>To estimate the preprocessing steps and then fit the linear model, a
-single call to [<code>fit()</code>][fit.model_spec()] is used:</p>
+single call to <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> is used:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">linear_sp_sign_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">linear_sp_sign_wflow</span>, data <span class="op">=</span> <span class="va">biomass_tr</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>When predicting, there is no need to do anything other than call
-[<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>][predict.model_fit()]. This preprocesses the new data
-in the same manner as the training set, then gives the data to the
+<code><a href="https://parsnip.tidymodels.org/reference/predict.model_fit.html" class="external-link">predict()</a></code>. This preprocesses the new
+data in the same manner as the training set, then gives the data to the
 linear model prediction code:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">linear_sp_sign_fit</span>, new_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 1</span></span>
@@ -326,9 +326,10 @@ prepped or unprepped, to learn more about its components.</p>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      2 step      pca       TRUE    FALSE pca_Zn1yz</span></span></code></pre><p></p></div>
 <p>You can also <code><a href="tidy.recipe.html">tidy()</a></code> recipe <em>steps</em> with a <code>number</code>
 or <code>id</code> argument.</p>
-<p>To apply the prepped recipe to a data set, the [bake()] function is
-used in the same manner that [<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>][predict.model_fit()]
-would be for models. This applies the estimated steps to any data set.</p>
+<p>To apply the prepped recipe to a data set, the <code><a href="bake.html">bake()</a></code>
+function is used in the same manner that
+<code><a href="https://parsnip.tidymodels.org/reference/predict.model_fit.html" class="external-link">predict()</a></code> would be for models. This
+applies the estimated steps to any data set.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">pca_rec</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biomass_te</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 6</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     HHV    PC1    PC2     PC3     PC4     PC5</span></span>
@@ -341,13 +342,6 @@ would be for models. This applies the estimated steps to any data set.</p>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  18.5 0.433   0.127  0.354  -0.0168 -0.0888</span></span></code></pre><p></p></div>
 <p>In general, the workflow interface to recipes is recommended for most
 applications.</p>
-<p>[biomass$dataset == "Training",]: R:biomass$dataset%20==%20%22Training%22,
-[biomass$dataset == "Testing",]: R:biomass$dataset%20==%20%22Testing%22,
-[fit.model_spec()]: R:fit.model_spec() [predict.model_fit()]:
-R:predict.model_fit() <code><a href="prep.html">prep()</a></code>: R:prep() <code><a href="prep.html">prep()</a></code>:
-R:prep() <code><a href="tidy.recipe.html">tidy.recipe()</a></code>: R:tidy.recipe()
-<code><a href="tidy.recipe.html">tidy.recipe()</a></code>: R:tidy.recipe() [bake()]: R:bake()
-[predict.model_fit()]: R:predict.model_fit()</p>
 </div>
 
 

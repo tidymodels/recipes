@@ -39,7 +39,7 @@ some general suggestions that you should consider.
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,38 +109,61 @@ some general suggestions that you should consider.
 
     
     
-<p>In the recipes package, there are no constraints on the order in which steps are added to the recipe; you as a user are free to apply steps in the order appropriate to your data preprocessing needs. However, the <strong>order of steps matters</strong> and there are some general suggestions that you should consider.</p>
+<p>In the recipes package, there are no constraints on the order in
+which steps are added to the recipe; you as a user are free to apply
+steps in the order appropriate to your data preprocessing needs.
+However, the <strong>order of steps matters</strong> and there are some
+general suggestions that you should consider.</p>
 <div class="section level2">
 <h2 id="transforming-a-variable">Transforming a variable<a class="anchor" aria-label="anchor" href="#transforming-a-variable"></a>
 </h2>
 <ul>
-<li>If using a Box-Cox transformation, don’t center the data first or do any operations that might make the data non-positive.</li>
-<li>Alternatively, use the Yeo-Johnson transformation so you don’t have to worry about this.</li>
+<li>If using a Box-Cox transformation, don’t center the data first or do
+any operations that might make the data non-positive.</li>
+<li>Alternatively, use the Yeo-Johnson transformation so you don’t have
+to worry about this.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="handling-levels-in-categorical-data">Handling levels in categorical data<a class="anchor" aria-label="anchor" href="#handling-levels-in-categorical-data"></a>
 </h2>
-<p>The order of steps for handling categorical levels is important, because each step sets levels for the next step to use as input. These steps create <em>factor</em> output, even if the input is of character type.</p>
+<p>The order of steps for handling categorical levels is important,
+because each step sets levels for the next step to use as input. These
+steps create <em>factor</em> output, even if the input is of character
+type.</p>
 <ul>
-<li>Typically use <code><a href="../reference/step_novel.html">step_novel()</a></code> before other steps for changing factor levels, so that the new factor level can be set as you desire rather than coerced to <code>NA</code> by other factor handling steps.</li>
-<li>Use steps like <code><a href="../reference/step_unknown.html">step_unknown()</a></code> and <code><a href="../reference/step_other.html">step_other()</a></code> after other steps for changing factor levels.</li>
-<li>If you are creating dummy variables from a categorical variable (see below), complete handling of the categorical variable’s levels <em>before</em> <code><a href="../reference/step_dummy.html">step_dummy()</a></code>.</li>
+<li>Typically use <code><a href="../reference/step_novel.html">step_novel()</a></code> before other steps for
+changing factor levels, so that the new factor level can be set as you
+desire rather than coerced to <code>NA</code> by other factor handling
+steps.</li>
+<li>Use steps like <code><a href="../reference/step_unknown.html">step_unknown()</a></code> and
+<code><a href="../reference/step_other.html">step_other()</a></code> after other steps for changing factor
+levels.</li>
+<li>If you are creating dummy variables from a categorical variable (see
+below), complete handling of the categorical variable’s levels
+<em>before</em> <code><a href="../reference/step_dummy.html">step_dummy()</a></code>.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="dummy-variables">Dummy variables<a class="anchor" aria-label="anchor" href="#dummy-variables"></a>
 </h2>
-<p>Recipes do not automatically create dummy variables (unlike <em>most</em> formula methods).</p>
+<p>Recipes do not automatically create dummy variables (unlike
+<em>most</em> formula methods).</p>
 <ul>
-<li>If you want to center, scale, or do any other operations on <em>all</em> of the predictors, run <code><a href="../reference/step_dummy.html">step_dummy()</a></code> first so that numeric columns are in the data set instead of factors.</li>
-<li>As noted in the <a href="https://recipes.tidymodels.org/reference/step_interact.html">help file for <code>step_interact()</code></a>, you should make dummy variables <em>before</em> creating the interactions.</li>
+<li>If you want to center, scale, or do any other operations on
+<em>all</em> of the predictors, run <code><a href="../reference/step_dummy.html">step_dummy()</a></code> first so
+that numeric columns are in the data set instead of factors.</li>
+<li>As noted in the <a href="https://recipes.tidymodels.org/reference/step_interact.html">help
+file for <code>step_interact()</code></a>, you should make dummy
+variables <em>before</em> creating the interactions.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="recommended-preprocessing-outline">Recommended preprocessing outline<a class="anchor" aria-label="anchor" href="#recommended-preprocessing-outline"></a>
 </h2>
-<p>While every individual project’s needs are different, here is a suggested order of <em>potential</em> steps that should work for most problems:</p>
+<p>While every individual project’s needs are different, here is a
+suggested order of <em>potential</em> steps that should work for most
+problems:</p>
 <ol style="list-style-type: decimal">
 <li>Impute</li>
 <li>Handle factor levels</li>

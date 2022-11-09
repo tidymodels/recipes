@@ -20,7 +20,7 @@ remove_role() eliminates a single existing role in the recipe."><meta property="
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -194,16 +194,16 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type    role      source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      numeric outcome   original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type      role      source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># However `sample` and `dataset` aren't predictors. Since they already have</span></span></span>
 <span class="r-in"><span><span class="co"># roles, `update_role()` can be used to make changes, to any arbitrary role:</span></span></span>
@@ -212,16 +212,16 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span>  <span class="fu">update_role</span><span class="op">(</span><span class="va">dataset</span>, new_role <span class="op">=</span> <span class="st">"splitting variable"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type    role               source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   nominal id variable        original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  nominal splitting variable original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   numeric predictor          original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen numeric predictor          original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   numeric predictor          original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen numeric predictor          original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   numeric predictor          original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      numeric outcome            original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type      role               source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> id variable        original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> splitting variable original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor          original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor          original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor          original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor          original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor          original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome            original</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `update_role()` cannot set a role to NA, use `remove_role()` for that</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -237,18 +237,18 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span>  <span class="fu">add_role</span><span class="op">(</span><span class="va">carbon</span>, <span class="va">sulfur</span>, new_role <span class="op">=</span> <span class="st">"something"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    variable type    role      source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> sample   nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> dataset  nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> carbon   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> carbon   numeric something original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> hydrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> oxygen   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> nitrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> sulfur   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> sulfur   numeric something original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> HHV      numeric outcome   original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variable type      role      source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> something original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> something original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `update_role()` has an argument called `old_role` that is required to</span></span></span>
 <span class="r-in"><span><span class="co"># unambiguously update a role when the column currently has multiple roles.</span></span></span>
@@ -257,17 +257,17 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span>  <span class="fu">update_role</span><span class="op">(</span><span class="va">carbon</span>, new_role <span class="op">=</span> <span class="st">"something else"</span>, old_role <span class="op">=</span> <span class="st">"something"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type    role           source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   nominal predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  nominal predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   numeric predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> carbon   numeric something else original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> hydrogen numeric predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> oxygen   numeric predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> nitrogen numeric predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> sulfur   numeric predictor      original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> HHV      numeric outcome        original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type      role           source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> something else original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor      original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome        original</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># `carbon` has two roles at the end, so the last `update_roles()` fails since</span></span></span>
 <span class="r-in"><span><span class="co"># `old_role` was not given.</span></span></span>
@@ -285,16 +285,16 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span>  <span class="fu">remove_role</span><span class="op">(</span><span class="va">carbon</span>, old_role <span class="op">=</span> <span class="st">"something"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type    role      source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      numeric outcome   original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type      role      source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># To remove all roles, call `remove_role()` multiple times to reset to `NA`</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -303,16 +303,16 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span>  <span class="fu">remove_role</span><span class="op">(</span><span class="va">carbon</span>, old_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type    role      source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  nominal predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   numeric <span style="color: #BB0000;">NA</span>        original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   numeric predictor original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      numeric outcome   original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type      role      source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>        original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ------------------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
@@ -320,16 +320,16 @@ on all of the variables that have a custom role with the selector
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type    role  source  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   nominal <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  nominal <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   numeric <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen numeric <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   numeric <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen numeric <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   numeric <span style="color: #BB0000;">NA</span>    original</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      numeric <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable type      role  source  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> sample   <span style="color: #949494;">&lt;chr [3]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> dataset  <span style="color: #949494;">&lt;chr [3]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> carbon   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> hydrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> oxygen   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #BB0000;">NA</span>    original</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
