@@ -27,7 +27,8 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
     n_install_pkgs <- sum(!good)
 
     cli::cli_text(
-      "{n_install_pkgs} package{?s} ({.pkg {install_pkg}}) {?is/are} needed for this step but {?is/are} not installed."
+      "{n_install_pkgs} package{?s} ({.pkg {install_pkg}}) {?is/are} needed ",
+      "for this step but {?is/are} not installed."
     )
 
     if (length(install_pkg) > 1) {
