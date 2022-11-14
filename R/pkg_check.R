@@ -39,7 +39,7 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
         quo(install.packages(!!install_pkg, !!!install_opt))
     }
     pkg_str <- deparse(quo_squash(inst_expr))
-    cli::cli_text("Start a clean R session then run: ", pkg_str)
+    cli::cli_text("To install run: {.run ", pkg_str, "}")
   }
 
   invisible()

@@ -4,8 +4,7 @@
       recipes_pkg_check(pkg = "missing_pkg", dependencies = NA)
     Message
       1 package (missing_pkg) is needed for this step but is not installed.
-      Start a clean R session then run: install.packages("missing_pkg", dependencies
-      = NA)
+      To install run: `install.packages("missing_pkg", dependencies = NA)`
 
 ---
 
@@ -14,8 +13,7 @@
     Message
       2 packages (missing_pkg_1 and missing_pkg_2) are needed for this step but are
       not installed.
-      Start a clean R session then run: install.packages(c("missing_pkg_1",
-      "missing_pkg_2"))
+      To install run: `install.packages(c("missing_pkg_1", "missing_pkg_2"))`
 
 ---
 
