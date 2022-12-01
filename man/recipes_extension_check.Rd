@@ -32,7 +32,7 @@ recipes steps to help keep everything up to date.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{test_that("recipes_extension_check", \{
   expect_snapshot(
-    recipes_extension_check(
+    recipes::recipes_extension_check(
       pkg = "pkgname"
     )
   )
