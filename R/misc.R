@@ -476,7 +476,8 @@ check_type <- function(dat, quant = TRUE, types = NULL) {
       paste0(
         "All columns selected for the step",
         " should be ",
-        label
+        label,
+        "."
       )
     )
   }
