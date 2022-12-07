@@ -78,6 +78,7 @@ test_that("dummy variables with non-factor inputs", {
     mutate(city = as.character(city))
 
   expect_snapshot(
+    error = TRUE,
     recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>%
       step_dummy(city, zip, price) %>%
       prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
