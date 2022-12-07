@@ -158,7 +158,7 @@ bake.step_count <- function(object, new_data, ...) {
     )
   )
   if (length(object$options) > 0) {
-    regex <- mod_call_args(regex, args = object$options)
+    regex <- rlang::call_modify(regex, !!!object$options)
   }
 
   new_data[, object$result] <- vapply(eval(regex), counter, integer(1))

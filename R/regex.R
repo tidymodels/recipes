@@ -152,7 +152,7 @@ bake.step_regex <- function(object, new_data, ...) {
     )
   )
   if (length(object$options) > 0) {
-    regex <- mod_call_args(regex, args = object$options)
+    regex <- rlang::call_modify(regex, !!!object$options)
   }
 
   new_data[, object$result] <- ifelse(eval(regex), 1L, 0L)
