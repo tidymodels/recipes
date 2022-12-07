@@ -127,7 +127,7 @@ get_ord_lvls <- function(x) {
 #' @export
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], types = "nominal")
+  check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   if (is.null(x$levels)) {
     res <- lapply(training[, col_names], get_ord_lvls)

@@ -167,7 +167,7 @@ step_dummy_new <-
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], types = "nominal")
+  check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   if (length(col_names) > 0) {
     col_names <- check_factor_vars(training, col_names, "step_dummy")
