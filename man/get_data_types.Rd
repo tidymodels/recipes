@@ -63,6 +63,25 @@ each element to have multiple types ("factor" returns "factor", "unordered",
 and "nominal", and "character" returns "string", "unordered", and
 "nominal") we are able to create more natural selectors such as
 \code{\link[=all_nominal]{all_nominal()}}, \code{\link[=all_string]{all_string()}} and \code{\link[=all_integer]{all_integer()}}.
+
+The following list shows the data types for different classes, as defined
+by recipes. If an object has a class not supported by \code{.get_data_types()},
+it will get data type "other".
+\itemize{
+\item character: string, unordered, and nominal
+\item ordered: ordered, and nominal
+\item factor: factor, unordered, and nominal
+\item integer: integer, and numeric
+\item numeric: double, and numeric
+\item double: double, and numeric
+\item Surv: surv
+\item logical: logical
+\item Date: date
+\item POSIXct: datetime
+\item list: list
+\item textrecipes_tokenlist: tokenlist
+\item hardhat_case_weights: case_weights
+}
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

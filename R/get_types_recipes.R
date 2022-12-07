@@ -17,6 +17,24 @@ get_types <- function(x) {
 #' "nominal") we are able to create more natural selectors such as
 #' [all_nominal()], [all_string()] and [all_integer()].
 #'
+#' The following list shows the data types for different classes, as defined
+#' by recipes. If an object has a class not supported by `.get_data_types()`,
+#' it will get data type "`r all_get_data_types$default`".
+#'
+#' - character: `r all_get_data_types$character`
+#' - ordered: `r all_get_data_types$ordered`
+#' - factor: `r all_get_data_types$factor`
+#' - integer: `r all_get_data_types$integer`
+#' - numeric: `r all_get_data_types$numeric`
+#' - double: `r all_get_data_types$double`
+#' - Surv: `r all_get_data_types$Surv`
+#' - logical: `r all_get_data_types$logical`
+#' - Date: `r all_get_data_types$Date`
+#' - POSIXct: `r all_get_data_types$POSIXct`
+#' - list: `r all_get_data_types$list`
+#' - textrecipes_tokenlist: `r all_get_data_types$textrecipes_tokenlist`
+#' - hardhat_case_weights: `r all_get_data_types$hardhat_case_weights`
+#'
 #' @rdname get_data_types
 #' @export
 #' @param x An object
@@ -111,3 +129,24 @@ get_types <- function(x) {
 .get_data_types.hardhat_case_weights <- function(x) {
   "case_weights"
 }
+
+all_get_data_types <- list(
+  default = recipes:::.get_data_types.default(),
+  character = recipes:::.get_data_types.character(),
+  ordered  = recipes:::.get_data_types.ordered (),
+  factor = recipes:::.get_data_types.factor(),
+  integer = recipes:::.get_data_types.integer(),
+  numeric = recipes:::.get_data_types.numeric(),
+  double = recipes:::.get_data_types.double(),
+  Surv = recipes:::.get_data_types.Surv(),
+  logical = recipes:::.get_data_types.logical(),
+  Date = recipes:::.get_data_types.Date(),
+  POSIXct = recipes:::.get_data_types.POSIXct(),
+  list = recipes:::.get_data_types.list(),
+  textrecipes_tokenlist = recipes:::.get_data_types.textrecipes_tokenlist(),
+  hardhat_case_weights = recipes:::.get_data_types.hardhat_case_weights()
+)
+
+all_get_data_types <- lapply(
+  all_get_data_types, glue::glue_collapse, sep = ", ", last = ", and "
+)
