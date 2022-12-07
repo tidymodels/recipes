@@ -23,15 +23,17 @@ called \strong{after} any selectors and the selectors should only
 resolve to numeric columns (otherwise an error is thrown).}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
 As of \code{recipes} version 0.1.14, \strong{\code{juice()} is superseded} in favor of
 \code{bake(object, new_data = NULL)}.
-}
-\details{
+
 As steps are estimated by \code{prep}, these operations are
 applied to the training set. Rather than running \code{\link[=bake]{bake()}}
 to duplicate this processing, this function will return
 variables from the processed training set.
-
+}
+\details{
 When preparing a recipe, if the training data set is
 retained using \code{retain = TRUE}, there is no need to \code{\link[=bake]{bake()}} the
 recipe to get the preprocessed training set.

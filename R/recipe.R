@@ -789,6 +789,9 @@ bake_req_tibble <- function(x) {
 
 #' Extract transformed training set
 #'
+#' @description
+#' `r lifecycle::badge('superseded')`
+#'
 #' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.
 #'
