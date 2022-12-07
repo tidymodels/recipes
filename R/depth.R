@@ -136,7 +136,7 @@ step_depth_new <-
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, x_names], types = "numeric")
+  check_type(training[, x_names], types = c("double", "integer"))
 
   class_var <- x$class[1]
 

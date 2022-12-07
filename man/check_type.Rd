@@ -4,17 +4,28 @@
 \alias{check_type}
 \title{Quantitatively check on variables}
 \usage{
-check_type(dat, quant = TRUE)
+check_type(dat, quant = TRUE, types = NULL)
 }
 \arguments{
 \item{dat}{A data frame or tibble of the training data.}
 
 \item{quant}{A logical indicating whether the data is expected to be numeric
-(TRUE) or a factor/character (FALSE).}
+(TRUE) or a factor/character (FALSE). Is ignored if \code{types} is specified.}
+
+\item{types}{Character vector of allowed types. Following the same types as
+\code{\link[=has_role]{has_role()}}. See details for more.}
 }
 \description{
 This internal function is to be used in the prep function to ensure that
 the type of the variables matches the expectation. Throws an error if
 check fails.
+}
+\details{
+Using \code{types} is a more fine-tuned way to use this function compared to using
+\code{quant}. \code{types} should specify all allowed types as designated by
+\link{get_data_types}. Suppose you want to allow doubles, integers, characters,
+factors and ordered factors, then you should specify
+\code{types = c("double", "integer", "string", "factor", "ordered")} to get a
+clear error message.
 }
 \keyword{internal}

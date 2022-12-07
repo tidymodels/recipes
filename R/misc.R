@@ -451,9 +451,9 @@ is_qual <- function(x) {
 #' Using `types` is a more fine-tuned way to use this function compared to using
 #' `quant`. `types` should specify all allowed types as designated by
 #' [get_data_types]. Suppose you want to allow doubles, integers, characters,
-#' factors and ordered factors, then you can specify
-#' `types = c("numeric", "nominal")` as doubles and integers are both
-#' `"numeric"` and characters, factors and ordered factors are `"nominal"`.
+#' factors and ordered factors, then you should specify
+#' `types = c("double", "integer", "string", "factor", "ordered")` to get a
+#' clear error message.
 #'
 #' @export
 #' @keywords internal
