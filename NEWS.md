@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Developer focused `check_type()` got a new `types` argument for more precise checking of column types.
+
 # recipes 1.0.3
 
 * `step_dummy()` no longer returns integer columns as there are a number of contrast methods that return fractional values. (#1053)
