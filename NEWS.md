@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `recipes_extension_check()` have been added. This developer focused function checks that steps have all the required S3 methods.
+
 # recipes 1.0.3
 
 * `step_dummy()` no longer returns integer columns as there are a number of contrast methods that return fractional values. (#1053)
