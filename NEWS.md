@@ -1,10 +1,22 @@
 # recipes (development version)
 
+# recipes 1.0.3
+
+* `step_dummy()` no longer returns integer columns as there are a number of contrast methods that return fractional values. (#1053)
+
+* Fixed a 0-length recycling bug in `step_dummy_extract()` exposed by the
+  development version of purrr (#1052).
+
 * Types of variables have been made granular. `"nominal"` has been split into `"ordered"` and `"unordered"` and `"numeric"` has been split into `"double"` and `"integer"`. (#993)
 
 * New selectors: `all_double()`, `all_ordered()`, `all_unordered()`, `all_date()` and `all_datetime()`, in addition to the existing `all_numeric()` and `all_nominal()`. All selectors come with a `*_predictors()` variant. (#993)
 
 * Developer focused `.get_data_types()` generic has been added to designate types of columns. Exported for use in extension packages that deal with types not supported in recipes directly. (#993)
+
+* The `step_date()` function now defaults to using the clock package to format day-of-week and month labels. (#1048)
+
+* `step_range()` has gained a argument `clipping` that when set to `FALSE` no longer clips the data to be between `min` and `max`.
+
 
 # recipes 1.0.2
 

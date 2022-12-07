@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 1.0.2.9000
+Version: 1.0.3.9000
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
@@ -21,6 +21,7 @@ Depends:
     R (>= 3.4)
 Imports: 
     cli,
+    clock (>= 0.6.1),
     ellipsis,
     generics (>= 0.1.2),
     glue,
@@ -39,7 +40,7 @@ Imports:
     tidyselect (>= 1.2.0),
     timeDate,
     utils,
-    vctrs,
+    vctrs (>= 0.5.0),
     withr
 Suggests: 
     covr,

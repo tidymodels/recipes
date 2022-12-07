@@ -24,6 +24,6 @@ format_selectors <- function(x, width = options()$width - 9) {
     expr_deparse(quo_get_expr(x))
   })
 
-  x_items <- vctrs::vec_unchop(x_items, ptype = character())
+  x_items <- vctrs::list_unchop(x_items, ptype = character())
   format_ch_vec(x_items, width = width, sep = ", ")
 }

@@ -397,7 +397,7 @@ tidy.step_discretize <- function(x, ...) {
 
     brks <- unname(brks)
     brks <- lapply(brks, unname)
-    values <- vctrs::vec_unchop(brks, ptype = double())
+    values <- vctrs::list_unchop(brks, ptype = double())
 
     res <- tibble(terms = brk_vars, value = values)
   } else {

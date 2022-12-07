@@ -468,7 +468,7 @@ test_that("Existing `NA` roles are not modified in prep() when new columns are g
     filter(new, grepl("Species", variable)),
     tibble(
       variable = c("Species_versicolor", "Species_virginica"),
-      type = rep(list(c("integer", "numeric")), 2),
+      type = rep(list(c("double", "numeric")), 2),
       role = rep("predictor", times = 2),
       source = rep("derived", times = 2)
     )

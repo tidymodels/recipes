@@ -111,8 +111,7 @@ The underlying operation does not allow for case weights.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\donttest{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -128,20 +127,17 @@ im_trans <- rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_isomap(all_numeric_predictors(), neighbors = 100, num_terms = 2)
 
-if (FALSE) {
-  im_estimates <- prep(im_trans, training = biomass_tr)
+im_estimates <- prep(im_trans, training = biomass_tr)
 
-  im_te <- bake(im_estimates, biomass_te)
+im_te <- bake(im_estimates, biomass_te)
 
-  rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-  plot(im_te$Isomap1, im_te$Isomap2,
-    xlim = rng, ylim = rng
-  )
+rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+plot(im_te$Isomap1, im_te$Isomap2,
+  xlim = rng, ylim = rng
+)
 
-  tidy(im_trans, number = 3)
-  tidy(im_estimates, number = 3)
-}
-}
+tidy(im_trans, number = 3)
+tidy(im_estimates, number = 3)
 \dontshow{\}) # examplesIf}
 }
 \references{

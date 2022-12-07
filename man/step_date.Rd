@@ -13,7 +13,7 @@ step_date(
   abbr = TRUE,
   label = TRUE,
   ordinal = FALSE,
-  locale = Sys.getlocale("LC_TIME"),
+  locale = clock::clock_locale()$labels,
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -58,7 +58,8 @@ available for features \code{month} or \code{dow}.}
 
 \item{locale}{Locale to be used for \code{month} and \code{dow}, see \link{locales}.
 On Linux systems you can use \code{system("locale -a")} to list all the
-installed locales. Defaults to \code{Sys.getlocale("LC_TIME")}.}
+installed locales. Can be a locales string, or a \code{\link[clock:clock_labels]{clock::clock_labels()}}
+object. Defaults to \code{clock::clock_locale()$labels}.}
 
 \item{columns}{A character string of variables that will be
 used as inputs. This field is a placeholder and will be
