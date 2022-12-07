@@ -50,7 +50,7 @@ sequence of any existing operations.
 \code{prep} has an option \code{strings_as_factors} that defaults to \code{TRUE}.
 If this step is used with the default option, the string(s() produced by
 this step will be converted to factors after all of the steps have been
-prepped. Character columns will be left unchanged if selected by this step.
+prepped.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns \code{terms}

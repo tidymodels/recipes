@@ -11,7 +11,7 @@
 #' @details `prep` has an option `strings_as_factors` that defaults to `TRUE`.
 #'   If this step is used with the default option, the string(s() produced by
 #'   this step will be converted to factors after all of the steps have been
-#'   prepped. Character columns will be left unchanged if selected by this step.
+#'   prepped.
 #'
 #' # Tidying
 #'
@@ -77,7 +77,7 @@ step_factor2string_new <-
 #' @export
 prep.step_factor2string <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_type(training[, col_names], types = c("factor", "ordered"))
 
   step_factor2string_new(
     terms = x$terms,
