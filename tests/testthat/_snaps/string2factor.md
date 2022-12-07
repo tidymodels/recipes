@@ -3,8 +3,8 @@
     Code
       rec %>% step_string2factor(w, n) %>% prep(ex_dat)
     Condition
-      Error in `prep()`:
-      ! The following variables are not character vectors: `n`
+      Error in `check_type()`:
+      ! All columns selected for the step should be string, factor, or ordered.
 
 ---
 

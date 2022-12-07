@@ -3,8 +3,8 @@
     Code
       prep(dummy)
     Condition
-      Error in `multi_dummy_check_type()`:
-      ! All columns selected for the step should be factor, character, or NA
+      Error in `check_type()`:
+      ! All columns selected for the step should be nominal, or logical.
 
 # printing
 
