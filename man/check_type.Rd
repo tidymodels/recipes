@@ -21,9 +21,9 @@ the type of the variables matches the expectation. Throws an error if
 check fails.
 }
 \details{
-Using \code{types} is a more fine-tuned way to use this function compared to using
+Using \code{types} is a more fine-tuned way to use this. function compared to using
 \code{quant}. \code{types} should specify all allowed types as designated by
-\link{get_data_types}. Suppose you want to allow doubles, integers, characters,
+\link{.get_data_types}. Suppose you want to allow doubles, integers, characters,
 factors and ordered factors, then you should specify
 \code{types = c("double", "integer", "string", "factor", "ordered")} to get a
 clear error message.
