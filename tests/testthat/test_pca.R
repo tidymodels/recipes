@@ -133,7 +133,7 @@ test_that("No PCA comps", {
 
   pca_extract_trained <- prep(pca_extract, training = biomass_tr)
   expect_equal(
-    names(juice(pca_extract_trained)),
+    names(bake(pca_extract_trained, new_data = NULL)),
     names(biomass_tr)[-(1:2)]
   )
   expect_true(all(is.na(pca_extract_trained$steps[[1]]$res$rotation)))

@@ -18,7 +18,7 @@ test_that("Does the imputation (no NAs), and does it correctly.", {
   imputed <- recipe(head(ames_dat)) %>%
     step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
     prep(ames_dat) %>%
-    juice() %>%
+    bake(new_data = NULL) %>%
     pull(Lot_Frontage) %>%
     .[missing_ind]
 
@@ -141,7 +141,7 @@ test_that("case weights", {
     prep(ames_dat_cw)
 
   imputed <- rec_prepped %>%
-    juice() %>%
+    bake(new_data = NULL) %>%
     pull(Lot_Frontage) %>%
     .[missing_ind]
 
@@ -167,7 +167,7 @@ test_that("case weights", {
     prep(ames_dat_cw)
 
   imputed <- rec_prepped %>%
-    juice() %>%
+    bake(new_data = NULL) %>%
     pull(Lot_Frontage) %>%
     .[missing_ind]
 

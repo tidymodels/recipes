@@ -21,7 +21,7 @@ test_that("basic usage", {
     slice(1:75) %>%
     dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
@@ -48,7 +48,7 @@ test_that("quasiquotation", {
     slice(1:75) %>%
     arrange(Sepal.Length, Petal.Length)
 
-  rec_1_train <- juice(prepped_1)
+  rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 })
 
@@ -57,7 +57,7 @@ test_that("no input", {
     iris_rec %>%
     step_arrange() %>%
     prep(training = iris) %>%
-    juice(composition = "data.frame")
+    bake(new_data = NULL, composition = "data.frame")
   expect_equal(no_inputs, iris)
 })
 

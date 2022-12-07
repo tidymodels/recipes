@@ -23,7 +23,7 @@ test_that("basic functionality", {
     )
   rec_trained <- prep(rec, traning = rand_data)
 
-  tr_int <- juice(rec_trained, all_predictors())
+  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
   te_int <- bake(rec_trained, rand_data, all_predictors())
 
   expect_equal(tr_int[["geo_dist"]], dists)
@@ -36,7 +36,7 @@ test_that("basic functionality", {
     )
   rec_log_trained <- prep(rec_log, traning = rand_data)
 
-  tr_log_int <- juice(rec_log_trained, all_predictors())
+  tr_log_int <- bake(rec_log_trained, new_data = NULL, all_predictors())
   te_log_int <- bake(rec_log_trained, rand_data, all_predictors())
 
   expect_equal(tr_log_int[["geo_dist"]], log(dists))

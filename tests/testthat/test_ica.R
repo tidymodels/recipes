@@ -45,7 +45,7 @@ test_that("correct ICA values", {
   set.seed(12)
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
-  ica_pred <- juice(ica_extract_trained, all_predictors())
+  ica_pred <- bake(ica_extract_trained, new_data = NULL, all_predictors())
   ica_pred <- head(as.matrix(ica_pred))
 
   rownames(ica_pred) <- NULL
@@ -96,7 +96,7 @@ test_that("No ICA comps", {
 
   ica_extract_trained <- prep(ica_extract, training = biomass_tr)
   expect_equal(
-    names(juice(ica_extract_trained)),
+    names(bake(ica_extract_trained, new_data = NULL)),
     names(biomass_tr)[-(1:2)]
   )
   expect_true(all(names(ica_extract_trained$steps[[1]]$res) == "x_vars"))

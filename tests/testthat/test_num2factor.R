@@ -18,7 +18,7 @@ test_that("basic functionality", {
   ex_1 <- rec %>%
     step_num2factor(z, levels = rev(LETTERS[1:10])) %>%
     prep(ex_dat) %>%
-    juice()
+    bake(new_data = NULL)
   expect_true(inherits(ex_1$w, "factor"))
   expect_true(inherits(ex_1$x, "numeric"))
   expect_true(inherits(ex_1$z, "factor"))
@@ -27,7 +27,7 @@ test_that("basic functionality", {
   ex_2 <- rec %>%
     step_num2factor(z, ordered = TRUE, levels = rev(LETTERS[1:10])) %>%
     prep(ex_dat) %>%
-    juice()
+    bake(new_data = NULL)
   expect_true(inherits(ex_2$w, "factor"))
   expect_true(inherits(ex_2$x, "numeric"))
   expect_true(inherits(ex_2$z, "ordered"))

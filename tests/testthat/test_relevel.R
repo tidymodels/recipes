@@ -14,7 +14,7 @@ test_that("basic functionality", {
     step_relevel(zip, ref_level = "z95838") %>%
     prep()
 
-  tr_1 <- juice(rec_1)
+  tr_1 <- bake(rec_1, new_data = NULL)
   expect_equal(levels(tr_1$zip)[[1]], "z95838")
 
   te_1 <- bake(rec_1, sacr_te)

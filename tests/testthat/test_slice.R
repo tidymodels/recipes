@@ -21,7 +21,7 @@ test_that("basic usage", {
     slice(1:75) %>%
     slice(1:5)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
@@ -47,7 +47,7 @@ test_that("skip = FALSE", {
     slice(1:75) %>%
     slice(1:5)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
@@ -73,7 +73,7 @@ test_that("quasiquotation", {
     slice(1:75) %>%
     slice(values)
 
-  rec_1_train <- juice(prepped_1)
+  rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
   expect_error(
@@ -93,7 +93,7 @@ test_that("quasiquotation", {
     prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
     regexp = NA
   )
-  rec_2_train <- juice(prepped_2)
+  rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
 })
 
@@ -103,7 +103,7 @@ test_that("no input", {
     iris_rec %>%
     step_slice() %>%
     prep(training = iris) %>%
-    juice(composition = "data.frame")
+    bake(new_data = NULL, composition = "data.frame")
   expect_equal(no_inputs, iris)
 })
 

@@ -93,7 +93,7 @@ test_that("old option argument", {
       recipe(~., data = iris) %>%
       step_poly(Sepal.Width, options = list(degree = 3)) %>%
       prep() %>%
-      juice(),
+      bake(new_data = NULL),
     "The `degree` argument is now a main argument"
   )
   exp_names <- c(

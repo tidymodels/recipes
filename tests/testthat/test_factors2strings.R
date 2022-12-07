@@ -19,7 +19,7 @@ test_that("basic functionality", {
   ex_1 <- rec %>%
     step_factor2string(y, z) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
   expect_equal(class(ex_1$w), "character")
   expect_equal(class(ex_1$x), "character")
 })

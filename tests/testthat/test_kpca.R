@@ -63,7 +63,7 @@ test_that("No kPCA comps", {
   )
 
   expect_equal(
-    names(juice(pca_extract)),
+    names(bake(pca_extract, new_data = NULL)),
     paste0("X", c(2:6, 1))
   )
   expect_null(pca_extract$steps[[1]]$res)

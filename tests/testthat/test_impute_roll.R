@@ -32,7 +32,7 @@ test_that("imputation values with 7-pt median", {
   seven_pt_exp$x2[4] <- median(seven_pt_exp$x2[1:7], na.rm = TRUE)
   seven_pt_exp$x2[10] <- median(seven_pt_exp$x2[6:12], na.rm = TRUE)
 
-  expect_equal(seven_pt_exp, juice(seven_pt))
+  expect_equal(seven_pt_exp, bake(seven_pt, new_data = NULL))
 
   seven_pt_tidy_tr <-
     tibble(
@@ -60,7 +60,7 @@ test_that("imputation values with 3-pt mean", {
   three_pt_exp$x2[4] <- mean(three_pt_exp$x2[3:5], na.rm = TRUE)
   three_pt_exp$x2[10] <- mean(three_pt_exp$x2[9:11], na.rm = TRUE)
 
-  expect_equal(three_pt_exp, juice(three_pt))
+  expect_equal(three_pt_exp, bake(three_pt, new_data = NULL))
 
   three_pt_tidy_tr <-
     tibble(

@@ -27,7 +27,7 @@ test_that("basic usage", {
       plum = Sepal.Length
     )
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
@@ -47,7 +47,7 @@ test_that("no input", {
     iris_rec %>%
     step_rename() %>%
     prep(training = iris) %>%
-    juice(composition = "data.frame")
+    bake(new_data = NULL, composition = "data.frame")
   expect_equal(no_inputs, iris)
 })
 
@@ -110,7 +110,7 @@ test_that("basic usage", {
     slice(1:75) %>%
     rename_at(vars(contains("Length")), ~ tolower(.))
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
@@ -139,7 +139,7 @@ test_that("no input", {
     iris_rec %>%
       step_rename_at() %>%
       prep(training = iris) %>%
-      juice(composition = "data.frame")
+      bake(new_data = NULL, composition = "data.frame")
   )
 })
 

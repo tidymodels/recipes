@@ -19,7 +19,7 @@ test_that("basic steps", {
   cols_1 <- c("hydrogen", "nitrogen", "sulfur", "HHV", "oxygen_o_carbon")
 
   expect_equal(
-    names(juice(rec_1)),
+    names(bake(rec_1, new_data = NULL)),
     cols_1
   )
   expect_equal(
@@ -28,7 +28,7 @@ test_that("basic steps", {
   )
 
   expect_equal(
-    names(juice(rec_1, all_predictors())),
+    names(bake(rec_1, new_data = NULL, all_predictors())),
     cols_1[cols_1 != "HHV"]
   )
   expect_equal(
@@ -72,7 +72,7 @@ test_that("skipped steps", {
   )
 
   expect_equal(
-    names(juice(rec_2)),
+    names(bake(rec_2, new_data = NULL)),
     cols_1
   )
   expect_equal(
@@ -81,7 +81,7 @@ test_that("skipped steps", {
   )
 
   expect_equal(
-    names(juice(rec_2, all_predictors())),
+    names(bake(rec_2, new_data = NULL, all_predictors())),
     cols_1[cols_1 != "HHV"]
   )
   expect_equal(
@@ -105,7 +105,7 @@ test_that("remove and add a column", {
   cols_3 <- c("hydrogen", "nitrogen", "sulfur", "oxygen_o_carbon", "HHV")
 
   expect_equal(
-    names(juice(rec_3)),
+    names(bake(rec_3, new_data = NULL)),
     cols_3
   )
   expect_equal(
@@ -114,7 +114,7 @@ test_that("remove and add a column", {
   )
 
   expect_equal(
-    names(juice(rec_3, all_predictors())),
+    names(bake(rec_3, new_data = NULL, all_predictors())),
     cols_3[cols_3 != "HHV"]
   )
   expect_equal(
@@ -138,7 +138,7 @@ test_that("extra roles", {
   cols_3 <- c("hydrogen", "nitrogen", "sulfur", "oxygen_o_carbon", "HHV")
 
   expect_equal(
-    names(juice(rec_4)),
+    names(bake(rec_4, new_data = NULL)),
     cols_3
   )
   expect_equal(
@@ -147,7 +147,7 @@ test_that("extra roles", {
   )
 
   expect_equal(
-    names(juice(rec_4, all_predictors())),
+    names(bake(rec_4, new_data = NULL, all_predictors())),
     cols_3[cols_3 != "HHV"]
   )
   expect_equal(

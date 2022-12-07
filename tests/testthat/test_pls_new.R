@@ -40,7 +40,7 @@ test_that("PLS, dense loadings", {
     c("mu", "sd", "coefs", "col_norms")
   )
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, bm_pls_tr)
   te_new <- bake(rec, biom_te)
   expect_equal(te_new, bm_pls_te)
@@ -59,7 +59,7 @@ test_that("PLS, dense loadings, multiple outcomes", {
     c("mu", "sd", "coefs", "col_norms")
   )
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, bm_pls_multi_tr)
   te_new <- bake(rec, biom_te %>% select(-carbon))
   expect_equal(te_new, bm_pls_multi_te)
@@ -79,7 +79,7 @@ test_that("PLS, sparse loadings", {
     c("mu", "sd", "coefs", "col_norms")
   )
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, bm_spls_tr)
   te_new <- bake(rec, biom_te)
   expect_equal(te_new, bm_spls_te)
@@ -99,7 +99,7 @@ test_that("PLS, dense loadings, multiple outcomes", {
     c("mu", "sd", "coefs", "col_norms")
   )
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, bm_spls_multi_tr)
   te_new <- bake(rec, biom_te %>% select(-carbon))
   expect_equal(te_new, bm_spls_multi_te)
@@ -119,7 +119,7 @@ test_that("PLS-DA, dense loadings", {
     c("mu", "sd", "coefs", "col_norms")
   )
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, cell_plsda_tr)
   te_new <- bake(rec, cell_te)
   expect_equal(te_new, cell_plsda_te)
@@ -148,7 +148,7 @@ test_that("PLS-DA, sparse loadings", {
     c("mu", "sd", "coefs", "col_norms")
   )
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(tr_new, cell_splsda_tr)
   te_new <- bake(rec, cell_te)
   expect_equal(te_new, cell_splsda_te)
@@ -178,7 +178,7 @@ test_that("No PLS", {
   )
   pred_names <- summary(rec)$variable[summary(rec)$role == "predictor"]
 
-  tr_new <- juice(rec, all_predictors())
+  tr_new <- bake(rec, new_data = NULL, all_predictors())
   expect_equal(names(tr_new), pred_names)
   te_new <- bake(rec, cell_te, all_predictors())
   expect_equal(names(te_new), pred_names)

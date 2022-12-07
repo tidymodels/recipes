@@ -401,7 +401,7 @@ test_that("adding multiple roles/types does not duplicate prepped columns", {
     rec %>%
       add_role(carbon, new_role = "carb") %>%
       prep(training = biomass) %>%
-      juice() %>%
+      bake(new_data = NULL) %>%
       ncol(),
     8
   )
@@ -411,7 +411,7 @@ test_that("adding multiple roles/types does not duplicate prepped columns", {
     rec %>%
       add_role(carbon, new_type = "carb") %>%
       prep(training = biomass) %>%
-      juice() %>%
+      bake(new_data = NULL) %>%
       ncol(),
     8
   )
@@ -476,7 +476,7 @@ test_that("Existing `NA` roles are not modified in prep() when new columns are g
 
   # Juicing with all predictors should only give these two columns
   expect_equal(
-    colnames(juice(prepped_rec_dummy, all_predictors())),
+    colnames(bake(prepped_rec_dummy, new_data = NULL, all_predictors())),
     c("Species_versicolor", "Species_virginica")
   )
 })
