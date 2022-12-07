@@ -77,7 +77,7 @@ step_unorder_new <-
 #' @export
 prep.step_unorder <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], types = "ordered")
+  check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   step_unorder_new(
     terms = x$terms,
