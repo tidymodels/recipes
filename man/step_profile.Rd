@@ -109,8 +109,7 @@ data(Sacramento, package = "modeldata")
 recipe(~ city + price + beds, data = Sacramento) \%>\%
   step_profile(-beds, profile = vars(beds)) \%>\%
   prep(training = Sacramento) \%>\%
-  juice()
-
+  bake(new_data = NULL)
 
 ##########
 
