@@ -26,7 +26,7 @@ te_dat$y[1] <- NA
 test_that("basic functionality", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
     step_integer(all_predictors())
-  rec_trained <- prep(rec, traning = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
@@ -46,7 +46,7 @@ test_that("basic functionality", {
 test_that("zero-based", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
     step_integer(all_predictors(), zero_based = TRUE)
-  rec_trained <- prep(rec, traning = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
@@ -65,7 +65,7 @@ test_that("zero-based", {
 test_that("not integers", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
     step_integer(all_predictors(), strict = FALSE)
-  rec_trained <- prep(rec, traning = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
@@ -126,7 +126,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     step_integer(x) %>%
     update_role(x, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
-  rec_trained <- prep(rec, traning = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat)
 
   tr_int <- juice(rec_trained, all_predictors())
 
