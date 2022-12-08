@@ -191,6 +191,9 @@ recipe.formula <- function(formula, data, ...) {
     rlang::abort("`-` is not allowed in a recipe formula. Use `step_rm()` instead.")
   }
 
+  if (rlang::is_missing(data)) {
+    cli::cli_abort("Argument {.var data} is missing, with no default.")
+  }
   # Check for other in-line functions
   args <- form2args(formula, data, ...)
   obj <- recipe.data.frame(
