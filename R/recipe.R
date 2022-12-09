@@ -795,13 +795,13 @@ bake_req_tibble <- function(x) {
 #' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.
 #'
-#' As steps are estimated by `prep`, these operations are
-#'  applied to the training set. Rather than running [bake()]
-#'  to duplicate this processing, this function will return
-#'  variables from the processed training set.
+#' As steps are estimated by `prep`, these operations are applied to the
+#' training set. Rather than running [bake()] to duplicate this processing, this
+#' function will return variables from the processed training set.
+#'
 #' @inheritParams bake.recipe
-#' @param object A `recipe` object that has been prepared
-#'   with the option `retain = TRUE`.
+#' @param object A `recipe` object that has been prepared with the option
+#'   `retain = TRUE`.
 #'
 #' @details
 #' `juice()` will return the results of a recipe where _all steps_ have been

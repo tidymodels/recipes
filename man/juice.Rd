@@ -7,8 +7,8 @@
 juice(object, ..., composition = "tibble")
 }
 \arguments{
-\item{object}{A \code{recipe} object that has been prepared
-with the option \code{retain = TRUE}.}
+\item{object}{A \code{recipe} object that has been prepared with the option
+\code{retain = TRUE}.}
 
 \item{...}{One or more selector functions to choose which variables will be
 returned by the function. See \code{\link[=selections]{selections()}} for more details.
@@ -28,10 +28,9 @@ resolve to numeric columns (otherwise an error is thrown).}
 As of \code{recipes} version 0.1.14, \strong{\code{juice()} is superseded} in favor of
 \code{bake(object, new_data = NULL)}.
 
-As steps are estimated by \code{prep}, these operations are
-applied to the training set. Rather than running \code{\link[=bake]{bake()}}
-to duplicate this processing, this function will return
-variables from the processed training set.
+As steps are estimated by \code{prep}, these operations are applied to the
+training set. Rather than running \code{\link[=bake]{bake()}} to duplicate this processing, this
+function will return variables from the processed training set.
 }
 \details{
 \code{juice()} will return the results of a recipe where \emph{all steps} have been
