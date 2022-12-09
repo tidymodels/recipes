@@ -802,13 +802,15 @@ bake_req_tibble <- function(x) {
 #' @inheritParams bake.recipe
 #' @param object A `recipe` object that has been prepared
 #'   with the option `retain = TRUE`.
-#' @details When preparing a recipe, if the training data set is
-#'  retained using `retain = TRUE`, there is no need to [bake()] the
-#'  recipe to get the preprocessed training set.
 #'
-#'  `juice()` will return the results of a recipe where _all steps_
-#'  have been applied to the data, irrespective of the value of
-#'  the step's `skip` argument.
+#' @details
+#' `juice()` will return the results of a recipe where _all steps_ have been
+#' applied to the data, irrespective of the value of the step's `skip` argument.
+#'
+#' `juice()` can only be used if a recipe was prepped with `retain = TRUE`. This
+#' is equivalent to `bake(object, new_data = NULL)` which is the preferred way
+#' to extract the transformation of the training data set.
+#'
 #' @export
 #' @seealso [recipe()] [prep()] [bake()]
 juice <- function(object, ..., composition = "tibble") {

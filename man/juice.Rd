@@ -34,13 +34,12 @@ to duplicate this processing, this function will return
 variables from the processed training set.
 }
 \details{
-When preparing a recipe, if the training data set is
-retained using \code{retain = TRUE}, there is no need to \code{\link[=bake]{bake()}} the
-recipe to get the preprocessed training set.
+\code{juice()} will return the results of a recipe where \emph{all steps} have been
+applied to the data, irrespective of the value of the step's \code{skip} argument.
 
-\code{juice()} will return the results of a recipe where \emph{all steps}
-have been applied to the data, irrespective of the value of
-the step's \code{skip} argument.
+\code{juice()} can only be used if a recipe was prepped with \code{retain = TRUE}. This
+is equivalent to \code{bake(object, new_data = NULL)} which is the preferred way
+to extract the transformation of the training data set.
 }
 \seealso{
 \code{\link[=recipe]{recipe()}} \code{\link[=prep]{prep()}} \code{\link[=bake]{bake()}}
