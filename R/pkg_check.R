@@ -22,21 +22,15 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
     }
   }
   if (any(!good)) {
-    pkList <- paste(pkg[!good], collapse = ", ")
-    msg <- paste0(
-      sum(!good),
-      ifelse(sum(!good) > 1, " packages are", " package is"),
-      " needed for this step and",
-      ifelse(sum(!good) > 1, " are", " is"),
-      " not installed. (",
-      pkList,
-      "). ",
-      "Start a clean R session then run: "
-    )
-    cat(msg)
-
     install_opt <- quos(...)
     install_pkg <- pkg[!good]
+    n_install_pkgs <- sum(!good)
+
+    cli::cli_text(
+      "{n_install_pkgs} package{?s} ({.pkg {install_pkg}}) {?is/are} needed ",
+      "for this step but {?is/are} not installed."
+    )
+
     if (length(install_pkg) > 1) {
       inst_expr <-
         quo(install.packages(c(!!!install_pkg), !!!install_opt))
@@ -45,7 +39,7 @@ recipes_pkg_check <- function(pkg = NULL, ...) {
         quo(install.packages(!!install_pkg, !!!install_opt))
     }
     pkg_str <- deparse(quo_squash(inst_expr))
-    cat(pkg_str)
+    cli::cli_text("To install run: {.run ", pkg_str, "}")
   }
 
   invisible()
