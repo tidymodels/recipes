@@ -213,7 +213,7 @@ or profiled) is returned.</p>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="op">~</span> <span class="va">city</span> <span class="op">+</span> <span class="va">price</span> <span class="op">+</span> <span class="va">beds</span>, data <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">step_profile</span><span class="op">(</span><span class="op">-</span><span class="va">beds</span>, profile <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">beds</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">Sacramento</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="juice.html">juice</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   city      price  beds</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -223,7 +223,6 @@ or profiled) is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> ANTELOPE <span style="text-decoration: underline;">220</span>000     4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> ANTELOPE <span style="text-decoration: underline;">220</span>000     5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> ANTELOPE <span style="text-decoration: underline;">220</span>000     8</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">##########</span></span></span>
 <span class="r-in"><span></span></span>
