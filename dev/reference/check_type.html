@@ -79,7 +79,7 @@ check fails.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_type</span><span class="op">(</span><span class="va">dat</span>, quant <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_type</span><span class="op">(</span><span class="va">dat</span>, quant <span class="op">=</span> <span class="cn">TRUE</span>, types <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,9 +90,23 @@ check fails.</p>
 
 <dt>quant</dt>
 <dd><p>A logical indicating whether the data is expected to be numeric
-(TRUE) or a factor/character (FALSE).</p></dd>
+(TRUE) or a factor/character (FALSE). Is ignored if <code>types</code> is specified.</p></dd>
+
+
+<dt>types</dt>
+<dd><p>Character vector of allowed types. Following the same types as
+<code><a href="has_role.html">has_role()</a></code>. See details for more.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Using <code>types</code> is a more fine-tuned way to use this. function compared to using
+<code>quant</code>. <code>types</code> should specify all allowed types as designated by
+<a href="get_data_types.html">.get_data_types</a>. Suppose you want to allow doubles, integers, characters,
+factors and ordered factors, then you should specify
+<code>types = c("double", "integer", "string", "factor", "ordered")</code> to get a
+clear error message.</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

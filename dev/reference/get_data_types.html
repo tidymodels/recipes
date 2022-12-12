@@ -138,7 +138,22 @@ each element to have multiple types ("factor" returns "factor", "unordered",
 and "nominal", and "character" returns "string", "unordered", and
 "nominal") we are able to create more natural selectors such as
 <code><a href="has_role.html">all_nominal()</a></code>, <code><a href="has_role.html">all_string()</a></code> and <code><a href="has_role.html">all_integer()</a></code>.</p>
-    </div>
+<p>The following list shows the data types for different classes, as defined
+by recipes. If an object has a class not supported by <code>.get_data_types()</code>,
+it will get data type "other".</p><ul><li><p>character: string, unordered, and nominal</p></li>
+<li><p>ordered: ordered, and nominal</p></li>
+<li><p>factor: factor, unordered, and nominal</p></li>
+<li><p>integer: integer, and numeric</p></li>
+<li><p>numeric: double, and numeric</p></li>
+<li><p>double: double, and numeric</p></li>
+<li><p>Surv: surv</p></li>
+<li><p>logical: logical</p></li>
+<li><p>Date: date</p></li>
+<li><p>POSIXct: datetime</p></li>
+<li><p>list: list</p></li>
+<li><p>textrecipes_tokenlist: tokenlist</p></li>
+<li><p>hardhat_case_weights: case_weights</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
