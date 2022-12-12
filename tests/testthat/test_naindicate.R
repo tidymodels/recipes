@@ -46,7 +46,7 @@ test_that("step_indicate_na on all columns", {
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(everything()) %>%
     prep(airquality, verbose = FALSE, retain = TRUE) %>%
-    juice()
+    bake(new_data = NULL)
 
   expect_named(
     baked,
@@ -62,7 +62,7 @@ test_that("step_indicate_na on subset of columns", {
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(Ozone, Solar.R) %>%
     prep(airquality, verbose = FALSE, retain = TRUE) %>%
-    juice()
+    bake(new_data = NULL)
 
   expect_named(
     baked,
@@ -75,7 +75,7 @@ test_that("step_indicate_na on subset of columns", {
   baked2 <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(Solar.R) %>%
     prep(airquality, verbose = FALSE, retain = TRUE) %>%
-    juice()
+    bake(new_data = NULL)
 
   expect_named(
     baked2,

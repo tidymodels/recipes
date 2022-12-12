@@ -37,7 +37,7 @@ stats::update
 #' rec_prepped <- prep(rec, training = biomass_tr)
 #' rec2_prepped <- prep(rec2, training = biomass_tr)
 #'
-#' # Juice both to see what changed
+#' # To see what changed
 #' bake(rec_prepped, new_data = NULL)
 #' bake(rec2_prepped, new_data = NULL)
 #'

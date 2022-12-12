@@ -16,7 +16,7 @@ test_that("basic functionality", {
     step_unknown(city, zip) %>%
     prep()
 
-  tr_1 <- juice(rec_1)
+  tr_1 <- bake(rec_1, new_data = NULL)
   tr_city <- tr_1$city[is.na(sacr_tr$city)]
   tr_city <- unique(as.character(tr_city))
   expect_true(all(tr_city == "unknown"))
@@ -47,7 +47,7 @@ test_that("basic functionality", {
   rec_2 <- rec %>%
     step_unknown(city, new_level = "potato-based") %>%
     prep()
-  tr_2 <- juice(rec_2)
+  tr_2 <- bake(rec_2, new_data = NULL)
   tr_city <- tr_2$city[is.na(sacr_tr$city)]
   tr_city <- unique(as.character(tr_city))
   expect_true(all(tr_city == "potato-based"))

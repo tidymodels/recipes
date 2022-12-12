@@ -32,7 +32,7 @@ test_that("basics", {
 #     step_rm(x1, skip = TRUE)
 #
 #   rec_trained <- prep(rec, training = ex_dat)
-#   tr_res <- juice(rec_trained)
+#   tr_res <- bake(rec_trained, new_data = NULL)
 #   te_res <- bake(rec_trained, new_data = ex_dat)
 #
 #   expect_equal(colnames(tr_res), "x2")
@@ -53,7 +53,7 @@ test_that("basic usage", {
     slice(1:75) %>%
     select(-Species, -starts_with("Sepal"))
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   iris_test <- iris %>%
@@ -92,7 +92,7 @@ test_that("remove via type", {
     slice(1:75) %>%
     select_if(~ !is.numeric(.))
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   iris_test <- iris %>%
@@ -121,7 +121,7 @@ test_that("remove via role", {
     slice(1:75) %>%
     select(Species)
 
-  rec_train <- juice(prepped)
+  rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   iris_test <- iris %>%
@@ -152,7 +152,7 @@ test_that("remove with quasi-quotation", {
     slice(1:75) %>%
     select(-all_of(sepal_vars))
 
-  rec_1_train <- juice(prepped_1)
+  rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
   rec_2 <-
@@ -169,7 +169,7 @@ test_that("remove with quasi-quotation", {
   #   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
   #   regexp = NA
   # )
-  rec_2_train <- juice(prepped_2)
+  rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
 })
 

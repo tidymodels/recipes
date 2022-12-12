@@ -14,7 +14,7 @@ test_that("numeric profile", {
   num_rec <- sacr_rec %>%
     step_profile(-sqft, profile = vars(sqft)) %>%
     prep(Sacramento) %>%
-    juice()
+    bake(new_data = NULL)
   expect_true(is_unq(num_rec$city))
   expect_true(is_unq(num_rec$price))
   expect_true(is_unq(num_rec$zip))
@@ -35,7 +35,7 @@ test_that("factor profile", {
   fact_rec <- sacr_rec %>%
     step_profile(-city, profile = vars(city)) %>%
     prep(Sacramento) %>%
-    juice()
+    bake(new_data = NULL)
   expect_false(is_unq(fact_rec$city))
   expect_true(is_unq(fact_rec$price))
   expect_true(is_unq(fact_rec$zip))
@@ -48,7 +48,7 @@ test_that("beds profile", {
   beds_rec <- sacr_rec %>%
     step_profile(-beds, profile = vars(beds)) %>%
     prep(Sacramento) %>%
-    juice()
+    bake(new_data = NULL)
   expect_true(is_unq(beds_rec$city))
   expect_true(is_unq(beds_rec$price))
   expect_true(is_unq(beds_rec$zip))
@@ -60,7 +60,7 @@ test_that("character profile", {
   chr_rec <- sacr_rec %>%
     step_profile(-zip, profile = vars(zip)) %>%
     prep(Sacramento, strings_as_factors = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
   expect_true(is_unq(chr_rec$city))
   expect_true(is_unq(chr_rec$price))
   expect_false(is_unq(chr_rec$zip))

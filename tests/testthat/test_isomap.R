@@ -92,7 +92,7 @@ test_that("No ISOmap", {
     prep()
 
   expect_equal(
-    names(juice(im_rec)),
+    names(bake(im_rec, new_data = NULL)),
     colnames(dat1)
   )
   expect_null(im_rec$steps[[1]]$res)

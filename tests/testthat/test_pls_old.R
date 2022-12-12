@@ -19,7 +19,7 @@ load(test_path("test_pls_old.RData"))
 ## -----------------------------------------------------------------------------
 
 test_that("check old PLS scores from recipes version <= 0.1.12", {
-  new_values_tr <- juice(old_pls, all_predictors())
+  new_values_tr <- bake(old_pls, new_data = NULL, all_predictors())
   expect_equal(new_values_tr, old_pls_tr)
 
   # Capture known warning about `keep_original_cols`

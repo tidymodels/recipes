@@ -19,7 +19,7 @@ test_that("basic functionality", {
   ex_1 <- rec %>%
     step_string2factor(w, x) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
   expect_equal(class(ex_1$w), "factor")
   expect_equal(class(ex_1$x), "factor")
   expect_equal(levels(ex_1$w), letters[1:3])
@@ -28,7 +28,7 @@ test_that("basic functionality", {
   ex_2 <- rec %>%
     step_string2factor(w, x, ordered = TRUE) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
   expect_equal(class(ex_2$w), c("ordered", "factor"))
   expect_equal(class(ex_2$x), c("ordered", "factor"))
   expect_equal(levels(ex_2$w), letters[1:3])
@@ -61,7 +61,7 @@ test_that("pre-made factors", {
   ex_1 <- rec %>%
     step_string2factor(w, x, y, z) %>%
     prep(ex_dat, strings_as_factors = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
   expect_true(inherits(ex_1$w, "factor"))
   expect_true(inherits(ex_1$x, "factor"))
   expect_true(inherits(ex_1$y, "factor"))

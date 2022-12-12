@@ -28,7 +28,7 @@ test_that("basic functionality", {
     step_integer(all_predictors())
   rec_trained <- prep(rec, training = tr_dat)
 
-  tr_int <- juice(rec_trained, all_predictors())
+  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
   exp_x <- c(NA, 2, 2, 1, 0)
@@ -48,7 +48,7 @@ test_that("zero-based", {
     step_integer(all_predictors(), zero_based = TRUE)
   rec_trained <- prep(rec, training = tr_dat)
 
-  tr_int <- juice(rec_trained, all_predictors())
+  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
   exp_x <- c(NA, 1, 1, 0, 3)
@@ -67,7 +67,7 @@ test_that("not integers", {
     step_integer(all_predictors(), strict = FALSE)
   rec_trained <- prep(rec, training = tr_dat)
 
-  tr_int <- juice(rec_trained, all_predictors())
+  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
   te_int <- bake(rec_trained, te_dat, all_predictors())
 
   expect_true(all(vapply(te_int, is.numeric, logical(1))))
@@ -128,7 +128,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE)
   rec_trained <- prep(rec, training = tr_dat)
 
-  tr_int <- juice(rec_trained, all_predictors())
+  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
 
   expect_error(bake(rec_trained, te_dat[, 2:3], all_predictors()),
                class = "new_data_missing_column")

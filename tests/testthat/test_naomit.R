@@ -6,7 +6,7 @@ test_that("step_naomit on all columns", {
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(everything()) %>%
     prep(airquality, verbose = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
 
   na_res <- tibble(na.omit(airquality))
   attributes(na_res)$na.action <- NULL
@@ -18,7 +18,7 @@ test_that("step_naomit on subset of columns", {
   baked <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(Ozone, Solar.R) %>%
     prep(airquality, verbose = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
 
   na_res <- tibble(tidyr::drop_na(airquality, Ozone, Solar.R))
 
@@ -27,7 +27,7 @@ test_that("step_naomit on subset of columns", {
   baked2 <- recipe(Ozone ~ ., data = airquality) %>%
     step_naomit(Solar.R) %>%
     prep(airquality, verbose = FALSE) %>%
-    juice()
+    bake(new_data = NULL)
 
   na_res2 <- tibble(tidyr::drop_na(airquality, Solar.R))
 

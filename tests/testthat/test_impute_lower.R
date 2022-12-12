@@ -44,7 +44,7 @@ test_that("basic usage", {
     rec1$steps[[1]]$threshold
   )
 
-  processed <- juice(rec1)
+  processed <- bake(rec1, new_data = NULL)
   for (i in names(rec1$steps[[1]]$threshold)) {
     affected <- biomass_tr[[i]] <= rec1$steps[[1]]$threshold[[i]]
     is_less <- processed[affected, i] < biomass_tr[affected, i]

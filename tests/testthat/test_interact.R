@@ -234,7 +234,7 @@ test_that("missing columns", {
     step_rm(x1) %>%
     step_interact(~ x1:x2)
   expect_snapshot(no_fail_rec <- prep(no_fail, dat_tr))
-  no_fail_res <- juice(no_fail_rec) %>% names()
+  no_fail_res <- bake(no_fail_rec, new_data = NULL) %>% names()
   expect_true(!any(grepl("_x_", no_fail_res)))
 
   one_int <-
@@ -243,7 +243,7 @@ test_that("missing columns", {
     step_interact(~ x1:x2) %>%
     step_interact(~ x3:x2)
   expect_snapshot(one_int_rec <- prep(one_int, dat_tr))
-  one_int_res <- juice(one_int_rec) %>% names()
+  one_int_res <- bake(one_int_rec, new_data = NULL) %>% names()
   expect_true(sum(grepl("_x_", one_int_res)) == 1)
 
   with_selectors <-

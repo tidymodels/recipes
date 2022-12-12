@@ -95,7 +95,7 @@ test_that("can `bake()` without roles that set `bake = FALSE`", {
 
   df$x <- NULL
 
-  expect <- juice(rec)
+  expect <- bake(rec, new_data = NULL)
   expect$x <- NULL
 
   expect_identical(
@@ -117,7 +117,7 @@ test_that("can update `bake` requirements after prepping", {
     bake(rec, df)
   })
 
-  expect <- juice(rec)
+  expect <- bake(rec, new_data = NULL)
   expect$x <- NULL
 
   rec <- update_role_requirements(rec, "id", bake = FALSE)
@@ -149,7 +149,7 @@ test_that("doesn't error on missing case weights by default", {
 
   df$w <- NULL
 
-  expect <- juice(rec)
+  expect <- bake(rec, new_data = NULL)
   expect$w <- NULL
 
   expect_identical(

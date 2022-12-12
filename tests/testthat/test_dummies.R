@@ -162,7 +162,7 @@ test_that("tests for NA values in factor", {
     factors <- prep(factors, training = sacr_missing)
   )
 
-  factors_data_0 <- juice(factors)
+  factors_data_0 <- bake(factors, new_data = NULL)
   expect_snapshot(
     factors_data_1 <- bake(factors, new_data = sacr_missing)
   )
@@ -184,7 +184,7 @@ test_that("tests for NA values in ordered factor", {
     factors <- prep(factors, training = sacr_ordered)
   )
 
-  factors_data_0 <- juice(factors)
+  factors_data_0 <- bake(factors, new_data = NULL)
   expect_snapshot(
     factors_data_1 <- bake(factors, new_data = sacr_ordered)
   )
