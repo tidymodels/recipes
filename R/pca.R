@@ -173,7 +173,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
           tol = NULL
         ))
       if (length(x$options) > 0) {
-        prc_call <- mod_call_args(prc_call, args = x$options)
+        prc_call <- rlang::call_modify(prc_call, !!!x$options)
       }
 
       prc_call$x <- expr(training[, col_names, drop = FALSE])

@@ -47,34 +47,6 @@ filter_terms.formula <- function(formula, data, ...) {
   get_rhs_vars(formula, data)
 }
 
-
-## This function takes the default arguments of `func` and
-## replaces them with the matching ones in `options` and
-## remove any in `removals`
-sub_args <- function(func, options, removals = NULL) {
-  args <- formals(func)
-  for (i in seq_along(options)) {
-    args[[names(options)[i]]] <- options[[i]]
-  }
-  if (!is.null(removals)) {
-    args[removals] <- NULL
-  }
-  args
-}
-## Same as above but starts with a call object
-mod_call_args <- function(cl, args, removals = NULL) {
-  if (!is.null(removals)) {
-    for (i in removals) {
-      cl[[i]] <- NULL
-    }
-  }
-  arg_names <- names(args)
-  for (i in arg_names) {
-    cl[[i]] <- args[[i]]
-  }
-  cl
-}
-
 #' Naming Tools
 #'
 #' `names0` creates a series of `num` names with a common prefix.
