@@ -49,7 +49,9 @@
       recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
-      Error in `sin_cos()`:
+      Error in `step_harmonic()`:
+      ! Problem while executing step.
+      Caused by error in `sin_cos()`:
       ! variable must have at least one non-NA value
 
 # harmonic character in term
@@ -58,7 +60,9 @@
       recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
-      Error in `check_type()`:
+      Error in `step_harmonic()`:
+      ! Problem while executing step.
+      Caused by error in `check_type()`:
       ! All columns selected for the step should be date, datetime, or numeric.
 
 # harmonic cycle_size length
@@ -68,7 +72,9 @@
         step_harmonic(time_var_1, time_var_2, time_var_3, frequency = 4, cycle_size = c(
           86400, 86400)) %>% prep()
     Condition
-      Error in `prep()`:
+      Error in `step_harmonic()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `cycle_size` must be length 1 or the same  length as the input columns
 
 # harmonic starting_val length
@@ -78,7 +84,9 @@
         step_harmonic(time_var_1, time_var_2, time_var_3, frequency = 4,
           starting_val = c(86400, 86400), cycle_size = 86400) %>% prep()
     Condition
-      Error in `prep()`:
+      Error in `step_harmonic()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `starting_val` must be length 1 or the same  length as the input columns
 
 # printing

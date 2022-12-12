@@ -3,7 +3,9 @@
     Code
       prep(rec_false, training = ex_dat, verbose = FALSE)
     Condition
-      Error in `FUN()`:
+      Error in `step_YeoJohnson()`:
+      ! Problem while executing step.
+      Caused by error in `FUN()`:
       ! Missing values are not allowed for the YJ transformation. See `na_rm` option
 
 # printing

@@ -3,7 +3,9 @@
     Code
       recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
     Condition
-      Error in `check_type()`:
+      Error in `step_cut()`:
+      ! Problem while executing step.
+      Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 
 ---
@@ -11,7 +13,9 @@
     Code
       recipe(x) %>% step_cut(everything(), breaks = 2) %>% prep()
     Condition
-      Error in `check_type()`:
+      Error in `step_cut()`:
+      ! Problem while executing step.
+      Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 
 # full_breaks_check will give warnings

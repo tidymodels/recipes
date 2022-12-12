@@ -3,7 +3,9 @@
     Code
       prep(rec)
     Condition
-      Error in `prep()`:
+      Error in `step_pls()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `step_pls()` only supports multivariate models for numeric outcomes.
 
 # PLS-DA, sparse loadings, multiple outcomes
@@ -11,7 +13,9 @@
     Code
       prep(rec)
     Condition
-      Error in `prep()`:
+      Error in `step_pls()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `step_pls()` only supports multivariate models for numeric outcomes.
 
 # Deprecation warning

@@ -60,7 +60,9 @@
       num_terms = 1, neighbors = 1) %>% prep()
     Message
     Condition
-      Error in `prep()`:
+      Error in `step_isomap()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `step_isomap` failed with error:
       Error in do.call(.Call, args = dot_call_args) : 
         TridiagEigen: eigen decomposition failed

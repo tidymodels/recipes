@@ -3,7 +3,9 @@
     Code
       rec %>% step_string2factor(w, n) %>% prep(ex_dat)
     Condition
-      Error in `check_type()`:
+      Error in `step_string2factor()`:
+      ! Problem while executing step.
+      Caused by error in `check_type()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
 ---

@@ -41,7 +41,9 @@
         log = FALSE, ref_lat = 38.8986312, ref_lon = -77.0062457, is_lat_lon = TRUE) %>%
         prep()
     Condition
-      Error in `geo_dist_calc_lat_lon()`:
+      Error in `step_geodist()`:
+      ! Problem while executing step.
+      Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lat` values should be between -90 and 90
 
 ---
@@ -51,7 +53,9 @@
         log = FALSE, ref_lat = 38.8986312, ref_lon = -77.0062457, is_lat_lon = TRUE) %>%
         prep()
     Condition
-      Error in `geo_dist_calc_lat_lon()`:
+      Error in `step_geodist()`:
+      ! Problem while executing step.
+      Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lon` values should be between -180 and 180
 
 ---
@@ -61,7 +65,9 @@
         log = FALSE, ref_lat = 38.8986312, ref_lon = -77.0062457, is_lat_lon = TRUE) %>%
         prep()
     Condition
-      Error in `geo_dist_calc_lat_lon()`:
+      Error in `step_geodist()`:
+      ! Problem while executing step.
+      Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lat` values should be between -90 and 90
 
 ---
@@ -71,7 +77,9 @@
         log = FALSE, ref_lat = 38.8986312, ref_lon = -77.0062457, is_lat_lon = TRUE) %>%
         prep()
     Condition
-      Error in `geo_dist_calc_lat_lon()`:
+      Error in `step_geodist()`:
+      ! Problem while executing step.
+      Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lon` values should be between -180 and 180
 
 # bad args
@@ -80,7 +88,9 @@
       rec %>% step_geodist(starts_with("x"), y, ref_lat = 0.5, ref_lon = 0.25) %>%
         prep(training = rand_data_2)
     Condition
-      Error in `prep()`:
+      Error in `step_geodist()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `lat` should resolve to a single column name.
 
 ---
@@ -89,7 +99,9 @@
       rec %>% step_geodist(x, starts_with("y"), ref_lat = 0.5, ref_lon = 0.25) %>%
         prep(training = rand_data_2)
     Condition
-      Error in `prep()`:
+      Error in `step_geodist()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! `lon` should resolve to a single column name.
 
 ---

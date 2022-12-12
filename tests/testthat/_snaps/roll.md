@@ -70,7 +70,9 @@
     Code
       prep(rec %>% step_window(fac), training = sim_dat)
     Condition
-      Error in `check_type()`:
+      Error in `step_window()`:
+      ! Problem while executing step.
+      Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 
 ---
@@ -86,7 +88,9 @@
     Code
       prep(bad_names, training = sim_dat)
     Condition
-      Error in `prep()`:
+      Error in `step_window()`:
+      ! Problem while executing step.
+      Caused by error in `prep()`:
       ! There were 2 term(s) selected but 1 values for the new features were passed to `names`.
 
 # printing

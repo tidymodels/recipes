@@ -3,7 +3,9 @@
     Code
       prep(rec_1, training = iris %>% slice(1:75))
     Condition
-      Error in `dplyr::filter()`:
+      Error in `step_filter()`:
+      ! Problem while executing step.
+      Caused by error in `dplyr::filter()`:
       ! Problem while computing `..2 = Species %in% values`.
       Caused by error in `Species %in% values`:
       ! object 'values' not found

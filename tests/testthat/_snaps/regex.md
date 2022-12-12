@@ -11,7 +11,9 @@
     Code
       prep(rec4, training = covers)
     Condition
-      Error in `check_type()`:
+      Error in `step_regex()`:
+      ! Problem while executing step.
+      Caused by error in `check_type()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
 # printing

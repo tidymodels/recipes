@@ -3,7 +3,9 @@
     Code
       prep(rec_1, training = iris %>% slice(1:75))
     Condition
-      Error in `dplyr::mutate()`:
+      Error in `step_mutate()`:
+      ! Problem while executing step.
+      Caused by error in `dplyr::mutate()`:
       ! Problem while computing `new_var = Sepal.Width * const`.
       Caused by error in `mask$eval_all_mutate()`:
       ! object 'const' not found

@@ -74,7 +74,9 @@
     Condition
       Warning:
       Note that the options `prefix` and `labels` will be applied to all variables
-      Error in `cut.default()`:
+      Error in `step_discretize()`:
+      ! Problem while executing step.
+      Caused by error in `cut.default()`:
       ! lengths of 'breaks' and 'labels' differ
 
 # bad args
@@ -82,7 +84,9 @@
     Code
       recipe(~., data = ex_tr) %>% step_discretize(x1, num_breaks = 1) %>% prep()
     Condition
-      Error in `recipes::discretize()`:
+      Error in `step_discretize()`:
+      ! Problem while executing step.
+      Caused by error in `recipes::discretize()`:
       ! There should be at least 2 cuts
 
 ---
