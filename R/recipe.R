@@ -434,12 +434,17 @@ prep.recipe <-
 
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
-        x$steps[[i]] <-
+        x$steps[[i]] <- recipes_error_context(
           prep(x$steps[[i]],
             training = training,
             info = x$term_info
-          )
-        training <- bake(x$steps[[i]], new_data = training)
+          ),
+          step_name = class(x$steps[[i]])[[1L]]
+        )
+        training <- recipes_error_context(
+          bake(x$steps[[i]], new_data = training),
+          step_name = class(x$steps[[i]])[[1L]]
+        )
         if (!is_tibble(training)) {
           abort("bake() methods should always return tibbles")
         }
