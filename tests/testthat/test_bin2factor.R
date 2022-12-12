@@ -14,6 +14,25 @@ test_that("default options", {
   expect_true(all(diag(table(res1$rocks, res1$more_rocks)) == 0))
 })
 
+test_that("works with logicals", {
+  mtcars$vs <- as.logical(mtcars$vs)
+  mtcars$am <- as.logical(mtcars$am)
+
+  res <- recipe(~., data = mtcars) %>%
+    step_bin2factor(all_logical_predictors()) %>%
+    prep() %>%
+    bake(new_data = NULL)
+
+  expect_identical(
+    factor(mtcars$vs, levels = c(TRUE, FALSE), labels = c("yes", "no")),
+    res$vs
+  )
+  expect_identical(
+    factor(mtcars$am, levels = c(TRUE, FALSE), labels = c("yes", "no")),
+    res$am
+  )
+})
+
 
 test_that("nondefault options", {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])

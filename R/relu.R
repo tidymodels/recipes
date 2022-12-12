@@ -126,7 +126,7 @@ step_relu_new <-
 #' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
   columns <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, columns])
+  check_type(training[, columns], types = c("double", "integer"))
 
   step_relu_new(
     terms = x$terms,

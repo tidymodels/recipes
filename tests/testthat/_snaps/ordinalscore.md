@@ -3,8 +3,8 @@
     Code
       prep(rec3, training = ex_dat, verbose = FALSE)
     Condition
-      Error in `prep()`:
-      ! Ordinal factor variables should be selected as inputs into this step.
+      Error in `check_type()`:
+      ! All columns selected for the step should be ordered.
 
 # printing
 

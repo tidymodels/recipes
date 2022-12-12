@@ -77,23 +77,7 @@ step_unorder_new <-
 #' @export
 prep.step_unorder <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  order_check <- vapply(
-    training[, col_names],
-    is.ordered,
-    logical(1L)
-  )
-  if (any(!order_check)) {
-    bad_cols <- names(order_check)[!order_check]
-    bad_cols <- paste0(bad_cols, collapse = ", ")
-    rlang::warn(
-      paste0(
-        "`step_unorder` requires ordered factors. Variables ",
-        bad_cols,
-        " will be ignored."
-      )
-    )
-    col_names <- names(order_check)[order_check]
-  }
+  check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   step_unorder_new(
     terms = x$terms,

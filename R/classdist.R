@@ -157,9 +157,10 @@ get_both <- function(x, wts = NULL, mfun = mean, cfun = cov) {
 
 #' @export
 prep.step_classdist <- function(x, training, info = NULL, ...) {
-  class_var <- x$class[1]
   x_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, x_names])
+  check_type(training[, x_names], types = c("double", "integer"))
+
+  class_var <- x$class[1]
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts)

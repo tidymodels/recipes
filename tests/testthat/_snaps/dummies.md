@@ -14,22 +14,8 @@
       recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>% step_dummy(city, zip,
         price) %>% prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
     Condition
-      Warning:
-      The following variables are not factor vectors and will be ignored: `city`, `price`
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          3
-      
-      Training data contained 932 data points and no missing data.
-      
-      Operations:
-      
-      Dummy variables from zip [trained]
+      Error in `check_type()`:
+      ! All columns selected for the step should be string, factor, or ordered.
 
 # tests for NA values in factor
 

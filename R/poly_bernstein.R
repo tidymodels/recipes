@@ -104,7 +104,7 @@ step_poly_bernstein_new <-
 
 prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], quant = TRUE)
+  check_type(training[, col_names], types = c("double", "integer"))
 
   x$options <- c(x$options, degree = x$degree)
 

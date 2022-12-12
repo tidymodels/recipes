@@ -2,9 +2,6 @@
 
     Code
       prep(rec2, training = examples, verbose = FALSE)
-    Condition
-      Warning:
-      `step_unorder` requires ordered factors. Variables X1 will be ignored.
     Output
       Recipe
       
@@ -17,15 +14,12 @@
       
       Operations:
       
-      Unordered variables X2 [trained]
+      Unordered variables X1, X2 [trained]
 
 ---
 
     Code
       prep(rec3, training = examples, verbose = FALSE)
-    Condition
-      Warning:
-      `step_unorder` requires ordered factors. Variables X1 will be ignored.
     Output
       Recipe
       
@@ -38,7 +32,7 @@
       
       Operations:
       
-      Unordered variables <none> [trained]
+      Unordered variables X1 [trained]
 
 # printing
 

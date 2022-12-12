@@ -155,7 +155,7 @@ step_pca_new <-
 #' @export
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

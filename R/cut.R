@@ -99,8 +99,7 @@ step_cut_new <-
 
 prep.step_cut <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   all_breaks <- vector("list", length(col_names))
   names(all_breaks) <- col_names

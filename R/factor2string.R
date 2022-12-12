@@ -1,24 +1,22 @@
 #' Convert Factors to Strings
 #'
-#' `step_factor2string` will convert one or more factor
-#'  vectors to strings.
+#' `step_factor2string` will convert one or more factor vectors to strings.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variables that will be
-#'  converted. This is `NULL` until computed by
-#'  [prep()].
+#' @param columns A character string of variables that will be converted. This
+#'   is `NULL` until computed by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details `prep` has an option `strings_as_factors` that
-#'  defaults to `TRUE`. If this step is used with the default
-#'  option, the string(s() produced by this step will be converted
-#'  to factors after all of the steps have been prepped.
+#' @details `prep` has an option `strings_as_factors` that defaults to `TRUE`.
+#'   If this step is used with the default option, the string(s() produced by
+#'   this step will be converted to factors after all of the steps have been
+#'   prepped.
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
+#' (the columns that will be affected) is returned.
 #'
 #' @template case-weights-not-supported
 #'
@@ -79,16 +77,7 @@ step_factor2string_new <-
 #' @export
 prep.step_factor2string <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  fac_check <-
-    vapply(training[, col_names], is.factor, logical(1))
-  if (any(!fac_check)) {
-    rlang::abort(
-      paste0(
-        "The following variables are not factor vectors: ",
-        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
-      )
-    )
-  }
+  check_type(training[, col_names], types = c("factor", "ordered"))
 
   step_factor2string_new(
     terms = x$terms,

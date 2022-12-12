@@ -95,8 +95,7 @@ step_lincomb_new <-
 #' @export
 prep.step_lincomb <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   filter <- iter_lc_rm(
     x = training[, col_names],

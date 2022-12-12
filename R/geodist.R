@@ -143,18 +143,19 @@ check_is_lat_lon <- function(x) {
 prep.step_geodist <- function(x, training, info = NULL, ...) {
   lon_name <- recipes_eval_select(x$lon, training, info)
   lat_name <- recipes_eval_select(x$lat, training, info)
+  check_type(training[, c(lon_name, lat_name)], types = c("double", "integer"))
 
   x <- check_is_lat_lon(x)
 
   if (length(lon_name) > 1) {
     rlang::abort("`lon` should resolve to a single column name.")
   }
-  check_type(training[, lon_name])
+  check_type(training[, lon_name], types = c("double", "integer"))
 
   if (length(lat_name) > 1) {
     rlang::abort("`lat` should resolve to a single column name.")
   }
-  check_type(training[, lat_name])
+  check_type(training[, lat_name], types = c("double", "integer"))
 
 
   if (any(names(training) == x$name)) {

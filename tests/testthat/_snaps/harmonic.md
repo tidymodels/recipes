@@ -58,8 +58,8 @@
       recipe(osc ~ time_var, data = harmonic_dat) %>% step_harmonic(time_var,
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
-      Error in `prep()`:
-      ! All variables for `step_harmonic` should be either `Date` `POSIXct` or `numeric` classes.
+      Error in `check_type()`:
+      ! All columns selected for the step should be date, datetime, or numeric.
 
 # harmonic cycle_size length
 

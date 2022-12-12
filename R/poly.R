@@ -122,8 +122,7 @@ poly_wrapper <- function(x, args) {
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   opts <- x$options
   opts$degree <- x$degree

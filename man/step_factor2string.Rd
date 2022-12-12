@@ -27,9 +27,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variables that will be
-converted. This is \code{NULL} until computed by
-\code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of variables that will be converted. This
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -45,18 +44,17 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_factor2string} will convert one or more factor
-vectors to strings.
+\code{step_factor2string} will convert one or more factor vectors to strings.
 }
 \details{
-\code{prep} has an option \code{strings_as_factors} that
-defaults to \code{TRUE}. If this step is used with the default
-option, the string(s() produced by this step will be converted
-to factors after all of the steps have been prepped.
+\code{prep} has an option \code{strings_as_factors} that defaults to \code{TRUE}.
+If this step is used with the default option, the string(s() produced by
+this step will be converted to factors after all of the steps have been
+prepped.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns \code{terms}
+(the columns that will be affected) is returned.
 }
 
 \section{Case weights}{

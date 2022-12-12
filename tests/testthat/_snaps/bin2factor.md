@@ -4,7 +4,7 @@
       prep(rec3, training = covers)
     Condition
       Error in `check_type()`:
-      ! All columns selected for the step should be numeric
+      ! All columns selected for the step should be double, integer, or logical.
 
 ---
 

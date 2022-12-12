@@ -114,6 +114,7 @@ step_dummy_multi_choice_new <-
 #' @export
 prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("nominal", "logical"))
 
   multi_dummy_check_type(training[, col_names])
 
@@ -144,14 +145,9 @@ multi_dummy_check_type <- function(dat) {
   }
 
   all_good <- vapply(dat, is_good, logical(1))
-  label <- "factor, character, or NA"
   if (!all(all_good)) {
     rlang::abort(
-      paste0(
-        "All columns selected for the step",
-        " should be ",
-        label
-      )
+      "All columns selected for the step should be factor, character, or NA"
     )
   }
   invisible(all_good)

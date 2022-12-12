@@ -122,7 +122,7 @@ step_impute_lower_new <-
 #' @export
 prep.step_impute_lower <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   threshold <-
     vapply(training[, col_names], min, numeric(1), na.rm = TRUE)

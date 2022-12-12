@@ -104,19 +104,10 @@ step_ordinalscore_new <-
   }
 
 #' @export
-prep.step_ordinalscore <-
-  function(x, training, info = NULL, ...) {
+prep.step_ordinalscore <- function(x, training, info = NULL, ...) {
     col_names <- recipes_eval_select(x$terms, training, info)
-    ord_check <-
-      vapply(training[, col_names], is.ordered, c(logic = TRUE))
-    if (!all(ord_check)) {
-      rlang::abort(
-        paste0(
-          "Ordinal factor variables should be selected as ",
-          "inputs into this step."
-        )
-      )
-    }
+    check_type(training[, col_names], types = "ordered")
+
     step_ordinalscore_new(
       terms = x$terms,
       role = x$role,

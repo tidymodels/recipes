@@ -113,7 +113,7 @@ step_spline_monotone_new <-
 
 prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], quant = TRUE)
+  check_type(training[, col_names], types = c("double", "integer"))
 
   res <-
     purrr::map2(

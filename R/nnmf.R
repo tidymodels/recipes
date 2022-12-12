@@ -127,8 +127,7 @@ step_nnmf_new <-
 #' @export
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))

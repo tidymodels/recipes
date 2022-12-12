@@ -118,15 +118,7 @@ step_time_new <-
 #' @export
 prep.step_time <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  if (!all(purrr::map_lgl(training[, col_names], inherits, "POSIXt"))) {
-    rlang::abort(
-      paste0(
-        "All variables for `step_time` should be either `POSIXlt` or",
-        "`POSIXct` classes."
-      )
-    )
-  }
+  check_type(training[, col_names], types = "datetime")
 
   step_time_new(
     terms = x$terms,

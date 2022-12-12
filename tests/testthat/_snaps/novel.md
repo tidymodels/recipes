@@ -4,7 +4,7 @@
       recipe(~., data = iris) %>% step_novel(all_predictors()) %>% prep(iris)
     Condition
       Error in `check_type()`:
-      ! All columns selected for the step should be factor or character
+      ! All columns selected for the step should be string, factor, or ordered.
 
 ---
 

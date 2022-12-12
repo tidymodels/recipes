@@ -143,8 +143,7 @@ nnmf_pen_call <- function(x) {
 #' @export
 prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   if (x$num_comp > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))

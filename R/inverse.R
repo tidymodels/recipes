@@ -77,8 +77,7 @@ step_inverse_new <-
 #' @export
 prep.step_inverse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   step_inverse_new(
     terms = x$terms,

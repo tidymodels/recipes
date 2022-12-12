@@ -89,16 +89,7 @@ step_holiday_new <-
 #' @export
 prep.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  holiday_data <- info[info$variable %in% col_names, ]
-  if (any(!holiday_data$type %in% c("date", "datetime"))) {
-    rlang::abort(
-      paste0(
-        "All variables for `step_holiday` should be either `Date` or",
-        "`POSIXct` classes."
-      )
-    )
-  }
+  check_type(training[, col_names], types = c("date", "datetime"))
 
   step_holiday_new(
     terms = x$terms,

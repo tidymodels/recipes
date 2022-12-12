@@ -148,16 +148,7 @@ step_date_new <-
 #' @export
 prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-
-  date_data <- info[info$variable %in% col_names, ]
-  if (any(!date_data$type %in% c("date", "datetime"))) {
-    rlang::abort(
-      paste0(
-        "All variables for `step_date` should be either `Date` or",
-        "`POSIXct` classes."
-      )
-    )
-  }
+  check_type(training[, col_names], types = c("date", "datetime"))
 
   step_date_new(
     terms = x$terms,

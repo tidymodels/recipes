@@ -342,7 +342,7 @@ bin_wrapper <- function(x, args) {
 #' @export
 prep.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training[, col_names], types = c("double", "integer"))
 
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     rlang::warn(

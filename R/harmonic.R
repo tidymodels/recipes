@@ -203,20 +203,7 @@ step_harmonic_new <-
 #' @export
 prep.step_harmonic <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  harmonic_data <- info[info$variable %in% col_names, ]
-
-
-  # check input columns
-  allowed_types <- c("date", "datetime", "numeric")
-  if (any(!map_lgl(harmonic_data$type, ~any(.x %in% allowed_types)))) {
-    rlang::abort(
-      paste0(
-        "All variables for `step_harmonic` should be either `Date` ",
-        "`POSIXct` or `numeric` classes."
-      )
-    )
-  }
-
+  check_type(training[, col_names], types = c("date", "datetime", "numeric"))
 
   # check cycle_size
   if (length(x$cycle_size) == 1) {

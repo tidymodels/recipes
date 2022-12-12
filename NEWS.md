@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Developer focused `check_type()` got a new `types` argument for more precise checking of column types.
+
 * `recipes_extension_check()` have been added. This developer focused function checks that steps have all the required S3 methods.
 
 # recipes 1.0.3

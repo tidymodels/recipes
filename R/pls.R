@@ -318,7 +318,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
   y_names <- recipes_eval_select(x$outcome, training, info)
 
-  check_type(training[, x_names])
+  check_type(training[, x_names], types = c("double", "integer"))
+
   if (length(y_names) > 1 && any(!map_lgl(training[y_names], is.numeric))) {
     rlang::abort(
       "`step_pls()` only supports multivariate models for numeric outcomes."

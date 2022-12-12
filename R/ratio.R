@@ -123,8 +123,10 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- tibble::as_tibble(col_names)
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
-  check_type(training[, col_names$top])
-  check_type(training[, col_names$bottom])
+  check_type(
+    training[, c(col_names$top, col_names$bottom)],
+    types = c("double", "integer")
+  )
 
   step_ratio_new(
     terms = x$terms,
