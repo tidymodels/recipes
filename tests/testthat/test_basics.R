@@ -332,3 +332,7 @@ test_that("`internal data is kept as tibbles when prepping", {
 
   expect_snapshot(error = TRUE, prep(rec_spec))
 })
+
+test_that("recipe() errors if `data` is missing", {
+  expect_snapshot(error = TRUE, recipe(mpg ~ .))
+})

@@ -138,3 +138,11 @@
       Error in `prep()`:
       ! bake() methods should always return tibbles
 
+# recipe() errors if `data` is missing
+
+    Code
+      recipe(mpg ~ .)
+    Condition
+      Error in `recipe()`:
+      ! Argument `data` is missing, with no default.
+
