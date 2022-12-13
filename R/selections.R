@@ -145,6 +145,11 @@ NULL
 #'   Defaults to `TRUE`. This is rarely changed and only needed in [juice()],
 #'   [bake.recipe()], [update_role()], and [add_role()].
 #'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
+#'
 #' @return
 #' A named character vector containing the evaluated selection. The names are
 #' always the same as the values, except when `allow_rename = TRUE`, in which
@@ -164,7 +169,7 @@ NULL
 #'
 #' recipes_eval_select(quos, scat, info)
 recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
-                                check_case_weights = TRUE) {
+                                check_case_weights = TRUE, call = caller_env()) {
   ellipsis::check_dots_empty()
 
   # Maintain ordering between `data` column names and `info$variable` so
@@ -189,7 +194,8 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,
-    allow_rename = allow_rename_compat
+    allow_rename = allow_rename_compat,
+    error_call = call
   )
 
   # Return names not positions, as these names are
@@ -202,12 +208,12 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   # at that point, just pass `allow_rename` to `eval_select()` directly.
   # https://github.com/r-lib/tidyselect/issues/221
   if (!allow_rename & !identical(out, names)) {
-    abort("Can't rename variables in this context.")
+    abort("Can't rename variables in this context.", call = call)
   }
 
   if (check_case_weights &&
       any(out %in% info$variable[info$role == "case_weights"])) {
-    abort("Cannot select case weights variable.")
+    abort("Cannot select case weights variable.", call = call)
   }
 
   names(out) <- names

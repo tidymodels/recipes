@@ -10,7 +10,8 @@ recipes_eval_select(
   info,
   ...,
   allow_rename = FALSE,
-  check_case_weights = TRUE
+  check_case_weights = TRUE,
+  call = caller_env()
 )
 }
 \arguments{
@@ -35,6 +36,11 @@ It is unlikely that your step will need renaming capabilities.}
 \item{check_case_weights}{Should selecting case weights throw an error?
 Defaults to \code{TRUE}. This is rarely changed and only needed in \code{\link[=juice]{juice()}},
 \code{\link[=bake.recipe]{bake.recipe()}}, \code{\link[=update_role]{update_role()}}, and \code{\link[=add_role]{add_role()}}.}
+
+\item{call}{The execution environment of a currently running function, e.g.
+\code{caller_env()}. The function will be mentioned in error messages as the
+source of the error. See the call argument of \code{\link[rlang:abort]{rlang::abort()}} for more
+information.}
 }
 \value{
 A named character vector containing the evaluated selection. The names are
