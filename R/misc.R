@@ -830,25 +830,19 @@ check_new_data <- function(req, object, new_data) {
   )
 }
 
-stop_recipes <- function(message = NULL,
-                         class = NULL,
-                         ...,
+stop_recipes <- function(class = NULL,
                          call = NULL,
                          parent = NULL) {
   rlang::abort(
-    message = message,
     class = c(class, "recipes_error"),
     call = call,
     parent = parent
   )
 }
 
-stop_recipes_step <- function(message = NULL,
-                              ...,
-                              call = NULL,
+stop_recipes_step <- function(call = NULL,
                               parent = NULL) {
   stop_recipes(
-    message = message,
     class = "recipes_error_step",
     call = call,
     parent = parent
@@ -860,7 +854,6 @@ recipes_error_context <- function(expr, step_name) {
     expr = force(expr),
     error = function(cnd) {
       stop_recipes_step(
-        message = "Problem while executing step.",
         call = call(step_name),
         parent = cnd
       )
