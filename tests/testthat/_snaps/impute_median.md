@@ -4,7 +4,6 @@
       prep(impute_rec, training = credit_tr, verbose = FALSE)
     Condition
       Error in `step_impute_median()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 

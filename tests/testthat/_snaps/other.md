@@ -4,7 +4,6 @@
       prep(others, training = sacr_tr_chr, strings_as_factors = FALSE)
     Condition
       Error in `step_other()`:
-      ! Problem while executing step.
       Caused by error in `FUN()`:
       ! The level other is already a factor level that will be retained. Please choose a different value.
 

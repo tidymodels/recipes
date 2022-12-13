@@ -4,7 +4,6 @@
       prep(impute_rec, training = credit_tr, verbose = FALSE)
     Condition
       Error in `step_impute_mode()`:
-      ! Problem while executing step.
       Caused by error in `FUN()`:
       ! The data should be character or factor to compute the mode.
 

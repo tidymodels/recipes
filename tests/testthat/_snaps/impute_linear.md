@@ -5,7 +5,6 @@
         tg_dat)
     Condition
       Error in `step_impute_linear()`:
-      ! Problem while executing step.
       Caused by error in `FUN()`:
       ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
 
@@ -16,7 +15,6 @@
         prep(tg_dat)
     Condition
       Error in `step_impute_linear()`:
-      ! Problem while executing step.
       Caused by error in `FUN()`:
       ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
 

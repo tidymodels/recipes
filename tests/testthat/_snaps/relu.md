@@ -28,7 +28,6 @@
       recipe(~., data = df) %>% step_relu(val2) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 

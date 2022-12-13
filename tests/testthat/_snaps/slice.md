@@ -4,7 +4,6 @@
       prep(rec_1, training = iris %>% slice(1:75))
     Condition
       Error in `step_slice()`:
-      ! Problem while executing step.
       Caused by error in `dplyr::slice()`:
       ! Problem while evaluating `..1 = values`.
       Caused by error:

@@ -4,7 +4,6 @@
       sacr_rec %>% step_profile(everything(), profile = vars(sqft)) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! The profiled variable cannot be in the list of variables to be fixed.
 
@@ -23,7 +22,6 @@
         prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! Only one variable should be profiled
 

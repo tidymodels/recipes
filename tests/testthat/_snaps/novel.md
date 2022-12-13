@@ -4,7 +4,6 @@
       recipe(~., data = iris) %>% step_novel(all_predictors()) %>% prep(iris)
     Condition
       Error in `step_novel()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
@@ -14,7 +13,6 @@
       recipe(~., data = tr_bad) %>% step_novel(all_predictors()) %>% prep(tr_bad)
     Condition
       Error in `step_novel()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! Columns already contain the new level: x
 

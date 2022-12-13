@@ -108,7 +108,6 @@
       prep(rec, training = iris %>% slice(1:75))
     Condition
       Error in `step_rename_at()`:
-      ! Problem while executing step.
       Caused by error in `dplyr::rename_at()`:
       ! `.funs` must contain one renaming function, not 2.
 

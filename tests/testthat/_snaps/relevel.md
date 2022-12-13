@@ -4,7 +4,6 @@
       rec %>% step_relevel(sqft, ref_level = 23) %>% prep()
     Condition
       Error in `step_relevel()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
@@ -14,7 +13,6 @@
       rec %>% step_relevel(city, ref_level = "missing_level") %>% prep()
     Condition
       Error in `step_relevel()`:
-      ! Problem while executing step.
       Caused by error in `error_cnd()`:
       ! Conditions must have named data fields
 

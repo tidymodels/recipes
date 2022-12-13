@@ -4,7 +4,6 @@
       prep(rec, training = iris %>% slice(1:75))
     Condition
       Error in `step_rm()`:
-      ! Problem while executing step.
       Caused by error in `recipes_eval_select()`:
       ! Can't rename variables in this context.
 
@@ -14,7 +13,6 @@
       prep(rec_1, training = iris %>% slice(1:75))
     Condition
       Error in `step_rm()`:
-      ! Problem while executing step.
       Caused by error in `recipes_eval_select()`:
       ! Problem while evaluating `all_of(sepal_vars)`.
       Caused by error in `as_indices_impl()`:

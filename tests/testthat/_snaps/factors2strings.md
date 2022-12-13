@@ -4,7 +4,6 @@
       rec %>% step_factor2string(w, x) %>% prep(ex_dat, strings_as_factors = FALSE)
     Condition
       Error in `step_factor2string()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be factor, or ordered.
 

@@ -6,7 +6,6 @@
       Warning:
       The following variables are not factor vectors and will be ignored: `city`, `zip`
       Error in `step_dummy()`:
-      ! Problem while executing step.
       Caused by error in `check_factor_vars()`:
       ! The `terms` argument in `step_dummy` did not select any factor columns.
 
@@ -17,7 +16,6 @@
         price) %>% prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
     Condition
       Error in `step_dummy()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be string, factor, or ordered.
 

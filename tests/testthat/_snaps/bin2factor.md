@@ -4,7 +4,6 @@
       prep(rec3, training = covers)
     Condition
       Error in `step_bin2factor()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, integer, or logical.
 

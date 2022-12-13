@@ -42,7 +42,6 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      ! Problem while executing step.
       Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lat` values should be between -90 and 90
 
@@ -54,7 +53,6 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      ! Problem while executing step.
       Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lon` values should be between -180 and 180
 
@@ -66,7 +64,6 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      ! Problem while executing step.
       Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lat` values should be between -90 and 90
 
@@ -78,7 +75,6 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      ! Problem while executing step.
       Caused by error in `geo_dist_calc_lat_lon()`:
       ! All `lon` values should be between -180 and 180
 
@@ -89,7 +85,6 @@
         prep(training = rand_data_2)
     Condition
       Error in `step_geodist()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! `lat` should resolve to a single column name.
 
@@ -100,7 +95,6 @@
         prep(training = rand_data_2)
     Condition
       Error in `step_geodist()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! `lon` should resolve to a single column name.
 

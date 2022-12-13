@@ -18,7 +18,6 @@
       recipe(~., data = sacr_tr) %>% step_unknown(sqft) %>% prep()
     Condition
       Error in `step_unknown()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
@@ -29,7 +28,6 @@
         prep()
     Condition
       Error in `step_unknown()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! Columns already contain a level 'FAIR_OAKS': city
 

@@ -4,7 +4,6 @@
       tst(a)
     Condition
       Error in `check_missing()`:
-      ! Problem while executing step.
       Caused by error in `bake()`:
       ! The following columns contain missing values: `a`.
 
@@ -14,7 +13,6 @@
       tst(b)
     Condition
       Error in `check_missing()`:
-      ! Problem while executing step.
       Caused by error in `bake()`:
       ! The following columns contain missing values: `b`.
 
@@ -24,7 +22,6 @@
       tst(d)
     Condition
       Error in `check_missing()`:
-      ! Problem while executing step.
       Caused by error in `bake()`:
       ! The following columns contain missing values: `d`.
 
@@ -34,7 +31,6 @@
       tst(e)
     Condition
       Error in `check_missing()`:
-      ! Problem while executing step.
       Caused by error in `bake()`:
       ! The following columns contain missing values: `e`.
 
@@ -44,7 +40,6 @@
       tst(a, e)
     Condition
       Error in `check_missing()`:
-      ! Problem while executing step.
       Caused by error in `bake()`:
       ! The following columns contain missing values: `a`, `e`.
 
@@ -54,7 +49,6 @@
       tst(everything())
     Condition
       Error in `check_missing()`:
-      ! Problem while executing step.
       Caused by error in `bake()`:
       ! The following columns contain missing values: `a`, `b`, `d`, `e`.
 

@@ -4,7 +4,6 @@
       prep(rec_1, training = iris_train)
     Condition
       Error in `step_select()`:
-      ! Problem while executing step.
       Caused by error in `recipes_eval_select()`:
       ! Problem while evaluating `all_of(sepal_vars)`.
       Caused by error in `as_indices_impl()`:

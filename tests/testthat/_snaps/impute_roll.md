@@ -5,7 +5,6 @@
         prep(training = example_data)
     Condition
       Error in `step_impute_roll()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double.
 
@@ -25,7 +24,6 @@
         step_impute_roll(all_predictors(), window = 3) %>% prep(training = example_data)
     Condition
       Error in `step_impute_roll()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double.
 

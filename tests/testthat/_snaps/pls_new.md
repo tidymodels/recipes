@@ -4,7 +4,6 @@
       prep(rec)
     Condition
       Error in `step_pls()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! `step_pls()` only supports multivariate models for numeric outcomes.
 
@@ -14,7 +13,6 @@
       prep(rec)
     Condition
       Error in `step_pls()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! `step_pls()` only supports multivariate models for numeric outcomes.
 

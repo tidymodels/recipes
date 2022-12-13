@@ -4,7 +4,6 @@
       prep(rec3, training = ex_dat, verbose = FALSE)
     Condition
       Error in `step_ordinalscore()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be ordered.
 

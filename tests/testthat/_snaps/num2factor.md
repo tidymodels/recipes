@@ -4,7 +4,6 @@
       rec %>% step_num2factor(w, x, levels = c("one", "two")) %>% prep(ex_dat)
     Condition
       Error in `step_num2factor()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 

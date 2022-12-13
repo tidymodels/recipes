@@ -4,7 +4,6 @@
       prep(rec, training = ex_dat, verbose = FALSE)
     Condition
       Error in `step_logit()`:
-      ! Problem while executing step.
       Caused by error in `binomial()$linkfun()`:
       ! Value -0.77772 out of range (0, 1)
 

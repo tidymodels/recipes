@@ -4,7 +4,6 @@
       rec %>% step_impute_lower(carbon, hydrogen, has_neg) %>% prep()
     Condition
       Error in `step_impute_lower()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! Some columns have negative values. Lower bound imputation is intended for data bounded at zero.
 

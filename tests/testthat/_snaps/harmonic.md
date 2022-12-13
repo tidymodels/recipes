@@ -50,7 +50,6 @@
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
       Error in `step_harmonic()`:
-      ! Problem while executing step.
       Caused by error in `sin_cos()`:
       ! variable must have at least one non-NA value
 
@@ -61,7 +60,6 @@
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
       Error in `step_harmonic()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be date, datetime, or numeric.
 
@@ -73,7 +71,6 @@
           86400, 86400)) %>% prep()
     Condition
       Error in `step_harmonic()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! `cycle_size` must be length 1 or the same  length as the input columns
 
@@ -85,7 +82,6 @@
           starting_val = c(86400, 86400), cycle_size = 86400) %>% prep()
     Condition
       Error in `step_harmonic()`:
-      ! Problem while executing step.
       Caused by error in `prep()`:
       ! `starting_val` must be length 1 or the same  length as the input columns
 

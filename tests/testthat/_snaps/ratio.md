@@ -4,7 +4,6 @@
       prep(rec4, ex_dat, verbose = FALSE)
     Condition
       Error in `step_ratio()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 
@@ -14,7 +13,6 @@
       prep(rec5, ex_dat, verbose = FALSE)
     Condition
       Error in `step_ratio()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 
@@ -24,7 +22,6 @@
       prep(rec6, ex_dat, verbose = FALSE)
     Condition
       Error in `step_ratio()`:
-      ! Problem while executing step.
       Caused by error in `check_type()`:
       ! All columns selected for the step should be double, or integer.
 
