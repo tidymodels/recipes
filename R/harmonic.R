@@ -256,9 +256,9 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
 sin_cos <- function(x,
                     frequency,
                     starting_val,
-                    cycle_size) {
+                    cycle_size, call = caller_env()) {
   if (all(is.na(x))) {
-    rlang::abort("variable must have at least one non-NA value")
+    rlang::abort("variable must have at least one non-NA value", call = call)
   }
 
   nc <- length(frequency)

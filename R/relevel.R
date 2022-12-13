@@ -92,9 +92,11 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   )
   if (any(ref_check)) {
     rlang::abort(
-      "Columns must contain the reference level '",
-      x$ref_level, "': ",
-      paste0(names(ref_check)[ref_check], collapse = ", ")
+      paste0(
+        "Columns must contain the reference level '",
+        x$ref_level, "': ",
+        paste0(names(ref_check)[ref_check], collapse = ", ")
+      )
     )
   }
 

@@ -3,7 +3,7 @@
     Code
       recipes_eval_select(quos = quos(log(beds)), data = Sacramento, info = info_sac)
     Condition
-      Error in `recipes_eval_select()`:
+      Error:
       ! Problem while evaluating `log(beds)`.
       Caused by error:
       ! object 'beds' not found

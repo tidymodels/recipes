@@ -4,7 +4,7 @@
       prep(impute_rec, training = credit_tr, verbose = FALSE)
     Condition
       Error in `step_impute_mode()`:
-      Caused by error in `FUN()`:
+      Caused by error in `prep()`:
       ! The data should be character or factor to compute the mode.
 
 # can bake recipes with no ptype

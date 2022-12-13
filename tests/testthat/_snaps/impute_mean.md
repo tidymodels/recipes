@@ -4,7 +4,7 @@
       prep(impute_rec, training = credit_tr, verbose = FALSE)
     Condition
       Error in `step_impute_mean()`:
-      Caused by error in `check_type()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
 # Deprecation warning

@@ -42,7 +42,7 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      Caused by error in `geo_dist_calc_lat_lon()`:
+      Caused by error in `bake()`:
       ! All `lat` values should be between -90 and 90
 
 ---
@@ -53,7 +53,7 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      Caused by error in `geo_dist_calc_lat_lon()`:
+      Caused by error in `bake()`:
       ! All `lon` values should be between -180 and 180
 
 ---
@@ -64,7 +64,7 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      Caused by error in `geo_dist_calc_lat_lon()`:
+      Caused by error in `bake()`:
       ! All `lat` values should be between -90 and 90
 
 ---
@@ -75,7 +75,7 @@
         prep()
     Condition
       Error in `step_geodist()`:
-      Caused by error in `geo_dist_calc_lat_lon()`:
+      Caused by error in `bake()`:
       ! All `lon` values should be between -180 and 180
 
 # bad args

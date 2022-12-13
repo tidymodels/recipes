@@ -429,7 +429,7 @@ is_qual <- function(x) {
 #'
 #' @export
 #' @keywords internal
-check_type <- function(dat, quant = TRUE, types = NULL) {
+check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
   if (is.null(types)) {
     if (quant) {
       all_good <- vapply(dat, is.numeric, logical(1))
@@ -450,7 +450,8 @@ check_type <- function(dat, quant = TRUE, types = NULL) {
         " should be ",
         label,
         "."
-      )
+      ),
+      call = call
     )
   }
 

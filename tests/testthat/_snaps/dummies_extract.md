@@ -4,7 +4,7 @@
       recipe(~medium, data = tate_text) %>% step_dummy_extract(medium) %>% prep()
     Condition
       Error in `step_dummy_extract()`:
-      Caused by error in `dummy_extract()`:
+      Caused by error in `prep()`:
       ! `sep` or `pattern` must be specified.
 
 # printing

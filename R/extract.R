@@ -255,7 +255,7 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
   new_data
 }
 
-dummy_extract <- function(x, sep = NULL, pattern = NULL) {
+dummy_extract <- function(x, sep = NULL, pattern = NULL, call = caller_env()) {
   x <- as.character(x)
   if (!is.null(sep)) {
     return(strsplit(x, sep))
@@ -264,7 +264,7 @@ dummy_extract <- function(x, sep = NULL, pattern = NULL) {
     matches <- gregexpr(pattern = pattern, text = x, perl = TRUE)
     return(regmatches(x, m = matches))
   }
-  rlang::abort("`sep` or `pattern` must be specified.")
+  rlang::abort("`sep` or `pattern` must be specified.", call = call)
 }
 
 list_to_dummies <- function(x, dict, other = "other") {

@@ -50,7 +50,7 @@
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
       Error in `step_harmonic()`:
-      Caused by error in `sin_cos()`:
+      Caused by error in `bake()`:
       ! variable must have at least one non-NA value
 
 # harmonic character in term
@@ -60,7 +60,7 @@
         frequency = 4, cycle_size = 86400) %>% prep() %>% bake(new_data = NULL)
     Condition
       Error in `step_harmonic()`:
-      Caused by error in `check_type()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be date, datetime, or numeric.
 
 # harmonic cycle_size length

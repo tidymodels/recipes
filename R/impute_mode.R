@@ -190,9 +190,12 @@ print.step_impute_mode <-
 #' @keywords internal
 print.step_modeimpute <- print.step_impute_mode
 
-mode_est <- function(x, wts = NULL) {
+mode_est <- function(x, wts = NULL, call = caller_env(2)) {
   if (!is.character(x) & !is.factor(x))
-    rlang::abort("The data should be character or factor to compute the mode.")
+    rlang::abort(
+      "The data should be character or factor to compute the mode.",
+      call = call
+    )
   tab <- weighted_table(x, wts = wts)
   modes <- names(tab)[tab == max(tab)]
   sample(modes, size = 1)

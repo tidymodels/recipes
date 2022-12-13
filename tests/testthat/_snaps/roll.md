@@ -71,7 +71,7 @@
       prep(rec %>% step_window(fac), training = sim_dat)
     Condition
       Error in `step_window()`:
-      Caused by error in `check_type()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
 ---
