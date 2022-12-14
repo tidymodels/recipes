@@ -3,7 +3,8 @@
     Code
       prep(rec, training = ex_dat, verbose = FALSE)
     Condition
-      Error in `binomial()$linkfun()`:
+      Error in `step_logit()`:
+      Caused by error in `binomial()$linkfun()`:
       ! Value -0.77772 out of range (0, 1)
 
 # printing

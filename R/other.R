@@ -213,7 +213,8 @@ print.step_other <-
     invisible(x)
   }
 
-keep_levels <- function(x, threshold = .1, other = "other", wts = NULL) {
+keep_levels <- function(x, threshold = .1, other = "other", wts = NULL,
+                        call = caller_env(2)) {
   if (!is.factor(x)) {
     x <- factor(x)
   }
@@ -248,7 +249,8 @@ keep_levels <- function(x, threshold = .1, other = "other", wts = NULL) {
         other,
         " is already a factor level that will be retained. ",
         "Please choose a different value."
-      )
+      ),
+      call = call
     )
   }
 

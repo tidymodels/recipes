@@ -3,7 +3,8 @@
     Code
       prep(rec, training = iris %>% slice(1:75))
     Condition
-      Error in `recipes_eval_select()`:
+      Error in `step_rm()`:
+      Caused by error in `prep()`:
       ! Can't rename variables in this context.
 
 # remove with quasi-quotation
@@ -11,7 +12,8 @@
     Code
       prep(rec_1, training = iris %>% slice(1:75))
     Condition
-      Error in `recipes_eval_select()`:
+      Error in `step_rm()`:
+      Caused by error in `prep()`:
       ! Problem while evaluating `all_of(sepal_vars)`.
       Caused by error in `as_indices_impl()`:
       ! object 'sepal_vars' not found

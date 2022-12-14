@@ -3,7 +3,8 @@
     Code
       prep(impute_rec, training = credit_tr, verbose = FALSE)
     Condition
-      Error in `check_type()`:
+      Error in `step_impute_median()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
 # Deprecation warning

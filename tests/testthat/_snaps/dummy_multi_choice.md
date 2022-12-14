@@ -3,7 +3,8 @@
     Code
       prep(dummy)
     Condition
-      Error in `check_type()`:
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be nominal, or logical.
 
 # printing

@@ -3,7 +3,8 @@
     Code
       prep(rec_1, training = iris_train)
     Condition
-      Error in `recipes_eval_select()`:
+      Error in `step_select()`:
+      Caused by error in `prep()`:
       ! Problem while evaluating `all_of(sepal_vars)`.
       Caused by error in `as_indices_impl()`:
       ! object 'sepal_vars' not found

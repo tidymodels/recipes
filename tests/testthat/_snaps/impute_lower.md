@@ -3,7 +3,8 @@
     Code
       rec %>% step_impute_lower(carbon, hydrogen, has_neg) %>% prep()
     Condition
-      Error in `prep()`:
+      Error in `step_impute_lower()`:
+      Caused by error in `prep()`:
       ! Some columns have negative values. Lower bound imputation is intended for data bounded at zero.
 
 # Deprecation warning

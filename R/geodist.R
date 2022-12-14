@@ -185,13 +185,14 @@ geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
 
 
 # earth_radius = 6371e3 in meters
-geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3) {
+geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
+                                  call = caller_env()) {
   if (any(abs(x_1) > 180.0)) {
-    rlang::abort("All `lon` values should be between -180 and 180")
+    rlang::abort("All `lon` values should be between -180 and 180", call = call)
   }
 
   if (any(abs(y_1) > 90.0)) {
-    rlang::abort("All `lat` values should be between -90 and 90")
+    rlang::abort("All `lat` values should be between -90 and 90", call = call)
   }
 
   to_rad <- pi / 180.0

@@ -429,7 +429,7 @@ is_qual <- function(x) {
 #'
 #' @export
 #' @keywords internal
-check_type <- function(dat, quant = TRUE, types = NULL) {
+check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
   if (is.null(types)) {
     if (quant) {
       all_good <- vapply(dat, is.numeric, logical(1))
@@ -450,7 +450,8 @@ check_type <- function(dat, quant = TRUE, types = NULL) {
         " should be ",
         label,
         "."
-      )
+      ),
+      call = call
     )
   }
 
@@ -830,3 +831,33 @@ check_new_data <- function(req, object, new_data) {
   )
 }
 
+stop_recipes <- function(class = NULL,
+                         call = NULL,
+                         parent = NULL) {
+  rlang::abort(
+    class = c(class, "recipes_error"),
+    call = call,
+    parent = parent
+  )
+}
+
+stop_recipes_step <- function(call = NULL,
+                              parent = NULL) {
+  stop_recipes(
+    class = "recipes_error_step",
+    call = call,
+    parent = parent
+  )
+}
+
+recipes_error_context <- function(expr, step_name) {
+  withCallingHandlers(
+    expr = force(expr),
+    error = function(cnd) {
+      stop_recipes_step(
+        call = call(step_name),
+        parent = cnd
+      )
+    }
+  )
+}

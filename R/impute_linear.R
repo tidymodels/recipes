@@ -108,7 +108,7 @@ step_impute_linear_new <-
     )
   }
 
-lm_wrap <- function(vars, dat, wts = NULL) {
+lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
   complete <- stats::complete.cases(dat)
   dat <- dat[complete, ]
@@ -118,7 +118,8 @@ lm_wrap <- function(vars, dat, wts = NULL) {
       paste(
         "The data used by step_impute_linear() did not have any rows",
         "where the imputation values were all complete."
-      )
+      ),
+      call = call
     )
   }
 
@@ -127,7 +128,8 @@ lm_wrap <- function(vars, dat, wts = NULL) {
       glue::glue(
         "Variable '{vars$y}' chosen for linear regression imputation ",
         "must be of type numeric."
-      )
+      ),
+      call = call
     )
   }
 

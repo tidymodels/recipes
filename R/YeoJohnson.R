@@ -226,13 +226,20 @@ yj_obj <- function(lam, dat, ind_neg, const) {
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5, na_rm = TRUE) {
+estimate_yj <- function(dat,
+                        limits = c(-5, 5),
+                        num_unique = 5,
+                        na_rm = TRUE,
+                        call = caller_env(2)) {
   na_rows <- which(is.na(dat))
   if (length(na_rows) > 0) {
     if (na_rm) {
       dat <- dat[-na_rows]
     } else {
-      rlang::abort("Missing values are not allowed for the YJ transformation. See `na_rm` option")
+      rlang::abort(
+        "Missing values are not allowed for the YJ transformation. See `na_rm` option",
+        call = call
+      )
     }
   }
 

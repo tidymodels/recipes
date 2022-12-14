@@ -10,7 +10,7 @@
 #' @importFrom purrr map map_chr map_dbl map_dfr map_if map_lgl reduce
 #' @importFrom rlang !! as_character call2 exec expr f_lhs f_rhs is_empty
 #' @importFrom rlang is_quosure na_dbl quo quo_get_expr quo_squash quo_text quos
-#' @importFrom rlang sym syms
+#' @importFrom rlang sym syms caller_env
 #' @importFrom splines bs ns
 #' @importFrom stats as.formula binomial complete.cases cor cov lm mahalanobis
 #' @importFrom stats median model.frame model.matrix na.omit na.pass optimize

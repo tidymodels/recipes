@@ -3,7 +3,8 @@
     Code
       rec %>% step_num2factor(w, x, levels = c("one", "two")) %>% prep(ex_dat)
     Condition
-      Error in `check_type()`:
+      Error in `step_num2factor()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
 ---

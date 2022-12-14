@@ -4,7 +4,7 @@
 \alias{check_type}
 \title{Quantitatively check on variables}
 \usage{
-check_type(dat, quant = TRUE, types = NULL)
+check_type(dat, quant = TRUE, types = NULL, call = caller_env())
 }
 \arguments{
 \item{dat}{A data frame or tibble of the training data.}

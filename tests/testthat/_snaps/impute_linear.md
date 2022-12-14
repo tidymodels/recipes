@@ -4,7 +4,8 @@
       recipe(tg_dat) %>% step_impute_linear(supp, impute_with = c("len")) %>% prep(
         tg_dat)
     Condition
-      Error in `FUN()`:
+      Error in `step_impute_linear()`:
+      Caused by error in `prep()`:
       ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
 
 ---
@@ -13,7 +14,8 @@
       recipe(tg_dat) %>% step_impute_linear(supp, dose, impute_with = c("len")) %>%
         prep(tg_dat)
     Condition
-      Error in `FUN()`:
+      Error in `step_impute_linear()`:
+      Caused by error in `prep()`:
       ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
 
 # Printing

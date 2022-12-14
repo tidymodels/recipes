@@ -154,7 +154,8 @@ recipe(mpg ~ ., data = mtcars)  \%>\%
   prep()
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `recipes_eval_select()` at recipes/R/log.R:104:2:
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `step_log()`:
+## Caused by error in `prep()` at recipes/R/recipe.R:437:8:
 ## ! Can't subset columns that don't exist.
 ## x Column `wt` doesn't exist.
 }\if{html}{\out{</div>}}

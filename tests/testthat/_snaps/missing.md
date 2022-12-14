@@ -3,7 +3,8 @@
     Code
       tst(a)
     Condition
-      Error in `bake()`:
+      Error in `check_missing()`:
+      Caused by error in `bake()`:
       ! The following columns contain missing values: `a`.
 
 ---
@@ -11,7 +12,8 @@
     Code
       tst(b)
     Condition
-      Error in `bake()`:
+      Error in `check_missing()`:
+      Caused by error in `bake()`:
       ! The following columns contain missing values: `b`.
 
 ---
@@ -19,7 +21,8 @@
     Code
       tst(d)
     Condition
-      Error in `bake()`:
+      Error in `check_missing()`:
+      Caused by error in `bake()`:
       ! The following columns contain missing values: `d`.
 
 ---
@@ -27,7 +30,8 @@
     Code
       tst(e)
     Condition
-      Error in `bake()`:
+      Error in `check_missing()`:
+      Caused by error in `bake()`:
       ! The following columns contain missing values: `e`.
 
 # check_missing works on multiple columns simultaneously
@@ -35,7 +39,8 @@
     Code
       tst(a, e)
     Condition
-      Error in `bake()`:
+      Error in `check_missing()`:
+      Caused by error in `bake()`:
       ! The following columns contain missing values: `a`, `e`.
 
 ---
@@ -43,7 +48,8 @@
     Code
       tst(everything())
     Condition
-      Error in `bake()`:
+      Error in `check_missing()`:
+      Caused by error in `bake()`:
       ! The following columns contain missing values: `a`, `b`, `d`, `e`.
 
 # check_missing on a new set

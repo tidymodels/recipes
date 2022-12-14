@@ -3,7 +3,8 @@
     Code
       prep(rec3, training = ex_dat, verbose = FALSE)
     Condition
-      Error in `check_type()`:
+      Error in `step_ordinalscore()`:
+      Caused by error in `prep()`:
       ! All columns selected for the step should be ordered.
 
 # printing

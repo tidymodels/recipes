@@ -218,7 +218,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   )
 }
 
-check_factor_vars <- function(data, col_names, step_name) {
+check_factor_vars <- function(data, col_names, step_name, call = caller_env()) {
   fac_check <- vapply(data[, col_names], is.factor, logical(1))
   if (any(!fac_check)) {
     rlang::warn(
@@ -236,7 +236,8 @@ check_factor_vars <- function(data, col_names, step_name) {
         step_name,
         "` did not select ",
         "any factor columns."
-      )
+      ),
+      call = call
     )
   }
   col_names

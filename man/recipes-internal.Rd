@@ -13,7 +13,13 @@
 \usage{
 yj_transform(x, lambda, ind_neg = NULL, eps = 0.001)
 
-estimate_yj(dat, limits = c(-5, 5), num_unique = 5, na_rm = TRUE)
+estimate_yj(
+  dat,
+  limits = c(-5, 5),
+  num_unique = 5,
+  na_rm = TRUE,
+  call = caller_env(2)
+)
 
 ellipse_check(...)
 
