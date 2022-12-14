@@ -68,7 +68,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
-<ul><li><p>Developer focused <code><a href="../reference/check_type.html">check_type()</a></code> got a new <code>types</code> argument for more precise checking of column types.</p></li>
+<ul><li><p>Errors in <code><a href="../reference/prep.html">prep()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> will now indicate which step caused the error. (<a href="https://github.com/tidymodels/recipes/issues/420" class="external-link">#420</a>)</p></li>
+<li><p>Developer focused <code><a href="../reference/check_type.html">check_type()</a></code> got a new <code>types</code> argument for more precise checking of column types.</p></li>
 <li><p><code><a href="../reference/recipes_extension_check.html">recipes_extension_check()</a></code> have been added. This developer focused function checks that steps have all the required S3 methods.</p></li>
 <li><p><code><a href="../reference/recipe.html">recipe()</a></code> now error more informatively when <code>data</code> is missing. (<a href="https://github.com/tidymodels/recipes/issues/1042" class="external-link">#1042</a>)</p></li>
 </ul></div>

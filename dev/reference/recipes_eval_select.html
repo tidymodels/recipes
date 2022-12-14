@@ -91,7 +91,8 @@ for more information about the unique recipes selectors.</p>
 <span>  <span class="va">info</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  allow_rename <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  check_case_weights <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  check_case_weights <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,6 +130,13 @@ It is unlikely that your step will need renaming capabilities.</p></dd>
 <dd><p>Should selecting case weights throw an error?
 Defaults to <code>TRUE</code>. This is rarely changed and only needed in <code><a href="juice.html">juice()</a></code>,
 <code><a href="bake.html">bake.recipe()</a></code>, <code><a href="roles.html">update_role()</a></code>, and <code><a href="roles.html">add_role()</a></code>.</p></dd>
+
+
+<dt>call</dt>
+<dd><p>The execution environment of a currently running function, e.g.
+<code><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env()</a></code>. The function will be mentioned in error messages as the
+source of the error. See the call argument of <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> for more
+information.</p></dd>
 
 </dl></div>
     <div class="section level2">

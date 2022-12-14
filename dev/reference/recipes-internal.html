@@ -96,7 +96,13 @@ printing.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">yj_transform</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span>, ind_neg <span class="op">=</span> <span class="cn">NULL</span>, eps <span class="op">=</span> <span class="fl">0.001</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">estimate_yj</span><span class="op">(</span><span class="va">dat</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>, num_unique <span class="op">=</span> <span class="fl">5</span>, na_rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">estimate_yj</span><span class="op">(</span></span>
+<span>  <span class="va">dat</span>,</span>
+<span>  limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  num_unique <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  na_rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ellipse_check</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span></span>
