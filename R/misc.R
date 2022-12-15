@@ -861,3 +861,8 @@ recipes_error_context <- function(expr, step_name) {
     }
   )
 }
+
+vec_paste0 <- function(..., collapse = NULL) {
+  args <- vctrs::vec_recycle_common(...)
+  rlang::inject(paste0(!!!args, collapse = collapse))
+}
