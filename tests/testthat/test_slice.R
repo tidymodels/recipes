@@ -97,17 +97,6 @@ test_that("quasiquotation", {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-
-test_that("no input", {
-  no_inputs <-
-    iris_rec %>%
-    step_slice() %>%
-    prep(training = iris) %>%
-    bake(new_data = NULL, composition = "data.frame")
-  expect_equal(no_inputs, iris)
-})
-
-
 test_that("printing", {
   rec <- iris_rec %>% step_slice(1:2)
   expect_snapshot(print(rec))
