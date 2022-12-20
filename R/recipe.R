@@ -704,43 +704,42 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #'
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
-  cat("Recipe\n\n")
-  cat("Inputs:\n\n")
-  no_role <- is.na(x$var_info$role)
-  if (any(!no_role)) {
-    tab <- as.data.frame(table(x$var_info$role))
-    colnames(tab) <- c("role", "#variables")
-    print(tab, row.names = FALSE)
-    if (any(no_role)) {
-      cat("\n ", sum(no_role), "variables with undeclared roles\n")
-    }
-  } else {
-    cat(" ", nrow(x$var_info), "variables (no declared roles)\n")
-  }
+  cli::cli_h1("Recipe")
+  cli::cli_h3("Inputs")
+
+  tab <- table(x$var_info$role, useNA = "ifany")
+  tab <- setNames(tab, names(tab))
+  names(tab)[is.na(names(tab))] <- "undeclared role"
+
+  tab <- c(
+    tab[names(tab) == "outcome"],
+    tab[names(tab) == "predictor"],
+    tab[names(tab) == "case_weights"],
+    sort(tab[!names(tab) %in% c("outcome", "predictor", "case_weights")], TRUE)
+  )
+
+  cli::cli_text("Number of variables by role")
+  cli::cli_dl(setNames(tab, names(tab)))
+
   if ("tr_info" %in% names(x)) {
+    cli::cli_h3("Training information")
     nmiss <- x$tr_info$nrows - x$tr_info$ncomplete
-    cat("\nTraining data contained ",
-      x$tr_info$nrows,
-      " data points and ",
-      sep = ""
+    nrows <- x$tr_info$nrows
+
+    cli::cli_text(
+      "Training data contained {nrows} data points and {cli::no(nmiss)} \\
+       incomplete row{?s}."
     )
-    if (x$tr_info$nrows == x$tr_info$ncomplete) {
-      cat("no missing data.\n")
-    } else {
-      cat(
-        nmiss,
-        "incomplete",
-        ifelse(nmiss > 1, "rows.", "row."),
-        "\n"
-      )
-    }
   }
+
   if (!is.null(x$steps)) {
-    cat("\nOperations:\n\n")
-    for (i in seq_along(x$steps)) {
-      print(x$steps[[i]], form_width = form_width)
-    }
+    cli::cli_h3("Operations")
   }
+
+  for (step in x$steps) {
+    print(step, form_width = form_width)
+  }
+
   invisible(x)
 }
 

@@ -21,34 +21,37 @@ print_step <- function(tr_obj = NULL,
                        width = max(20, options()$width - 30),
                        case_weights = NULL) {
 
-  cat(title)
+  trained_text <- if_else(trained, "Trained", "")
+  case_weights_text <- case_when(
+    is.null(case_weights) ~ "",
+    isTRUE(case_weights) ~ "weighted",
+    isFALSE(case_weights) ~ "ignored weights"
+  )
+
+  vline_seperator <- if_else(trained_text == "", "", "|")
+  comma_seperator <- if_else(
+    trained_text != "" && case_weights_text != "",
+    true = ",", false = ""
+  )
+
+  cli::cli_text(
+    "{title} \\
+    {vline_seperator} \\
+    {.emph {trained_text}}\\
+    {comma_seperator} \\
+    {.emph {case_weights_text}}"
+  )
 
   if (trained) {
-    txt <- format_ch_vec(tr_obj, width = width)
+    txt <- format_ch_vec(tr_obj, width = cli::console_width() - 3)
   } else {
-    txt <- format_selectors(untr_obj, width = width)
+    txt <- format_selectors(untr_obj, width = cli::console_width() - 3)
   }
 
   if (length(txt) == 0L) {
     txt <- "<none>"
   }
 
-  cat(txt)
-
-  if (trained) {
-    if (is.null(case_weights)) {
-      cat(" [trained]\n")
-    } else {
-      case_weights_ind <- ifelse(case_weights, "weighted", "ignored weights")
-      trained_txt <- paste(case_weights_ind, "trained", sep = ", ")
-      trained_txt <- paste0(" [", trained_txt, "]\n")
-      cat(trained_txt)
-    }
-
-
-  } else {
-    cat("\n")
-  }
-
+  cli::cli_li(txt)
   invisible(NULL)
 }
