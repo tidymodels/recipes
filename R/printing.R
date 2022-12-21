@@ -34,24 +34,38 @@ print_step <- function(tr_obj = NULL,
     true = ",", false = ""
   )
 
-  cli::cli_text(
-    "{title} \\
+  title_width <- paste(title, vline_seperator, trained_text, comma_seperator,
+                       case_weights_text) |> nchar()
+
+  diff_width <- cli::console_width() * 1 - title_width
+
+  if (trained) {
+    elements <- tr_obj
+  } else {
+    elements <- lapply(untr_obj, function(x) {
+      expr_deparse(quo_get_expr(x))
+    })
+
+    elements <- vctrs::list_unchop(elements, ptype = character())
+  }
+
+  if (length(elements) == 0L) {
+    elements <- "<none>"
+  }
+
+  # do math
+  first_line <- max(which(diff_width >= cumsum(nchar(elements) + 4)))
+
+  cli::cli_bullets(
+    c("*" = "
+    {stringr::str_trim(title)}: \\
+    {.pkg {elements[seq_len(first_line)]}} \\
     {vline_seperator} \\
     {.emph {trained_text}}\\
     {comma_seperator} \\
-    {.emph {case_weights_text}}"
+    {.emph {case_weights_text}}
+    ")
   )
 
-  if (trained) {
-    txt <- format_ch_vec(tr_obj, width = cli::console_width() - 3)
-  } else {
-    txt <- format_selectors(untr_obj, width = cli::console_width() - 3)
-  }
-
-  if (length(txt) == 0L) {
-    txt <- "<none>"
-  }
-
-  cli::cli_li(txt)
   invisible(NULL)
 }

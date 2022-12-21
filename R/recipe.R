@@ -715,11 +715,18 @@ print.recipe <- function(x, form_width = 30, ...) {
     tab[names(tab) == "outcome"],
     tab[names(tab) == "predictor"],
     tab[names(tab) == "case_weights"],
-    sort(tab[!names(tab) %in% c("outcome", "predictor", "case_weights")], TRUE)
+    sort(tab[!names(tab) %in% c("outcome", "predictor", "case_weights", "undeclared role")], TRUE),
+    tab[names(tab) == "undeclared role"]
   )
 
   cli::cli_text("Number of variables by role")
-  cli::cli_dl(setNames(tab, names(tab)))
+
+  spaces_needed <- max(nchar(names(tab))) - nchar(names(tab)) +
+    max(nchar(tab)) - nchar(tab)
+
+  cli::cli_verbatim(
+    glue::glue("{names(tab)}: {strrep('\ua0', spaces_needed)}{tab}")
+  )
 
   if ("tr_info" %in% names(x)) {
     cli::cli_h3("Training information")
@@ -735,6 +742,14 @@ print.recipe <- function(x, form_width = 30, ...) {
   if (!is.null(x$steps)) {
     cli::cli_h3("Operations")
   }
+  # # Don't do this
+  # if (all(purrr::map_lgl(x$steps, "trained"))) {
+  #   cli::cli_text("{.emph All steps are trained}")
+  #   x$steps <- purrr::map(x$steps, function(x) {
+  #     x$trained <- FALSE
+  #     x
+  #   })
+  # }
 
   for (step in x$steps) {
     print(step, form_width = form_width)
