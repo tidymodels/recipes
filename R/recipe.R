@@ -742,14 +742,6 @@ print.recipe <- function(x, form_width = 30, ...) {
   if (!is.null(x$steps)) {
     cli::cli_h3("Operations")
   }
-  # # Don't do this
-  # if (all(purrr::map_lgl(x$steps, "trained"))) {
-  #   cli::cli_text("{.emph All steps are trained}")
-  #   x$steps <- purrr::map(x$steps, function(x) {
-  #     x$trained <- FALSE
-  #     x
-  #   })
-  # }
 
   for (step in x$steps) {
     print(step, form_width = form_width)
