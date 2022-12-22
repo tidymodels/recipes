@@ -21,6 +21,8 @@ print_step <- function(tr_obj = NULL,
                        width = max(20, options()$width - 30),
                        case_weights = NULL) {
 
+  title <- trimws(title)
+
   trained_text <- if_else(trained, "Trained", "")
   case_weights_text <- case_when(
     is.null(case_weights) ~ "",
@@ -34,10 +36,14 @@ print_step <- function(tr_obj = NULL,
     true = ",", false = ""
   )
 
-  title_width <- paste(title, vline_seperator, trained_text, comma_seperator,
-                       case_weights_text) |> nchar()
+  width_title <- nchar(
+    paste0(
+      "* ", title, ":", " ", vline_seperator, " ", trained_text, " ",
+      comma_seperator, " ", case_weights_text
+    )
+  )
 
-  diff_width <- cli::console_width() * 1 - title_width
+  width_diff <- cli::console_width() * 1 - width_title
 
   if (trained) {
     elements <- tr_obj
@@ -53,13 +59,19 @@ print_step <- function(tr_obj = NULL,
     elements <- "<none>"
   }
 
-  # do math
-  first_line <- max(which(diff_width >= cumsum(nchar(elements) + 4)))
+  element_print_lengths <- cumsum(nchar(elements)) + # length of elements
+    c(0, cumsum(rep(2, length(elements) - 1))) + # length of comma seperator
+    c(rep(5, length(elements) - 1), 0) # length of `, ...`
+
+  first_line <- max(which(width_diff >= element_print_lengths))
+
+  more_dots <- ifelse(first_line == length(elements), "", ", ...")
 
   cli::cli_bullets(
     c("*" = "
-    {stringr::str_trim(title)}: \\
-    {.pkg {elements[seq_len(first_line)]}} \\
+    {title}: \\
+    {.pkg {elements[seq_len(first_line)]}}\\
+    {more_dots} \\
     {vline_seperator} \\
     {.emph {trained_text}}\\
     {comma_seperator} \\

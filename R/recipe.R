@@ -704,6 +704,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #'
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
+  cli::cli_div(theme = list(.pkg = list("vec-trunc" = Inf, "vec-last" = ", ")))
+
   cli::cli_h1("Recipe")
   cli::cli_h3("Inputs")
 
@@ -711,12 +713,14 @@ print.recipe <- function(x, form_width = 30, ...) {
   tab <- setNames(tab, names(tab))
   names(tab)[is.na(names(tab))] <- "undeclared role"
 
+  roles <- c("outcome", "predictor", "case_weights", "undeclared role")
+
   tab <- c(
-    tab[names(tab) == "outcome"],
-    tab[names(tab) == "predictor"],
-    tab[names(tab) == "case_weights"],
-    sort(tab[!names(tab) %in% c("outcome", "predictor", "case_weights", "undeclared role")], TRUE),
-    tab[names(tab) == "undeclared role"]
+    tab[names(tab) == roles[1]],
+    tab[names(tab) == roles[2]],
+    tab[names(tab) == roles[3]],
+    sort(tab[!names(tab) %in% roles], TRUE),
+    tab[names(tab) == roles[4]]
   )
 
   cli::cli_text("Number of variables by role")
@@ -743,9 +747,10 @@ print.recipe <- function(x, form_width = 30, ...) {
     cli::cli_h3("Operations")
   }
 
-  for (step in x$steps) {
+    for (step in x$steps) {
     print(step, form_width = form_width)
   }
+  cli::cli_end()
 
   invisible(x)
 }
