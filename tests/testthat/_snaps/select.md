@@ -13,33 +13,32 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Variables selected Species, starts_with("Sepal"), Petal.Width
+      -- Operations 
+      * Variables selected: Species, starts_with("Sepal"), Petal.Width
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Variables selected Species, Sepal.Length, Sepal.Width, petal_... [trained]
+      -- Operations 
+      * Variables selected: Species, Sepal.Length, Sepal.Width, petal_width | Trained
 

@@ -18,107 +18,105 @@
 
     Code
       print(filtering)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          7
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
       
-      Operations:
-      
-      Correlation filter on all_predictors()
+      -- Operations 
+      * Correlation filter on: all_predictors()
 
 ---
 
     Code
       prep(filtering)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          7
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Correlation filter on V6, V1 [trained]
+      -- Operations 
+      * Correlation filter on: V6, V1 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Correlation filter on <none>
+      -- Operations 
+      * Correlation filter on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Correlation filter on <none> [trained]
+      -- Operations 
+      * Correlation filter on: <none> | Trained
 
 # case weights
 
     Code
       filtering_trained
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          8
+      -- Inputs 
+      Number of variables by role
+      predictor:    8
+      case_weights: 1
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Correlation filter on V3_dup, V1, V2 [weighted, trained]
+      -- Operations 
+      * Correlation filter on: V3_dup, V1, V2 | Trained, weighted
 
 ---
 
     Code
       filtering_trained
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          8
+      -- Inputs 
+      Number of variables by role
+      predictor:    8
+      case_weights: 1
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Correlation filter on V6, V1, V3 [ignored weights, trained]
+      -- Operations 
+      * Correlation filter on: V6, V1, V3 | Trained, ignored weights
 

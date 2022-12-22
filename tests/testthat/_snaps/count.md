@@ -19,69 +19,67 @@
 
     Code
       print(rec5)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Operations:
-      
-      Regular expression counts using description
+      -- Operations 
+      * Regular expression counts using: description
 
 ---
 
     Code
       prep(rec5)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 40 data points and no missing data.
+      -- Training information 
+      Training data contained 40 data points and no incomplete rows.
       
-      Operations:
-      
-      Regular expression counts using description [trained]
+      -- Operations 
+      * Regular expression counts using: description | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Regular expression counts using <none>
+      -- Operations 
+      * Regular expression counts using: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Regular expression counts using <none> [trained]
+      -- Operations 
+      * Regular expression counts using: <none> | Trained
 

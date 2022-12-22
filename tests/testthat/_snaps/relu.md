@@ -35,69 +35,67 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Operations:
-      
-      Adding relu transform for val1
+      -- Operations 
+      * Adding relu transform for: val1
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 21 data points and no missing data.
+      -- Training information 
+      Training data contained 21 data points and no incomplete rows.
       
-      Operations:
-      
-      Adding relu transform for val1 [trained]
+      -- Operations 
+      * Adding relu transform for: val1 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Adding relu transform for <none>
+      -- Operations 
+      * Adding relu transform for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Adding relu transform for <none> [trained]
+      -- Operations 
+      * Adding relu transform for: <none> | Trained
 

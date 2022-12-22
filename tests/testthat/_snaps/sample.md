@@ -26,71 +26,70 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 6
       
-      Operations:
-      
-      Row sampling <none>
+      -- Operations 
+      * Row sampling: <none>
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 6
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Row sampling <none> [trained]
+      -- Operations 
+      * Row sampling: <none> | Trained
 
 # sample with case weights
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor         10
+      -- Inputs 
+      Number of variables by role
+      predictor:    10
+      case_weights:  1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Row sampling <none> [weighted, trained]
+      -- Operations 
+      * Row sampling: <none> | Trained, weighted
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor         10
+      -- Inputs 
+      Number of variables by role
+      predictor:    10
+      case_weights:  1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Row sampling <none> [weighted, trained]
+      -- Operations 
+      * Row sampling: <none> | Trained, weighted
 

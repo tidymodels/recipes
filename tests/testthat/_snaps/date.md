@@ -2,35 +2,34 @@
 
     Code
       print(date_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Operations:
-      
-      Date features from all_predictors()
+      -- Operations 
+      * Date features from: all_predictors()
 
 ---
 
     Code
       prep(date_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 10 data points and no missing data.
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
       
-      Operations:
-      
-      Date features from Dan, Stefan [trained]
+      -- Operations 
+      * Date features from: Dan, Stefan | Trained
 
 # can prep recipes with no keep_original_cols
 
@@ -45,35 +44,34 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Date features from <none>
+      -- Operations 
+      * Date features from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Date features from <none> [trained]
+      -- Operations 
+      * Date features from: <none> | Trained
 

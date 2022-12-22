@@ -2,56 +2,55 @@
 
     Code
       kpca_rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Operations:
-      
-      Polynomial kernel PCA extraction with X2, X3, X4, X5, X6
+      -- Operations 
+      * Polynomial kernel PCA extraction with: X2, X3, X4, X5, X6
 
 ---
 
     Code
       prep(kpca_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Polynomial kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
+      -- Operations 
+      * Polynomial kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
 # No kPCA comps
 
     Code
       pca_extract
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Polynomial kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
+      -- Operations 
+      * Polynomial kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
 # can prep recipes with no keep_original_cols
 
@@ -66,35 +65,34 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Polynomial kernel PCA extraction with <none>
+      -- Operations 
+      * Polynomial kernel PCA extraction with: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Polynomial kernel PCA extraction with <none> [trained]
+      -- Operations 
+      * Polynomial kernel PCA extraction with: <none> | Trained
 

@@ -11,107 +11,105 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
       
-      Operations:
-      
-      Extract patterns from all_predictors()
+      -- Operations 
+      * Extract patterns from: all_predictors()
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
       
-      Training data contained 4284 data points and no missing data.
+      -- Training information 
+      Training data contained 4284 data points and no incomplete rows.
       
-      Operations:
-      
-      Extract patterns from medium [trained]
+      -- Operations 
+      * Extract patterns from: medium | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Extract patterns from <none>
+      -- Operations 
+      * Extract patterns from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Extract patterns from <none> [trained]
+      -- Operations 
+      * Extract patterns from: <none> | Trained
 
 # case weights
 
     Code
       dummy_prepped
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor:    1
+      case_weights: 1
       
-      Training data contained 4 data points and no missing data.
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
       
-      Operations:
-      
-      Extract patterns from medium [weighted, trained]
+      -- Operations 
+      * Extract patterns from: medium | Trained, weighted
 
 ---
 
     Code
       dummy_prepped
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor:    1
+      case_weights: 1
       
-      Training data contained 4 data points and no missing data.
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
       
-      Operations:
-      
-      Extract patterns from medium [ignored weights, trained]
+      -- Operations 
+      * Extract patterns from: medium | Trained, ignored weights
 

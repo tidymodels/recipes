@@ -11,113 +11,110 @@
 
     Code
       print(standardized)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Operations:
-      
-      Centering for carbon
-      Scaling for hydrogen
-      Centering and scaling for nitrogen, carbon
+      -- Operations 
+      * Centering for: carbon
+      * Scaling for: hydrogen
+      * Centering and scaling for: nitrogen, carbon
 
 ---
 
     Code
       prep(standardized)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 536 data points and no missing data.
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering for carbon [trained]
-      Scaling for hydrogen [trained]
-      Centering and scaling for nitrogen, carbon [trained]
+      -- Operations 
+      * Centering for: carbon | Trained
+      * Scaling for: hydrogen | Trained
+      * Centering and scaling for: nitrogen, carbon | Trained
 
 # center - empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Centering for <none>
+      -- Operations 
+      * Centering for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering for <none> [trained]
+      -- Operations 
+      * Centering for: <none> | Trained
 
 # scale - empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Scaling for <none>
+      -- Operations 
+      * Scaling for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Scaling for <none> [trained]
+      -- Operations 
+      * Scaling for: <none> | Trained
 
 # scale - warns on zv
 
@@ -126,56 +123,55 @@
     Condition
       Warning:
       Column(s) have zero variance so scaling cannot be used: `zero_variance`. Consider using `step_zv()` to remove those columns before normalizing
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
       
-      Training data contained 536 data points and no missing data.
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
       
-      Operations:
-      
-      Scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
+      -- Operations 
+      * Scaling for: carbon, hydrogen, oxygen, nitrogen, sulfur, ... | Trained
 
 # normalize - empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Centering and scaling for <none>
+      -- Operations 
+      * Centering and scaling for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering and scaling for <none> [trained]
+      -- Operations 
+      * Centering and scaling for: <none> | Trained
 
 # normalize - warns on zv
 
@@ -184,138 +180,141 @@
     Condition
       Warning:
       Column(s) have zero variance so scaling cannot be used: `zero_variance`. Consider using `step_zv()` to remove those columns before normalizing
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
       
-      Training data contained 536 data points and no missing data.
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur, zer... [trained]
+      -- Operations 
+      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
 
 # centering with case weights
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering for disp, hp, drat, wt, qsec, vs, am, gear, carb [weighted, trained]
+      -- Operations 
+      * Centering for: disp, hp, drat, wt, qsec, vs, am, gear, ... | Trained,
+        weighted
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering for cyl, disp, hp, drat, qsec, vs, am, gear, carb [ignored weights, trained]
+      -- Operations 
+      * Centering for: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored weights
 
 # scaling with case weights
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Scaling for disp, hp, drat, wt, qsec, vs, am, gear, carb [weighted, trained]
+      -- Operations 
+      * Scaling for: disp, hp, drat, wt, qsec, vs, am, gear, carb | Trained, weighted
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Scaling for cyl, disp, hp, drat, qsec, vs, am, gear, carb [ignored weights, trained]
+      -- Operations 
+      * Scaling for: cyl, disp, hp, drat, qsec, vs, am, ... | Trained, ignored
+        weights
 
 # normalizing with case weights
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering and scaling for disp, hp, drat, wt, qsec, vs, am, gear, carb [weighted, trained]
+      -- Operations 
+      * Centering and scaling for: disp, hp, drat, wt, qsec, ... | Trained, weighted
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering and scaling for cyl, disp, hp, drat, qsec, vs, am, gear, carb [ignored weights, trained]
+      -- Operations 
+      * Centering and scaling for: cyl, disp, hp, drat, ... | Trained, ignored
+        weights
 

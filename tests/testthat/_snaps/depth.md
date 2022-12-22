@@ -2,71 +2,69 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Operations:
-      
-      Data depth by Species for all_predictors()
+      -- Operations 
+      * Data depth by Species for: all_predictors()
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Data depth by Species for Sepal.Length, Sepal.Width, Petal.Length, Petal.... [trained]
+      -- Operations 
+      * Data depth by Species for: Sepal.Length, Sepal.Width, ... | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Operations:
-      
-      Data depth by Species for <none>
+      -- Operations 
+      * Data depth by Species for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Data depth by Species for <none> [trained]
+      -- Operations 
+      * Data depth by Species for: <none> | Trained
 

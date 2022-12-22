@@ -140,18 +140,26 @@ sp_signed <-
 sp_signed
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Recipe
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
+
+## -- Recipe ------------------------------------------------------------
+
 ## 
-## Inputs:
+
+## -- Inputs
+
+## Number of variables by role
+
+## outcome:   1
+## predictor: 5
+
 ## 
-##       role #variables
-##    outcome          1
-##  predictor          5
-## 
-## Operations:
-## 
-## Centering and scaling for all_numeric_predictors()
-## Spatial sign on  all_numeric_predictors()
+
+## -- Operations
+
+## * Centering and scaling for: all_numeric_predictors()
+
+## * Spatial sign on: all_numeric_predictors()
 }\if{html}{\out{</div>}}
 
 We can create a \code{parsnip} model, and then build a workflow with the
@@ -234,20 +242,32 @@ Now to estimate the normalization statistics and the PCA loadings:
 pca_rec
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Recipe
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
+
+## -- Recipe ------------------------------------------------------------
+
 ## 
-## Inputs:
+
+## -- Inputs
+
+## Number of variables by role
+
+## outcome:   1
+## predictor: 5
+
 ## 
-##       role #variables
-##    outcome          1
-##  predictor          5
+
+## -- Training information
+
+## Training data contained 456 data points and no incomplete rows.
+
 ## 
-## Training data contained 456 data points and no missing data.
-## 
-## Operations:
-## 
-## Centering and scaling for carbon, hydrogen, oxygen, nitrogen, s... [trained]
-## PCA extraction with carbon, hydrogen, oxygen, nitrogen, su... [trained]
+
+## -- Operations
+
+## * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
+
+## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained
 }\if{html}{\out{</div>}}
 
 Note that the estimated recipe shows the actual column names captured by

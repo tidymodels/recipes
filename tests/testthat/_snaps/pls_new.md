@@ -29,37 +29,36 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Operations:
-      
-      PLS feature extraction with all_predictors()
+      -- Operations 
+      * PLS feature extraction with: all_predictors()
 
 ---
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      PLS feature extraction with carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+      -- Operations 
+      * PLS feature extraction with: carbon, hydrogen, oxygen, ... | Trained
 
 # can prep recipes with no keep_original_cols
 
@@ -74,35 +73,34 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      PLS feature extraction with <none>
+      -- Operations 
+      * PLS feature extraction with: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      PLS feature extraction with <none> [trained]
+      -- Operations 
+      * PLS feature extraction with: <none> | Trained
 

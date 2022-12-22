@@ -11,71 +11,69 @@
 
     Code
       print(imputed)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
       
-      Operations:
-      
-      Bagged tree imputation for carbon
+      -- Operations 
+      * Bagged tree imputation for: carbon
 
 ---
 
     Code
       prep(imputed)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
       
-      Training data contained 536 data points and no missing data.
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
       
-      Operations:
-      
-      Bagged tree imputation for carbon [trained]
+      -- Operations 
+      * Bagged tree imputation for: carbon | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Bagged tree imputation for <none>
+      -- Operations 
+      * Bagged tree imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Bagged tree imputation for <none> [trained]
+      -- Operations 
+      * Bagged tree imputation for: <none> | Trained
 

@@ -2,91 +2,89 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Operations:
-      
-      Distances to Species for all_predictors()
+      -- Operations 
+      * Distances to Species for: all_predictors()
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Distances to Species for Sepal.Length, Sepal.Width, Petal.Length, Petal.... [trained]
+      -- Operations 
+      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Operations:
-      
-      Distances to Species for <none>
+      -- Operations 
+      * Distances to Species for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Distances to Species for <none> [trained]
+      -- Operations 
+      * Distances to Species for: <none> | Trained
 
 # case weights
 
     Code
       rec_prep
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    4
+      case_weights: 1
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Distances to Species for Sepal.Length, Sepal.Width, Petal.Length, Petal.... [weighted, trained]
+      -- Operations 
+      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained, weighted
 

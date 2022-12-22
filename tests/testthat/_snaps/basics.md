@@ -81,19 +81,20 @@
        new (2): disp_ns_1, disp_ns_2
        removed (1): disp
       
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Natural splines on disp [trained]
+      -- Operations 
+      * Natural splines on: disp | Trained
 
 # case weights are being infered correctly for formula interface
 

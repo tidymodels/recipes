@@ -13,20 +13,20 @@
     Condition
       Warning:
       Since some operations have `skip = TRUE`, using `retain = TRUE` will allow those steps results to be accessible.
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Log transformation on Sepal.Length [trained]
-      Dummy variables from Species [trained]
-      Centering for Sepal.Width, Petal.Length, Petal.Width, Species... [trained]
+      -- Operations 
+      * Log transformation on: Sepal.Length | Trained
+      * Dummy variables from: Species | Trained
+      * Centering for: Sepal.Width, Petal.Length, Petal.Width, ... | Trained
 

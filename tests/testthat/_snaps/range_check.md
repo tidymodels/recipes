@@ -106,67 +106,67 @@
 
     Code
       print(check_range_extract)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        11 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 11
       
-      Operations:
-      
-      Checking range of drat, cyl, am
+      -- Operations 
+      * Checking range of: drat, cyl, am
 
 ---
 
     Code
       prep(check_range_extract)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        11 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 11
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Checking range of drat, cyl, am [trained]
+      -- Operations 
+      * Checking range of: drat, cyl, am | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Checking range of <none>
+      -- Operations 
+      * Checking range of: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Checking range of <none> [trained]
+      -- Operations 
+      * Checking range of: <none> | Trained
 

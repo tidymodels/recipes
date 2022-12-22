@@ -2,71 +2,69 @@
 
     Code
       print(with_poly)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Operations:
-      
-      Orthogonal polynomials on carbon, hydrogen
+      -- Operations 
+      * Orthogonal polynomials on: carbon, hydrogen
 
 ---
 
     Code
       prep(with_poly)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Orthogonal polynomials on carbon, hydrogen [trained]
+      -- Operations 
+      * Orthogonal polynomials on: carbon, hydrogen | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Orthogonal polynomials on <none>
+      -- Operations 
+      * Orthogonal polynomials on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Orthogonal polynomials on <none> [trained]
+      -- Operations 
+      * Orthogonal polynomials on: <none> | Trained
 
