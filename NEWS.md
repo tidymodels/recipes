@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* update print methods to use cli package for formatting. (#426)
+
 * Errors in `prep()` and `bake()` will now indicate which step caused the error. (#420)
 
 * Developer focused `check_type()` got a new `types` argument for more precise checking of column types.
