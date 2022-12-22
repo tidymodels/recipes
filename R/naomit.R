@@ -66,7 +66,9 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_naomit <- function(object, new_data, ...) {
-  tibble::as_tibble(tidyr::drop_na(new_data, object$columns))
+  columns <- object$columns
+  columns <- unname(columns)
+  tibble::as_tibble(tidyr::drop_na(new_data, tidyselect::all_of(columns)))
 }
 
 print.step_naomit <-

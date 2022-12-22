@@ -109,7 +109,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
   )
 
   cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
-  cols <- dplyr::rename_with(cols, ~ paste0(object$prefix, "_", .x))
+  cols <- dplyr::rename_with(cols, ~ vec_paste0(object$prefix, "_", .x))
 
   new_data <- dplyr::bind_cols(new_data, cols)
   new_data
