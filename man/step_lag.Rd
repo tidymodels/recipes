@@ -67,6 +67,11 @@ argument.
 The step assumes that the data are already \emph{in the proper sequential
 order} for lagging.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be affected) is returned.
+}
+
 \section{Case weights}{
 
 

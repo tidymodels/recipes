@@ -55,6 +55,11 @@ that it is by default called in the bake step. Be careful to avoid
 unintentional transformations when calling steps with
 \code{all_predictors}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
+\code{terms} (the columns that will be affected) is returned.
+}
+
 \section{Case weights}{
 
 

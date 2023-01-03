@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Added missing tidy method for `step_intercept()` and `step_lag()`. (#730)
+
 * Errors in `prep()` and `bake()` will now indicate which step caused the error. (#420)
 
 * Developer focused `check_type()` got a new `types` argument for more precise checking of column types.
