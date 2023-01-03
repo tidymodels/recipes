@@ -60,10 +60,15 @@ print_step <- function(tr_obj = NULL,
   }
 
   element_print_lengths <- cumsum(nchar(elements)) + # length of elements
-    c(0, cumsum(rep(2, length(elements) - 1))) + # length of comma seperator
-    c(rep(5, length(elements) - 1), 0) # length of `, ...`
+    c(0L, cumsum(rep(2L, length(elements) - 1))) + # length of comma seperator
+    c(rep(5L, length(elements) - 1), 0L) # length of `, ...`
 
-  first_line <- max(which(width_diff >= element_print_lengths))
+  first_line <- which(width_diff >= element_print_lengths)
+  first_line <- ifelse(
+    test = identical(first_line, integer(0)),
+    yes = length(element_print_lengths),
+    no = max(first_line)
+  )
 
   more_dots <- ifelse(first_line == length(elements), "", ", ...")
 
