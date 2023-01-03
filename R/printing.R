@@ -23,15 +23,15 @@ print_step <- function(tr_obj = NULL,
 
   title <- trimws(title)
 
-  trained_text <- if_else(trained, "Trained", "")
-  case_weights_text <- case_when(
+  trained_text <- dplyr::if_else(trained, "Trained", "")
+  case_weights_text <- dplyr::case_when(
     is.null(case_weights) ~ "",
     isTRUE(case_weights) ~ "weighted",
     isFALSE(case_weights) ~ "ignored weights"
   )
 
-  vline_seperator <- if_else(trained_text == "", "", "|")
-  comma_seperator <- if_else(
+  vline_seperator <- dplyr::if_else(trained_text == "", "", "|")
+  comma_seperator <- dplyr::if_else(
     trained_text != "" && case_weights_text != "",
     true = ",", false = ""
   )

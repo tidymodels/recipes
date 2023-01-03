@@ -710,7 +710,7 @@ print.recipe <- function(x, form_width = 30, ...) {
   cli::cli_h3("Inputs")
 
   tab <- table(x$var_info$role, useNA = "ifany")
-  tab <- setNames(tab, names(tab))
+  tab <- stats::setNames(tab, names(tab))
   names(tab)[is.na(names(tab))] <- "undeclared role"
 
   roles <- c("outcome", "predictor", "case_weights", "undeclared role")
