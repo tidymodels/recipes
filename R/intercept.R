@@ -106,7 +106,7 @@ print.step_intercept <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_intercept <- function(x, ...) {
-  res <- simple_terms(x, ...)
+  res <- tibble(value = x$name)
   res$id <- x$id
   res
 }
