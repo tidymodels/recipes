@@ -62,12 +62,12 @@ step_sample <- function(recipe, ...,
     rlang::warn("Selectors are not used for this step.")
   }
 
-  if (!is_tune(size) & !is_varying(size)) {
+  if (!is_tune(size)) {
     if (!is.null(size) & (!is.numeric(size) || size < 0)) {
       rlang::abort("`size` should be a positive number or NULL.")
     }
   }
-  if (!is_tune(replace) & !is_varying(replace)) {
+  if (!is_tune(replace)) {
     if (!is.logical(replace)) {
       rlang::abort("`replace` should be a single logical.")
     }
