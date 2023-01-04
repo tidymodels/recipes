@@ -64,6 +64,7 @@ print_step <- function(tr_obj = NULL,
     c(rep(5L, length(elements) - 1), 0L) # length of `, ...`
 
   first_line <- which(width_diff >= element_print_lengths)
+  first_line <- unname(first_line)
   first_line <- ifelse(
     test = identical(first_line, integer(0)),
     yes = length(element_print_lengths),
