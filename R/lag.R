@@ -20,6 +20,11 @@
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
@@ -132,3 +137,11 @@ print.step_lag <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
+
+#' @rdname tidy.recipe
+#' @export
+tidy.step_lag <- function(x, ...) {
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
+}
