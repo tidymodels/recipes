@@ -19,6 +19,12 @@
 #' @template step-return
 #' @export
 #'
+#' @details
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -96,3 +102,11 @@ print.step_intercept <-
     print_step(x$name, untrained_terms, x$trained, title, width)
     invisible(x)
   }
+
+#' @rdname tidy.recipe
+#' @export
+tidy.step_intercept <- function(x, ...) {
+  res <- tibble(value = x$name)
+  res$id <- x$id
+  res
+}
