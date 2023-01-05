@@ -103,6 +103,52 @@ test_that("passing new probs works", {
   )
 })
 
+test_that("outside argument", {
+  train_df <- tibble(a = 1:9)
+
+  new_df <- tibble(a = c(0.99, 5, 9.01))
+
+  expect_identical(
+    recipe(~ a, data = train_df) %>%
+      step_percentile(a, outside = "none") %>%
+      prep() %>%
+      bake(new_data = new_df),
+    tibble(a = c(NA, 0.5, NA))
+  )
+
+  expect_identical(
+    recipe(~ a, data = train_df) %>%
+      step_percentile(a, outside = "lower") %>%
+      prep() %>%
+      bake(new_data = new_df),
+    tibble(a = c(0, 0.5, NA))
+  )
+
+  expect_identical(
+    recipe(~ a, data = train_df) %>%
+      step_percentile(a, outside = "upper") %>%
+      prep() %>%
+      bake(new_data = new_df),
+    tibble(a = c(NA, 0.5, 1))
+  )
+
+  expect_identical(
+    recipe(~ a, data = train_df) %>%
+      step_percentile(a, outside = "both") %>%
+      prep() %>%
+      bake(new_data = new_df),
+    tibble(a = c(0, 0.5, 1))
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ a, data = train_df) %>%
+      step_percentile(a, outside = "left") %>%
+      prep() %>%
+      bake(new_data = new_df)
+  )
+})
+
 test_that("printing", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur)

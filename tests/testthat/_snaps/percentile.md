@@ -1,3 +1,12 @@
+# outside argument
+
+    Code
+      recipe(~a, data = train_df) %>% step_percentile(a, outside = "left") %>% prep() %>%
+        bake(new_data = new_df)
+    Condition
+      Error in `step_percentile()`:
+      ! `outside` must be one of "none", "both", "upper", or "lower", not "left".
+
 # printing
 
     Code
