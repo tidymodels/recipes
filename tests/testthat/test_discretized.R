@@ -1,6 +1,7 @@
 library(testthat)
 library(recipes)
 
+r_version <- function() paste0("R", getRversion()[, 1:2])
 
 ex_tr <- data.frame(
   x1 = 1:100,
@@ -131,7 +132,8 @@ test_that("multiple column prefix", {
   expect_snapshot(error = TRUE,
     recipe(~., data = example_data) %>%
       step_discretize(x1, x2, options = list(labels = "hello")) %>%
-      prep()
+      prep(),
+    variant = r_version()
   )
 })
 
