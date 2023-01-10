@@ -2,9 +2,9 @@ Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
 Version: 1.0.4
 Authors@R: c(
-    person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
-    person("RStudio", role = "cph")
+    person("Max", "Kuhn", , "max@posit.co", role = c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
+    person("Posit Software PBC", role = "cph")
   )
 Description: A recipe prepares your data for modeling. We provide an
     extensible framework for pipeable sequences of feature engineering
