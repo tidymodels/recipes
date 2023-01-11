@@ -1,4 +1,4 @@
-# recipes (development version)
+# recipes 1.0.4
 
 * Added missing tidy method for `step_intercept()` and `step_lag()`. (#730)
 
