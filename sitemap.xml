@@ -145,6 +145,9 @@
     <loc>https://recipes.tidymodels.org/reference/recipes_eval_select.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/recipes_extension_check.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/recipes_pkg_check.html</loc>
   </url>
   <url>
