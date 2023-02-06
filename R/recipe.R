@@ -393,7 +393,7 @@ prep.recipe <-
         inherits(x$var_info$type, "character")) {
       x$var_info <- x$var_info %>%
         dplyr::select(-type) %>%
-        dplyr::left_join(get_types(training), by = "variable") %>%
+        dplyr::left_join(get_types(training), by = "variable", multiple = "all") %>%
         dplyr::select(variable, type, role, source)
     }
 
@@ -401,7 +401,7 @@ prep.recipe <-
         inherits(x$term_info$type, "character")) {
       x$term_info <- x$term_info %>%
         dplyr::select(-type) %>%
-        dplyr::left_join(get_types(training), by = "variable") %>%
+        dplyr::left_join(get_types(training), by = "variable", multiple = "all") %>%
         dplyr::select(variable, type, role, source)
     }
 
@@ -778,7 +778,12 @@ print.recipe <- function(x, form_width = 30, ...) {
 summary.recipe <- function(object, original = FALSE, ...) {
   if (original) {
     res <- object$var_info
-    res <- dplyr::left_join(res, bake_req_tibble(object), by = "role")
+    res <- dplyr::left_join(
+      res,
+      bake_req_tibble(object),
+      by = "role",
+      multiple = "all"
+    )
   } else {
     res <- object$term_info
   }

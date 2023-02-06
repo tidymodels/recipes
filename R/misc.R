@@ -263,7 +263,7 @@ merge_term_info <- function(.new, .old) {
   # the original value
   .new %>%
     dplyr::rename(new_type = type) %>%
-    dplyr::left_join(.old, by = "variable") %>%
+    dplyr::left_join(.old, by = "variable", multiple = "all") %>%
     dplyr::mutate(
       type = ifelse(is.na(type), "other", "type"),
       type = ifelse(type != new_type, new_type, type)
