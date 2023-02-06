@@ -5,8 +5,8 @@
     Condition
       Error in `step_mutate()`:
       Caused by error in `dplyr::mutate()`:
-      ! Problem while computing `new_var = Sepal.Width * const`.
-      Caused by error in `mask$eval_all_mutate()`:
+      i In argument: `new_var = Sepal.Width * const`.
+      Caused by error:
       ! object 'const' not found
 
 # printing
