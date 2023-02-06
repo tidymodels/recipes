@@ -512,7 +512,7 @@ prep.recipe <-
       arrange(desc(number)) %>%
       summarise(
         type = list(dplyr::first(type)),
-        role = as.list(unique(unlist(role))),
+        role = list(unique(unlist(role))),
         source = dplyr::first(source),
         number = dplyr::first(number),
         skip = dplyr::first(skip),
