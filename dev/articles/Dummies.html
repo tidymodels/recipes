@@ -327,20 +327,7 @@ additive function of the results. In this case, that means that</p>
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">Species_versicolor</span> <span class="op">+</span> <span class="va">Species_virginica</span><span class="op">)</span></span></code></pre></div>
 <p>The entire interaction formula is shown here:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris_int</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;  predictor          6</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Training data contained 150 data points and no missing data.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Operations:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Dummy variables from Species [trained]</span></span>
-<span><span class="co">#&gt; Interactions with (Species_versicolor + Species_virginica):Sep... [trained]</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris_int</span></span></code></pre></div>
 <p>For interactions between multiple sets of dummy variables, the
 formula could include multiple selectors
 (e.g. <code>starts_with("x_"):starts_with("y_")</code>).</p>

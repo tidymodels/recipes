@@ -194,53 +194,53 @@ data, the step for scaling is given the centered data.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> oper 4 step ns [training] </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The retained training set is ~ 0.49 Mb  in memory.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Recipe</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Inputs:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       role #variables</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  predictor          5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Training data contained 2930 data points and no missing data.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Operations:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Collapsing factor levels for Neighborhood [trained]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy variables from Neighborhood, Central_Air [trained]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Interactions with Central_Air_Y:Year_Built [trained]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Natural splines on Longitude, Latitude [trained]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inputs </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of variables by role</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> outcome:   1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> predictor: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Training information </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Training data contained 2930 data points and no incomplete rows.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Operations </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Collapsing factor levels for: <span style="color: #0000BB;">Neighborhood</span> | <span style="font-style: italic;">Trained</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Dummy variables from: <span style="color: #0000BB;">Neighborhood</span>, <span style="color: #0000BB;">Central_Air</span> | <span style="font-style: italic;">Trained</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Interactions with: <span style="color: #0000BB;">Central_Air_Y:Year_Built</span> | <span style="font-style: italic;">Trained</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Natural splines on: <span style="color: #0000BB;">Longitude</span>, <span style="color: #0000BB;">Latitude</span> | <span style="font-style: italic;">Trained</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">prep</span><span class="op">(</span><span class="va">ames_rec</span>, log_changes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_other (other_4Lt89): same number of columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_other (other_ffdNH): same number of columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_dummy (dummy_UdMwD): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_dummy (dummy_MQSBf): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  new (9): Neighborhood_College_Creek, Neighborhood_Old_Town, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  removed (2): Neighborhood, Central_Air</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_interact (interact_RWjgy): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_interact (interact_ZGzss): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  new (1): Central_Air_Y_x_Year_Built</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> step_ns (ns_KHyXv): </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> step_ns (ns_Svhc1): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  new (10): Longitude_ns_1, Longitude_ns_2, Longitude_ns_3, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  removed (2): Longitude, Latitude</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Recipe</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Inputs:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       role #variables</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    outcome          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  predictor          5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Training data contained 2930 data points and no missing data.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Operations:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Collapsing factor levels for Neighborhood [trained]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dummy variables from Neighborhood, Central_Air [trained]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Interactions with Central_Air_Y:Year_Built [trained]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Natural splines on Longitude, Latitude [trained]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inputs </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of variables by role</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> outcome:   1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> predictor: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Training information </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Training data contained 2930 data points and no incomplete rows.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Operations </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Collapsing factor levels for: <span style="color: #0000BB;">Neighborhood</span> | <span style="font-style: italic;">Trained</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Dummy variables from: <span style="color: #0000BB;">Neighborhood</span>, <span style="color: #0000BB;">Central_Air</span> | <span style="font-style: italic;">Trained</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Interactions with: <span style="color: #0000BB;">Central_Air_Y:Year_Built</span> | <span style="font-style: italic;">Trained</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Natural splines on: <span style="color: #0000BB;">Longitude</span>, <span style="color: #0000BB;">Latitude</span> | <span style="font-style: italic;">Trained</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

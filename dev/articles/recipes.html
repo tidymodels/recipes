@@ -175,14 +175,7 @@ variables in a data set.</p>
 recipe is to use the standard formula method:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rec_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
-<span><span class="va">rec_obj</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;    outcome          1</span></span>
-<span><span class="co">#&gt;  predictor         13</span></span></code></pre></div>
+<span><span class="va">rec_obj</span></span></code></pre></div>
 <p>The data contained in the <code>data</code> argument need not be the
 training set; this data is only used to catalog the names of the
 variables and their types (e.g. numeric, etc.).</p>
@@ -239,18 +232,7 @@ are numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imputed</span> <span class="op">&lt;-</span> <span class="va">rec_obj</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_impute_knn.html">step_impute_knn</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="va">imputed</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;    outcome          1</span></span>
-<span><span class="co">#&gt;  predictor         13</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Operations:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></span></code></pre></div>
+<span><span class="va">imputed</span></span></code></pre></div>
 <p>It is important to realize that the <em>specific</em> variables have
 not been declared yet (as shown when the recipe is printed above). In
 some preprocessing steps, variables will be added or removed from the
@@ -262,62 +244,20 @@ do this, the step selects all non-numeric predictors:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ind_vars</span> <span class="op">&lt;-</span> <span class="va">imputed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="va">ind_vars</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;    outcome          1</span></span>
-<span><span class="co">#&gt;  predictor         13</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Operations:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></span>
-<span><span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></span></code></pre></div>
+<span><span class="va">ind_vars</span></span></code></pre></div>
 <p>At this point in the recipe, all of the predictor should be encoded
 as numeric, we can further add more steps to center and scale them:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">standardized</span> <span class="op">&lt;-</span> <span class="va">ind_vars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="va">standardized</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;    outcome          1</span></span>
-<span><span class="co">#&gt;  predictor         13</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Operations:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; K-nearest neighbor imputation for all_predictors()</span></span>
-<span><span class="co">#&gt; Dummy variables from all_nominal_predictors()</span></span>
-<span><span class="co">#&gt; Centering for all_numeric_predictors()</span></span>
-<span><span class="co">#&gt; Scaling for all_numeric_predictors()</span></span></code></pre></div>
+<span><span class="va">standardized</span></span></code></pre></div>
 <p>If these are the only preprocessing steps for the predictors, we can
 now estimate the means and standard deviations from the training set.
 The <code>prep</code> function is used with a recipe and a data set:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trained_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">standardized</span>, training <span class="op">=</span> <span class="va">credit_train</span><span class="op">)</span></span>
-<span><span class="va">trained_rec</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;    outcome          1</span></span>
-<span><span class="co">#&gt;  predictor         13</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Training data contained 3340 data points and 322 incomplete rows. </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Operations:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; K-nearest neighbor imputation for Seniority, Home, Time, Age, Marital, Rec... [trained]</span></span>
-<span><span class="co">#&gt; Dummy variables from Home, Marital, Records, Job [trained]</span></span>
-<span><span class="co">#&gt; Centering for Seniority, Time, Age, Expenses, Income, A... [trained]</span></span>
-<span><span class="co">#&gt; Scaling for Seniority, Time, Age, Expenses, Income, A... [trained]</span></span></code></pre></div>
+<span><span class="va">trained_rec</span></span></code></pre></div>
 <p>Note that the real variables are listed (e.g. <code>Home</code> etc.)
 instead of the selectors (<code><a href="../reference/has_role.html">all_numeric_predictors()</a></code>).</p>
 <p>Now that the statistics have been estimated, the preprocessing can be
