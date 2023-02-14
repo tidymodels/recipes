@@ -53,17 +53,16 @@
     Condition
       Warning:
       `size` was not an integer (3.14159265358979) and was converted to 3.
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 6
       
-      Operations:
-      
-      Moving 3-point mean on y1
+      -- Operations 
+      * Moving 3-point mean on: y1
 
 ---
 
@@ -95,69 +94,67 @@
 
     Code
       print(new_names)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 6
       
-      Operations:
-      
-      Moving 3-point mean on starts_with("y")
+      -- Operations 
+      * Moving 3-point mean on: starts_with("y")
 
 ---
 
     Code
       prep(new_names)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 6
       
-      Training data contained 81 data points and no missing data.
+      -- Training information 
+      Training data contained 81 data points and no incomplete rows.
       
-      Operations:
-      
-      Moving 3-point mean on y1, y2 [trained]
+      -- Operations 
+      * Moving 3-point mean on: y1, y2 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Moving 3-point mean on <none>
+      -- Operations 
+      * Moving 3-point mean on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Moving 3-point mean on <none> [trained]
+      -- Operations 
+      * Moving 3-point mean on: <none> | Trained
 

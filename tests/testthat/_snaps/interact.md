@@ -2,53 +2,36 @@
 
     Code
       print(int_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
       
-      Operations:
-      
-      Interactions with x1:x2
+      -- Operations 
+      * Interactions with: x1:x2
 
 ---
 
     Code
       prep(int_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
       
-      Training data contained 10 data points and no missing data.
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
       
-      Operations:
-      
-      Interactions with x1:x2 [trained]
-
-# missing columns
-
-    Code
-      no_fail_rec <- prep(no_fail, dat_tr)
-    Condition
-      Warning:
-      Interaction specification failed for: ~x1:x2. No interactions will be created.
-
----
-
-    Code
-      one_int_rec <- prep(one_int, dat_tr)
-    Condition
-      Warning:
-      Interaction specification failed for: ~x1:x2. No interactions will be created.
+      -- Operations 
+      * Interactions with: x1:x2 | Trained
 
 # bake method errors when needed non-standard role columns are missing
 

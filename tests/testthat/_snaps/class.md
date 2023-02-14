@@ -74,67 +74,67 @@
 
     Code
       print(rec7)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        2 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 2
       
-      Operations:
-      
-      Checking the class(es) for everything()
+      -- Operations 
+      * Checking the class(es) for: everything()
 
 ---
 
     Code
       prep(rec7)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        2 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 2
       
-      Training data contained 3 data points and no missing data.
+      -- Training information 
+      Training data contained 3 data points and no incomplete rows.
       
-      Operations:
-      
-      Checking the class(es) for x1, x2 [trained]
+      -- Operations 
+      * Checking the class(es) for: x1, x2 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Checking the class(es) for <none>
+      -- Operations 
+      * Checking the class(es) for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Checking the class(es) for <none> [trained]
+      -- Operations 
+      * Checking the class(es) for: <none> | Trained
 

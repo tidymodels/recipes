@@ -2,71 +2,69 @@
 
     Code
       print(standardized)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 2
       
-      Operations:
-      
-      Range scaling to [-12,1] for carbon, hydrogen
+      -- Operations 
+      * Range scaling to [-12,1] for: carbon, hydrogen
 
 ---
 
     Code
       prep(standardized)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 2
       
-      Training data contained 10 data points and no missing data.
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
       
-      Operations:
-      
-      Range scaling to [-12,1] for carbon, hydrogen [trained]
+      -- Operations 
+      * Range scaling to [-12,1] for: carbon, hydrogen | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Range scaling to [0,1] for <none>
+      -- Operations 
+      * Range scaling to [0,1] for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Range scaling to [0,1] for <none> [trained]
+      -- Operations 
+      * Range scaling to [0,1] for: <none> | Trained
 

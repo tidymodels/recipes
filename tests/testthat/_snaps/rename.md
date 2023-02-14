@@ -2,105 +2,102 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Variable renaming for wat
+      -- Operations 
+      * Variable renaming for: wat
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable renaming for wat [trained]
+      -- Operations 
+      * Variable renaming for: wat | Trained
 
 ---
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Variable renaming for contains("Sepal")
+      -- Operations 
+      * Variable renaming for: contains("Sepal")
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable renaming for Sepal.Length, Sepal.Width [trained]
+      -- Operations 
+      * Variable renaming for: Sepal.Length, Sepal.Width | Trained
 
 # rename - empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Variable renaming for <none>
+      -- Operations 
+      * Variable renaming for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable renaming for <none> [trained]
+      -- Operations 
+      * Variable renaming for: <none> | Trained
 
 # mulitple functions
 
@@ -115,35 +112,34 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Variable renaming for <none>
+      -- Operations 
+      * Variable renaming for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable renaming for <none> [trained]
+      -- Operations 
+      * Variable renaming for: <none> | Trained
 

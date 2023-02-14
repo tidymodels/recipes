@@ -2,37 +2,36 @@
 
     Code
       print(with_ns)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Operations:
-      
-      Basis spline expansion carbon, hydrogen
+      -- Operations 
+      * Basis spline expansion: carbon, hydrogen
 
 ---
 
     Code
       prep(with_ns)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Basis spline expansion carbon, hydrogen [trained]
+      -- Operations 
+      * Basis spline expansion: carbon, hydrogen | Trained
 
 ---
 
@@ -43,54 +42,53 @@
       The 'df' must be a nonnegative integer.
       Warning:
       The 'df' must be a nonnegative integer.
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Basis spline expansion <none> [trained]
+      -- Operations 
+      * Basis spline expansion: <none> | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Basis spline expansion <none>
+      -- Operations 
+      * Basis spline expansion: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Basis spline expansion <none> [trained]
+      -- Operations 
+      * Basis spline expansion: <none> | Trained
 

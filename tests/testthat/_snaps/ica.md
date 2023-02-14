@@ -2,93 +2,91 @@
 
     Code
       print(ica_extract)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Operations:
-      
-      Centering and scaling for all_predictors()
-      ICA extraction with carbon, hydrogen
+      -- Operations 
+      * Centering and scaling for: all_predictors()
+      * ICA extraction with: carbon, hydrogen
 
 ---
 
     Code
       prep(ica_extract)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
-      ICA extraction with carbon, hydrogen [trained]
+      -- Operations 
+      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
+      * ICA extraction with: carbon, hydrogen | Trained
 
 # No ICA comps
 
     Code
       print(ica_extract_trained)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering and scaling for carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
-      No ICA components were extracted from carbon, hydrogen, oxygen, nitrogen, sulfur [trained]
+      -- Operations 
+      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
+      * No ICA components were extracted from: carbon, hydrogen, ... | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      ICA extraction with <none>
+      -- Operations 
+      * ICA extraction with: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      ICA extraction with <none> [trained]
+      -- Operations 
+      * ICA extraction with: <none> | Trained
 

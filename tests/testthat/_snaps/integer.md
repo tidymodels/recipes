@@ -2,69 +2,67 @@
 
     Code
       print(ints)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Operations:
-      
-      Integer encoding for all_predictors()
+      -- Operations 
+      * Integer encoding for: all_predictors()
 
 ---
 
     Code
       prep(ints)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 10 data points and 2 incomplete rows. 
+      -- Training information 
+      Training data contained 10 data points and 2 incomplete rows.
       
-      Operations:
-      
-      Integer encoding for x, y, z [trained]
+      -- Operations 
+      * Integer encoding for: x, y, z | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Integer encoding for <none>
+      -- Operations 
+      * Integer encoding for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Integer encoding for <none> [trained]
+      -- Operations 
+      * Integer encoding for: <none> | Trained
 
