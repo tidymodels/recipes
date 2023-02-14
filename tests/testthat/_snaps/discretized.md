@@ -52,19 +52,19 @@
     Condition
       Warning:
       Note that the options `prefix` and `labels` will be applied to all variables
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 1000 data points and no missing data.
+      -- Training information 
+      Training data contained 1000 data points and no incomplete rows.
       
-      Operations:
-      
-      Discretize numeric variables from x1, x2 [trained]
+      -- Operations 
+      * Discretize numeric variables from: x1, x2 | Trained
 
 # bad args
 
@@ -82,19 +82,19 @@
     Condition
       Warning:
       Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Discretize numeric variables from x1 [trained]
+      -- Operations 
+      * Discretize numeric variables from: x1 | Trained
 
 ---
 
@@ -104,87 +104,85 @@
     Condition
       Warning:
       The prefix '@$' is not a valid R name. It has been changed to 'X..'.
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Discretize numeric variables from x1 [trained]
+      -- Operations 
+      * Discretize numeric variables from: x1 | Trained
 
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Operations:
-      
-      Discretize numeric variables from x1
+      -- Operations 
+      * Discretize numeric variables from: x1
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Discretize numeric variables from x1 [trained]
+      -- Operations 
+      * Discretize numeric variables from: x1 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Discretize numeric variables from <none>
+      -- Operations 
+      * Discretize numeric variables from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Discretize numeric variables from <none> [trained]
+      -- Operations 
+      * Discretize numeric variables from: <none> | Trained
 

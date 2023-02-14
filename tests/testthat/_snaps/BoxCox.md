@@ -19,35 +19,34 @@
       Non-positive values in selected variable.
       Warning:
       No Box-Cox transformation could be estimated for: `x1`
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
       
-      Training data contained 20 data points and no missing data.
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
       
-      Operations:
-      
-      Box-Cox transformation on <none> [trained]
+      -- Operations 
+      * Box-Cox transformation on: <none> | Trained
 
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
       
-      Operations:
-      
-      Box-Cox transformation on x1, x2, x3, x4
+      -- Operations 
+      * Box-Cox transformation on: x1, x2, x3, x4
 
 ---
 
@@ -60,53 +59,52 @@
       Fewer than `num_unique` values in selected variable.
       Warning:
       No Box-Cox transformation could be estimated for: `x2`, `x3`
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
       
-      Training data contained 20 data points and no missing data.
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
       
-      Operations:
-      
-      Box-Cox transformation on x1, x4 [trained]
+      -- Operations 
+      * Box-Cox transformation on: x1, x4 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Box-Cox transformation on <none>
+      -- Operations 
+      * Box-Cox transformation on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Box-Cox transformation on <none> [trained]
+      -- Operations 
+      * Box-Cox transformation on: <none> | Trained
 

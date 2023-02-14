@@ -63,69 +63,67 @@
 
     Code
       print(num_rec_1)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      predictor: 10
       
-      Operations:
-      
-      Profiling data set for sqft
+      -- Operations 
+      * Profiling data set for: sqft
 
 ---
 
     Code
       print(num_rec_2)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      predictor: 10
       
-      Training data contained 20 data points and no missing data.
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
       
-      Operations:
-      
-      Profiling data set for sqft [trained]
+      -- Operations 
+      * Profiling data set for: sqft | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Profiling data set for mpg
+      -- Operations 
+      * Profiling data set for: mpg
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Profiling data set for mpg [trained]
+      -- Operations 
+      * Profiling data set for: mpg | Trained
 

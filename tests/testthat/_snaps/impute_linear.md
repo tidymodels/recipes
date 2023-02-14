@@ -22,107 +22,105 @@
 
     Code
       print(imputed)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        3 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 3
       
-      Operations:
-      
-      Linear regression imputation for Lot_Frontage
+      -- Operations 
+      * Linear regression imputation for: Lot_Frontage
 
 ---
 
     Code
       prep(imputed)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        3 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 3
       
-      Training data contained 2930 data points and 556 incomplete rows. 
+      -- Training information 
+      Training data contained 2930 data points and 556 incomplete rows.
       
-      Operations:
-      
-      Linear regression imputation for Lot_Frontage [trained]
+      -- Operations 
+      * Linear regression imputation for: Lot_Frontage | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Linear regression imputation for <none>
+      -- Operations 
+      * Linear regression imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Linear regression imputation for <none> [trained]
+      -- Operations 
+      * Linear regression imputation for: <none> | Trained
 
 # case weights
 
     Code
       rec_prepped
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
+      -- Inputs 
+      Number of variables by role
+      case_weights:    1
+      undeclared role: 2
       
-        2 variables with undeclared roles
+      -- Training information 
+      Training data contained 2930 data points and 556 incomplete rows.
       
-      Training data contained 2930 data points and 556 incomplete rows. 
-      
-      Operations:
-      
-      Linear regression imputation for Lot_Frontage [weighted, trained]
+      -- Operations 
+      * Linear regression imputation for: Lot_Frontage | Trained, weighted
 
 ---
 
     Code
       rec_prepped
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
+      -- Inputs 
+      Number of variables by role
+      case_weights:    1
+      undeclared role: 2
       
-        2 variables with undeclared roles
+      -- Training information 
+      Training data contained 2930 data points and 556 incomplete rows.
       
-      Training data contained 2930 data points and 556 incomplete rows. 
-      
-      Operations:
-      
-      Linear regression imputation for Lot_Frontage [ignored weights, trained]
+      -- Operations 
+      * Linear regression imputation for: Lot_Frontage | Trained, ignored weights
 

@@ -2,9 +2,13 @@
 
 * Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
 
+* update print methods to use cli package for formatting. (#426)
+
+
 # recipes 1.0.4
 
 * Added missing tidy method for `step_intercept()` and `step_lag()`. (#730)
+
 
 * Errors in `prep()` and `bake()` will now indicate which step caused the error. (#420)
 

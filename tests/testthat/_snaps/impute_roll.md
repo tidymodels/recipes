@@ -40,71 +40,69 @@
 
     Code
       print(seven_pt)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-             role #variables
-        predictor          3
-       time_index          1
+      -- Inputs 
+      Number of variables by role
+      predictor:  3
+      time_index: 1
       
-      Operations:
-      
-      Rolling imputation for all_predictors()
+      -- Operations 
+      * Rolling imputation for: all_predictors()
 
 ---
 
     Code
       prep(seven_pt)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-             role #variables
-        predictor          3
-       time_index          1
+      -- Inputs 
+      Number of variables by role
+      predictor:  3
+      time_index: 1
       
-      Training data contained 12 data points and 7 incomplete rows. 
+      -- Training information 
+      Training data contained 12 data points and 7 incomplete rows.
       
-      Operations:
-      
-      Rolling imputation for x1, x2, x3 [trained]
+      -- Operations 
+      * Rolling imputation for: x1, x2, x3 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Rolling imputation for <none>
+      -- Operations 
+      * Rolling imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Rolling imputation for <none> [trained]
+      -- Operations 
+      * Rolling imputation for: <none> | Trained
 

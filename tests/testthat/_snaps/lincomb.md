@@ -2,71 +2,69 @@
 
     Code
       print(dum_filtered)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         12
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 12
       
-      Operations:
-      
-      Linear combination filter on all_predictors()
+      -- Operations 
+      * Linear combination filter on: all_predictors()
 
 ---
 
     Code
       prep(dum_filtered)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         12
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 12
       
-      Training data contained 24 data points and no missing data.
+      -- Training information 
+      Training data contained 24 data points and no incomplete rows.
       
-      Operations:
-      
-      Linear combination filter removed N1, P1, K1 [trained]
+      -- Operations 
+      * Linear combination filter removed: N1, P1, K1 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Linear combination filter on <none>
+      -- Operations 
+      * Linear combination filter on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Linear combination filter removed <none> [trained]
+      -- Operations 
+      * Linear combination filter removed: <none> | Trained
 

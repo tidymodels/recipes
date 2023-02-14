@@ -29,35 +29,34 @@
 
     Code
       print(rec3)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Ratios from all_numeric(), all_numeric()
+      -- Operations 
+      * Ratios from: all_numeric(), all_numeric()
 
 ---
 
     Code
       prep(rec3)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 10 data points and 1 incomplete row. 
+      -- Training information 
+      Training data contained 10 data points and 1 incomplete row.
       
-      Operations:
-      
-      Ratios from x2, x3, x4, x1, x1, x2, x3, x4 [trained]
+      -- Operations 
+      * Ratios from: x2, x3, x4, x1, x1, x2, x3, x4 | Trained
 
 # can prep recipes with no keep_original_cols
 
@@ -72,35 +71,34 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Ratios from mpg
+      -- Operations 
+      * Ratios from: mpg
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Ratios from <none> [trained]
+      -- Operations 
+      * Ratios from: <none> | Trained
 

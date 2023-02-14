@@ -29,109 +29,107 @@
 
     Code
       print(impute_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         13
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
       
-      Operations:
-      
-      Mode imputation for Status, Home, Marital
+      -- Operations 
+      * Mode imputation for: Status, Home, Marital
 
 ---
 
     Code
       prep(impute_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         13
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
       
-      Training data contained 2000 data points and 186 incomplete rows. 
+      -- Training information 
+      Training data contained 2000 data points and 186 incomplete rows.
       
-      Operations:
-      
-      Mode imputation for Status, Home, Marital [trained]
+      -- Operations 
+      * Mode imputation for: Status, Home, Marital | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Mode imputation for <none>
+      -- Operations 
+      * Mode imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Mode imputation for <none> [trained]
+      -- Operations 
+      * Mode imputation for: <none> | Trained
 
 # case weights
 
     Code
       imputed
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor:    1
+      case_weights: 1
       
-      Training data contained 150 data points and 10 incomplete rows. 
+      -- Training information 
+      Training data contained 150 data points and 10 incomplete rows.
       
-      Operations:
-      
-      Mode imputation for x1 [weighted, trained]
+      -- Operations 
+      * Mode imputation for: x1 | Trained, weighted
 
 ---
 
     Code
       imputed
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor:    1
+      case_weights: 1
       
-      Training data contained 150 data points and 10 incomplete rows. 
+      -- Training information 
+      Training data contained 150 data points and 10 incomplete rows.
       
-      Operations:
-      
-      Mode imputation for x1 [ignored weights, trained]
+      -- Operations 
+      * Mode imputation for: x1 | Trained, ignored weights
 

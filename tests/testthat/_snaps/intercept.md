@@ -21,51 +21,50 @@
     Condition
       Warning:
       Selectors are not used for this step.
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 10 data points and no missing data.
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
       
-      Operations:
-      
-      Adding intercept named: intercept [trained]
+      -- Operations 
+      * Adding intercept named:: intercept | Trained
 
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Operations:
-      
-      Adding intercept named: intercept
+      -- Operations 
+      * Adding intercept named:: intercept
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 10 data points and no missing data.
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
       
-      Operations:
-      
-      Adding intercept named: intercept [trained]
+      -- Operations 
+      * Adding intercept named:: intercept | Trained
 
