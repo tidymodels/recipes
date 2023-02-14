@@ -97,7 +97,7 @@ step_date <-
         "dow",
         "month"
       )
-    if (!is_tune(features) & !is_varying(features)) {
+    if (!is_tune(features)) {
       if (!all(features %in% feat)) {
         rlang::abort(paste0(
           "Possible values of `features` should include: ",

@@ -97,7 +97,7 @@ step_other <-
            objects = NULL,
            skip = FALSE,
            id = rand_id("other")) {
-    if (!is_tune(threshold) & !is_varying(threshold)) {
+    if (!is_tune(threshold)) {
       if (threshold < 0) {
         rlang::abort("`threshold` should be non-negative.")
       }
