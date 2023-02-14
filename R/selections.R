@@ -175,7 +175,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
   data_info <- tibble(variable = names(data))
-  data_info <- dplyr::left_join(data_info, info, by = "variable")
+  data_info <- dplyr::left_join(data_info, info, by = "variable", multiple = "all")
 
   nested_info <- tidyr::nest(data_info, data = -variable)
 

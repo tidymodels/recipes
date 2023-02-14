@@ -1,10 +1,10 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 1.0.3.9000
+Version: 1.0.4.9000
 Authors@R: c(
-    person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre")),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
-    person("RStudio", role = "cph")
+    person("Max", "Kuhn", , "max@posit.co", role = c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
+    person("Posit Software PBC", role = "cph")
   )
 Description: A recipe prepares your data for modeling. We provide an
     extensible framework for pipeable sequences of feature engineering
@@ -17,7 +17,7 @@ URL: https://github.com/tidymodels/recipes,
     https://recipes.tidymodels.org/
 BugReports: https://github.com/tidymodels/recipes/issues
 Depends: 
-    dplyr,
+    dplyr (>= 1.1.0),
     R (>= 3.4)
 Imports: 
     cli,
@@ -70,4 +70,4 @@ Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1.9000
+RoxygenNote: 7.2.3
