@@ -49,7 +49,7 @@ step_holiday <-
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("holiday")) {
-    if (!is_tune(holidays) & !is_varying(holidays)) {
+    if (!is_tune(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days)) {
         rlang::abort("Invalid `holidays` value. See timeDate::listHolidays")

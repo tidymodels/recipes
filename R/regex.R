@@ -56,7 +56,7 @@ step_regex <- function(recipe,
                        input = NULL,
                        skip = FALSE,
                        id = rand_id("regex")) {
-  if (!is_tune(pattern) & !is_varying(pattern)) {
+  if (!is_tune(pattern)) {
     if (!is.character(pattern)) {
       rlang::abort("`pattern` should be a character string")
     }
