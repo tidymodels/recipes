@@ -1,6 +1,9 @@
 # recipes (development version)
 
+* Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
+
 * update print methods to use cli package for formatting. (#426)
+
 
 # recipes 1.0.4
 
