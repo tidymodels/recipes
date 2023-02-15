@@ -83,6 +83,7 @@ replaces the value of a variable with its percentile from the training set.</p>
 <span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ref_dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>probs <span class="op">=</span> <span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>  outside <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"percentile"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -119,6 +120,15 @@ preprocessing step has be trained by <code><a href="prep.html">prep()</a></code>
 <dt>options</dt>
 <dd><p>A named list of options to pass to <code><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">stats::quantile()</a></code>.
 See Details for more information.</p></dd>
+
+
+<dt>outside</dt>
+<dd><p>A character, describing how interpolation is to take place
+outside the interval <code>[min(x), max(x)]</code>. <code>none</code> means nothing will happen
+and values outside the range will be <code>NA</code>. <code>lower</code> means that new values
+less than <code>min(x)</code> will be given the value <code>0</code>. <code>upper</code> means that new
+values larger than <code>max(x)</code> will be given the value <code>1</code>. <code>both</code> will handle
+both cases. Defaults to <code>none</code>.</p></dd>
 
 
 <dt>skip</dt>
