@@ -11,6 +11,7 @@ step_percentile(
   trained = FALSE,
   ref_dist = NULL,
   options = list(probs = (0:100)/100),
+  outside = "none",
   skip = FALSE,
   id = rand_id("percentile")
 )
@@ -34,6 +35,13 @@ preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
 \item{options}{A named list of options to pass to \code{\link[stats:quantile]{stats::quantile()}}.
 See Details for more information.}
+
+\item{outside}{A character, describing how interpolation is to take place
+outside the interval \verb{[min(x), max(x)]}. \code{none} means nothing will happen
+and values outside the range will be \code{NA}. \code{lower} means that new values
+less than \code{min(x)} will be given the value \code{0}. \code{upper} means that new
+values larger than \code{max(x)} will be given the value \code{1}. \code{both} will handle
+both cases. Defaults to \code{none}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

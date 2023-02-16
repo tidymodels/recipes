@@ -60,7 +60,7 @@ step_poly <-
            options = list(),
            skip = FALSE,
            id = rand_id("poly")) {
-    if (!is_tune(degree) & !is_varying(degree)) {
+    if (!is_tune(degree)) {
       degree <- as.integer(degree)
     }
 

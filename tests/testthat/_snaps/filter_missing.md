@@ -2,107 +2,106 @@
 
     Code
       print(filtering)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          7
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
       
-      Operations:
-      
-      Missing value column filter on all_predictors()
+      -- Operations 
+      * Missing value column filter on: all_predictors()
 
 ---
 
     Code
       prep(filtering)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          7
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
       
-      Training data contained 100 data points and 100 incomplete rows. 
+      -- Training information 
+      Training data contained 100 data points and 100 incomplete rows.
       
-      Operations:
-      
-      Missing value column filter removed dbl4, dbl5, chr2 [trained]
+      -- Operations 
+      * Missing value column filter removed: dbl4, dbl5, chr2 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Missing value column filter on <none>
+      -- Operations 
+      * Missing value column filter on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Missing value column filter removed <none> [trained]
+      -- Operations 
+      * Missing value column filter removed: <none> | Trained
 
 # case weights
 
     Code
       filtering_trained
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          7
+      -- Inputs 
+      Number of variables by role
+      predictor:    7
+      case_weights: 1
       
-      Training data contained 100 data points and 100 incomplete rows. 
+      -- Training information 
+      Training data contained 100 data points and 100 incomplete rows.
       
-      Operations:
-      
-      Missing value column filter removed dbl2, dbl3, dbl4, dbl5, chr1, chr2 [weighted, trained]
+      -- Operations 
+      * Missing value column filter removed: dbl2, dbl3, dbl4, ... | Trained,
+        weighted
 
 ---
 
     Code
       filtering_trained
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          7
+      -- Inputs 
+      Number of variables by role
+      predictor:    7
+      case_weights: 1
       
-      Training data contained 100 data points and 100 incomplete rows. 
+      -- Training information 
+      Training data contained 100 data points and 100 incomplete rows.
       
-      Operations:
-      
-      Missing value column filter removed dbl2, dbl3, dbl4, dbl5, chr2 [ignored weights, trained]
+      -- Operations 
+      * Missing value column filter removed: dbl2, ... | Trained, ignored weights
 

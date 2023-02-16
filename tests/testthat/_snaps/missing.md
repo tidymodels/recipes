@@ -64,67 +64,67 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        11 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 11
       
-      Operations:
-      
-      Check missing values for all_numeric()
+      -- Operations 
+      * Check missing values for: all_numeric()
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        11 variables (no declared roles)
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 11
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Check missing values for mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gea... [trained]
+      -- Operations 
+      * Check missing values for: mpg, cyl, disp, hp, drat, wt, qsec, ... | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Check missing values for <none>
+      -- Operations 
+      * Check missing values for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Check missing values for <none> [trained]
+      -- Operations 
+      * Check missing values for: <none> | Trained
 

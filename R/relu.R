@@ -71,17 +71,17 @@ step_relu <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("relu")) {
-    if (!is_tune(shift) & !is_varying(shift)) {
+    if (!is_tune(shift)) {
       if (!is.numeric(shift)) {
         rlang::abort("Shift argument must be a numeric value.")
       }
     }
-    if (!is_tune(reverse) & !is_varying(reverse)) {
+    if (!is_tune(reverse)) {
       if (!is.logical(reverse)) {
         rlang::abort("Reverse argument must be a logical value.")
       }
     }
-    if (!is_tune(smooth) & !is_varying(smooth)) {
+    if (!is_tune(smooth)) {
       if (!is.logical(smooth)) {
         rlang::abort("Smooth argument must be logical value.")
       }

@@ -98,7 +98,7 @@ step_dummy_extract <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy_extract")) {
-    if (!is_tune(threshold) & !is_varying(threshold)) {
+    if (!is_tune(threshold)) {
       if (threshold < 0) {
         rlang::abort("`threshold` should not be negative.")
       }

@@ -77,15 +77,14 @@
     Condition
       Warning:
       Column, 'sample', does not have role, 'non-existant'.
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-        role #variables
-       role1          1
-      
-        7 variables with undeclared roles
+      -- Inputs 
+      Number of variables by role
+      role1:           1
+      undeclared role: 7
 
 # empty dots and zero column selections return input with a warning
 

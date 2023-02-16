@@ -35,69 +35,67 @@
 
     Code
       print(rec %>% step_unknown(city, zip))
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          9
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
       
-      Operations:
-      
-      Unknown factor level assignment for city, zip
+      -- Operations 
+      * Unknown factor level assignment for: city, zip
 
 ---
 
     Code
       print(rec %>% step_unknown(city, zip) %>% prep())
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          9
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
       
-      Training data contained 800 data points and no missing data.
+      -- Training information 
+      Training data contained 800 data points and no incomplete rows.
       
-      Operations:
-      
-      Unknown factor level assignment for city, zip [trained]
+      -- Operations 
+      * Unknown factor level assignment for: city, zip | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Unknown factor level assignment for <none>
+      -- Operations 
+      * Unknown factor level assignment for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Unknown factor level assignment for <none> [trained]
+      -- Operations 
+      * Unknown factor level assignment for: <none> | Trained
 

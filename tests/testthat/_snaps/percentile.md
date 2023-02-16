@@ -1,108 +1,115 @@
+# outside argument
+
+    Code
+      recipe(~a, data = train_df) %>% step_percentile(a, outside = "left") %>% prep() %>%
+        bake(new_data = new_df)
+    Condition
+      Error in `step_percentile()`:
+      ! `outside` must be one of "none", "both", "upper", or "lower", not "left".
+
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          8
+      -- Inputs 
+      Number of variables by role
+      predictor: 8
       
-      Operations:
-      
-      Percentile transformation on carbon, sulfur
+      -- Operations 
+      * Percentile transformation on: carbon, sulfur
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          8
+      -- Inputs 
+      Number of variables by role
+      predictor: 8
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Percentile transformation on carbon, sulfur [trained]
+      -- Operations 
+      * Percentile transformation on: carbon, sulfur | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Percentile transformation on <none>
+      -- Operations 
+      * Percentile transformation on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Percentile transformation on <none> [trained]
+      -- Operations 
+      * Percentile transformation on: <none> | Trained
 
 # case weights
 
     Code
       rec_trained
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          8
+      -- Inputs 
+      Number of variables by role
+      predictor:    8
+      case_weights: 1
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Percentile transformation on carbon, sulfur [weighted, trained]
+      -- Operations 
+      * Percentile transformation on: carbon, sulfur | Trained, weighted
 
 ---
 
     Code
       rec_trained
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          8
+      -- Inputs 
+      Number of variables by role
+      predictor:    8
+      case_weights: 1
       
-      Training data contained 456 data points and no missing data.
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
       
-      Operations:
-      
-      Percentile transformation on carbon, sulfur [ignored weights, trained]
+      -- Operations 
+      * Percentile transformation on: carbon, sulfur | Trained, ignored weights
 

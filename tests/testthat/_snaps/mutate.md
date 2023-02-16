@@ -5,111 +5,108 @@
     Condition
       Error in `step_mutate()`:
       Caused by error in `dplyr::mutate()`:
-      ! Problem while computing `new_var = Sepal.Width * const`.
-      Caused by error in `mask$eval_all_mutate()`:
+      i In argument: `new_var = Sepal.Width * const`.
+      Caused by error:
       ! object 'const' not found
 
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Variable mutation for 5
+      -- Operations 
+      * Variable mutation for: 5
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable mutation for ~5 [trained]
+      -- Operations 
+      * Variable mutation for: ~5 | Trained
 
 ---
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Variable mutation for contains("Sepal")
+      -- Operations 
+      * Variable mutation for: contains("Sepal")
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable mutation for Sepal.Length, Sepal.Width [trained]
+      -- Operations 
+      * Variable mutation for: Sepal.Length, Sepal.Width | Trained
 
 # mutate_at - empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Variable mutation for <none>
+      -- Operations 
+      * Variable mutation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Variable mutation for <none> [trained]
+      -- Operations 
+      * Variable mutation for: <none> | Trained
 

@@ -19,69 +19,67 @@
 
     Code
       print(rec1)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Operations:
-      
-      Regular expression dummy variable using "(rock|stony)"
+      -- Operations 
+      * Regular expression dummy variable using: "(rock|stony)"
 
 ---
 
     Code
       prep(rec1)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 40 data points and no missing data.
+      -- Training information 
+      Training data contained 40 data points and no incomplete rows.
       
-      Operations:
-      
-      Regular expression dummy variable using "(rock|stony)" [trained]
+      -- Operations 
+      * Regular expression dummy variable using: "(rock|stony)" | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Regular expression dummy variable using "."
+      -- Operations 
+      * Regular expression dummy variable using: "."
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Regular expression dummy variable using "." [trained]
+      -- Operations 
+      * Regular expression dummy variable using: "." | Trained
 

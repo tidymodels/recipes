@@ -2,35 +2,34 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
       
-      Operations:
-      
-      Log transformation on x1, x2, x3, x4
+      -- Operations 
+      * Log transformation on: x1, x2, x3, x4
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
       
-      Training data contained 20 data points and no missing data.
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
       
-      Operations:
-      
-      Log transformation on x1, x2, x3, x4 [trained]
+      -- Operations 
+      * Log transformation on: x1, x2, x3, x4 | Trained
 
 # signed arg
 
@@ -39,53 +38,52 @@
     Condition
       Warning:
       When signed is TRUE, offset will be ignored
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
       
-      Training data contained 4 data points and no missing data.
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
       
-      Operations:
-      
-      Signed log transformation on x [trained]
+      -- Operations 
+      * Signed log transformation on: x | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Log transformation on <none>
+      -- Operations 
+      * Log transformation on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Log transformation on <none> [trained]
+      -- Operations 
+      * Log transformation on: <none> | Trained
 

@@ -5,7 +5,7 @@
     Condition
       Error in `step_filter()`:
       Caused by error in `dplyr::filter()`:
-      ! Problem while computing `..2 = Species %in% values`.
+      i In argument: `Species %in% values`.
       Caused by error in `Species %in% values`:
       ! object 'values' not found
 
@@ -13,69 +13,67 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Row filtering using Sepal.Length > 4.5
+      -- Operations 
+      * Row filtering using: Sepal.Length > 4.5
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Row filtering using ~Sepal.Length > 4.5 [trained]
+      -- Operations 
+      * Row filtering using: ~Sepal.Length > 4.5 | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Row filtering using <none>
+      -- Operations 
+      * Row filtering using: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Row filtering using <none> [trained]
+      -- Operations 
+      * Row filtering using: <none> | Trained
 

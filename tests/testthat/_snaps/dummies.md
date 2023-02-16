@@ -94,57 +94,56 @@
 
     Code
       print(dummy)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          7
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 7
       
-      Operations:
-      
-      Dummy variables from city, zip
+      -- Operations 
+      * Dummy variables from: city, zip
 
 ---
 
     Code
       prep(dummy)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          7
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 7
       
-      Training data contained 932 data points and no missing data.
+      -- Training information 
+      Training data contained 932 data points and no incomplete rows.
       
-      Operations:
-      
-      Dummy variables from city, zip [trained]
+      -- Operations 
+      * Dummy variables from: city, zip | Trained
 
 # no columns selected
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 2
       
-      Training data contained 3 data points and no missing data.
+      -- Training information 
+      Training data contained 3 data points and no incomplete rows.
       
-      Operations:
-      
-      Zero variance filter removed x [trained]
-      Dummy variables from <none> [trained]
+      -- Operations 
+      * Zero variance filter removed: x | Trained
+      * Dummy variables from: <none> | Trained
 
 # can prep recipes with no keep_original_cols
 
@@ -159,35 +158,34 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Dummy variables from <none>
+      -- Operations 
+      * Dummy variables from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Dummy variables from <none> [trained]
+      -- Operations 
+      * Dummy variables from: <none> | Trained
 

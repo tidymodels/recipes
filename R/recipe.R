@@ -393,7 +393,7 @@ prep.recipe <-
         inherits(x$var_info$type, "character")) {
       x$var_info <- x$var_info %>%
         dplyr::select(-type) %>%
-        dplyr::left_join(get_types(training), by = "variable") %>%
+        dplyr::left_join(get_types(training), by = "variable", multiple = "all") %>%
         dplyr::select(variable, type, role, source)
     }
 
@@ -401,7 +401,7 @@ prep.recipe <-
         inherits(x$term_info$type, "character")) {
       x$term_info <- x$term_info %>%
         dplyr::select(-type) %>%
-        dplyr::left_join(get_types(training), by = "variable") %>%
+        dplyr::left_join(get_types(training), by = "variable", multiple = "all") %>%
         dplyr::select(variable, type, role, source)
     }
 
@@ -512,7 +512,7 @@ prep.recipe <-
       arrange(desc(number)) %>%
       summarise(
         type = list(dplyr::first(type)),
-        role = as.list(unique(unlist(role))),
+        role = list(unique(unlist(role))),
         source = dplyr::first(source),
         number = dplyr::first(number),
         skip = dplyr::first(skip),
@@ -704,43 +704,54 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #'
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
-  cat("Recipe\n\n")
-  cat("Inputs:\n\n")
-  no_role <- is.na(x$var_info$role)
-  if (any(!no_role)) {
-    tab <- as.data.frame(table(x$var_info$role))
-    colnames(tab) <- c("role", "#variables")
-    print(tab, row.names = FALSE)
-    if (any(no_role)) {
-      cat("\n ", sum(no_role), "variables with undeclared roles\n")
-    }
-  } else {
-    cat(" ", nrow(x$var_info), "variables (no declared roles)\n")
-  }
+  cli::cli_div(theme = list(.pkg = list("vec-trunc" = Inf, "vec-last" = ", ")))
+
+  cli::cli_h1("Recipe")
+  cli::cli_h3("Inputs")
+
+  tab <- table(x$var_info$role, useNA = "ifany")
+  tab <- stats::setNames(tab, names(tab))
+  names(tab)[is.na(names(tab))] <- "undeclared role"
+
+  roles <- c("outcome", "predictor", "case_weights", "undeclared role")
+
+  tab <- c(
+    tab[names(tab) == roles[1]],
+    tab[names(tab) == roles[2]],
+    tab[names(tab) == roles[3]],
+    sort(tab[!names(tab) %in% roles], TRUE),
+    tab[names(tab) == roles[4]]
+  )
+
+  cli::cli_text("Number of variables by role")
+
+  spaces_needed <- max(nchar(names(tab))) - nchar(names(tab)) +
+    max(nchar(tab)) - nchar(tab)
+
+  cli::cli_verbatim(
+    glue::glue("{names(tab)}: {strrep('\ua0', spaces_needed)}{tab}")
+  )
+
   if ("tr_info" %in% names(x)) {
+    cli::cli_h3("Training information")
     nmiss <- x$tr_info$nrows - x$tr_info$ncomplete
-    cat("\nTraining data contained ",
-      x$tr_info$nrows,
-      " data points and ",
-      sep = ""
+    nrows <- x$tr_info$nrows
+
+    cli::cli_text(
+      "Training data contained {nrows} data points and {cli::no(nmiss)} \\
+       incomplete row{?s}."
     )
-    if (x$tr_info$nrows == x$tr_info$ncomplete) {
-      cat("no missing data.\n")
-    } else {
-      cat(
-        nmiss,
-        "incomplete",
-        ifelse(nmiss > 1, "rows.", "row."),
-        "\n"
-      )
-    }
   }
+
   if (!is.null(x$steps)) {
-    cat("\nOperations:\n\n")
-    for (i in seq_along(x$steps)) {
-      print(x$steps[[i]], form_width = form_width)
-    }
+    cli::cli_h3("Operations")
   }
+
+    for (step in x$steps) {
+    print(step, form_width = form_width)
+  }
+  cli::cli_end()
+
   invisible(x)
 }
 
@@ -778,7 +789,12 @@ print.recipe <- function(x, form_width = 30, ...) {
 summary.recipe <- function(object, original = FALSE, ...) {
   if (original) {
     res <- object$var_info
-    res <- dplyr::left_join(res, bake_req_tibble(object), by = "role")
+    res <- dplyr::left_join(
+      res,
+      bake_req_tibble(object),
+      by = "role",
+      multiple = "all"
+    )
   } else {
     res <- object$term_info
   }

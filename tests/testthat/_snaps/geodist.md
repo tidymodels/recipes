@@ -156,33 +156,32 @@
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Operations:
-      
-      Geographical distances from 0.5 x 0.25 using x, y
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: x, y
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 10 data points and 1 incomplete row. 
+      -- Training information 
+      Training data contained 10 data points and 1 incomplete row.
       
-      Operations:
-      
-      Geographical distances from 0.5 x 0.25 using x, y [trained]
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: x, y | Trained
 

@@ -120,7 +120,7 @@ step_window <-
     }
 
     ## ensure size is odd, integer, and not too small
-    if (!is_tune(size) & !is_varying(size)) {
+    if (!is_tune(size)) {
       if (is.na(size) | is.null(size)) {
         rlang::abort("`size` needs a value.")
       }

@@ -20,111 +20,109 @@
 
     Code
       print(impute_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         13
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
       
-      Operations:
-      
-      Median imputation for Age, Assets, Income
+      -- Operations 
+      * Median imputation for: Age, Assets, Income
 
 ---
 
     Code
       prep(impute_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         13
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
       
-      Training data contained 2000 data points and 186 incomplete rows. 
+      -- Training information 
+      Training data contained 2000 data points and 186 incomplete rows.
       
-      Operations:
-      
-      Median imputation for Age, Assets, Income [trained]
+      -- Operations 
+      * Median imputation for: Age, Assets, Income | Trained
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Median imputation for <none>
+      -- Operations 
+      * Median imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Median imputation for <none> [trained]
+      -- Operations 
+      * Median imputation for: <none> | Trained
 
 # case weights
 
     Code
       impute_rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor         12
+      -- Inputs 
+      Number of variables by role
+      outcome:       1
+      predictor:    12
+      case_weights:  1
       
-      Training data contained 2000 data points and 186 incomplete rows. 
+      -- Training information 
+      Training data contained 2000 data points and 186 incomplete rows.
       
-      Operations:
-      
-      Median imputation for Age, Assets, Income [weighted, trained]
+      -- Operations 
+      * Median imputation for: Age, Assets, Income | Trained, weighted
 
 ---
 
     Code
       impute_rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor         12
+      -- Inputs 
+      Number of variables by role
+      outcome:       1
+      predictor:    12
+      case_weights:  1
       
-      Training data contained 2000 data points and 186 incomplete rows. 
+      -- Training information 
+      Training data contained 2000 data points and 186 incomplete rows.
       
-      Operations:
-      
-      Median imputation for Age, Assets, Income [ignored weights, trained]
+      -- Operations 
+      * Median imputation for: Age, Assets, Income | Trained, ignored weights
 
