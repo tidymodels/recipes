@@ -6,6 +6,8 @@
 
 * The `recipe`, `step`, and `check` methods for `generics::tune_args()` are now registered unconditionally (tidymodels/workflows#192).
 
+* Added a `conditionMessage()` method for `recipes_error`s to consistently point out which step errors occurred in when reporting errors. (#1080)
+
 # recipes 1.0.4
 
 * Added missing tidy method for `step_intercept()` and `step_lag()`. (#730)
