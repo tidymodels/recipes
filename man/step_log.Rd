@@ -46,7 +46,7 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{signed}{A logical indicating whether to take the signed log.
-This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
+This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 If \code{TRUE} the \code{offset} argument will be ignored.}
 
 \item{id}{A character string that is unique to this step to identify it.}
