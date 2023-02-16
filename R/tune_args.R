@@ -1,7 +1,3 @@
-#' @importFrom generics tune_args
-#' @export
-generics::tune_args
-
 #' @export
 tune_args.recipe <- function(object, full = FALSE, ...) {
   steps <- object$steps
