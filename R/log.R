@@ -10,7 +10,7 @@
 #' @param columns A character string of variable names that will
 #'  be populated (eventually) by the `terms` argument.
 #' @param signed A logical indicating whether to take the signed log.
-#'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
+#'  This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @template step-return
 #' @family individual transformation steps
