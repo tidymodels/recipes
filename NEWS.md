@@ -4,6 +4,7 @@
 
 * update print methods to use cli package for formatting. (#426)
 
+* The `recipe`, `step`, and `check` methods for `generics::tune_args()` are now registered unconditionally (tidymodels/workflows#192).
 
 # recipes 1.0.4
 
