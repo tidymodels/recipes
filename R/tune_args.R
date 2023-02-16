@@ -1,6 +1,5 @@
-
-# Lazily registered in .onLoad()
-tune_args_recipe <- function(object, full = FALSE, ...) {
+#' @export
+tune_args.recipe <- function(object, full = FALSE, ...) {
   steps <- object$steps
 
   if (length(steps) == 0L) {
@@ -19,8 +18,8 @@ tune_args_recipe <- function(object, full = FALSE, ...) {
   )
 }
 
-# @export - lazily and conditionally registered in .onLoad()
-tune_args_step <- function(object, full = FALSE, ...) {
+#' @export
+tune_args.step <- function(object, full = FALSE, ...) {
   step_id <- object$id
   # Grab the step class before the subset, as that removes the class
   step_type <- class(object)[1]
@@ -49,8 +48,8 @@ tune_args_step <- function(object, full = FALSE, ...) {
 }
 
 
-# @export - lazily and conditionally registered in .onLoad()
-tune_args_check <- tune_args_step
+#' @export
+tune_args.check <- tune_args.step
 
 
 # helpers for tune_args() methods -----------------------------------------
