@@ -142,6 +142,36 @@ test_that("correct values", {
   expect_equal(exp_pred, obs_pred)
 })
 
+test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
+  standardized <- rec %>%
+    step_range(carbon, hydrogen, min = -12, id = "", clipping = FALSE)
+
+  standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
+
+  # simulates old recipe
+  standardized_trained$steps[[1]]$clipping <- NULL
+
+  obs_pred <- bake(standardized_trained, new_data = biomass_te, all_predictors())
+  obs_pred <- as.matrix(obs_pred)
+
+  mins <- apply(biomass_tr[, c("carbon", "hydrogen")], 2, min)
+  maxs <- apply(biomass_tr[, c("carbon", "hydrogen")], 2, max)
+
+  new_min <- -12
+  new_max <- 1
+  new_range <- new_max - new_min
+
+  carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
+             (maxs["carbon"] - mins["carbon"])) + new_min
+
+  hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
+              (maxs["hydrogen"] - mins["hydrogen"])) + new_min
+
+  exp_pred <- cbind(carb, hydro)
+  colnames(exp_pred) <- c("carbon", "hydrogen")
+  expect_equal(exp_pred, obs_pred)
+})
+
 test_that("printing", {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12)
