@@ -6,6 +6,8 @@
 
 * The `recipe`, `step`, and `check` methods for `generics::tune_args()` are now registered unconditionally (tidymodels/workflows#192).
 
+* `step_range()` is now backwards compatible with respect to the `clipping` argument that was added 1.0.3, and old saved recipes can now be baked. (#1090)
+
 # recipes 1.0.4
 
 * Added missing tidy method for `step_intercept()` and `step_lag()`. (#730)
