@@ -24,17 +24,6 @@ ad_rec <- recipe(Class ~ tau + VEGF, data = ad_data) %>%
   step_normalize(all_numeric_predictors())
 
 ad_rec
-#> Recipe
-#> 
-#> Inputs:
-#> 
-#>       role #variables
-#>    outcome          1
-#>  predictor          2
-#> 
-#> Operations:
-#> 
-#> Centering and scaling for all_numeric_predictors()
 ```
 
 More information on recipes can be found at the [*Get
