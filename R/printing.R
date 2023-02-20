@@ -49,7 +49,7 @@ print_step <- function(tr_obj = NULL,
     elements <- tr_obj
   } else {
     elements <- lapply(untr_obj, function(x) {
-      expr_deparse(quo_get_expr(x))
+      expr_deparse(quo_get_expr(x), width = Inf)
     })
 
     elements <- vctrs::list_unchop(elements, ptype = character())

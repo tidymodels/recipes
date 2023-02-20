@@ -21,7 +21,7 @@ format_ch_vec <-
 format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~
   x_items <- lapply(x, function(x) {
-    expr_deparse(quo_get_expr(x))
+    expr_deparse(quo_get_expr(x), width = Inf)
   })
 
   x_items <- vctrs::list_unchop(x_items, ptype = character())

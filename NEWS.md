@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Print methods no longer errors for untrained recipes with long selections. (#1083)
+
 * Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
 
 * update print methods to use cli package for formatting. (#426)
@@ -7,6 +9,9 @@
 * The `recipe`, `step`, and `check` methods for `generics::tune_args()` are now registered unconditionally (tidymodels/workflows#192).
 
 * `step_range()` is now backwards compatible with respect to the `clipping` argument that was added 1.0.3, and old saved recipes can now be baked. (#1090)
+
+* Added a `conditionMessage()` method for `recipes_error`s to consistently point out which step errors occurred in when reporting errors. (#1080)
+
 
 # recipes 1.0.4
 

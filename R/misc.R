@@ -848,6 +848,12 @@ recipes_error_context <- function(expr, step_name) {
   )
 }
 
+#' @method conditionMessage recipes_error
+#' @export
+conditionMessage.recipes_error <- function(c) {
+  rlang::cnd_message(c, prefix = TRUE)
+}
+
 vec_paste0 <- function(..., collapse = NULL) {
   args <- vctrs::vec_recycle_common(...)
   rlang::inject(paste0(!!!args, collapse = collapse))
