@@ -49,3 +49,24 @@ test_that("format_ch_vec handles a long expression", {
     "1,  1 2 3 4 5 6 7..."
   )
 })
+
+test_that("format_selectors handles a long expression (#1083)", {
+  local_width <- function(width, env = parent.frame()) {
+    op <- options(width = width)
+    withr::defer(options(op), env)
+  }
+
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_mutate(vs = function_call(
+        .x = vs,
+        very_very_very_long_text = "long1",
+        also_very_very_long_text = "long2"
+      )
+    )
+
+  local_width(100)
+  expect_snapshot(rec)
+
+  local_width(60)
+  expect_snapshot(rec)
+})

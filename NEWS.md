@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Print methods no longer errors for untrained recipes with long selections. (#1083)
+
 * Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
 
 * update print methods to use cli package for formatting. (#426)
