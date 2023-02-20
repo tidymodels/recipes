@@ -46,7 +46,7 @@
     
     <a class="navbar-brand me-2" href="index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.4.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.5.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,18 +120,7 @@
 <span><span class="va">ad_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Class</span> <span class="op">~</span> <span class="va">tau</span> <span class="op">+</span> <span class="va">VEGF</span>, data <span class="op">=</span> <span class="va">ad_data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ad_rec</span></span>
-<span><span class="co">#&gt; Recipe</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Inputs:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       role #variables</span></span>
-<span><span class="co">#&gt;    outcome          1</span></span>
-<span><span class="co">#&gt;  predictor          2</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Operations:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Centering and scaling for all_numeric_predictors()</span></span></code></pre></div>
+<span><span class="va">ad_rec</span></span></code></pre></div>
 <p>More information on recipes can be found at the <a href="https://www.tidymodels.org/start/recipes/" class="external-link"><em>Get Started</em></a> page of <a href="https://www.tidymodels.org" class="external-link">tidymodels.org</a>.</p>
 <p>You may consider recipes as an alternative method for creating and preprocessing design matrices (also known as model matrices) that can be used for modeling or visualization. While R already has long-standing methods for creating such matrices (e.g. <a href="https://rviews.rstudio.com/2017/02/01/the-r-formula-method-the-good-parts/" class="external-link">formulas</a> and <code>model.matrix</code>), there are some <a href="https://rviews.rstudio.com/2017/03/01/the-r-formula-method-the-bad-parts/" class="external-link">limitations to what the existing infrastructure can do</a>.</p>
 </div>
