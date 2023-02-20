@@ -72,6 +72,7 @@
 <li><p>Added <code>outside</code> argument to <code><a href="../reference/step_percentile.html">step_percentile()</a></code> to determine different ways of handling values outside the range of the training data.</p></li>
 <li><p>update print methods to use cli package for formatting. (<a href="https://github.com/tidymodels/recipes/issues/426" class="external-link">#426</a>)</p></li>
 <li><p>The <code>recipe</code>, <code>step</code>, and <code>check</code> methods for <code><a href="https://generics.r-lib.org/reference/tune_args.html" class="external-link">generics::tune_args()</a></code> are now registered unconditionally (tidymodels/workflows#192).</p></li>
+<li><p><code><a href="../reference/step_range.html">step_range()</a></code> is now backwards compatible with respect to the <code>clipping</code> argument that was added 1.0.3, and old saved recipes can now be baked. (<a href="https://github.com/tidymodels/recipes/issues/1090" class="external-link">#1090</a>)</p></li>
 <li><p>Added a <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage()</a></code> method for <code>recipes_error</code>s to consistently point out which step errors occurred in when reporting errors. (<a href="https://github.com/tidymodels/recipes/issues/1080" class="external-link">#1080</a>)</p></li>
 </ul></div>
     <div class="section level2">
