@@ -121,6 +121,18 @@ test_that("tunable", {
   )
 })
 
+test_that("tunable is setup to works with extract_parameter_set_dials works", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_impute_bag(
+      all_predictors(),
+      trees = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
+})
 
 test_that("non-factor imputation", {
   data(scat, package = "modeldata")

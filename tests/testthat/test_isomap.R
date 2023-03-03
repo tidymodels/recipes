@@ -139,6 +139,19 @@ test_that("tunable", {
   )
 })
 
+test_that("tunable is setup to works with extract_parameter_set_dials works", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_isomap(
+      all_predictors(),
+      num_terms = hardhat::tune(), neighbors = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 2L)
+})
+
 test_that("keep_original_cols works", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")

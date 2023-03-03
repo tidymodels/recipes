@@ -64,6 +64,19 @@ test_that("tunable", {
   )
 })
 
+test_that("tunable is setup to works with extract_parameter_set_dials works", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_dummy_multi_choice(
+      all_predictors(),
+      threshold = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
+})
+
 test_that("no columns selected", {
   zdat <- tibble(
     y = c(1, 2, 3),

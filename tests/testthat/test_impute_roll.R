@@ -126,6 +126,19 @@ test_that("tunable", {
   )
 })
 
+test_that("tunable is setup to works with extract_parameter_set_dials works", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_impute_roll(
+      all_predictors(),
+      statistic = hardhat::tune(), window = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 2L)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_impute_roll(rec1)

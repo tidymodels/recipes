@@ -181,6 +181,19 @@ test_that("tunable", {
   )
 })
 
+test_that("tunable is setup to works with extract_parameter_set_dials works", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_pca(
+      all_predictors(),
+      num_comp = hardhat::tune(), threshold = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 2L)
+})
+
 test_that("keep_original_cols works", {
   pca_extract <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
