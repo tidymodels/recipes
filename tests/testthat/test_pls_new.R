@@ -242,6 +242,21 @@ test_that("print method", {
   expect_snapshot(print(rec))
 })
 
+test_that("tunable", {
+  rec <-
+    recipe(Species ~ ., data = iris) %>%
+    step_pls(all_predictors(), outcome = "Species")
+  rec_param <- tunable.step_pls(rec$steps[[1]])
+  expect_equal(rec_param$name, c("num_comp", "predictor_prop"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 2)
+  expect_equal(
+    names(rec_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+})
+
 test_that("keep_original_cols works", {
   skip_if_not_installed("mixOmics")
   pls_rec <- recipe(HHV ~ ., data = biom_tr) %>%
