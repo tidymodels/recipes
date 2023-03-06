@@ -255,7 +255,7 @@ bake.step_classdist <- function(object, new_data, ...) {
 
 print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue::glue("Distances to {x$class} for ")
+    title <- glue("Distances to {x$class} for ")
     if (x$trained) {
       x_names <- if (x$pool) {
         names(x$objects[["center"]][[1]])

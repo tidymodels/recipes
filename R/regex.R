@@ -162,7 +162,7 @@ bake.step_regex <- function(object, new_data, ...) {
 print.step_regex <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Regular expression dummy variable using "
-    pattern <- glue::glue("\"{x$pattern}\"")
+    pattern <- glue("\"{x$pattern}\"")
     untrained_terms <- rlang::parse_quos(pattern, rlang::current_env())
     print_step(pattern, untrained_terms, x$trained, title, width)
     invisible(x)

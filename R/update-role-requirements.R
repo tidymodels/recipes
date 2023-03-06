@@ -89,7 +89,7 @@ update_role_requirements <- function(recipe,
     role <- glue::double_quote(role)
     message <- c(
       "`role` must be a preexisting role in the recipe.",
-      i = glue::glue("{role} is not a preexisting role.")
+      i = glue("{role} is not a preexisting role.")
     )
     abort(message)
   }
@@ -207,8 +207,8 @@ check_bake_role_requirements <- function(recipe,
     roles <- glue::glue_collapse(roles, sep = ", ")
 
     message <- c(
-      glue::glue("The following required columns are missing from `new_data`: {names}."),
-      i = glue::glue("These columns have one of the following roles, which are required at `bake()` time: {roles}.")
+      glue("The following required columns are missing from `new_data`: {names}."),
+      i = glue("These columns have one of the following roles, which are required at `bake()` time: {roles}.")
     )
 
     if (any_nonstandard) {
