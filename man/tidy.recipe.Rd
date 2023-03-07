@@ -8,7 +8,7 @@
 %   R/impute_lower.R, R/impute_mean.R, R/impute_median.R, R/impute_mode.R,
 %   R/impute_roll.R, R/integer.R, R/interactions.R, R/intercept.R, R/inverse.R,
 %   R/invlogit.R, R/isomap.R, R/kpca.R, R/kpca_poly.R, R/kpca_rbf.R,
-%   R/lag.R, R/lincombo.R, R/log.R, R/logit.R, R/missing.r, R/mutate.R,
+%   R/lag.R, R/lincombo.R, R/log.R, R/logit.R, R/missing.R, R/mutate.R,
 %   R/mutate_at.R, R/naindicate.R, R/naomit.R, R/newvalues.R, R/nnmf.R,
 %   R/nnmf_sparse.R, R/normalize.R, R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R,
 %   R/ordinalscore.R, R/other.R, R/pca.R, R/percentile.R, R/pls.R, R/poly.R,
