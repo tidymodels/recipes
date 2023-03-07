@@ -113,7 +113,7 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     var_names <- names(values[is.na(values)])
     vars <- glue::glue_collapse(glue::backtick(var_names), sep = ", ")
     rlang::warn(paste(
-      "No Box-Cox transformation could be estimated for:", glue::glue("{vars}")
+      "No Box-Cox transformation could be estimated for:", glue("{vars}")
     ))
   }
   values <- values[!is.na(values)]

@@ -125,7 +125,7 @@ lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
 
   if (!is.numeric(dat[[vars$y]])) {
     rlang::abort(
-      glue::glue(
+      glue(
         "Variable '{vars$y}' chosen for linear regression imputation ",
         "must be of type numeric."
       ),

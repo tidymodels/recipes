@@ -15,7 +15,7 @@ make_new <- function(name,
     rlang::abort("Change working directory to package root")
   }
 
-  if (glue::glue("{name}.R") %in% list.files("./R")) {
+  if (glue("{name}.R") %in% list.files("./R")) {
     rlang::abort("step or check already present with this name in /R")
   }
 
