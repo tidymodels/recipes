@@ -273,7 +273,7 @@ bake.step_window <- function(object, new_data, ...) {
 
 print.step_window <-
   function(x, width = max(20, options()$width - 28), ...) {
-    title <- glue::glue("Moving {x$size}-point {x$statistic} on ")
+    title <- glue("Moving {x$size}-point {x$statistic} on ")
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }

@@ -150,7 +150,7 @@ bake.step_relu <- function(object, new_data, ...) {
     call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
   exprs <- purrr::map(object$columns, make_relu_call)
-  newname <- glue::glue("{object$prefix}{object$columns}")
+  newname <- glue("{object$prefix}{object$columns}")
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
   dplyr::mutate(new_data, !!!exprs)
 }

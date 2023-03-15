@@ -251,7 +251,7 @@ print.step_pca <-
         title <- "No PCA components were extracted from "
         columns <- names(x$columns)
       } else {
-        title <- glue::glue("PCA extraction with ")
+        title <- glue("PCA extraction with ")
         columns <- rownames(x$res$rotation)
       }
     } else {

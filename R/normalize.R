@@ -107,10 +107,10 @@ sd_check <- function(x) {
   zero_sd <- which(x < .Machine$double.eps)
   if (length(zero_sd) > 0) {
     glue_cols <- glue::glue_collapse(
-      glue::glue("`{names(zero_sd)}`"), sep = ", ", last = " and "
+      glue("`{names(zero_sd)}`"), sep = ", ", last = " and "
     )
     rlang::warn(
-      glue::glue(
+      glue(
         "Column(s) have zero variance so scaling cannot be used: {glue_cols}. ",
         "Consider using `step_zv()` to remove those columns before normalizing"
       )

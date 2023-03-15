@@ -124,7 +124,7 @@ bake.step_lag <- function(object, new_data, ...) {
 
   grid <- tidyr::expand_grid(col = object$columns, lag_val = object$lag)
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-  newname <- as.character(glue::glue("{object$prefix}{grid$lag_val}_{grid$col}"))
+  newname <- as.character(glue("{object$prefix}{grid$lag_val}_{grid$col}"))
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
   new_data <- mutate(new_data, !!!calls)

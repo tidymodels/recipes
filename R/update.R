@@ -69,7 +69,7 @@ update_fields <- function(object, changes) {
 
   for (nm in new_nms) {
     if (!(nm %in% old_nms)) {
-      rlang::abort(glue::glue(
+      rlang::abort(glue(
         "The step you are trying to update, ",
         "'{step_type}', does not have the '{nm}' field."
       ))
@@ -128,7 +128,7 @@ validate_not_trained <- function(x) {
   if (is_trained(x)) {
     step_type <- class(x)[1]
 
-    rlang::abort(glue::glue(
+    rlang::abort(glue(
       "To update '{step_type}', it must not be trained."
     ))
   }

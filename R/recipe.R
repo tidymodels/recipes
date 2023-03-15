@@ -729,7 +729,7 @@ print.recipe <- function(x, form_width = 30, ...) {
     max(nchar(tab)) - nchar(tab)
 
   cli::cli_verbatim(
-    glue::glue("{names(tab)}: {strrep('\ua0', spaces_needed)}{tab}")
+    glue("{names(tab)}: {strrep('\ua0', spaces_needed)}{tab}")
   )
 
   if ("tr_info" %in% names(x)) {

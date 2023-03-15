@@ -459,8 +459,6 @@ all_unordered_predictors <- function() {
 
 ## functions to get current variable info for selectors modeled after
 ## dplyr versions
-
-#' @import rlang
 cur_info_env <- env(empty_env())
 
 local_current_info <- function(nested_info, frame = parent.frame()) {

@@ -205,7 +205,7 @@ tunable.step_spline_convex <- function(x, ...) {
     name = c("deg_free", "degree"),
     call_info = list(
       list(pkg = "dials", fun = "spline_degree", range = c(2L, 15L)),
-      list(pkg = "dials", fun = "degree", range = c(0L, 3L))
+      list(pkg = "dials", fun = "degree_int", range = c(0L, 3L))
     ),
     source = "recipe",
     component = "step_spline_convex",
