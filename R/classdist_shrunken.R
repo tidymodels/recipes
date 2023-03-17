@@ -212,12 +212,19 @@ print.step_classdist_shrunken <-
 #' @export
 tidy.step_classdist_shrunken <- function(x, ...) {
   if (is_trained(x)) {
-    res <-
-2
+    res <- x$objects %>%
+      dplyr::select(terms = variable, value = centroid, class = .class) %>%
+      dplyr::mutate(
+        threshold = x$threshold,
+        class = gsub(x$prefix, "", class)
+      )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(
+      terms = term_names,
+      value = na_dbl,
+      class = na_chr
+    )
   }
   res$id <- x$id
   res
