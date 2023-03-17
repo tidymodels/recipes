@@ -143,6 +143,7 @@ compute_shrunken_centroids <- function(x, y, threshold, prefix = "classdist_") {
     dplyr::select(variable, .class, std_dev_pooled, centroid, prob_class, max_delta)
 }
 
+# convert to case weight versions
 new_shrunken_scores <- function(object, new_data) {
   preds <- unique(unique(object$variable))
   new_data %>%
@@ -200,14 +201,13 @@ bake.step_classdist_shrunken <- function(object, new_data, ...) {
 
 print.step_classdist_shrunken <-
   function(x, width = max(20, options()$width - 30), ...) {
-    preds <- unique(object$stats$variable)
-    title <- "Shrunken centroid with"
+    preds <- unique(x$objects$variable)
+    title <- "Distance to shrunken centroids with"
     print_step(preds, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 
-# TODO fill this out
 #' @rdname tidy.recipe
 #' @export
 tidy.step_classdist_shrunken <- function(x, ...) {
