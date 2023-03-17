@@ -132,6 +132,7 @@ tidy(rec_dists, number = 1)
 }
 \seealso{
 Other multivariate transformation steps: 
+\code{\link{step_classdist_shrunken}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},
 \code{\link{step_ica}()},
