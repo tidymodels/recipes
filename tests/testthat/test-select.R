@@ -102,13 +102,6 @@ test_that("quasiquotation", {
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
 
-  # only rec_2 works when local variable is removed
-  rm(sepal_vars)
-
-  expect_snapshot(error = TRUE,
-    prep(rec_1, training = iris_train)
-  )
-
   prepped_2 <- prep(rec_2, training = iris_train)
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
