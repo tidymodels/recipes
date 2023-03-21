@@ -20,5 +20,5 @@
 #' @export
 #' @keywords internal
 terms_select <- function(terms, info, empty_fun = function(x) x) {
-  lifecycle::deprecate_stop("0.1.17", "terms_select()", "recipes_eval_select()")
+  lifecycle::deprecate_stop("1.0.6", "terms_select()", "recipes_eval_select()")
 }
