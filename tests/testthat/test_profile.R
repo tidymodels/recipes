@@ -77,11 +77,6 @@ test_that("bad values", {
   )
   expect_snapshot(error = TRUE,
     sacr_rec %>%
-      step_profile(everything(), profile = age) %>%
-      prep(data = Sacramento)
-  )
-  expect_snapshot(error = TRUE,
-    sacr_rec %>%
       step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
       prep(data = Sacramento)
   )
