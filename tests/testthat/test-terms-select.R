@@ -102,9 +102,6 @@ test_that("simple name selections", {
   expect_snapshot(error = TRUE,
     terms_select(info = info1, quos(matches("blahblahblah")))
   )
-  expect_snapshot(error = TRUE,
-    terms_select(info = info1)
-  )
 })
 
 

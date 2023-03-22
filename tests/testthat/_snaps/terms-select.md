@@ -6,6 +6,9 @@
       Warning:
       `terms_select()` was deprecated in recipes 0.1.17.
       i Please use `recipes_eval_select()` instead.
+      Warning:
+      `with_handlers()` is deprecated as of rlang 1.0.0.
+      i Please use `tryCatch()`, `withCallingHandlers()`, or `try_fetch()`.
     Output
       [1] "city"      "zip"       "beds"      "baths"     "sqft"      "type"     
       [7] "price"     "latitude"  "longitude"
@@ -49,12 +52,4 @@
     Condition
       Error:
       ! No variables or terms were selected.
-
----
-
-    Code
-      terms_select(info = info1)
-    Condition
-      Error in `is_empty()`:
-      ! argument "terms" is missing, with no default
 

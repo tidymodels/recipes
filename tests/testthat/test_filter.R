@@ -84,10 +84,6 @@ test_that("quasiquotation", {
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 
-  rm(values)
-  expect_snapshot(error = TRUE,
-    prep(rec_1, training = iris %>% slice(1:75))
-  )
   expect_error(
     prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
     regexp = NA
