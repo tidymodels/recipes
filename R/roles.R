@@ -307,6 +307,9 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @rdname roles
 #' @export
 remove_role <- function(recipe, ..., old_role) {
+  if (rlang::is_missing(old_role)) {
+    rlang::abort('argument "old_role" is missing, with no default.')
+  }
   single_chr(old_role, "old_")
 
   terms <- quos(...)

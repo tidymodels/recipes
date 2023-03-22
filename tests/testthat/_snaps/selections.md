@@ -13,6 +13,6 @@
     Code
       recipes_eval_select(data = Sacramento, info = info_sac)
     Condition
-      Error in `enexpr()`:
-      ! argument "quos" is missing, with no default
+      Error in `recipes_eval_select()`:
+      ! argument "quos" is missing, with no default.
 
