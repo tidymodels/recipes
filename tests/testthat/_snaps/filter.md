@@ -1,14 +1,3 @@
-# quasiquotation
-
-    Code
-      prep(rec_1, training = iris %>% slice(1:75))
-    Condition
-      Error in `step_filter()`:
-      Caused by error in `dplyr::filter()`:
-      i In argument: `Species %in% values`.
-      Caused by error in `Species %in% values`:
-      ! object 'values' not found
-
 # printing
 
     Code

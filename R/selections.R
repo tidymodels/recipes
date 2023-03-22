@@ -172,6 +172,10 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
                                 check_case_weights = TRUE, call = caller_env()) {
   ellipsis::check_dots_empty()
 
+  if (rlang::is_missing(quos)) {
+    rlang::abort('argument "quos" is missing, with no default.')
+  }
+
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
   data_info <- tibble(variable = names(data))

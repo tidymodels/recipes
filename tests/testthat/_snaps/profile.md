@@ -10,14 +10,6 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(everything(), profile = age) %>% prep(data = Sacramento)
-    Condition
-      Error in `structure()`:
-      ! object 'age' not found
-
----
-
-    Code
       sacr_rec %>% step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
         prep(data = Sacramento)
     Condition
