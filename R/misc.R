@@ -39,10 +39,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   predictor_names
 }
 
-terms.recipe <- function(x, ...) {
-  x$term_info
-}
-
 filter_terms.formula <- function(formula, data, ...) {
   get_rhs_vars(formula, data)
 }
