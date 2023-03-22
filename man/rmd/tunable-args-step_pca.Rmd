@@ -1,0 +1,14 @@
+```{r, child = "tunable-args.Rmd", include = FALSE}
+```
+
+# Tuning Parameters
+
+```{r echo = FALSE}
+param <- get_param_list("step_pca")
+```
+
+This step has `r length(param)` tuning parameters:
+
+```{r echo = FALSE, results = "asis"}
+param
+```
