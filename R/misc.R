@@ -1,7 +1,3 @@
-filter_terms <- function(x, ...) {
-  UseMethod("filter_terms")
-}
-
 get_lhs_vars <- function(formula, data) {
   if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
@@ -36,10 +32,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 
 terms.recipe <- function(x, ...) {
   x$term_info
-}
-
-filter_terms.formula <- function(formula, data, ...) {
-  get_rhs_vars(formula, data)
 }
 
 #' Naming Tools
