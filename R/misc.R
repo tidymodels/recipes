@@ -30,10 +30,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   predictor_names
 }
 
-terms.recipe <- function(x, ...) {
-  x$term_info
-}
-
 #' Naming Tools
 #'
 #' `names0` creates a series of `num` names with a common prefix.
