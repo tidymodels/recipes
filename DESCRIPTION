@@ -22,7 +22,6 @@ Depends:
 Imports: 
     cli,
     clock (>= 0.6.1),
-    dials (>= 1.1.0.9000),
     ellipsis,
     generics (>= 0.1.2),
     glue,
@@ -46,6 +45,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
+    dials (>= 1.1.0.9000),
     ggplot2,
     igraph,
     kernlab,
