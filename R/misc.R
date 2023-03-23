@@ -1,7 +1,3 @@
-filter_terms <- function(x, ...) {
-  UseMethod("filter_terms")
-}
-
 ## get variables from formulas
 is_formula <- function(x) {
   isTRUE(inherits(x, "formula"))
@@ -37,10 +33,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
     predictor_names <- predictor_names[-response_info]
   }
   predictor_names
-}
-
-filter_terms.formula <- function(formula, data, ...) {
-  get_rhs_vars(formula, data)
 }
 
 #' Naming Tools
