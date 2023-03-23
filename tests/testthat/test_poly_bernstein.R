@@ -115,6 +115,7 @@ test_that("tunable", {
 })
 
 test_that("tunable is setup to works with extract_parameter_set_dials works", {
+  skip_if_not_installed("dials")
   rec <- recipe(~., data = mtcars) %>%
     step_poly_bernstein(
       all_predictors(),
