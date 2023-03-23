@@ -259,7 +259,7 @@ make_new_formula <- function(x) {
 ## term expansion (without `.`s). This returns the factor
 ## names and would not expand dummy variables.
 get_term_names <- function(form, vnames) {
-  if (!is_formula(form)) {
+  if (!rlang::is_formula(form, scoped = TRUE)) {
     form <- as.formula(form)
   }
 

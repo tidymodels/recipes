@@ -1,10 +1,5 @@
-## get variables from formulas
-is_formula <- function(x) {
-  isTRUE(inherits(x, "formula"))
-}
-
 get_lhs_vars <- function(formula, data) {
-  if (!is_formula(formula)) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
   ## Want to make sure that multiple outcomes can be expressed as
@@ -14,7 +9,7 @@ get_lhs_vars <- function(formula, data) {
 }
 
 get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
-  if (!is_formula(formula)) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
   if (no_lhs) {

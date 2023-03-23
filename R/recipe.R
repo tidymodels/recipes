@@ -214,7 +214,7 @@ recipe.matrix <- function(x, ...) {
 }
 
 form2args <- function(formula, data, ...) {
-  if (!is_formula(formula)) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
 
