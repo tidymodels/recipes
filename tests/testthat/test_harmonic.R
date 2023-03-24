@@ -427,9 +427,10 @@ test_that("tunable", {
 test_that("tunable is setup to works with extract_parameter_set_dials works", {
   skip_if_not_installed("dials")
   rec <- recipe(~., data = mtcars) %>%
-    step_filter_missing(
+    step_harmonic(
       all_predictors(),
-      threshold = hardhat::tune()
+      cycle_size = 1,
+      frequency = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)
