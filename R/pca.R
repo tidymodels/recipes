@@ -67,7 +67,11 @@
 #' for the variable loadings per component or `type = "variance"` for how
 #' much variance each component accounts for.
 #'
-#' @includeRmd man/rmd/tunable-args-step_pca.Rmd details
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_pca"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'

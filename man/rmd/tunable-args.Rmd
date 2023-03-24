@@ -1,4 +1,3 @@
-
 ```{r, include = FALSE}
 get_dials <- function(x) {
   if (any(names(x) == "range")) {
@@ -24,3 +23,14 @@ get_param_list <- function(x) {
 }
 ```
 
+# Tuning Parameters
+
+```{r echo = FALSE}
+param <- get_param_list(step)
+```
+
+This step has `r length(param)` tuning parameters:
+
+```{r echo = FALSE, results = "asis"}
+param
+```
