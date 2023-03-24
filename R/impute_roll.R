@@ -44,6 +44,12 @@
 #'  `terms` (the selectors or variables selected) and `window`
 #'  (the window size) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_roll"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples

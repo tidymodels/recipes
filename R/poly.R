@@ -29,6 +29,12 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the columns that will be affected) and `degree` is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_poly"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed("modeldata")

@@ -22,6 +22,12 @@
 #'
 #' @template dummy-naming
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_dummy_multi_choice"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples

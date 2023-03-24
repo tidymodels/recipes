@@ -58,6 +58,12 @@
 #'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
 #'  1.0 with `cycle_size` equal to 3600.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_harmonic"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references Doran, H. E., & Quilkey, J. J. (1972).

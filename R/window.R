@@ -48,6 +48,12 @@
 #' `terms` (the selectors or variables selected), `statistic` (the
 #' summary function name), and `size` is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_window"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed(c("RcppML", "ggplot2"))
