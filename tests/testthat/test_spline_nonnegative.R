@@ -114,7 +114,7 @@ test_that("tunable", {
   )
 })
 
-test_that("tunable is setup to works with extract_parameter_set_dials works", {
+test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
   rec <- recipe(~., data = mtcars) %>%
     step_spline_nonnegative(
