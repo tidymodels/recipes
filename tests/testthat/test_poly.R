@@ -85,7 +85,19 @@ test_that("tunable", {
   )
 })
 
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_poly(
+      all_predictors(),
+      degree = hardhat::tune()
+    )
 
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
+})
 
 test_that("old option argument", {
   expect_message(

@@ -409,6 +409,36 @@ test_that("harmonic check tidy starting value", {
   )
 })
 
+test_that("tunable", {
+  rec <-
+    recipe(~., data = iris) %>%
+    step_harmonic(all_predictors(), cycle_size = 1)
+  rec_param <- tunable.step_harmonic(rec$steps[[1]])
+  expect_equal(rec_param$name, c("frequency"))
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_harmonic(
+      all_predictors(),
+      cycle_size = 1,
+      frequency = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_harmonic(rec1, frequency = 1 / 11, cycle_size = 1)
