@@ -45,7 +45,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dials (>= 1.0.0),
+    dials (>= 1.1.0.9000),
     ggplot2,
     igraph,
     kernlab,
@@ -71,3 +71,5 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Remotes:  
+    tidymodels/dials

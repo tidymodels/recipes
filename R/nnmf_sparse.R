@@ -86,7 +86,7 @@ step_nnmf_sparse <-
     add_step(
       recipe,
       step_nnmf_sparse_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,

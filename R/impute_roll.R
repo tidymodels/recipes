@@ -265,8 +265,8 @@ tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(
     name = c("statistic", "window"),
     call_info = list(
-      list(pkg = "dials", fun = "location_stat"),
-      list(pkg = "dials", fun = "window")
+      list(pkg = "dials", fun = "summary_stat"),
+      list(pkg = "dials", fun = "window_size")
     ),
     source = "recipe",
     component = "step_impute_roll",

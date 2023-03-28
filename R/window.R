@@ -297,7 +297,7 @@ tidy.step_window <- function(x, ...) {
 #' @export
 tunable.step_window <- function(x, ...) {
   tibble::tibble(
-    name = c("statistic", "window"),
+    name = c("statistic", "size"),
     call_info = list(
       list(pkg = "dials", fun = "summary_stat"),
       list(pkg = "dials", fun = "window_size")

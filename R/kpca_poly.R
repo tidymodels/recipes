@@ -210,7 +210,7 @@ tunable.step_kpca_poly <- function(x, ...) {
       list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
       list(pkg = "dials", fun = "degree"),
       list(pkg = "dials", fun = "scale_factor"),
-      list(pkg = "dials", fun = "offset")
+      list(pkg = "dials", fun = "kernel_offset")
     ),
     source = "recipe",
     component = "step_kpca_poly",

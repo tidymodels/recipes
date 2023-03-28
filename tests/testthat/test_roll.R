@@ -129,7 +129,7 @@ test_that("tunable", {
     recipe(~., data = iris) %>%
     step_window(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_window(rec$steps[[1]])
-  expect_equal(rec_param$name, c("statistic", "window"))
+  expect_equal(rec_param$name, c("statistic", "size"))
   expect_true(all(rec_param$source == "recipe"))
   expect_true(is.list(rec_param$call_info))
   expect_equal(nrow(rec_param), 2)
@@ -137,6 +137,20 @@ test_that("tunable", {
     names(rec_param),
     c("name", "call_info", "source", "component", "component_id")
   )
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_window(
+      all_predictors(),
+      statistic = hardhat::tune(), size = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 2L)
 })
 
 test_that("empty selection prep/bake is a no-op", {
