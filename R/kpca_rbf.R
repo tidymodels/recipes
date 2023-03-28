@@ -17,6 +17,8 @@
 #' @export
 #' @template kpca-info
 #'
+#' @details
+#'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_kpca_rbf"
 #' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")

@@ -93,6 +93,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 summary function name), and \code{size} is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{statistic}: Rolling Summary Statistic (type: character, default: mean)
+\item \code{size}: Window Size (type: integer, default: 3)
+}
+}
+
 \section{Case weights}{
 
 

@@ -111,6 +111,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 and \code{component} is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+}
+}
+
 \section{Case weights}{
 
 

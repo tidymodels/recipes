@@ -120,6 +120,14 @@ above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
 selectors or variables selected), \code{components}, and \code{values} is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 2)
+\item \code{predictor_prop}: Proportion of Predictors (type: double, default: 1)
+}
+}
+
 \section{Case weights}{
 
 

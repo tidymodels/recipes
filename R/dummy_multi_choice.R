@@ -22,6 +22,8 @@
 #'
 #' @template dummy-naming
 #'
+#' @details
+#'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_dummy_multi_choice"
 #' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")

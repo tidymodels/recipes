@@ -240,7 +240,7 @@ tunable.step_nnmf <- function(x, ...) {
     name = c("num_comp", "num_run"),
     call_info = list(
       list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
-      list(pkg = "dials", fun = "num_run", range = c(1L, 10L))
+      list(pkg = "dials", fun = "num_runs", range = c(1L, 10L))
     ),
     source = "recipe",
     component = "step_nnmf",
