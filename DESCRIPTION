@@ -32,7 +32,7 @@ Imports:
     lubridate (>= 1.8.0),
     magrittr,
     Matrix,
-    purrr (>= 0.2.3),
+    purrr (>= 1.0.0),
     rlang (>= 1.0.3),
     stats,
     tibble,
