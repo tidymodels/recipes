@@ -180,7 +180,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-
       object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)

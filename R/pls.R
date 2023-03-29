@@ -285,7 +285,7 @@ old_pls_project <- function(object, x) {
   }
   input_data <- sweep(input_data, 2, object$Xmeans, "-")
   comps <- input_data %*% object$projection
-  colnames(comps) <- paste0("pls", 1:ncol(comps))
+  colnames(comps) <- paste0("pls", seq_len(ncol(comps)))
   tibble::as_tibble(comps)
 }
 

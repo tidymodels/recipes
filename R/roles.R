@@ -333,7 +333,7 @@ remove_role <- function(recipe, ..., old_role) {
   }
 
   info <- info %>%
-    mutate(.orig_order = 1:nrow(info)) %>%
+    mutate(.orig_order = seq_len(nrow(info))) %>%
     group_by(variable) %>%
     do(role_rm_machine(., role = old_role, var = vars)) %>%
     ungroup() %>%

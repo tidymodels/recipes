@@ -150,7 +150,7 @@ bake.step_kpca_rbf <- function(object, new_data, ...) {
         rlang::expr(as.matrix(new_data[, object$columns]))
       )
     comps <- rlang::eval_tidy(cl)
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
