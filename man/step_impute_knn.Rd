@@ -107,6 +107,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (those variables used to impute), and \code{neighbors} is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{neighbors}: # Nearest Neighbors (type: integer, default: 5)
+}
+}
+
 \section{Case weights}{
 
 

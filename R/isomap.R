@@ -50,6 +50,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the selectors or variables selected) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_isomap"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
@@ -197,7 +203,7 @@ bake.step_isomap <- function(object, new_data, ...) {
         dimred_data(new_data[, isomap_vars, drop = FALSE])
       )@data
     })
-    comps <- comps[, 1:object$num_terms, drop = FALSE]
+    comps <- comps[, seq_len(object$num_terms), drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)

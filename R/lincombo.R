@@ -150,7 +150,7 @@ recommend_rm <- function(x, eps = 1e-6, ...) {
   if (is.null(num_cols) || rank == num_cols) {
     rm_list <- character(0) # there are no linear combinations
   } else {
-    p1 <- 1:rank
+    p1 <- seq_len(rank)
     X <- qr_decomp_R[p1, p1] # extract the independent columns
     Y <- qr_decomp_R[p1, -p1, drop = FALSE] # extract the dependent columns
     b <- qr(X) # factor the independent columns
@@ -160,7 +160,7 @@ recommend_rm <- function(x, eps = 1e-6, ...) {
 
     # generate a list with one element for each dependent column
     combos <- lapply(
-      1:ncol(Y),
+      seq_len(ncol(Y)),
       function(i) {
         c(pivot[rank + i], pivot[which(b[, i] != 0)])
       }
@@ -197,7 +197,7 @@ iter_lc_rm <- function(x,
     stringsAsFactors = FALSE
   )
 
-  for (i in 1:max_steps) {
+  for (i in seq_len(max_steps)) {
     if (verbose) {
       cat(i)
     }

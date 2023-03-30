@@ -50,6 +50,12 @@
 #' `terms` (the selectors or variables selected) and the number of
 #' components is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_nnmf"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
@@ -180,7 +186,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
     nnmf_vars <- rownames(object$res@other.data$w)
     comps <-
       object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)
@@ -234,7 +240,7 @@ tunable.step_nnmf <- function(x, ...) {
     name = c("num_comp", "num_run"),
     call_info = list(
       list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
-      list(pkg = "dials", fun = "num_run", range = c(1L, 10L))
+      list(pkg = "dials", fun = "num_runs", range = c(1L, 10L))
     ),
     source = "recipe",
     component = "step_nnmf",
