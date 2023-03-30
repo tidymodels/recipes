@@ -187,18 +187,10 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   expr <- expr(c(!!!quos))
 
-  # FIXME: Ideally this is `FALSE` for strict selection,
-  # but empty selections incorrectly throw an
-  # error when this is false due to the following bug:
-  # https://github.com/r-lib/tidyselect/issues/221
-  # Once it's fixed, remove this and pass allow_rename to
-  # tidyselect::eval_select().
-  allow_rename_compat <- TRUE
-
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,
-    allow_rename = allow_rename_compat,
+    allow_rename = allow_rename,
     error_call = call
   )
 
@@ -207,13 +199,6 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   # may have changed. If renaming is allowed, add the new names.
   out <- names(data)[sel]
   names <- names(sel)
-
-  # FIXME: Remove this check when the following issue is fixed,
-  # at that point, just pass `allow_rename` to `eval_select()` directly.
-  # https://github.com/r-lib/tidyselect/issues/221
-  if (!allow_rename & !identical(out, names)) {
-    abort("Can't rename variables in this context.", call = call)
-  }
 
   if (check_case_weights &&
       any(out %in% info$variable[info$role == "case_weights"])) {
