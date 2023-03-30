@@ -153,6 +153,19 @@ test_that("lat lon", {
   )
 })
 
+test_that("step_geodist() uses check_name()", {
+  rec <- recipe(~ x + y, data = rand_data) %>%
+    step_geodist(x, y,
+                 ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
+                 log = FALSE, name = "x"
+    )
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = rand_data)
+  )
+})
+
 test_that("bad args", {
   rand_data_2 <- rand_data
   rand_data_2$x1 <- runif(nrow(rand_data_2))
