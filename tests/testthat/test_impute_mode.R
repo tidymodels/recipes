@@ -45,13 +45,13 @@ test_that("simple modes", {
   imp_tibble_un <-
     tibble(
       terms = c("Status", "Home", "Marital"),
-      model = rep(NA_character_, 3),
+      value = rep(NA_character_, 3),
       id = ""
     )
   imp_tibble_tr <-
     tibble(
       terms = c("Status", "Home", "Marital"),
-      model = modes,
+      value = modes,
       id = ""
     )
 
@@ -127,7 +127,7 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_impute_mode(rec)
 
-  expect <- tibble(terms = character(), model = character(), id = character())
+  expect <- tibble(terms = character(), value = character(), id = character())
 
   expect_identical(tidy(rec, number = 1), expect)
 
@@ -159,10 +159,10 @@ test_that('case weights', {
 
   imp_tibble_tr <- fake_data %>%
     mutate(x2 = as.double(x2)) %>%
-    count(model = x1, wt = x2) %>%
+    count(value = x1, wt = x2) %>%
     slice_max(n, n = 1) %>%
     mutate(terms = "x1", id = "") %>%
-    select(terms, model, id)
+    select(terms, value, id)
 
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
@@ -179,10 +179,10 @@ test_that('case weights', {
   te_imputed <- bake(imputed, new_data = fake_data)
 
   imp_tibble_tr <- fake_data %>%
-    count(model = x1) %>%
+    count(value = x1) %>%
     slice_max(n, n = 1) %>%
     mutate(terms = "x1", id = "") %>%
-    select(terms, model, id)
+    select(terms, value, id)
 
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 
