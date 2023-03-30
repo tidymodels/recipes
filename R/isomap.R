@@ -197,7 +197,7 @@ bake.step_isomap <- function(object, new_data, ...) {
         dimred_data(new_data[, isomap_vars, drop = FALSE])
       )@data
     })
-    comps <- comps[, 1:object$num_terms, drop = FALSE]
+    comps <- comps[, seq_len(object$num_terms), drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)

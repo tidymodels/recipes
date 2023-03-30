@@ -234,7 +234,7 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
 
   frequencies <- sort(unique(na.omit(x$frequency)))
 
-  names(frequencies) <- as.character(1:length(frequencies))
+  names(frequencies) <- as.character(seq_along(frequencies))
   names(starting_vals) <- col_names
   names(cycle_sizes) <- col_names
 
@@ -303,7 +303,7 @@ bake.step_harmonic <- function(object, new_data, ...) {
     colnames(res) <- paste0(
       col_name,
       rep(c("_sin_", "_cos_"), each = n_frequency),
-      1:n_frequency
+      seq_len(n_frequency)
     )
     res <- as_tibble(res)
     new_data <- bind_cols(new_data, res)

@@ -147,7 +147,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
-  new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
+  new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_"))
 
   # Start with n-row, 0-col tibble for the empty selection case
   new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))
