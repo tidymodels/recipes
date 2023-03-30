@@ -101,6 +101,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+\item \code{sigma}: Radial Basis Function sigma (type: double, default: 0.2)
+}
+}
+
 \section{Case weights}{
 
 

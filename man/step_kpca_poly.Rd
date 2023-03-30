@@ -103,6 +103,16 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 4 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+\item \code{degree}: Polynomial Degree (type: double, default: 2)
+\item \code{scale_factor}: Scale Factor (type: double, default: 1)
+\item \code{offset}: Offset (type: double, default: 1)
+}
+}
+
 \section{Case weights}{
 
 

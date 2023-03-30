@@ -110,6 +110,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the bagged tree object) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{trees}: # Trees (type: integer, default: 25)
+}
+}
+
 \section{Case weights}{
 
 

@@ -57,6 +57,12 @@
 #' above. When you `tidy()` this step, a tibble with columns `terms` (the
 #' selectors or variables selected), `components`, and `values` is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_pls"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references

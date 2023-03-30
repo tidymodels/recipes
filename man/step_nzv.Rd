@@ -93,6 +93,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{freq_cut}: Frequency Distribution Ratio (type: double, default: 95/5)
+\item \code{unique_cut}: \% Unique Values (type: double, default: 10)
+}
+}
+
 \section{Case weights}{
 
 

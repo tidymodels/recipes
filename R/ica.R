@@ -51,6 +51,12 @@
 #' `terms` (the selectors or variables selected), `value` (the loading),
 #' and `component` is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_ica"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent

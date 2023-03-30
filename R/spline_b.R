@@ -40,6 +40,12 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_spline_b"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' library(tidyr)
 #' library(dplyr)

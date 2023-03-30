@@ -2,6 +2,8 @@
 
 * Fixed bug in `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `spline_nonnegative()` where you weren't able to tune the `degree` argument.
 
+* Steps with tunable arguments now have those arguments listed in the documentation.
+
 # recipes 1.0.5
 
 * Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.

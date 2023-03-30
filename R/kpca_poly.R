@@ -17,6 +17,14 @@
 #' @export
 #' @template kpca-info
 #'
+#' @details
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_kpca_poly"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2","kernlab"))

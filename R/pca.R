@@ -33,6 +33,7 @@
 #' @family multivariate transformation steps
 #' @export
 #' @details
+#'
 #' Principal component analysis (PCA) is a transformation of a
 #'  group of variables that produces a new set of artificial
 #'  features or components. These components are designed to capture
@@ -65,6 +66,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
 #' for the variable loadings per component or `type = "variance"` for how
 #' much variance each component accounts for.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_pca"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'

@@ -97,6 +97,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the window size) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{statistic}: Rolling Summary Statistic (type: character, default: median)
+\item \code{window}: Window Size (type: integer, default: 5)
+}
+}
+
 \section{Case weights}{
 
 
