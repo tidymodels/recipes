@@ -2,6 +2,8 @@
 
 * Fixed bug in `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `spline_nonnegative()` where you weren't able to tune the `degree` argument.
 
+* The `tidy()` method for `step_impute_mean()`, `step_impute_median()`, and `step_impute_mode()` now the imputed value with the column name `value` instead of `model`. This is in line with the output of `step_impute_lower()`. (#826)
+
 # recipes 1.0.5
 
 * Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
