@@ -54,11 +54,11 @@ test_that("correct types", {
   expect_true(inherits(juice_sparse_1d, "matrix"))
 
   expect_equal(
-    recipes:::convert_matrix(bake_default, sparse = FALSE),
+    hardhat::recompose(bake_default, composition = "matrix"),
     bake_sparse
   )
   expect_equal(
-    recipes:::convert_matrix(juice_default, sparse = FALSE),
+    hardhat::recompose(juice_default, composition = "matrix"),
     juice_sparse
   )
 })
