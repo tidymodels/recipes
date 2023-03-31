@@ -178,10 +178,27 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
-  data_info <- tibble(variable = names(data))
-  data_info <- dplyr::left_join(data_info, info, by = "variable", multiple = "all")
+  data_info <-
+    dplyr::left_join(
+      tibble::new_tibble(list(variable = names(data)), nrow = length(names(data))),
+      info,
+      by = "variable",
+      multiple = "all"
+    )
 
-  nested_info <- tidyr::nest(data_info, data = -variable)
+  var_counts <- vctrs::vec_count(data_info$variable, sort = "location")
+
+  data_col <-
+    vctrs::vec_chop(
+      data_info[!colnames(data_info) == "variable"],
+      sizes = var_counts$count
+    )
+  data_col <- map(data_col, tibble::new_tibble)
+  nested_info <-
+    tibble::new_tibble(vctrs::df_list(
+      variable = var_counts$key,
+      data = data_col
+    ))
 
   local_current_info(nested_info)
 
