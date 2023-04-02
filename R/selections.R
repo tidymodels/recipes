@@ -178,13 +178,8 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
-  data_info <-
-    dplyr::left_join(
-      tibble::new_tibble(list(variable = names(data)), nrow = length(names(data))),
-      info,
-      by = "variable",
-      multiple = "all"
-    )
+  matches <- vctrs::vec_locate_matches(names(data), info$variable)
+  data_info <- vec_slice(info, matches$haystack)
 
   var_counts <- vctrs::vec_count(data_info$variable, sort = "location")
 
