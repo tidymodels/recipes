@@ -181,19 +181,12 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   matches <- vctrs::vec_locate_matches(names(data), info$variable)
   data_info <- vec_slice(info, matches$haystack)
 
-  var_counts <- vctrs::vec_count(data_info$variable, sort = "location")
+  data_nest <- data_info[names(data_info) != "variable"]
+  data_nest <- tibble::new_tibble(data_nest, nrow = vctrs::vec_size(data_nest))
 
-  data_col <-
-    vctrs::vec_chop(
-      data_info[!colnames(data_info) == "variable"],
-      sizes = var_counts$count
-    )
-  data_col <- map(data_col, tibble::new_tibble)
-  nested_info <-
-    tibble::new_tibble(vctrs::df_list(
-      variable = var_counts$key,
-      data = data_col
-    ))
+  nested_info <- vctrs::vec_split(data_nest, by = data_info$variable)
+  nested_info <- list(variable = nested_info$key, data = nested_info$val)
+  nested_info <- tibble::new_tibble(nested_info, nrow = length(nested_info$variable))
 
   local_current_info(nested_info)
 
