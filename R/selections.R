@@ -178,7 +178,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
-  matches <- vctrs::vec_locate_matches(names(data), info$variable)
+  matches <- vctrs::vec_locate_matches(names(data), info$variable, no_match = "error")
   data_info <- vec_slice(info, matches$haystack)
 
   data_nest <- data_info[names(data_info) != "variable"]
