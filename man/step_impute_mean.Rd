@@ -80,6 +80,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 value) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{trim}: Amount of Trimming (type: double, default: 0)
+}
+}
+
 \section{Case weights}{
 
 

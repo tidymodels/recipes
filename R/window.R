@@ -48,6 +48,12 @@
 #' `terms` (the selectors or variables selected), `statistic` (the
 #' summary function name), and `size` is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_window"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed(c("RcppML", "ggplot2"))
@@ -237,7 +243,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   ## Fill in the left-hand points. Add enough data so that the
   ## missing values at the start can be estimated and filled in
-  x2[1:gap] <- x2[gap + 1]
+  x2[seq_len(gap)] <- x2[gap + 1]
 
   ## Right-hand points
   x2[(m - gap + 1):m] <- x2[m - gap]

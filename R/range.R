@@ -130,7 +130,7 @@ bake.step_range <- function(object, new_data, ...) {
     new_data[[column]] <- (new_data[[column]] - min) *
       (object$max - object$min) / (max - min) + object$min
 
-    if (!is.null(object$clipping) && object$clipping) {
+    if (is.null(object$clipping) || isTRUE(object$clipping)) {
       new_data[[column]] <- pmax(new_data[[column]], object$min)
       new_data[[column]] <- pmin(new_data[[column]], object$max)
     }

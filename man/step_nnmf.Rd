@@ -107,6 +107,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 components is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 2)
+\item \code{num_run}: Number of Computation Runs (type: integer, default: 30)
+}
+}
+
 \section{Case weights}{
 
 

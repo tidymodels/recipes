@@ -264,6 +264,12 @@ print.discretize <-
 #' `terms` (the selectors or variables selected) and `value`
 #' (the breaks) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_discretize"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @family discretization steps

@@ -37,6 +37,12 @@
 #'  `terms` (the selectors or variables selected) and the number of
 #'  components is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_nnmf_sparse"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf .Platform$OS.type!= "windows"

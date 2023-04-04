@@ -90,6 +90,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 levels that were not pulled into "other") is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{threshold}: Threshold (type: double, default: 0.05)
+}
+}
+
 \section{Case weights}{
 
 

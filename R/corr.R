@@ -42,6 +42,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be removed) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_corr"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")

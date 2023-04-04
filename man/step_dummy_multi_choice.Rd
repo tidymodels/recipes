@@ -93,6 +93,13 @@ new variable called \code{x_b}. The naming format can be changed using
 the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
 default.
 }
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{threshold}: Threshold (type: double, default: 0)
+}
+}
+
 \section{Case weights}{
 
 

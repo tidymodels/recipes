@@ -81,9 +81,9 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 
 names0 <- function(num, prefix = "x") {
   if (num < 1) {
-    rlang::abort("`num` should be > 0")
+    rlang::abort("`num` should be > 0.")
   }
-  ind <- format(1:num)
+  ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
 }
