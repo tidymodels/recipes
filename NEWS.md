@@ -2,6 +2,8 @@
 
 * Fixed bug in `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `spline_nonnegative()` where you weren't able to tune the `degree` argument.
 
+* The `tidy()` method for `step_impute_mean()`, `step_impute_median()`, and `step_impute_mode()` now the imputed value with the column name `value` instead of `model`. This is in line with the output of `step_impute_lower()`. (#826)
+
 * `step_range()` now perform correctly performs clipping on recipes created before 1.0.3. (#1097)
 
 * Steps with tunable arguments now have those arguments listed in the documentation.

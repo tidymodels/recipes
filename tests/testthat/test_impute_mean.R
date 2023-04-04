@@ -44,13 +44,13 @@ test_that("simple mean", {
   imp_tibble_un <-
     tibble(
       terms = c("Age", "Assets", "Income"),
-      model = rep(NA_real_, 3),
+      value = rep(NA_real_, 3),
       id = ""
     )
   imp_tibble_tr <-
     tibble(
       terms = c("Age", "Assets", "Income"),
-      model = unname(means),
+      value = unname(means),
       id = ""
     )
 
@@ -156,7 +156,7 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_impute_mean(rec)
 
-  expect <- tibble(terms = character(), model = double(), id = character())
+  expect <- tibble(terms = character(), value = double(), id = character())
 
   expect_identical(tidy(rec, number = 1), expect)
 
