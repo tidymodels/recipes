@@ -79,6 +79,13 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{degree}: Polynomial Degree (type: integer, default: 10)
+}
+}
+
 \section{Case weights}{
 
 

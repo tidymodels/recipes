@@ -55,11 +55,11 @@ test_that("correct types", {
   expect_equal(as.vector(class(juice_sparse_1d)), "dgCMatrix")
 
   expect_equal(
-    recipes:::convert_matrix(bake_default),
+    hardhat::recompose(bake_default, composition = "dgCMatrix"),
     bake_sparse
   )
   expect_equal(
-    recipes:::convert_matrix(juice_default),
+    hardhat::recompose(juice_default, composition = "dgCMatrix"),
     juice_sparse
   )
 })

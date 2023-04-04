@@ -51,6 +51,12 @@
 #' `terms` (the selectors or variables selected), `value` (the loading),
 #' and `component` is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_ica"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references Hyvarinen, A., and Oja, E. (2000). Independent
@@ -191,7 +197,7 @@ bake.step_ica <- function(object, new_data, ...) {
       center = object$res$means, scale = FALSE
     )
     comps <- comps %*% object$res$K %*% object$res$W
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)

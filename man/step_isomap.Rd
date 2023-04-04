@@ -104,6 +104,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_terms}: # Model Terms (type: integer, default: 5)
+\item \code{neighbors}: # Nearest Neighbors (type: integer, default: 50)
+}
+}
+
 \section{Case weights}{
 
 

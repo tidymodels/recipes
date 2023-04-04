@@ -105,6 +105,13 @@ frequency, for example, a \code{POSIXct} input column given a \code{frequency} o
 24 and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of
 1.0 with \code{cycle_size} equal to 3600.
 }
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{frequency}: Harmonic Frequency (type: double, default: NA)
+}
+}
+
 \section{Case weights}{
 
 

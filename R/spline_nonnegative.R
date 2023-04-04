@@ -35,6 +35,12 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_spline_nonnegative"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @references
 #' Curry, H.B., Schoenberg, I.J. (1988). On Polya Frequency Functions IV: The
 #' Fundamental Spline Functions and their Limits. In: de Boor, C. (eds) I. J.

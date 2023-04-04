@@ -33,6 +33,7 @@
 #' @family multivariate transformation steps
 #' @export
 #' @details
+#'
 #' Principal component analysis (PCA) is a transformation of a
 #'  group of variables that produces a new set of artificial
 #'  features or components. These components are designed to capture
@@ -65,6 +66,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
 #' for the variable loadings per component or `type = "variance"` for how
 #' much variance each component accounts for.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_pca"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'
@@ -228,7 +235,7 @@ bake.step_pca <- function(object, new_data, ...) {
     pca_vars <- rownames(object$res$rotation)
     comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
       object$res$rotation
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
+    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- bind_cols(new_data, as_tibble(comps))
     keep_original_cols <- get_keep_original_cols(object)
@@ -305,7 +312,7 @@ pca_variances <- function(x) {
     res <- tibble::tibble(
       terms = x,
       value = y,
-      component = rep(1:p, 4)
+      component = rep(seq_len(p), 4)
     )
   } else {
     res <- tibble::tibble(

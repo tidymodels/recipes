@@ -144,7 +144,7 @@ test_that("correct values", {
 
 test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
   standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12, id = "", clipping = FALSE)
+    step_range(carbon, hydrogen, min = -12, id = "", clipping = TRUE)
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
@@ -163,9 +163,13 @@ test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
 
   carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
              (maxs["carbon"] - mins["carbon"])) + new_min
+  carb <- ifelse(carb > new_max, new_max, carb)
+  carb <- ifelse(carb < new_min, new_min, carb)
 
   hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
               (maxs["hydrogen"] - mins["hydrogen"])) + new_min
+  hydro <- ifelse(hydro > new_max, new_max, hydro)
+  hydro <- ifelse(hydro < new_min, new_min, hydro)
 
   exp_pred <- cbind(carb, hydro)
   colnames(exp_pred) <- c("carbon", "hydrogen")

@@ -27,6 +27,12 @@
 #' `terms` (the selectors or variables selected) and `model` (the mean
 #' value) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_mean"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
