@@ -178,10 +178,15 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
-  data_info <- tibble(variable = names(data))
-  data_info <- dplyr::left_join(data_info, info, by = "variable", multiple = "all")
+  matches <- vctrs::vec_locate_matches(names(data), info$variable, no_match = "error")
+  data_info <- vec_slice(info, matches$haystack)
 
-  nested_info <- tidyr::nest(data_info, data = -variable)
+  data_nest <- data_info[names(data_info) != "variable"]
+  data_nest <- tibble::new_tibble(data_nest, nrow = vctrs::vec_size(data_nest))
+
+  nested_info <- vctrs::vec_split(data_nest, by = data_info$variable)
+  nested_info <- list(variable = nested_info$key, data = nested_info$val)
+  nested_info <- tibble::new_tibble(nested_info, nrow = length(nested_info$variable))
 
   local_current_info(nested_info)
 
