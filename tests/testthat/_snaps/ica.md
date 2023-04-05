@@ -55,6 +55,15 @@
       * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
       * No ICA components were extracted from: carbon, hydrogen, ... | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_ica`. The following variable names already exists: IC1.
+
 # empty printing
 
     Code
