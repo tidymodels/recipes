@@ -145,6 +145,15 @@
       * Zero variance filter removed: x | Trained
       * Dummy variables from: <none> | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_dummy`. The following variable names already exists: Species_versicolor.
+
 # can prep recipes with no keep_original_cols
 
     Code
