@@ -71,8 +71,9 @@
     Message
     Condition
       Error in `step_isomap()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_isomap`. The following variable names already exists: Isomap1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Isomap1
 
 # can prep recipes with no keep_original_cols
 

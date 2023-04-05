@@ -91,8 +91,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_harmonic()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_harmonic`. The following variable names already exists: mpg_sin_1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_sin_1
 
 # printing
 

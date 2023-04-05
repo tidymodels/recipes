@@ -37,8 +37,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_date()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_date`. The following variable names already exists: Dan_year.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Dan_year
 
 # can prep recipes with no keep_original_cols
 

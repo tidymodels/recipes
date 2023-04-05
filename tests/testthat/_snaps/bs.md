@@ -4,8 +4,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_bs()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_bs`. The following variable names already exists: mpg_bs_1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_bs_1
 
 # printing
 

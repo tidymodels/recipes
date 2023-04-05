@@ -31,8 +31,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_ratio()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_ratio`. The following variable names already exists: mpg_o_disp.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_o_disp
 
 # printing
 

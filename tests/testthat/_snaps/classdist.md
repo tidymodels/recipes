@@ -39,8 +39,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_classdist()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_classdist`. The following variable names already exists: classdist_setosa.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  classdist_setosa
 
 # empty printing
 

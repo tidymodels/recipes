@@ -4,8 +4,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_interact()`:
-      Caused by error in `step_interact()`:
-      ! The following required column is missing from `new_data` in step 'interact_Mws1X': x1+x2.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  x1ax2
 
 # printing
 

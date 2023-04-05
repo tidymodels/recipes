@@ -58,8 +58,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_kpca_rbf()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_kpca_rbf`. The following variable names already exists: kPC1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  kPC1
 
 # can prep recipes with no keep_original_cols
 

@@ -4,8 +4,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_poly_bernstein()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_poly_bernstein`. The following variable names already exists: mpg_01.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_01
 
 # printing
 

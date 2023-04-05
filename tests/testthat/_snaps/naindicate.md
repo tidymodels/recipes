@@ -4,8 +4,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_indicate_na()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_indicate_na`. The following variable names already exists: na_ind_mpg.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  na_ind_mpg
 
 # printing
 

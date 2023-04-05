@@ -61,8 +61,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_ica()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_ica`. The following variable names already exists: IC1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  IC1
 
 # empty printing
 

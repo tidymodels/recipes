@@ -4,8 +4,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_time()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_time`. The following variable names already exists: time_hour.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  time_hour
 
 # printing
 

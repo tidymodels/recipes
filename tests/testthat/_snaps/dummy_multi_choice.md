@@ -13,8 +13,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_dummy_multi_choice()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_dummy_multi_choice`. The following variable names already exists: Species_setosa.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Species_setosa
 
 # printing
 

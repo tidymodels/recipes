@@ -87,8 +87,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_pca()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_pca`. The following variable names already exists: PC1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  PC1
 
 # can prep recipes with no keep_original_cols
 

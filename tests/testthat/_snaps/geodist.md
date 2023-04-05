@@ -84,8 +84,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_geodist()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_geodist`. The following variable names already exists: geo_dist.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  geo_dist
 
 # bad args
 

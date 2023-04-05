@@ -4,6 +4,7 @@
       prep(rec, training = dat)
     Condition
       Error in `step_nnmf_sparse()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_nnmf_sparse`. The following variable names already exists: NNMF1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  NNMF1
 

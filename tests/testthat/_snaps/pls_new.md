@@ -22,8 +22,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_pls()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_pls`. The following variable names already exists: PLS1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  PLS1
 
 # Deprecation warning
 

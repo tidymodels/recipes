@@ -44,8 +44,9 @@
       prep(rec, training = dat)
     Condition
       Error in `step_kpca()`:
-      Caused by error in `check_name()`:
-      ! Name collision occured in `step_kpca`. The following variable names already exists: kPC1.
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  kPC1
 
 # No kPCA comps
 
