@@ -1,3 +1,12 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_spline_nonnegative()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_spline_nonnegative`. The following variable names already exists: mpg_01.
+
 # printing
 
     Code
