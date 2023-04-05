@@ -239,7 +239,7 @@ bake.step_geodist <- function(object, new_data, ...) {
   geo_data <- tibble(dist_vals)
   names(geo_data) <- object$name
 
-  check_name(geo_data, new_data, object, newname = object$name)
+  geo_data <- check_name(geo_data, new_data, object, newname = object$name)
 
   new_data <- bind_cols(new_data, geo_data)
 

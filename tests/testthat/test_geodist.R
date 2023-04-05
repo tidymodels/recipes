@@ -153,16 +153,16 @@ test_that("lat lon", {
   )
 })
 
-test_that("step_geodist() uses check_name()", {
-  rec <- recipe(~ x + y, data = rand_data) %>%
-    step_geodist(x, y,
-                 ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
-                 log = FALSE, name = "x"
-    )
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$geo_dist <- dat$mpg
+
+  rec <- recipe(~., data = dat) |>
+    step_geodist(vs, am, ref_lat = 0, ref_lon = 0)
 
   expect_snapshot(
     error = TRUE,
-    prep(rec, training = rand_data)
+    prep(rec, training = dat)
   )
 })
 
