@@ -8,6 +8,8 @@
 
 * Steps with tunable arguments now have those arguments listed in the documentation.
 
+* All steps that add new columns will now informatively error if name collision occurs. (#983)
+
 # recipes 1.0.5
 
 * Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
