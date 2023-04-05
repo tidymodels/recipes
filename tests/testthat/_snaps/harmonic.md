@@ -85,6 +85,15 @@
       Caused by error in `prep()`:
       ! `starting_val` must be length 1 or the same  length as the input columns
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_harmonic()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_harmonic`. The following variable names already exists: mpg_sin_1.
+
 # printing
 
     Code

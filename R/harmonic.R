@@ -312,6 +312,9 @@ bake.step_harmonic <- function(object, new_data, ...) {
       seq_len(n_frequency)
     )
     res <- as_tibble(res)
+
+    res <- check_name(res, new_data, object, names(res))
+
     new_data <- bind_cols(new_data, res)
   }
 
