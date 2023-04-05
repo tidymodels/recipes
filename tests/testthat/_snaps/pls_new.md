@@ -16,6 +16,15 @@
       Caused by error in `prep()`:
       ! `step_pls()` only supports multivariate models for numeric outcomes.
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_pls()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_pls`. The following variable names already exists: PLS1.
+
 # Deprecation warning
 
     Code
