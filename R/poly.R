@@ -171,7 +171,8 @@ bake.step_poly <- function(object, new_data, ...) {
     new_tbl[i_new_names] <- new_cols
   }
 
-  new_data <- dplyr::bind_cols(new_data, new_tbl)
+  new_tbl <- check_name(new_tbl, new_data, object, names(new_tbl))
+  new_data <- bind_cols(new_data, new_tbl)
   new_data <- dplyr::select(new_data, -dplyr::all_of(col_names))
   new_data
 }

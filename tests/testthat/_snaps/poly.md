@@ -1,3 +1,12 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_poly()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_poly`. The following variable names already exists: mpg_poly_1.
+
 # printing
 
     Code
