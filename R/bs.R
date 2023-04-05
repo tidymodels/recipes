@@ -183,7 +183,10 @@ bake.step_bs <- function(object, new_data, ...) {
     strt <- max(cols) + 1
     new_data[, orig_var] <- NULL
   }
-  new_data <- bind_cols(new_data, as_tibble(bs_values))
+  bs_values <- as_tibble(bs_values)
+  bs_values <- check_name(bs_values, new_data, object, names(bs_values))
+
+  new_data <- bind_cols(new_data, bs_values)
   new_data
 }
 
