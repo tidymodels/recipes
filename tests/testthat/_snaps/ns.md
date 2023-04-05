@@ -1,3 +1,12 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_ns()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_ns`. The following variable names already exists: mpg_ns_1.
+
 # printing
 
     Code

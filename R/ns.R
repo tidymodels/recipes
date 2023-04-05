@@ -173,7 +173,9 @@ bake.step_ns <- function(object, new_data, ...) {
     strt <- max(cols) + 1
     new_data[, orig_var] <- NULL
   }
-  new_data <- bind_cols(new_data, as_tibble(ns_values))
+  ns_values <- as_tibble(ns_values)
+  ns_values <- check_name(ns_values, new_data, object, names(ns_values))
+  new_data <- bind_cols(new_data, ns_values)
   new_data
 }
 
