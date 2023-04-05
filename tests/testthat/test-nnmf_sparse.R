@@ -1,4 +1,5 @@
 test_that("check_name() is used", {
+  skip_if_not_installed("RcppML")
   data("ames", package = "modeldata")
   library(Matrix)
   dat <- mtcars
