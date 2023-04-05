@@ -246,6 +246,8 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl)
 
+    indicators <- check_name(indicators, new_data, object, names(indicators))
+
     new_data <- bind_cols(new_data, indicators)
 
     if (!keep_original_cols) {
