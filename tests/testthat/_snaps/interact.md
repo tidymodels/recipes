@@ -1,3 +1,12 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_interact()`:
+      Caused by error in `step_interact()`:
+      ! The following required column is missing from `new_data` in step 'interact_Mws1X': x1+x2.
+
 # printing
 
     Code

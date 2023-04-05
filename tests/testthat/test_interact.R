@@ -163,6 +163,19 @@ test_that("using all_of() works", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- dat_tr
+  dat$`x1:x2` <- dat$x1
+
+  rec <- recipe(y ~ ., data = dat) %>%
+    step_interact(~ (. - y - z)^3, sep = ":")
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("printing", {
   int_rec <- rec %>% step_interact(~ x1:x2)
   expect_snapshot(print(int_rec))
