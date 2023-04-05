@@ -4,7 +4,14 @@
 \alias{check_name}
 \title{check that newly created variable names don't overlap}
 \usage{
-check_name(res, new_data, object, newname = NULL, names = FALSE)
+check_name(
+  res,
+  new_data,
+  object,
+  newname = NULL,
+  names = FALSE,
+  call = caller_env()
+)
 }
 \arguments{
 \item{res}{A data frame or tibble of the newly created variables.}
@@ -18,6 +25,11 @@ in the trained object.}
 
 \item{names}{A logical determining if the names should be set using
 the names function (TRUE) or colnames function (FALSE).}
+
+\item{call}{The execution environment of a currently running function, e.g.
+\code{caller_env()}. The function will be mentioned in error messages as the
+source of the error. See the call argument of \code{\link[rlang:abort]{rlang::abort()}} for more
+information.}
 }
 \description{
 \code{check_name} is to be used in the bake function to ensure that
