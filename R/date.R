@@ -286,6 +286,8 @@ bake.step_date <- function(object, new_data, ...) {
 
   names(date_values) <- new_names
 
+  date_values <- check_name(date_values, new_data, object, names(date_values))
+
   new_data <- bind_cols(new_data, date_values)
   keep_original_cols <- get_keep_original_cols(object)
   if (!keep_original_cols) {
