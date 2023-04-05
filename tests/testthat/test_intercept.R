@@ -52,6 +52,19 @@ test_that("deals with bad input", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$intercept <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_intercept()
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_intercept()
