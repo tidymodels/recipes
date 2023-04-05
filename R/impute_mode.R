@@ -207,11 +207,11 @@ tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$modes),
-      model = unname(x$modes)
+      value = unname(x$modes)
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_chr)
+    res <- tibble(terms = term_names, value = na_chr)
   }
   res$id <- x$id
   res

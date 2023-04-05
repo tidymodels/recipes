@@ -180,11 +180,11 @@ tidy.step_impute_median <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$medians),
-      model = vctrs::list_unchop(unname(x$medians), ptype = double())
+      value = vctrs::list_unchop(unname(x$medians), ptype = double())
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_dbl)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
   res$id <- x$id
   res
