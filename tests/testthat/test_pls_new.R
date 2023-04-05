@@ -223,6 +223,7 @@ test_that("tidy method", {
 })
 
 test_that("check_name() is used", {
+  skip_if_not_installed("mixOmics")
   dat <- mtcars
   dat$PLS1 <- dat$mpg
 

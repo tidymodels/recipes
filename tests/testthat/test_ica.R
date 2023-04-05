@@ -105,6 +105,9 @@ test_that("No ICA comps", {
 })
 
 test_that("check_name() is used", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
   dat <- mtcars
   dat$IC1 <- dat$mpg
 
