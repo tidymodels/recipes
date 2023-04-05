@@ -1,3 +1,12 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_indicate_na()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_indicate_na`. The following variable names already exists: na_ind_mpg.
+
 # printing
 
     Code

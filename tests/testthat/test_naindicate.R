@@ -86,6 +86,19 @@ test_that("step_indicate_na on subset of columns", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- dplyr::as_tibble(mtcars)
+  dat$na_ind_mpg <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_indicate_na(mpg)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("printing", {
   rec <- recipe(Ozone ~ ., data = airquality) %>%
     step_indicate_na(all_predictors())
