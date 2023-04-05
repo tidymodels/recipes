@@ -38,6 +38,15 @@
       -- Operations 
       * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_kpca()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_kpca`. The following variable names already exists: kPC1.
+
 # No kPCA comps
 
     Code

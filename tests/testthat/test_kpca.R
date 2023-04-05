@@ -53,6 +53,19 @@ test_that("printing", {
   expect_snapshot(prep(kpca_rec))
 })
 
+test_that("check_name() is used", {
+  skip_if_not_installed("kernlab")
+  dat <- dplyr::as_tibble(tr_dat)
+  dat$kPC1 <- dat$X1
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_kpca(X2, X3, X4, X5, X6)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
 
 test_that("No kPCA comps", {
   skip_if_not_installed("kernlab")
