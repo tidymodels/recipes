@@ -177,6 +177,25 @@ test_that("printing", {
   expect_snapshot(prep(holiday_rec))
 })
 
+
+test_that("check_name() is used", {
+  dat <- test_data
+  dat$day_Easter <- dat$day
+
+  rec <- recipe(~., dat) %>%
+    step_holiday(day, holidays = exp_dates$holiday)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
+holiday_rec <- recipe(~day, test_data) %>%
+  step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+holiday_rec <- prep(holiday_rec, training = test_data)
+
 test_that("keep_original_cols works", {
   holiday_rec <- recipe(~day, test_data) %>%
     step_holiday(all_predictors(),

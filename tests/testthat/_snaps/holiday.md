@@ -31,6 +31,15 @@
       -- Operations 
       * Holiday features from: day | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_holiday()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_holiday`. The following variable names already exists: day_Easter.
+
 # can prep recipes with no keep_original_cols
 
     Code
