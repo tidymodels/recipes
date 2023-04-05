@@ -42,6 +42,19 @@ test_that("dummy variables with non-factor inputs", {
   expect_snapshot(error = TRUE, prep(dummy))
 })
 
+test_that("check_name() is used", {
+  dat <- iris
+  dat$Species_setosa <- dat$Species
+
+  rec <- recipe(~., data = dat) |>
+    step_dummy_multi_choice(Species)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("printing", {
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(all_predictors())
