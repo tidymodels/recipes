@@ -509,15 +509,12 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
   new_data_names <- colnames(new_data)
   intersection <- new_data_names %in% newname
   if (any(intersection)) {
-    rlang::abort(
-      paste0(
-        "Name collision occured in `",
-        class(object)[1],
-        "`. The following variable names already exists: ",
-        paste0(new_data_names[intersection], collapse = ", "),
-        "."
-      )
+    nms <- new_data_names[intersection]
+    cli::cli_abort(
+      c("Name collision occured. The following variable names already exists:",
+        i = " {nms}")
     )
+
   }
   if (names) {
     names(res) <- newname
