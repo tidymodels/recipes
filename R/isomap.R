@@ -204,8 +204,9 @@ bake.step_isomap <- function(object, new_data, ...) {
       )@data
     })
     comps <- comps[, seq_len(object$num_terms), drop = FALSE]
+    comps <- as_tibble(comps)
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <- bind_cols(new_data, comps)
     keep_original_cols <- get_keep_original_cols(object)
     if (!keep_original_cols) {
       new_data <- new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]

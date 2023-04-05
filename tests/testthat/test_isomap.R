@@ -123,6 +123,25 @@ test_that("ISOmap fails gracefully", {
   )
 })
 
+test_that("check_name() is used", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+  dat <- dplyr::as_tibble(dat1)
+  dat$Isomap1 <- dat$x1
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat),
+    transform = scrub_timestamp
+  )
+})
 
 test_that("tunable", {
   rec <-
