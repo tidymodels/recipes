@@ -91,6 +91,22 @@ test_that("custom hour12 metric is correct", {
   expect_equal(date_res, date_exp)
 })
 
+test_that("check_name() is used", {
+  dat <- tibble(
+    time = lubridate::ymd_hms("2000-01-01 00:00:00") +
+      lubridate::seconds(seq(0, 60 * 60 * 24))
+  )
+  dat$time_hour <- dat$time
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_time(time)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("printing", {
   examples <- data.frame(
     times = lubridate::ymd_hms("2022-05-06 10:01:07") +
