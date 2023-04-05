@@ -81,6 +81,22 @@ test_that("printing", {
   expect_snapshot(prep(rec))
 })
 
+test_that("check_name() is used", {
+  dat <- iris
+  dat$classdist_setosa <- dat$Sepal.Length
+
+  rec <- recipe(Species ~ ., data = dat) %>%
+    step_classdist(
+      Sepal.Length, Sepal.Width, Petal.Length, Petal.Width,
+      class = "Species"
+    )
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("prefix", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(),

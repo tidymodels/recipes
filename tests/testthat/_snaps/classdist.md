@@ -33,6 +33,15 @@
       -- Operations 
       * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `check_name()`:
+      ! Name collision occured in `step_classdist`. The following variable names already exists: classdist_setosa.
+
 # empty printing
 
     Code
