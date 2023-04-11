@@ -31,6 +31,16 @@
       -- Operations 
       * Date features from: Dan, Stefan | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_date()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Dan_year
+
 # can prep recipes with no keep_original_cols
 
     Code

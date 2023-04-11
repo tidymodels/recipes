@@ -98,6 +98,19 @@ test_that("printing", {
   expect_snapshot(prep(date_rec))
 })
 
+test_that("check_name() is used", {
+  dat <- examples
+  dat$Dan_year <- dat$Dan
+
+  rec <- recipe(~., data = dat) |>
+    step_date(Dan)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("keep_original_cols works", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors(), features = feats, keep_original_cols = FALSE)

@@ -330,6 +330,19 @@ test_that("retained columns", {
   expect_true(any(colnames(dummy_pred) == "zip"))
 })
 
+test_that("check_name() is used", {
+  dat <- iris
+  dat$Species_versicolor <- dat$Species
+
+  rec <- recipe(~., data = dat) |>
+    step_dummy(Species)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("keep_original_cols works", {
   rec <- recipe(sqft ~ city, data = sacr_fac)
   dummy <- rec %>% step_dummy(city, id = "", keep_original_cols = TRUE)

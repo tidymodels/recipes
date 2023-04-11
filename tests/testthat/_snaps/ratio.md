@@ -25,6 +25,16 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_ratio()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_o_disp
+
 # printing
 
     Code

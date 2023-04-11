@@ -165,6 +165,18 @@ test_that("backwards compatible with 0.1.17", {
   expect_snapshot(pca_extract)
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$PC1 <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_pca(mpg, disp, vs)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
 
 test_that("tunable", {
   rec <-

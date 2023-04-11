@@ -218,6 +218,19 @@ test_that("dummy variables with integer threshold", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- iris
+  dat$Species_setosa <- dat$Species
+
+  rec <- recipe(~., data = dat) |>
+    step_dummy_extract(Species, sep = " ")
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("naming function", {
   expect_equal(
     dummy_extract_names("x", letters[c(1, 2, 3, 3)]),

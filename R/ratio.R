@@ -159,9 +159,10 @@ bake.step_ratio <- function(object, new_data, ...) {
 
   res <- tibble::new_tibble(res, nrow = nrow(new_data))
 
-  keep_original_cols <- get_keep_original_cols(object)
+  res <- check_name(res, new_data, object, names(res))
   new_data <- bind_cols(new_data, res)
 
+  keep_original_cols <- get_keep_original_cols(object)
   if (!keep_original_cols) {
     union_cols <- union(object$columns$top, object$columns$bottom)
     new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]

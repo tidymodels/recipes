@@ -78,6 +78,16 @@
       Caused by error in `bake()`:
       ! All `lon` values should be between -180 and 180
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_geodist()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  geo_dist
+
 # bad args
 
     Code

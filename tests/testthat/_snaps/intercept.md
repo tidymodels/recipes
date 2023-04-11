@@ -35,6 +35,16 @@
       -- Operations 
       * Adding intercept named:: intercept | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_intercept()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  intercept
+
 # printing
 
     Code

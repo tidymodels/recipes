@@ -134,6 +134,18 @@ test_that("wrong type", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$mpg_o_disp <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_ratio(mpg, denom = denom_vars(disp))
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
 
 test_that("printing", {
   rec3 <- rec %>%

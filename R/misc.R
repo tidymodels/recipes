@@ -500,24 +500,27 @@ simple_terms <- function(x, ...) {
 #'   in the trained object.
 #' @param names A logical determining if the names should be set using
 #' the names function (TRUE) or colnames function (FALSE).
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
 #' @export
 #' @keywords internal
-check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
+check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
+                       call = caller_env()) {
   if (is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
   }
   new_data_names <- colnames(new_data)
   intersection <- new_data_names %in% newname
   if (any(intersection)) {
-    rlang::abort(
-      paste0(
-        "Name collision occured in `",
-        class(object)[1],
-        "`. The following variable names already exists: ",
-        paste0(new_data_names[intersection], collapse = ", "),
-        "."
-      )
+    nms <- new_data_names[intersection]
+    cli::cli_abort(
+      c("Name collision occured. The following variable names already exists:",
+        i = " {nms}"),
+      call = call
     )
+
   }
   if (names) {
     names(res) <- newname

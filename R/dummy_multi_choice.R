@@ -176,8 +176,11 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
   used_lvl <- gsub(paste0("^", prefix), "", colnames(indicators))
   colnames(indicators) <- object$naming(prefix, used_lvl)
+  indicators <- as_tibble(indicators)
 
-  new_data <- bind_cols(new_data, as_tibble(indicators))
+  indicators <- check_name(indicators, new_data, object, names(indicators))
+
+  new_data <- bind_cols(new_data, indicators)
   keep_original_cols <- get_keep_original_cols(object)
 
   if (!keep_original_cols) {

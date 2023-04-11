@@ -75,6 +75,18 @@ test_that("correct convex functions", {
   expect_equal(hydrogen_ns_te_res, hydrogen_ns_te_exp)
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$mpg_01 <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_spline_convex(mpg)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
 
 test_that("printing", {
 

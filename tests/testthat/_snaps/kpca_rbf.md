@@ -52,6 +52,16 @@
       -- Operations 
       * RBF kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_kpca_rbf()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  kPC1
+
 # can prep recipes with no keep_original_cols
 
     Code

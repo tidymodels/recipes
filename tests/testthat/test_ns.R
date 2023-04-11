@@ -71,6 +71,18 @@ test_that("correct basis functions", {
   expect_equal(hydrogen_ns_te_res, hydrogen_ns_te_exp)
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$mpg_ns_1 <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_ns(mpg)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
 
 test_that("printing", {
   with_ns <- rec %>% step_ns(carbon, hydrogen)

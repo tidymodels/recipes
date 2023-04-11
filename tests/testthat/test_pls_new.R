@@ -222,6 +222,20 @@ test_that("tidy method", {
   expect_equal(tidy_post, exp_post, tolerance = 0.01)
 })
 
+test_that("check_name() is used", {
+  skip_if_not_installed("mixOmics")
+  dat <- mtcars
+  dat$PLS1 <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_pls(mpg, disp, vs, outcome = "am")
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 ## -----------------------------------------------------------------------------
 
 test_that("Deprecation warning", {

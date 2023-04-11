@@ -7,6 +7,16 @@
       Caused by error in `prep()`:
       ! `sep` or `pattern` must be specified.
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Species_setosa
+
 # printing
 
     Code

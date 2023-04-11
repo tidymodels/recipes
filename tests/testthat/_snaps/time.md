@@ -1,3 +1,13 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_time()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  time_hour
+
 # printing
 
     Code

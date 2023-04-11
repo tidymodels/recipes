@@ -153,6 +153,19 @@ test_that("lat lon", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$geo_dist <- dat$mpg
+
+  rec <- recipe(~., data = dat) |>
+    step_geodist(vs, am, ref_lat = 0, ref_lon = 0)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 test_that("bad args", {
   rand_data_2 <- rand_data
   rand_data_2$x1 <- runif(nrow(rand_data_2))

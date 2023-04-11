@@ -104,6 +104,21 @@ test_that("No ICA comps", {
   expect_true(all(is.na(tidy(ica_extract_trained, 2)$value)))
 })
 
+test_that("check_name() is used", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+  dat <- mtcars
+  dat$IC1 <- dat$mpg
+
+  rec <- recipe(~., data = dat) |>
+    step_ica(mpg, disp)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
 
 
 test_that("tunable", {

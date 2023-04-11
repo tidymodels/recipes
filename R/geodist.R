@@ -157,11 +157,6 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   }
   check_type(training[, lat_name], types = c("double", "integer"))
 
-
-  if (any(names(training) == x$name)) {
-    rlang::abort("'", x$name, "' is already used in the data.")
-  }
-
   step_geodist_new(
     lon = x$lon,
     lat = x$lat,
@@ -238,10 +233,15 @@ bake.step_geodist <- function(object, new_data, ...) {
   }
 
   if (object$log) {
-    new_data[, object$name] <- log(dist_vals)
-  } else {
-    new_data[, object$name] <- dist_vals
+    dist_vals <- log(dist_vals)
   }
+
+  geo_data <- tibble(dist_vals)
+  names(geo_data) <- object$name
+
+  geo_data <- check_name(geo_data, new_data, object, newname = object$name)
+
+  new_data <- bind_cols(new_data, geo_data)
 
   new_data
 }

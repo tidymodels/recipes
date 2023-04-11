@@ -64,6 +64,17 @@
       Error in do.call(.Call, args = dot_call_args) : 
         TridiagEigen: eigen decomposition failed
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Message
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Isomap1
+
 # can prep recipes with no keep_original_cols
 
     Code

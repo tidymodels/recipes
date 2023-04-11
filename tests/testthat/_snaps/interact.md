@@ -1,3 +1,13 @@
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_interact()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  x1ax2
+
 # printing
 
     Code
