@@ -72,6 +72,7 @@
 <li><p>The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method for <code><a href="../reference/step_impute_mean.html">step_impute_mean()</a></code>, <code><a href="../reference/step_impute_median.html">step_impute_median()</a></code>, and <code><a href="../reference/step_impute_mode.html">step_impute_mode()</a></code> now the imputed value with the column name <code>value</code> instead of <code>model</code>. This is in line with the output of <code><a href="../reference/step_impute_lower.html">step_impute_lower()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/826" class="external-link">#826</a>)</p></li>
 <li><p><code><a href="../reference/step_range.html">step_range()</a></code> now perform correctly performs clipping on recipes created before 1.0.3. (<a href="https://github.com/tidymodels/recipes/issues/1097" class="external-link">#1097</a>)</p></li>
 <li><p>Steps with tunable arguments now have those arguments listed in the documentation.</p></li>
+<li><p>All steps that add new columns will now informatively error if name collision occurs. (<a href="https://github.com/tidymodels/recipes/issues/983" class="external-link">#983</a>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.5" id="recipes-105">recipes 1.0.5<a class="anchor" aria-label="anchor" href="#recipes-105"></a></h2><p class="text-muted">CRAN release: 2023-02-20</p>
