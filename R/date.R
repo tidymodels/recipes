@@ -168,7 +168,7 @@ prep.step_date <- function(x, training, info = NULL, ...) {
 
 
 ord2fac <- function(x, what) {
-  x <- getElement(x, what)
+  x <- x[[what]]
   factor(as.character(x), levels = levels(x), ordered = FALSE)
 }
 
@@ -265,7 +265,7 @@ bake.step_date <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
 
     tmp <- get_date_features(
-      dt = getElement(new_data, object$columns[i]),
+      dt = new_data[[object$columns[i]]],
       feats = object$features,
       locale = object$locale %||% Sys.getlocale("LC_TIME"),
       abbr = object$abbr,

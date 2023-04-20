@@ -166,7 +166,7 @@ bake.step_ns <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     ns_values[, cols] <-
-      ns_predict(object$objects[[i]], getElement(new_data, i))
+      ns_predict(object$objects[[i]], new_data[[i]])
     new_names <-
       paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
     colnames(ns_values)[cols] <- new_names

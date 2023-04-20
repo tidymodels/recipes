@@ -168,12 +168,11 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-  x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+  x_dat <- split(training[, x_names], training[[class_var]])
   if (is.null(wts)) {
     wts_split <- map(x_dat, ~NULL)
   } else {
-    wts_split <- split(as.double(wts), getElement(training, class_var))
+    wts_split <- split(as.double(wts), training[[class_var]])
   }
   if (x$pool) {
     res <- list(

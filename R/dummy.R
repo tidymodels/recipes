@@ -196,8 +196,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       ## factor levels at the end of `prep.recipe` since it is
       ## not a factor anymore. We'll save them here and reset them
       ## in `bake.step_dummy` just prior to calling `model.matrix`
-      attr(levels[[i]], "values") <-
-        levels(getElement(training, col_names[i]))
+      attr(levels[[i]], "values") <- levels(training[[col_names[i]]])
       attr(levels[[i]], ".Environment") <- NULL
     }
   } else {
@@ -301,7 +300,8 @@ bake.step_dummy <- function(object, new_data, ...) {
     )
 
     new_data[, orig_var] <-
-      factor(getElement(new_data, orig_var),
+      factor(
+        new_data[[orig_var]],
         levels = attr(object$levels[[i]], "values"),
         ordered = fac_type == "ordered"
       )

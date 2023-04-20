@@ -179,10 +179,10 @@ bake.step_other <- function(object, new_data, ...) {
   check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
-      tmp <- if (!is.character(new_data[, i])) {
-        as.character(getElement(new_data, i))
-      } else {
-        getElement(new_data, i)
+      tmp <- new_data[[i]]
+
+      if (!is.character(tmp)) {
+        tmp <- as.character(tmp)
       }
 
       tmp <- ifelse(
@@ -199,7 +199,7 @@ bake.step_other <- function(object, new_data, ...) {
         )
       )
 
-      new_data[, i] <- tmp
+      new_data[[i]] <- tmp
     }
   }
   new_data

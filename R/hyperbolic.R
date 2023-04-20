@@ -113,9 +113,8 @@ bake.step_hyperbolic <- function(object, new_data, ...) {
     get(object$func)
   }
   col_names <- object$columns
-  for (i in seq_along(col_names)) {
-    new_data[, col_names[i]] <-
-      func(getElement(new_data, col_names[i]))
+  for (col_name in col_names) {
+    new_data[, col_name] <- func(new_data[[col_name]])
   }
   new_data
 }

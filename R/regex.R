@@ -143,7 +143,7 @@ bake.step_regex <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(
     grepl(
-      x = getElement(new_data, object$input),
+      x = new_data[[object$input]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,

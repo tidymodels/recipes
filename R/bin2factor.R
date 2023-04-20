@@ -109,10 +109,10 @@ bake.step_bin2factor <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
+  for (col_name in object$columns) {
+    new_data[, col_name] <-
       factor(ifelse(
-        getElement(new_data, object$columns[i]) == 1,
+        new_data[[col_name]] == 1,
         object$levels[1],
         object$levels[2]
       ),

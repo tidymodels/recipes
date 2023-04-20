@@ -90,10 +90,11 @@ bake.step_shuffle <- function(object, new_data, ...) {
 
   if (length(object$columns) > 0) {
     for (i in seq_along(object$columns)) {
-      new_data[, object$columns[i]] <-
-        sample(getElement(new_data, object$columns[i]))
+      new_data[[object$columns[i]]] <-
+        sample(new_data[[object$columns[i]]])
     }
   }
+
   new_data
 }
 
