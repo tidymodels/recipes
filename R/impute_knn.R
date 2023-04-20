@@ -235,7 +235,7 @@ nn_index <- function(miss_data, ref_data, vars, K, opt) {
 
 nn_pred <- function(index, dat) {
   dat <- dat[index, ]
-  dat <- getElement(dat, names(dat))
+  dat <- dat[[names(dat)]]
   dat <- dat[!is.na(dat)]
   est <- if (is.factor(dat) | is.character(dat)) {
     mode_est(dat)

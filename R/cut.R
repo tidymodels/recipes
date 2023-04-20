@@ -105,7 +105,7 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   names(all_breaks) <- col_names
   for (col_name in col_names) {
     all_breaks[[col_name]] <-
-      create_full_breaks(training[, col_name, drop = TRUE], breaks = x$breaks)
+      create_full_breaks(training[[col_name]], breaks = x$breaks)
     full_breaks_check(all_breaks[[col_name]])
   }
 
@@ -145,11 +145,11 @@ bake.step_cut <- function(object, new_data, ...) {
 
   for (col_name in names(object$breaks)) {
     res <- cut_var(
-      new_data[, col_name, drop = TRUE],
+      new_data[[col_name]],
       object$breaks[[col_name]],
       object$include_outside_range
     )
-    new_data[, col_name] <- res
+    new_data[[col_name]] <- res
   }
   new_data
 }

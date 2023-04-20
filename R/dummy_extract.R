@@ -235,7 +235,7 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
     orig_var <- names(object$levels)[i]
 
     elements <- dummy_extract(
-      getElement(new_data, orig_var),
+      new_data[[orig_var]],
       sep = object$sep, pattern = object$pattern
     )
 
@@ -251,7 +251,7 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
     new_data <- bind_cols(new_data, indicators)
 
     if (!keep_original_cols) {
-      new_data[, col_names[i]] <- NULL
+      new_data[[col_names[i]]] <- NULL
     }
   }
   new_data

@@ -140,8 +140,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
 
   class_var <- x$class[1]
 
-  x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+  x_dat <- split(training[, x_names], training[[class_var]])
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,

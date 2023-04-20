@@ -149,7 +149,7 @@ bake.step_count <- function(object, new_data, ...) {
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = getElement(new_data, object$input),
+      text = new_data[[object$input]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -163,7 +163,7 @@ bake.step_count <- function(object, new_data, ...) {
 
   new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
   if (object$normalize) {
-    totals <- nchar(as.character(getElement(new_data, object$input)))
+    totals <- nchar(as.character(new_data[[object$input]]))
     new_data[, object$result] <- new_data[, object$result] / totals
   }
   new_data

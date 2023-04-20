@@ -176,12 +176,12 @@ bake.step_bs <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     bs_values[, cols] <-
-      bs_predict(object$objects[[i]], getElement(new_data, i))
+      bs_predict(object$objects[[i]], new_data[[i]])
     new_names <-
       paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
     colnames(bs_values)[cols] <- new_names
     strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
+    new_data[[orig_var]] <- NULL
   }
   bs_values <- as_tibble(bs_values)
   bs_values <- check_name(bs_values, new_data, object, names(bs_values))

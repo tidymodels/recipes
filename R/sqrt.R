@@ -87,8 +87,7 @@ bake.step_sqrt <- function(object, new_data, ...) {
 
   col_names <- object$columns
   for (i in seq_along(col_names)) {
-    new_data[, col_names[i]] <-
-      sqrt(getElement(new_data, col_names[i]))
+    new_data[[col_names[i]]] <- sqrt(new_data[[col_names[i]]])
   }
   new_data
 }
