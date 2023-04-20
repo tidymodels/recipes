@@ -251,7 +251,7 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
     new_data <- bind_cols(new_data, indicators)
 
     if (!keep_original_cols) {
-      new_data[, col_names[i]] <- NULL
+      new_data[[col_names[i]]] <- NULL
     }
   }
   new_data

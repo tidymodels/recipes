@@ -103,7 +103,7 @@ bake.step_logit <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
   for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
+    new_data[[object$columns[i]]] <-
       binomial()$linkfun(
         pre_logit(new_data[[object$columns[i]]], object$offset)
       )

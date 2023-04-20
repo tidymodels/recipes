@@ -336,7 +336,7 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     new_data <- bind_cols(new_data, indicators)
     if (any(!object$preserve, !keep_original_cols)) {
-      new_data[, col_names[i]] <- NULL
+      new_data[[col_names[i]]] <- NULL
     }
   }
   new_data

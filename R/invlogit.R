@@ -90,7 +90,7 @@ bake.step_invlogit <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
   for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
+    new_data[[object$columns[i]]] <-
       binomial()$linkinv(
         unlist(
           new_data[[object$columns[i]]],

@@ -110,7 +110,7 @@ bake.step_bin2factor <- function(object, new_data, ...) {
 
   levs <- if (object$ref_first) object$levels else rev(object$levels)
   for (col_name in object$columns) {
-    new_data[, col_name] <-
+    new_data[[col_name]] <-
       factor(ifelse(
         new_data[[col_name]] == 1,
         object$levels[1],

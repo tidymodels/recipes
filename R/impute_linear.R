@@ -206,7 +206,7 @@ bake.step_impute_linear <- function(object, new_data, ...) {
   old_data <- new_data
   for (i in seq(along.with = object$models)) {
     imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[, imp_var])
+    missing_rows <- !complete.cases(new_data[[imp_var]])
     if (any(missing_rows)) {
       preds <- object$models[[imp_var]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]

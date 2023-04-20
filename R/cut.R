@@ -149,7 +149,7 @@ bake.step_cut <- function(object, new_data, ...) {
       object$breaks[[col_name]],
       object$include_outside_range
     )
-    new_data[, col_name] <- res
+    new_data[[col_name]] <- res
   }
   new_data
 }
