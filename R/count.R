@@ -137,6 +137,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_count <- function(object, new_data, ...) {
   check_new_data(names(object$input), object, new_data)
 

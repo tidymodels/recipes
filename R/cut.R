@@ -140,6 +140,7 @@ full_breaks_check <- function(breaks) {
   }
 }
 
+#' @export
 bake.step_cut <- function(object, new_data, ...) {
   check_new_data(names(object$breaks), object, new_data)
 

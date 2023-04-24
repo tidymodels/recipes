@@ -164,6 +164,7 @@ prep.step_spline_b <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_spline_b <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {

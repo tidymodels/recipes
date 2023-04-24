@@ -74,6 +74,7 @@ prep.check_cols <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.check_cols <- function(object, new_data, ...) {
   original_cols <- object$columns
   new_cols <- names(new_data)

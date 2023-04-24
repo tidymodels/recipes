@@ -105,6 +105,7 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_bin2factor <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 

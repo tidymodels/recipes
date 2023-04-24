@@ -142,13 +142,14 @@ prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
 }
 
 create_bake_method <- function(name, which) {
-  glue('
+  glue("
+#' @export
 bake.{which}_{name} <- function(object, new_data, ...) {{
   <baking actions here>
   as_tibble(new_data)
 }}
 
-')
+")
 }
 
 create_print_method <- function(name, which) {

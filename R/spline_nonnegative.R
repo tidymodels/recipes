@@ -167,6 +167,7 @@ prep.step_spline_nonnegative <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_spline_nonnegative <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {

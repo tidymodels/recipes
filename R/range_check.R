@@ -175,6 +175,7 @@ range_check_func <- function(x,
   }
 }
 
+#' @export
 bake.check_range <- function(object,
                              new_data,
                              ...) {

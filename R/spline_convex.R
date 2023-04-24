@@ -155,6 +155,7 @@ prep.step_spline_convex <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_spline_convex <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {

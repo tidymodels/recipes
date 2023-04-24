@@ -131,6 +131,7 @@ prep.check_new_values <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.check_new_values <- function(object,
                                   new_data,
                                   ...) {

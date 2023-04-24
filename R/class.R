@@ -182,6 +182,7 @@ bake_check_class_core <- function(x,
   }
 }
 
+#' @export
 bake.check_class <- function(object,
                              new_data,
                              ...) {
