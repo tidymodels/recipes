@@ -97,18 +97,6 @@ test_that("empty selection tidy method works", {
   )
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_bin2factor(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   mtcars_bin <- mtcars %>% mutate(bin = c(1, rep(0, nrow(mtcars) - 1)))
 
@@ -123,3 +111,14 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_bin2factor(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

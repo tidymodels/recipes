@@ -94,8 +94,9 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- check_range(rec)
 

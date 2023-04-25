@@ -118,19 +118,6 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if_not_installed("ddalpha")
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(Species ~ ., iris)
-  rec <- step_depth(rec, class = "Species")
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, iris)
-
-  expect_snapshot(rec)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("ddalpha")
 
@@ -146,3 +133,15 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  skip_if_not_installed("ddalpha")
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_depth(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
+})

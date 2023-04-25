@@ -17,13 +17,6 @@ biomass['zero_variance'] <- 1
 rec_zv <- recipe(HHV ~  + carbon + hydrogen + oxygen + nitrogen + sulfur + zero_variance,
                  data = biomass)
 
-test_that("printing", {
-  standardized <- rec %>%
-    step_normalize(nitrogen, carbon)
-  expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized))
-})
-
 test_that("correct means and std devs for step_normalize", {
   standardized <- rec %>%
     step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "norm")
@@ -132,18 +125,6 @@ test_that("normalize - empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("normalize - empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_normalize(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("normalize - warns on zv",{
   rec1 <- step_normalize(rec_zv,all_numeric_predictors())
   expect_snapshot(prep(rec1))
@@ -204,3 +185,14 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_normalize(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

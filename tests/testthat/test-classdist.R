@@ -148,19 +148,6 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec3, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(Species ~ ., iris)
-  rec <- step_classdist(rec, class = "Species")
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, iris)
-
-  expect_snapshot(rec)
-})
-
-
 test_that("case weights", {
   set.seed(1)
   wts <- runif(32)
@@ -243,3 +230,14 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_classdist(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
+})

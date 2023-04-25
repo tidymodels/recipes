@@ -40,41 +40,6 @@
       -- Operations 
       * Percentile transformation on: carbon, sulfur | Trained
 
-# empty printing
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * Percentile transformation on: <none>
-
----
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * Percentile transformation on: <none> | Trained
-
 # case weights
 
     Code
@@ -112,4 +77,39 @@
       
       -- Operations 
       * Percentile transformation on: carbon, sulfur | Trained, ignored weights
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Percentile transformation on: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Percentile transformation on: <none> | Trained
 

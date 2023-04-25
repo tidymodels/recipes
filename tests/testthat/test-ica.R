@@ -239,22 +239,6 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
-
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_ica(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
@@ -275,3 +259,18 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_ica(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

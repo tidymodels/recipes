@@ -40,7 +40,7 @@
       -- Operations 
       * Variable renaming for: Sepal.Length, Sepal.Width | Trained
 
-# rename_at - empty printing
+# empty printing
 
     Code
       rec

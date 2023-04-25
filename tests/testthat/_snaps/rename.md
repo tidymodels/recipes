@@ -31,7 +31,7 @@
       -- Operations 
       * Variable renaming for: wat | Trained
 
-# rename - empty printing
+# empty printing
 
     Code
       rec

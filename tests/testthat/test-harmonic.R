@@ -493,18 +493,6 @@ test_that("printing", {
   expect_snapshot(prep(with_harmonic))
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_harmonic(rec, frequency = 1 / 11, cycle_size = 1)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   harmonic_dat_mult <- tibble(
     osc = sin(2 * pi * x_second / (3600 * 6)),
@@ -526,3 +514,14 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_harmonic(rec, frequency = 1 / 11, cycle_size = 1)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})

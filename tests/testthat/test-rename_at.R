@@ -81,8 +81,9 @@ test_that("rename_at - empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("rename_at - empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_rename_at(rec, fn = identity)
 
@@ -92,5 +93,3 @@ test_that("rename_at - empty printing", {
 
   expect_snapshot(rec)
 })
-
-# Infrastructure ---------------------------------------------------------------
