@@ -31,6 +31,11 @@
       -- Operations 
       * Hyperbolic sin (inv) transformation on: x1, x2 | Trained
 
+# wrong function
+
+    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
+    i Did you mean "cosh"?
+
 # empty printing
 
     Code
@@ -65,9 +70,4 @@
       
       -- Operations 
       * Hyperbolic sin (inv) transformation on: <none> | Trained
-
-# wrong function
-
-    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
-    i Did you mean "cosh"?
 

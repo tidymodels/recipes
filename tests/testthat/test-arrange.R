@@ -72,8 +72,15 @@ test_that("empty tidying", {
   )
 })
 
+test_that("printing", {
+  rec <- iris_rec %>% step_arrange(Sepal.Length)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})
+
+# Infrastructure ---------------------------------------------------------------
+
 test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_arrange(rec)
 
@@ -83,11 +90,3 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
-
-test_that("printing", {
-  rec <- iris_rec %>% step_arrange(Sepal.Length)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-# Infrastructure ---------------------------------------------------------------

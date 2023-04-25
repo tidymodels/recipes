@@ -83,18 +83,6 @@ test_that("empty selection tidy method works", {
   )
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- check_cols(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("non-standard roles during bake/predict", {
   skip_if_not_installed("modeldata")
   skip_if_not_installed("workflows")
@@ -198,4 +186,15 @@ test_that("non-standard roles during bake/predict", {
   expect_error(predict(rm_fit, Chicago %>% select(-date)))
 })
 
+# Infrastructure ---------------------------------------------------------------
 
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- check_cols(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
