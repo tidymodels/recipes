@@ -145,21 +145,6 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
-test_that("empty selection prep/bake is a no-op", {
-  skip_if_not_installed("kernlab")
-
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_kpca_poly(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("kernlab")
 
@@ -187,6 +172,21 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  skip_if_not_installed("kernlab")
+
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_kpca_poly(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
 })
 
 test_that("empty selection tidy method works", {

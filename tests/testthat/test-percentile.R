@@ -149,19 +149,6 @@ test_that("outside argument", {
   )
 })
 
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_percentile(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
 test_that("case weights", {
   test_wts <- rep(c(1, 0), c(200, 256))
   biomass_tr_cw <- biomass_tr %>%
@@ -261,6 +248,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_percentile(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
 })
 
 test_that("empty selection tidy method works", {

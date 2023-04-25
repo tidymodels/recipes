@@ -123,17 +123,6 @@ test_that("tidy", {
   expect_equal(tidy_4, exp_4)
 })
 
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_profile(rec1, profile = vars(mpg))
-
-  rec2 <- prep(rec2, mtcars)
-
-  baked2 <- bake(rec2, mtcars)
-
-  expect_named(baked2, "mpg")
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
@@ -145,6 +134,17 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_profile(rec1, profile = vars(mpg))
+
+  rec2 <- prep(rec2, mtcars)
+
+  baked2 <- bake(rec2, mtcars)
+
+  expect_named(baked2, "mpg")
 })
 
 test_that("empty selection tidy method works", {

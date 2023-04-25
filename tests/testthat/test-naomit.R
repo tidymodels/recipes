@@ -34,19 +34,6 @@ test_that("step_naomit on subset of columns", {
   expect_equal(baked2, na_res2[, c(2:6, 1)])
 })
 
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_naomit(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
@@ -58,6 +45,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_naomit(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
 })
 
 test_that("empty selection tidy method works", {

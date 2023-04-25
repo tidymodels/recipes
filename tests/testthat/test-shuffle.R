@@ -69,19 +69,6 @@ test_that("bake a single row", {
   expect_equal(dat4, tibble(dat[1, ]))
 })
 
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_shuffle(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(all_numeric()) %>%
@@ -105,6 +92,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_shuffle(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
 })
 
 test_that("empty selection tidy method works", {
