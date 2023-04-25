@@ -116,6 +116,7 @@ check_class_new <-
     )
   }
 
+#' @export
 prep.check_class <- function(x,
                              training,
                              info = NULL,

@@ -97,6 +97,7 @@ check_missing_new <-
     )
   }
 
+#' @export
 prep.check_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 

@@ -61,6 +61,7 @@ check_cols_new <-
     )
   }
 
+#' @export
 prep.check_cols <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 

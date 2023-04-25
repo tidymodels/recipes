@@ -101,6 +101,7 @@ check_range_new <-
     )
   }
 
+#' @export
 prep.check_range <- function(x,
                              training,
                              info = NULL,
