@@ -14,7 +14,7 @@ variables using B-splines."><meta property="og:image" content="https://recipes.t
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,6 +173,11 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 <code>terms</code> (the columns that will be affected) is returned.</p>
     </div>
     <div class="section level2">
+    <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
+    <p>This step has 2 tuning parameters:</p><ul><li><p><code>deg_free</code>: Spline Degrees of Freedom (type: integer, default: NULL)</p></li>
+<li><p><code>degree</code>: Polynomial Degree (type: integer, default: 3)</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     
 
@@ -217,21 +222,21 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
 <span class="r-in"><span><span class="va">expanded</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">with_splines</span>, <span class="va">biomass_te</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">expanded</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 80 × 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    oxygen nitrogen sulfur   HHV carbon_b…¹ carbo…² carbo…³ hydro…⁴ hydro…⁵</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   47.2     0.3    0.22  18.3      0.437  0.273  0.056<span style="text-decoration: underline;">8</span>    0.383   0.367</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>   48.1     2.85   0.34  17.6      0.444  0.236  0.041<span style="text-decoration: underline;">7</span>    0.393   0.355</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   49.1     2.4    0.3   17.2      0.444  0.229  0.039<span style="text-decoration: underline;">4</span>    0.393   0.355</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   37.3     1.8    0.5   18.9      0.437  0.273  0.057<span style="text-decoration: underline;">1</span>    0.354   0.394</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   42.8     0.2    0     20.5      0.427  0.301  0.070<span style="text-decoration: underline;">7</span>    0.338   0.406</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   41.7     0.7    0.2   18.5      0.442  0.248  0.046<span style="text-decoration: underline;">5</span>    0.393   0.355</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   54.1     1.19   0.51  15.1      0.440  0.184  0.025<span style="text-decoration: underline;">6</span>    0.408   0.335</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   33.8     0.95   0.2   16.2      0.444  0.222  0.036<span style="text-decoration: underline;">9</span>    0.431   0.290</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   31.1     0.14   4.9   11.1      0.359  0.077<span style="text-decoration: underline;">1</span> 0.005<span style="text-decoration: underline;">52</span>   0.438   0.268</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   23.7     4.63   1.05  10.8      0.338  0.064<span style="text-decoration: underline;">3</span> 0.004<span style="text-decoration: underline;">08</span>   0.444   0.214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 70 more rows, 1 more variable: hydrogen_bs_3 &lt;dbl&gt;, and</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   abbreviated variable names ¹​carbon_bs_1, ²​carbon_bs_2, ³​carbon_bs_3,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁴​hydrogen_bs_1, ⁵​hydrogen_bs_2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    oxygen nitrogen sulfur   HHV carbon_bs_1 carbon_bs_2 carbon_bs_3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   47.2     0.3    0.22  18.3       0.437      0.273      0.056<span style="text-decoration: underline;">8</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>   48.1     2.85   0.34  17.6       0.444      0.236      0.041<span style="text-decoration: underline;">7</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   49.1     2.4    0.3   17.2       0.444      0.229      0.039<span style="text-decoration: underline;">4</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   37.3     1.8    0.5   18.9       0.437      0.273      0.057<span style="text-decoration: underline;">1</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   42.8     0.2    0     20.5       0.427      0.301      0.070<span style="text-decoration: underline;">7</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   41.7     0.7    0.2   18.5       0.442      0.248      0.046<span style="text-decoration: underline;">5</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   54.1     1.19   0.51  15.1       0.440      0.184      0.025<span style="text-decoration: underline;">6</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   33.8     0.95   0.2   16.2       0.444      0.222      0.036<span style="text-decoration: underline;">9</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   31.1     0.14   4.9   11.1       0.359      0.077<span style="text-decoration: underline;">1</span>     0.005<span style="text-decoration: underline;">52</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   23.7     4.63   1.05  10.8       0.338      0.064<span style="text-decoration: underline;">3</span>     0.004<span style="text-decoration: underline;">08</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 70 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: hydrogen_bs_1 &lt;dbl&gt;, hydrogen_bs_2 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hydrogen_bs_3 &lt;dbl&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -241,7 +246,7 @@ for the new variables is <code>varname_bs_1</code> and so on.</p>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/topepo" class="external-link">Max Kuhn</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/topepo" class="external-link">Max Kuhn</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Emil Hvitfeldt, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

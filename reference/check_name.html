@@ -14,7 +14,7 @@ Throws an error if check fails."><meta property="og:image" content="https://reci
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,14 @@ Throws an error if check fails.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_name</span><span class="op">(</span><span class="va">res</span>, <span class="va">new_data</span>, <span class="va">object</span>, newname <span class="op">=</span> <span class="cn">NULL</span>, names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_name</span><span class="op">(</span></span>
+<span>  <span class="va">res</span>,</span>
+<span>  <span class="va">new_data</span>,</span>
+<span>  <span class="va">object</span>,</span>
+<span>  newname <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -105,6 +112,13 @@ in the trained object.</p></dd>
 <dd><p>A logical determining if the names should be set using
 the names function (TRUE) or colnames function (FALSE).</p></dd>
 
+
+<dt>call</dt>
+<dd><p>The execution environment of a currently running function, e.g.
+<code>caller_env()</code>. The function will be mentioned in error messages as the
+source of the error. See the call argument of <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code> for more
+information.</p></dd>
+
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -114,7 +128,7 @@ the names function (TRUE) or colnames function (FALSE).</p></dd>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/topepo" class="external-link">Max Kuhn</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/topepo" class="external-link">Max Kuhn</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Emil Hvitfeldt, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
