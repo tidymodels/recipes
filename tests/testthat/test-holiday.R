@@ -281,3 +281,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(holiday_rec, exp_dates[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
+
+# Infrastructure ---------------------------------------------------------------

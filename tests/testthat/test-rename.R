@@ -186,3 +186,5 @@ test_that("rename_at - empty printing", {
 
   expect_snapshot(rec)
 })
+
+# Infrastructure ---------------------------------------------------------------

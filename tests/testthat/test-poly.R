@@ -185,3 +185,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(with_poly, new_data = biomass_tr[, c(-3)]),
                class = "new_data_missing_column")
 })
+
+# Infrastructure ---------------------------------------------------------------

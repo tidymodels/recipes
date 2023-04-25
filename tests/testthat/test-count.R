@@ -119,3 +119,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_trained, new_data = mt_tibble[,c(-1)]),
                class = "new_data_missing_column")
 })
+
+# Infrastructure ---------------------------------------------------------------

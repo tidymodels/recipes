@@ -305,3 +305,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_snapshot(bake(int_rec_trained, dat_tr[, 4:6]), error = TRUE)
 })
+
+# Infrastructure ---------------------------------------------------------------

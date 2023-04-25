@@ -133,3 +133,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_trained, te_dat[, 2:3], all_predictors()),
                class = "new_data_missing_column")
 })
+
+# Infrastructure ---------------------------------------------------------------

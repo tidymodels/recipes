@@ -159,3 +159,5 @@ test_that("case weights", {
 
   expect_snapshot(filtering_trained)
 })
+
+# Infrastructure ---------------------------------------------------------------

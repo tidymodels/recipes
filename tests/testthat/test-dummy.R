@@ -422,3 +422,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
                class = "new_data_missing_column")
 })
+
+# Infrastructure ---------------------------------------------------------------

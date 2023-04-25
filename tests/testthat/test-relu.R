@@ -147,3 +147,5 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 rm(df)
+
+# Infrastructure ---------------------------------------------------------------

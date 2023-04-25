@@ -191,3 +191,5 @@ test_that("factor levels are preserved", {
 
   expect_identical(ncol(data1), ncol(data2))
 })
+
+# Infrastructure ---------------------------------------------------------------

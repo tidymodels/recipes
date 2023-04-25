@@ -142,3 +142,5 @@ test_that("sample with case weights", {
 
   expect_snapshot(rec)
 })
+
+# Infrastructure ---------------------------------------------------------------
