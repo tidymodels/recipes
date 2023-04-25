@@ -1,3 +1,12 @@
+# mulitple functions
+
+    Code
+      prep(rec, training = iris %>% slice(1:75))
+    Condition
+      Error in `step_rename_at()`:
+      Caused by error in `dplyr::rename_at()`:
+      ! `.funs` must contain one renaming function, not 2.
+
 # printing
 
     Code
@@ -11,7 +20,7 @@
       predictor: 5
       
       -- Operations 
-      * Variable renaming for: wat
+      * Variable renaming for: contains("Sepal")
 
 ---
 
@@ -29,9 +38,9 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Variable renaming for: wat | Trained
+      * Variable renaming for: Sepal.Length, Sepal.Width | Trained
 
-# rename - empty printing
+# rename_at - empty printing
 
     Code
       rec
