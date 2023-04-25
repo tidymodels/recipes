@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 1.0.5.9000
+Version: 1.0.6
 Authors@R: c(
     person("Max", "Kuhn", , "max@posit.co", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
@@ -46,7 +46,7 @@ Imports:
 Suggests: 
     covr,
     ddalpha,
-    dials (>= 1.1.0.9000),
+    dials (>= 1.2.0),
     ggplot2,
     igraph,
     kernlab,
@@ -72,5 +72,3 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Remotes:  
-    tidymodels/dials

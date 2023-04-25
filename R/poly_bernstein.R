@@ -107,7 +107,7 @@ step_poly_bernstein_new <-
   }
 
 # ------------------------------------------------------------------------------
-
+#' @export
 prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
@@ -147,6 +147,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_poly_bernstein <- function(object, new_data, ...) {
   orig_names <- names(object$results)
   if (length(orig_names) > 0) {

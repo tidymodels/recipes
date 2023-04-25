@@ -121,7 +121,8 @@ create_generator <- function(name, which) {
 }
 
 create_prep_method <- function(name, which) {
-  glue('
+  glue("
+#' @export
 prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
@@ -138,17 +139,18 @@ prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
   )
 }}
 
-')
+")
 }
 
 create_bake_method <- function(name, which) {
-  glue('
+  glue("
+#' @export
 bake.{which}_{name} <- function(object, new_data, ...) {{
   <baking actions here>
   as_tibble(new_data)
 }}
 
-')
+")
 }
 
 create_print_method <- function(name, which) {

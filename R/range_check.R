@@ -101,6 +101,7 @@ check_range_new <-
     )
   }
 
+#' @export
 prep.check_range <- function(x,
                              training,
                              info = NULL,
@@ -175,6 +176,7 @@ range_check_func <- function(x,
   }
 }
 
+#' @export
 bake.check_range <- function(object,
                              new_data,
                              ...) {
