@@ -90,6 +90,7 @@ test_that("centering with case weights", {
   expect_snapshot(rec)
 })
 
+# Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   sp_sign <- rec %>%
@@ -102,8 +103,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(sp_sign_trained, new_data = biomass[,c(-3)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

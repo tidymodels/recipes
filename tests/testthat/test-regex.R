@@ -60,6 +60,8 @@ test_that("empty selection prep/bake adds a 0 column", {
   expect_identical(baked2$xxx, rep(0, nrow(mtcars)))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   mt_tibble <- mtcars %>%
     tibble::rownames_to_column(var = "make_model")
@@ -74,8 +76,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec, new_data = mt_tibble[, c(-1)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

@@ -390,6 +390,8 @@ test_that("othering with case weights", {
   expect_snapshot(others)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   others <- rec %>% step_other(city, zip, other = "another", id = "") %>%
     update_role(city, zip, new_role = "potato") %>%
@@ -406,8 +408,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(others, new_data = sacr_te[, 3:9]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

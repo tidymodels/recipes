@@ -282,6 +282,7 @@ test_that("missing columns", {
 #   all.equal(te_og, te_new)
 # })
 
+# Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   int_rec <- rec %>%
@@ -299,8 +300,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_snapshot(bake(int_rec_trained, dat_tr[, 4:6]), error = TRUE)
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("printing", {
   rec <- recipe(y ~ ., data = dat_tr) %>%

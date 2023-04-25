@@ -176,6 +176,8 @@ test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
   expect_equal(exp_pred, obs_pred)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   standardized <- rec %>%
     step_range(carbon, hydrogen, min = -12) %>%
@@ -187,8 +189,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(standardized_trained, new_data = biomass_te[, 1:3]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

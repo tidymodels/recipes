@@ -135,6 +135,8 @@ test_that("non-factor imputation", {
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   imputed <- rec %>%
     step_impute_bag(carbon, fac,
@@ -149,8 +151,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(imputed_trained, new_data = biomass[, c(-3, -9)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

@@ -64,6 +64,8 @@ test_that("choose reference level", {
   expect_true(levels(res4$rocks)[1] == "no")
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   mtcars_bin <- mtcars %>% mutate(bin = c(1, rep(0, nrow(mtcars) - 1)))
 
@@ -76,8 +78,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(rec, mtcars), class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

@@ -110,6 +110,8 @@ test_that("centering with case weights", {
   expect_snapshot(rec)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   std <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
@@ -121,8 +123,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(std_trained, new_data = biomass[, 1:2]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

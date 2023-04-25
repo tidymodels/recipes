@@ -99,6 +99,8 @@ test_that("check_name() is used", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- recipe(train) %>%
     step_indicate_na(col1) %>%
@@ -109,8 +111,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec1, new_data = test[, 2:3]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

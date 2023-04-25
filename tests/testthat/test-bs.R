@@ -109,6 +109,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   with_bs <- rec %>%
     step_bs(carbon, hydrogen, deg_free = 5, degree = 2) %>%
@@ -120,8 +122,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(with_bs, new_data = biomass_tr[,c(-4)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

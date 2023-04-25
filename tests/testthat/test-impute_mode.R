@@ -144,6 +144,8 @@ test_that('case weights', {
   expect_snapshot(imputed)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
@@ -156,8 +158,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(imputed, new_data = credit_te[, c(-6)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

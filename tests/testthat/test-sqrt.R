@@ -19,6 +19,8 @@ test_that("simple sqrt trans", {
   expect_equal(rec_trans, exp_res)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_sqrt(x1, x2) %>%
@@ -29,8 +31,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec, new_data = ex_dat[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

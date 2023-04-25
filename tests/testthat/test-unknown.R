@@ -81,6 +81,8 @@ test_that("tidy methods", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec_1 <- rec %>%
     step_unknown(city, zip) %>%
@@ -91,8 +93,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_1, sacr_te[3:ncol(sacr_te)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

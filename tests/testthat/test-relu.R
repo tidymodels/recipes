@@ -90,6 +90,8 @@ test_that("input checking", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = df) %>%
     step_relu(val1) %>%
@@ -100,10 +102,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec, df[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-rm(df)
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

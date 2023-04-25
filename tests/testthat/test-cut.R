@@ -150,6 +150,8 @@ test_that("step_cut integration test", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   df <- data.frame(x = 1:10, y = 5:14)
   rec <- recipe(df)
@@ -165,8 +167,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(prepped, df[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

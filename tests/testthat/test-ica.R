@@ -188,6 +188,8 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
@@ -206,8 +208,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(ica_extract_trained, new_data = biomass_tr[, c(-3)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   skip_if_not_installed("dimRed")

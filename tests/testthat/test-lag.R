@@ -70,6 +70,8 @@ test_that("specification of multiple lags in a vector", {
 
 rm(n, start, end)
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   set.seed(27)
 
@@ -89,8 +91,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec, new_data = df[, 1, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

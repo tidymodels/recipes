@@ -225,6 +225,8 @@ test_that("case weights", {
   expect_snapshot(rec_trained)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = biomass_tr) %>%
     step_percentile(carbon, sulfur) %>%
@@ -236,8 +238,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_trained, new_data = biomass_tr[, c(-3, -7)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

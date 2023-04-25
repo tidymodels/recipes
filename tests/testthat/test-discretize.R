@@ -185,6 +185,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(cyl ~ ., mtcars)
   rec <- step_discretize(rec, mpg, min_unique = 3) %>%
@@ -195,8 +197,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec, new_data = mtcars[, 2:ncol(mtcars)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

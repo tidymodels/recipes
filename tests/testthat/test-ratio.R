@@ -181,6 +181,8 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- rec %>%
     step_ratio(x1, denom = denom_vars(all_numeric())) %>%
@@ -192,8 +194,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec1, ex_dat[, 2:5]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

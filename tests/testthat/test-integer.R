@@ -76,6 +76,8 @@ test_that("not integers", {
   expect_true(!all(vapply(tr_int, is.integer, logical(1))))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
     step_integer(x) %>%
@@ -88,8 +90,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_trained, te_dat[, 2:3], all_predictors()),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

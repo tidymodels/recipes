@@ -27,6 +27,8 @@ test_that("simple logit trans", {
   expect_equal(rec_trans, exp_res)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_invlogit(x1) %>%
@@ -38,8 +40,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

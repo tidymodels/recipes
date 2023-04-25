@@ -71,6 +71,8 @@ test_that("bad spec", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- recipe(~., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord")) %>%
@@ -84,8 +86,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec1, new_data = ex_dat[, 1:3]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

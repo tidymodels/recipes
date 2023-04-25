@@ -122,6 +122,8 @@ test_that("old option argument", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   with_poly <- rec %>%
     step_poly(carbon, hydrogen, id = "") %>%
@@ -139,8 +141,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(with_poly, new_data = biomass_tr[, c(-3)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

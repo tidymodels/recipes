@@ -69,6 +69,8 @@ test_that("bake a single row", {
   expect_equal(dat4, tibble(dat[1, ]))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(all_numeric()) %>%
@@ -80,8 +82,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec1, dat[, 2:5]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

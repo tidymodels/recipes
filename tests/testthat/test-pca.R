@@ -293,6 +293,8 @@ test_that("case weights", {
   expect_snapshot(pca_extract_trained)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
@@ -306,8 +308,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(pca_extract_trained, new_data = biomass_te[, c(-3)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

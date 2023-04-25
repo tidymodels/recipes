@@ -131,6 +131,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   seven_pt <- recipe(~., data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
@@ -142,8 +144,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(seven_pt, new_data = example_data[, c(-2)]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

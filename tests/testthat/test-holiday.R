@@ -224,6 +224,8 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   holiday_rec <- recipe(~day, test_data) %>%
     step_holiday(day, holidays = exp_dates$holiday) %>%
@@ -235,8 +237,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(holiday_rec, exp_dates[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)

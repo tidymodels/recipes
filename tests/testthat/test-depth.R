@@ -95,6 +95,8 @@ test_that("empty selection prep/bake adds NA columns", {
   expect_identical(baked2$depth_virginica, rep(NA_real_, nrow(iris)))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("ddalpha")
 
@@ -108,8 +110,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(trained, new_data = iris[, 2:5]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   skip_if_not_installed("ddalpha")

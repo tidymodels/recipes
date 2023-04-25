@@ -62,6 +62,8 @@ test_that("wrong function", {
   expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_hyperbolic(x1, x2, func = "sinh", inverse = FALSE) %>%
@@ -73,8 +75,6 @@ test_that("bake method errors when needed non-standard role columns are missing"
   expect_error(bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE]),
                class = "new_data_missing_column")
 })
-
-# Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
