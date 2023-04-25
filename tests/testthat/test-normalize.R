@@ -94,7 +94,7 @@ test_that("na_rm argument works for step_normalize", {
   )
 })
 
-test_that("normalize - empty selection prep/bake is a no-op", {
+test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_normalize(rec1)
 
@@ -107,25 +107,7 @@ test_that("normalize - empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
-test_that("normalize - empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_normalize(rec)
-
-  expect <- tibble(
-    terms = character(),
-    statistic = character(),
-    value = double(),
-    id = character()
-  )
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("normalize - warns on zv",{
+test_that("warns on zv",{
   rec1 <- step_normalize(rec_zv,all_numeric_predictors())
   expect_snapshot(prep(rec1))
 })
@@ -195,6 +177,24 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_normalize(rec)
+
+  expect <- tibble(
+    terms = character(),
+    statistic = character(),
+    value = double(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

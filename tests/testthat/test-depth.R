@@ -95,20 +95,6 @@ test_that("empty selection prep/bake adds NA columns", {
   expect_identical(baked2$depth_virginica, rep(NA_real_, nrow(iris)))
 })
 
-test_that("empty selection tidy method works", {
-  skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., iris)
-  rec <- step_depth(rec, class = "Species")
-
-  expect <- tibble(terms = character(), class = character(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, iris)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("ddalpha")
 
@@ -135,6 +121,20 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  skip_if_not_installed("ddalpha")
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_depth(rec, class = "Species")
+
+  expect <- tibble(terms = character(), class = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, iris)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

@@ -103,19 +103,6 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_relu(rec)
-
-  expect <- tibble(terms = character(), shift = double(), reverse = logical(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = df) %>%
     step_relu(val1) %>%
@@ -140,6 +127,24 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_relu(rec)
+
+  expect <- tibble(
+    terms = character(),
+    shift = double(),
+    reverse = logical(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

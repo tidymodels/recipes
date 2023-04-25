@@ -99,19 +99,6 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_median(rec)
-
-  expect <- tibble(terms = character(), value = double(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
 test_that("case weights", {
   credit_tr_cw <- credit_tr %>%
     mutate(Amount = frequency_weights(Amount))
@@ -177,6 +164,20 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_median(rec)
+
+  expect <- tibble(terms = character(), value = double(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
 
 test_that("printing", {
   rec <- recipe(Price ~ ., data = credit_tr) %>%

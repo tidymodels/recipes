@@ -47,7 +47,7 @@ test_that("no input", {
   expect_equal(no_inputs, iris)
 })
 
-test_that("rename - empty selection prep/bake is a no-op", {
+test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_rename(rec1)
 
@@ -58,19 +58,6 @@ test_that("rename - empty selection prep/bake is a no-op", {
   baked2 <- bake(rec2, mtcars)
 
   expect_identical(baked1, baked2)
-})
-
-test_that("rename - empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_rename(rec)
-
-  expect <- tibble(terms = character(), value = character(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -84,6 +71,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_rename(rec)
+
+  expect <- tibble(terms = character(), value = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

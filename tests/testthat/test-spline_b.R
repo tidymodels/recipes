@@ -138,19 +138,6 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_spline_b(rec)
-
-  expect <- tibble(terms = "<none>", id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec_prepped <- prep(rec, mtcars)
-  expect_prepped <- tibble::tibble(terms = "<none>", id = rec_prepped$steps[[1]]$id)
-  expect_identical(tidy(rec_prepped, number = 1), expect_prepped)
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
@@ -162,6 +149,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_spline_b(rec)
+
+  expect <- tibble(terms = "<none>", id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec_prepped <- prep(rec, mtcars)
+  expect_prepped <- tibble::tibble(terms = "<none>", id = rec_prepped$steps[[1]]$id)
+  expect_identical(tidy(rec_prepped, number = 1), expect_prepped)
 })
 
 test_that("printing", {

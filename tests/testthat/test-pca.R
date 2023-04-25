@@ -251,24 +251,6 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_pca(rec)
-
-  expect <- tibble(
-    terms = character(),
-    value = double(),
-    component = character(),
-    id = character()
-  )
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
 test_that("case weights", {
   biomass_tr_cw <- biomass_tr %>%
     mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
@@ -349,6 +331,24 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_pca(rec)
+
+  expect <- tibble(
+    terms = character(),
+    value = double(),
+    component = character(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

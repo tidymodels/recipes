@@ -80,7 +80,7 @@ test_that("no input", {
   )
 })
 
-test_that("mutate_at - empty selection prep/bake is a no-op", {
+test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_mutate_at(rec1, fn = mean)
 
@@ -93,7 +93,20 @@ test_that("mutate_at - empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
-test_that("mutate_at - empty selection tidy method works", {
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_mutate_at(rec, fn = mean)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_mutate_at(rec, fn = mean)
 
@@ -105,21 +118,6 @@ test_that("mutate_at - empty selection tidy method works", {
 
   expect_identical(tidy(rec, number = 1), expect)
 })
-
-test_that("mutate_at - empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_mutate_at(rec, fn = mean)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-# Infrastructure ---------------------------------------------------------------
-
 
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%

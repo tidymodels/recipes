@@ -124,23 +124,6 @@ test_that("empty selection prep/bake returns NA columns", {
   expect_identical(baked3$classdist_virginica, expect)
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(Species ~ ., iris)
-  rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
-  rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
-
-  expect <- tibble(terms = character(), value = double(), class = character(), id = character())
-
-  expect_identical(tidy(rec2, number = 1), expect)
-  expect_identical(tidy(rec3, number = 1), expect)
-
-  rec2 <- prep(rec2, iris)
-  rec3 <- prep(rec3, iris)
-
-  expect_identical(tidy(rec2, number = 1), expect)
-  expect_identical(tidy(rec3, number = 1), expect)
-})
-
 test_that("case weights", {
   set.seed(1)
   wts <- runif(32)
@@ -233,6 +216,23 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(Species ~ ., iris)
+  rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
+  rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
+
+  expect <- tibble(terms = character(), value = double(), class = character(), id = character())
+
+  expect_identical(tidy(rec2, number = 1), expect)
+  expect_identical(tidy(rec3, number = 1), expect)
+
+  rec2 <- prep(rec2, iris)
+  rec3 <- prep(rec3, iris)
+
+  expect_identical(tidy(rec2, number = 1), expect)
+  expect_identical(tidy(rec3, number = 1), expect)
 })
 
 test_that("printing", {

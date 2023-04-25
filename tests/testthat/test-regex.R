@@ -60,19 +60,6 @@ test_that("empty selection prep/bake adds a 0 column", {
   expect_identical(baked2$xxx, rep(0, nrow(mtcars)))
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_regex(rec)
-
-  expect <- tibble(terms = character(), result = character(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   mt_tibble <- mtcars %>%
     tibble::rownames_to_column(var = "make_model")
@@ -99,6 +86,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_regex(rec)
+
+  expect <- tibble(terms = character(), result = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

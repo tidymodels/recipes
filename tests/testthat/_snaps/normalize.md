@@ -1,4 +1,4 @@
-# normalize - warns on zv
+# warns on zv
 
     Code
       prep(rec1)
