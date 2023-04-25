@@ -188,10 +188,9 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("printing", {
-  skip_if_not_installed("RcppRoll")
-  rec <- recipe(~., data = sim_dat) %>%
-    step_window(starts_with("y"))
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_window(rec)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))

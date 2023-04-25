@@ -227,7 +227,6 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-
 test_that("printing", {
   rec <- recipe(mpg ~ ., data = mtcars) %>%
     step_range(disp, wt)

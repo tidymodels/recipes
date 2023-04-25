@@ -36,13 +36,6 @@ test_that("alt offset", {
   expect_equal(rec_trans, exp_res)
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_inverse(x1, x2, x3, x4)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_inverse(rec1)
@@ -92,4 +85,12 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_inverse(x1, x2, x3, x4)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

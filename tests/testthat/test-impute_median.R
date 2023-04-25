@@ -178,7 +178,6 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-
 test_that("printing", {
   rec <- recipe(Price ~ ., data = credit_tr) %>%
     step_impute_median(Age, Assets, Income)

@@ -125,7 +125,7 @@
       -- Operations 
       * Moving 3-point mean on: <none> | Trained
 
-# printing
+---
 
     Code
       print(rec)
@@ -135,10 +135,11 @@
       
       -- Inputs 
       Number of variables by role
-      predictor: 6
+      outcome:    1
+      predictor: 10
       
       -- Operations 
-      * Moving 3-point mean on: starts_with("y")
+      * Moving 3-point mean on: <none>
 
 ---
 
@@ -150,11 +151,12 @@
       
       -- Inputs 
       Number of variables by role
-      predictor: 6
+      outcome:    1
+      predictor: 10
       
       -- Training information 
-      Training data contained 81 data points and no incomplete rows.
+      Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Moving 3-point mean on: y1, y2 | Trained
+      * Moving 3-point mean on: <none> | Trained
 
