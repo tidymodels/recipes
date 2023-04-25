@@ -70,12 +70,9 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_sqrt(rec)
+  rec <- recipe(~., data = ex_dat) %>%
+    step_sqrt(x1, x2)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

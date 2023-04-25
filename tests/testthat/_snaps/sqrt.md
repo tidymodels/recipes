@@ -36,35 +36,33 @@
 # printing
 
     Code
-      rec
+      print(rec)
     Message
       
       -- Recipe ----------------------------------------------------------------------
       
       -- Inputs 
       Number of variables by role
-      outcome:    1
-      predictor: 10
+      predictor: 2
       
       -- Operations 
-      * Square root transformation on: <none>
+      * Square root transformation on: x1, x2
 
 ---
 
     Code
-      rec
+      prep(rec)
     Message
       
       -- Recipe ----------------------------------------------------------------------
       
       -- Inputs 
       Number of variables by role
-      outcome:    1
-      predictor: 10
+      predictor: 2
       
       -- Training information 
-      Training data contained 32 data points and no incomplete rows.
+      Training data contained 20 data points and no incomplete rows.
       
       -- Operations 
-      * Square root transformation on: <none> | Trained
+      * Square root transformation on: x1, x2 | Trained
 
