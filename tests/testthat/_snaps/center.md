@@ -1,38 +1,3 @@
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Centering for: carbon
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 536 data points and no incomplete rows.
-      
-      -- Operations 
-      * Centering for: carbon | Trained
-
 # centering with case weights
 
     Code
@@ -108,4 +73,39 @@
       
       -- Operations 
       * Centering for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Centering for: carbon
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * Centering for: carbon | Trained
 

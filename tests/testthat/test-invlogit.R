@@ -27,13 +27,6 @@ test_that("simple logit trans", {
   expect_equal(rec_trans, exp_res)
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_invlogit(x1)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_invlogit(rec1)
@@ -83,4 +76,11 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_invlogit(x1)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

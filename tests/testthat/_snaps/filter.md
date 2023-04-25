@@ -1,36 +1,3 @@
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Operations 
-      * Row filtering using: Sepal.Length > 4.5
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 150 data points and no incomplete rows.
-      
-      -- Operations 
-      * Row filtering using: ~Sepal.Length > 4.5 | Trained
-
 # empty printing
 
     Code
@@ -65,4 +32,37 @@
       
       -- Operations 
       * Row filtering using: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Row filtering using: Sepal.Length > 4.5
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
+      
+      -- Operations 
+      * Row filtering using: ~Sepal.Length > 4.5 | Trained
 

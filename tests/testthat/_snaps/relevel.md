@@ -16,39 +16,6 @@
       Caused by error in `prep()`:
       ! Columns must contain the reference level 'missing_level': city
 
-# printing
-
-    Code
-      print(rec %>% step_relevel(zip, ref_level = "z95838"))
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 9
-      
-      -- Operations 
-      * Re-order factor level to ref_level for: zip
-
----
-
-    Code
-      print(rec %>% step_relevel(zip, ref_level = "z95838") %>% prep())
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 9
-      
-      -- Training information 
-      Training data contained 800 data points and no incomplete rows.
-      
-      -- Operations 
-      * Re-order factor level to ref_level for: zip | Trained
-
 # empty printing
 
     Code
@@ -83,4 +50,37 @@
       
       -- Operations 
       * Re-order factor level to ref_level for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Operations 
+      * Re-order factor level to ref_level for: zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Training information 
+      Training data contained 800 data points and no incomplete rows.
+      
+      -- Operations 
+      * Re-order factor level to ref_level for: zip | Trained
 

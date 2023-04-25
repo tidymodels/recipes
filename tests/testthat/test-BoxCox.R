@@ -89,15 +89,6 @@ test_that("warnings", {
   )
 })
 
-test_that("printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(~., data = ex_dat) %>%
-    step_BoxCox(x1, x2, x3, x4)
-
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_BoxCox(rec1)
@@ -154,4 +145,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_BoxCox(x1, x2, x3, x4)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

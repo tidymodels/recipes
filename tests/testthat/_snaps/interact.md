@@ -8,10 +8,18 @@
       ! Name collision occured. The following variable names already exists:
       i  x1ax2
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(int_rec_trained, dat_tr[, 4:6])
+    Condition
+      Error in `step_interact()`:
+      ! The following required columns are missing from `new_data` in step '': z and x1.
+
 # printing
 
     Code
-      print(int_rec)
+      print(rec)
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -27,7 +35,7 @@
 ---
 
     Code
-      prep(int_rec)
+      prep(rec)
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -42,12 +50,4 @@
       
       -- Operations 
       * Interactions with: x1:x2 | Trained
-
-# bake method errors when needed non-standard role columns are missing
-
-    Code
-      bake(int_rec_trained, dat_tr[, 4:6])
-    Condition
-      Error in `step_interact()`:
-      ! The following required columns are missing from `new_data` in step '': z and x1.
 

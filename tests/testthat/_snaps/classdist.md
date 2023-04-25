@@ -1,38 +1,3 @@
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Operations 
-      * Distances to Species for: all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 150 data points and no incomplete rows.
-      
-      -- Operations 
-      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained
-
 # check_name() is used
 
     Code
@@ -97,4 +62,39 @@
       
       -- Operations 
       * Distances to Species for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
+      
+      -- Operations 
+      * Distances to Species for: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
+      
+      -- Operations 
+      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained
 

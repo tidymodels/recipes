@@ -68,12 +68,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  expect_snapshot(print(rec %>% step_unknown(city, zip)))
-  expect_snapshot(print(rec %>% step_unknown(city, zip) %>% prep()))
-})
-
 test_that("tidy methods", {
   rec_raw <- rec %>% step_unknown(all_nominal(), new_level = "cake", id = "cheese")
 
@@ -135,4 +129,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = sacr_tr) %>%
+    step_unknown(city, zip)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

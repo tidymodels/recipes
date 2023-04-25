@@ -55,13 +55,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = languages) %>%
-    step_dummy_multi_choice(all_predictors())
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("tunable", {
   rec <-
     recipe(~., data = languages) %>%
@@ -191,4 +184,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = languages) %>%
+    step_dummy_multi_choice(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

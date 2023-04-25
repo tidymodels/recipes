@@ -169,20 +169,6 @@ test_that("remove with quasi-quotation", {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that("printing", {
-  n <- 20
-  set.seed(12)
-  ex_dat <- data.frame(
-    x1 = rnorm(n),
-    x2 = runif(n)
-  )
-
-  rec <- recipe(~., data = ex_dat) %>%
-    step_rm(x1)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_rm(rec1)
@@ -220,4 +206,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_rm(disp)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

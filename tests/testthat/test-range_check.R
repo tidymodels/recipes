@@ -61,13 +61,6 @@ test_that("in recipe", {
   expect_snapshot(error = TRUE, bake(rec4, test))
 })
 
-test_that("printing", {
-  check_range_extract <- recipe(mtcars) %>%
-    check_range(drat, cyl, am)
-  expect_snapshot(print(check_range_extract))
-  expect_snapshot(prep(check_range_extract))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- check_range(rec1)
@@ -105,4 +98,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mtcars) %>%
+    check_range(drat, cyl, am)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

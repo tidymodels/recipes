@@ -71,14 +71,6 @@ test_that("bad spec", {
   )
 })
 
-
-test_that("printing", {
-  rec5 <- recipe(~., data = ex_dat) %>%
-    step_ordinalscore(starts_with("ord"))
-  expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_ordinalscore(rec1)
@@ -130,4 +122,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_ordinalscore(starts_with("ord"))
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

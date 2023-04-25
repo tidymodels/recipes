@@ -245,17 +245,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("print method", {
-  skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3, id = "dork")
-
-  expect_snapshot(print(rec))
-
-  rec <- prep(rec)
-  expect_snapshot(print(rec))
-})
-
 test_that("tunable", {
   rec <-
     recipe(Species ~ ., data = iris) %>%
@@ -375,4 +364,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

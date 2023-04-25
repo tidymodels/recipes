@@ -485,14 +485,6 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  with_harmonic <- rec %>% step_harmonic(hp, frequency = 1 / 11, cycle_size = 1)
-  expect_snapshot(print(with_harmonic))
-  expect_snapshot(prep(with_harmonic))
-})
-
 test_that("bake method errors when needed non-standard role columns are missing", {
   harmonic_dat_mult <- tibble(
     osc = sin(2 * pi * x_second / (3600 * 6)),
@@ -524,4 +516,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    step_harmonic(hp, frequency = 1 / 11, cycle_size = 1)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

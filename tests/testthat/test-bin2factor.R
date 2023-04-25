@@ -55,14 +55,6 @@ test_that("bad options", {
   )
 })
 
-
-test_that("printing", {
-  rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
-  expect_snapshot(print(rec2))
-  expect_snapshot(prep(rec2))
-})
-
-
 test_that("choose reference level", {
   rec4 <- rec %>% step_bin2factor(rocks, ref_first = FALSE)
   rec4 <- prep(rec4, training = covers)
@@ -121,4 +113,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec2 <- rec %>%
+    step_bin2factor(rocks, levels = letters[2:1])
+
+  expect_snapshot(print(rec2))
+  expect_snapshot(prep(rec2))
 })

@@ -49,13 +49,6 @@ test_that("check_missing on a new set", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(mtcars) %>%
-    check_missing(all_numeric())
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- check_missing(rec1)
@@ -93,4 +86,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mtcars) %>%
+    check_missing(all_numeric())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -97,12 +97,6 @@ test_that("quasiquotation", {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that("printing", {
-  rec <- iris_rec %>% step_slice(1:2)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_slice(rec1)
@@ -140,4 +134,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_slice(1:2)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

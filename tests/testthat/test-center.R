@@ -52,13 +52,6 @@ test_that("single predictor", {
   expect_equal(results, exp_res[, colnames(results)])
 })
 
-test_that("printing", {
-  rec <- rec %>%
-    step_center(carbon)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("na_rm argument works for step_center", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
@@ -170,4 +163,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- rec %>%
+    step_center(carbon)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

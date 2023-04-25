@@ -100,17 +100,6 @@ test_that("bad values", {
   )
 })
 
-test_that("printing", {
-  num_rec_1 <- sacr_rec %>%
-    step_profile(-sqft, profile = vars(sqft))
-  num_rec_2 <- prep(num_rec_1, Sacramento)
-
-  expect_snapshot(print(num_rec_1))
-  expect_snapshot(print(num_rec_2))
-})
-
-
-
 test_that("tidy", {
   num_rec_3 <- sacr_rec %>%
     step_profile(-sqft, profile = vars(contains("sqft")), id = "")
@@ -173,4 +162,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = Sacramento) %>%
+    step_profile(-sqft, profile = vars(sqft))
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -15,42 +15,6 @@
       Error in `step_num2factor()`:
       ! Please provide a character vector of appropriate length for `levels`.
 
-# printing
-
-    Code
-      print(ex_3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 200 data points and no incomplete rows.
-      
-      -- Operations 
-      * Factor variables from: z | Trained
-
----
-
-    Code
-      prep(ex_3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 200 data points and no incomplete rows.
-      
-      -- Operations 
-      * Factor variables from: z | Trained
-
 # empty printing
 
     Code
@@ -85,4 +49,37 @@
       
       -- Operations 
       * Factor variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Factor variables from: z
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 200 data points and no incomplete rows.
+      
+      -- Operations 
+      * Factor variables from: z | Trained
 

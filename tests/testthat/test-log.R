@@ -48,14 +48,6 @@ test_that("alt offset", {
   expect_equal(rec_trans, exp_res)
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_log(x1, x2, x3, x4)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-
 test_that("signed arg", {
   ex_with_neg <- data.frame(x = c(-1 * exp(2), -0.5, 0.5, exp(2)))
   rec <- recipe(ex_with_neg, ~x) %>%
@@ -116,4 +108,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_log(x1, x2, x3, x4)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

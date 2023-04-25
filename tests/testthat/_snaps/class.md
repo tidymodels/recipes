@@ -70,39 +70,6 @@
       Error:
       ! type should have the class(es) factor but has the class(es) character.
 
-# printing
-
-    Code
-      print(rec7)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      undeclared role: 2
-      
-      -- Operations 
-      * Checking the class(es) for: everything()
-
----
-
-    Code
-      prep(rec7)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      undeclared role: 2
-      
-      -- Training information 
-      Training data contained 3 data points and no incomplete rows.
-      
-      -- Operations 
-      * Checking the class(es) for: x1, x2 | Trained
-
 # empty printing
 
     Code
@@ -137,4 +104,39 @@
       
       -- Operations 
       * Checking the class(es) for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec7)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Checking the class(es) for: everything()
+
+---
+
+    Code
+      prep(rec7)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Checking the class(es) for: cyl, disp, hp, drat, wt, qsec, vs, ... | Trained
 

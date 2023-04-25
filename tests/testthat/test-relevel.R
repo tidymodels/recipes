@@ -34,12 +34,6 @@ test_that("bad args", {
   )
 })
 
-test_that("printing", {
-  expect_snapshot(print(rec %>% step_relevel(zip, ref_level = "z95838")))
-  expect_snapshot(print(rec %>% step_relevel(zip, ref_level = "z95838") %>% prep()))
-})
-
-
 test_that("tidy methods", {
   rec_raw <- rec %>% step_relevel(zip, ref_level = "z95838", id = "city")
   expect_equal(
@@ -100,4 +94,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = sacr_tr) %>%
+    step_relevel(zip, ref_level = "z95838")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

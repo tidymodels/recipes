@@ -8,41 +8,6 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_poly_1
 
-# printing
-
-    Code
-      print(with_poly)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Orthogonal polynomials on: carbon, hydrogen
-
----
-
-    Code
-      prep(with_poly)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * Orthogonal polynomials on: carbon, hydrogen | Trained
-
 # empty printing
 
     Code
@@ -77,4 +42,39 @@
       
       -- Operations 
       * Orthogonal polynomials on: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Orthogonal polynomials on: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * Orthogonal polynomials on: carbon, hydrogen | Trained
 

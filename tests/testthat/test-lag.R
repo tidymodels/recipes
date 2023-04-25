@@ -68,16 +68,6 @@ test_that("specification of multiple lags in a vector", {
   expect_equal(baked, expected)
 })
 
-test_that("something prints", {
-  df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
-
-  rec <- recipe(~., data = df) %>%
-    step_lag(t)
-
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 rm(n, start, end)
 
 
@@ -141,4 +131,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_lag(disp)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

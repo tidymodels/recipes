@@ -7,39 +7,6 @@
       Error in `step_percentile()`:
       ! `outside` must be one of "none", "both", "upper", or "lower", not "left".
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 8
-      
-      -- Operations 
-      * Percentile transformation on: carbon, sulfur
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 8
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * Percentile transformation on: carbon, sulfur | Trained
-
 # case weights
 
     Code
@@ -112,4 +79,37 @@
       
       -- Operations 
       * Percentile transformation on: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 8
+      
+      -- Operations 
+      * Percentile transformation on: carbon, sulfur
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 8
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * Percentile transformation on: carbon, sulfur | Trained
 

@@ -7,41 +7,6 @@
       Warning:
       Scaling `factor` should take either a value of 1 or 2
 
-# printing
-
-    Code
-      print(standardized)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Scaling for: hydrogen
-
----
-
-    Code
-      prep(standardized)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 536 data points and no incomplete rows.
-      
-      -- Operations 
-      * Scaling for: hydrogen | Trained
-
 # warns on zv
 
     Code
@@ -139,4 +104,39 @@
       
       -- Operations 
       * Scaling for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Scaling for: disp, wt
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Scaling for: disp, wt | Trained
 

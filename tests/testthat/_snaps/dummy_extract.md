@@ -17,39 +17,6 @@
       ! Name collision occured. The following variable names already exists:
       i  Species_setosa
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 1
-      
-      -- Operations 
-      * Extract patterns from: all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 1
-      
-      -- Training information 
-      Training data contained 4284 data points and no incomplete rows.
-      
-      -- Operations 
-      * Extract patterns from: medium | Trained
-
 # case weights
 
     Code
@@ -122,4 +89,37 @@
       
       -- Operations 
       * Extract patterns from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Operations 
+      * Extract patterns from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 4284 data points and no incomplete rows.
+      
+      -- Operations 
+      * Extract patterns from: medium | Trained
 

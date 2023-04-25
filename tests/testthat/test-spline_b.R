@@ -88,26 +88,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-
-  biomass_tr <- biomass[biomass$dataset == "Training", ]
-  biomass_te <- biomass[biomass$dataset == "Testing", ]
-
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr
-  )
-
-  with_ns <- rec %>% step_spline_b(carbon, hydrogen)
-  expect_snapshot(print(with_ns))
-  expect_snapshot(prep(with_ns))
-
-  expect_snapshot(
-    rec %>% step_spline_b(carbon, hydrogen, deg_free = -1) %>% prep()
-  )
-
-})
-
-
 test_that("tunable", {
 
   biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -182,4 +162,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass) %>%
+    step_spline_b(carbon, hydrogen)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -48,14 +48,6 @@ test_that("out of bounds logit trans", {
   )
 })
 
-
-test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_logit(x1)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_logit(rec1)
@@ -105,4 +97,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_logit(x1)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

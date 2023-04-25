@@ -69,14 +69,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  rec2 <- rec %>%
-    step_impute_lower(carbon, hydrogen)
-
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec2))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_impute_lower(rec1)
@@ -126,4 +118,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + has_neg,
+                 data = biomass) %>%
+    step_impute_lower(carbon, hydrogen)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

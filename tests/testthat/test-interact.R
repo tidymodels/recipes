@@ -176,12 +176,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  int_rec <- rec %>% step_interact(~ x1:x2)
-  expect_snapshot(print(int_rec))
-  expect_snapshot(prep(int_rec))
-})
-
 # more missing data tests
 
 
@@ -307,3 +301,11 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("printing", {
+  rec <- recipe(y ~ ., data = dat_tr) %>%
+    step_interact(~ x1:x2)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})

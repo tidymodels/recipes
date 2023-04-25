@@ -102,12 +102,6 @@ test_that("no input", {
   expect_equal(no_inputs, iris)
 })
 
-test_that("printing", {
-  rec <- iris_rec %>% step_mutate(x = 5)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("tidying allows for named and unnamed expressions", {
   rec <- step_mutate(iris_rec, x = mean(y), id = "named")
   tidied <- tidy(rec, id = "named")
@@ -125,3 +119,11 @@ test_that("tidying allows for named and unnamed expressions", {
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_mutate(x = 5)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})

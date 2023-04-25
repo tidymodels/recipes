@@ -1,38 +1,3 @@
-# something prints
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Removing rows with NA values in: all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 153 data points and 42 incomplete rows.
-      
-      -- Operations 
-      * Removing rows with NA values in: Solar.R, Wind, Temp, Month, Day | Trained
-
 # empty printing
 
     Code
@@ -67,4 +32,39 @@
       
       -- Operations 
       * Removing rows with NA values in: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Removing rows with NA values in: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 153 data points and 42 incomplete rows.
+      
+      -- Operations 
+      * Removing rows with NA values in: Solar.R, Wind, Temp, Month, Day | Trained
 

@@ -76,13 +76,6 @@ test_that("not integers", {
   expect_true(!all(vapply(tr_int, is.integer, logical(1))))
 })
 
-test_that("printing", {
-  rec <- recipe(~ x + y + z, data = tr_dat)
-  ints <- rec %>% step_integer(all_predictors())
-  expect_snapshot(print(ints))
-  expect_snapshot(prep(ints))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_integer(rec1)
@@ -133,4 +126,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+    step_integer(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

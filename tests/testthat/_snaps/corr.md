@@ -14,39 +14,6 @@
       Warning:
       The correlation matrix has sporadic missing values. Some columns were excluded from the filter.
 
-# printing
-
-    Code
-      print(filtering)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 7
-      
-      -- Operations 
-      * Correlation filter on: all_predictors()
-
----
-
-    Code
-      prep(filtering)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 7
-      
-      -- Training information 
-      Training data contained 100 data points and no incomplete rows.
-      
-      -- Operations 
-      * Correlation filter on: V6, V1 | Trained
-
 # case weights
 
     Code
@@ -119,4 +86,37 @@
       
       -- Operations 
       * Correlation filter on: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
+      
+      -- Operations 
+      * Correlation filter on: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
+      
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
+      
+      -- Operations 
+      * Correlation filter on: V6, V1 | Trained
 

@@ -86,13 +86,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
-    step_impute_median(Age, Assets, Income)
-  expect_snapshot(print(impute_rec))
-  expect_snapshot(prep(impute_rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_impute_median(rec1)
@@ -183,4 +176,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(Price ~ ., data = credit_tr) %>%
+    step_impute_median(Age, Assets, Income)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

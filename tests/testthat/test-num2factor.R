@@ -47,15 +47,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  ex_3 <- rec %>%
-    step_num2factor(z, levels = letters) %>%
-    prep(ex_dat, strings_as_factors = FALSE)
-  expect_snapshot(print(ex_3))
-  expect_snapshot(prep(ex_3))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_num2factor(rec1, levels = "x")
@@ -104,4 +95,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_num2factor(z, levels = letters)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -80,12 +80,6 @@ test_that("no input", {
   )
 })
 
-test_that("printing", {
-  rec <- iris_rec %>% step_mutate_at(contains("Sepal"), fn = log)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("mutate_at - empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_mutate_at(rec1, fn = mean)
@@ -125,3 +119,12 @@ test_that("mutate_at - empty printing", {
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_mutate_at(contains("Sepal"), fn = log)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})

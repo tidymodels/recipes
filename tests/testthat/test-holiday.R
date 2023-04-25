@@ -170,14 +170,6 @@ test_that("works with no missing values - POSIXct class", {
   )
 })
 
-test_that("printing", {
-  holiday_rec <- recipe(~day, test_data) %>%
-    step_holiday(all_predictors(), holidays = exp_dates$holiday)
-  expect_snapshot(print(holiday_rec))
-  expect_snapshot(prep(holiday_rec))
-})
-
-
 test_that("check_name() is used", {
   dat <- test_data
   dat$day_Easter <- dat$day
@@ -281,4 +273,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~day, test_data) %>%
+    step_holiday(all_predictors(), holidays = exp_dates$holiday)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

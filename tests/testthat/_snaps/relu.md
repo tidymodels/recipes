@@ -31,39 +31,6 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
-# prints something
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Adding relu transform for: val1
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 21 data points and no incomplete rows.
-      
-      -- Operations 
-      * Adding relu transform for: val1 | Trained
-
 # empty printing
 
     Code
@@ -98,4 +65,37 @@
       
       -- Operations 
       * Adding relu transform for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Operations 
+      * Adding relu transform for: disp
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Adding relu transform for: disp | Trained
 

@@ -55,14 +55,6 @@ test_that("bad selector(s)", {
   )
 })
 
-
-test_that("printing", {
-  rec5 <- rec %>%
-    step_count(description, pattern = "(rock|stony)")
-  expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5))
-})
-
 test_that("empty selection prep/bake adds an NA column", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_count(rec1, pattern = "rock")
@@ -119,4 +111,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- rec %>%
+    step_count(description, pattern = "(rock|stony)")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -90,14 +90,6 @@ test_that("ordinal values", {
   expect_equal(date_res, date_exp)
 })
 
-
-test_that("printing", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = feats)
-  expect_snapshot(print(date_rec))
-  expect_snapshot(prep(date_rec))
-})
-
 test_that("check_name() is used", {
   dat <- examples
   dat$Dan_year <- dat$Dan
@@ -268,4 +260,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), features = feats)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

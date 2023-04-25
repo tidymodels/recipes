@@ -118,39 +118,6 @@
       -- Operations 
       * Discretize numeric variables from: x1 | Trained
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Operations 
-      * Discretize numeric variables from: x1
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 100 data points and no incomplete rows.
-      
-      -- Operations 
-      * Discretize numeric variables from: x1 | Trained
-
 # empty printing
 
     Code
@@ -185,4 +152,37 @@
       
       -- Operations 
       * Discretize numeric variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Discretize numeric variables from: x1
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
+      
+      -- Operations 
+      * Discretize numeric variables from: x1 | Trained
 

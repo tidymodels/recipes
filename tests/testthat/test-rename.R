@@ -47,12 +47,6 @@ test_that("no input", {
   expect_equal(no_inputs, iris)
 })
 
-test_that("printing", {
-  rec <- iris_rec %>% step_rename(wat = Species)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("rename - empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_rename(rec1)
@@ -90,4 +84,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_rename(wat = Species)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

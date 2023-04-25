@@ -1,36 +1,3 @@
-# printing
-
-    Code
-      print(date_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Date features from: all_predictors()
-
----
-
-    Code
-      prep(date_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 10 data points and no incomplete rows.
-      
-      -- Operations 
-      * Date features from: Dan, Stefan | Trained
-
 # check_name() is used
 
     Code
@@ -84,4 +51,37 @@
       
       -- Operations 
       * Date features from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Operations 
+      * Date features from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
+      
+      -- Operations 
+      * Date features from: Dan, Stefan | Trained
 

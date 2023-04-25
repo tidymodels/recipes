@@ -35,39 +35,6 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_o_disp
 
-# printing
-
-    Code
-      print(rec3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Operations 
-      * Ratios from: all_numeric(), all_numeric()
-
----
-
-    Code
-      prep(rec3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 10 data points and 1 incomplete row.
-      
-      -- Operations 
-      * Ratios from: x2, x3, x4, x1, x1, x2, x3, x4 | Trained
-
 # can prep recipes with no keep_original_cols
 
     Code
@@ -111,4 +78,37 @@
       
       -- Operations 
       * Ratios from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Ratios from: all_numeric(), all_numeric()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 10 data points and 1 incomplete row.
+      
+      -- Operations 
+      * Ratios from: x2, x3, x4, x1, x1, x2, x3, x4 | Trained
 

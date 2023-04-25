@@ -106,19 +106,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  discr_rec <- rec %>%
-    step_impute_knn(carbon,
-      nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
-      neighbors = 3,
-      id = ""
-    )
-  expect_snapshot(print(discr_rec))
-  expect_snapshot(prep(discr_rec))
-})
-
-
 test_that("options", {
   rec_1 <- rec %>%
     step_impute_knn(carbon,
@@ -263,4 +250,16 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass) %>%
+    step_impute_knn(
+      carbon, nitrogen,
+      impute_with = imp_vars(hydrogen, oxygen, nitrogen)
+    )
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -8,41 +8,6 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_bs_1
 
-# printing
-
-    Code
-      print(with_bs)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * B-splines on: carbon, hydrogen
-
----
-
-    Code
-      prep(with_bs)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * B-splines on: carbon, hydrogen | Trained
-
 # empty printing
 
     Code
@@ -77,4 +42,39 @@
       
       -- Operations 
       * B-splines on: <none> | Trained
+
+# printing
+
+    Code
+      print(with_bs)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * B-splines on: carbon, hydrogen
+
+---
+
+    Code
+      prep(with_bs)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * B-splines on: carbon, hydrogen | Trained
 

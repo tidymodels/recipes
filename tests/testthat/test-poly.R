@@ -74,14 +74,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  with_poly <- rec %>%
-    step_poly(carbon, hydrogen)
-  expect_snapshot(print(with_poly))
-  expect_snapshot(prep(with_poly))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -185,4 +177,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass_tr) %>%
+    step_poly(carbon, hydrogen)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

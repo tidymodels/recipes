@@ -84,13 +84,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  with_ns <- rec %>% step_ns(carbon, hydrogen)
-  expect_snapshot(print(with_ns))
-  expect_snapshot(prep(with_ns))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -169,4 +162,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_ns(disp, wt)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

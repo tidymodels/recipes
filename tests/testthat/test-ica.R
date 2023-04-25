@@ -75,18 +75,6 @@ test_that("correct ICA values", {
   expect_equal(tidy_exp_tr, tidy(ica_extract_trained, number = 2))
 })
 
-
-test_that("printing", {
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
-  ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, num_comp = 2)
-  expect_snapshot(print(ica_extract))
-  expect_snapshot(prep(ica_extract))
-})
-
-
 test_that("No ICA comps", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
@@ -273,4 +261,18 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass_tr) %>%
+    step_normalize(all_predictors()) %>%
+    step_ica(carbon, hydrogen, num_comp = 2)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

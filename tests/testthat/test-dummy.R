@@ -290,14 +290,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(sqft ~ ., data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, zip)
-  expect_snapshot(print(dummy))
-  expect_snapshot(prep(dummy))
-})
-
-
 test_that("no columns selected", {
   zdat <- tibble(
     y = c(1, 2, 3),
@@ -422,4 +414,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(sqft ~ ., data = sacr_fac) %>%
+    step_dummy(city, zip)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

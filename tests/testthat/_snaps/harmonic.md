@@ -95,41 +95,6 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_sin_1
 
-# printing
-
-    Code
-      print(with_harmonic)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * Harmonic numeric variables for: hp
-
----
-
-    Code
-      prep(with_harmonic)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * Harmonic numeric variables for: hp | Trained
-
 # empty printing
 
     Code
@@ -164,4 +129,39 @@
       
       -- Operations 
       * Harmonic numeric variables for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Harmonic numeric variables for: hp
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Harmonic numeric variables for: hp | Trained
 

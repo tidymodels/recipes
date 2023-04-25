@@ -16,41 +16,6 @@
       ! `step_medianimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_median()` instead.
 
-# printing
-
-    Code
-      print(impute_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 13
-      
-      -- Operations 
-      * Median imputation for: Age, Assets, Income
-
----
-
-    Code
-      prep(impute_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 13
-      
-      -- Training information 
-      Training data contained 2000 data points and 186 incomplete rows.
-      
-      -- Operations 
-      * Median imputation for: Age, Assets, Income | Trained
-
 # case weights
 
     Code
@@ -125,4 +90,39 @@
       
       -- Operations 
       * Median imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
+      
+      -- Operations 
+      * Median imputation for: Age, Assets, Income
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
+      
+      -- Training information 
+      Training data contained 2000 data points and 186 incomplete rows.
+      
+      -- Operations 
+      * Median imputation for: Age, Assets, Income | Trained
 

@@ -1,36 +1,3 @@
-# printing
-
-    Code
-      print(filtering)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 7
-      
-      -- Operations 
-      * Missing value column filter on: all_predictors()
-
----
-
-    Code
-      prep(filtering)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 7
-      
-      -- Training information 
-      Training data contained 100 data points and 100 incomplete rows.
-      
-      -- Operations 
-      * Missing value column filter removed: dbl4, dbl5, chr2 | Trained
-
 # case weights
 
     Code
@@ -104,4 +71,37 @@
       
       -- Operations 
       * Missing value column filter removed: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
+      
+      -- Operations 
+      * Missing value column filter on: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 7
+      
+      -- Training information 
+      Training data contained 100 data points and 100 incomplete rows.
+      
+      -- Operations 
+      * Missing value column filter removed: dbl2, dbl3, dbl4, dbl5, chr2 | Trained
 

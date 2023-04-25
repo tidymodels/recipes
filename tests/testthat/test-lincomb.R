@@ -65,14 +65,6 @@ test_that("no exclusions", {
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))
 })
 
-
-test_that("printing", {
-  dum_filtered <- dum_rec %>%
-    step_lincomb(all_predictors())
-  expect_snapshot(print(dum_filtered))
-  expect_snapshot(prep(dum_filtered))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_lincomb(rec1)
@@ -110,4 +102,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(yield ~ ., data = dummies) %>%
+    step_lincomb(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

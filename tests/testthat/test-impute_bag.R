@@ -95,17 +95,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  imputed <- rec %>%
-    step_impute_bag(carbon,
-      impute_with = imp_vars(hydrogen), seed_val = 12,
-      trees = 7
-    )
-
-  expect_snapshot(print(imputed))
-  expect_snapshot(prep(imputed))
-})
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -198,4 +187,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
+                    data = biomass) %>%
+    step_impute_bag(carbon, impute_with = imp_vars(hydrogen))
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

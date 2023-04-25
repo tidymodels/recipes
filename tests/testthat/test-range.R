@@ -176,13 +176,6 @@ test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
   expect_equal(exp_pred, obs_pred)
 })
 
-test_that("printing", {
-  standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12)
-  expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_range(rec1)
@@ -232,4 +225,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_range(disp, wt)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

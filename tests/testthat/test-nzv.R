@@ -75,15 +75,6 @@ test_that("Deprecation warning", {
   )
 })
 
-
-test_that("printing", {
-  rec <- recipe(y ~ ., data = dat) %>%
-    step_nzv(x1, x2, x3, x4)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -241,4 +232,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(y ~ ., data = dat) %>%
+    step_nzv(x1, x2, x3, x4)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -150,13 +150,6 @@ test_that("step_cut integration test", {
   )
 })
 
-test_that("printing", {
-  rec5 <- recipe(mpg ~ ., mtcars) %>%
-    step_cut(disp, breaks = 100)
-  expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_cut(rec1, breaks = 5)
@@ -214,4 +207,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    step_cut(disp, breaks = 100)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

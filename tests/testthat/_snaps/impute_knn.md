@@ -7,41 +7,6 @@
       ! `step_knnimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_knn()` instead.
 
-# printing
-
-    Code
-      print(discr_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * K-nearest neighbor imputation for: carbon, nitrogen
-
----
-
-    Code
-      prep(discr_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 536 data points and no incomplete rows.
-      
-      -- Operations 
-      * K-nearest neighbor imputation for: carbon, nitrogen | Trained
-
 # options
 
     Code
@@ -84,4 +49,39 @@
       
       -- Operations 
       * K-nearest neighbor imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * K-nearest neighbor imputation for: carbon, nitrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * K-nearest neighbor imputation for: carbon, nitrogen | Trained
 

@@ -48,15 +48,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  ex_3 <- rec %>%
-    step_string2factor(w, x) %>%
-    prep(ex_dat, strings_as_factors = FALSE)
-  expect_snapshot(print(ex_3))
-  expect_snapshot(prep(ex_3))
-})
-
 test_that("pre-made factors", {
   ex_1 <- rec %>%
     step_string2factor(w, x, y, z) %>%
@@ -109,4 +100,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_string2factor(w, x)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

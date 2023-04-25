@@ -60,14 +60,6 @@ test_that("all data", {
   expect_equal(exp3, obs3)
 })
 
-
-test_that("printing", {
-  rec3 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
-  expect_snapshot(print(rec3))
-  expect_snapshot(prep(rec3))
-})
-
 test_that("bake a single row", {
   rec4 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
@@ -126,4 +118,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(y ~ ., data = dat) %>%
+    step_shuffle(everything())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

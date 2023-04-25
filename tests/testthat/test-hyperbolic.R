@@ -56,14 +56,6 @@ test_that("simple hyperbolic trans", {
 
 })
 
-
-test_that("printing", {
-  rec <- recipe(~., data = ex_dat) %>%
-    step_hyperbolic(x1, x2, func = "sinh", inverse = TRUE)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_hyperbolic(rec1)
@@ -124,4 +116,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_hyperbolic(x1, x2)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

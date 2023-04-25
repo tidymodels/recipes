@@ -75,14 +75,6 @@ test_that("group-wise zv filtering", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(y ~ ., data = dat) %>%
-    step_zv(x1, x2, x3, x4)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-
 test_that("mssing values in zero-variance screen", {
   x <- rep(1, 5)
   y <- c(NA, x)
@@ -133,4 +125,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(y ~ ., data = dat) %>%
+    step_zv(x1, x2, x3, x4)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

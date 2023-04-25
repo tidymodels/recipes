@@ -60,17 +60,6 @@ test_that("occasional missing values", {
   expect_equal(filtering_trained$steps[[1]]$removals, "V2")
 })
 
-
-test_that("printing", {
-  set.seed(1)
-  rec <- recipe(~., data = dat)
-  filtering <- rec %>%
-    step_corr(all_predictors(), threshold = .5)
-  expect_snapshot(print(filtering))
-  expect_snapshot(prep(filtering))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -196,4 +185,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  set.seed(1)
+  rec <- recipe(~., data = dat) %>%
+    step_corr(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

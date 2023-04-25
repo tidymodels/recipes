@@ -35,41 +35,6 @@
       ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use the `keep_original_cols` argument instead.
 
-# print method
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * PLS feature extraction with: all_predictors()
-
----
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * PLS feature extraction with: carbon, hydrogen, oxygen, ... | Trained
-
 # can prep recipes with no keep_original_cols
 
     Code
@@ -113,4 +78,39 @@
       
       -- Operations 
       * PLS feature extraction with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * PLS feature extraction with: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * PLS feature extraction with: carbon, hydrogen, oxygen, ... | Trained
 

@@ -7,42 +7,6 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be factor, or ordered.
 
-# printing
-
-    Code
-      print(ex_3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 200 data points and no incomplete rows.
-      
-      -- Operations 
-      * Character variables from: y, z | Trained
-
----
-
-    Code
-      prep(ex_3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 200 data points and no incomplete rows.
-      
-      -- Operations 
-      * Character variables from: y, z | Trained
-
 # empty printing
 
     Code
@@ -77,4 +41,37 @@
       
       -- Operations 
       * Character variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Operations 
+      * Character variables from: y, z
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 200 data points and no incomplete rows.
+      
+      -- Operations 
+      * Character variables from: y, z | Trained
 

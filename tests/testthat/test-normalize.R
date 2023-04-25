@@ -196,3 +196,11 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("printing", {
+  rec <- recipe(mpg ~., data = mtcars) %>%
+    step_normalize(disp, wt)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})

@@ -40,17 +40,6 @@ test_that("correct kernel PCA values", {
   expect_equal(tidy(kpca_trained, 1), kpca_tibble)
 })
 
-test_that("printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  skip_if_not_installed("kernlab")
-
-  kpca_rec <- rec %>%
-    step_kpca_rbf(X2, X3, X4, X5, X6)
-  expect_snapshot(kpca_rec)
-  expect_snapshot(prep(kpca_rec))
-})
-
-
 test_that("No kPCA comps", {
   pca_extract <- rec %>%
     step_kpca_rbf(X2, X3, X4, X5, X6, num_comp = 0, id = "") %>%
@@ -205,4 +194,14 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- recipe(X1 ~ ., data = tr_dat) %>%
+    step_kpca_rbf(X2, X3, X4, X5, X6)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

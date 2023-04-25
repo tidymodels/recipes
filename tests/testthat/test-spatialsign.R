@@ -56,16 +56,6 @@ test_that("Missing values", {
   expect_equal(sp_sign_no_rm_na, exp_no_rm_na)
 })
 
-
-test_that("printing", {
-  sp_sign <- rec %>%
-    step_center(carbon, hydrogen) %>%
-    step_scale(carbon, hydrogen) %>%
-    step_spatialsign(carbon, hydrogen)
-  expect_snapshot(print(sp_sign))
-  expect_snapshot(prep(sp_sign))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_spatialsign(rec1)
@@ -150,4 +140,15 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass) %>%
+    step_center(carbon, hydrogen) %>%
+    step_scale(carbon, hydrogen) %>%
+    step_spatialsign(carbon, hydrogen)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

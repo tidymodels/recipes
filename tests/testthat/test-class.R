@@ -113,12 +113,6 @@ test_that("characters are handled correctly", {
   )
 })
 
-test_that("printing", {
-  rec7 <- recipe(x) %>% check_class(everything())
-  expect_snapshot(print(rec7))
-  expect_snapshot(prep(rec7))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- check_class(rec1)
@@ -160,4 +154,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec7 <- recipe(mpg ~ ., mtcars) %>%
+    check_class(everything())
+
+  expect_snapshot(print(rec7))
+  expect_snapshot(prep(rec7))
 })

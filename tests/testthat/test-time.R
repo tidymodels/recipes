@@ -107,18 +107,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  examples <- data.frame(
-    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
-      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
-  )
-
-  date_rec <- recipe(~ times, examples) %>%
-    step_time(all_predictors())
-  expect_snapshot(print(date_rec))
-  expect_snapshot(prep(date_rec))
-})
-
 test_that("keep_original_cols works", {
   examples <- data.frame(
     times = lubridate::ymd_hms("2022-05-06 10:01:07") +
@@ -174,4 +162,17 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

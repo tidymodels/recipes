@@ -119,14 +119,6 @@ test_that("Reduced rotation size", {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
-test_that("printing", {
-  pca_extract <- rec %>%
-    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  expect_snapshot(print(pca_extract))
-  expect_snapshot(prep(pca_extract))
-})
-
-
 test_that("No PCA comps", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
@@ -357,4 +349,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass_tr) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -149,13 +149,6 @@ test_that("outside argument", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = biomass_tr) %>%
-    step_percentile(carbon, sulfur)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_percentile(rec1)
@@ -286,4 +279,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = biomass_tr) %>%
+    step_percentile(carbon, sulfur)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

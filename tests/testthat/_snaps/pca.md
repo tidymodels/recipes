@@ -6,41 +6,6 @@
       Error in `match.arg()`:
       ! 'arg' should be one of "coef", "variance"
 
-# printing
-
-    Code
-      print(pca_extract)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur
-
----
-
-    Code
-      prep(pca_extract)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
-
 # No PCA comps
 
     Code
@@ -174,4 +139,39 @@
       
       -- Operations 
       * No PCA components were extracted from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
 

@@ -147,13 +147,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  rec3 <- rec %>%
-    step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
-  expect_snapshot(print(rec3))
-  expect_snapshot(prep(rec3))
-})
-
 test_that("keep_original_cols works", {
   rec1 <- rec %>%
     step_ratio(x1,
@@ -237,4 +230,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
+    step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

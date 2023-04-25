@@ -17,39 +17,6 @@
       ! Name collision occured. The following variable names already exists:
       i  Species_setosa
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Operations 
-      * Multi-choice dummy variables from: all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 4 data points and 4 incomplete rows.
-      
-      -- Operations 
-      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
-
 # empty printing
 
     Code
@@ -84,4 +51,37 @@
       
       -- Operations 
       * Multi-choice dummy variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Operations 
+      * Multi-choice dummy variables from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 4 data points and 4 incomplete rows.
+      
+      -- Operations 
+      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
 

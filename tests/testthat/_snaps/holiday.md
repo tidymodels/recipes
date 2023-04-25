@@ -1,36 +1,3 @@
-# printing
-
-    Code
-      print(holiday_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 1
-      
-      -- Operations 
-      * Holiday features from: all_predictors()
-
----
-
-    Code
-      prep(holiday_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 1
-      
-      -- Training information 
-      Training data contained 366 data points and 1 incomplete row.
-      
-      -- Operations 
-      * Holiday features from: day | Trained
-
 # check_name() is used
 
     Code
@@ -84,4 +51,37 @@
       
       -- Operations 
       * Holiday features from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Operations 
+      * Holiday features from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 366 data points and 1 incomplete row.
+      
+      -- Operations 
+      * Holiday features from: day | Trained
 

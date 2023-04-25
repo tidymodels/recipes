@@ -85,13 +85,6 @@ test_that("single predictor", {
   expect_equal(results, exp_res[, colnames(results)])
 })
 
-test_that("printing", {
-  standardized <- rec %>%
-    step_scale(hydrogen)
-  expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized))
-})
-
 test_that("na_rm argument works for step_scale", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
@@ -204,4 +197,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_scale(disp, wt)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

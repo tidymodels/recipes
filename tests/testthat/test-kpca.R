@@ -40,19 +40,6 @@ test_that("correct kernel PCA values", {
   expect_equal(tidy(kpca_trained, 1), kpca_tibble)
 })
 
-
-test_that("printing", {
-  skip_if_not_installed("kernlab")
-
-  skip_if(packageVersion("rlang") < "1.0.0")
-  expect_snapshot(
-    kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
-  )
-
-  expect_snapshot(kpca_rec)
-  expect_snapshot(prep(kpca_rec))
-})
-
 test_that("check_name() is used", {
   skip_if_not_installed("kernlab")
   dat <- dplyr::as_tibble(tr_dat)
@@ -185,4 +172,14 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_if_not_installed("kernlab")
+
+  rec <- recipe(X1 ~ ., data = tr_dat) %>%
+    step_kpca(X2, X3, X4, X5, X6)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

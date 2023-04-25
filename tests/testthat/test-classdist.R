@@ -74,13 +74,6 @@ test_that("alt args", {
   }
 })
 
-test_that("printing", {
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species", log = FALSE)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("check_name() is used", {
   dat <- iris
   dat$classdist_setosa <- dat$Sepal.Length
@@ -240,4 +233,12 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = "Species")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

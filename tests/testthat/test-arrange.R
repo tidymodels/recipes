@@ -72,12 +72,6 @@ test_that("empty tidying", {
   )
 })
 
-test_that("printing", {
-  rec <- iris_rec %>% step_arrange(Sepal.Length)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
@@ -89,4 +83,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- iris_rec %>%
+    step_arrange(Sepal.Length)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

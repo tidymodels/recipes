@@ -47,14 +47,6 @@ test_that("bad selector(s)", {
   )
 })
 
-
-test_that("printing", {
-  rec1 <- rec %>%
-    step_regex(description, pattern = "(rock|stony)")
-  expect_snapshot(print(rec1))
-  expect_snapshot(prep(rec1))
-})
-
 test_that("empty selection prep/bake adds a 0 column", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_regex(rec1, pattern = "xxx")
@@ -107,4 +99,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~ description + rows + ch_rows, covers) %>%
+    step_regex(description, pattern = "(rock|stony)")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

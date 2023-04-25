@@ -97,14 +97,6 @@ test_that("missing values", {
   expect_equal(which(is.na(te_miss$z)), which(is.na(ex_2_te$z)))
 })
 
-
-test_that("printing", {
-  ex_3 <- rec %>%
-    step_novel(all_predictors())
-  expect_snapshot(print(ex_3))
-  expect_snapshot(print(prep(ex_3)))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_novel(rec1)
@@ -153,4 +145,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = tr_dat) %>%
+    step_novel(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

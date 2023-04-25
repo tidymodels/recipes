@@ -156,16 +156,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  rec <- recipe(~., data = ex_tr) %>%
-    step_discretize(x1, id = "")
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -243,4 +233,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = ex_tr) %>%
+    step_discretize(x1)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

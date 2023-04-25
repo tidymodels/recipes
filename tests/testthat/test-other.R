@@ -249,12 +249,6 @@ test_that("'other' already in use", {
   )
 })
 
-test_that("printing", {
-  rec <- rec %>% step_other(city, zip)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that(
   desc = "if threshold argument is an integer greater than one
           then it's treated as a frequency",
@@ -451,4 +445,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~ city + zip, data = sacr_tr) %>%
+    step_other(city, zip)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

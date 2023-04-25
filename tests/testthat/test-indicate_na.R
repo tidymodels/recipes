@@ -99,14 +99,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(Ozone ~ ., data = airquality) %>%
-    step_indicate_na(all_predictors())
-
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_indicate_na(rec1)
@@ -155,4 +147,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(Ozone ~ ., data = airquality) %>%
+    step_indicate_na(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

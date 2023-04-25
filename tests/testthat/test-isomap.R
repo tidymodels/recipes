@@ -62,23 +62,6 @@ test_that("correct Isomap values", {
   expect_equal(tidy(im_trained, 1), im_tibble)
 })
 
-
-test_that("printing", {
-
-  skip_on_cran()
-  skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
-  skip_if_not_installed("RANN")
-  skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
-
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
-  expect_snapshot(print(im_rec))
-  expect_snapshot(prep(im_rec), transform = scrub_timestamp)
-})
-
-
 test_that("No ISOmap", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
@@ -276,4 +259,19 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  rec <- recipe(~., data = dat1) %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec), transform = scrub_timestamp)
 })

@@ -7,39 +7,6 @@
       Caused by error in `prep()`:
       ! The level other is already a factor level that will be retained. Please choose a different value.
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Collapsing factor levels for: city, zip
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 732 data points and no incomplete rows.
-      
-      -- Operations 
-      * Collapsing factor levels for: city, zip | Trained
-
 # if the threshold argument is greather than one then it should be an integer(ish)
 
     Code
@@ -120,4 +87,37 @@
       
       -- Operations 
       * Collapsing factor levels for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Operations 
+      * Collapsing factor levels for: city, zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Training information 
+      Training data contained 732 data points and no incomplete rows.
+      
+      -- Operations 
+      * Collapsing factor levels for: city, zip | Trained
 

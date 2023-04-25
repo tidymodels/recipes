@@ -102,15 +102,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  seven_pt <- recipe(~., data = example_data) %>%
-    update_role(day, new_role = "time_index") %>%
-    step_impute_roll(all_predictors(), window = 7)
-  expect_snapshot(print(seven_pt))
-  expect_snapshot(prep(seven_pt))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -189,4 +180,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_impute_roll(all_predictors(), window = 7)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

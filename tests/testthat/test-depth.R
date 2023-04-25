@@ -68,15 +68,6 @@ test_that("alt args", {
   }
 })
 
-
-test_that("printing", {
-  skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = "Species", metric = "spatial")
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("prefix", {
   skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
@@ -144,4 +135,13 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_if_not_installed("ddalpha")
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_depth(all_predictors(), class = "Species", metric = "spatial")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

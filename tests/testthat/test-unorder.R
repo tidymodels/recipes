@@ -32,12 +32,6 @@ test_that("wrong vars", {
   expect_snapshot(prep(rec3, training = examples, verbose = FALSE))
 })
 
-test_that("printing", {
-  rec4 <- rec %>% step_unorder(X2)
-  expect_snapshot(print(rec4))
-  expect_snapshot(prep(rec4))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_unorder(rec1)
@@ -86,4 +80,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(~ X1 + X2, data = examples) %>%
+    step_unorder(X2)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

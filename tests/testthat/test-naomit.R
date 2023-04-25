@@ -34,14 +34,6 @@ test_that("step_naomit on subset of columns", {
   expect_equal(baked2, na_res2[, c(2:6, 1)])
 })
 
-test_that("something prints", {
-  rec <- recipe(Ozone ~ ., data = airquality) %>%
-    step_naomit(all_predictors())
-
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_naomit(rec1)
@@ -79,4 +71,12 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  rec <- recipe(Ozone ~ ., data = airquality) %>%
+    step_naomit(all_predictors())
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

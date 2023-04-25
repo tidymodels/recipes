@@ -115,15 +115,6 @@ test_that("na_rm argument works for step_window", {
   )
 })
 
-test_that("printing", {
-  skip_if_not_installed("RcppRoll")
-  new_names <- rec %>%
-    step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
-  expect_snapshot(print(new_names))
-  expect_snapshot(prep(new_names))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -195,4 +186,13 @@ test_that("empty printing", {
   rec <- prep(rec, mtcars)
 
   expect_snapshot(rec)
+})
+
+test_that("printing", {
+  skip_if_not_installed("RcppRoll")
+  rec <- recipe(~., data = sim_dat) %>%
+    step_window(starts_with("y"))
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -1,43 +1,3 @@
-# printing
-
-    Code
-      kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
-
----
-
-    Code
-      kpca_rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Kernel PCA extraction with: X2, X3, X4, X5, X6
-
----
-
-    Code
-      prep(kpca_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 100 data points and no incomplete rows.
-      
-      -- Operations 
-      * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
-
 # check_name() is used
 
     Code
@@ -116,4 +76,39 @@
       
       -- Operations 
       * Kernel PCA extraction with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Kernel PCA extraction with: X2, X3, X4, X5, X6
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
+      
+      -- Operations 
+      * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
