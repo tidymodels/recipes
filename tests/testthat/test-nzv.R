@@ -61,7 +61,6 @@ test_that("altered freq_cut and unique_cut", {
 
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 
-  skip_if(packageVersion("rlang") < "1.0.0")
   expect_snapshot_error(
     rec %>%
       step_nzv(x1, x2, x3, x4, options = list(freq_cut = 50, unique_cut = 10))

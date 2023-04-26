@@ -74,7 +74,6 @@ test_that("simple Box Cox", {
   expect_equal(exp_lambda[!is.na(exp_lambda)], rec_trained$steps[[1]]$lambdas, tolerance = .001)
   expect_equal(as.matrix(exp_dat), as.matrix(rec_trans), tolerance = .05)
 
-  skip_if(packageVersion("rlang") < "1.0.0")
   # Capture warnings
   expect_snapshot(
     rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)

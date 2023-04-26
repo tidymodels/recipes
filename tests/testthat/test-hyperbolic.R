@@ -57,7 +57,6 @@ test_that("simple hyperbolic trans", {
 })
 
 test_that("wrong function", {
-  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
 })

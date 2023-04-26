@@ -54,7 +54,6 @@ test_that("No kPCA comps", {
     tidy(pca_extract, 1),
     tibble::tibble(terms = paste0("X", 2:6), id = "")
   )
-  skip_if(packageVersion("rlang") < "1.0.0")
   expect_snapshot(pca_extract)
 })
 
@@ -137,7 +136,6 @@ test_that("can prep recipes with no keep_original_cols", {
     NA
   )
 
-  skip_if(packageVersion("rlang") < "1.0.0")
   expect_snapshot(
     kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
   )
