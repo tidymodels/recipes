@@ -44,7 +44,6 @@ test_that("in recipe", {
   expect_error(bake(rec1, test), NA)
   expect_warning(bake(rec1, test), NA)
 
-  skip_if(packageVersion("rlang") < "1.0.0")
   rec2 <- recipe(train) %>%
     check_range(x, y) %>%
     prep()
