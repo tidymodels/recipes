@@ -76,11 +76,30 @@ test_that("not integers", {
   expect_true(!all(vapply(tr_int, is.integer, logical(1))))
 })
 
-test_that("printing", {
-  rec <- recipe(~ x + y + z, data = tr_dat)
-  ints <- rec %>% step_integer(all_predictors())
-  expect_snapshot(print(ints))
-  expect_snapshot(prep(ints))
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+    step_integer(x) %>%
+    update_role(x, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  rec_trained <- prep(rec, training = tr_dat)
+
+  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
+
+  expect_error(bake(rec_trained, te_dat[, 2:3], all_predictors()),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_integer(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -109,27 +128,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_integer(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   rec <- recipe(~ x + y + z, data = tr_dat) %>%
-    step_integer(x) %>%
-    update_role(x, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-  rec_trained <- prep(rec, training = tr_dat)
+    step_integer(all_predictors())
 
-  tr_int <- bake(rec_trained, new_data = NULL, all_predictors())
-
-  expect_error(bake(rec_trained, te_dat[, 2:3], all_predictors()),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

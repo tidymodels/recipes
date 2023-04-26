@@ -55,14 +55,6 @@ test_that("bad options", {
   )
 })
 
-
-test_that("printing", {
-  rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
-  expect_snapshot(print(rec2))
-  expect_snapshot(prep(rec2))
-})
-
-
 test_that("choose reference level", {
   rec4 <- rec %>% step_bin2factor(rocks, ref_first = FALSE)
   rec4 <- prep(rec4, training = covers)
@@ -70,6 +62,32 @@ test_that("choose reference level", {
   expect_true(all(res4$rocks[res4$more_rocks == 1] == "yes"))
   expect_true(all(res4$rocks[res4$more_rocks == 0] == "no"))
   expect_true(levels(res4$rocks)[1] == "no")
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  mtcars_bin <- mtcars %>% mutate(bin = c(1, rep(0, nrow(mtcars) - 1)))
+
+  rec <- recipe(mpg ~ ., mtcars_bin)
+  rec <- step_bin2factor(rec, "bin") %>%
+    update_role(bin, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec <- prep(rec, mtcars_bin)
+
+  expect_error(bake(rec, mtcars), class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_bin2factor(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -89,35 +107,19 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_bin2factor(rec)
 
-  rec <- prep(rec, mtcars)
+  expect <- tibble(terms = character(), id = character())
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), id = character())
-  )
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_bin2factor(rec)
-
-  expect_snapshot(rec)
+  expect_identical(tidy(rec, number = 1), expect)
 
   rec <- prep(rec, mtcars)
 
-  expect_snapshot(rec)
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("bake method errors when needed non-standard role columns are missing", {
-  mtcars_bin <- mtcars %>% mutate(bin = c(1, rep(0, nrow(mtcars) - 1)))
+test_that("printing", {
+  rec2 <- rec %>%
+    step_bin2factor(rocks, levels = letters[2:1])
 
-  rec <- recipe(mpg ~ ., mtcars_bin)
-  rec <- step_bin2factor(rec, "bin") %>%
-    update_role(bin, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  rec <- prep(rec, mtcars_bin)
-
-  expect_error(bake(rec, mtcars), class = "new_data_missing_column")
+  expect_snapshot(print(rec2))
+  expect_snapshot(prep(rec2))
 })

@@ -90,11 +90,28 @@ test_that("input checking", {
   )
 })
 
-test_that("prints something", {
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = df) %>%
-    step_relu(val1)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
+    step_relu(val1) %>%
+    update_role(val1, new_role = "potato") %>%
+    update_role_requirements("potato", bake = FALSE) %>%
+    prep(df, verbose = FALSE)
+
+  expect_error(bake(rec, df[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_relu(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -114,7 +131,12 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_relu(rec)
 
-  expect <- tibble(terms = character(), shift = double(), reverse = logical(), id = character())
+  expect <- tibble(
+    terms = character(),
+    shift = double(),
+    reverse = logical(),
+    id = character()
+  )
 
   expect_identical(tidy(rec, number = 1), expect)
 
@@ -123,27 +145,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_relu(rec)
+test_that("printing", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_relu(disp)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~., data = df) %>%
-    step_relu(val1) %>%
-    update_role(val1, new_role = "potato") %>%
-    update_role_requirements("potato", bake = FALSE) %>%
-    prep(df, verbose = FALSE)
-
-  expect_error(bake(rec, df[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
-})
-
-rm(df)

@@ -290,14 +290,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(sqft ~ ., data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, zip)
-  expect_snapshot(print(dummy))
-  expect_snapshot(prep(dummy))
-})
-
-
 test_that("no columns selected", {
   zdat <- tibble(
     y = c(1, 2, 3),
@@ -374,6 +366,30 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
+  dummy <- rec %>% step_dummy(city, zip, id = "") %>%
+    update_role(city, zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
+
+  expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_dummy(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_dummy(rec1)
@@ -400,25 +416,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_dummy(rec)
+test_that("printing", {
+  rec <- recipe(sqft ~ ., data = sacr_fac) %>%
+    step_dummy(city, zip)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, zip, id = "") %>%
-    update_role(city, zip, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
-
-  expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

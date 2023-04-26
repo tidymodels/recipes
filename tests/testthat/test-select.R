@@ -107,13 +107,6 @@ test_that("quasiquotation", {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = iris) %>%
-    step_select(Species, starts_with("Sepal"), petal_width = Petal.Width)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("tidying", {
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
@@ -139,6 +132,8 @@ test_that("tidying", {
   })
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = mtcars) %>%
     step_select(cyl) %>%
@@ -148,4 +143,12 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(rec, new_data = mtcars[, c(-2)]),
                class = "new_data_missing_column")
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_select(Species)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

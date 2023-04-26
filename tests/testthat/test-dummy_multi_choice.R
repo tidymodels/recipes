@@ -55,13 +55,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(~., data = languages) %>%
-    step_dummy_multi_choice(all_predictors())
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("tunable", {
   rec <-
     recipe(~., data = languages) %>%
@@ -133,6 +126,40 @@ test_that("one columns selected", {
   expect_equal(names(bake(rec, zdat)), c("z", "y", "x_a"))
 })
 
+test_that("factor levels are preserved", {
+  # old data
+  tr <- data.frame(x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+
+  # new data
+  te <- data.frame(x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+  data1 <- tr %>%
+    recipe() %>%
+    step_dummy(x, one_hot = T) %>%
+    prep() %>%
+    bake(new_data = te)
+
+  data2 <- tr %>%
+    recipe() %>%
+    step_dummy_multi_choice(x, threshold = 0) %>%
+    prep() %>%
+    bake(new_data = te)
+
+  expect_identical(ncol(data1), ncol(data2))
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_dummy_multi_choice(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_dummy_multi_choice(rec1)
@@ -159,35 +186,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_dummy_multi_choice(rec)
+test_that("printing", {
+  rec <- recipe(~., data = languages) %>%
+    step_dummy_multi_choice(all_predictors())
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("factor levels are preserved", {
-  # old data
-  tr <- data.frame(x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g")))
-
-  # new data
-  te <- data.frame(x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g")))
-  data1 <- tr %>%
-    recipe() %>%
-    step_dummy(x, one_hot = T) %>%
-    prep() %>%
-    bake(new_data = te)
-
-  data2 <- tr %>%
-    recipe() %>%
-    step_dummy_multi_choice(x, threshold = 0) %>%
-    prep() %>%
-    bake(new_data = te)
-
-  expect_identical(ncol(data1), ncol(data2))
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

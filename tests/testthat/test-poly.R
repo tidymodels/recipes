@@ -74,14 +74,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  with_poly <- rec %>%
-    step_poly(carbon, hydrogen)
-  expect_snapshot(print(with_poly))
-  expect_snapshot(prep(with_poly))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -130,6 +122,37 @@ test_that("old option argument", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  with_poly <- rec %>%
+    step_poly(carbon, hydrogen, id = "") %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  exp_tidy_un <- tibble(
+    terms = c("carbon", "hydrogen"),
+    degree = rep(2L, 2),
+    id = ""
+  )
+
+  with_poly <- prep(with_poly, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(with_poly, new_data = biomass_tr[, c(-3)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_poly(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_poly(rec1)
@@ -156,32 +179,11 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_poly(rec)
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass_tr) %>%
+    step_poly(carbon, hydrogen)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  with_poly <- rec %>%
-    step_poly(carbon, hydrogen, id = "") %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  exp_tidy_un <- tibble(
-    terms = c("carbon", "hydrogen"),
-    degree = rep(2L, 2),
-    id = ""
-  )
-
-  with_poly <- prep(with_poly, training = biomass_tr, verbose = FALSE)
-
-  expect_error(bake(with_poly, new_data = biomass_tr[, c(-3)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

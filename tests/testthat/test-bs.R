@@ -82,13 +82,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  with_bs <- rec %>% step_bs(carbon, hydrogen)
-  expect_snapshot(print(with_bs))
-  expect_snapshot(prep(with_bs))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -116,6 +109,31 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  with_bs <- rec %>%
+    step_bs(carbon, hydrogen, deg_free = 5, degree = 2) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  with_bs <- prep(with_bs, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(with_bs, new_data = biomass_tr[,c(-4)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_bs(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_bs(rec1)
@@ -133,39 +151,19 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_bs(rec)
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), id = character())
-  )
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
 
   rec <- prep(rec, mtcars)
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), id = character())
-  )
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_bs(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   with_bs <- rec %>%
-    step_bs(carbon, hydrogen, deg_free = 5, degree = 2) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+    step_bs(carbon, hydrogen)
 
-  with_bs <- prep(with_bs, training = biomass_tr, verbose = FALSE)
-
-  expect_error(bake(with_bs, new_data = biomass_tr[,c(-4)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(with_bs))
+  expect_snapshot(prep(with_bs))
 })

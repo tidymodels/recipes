@@ -75,14 +75,6 @@ test_that("group-wise zv filtering", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(y ~ ., data = dat) %>%
-    step_zv(x1, x2, x3, x4)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-
 test_that("mssing values in zero-variance screen", {
   x <- rep(1, 5)
   y <- c(NA, x)
@@ -91,6 +83,19 @@ test_that("mssing values in zero-variance screen", {
   expect_true(recipes:::one_unique(x))
   expect_true(recipes:::one_unique(y))
   expect_true(recipes:::one_unique(z))
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_zv(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -123,13 +128,9 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_zv(rec)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

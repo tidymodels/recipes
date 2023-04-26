@@ -74,13 +74,6 @@ test_that("alt args", {
   }
 })
 
-test_that("printing", {
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species", log = FALSE)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("check_name() is used", {
   dat <- iris
   dat$classdist_setosa <- dat$Sepal.Length
@@ -130,36 +123,6 @@ test_that("empty selection prep/bake returns NA columns", {
   expect_identical(baked3$classdist_versicolor, expect)
   expect_identical(baked3$classdist_virginica, expect)
 })
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(Species ~ ., iris)
-  rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
-  rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
-
-  expect <- tibble(terms = character(), value = double(), class = character(), id = character())
-
-  expect_identical(tidy(rec2, number = 1), expect)
-  expect_identical(tidy(rec3, number = 1), expect)
-
-  rec2 <- prep(rec2, iris)
-  rec3 <- prep(rec3, iris)
-
-  expect_identical(tidy(rec2, number = 1), expect)
-  expect_identical(tidy(rec3, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(Species ~ ., iris)
-  rec <- step_classdist(rec, class = "Species")
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, iris)
-
-  expect_snapshot(rec)
-})
-
 
 test_that("case weights", {
   set.seed(1)
@@ -230,6 +193,8 @@ test_that("case weights", {
   expect_snapshot(rec_prep)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(Petal.Length, class = "Species", log = FALSE)  %>%
@@ -240,4 +205,40 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(trained, new_data = iris[,c(-3)]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_classdist(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(Species ~ ., iris)
+  rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
+  rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
+
+  expect <- tibble(terms = character(), value = double(), class = character(), id = character())
+
+  expect_identical(tidy(rec2, number = 1), expect)
+  expect_identical(tidy(rec3, number = 1), expect)
+
+  rec2 <- prep(rec2, iris)
+  rec3 <- prep(rec3, iris)
+
+  expect_identical(tidy(rec2, number = 1), expect)
+  expect_identical(tidy(rec3, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = "Species")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

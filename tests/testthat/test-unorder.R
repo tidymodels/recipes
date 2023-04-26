@@ -32,10 +32,28 @@ test_that("wrong vars", {
   expect_snapshot(prep(rec3, training = examples, verbose = FALSE))
 })
 
-test_that("printing", {
-  rec4 <- rec %>% step_unorder(X2)
-  expect_snapshot(print(rec4))
-  expect_snapshot(prep(rec4))
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec1 <- rec %>% step_unorder(X2) %>%
+    update_role(X2, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec1_trained <- prep(rec1, training = examples, verbose = FALSE)
+
+  expect_error(bake(rec1_trained, new_data = examples[, 1, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_unorder(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -64,26 +82,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_unorder(rec)
+test_that("printing", {
+  rec <- recipe(~ X1 + X2, data = examples) %>%
+    step_unorder(X2)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- rec %>% step_unorder(X2) %>%
-    update_role(X2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  rec1_trained <- prep(rec1, training = examples, verbose = FALSE)
-
-  expect_error(bake(rec1_trained, new_data = examples[, 1, drop = FALSE]),
-               class = "new_data_missing_column")
-})
-

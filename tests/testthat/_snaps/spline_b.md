@@ -8,65 +8,6 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_01
 
-# printing
-
-    Code
-      print(with_ns)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Basis spline expansion: carbon, hydrogen
-
----
-
-    Code
-      prep(with_ns)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * Basis spline expansion: carbon, hydrogen | Trained
-
----
-
-    Code
-      rec %>% step_spline_b(carbon, hydrogen, deg_free = -1) %>% prep()
-    Condition
-      Warning:
-      The 'df' must be a nonnegative integer.
-      Warning:
-      The 'df' must be a nonnegative integer.
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * Basis spline expansion: <none> | Trained
-
 # empty printing
 
     Code
@@ -101,4 +42,39 @@
       
       -- Operations 
       * Basis spline expansion: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Basis spline expansion: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * Basis spline expansion: carbon, hydrogen | Trained
 

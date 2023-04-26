@@ -61,11 +61,17 @@ test_that("in recipe", {
   expect_snapshot(error = TRUE, bake(rec4, test))
 })
 
-test_that("printing", {
-  check_range_extract <- recipe(mtcars) %>%
-    check_range(drat, cyl, am)
-  expect_snapshot(print(check_range_extract))
-  expect_snapshot(prep(check_range_extract))
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- check_range(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -94,14 +100,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- check_range(rec)
+test_that("printing", {
+  rec <- recipe(mtcars) %>%
+    check_range(drat, cyl, am)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

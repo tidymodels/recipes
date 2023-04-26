@@ -7,39 +7,6 @@
       Caused by error in `binomial()$linkfun()`:
       ! Value -0.77772 out of range (0, 1)
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Operations 
-      * Logit transformation on: x1
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 20 data points and no incomplete rows.
-      
-      -- Operations 
-      * Logit transformation on: x1 | Trained
-
 # empty printing
 
     Code
@@ -74,4 +41,37 @@
       
       -- Operations 
       * Logit transformation on: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Logit transformation on: x1
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
+      
+      -- Operations 
+      * Logit transformation on: x1 | Trained
 

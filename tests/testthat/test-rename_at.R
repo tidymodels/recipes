@@ -2,16 +2,12 @@ library(testthat)
 library(recipes)
 library(dplyr)
 
-# ------------------------------------------------------------------------------
-
 iris_rec <- recipe(~., data = iris)
-
-# ------------------------------------------------------------------------------
 
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-    step_arrange(desc(Sepal.Length), 1 / Petal.Length)
+    step_rename_at(contains("Length"), fn = ~ tolower(.))
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
@@ -19,7 +15,7 @@ test_that("basic usage", {
     iris %>%
     as_tibble() %>%
     slice(1:75) %>%
-    dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
+    rename_at(vars(contains("Length")), ~ tolower(.))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
@@ -28,44 +24,36 @@ test_that("basic usage", {
     iris %>%
     as_tibble() %>%
     slice(76:150) %>%
-    dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
+    rename_at(vars(contains("Length")), ~ tolower(.))
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
 
-test_that("quasiquotation", {
-  sort_vars <- c("Sepal.Length", "Petal.Length")
-  sort_vars <- syms(sort_vars)
-  rec_1 <-
+test_that("mulitple functions", {
+  rec <-
     iris_rec %>%
-    step_arrange(!!!sort_vars)
+    step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
 
-  prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
-
-  dplyr_train <-
-    iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    arrange(Sepal.Length, Petal.Length)
-
-  rec_1_train <- bake(prepped_1, new_data = NULL)
-  expect_equal(dplyr_train, rec_1_train)
+  expect_snapshot(error = TRUE,
+                  prep(rec, training = iris %>% slice(1:75))
+  )
 })
 
 test_that("no input", {
-  no_inputs <-
+  # Wait for call pass through
+  expect_error(
     iris_rec %>%
-    step_arrange() %>%
-    prep(training = iris) %>%
-    bake(new_data = NULL, composition = "data.frame")
-  expect_equal(no_inputs, iris)
+      step_rename_at() %>%
+      prep(training = iris) %>%
+      bake(new_data = NULL, composition = "data.frame")
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_arrange(rec)
+  rec <- step_rename_at(rec, fn = identity)
 
   expect_snapshot(rec)
 
@@ -74,9 +62,22 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_rename_at(rec1, fn = identity)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_arrange(rec)
+  rec <- step_rename_at(rec, fn = identity)
 
   expect <- tibble(terms = character(), id = character())
 
@@ -88,8 +89,8 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- iris_rec %>%
-    step_arrange(Sepal.Length)
+  rec <- recipe(~., data = iris) %>%
+    step_rename_at(contains("Sepal"), fn = tolower)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))

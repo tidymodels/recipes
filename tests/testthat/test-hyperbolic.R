@@ -56,12 +56,35 @@ test_that("simple hyperbolic trans", {
 
 })
 
+test_that("wrong function", {
+  skip_if(packageVersion("rlang") < "1.0.0")
+  rec <- recipe(mpg ~ ., mtcars)
+  expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
+})
 
-test_that("printing", {
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = ex_dat) %>%
-    step_hyperbolic(x1, x2, func = "sinh", inverse = TRUE)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
+    step_hyperbolic(x1, x2, func = "sinh", inverse = FALSE) %>%
+    update_role(x1, x2, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+
+  expect_error(bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_hyperbolic(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -95,32 +118,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_hyperbolic(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("wrong function", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
-    step_hyperbolic(x1, x2, func = "sinh", inverse = FALSE) %>%
-    update_role(x1, x2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+    step_hyperbolic(x1, x2)
 
-  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
-
-  expect_error(bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

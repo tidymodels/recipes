@@ -90,41 +90,6 @@
       ! The `preserve` argument of `step_dummy()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use the `keep_original_cols` argument instead.
 
-# printing
-
-    Code
-      print(dummy)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 7
-      
-      -- Operations 
-      * Dummy variables from: city, zip
-
----
-
-    Code
-      prep(dummy)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 7
-      
-      -- Training information 
-      Training data contained 932 data points and no incomplete rows.
-      
-      -- Operations 
-      * Dummy variables from: city, zip | Trained
-
 # no columns selected
 
     Code
@@ -198,4 +163,39 @@
       
       -- Operations 
       * Dummy variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 7
+      
+      -- Operations 
+      * Dummy variables from: city, zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 7
+      
+      -- Training information 
+      Training data contained 932 data points and no incomplete rows.
+      
+      -- Operations 
+      * Dummy variables from: city, zip | Trained
 

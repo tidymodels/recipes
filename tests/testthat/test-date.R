@@ -90,14 +90,6 @@ test_that("ordinal values", {
   expect_equal(date_res, date_exp)
 })
 
-
-test_that("printing", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = feats)
-  expect_snapshot(print(date_rec))
-  expect_snapshot(prep(date_rec))
-})
-
 test_that("check_name() is used", {
   dat <- examples
   dat$Dan_year <- dat$Dan
@@ -218,6 +210,32 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  date_rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(Dan, features = feats) %>%
+    update_role(Dan, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  date_rec <- prep(date_rec, training = examples)
+  date_res <- bake(date_rec, new_data = examples)
+
+  expect_error(bake(date_rec, new_data = examples[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_date(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_date(rec1)
@@ -235,7 +253,12 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_date(rec)
 
-  expect <- tibble(terms = character(), value = character(), ordinal = logical(), id = character())
+  expect <- tibble(
+    terms = character(),
+    value = character(),
+    ordinal = logical(),
+    id = character()
+  )
 
   expect_identical(tidy(rec, number = 1), expect)
 
@@ -244,27 +267,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_date(rec)
+test_that("printing", {
+  rec <- recipe(~ Dan + Stefan, examples) %>%
+    step_date(all_predictors(), features = feats)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(Dan, features = feats) %>%
-    update_role(Dan, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  date_rec <- prep(date_rec, training = examples)
-  date_res <- bake(date_rec, new_data = examples)
-
-  expect_error(bake(date_rec, new_data = examples[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

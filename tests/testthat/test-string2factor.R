@@ -48,15 +48,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  ex_3 <- rec %>%
-    step_string2factor(w, x) %>%
-    prep(ex_dat, strings_as_factors = FALSE)
-  expect_snapshot(print(ex_3))
-  expect_snapshot(prep(ex_3))
-})
-
 test_that("pre-made factors", {
   ex_1 <- rec %>%
     step_string2factor(w, x, y, z) %>%
@@ -70,6 +61,19 @@ test_that("pre-made factors", {
 
   expect_equal(ex_1$y, ex_dat$y)
   expect_equal(ex_1$z, ex_dat$z)
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_string2factor(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -98,14 +102,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_string2factor(rec)
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_string2factor(w, x)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

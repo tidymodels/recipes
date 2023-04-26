@@ -86,51 +86,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  impute_rec <- recipe(Price ~ ., data = credit_tr) %>%
-    step_impute_median(Age, Assets, Income)
-  expect_snapshot(print(impute_rec))
-  expect_snapshot(prep(impute_rec))
-})
-
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_impute_median(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_median(rec)
-
-  expect <- tibble(terms = character(), value = double(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_median(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("case weights", {
   credit_tr_cw <- credit_tr %>%
     mutate(Amount = frequency_weights(Amount))
@@ -171,6 +126,8 @@ test_that("case weights", {
   expect_snapshot(impute_rec)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
@@ -182,4 +139,49 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(imputed, new_data = credit_te[, c(-5)]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_median(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_impute_median(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_median(rec)
+
+  expect <- tibble(terms = character(), value = double(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(Price ~ ., data = credit_tr) %>%
+    step_impute_median(Age, Assets, Income)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

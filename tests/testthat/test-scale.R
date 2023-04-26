@@ -85,13 +85,6 @@ test_that("single predictor", {
   expect_equal(results, exp_res[, colnames(results)])
 })
 
-test_that("printing", {
-  standardized <- rec %>%
-    step_scale(hydrogen)
-  expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized))
-})
-
 test_that("na_rm argument works for step_scale", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
@@ -116,44 +109,6 @@ test_that("na_rm argument works for step_scale", {
     tidy(rec_na_rm, 1)$value,
     unname(exp_na_rm)
   )
-})
-
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_scale(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_scale(rec)
-
-  expect <- tibble(terms = character(), value = double(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_scale(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
 })
 
 test_that("warns on zv",{
@@ -193,6 +148,8 @@ test_that("scaling with case weights", {
   expect_snapshot(rec)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   std <- rec %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
@@ -203,4 +160,49 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(std_trained, new_data = biomass[, 1:2]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_scale(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_scale(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_scale(rec)
+
+  expect <- tibble(terms = character(), value = double(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_scale(disp, wt)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

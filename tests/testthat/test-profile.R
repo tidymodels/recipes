@@ -100,17 +100,6 @@ test_that("bad values", {
   )
 })
 
-test_that("printing", {
-  num_rec_1 <- sacr_rec %>%
-    step_profile(-sqft, profile = vars(sqft))
-  num_rec_2 <- prep(num_rec_1, Sacramento)
-
-  expect_snapshot(print(num_rec_1))
-  expect_snapshot(print(num_rec_2))
-})
-
-
-
 test_that("tidy", {
   num_rec_3 <- sacr_rec %>%
     step_profile(-sqft, profile = vars(contains("sqft")), id = "")
@@ -132,6 +121,19 @@ test_that("tidy", {
     id = ""
   )
   expect_equal(tidy_4, exp_4)
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_profile(rec, profile = vars(mpg))
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -162,14 +164,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_profile(rec, profile = vars(mpg))
+test_that("printing", {
+  rec <- recipe(~., data = Sacramento) %>%
+    step_profile(-sqft, profile = vars(sqft))
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

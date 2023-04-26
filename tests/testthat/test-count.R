@@ -55,14 +55,6 @@ test_that("bad selector(s)", {
   )
 })
 
-
-test_that("printing", {
-  rec5 <- rec %>%
-    step_count(description, pattern = "(rock|stony)")
-  expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5))
-})
-
 test_that("empty selection prep/bake adds an NA column", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_count(rec1, pattern = "rock")
@@ -74,34 +66,7 @@ test_that("empty selection prep/bake adds an NA column", {
   expect_identical(baked2$rock, rep(NA_integer_, nrow(mtcars)))
 })
 
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_count(rec)
-
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), result = character(), id = character())
-  )
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), result = character(), id = character())
-  )
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_count(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
+# Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   mt_tibble <- mtcars %>%
@@ -118,4 +83,36 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(rec_trained, new_data = mt_tibble[,c(-1)]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_count(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_count(rec)
+
+  expect <- tibble(terms = character(), result = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- rec %>%
+    step_count(description, pattern = "(rock|stony)")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

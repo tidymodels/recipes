@@ -12,7 +12,7 @@
       predictor: 10
       
       -- Operations 
-      * Integer encoding for: <none>
+      * Variable mutation for: <none>
 
 ---
 
@@ -31,7 +31,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Integer encoding for: <none> | Trained
+      * Variable mutation for: <none> | Trained
 
 # printing
 
@@ -43,10 +43,10 @@
       
       -- Inputs 
       Number of variables by role
-      predictor: 3
+      predictor: 5
       
       -- Operations 
-      * Integer encoding for: all_predictors()
+      * Variable mutation for: contains("Sepal")
 
 ---
 
@@ -58,11 +58,11 @@
       
       -- Inputs 
       Number of variables by role
-      predictor: 3
+      predictor: 5
       
       -- Training information 
-      Training data contained 10 data points and 2 incomplete rows.
+      Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Integer encoding for: x, y, z | Trained
+      * Variable mutation for: Sepal.Length, Sepal.Width | Trained
 

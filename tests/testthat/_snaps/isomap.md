@@ -1,36 +1,3 @@
-# printing
-
-    Code
-      print(im_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Operations 
-      * Isomap approximation with: x1, x2, x3
-
----
-
-    Code
-      prep(im_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 5 data points and no incomplete rows.
-      
-      -- Operations 
-      * Isomap approximation with: x1, x2, x3 | Trained
-
 # No ISOmap
 
     Code
@@ -119,4 +86,37 @@
       
       -- Operations 
       * Isomap approximation with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Isomap approximation with: x1, x2, x3
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 5 data points and no incomplete rows.
+      
+      -- Operations 
+      * Isomap approximation with: x1, x2, x3 | Trained
 

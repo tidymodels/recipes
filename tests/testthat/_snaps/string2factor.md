@@ -15,42 +15,6 @@
       Error in `step_string2factor()`:
       ! `ordered` should be a single logical variable
 
-# printing
-
-    Code
-      print(ex_3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 200 data points and no incomplete rows.
-      
-      -- Operations 
-      * Factor variables from: w, x | Trained
-
----
-
-    Code
-      prep(ex_3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 200 data points and no incomplete rows.
-      
-      -- Operations 
-      * Factor variables from: w, x | Trained
-
 # empty printing
 
     Code
@@ -85,4 +49,37 @@
       
       -- Operations 
       * Factor variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Factor variables from: w, x
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 200 data points and no incomplete rows.
+      
+      -- Operations 
+      * Factor variables from: w, x | Trained
 

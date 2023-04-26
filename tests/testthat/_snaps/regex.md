@@ -15,39 +15,6 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
-# printing
-
-    Code
-      print(rec1)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Operations 
-      * Regular expression dummy variable using: "(rock|stony)"
-
----
-
-    Code
-      prep(rec1)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 40 data points and no incomplete rows.
-      
-      -- Operations 
-      * Regular expression dummy variable using: "(rock|stony)" | Trained
-
 # empty printing
 
     Code
@@ -82,4 +49,37 @@
       
       -- Operations 
       * Regular expression dummy variable using: "." | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Regular expression dummy variable using: "(rock|stony)"
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 40 data points and no incomplete rows.
+      
+      -- Operations 
+      * Regular expression dummy variable using: "(rock|stony)" | Trained
 

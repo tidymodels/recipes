@@ -60,14 +60,6 @@ test_that("all data", {
   expect_equal(exp3, obs3)
 })
 
-
-test_that("printing", {
-  rec3 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
-  expect_snapshot(print(rec3))
-  expect_snapshot(prep(rec3))
-})
-
 test_that("bake a single row", {
   rec4 <- recipe(y ~ ., data = dat) %>%
     step_shuffle(everything())
@@ -75,6 +67,31 @@ test_that("bake a single row", {
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
   expect_snapshot(dat4 <- bake(rec4, dat[1, ], everything()))
   expect_equal(dat4, tibble(dat[1, ]))
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec1 <- recipe(y ~ ., data = dat) %>%
+    step_shuffle(all_numeric()) %>%
+    update_role(all_numeric(), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec1 <- prep(rec1, training = dat, verbose = FALSE)
+
+  expect_error(bake(rec1, dat[, 2:5]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_shuffle(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -103,26 +120,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_shuffle(rec)
+test_that("printing", {
+  rec <- recipe(y ~ ., data = dat) %>%
+    step_shuffle(everything())
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(all_numeric()) %>%
-    update_role(all_numeric(), new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  rec1 <- prep(rec1, training = dat, verbose = FALSE)
-
-  expect_error(bake(rec1, dat[, 2:5]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

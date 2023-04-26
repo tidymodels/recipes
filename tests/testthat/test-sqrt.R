@@ -19,12 +19,28 @@ test_that("simple sqrt trans", {
   expect_equal(rec_trans, exp_res)
 })
 
+# Infrastructure ---------------------------------------------------------------
 
-test_that("printing", {
+test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = ex_dat) %>%
-    step_sqrt(x1, x2)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
+    step_sqrt(x1, x2) %>%
+    update_role(x1, x2, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(ex_dat)
+
+  expect_error(bake(rec, new_data = ex_dat[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_sqrt(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -53,26 +69,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_sqrt(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
-    step_sqrt(x1, x2) %>%
-    update_role(x1, x2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep(ex_dat)
+    step_sqrt(x1, x2)
 
-  expect_error(bake(rec, new_data = ex_dat[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

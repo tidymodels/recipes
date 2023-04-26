@@ -7,39 +7,6 @@
       Caused by error in `bake()`:
       ! step_lag requires 'lag' argument to be integer valued.
 
-# something prints
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Lagging: t
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 10 data points and no incomplete rows.
-      
-      -- Operations 
-      * Lagging: t | Trained
-
 # empty printing
 
     Code
@@ -74,4 +41,37 @@
       
       -- Operations 
       * Lagging: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Operations 
+      * Lagging: disp
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Lagging: disp | Trained
 

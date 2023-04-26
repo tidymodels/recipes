@@ -65,12 +65,17 @@ test_that("no exclusions", {
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))
 })
 
+# Infrastructure ---------------------------------------------------------------
 
-test_that("printing", {
-  dum_filtered <- dum_rec %>%
-    step_lincomb(all_predictors())
-  expect_snapshot(print(dum_filtered))
-  expect_snapshot(prep(dum_filtered))
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_lincomb(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -99,14 +104,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_lincomb(rec)
+test_that("printing", {
+  rec <- recipe(yield ~ ., data = dummies) %>%
+    step_lincomb(all_predictors())
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

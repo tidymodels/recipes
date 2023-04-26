@@ -25,76 +25,6 @@
       ! `step_modeimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_mode()` instead.
 
-# printing
-
-    Code
-      print(impute_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 13
-      
-      -- Operations 
-      * Mode imputation for: Status, Home, Marital
-
----
-
-    Code
-      prep(impute_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 13
-      
-      -- Training information 
-      Training data contained 2000 data points and 186 incomplete rows.
-      
-      -- Operations 
-      * Mode imputation for: Status, Home, Marital | Trained
-
-# empty printing
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * Mode imputation for: <none>
-
----
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * Mode imputation for: <none> | Trained
-
 # case weights
 
     Code
@@ -132,4 +62,74 @@
       
       -- Operations 
       * Mode imputation for: x1 | Trained, ignored weights
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Mode imputation for: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Mode imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
+      
+      -- Operations 
+      * Mode imputation for: Status, Home, Marital
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 13
+      
+      -- Training information 
+      Training data contained 2000 data points and 186 incomplete rows.
+      
+      -- Operations 
+      * Mode imputation for: Status, Home, Marital | Trained
 

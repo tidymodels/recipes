@@ -245,17 +245,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("print method", {
-  skip_if_not_installed("mixOmics")
-  rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3, id = "dork")
-
-  expect_snapshot(print(rec))
-
-  rec <- prep(rec)
-  expect_snapshot(print(rec))
-})
-
 test_that("tunable", {
   rec <-
     recipe(Species ~ ., data = iris) %>%
@@ -320,6 +309,32 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(HHV ~ ., data = biom_tr) %>%
+    step_pls(carbon, outcome = "HHV", num_comp = 3) %>%
+    update_role(carbon, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec <- prep(rec)
+
+  expect_error(bake(rec, new_data = biom_tr[, c(-1)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_pls(rec, outcome = "mpg")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_pls(rec1, outcome = "mpg")
@@ -351,28 +366,11 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_pls(rec, outcome = "mpg")
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(carbon, outcome = "HHV", num_comp = 3) %>%
-    update_role(carbon, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+    step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
 
-  rec <- prep(rec)
-
-  expect_error(bake(rec, new_data = biom_tr[, c(-1)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

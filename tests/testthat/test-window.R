@@ -115,15 +115,6 @@ test_that("na_rm argument works for step_window", {
   )
 })
 
-test_that("printing", {
-  skip_if_not_installed("RcppRoll")
-  new_names <- rec %>%
-    step_window(starts_with("y"), names = paste0("new", 1:2), role = "predictor")
-  expect_snapshot(print(new_names))
-  expect_snapshot(prep(new_names))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -151,6 +142,19 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_window(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -185,13 +189,9 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_window(rec)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

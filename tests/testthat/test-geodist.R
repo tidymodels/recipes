@@ -220,15 +220,7 @@ test_that("bad args", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(~ x + y, data = rand_data) %>%
-    step_geodist(x, y,
-      ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
-      log = FALSE
-    )
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
+# Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~ x + y, data = rand_data) %>%
@@ -241,4 +233,15 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec_trained <- prep(rec, rand_data)
   expect_error(bake(rec_trained, new_data = rand_data[, 2, drop = FALSE]),
                class = "new_data_missing_column")
+})
+
+test_that("printing", {
+  rec <- recipe(~ x + y, data = rand_data) %>%
+    step_geodist(
+      x, y,
+      ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE
+    )
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

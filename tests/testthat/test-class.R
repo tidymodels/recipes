@@ -113,10 +113,17 @@ test_that("characters are handled correctly", {
   )
 })
 
-test_that("printing", {
-  rec7 <- recipe(x) %>% check_class(everything())
-  expect_snapshot(print(rec7))
-  expect_snapshot(prep(rec7))
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- check_class(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -136,27 +143,19 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- check_class(rec)
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), value = character(), id = character())
-  )
+  expect <- tibble(terms = character(), value = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
 
   rec <- prep(rec, mtcars)
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), value = character(), id = character())
-  )
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- check_class(rec)
+test_that("printing", {
+  rec7 <- recipe(mpg ~ ., mtcars) %>%
+    check_class(everything())
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec7))
+  expect_snapshot(prep(rec7))
 })

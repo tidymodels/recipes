@@ -34,12 +34,6 @@ test_that("bad args", {
   )
 })
 
-test_that("printing", {
-  expect_snapshot(print(rec %>% step_relevel(zip, ref_level = "z95838")))
-  expect_snapshot(print(rec %>% step_relevel(zip, ref_level = "z95838") %>% prep()))
-})
-
-
 test_that("tidy methods", {
   rec_raw <- rec %>% step_relevel(zip, ref_level = "z95838", id = "city")
   expect_equal(
@@ -50,6 +44,30 @@ test_that("tidy methods", {
     tidy(prep(rec_raw), 1),
     tibble(terms = "zip", value = "z95838", id = "city")
   )
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec_1 <- rec %>%
+    step_relevel(zip, ref_level = "z95838") %>%
+    update_role(zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_relevel(rec, ref_level = "x")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -78,26 +96,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_relevel(rec, ref_level = "x")
+test_that("printing", {
+  rec <- recipe(~., data = sacr_tr) %>%
+    step_relevel(zip, ref_level = "z95838")
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec_1 <- rec %>%
-    step_relevel(zip, ref_level = "z95838") %>%
-    update_role(zip, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep()
-
-  expect_error(bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

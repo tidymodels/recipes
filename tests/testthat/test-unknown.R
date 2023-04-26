@@ -68,12 +68,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  expect_snapshot(print(rec %>% step_unknown(city, zip)))
-  expect_snapshot(print(rec %>% step_unknown(city, zip) %>% prep()))
-})
-
 test_that("tidy methods", {
   rec_raw <- rec %>% step_unknown(all_nominal(), new_level = "cake", id = "cheese")
 
@@ -85,6 +79,30 @@ test_that("tidy methods", {
     tidy(prep(rec_raw), 1),
     tibble(terms = c("city", "zip", "type"), value = "cake", id = "cheese")
   )
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec_1 <- rec %>%
+    step_unknown(city, zip) %>%
+    update_role(city, zip, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(rec_1, sacr_te[3:ncol(sacr_te)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_unknown(rec, new_level = "cake")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -113,26 +131,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_unknown(rec, new_level = "cake")
+test_that("printing", {
+  rec <- recipe(~., data = sacr_tr) %>%
+    step_unknown(city, zip)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec_1 <- rec %>%
-    step_unknown(city, zip) %>%
-    update_role(city, zip, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep()
-
-  expect_error(bake(rec_1, sacr_te[3:ncol(sacr_te)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

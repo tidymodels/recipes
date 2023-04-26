@@ -95,17 +95,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  imputed <- rec %>%
-    step_impute_bag(carbon,
-      impute_with = imp_vars(hydrogen), seed_val = 12,
-      trees = 7
-    )
-
-  expect_snapshot(print(imputed))
-  expect_snapshot(prep(imputed))
-})
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -146,6 +135,34 @@ test_that("non-factor imputation", {
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  imputed <- rec %>%
+    step_impute_bag(carbon, fac,
+                    impute_with = imp_vars(hydrogen, oxygen),
+                    seed_val = 12, trees = 5
+    ) %>%
+    update_role(carbon, fac, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
+
+  expect_error(bake(imputed_trained, new_data = biomass[, c(-3, -9)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_bag(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_impute_bag(rec1)
@@ -172,29 +189,11 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_bag(rec)
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
+                    data = biomass) %>%
+    step_impute_bag(carbon, impute_with = imp_vars(hydrogen))
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  imputed <- rec %>%
-    step_impute_bag(carbon, fac,
-                    impute_with = imp_vars(hydrogen, oxygen),
-                    seed_val = 12, trees = 5
-    ) %>%
-    update_role(carbon, fac, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
-
-  expect_error(bake(imputed_trained, new_data = biomass[, c(-3, -9)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -16,38 +16,6 @@
       ! `step_lowerimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_lower()` instead.
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 3
-
----
-
-    Code
-      prep(rec2)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 536 data points and no incomplete rows.
-      
-      -- Operations 
-      * Lower bound imputation for: carbon, hydrogen | Trained
-
 # empty printing
 
     Code
@@ -82,4 +50,39 @@
       
       -- Operations 
       * Lower bound imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 3
+      
+      -- Operations 
+      * Lower bound imputation for: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * Lower bound imputation for: carbon, hydrogen | Trained
 

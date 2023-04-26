@@ -81,12 +81,6 @@ test_that("bad input", {
   )
 })
 
-test_that("printing", {
-  rec <- iris_rec %>% step_sample()
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("sample with case weights", {
   mtcars1 <- mtcars
   mtcars1$carb <- frequency_weights(mtcars1$carb)
@@ -141,4 +135,14 @@ test_that("sample with case weights", {
     prep()
 
   expect_snapshot(rec)
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_sample()
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

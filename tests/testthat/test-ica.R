@@ -75,18 +75,6 @@ test_that("correct ICA values", {
   expect_equal(tidy_exp_tr, tidy(ica_extract_trained, number = 2))
 })
 
-
-test_that("printing", {
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
-  ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, num_comp = 2)
-  expect_snapshot(print(ica_extract))
-  expect_snapshot(prep(ica_extract))
-})
-
-
 test_that("No ICA comps", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
@@ -200,6 +188,42 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  ica_extract <-
+    recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+           data = biomass_tr
+    ) %>%
+    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(ica_extract_trained, new_data = biomass_tr[, c(-3)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_ica(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
@@ -239,37 +263,16 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
+test_that("printing", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
 
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_ica(rec)
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass_tr) %>%
+    step_normalize(all_predictors()) %>%
+    step_ica(carbon, hydrogen, num_comp = 2)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
-
-  ica_extract <-
-    recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           data = biomass_tr
-    ) %>%
-    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
-
-  expect_error(bake(ica_extract_trained, new_data = biomass_tr[, c(-3)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

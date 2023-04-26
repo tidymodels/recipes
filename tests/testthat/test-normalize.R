@@ -17,13 +17,6 @@ biomass['zero_variance'] <- 1
 rec_zv <- recipe(HHV ~  + carbon + hydrogen + oxygen + nitrogen + sulfur + zero_variance,
                  data = biomass)
 
-test_that("printing", {
-  standardized <- rec %>%
-    step_normalize(nitrogen, carbon)
-  expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized))
-})
-
 test_that("correct means and std devs for step_normalize", {
   standardized <- rec %>%
     step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur, id = "norm")
@@ -101,50 +94,7 @@ test_that("na_rm argument works for step_normalize", {
   )
 })
 
-test_that("normalize - empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_normalize(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("normalize - empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_normalize(rec)
-
-  expect <- tibble(
-    terms = character(),
-    statistic = character(),
-    value = double(),
-    id = character()
-  )
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("normalize - empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_normalize(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("normalize - warns on zv",{
+test_that("warns on zv",{
   rec1 <- step_normalize(rec_zv,all_numeric_predictors())
   expect_snapshot(prep(rec1))
 })
@@ -191,6 +141,8 @@ test_that("normalizing with case weights", {
   expect_snapshot(rec)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   std <- rec %>%
     step_normalize(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
@@ -201,4 +153,54 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(std_trained, new_data = biomass[, 1:2]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_normalize(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_normalize(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_normalize(rec)
+
+  expect <- tibble(
+    terms = character(),
+    statistic = character(),
+    value = double(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(mpg ~., data = mtcars) %>%
+    step_normalize(disp, wt)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

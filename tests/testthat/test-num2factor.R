@@ -47,13 +47,28 @@ test_that("bad args", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
 
-test_that("printing", {
-  ex_3 <- rec %>%
-    step_num2factor(z, levels = letters) %>%
-    prep(ex_dat, strings_as_factors = FALSE)
-  expect_snapshot(print(ex_3))
-  expect_snapshot(prep(ex_3))
+test_that("bake method errors when needed non-standard role columns are missing", {
+  ex_1 <- rec %>%
+    step_num2factor(z, levels = rev(LETTERS[1:10])) %>%
+    update_role(z, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(ex_dat)
+
+  expect_error(bake(ex_1, new_data = ex_dat[, 1:2]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_num2factor(rec, levels = "x")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -82,26 +97,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_num2factor(rec, levels = "x")
+test_that("printing", {
+  rec <- recipe(~., data = ex_dat) %>%
+    step_num2factor(z, levels = letters)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  ex_1 <- rec %>%
-    step_num2factor(z, levels = rev(LETTERS[1:10])) %>%
-    update_role(z, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep(ex_dat)
-
-  expect_error(bake(ex_1, new_data = ex_dat[, 1:2]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

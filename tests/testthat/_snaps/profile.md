@@ -51,39 +51,6 @@
       Error in `error_cnd()`:
       ! Conditions must have named data fields
 
-# printing
-
-    Code
-      print(num_rec_1)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 10
-      
-      -- Operations 
-      * Profiling data set for: sqft
-
----
-
-    Code
-      print(num_rec_2)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 20 data points and no incomplete rows.
-      
-      -- Operations 
-      * Profiling data set for: sqft | Trained
-
 # empty printing
 
     Code
@@ -118,4 +85,37 @@
       
       -- Operations 
       * Profiling data set for: mpg | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 10
+      
+      -- Operations 
+      * Profiling data set for: sqft
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
+      
+      -- Operations 
+      * Profiling data set for: sqft | Trained
 

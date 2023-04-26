@@ -18,74 +18,6 @@
       Caused by error in `prep()`:
       ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
 
-# Printing
-
-    Code
-      print(imputed)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      undeclared role: 3
-      
-      -- Operations 
-      * Linear regression imputation for: Lot_Frontage
-
----
-
-    Code
-      prep(imputed)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      undeclared role: 3
-      
-      -- Training information 
-      Training data contained 2930 data points and 556 incomplete rows.
-      
-      -- Operations 
-      * Linear regression imputation for: Lot_Frontage | Trained
-
-# empty printing
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * Linear regression imputation for: <none>
-
----
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * Linear regression imputation for: <none> | Trained
-
 # case weights
 
     Code
@@ -123,4 +55,72 @@
       
       -- Operations 
       * Linear regression imputation for: Lot_Frontage | Trained, ignored weights
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Linear regression imputation for: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Linear regression imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 3
+      
+      -- Operations 
+      * Linear regression imputation for: Lot_Frontage
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 3
+      
+      -- Training information 
+      Training data contained 2930 data points and 556 incomplete rows.
+      
+      -- Operations 
+      * Linear regression imputation for: Lot_Frontage | Trained
 

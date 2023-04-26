@@ -1,38 +1,3 @@
-# printing
-
-    Code
-      print(rec3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Operations 
-      * Shuffled: everything()
-
----
-
-    Code
-      prep(rec3)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 50 data points and no incomplete rows.
-      
-      -- Operations 
-      * Shuffled: x1, x2, x3, x4, y | Trained
-
 # bake a single row
 
     Code
@@ -75,4 +40,39 @@
       
       -- Operations 
       * Shuffled: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
+      
+      -- Operations 
+      * Shuffled: everything()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 50 data points and no incomplete rows.
+      
+      -- Operations 
+      * Shuffled: x1, x2, x3, x4, y | Trained
 

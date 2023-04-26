@@ -1,40 +1,3 @@
-# printing
-
-    Code
-      print(ica_extract)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Centering and scaling for: all_predictors()
-      * ICA extraction with: carbon, hydrogen
-
----
-
-    Code
-      prep(ica_extract)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
-      * ICA extraction with: carbon, hydrogen | Trained
-
 # No ICA comps
 
     Code
@@ -99,4 +62,41 @@
       
       -- Operations 
       * ICA extraction with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Centering and scaling for: all_predictors()
+      * ICA extraction with: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
+      * ICA extraction with: carbon, hydrogen | Trained
 

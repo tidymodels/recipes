@@ -8,39 +8,6 @@
       ! Name collision occured. The following variable names already exists:
       i  time_hour
 
-# printing
-
-    Code
-      print(date_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 1
-      
-      -- Operations 
-      * Time features from: all_predictors()
-
----
-
-    Code
-      prep(date_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 1
-      
-      -- Training information 
-      Training data contained 5 data points and no incomplete rows.
-      
-      -- Operations 
-      * Time features from: times | Trained
-
 # empty printing
 
     Code
@@ -75,4 +42,37 @@
       
       -- Operations 
       * Time features from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Operations 
+      * Time features from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 5 data points and no incomplete rows.
+      
+      -- Operations 
+      * Time features from: times | Trained
 

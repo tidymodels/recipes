@@ -452,6 +452,39 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 1L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  harmonic_dat_mult <- tibble(
+    osc = sin(2 * pi * x_second / (3600 * 6)),
+    time_var_1 = x_second,
+    time_var_2 = x_second * 2
+  )
+
+  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) %>%
+    step_harmonic(time_var_1, time_var_2,
+                  frequency = c(5, 10),
+                  cycle_size = 1
+    ) %>%
+    update_role(time_var_1, time_var_2, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(rec, new_data = harmonic_dat_mult[, 1:2]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_harmonic(rec, frequency = 1 / 11, cycle_size = 1)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_harmonic(rec1, frequency = 1 / 11, cycle_size = 1)
@@ -486,42 +519,9 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  with_harmonic <- rec %>% step_harmonic(hp, frequency = 1 / 11, cycle_size = 1)
-  expect_snapshot(print(with_harmonic))
-  expect_snapshot(prep(with_harmonic))
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    step_harmonic(hp, frequency = 1 / 11, cycle_size = 1)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_harmonic(rec, frequency = 1 / 11, cycle_size = 1)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  harmonic_dat_mult <- tibble(
-    osc = sin(2 * pi * x_second / (3600 * 6)),
-    time_var_1 = x_second,
-    time_var_2 = x_second * 2
-  )
-
-  rec <- recipe(osc ~ time_var_1 + time_var_2, data = harmonic_dat_mult) %>%
-    step_harmonic(time_var_1, time_var_2,
-                  frequency = c(5, 10),
-                  cycle_size = 1
-    ) %>%
-    update_role(time_var_1, time_var_2, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep()
-
-  expect_error(bake(rec, new_data = harmonic_dat_mult[, 1:2]),
-               class = "new_data_missing_column")
-})
-

@@ -83,53 +83,6 @@ test_that("Maintain data type", {
   )
 })
 
-
-test_that("Printing", {
-  imputed <- recipe(ames_dat) %>%
-    step_impute_linear(Lot_Frontage, impute_with = imp_vars(Lot_Area))
-
-  expect_snapshot(print(imputed))
-  expect_snapshot(prep(imputed))
-})
-
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_impute_linear(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_linear(rec)
-
-  expect <- tibble(terms = character(), model = list(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_linear(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("case weights", {
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
@@ -181,6 +134,8 @@ test_that("case weights", {
   expect_snapshot(rec_prepped)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(head(ames_dat)) %>%
     step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
@@ -190,4 +145,49 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(rec, new_data = ames_dat[, 2:3]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_linear(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_impute_linear(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_linear(rec)
+
+  expect <- tibble(terms = character(), model = list(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(ames_dat) %>%
+    step_impute_linear(Lot_Frontage, impute_with = imp_vars(Lot_Area))
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

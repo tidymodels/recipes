@@ -107,18 +107,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-  examples <- data.frame(
-    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
-      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
-  )
-
-  date_rec <- recipe(~ times, examples) %>%
-    step_time(all_predictors())
-  expect_snapshot(print(date_rec))
-  expect_snapshot(prep(date_rec))
-})
-
 test_that("keep_original_cols works", {
   examples <- data.frame(
     times = lubridate::ymd_hms("2022-05-06 10:01:07") +
@@ -135,6 +123,19 @@ test_that("keep_original_cols works", {
     colnames(date_res),
     paste0("times_", c("hour", "minute", "second"))
   )
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_time(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -163,14 +164,15 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_time(rec)
+test_that("printing", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
 
-  expect_snapshot(rec)
+  rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors())
 
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

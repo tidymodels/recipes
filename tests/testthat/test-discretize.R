@@ -156,16 +156,6 @@ test_that("bad args", {
   )
 })
 
-
-test_that("printing", {
-  rec <- recipe(~., data = ex_tr) %>%
-    step_discretize(x1, id = "")
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -195,6 +185,30 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(cyl ~ ., mtcars)
+  rec <- step_discretize(rec, mpg, min_unique = 3) %>%
+    update_role(mpg, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+  rec <- prep(rec, mtcars)
+
+  expect_error(bake(rec, new_data = mtcars[, 2:ncol(mtcars)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_discretize(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_discretize(rec1)
@@ -221,25 +235,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_discretize(rec)
+test_that("printing", {
+  rec <- recipe(~., data = ex_tr) %>%
+    step_discretize(x1)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(cyl ~ ., mtcars)
-  rec <- step_discretize(rec, mpg, min_unique = 3) %>%
-    update_role(mpg, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-  rec <- prep(rec, mtcars)
-
-  expect_error(bake(rec, new_data = mtcars[, 2:ncol(mtcars)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

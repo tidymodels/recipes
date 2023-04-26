@@ -102,15 +102,6 @@ test_that("Deprecation warning", {
   )
 })
 
-test_that("printing", {
-  seven_pt <- recipe(~., data = example_data) %>%
-    update_role(day, new_role = "time_index") %>%
-    step_impute_roll(all_predictors(), window = 7)
-  expect_snapshot(print(seven_pt))
-  expect_snapshot(prep(seven_pt))
-})
-
-
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
@@ -140,6 +131,31 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  seven_pt <- recipe(~., data = example_data) %>%
+    update_role(day, new_role = "time_index") %>%
+    step_impute_roll(x1, window = 7) %>%
+    update_role(x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(training = example_data)
+
+  expect_error(bake(seven_pt, new_data = example_data[, c(-2)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_impute_roll(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_impute_roll(rec1)
@@ -166,27 +182,11 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_impute_roll(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  seven_pt <- recipe(~., data = example_data) %>%
+test_that("printing", {
+  rec <- recipe(~., data = example_data) %>%
     update_role(day, new_role = "time_index") %>%
-    step_impute_roll(x1, window = 7) %>%
-    update_role(x1, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep(training = example_data)
+    step_impute_roll(all_predictors(), window = 7)
 
-  expect_error(bake(seven_pt, new_data = example_data[, c(-2)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

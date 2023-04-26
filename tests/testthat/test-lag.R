@@ -68,59 +68,9 @@ test_that("specification of multiple lags in a vector", {
   expect_equal(baked, expected)
 })
 
-test_that("something prints", {
-  df <- tibble(x = rnorm(n), t = sample(seq(start, end, by = "day"), n))
-
-  rec <- recipe(~., data = df) %>%
-    step_lag(t)
-
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 rm(n, start, end)
 
-
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_lag(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  # TODO: Uncomment if we get a tidy method for step_lag()
-  expect_true(TRUE)
-
-  # rec <- recipe(mpg ~ ., mtcars)
-  # rec <- step_lag(rec)
-  #
-  # expect <- tibble(terms = character(), id = character())
-  #
-  # expect_identical(tidy(rec, number = 1), expect)
-  #
-  # rec <- prep(rec, mtcars)
-  #
-  # expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_lag(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
+# Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   set.seed(27)
@@ -140,4 +90,36 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(rec, new_data = df[, 1, drop = FALSE]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_lag(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_lag(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_lag(disp)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -1,3 +1,12 @@
+# mulitple functions
+
+    Code
+      prep(rec, training = iris %>% slice(1:75))
+    Condition
+      Error in `step_rename_at()`:
+      Caused by error in `dplyr::rename_at()`:
+      ! `.funs` must contain one renaming function, not 2.
+
 # empty printing
 
     Code
@@ -12,7 +21,7 @@
       predictor: 10
       
       -- Operations 
-      * Integer encoding for: <none>
+      * Variable renaming for: <none>
 
 ---
 
@@ -31,7 +40,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Integer encoding for: <none> | Trained
+      * Variable renaming for: <none> | Trained
 
 # printing
 
@@ -43,10 +52,10 @@
       
       -- Inputs 
       Number of variables by role
-      predictor: 3
+      predictor: 5
       
       -- Operations 
-      * Integer encoding for: all_predictors()
+      * Variable renaming for: contains("Sepal")
 
 ---
 
@@ -58,11 +67,11 @@
       
       -- Inputs 
       Number of variables by role
-      predictor: 3
+      predictor: 5
       
       -- Training information 
-      Training data contained 10 data points and 2 incomplete rows.
+      Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Integer encoding for: x, y, z | Trained
+      * Variable renaming for: Sepal.Length, Sepal.Width | Trained
 

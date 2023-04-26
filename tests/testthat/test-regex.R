@@ -47,14 +47,6 @@ test_that("bad selector(s)", {
   )
 })
 
-
-test_that("printing", {
-  rec1 <- rec %>%
-    step_regex(description, pattern = "(rock|stony)")
-  expect_snapshot(print(rec1))
-  expect_snapshot(prep(rec1))
-})
-
 test_that("empty selection prep/bake adds a 0 column", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_regex(rec1, pattern = "xxx")
@@ -66,6 +58,34 @@ test_that("empty selection prep/bake adds a 0 column", {
   baked2 <- bake(rec2, mtcars)
 
   expect_identical(baked2$xxx, rep(0, nrow(mtcars)))
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  mt_tibble <- mtcars %>%
+    tibble::rownames_to_column(var = "make_model")
+
+  rec <-
+    recipe(mpg ~ ., data = mt_tibble) %>%
+    step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
+    update_role(make_model, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(mt_tibble)
+
+  expect_error(bake(rec, new_data = mt_tibble[, c(-1)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_regex(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection tidy method works", {
@@ -81,29 +101,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_regex(rec)
+test_that("printing", {
+  rec <- recipe(~ description + rows + ch_rows, covers) %>%
+    step_regex(description, pattern = "(rock|stony)")
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  mt_tibble <- mtcars %>%
-    tibble::rownames_to_column(var = "make_model")
-
-  rec <-
-    recipe(mpg ~ ., data = mt_tibble) %>%
-    step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
-    update_role(make_model, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep(mt_tibble)
-
-  expect_error(bake(rec, new_data = mt_tibble[, c(-1)]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

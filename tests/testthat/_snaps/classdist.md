@@ -1,38 +1,3 @@
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Operations 
-      * Distances to Species for: all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 150 data points and no incomplete rows.
-      
-      -- Operations 
-      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained
-
 # check_name() is used
 
     Code
@@ -42,6 +7,26 @@
       Caused by error in `bake()`:
       ! Name collision occured. The following variable names already exists:
       i  classdist_setosa
+
+# case weights
+
+    Code
+      rec_prep
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    4
+      case_weights: 1
+      
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
+      
+      -- Operations 
+      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained, weighted
 
 # empty printing
 
@@ -78,23 +63,38 @@
       -- Operations 
       * Distances to Species for: <none> | Trained
 
-# case weights
+# printing
 
     Code
-      rec_prep
+      print(rec)
     Message
       
       -- Recipe ----------------------------------------------------------------------
       
       -- Inputs 
       Number of variables by role
-      outcome:      1
-      predictor:    4
-      case_weights: 1
+      outcome:   1
+      predictor: 4
+      
+      -- Operations 
+      * Distances to Species for: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
       
       -- Training information 
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained, weighted
+      * Distances to Species for: Sepal.Length, Sepal.Width, ... | Trained
 

@@ -40,19 +40,6 @@ test_that("correct kernel PCA values", {
   expect_equal(tidy(kpca_trained, 1), kpca_tibble)
 })
 
-
-test_that("printing", {
-  skip_if_not_installed("kernlab")
-
-  skip_if(packageVersion("rlang") < "1.0.0")
-  expect_snapshot(
-    kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
-  )
-
-  expect_snapshot(kpca_rec)
-  expect_snapshot(prep(kpca_rec))
-})
-
 test_that("check_name() is used", {
   skip_if_not_installed("kernlab")
   dat <- dplyr::as_tibble(tr_dat)
@@ -135,6 +122,32 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("kernlab")
+
+  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6) %>%
+    update_role(X2, X3, X4, X5, X6, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+
+  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_kpca(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_kpca(rec1)
@@ -161,28 +174,12 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expected)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_kpca(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6) %>%
-    update_role(X2, X3, X4, X5, X6, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+  rec <- recipe(X1 ~ ., data = tr_dat) %>%
+    step_kpca(X2, X3, X4, X5, X6)
 
-  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
-
-  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -23,6 +23,41 @@
       Error in `step_bin2factor()`:
       ! `levels` should be a two element character string
 
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Dummy variable to factor conversion for: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Dummy variable to factor conversion for: <none> | Trained
+
 # printing
 
     Code
@@ -59,39 +94,4 @@
       * Regular expression dummy variable using: "(rock|stony)" | Trained
       * Regular expression dummy variable using: "(rock|stony)" | Trained
       * Dummy variable to factor conversion for: rocks | Trained
-
-# empty printing
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * Dummy variable to factor conversion for: <none>
-
----
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * Dummy variable to factor conversion for: <none> | Trained
 

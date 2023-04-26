@@ -176,11 +176,29 @@ test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
   expect_equal(exp_pred, obs_pred)
 })
 
-test_that("printing", {
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
   standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12)
-  expect_snapshot(print(standardized))
-  expect_snapshot(prep(standardized))
+    step_range(carbon, hydrogen, min = -12) %>%
+    update_role(carbon, hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
+
+  expect_error(bake(standardized_trained, new_data = biomass_te[, 1:3]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_range(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -209,27 +227,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_range(rec)
+test_that("printing", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_range(disp, wt)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  standardized <- rec %>%
-    step_range(carbon, hydrogen, min = -12) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
-
-  expect_error(bake(standardized_trained, new_data = biomass_te[, 1:3]),
-               class = "new_data_missing_column")
-})
-

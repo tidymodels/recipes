@@ -56,54 +56,6 @@ test_that("Missing values", {
   expect_equal(sp_sign_no_rm_na, exp_no_rm_na)
 })
 
-
-test_that("printing", {
-  sp_sign <- rec %>%
-    step_center(carbon, hydrogen) %>%
-    step_scale(carbon, hydrogen) %>%
-    step_spatialsign(carbon, hydrogen)
-  expect_snapshot(print(sp_sign))
-  expect_snapshot(prep(sp_sign))
-})
-
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_spatialsign(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_spatialsign(rec)
-
-  expect <- tibble(terms = character(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_spatialsign(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("centering with case weights", {
   mtcars_freq <- mtcars
   mtcars_freq$cyl <- frequency_weights(mtcars_freq$cyl)
@@ -138,6 +90,7 @@ test_that("centering with case weights", {
   expect_snapshot(rec)
 })
 
+# Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   sp_sign <- rec %>%
@@ -149,4 +102,52 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(sp_sign_trained, new_data = biomass[,c(-3)]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_spatialsign(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_spatialsign(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_spatialsign(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass) %>%
+    step_center(carbon, hydrogen) %>%
+    step_scale(carbon, hydrogen) %>%
+    step_spatialsign(carbon, hydrogen)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

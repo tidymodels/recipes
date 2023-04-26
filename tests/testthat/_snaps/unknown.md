@@ -31,39 +31,6 @@
       Caused by error in `prep()`:
       ! Columns already contain a level 'FAIR_OAKS': city
 
-# printing
-
-    Code
-      print(rec %>% step_unknown(city, zip))
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 9
-      
-      -- Operations 
-      * Unknown factor level assignment for: city, zip
-
----
-
-    Code
-      print(rec %>% step_unknown(city, zip) %>% prep())
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 9
-      
-      -- Training information 
-      Training data contained 800 data points and no incomplete rows.
-      
-      -- Operations 
-      * Unknown factor level assignment for: city, zip | Trained
-
 # empty printing
 
     Code
@@ -98,4 +65,37 @@
       
       -- Operations 
       * Unknown factor level assignment for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Operations 
+      * Unknown factor level assignment for: city, zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Training information 
+      Training data contained 800 data points and no incomplete rows.
+      
+      -- Operations 
+      * Unknown factor level assignment for: city, zip | Trained
 

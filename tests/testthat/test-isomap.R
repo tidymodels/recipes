@@ -62,23 +62,6 @@ test_that("correct Isomap values", {
   expect_equal(tidy(im_trained, 1), im_tibble)
 })
 
-
-test_that("printing", {
-
-  skip_on_cran()
-  skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
-  skip_if_not_installed("RANN")
-  skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
-
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
-  expect_snapshot(print(im_rec))
-  expect_snapshot(prep(im_rec), transform = scrub_timestamp)
-})
-
-
 test_that("No ISOmap", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
@@ -220,6 +203,38 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) %>%
+    update_role(x1, x2, x3, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
+
+  expect_error(bake(im_trained, new_data = dat2[, 1:2]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_isomap(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_isomap(rec1)
@@ -246,20 +261,7 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_isomap(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-
-test_that("bake method errors when needed non-standard role columns are missing", {
+test_that("printing", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
   skip_if_not_installed("igraph")
@@ -267,13 +269,9 @@ test_that("bake method errors when needed non-standard role columns are missing"
   skip_if_not_installed("dimRed")
   skip_if(getRversion() <= "3.4.4")
 
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) %>%
-    update_role(x1, x2, x3, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+  rec <- recipe(~., data = dat1) %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
 
-  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
-
-  expect_error(bake(im_trained, new_data = dat2[, 1:2]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec), transform = scrub_timestamp)
 })

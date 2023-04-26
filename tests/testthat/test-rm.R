@@ -169,18 +169,17 @@ test_that("remove with quasi-quotation", {
   expect_equal(dplyr_train, rec_2_train)
 })
 
-test_that("printing", {
-  n <- 20
-  set.seed(12)
-  ex_dat <- data.frame(
-    x1 = rnorm(n),
-    x2 = runif(n)
-  )
+# Infrastructure ---------------------------------------------------------------
 
-  rec <- recipe(~., data = ex_dat) %>%
-    step_rm(x1)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_rm(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -209,14 +208,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_rm(rec)
+test_that("printing", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_rm(disp)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

@@ -7,39 +7,6 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be ordered.
 
-# printing
-
-    Code
-      print(rec5)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Operations 
-      * Scoring for: starts_with("ord")
-
----
-
-    Code
-      prep(rec5)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 20 data points and no incomplete rows.
-      
-      -- Operations 
-      * Scoring for: ord1, ord2, ord3 | Trained
-
 # empty printing
 
     Code
@@ -74,4 +41,37 @@
       
       -- Operations 
       * Scoring for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Scoring for: starts_with("ord")
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
+      
+      -- Operations 
+      * Scoring for: ord1, ord2, ord3 | Trained
 

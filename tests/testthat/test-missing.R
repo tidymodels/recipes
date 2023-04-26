@@ -49,11 +49,17 @@ test_that("check_missing on a new set", {
   )
 })
 
-test_that("printing", {
-  rec <- recipe(mtcars) %>%
-    check_missing(all_numeric())
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- check_missing(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -82,14 +88,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- check_missing(rec)
+test_that("printing", {
+  rec <- recipe(mtcars) %>%
+    check_missing(all_numeric())
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

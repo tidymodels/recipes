@@ -150,11 +150,33 @@ test_that("step_cut integration test", {
   )
 })
 
-test_that("printing", {
-  rec5 <- recipe(mpg ~ ., mtcars) %>%
-    step_cut(disp, breaks = 100)
-  expect_snapshot(print(rec5))
-  expect_snapshot(prep(rec5))
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  df <- data.frame(x = 1:10, y = 5:14)
+  rec <- recipe(df)
+
+  # The min and max of the variable are used as boundaries
+  # if they exceed the breaks
+  prepped <- rec %>%
+    step_cut(x, breaks = 5) %>%
+    update_role(x, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep()
+
+  expect_error(bake(prepped, df[, 2, drop = FALSE]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_cut(rec, breaks = 5)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -174,43 +196,19 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_cut(rec, breaks = 5)
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), value = character(), id = character())
-  )
+  expect <- tibble(terms = character(), value = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
 
   rec <- prep(rec, mtcars)
 
-  expect_identical(
-    tidy(rec, number = 1),
-    tibble(terms = character(), value = character(), id = character())
-  )
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_cut(rec, breaks = 5)
+test_that("printing", {
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    step_cut(disp, breaks = 100)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  df <- data.frame(x = 1:10, y = 5:14)
-  rec <- recipe(df)
-
-  # The min and max of the variable are used as boundaries
-  # if they exceed the breaks
-  prepped <- rec %>%
-    step_cut(x, breaks = 5) %>%
-    update_role(x, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep()
-
-  expect_error(bake(prepped, df[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

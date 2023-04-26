@@ -88,21 +88,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("printing", {
-
-  biomass_tr <- biomass[biomass$dataset == "Training", ]
-  biomass_te <- biomass[biomass$dataset == "Testing", ]
-
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr
-  )
-
-  with_ns <- rec %>% step_poly_bernstein(carbon, hydrogen)
-  expect_snapshot(print(with_ns))
-  expect_snapshot(prep(with_ns))
-})
-
-
 test_that("tunable", {
 
   biomass_tr <- biomass[biomass$dataset == "Training", ]
@@ -140,6 +125,19 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 1L)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_poly_bernstein(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_poly_bernstein(rec1)
@@ -166,14 +164,11 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec_prepped, number = 1), expect_prepped)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_poly_bernstein(rec)
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass) %>%
+    step_poly_bernstein(carbon, hydrogen)
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

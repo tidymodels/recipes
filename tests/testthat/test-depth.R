@@ -68,15 +68,6 @@ test_that("alt args", {
   }
 })
 
-
-test_that("printing", {
-  skip_if_not_installed("ddalpha")
-  rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = "Species", metric = "spatial")
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
-})
-
 test_that("prefix", {
   skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
@@ -104,6 +95,34 @@ test_that("empty selection prep/bake adds NA columns", {
   expect_identical(baked2$depth_virginica, rep(NA_real_, nrow(iris)))
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("ddalpha")
+
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_depth(starts_with("Sepal"), class = "Species", metric = "spatial") %>%
+    update_role(starts_with("Sepal"), new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[, 2:5]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  skip_if_not_installed("ddalpha")
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_depth(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
+})
+
 test_that("empty selection tidy method works", {
   skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., iris)
@@ -118,29 +137,11 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
+test_that("printing", {
   skip_if_not_installed("ddalpha")
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(Species ~ ., iris)
-  rec <- step_depth(rec, class = "Species")
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, iris)
-
-  expect_snapshot(rec)
-})
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  skip_if_not_installed("ddalpha")
-
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(starts_with("Sepal"), class = "Species", metric = "spatial") %>%
-    update_role(starts_with("Sepal"), new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+    step_depth(all_predictors(), class = "Species", metric = "spatial")
 
-  trained <- prep(rec, training = iris, verbose = FALSE)
-
-  expect_error(bake(trained, new_data = iris[, 2:5]),
-               class = "new_data_missing_column")
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

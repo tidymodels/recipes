@@ -34,12 +34,17 @@ test_that("step_naomit on subset of columns", {
   expect_equal(baked2, na_res2[, c(2:6, 1)])
 })
 
-test_that("something prints", {
-  rec <- recipe(Ozone ~ ., data = airquality) %>%
-    step_naomit(all_predictors())
+# Infrastructure ---------------------------------------------------------------
 
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_naomit(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -68,14 +73,10 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_naomit(rec)
+test_that("printing", {
+  rec <- recipe(Ozone ~ ., data = airquality) %>%
+    step_naomit(all_predictors())
 
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

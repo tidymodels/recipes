@@ -119,14 +119,6 @@ test_that("Reduced rotation size", {
   expect_equal(pca_pred, pca_pred_exp)
 })
 
-test_that("printing", {
-  pca_extract <- rec %>%
-    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
-  expect_snapshot(print(pca_extract))
-  expect_snapshot(prep(pca_extract))
-})
-
-
 test_that("No PCA comps", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 0)
@@ -246,49 +238,6 @@ test_that("can prep recipes with no keep_original_cols", {
   )
 })
 
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_pca(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_pca(rec)
-
-  expect <- tibble(
-    terms = character(),
-    value = double(),
-    component = character(),
-    id = character()
-  )
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
-})
-
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_pca(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
 test_that("case weights", {
   biomass_tr_cw <- biomass_tr %>%
     mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
@@ -344,6 +293,8 @@ test_that("case weights", {
   expect_snapshot(pca_extract_trained)
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   pca_extract <- rec %>%
     step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
@@ -356,4 +307,55 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(pca_extract_trained, new_data = biomass_te[, c(-3)]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_pca(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_pca(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_pca(rec)
+
+  expect <- tibble(
+    terms = character(),
+    value = double(),
+    component = character(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+                data = biomass_tr) %>%
+    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
