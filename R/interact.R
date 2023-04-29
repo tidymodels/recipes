@@ -93,7 +93,7 @@ step_interact <-
     add_step(
       recipe,
       step_interact_new(
-        terms = terms,
+        terms = enquos(terms),
         trained = trained,
         role = role,
         objects = objects,
@@ -124,8 +124,27 @@ step_interact_new <-
 ## one large set of collected terms.
 #' @export
 prep.step_interact <- function(x, training, info = NULL, ...) {
+
+  # Empty selection
+  if (identical(x$terms[[1]], quo())) {
+    return(
+        step_interact_new(
+        terms = x$terms,
+        role = x$role,
+        trained = TRUE,
+        objects = x$objects,
+        sep = x$sep,
+        skip = x$skip,
+        id = x$id
+      )
+    )
+  }
+
   # Identify any selectors that are involved in the interaction
   # formula
+  tmp_terms <- as.formula(rlang::as_label(x$terms[[1]]))
+  environment(tmp_terms) <- environment(x$terms[[1]])
+  x$terms <- tmp_terms
 
   form_sel <- find_selectors(x$terms)
 
@@ -198,6 +217,12 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_interact <- function(object, new_data, ...) {
+
+  # empty selection
+  if (is.null(object$objects)) {
+    return(new_data)
+  }
+
   col_names <- unlist(lapply(object$objects, function(x) all.vars(rlang::f_rhs(x))))
   check_new_data(col_names, object, new_data)
 
@@ -300,7 +325,17 @@ make_small_terms <- function(forms, dat) {
 print.step_interact <-
   function(x, width = max(20, options()$width - 27), ...) {
     title <- "Interactions with "
-    terms <- as.character(x$terms)[-1]
+
+    if (x$trained) {
+      terms <- as.character(x$terms)[-1]
+    } else {
+      terms <- as_label(x$terms[[1]])
+      if (terms == "<empty>") {
+        terms <- ""
+      } else {
+        terms <- as.character(as.formula(terms))[-1]
+      }
+    }
     untrained_terms <- rlang::parse_quos(terms, rlang::current_env())
     print_step(terms, untrained_terms, x$trained, title, width)
     invisible(x)
