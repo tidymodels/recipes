@@ -140,12 +140,15 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     )
   }
 
+  # make backwards compatible with 1.0.6 (#1138)
+  if (!is_formula(x)) {
+    tmp_terms <- as.formula(rlang::as_label(x$terms[[1]]))
+    environment(tmp_terms) <- environment(x$terms[[1]])
+    x$terms <- tmp_terms
+  }
+
   # Identify any selectors that are involved in the interaction
   # formula
-  tmp_terms <- as.formula(rlang::as_label(x$terms[[1]]))
-  environment(tmp_terms) <- environment(x$terms[[1]])
-  x$terms <- tmp_terms
-
   form_sel <- find_selectors(x$terms)
 
   # Use formula environment as quosure env
