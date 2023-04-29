@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where `step_interact()` didn't work with empty selection.
+
 # recipes 1.0.6
 
 ## Improvements
