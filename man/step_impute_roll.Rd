@@ -43,8 +43,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A named numeric vector of columns. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{statistic}{A function with a single argument for the data to compute
 the imputed value. Only complete values will be passed to the function and

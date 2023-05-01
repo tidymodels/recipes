@@ -4,13 +4,12 @@
 #'  recipe step that will create a two-level factor from a single
 #'  dummy variable.
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param levels A length 2 character string that indicates the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)
 #' @param ref_first Logical. Should the first level, which replaces
 #' 1's, be the factor reference level?
-#' @param columns A vector with the selected variable names. This
-#'  is `NULL` until computed by [prep()].
 #' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as

@@ -42,8 +42,8 @@ stay unchanged.}
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{options}{A list of options to \code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for
 the arguments \code{kernel} and \code{kpar} but others can be passed in.

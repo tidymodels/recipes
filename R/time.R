@@ -12,9 +12,6 @@
 #' @param features A character string that includes at least one
 #'  of the following values: `am` (is is AM), `hour`, `hour12`, `minute`,
 #'  `second`, `decimal_day`.
-#' @param columns A character string of variables that will be
-#'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep()] is used.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @template step-return

@@ -3,8 +3,7 @@
 #' `step_factor2string` will convert one or more factor vectors to strings.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variables that will be converted. This
-#'   is `NULL` until computed by [prep()].
+#' @inheritParams step_pca
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export

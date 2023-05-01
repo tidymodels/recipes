@@ -16,8 +16,6 @@
 #'  created from previous versions of recipes, a value of `FALSE` is used.
 #' @param log A logical: should the distance be transformed by
 #'  the natural log function?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param name A single character value to use for the new
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.

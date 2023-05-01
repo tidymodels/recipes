@@ -4,11 +4,10 @@
 #'  that will log transform data.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param base A numeric value for the base.
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `log(0)`).
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param signed A logical indicating whether to take the signed log.
 #'  This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.

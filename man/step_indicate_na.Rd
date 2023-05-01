@@ -29,8 +29,8 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the terms argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. Defaults to "na_ind".}

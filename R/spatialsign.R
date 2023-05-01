@@ -8,8 +8,6 @@
 #' @inheritParams step_center
 #' @param na_rm A logical: should missing data be removed from the
 #'  norm computation?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export

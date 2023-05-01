@@ -54,9 +54,8 @@ of their possible levels are profiled). In the case of date
 variables, \code{pctl = FALSE} will always be used since there is no
 quantile method for dates.}
 
-\item{columns}{A character string that contains the names of
-columns that should be fixed and their values. These values are
-not determined until \code{\link[=prep]{prep()}} is called.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}

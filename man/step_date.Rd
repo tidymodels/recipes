@@ -61,9 +61,8 @@ On Linux systems you can use \code{system("locale -a")} to list all the
 installed locales. Can be a locales string, or a \code{\link[clock:clock_labels]{clock::clock_labels()}}
 object. Defaults to \code{clock::clock_locale()$labels}.}
 
-\item{columns}{A character string of variables that will be
-used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep]{prep()}} is used.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}

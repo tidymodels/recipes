@@ -35,9 +35,8 @@ preprocessing have been estimated.}
 holiday supported by the \code{timeDate} package. See
 \code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}} for a complete list.}
 
-\item{columns}{A character string of variables that will be
-used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep]{prep()}} is used.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}

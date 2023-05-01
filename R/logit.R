@@ -4,8 +4,7 @@
 #'  step that will logit transform the data.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
+#' @inheritParams step_pca
 #' @param offset A numeric value to modify values of the columns that are either
 #' one or zero. They are modified to be `x - offset` or `offset`, respectively.
 #' @template step-return

@@ -10,9 +10,6 @@
 #' @param holidays A character string that includes at least one
 #'  holiday supported by the `timeDate` package. See
 #'  [timeDate::listHolidays()] for a complete list.
-#' @param columns A character string of variables that will be
-#'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep()] is used.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
