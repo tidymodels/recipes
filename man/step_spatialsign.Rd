@@ -32,8 +32,8 @@ norm computation?}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

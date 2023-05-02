@@ -63,8 +63,8 @@ Available options are currently \code{nthread} and \code{eps}.}
 done up to the point of this imputation step. This is \code{NULL} until the step
 is trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{The column names that will be imputed and used for
-imputation. This is \code{NULL} until the step is trained by \code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

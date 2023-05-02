@@ -7,6 +7,7 @@
 #'  models.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param profile A call to [dplyr::vars()]) to specify which
 #'  variable will be profiled (see [selections()]). If a column is
 #'  included in both lists to be fixed and to be profiled, an error
@@ -32,9 +33,6 @@
 #'  of their possible levels are profiled). In the case of date
 #'  variables, `pctl = FALSE` will always be used since there is no
 #'  quantile method for dates.
-#' @param columns A character string that contains the names of
-#'  columns that should be fixed and their values. These values are
-#'  not determined until [prep()] is called.
 #' @details This step is atypical in that, when baked, the
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.

@@ -6,11 +6,10 @@
 #'
 #' @template row-ops
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param role Unused, include for consistency with other steps.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #'
 #' @template case-weights-not-supported
 #'

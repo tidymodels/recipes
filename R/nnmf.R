@@ -21,8 +21,6 @@
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
 #'  [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation

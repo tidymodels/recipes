@@ -14,8 +14,6 @@
 #' @param prefix A prefix for generated column names, defaults to "right_relu_"
 #'   for right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
 #' @export

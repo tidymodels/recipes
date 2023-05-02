@@ -5,11 +5,10 @@
 #'  function.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param func A character value for the function. Valid values
 #'  are "sinh", "cosh", or "tanh".
 #' @param inverse A logical: should the inverse function be used?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
 #' @export

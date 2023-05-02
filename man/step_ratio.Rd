@@ -49,9 +49,8 @@ listing.}
 \item{naming}{A function that defines the naming convention for
 new ratio columns.}
 
-\item{columns}{The column names used in the ratios. This
-argument is not populated until \code{\link[=prep]{prep()}} is
-executed.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}

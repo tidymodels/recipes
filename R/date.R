@@ -31,9 +31,6 @@
 #'  On Linux systems you can use `system("locale -a")` to list all the
 #'  installed locales. Can be a locales string, or a [clock::clock_labels()]
 #'  object. Defaults to `clock::clock_locale()$labels`.
-#' @param columns A character string of variables that will be
-#'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep()] is used.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @template step-return

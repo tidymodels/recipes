@@ -5,6 +5,7 @@
 #'  functions that compute statistics across moving windows.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned? If `names` is left to be
 #'  `NULL`, the rolling statistics replace the original columns
@@ -19,9 +20,6 @@
 #'  values are: `'max'`, `'mean'`, `'median'`,
 #'  `'min'`, `'prod'`, `'sd'`, `'sum'`,
 #'  `'var'`
-#' @param columns A character string that contains the names of
-#'  columns that should be processed. These values are not
-#'  determined until [prep()] is called.
 #' @param names An optional character string that is the same
 #'  length of the number of terms selected by `terms`. If you
 #'  are not sure what columns will be selected, use the

@@ -46,9 +46,8 @@ values are: \code{'max'}, \code{'mean'}, \code{'median'},
 \code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
 \code{'var'}}
 
-\item{columns}{A character string that contains the names of
-columns that should be processed. These values are not
-determined until \code{\link[=prep]{prep()}} is called.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{names}{An optional character string that is the same
 length of the number of terms selected by \code{terms}. If you

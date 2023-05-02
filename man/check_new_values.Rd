@@ -29,8 +29,8 @@ created.}
 \item{trained}{A logical for whether the selectors in \code{...}
 have been resolved by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the terms argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{ignore_NA}{A logical that indicates if we should consider missing
 values as value or not. Defaults to \code{TRUE}.}

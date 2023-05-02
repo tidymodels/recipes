@@ -6,8 +6,6 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the terms argument.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. Defaults to "na_ind".
 #' @template step-return

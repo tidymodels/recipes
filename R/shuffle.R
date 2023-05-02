@@ -5,9 +5,7 @@
 #'  variables.
 #'
 #' @inheritParams step_center
-#' @param columns A character string that contains the names of
-#'  columns that should be shuffled. These values are not determined
-#'  until [prep()] is called.
+#' @inheritParams step_pca
 #' @template step-return
 #' @details
 #'

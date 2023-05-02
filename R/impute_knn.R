@@ -5,14 +5,13 @@
 #'
 #' @inheritParams step_impute_bag
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param neighbors The number of neighbors.
 #' @param options A named list of options to pass to [gower::gower_topn()].
 #'  Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'  done up to the point of this imputation step. This is `NULL` until the step
 #'  is trained by [prep()].
-#' @param columns The column names that will be imputed and used for
-#'  imputation. This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export

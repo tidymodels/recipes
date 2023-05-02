@@ -4,8 +4,7 @@
 #'  step that will transform the data.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
+#' @inheritParams step_pca
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export

@@ -53,8 +53,8 @@ processing is turned off in favor of resample-level parallelization.}
 here once this preprocessing step has been trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}

@@ -23,8 +23,8 @@
 #'  should not be passed here (or at all).
 #' @param res The [stats::prcomp.default()] object is stored here once this
 #'  preprocessing step has be trained by [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
+#' @param columns A character string of the selected variable names. This field
+#'   is a placeholder and will be populated once [prep()] is used.
 #' @param prefix A character string for the prefix of the resulting new
 #'  variables. See notes below.
 #' @param keep_original_cols A logical to keep the original variables in the
