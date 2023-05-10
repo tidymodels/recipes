@@ -102,28 +102,6 @@ test_that("prefix", {
   expect_true(any(grepl("centroid_", names(dists))))
 })
 
-test_that("empty selection prep/bake returns NA columns", {
-  rec1 <- recipe(Species ~ ., iris)
-  rec2 <- step_classdist(rec1, class = "Species", pool = FALSE)
-  rec3 <- step_classdist(rec1, class = "Species", pool = TRUE)
-
-  rec2 <- prep(rec2, iris)
-  rec3 <- prep(rec3, iris)
-
-  baked2 <- bake(rec2, iris)
-  baked3 <- bake(rec3, iris)
-
-  expect <- rep(NA_real_, nrow(iris))
-
-  expect_identical(baked2$classdist_setosa, expect)
-  expect_identical(baked2$classdist_versicolor, expect)
-  expect_identical(baked2$classdist_virginica, expect)
-
-  expect_identical(baked3$classdist_setosa, expect)
-  expect_identical(baked3$classdist_versicolor, expect)
-  expect_identical(baked3$classdist_virginica, expect)
-})
-
 test_that("case weights", {
   set.seed(1)
   wts <- runif(32)
@@ -216,6 +194,19 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_classdist(rec1, class = "mpg")
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
 })
 
 test_that("empty selection tidy method works", {

@@ -156,6 +156,12 @@ test_that("empty printing", {
   expect_snapshot(rec)
 })
 
+test_that("empty selection prep/bake is a no-op", {
+  # Here for completeness
+  # step_select() will mimick dplyr::select() by not selecting anything
+  expect_true(TRUE)
+})
+
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%
     step_select(Species)
