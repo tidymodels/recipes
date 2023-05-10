@@ -151,7 +151,7 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
     dat <- tibble_to_sparse(training[, col_names], transp = TRUE)
     cl <- nnmf_pen_call(x)
@@ -172,6 +172,7 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
     }
   } else {
     nnm <- list(x_vars = col_names, w = NULL)
+    x$num_comp <- 0
   }
 
   step_nnmf_sparse_new(
