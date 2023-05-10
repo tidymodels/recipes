@@ -227,6 +227,10 @@ mah_pooled <- function(means, x, cov_mat) {
 
 #' @export
 bake.step_classdist <- function(object, new_data, ...) {
+  if (length(object$objects[[1]]$center) == 0) {
+    return(new_data)
+  }
+
   if (object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
     check_new_data(x_cols, object, new_data)
