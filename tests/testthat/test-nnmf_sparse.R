@@ -26,3 +26,12 @@ test_that("empty printing", {
 
   expect_snapshot(rec)
 })
+
+test_that("printing", {
+  library(Matrix)
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    step_nnmf_sparse(disp, drat)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})
