@@ -17,6 +17,8 @@ test_that("check_name() is used", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("empty printing", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_nnmf_sparse(rec)
 
@@ -28,6 +30,7 @@ test_that("empty printing", {
 })
 
 test_that("empty selection prep/bake is a no-op", {
+  skip_if_not_installed("RcppML")
   library(Matrix)
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_nnmf_sparse(rec1)
@@ -42,6 +45,7 @@ test_that("empty selection prep/bake is a no-op", {
 })
 
 test_that("printing", {
+  skip_if_not_installed("RcppML")
   library(Matrix)
   rec <- recipe(mpg ~ ., mtcars) %>%
     step_nnmf_sparse(disp, drat)
