@@ -142,8 +142,6 @@ bake.step_count <- function(object, new_data, ...) {
   check_new_data(names(object$input), object, new_data)
 
   if (length(object$input) == 0L) {
-    # Empty selection, but still return the new column
-    new_data[, object$result] <- if (object$normalize) NA_real_ else NA_integer_
     return(new_data)
   }
 
