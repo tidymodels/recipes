@@ -210,6 +210,10 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
 bake.step_geodist <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
+  if (length(object$columns) == 0) {
+    return(new_data)
+  }
+
   object <- check_is_lat_lon(object)
 
   if (object$is_lat_lon) {
