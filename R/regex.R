@@ -134,8 +134,6 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_regex <- function(object, new_data, ...) {
   if (length(object$input) == 0) {
-    # Handle empty selection by adding an all `0` column
-    new_data[[object$result]] <- rep(0, times = nrow(new_data))
     return(new_data)
   }
 
