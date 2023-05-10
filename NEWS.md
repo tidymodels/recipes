@@ -1,6 +1,10 @@
 # recipes (development version)
 
-* Fixed bug where `step_interact()` didn't work with empty selection.
+* Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection.
+
+* `step_classdist()`, `step_count()` and `step_depth()` no longer returns a column with all `NA`s with empty selections.
+
+* `step_regex()` no longer returns a column with all 0s with empty selections.
 
 # recipes 1.0.6
 
