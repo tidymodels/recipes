@@ -67,6 +67,12 @@ test_that("check_name() is used", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("empty printing", {
+  # Here for completeness
+  # step_intercept() is special as it can't be used without selection
+  expect_true(TRUE)
+})
+
 test_that("printing", {
   rec <- recipe(~., data = ex_dat) %>%
     step_intercept()

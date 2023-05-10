@@ -235,6 +235,17 @@ test_that("bake method errors when needed non-standard role columns are missing"
                class = "new_data_missing_column")
 })
 
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_geodist(rec, ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("printing", {
   rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(

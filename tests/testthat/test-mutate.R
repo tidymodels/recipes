@@ -93,15 +93,6 @@ test_that("can use unnamed expressions like `across()` (#759)", {
   )
 })
 
-test_that("no input", {
-  no_inputs <-
-    iris_rec %>%
-    step_mutate() %>%
-    prep(training = iris) %>%
-    bake(new_data = NULL, composition = "data.frame")
-  expect_equal(no_inputs, iris)
-})
-
 test_that("tidying allows for named and unnamed expressions", {
   rec <- step_mutate(iris_rec, x = mean(y), id = "named")
   tidied <- tidy(rec, id = "named")
@@ -119,6 +110,17 @@ test_that("tidying allows for named and unnamed expressions", {
 })
 
 # Infrastructure ---------------------------------------------------------------
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_mutate(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
 
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%

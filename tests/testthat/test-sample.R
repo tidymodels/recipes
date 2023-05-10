@@ -139,6 +139,17 @@ test_that("sample with case weights", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_sample(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%
     step_sample()
