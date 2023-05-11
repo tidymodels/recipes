@@ -233,6 +233,10 @@ tidy.step_profile <- function(x, ...) {
     fixed_names <- sel2char(x$terms)
     prof_names <- sel2char(x$profile)
   }
+
+  if (length(fixed_names) == 0) {
+    return(tibble(terms = character(), type = character(), id = character()))
+  }
   fixed_res <- tibble(
     terms = fixed_names,
     type = rep("fixed", length = length(fixed_names))
