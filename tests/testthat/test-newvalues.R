@@ -193,3 +193,11 @@ test_that("empty selection tidy method works", {
 
   expect_identical(tidy(rec, number = 1), expect)
 })
+
+test_that("printing", {
+  rec <- recipe(mpg ~ ., mtcars) %>%
+    check_new_values(disp)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})

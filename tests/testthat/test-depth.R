@@ -81,20 +81,6 @@ test_that("prefix", {
   expect_true(any(grepl("spatial_", names(dists))))
 })
 
-test_that("empty selection prep/bake adds NA columns", {
-  skip_if_not_installed("ddalpha")
-  rec1 <- recipe(Species ~ ., iris)
-  rec2 <- step_depth(rec1, class = "Species")
-
-  rec2 <- prep(rec2, iris)
-
-  baked2 <- bake(rec2, iris)
-
-  expect_identical(baked2$depth_setosa, rep(NA_real_, nrow(iris)))
-  expect_identical(baked2$depth_versicolor, rep(NA_real_, nrow(iris)))
-  expect_identical(baked2$depth_virginica, rep(NA_real_, nrow(iris)))
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -121,6 +107,20 @@ test_that("empty printing", {
   rec <- prep(rec, iris)
 
   expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  skip_if_not_installed("ddalpha")
+  rec1 <- recipe(Species ~ ., iris)
+  rec2 <- step_depth(rec1, class = "Species")
+
+  rec1 <- prep(rec1, iris)
+  rec2 <- prep(rec2, iris)
+
+  baked1 <- bake(rec1, iris)
+  baked2 <- bake(rec2, iris)
+
+  expect_identical(baked1, baked2)
 })
 
 test_that("empty selection tidy method works", {

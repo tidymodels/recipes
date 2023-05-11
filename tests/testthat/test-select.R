@@ -145,6 +145,23 @@ test_that("bake method errors when needed non-standard role columns are missing"
                class = "new_data_missing_column")
 })
 
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_select(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  # Here for completeness
+  # step_select() will mimick dplyr::select() by not selecting anything
+  expect_true(TRUE)
+})
+
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%
     step_select(Species)
