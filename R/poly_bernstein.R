@@ -180,9 +180,6 @@ print.step_poly_bernstein <-
 tidy.step_poly_bernstein <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
-    if (length(terms) == 0) {
-      terms <- "<none>"
-    }
   } else {
     terms <- sel2char(x$terms)
   }
