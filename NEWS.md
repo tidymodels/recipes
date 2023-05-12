@@ -6,6 +6,8 @@
 
 * `step_regex()` no longer returns a column with all 0s with empty selections.
 
+* the `tidy()` method for `step_geodist()`, `step_nnmf_sparse()`, and `step_sample()` now correctly returns zero-row tibbles when used with empty selections.
+
 # recipes 1.0.6
 
 ## Improvements
