@@ -197,9 +197,6 @@ print.step_spline_b <-
 tidy.step_spline_b <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
-    if (length(terms) == 0) {
-      terms <- "<none>"
-    }
   } else {
     terms <- sel2char(x$terms)
   }

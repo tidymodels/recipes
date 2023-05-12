@@ -155,13 +155,13 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_spline_monotone(rec)
 
-  expect <- tibble(terms = "<none>", id = character())
+  expect <- tibble(terms = character(), id = character())
 
   expect_identical(tidy(rec, number = 1), expect)
 
-  rec_prepped <- prep(rec, mtcars)
-  expect_prepped <- tibble::tibble(terms = "<none>", id = rec_prepped$steps[[1]]$id)
-  expect_identical(tidy(rec_prepped, number = 1), expect_prepped)
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {
