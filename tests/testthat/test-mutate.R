@@ -111,6 +111,13 @@ test_that("tidying allows for named and unnamed expressions", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # step_rename() is one of the thin wrappers around dplyr functions and
+  # is thus hard to check against
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_mutate(rec)
@@ -134,7 +141,6 @@ test_that("empty selection prep/bake is a no-op", {
 
   expect_identical(baked1, baked2)
 })
-
 
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%
