@@ -151,6 +151,13 @@ test_that("non-standard roles during bake/predict", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # the main check_cols() purpose of this function is to test for this
+  # event
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- check_cols(rec)

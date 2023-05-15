@@ -115,6 +115,18 @@ test_that("characters are handled correctly", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(x) %>%
+    check_class(x1, x2) %>%
+    update_role(x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec)
+
+  expect_error(bake(rec_trained, new_data = x[, -1]),
+               class = "new_data_missing_column")
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- check_class(rec)
