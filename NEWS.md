@@ -10,6 +10,8 @@
 
 * `step_poly_bernstein()`, `step_profile()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now correctly return a zero row tibble when used with empty selection. (#1133)
 
+* Fixed bug where the `tidy()` method for `step_sample()` didn't return `id`.
+
 # recipes 1.0.6
 
 ## Improvements
