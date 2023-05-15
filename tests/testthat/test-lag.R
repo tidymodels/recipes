@@ -116,6 +116,19 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_lag(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
 test_that("printing", {
   rec <- recipe(~., data = mtcars) %>%
     step_lag(disp)

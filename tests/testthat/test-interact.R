@@ -327,9 +327,9 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_center(rec)
+  rec <- step_interact(rec)
 
-  expect <- tibble(terms = character(), value = double(), id = character())
+  expect <- tibble(terms = character(), id = character())
 
   expect_identical(tidy(rec, number = 1), expect)
 

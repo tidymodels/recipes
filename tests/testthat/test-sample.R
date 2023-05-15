@@ -163,6 +163,12 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
+test_that("empty selection tidy method works", {
+  # Here for completeness
+  # step_sample() is special as it can't be used without selection
+  expect_true(TRUE)
+})
+
 test_that("printing", {
   rec <- recipe(~., data = iris) %>%
     step_sample()

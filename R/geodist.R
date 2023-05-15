@@ -266,7 +266,16 @@ print.step_geodist <-
 tidy.step_geodist <- function(x, ...) {
   x <- check_is_lat_lon(x)
 
-  if (is_trained(x)) {
+  if (length(x$columns) == 0) {
+    res <- tibble(
+      latitude = character(),
+      longitude = character(),
+      ref_latitude = double(),
+      ref_longitude = double(),
+      is_lat_lon = logical(),
+      name = character()
+    )
+  } else if (is_trained(x)) {
     res <- tibble(
       latitude = x$columns[1],
       longitude = x$columns[2],
@@ -285,6 +294,7 @@ tidy.step_geodist <- function(x, ...) {
       name = x$name
     )
   }
+
   res$id <- x$id
   res
 }
