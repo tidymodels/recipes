@@ -49,6 +49,14 @@ test_that("no input", {
 
 # Infrastructure ---------------------------------------------------------------
 
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # step_rename() is one of the thin wrappers around dplyr functions and
+  # is thus hard to check against
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_rename(rec)

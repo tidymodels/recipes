@@ -149,6 +149,18 @@ test_that("factor levels are preserved", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(~., data = languages) %>%
+    step_dummy_multi_choice(lang_1, lang_2, lang_3) %>%
+    update_role(lang_1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = languages)
+
+  expect_error(bake(rec_trained, new_data = languages[, -1]),
+               class = "new_data_missing_column")
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_dummy_multi_choice(rec)

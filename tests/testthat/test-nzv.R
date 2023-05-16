@@ -196,6 +196,12 @@ test_that("nzv with case weights", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # step_nzv() removes variables and thus does not care if they are not there.
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_nzv(rec)

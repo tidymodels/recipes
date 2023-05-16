@@ -171,6 +171,12 @@ test_that("remove with quasi-quotation", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # step_rm() removes variables and thus does not care if they are not there.
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_rm(rec)

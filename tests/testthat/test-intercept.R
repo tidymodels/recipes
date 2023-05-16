@@ -67,6 +67,12 @@ test_that("check_name() is used", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # step_intercept() is special as it doesn't care about the incoming data
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   # Here for completeness
   # step_intercept() is special as it can't be used without selection

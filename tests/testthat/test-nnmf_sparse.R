@@ -16,6 +16,21 @@ test_that("check_name() is used", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
+
+  rec <- recipe(mtcars) %>%
+    step_nnmf_sparse(disp, wt) %>%
+    update_role(disp, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = mtcars)
+
+  expect_error(bake(rec_trained, new_data = mtcars[, -3]),
+               class = "new_data_missing_column")
+})
+
 test_that("empty printing", {
   skip_if_not_installed("RcppML")
   library(Matrix)

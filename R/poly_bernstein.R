@@ -150,6 +150,9 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_poly_bernstein <- function(object, new_data, ...) {
   orig_names <- names(object$results)
+
+  check_new_data(orig_names, object, new_data)
+
   if (length(orig_names) > 0) {
     new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
     new_cols <- check_name(new_cols, new_data, object, names(new_cols))
