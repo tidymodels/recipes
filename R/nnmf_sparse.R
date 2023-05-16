@@ -201,7 +201,7 @@ bake.step_nnmf_sparse <- function(object, new_data, ...) {
     colnames(proj_data) <- names0(ncol(proj_data), object$prefix)
     proj_data <- as_tibble(proj_data)
     proj_data <- check_name(proj_data, new_data, object)
-    new_data <- bind_cols(new_data, proj_data)
+    new_data <- vec_cbind(new_data, proj_data)
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {

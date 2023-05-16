@@ -165,7 +165,7 @@ bake.step_spline_monotone <- function(object, new_data, ...) {
   if (length(orig_names) > 0) {
     new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
     new_cols <- check_name(new_cols, new_data, object, names(new_cols))
-    new_data <- bind_cols(new_data, new_cols)
+    new_data <- vec_cbind(new_data, new_cols)
     keep_original_cols <- get_keep_original_cols(object)
     if (!keep_original_cols) {
       new_data <- new_data[, !(colnames(new_data) %in% orig_names), drop = FALSE]

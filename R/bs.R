@@ -186,7 +186,7 @@ bake.step_bs <- function(object, new_data, ...) {
   bs_values <- as_tibble(bs_values)
   bs_values <- check_name(bs_values, new_data, object, names(bs_values))
 
-  new_data <- bind_cols(new_data, bs_values)
+  new_data <- vec_cbind(new_data, bs_values)
   new_data
 }
 

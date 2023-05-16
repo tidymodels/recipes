@@ -166,7 +166,7 @@ bake.step_kpca <- function(object, new_data, ...) {
     colnames(comps) <- names0(ncol(comps), object$prefix)
     comps <- as_tibble(comps)
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, comps)
+    new_data <- vec_cbind(new_data, comps)
     keep_original_cols <- get_keep_original_cols(object)
 
     if (!keep_original_cols) {
