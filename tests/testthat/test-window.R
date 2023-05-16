@@ -147,6 +147,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_if_not_installed("RcppRoll")
   rec <- rec %>%
     step_window(x1) %>%
     update_role(x1, new_role = "potato") %>%
