@@ -259,6 +259,27 @@ test_that("empty selection prep/bake is a no-op", {
   expect_identical(baked1, baked2)
 })
 
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_geodist(rec, ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE)
+
+  expect <- tibble(
+    latitude = character(),
+    longitude = character(),
+    ref_latitude = double(),
+    ref_longitude = double(),
+    is_lat_lon = logical(),
+    name = character(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
 test_that("printing", {
   rec <- recipe(~ x + y, data = rand_data) %>%
     step_geodist(

@@ -51,7 +51,8 @@
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-step_sample <- function(recipe, ...,
+step_sample <- function(recipe,
+                        ...,
                         role = NA,
                         trained = FALSE,
                         size = NULL,
@@ -170,9 +171,14 @@ print.step_sample <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_sample <- function(x, ...) {
-  tibble(
-    size = x$size,
-    replace = x$replace,
-    id = x$inputs
-  )
+  if (is.null(x$size)) {
+    res <- tibble(size = numeric(), replace = logical())
+  } else {
+    res <- tibble(
+      size = x$size,
+      replace = x$replace
+    )
+  }
+  res$id <- x$id
+  res
 }

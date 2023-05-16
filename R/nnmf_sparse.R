@@ -245,11 +245,15 @@ tidy.step_nnmf_sparse <- function(x, ...) {
       res <- res[, c("terms", "value", "component")]
       res <- res[order(res$component, res$terms), ]
     } else {
-      res <- tibble(terms = x$res$x_vars, value = na_dbl, component = na_chr)
+      res <- tibble(
+        terms = unname(x$res$x_vars),
+        value = na_dbl,
+        component = na_chr
+      )
     }
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, value = na_dbl, component = x$num_comp)
+    res <- tibble(terms = term_names, value = na_dbl, component = na_chr)
   }
   res$id <- x$id
   res
