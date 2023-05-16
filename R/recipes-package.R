@@ -36,7 +36,6 @@
 ## usethis namespace: start
 #' @import rlang
 #' @importFrom dplyr arrange
-#' @importFrom dplyr bind_cols
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr desc
 #' @importFrom dplyr do
@@ -99,6 +98,7 @@
 #' @importFrom utils install.packages
 #' @importFrom utils object.size
 #' @importFrom vctrs vec_cast
+#' @importFrom vctrs vec_cbind
 #' @importFrom vctrs vec_slice
 ## usethis namespace: end
 NULL
