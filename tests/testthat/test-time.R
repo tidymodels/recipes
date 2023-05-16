@@ -127,6 +127,25 @@ test_that("keep_original_cols works", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  feats <- c("am", "hour", "hour12", "minute", "second", "decimal_day")
+
+  rec <- recipe(examples) %>%
+    step_time(times) %>%
+    update_role(times, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = examples)
+
+  expect_error(bake(rec_trained, new_data = examples[, -1]),
+               class = "new_data_missing_column")
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_time(rec)

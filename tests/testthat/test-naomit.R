@@ -36,6 +36,18 @@ test_that("step_naomit on subset of columns", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <-  recipe(airquality) %>%
+    step_naomit(Wind, Temp, skip = FALSE) %>%
+    update_role(Wind, Temp, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = airquality)
+
+  expect_error(bake(rec_trained, new_data = airquality[, -3]),
+               class = "new_data_missing_column")
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_naomit(rec)

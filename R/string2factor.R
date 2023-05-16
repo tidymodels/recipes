@@ -160,6 +160,8 @@ make_factor <- function(x, lvl, ord) {
 bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
+  check_new_data(col_names, object, new_data)
+
   if (is.list(object$levels)) {
     new_data[, col_names] <-
       purrr::map2(new_data[, col_names],

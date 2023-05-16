@@ -146,6 +146,18 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- rec %>%
+    step_window(x1) %>%
+    update_role(x1, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = sim_dat)
+
+  expect_error(bake(rec_trained, new_data = sim_dat[, -1]),
+               class = "new_data_missing_column")
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_window(rec)

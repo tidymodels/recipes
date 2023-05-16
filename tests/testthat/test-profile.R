@@ -125,6 +125,12 @@ test_that("tidy", {
 
 # Infrastructure ---------------------------------------------------------------
 
+test_that("bake method errors when needed non-standard role columns are missing", {
+  # Here for completeness
+  # step_profile() doesn't work in a way where this is useful
+  expect_true(TRUE)
+})
+
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_profile(rec, profile = vars(mpg))
