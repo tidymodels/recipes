@@ -180,7 +180,7 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
   indicators <- check_name(indicators, new_data, object, names(indicators))
 
-  new_data <- bind_cols(new_data, indicators)
+  new_data <- vec_cbind(new_data, indicators)
   keep_original_cols <- get_keep_original_cols(object)
 
   if (!keep_original_cols) {

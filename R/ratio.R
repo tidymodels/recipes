@@ -157,7 +157,7 @@ bake.step_ratio <- function(object, new_data, ...) {
   res <- tibble::new_tibble(res, nrow = nrow(new_data))
 
   res <- check_name(res, new_data, object, names(res))
-  new_data <- bind_cols(new_data, res)
+  new_data <- vec_cbind(new_data, res)
 
   keep_original_cols <- get_keep_original_cols(object)
   if (!keep_original_cols) {

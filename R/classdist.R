@@ -252,7 +252,7 @@ bake.step_classdist <- function(object, new_data, ...) {
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
+  res <- vec_cbind(new_data, res)
   res
 }
 

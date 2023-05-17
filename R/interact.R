@@ -262,7 +262,7 @@ bake.step_interact <- function(object, new_data, ...) {
     gsub(":", object$sep, unlist(lapply(res, colnames)))
   out <- as_tibble(out)
   out <- check_name(out, new_data, object, names(out))
-  new_data <- bind_cols(new_data, out)
+  new_data <- vec_cbind(new_data, out)
   new_data
 }
 
