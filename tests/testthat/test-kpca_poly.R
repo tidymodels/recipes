@@ -86,23 +86,6 @@ test_that("tunable", {
   )
 })
 
-test_that("tunable is setup to work with extract_parameter_set_dials", {
-  skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
-    step_kpca_poly(
-      all_predictors(),
-      num_comp = hardhat::tune(),
-      degree = hardhat::tune(),
-      scale_factor = hardhat::tune(),
-      offset = hardhat::tune()
-    )
-
-  params <- extract_parameter_set_dials(rec)
-
-  expect_s3_class(params, "parameters")
-  expect_identical(nrow(params), 4L)
-})
-
 test_that("keep_original_cols works", {
   skip_if_not_installed("kernlab")
 
@@ -210,4 +193,21 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_kpca_poly(
+      all_predictors(),
+      num_comp = hardhat::tune(),
+      degree = hardhat::tune(),
+      scale_factor = hardhat::tune(),
+      offset = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 4L)
 })

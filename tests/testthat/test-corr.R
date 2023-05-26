@@ -75,18 +75,6 @@ test_that("tunable", {
   )
 })
 
-test_that("tunable is setup to work with extract_parameter_set_dials", {
-  skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
-    step_corr(all_predictors(),
-              threshold = hardhat::tune())
-
-  params <- extract_parameter_set_dials(rec)
-
-  expect_s3_class(params, "parameters")
-  expect_identical(nrow(params), 1L)
-})
-
 test_that("case weights", {
   dat_caseweights <- dat %>%
     mutate(V3_dup = V3 + rep(c(0, 1), c(50, 50)),
@@ -196,4 +184,16 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_corr(all_predictors(),
+              threshold = hardhat::tune())
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
 })

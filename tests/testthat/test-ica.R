@@ -127,23 +127,6 @@ test_that("tunable", {
   )
 })
 
-test_that("tunable is setup to work with extract_parameter_set_dials", {
-  skip_if_not_installed("dials")
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
-  rec <- recipe(~., data = mtcars) %>%
-    step_ica(
-      all_predictors(),
-      num_comp = hardhat::tune()
-    )
-
-  params <- extract_parameter_set_dials(rec)
-
-  expect_s3_class(params, "parameters")
-  expect_identical(nrow(params), 1L)
-})
-
 test_that("keep_original_cols works", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
@@ -275,4 +258,21 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+  rec <- recipe(~., data = mtcars) %>%
+    step_ica(
+      all_predictors(),
+      num_comp = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
 })
