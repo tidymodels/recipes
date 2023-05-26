@@ -89,20 +89,6 @@ test_that("tunable", {
   )
 })
 
-test_that("tunable is setup to work with extract_parameter_set_dials", {
-  skip_if_not_installed("dials")
-  rec <- recipe(~., data = mtcars) %>%
-    step_nzv(
-      all_predictors(),
-      freq_cut = hardhat::tune(), unique_cut = hardhat::tune()
-    )
-
-  params <- extract_parameter_set_dials(rec)
-
-  expect_s3_class(params, "parameters")
-  expect_identical(nrow(params), 2L)
-})
-
 test_that("nzv with case weights", {
   weighted_int_counts <- dat %>% count(x3, wt = x2, sort = TRUE)
   exp_freq_cut_int <- weighted_int_counts$n[1] / weighted_int_counts$n[2]
@@ -245,4 +231,18 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_nzv(
+      all_predictors(),
+      freq_cut = hardhat::tune(), unique_cut = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 2L)
 })

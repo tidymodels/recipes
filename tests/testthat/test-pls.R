@@ -260,21 +260,6 @@ test_that("tunable", {
   )
 })
 
-test_that("tunable is setup to work with extract_parameter_set_dials", {
-  skip_if_not_installed("dials")
-  rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_pls(
-      all_predictors(),
-      outcome = "mpg",
-      num_comp = hardhat::tune(), predictor_prop = hardhat::tune()
-    )
-
-  params <- extract_parameter_set_dials(rec)
-
-  expect_s3_class(params, "parameters")
-  expect_identical(nrow(params), 2L)
-})
-
 test_that("keep_original_cols works", {
   skip_if_not_installed("mixOmics")
   pls_rec <- recipe(HHV ~ ., data = biom_tr) %>%
@@ -373,4 +358,19 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_pls(
+      all_predictors(),
+      outcome = "mpg",
+      num_comp = hardhat::tune(), predictor_prop = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 2L)
 })
