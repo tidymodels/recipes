@@ -859,7 +859,7 @@ vec_paste0 <- function(..., collapse = NULL) {
 #' @export
 remove_original_cols <- function(new_data, object, col_names) {
   keep_original_cols <- get_keep_original_cols(object)
-  if (any(!object$preserve, !keep_original_cols)) {
+  if (any(isFALSE(object$preserve), !keep_original_cols)) {
     new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
   }
   new_data

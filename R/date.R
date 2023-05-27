@@ -286,10 +286,8 @@ bake.step_date <- function(object, new_data, ...) {
   date_values <- check_name(date_values, new_data, object, names(date_values))
 
   new_data <- vec_cbind(new_data, date_values)
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-  }
+
+  new_data <- remove_original_cols(new_data, object, object$columns)
   new_data
 }
 

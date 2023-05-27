@@ -383,19 +383,17 @@ bake.step_pls <- function(object, new_data, ...) {
     comps <- check_name(comps, new_data, object)
 
     new_data <- vec_cbind(new_data, comps)
-    keep_original_cols <- get_keep_original_cols(object)
 
     # Old pls never preserved original columns,
     # but didn't have the `preserve` option
     if (use_old_pls(object$res)) {
+      object$perserve <- FALSE
       pls_vars <- rownames(object$res$projection)
-      keep_vars <- !(colnames(new_data) %in% pls_vars)
-      new_data <- new_data[, keep_vars, drop = FALSE]
-    } else if (any(!object$preserve, !keep_original_cols)) {
+    } else {
       pls_vars <- names(object$res$mu)
-      keep_vars <- !(colnames(new_data) %in% pls_vars)
-      new_data <- new_data[, keep_vars, drop = FALSE]
     }
+
+    new_data <- remove_original_cols(new_data, object, pls_vars)
   }
   new_data
 }
