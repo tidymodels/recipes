@@ -67,6 +67,7 @@ step_YeoJohnson <-
   function(recipe, ..., role = NA, trained = FALSE,
            lambdas = NULL, limits = c(-5, 5), num_unique = 5,
            na_rm = TRUE,
+           columns = list(),
            skip = FALSE,
            id = rand_id("YeoJohnson")) {
     add_step(
@@ -79,6 +80,7 @@ step_YeoJohnson <-
         limits = sort(limits)[1:2],
         num_unique = num_unique,
         na_rm = na_rm,
+        columns = columns,
         skip = skip,
         id = id
       )
@@ -86,7 +88,8 @@ step_YeoJohnson <-
   }
 
 step_YeoJohnson_new <-
-  function(terms, role, trained, lambdas, limits, num_unique, na_rm, skip, id) {
+  function(terms, role, trained, lambdas, limits, num_unique, na_rm, columns,
+           skip, id) {
     step(
       subclass = "YeoJohnson",
       terms = terms,
@@ -96,6 +99,7 @@ step_YeoJohnson_new <-
       limits = limits,
       num_unique = num_unique,
       na_rm = na_rm,
+      columns = columns,
       skip = skip,
       id = id
     )
@@ -123,6 +127,7 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
     limits = x$limits,
     num_unique = x$num_unique,
     na_rm = x$na_rm,
+    columns = list(input = col_names, output = col_names),
     skip = x$skip,
     id = x$id
   )

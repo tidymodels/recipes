@@ -13,6 +13,7 @@ step_YeoJohnson(
   limits = c(-5, 5),
   num_unique = 5,
   na_rm = TRUE,
+  columns = list(),
   skip = FALSE,
   id = rand_id("YeoJohnson")
 )
