@@ -238,11 +238,7 @@ bake.step_pca <- function(object, new_data, ...) {
     comps <- comps[, seq_len(object$num_comp), drop = FALSE]
     comps <- check_name(comps, new_data, object)
     new_data <- vec_cbind(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
-    }
+    new_data <- remove_original_cols(new_data, object, pca_vars)
   }
   new_data
 }

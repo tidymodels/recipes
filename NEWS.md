@@ -14,6 +14,8 @@
 
 * `check_class()`, `check_missing()`, `check_new_values()`, `check_range()`, `step_naomit()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and `step_string2factor()` now throw an informative error if needed non-standard role columns are missing during `bake()`.
 
+* Added developer function `remove_original_cols()` to help remove original columns that are no longer needed.
+
 # recipes 1.0.6
 
 ## Improvements

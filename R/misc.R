@@ -844,3 +844,23 @@ vec_paste0 <- function(..., collapse = NULL) {
   args <- vctrs::vec_recycle_common(...)
   rlang::inject(paste0(!!!args, collapse = collapse))
 }
+
+#' Removes original columns if options apply
+#'
+#' This helper function should be used whenever the argument
+#' `keep_original_cols` is used in a function.
+#'
+#' @param new_data A tibble.
+#' @param object A step object.
+#' @param col_names A character vector, denoting columns to remove.
+#' @return new_data with `col_names` removed if
+#'     `get_keep_original_cols(object) == TRUE` or `object$preserve == TRUE`.
+#' @keywords internal
+#' @export
+remove_original_cols <- function(new_data, object, col_names) {
+  keep_original_cols <- get_keep_original_cols(object)
+  if (any(isFALSE(object$preserve), !keep_original_cols)) {
+    new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
+  }
+  new_data
+}

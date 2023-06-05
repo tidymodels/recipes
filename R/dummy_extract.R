@@ -229,7 +229,6 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
   }
 
   col_names <- names(object$levels)
-  keep_original_cols <- get_keep_original_cols(object)
 
   for (i in seq_along(object$levels)) {
     orig_var <- names(object$levels)[i]
@@ -249,11 +248,10 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
     indicators <- check_name(indicators, new_data, object, names(indicators))
 
     new_data <- vec_cbind(new_data, indicators)
-
-    if (!keep_original_cols) {
-      new_data[[col_names[i]]] <- NULL
-    }
   }
+
+  new_data <- remove_original_cols(new_data, object, col_names)
+
   new_data
 }
 

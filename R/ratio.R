@@ -159,11 +159,9 @@ bake.step_ratio <- function(object, new_data, ...) {
   res <- check_name(res, new_data, object, names(res))
   new_data <- vec_cbind(new_data, res)
 
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    union_cols <- union(object$columns$top, object$columns$bottom)
-    new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
-  }
+  union_cols <- union(object$columns$top, object$columns$bottom)
+  new_data <- remove_original_cols(new_data, object, union_cols)
+
   new_data
 }
 
