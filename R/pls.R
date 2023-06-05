@@ -387,7 +387,7 @@ bake.step_pls <- function(object, new_data, ...) {
     # Old pls never preserved original columns,
     # but didn't have the `preserve` option
     if (use_old_pls(object$res)) {
-      object$perserve <- FALSE
+      object$preserve <- FALSE
       pls_vars <- rownames(object$res$projection)
     } else {
       pls_vars <- names(object$res$mu)
