@@ -229,17 +229,19 @@ bake.step_pca <- function(object, new_data, ...) {
     object$columns <- stats::setNames(nm = rownames(object$res$rotation))
   }
 
-  if (length(object$columns) > 0 && !all(is.na(object$res$rotation))) {
-    check_new_data(object$columns, object, new_data)
-
-    pca_vars <- rownames(object$res$rotation)
-    comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
-      object$res$rotation
-    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
-    comps <- check_name(comps, new_data, object)
-    new_data <- vec_cbind(new_data, as_tibble(comps))
-    new_data <- remove_original_cols(new_data, object, pca_vars)
+  if (length(object$columns) == 0 || all(is.na(object$res$rotation))) {
+    return(new_data)
   }
+
+  check_new_data(object$columns, object, new_data)
+
+  pca_vars <- rownames(object$res$rotation)
+  comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
+    object$res$rotation
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, as_tibble(comps))
+  new_data <- remove_original_cols(new_data, object, pca_vars)
   new_data
 }
 

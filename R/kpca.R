@@ -151,24 +151,26 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 bake.step_kpca <- function(object, new_data, ...) {
   uses_dim_red(object)
 
-  if (object$num_comp > 0 && length(object$columns) > 0) {
-    check_new_data(object$columns, object, new_data)
-
-    cl <-
-      rlang::call2(
-        "predict",
-        .ns = "kernlab",
-        object = object$res,
-        rlang::expr(as.matrix(new_data[, object$columns]))
-      )
-    comps <- rlang::eval_tidy(cl)
-    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
-    colnames(comps) <- names0(ncol(comps), object$prefix)
-    comps <- as_tibble(comps)
-    comps <- check_name(comps, new_data, object)
-    new_data <- vec_cbind(new_data, comps)
-    new_data <- remove_original_cols(new_data, object, object$columns)
+  if (object$num_comp == 0 || length(object$columns) == 0) {
+    return(new_data)
   }
+
+  check_new_data(object$columns, object, new_data)
+
+  cl <-
+    rlang::call2(
+      "predict",
+      .ns = "kernlab",
+      object = object$res,
+      rlang::expr(as.matrix(new_data[, object$columns]))
+    )
+  comps <- rlang::eval_tidy(cl)
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, comps)
+  new_data <- remove_original_cols(new_data, object, object$columns)
   new_data
 }
 
