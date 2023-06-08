@@ -146,7 +146,8 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
 bake.step_kpca_rbf <- function(object, new_data, ...) {
   uses_dim_red(object)
 
-  if (object$num_comp == 0 || length(object$columns) == 0) {
+  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  if (!keep_going) {
     return(new_data)
   }
 
