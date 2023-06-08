@@ -225,6 +225,8 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
+  check_new_data(object$columns, object, new_data)
+
   if (is.null(object$columns)) {
     object$columns <- stats::setNames(nm = rownames(object$res$rotation))
   }
@@ -232,8 +234,6 @@ bake.step_pca <- function(object, new_data, ...) {
   if (length(object$columns) == 0 || all(is.na(object$res$rotation))) {
     return(new_data)
   }
-
-  check_new_data(object$columns, object, new_data)
 
   pca_vars <- rownames(object$res$rotation)
   comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%

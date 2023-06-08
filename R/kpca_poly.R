@@ -157,13 +157,13 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_kpca_poly <- function(object, new_data, ...) {
   uses_dim_red(object)
+  check_new_data(object$columns, object, new_data)
 
   keep_going <- object$num_comp > 0 && length(object$columns) > 0
   if (!keep_going) {
     return(new_data)
   }
 
-  check_new_data(object$columns, object, new_data)
   cl <-
     rlang::call2(
       "predict",
