@@ -371,30 +371,35 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 bake.step_pls <- function(object, new_data, ...) {
   check_new_data(get_columns_pls(object), object, new_data)
 
-  if (object$num_comp > 0 && length(get_columns_pls(object)) > 0 && pls_worked(object$res)) {
-    if (use_old_pls(object$res)) {
-      comps <- old_pls_project(object$res, new_data)
-    } else {
-      comps <- pls_project(object$res, new_data)
-    }
-
-    names(comps) <- names0(ncol(comps), object$prefix)
-    comps <- as_tibble(comps)
-    comps <- check_name(comps, new_data, object)
-
-    new_data <- vec_cbind(new_data, comps)
-
-    # Old pls never preserved original columns,
-    # but didn't have the `preserve` option
-    if (use_old_pls(object$res)) {
-      object$preserve <- FALSE
-      pls_vars <- rownames(object$res$projection)
-    } else {
-      pls_vars <- names(object$res$mu)
-    }
-
-    new_data <- remove_original_cols(new_data, object, pls_vars)
+  if (object$num_comp == 0 ||
+      length(get_columns_pls(object)) == 0 ||
+      !pls_worked(object$res)) {
+    return(new_data)
   }
+
+  if (use_old_pls(object$res)) {
+    comps <- old_pls_project(object$res, new_data)
+  } else {
+    comps <- pls_project(object$res, new_data)
+  }
+
+  names(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+
+  new_data <- vec_cbind(new_data, comps)
+
+  # Old pls never preserved original columns,
+  # but didn't have the `preserve` option
+  if (use_old_pls(object$res)) {
+    object$preserve <- FALSE
+    pls_vars <- rownames(object$res$projection)
+  } else {
+    pls_vars <- names(object$res$mu)
+  }
+
+  new_data <- remove_original_cols(new_data, object, pls_vars)
+
   new_data
 }
 

@@ -195,15 +195,17 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
 bake.step_nnmf_sparse <- function(object, new_data, ...) {
   check_new_data(object$res$x_vars, object, new_data)
 
-  if (object$num_comp > 0) {
-    proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
-    proj_data <- proj_data %*% object$res$w
-    colnames(proj_data) <- names0(ncol(proj_data), object$prefix)
-    proj_data <- as_tibble(proj_data)
-    proj_data <- check_name(proj_data, new_data, object)
-    new_data <- vec_cbind(new_data, proj_data)
-    new_data <- remove_original_cols(new_data, object, object$res$x_vars)
+  if (object$num_comp == 0) {
+    return(new_data)
   }
+
+  proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
+  proj_data <- proj_data %*% object$res$w
+  colnames(proj_data) <- names0(ncol(proj_data), object$prefix)
+  proj_data <- as_tibble(proj_data)
+  proj_data <- check_name(proj_data, new_data, object)
+  new_data <- vec_cbind(new_data, proj_data)
+  new_data <- remove_original_cols(new_data, object, object$res$x_vars)
   new_data
 }
 

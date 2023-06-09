@@ -178,19 +178,22 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf <- function(object, new_data, ...) {
+  check_new_data(object$columns, object, new_data)
 
-  if (object$num_comp > 0 && length(object$columns) > 0) {
-    check_new_data(object$columns, object, new_data)
-    nnmf_vars <- rownames(object$res@other.data$w)
-    comps <-
-      object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
-    comps <- comps[, seq_len(object$num_comp), drop = FALSE]
-    colnames(comps) <- names0(ncol(comps), object$prefix)
-    comps <- as_tibble(comps)
-    comps <- check_name(comps, new_data, object)
-    new_data <- vec_cbind(new_data, comps)
-    new_data <- remove_original_cols(new_data, object, nnmf_vars)
+  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  if (!keep_going) {
+    return(new_data)
   }
+
+  nnmf_vars <- rownames(object$res@other.data$w)
+  comps <-
+    object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, comps)
+  new_data <- remove_original_cols(new_data, object, nnmf_vars)
   new_data
 }
 
