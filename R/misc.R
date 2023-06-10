@@ -889,7 +889,8 @@ recipes_remove_cols <- function(new_data, object, col_names = character()) {
   }
 
   if (length(removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% removals)]
+    # drop = FALSE in case someone uses this on a data.frame
+    new_data <- new_data[, !(colnames(new_data) %in% removals), drop = FALSE]
   }
   new_data
 }
