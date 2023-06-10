@@ -864,3 +864,32 @@ remove_original_cols <- function(new_data, object, col_names) {
   }
   new_data
 }
+
+#' Removes columns if options apply
+#'
+#' This helper function should whenever columns should be removed using
+#' character vectors.
+#'
+#' @param new_data A tibble.
+#' @param object A step object.
+#' @param col_names A character vector, denoting columns to remove. Will
+#'   overwrite `object$removals` if set.
+#'
+#' @return `new_data` with column names removed if specified by `col_names` or
+#'   `object$removals`.
+#' @keywords internal
+#' @export
+recipes_remove_cols <- function(new_data, object, col_names = character()) {
+  if (length(col_names) > 0) {
+    removals <- col_names
+  } else if (length(object$removals) > 0) {
+    removals <- object$removals
+  } else {
+    return(new_data)
+  }
+
+  if (length(removals) > 0) {
+    new_data <- new_data[, !(colnames(new_data) %in% removals)]
+  }
+  new_data
+}
