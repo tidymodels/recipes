@@ -65,6 +65,7 @@ step_bs <-
            degree = 3,
            objects = NULL,
            options = list(),
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("bs")) {
     add_step(
@@ -77,6 +78,7 @@ step_bs <-
         role = role,
         objects = objects,
         options = options,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -84,7 +86,8 @@ step_bs <-
   }
 
 step_bs_new <-
-  function(terms, role, trained, deg_free, degree, objects, options, skip, id) {
+  function(terms, role, trained, deg_free, degree, objects, options,
+           keep_original_cols, skip, id) {
     step(
       subclass = "bs",
       terms = terms,
@@ -94,6 +97,7 @@ step_bs_new <-
       degree = degree,
       objects = objects,
       options = options,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -157,6 +161,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
     degree = x$degree,
     objects = obj,
     options = x$options,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -181,7 +186,7 @@ bake.step_bs <- function(object, new_data, ...) {
       paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
     colnames(bs_values)[cols] <- new_names
     strt <- max(cols) + 1
-    new_data[[orig_var]] <- NULL
+    new_data <- remove_original_cols(new_data, object, orig_var)
   }
   bs_values <- as_tibble(bs_values)
   bs_values <- check_name(bs_values, new_data, object, names(bs_values))
