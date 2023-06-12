@@ -88,6 +88,7 @@ variables using B-splines.</p>
 <span>  degree <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  objects <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  keep_original_cols <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"bs"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -135,6 +136,11 @@ created once the step has been trained.</p></dd>
 <dt>options</dt>
 <dd><p>A list of options for <code><a href="https://rdrr.io/r/splines/bs.html" class="external-link">splines::bs()</a></code>
 which should not include <code>x</code>, <code>degree</code>, or <code>df</code>.</p></dd>
+
+
+<dt>keep_original_cols</dt>
+<dd><p>A logical to keep the original variables in the
+output. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt>skip</dt>
