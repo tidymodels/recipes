@@ -19,7 +19,6 @@ overwrite \code{object$removals} if set.}
 \code{object$removals}.
 }
 \description{
-This helper function should whenever columns should be removed using
-character vectors.
+This helper function removes columns based on character vectors.
 }
 \keyword{internal}
