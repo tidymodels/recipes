@@ -867,8 +867,7 @@ remove_original_cols <- function(new_data, object, col_names) {
 
 #' Removes columns if options apply
 #'
-#' This helper function should whenever columns should be removed using
-#' character vectors.
+#' This helper function removes columns based on character vectors.
 #'
 #' @param new_data A tibble.
 #' @param object A step object.
