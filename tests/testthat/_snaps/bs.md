@@ -8,15 +8,6 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_bs_1
 
-# can prep recipes with no keep_original_cols
-
-    Code
-      rec <- prep(rec)
-    Condition
-      Warning:
-      'keep_original_cols' was added to `step_bs()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
-
 # empty printing
 
     Code

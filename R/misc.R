@@ -860,7 +860,36 @@ vec_paste0 <- function(..., collapse = NULL) {
 remove_original_cols <- function(new_data, object, col_names) {
   keep_original_cols <- get_keep_original_cols(object)
   if (any(isFALSE(object$preserve), !keep_original_cols)) {
-    new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
+    new_data <- recipes_remove_cols(new_data, object, col_names)
+  }
+  new_data
+}
+
+#' Removes columns if options apply
+#'
+#' This helper function removes columns based on character vectors.
+#'
+#' @param new_data A tibble.
+#' @param object A step object.
+#' @param col_names A character vector, denoting columns to remove. Will
+#'   overwrite `object$removals` if set.
+#'
+#' @return `new_data` with column names removed if specified by `col_names` or
+#'   `object$removals`.
+#' @keywords internal
+#' @export
+recipes_remove_cols <- function(new_data, object, col_names = character()) {
+  if (length(col_names) > 0) {
+    removals <- col_names
+  } else if (length(object$removals) > 0) {
+    removals <- object$removals
+  } else {
+    return(new_data)
+  }
+
+  if (length(removals) > 0) {
+    # drop = FALSE in case someone uses this on a data.frame
+    new_data <- new_data[, !(colnames(new_data) %in% removals), drop = FALSE]
   }
   new_data
 }

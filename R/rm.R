@@ -89,9 +89,7 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_rm <- function(object, new_data, ...) {
-  if (length(object$removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  }
+  new_data <- recipes_remove_cols(new_data, object)
   new_data
 }
 

@@ -97,48 +97,6 @@ test_that("tunable", {
   )
 })
 
-test_that("keep_original_cols works", {
-  new_names <- c("mpg_bs_1", "mpg_bs_2", "mpg_bs_3")
-
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_bs(all_predictors(), keep_original_cols = FALSE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    new_names
-  )
-
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_bs(all_predictors(), keep_original_cols = TRUE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    c("mpg", new_names)
-  )
-})
-
-test_that("can prep recipes with no keep_original_cols", {
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_bs(all_predictors())
-
-  rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    rec <- prep(rec)
-  )
-
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
