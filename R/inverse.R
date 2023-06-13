@@ -91,12 +91,13 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_inverse <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
-    new_data[[object$columns[i]]] <-
-      1 / (new_data[[object$columns[i]]] + object$offset)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- 1 / (new_data[[col_name]] + object$offset)
   }
+
   new_data
 }
 

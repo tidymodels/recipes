@@ -130,20 +130,16 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_YeoJohnson <- function(object, new_data, ...) {
-  check_new_data(names(object$lambdas), object, new_data)
+  col_names <- names(object$lambdas)
+  check_new_data(col_names, object, new_data)
 
-  if (length(object$lambdas) == 0) {
-    return(new_data)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- yj_transform(
+      new_data[[col_name]],
+      lambda = object$lambdas[col_name]
+    )
   }
 
-  param <- names(object$lambdas)
-  for (i in seq_along(object$lambdas)) {
-    new_data[[param[i]]] <-
-      yj_transform(
-        new_data[[param[i]]],
-        lambda = object$lambdas[param[i]]
-      )
-  }
   new_data
 }
 

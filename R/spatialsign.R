@@ -133,9 +133,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_spatialsign <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
-
-  col_names <- object$columns
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   if (isTRUE(object$case_weights)) {
     wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)

@@ -378,10 +378,16 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <- predict(object$objects[[i]], new_data[[i]])
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- predict(
+      object$objects[[col_name]],
+      new_data[[col_name]]
+    )
   }
+
   new_data
 }
 

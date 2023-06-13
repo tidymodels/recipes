@@ -187,15 +187,16 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
   uses_dim_red(object)
-  check_new_data(object$columns, object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  keep_going <- object$num_comp > 0 && length(col_names) > 0
   if (!keep_going) {
     return(new_data)
   }
 
 
-  comps <- scale(as.matrix(new_data[, object$columns]),
+  comps <- scale(as.matrix(new_data[, col_names]),
     center = object$res$means, scale = FALSE
   )
   comps <- comps %*% object$res$K %*% object$res$W
@@ -205,7 +206,7 @@ bake.step_ica <- function(object, new_data, ...) {
   comps <- check_name(comps, new_data, object)
   new_data <- vec_cbind(new_data, comps)
 
-  new_data <- remove_original_cols(new_data, object, object$columns)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

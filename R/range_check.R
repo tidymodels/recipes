@@ -177,22 +177,18 @@ range_check_func <- function(x,
 }
 
 #' @export
-bake.check_range <- function(object,
-                             new_data,
-                             ...) {
+bake.check_range <- function(object, new_data, ...) {
   col_names <- names(object$lower)
-
   check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(col_names)) {
-    colname <- col_names[i]
+  for (col_name in col_names) {
     range_check_func(
-      new_data[[colname]],
-      object$lower[colname],
-      object$upper[colname],
+      new_data[[col_name]],
+      object$lower[col_name],
+      object$upper[col_name],
       object$slack_prop,
       object$warn,
-      colname
+      col_name
     )
   }
   new_data

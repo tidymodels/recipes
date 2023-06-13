@@ -164,7 +164,6 @@ multi_dummy_check_type <- function(dat) {
 #' @export
 bake.step_dummy_multi_choice <- function(object, new_data, ...) {
   col_names <- object$input
-
   check_new_data(col_names, object, new_data)
 
   indicators <- multi_dummy(new_data[, col_names], object$levels)

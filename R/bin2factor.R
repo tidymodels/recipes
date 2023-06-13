@@ -106,19 +106,22 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bin2factor <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (col_name in object$columns) {
-    new_data[[col_name]] <-
-      factor(ifelse(
-        new_data[[col_name]] == 1,
-        object$levels[1],
-        object$levels[2]
-      ),
-      levels = levs
-      )
+
+  for (col_name in col_names) {
+    tmp <- ifelse(
+      new_data[[col_name]] == 1,
+      object$levels[1],
+      object$levels[2]
+    )
+    tmp <- factor(tmp, levels = levs)
+
+    new_data[[col_name]] <- tmp
   }
+
   new_data
 }
 

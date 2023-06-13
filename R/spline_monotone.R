@@ -158,18 +158,28 @@ prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_spline_monotone <- function(object, new_data, ...) {
-  orig_names <- names(object$results)
+  col_names <- names(object$results)
+  check_new_data(col_names, object, new_data)
 
-  check_new_data(orig_names, object, new_data)
-
-  if (length(orig_names) == 0) {
+  if (length(col_names) == 0) {
     return(new_data)
   }
 
-  new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
+  new_cols <- list()
+
+  for (col_name in col_names) {
+    new_cols[[col_name]] <- spline2_apply(
+      object$results[[col_name]],
+      new_data[[col_name]]
+    )
+  }
+
+  new_cols <- purrr::list_cbind(unname(new_cols))
   new_cols <- check_name(new_cols, new_data, object, names(new_cols))
+
   new_data <- vec_cbind(new_data, new_cols)
-  new_data <- remove_original_cols(new_data, object, orig_names)
+  new_data <- remove_original_cols(new_data, object, col_names)
+
   new_data
 }
 

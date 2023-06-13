@@ -157,9 +157,10 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_kpca_poly <- function(object, new_data, ...) {
   uses_dim_red(object)
-  check_new_data(object$columns, object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  keep_going <- object$num_comp > 0 && length(col_names) > 0
   if (!keep_going) {
     return(new_data)
   }
@@ -169,7 +170,7 @@ bake.step_kpca_poly <- function(object, new_data, ...) {
       "predict",
       .ns = "kernlab",
       object = object$res,
-      rlang::expr(as.matrix(new_data[, object$columns]))
+      rlang::expr(as.matrix(new_data[, col_names]))
     )
   comps <- rlang::eval_tidy(cl)
   comps <- comps[, seq_len(object$num_comp), drop = FALSE]
@@ -177,7 +178,7 @@ bake.step_kpca_poly <- function(object, new_data, ...) {
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
   new_data <- vec_cbind(new_data, comps)
-  new_data <- remove_original_cols(new_data, object, object$columns)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

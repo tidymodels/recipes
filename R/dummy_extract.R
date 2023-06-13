@@ -221,29 +221,30 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_dummy_extract <- function(object, new_data, ...) {
-  check_new_data(names(object$levels), object, new_data)
+  col_names <- names(object$levels)
+  check_new_data(col_names, object, new_data)
 
   # If no terms were selected
   if (length(object$levels) == 0) {
     return(new_data)
   }
 
-  col_names <- names(object$levels)
-
-  for (i in seq_along(object$levels)) {
-    orig_var <- names(object$levels)[i]
-
+  for (col_name in col_names) {
     elements <- dummy_extract(
-      new_data[[orig_var]],
+      new_data[[col_name]],
       sep = object$sep, pattern = object$pattern
     )
 
-    indicators <- list_to_dummies(elements, sort(object$levels[[i]]), object$other)
+    indicators <- list_to_dummies(
+      elements,
+      sort(object$levels[[col_name]]),
+      object$other
+    )
     indicators <- purrr::map_dfc(indicators, vec_cast, integer())
 
     ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
-    colnames(indicators) <- object$naming(col_names[i], used_lvl)
+    used_lvl <- gsub(paste0("^", col_name), "", colnames(indicators))
+    colnames(indicators) <- object$naming(col_name, used_lvl)
 
     indicators <- check_name(indicators, new_data, object, names(indicators))
 
