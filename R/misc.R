@@ -1,14 +1,5 @@
-filter_terms <- function(x, ...) {
-  UseMethod("filter_terms")
-}
-
-## get variables from formulas
-is_formula <- function(x) {
-  isTRUE(inherits(x, "formula"))
-}
-
 get_lhs_vars <- function(formula, data) {
-  if (!is_formula(formula)) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
   ## Want to make sure that multiple outcomes can be expressed as
@@ -18,7 +9,7 @@ get_lhs_vars <- function(formula, data) {
 }
 
 get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
-  if (!is_formula(formula)) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
   if (no_lhs) {
@@ -37,14 +28,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
     predictor_names <- predictor_names[-response_info]
   }
   predictor_names
-}
-
-terms.recipe <- function(x, ...) {
-  x$term_info
-}
-
-filter_terms.formula <- function(formula, data, ...) {
-  get_rhs_vars(formula, data)
 }
 
 #' Naming Tools
@@ -98,9 +81,9 @@ filter_terms.formula <- function(formula, data, ...) {
 
 names0 <- function(num, prefix = "x") {
   if (num < 1) {
-    rlang::abort("`num` should be > 0")
+    rlang::abort("`num` should be > 0.")
   }
-  ind <- format(1:num)
+  ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
 }
@@ -263,7 +246,7 @@ merge_term_info <- function(.new, .old) {
   # the original value
   .new %>%
     dplyr::rename(new_type = type) %>%
-    dplyr::left_join(.old, by = "variable") %>%
+    dplyr::left_join(.old, by = "variable", multiple = "all") %>%
     dplyr::mutate(
       type = ifelse(is.na(type), "other", "type"),
       type = ifelse(type != new_type, new_type, type)
@@ -517,24 +500,27 @@ simple_terms <- function(x, ...) {
 #'   in the trained object.
 #' @param names A logical determining if the names should be set using
 #' the names function (TRUE) or colnames function (FALSE).
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
 #' @export
 #' @keywords internal
-check_name <- function(res, new_data, object, newname = NULL, names = FALSE) {
+check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
+                       call = caller_env()) {
   if (is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
   }
   new_data_names <- colnames(new_data)
   intersection <- new_data_names %in% newname
   if (any(intersection)) {
-    rlang::abort(
-      paste0(
-        "Name collision occured in `",
-        class(object)[1],
-        "`. The following variable names already exists: ",
-        paste0(new_data_names[intersection], collapse = ", "),
-        "."
-      )
+    nms <- new_data_names[intersection]
+    cli::cli_abort(
+      c("Name collision occured. The following variable names already exists:",
+        i = " {nms}"),
+      call = call
     )
+
   }
   if (names) {
     names(res) <- newname
@@ -690,20 +676,6 @@ get_keep_original_cols <- function(object) {
 }
 
 # ------------------------------------------------------------------------------
-# From parsnip, keep synced
-
-is_varying <- function(x) {
-  if (is.null(x)) {
-    res <- FALSE
-  } else {
-    res <- if (is_quosure(x)) {
-      isTRUE(all.equal(x[[-1]], quote(varying())))
-    } else {
-      isTRUE(all.equal(x, quote(varying())))
-    }
-  }
-  res
-}
 
 # from tune package
 is_tune <- function(x) {
@@ -862,7 +834,62 @@ recipes_error_context <- function(expr, step_name) {
   )
 }
 
+#' @method conditionMessage recipes_error
+#' @export
+conditionMessage.recipes_error <- function(c) {
+  rlang::cnd_message(c, prefix = TRUE)
+}
+
 vec_paste0 <- function(..., collapse = NULL) {
   args <- vctrs::vec_recycle_common(...)
   rlang::inject(paste0(!!!args, collapse = collapse))
+}
+
+#' Removes original columns if options apply
+#'
+#' This helper function should be used whenever the argument
+#' `keep_original_cols` is used in a function.
+#'
+#' @param new_data A tibble.
+#' @param object A step object.
+#' @param col_names A character vector, denoting columns to remove.
+#' @return new_data with `col_names` removed if
+#'     `get_keep_original_cols(object) == TRUE` or `object$preserve == TRUE`.
+#' @keywords internal
+#' @export
+remove_original_cols <- function(new_data, object, col_names) {
+  keep_original_cols <- get_keep_original_cols(object)
+  if (any(isFALSE(object$preserve), !keep_original_cols)) {
+    new_data <- recipes_remove_cols(new_data, object, col_names)
+  }
+  new_data
+}
+
+#' Removes columns if options apply
+#'
+#' This helper function removes columns based on character vectors.
+#'
+#' @param new_data A tibble.
+#' @param object A step object.
+#' @param col_names A character vector, denoting columns to remove. Will
+#'   overwrite `object$removals` if set.
+#'
+#' @return `new_data` with column names removed if specified by `col_names` or
+#'   `object$removals`.
+#' @keywords internal
+#' @export
+recipes_remove_cols <- function(new_data, object, col_names = character()) {
+  if (length(col_names) > 0) {
+    removals <- col_names
+  } else if (length(object$removals) > 0) {
+    removals <- object$removals
+  } else {
+    return(new_data)
+  }
+
+  if (length(removals) > 0) {
+    # drop = FALSE in case someone uses this on a data.frame
+    new_data <- new_data[, !(colnames(new_data) %in% removals), drop = FALSE]
+  }
+  new_data
 }

@@ -1,55 +1,20 @@
-# printing
-
-    Code
-      print(im_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Operations:
-      
-      Isomap approximation with x1, x2, x3
-
----
-
-    Code
-      prep(im_rec)
-    Message
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Training data contained 5 data points and no missing data.
-      
-      Operations:
-      
-      Isomap approximation with x1, x2, x3 [trained]
-
 # No ISOmap
 
     Code
       print(im_rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          3
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
       
-      Training data contained 5 data points and no missing data.
+      -- Training information 
+      Training data contained 5 data points and no incomplete rows.
       
-      Operations:
-      
-      Isomap was not conducted for x1, x2, x3 [trained]
+      -- Operations 
+      * Isomap was not conducted for: x1, x2, x3 | Trained
 
 # ISOmap fails gracefully
 
@@ -66,6 +31,17 @@
       Error in do.call(.Call, args = dot_call_args) : 
         TridiagEigen: eigen decomposition failed
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Message
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Isomap1
+
 # can prep recipes with no keep_original_cols
 
     Code
@@ -80,35 +56,67 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Isomap approximation with <none>
+      -- Operations 
+      * Isomap approximation with: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Isomap approximation with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Isomap approximation with <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Isomap approximation with: x1, x2, x3
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 5 data points and no incomplete rows.
+      
+      -- Operations 
+      * Isomap approximation with: x1, x2, x3 | Trained
 

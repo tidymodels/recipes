@@ -140,8 +140,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
 
   class_var <- x$class[1]
 
-  x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+  x_dat <- split(training[, x_names], training[[class_var]])
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,
@@ -174,6 +173,10 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
+  if (ncol(object$data[[1]]) == 0) {
+    return(new_data)
+  }
+
   x_names <- colnames(object$data[[1]])
   check_new_data(x_names, object, new_data)
 
@@ -188,13 +191,13 @@ bake.step_depth <- function(object, new_data, ...) {
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
+  res <- vec_cbind(new_data, res)
   res
 }
 
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue::glue("Data depth by {x$class} for ")
+    title <- glue("Data depth by {x$class} for ")
 
     if (x$trained) {
       x_names <- colnames(x$data[[1]])

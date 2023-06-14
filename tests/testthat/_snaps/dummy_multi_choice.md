@@ -7,73 +7,81 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be nominal, or logical.
 
-# printing
+# check_name() is used
 
     Code
-      print(rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          4
-      
-      Operations:
-      
-      Multi-choice dummy variables from all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          4
-      
-      Training data contained 4 data points and 4 incomplete rows. 
-      
-      Operations:
-      
-      Multi-choice dummy variables from lang_1, lang_2, lang_3, lang_4 [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Species_setosa
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Multi-choice dummy variables from <none>
+      -- Operations 
+      * Multi-choice dummy variables from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Multi-choice dummy variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Multi-choice dummy variables from <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Operations 
+      * Multi-choice dummy variables from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 4 data points and 4 incomplete rows.
+      
+      -- Operations 
+      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
 

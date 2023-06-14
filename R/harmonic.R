@@ -58,6 +58,12 @@
 #'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
 #'  1.0 with `cycle_size` equal to 3600.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_harmonic"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references Doran, H. E., & Quilkey, J. J. (1972).
@@ -234,7 +240,7 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
 
   frequencies <- sort(unique(na.omit(x$frequency)))
 
-  names(frequencies) <- as.character(1:length(frequencies))
+  names(frequencies) <- as.character(seq_along(frequencies))
   names(starting_vals) <- col_names
   names(cycle_sizes) <- col_names
 
@@ -303,17 +309,17 @@ bake.step_harmonic <- function(object, new_data, ...) {
     colnames(res) <- paste0(
       col_name,
       rep(c("_sin_", "_cos_"), each = n_frequency),
-      1:n_frequency
+      seq_len(n_frequency)
     )
     res <- as_tibble(res)
-    new_data <- bind_cols(new_data, res)
+
+    res <- check_name(res, new_data, object, names(res))
+
+    new_data <- vec_cbind(new_data, res)
   }
 
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    new_data <-
-      new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
-  }
+  new_data <- remove_original_cols(new_data, object, col_names)
+
   new_data
 }
 

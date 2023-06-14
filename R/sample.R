@@ -51,7 +51,8 @@
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-step_sample <- function(recipe, ...,
+step_sample <- function(recipe,
+                        ...,
                         role = NA,
                         trained = FALSE,
                         size = NULL,
@@ -62,12 +63,12 @@ step_sample <- function(recipe, ...,
     rlang::warn("Selectors are not used for this step.")
   }
 
-  if (!is_tune(size) & !is_varying(size)) {
+  if (!is_tune(size)) {
     if (!is.null(size) & (!is.numeric(size) || size < 0)) {
       rlang::abort("`size` should be a positive number or NULL.")
     }
   }
-  if (!is_tune(replace) & !is_varying(replace)) {
+  if (!is_tune(replace)) {
     if (!is.logical(replace)) {
       rlang::abort("`replace` should be a single logical.")
     }
@@ -133,7 +134,7 @@ bake.step_sample <- function(object, new_data, ...) {
 
   if (isTRUE(object$case_weights)) {
     wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)
-    wts <- getElement(new_data, names(which(wts_col)))
+    wts <- new_data[[names(which(wts_col))]]
     wts <- as.double(wts)
   } else {
     wts <- NULL
@@ -170,9 +171,14 @@ print.step_sample <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_sample <- function(x, ...) {
-  tibble(
-    size = x$size,
-    replace = x$replace,
-    id = x$inputs
-  )
+  if (is.null(x$size)) {
+    res <- tibble(size = numeric(), replace = logical())
+  } else {
+    res <- tibble(
+      size = x$size,
+      replace = x$replace
+    )
+  }
+  res$id <- x$id
+  res
 }

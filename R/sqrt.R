@@ -4,8 +4,7 @@
 #'  step that will square root transform the data.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
+#' @inheritParams step_pca
 #' @template step-return
 #' @family individual transformation steps
 #' @details
@@ -87,8 +86,7 @@ bake.step_sqrt <- function(object, new_data, ...) {
 
   col_names <- object$columns
   for (i in seq_along(col_names)) {
-    new_data[, col_names[i]] <-
-      sqrt(getElement(new_data, col_names[i]))
+    new_data[[col_names[i]]] <- sqrt(new_data[[col_names[i]]])
   }
   new_data
 }

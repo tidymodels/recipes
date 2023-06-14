@@ -31,6 +31,12 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_bs"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -170,14 +176,17 @@ bake.step_bs <- function(object, new_data, ...) {
     cols <- (strt):(strt + new_cols[i] - 1)
     orig_var <- attr(object$objects[[i]], "var")
     bs_values[, cols] <-
-      bs_predict(object$objects[[i]], getElement(new_data, i))
+      bs_predict(object$objects[[i]], new_data[[i]])
     new_names <-
       paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
     colnames(bs_values)[cols] <- new_names
     strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
+    new_data[[orig_var]] <- NULL
   }
-  new_data <- bind_cols(new_data, as_tibble(bs_values))
+  bs_values <- as_tibble(bs_values)
+  bs_values <- check_name(bs_values, new_data, object, names(bs_values))
+
+  new_data <- vec_cbind(new_data, bs_values)
   new_data
 }
 

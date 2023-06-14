@@ -50,8 +50,8 @@ is 0.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -105,6 +105,13 @@ frequency, for example, a \code{POSIXct} input column given a \code{frequency} o
 24 and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of
 1.0 with \code{cycle_size} equal to 3600.
 }
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{frequency}: Harmonic Frequency (type: double, default: NA)
+}
+}
+
 \section{Case weights}{
 
 

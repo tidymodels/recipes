@@ -1,45 +1,68 @@
-# quasiquotation
+# empty printing
 
     Code
-      prep(rec_1, training = iris_train)
-    Condition
-      Error in `step_select()`:
-      Caused by error in `prep()`:
-      ! Problem while evaluating `all_of(sepal_vars)`.
-      Caused by error in `as_indices_impl()`:
-      ! object 'sepal_vars' not found
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Variables selected: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Variables selected: <none> | Trained
 
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Variables selected Species, starts_with("Sepal"), Petal.Width
+      -- Operations 
+      * Variables selected: Species
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Variables selected Species, Sepal.Length, Sepal.Width, petal_... [trained]
+      -- Operations 
+      * Variables selected: Species | Trained
 

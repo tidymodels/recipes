@@ -125,7 +125,7 @@ lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
 
   if (!is.numeric(dat[[vars$y]])) {
     rlang::abort(
-      glue::glue(
+      glue(
         "Variable '{vars$y}' chosen for linear regression imputation ",
         "must be of type numeric."
       ),
@@ -206,7 +206,7 @@ bake.step_impute_linear <- function(object, new_data, ...) {
   old_data <- new_data
   for (i in seq(along.with = object$models)) {
     imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[, imp_var])
+    missing_rows <- !complete.cases(new_data[[imp_var]])
     if (any(missing_rows)) {
       preds <- object$models[[imp_var]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]

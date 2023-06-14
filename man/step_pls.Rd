@@ -59,8 +59,8 @@ original predictor data should be retained along with the new features.}
 \item{res}{A list of results are stored here once this preprocessing step
 has been trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -118,6 +118,14 @@ When applied to data, these values are usually scaled by a column-specific
 norm. The \code{tidy()} method applies this same norm to the coefficients shown
 above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
 selectors or variables selected), \code{components}, and \code{values} is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 2)
+\item \code{predictor_prop}: Proportion of Predictors (type: double, default: 1)
+}
 }
 
 \section{Case weights}{

@@ -1,0 +1,36 @@
+```{r, include = FALSE}
+get_dials <- function(x) {
+  if (any(names(x) == "range")) {
+    cl <- rlang::call2(x$fun, .ns = x$pkg, range = x$range)
+  } else {
+    cl <- rlang::call2(x$fun, .ns = x$pkg)
+  }
+  rlang::eval_tidy(cl)
+}
+
+get_param_list <- function(x) {
+  args <- formals(x)
+  params <- getS3method("tunable", x)(list()) %>%
+    dplyr::mutate(
+      default = args[name],
+      dials = purrr::map(call_info, get_dials),
+      label = purrr::map_chr(dials, ~ .x$label),
+      type = purrr::map_chr(dials, ~ .x$type),
+      item = glue::glue("- `{name}`: {label} (type: {type}, default: {default})\n\n")
+    )
+
+  params$item
+}
+```
+
+# Tuning Parameters
+
+```{r echo = FALSE}
+param <- get_param_list(step)
+```
+
+This step has `r length(param)` tuning parameters:
+
+```{r echo = FALSE, results = "asis"}
+param
+```

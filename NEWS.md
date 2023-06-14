@@ -1,5 +1,60 @@
 # recipes (development version)
 
+* Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection. All steps now leave data unmodified when having empty selections.
+
+* `step_classdist()`, `step_count()` and `step_depth()` no longer returns a column with all `NA`s with empty selections.
+
+* `step_regex()` no longer returns a column with all 0s with empty selections.
+
+* The `tidy()` methods for `step_geodist()`, `step_nnmf_sparse()`, and `step_sample()` now correctly return zero-row tibbles when used with empty selections.
+
+* `step_poly_bernstein()`, `step_profile()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now correctly return a zero row tibble when used with empty selection. (#1133)
+
+* Fixed bug where the `tidy()` method for `step_sample()` didn't return an `id` column.
+
+* `check_class()`, `check_missing()`, `check_new_values()`, `check_range()`, `step_naomit()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and `step_string2factor()` now throw an informative error if needed non-standard role columns are missing during `bake()`.
+
+* Added developer function `remove_original_cols()` to help remove original columns that are no longer needed.
+
+* Added developer function `recipes_remove_cols()` to provide standardized way to remove columns by column names. (#1155)
+
+# recipes 1.0.6
+
+## Improvements
+
+* Steps with tunable arguments now have those arguments listed in the documentation.
+
+* All steps that add new columns will now informatively error if name collision occurs. (#983)
+
+## Bug Fixes
+
+* Fixed bug in `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `spline_nonnegative()` where you weren't able to tune the `degree` argument.
+
+* `step_range()` now perform correctly performs clipping on recipes created before 1.0.3. (#1097)
+
+## Breaking Changes
+
+* The `tidy()` method for `step_impute_mean()`, `step_impute_median()`, and `step_impute_mode()` now the imputed value with the column name `value` instead of `model`. This is in line with the output of `step_impute_lower()`. (#826)
+
+# recipes 1.0.5
+
+* Added `outside` argument to `step_percentile()` to determine different ways of handling values outside the range of the training data.
+
+* `step_range()` is now backwards compatible with respect to the `clipping` argument that was added 1.0.3, and old saved recipes can now be baked. (#1090)
+
+* update print methods to use cli package for formatting. (#426)
+
+* Print methods no longer errors for untrained recipes with long selections. (#1083)
+
+* The `recipe`, `step`, and `check` methods for `generics::tune_args()` are now registered unconditionally (tidymodels/workflows#192).
+
+* Added a `conditionMessage()` method for `recipes_error`s to consistently point out which step errors occurred in when reporting errors. (#1080)
+
+# recipes 1.0.4
+
+* Added missing tidy method for `step_intercept()` and `step_lag()`. (#730)
+
+
 * Errors in `prep()` and `bake()` will now indicate which step caused the error. (#420)
 
 * Developer focused `check_type()` got a new `types` argument for more precise checking of column types.

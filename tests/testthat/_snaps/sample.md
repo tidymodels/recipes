@@ -22,75 +22,109 @@
       Error in `step_sample()`:
       ! `replace` should be a single logical.
 
+# sample with case weights
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor:    10
+      case_weights:  1
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Row sampling: <none> | Trained, weighted
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor:    10
+      case_weights:  1
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Row sampling: <none> | Trained, weighted
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Row sampling: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Row sampling: <none> | Trained
+
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Operations:
-      
-      Row sampling <none>
+      -- Operations 
+      * Row sampling: <none>
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          6
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
       
-      Training data contained 150 data points and no missing data.
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
       
-      Operations:
-      
-      Row sampling <none> [trained]
-
-# sample with case weights
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-               role #variables
-       case_weights          1
-          predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Row sampling <none> [weighted, trained]
-
----
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-               role #variables
-       case_weights          1
-          predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Row sampling <none> [weighted, trained]
+      -- Operations 
+      * Row sampling: <none> | Trained
 

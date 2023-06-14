@@ -91,7 +91,7 @@ step_num2factor <-
            ordered = FALSE,
            skip = FALSE,
            id = rand_id("num2factor")) {
-    if (!is_tune(ordered) & !is_varying(ordered)) {
+    if (!is_tune(ordered)) {
       if (!is.logical(ordered) || length(ordered) != 1) {
         rlang::abort("`ordered` should be a single logical variable")
       }

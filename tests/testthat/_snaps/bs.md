@@ -1,72 +1,80 @@
-# printing
+# check_name() is used
 
     Code
-      print(with_bs)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Operations:
-      
-      B-splines on carbon, hydrogen
-
----
-
-    Code
-      prep(with_bs)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Training data contained 456 data points and no missing data.
-      
-      Operations:
-      
-      B-splines on carbon, hydrogen [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_bs()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_bs_1
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      B-splines on <none>
+      -- Operations 
+      * B-splines on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * B-splines on: <none> | Trained
+
+# printing
+
+    Code
+      print(with_bs)
+    Message
       
-      B-splines on <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * B-splines on: carbon, hydrogen
+
+---
+
+    Code
+      prep(with_bs)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * B-splines on: carbon, hydrogen | Trained
 

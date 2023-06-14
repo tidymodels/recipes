@@ -73,6 +73,14 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the breaks) is returned.
 }
 
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{min_unique}: Unique Value Threshold (type: integer, default: 10)
+\item \code{num_breaks}: Number of Cut Points (type: integer, default: 4)
+}
+}
+
 \section{Case weights}{
 
 

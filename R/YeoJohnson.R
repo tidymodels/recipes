@@ -133,12 +133,14 @@ bake.step_YeoJohnson <- function(object, new_data, ...) {
   check_new_data(names(object$lambdas), object, new_data)
 
   if (length(object$lambdas) == 0) {
-    return(as_tibble(new_data))
+    return(new_data)
   }
+
   param <- names(object$lambdas)
   for (i in seq_along(object$lambdas)) {
-    new_data[, param[i]] <-
-      yj_transform(getElement(new_data, param[i]),
+    new_data[[param[i]]] <-
+      yj_transform(
+        new_data[[param[i]]],
         lambda = object$lambdas[param[i]]
       )
   }

@@ -4,10 +4,9 @@
 #'  step that will inverse transform the data.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `1/0`).
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
@@ -95,7 +94,7 @@ bake.step_inverse <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
   for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
+    new_data[[object$columns[i]]] <-
       1 / (new_data[[object$columns[i]]] + object$offset)
   }
   new_data

@@ -1,54 +1,12 @@
-# printing
+# check_name() is used
 
     Code
-      print(int_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          6
-      
-      Operations:
-      
-      Interactions with x1:x2
-
----
-
-    Code
-      prep(int_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          6
-      
-      Training data contained 10 data points and no missing data.
-      
-      Operations:
-      
-      Interactions with x1:x2 [trained]
-
-# missing columns
-
-    Code
-      no_fail_rec <- prep(no_fail, dat_tr)
+      prep(rec, training = dat)
     Condition
-      Warning:
-      Interaction specification failed for: ~x1:x2. No interactions will be created.
-
----
-
-    Code
-      one_int_rec <- prep(one_int, dat_tr)
-    Condition
-      Warning:
-      Interaction specification failed for: ~x1:x2. No interactions will be created.
+      Error in `step_interact()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  x1ax2
 
 # bake method errors when needed non-standard role columns are missing
 
@@ -57,4 +15,74 @@
     Condition
       Error in `step_interact()`:
       ! The following required columns are missing from `new_data` in step '': z and x1.
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Interactions with: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Interactions with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
+      
+      -- Operations 
+      * Interactions with: x1:x2
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 6
+      
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
+      
+      -- Operations 
+      * Interactions with: x1:x2 | Trained
 

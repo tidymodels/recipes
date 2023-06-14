@@ -114,6 +114,7 @@ new_values_func <- function(x,
   ))
 }
 
+#' @export
 prep.check_new_values <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
@@ -131,10 +132,14 @@ prep.check_new_values <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.check_new_values <- function(object,
                                   new_data,
                                   ...) {
   col_names <- names(object$values)
+
+  check_new_data(col_names, object, new_data)
+
   for (i in seq_along(col_names)) {
     colname <- col_names[i]
     new_values_func(new_data[[colname]],

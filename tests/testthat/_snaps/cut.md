@@ -32,75 +32,73 @@
       Warning:
       In step_cut: this will create a factor with one value only.
 
-# printing
-
-    Code
-      print(rec5)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Operations:
-      
-      Cut numeric for disp
-
----
-
-    Code
-      prep(rec5)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Cut numeric for disp [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Cut numeric for <none>
+      -- Operations 
+      * Cut numeric for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Cut numeric for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Cut numeric for <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Cut numeric for: disp
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Cut numeric for: disp | Trained
 

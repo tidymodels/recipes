@@ -1,72 +1,70 @@
-# printing
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Zero variance filter on: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Zero variance filter removed: <none> | Trained
+
+---
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Zero variance filter on x1, x2, x3, x4
+      -- Operations 
+      * Zero variance filter on: <none>
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          4
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 50 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Zero variance filter removed x4 [trained]
-
-# empty printing
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Operations:
-      
-      Zero variance filter on <none>
-
----
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Zero variance filter removed <none> [trained]
+      -- Operations 
+      * Zero variance filter removed: <none> | Trained
 

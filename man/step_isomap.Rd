@@ -47,8 +47,8 @@ used.}
 here once this preprocessing step has be trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -102,6 +102,14 @@ if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_terms}: # Model Terms (type: integer, default: 5)
+\item \code{neighbors}: # Nearest Neighbors (type: integer, default: 50)
+}
 }
 
 \section{Case weights}{

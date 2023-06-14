@@ -27,6 +27,12 @@
 #' `terms` (the selectors or variables selected) and `model` (the mean
 #' value) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_mean"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -214,11 +220,11 @@ tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$means),
-      model = vctrs::list_unchop(unname(x$means), ptype = double())
+      value = vctrs::list_unchop(unname(x$means), ptype = double())
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_dbl)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
   res$id <- x$id
   res

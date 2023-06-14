@@ -1,116 +1,115 @@
-# printing
+# centering with case weights
 
     Code
-      print(sp_sign)
-    Output
-      Recipe
+      rec
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Operations:
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Centering for carbon, hydrogen
-      Scaling for carbon, hydrogen
-      Spatial sign on  carbon, hydrogen
+      -- Operations 
+      * Spatial sign on: disp, hp, drat, wt, qsec, vs, am, ... | Trained, weighted
 
 ---
 
     Code
-      prep(sp_sign)
-    Output
-      Recipe
+      rec
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:      1
+      predictor:    9
+      case_weights: 1
       
-      Training data contained 536 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Centering for carbon, hydrogen [trained]
-      Scaling for carbon, hydrogen [trained]
-      Spatial sign on  carbon, hydrogen [trained]
+      -- Operations 
+      * Spatial sign on: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored
+        weights
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Spatial sign on  <none>
+      -- Operations 
+      * Spatial sign on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Spatial sign on  <none> [trained]
+      -- Operations 
+      * Spatial sign on: <none> | Trained
 
-# centering with case weights
+# printing
 
     Code
-      rec
-    Output
-      Recipe
+      print(rec)
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Spatial sign on  disp, hp, drat, wt, qsec, vs, am, gear, carb [weighted, trained]
+      -- Operations 
+      * Centering for: carbon, hydrogen
+      * Scaling for: carbon, hydrogen
+      * Spatial sign on: carbon, hydrogen
 
 ---
 
     Code
-      rec
-    Output
-      Recipe
+      prep(rec)
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-            outcome          1
-          predictor          9
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
       
-      Operations:
-      
-      Spatial sign on  cyl, disp, hp, drat, qsec, vs, am, gear, carb [ignored weights, trained]
+      -- Operations 
+      * Centering for: carbon, hydrogen | Trained
+      * Scaling for: carbon, hydrogen | Trained
+      * Spatial sign on: carbon, hydrogen | Trained
 

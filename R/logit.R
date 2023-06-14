@@ -4,8 +4,7 @@
 #'  step that will logit transform the data.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
+#' @inheritParams step_pca
 #' @param offset A numeric value to modify values of the columns that are either
 #' one or zero. They are modified to be `x - offset` or `offset`, respectively.
 #' @template step-return
@@ -103,7 +102,7 @@ bake.step_logit <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
   for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
+    new_data[[object$columns[i]]] <-
       binomial()$linkfun(
         pre_logit(new_data[[object$columns[i]]], object$offset)
       )

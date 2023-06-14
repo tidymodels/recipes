@@ -5,9 +5,7 @@
 #'  numeric scores.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variables that will be
-#'  converted. This is `NULL` until computed by
-#'  [prep()].
+#' @inheritParams step_pca
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return
@@ -127,7 +125,7 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
   scores <- lapply(scores, vec_cast, integer())
 
   for (i in object$columns) {
-    new_data[, i] <- scores[[i]]
+    new_data[[i]] <- scores[[i]]
   }
   new_data
 }

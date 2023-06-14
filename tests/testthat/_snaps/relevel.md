@@ -16,73 +16,71 @@
       Caused by error in `prep()`:
       ! Columns must contain the reference level 'missing_level': city
 
-# printing
-
-    Code
-      print(rec %>% step_relevel(zip, ref_level = "z95838"))
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          9
-      
-      Operations:
-      
-      Re-order factor level to ref_level for zip
-
----
-
-    Code
-      print(rec %>% step_relevel(zip, ref_level = "z95838") %>% prep())
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          9
-      
-      Training data contained 800 data points and no missing data.
-      
-      Operations:
-      
-      Re-order factor level to ref_level for zip [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Re-order factor level to ref_level for <none>
+      -- Operations 
+      * Re-order factor level to ref_level for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Re-order factor level to ref_level for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Re-order factor level to ref_level for <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Operations 
+      * Re-order factor level to ref_level for: zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Training information 
+      Training data contained 800 data points and no incomplete rows.
+      
+      -- Operations 
+      * Re-order factor level to ref_level for: zip | Trained
 

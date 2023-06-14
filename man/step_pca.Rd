@@ -53,8 +53,8 @@ should not be passed here (or at all).}
 \item{res}{The \code{\link[stats:prcomp]{stats::prcomp.default()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -111,6 +111,14 @@ fraction of the total variance in the variables.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, use either \code{type = "coef"}
 for the variable loadings per component or \code{type = "variance"} for how
 much variance each component accounts for.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+\item \code{threshold}: Threshold (type: double, default: NA)
+}
 }
 
 \section{Case weights}{

@@ -4,8 +4,7 @@
 #'  step that will transform the data.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
+#' @inheritParams step_pca
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
@@ -95,8 +94,9 @@ bake.step_unorder <- function(object, new_data, ...) {
 
   for (i in seq_along(object$columns)) {
     new_data[, object$columns[i]] <-
-      factor(as.character(getElement(new_data, object$columns[i])),
-        levels = levels(getElement(new_data, object$columns[i]))
+      factor(
+        x = as.character(new_data[[object$columns[i]]]),
+        levels = levels(new_data[[object$columns[i]]])
       )
   }
   new_data

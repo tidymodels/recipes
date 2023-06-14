@@ -47,6 +47,12 @@
 #'  `terms` (the selectors or variables selected) and `model`
 #'  (the bagged tree object) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_bag"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
@@ -275,7 +281,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
   old_data <- new_data
   for (i in seq(along.with = object$models)) {
     imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[, imp_var])
+    missing_rows <- !complete.cases(new_data[[imp_var]])
     if (any(missing_rows)) {
       preds <- object$models[[imp_var]]$..imp_vars
       pred_data <- old_data[missing_rows, preds, drop = FALSE]

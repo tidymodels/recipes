@@ -46,6 +46,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be removed) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_nzv"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -161,9 +167,7 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nzv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  }
+  new_data <- recipes_remove_cols(new_data, object)
   new_data
 }
 

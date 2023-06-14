@@ -5,14 +5,13 @@
 #'
 #' @inheritParams step_impute_bag
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param neighbors The number of neighbors.
 #' @param options A named list of options to pass to [gower::gower_topn()].
 #'  Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'  done up to the point of this imputation step. This is `NULL` until the step
 #'  is trained by [prep()].
-#' @param columns The column names that will be imputed and used for
-#'  imputation. This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
@@ -38,6 +37,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables for imputation), `predictors`
 #' (those variables used to impute), and `neighbors` is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_knn"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -229,7 +234,7 @@ nn_index <- function(miss_data, ref_data, vars, K, opt) {
 
 nn_pred <- function(index, dat) {
   dat <- dat[index, ]
-  dat <- getElement(dat, names(dat))
+  dat <- dat[[names(dat)]]
   dat <- dat[!is.na(dat)]
   est <- if (is.factor(dat) | is.character(dat)) {
     mode_est(dat)

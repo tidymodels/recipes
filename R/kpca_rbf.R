@@ -10,12 +10,18 @@
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
 #' @template kpca-info
+#'
+#' @details
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_kpca_rbf"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -139,27 +145,27 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_kpca_rbf <- function(object, new_data, ...) {
   uses_dim_red(object)
+  check_new_data(object$columns, object, new_data)
 
-  if (object$num_comp > 0 && length(object$columns) > 0) {
-    check_new_data(object$columns, object, new_data)
-    cl <-
-      rlang::call2(
-        "predict",
-        .ns = "kernlab",
-        object = object$res,
-        rlang::expr(as.matrix(new_data[, object$columns]))
-      )
-    comps <- rlang::eval_tidy(cl)
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
-    colnames(comps) <- names0(ncol(comps), object$prefix)
-    comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-    }
+  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  if (!keep_going) {
+    return(new_data)
   }
+
+  cl <-
+    rlang::call2(
+      "predict",
+      .ns = "kernlab",
+      object = object$res,
+      rlang::expr(as.matrix(new_data[, object$columns]))
+    )
+  comps <- rlang::eval_tidy(cl)
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, comps)
+  new_data <- remove_original_cols(new_data, object, object$columns)
   new_data
 }
 

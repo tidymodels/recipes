@@ -46,9 +46,8 @@ values are: \code{'max'}, \code{'mean'}, \code{'median'},
 \code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
 \code{'var'}}
 
-\item{columns}{A character string that contains the names of
-columns that should be processed. These values are not
-determined until \code{\link[=prep]{prep()}} is called.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{names}{An optional character string that is the same
 length of the number of terms selected by \code{terms}. If you
@@ -91,6 +90,14 @@ step will stop with a note about installing the package.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{statistic} (the
 summary function name), and \code{size} is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{statistic}: Rolling Summary Statistic (type: character, default: mean)
+\item \code{size}: Window Size (type: integer, default: 3)
+}
 }
 
 \section{Case weights}{

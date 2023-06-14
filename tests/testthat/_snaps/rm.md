@@ -7,84 +7,71 @@
       Caused by error in `prep()`:
       ! Can't rename variables in this context.
 
-# remove with quasi-quotation
+# empty printing
 
     Code
-      prep(rec_1, training = iris %>% slice(1:75))
-    Condition
-      Error in `step_rm()`:
-      Caused by error in `prep()`:
-      ! Problem while evaluating `all_of(sepal_vars)`.
-      Caused by error in `as_indices_impl()`:
-      ! object 'sepal_vars' not found
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Variables removed: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Variables removed: <none> | Trained
 
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
       
-      Operations:
-      
-      Variables removed x1
+      -- Operations 
+      * Variables removed: disp
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
       
-      Training data contained 20 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Variables removed x1 [trained]
-
-# empty printing
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Operations:
-      
-      Variables removed <none>
-
----
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Variables removed <none> [trained]
+      -- Operations 
+      * Variables removed: disp | Trained
 

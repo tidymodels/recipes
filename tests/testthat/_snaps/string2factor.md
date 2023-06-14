@@ -15,75 +15,71 @@
       Error in `step_string2factor()`:
       ! `ordered` should be a single logical variable
 
-# printing
-
-    Code
-      print(ex_3)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          5
-      
-      Training data contained 200 data points and no missing data.
-      
-      Operations:
-      
-      Factor variables from w, x [trained]
-
----
-
-    Code
-      prep(ex_3)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          5
-      
-      Training data contained 200 data points and no missing data.
-      
-      Operations:
-      
-      Factor variables from w, x [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Factor variables from <none>
+      -- Operations 
+      * Factor variables from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Factor variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Factor variables from <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Factor variables from: w, x
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 200 data points and no incomplete rows.
+      
+      -- Operations 
+      * Factor variables from: w, x | Trained
 

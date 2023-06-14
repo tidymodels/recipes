@@ -12,13 +12,16 @@
 #' @param lag A vector of positive integers. Each specified column will be
 #'  lagged for each value in the vector.
 #' @param prefix A prefix for generated column names, default to "lag_".
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param default Passed to `dplyr::lag`, determines what fills empty rows
 #'   left by lagging (defaults to NA).
 #' @template step-return
 #' @details The step assumes that the data are already _in the proper sequential
 #'  order_ for lagging.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
+#' `terms` (the columns that will be affected) is returned.
 #'
 #' @template case-weights-not-supported
 #'
@@ -119,7 +122,7 @@ bake.step_lag <- function(object, new_data, ...) {
 
   grid <- tidyr::expand_grid(col = object$columns, lag_val = object$lag)
   calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-  newname <- as.character(glue::glue("{object$prefix}{grid$lag_val}_{grid$col}"))
+  newname <- as.character(glue("{object$prefix}{grid$lag_val}_{grid$col}"))
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
   new_data <- mutate(new_data, !!!calls)
@@ -132,3 +135,11 @@ print.step_lag <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
+
+#' @rdname tidy.recipe
+#' @export
+tidy.step_lag <- function(x, ...) {
+  res <- simple_terms(x, ...)
+  res$id <- x$id
+  res
+}

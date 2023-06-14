@@ -78,6 +78,16 @@
       Caused by error in `bake()`:
       ! All `lon` values should be between -180 and 180
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_geodist()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  geo_dist
+
 # bad args
 
     Code
@@ -152,37 +162,71 @@
       Error in `step_geodist()`:
       ! `is_lat_lon` should be a single logical value.
 
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: NULL, NULL
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: <none> | Trained
+
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Operations:
-      
-      Geographical distances from 0.5 x 0.25 using x, y
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: x, y
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
       
-      Training data contained 10 data points and 1 incomplete row. 
+      -- Training information 
+      Training data contained 10 data points and 1 incomplete row.
       
-      Operations:
-      
-      Geographical distances from 0.5 x 0.25 using x, y [trained]
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: x, y | Trained
 

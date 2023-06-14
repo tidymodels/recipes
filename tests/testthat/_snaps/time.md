@@ -1,70 +1,78 @@
-# printing
+# check_name() is used
 
     Code
-      print(date_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          1
-      
-      Operations:
-      
-      Time features from all_predictors()
-
----
-
-    Code
-      prep(date_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          1
-      
-      Training data contained 5 data points and no missing data.
-      
-      Operations:
-      
-      Time features from times [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_time()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  time_hour
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Time features from <none>
+      -- Operations 
+      * Time features from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Time features from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Time features from <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Operations 
+      * Time features from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 5 data points and no incomplete rows.
+      
+      -- Operations 
+      * Time features from: times | Trained
 

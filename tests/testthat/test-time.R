@@ -91,16 +91,20 @@ test_that("custom hour12 metric is correct", {
   expect_equal(date_res, date_exp)
 })
 
-test_that("printing", {
-  examples <- data.frame(
-    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
-      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+test_that("check_name() is used", {
+  dat <- tibble(
+    time = lubridate::ymd_hms("2000-01-01 00:00:00") +
+      lubridate::seconds(seq(0, 60 * 60 * 24))
   )
+  dat$time_hour <- dat$time
 
-  date_rec <- recipe(~ times, examples) %>%
-    step_time(all_predictors())
-  expect_snapshot(print(date_rec))
-  expect_snapshot(prep(date_rec))
+  rec <- recipe(~ ., data = dat) %>%
+    step_time(time)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
 })
 
 test_that("keep_original_cols works", {
@@ -119,6 +123,38 @@ test_that("keep_original_cols works", {
     colnames(date_res),
     paste0("times_", c("hour", "minute", "second"))
   )
+})
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  feats <- c("am", "hour", "hour12", "minute", "second", "decimal_day")
+
+  rec <- recipe(examples) %>%
+    step_time(times) %>%
+    update_role(times, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  rec_trained <- prep(rec, training = examples)
+
+  expect_error(bake(rec_trained, new_data = examples[, -1]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_time(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
 })
 
 test_that("empty selection prep/bake is a no-op", {
@@ -147,14 +183,15 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
-  skip_if(packageVersion("rlang") < "1.0.0")
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_time(rec)
+test_that("printing", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
 
-  expect_snapshot(rec)
+  rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors())
 
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })

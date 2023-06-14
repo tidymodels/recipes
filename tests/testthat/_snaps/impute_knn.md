@@ -7,42 +7,6 @@
       ! `step_knnimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_knn()` instead.
 
-# printing
-
-    Code
-      print(discr_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Operations:
-      
-      K-nearest neighbor imputation for carbon, nitrogen
-
----
-
-    Code
-      prep(discr_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Training data contained 536 data points and no missing data.
-      
-      Operations:
-      
-      K-nearest neighbor imputation for carbon, nitrogen [trained]
-
 # options
 
     Code
@@ -55,35 +19,69 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      K-nearest neighbor imputation for <none>
+      -- Operations 
+      * K-nearest neighbor imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * K-nearest neighbor imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      K-nearest neighbor imputation for <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * K-nearest neighbor imputation for: carbon, nitrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * K-nearest neighbor imputation for: carbon, nitrogen | Trained
 

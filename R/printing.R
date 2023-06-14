@@ -21,34 +21,69 @@ print_step <- function(tr_obj = NULL,
                        width = max(20, options()$width - 30),
                        case_weights = NULL) {
 
-  cat(title)
+  title <- trimws(title)
+
+  trained_text <- dplyr::if_else(trained, "Trained", "")
+  case_weights_text <- dplyr::case_when(
+    is.null(case_weights) ~ "",
+    isTRUE(case_weights) ~ "weighted",
+    isFALSE(case_weights) ~ "ignored weights"
+  )
+
+  vline_seperator <- dplyr::if_else(trained_text == "", "", "|")
+  comma_seperator <- dplyr::if_else(
+    trained_text != "" && case_weights_text != "",
+    true = ",", false = ""
+  )
+
+  width_title <- nchar(
+    paste0(
+      "* ", title, ":", " ", vline_seperator, " ", trained_text, " ",
+      comma_seperator, " ", case_weights_text
+    )
+  )
+
+  width_diff <- cli::console_width() * 1 - width_title
 
   if (trained) {
-    txt <- format_ch_vec(tr_obj, width = width)
+    elements <- tr_obj
   } else {
-    txt <- format_selectors(untr_obj, width = width)
+    elements <- lapply(untr_obj, function(x) {
+      expr_deparse(quo_get_expr(x), width = Inf)
+    })
+
+    elements <- vctrs::list_unchop(elements, ptype = character())
   }
 
-  if (length(txt) == 0L) {
-    txt <- "<none>"
+  if (length(elements) == 0L) {
+    elements <- "<none>"
   }
 
-  cat(txt)
+  element_print_lengths <- cumsum(nchar(elements)) + # length of elements
+    c(0L, cumsum(rep(2L, length(elements) - 1))) + # length of comma seperator
+    c(rep(5L, length(elements) - 1), 0L) # length of `, ...`
 
-  if (trained) {
-    if (is.null(case_weights)) {
-      cat(" [trained]\n")
-    } else {
-      case_weights_ind <- ifelse(case_weights, "weighted", "ignored weights")
-      trained_txt <- paste(case_weights_ind, "trained", sep = ", ")
-      trained_txt <- paste0(" [", trained_txt, "]\n")
-      cat(trained_txt)
-    }
+  first_line <- which(width_diff >= element_print_lengths)
+  first_line <- unname(first_line)
+  first_line <- ifelse(
+    test = identical(first_line, integer(0)),
+    yes = length(element_print_lengths),
+    no = max(first_line)
+  )
 
+  more_dots <- ifelse(first_line == length(elements), "", ", ...")
 
-  } else {
-    cat("\n")
-  }
+  cli::cli_bullets(
+    c("*" = "
+    {title}: \\
+    {.pkg {elements[seq_len(first_line)]}}\\
+    {more_dots} \\
+    {vline_seperator} \\
+    {.emph {trained_text}}\\
+    {comma_seperator} \\
+    {.emph {case_weights_text}}
+    ")
+  )
 
   invisible(NULL)
 }

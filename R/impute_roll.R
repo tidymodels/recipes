@@ -5,11 +5,10 @@
 #'  variables by the measure of location (e.g. median) within a moving window.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param ... One or more selector functions to choose variables to be imputed;
 #'  these columns must be non-integer numerics (i.e., double precision).
 #'  See [selections()] for more details.
-#' @param columns A named numeric vector of columns. This is
-#'  `NULL` until computed by [prep()].
 #' @param window The size of the window around a point to be imputed. Should be
 #'  an odd integer greater than one. See Details below for a discussion of
 #'  points at the ends of the series.
@@ -43,6 +42,12 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `window`
 #'  (the window size) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_roll"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -78,7 +83,7 @@ step_impute_roll <-
            window = 5,
            skip = FALSE,
            id = rand_id("impute_roll")) {
-    if (!is_tune(window) & !is_varying(window)) {
+    if (!is_tune(window)) {
       if (window < 3 | window %% 2 != 1) {
         rlang::abort("`window` should be an odd integer >= 3")
       }
@@ -259,8 +264,8 @@ tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(
     name = c("statistic", "window"),
     call_info = list(
-      list(pkg = "dials", fun = "location_stat"),
-      list(pkg = "dials", fun = "window")
+      list(pkg = "dials", fun = "summary_stat"),
+      list(pkg = "dials", fun = "window_size")
     ),
     source = "recipe",
     component = "step_impute_roll",

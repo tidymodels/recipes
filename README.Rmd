@@ -48,8 +48,8 @@ install.packages("tidymodels")
 install.packages("recipes")
 
 # Or the development version from GitHub:
-# install.packages("devtools")
-devtools::install_github("tidymodels/recipes")
+# install.packages("pak")
+pak::pak("tidymodels/recipes")
 ```
 
 ## Contributing

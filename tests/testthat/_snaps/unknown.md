@@ -31,73 +31,71 @@
       Caused by error in `prep()`:
       ! Columns already contain a level 'FAIR_OAKS': city
 
-# printing
-
-    Code
-      print(rec %>% step_unknown(city, zip))
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          9
-      
-      Operations:
-      
-      Unknown factor level assignment for city, zip
-
----
-
-    Code
-      print(rec %>% step_unknown(city, zip) %>% prep())
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          9
-      
-      Training data contained 800 data points and no missing data.
-      
-      Operations:
-      
-      Unknown factor level assignment for city, zip [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Unknown factor level assignment for <none>
+      -- Operations 
+      * Unknown factor level assignment for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Unknown factor level assignment for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Unknown factor level assignment for <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Operations 
+      * Unknown factor level assignment for: city, zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 9
+      
+      -- Training information 
+      Training data contained 800 data points and no incomplete rows.
+      
+      -- Operations 
+      * Unknown factor level assignment for: city, zip | Trained
 

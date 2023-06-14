@@ -137,19 +137,18 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_count <- function(object, new_data, ...) {
   check_new_data(names(object$input), object, new_data)
 
   if (length(object$input) == 0L) {
-    # Empty selection, but still return the new column
-    new_data[, object$result] <- if (object$normalize) NA_real_ else NA_integer_
     return(new_data)
   }
 
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = getElement(new_data, object$input),
+      text = new_data[[object$input]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -163,7 +162,7 @@ bake.step_count <- function(object, new_data, ...) {
 
   new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
   if (object$normalize) {
-    totals <- nchar(as.character(getElement(new_data, object$input)))
+    totals <- nchar(as.character(new_data[[object$input]]))
     new_data[, object$result] <- new_data[, object$result] / totals
   }
   new_data

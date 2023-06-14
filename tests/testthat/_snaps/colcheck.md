@@ -16,75 +16,73 @@
       ! The following required columns are missing from `new_data`: "mpg".
       i These columns have one of the following roles, which are required at `bake()` time: "predictor".
 
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Check if the following columns are present:: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Check if the following columns are present:: <none> | Trained
+
 # printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Check if the following columns are present: everything()
+      -- Operations 
+      * Check if the following columns are present:: everything()
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Check if the following columns are present: mpg, disp, hp, drat, wt, qsec, vs, am, gear, ca... [trained]
-
-# empty printing
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Operations:
-      
-      Check if the following columns are present: <none>
-
----
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Check if the following columns are present: <none> [trained]
+      -- Operations 
+      * Check if the following columns are present:: cyl, disp, hp, ... | Trained
 

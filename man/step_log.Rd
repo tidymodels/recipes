@@ -35,8 +35,8 @@ preprocessing have been estimated.}
 \item{offset}{An optional value to add to the data prior to
 logging (to avoid \code{log(0)}).}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -46,7 +46,7 @@ Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{signed}{A logical indicating whether to take the signed log.
-This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
+This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 If \code{TRUE} the \code{offset} argument will be ignored.}
 
 \item{id}{A character string that is unique to this step to identify it.}

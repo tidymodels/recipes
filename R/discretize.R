@@ -264,6 +264,12 @@ print.discretize <-
 #' `terms` (the selectors or variables selected) and `value`
 #' (the breaks) is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_discretize"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @family discretization steps
@@ -374,8 +380,7 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 bake.step_discretize <- function(object, new_data, ...) {
   check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
-    new_data[, i] <-
-      predict(object$objects[[i]], getElement(new_data, i))
+    new_data[[i]] <- predict(object$objects[[i]], new_data[[i]])
   }
   new_data
 }

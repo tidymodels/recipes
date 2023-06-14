@@ -83,7 +83,7 @@ step_string2factor <-
            ordered = FALSE,
            skip = FALSE,
            id = rand_id("string2factor")) {
-    if (!is_tune(ordered) & !is_varying(ordered)) {
+    if (!is_tune(ordered)) {
       if (!is.logical(ordered) || length(ordered) != 1) {
         rlang::abort("`ordered` should be a single logical variable")
       }
@@ -159,6 +159,8 @@ make_factor <- function(x, lvl, ord) {
 #' @export
 bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
+
+  check_new_data(col_names, object, new_data)
 
   if (is.list(object$levels)) {
     new_data[, col_names] <-

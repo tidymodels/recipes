@@ -113,7 +113,7 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     var_names <- names(values[is.na(values)])
     vars <- glue::glue_collapse(glue::backtick(var_names), sep = ", ")
     rlang::warn(paste(
-      "No Box-Cox transformation could be estimated for:", glue::glue("{vars}")
+      "No Box-Cox transformation could be estimated for:", glue("{vars}")
     ))
   }
   values <- values[!is.na(values)]
@@ -135,7 +135,10 @@ bake.step_BoxCox <- function(object, new_data, ...) {
   check_new_data(param, object, new_data)
 
   for (i in seq_along(object$lambdas)) {
-    new_data[, param[i]] <- bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+    new_data[[param[i]]] <- bc_trans(
+      new_data[[param[i]]],
+      lambda = object$lambdas[i]
+    )
   }
 
   new_data

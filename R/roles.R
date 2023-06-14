@@ -169,7 +169,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
     vars <- glue::glue_collapse(glue::single_quote(vars), sep = ", ")
-    rlang::abort(glue::glue(
+    rlang::abort(glue(
       "No role currently exists for column(s): {vars}. Please use ",
       "`update_role()` instead."
     ))
@@ -193,7 +193,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     )
 
     rlang::warn(
-      glue::glue(
+      glue(
         "Role, '{new_role}', already exists for column(s): {bad_vars}. ",
         "Skipping."
       )
@@ -307,6 +307,9 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @rdname roles
 #' @export
 remove_role <- function(recipe, ..., old_role) {
+  if (rlang::is_missing(old_role)) {
+    rlang::abort('argument "old_role" is missing, with no default.')
+  }
   single_chr(old_role, "old_")
 
   terms <- quos(...)
@@ -330,7 +333,7 @@ remove_role <- function(recipe, ..., old_role) {
   }
 
   info <- info %>%
-    mutate(.orig_order = 1:nrow(info)) %>%
+    mutate(.orig_order = seq_len(nrow(info))) %>%
     group_by(variable) %>%
     do(role_rm_machine(., role = old_role, var = vars)) %>%
     ungroup() %>%
@@ -356,7 +359,7 @@ role_rm_machine <- function(x, role, var) {
     role <- glue::single_quote(role)
 
     rlang::warn(
-      glue::glue("Column, {var}, does not have role, {role}.")
+      glue("Column, {var}, does not have role, {role}.")
     )
 
     return(x)

@@ -168,12 +168,11 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-  x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+  x_dat <- split(training[, x_names], training[[class_var]])
   if (is.null(wts)) {
     wts_split <- map(x_dat, ~NULL)
   } else {
-    wts_split <- split(as.double(wts), getElement(training, class_var))
+    wts_split <- split(as.double(wts), training[[class_var]])
   }
   if (x$pool) {
     res <- list(
@@ -228,6 +227,10 @@ mah_pooled <- function(means, x, cov_mat) {
 
 #' @export
 bake.step_classdist <- function(object, new_data, ...) {
+  if (length(object$objects[[1]]$center) == 0) {
+    return(new_data)
+  }
+
   if (object$pool) {
     x_cols <- names(object$objects[["center"]][[1]])
     check_new_data(x_cols, object, new_data)
@@ -249,13 +252,13 @@ bake.step_classdist <- function(object, new_data, ...) {
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
+  res <- vec_cbind(new_data, res)
   res
 }
 
 print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue::glue("Distances to {x$class} for ")
+    title <- glue("Distances to {x$class} for ")
     if (x$trained) {
       x_names <- if (x$pool) {
         names(x$objects[["center"]][[1]])

@@ -7,40 +7,6 @@
       Caused by error in `prep()`:
       ! The level other is already a factor level that will be retained. Please choose a different value.
 
-# printing
-
-    Code
-      print(rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          2
-      
-      Operations:
-      
-      Collapsing factor levels for city, zip
-
----
-
-    Code
-      prep(rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          2
-      
-      Training data contained 732 data points and no missing data.
-      
-      Operations:
-      
-      Collapsing factor levels for city, zip [trained]
-
 # if the threshold argument is greather than one then it should be an integer(ish)
 
     Code
@@ -49,77 +15,109 @@
       Error in `step_other()`:
       ! If `threshold` is greater than one it should be an integer.
 
-# empty printing
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Operations:
-      
-      Collapsing factor levels for <none>
-
----
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Collapsing factor levels for <none> [trained]
-
 # othering with case weights
 
     Code
       others
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor:    1
+      case_weights: 1
       
-      Training data contained 732 data points and no missing data.
+      -- Training information 
+      Training data contained 732 data points and no incomplete rows.
       
-      Operations:
-      
-      Collapsing factor levels for city [weighted, trained]
+      -- Operations 
+      * Collapsing factor levels for: city | Trained, weighted
 
 ---
 
     Code
       others
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-               role #variables
-       case_weights          1
-          predictor          1
+      -- Inputs 
+      Number of variables by role
+      predictor:    1
+      case_weights: 1
       
-      Training data contained 732 data points and no missing data.
+      -- Training information 
+      Training data contained 732 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Collapsing factor levels for: city | Trained, ignored weights
+
+# empty printing
+
+    Code
+      rec
+    Message
       
-      Collapsing factor levels for city [ignored weights, trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Collapsing factor levels for: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Collapsing factor levels for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Operations 
+      * Collapsing factor levels for: city, zip
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Training information 
+      Training data contained 732 data points and no incomplete rows.
+      
+      -- Operations 
+      * Collapsing factor levels for: city, zip | Trained
 

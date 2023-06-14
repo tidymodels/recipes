@@ -196,8 +196,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       ## factor levels at the end of `prep.recipe` since it is
       ## not a factor anymore. We'll save them here and reset them
       ## in `bake.step_dummy` just prior to calling `model.matrix`
-      attr(levels[[i]], "values") <-
-        levels(getElement(training, col_names[i]))
+      attr(levels[[i]], "values") <- levels(training[[col_names[i]]])
       attr(levels[[i]], ".Environment") <- NULL
     }
   } else {
@@ -268,7 +267,6 @@ bake.step_dummy <- function(object, new_data, ...) {
   }
 
   col_names <- names(object$levels)
-  keep_original_cols <- get_keep_original_cols(object)
 
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
@@ -301,7 +299,8 @@ bake.step_dummy <- function(object, new_data, ...) {
     )
 
     new_data[, orig_var] <-
-      factor(getElement(new_data, orig_var),
+      factor(
+        new_data[[orig_var]],
         levels = attr(object$levels[[i]], "values"),
         ordered = fac_type == "ordered"
       )
@@ -331,11 +330,14 @@ bake.step_dummy <- function(object, new_data, ...) {
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^\\`?", col_names[i], "\\`?"), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
-    new_data <- bind_cols(new_data, as_tibble(indicators))
-    if (any(!object$preserve, !keep_original_cols)) {
-      new_data[, col_names[i]] <- NULL
-    }
+    indicators <- as_tibble(indicators)
+    indicators <- check_name(indicators, new_data, object, names(indicators))
+
+    new_data <- vec_cbind(new_data, indicators)
   }
+
+  new_data <- remove_original_cols(new_data, object, col_names)
+
   new_data
 }
 

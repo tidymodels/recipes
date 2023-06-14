@@ -1,72 +1,80 @@
-# printing
+# check_name() is used
 
     Code
-      print(with_poly)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Operations:
-      
-      Orthogonal polynomials on carbon, hydrogen
-
----
-
-    Code
-      prep(with_poly)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Training data contained 456 data points and no missing data.
-      
-      Operations:
-      
-      Orthogonal polynomials on carbon, hydrogen [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_poly()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_poly_1
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Orthogonal polynomials on <none>
+      -- Operations 
+      * Orthogonal polynomials on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Orthogonal polynomials on: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Orthogonal polynomials on <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Orthogonal polynomials on: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * Orthogonal polynomials on: carbon, hydrogen | Trained
 

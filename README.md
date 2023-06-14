@@ -24,17 +24,6 @@ ad_rec <- recipe(Class ~ tau + VEGF, data = ad_data) %>%
   step_normalize(all_numeric_predictors())
 
 ad_rec
-#> Recipe
-#> 
-#> Inputs:
-#> 
-#>       role #variables
-#>    outcome          1
-#>  predictor          2
-#> 
-#> Operations:
-#> 
-#> Centering and scaling for all_numeric_predictors()
 ```
 
 More information on recipes can be found at the [*Get
@@ -62,8 +51,8 @@ install.packages("tidymodels")
 install.packages("recipes")
 
 # Or the development version from GitHub:
-# install.packages("devtools")
-devtools::install_github("tidymodels/recipes")
+# install.packages("pak")
+pak::pak("tidymodels/recipes")
 ```
 
 ## Contributing

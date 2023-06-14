@@ -15,73 +15,71 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be string, factor, or ordered.
 
-# printing
-
-    Code
-      print(rec5)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Operations:
-      
-      Regular expression counts using description
-
----
-
-    Code
-      prep(rec5)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Training data contained 40 data points and no missing data.
-      
-      Operations:
-      
-      Regular expression counts using description [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Regular expression counts using <none>
+      -- Operations 
+      * Regular expression counts using: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Regular expression counts using: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Regular expression counts using <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Regular expression counts using: description
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 40 data points and no incomplete rows.
+      
+      -- Operations 
+      * Regular expression counts using: description | Trained
 

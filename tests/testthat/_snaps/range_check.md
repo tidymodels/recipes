@@ -102,71 +102,71 @@
       Error in `range_check_func()`:
       ! max y is 60, upper bound is 55
 
-# printing
-
-    Code
-      print(check_range_extract)
-    Output
-      Recipe
-      
-      Inputs:
-      
-        11 variables (no declared roles)
-      
-      Operations:
-      
-      Checking range of drat, cyl, am
-
----
-
-    Code
-      prep(check_range_extract)
-    Output
-      Recipe
-      
-      Inputs:
-      
-        11 variables (no declared roles)
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Checking range of drat, cyl, am [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Checking range of <none>
+      -- Operations 
+      * Checking range of: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Checking range of: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Checking range of <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 11
+      
+      -- Operations 
+      * Checking range of: drat, cyl, am
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      undeclared role: 11
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Checking range of: drat, cyl, am | Trained
 

@@ -9,6 +9,12 @@
 #'  preprocessing step has be trained by [prep()].
 #' @param options A named list of options to pass to [stats::quantile()].
 #'   See Details for more information.
+#' @param outside A character, describing how interpolation is to take place
+#'   outside the interval `[min(x), max(x)]`. `none` means nothing will happen
+#'   and values outside the range will be `NA`. `lower` means that new values
+#'   less than `min(x)` will be given the value `0`. `upper` means that new
+#'   values larger than `max(x)` will be given the value `1`. `both` will handle
+#'   both cases. Defaults to `none`.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
@@ -42,8 +48,13 @@ step_percentile <-
            trained = FALSE,
            ref_dist = NULL,
            options = list(probs = (0:100) / 100),
+           outside = "none",
            skip = FALSE,
            id = rand_id("percentile")) {
+
+    outside <- rlang::arg_match(outside,
+                                values = c("none", "both", "upper", "lower"))
+
     add_step(
       recipe,
       step_percentile_new(
@@ -52,6 +63,7 @@ step_percentile <-
         role = role,
         ref_dist = ref_dist,
         options = options,
+        outside = outside,
         skip = skip,
         id = id,
         case_weights = NULL
@@ -60,7 +72,7 @@ step_percentile <-
   }
 
 step_percentile_new <-
-  function(terms, role, trained, ref_dist, options, skip, id, case_weights) {
+  function(terms, role, trained, ref_dist, options, outside, skip, id, case_weights) {
     step(
       subclass = "percentile",
       terms = terms,
@@ -68,6 +80,7 @@ step_percentile_new <-
       trained = trained,
       ref_dist = ref_dist,
       options = options,
+      outside = outside,
       skip = skip,
       id = id,
       case_weights = case_weights
@@ -107,6 +120,7 @@ prep.step_percentile <- function(x, training, info = NULL, ...) {
     role = x$role,
     ref_dist = ref_dist,
     options = x$options,
+    outside = x$outside,
     skip = x$skip,
     id = x$id,
     case_weights = were_weights_used
@@ -142,17 +156,24 @@ bake.step_percentile <- function(object, new_data, ...) {
   vars <- names(object$ref_dist)
   check_new_data(vars, object, new_data)
 
-  new_data[, vars] <-
-    purrr::map2_dfc(new_data[, vars], object$ref_dist, pctl_by_approx)
+  new_data[, vars] <- purrr::map2_dfc(
+    .x = new_data[, vars],
+    .y = object$ref_dist,
+    .f = pctl_by_approx,
+    outside = object$outside
+  )
 
   new_data
 }
 
-pctl_by_approx <- function(x, ref) {
+pctl_by_approx <- function(x, ref, outside) {
   # In case duplicates were removed, get the percentiles from
   # the names of the reference object
+
+  outside <- switch(outside, none = 1, both = 2, upper = 1:2, lower = 2:1)
+
   grid <- as.numeric(gsub("%$", "", names(ref)))
-  stats::approx(x = ref, y = grid, xout = x)$y / 100
+  stats::approx(x = ref, y = grid, xout = x, rule = outside)$y / 100
 }
 
 print.step_percentile <-

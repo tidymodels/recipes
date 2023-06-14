@@ -10,14 +10,6 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(everything(), profile = age) %>% prep(data = Sacramento)
-    Condition
-      Error in `structure()`:
-      ! object 'age' not found
-
----
-
-    Code
       sacr_rec %>% step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
         prep(data = Sacramento)
     Condition
@@ -59,73 +51,71 @@
       Error in `error_cnd()`:
       ! Conditions must have named data fields
 
-# printing
-
-    Code
-      print(num_rec_1)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor         10
-      
-      Operations:
-      
-      Profiling data set for sqft
-
----
-
-    Code
-      print(num_rec_2)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor         10
-      
-      Training data contained 20 data points and no missing data.
-      
-      Operations:
-      
-      Profiling data set for sqft [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Profiling data set for mpg
+      -- Operations 
+      * Profiling data set for: mpg
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Profiling data set for: mpg | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Profiling data set for mpg [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 10
+      
+      -- Operations 
+      * Profiling data set for: sqft
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
+      
+      -- Operations 
+      * Profiling data set for: sqft | Trained
 

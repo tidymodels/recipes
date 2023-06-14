@@ -25,39 +25,15 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be double, or integer.
 
-# printing
+# check_name() is used
 
     Code
-      print(rec3)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          5
-      
-      Operations:
-      
-      Ratios from all_numeric(), all_numeric()
-
----
-
-    Code
-      prep(rec3)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          5
-      
-      Training data contained 10 data points and 1 incomplete row. 
-      
-      Operations:
-      
-      Ratios from x2, x3, x4, x1, x1, x2, x3, x4 [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_ratio()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_o_disp
 
 # can prep recipes with no keep_original_cols
 
@@ -72,35 +48,67 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Ratios from mpg
+      -- Operations 
+      * Ratios from: mpg
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Ratios from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Ratios from <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Ratios from: all_numeric(), all_numeric()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 10 data points and 1 incomplete row.
+      
+      -- Operations 
+      * Ratios from: x2, x3, x4, x1, x1, x2, x3, x4 | Trained
 

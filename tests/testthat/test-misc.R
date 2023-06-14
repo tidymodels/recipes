@@ -14,3 +14,17 @@ test_that("check_new_data works", {
   expect_snapshot(bake(log_obj, examples[,3:4, drop = FALSE]), error = TRUE)
   expect_snapshot(bake(log_obj, examples[,  4, drop = FALSE]), error = TRUE)
 })
+
+test_that("conditionMessage method for recipes errors works", {
+  res <-
+    try({
+      recipe(~ ., data = mtcars) %>%
+        step_dummy(all_numeric_predictors()) %>%
+        prep()},
+      silent = TRUE
+    )
+
+  expect_s3_class(attr(res, "condition"), "recipes_error")
+
+  expect_snapshot(conditionMessage(attr(res, "condition")))
+})

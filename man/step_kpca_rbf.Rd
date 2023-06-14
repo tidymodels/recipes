@@ -43,8 +43,8 @@ stay unchanged.}
 here once this preprocessing step has be trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{sigma}{A numeric value for the radial basis function parameter.}
 
@@ -99,6 +99,14 @@ new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names
 \section{tidy() results}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+\item \code{sigma}: Radial Basis Function sigma (type: double, default: 0.2)
+}
 }
 
 \section{Case weights}{

@@ -15,8 +15,6 @@
 #' @param res The [dimRed::Isomap()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -49,6 +47,12 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the selectors or variables selected) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_isomap"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -197,13 +201,11 @@ bake.step_isomap <- function(object, new_data, ...) {
         dimred_data(new_data[, isomap_vars, drop = FALSE])
       )@data
     })
-    comps <- comps[, 1:object$num_terms, drop = FALSE]
+    comps <- comps[, seq_len(object$num_terms), drop = FALSE]
+    comps <- as_tibble(comps)
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
-    }
+    new_data <- vec_cbind(new_data, comps)
+    new_data <- remove_original_cols(new_data, object, isomap_vars)
   }
   new_data
 }

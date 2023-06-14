@@ -1,43 +1,12 @@
-# printing
+# check_name() is used
 
     Code
-      kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6)
-
----
-
-    Code
-      kpca_rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Operations:
-      
-      Kernel PCA extraction with X2, X3, X4, X5, X6
-
----
-
-    Code
-      prep(kpca_rec)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Training data contained 100 data points and no missing data.
-      
-      Operations:
-      
-      Kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_kpca()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  kPC1
 
 # No kPCA comps
 
@@ -49,20 +18,20 @@
 
     Code
       pca_extract
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor          5
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
       
-      Training data contained 100 data points and no missing data.
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
       
-      Operations:
-      
-      Kernel PCA extraction with X2, X3, X4, X5, X6 [trained]
+      -- Operations 
+      * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
 # can prep recipes with no keep_original_cols
 
@@ -77,35 +46,69 @@
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Kernel PCA extraction with <none>
+      -- Operations 
+      * Kernel PCA extraction with: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Kernel PCA extraction with: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Kernel PCA extraction with <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Kernel PCA extraction with: X2, X3, X4, X5, X6
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
+      
+      -- Operations 
+      * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 

@@ -52,8 +52,8 @@ running ICA.}
 here once this preprocessing step has be trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -109,6 +109,13 @@ If \code{num_comp = 101}, the names would be \code{IC001} -
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{value} (the loading),
 and \code{component} is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+}
 }
 
 \section{Case weights}{

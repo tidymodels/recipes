@@ -43,8 +43,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A named numeric vector of columns. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{statistic}{A function with a single argument for the data to compute
 the imputed value. Only complete values will be passed to the function and
@@ -95,6 +95,14 @@ to \code{step_impute_roll()}.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{window}
 (the window size) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{statistic}: Rolling Summary Statistic (type: character, default: median)
+\item \code{window}: Window Size (type: integer, default: 5)
+}
 }
 
 \section{Case weights}{

@@ -10,9 +10,6 @@
 #' @param holidays A character string that includes at least one
 #'  holiday supported by the `timeDate` package. See
 #'  [timeDate::listHolidays()] for a complete list.
-#' @param columns A character string of variables that will be
-#'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep()] is used.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
@@ -49,7 +46,7 @@ step_holiday <-
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("holiday")) {
-    if (!is_tune(holidays) & !is_varying(holidays)) {
+    if (!is_tune(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days)) {
         rlang::abort("Invalid `holidays` value. See timeDate::listHolidays")
@@ -141,13 +138,12 @@ bake.step_holiday <- function(object, new_data, ...) {
     names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
     tmp <- purrr::map_dfc(tmp, vec_cast, integer())
 
-    new_data <- bind_cols(new_data, tmp)
+    tmp <- check_name(tmp, new_data, object, names(tmp))
+    new_data <- vec_cbind(new_data, tmp)
   }
 
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-  }
+  new_data <- remove_original_cols(new_data, object, names(object$columns))
+
   new_data
 }
 

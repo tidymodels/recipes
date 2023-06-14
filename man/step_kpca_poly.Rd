@@ -45,8 +45,8 @@ stay unchanged.}
 here once this preprocessing step has be trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{degree, scale_factor, offset}{Numeric values for the polynomial kernel function.}
 
@@ -101,6 +101,16 @@ new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names
 \section{tidy() results}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 4 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+\item \code{degree}: Polynomial Degree (type: double, default: 2)
+\item \code{scale_factor}: Scale Factor (type: double, default: 1)
+\item \code{offset}: Offset (type: double, default: 1)
+}
 }
 
 \section{Case weights}{

@@ -130,7 +130,7 @@ bake.step_range <- function(object, new_data, ...) {
     new_data[[column]] <- (new_data[[column]] - min) *
       (object$max - object$min) / (max - min) + object$min
 
-    if (object$clipping) {
+    if (is.null(object$clipping) || isTRUE(object$clipping)) {
       new_data[[column]] <- pmax(new_data[[column]], object$min)
       new_data[[column]] <- pmin(new_data[[column]], object$max)
     }
@@ -140,7 +140,7 @@ bake.step_range <- function(object, new_data, ...) {
 
 print.step_range <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue::glue("Range scaling to [{x$min},{x$max}] for ")
+    title <- glue("Range scaling to [{x$min},{x$max}] for ")
     print_step(colnames(x$ranges), x$terms, x$trained, title, width)
     invisible(x)
   }

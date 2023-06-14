@@ -20,9 +20,6 @@
 #'  listing.
 #' @param naming A function that defines the naming convention for
 #'  new ratio columns.
-#' @param columns The column names used in the ratios. This
-#'  argument is not populated until [prep()] is
-#'  executed.
 #' @template step-return
 #' @details
 #'
@@ -159,13 +156,12 @@ bake.step_ratio <- function(object, new_data, ...) {
 
   res <- tibble::new_tibble(res, nrow = nrow(new_data))
 
-  keep_original_cols <- get_keep_original_cols(object)
-  new_data <- bind_cols(new_data, res)
+  res <- check_name(res, new_data, object, names(res))
+  new_data <- vec_cbind(new_data, res)
 
-  if (!keep_original_cols) {
-    union_cols <- union(object$columns$top, object$columns$bottom)
-    new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
-  }
+  union_cols <- union(object$columns$top, object$columns$bottom)
+  new_data <- remove_original_cols(new_data, object, union_cols)
+
   new_data
 }
 

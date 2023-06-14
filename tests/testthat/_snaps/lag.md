@@ -7,73 +7,71 @@
       Caused by error in `bake()`:
       ! step_lag requires 'lag' argument to be integer valued.
 
-# something prints
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Lagging: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Lagging: <none> | Trained
+
+# printing
 
     Code
       print(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
       
-      Operations:
-      
-      Lagging t
+      -- Operations 
+      * Lagging: disp
 
 ---
 
     Code
       prep(rec)
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-       predictor          2
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
       
-      Training data contained 10 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
-      
-      Lagging t [trained]
-
-# empty printing
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Operations:
-      
-      Lagging <none>
-
----
-
-    Code
-      rec
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         10
-      
-      Training data contained 32 data points and no missing data.
-      
-      Operations:
-      
-      Lagging <none> [trained]
+      -- Operations 
+      * Lagging: disp | Trained
 

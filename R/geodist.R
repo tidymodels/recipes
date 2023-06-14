@@ -16,8 +16,6 @@
 #'  created from previous versions of recipes, a value of `FALSE` is used.
 #' @param log A logical: should the distance be transformed by
 #'  the natural log function?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param name A single character value to use for the new
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
@@ -157,11 +155,6 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   }
   check_type(training[, lat_name], types = c("double", "integer"))
 
-
-  if (any(names(training) == x$name)) {
-    rlang::abort("'", x$name, "' is already used in the data.")
-  }
-
   step_geodist_new(
     lon = x$lon,
     lat = x$lat,
@@ -217,6 +210,10 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
 bake.step_geodist <- function(object, new_data, ...) {
   check_new_data(names(object$columns), object, new_data)
 
+  if (length(object$columns) == 0) {
+    return(new_data)
+  }
+
   object <- check_is_lat_lon(object)
 
   if (object$is_lat_lon) {
@@ -238,10 +235,15 @@ bake.step_geodist <- function(object, new_data, ...) {
   }
 
   if (object$log) {
-    new_data[, object$name] <- log(dist_vals)
-  } else {
-    new_data[, object$name] <- dist_vals
+    dist_vals <- log(dist_vals)
   }
+
+  geo_data <- tibble(dist_vals)
+  names(geo_data) <- object$name
+
+  geo_data <- check_name(geo_data, new_data, object, newname = object$name)
+
+  new_data <- vec_cbind(new_data, geo_data)
 
   new_data
 }
@@ -264,7 +266,16 @@ print.step_geodist <-
 tidy.step_geodist <- function(x, ...) {
   x <- check_is_lat_lon(x)
 
-  if (is_trained(x)) {
+  if (length(x$columns) == 0) {
+    res <- tibble(
+      latitude = character(),
+      longitude = character(),
+      ref_latitude = double(),
+      ref_longitude = double(),
+      is_lat_lon = logical(),
+      name = character()
+    )
+  } else if (is_trained(x)) {
     res <- tibble(
       latitude = x$columns[1],
       longitude = x$columns[2],
@@ -283,6 +294,7 @@ tidy.step_geodist <- function(x, ...) {
       name = x$name
     )
   }
+
   res$id <- x$id
   res
 }

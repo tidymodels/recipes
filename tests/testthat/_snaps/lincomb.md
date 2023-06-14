@@ -1,72 +1,70 @@
-# printing
-
-    Code
-      print(dum_filtered)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         12
-      
-      Operations:
-      
-      Linear combination filter on all_predictors()
-
----
-
-    Code
-      prep(dum_filtered)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor         12
-      
-      Training data contained 24 data points and no missing data.
-      
-      Operations:
-      
-      Linear combination filter removed N1, P1, K1 [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Linear combination filter on <none>
+      -- Operations 
+      * Linear combination filter on: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Linear combination filter removed: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Linear combination filter removed <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 12
+      
+      -- Operations 
+      * Linear combination filter on: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 12
+      
+      -- Training information 
+      Training data contained 24 data points and no incomplete rows.
+      
+      -- Operations 
+      * Linear combination filter removed: N1, P1, K1 | Trained
 

@@ -15,75 +15,71 @@
       Error in `step_num2factor()`:
       ! Please provide a character vector of appropriate length for `levels`.
 
-# printing
-
-    Code
-      print(ex_3)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Training data contained 200 data points and no missing data.
-      
-      Operations:
-      
-      Factor variables from z [trained]
-
----
-
-    Code
-      prep(ex_3)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-       predictor          3
-      
-      Training data contained 200 data points and no missing data.
-      
-      Operations:
-      
-      Factor variables from z [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Factor variables from <none>
+      -- Operations 
+      * Factor variables from: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Factor variables from: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Factor variables from <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Factor variables from: z
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 200 data points and no incomplete rows.
+      
+      -- Operations 
+      * Factor variables from: z | Trained
 

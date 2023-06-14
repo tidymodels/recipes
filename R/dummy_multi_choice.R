@@ -22,6 +22,14 @@
 #'
 #' @template dummy-naming
 #'
+#' @details
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_dummy_multi_choice"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples
@@ -63,7 +71,7 @@ step_dummy_multi_choice <- function(recipe,
                                     keep_original_cols = FALSE,
                                     skip = FALSE,
                                     id = rand_id("dummy_multi_choice")) {
-  if (!is_tune(threshold) & !is_varying(threshold)) {
+  if (!is_tune(threshold)) {
     if (threshold < 0) {
       rlang::abort("`threshold` should be non-negative.")
     }
@@ -168,13 +176,12 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
   used_lvl <- gsub(paste0("^", prefix), "", colnames(indicators))
   colnames(indicators) <- object$naming(prefix, used_lvl)
+  indicators <- as_tibble(indicators)
 
-  new_data <- bind_cols(new_data, as_tibble(indicators))
-  keep_original_cols <- get_keep_original_cols(object)
+  indicators <- check_name(indicators, new_data, object, names(indicators))
 
-  if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
-  }
+  new_data <- vec_cbind(new_data, indicators)
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }

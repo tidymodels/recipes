@@ -14,8 +14,6 @@
 #' @param prefix A prefix for generated column names, defaults to "right_relu_"
 #'   for right hinge transformation and "left_relu_" for reversed/left hinge
 #'   transformations.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
@@ -71,17 +69,17 @@ step_relu <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("relu")) {
-    if (!is_tune(shift) & !is_varying(shift)) {
+    if (!is_tune(shift)) {
       if (!is.numeric(shift)) {
         rlang::abort("Shift argument must be a numeric value.")
       }
     }
-    if (!is_tune(reverse) & !is_varying(reverse)) {
+    if (!is_tune(reverse)) {
       if (!is.logical(reverse)) {
         rlang::abort("Reverse argument must be a logical value.")
       }
     }
-    if (!is_tune(smooth) & !is_varying(smooth)) {
+    if (!is_tune(smooth)) {
       if (!is.logical(smooth)) {
         rlang::abort("Smooth argument must be logical value.")
       }
@@ -150,7 +148,7 @@ bake.step_relu <- function(object, new_data, ...) {
     call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
   exprs <- purrr::map(object$columns, make_relu_call)
-  newname <- glue::glue("{object$prefix}{object$columns}")
+  newname <- glue("{object$prefix}{object$columns}")
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
   dplyr::mutate(new_data, !!!exprs)
 }

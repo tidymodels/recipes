@@ -53,8 +53,8 @@ processing is turned off in favor of resample-level parallelization.}
 here once this preprocessing step has been trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -105,6 +105,14 @@ If \code{num = 101}, the names would be \code{NNMF001} -
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) and the number of
 components is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 2)
+\item \code{num_run}: Number of Computation Runs (type: integer, default: 30)
+}
 }
 
 \section{Case weights}{

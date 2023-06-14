@@ -23,8 +23,8 @@
 #'  should not be passed here (or at all).
 #' @param res The [stats::prcomp.default()] object is stored here once this
 #'  preprocessing step has be trained by [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
+#' @param columns A character string of the selected variable names. This field
+#'   is a placeholder and will be populated once [prep()] is used.
 #' @param prefix A character string for the prefix of the resulting new
 #'  variables. See notes below.
 #' @param keep_original_cols A logical to keep the original variables in the
@@ -33,6 +33,7 @@
 #' @family multivariate transformation steps
 #' @export
 #' @details
+#'
 #' Principal component analysis (PCA) is a transformation of a
 #'  group of variables that produces a new set of artificial
 #'  features or components. These components are designed to capture
@@ -65,6 +66,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
 #' for the variable loadings per component or `type = "variance"` for how
 #' much variance each component accounts for.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_pca"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'
@@ -105,7 +112,7 @@ step_pca <- function(recipe,
                      keep_original_cols = FALSE,
                      skip = FALSE,
                      id = rand_id("pca")) {
-  if (!is_tune(threshold) & !is_varying(threshold)) {
+  if (!is_tune(threshold)) {
     if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
       rlang::abort("`threshold` should be on (0, 1].")
     }
@@ -218,25 +225,23 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pca <- function(object, new_data, ...) {
+  check_new_data(object$columns, object, new_data)
+
   if (is.null(object$columns)) {
     object$columns <- stats::setNames(nm = rownames(object$res$rotation))
   }
 
-  if (length(object$columns) > 0 && !all(is.na(object$res$rotation))) {
-    check_new_data(object$columns, object, new_data)
-
-    pca_vars <- rownames(object$res$rotation)
-    comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
-      object$res$rotation
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
-    comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
-    }
+  if (length(object$columns) == 0 || all(is.na(object$res$rotation))) {
+    return(new_data)
   }
+
+  pca_vars <- rownames(object$res$rotation)
+  comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
+    object$res$rotation
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, as_tibble(comps))
+  new_data <- remove_original_cols(new_data, object, pca_vars)
   new_data
 }
 
@@ -251,7 +256,7 @@ print.step_pca <-
         title <- "No PCA components were extracted from "
         columns <- names(x$columns)
       } else {
-        title <- glue::glue("PCA extraction with ")
+        title <- glue("PCA extraction with ")
         columns <- rownames(x$res$rotation)
       }
     } else {
@@ -305,7 +310,7 @@ pca_variances <- function(x) {
     res <- tibble::tibble(
       terms = x,
       value = y,
-      component = rep(1:p, 4)
+      component = rep(seq_len(p), 4)
     )
   } else {
     res <- tibble::tibble(

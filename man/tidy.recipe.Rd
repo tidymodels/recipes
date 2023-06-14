@@ -2,22 +2,22 @@
 % Please edit documentation in R/BoxCox.R, R/YeoJohnson.R, R/arrange.R,
 %   R/bin2factor.R, R/bs.R, R/center.R, R/class.R, R/classdist.R, R/colcheck.R,
 %   R/corr.R, R/count.R, R/cut.R, R/date.R, R/depth.R, R/discretize.R,
-%   R/dummy.R, R/dummy_multi_choice.R, R/extract.R, R/factor2string.R,
+%   R/dummy.R, R/dummy_extract.R, R/dummy_multi_choice.R, R/factor2string.R,
 %   R/filter.R, R/filter_missing.R, R/geodist.R, R/harmonic.R, R/holiday.R,
 %   R/hyperbolic.R, R/ica.R, R/impute_bag.R, R/impute_knn.R, R/impute_linear.R,
 %   R/impute_lower.R, R/impute_mean.R, R/impute_median.R, R/impute_mode.R,
-%   R/impute_roll.R, R/integer.R, R/interactions.R, R/inverse.R, R/invlogit.R,
-%   R/isomap.R, R/kpca.R, R/kpca_poly.R, R/kpca_rbf.R, R/lincombo.R, R/log.R,
-%   R/logit.R, R/missing.r, R/mutate.R, R/mutate_at.R, R/naindicate.R,
-%   R/naomit.R, R/newvalues.R, R/nnmf.R, R/nnmf_sparse.R, R/normalize.R,
-%   R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R, R/ordinalscore.R, R/other.R,
-%   R/pca.R, R/percentile.R, R/pls.R, R/poly.R, R/poly_bernstein.R, R/profile.R,
-%   R/range.R, R/range_check.R, R/ratio.R, R/regex.R, R/relevel.R, R/relu.R,
-%   R/rename.R, R/rename_at.R, R/rm.R, R/sample.R, R/scale.R, R/select.R,
-%   R/shuffle.R, R/slice.R, R/spatialsign.R, R/spline_b.R, R/spline_convex.R,
-%   R/spline_monotone.R, R/spline_natural.R, R/spline_nonnegative.R, R/sqrt.R,
-%   R/string2factor.R, R/tidy.R, R/time.R, R/unknown.R, R/unorder.R, R/window.R,
-%   R/zv.R
+%   R/impute_roll.R, R/indicate_na.R, R/integer.R, R/interact.R, R/intercept.R,
+%   R/inverse.R, R/invlogit.R, R/isomap.R, R/kpca.R, R/kpca_poly.R,
+%   R/kpca_rbf.R, R/lag.R, R/lincomb.R, R/log.R, R/logit.R, R/missing.R,
+%   R/mutate.R, R/mutate_at.R, R/naomit.R, R/newvalues.R, R/nnmf.R,
+%   R/nnmf_sparse.R, R/normalize.R, R/novel.R, R/ns.R, R/num2factor.R, R/nzv.R,
+%   R/ordinalscore.R, R/other.R, R/pca.R, R/percentile.R, R/pls.R, R/poly.R,
+%   R/poly_bernstein.R, R/profile.R, R/range.R, R/range_check.R, R/ratio.R,
+%   R/regex.R, R/relevel.R, R/relu.R, R/rename.R, R/rename_at.R, R/rm.R,
+%   R/sample.R, R/scale.R, R/select.R, R/shuffle.R, R/slice.R, R/spatialsign.R,
+%   R/spline_b.R, R/spline_convex.R, R/spline_monotone.R, R/spline_natural.R,
+%   R/spline_nonnegative.R, R/sqrt.R, R/string2factor.R, R/tidy.R, R/time.R,
+%   R/unknown.R, R/unorder.R, R/window.R, R/zv.R
 \name{tidy.step_BoxCox}
 \alias{tidy.step_BoxCox}
 \alias{tidy.step_YeoJohnson}
@@ -35,8 +35,8 @@
 \alias{tidy.step_depth}
 \alias{tidy.step_discretize}
 \alias{tidy.step_dummy}
-\alias{tidy.step_dummy_multi_choice}
 \alias{tidy.step_dummy_extract}
+\alias{tidy.step_dummy_multi_choice}
 \alias{tidy.step_factor2string}
 \alias{tidy.step_filter}
 \alias{tidy.step_filter_missing}
@@ -53,21 +53,23 @@
 \alias{tidy.step_impute_median}
 \alias{tidy.step_impute_mode}
 \alias{tidy.step_impute_roll}
+\alias{tidy.step_indicate_na}
 \alias{tidy.step_integer}
 \alias{tidy.step_interact}
+\alias{tidy.step_intercept}
 \alias{tidy.step_inverse}
 \alias{tidy.step_invlogit}
 \alias{tidy.step_isomap}
 \alias{tidy.step_kpca}
 \alias{tidy.step_kpca_poly}
 \alias{tidy.step_kpca_rbf}
+\alias{tidy.step_lag}
 \alias{tidy.step_lincomb}
 \alias{tidy.step_log}
 \alias{tidy.step_logit}
 \alias{tidy.check_missing}
 \alias{tidy.step_mutate}
 \alias{tidy.step_mutate_at}
-\alias{tidy.step_indicate_na}
 \alias{tidy.step_naomit}
 \alias{tidy.check_new_values}
 \alias{tidy.step_nnmf}
@@ -149,9 +151,9 @@
 
 \method{tidy}{step_dummy}(x, ...)
 
-\method{tidy}{step_dummy_multi_choice}(x, ...)
-
 \method{tidy}{step_dummy_extract}(x, ...)
+
+\method{tidy}{step_dummy_multi_choice}(x, ...)
 
 \method{tidy}{step_factor2string}(x, ...)
 
@@ -185,9 +187,13 @@
 
 \method{tidy}{step_impute_roll}(x, ...)
 
+\method{tidy}{step_indicate_na}(x, ...)
+
 \method{tidy}{step_integer}(x, ...)
 
 \method{tidy}{step_interact}(x, ...)
+
+\method{tidy}{step_intercept}(x, ...)
 
 \method{tidy}{step_inverse}(x, ...)
 
@@ -201,6 +207,8 @@
 
 \method{tidy}{step_kpca_rbf}(x, ...)
 
+\method{tidy}{step_lag}(x, ...)
+
 \method{tidy}{step_lincomb}(x, ...)
 
 \method{tidy}{step_log}(x, ...)
@@ -212,8 +220,6 @@
 \method{tidy}{step_mutate}(x, ...)
 
 \method{tidy}{step_mutate_at}(x, ...)
-
-\method{tidy}{step_indicate_na}(x, ...)
 
 \method{tidy}{step_naomit}(x, ...)
 

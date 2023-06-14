@@ -48,6 +48,12 @@
 #' `terms` (the columns that will be affected) and `retained` (the factor
 #' levels that were not pulled into "other") is returned.
 #'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_other"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -97,7 +103,7 @@ step_other <-
            objects = NULL,
            skip = FALSE,
            id = rand_id("other")) {
-    if (!is_tune(threshold) & !is_varying(threshold)) {
+    if (!is_tune(threshold)) {
       if (threshold < 0) {
         rlang::abort("`threshold` should be non-negative.")
       }
@@ -173,10 +179,10 @@ bake.step_other <- function(object, new_data, ...) {
   check_new_data(names(object$objects), object, new_data)
   for (i in names(object$objects)) {
     if (object$objects[[i]]$collapse) {
-      tmp <- if (!is.character(new_data[, i])) {
-        as.character(getElement(new_data, i))
-      } else {
-        getElement(new_data, i)
+      tmp <- new_data[[i]]
+
+      if (!is.character(tmp)) {
+        tmp <- as.character(tmp)
       }
 
       tmp <- ifelse(
@@ -193,7 +199,7 @@ bake.step_other <- function(object, new_data, ...) {
         )
       )
 
-      new_data[, i] <- tmp
+      new_data[[i]] <- tmp
     }
   }
   new_data

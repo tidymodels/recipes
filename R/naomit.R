@@ -6,11 +6,10 @@
 #'
 #' @template row-ops
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param role Unused, include for consistency with other steps.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #'
 #' @template case-weights-not-supported
 #'
@@ -66,9 +65,11 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_naomit <- function(object, new_data, ...) {
-  columns <- object$columns
-  columns <- unname(columns)
-  tibble::as_tibble(tidyr::drop_na(new_data, tidyselect::all_of(columns)))
+  col_names <- unname(object$columns)
+
+  check_new_data(col_names, object, new_data)
+
+  tibble::as_tibble(tidyr::drop_na(new_data, tidyselect::all_of(col_names)))
 }
 
 print.step_naomit <-

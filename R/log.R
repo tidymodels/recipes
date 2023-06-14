@@ -4,13 +4,12 @@
 #'  that will log transform data.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param base A numeric value for the base.
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `log(0)`).
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param signed A logical indicating whether to take the signed log.
-#'  This is sign(x) * abs(log(x)) when abs(x) => 1 or 0 if abs(x) < 1.
+#'  This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
 #' @template step-return
 #' @family individual transformation steps
@@ -129,7 +128,7 @@ bake.step_log <- function(object, new_data, ...) {
 
   if (!object$signed) {
     for (i in seq_along(col_names)) {
-      new_data[, col_names[i]] <-
+      new_data[[col_names[i]]] <-
         log(new_data[[col_names[i]]] + object$offset, base = object$base)
     }
   } else {
@@ -137,7 +136,7 @@ bake.step_log <- function(object, new_data, ...) {
       rlang::warn("When signed is TRUE, offset will be ignored")
     }
     for (i in seq_along(col_names)) {
-      new_data[, col_names[i]] <-
+      new_data[[col_names[i]]] <-
         ifelse(abs(new_data[[col_names[i]]]) < 1,
           0,
           sign(new_data[[col_names[i]]]) *
@@ -151,7 +150,7 @@ bake.step_log <- function(object, new_data, ...) {
 print.step_log <-
   function(x, width = max(20, options()$width - 31), ...) {
     msg <- ifelse(x$signed, "Signed log", "Log")
-    title <- glue::glue("{msg} transformation on ")
+    title <- glue("{msg} transformation on ")
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }

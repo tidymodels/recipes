@@ -21,8 +21,6 @@
 #' @param res The `NNMF()` object is stored
 #'  here once this preprocessing step has been trained by
 #'  [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. See notes below.
 #' @param seed An integer that will be used to set the seed in isolation
@@ -49,6 +47,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the selectors or variables selected) and the number of
 #' components is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_nnmf"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -174,21 +178,22 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nnmf <- function(object, new_data, ...) {
+  check_new_data(object$columns, object, new_data)
 
-  if (object$num_comp > 0 && length(object$columns) > 0) {
-    check_new_data(object$columns, object, new_data)
-    nnmf_vars <- rownames(object$res@other.data$w)
-    comps <-
-      object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
-    colnames(comps) <- names0(ncol(comps), object$prefix)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
-    }
+  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  if (!keep_going) {
+    return(new_data)
   }
+
+  nnmf_vars <- rownames(object$res@other.data$w)
+  comps <-
+    object$res@apply(dimred_data(new_data[, nnmf_vars, drop = FALSE]))@data
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, comps)
+  new_data <- remove_original_cols(new_data, object, nnmf_vars)
   new_data
 }
 
@@ -234,7 +239,7 @@ tunable.step_nnmf <- function(x, ...) {
     name = c("num_comp", "num_run"),
     call_info = list(
       list(pkg = "dials", fun = "num_comp", range = c(1L, 4L)),
-      list(pkg = "dials", fun = "num_run", range = c(1L, 10L))
+      list(pkg = "dials", fun = "num_runs", range = c(1L, 10L))
     ),
     source = "recipe",
     component = "step_nnmf",

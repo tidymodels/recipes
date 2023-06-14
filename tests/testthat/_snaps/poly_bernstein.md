@@ -1,72 +1,80 @@
-# printing
+# check_name() is used
 
     Code
-      print(with_ns)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Operations:
-      
-      Bernstein polynomial expansion carbon, hydrogen
-
----
-
-    Code
-      prep(with_ns)
-    Output
-      Recipe
-      
-      Inputs:
-      
-            role #variables
-         outcome          1
-       predictor          5
-      
-      Training data contained 456 data points and no missing data.
-      
-      Operations:
-      
-      Bernstein polynomial expansion carbon, hydrogen [trained]
+      prep(rec, training = dat)
+    Condition
+      Error in `step_poly_bernstein()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_01
 
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Bernstein polynomial expansion <none>
+      -- Operations 
+      * Bernstein polynomial expansion: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Bernstein polynomial expansion: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Bernstein polynomial expansion <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Bernstein polynomial expansion: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * Bernstein polynomial expansion: carbon, hydrogen | Trained
 

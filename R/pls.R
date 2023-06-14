@@ -17,8 +17,6 @@
 #' arguments).
 #' @param res A list of results are stored here once this preprocessing step
 #'  has been trained by [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -56,6 +54,12 @@
 #' norm. The `tidy()` method applies this same norm to the coefficients shown
 #' above. When you `tidy()` this step, a tibble with columns `terms` (the
 #' selectors or variables selected), `components`, and `values` is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_pls"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -285,7 +289,7 @@ old_pls_project <- function(object, x) {
   }
   input_data <- sweep(input_data, 2, object$Xmeans, "-")
   comps <- input_data %*% object$projection
-  colnames(comps) <- paste0("pls", 1:ncol(comps))
+  colnames(comps) <- paste0("pls", seq_len(ncol(comps)))
   tibble::as_tibble(comps)
 }
 
@@ -367,31 +371,35 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 bake.step_pls <- function(object, new_data, ...) {
   check_new_data(get_columns_pls(object), object, new_data)
 
-  if (object$num_comp > 0 && length(get_columns_pls(object)) > 0 && pls_worked(object$res)) {
-    if (use_old_pls(object$res)) {
-      comps <- old_pls_project(object$res, new_data)
-    } else {
-      comps <- pls_project(object$res, new_data)
-    }
-
-    names(comps) <- names0(ncol(comps), object$prefix)
-    comps <- check_name(comps, new_data, object)
-
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    # Old pls never preserved original columns,
-    # but didn't have the `preserve` option
-    if (use_old_pls(object$res)) {
-      pls_vars <- rownames(object$res$projection)
-      keep_vars <- !(colnames(new_data) %in% pls_vars)
-      new_data <- new_data[, keep_vars, drop = FALSE]
-    } else if (any(!object$preserve, !keep_original_cols)) {
-      pls_vars <- names(object$res$mu)
-      keep_vars <- !(colnames(new_data) %in% pls_vars)
-      new_data <- new_data[, keep_vars, drop = FALSE]
-    }
+  if (object$num_comp == 0 ||
+      length(get_columns_pls(object)) == 0 ||
+      !pls_worked(object$res)) {
+    return(new_data)
   }
+
+  if (use_old_pls(object$res)) {
+    comps <- old_pls_project(object$res, new_data)
+  } else {
+    comps <- pls_project(object$res, new_data)
+  }
+
+  names(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+
+  new_data <- vec_cbind(new_data, comps)
+
+  # Old pls never preserved original columns,
+  # but didn't have the `preserve` option
+  if (use_old_pls(object$res)) {
+    object$preserve <- FALSE
+    pls_vars <- rownames(object$res$projection)
+  } else {
+    pls_vars <- names(object$res$mu)
+  }
+
+  new_data <- remove_original_cols(new_data, object, pls_vars)
+
   new_data
 }
 

@@ -36,75 +36,73 @@
       ! `step_rollimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_roll()` instead.
 
-# printing
-
-    Code
-      print(seven_pt)
-    Output
-      Recipe
-      
-      Inputs:
-      
-             role #variables
-        predictor          3
-       time_index          1
-      
-      Operations:
-      
-      Rolling imputation for all_predictors()
-
----
-
-    Code
-      prep(seven_pt)
-    Output
-      Recipe
-      
-      Inputs:
-      
-             role #variables
-        predictor          3
-       time_index          1
-      
-      Training data contained 12 data points and 7 incomplete rows. 
-      
-      Operations:
-      
-      Rolling imputation for x1, x2, x3 [trained]
-
 # empty printing
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Operations:
-      
-      Rolling imputation for <none>
+      -- Operations 
+      * Rolling imputation for: <none>
 
 ---
 
     Code
       rec
-    Output
-      Recipe
+    Message
       
-      Inputs:
+      -- Recipe ----------------------------------------------------------------------
       
-            role #variables
-         outcome          1
-       predictor         10
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
       
-      Training data contained 32 data points and no missing data.
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
       
-      Operations:
+      -- Operations 
+      * Rolling imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
       
-      Rolling imputation for <none> [trained]
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor:  3
+      time_index: 1
+      
+      -- Operations 
+      * Rolling imputation for: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor:  3
+      time_index: 1
+      
+      -- Training information 
+      Training data contained 12 data points and 7 incomplete rows.
+      
+      -- Operations 
+      * Rolling imputation for: x1, x2, x3 | Trained
 

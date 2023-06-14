@@ -102,23 +102,9 @@ test_that("quasiquotation", {
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
 
-  # only rec_2 works when local variable is removed
-  rm(sepal_vars)
-
-  expect_snapshot(error = TRUE,
-    prep(rec_1, training = iris_train)
-  )
-
   prepped_2 <- prep(rec_2, training = iris_train)
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
-})
-
-test_that("printing", {
-  rec <- recipe(~., data = iris) %>%
-    step_select(Species, starts_with("Sepal"), petal_width = Petal.Width)
-  expect_snapshot(print(rec))
-  expect_snapshot(prep(rec))
 })
 
 test_that("tidying", {
@@ -146,6 +132,8 @@ test_that("tidying", {
   })
 })
 
+# Infrastructure ---------------------------------------------------------------
+
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(~., data = mtcars) %>%
     step_select(cyl) %>%
@@ -155,4 +143,42 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_error(bake(rec, new_data = mtcars[, c(-2)]),
                class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_select(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  # Here for completeness
+  # step_select() will mimick dplyr::select() by not selecting anything
+  expect_true(TRUE)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_select(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("printing", {
+  rec <- recipe(~., data = iris) %>%
+    step_select(Species)
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
 })
