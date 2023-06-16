@@ -454,7 +454,7 @@ prep.recipe <-
         bake_time <- proc.time() - time
 
         fit_times[[i]] <- list(
-          id = paste(c("prep", "bake"), x$steps[[i]]$id, sep = "."),
+          process_id = paste(c("prep", "bake"), x$steps[[i]]$id, sep = "."),
           time = c(prep_time[["elapsed"]], bake_time[["elapsed"]])
         )
 

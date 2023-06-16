@@ -4,7 +4,7 @@ extract_fit_time.recipe <- function(x, summarize = TRUE, ...) {
 
   if (summarize) {
     res <- tibble(
-      id = "recipe",
+      process_id = "recipe",
       time = sum(res$time)
     )
   }
