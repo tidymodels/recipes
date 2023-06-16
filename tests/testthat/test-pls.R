@@ -295,8 +295,6 @@ test_that("can prep recipes with no keep_original_cols", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE #1152", {
-  skip_if_not_installed("mixOmics")
-
   rec <- recipe(carb ~ ., data = mtcars) %>%
     step_pls(all_predictors(), outcome = "carb",
              num_comp = 0, keep_original_cols = FALSE) %>%
