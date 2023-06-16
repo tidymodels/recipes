@@ -55,9 +55,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_scale} creates a \emph{specification} of a recipe
-step that will normalize numeric data to have a standard
-deviation of one.
+\code{step_scale()} creates a \emph{specification} of a recipe step that will normalize
+numeric data to have a standard deviation of one.
 }
 \details{
 Scaling data means that the standard deviation of a

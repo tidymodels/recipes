@@ -70,9 +70,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca} creates a \emph{specification} of a recipe step that
-will convert numeric data into one or more principal components
-using a kernel basis expansion.
+\code{step_kpca()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more principal components using a kernel basis
+expansion.
 }
 \details{
 When performing kPCA with \code{step_kpca()}, you must choose the kernel

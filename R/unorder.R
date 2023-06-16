@@ -1,7 +1,7 @@
 #' Convert Ordered Factors to Unordered Factors
 #'
-#' `step_unorder` creates a *specification* of a recipe
-#'  step that will transform the data.
+#' `step_unorder()` creates a *specification* of a recipe step that will turn
+#' ordered factor variables into unordered factor variables.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

@@ -1,7 +1,7 @@
 #' Partial Least Squares Feature Extraction
 #'
-#' `step_pls` creates a *specification* of a recipe step that will
-#'  convert numeric data into one or more new dimensions.
+#' `step_pls()` creates a *specification* of a recipe step that will convert
+#' numeric data into one or more new dimensions.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

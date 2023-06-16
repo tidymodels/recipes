@@ -1,7 +1,7 @@
 #' Logit Transformation
 #'
-#' `step_logit` creates a *specification* of a recipe
-#'  step that will logit transform the data.
+#' `step_logit()` creates a *specification* of a recipe step that will logit
+#' transform the data.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

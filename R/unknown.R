@@ -1,7 +1,7 @@
 #' Assign missing categories to "unknown"
 #'
-#' `step_unknown` creates a *specification* of a recipe
-#'  step that will assign a missing value in a factor level to"unknown".
+#' `step_unknown()` creates a *specification* of a recipe step that will assign
+#' a missing value in a factor level to `"unknown"`.
 #'
 #' @inheritParams step_center
 #' @param new_level A single character value that will be assigned

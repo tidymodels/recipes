@@ -1,9 +1,8 @@
 #' Distances to Class Centroids
 #'
-#' `step_classdist` creates a *specification* of a
-#'  recipe step that will convert numeric data into Mahalanobis
-#'  distance measurements to the data centroid. This is done for
-#'  each value of a categorical class variable.
+#' `step_classdist()` creates a *specification* of a recipe step that will
+#' convert numeric data into Mahalanobis distance measurements to the data
+#' centroid. This is done for each value of a categorical class variable.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

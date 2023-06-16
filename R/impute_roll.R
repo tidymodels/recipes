@@ -1,8 +1,8 @@
 #' Impute numeric data using a rolling window statistic
 #'
-#' `step_impute_roll` creates a *specification* of a
-#'  recipe step that will substitute missing values of numeric
-#'  variables by the measure of location (e.g. median) within a moving window.
+#' `step_impute_roll()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the measure of location
+#' (e.g. median) within a moving window.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

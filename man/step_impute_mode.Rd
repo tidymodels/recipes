@@ -60,9 +60,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_mode} creates a \emph{specification} of a
-recipe step that will substitute missing values of nominal
-variables by the training set mode of those variables.
+\code{step_impute_mode()} creates a \emph{specification} of a recipe step that will
+substitute missing values of nominal variables by the training set mode of
+those variables.
 }
 \details{
 \code{step_impute_mode} estimates the variable modes

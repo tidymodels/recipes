@@ -2,9 +2,8 @@
 #'
 #' @description
 #'
-#' `step_nnmf` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more non-negative
-#'  components.
+#' `step_nnmf()` creates a *specification* of a recipe step that will convert
+#' numeric data into one or more non-negative components.
 #'
 #' `r lifecycle::badge("deprecated")`
 #'

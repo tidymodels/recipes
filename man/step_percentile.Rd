@@ -57,8 +57,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_percentile} creates a \emph{specification} of a recipe step that
-replaces the value of a variable with its percentile from the training set.
+\code{step_percentile()} creates a \emph{specification} of a recipe step that replaces
+the value of a variable with its percentile from the training set.
 }
 \section{Case weights}{
 

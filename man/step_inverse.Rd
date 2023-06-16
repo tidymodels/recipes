@@ -48,8 +48,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_inverse} creates a \emph{specification} of a recipe
-step that will inverse transform the data.
+\code{step_inverse()} creates a \emph{specification} of a recipe step that will inverse
+transform the data.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

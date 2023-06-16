@@ -1,8 +1,7 @@
 #' Non-Negative Matrix Factorization Signal Extraction with lasso Penalization
 #'
-#' `step_nnmf_sparse()` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more non-negative
-#'  components.
+#' `step_nnmf_sparse()` creates a *specification* of a recipe step that will
+#' convert numeric data into one or more non-negative components.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

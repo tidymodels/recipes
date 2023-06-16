@@ -61,9 +61,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_relu} creates a \emph{specification} of a recipe step that
-will apply the rectified linear or softplus transformations to numeric
-data. The transformed data is added as new columns to the data matrix.
+\code{step_relu()} creates a \emph{specification} of a recipe step that will add the
+rectified linear or softplus transformations of a variable to the data set.
 }
 \details{
 The rectified linear transformation is calculated as

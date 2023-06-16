@@ -52,8 +52,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_zv} creates a \emph{specification} of a recipe step
-that will remove variables that contain only a single value.
+\code{step_zv()} creates a \emph{specification} of a recipe step that will remove
+variables that contain only a single value.
 }
 \details{
 This step can potentially remove columns from the data set. This may

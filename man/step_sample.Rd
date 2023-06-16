@@ -49,9 +49,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_sample} creates a \emph{specification} of a recipe step
-that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
-\code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
+\code{step_sample()} creates a \emph{specification} of a recipe step that will sample
+rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or \code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
 }
 \section{Row Filtering}{
 

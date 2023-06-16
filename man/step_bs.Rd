@@ -58,9 +58,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_bs} creates a \emph{specification} of a recipe step
-that will create new columns that are basis expansions of
-variables using B-splines.
+\code{step_bs()} creates a \emph{specification} of a recipe step that will create new
+columns that are basis expansions of variables using B-splines.
 }
 \details{
 \code{step_bs} can create new features from a single variable

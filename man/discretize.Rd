@@ -68,7 +68,7 @@ discretization takes place.}
 vector.
 }
 \description{
-\code{discretize} converts a numeric vector into a factor with
+\code{discretize()} converts a numeric vector into a factor with
 bins having approximately the same number of data points (based
 on a training set).
 }

@@ -1,8 +1,7 @@
 #' Date Feature Generator
 #'
-#' `step_date` creates a *specification* of a recipe
-#'  step that will convert date data into one or more factor or
-#'  numeric variables.
+#' `step_date()` creates a *specification* of a recipe step that will convert
+#' date data into one or more factor or numeric variables.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

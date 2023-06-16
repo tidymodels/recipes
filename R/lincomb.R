@@ -1,8 +1,8 @@
 #' Linear Combination Filter
 #'
-#' `step_lincomb` creates a *specification* of a recipe
-#'  step that will potentially remove numeric variables that have
-#'  linear combinations between them.
+#' `step_lincomb()` creates a *specification* of a recipe step that will
+#' potentially remove numeric variables that have linear combinations between
+#' them.
 #'
 #' @inheritParams step_center
 #' @param max_steps The number of times to apply the algorithm.

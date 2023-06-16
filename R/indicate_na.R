@@ -1,8 +1,8 @@
 #' Create Missing Data Column Indicators
 #'
-#' `step_indicate_na` creates a *specification* of a recipe step that will
-#'  create and append additional binary columns to the dataset to indicate
-#'  which observations are missing.
+#' `step_indicate_na()` creates a *specification* of a recipe step that will
+#' create and append additional binary columns to the data set to indicate which
+#' observations are missing.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

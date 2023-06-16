@@ -1,10 +1,9 @@
 #' Create a Profiling Version of a Data Set
 #'
-#' `step_profile` creates a *specification* of a recipe step that
-#'  will fix the levels of all variables but one and will create a
-#'  sequence of values for the remaining variable. This step can be
-#'  helpful when creating partial regression plots for additive
-#'  models.
+#' `step_profile()` creates a *specification* of a recipe step that will fix the
+#' levels of all variables but one and will create a sequence of values for the
+#' remaining variable. This step can be helpful when creating partial regression
+#' plots for additive models.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

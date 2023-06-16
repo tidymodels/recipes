@@ -68,8 +68,8 @@ the computations for subsequent operations.}
 An object with classes \code{"step_spline_monotone"} and \code{"step"}.
 }
 \description{
-\code{step_spline_monotone} creates a \emph{specification} of a recipe
-step that creates monotone spline features.
+\code{step_spline_monotone()} creates a \emph{specification} of a recipe step that
+creates monotone spline features.
 }
 \details{
 Spline transformations take a numeric column and create multiple features

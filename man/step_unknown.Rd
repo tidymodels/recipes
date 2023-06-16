@@ -48,8 +48,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_unknown} creates a \emph{specification} of a recipe
-step that will assign a missing value in a factor level to"unknown".
+\code{step_unknown()} creates a \emph{specification} of a recipe step that will assign
+a missing value in a factor level to \code{"unknown"}.
 }
 \details{
 The selected variables are adjusted to have a new

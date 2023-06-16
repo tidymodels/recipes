@@ -1,8 +1,8 @@
 #' Convert Numbers to Factors
 #'
-#' `step_num2factor` will convert one or more numeric vectors to factors
-#'  (ordered or unordered). This can be useful when categories are encoded as
-#'  integers.
+#' `step_num2factor()` will convert one or more numeric vectors to factors
+#' (ordered or unordered). This can be useful when categories are encoded as
+#' integers.
 #'
 #' @inheritParams step_center
 #' @param transform A function taking a single argument `x` that can be used

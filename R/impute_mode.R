@@ -1,8 +1,8 @@
 #' Impute nominal data using the most common value
 #'
-#'   `step_impute_mode` creates a *specification* of a
-#'  recipe step that will substitute missing values of nominal
-#'  variables by the training set mode of those variables.
+#'  `step_impute_mode()` creates a *specification* of a recipe step that will
+#'  substitute missing values of nominal variables by the training set mode of
+#'  those variables.
 #'
 #' @inheritParams step_center
 #' @param modes A named character vector of modes. This is

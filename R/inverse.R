@@ -1,7 +1,7 @@
 #' Inverse Transformation
 #'
-#' `step_inverse` creates a *specification* of a recipe
-#'  step that will inverse transform the data.
+#' `step_inverse()` creates a *specification* of a recipe step that will inverse
+#' transform the data.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

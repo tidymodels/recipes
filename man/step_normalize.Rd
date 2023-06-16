@@ -52,9 +52,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_normalize} creates a \emph{specification} of a recipe
-step that will normalize numeric data to have a standard
-deviation of one and a mean of zero.
+\code{step_normalize()} creates a \emph{specification} of a recipe step that will
+normalize numeric data to have a standard deviation of one and a mean of
+zero.
 }
 \details{
 Centering data means that the average of a variable is subtracted

@@ -1,8 +1,7 @@
 #' B-Spline Basis Functions
 #'
-#' `step_bs` creates a *specification* of a recipe step
-#'  that will create new columns that are basis expansions of
-#'  variables using B-splines.
+#' `step_bs()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using B-splines.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

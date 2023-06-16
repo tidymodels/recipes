@@ -44,7 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_factor2string} will convert one or more factor vectors to strings.
+\code{step_factor2string()}  creates a \emph{specification} of a recipe step that will
+convert one or more factor vectors to strings.
 }
 \details{
 \code{prep} has an option \code{strings_as_factors} that defaults to \code{TRUE}.

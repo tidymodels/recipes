@@ -48,8 +48,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_logit} creates a \emph{specification} of a recipe
-step that will logit transform the data.
+\code{step_logit()} creates a \emph{specification} of a recipe step that will logit
+transform the data.
 }
 \details{
 The logit transformation takes values between

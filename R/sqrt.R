@@ -1,7 +1,7 @@
 #' Square Root Transformation
 #'
-#' `step_sqrt` creates a *specification* of a recipe
-#'  step that will square root transform the data.
+#' `step_sqrt()` creates a *specification* of a recipe step that will apply
+#' square root transform to the variables.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

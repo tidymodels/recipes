@@ -1,8 +1,7 @@
 #' Natural Spline Basis Functions
 #'
-#' `step_ns` creates a *specification* of a recipe step
-#'  that will create new columns that are basis expansions of
-#'  variables using natural splines.
+#' `step_ns()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using natural splines.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

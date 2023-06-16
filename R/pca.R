@@ -1,7 +1,7 @@
 #' PCA Signal Extraction
 #'
-#' `step_pca` creates a *specification* of a recipe step that will convert
-#'  numeric data into one or more principal components.
+#' `step_pca()` creates a *specification* of a recipe step that will convert
+#' numeric variables into one or more principal components.
 #'
 #' @inheritParams step_center
 #' @param role For model terms created by this step, what analysis role should

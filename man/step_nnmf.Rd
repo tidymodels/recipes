@@ -79,9 +79,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_nnmf} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more non-negative
-components.
+\code{step_nnmf()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more non-negative components.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 

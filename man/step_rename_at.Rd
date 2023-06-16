@@ -49,8 +49,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_rename_at} creates a \emph{specification} of a recipe step that will rename
-the selected variables using a common function via \code{\link[dplyr:select_all]{dplyr::rename_at()}}.
+\code{step_rename_at()} creates a \emph{specification} of a recipe step that will
+rename the selected variables using a common function via
+\code{\link[dplyr:select_all]{dplyr::rename_at()}}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

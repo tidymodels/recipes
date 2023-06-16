@@ -1,8 +1,7 @@
 #' Orthogonal Polynomial Basis Functions
 #'
-#' `step_poly` creates a *specification* of a recipe
-#'  step that will create new columns that are basis expansions of
-#'  variables using orthogonal polynomials.
+#' `step_poly()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using orthogonal polynomials.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

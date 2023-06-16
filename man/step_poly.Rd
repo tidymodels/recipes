@@ -54,9 +54,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_poly} creates a \emph{specification} of a recipe
-step that will create new columns that are basis expansions of
-variables using orthogonal polynomials.
+\code{step_poly()} creates a \emph{specification} of a recipe step that will create new
+columns that are basis expansions of variables using orthogonal polynomials.
 }
 \details{
 \code{step_poly} can create new features from a single

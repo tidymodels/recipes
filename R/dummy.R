@@ -1,9 +1,8 @@
 #' Create traditional dummy variables
 #'
-#' `step_dummy()` creates a *specification* of a recipe
-#'  step that will convert nominal data (e.g. character or factors)
-#'  into one or more numeric binary model terms for the levels of
-#'  the original data.
+#' `step_dummy()` creates a *specification* of a recipe step that will convert
+#' nominal data (e.g. character or factors) into one or more numeric binary
+#' model terms for the levels of the original data.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
