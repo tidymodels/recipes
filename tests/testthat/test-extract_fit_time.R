@@ -1,0 +1,31 @@
+test_that("extract_fit_time() works", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_scale(all_numeric_predictors(), id = "scale") %>%
+    step_center(all_numeric_predictors(), id = "center") %>%
+    prep()
+
+  res <- extract_fit_time(rec)
+
+  expect_true(is_tibble(res))
+  expect_identical(names(res), c("process_id", "time"))
+  expect_identical(res$process_id, "recipe")
+  expect_true(is.double(res$time))
+  expect_true(res$time >= 0)
+
+  res <- extract_fit_time(rec, summarize = FALSE)
+
+  expect_true(is_tibble(res))
+  expect_identical(names(res), c("process_id", "time"))
+  expect_identical(
+    res$process_id,
+    c("prep.scale", "bake.scale", "prep.center", "bake.center")
+  )
+  expect_true(is.double(res$time))
+  expect_true(all(res$time >= 0))
+
+  rec$fit_times <- NULL
+
+  expect_snapshot_error(
+    extract_fit_time(rec)
+  )
+})
