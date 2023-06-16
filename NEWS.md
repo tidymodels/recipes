@@ -18,6 +18,8 @@
 
 * Added developer function `recipes_remove_cols()` to provide standardized way to remove columns by column names. (#1155)
 
+* New `extract_fit_time()` method has been added that return the time it took to train the recipe. (#1071)
+
 # recipes 1.0.6
 
 ## Improvements
