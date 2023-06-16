@@ -125,7 +125,8 @@ dummy_data <- bake(dummies, new_data = NULL)
 
 dummy_data \%>\%
   select(starts_with("medium")) \%>\%
-  names()
+  names() \%>\%
+  head()
 
 # More detailed splitting
 dummies_specific <- recipe(~medium, data = tate_text) \%>\%
@@ -136,7 +137,8 @@ dummy_data_specific <- bake(dummies_specific, new_data = NULL)
 
 dummy_data_specific \%>\%
   select(starts_with("medium")) \%>\%
-  names()
+  names() \%>\%
+  head()
 
 tidy(dummies, number = 1)
 tidy(dummies_specific, number = 1)
