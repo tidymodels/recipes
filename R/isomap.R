@@ -2,7 +2,7 @@
 #'
 #' `step_isomap()` creates a *specification* of a recipe step that uses
 #' multidimensional scaling to convert numeric data into one or more new
-#' dimensions using
+#' dimensions.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
