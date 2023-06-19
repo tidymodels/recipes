@@ -174,7 +174,6 @@ bake.step_num2factor <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   lvls <- object$levels[names(object$levels) == "..levels"]
-  object$levels <- object$levels[names(object$levels) != "..levels"]
 
   new_data[, col_names] <-
     map(new_data[, col_names],
