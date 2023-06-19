@@ -1,7 +1,7 @@
 #' Handle levels in multiple predictors together
 #'
 #' `step_dummy_multi_choice()` creates a *specification* of a recipe step that
-#' will convert multiple nominal data (e.g. character or factors) into one or
+#' will convert multiple nominal data (e.g. characters or factors) into one or
 #' more numeric binary model terms for the levels of the original data.
 #'
 #' @inheritParams step_dummy

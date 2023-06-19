@@ -2,8 +2,8 @@
 #'
 #' `step_intercept()` creates a *specification* of a recipe step that will add
 #' an intercept or constant term in the first column of a data matrix.
-#' `step_intercept()` has defaults to *predictor* role so that it is by default
-#' called in the bake step. Be careful to avoid unintentional transformations
+#' `step_intercept()` defaults to *predictor* role so that it is by default
+#' only called in the bake step. Be careful to avoid unintentional transformations
 #' when calling steps with `all_predictors()`.
 #'
 #' @inheritParams step_pca

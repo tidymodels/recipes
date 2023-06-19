@@ -1,7 +1,7 @@
 #' Add sin and cos terms for harmonic analysis
 #'
 #' `step_harmonic()` creates a *specification* of a recipe step that will add
-#' sin and cos terms for harmonic analysis.
+#' `sin()` and `cos()` terms for harmonic analysis.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_date

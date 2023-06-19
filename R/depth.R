@@ -1,7 +1,7 @@
 #' Data Depths
 #'
 #' `step_depth()` creates a *specification* of a recipe step that will convert
-#' numeric data into measurement of *data depth*. This is done for each value of
+#' numeric data into a measurement of *data depth*. This is done for each value of
 #' a categorical class variable.
 #'
 #' @inheritParams step_pca

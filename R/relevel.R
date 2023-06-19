@@ -2,7 +2,7 @@
 #'
 #' `step_relevel()` creates a *specification* of a recipe step that will reorder
 #' the provided factor columns so that the level specified by `ref_level` is
-#' first. This is useful for `contr.treatment()` contrasts which take the first
+#' first. This is useful for [contr.treatment()] contrasts which take the first
 #' level as the reference.
 #'
 #' @inheritParams step_center
