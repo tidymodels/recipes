@@ -70,7 +70,7 @@ sequence of any existing operations.
 }
 \description{
 \code{step_depth()} creates a \emph{specification} of a recipe step that will convert
-numeric data into measurement of \emph{data depth}. This is done for each value of
+numeric data into a measurement of \emph{data depth}. This is done for each value of
 a categorical class variable.
 }
 \details{

@@ -76,7 +76,7 @@ sequence of any existing operations.
 }
 \description{
 \code{step_dummy_extract()} creates a \emph{specification} of a recipe step that will
-convert nominal data (e.g. character or factors) into one or more integer
+convert nominal data (e.g. characters or factors) into one or more integer
 model terms for the extracted levels.
 }
 \details{

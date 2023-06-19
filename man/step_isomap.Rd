@@ -72,7 +72,7 @@ sequence of any existing operations.
 \description{
 \code{step_isomap()} creates a \emph{specification} of a recipe step that uses
 multidimensional scaling to convert numeric data into one or more new
-dimensions using
+dimensions.
 }
 \details{
 Isomap is a form of multidimensional scaling (MDS).

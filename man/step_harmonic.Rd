@@ -68,7 +68,7 @@ sequence of any existing operations.
 }
 \description{
 \code{step_harmonic()} creates a \emph{specification} of a recipe step that will add
-sin and cos terms for harmonic analysis.
+\code{sin()} and \code{cos()} terms for harmonic analysis.
 }
 \details{
 This step seeks to describe periodic components of observational

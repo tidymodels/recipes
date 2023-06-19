@@ -65,8 +65,8 @@ sequence of any existing operations.
 }
 \description{
 \code{step_dummy()} creates a \emph{specification} of a recipe step that will convert
-nominal data (e.g. character or factors) into one or more numeric binary
-model terms for the levels of the original data.
+nominal data (e.g. characters or factors) into one or more numeric binary
+model terms corresponding to the levels of the original data.
 }
 \details{
 \code{step_dummy()} will create a set of binary dummy
