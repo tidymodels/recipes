@@ -18,4 +18,7 @@ and underscore.
 \description{
 Make a random identification field for steps
 }
+\seealso{
+\link{developer-functions}
+}
 \keyword{internal}

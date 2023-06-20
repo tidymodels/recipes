@@ -94,8 +94,8 @@ columns to the data set.
 with the \code{keep_original_cols} argument. \code{\link[=get_keep_original_cols]{get_keep_original_cols()}} is used in
 \verb{prep.step_*()} functions, for steps that were created before the
 \code{keep_original_cols} argument was added. And acts as a way to throw a warning
-that the user should regenerate the recipe. \code{\link[=remove_orignal_cols]{remove_orignal_cols()}} should be
-used in \verb{bake.step_*()} functions to help remove the original cols. It is
+that the user should regenerate the recipe. \code{\link[=remove_original_cols]{remove_original_cols()}} should
+be used in \verb{bake.step_*()} functions to help remove the original cols. It is
 worth noting that \code{\link[=remove_original_cols]{remove_original_cols()}} can remove multiple columns at
 once and when possible should be put outside \code{for} loops.
 
@@ -116,7 +116,7 @@ replacing the internally deprecated \code{\link[=printer]{printer()}} function.
 
 \code{\link[=sel2char]{sel2char()}} is mostly used within \verb{tidy.step_*()} functions to turn
 selections into character vectors.
-
+.
 \code{\link[=names0]{names0()}} creates a series of \code{num} names with a common prefix. The names
 are numbered with leading zeros (e.g. \code{prefix01}-\code{prefix10} instead of
 \code{prefix1}-\code{prefix10}). This is useful for many types of steps that produce

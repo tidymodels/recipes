@@ -59,6 +59,9 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' @return `names0` returns a character string of length `num` and
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`.
+#'
+#' @seealso [developer-functions]
+#'
 #' @examples
 #' names0(9, "a")
 #' names0(10, "a")
@@ -78,7 +81,6 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #'
 #' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
-
 names0 <- function(num, prefix = "x") {
   if (num < 1) {
     rlang::abort("`num` should be > 0.")
@@ -337,6 +339,9 @@ prepare <- function(x, ...) {
 #'  through `prep`. If no steps have been added to the recipe, `TRUE` is
 #'  returned only if the recipe has been prepped.
 #' @export
+#'
+#' @seealso [developer-functions]
+#'
 #' @examples
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_center(all_numeric())
@@ -368,6 +373,8 @@ fully_trained <- function(x) {
 #'   to check if `step_intercept` is present, use `name = intercept`.
 #' @return Logical indicating if recipes contains given step.
 #' @export
+#'
+#' @seealso [developer-functions]
 #'
 #' @examples
 #' rec <- recipe(Species ~ ., data = iris) %>%
@@ -410,6 +417,8 @@ is_qual <- function(x) {
 #' `types = c("double", "integer", "string", "factor", "ordered")` to get a
 #' clear error message.
 #'
+#' @seealso [developer-functions]
+#'
 #' @export
 #' @keywords internal
 check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
@@ -449,6 +458,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
+#' @seealso [developer-functions]
 is_trained <- function(x) {
   x$trained
 }
@@ -464,6 +474,7 @@ is_trained <- function(x) {
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
+#' @seealso [developer-functions]
 sel2char <- function(x) {
   unname(map_chr(x, to_character))
 }
@@ -504,6 +515,9 @@ simple_terms <- function(x, ...) {
 #'   `caller_env()`. The function will be mentioned in error messages as the
 #'   source of the error. See the call argument of [rlang::abort()] for more
 #'   information.
+#'
+#' @seealso [developer-functions]
+#'
 #' @export
 #' @keywords internal
 check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
@@ -532,11 +546,14 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
 
 #' Make a random identification field for steps
 #'
+#'
 #' @export
 #' @param prefix A single character string
 #' @param len An integer for the number of random characters
 #' @return A character string with the prefix and random letters separated by
 #'  and underscore.
+#'
+#' @seealso [developer-functions]
 #' @keywords internal
 rand_id <- function(prefix = "step", len = 5) {
   candidates <- c(letters, LETTERS, paste(0:9))
@@ -654,6 +671,7 @@ check_training_set <- function(x, rec, fresh) {
 #' @param object A recipe step
 #' @return A logical to keep the original variables in the output
 #' @keywords internal
+#' @seealso [developer-functions]
 get_keep_original_cols <- function(object) {
   # Allow prepping of old recipes created before addition of keep_original_cols
   step_class <- class(object)[1]
@@ -784,6 +802,9 @@ uses_dim_red <- function(x) {
 #' @param new_data A tibble of data being baked.
 #' @return Invisible NULL. Side effects are the focus of the function.
 #' @keywords internal
+#'
+#' @seealso [developer-functions]
+#'
 #' @export
 check_new_data <- function(req, object, new_data) {
   if (is.null(req) || length(req) == 0L) {
@@ -856,6 +877,9 @@ vec_paste0 <- function(..., collapse = NULL) {
 #' @return new_data with `col_names` removed if
 #'     `get_keep_original_cols(object) == TRUE` or `object$preserve == TRUE`.
 #' @keywords internal
+#'
+#' @seealso [developer-functions]
+#'
 #' @export
 remove_original_cols <- function(new_data, object, col_names) {
   keep_original_cols <- get_keep_original_cols(object)
@@ -877,6 +901,9 @@ remove_original_cols <- function(new_data, object, col_names) {
 #' @return `new_data` with column names removed if specified by `col_names` or
 #'   `object$removals`.
 #' @keywords internal
+#'
+#' @seealso [developer-functions]
+#'
 #' @export
 recipes_remove_cols <- function(new_data, object, col_names = character()) {
   if (length(col_names) > 0) {

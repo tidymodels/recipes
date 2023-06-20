@@ -88,4 +88,11 @@ printing.
 
 This internal function is used for printing steps.
 }
+\seealso{
+\link{developer-functions}
+
+\link{developer-functions}
+
+\link{developer-functions}
+}
 \keyword{internal}

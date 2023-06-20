@@ -8,9 +8,7 @@
 #' @param ... All arguments to the operator that should be returned.
 #' @param .prefix Prefix to the subclass created.
 #'
-#' @details
-#'
-#' See [developer-functions] for how to use these functions.
+#' @seealso [developer-functions]
 #'
 #' @keywords internal
 #' @return An updated step or check with the new class.
@@ -34,13 +32,12 @@ check <- function(subclass, ..., .prefix = "check_") {
 #' `add_step` adds a step to the last location in the recipe.
 #' `add_check` does the same for checks.
 #'
-#' @details
-#'
-#' See [developer-functions] for how to use these functions.
-#'
 #' @param rec A [recipe()].
 #' @param object A step or check object.
 #' @return A updated [recipe()] with the new operation in the last slot.
+#'
+#' @seealso [developer-functions]
+#'
 #' @export
 add_step <- function(rec, object) {
   rec$steps[[length(rec$steps) + 1]] <- object
