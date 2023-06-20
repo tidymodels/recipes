@@ -29,5 +29,5 @@ rec \%>\%
   fully_trained()
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }

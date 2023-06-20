@@ -1,4 +1,4 @@
-#' @name developer-functions
+#' @name developer_functions
 #'
 #' @title Developer functions for creating recipes steps
 #'

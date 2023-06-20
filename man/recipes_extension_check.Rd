@@ -51,5 +51,5 @@ recipes_extension_check(
 )
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }

@@ -21,6 +21,6 @@ When baking a step, create an information error message when a column that
 is used by the step is not present in \code{new_data}.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

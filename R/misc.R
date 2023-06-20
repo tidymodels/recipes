@@ -60,7 +60,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #'  `dummy_names` generates a character vector the same length as
 #'  `lvl`.
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @examples
 #' names0(9, "a")
@@ -340,7 +340,7 @@ prepare <- function(x, ...) {
 #'  returned only if the recipe has been prepped.
 #' @export
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @examples
 #' rec <- recipe(Species ~ ., data = iris) %>%
@@ -374,7 +374,7 @@ fully_trained <- function(x) {
 #' @return Logical indicating if recipes contains given step.
 #' @export
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @examples
 #' rec <- recipe(Species ~ ., data = iris) %>%
@@ -417,7 +417,7 @@ is_qual <- function(x) {
 #' `types = c("double", "integer", "string", "factor", "ordered")` to get a
 #' clear error message.
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @export
 #' @keywords internal
@@ -458,7 +458,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 is_trained <- function(x) {
   x$trained
 }
@@ -474,7 +474,7 @@ is_trained <- function(x) {
 #' @export
 #' @keywords internal
 #' @rdname recipes-internal
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 sel2char <- function(x) {
   unname(map_chr(x, to_character))
 }
@@ -516,7 +516,7 @@ simple_terms <- function(x, ...) {
 #'   source of the error. See the call argument of [rlang::abort()] for more
 #'   information.
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @export
 #' @keywords internal
@@ -553,7 +553,7 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
 #' @return A character string with the prefix and random letters separated by
 #'  and underscore.
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #' @keywords internal
 rand_id <- function(prefix = "step", len = 5) {
   candidates <- c(letters, LETTERS, paste(0:9))
@@ -671,7 +671,7 @@ check_training_set <- function(x, rec, fresh) {
 #' @param object A recipe step
 #' @return A logical to keep the original variables in the output
 #' @keywords internal
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 get_keep_original_cols <- function(object) {
   # Allow prepping of old recipes created before addition of keep_original_cols
   step_class <- class(object)[1]
@@ -803,7 +803,7 @@ uses_dim_red <- function(x) {
 #' @return Invisible NULL. Side effects are the focus of the function.
 #' @keywords internal
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @export
 check_new_data <- function(req, object, new_data) {
@@ -878,7 +878,7 @@ vec_paste0 <- function(..., collapse = NULL) {
 #'     `get_keep_original_cols(object) == TRUE` or `object$preserve == TRUE`.
 #' @keywords internal
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @export
 remove_original_cols <- function(new_data, object, col_names) {
@@ -902,7 +902,7 @@ remove_original_cols <- function(new_data, object, col_names) {
 #'   `object$removals`.
 #' @keywords internal
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @export
 recipes_remove_cols <- function(new_data, object, col_names = character()) {

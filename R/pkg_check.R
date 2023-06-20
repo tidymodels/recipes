@@ -9,7 +9,7 @@
 #'  console about which packages (if any) should be installed along
 #'  with code to do so.
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #' @export
 #' @keywords internal
 #' @examples

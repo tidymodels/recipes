@@ -89,10 +89,10 @@ printing.
 This internal function is used for printing steps.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 
-\link{developer-functions}
+\link{developer_functions}
 
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

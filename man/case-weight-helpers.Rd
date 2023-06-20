@@ -69,5 +69,5 @@ with any missing values (equal to the "complete.obs" strategy in
 inside print method to determine how printing should be done.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }

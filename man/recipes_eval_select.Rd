@@ -71,5 +71,5 @@ recipes_eval_select(quos, scat, info)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }

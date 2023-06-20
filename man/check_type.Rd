@@ -29,6 +29,6 @@ factors and ordered factors, then you should specify
 clear error message.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

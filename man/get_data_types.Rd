@@ -91,5 +91,5 @@ lapply(Sacramento, .get_data_types)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }

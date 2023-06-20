@@ -26,7 +26,7 @@
 #' @return cli output
 #' @export
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @examples
 #' recipes_extension_check(

@@ -37,6 +37,6 @@ newly created variable names don't overlap with existing names.
 Throws an error if check fails.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

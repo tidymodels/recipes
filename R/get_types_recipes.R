@@ -37,7 +37,7 @@ get_types <- function(x) {
 #'
 #' @rdname get_data_types
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @export
 #' @param x An object

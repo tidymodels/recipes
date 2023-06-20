@@ -25,5 +25,5 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 detect_step(rec, "intercept")
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }

@@ -19,6 +19,6 @@ and underscore.
 Make a random identification field for steps
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

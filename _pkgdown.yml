@@ -154,7 +154,7 @@ reference:
     - matches("^check_")
   - title: Developer Functions
     contents:
-    - developer-functions
+    - developer_functions
     - add_step
     - detect_step
     - fully_trained

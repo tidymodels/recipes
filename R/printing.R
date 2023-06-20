@@ -14,7 +14,7 @@
 #' @keywords internal
 #' @export
 #'
-#' @seealso [developer-functions]
+#' @seealso [developer_functions]
 #'
 #' @rdname recipes-internal
 print_step <- function(tr_obj = NULL,

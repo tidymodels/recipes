@@ -22,6 +22,6 @@ This helper function should be used whenever the argument
 \code{keep_original_cols} is used in a function.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

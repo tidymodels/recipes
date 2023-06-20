@@ -25,6 +25,6 @@ recipes_pkg_check("recipes")
 }
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

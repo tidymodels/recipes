@@ -25,6 +25,6 @@ An updated step or check with the new class.
 \code{step} sets the class of the \code{step} and \code{check} is for checks.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
 \keyword{internal}

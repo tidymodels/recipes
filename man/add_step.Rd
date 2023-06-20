@@ -22,5 +22,5 @@ A updated \code{\link[=recipe]{recipe()}} with the new operation in the last slo
 \code{add_check} does the same for checks.
 }
 \seealso{
-\link{developer-functions}
+\link{developer_functions}
 }
