@@ -24,4 +24,7 @@ An updated step or check with the new class.
 \description{
 \code{step} sets the class of the \code{step} and \code{check} is for checks.
 }
+\details{
+See \link{developer-functions} for how to use these functions.
+}
 \keyword{internal}

@@ -152,9 +152,13 @@ reference:
   - title: Check Functions
     contents:
     - matches("^check_")
-  - title: Internal Step Handling
+  - title: Developer Functions
     contents:
+    - developer-functions
     - add_step
+    - add_check
+    - step
+    - check
     - detect_step
     - fully_trained
     - .get_data_types
