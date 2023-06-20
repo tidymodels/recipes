@@ -14,7 +14,7 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE #1152", {
+test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   skip_if_not_installed("RcppML")
   library(Matrix)
 

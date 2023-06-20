@@ -279,7 +279,7 @@ test_that("case weights", {
   expect_snapshot(pca_extract_trained)
 })
 
-test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE #1152", {
+test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   rec <- recipe(~ ., data = mtcars) %>%
     step_pca(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
     prep()
