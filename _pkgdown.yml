@@ -156,9 +156,6 @@ reference:
     contents:
     - developer-functions
     - add_step
-    - add_check
-    - step
-    - check
     - detect_step
     - fully_trained
     - .get_data_types
