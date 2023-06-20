@@ -81,9 +81,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_date} creates a \emph{specification} of a recipe
-step that will convert date data into one or more factor or
-numeric variables.
+\code{step_date()} creates a \emph{specification} of a recipe step that will convert
+date data into one or more factor or numeric variables.
 }
 \details{
 Unlike some other steps, \code{step_date} does \emph{not}

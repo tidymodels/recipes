@@ -80,7 +80,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_knn} creates a \emph{specification} of a recipe step that will
+\code{step_impute_knn()} creates a \emph{specification} of a recipe step that will
 impute missing data using nearest neighbors.
 }
 \details{

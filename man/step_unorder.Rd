@@ -44,8 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_unorder} creates a \emph{specification} of a recipe
-step that will transform the data.
+\code{step_unorder()} creates a \emph{specification} of a recipe step that will turn
+ordered factor variables into unordered factor variables.
 }
 \details{
 The factors level order is preserved during the transformation.

@@ -44,8 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_arrange} creates a \emph{specification} of a recipe step
-that will sort rows using \code{\link[dplyr:arrange]{dplyr::arrange()}}.
+\code{step_arrange()} creates a \emph{specification} of a recipe step that will sort
+rows using \code{\link[dplyr:arrange]{dplyr::arrange()}}.
 }
 \details{
 When an object in the user's global environment is

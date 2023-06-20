@@ -56,12 +56,10 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_lag} creates a \emph{specification} of a recipe step that
-will add new columns of lagged data. Lagged data will
-by default include NA values where the lag was induced.
-These can be removed with \code{\link[=step_naomit]{step_naomit()}}, or you may
-specify an alternative filler value with the \code{default}
-argument.
+\code{step_lag()} creates a \emph{specification} of a recipe step that will add new
+columns of lagged data. Lagged data will by default include NA values where
+the lag was induced. These can be removed with \code{\link[=step_naomit]{step_naomit()}}, or you may
+specify an alternative filler value with the \code{default} argument.
 }
 \details{
 The step assumes that the data are already \emph{in the proper sequential

@@ -1,8 +1,7 @@
 #' Sample rows using dplyr
 #'
-#' `step_sample` creates a *specification* of a recipe step
-#'  that will sample rows using [dplyr::sample_n()] or
-#'  [dplyr::sample_frac()].
+#' `step_sample()` creates a *specification* of a recipe step that will sample
+#' rows using [dplyr::sample_n()] or [dplyr::sample_frac()].
 #'
 #' @template row-ops
 #' @inheritParams step_center

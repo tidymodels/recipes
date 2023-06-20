@@ -68,10 +68,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_classdist} creates a \emph{specification} of a
-recipe step that will convert numeric data into Mahalanobis
-distance measurements to the data centroid. This is done for
-each value of a categorical class variable.
+\code{step_classdist()} creates a \emph{specification} of a recipe step that will
+convert numeric data into Mahalanobis distance measurements to the data
+centroid. This is done for each value of a categorical class variable.
 }
 \details{
 \code{step_classdist} will create a new column for every

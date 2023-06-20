@@ -1,7 +1,7 @@
 #' Percentile Transformation
 #'
-#' `step_percentile` creates a *specification* of a recipe step that
-#' replaces the value of a variable with its percentile from the training set.
+#' `step_percentile()` creates a *specification* of a recipe step that replaces
+#' the value of a variable with its percentile from the training set.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

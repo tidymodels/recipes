@@ -70,9 +70,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca_poly} creates a \emph{specification} of a recipe step that
-will convert numeric data into one or more principal components
-using a polynomial kernel basis expansion.
+\code{step_kpca_poly()} creates a \emph{specification} of a recipe step that will
+convert numeric data into one or more principal components using a polynomial
+kernel basis expansion.
 }
 \details{
 Kernel principal component analysis (kPCA) is an extension of a PCA analysis

@@ -44,9 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_invlogit} creates a \emph{specification} of a recipe
-step that will transform the data from real values to be between
-zero and one.
+\code{step_invlogit()} creates a \emph{specification} of a recipe step that will
+transform the data from real values to be between zero and one.
 }
 \details{
 The inverse logit transformation takes values on the

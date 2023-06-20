@@ -1,7 +1,7 @@
 #' Add new variables using dplyr
 #'
-#' `step_mutate()` creates a *specification* of a recipe step
-#'  that will add variables using [dplyr::mutate()].
+#' `step_mutate()` creates a *specification* of a recipe step that will add
+#' variables using [dplyr::mutate()].
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

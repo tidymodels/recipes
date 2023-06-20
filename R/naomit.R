@@ -1,8 +1,7 @@
 #' Remove observations with missing values
 #'
-#' `step_naomit` creates a *specification* of a recipe step that
-#'   will remove observations (rows of data) if they contain `NA`
-#'   or `NaN` values.
+#' `step_naomit()` creates a *specification* of a recipe step that will remove
+#' observations (rows of data) if they contain `NA` or `NaN` values.
 #'
 #' @template row-ops
 #' @inheritParams step_center

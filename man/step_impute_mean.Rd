@@ -62,7 +62,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_mean} creates a \emph{specification} of a recipe step that will
+\code{step_impute_mean()} creates a \emph{specification} of a recipe step that will
 substitute missing values of numeric variables by the training set mean of
 those variables.
 }

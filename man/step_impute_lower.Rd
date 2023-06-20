@@ -55,11 +55,11 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_lower} creates a \emph{specification} of a recipe step
-designed for cases where the non-negative numeric data cannot be
-measured below a known value. In these cases, one method for
-imputing the data is to substitute the truncated value by a
-random uniform number between zero and the truncation point.
+\code{step_impute_lower()} creates a \emph{specification} of a recipe step designed for
+cases where the non-negative numeric data cannot be measured below a known
+value. In these cases, one method for imputing the data is to substitute the
+truncated value by a random uniform number between zero and the truncation
+point.
 }
 \details{
 \code{step_impute_lower} estimates the variable minimums

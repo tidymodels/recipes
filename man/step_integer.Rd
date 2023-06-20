@@ -55,9 +55,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_integer} creates a \emph{specification} of a recipe
-step that will convert new data into a set of integers based
-on the original data values.
+\code{step_integer()} creates a \emph{specification} of a recipe step that will convert
+new data into a set of integers based on the original data values.
 }
 \details{
 \code{step_integer} will determine the unique values of

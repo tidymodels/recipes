@@ -45,8 +45,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_rm} creates a \emph{specification} of a recipe step
-that will remove variables based on their name, type, or role.
+\code{step_rm()} creates a \emph{specification} of a recipe step that will remove
+selected variables.
 }
 \details{
 This step can potentially remove columns from the data set. This may

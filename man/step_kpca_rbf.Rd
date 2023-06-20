@@ -68,9 +68,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca_rbf} creates a \emph{specification} of a recipe step that
-will convert numeric data into one or more principal components
-using a radial basis function kernel basis expansion.
+\code{step_kpca_rbf()} creates a \emph{specification} of a recipe step that will
+convert numeric data into one or more principal components using a radial
+basis function kernel basis expansion.
 }
 \details{
 Kernel principal component analysis (kPCA) is an extension of a PCA analysis

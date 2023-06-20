@@ -76,8 +76,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_pca} creates a \emph{specification} of a recipe step that will convert
-numeric data into one or more principal components.
+\code{step_pca()} creates a \emph{specification} of a recipe step that will convert
+numeric variables into one or more principal components.
 }
 \details{
 Principal component analysis (PCA) is a transformation of a

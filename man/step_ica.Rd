@@ -75,9 +75,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_ica} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more independent
-components.
+\code{step_ica()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more independent components.
 }
 \details{
 Independent component analysis (ICA) is a

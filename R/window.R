@@ -1,8 +1,8 @@
 #' Moving Window Functions
 #'
-#'   `step_window` creates a *specification* of a recipe
-#'  step that will create new columns that are the results of
-#'  functions that compute statistics across moving windows.
+#' `step_window()` creates a *specification* of a recipe step that will create
+#' new columns that are the results of functions that compute statistics across
+#' moving windows.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

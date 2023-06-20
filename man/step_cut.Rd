@@ -49,7 +49,7 @@ sequence of any existing operations.
 }
 \description{
 \code{step_cut()} creates a \emph{specification} of a recipe step that cuts a numeric
-variable into a factor based on provided boundary values
+variable into a factor based on provided boundary values.
 }
 \details{
 Unlike the \code{base::cut()} function there is no need to specify the

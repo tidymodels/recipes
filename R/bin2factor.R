@@ -1,8 +1,8 @@
 #' Create a Factors from A Dummy Variable
 #'
-#' `step_bin2factor` creates a *specification* of a
-#'  recipe step that will create a two-level factor from a single
-#'  dummy variable.
+#' `step_bin2factor()` creates a *specification* of a recipe step that will
+#' create a two-level factor from a single dummy variable.
+#'
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param levels A length 2 character string that indicates the

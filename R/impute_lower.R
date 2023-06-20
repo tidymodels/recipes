@@ -1,10 +1,10 @@
 #' Impute numeric data below the threshold of measurement
 #'
-#' `step_impute_lower` creates a *specification* of a recipe step
-#'  designed for cases where the non-negative numeric data cannot be
-#'  measured below a known value. In these cases, one method for
-#'  imputing the data is to substitute the truncated value by a
-#'  random uniform number between zero and the truncation point.
+#' `step_impute_lower()` creates a *specification* of a recipe step designed for
+#' cases where the non-negative numeric data cannot be measured below a known
+#' value. In these cases, one method for imputing the data is to substitute the
+#' truncated value by a random uniform number between zero and the truncation
+#' point.
 #'
 #' @inheritParams step_center
 #' @param threshold A named numeric vector of lower bounds. This is

@@ -48,12 +48,11 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_intercept} creates a \emph{specification} of a recipe step that
-will add an intercept or constant term in the first column of a data
-matrix. \code{step_intercept} has defaults to \emph{predictor} role so
-that it is by default called in the bake step. Be careful to avoid
-unintentional transformations when calling steps with
-\code{all_predictors}.
+\code{step_intercept()} creates a \emph{specification} of a recipe step that will add
+an intercept or constant term in the first column of a data matrix.
+\code{step_intercept()} defaults to \emph{predictor} role so that it is by default
+only called in the bake step. Be careful to avoid unintentional transformations
+when calling steps with \code{all_predictors()}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column

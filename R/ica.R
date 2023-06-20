@@ -1,8 +1,7 @@
 #' ICA Signal Extraction
 #'
-#' `step_ica` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more independent
-#'  components.
+#' `step_ica()` creates a *specification* of a recipe step that will convert
+#' numeric data into one or more independent components.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

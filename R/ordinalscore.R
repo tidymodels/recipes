@@ -1,8 +1,7 @@
 #' Convert Ordinal Factors to Numeric Scores
 #'
-#' `step_ordinalscore` creates a *specification* of a
-#'  recipe step that will convert ordinal factor variables into
-#'  numeric scores.
+#' `step_ordinalscore()` creates a *specification* of a recipe step that will
+#' convert ordinal factor variables into numeric scores.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

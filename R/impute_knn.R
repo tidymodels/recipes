@@ -1,7 +1,7 @@
 #' Impute via k-nearest neighbors
 #'
-#' `step_impute_knn` creates a *specification* of a recipe step that will
-#'  impute missing data using nearest neighbors.
+#' `step_impute_knn()` creates a *specification* of a recipe step that will
+#' impute missing data using nearest neighbors.
 #'
 #' @inheritParams step_impute_bag
 #' @inheritParams step_center

@@ -1,8 +1,7 @@
 #' Collapse Some Categorical Levels
 #'
-#' `step_other` creates a *specification* of a recipe
-#'  step that will potentially pool infrequently occurring values
-#'  into an "other" category.
+#' `step_other()` creates a *specification* of a recipe step that will
+#' potentially pool infrequently occurring values into an `"other"` category.
 #'
 #' @inheritParams step_center
 #' @param threshold A numeric value between 0 and 1, or an integer greater or

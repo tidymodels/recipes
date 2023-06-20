@@ -50,9 +50,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_filter_missing} creates a \emph{specification} of a recipe
-step that will potentially remove variables that have too many missing
-values.
+\code{step_filter_missing()} creates a \emph{specification} of a recipe step that will
+potentially remove variables that have too many missing values.
 }
 \details{
 This step can potentially remove columns from the data set. This may
