@@ -91,14 +91,12 @@ Non-negative matrix factorization computes latent components that
 have non-negative values and take into account that the original data
 have non-negative values.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
-If \code{num = 101}, the names would be \code{NNMF001} -
-\code{NNMF101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{NNMF1} - \code{NNMF9}. If \code{num_comp = 101},
+the names would be \code{NNMF1} - \code{NNMF101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
