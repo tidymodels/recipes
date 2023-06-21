@@ -1,0 +1,11 @@
+```{r, include = FALSE}
+low_range <- paste0("\`", prefix, 1, "\` - \`", prefix, 9, "\`")
+high_range <- paste0("\`", prefix, 001, "\` - \`", prefix, 101, "\`")
+```
+
+The argument `num_comp` controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with `prefix` and a 
+sequence of numbers. The variable names are padded with zeros. For example, if 
+`num_comp < 10`, their names will be `r low_range`. If `num_comp = 101`, 
+the names would be `r high_range`.
