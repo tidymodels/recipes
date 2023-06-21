@@ -11,9 +11,9 @@
 #'
 #' # Creating steps
 #'
-#' [add_step()] and [add_check()] are required when creating a new step. It
-#' should be the other function call in your steps and should have the following
-#' format:
+#' [add_step()] and [add_check()] are required when creating a new step. The
+#' output of [add_step()] should be the return value of all steps and should
+#' have the following format:
 #'
 #' ```r
 #' step_example <- function(recipe,

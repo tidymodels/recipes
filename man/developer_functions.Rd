@@ -8,9 +8,9 @@ This page provides a comprehensive list of the exported functions for
 creating recipes steps and guidance on how to use them.
 }
 \section{Creating steps}{
-\code{\link[=add_step]{add_step()}} and \code{\link[=add_check]{add_check()}} are required when creating a new step. It
-should be the other function call in your steps and should have the following
-format:
+\code{\link[=add_step]{add_step()}} and \code{\link[=add_check]{add_check()}} are required when creating a new step. The
+output of \code{\link[=add_step]{add_step()}} should be the return value of all steps and should
+have the following format:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{step_example <- function(recipe,
                          ...,
