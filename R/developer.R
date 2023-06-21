@@ -5,7 +5,7 @@
 #' @description
 #'
 #' This page provides a comprehensive list of the exported functions for
-#' creating recipes steps, and how to use them.
+#' creating recipes steps and guidance on how to use them.
 #'
 #' @details
 #'
@@ -63,7 +63,7 @@
 #' ```
 #'
 #' [recipes_eval_select()] is used within `prep.step_*()` functions, and are
-#' used to turn `x$terms` object into a character vector of the selected
+#' used to turn the `terms` object into a character vector of the selected
 #' variables.
 #'
 #' It will most likely be used like so:
@@ -76,8 +76,8 @@
 #' variables passed in are the right types. We recommend that you use the
 #' `types` argument as it offers higher flexibility and it matches the types
 #' defined by [.get_data_types()]. When using `types` we find it better to be
-#' explicit, so writing `types = c("double", "integer")` instead of `types =
-#' "numeric"` as it produces cleaner error messages.
+#' explicit, e.g. writing `types = c("double", "integer")` instead of `types =
+#' "numeric"`, as it produces cleaner error messages.
 #'
 #' It should be used like so:
 #'
@@ -102,10 +102,10 @@
 #'
 #' [get_keep_original_cols()] and [remove_original_cols()] are used within steps
 #' with the `keep_original_cols` argument. [get_keep_original_cols()] is used in
-#' `prep.step_*()` functions, for steps that were created before the
-#' `keep_original_cols` argument was added. And acts as a way to throw a warning
+#' `prep.step_*()` functions for steps that were created before the
+#' `keep_original_cols` argument was added, and acts as a way to throw a warning
 #' that the user should regenerate the recipe. [remove_original_cols()] should
-#' be used in `bake.step_*()` functions to help remove the original cols. It is
+#' be used in `bake.step_*()` functions to remove the original columns. It is
 #' worth noting that [remove_original_cols()] can remove multiple columns at
 #' once and when possible should be put outside `for` loops.
 #'
@@ -113,12 +113,12 @@
 #' new_data <- remove_original_cols(new_data, object, names_of_original_cols)
 #' ```
 #'
-#' [recipes_remove_cols()] should be used in `prep.step_*()` functions, and are
+#' [recipes_remove_cols()] should be used in `prep.step_*()` functions, and is
 #' used to remove columns from the data set, either by using the
-#' `object$removals` field, or by using the `col_names` argument.
+#' `object$removals` field or by using the `col_names` argument.
 #'
 #' [get_case_weights()] and [are_weights_used()] are functions that help you
-#' extract case weights, and help determine if they are used or not within the
+#' extract case weights and help determine if they are used or not within the
 #' step. They will typically be used within the `prep.step_*()` functions if the
 #' step in question supports case weights.
 #'
@@ -127,7 +127,7 @@
 #'
 #' [sel2char()] is mostly used within `tidy.step_*()` functions to turn
 #' selections into character vectors.
-#'.
+#'
 #' [names0()] creates a series of `num` names with a common prefix. The names
 #' are numbered with leading zeros (e.g. `prefix01`-`prefix10` instead of
 #' `prefix1`-`prefix10`). This is useful for many types of steps that produce
@@ -142,7 +142,7 @@
 #' The function [is_trained()] can be used to check in any individual steps are
 #' trained or not.
 #'
-#' [.get_data_types()] is a S3 method that is used for [selections]. This method
+#' [.get_data_types()] is an S3 method that is used for [selections]. This method
 #' can be extended to work with column types not supported by recipes.
 #'
 #' [recipes_extension_check()] is recommended to be used by package authors to
