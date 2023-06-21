@@ -185,13 +185,12 @@ the package.</p>
 <p>As with ordinary PCA, it is important to center and scale the variables
 prior to computing PCA components (<code><a href="step_normalize.html">step_normalize()</a></code> can be used for
 this purpose).</p>
-<p>The argument <code>num_comp</code> controls the number of components that will be
-retained; the original variables that are used to derive the components are
-removed from the data when <code>keep_original_cols = FALSE</code>. The new components
-will have names that begin with <code>prefix</code> and a sequence of numbers. The
-variable names are padded with zeros. For example, if <code>num_comp &lt; 10</code>, the
-new names will be <code>kPC1</code> - <code>kPC9</code>. If <code>num_comp = 101</code>, the names would be
-<code>kPC001</code> - <code>kPC101</code>.</p>
+<p>The argument <code>num_comp</code> controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with <code>prefix</code> and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+<code>num_comp &lt; 10</code>, their names will be <code>kPC1</code> - <code>kPC9</code>. If <code>num_comp = 101</code>,
+the names would be <code>kPC1</code> - <code>kPC101</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="tidy-results">tidy() results<a class="anchor" aria-label="anchor" href="#tidy-results"></a></h2>

@@ -195,12 +195,12 @@ analysis that requires the outcome data to compute
 the new features.</p>
 <p>This step requires the Bioconductor <span class="pkg">mixOmics</span> package. If not installed, the
 step will stop with a note about installing the package.</p>
-<p>The argument <code>num_comp</code> controls the number of components that will
-be retained (the original variables that are used to derive the
-components are removed from the data). The new components will
-have names that begin with <code>prefix</code> and a sequence of numbers.
-The variable names are padded with zeros. For example, if <code>num_comp &lt; 10</code>, their names will be <code>PLS1</code> - <code>PLS9</code>. If <code>num_comp = 101</code>, the
-names would be <code>PLS001</code> - <code>PLS101</code>.</p>
+<p>The argument <code>num_comp</code> controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with <code>prefix</code> and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+<code>num_comp &lt; 10</code>, their names will be <code>PLS1</code> - <code>PLS9</code>. If <code>num_comp = 101</code>,
+the names would be <code>PLS1</code> - <code>PLS101</code>.</p>
 <p>Sparsity can be encouraged using the <code>predictor_prop</code> parameter. This affects
 each PLS component, and indicates the maximum proportion of predictors with
 non-zero coefficients in each component. <code>step_pls()</code> converts this

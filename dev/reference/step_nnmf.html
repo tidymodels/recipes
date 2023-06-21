@@ -194,14 +194,12 @@ sequence of any existing operations.</p>
     <p>Non-negative matrix factorization computes latent components that
 have non-negative values and take into account that the original data
 have non-negative values.</p>
-<p>The argument <code>num_comp</code> controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with <code>prefix</code> and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if <code>num &lt; 10</code>, their names will be <code>NNMF1</code> - <code>NNMF9</code>.
-If <code>num = 101</code>, the names would be <code>NNMF001</code> -
-<code>NNMF101</code>.</p>
+<p>The argument <code>num_comp</code> controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with <code>prefix</code> and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+<code>num_comp &lt; 10</code>, their names will be <code>NNMF1</code> - <code>NNMF9</code>. If <code>num_comp = 101</code>,
+the names would be <code>NNMF1</code> - <code>NNMF101</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
