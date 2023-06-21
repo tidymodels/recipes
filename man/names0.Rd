@@ -68,3 +68,6 @@ levels(example$x)
 
 dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 }
+\seealso{
+\link{developer_functions}
+}

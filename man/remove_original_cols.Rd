@@ -21,4 +21,7 @@ new_data with \code{col_names} removed if
 This helper function should be used whenever the argument
 \code{keep_original_cols} is used in a function.
 }
+\seealso{
+\link{developer_functions}
+}
 \keyword{internal}

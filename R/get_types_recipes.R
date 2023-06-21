@@ -36,6 +36,9 @@ get_types <- function(x) {
 #' - hardhat_case_weights: `r all_get_data_types$hardhat_case_weights`
 #'
 #' @rdname get_data_types
+#'
+#' @seealso [developer_functions]
+#'
 #' @export
 #' @param x An object
 #' @examplesIf rlang::is_installed("modeldata")

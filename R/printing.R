@@ -13,6 +13,9 @@
 #' @return `NULL`, invisibly.
 #' @keywords internal
 #' @export
+#'
+#' @seealso [developer_functions]
+#'
 #' @rdname recipes-internal
 print_step <- function(tr_obj = NULL,
                        untr_obj = NULL,

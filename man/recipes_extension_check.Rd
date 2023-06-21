@@ -50,3 +50,6 @@ recipes_extension_check(
   exclude_methods = c("required_pkgs")
 )
 }
+\seealso{
+\link{developer_functions}
+}
