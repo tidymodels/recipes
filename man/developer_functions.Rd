@@ -5,7 +5,7 @@
 \title{Developer functions for creating recipes steps}
 \description{
 This page provides a comprehensive list of the exported functions for
-creating recipes steps, and how to use them.
+creating recipes steps and guidance on how to use them.
 }
 \section{Creating steps}{
 \code{\link[=add_step]{add_step()}} and \code{\link[=add_check]{add_check()}} are required when creating a new step. It
@@ -57,7 +57,7 @@ use in your new step. It will be used in the following way:
 }\if{html}{\out{</div>}}
 
 \code{\link[=recipes_eval_select]{recipes_eval_select()}} is used within \verb{prep.step_*()} functions, and are
-used to turn \code{x$terms} object into a character vector of the selected
+used to turn the \code{terms} object into a character vector of the selected
 variables.
 
 It will most likely be used like so:
@@ -69,7 +69,7 @@ It will most likely be used like so:
 variables passed in are the right types. We recommend that you use the
 \code{types} argument as it offers higher flexibility and it matches the types
 defined by \code{\link[=.get_data_types]{.get_data_types()}}. When using \code{types} we find it better to be
-explicit, so writing \code{types = c("double", "integer")} instead of \code{types = "numeric"} as it produces cleaner error messages.
+explicit, e.g. writing \code{types = c("double", "integer")} instead of \code{types = "numeric"}, as it produces cleaner error messages.
 
 It should be used like so:
 
@@ -92,22 +92,22 @@ columns to the data set.
 
 \code{\link[=get_keep_original_cols]{get_keep_original_cols()}} and \code{\link[=remove_original_cols]{remove_original_cols()}} are used within steps
 with the \code{keep_original_cols} argument. \code{\link[=get_keep_original_cols]{get_keep_original_cols()}} is used in
-\verb{prep.step_*()} functions, for steps that were created before the
-\code{keep_original_cols} argument was added. And acts as a way to throw a warning
+\verb{prep.step_*()} functions for steps that were created before the
+\code{keep_original_cols} argument was added, and acts as a way to throw a warning
 that the user should regenerate the recipe. \code{\link[=remove_original_cols]{remove_original_cols()}} should
-be used in \verb{bake.step_*()} functions to help remove the original cols. It is
+be used in \verb{bake.step_*()} functions to remove the original columns. It is
 worth noting that \code{\link[=remove_original_cols]{remove_original_cols()}} can remove multiple columns at
 once and when possible should be put outside \code{for} loops.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{new_data <- remove_original_cols(new_data, object, names_of_original_cols)
 }\if{html}{\out{</div>}}
 
-\code{\link[=recipes_remove_cols]{recipes_remove_cols()}} should be used in \verb{prep.step_*()} functions, and are
+\code{\link[=recipes_remove_cols]{recipes_remove_cols()}} should be used in \verb{prep.step_*()} functions, and is
 used to remove columns from the data set, either by using the
-\code{object$removals} field, or by using the \code{col_names} argument.
+\code{object$removals} field or by using the \code{col_names} argument.
 
 \code{\link[=get_case_weights]{get_case_weights()}} and \code{\link[=are_weights_used]{are_weights_used()}} are functions that help you
-extract case weights, and help determine if they are used or not within the
+extract case weights and help determine if they are used or not within the
 step. They will typically be used within the \verb{prep.step_*()} functions if the
 step in question supports case weights.
 
@@ -116,7 +116,7 @@ replacing the internally deprecated \code{\link[=printer]{printer()}} function.
 
 \code{\link[=sel2char]{sel2char()}} is mostly used within \verb{tidy.step_*()} functions to turn
 selections into character vectors.
-.
+
 \code{\link[=names0]{names0()}} creates a series of \code{num} names with a common prefix. The names
 are numbered with leading zeros (e.g. \code{prefix01}-\code{prefix10} instead of
 \code{prefix1}-\code{prefix10}). This is useful for many types of steps that produce
@@ -131,7 +131,7 @@ check is included in a recipe.
 The function \code{\link[=is_trained]{is_trained()}} can be used to check in any individual steps are
 trained or not.
 
-\code{\link[=.get_data_types]{.get_data_types()}} is a S3 method that is used for \link{selections}. This method
+\code{\link[=.get_data_types]{.get_data_types()}} is an S3 method that is used for \link{selections}. This method
 can be extended to work with column types not supported by recipes.
 
 \code{\link[=recipes_extension_check]{recipes_extension_check()}} is recommended to be used by package authors to
