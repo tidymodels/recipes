@@ -18,6 +18,8 @@
 
 * Added developer function `recipes_remove_cols()` to provide standardized way to remove columns by column names. (#1155)
 
+* `step_bs()` and `step_ns()` have gained `keep_original_cols` argument.
+
 # recipes 1.0.6
 
 ## Improvements
