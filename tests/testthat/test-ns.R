@@ -125,7 +125,7 @@ test_that("keep_original_cols works", {
   )
 })
 
-test_that("can prep recipes with no keep_original_cols", {
+test_that("keep_original_cols - can prep recipes with it missing", {
   rec <- recipe(~ mpg, mtcars) %>%
     step_ns(all_predictors())
 
