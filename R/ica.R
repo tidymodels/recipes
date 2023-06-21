@@ -33,14 +33,11 @@
 #'  \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
 #'  step will stop with a note about installing these packages.
 #'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_comp < 10`, their names will be `IC1` - `IC9`.
-#'  If `num_comp = 101`, the names would be `IC001` -
-#'  `IC101`.
+#' ```{r, echo = FALSE, results="asis"}
+#' prefix <- "IC"
+#' result <- knitr::knit_child("man/rmd/num_comp.Rmd")
+#' cat(result)
+#' ```
 #'
 #' # Tidying
 #'

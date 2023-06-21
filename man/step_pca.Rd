@@ -94,14 +94,12 @@ the PCA calculation. This can be changed using the
 \code{options} argument or by using \code{\link[=step_center]{step_center()}}
 and \code{\link[=step_scale]{step_scale()}}.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_comp < 10}, their names will be \code{PC1} - \code{PC9}.
-If \code{num_comp = 101}, the names would be \code{PC001} -
-\code{PC101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{PC1} - \code{PC9}. If \code{num_comp = 101},
+the names would be \code{PC1} - \code{PC101}.
 
 Alternatively, \code{threshold} can be used to determine the
 number of components that are required to capture a specified

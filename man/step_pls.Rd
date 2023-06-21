@@ -93,12 +93,12 @@ the new features.
 This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
 step will stop with a note about installing the package.
 
-The argument \code{num_comp} controls the number of components that will
-be retained (the original variables that are used to derive the
-components are removed from the data). The new components will
-have names that begin with \code{prefix} and a sequence of numbers.
-The variable names are padded with zeros. For example, if \code{num_comp < 10}, their names will be \code{PLS1} - \code{PLS9}. If \code{num_comp = 101}, the
-names would be \code{PLS001} - \code{PLS101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{PLS1} - \code{PLS9}. If \code{num_comp = 101},
+the names would be \code{PLS1} - \code{PLS101}.
 
 Sparsity can be encouraged using the \code{predictor_prop} parameter. This affects
 each PLS component, and indicates the maximum proportion of predictors with
