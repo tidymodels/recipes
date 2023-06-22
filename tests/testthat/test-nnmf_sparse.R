@@ -121,6 +121,8 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
   rec <- recipe(~ mpg, mtcars) %>%
     step_nnmf_sparse(all_predictors())
 
