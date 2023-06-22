@@ -79,47 +79,6 @@ test_that("No kPCA comps", {
   expect_snapshot(pca_extract)
 })
 
-
-test_that("keep_original_cols works", {
-  skip_if_not_installed("kernlab")
-
-  kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, id = "", keep_original_cols = TRUE)
-
-  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
-
-  pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
-
-  expect_equal(
-    colnames(pca_pred),
-    c(
-      "X2", "X3", "X4", "X5", "X6",
-      "kPC1", "kPC2", "kPC3", "kPC4", "kPC5"
-    )
-  )
-})
-
-test_that("can prep recipes with no keep_original_cols", {
-  skip_if_not_installed("kernlab")
-
-  kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, id = "")
-
-  kpca_rec$steps[[1]]$keep_original_cols <- NULL
-
-  suppressWarnings(
-    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
-  )
-
-  expect_error(
-    pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors()),
-    NA
-  )
-  expect_snapshot(
-    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE),
-  )
-})
-
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   rec <- recipe(~ ., data = mtcars) %>%
     step_kpca(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
@@ -180,6 +139,50 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expected)
+})
+
+test_that("keep_original_cols works", {
+  skip_if_not_installed("kernlab")
+  new_names <- paste0("kPC", 1:5)
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("kernlab")
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 test_that("printing", {

@@ -42,16 +42,6 @@
       ! Name collision occured. The following variable names already exists:
       i  Isomap1
 
-# can prep recipes with no keep_original_cols
-
-    Code
-      im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
-    Message
-    Condition
-      Warning:
-      'keep_original_cols' was added to `step_isomap()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
-
 # empty printing
 
     Code
@@ -86,6 +76,16 @@
       
       -- Operations 
       * Isomap approximation with: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Message
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_isomap()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
 
 # printing
 

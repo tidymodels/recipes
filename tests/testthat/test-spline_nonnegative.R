@@ -162,6 +162,38 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
+test_that("keep_original_cols works", {
+  new_names <- paste0("mpg_", formatC(1:10, width = 2, flag = "0"))
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_spline_nonnegative(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_spline_nonnegative(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  # step_spline_nonnegative() was added after keep_original_cols
+  # Making this test case unlikely
+  expect_true(TRUE)
+})
+
 test_that("printing", {
   rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
                 data = biomass) %>%
