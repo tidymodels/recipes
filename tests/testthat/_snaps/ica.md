@@ -28,15 +28,6 @@
       ! Name collision occured. The following variable names already exists:
       i  IC1
 
-# keep_original_cols - can prep recipes with it missing
-
-    Code
-      rec <- prep(rec)
-    Condition
-      Warning:
-      'keep_original_cols' was added to `step_ica()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
-
 # empty printing
 
     Code
@@ -71,6 +62,15 @@
       
       -- Operations 
       * ICA extraction with: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_ica()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
 
 # printing
 

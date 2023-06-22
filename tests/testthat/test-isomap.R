@@ -141,6 +141,64 @@ test_that("tunable", {
   )
 })
 
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  im_rec <- rec %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) %>%
+    update_role(x1, x2, x3, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
+
+  expect_error(bake(im_trained, new_data = dat2[, 1:2]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_isomap(rec)
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, mtcars)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(mpg ~ ., mtcars)
+  rec2 <- step_isomap(rec1)
+
+  rec1 <- prep(rec1, mtcars)
+  rec2 <- prep(rec2, mtcars)
+
+  baked1 <- bake(rec1, mtcars)
+  baked2 <- bake(rec2, mtcars)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_isomap(rec)
+
+  expect <- tibble(terms = character(), id = character())
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, mtcars)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
 test_that("keep_original_cols works", {
   skip_on_cran()
   skip_if_not_installed("RSpectra")
@@ -198,64 +256,6 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     bake(rec, new_data = dat1),
     NA
   )
-})
-
-# Infrastructure ---------------------------------------------------------------
-
-test_that("bake method errors when needed non-standard role columns are missing", {
-  skip_on_cran()
-  skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
-  skip_if_not_installed("RANN")
-  skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
-
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3) %>%
-    update_role(x1, x2, x3, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
-
-  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
-
-  expect_error(bake(im_trained, new_data = dat2[, 1:2]),
-               class = "new_data_missing_column")
-})
-
-test_that("empty printing", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_isomap(rec)
-
-  expect_snapshot(rec)
-
-  rec <- prep(rec, mtcars)
-
-  expect_snapshot(rec)
-})
-
-test_that("empty selection prep/bake is a no-op", {
-  rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_isomap(rec1)
-
-  rec1 <- prep(rec1, mtcars)
-  rec2 <- prep(rec2, mtcars)
-
-  baked1 <- bake(rec1, mtcars)
-  baked2 <- bake(rec2, mtcars)
-
-  expect_identical(baked1, baked2)
-})
-
-test_that("empty selection tidy method works", {
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_isomap(rec)
-
-  expect <- tibble(terms = character(), id = character())
-
-  expect_identical(tidy(rec, number = 1), expect)
-
-  rec <- prep(rec, mtcars)
-
-  expect_identical(tidy(rec, number = 1), expect)
 })
 
 test_that("printing", {

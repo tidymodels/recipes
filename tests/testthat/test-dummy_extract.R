@@ -296,50 +296,6 @@ test_that("case weights", {
   expect_snapshot(dummy_prepped)
 })
 
-test_that("keep_original_cols works", {
-  new_names <- paste0("colors_", c("blue", "red", "white", "other"))
-
-  rec <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
-                       keep_original_cols = FALSE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    new_names
-  )
-
-  rec <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
-                       keep_original_cols = TRUE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    c("colors", new_names)
-  )
-})
-
-test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ colors, data = color_examples) %>%
-    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')")
-
-  rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    rec <- prep(rec)
-  )
-
-  expect_error(
-    bake(rec, new_data = color_examples),
-    NA
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -389,6 +345,50 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  new_names <- paste0("colors_", c("blue", "red", "white", "other"))
+
+  rec <- recipe(~ colors, data = color_examples) %>%
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+                       keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ colors, data = color_examples) %>%
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+                       keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("colors", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ colors, data = color_examples) %>%
+    step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')")
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = color_examples),
+    NA
+  )
 })
 
 test_that("printing", {

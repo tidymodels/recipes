@@ -260,50 +260,6 @@ test_that("tunable", {
   )
 })
 
-test_that("keep_original_cols works", {
-  skip_if_not_installed("mixOmics")
-  new_names <- c("vs", "PLS1")
-
-  rec <- recipe(vs ~ mpg, mtcars) %>%
-    step_pls(all_predictors(), outcome = "vs", keep_original_cols = FALSE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    new_names
-  )
-
-  rec <- recipe(vs ~ mpg, mtcars) %>%
-    step_pls(all_predictors(), outcome = "vs", keep_original_cols = TRUE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    c("mpg", new_names)
-  )
-})
-
-test_that("keep_original_cols - can prep recipes with it missing", {
-  skip_if_not_installed("mixOmics")
-  rec <- recipe(vs ~ mpg, mtcars) %>%
-    step_pls(all_predictors(), outcome = "vs")
-
-  rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    rec <- prep(rec)
-  )
-
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
-  )
-})
-
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   rec <- recipe(carb ~ ., data = mtcars) %>%
     step_pls(all_predictors(), outcome = "carb",
@@ -370,6 +326,50 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  skip_if_not_installed("mixOmics")
+  new_names <- c("vs", "PLS1")
+
+  rec <- recipe(vs ~ mpg, mtcars) %>%
+    step_pls(all_predictors(), outcome = "vs", keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(vs ~ mpg, mtcars) %>%
+    step_pls(all_predictors(), outcome = "vs", keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("mixOmics")
+  rec <- recipe(vs ~ mpg, mtcars) %>%
+    step_pls(all_predictors(), outcome = "vs")
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 test_that("printing", {

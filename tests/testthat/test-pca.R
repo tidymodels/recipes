@@ -250,48 +250,6 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
-test_that("keep_original_cols works", {
-  new_names <- c("PC1")
-
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_pca(all_predictors(), keep_original_cols = FALSE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    new_names
-  )
-
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_pca(all_predictors(), keep_original_cols = TRUE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    c("mpg", new_names)
-  )
-})
-
-test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_pca(all_predictors())
-
-  rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    rec <- prep(rec)
-  )
-
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -348,6 +306,48 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  new_names <- c("PC1")
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_pca(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_pca(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_pca(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 test_that("printing", {

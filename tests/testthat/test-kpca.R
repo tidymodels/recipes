@@ -79,51 +79,6 @@ test_that("No kPCA comps", {
   expect_snapshot(pca_extract)
 })
 
-
-test_that("keep_original_cols works", {
-  skip_if_not_installed("kernlab")
-  new_names <- paste0("kPC", 1:5)
-
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_kpca(all_predictors(), keep_original_cols = FALSE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    new_names
-  )
-
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_kpca(all_predictors(), keep_original_cols = TRUE)
-
-  rec <- prep(rec)
-  res <- bake(rec, new_data = NULL)
-
-  expect_equal(
-    colnames(res),
-    c("mpg", new_names)
-  )
-})
-
-test_that("keep_original_cols - can prep recipes with it missing", {
-  skip_if_not_installed("kernlab")
-  rec <- recipe(~ mpg, mtcars) %>%
-    step_kpca(all_predictors())
-
-  rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    rec <- prep(rec)
-  )
-
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
-  )
-})
-
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   rec <- recipe(~ ., data = mtcars) %>%
     step_kpca(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
@@ -184,6 +139,50 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expected)
+})
+
+test_that("keep_original_cols works", {
+  skip_if_not_installed("kernlab")
+  new_names <- paste0("kPC", 1:5)
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("kernlab")
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 test_that("printing", {
