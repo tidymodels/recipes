@@ -148,35 +148,43 @@ test_that("check_name() is used", {
 })
 
 test_that("keep_original_cols works", {
-  rec1 <- rec %>%
-    step_ratio(x1,
-      denom = denom_vars(all_numeric()),
-      id = "", keep_original_cols = FALSE
-    )
+  new_names <- c("mpg_o_disp")
 
-  rec1 <- prep(rec1, ex_dat, verbose = FALSE)
-  obs1 <- bake(rec1, ex_dat)
-  res1 <- tibble(
-    x5        = factor(letters[1:10]),
-    x1_o_x2   = ex_dat$x1 / ex_dat$x2,
-    x1_o_x3   = ex_dat$x1 / ex_dat$x3,
-    x1_o_x4   = ex_dat$x1 / ex_dat$x4
+  rec <- recipe(~ mpg + disp, mtcars) %>%
+    step_ratio(mpg, denom = denom_vars(disp), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
   )
-  expect_equal(res1, obs1)
+
+  rec <- recipe(~ mpg + disp, mtcars) %>%
+    step_ratio(mpg, denom = denom_vars(disp), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", "disp", new_names)
+  )
 })
 
-test_that("can prep recipes with no keep_original_cols", {
-  rec1 <- rec %>%
-    step_ratio(x1, denom = denom_vars(all_numeric()), id = "")
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ mpg + disp, mtcars) %>%
+    step_ratio(mpg, denom = denom_vars(disp))
 
-  rec1$steps[[1]]$keep_original_cols <- NULL
+  rec$steps[[1]]$keep_original_cols <- NULL
 
   expect_snapshot(
-    prep1 <- prep(rec1, training = ex_dat, verbose = FALSE)
+    rec <- prep(rec)
   )
 
   expect_error(
-    obs1 <- bake(prep1, new_data = ex_dat, all_predictors()),
+    bake(rec, new_data = mtcars),
     NA
   )
 })

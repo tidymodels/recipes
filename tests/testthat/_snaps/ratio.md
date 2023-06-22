@@ -35,10 +35,10 @@
       ! Name collision occured. The following variable names already exists:
       i  mpg_o_disp
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      prep1 <- prep(rec1, training = ex_dat, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
       'keep_original_cols' was added to `step_ratio()` after this recipe was created.

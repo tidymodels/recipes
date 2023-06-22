@@ -8,10 +8,10 @@
       ! Name collision occured. The following variable names already exists:
       i  day_Easter
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      holiday_rec <- prep(holiday_rec, training = test_data, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
       'keep_original_cols' was added to `step_holiday()` after this recipe was created.

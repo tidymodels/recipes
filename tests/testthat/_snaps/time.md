@@ -8,7 +8,7 @@
       ! Name collision occured. The following variable names already exists:
       i  time_hour
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
       rec <- prep(rec)

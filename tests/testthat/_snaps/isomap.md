@@ -42,10 +42,10 @@
       ! Name collision occured. The following variable names already exists:
       i  Isomap1
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
+      rec <- prep(rec)
     Message
     Condition
       Warning:

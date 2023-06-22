@@ -33,10 +33,10 @@
       -- Operations 
       * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
       'keep_original_cols' was added to `step_kpca()` after this recipe was created.

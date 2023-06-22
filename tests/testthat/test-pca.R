@@ -185,45 +185,6 @@ test_that("tunable", {
   )
 })
 
-test_that("keep_original_cols works", {
-  pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur,
-      options = list(retx = TRUE), id = "", keep_original_cols = TRUE
-    )
-
-  pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
-
-  pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors())
-
-  expect_equal(
-    colnames(pca_pred),
-    c(
-      "carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
-      "PC1", "PC2", "PC3", "PC4", "PC5"
-    )
-  )
-})
-
-test_that("can prep recipes with no keep_original_cols", {
-  pca_extract <- rec %>%
-    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_scale(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    step_pca(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 3)
-
-  pca_extract$steps[[3]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
-  )
-
-  expect_error(
-    pca_pred <- bake(pca_extract_trained, new_data = biomass_te, all_predictors()),
-    NA
-  )
-})
-
 test_that("case weights", {
   biomass_tr_cw <- biomass_tr %>%
     mutate(nitrogen = frequency_weights(round(nitrogen))) %>%
@@ -287,6 +248,48 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   res <- bake(rec, new_data = NULL)
 
   expect_identical(res, tibble::as_tibble(mtcars))
+})
+
+test_that("keep_original_cols works", {
+  new_names <- c("PC1")
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_pca(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_pca(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_pca(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------

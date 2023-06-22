@@ -262,34 +262,44 @@ test_that("tunable", {
 
 test_that("keep_original_cols works", {
   skip_if_not_installed("mixOmics")
-  pls_rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3, keep_original_cols = TRUE)
+  new_names <- c("vs", "PLS1")
 
-  pls_trained <- prep(pls_rec)
-  pls_pred <- bake(pls_trained, new_data = biom_te, all_predictors())
+  rec <- recipe(vs ~ mpg, mtcars) %>%
+    step_pls(all_predictors(), outcome = "vs", keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
 
   expect_equal(
-    colnames(pls_pred),
-    c(
-      "carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
-      "PLS1", "PLS2", "PLS3"
-    )
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(vs ~ mpg, mtcars) %>%
+    step_pls(all_predictors(), outcome = "vs", keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
   )
 })
 
-test_that("can prep recipes with no keep_original_cols", {
+test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("mixOmics")
-  pls_rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3)
+  rec <- recipe(vs ~ mpg, mtcars) %>%
+    step_pls(all_predictors(), outcome = "vs")
 
-  pls_rec$steps[[1]]$keep_original_cols <- NULL
+  rec$steps[[1]]$keep_original_cols <- NULL
 
   expect_snapshot(
-    pls_trained <- prep(pls_rec, training = biom_tr, verbose = FALSE)
+    rec <- prep(rec)
   )
 
   expect_error(
-    pls_pred <- bake(pls_trained, new_data = biom_te, all_predictors()),
+    bake(rec, new_data = mtcars),
     NA
   )
 })

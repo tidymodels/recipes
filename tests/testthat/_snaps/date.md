@@ -8,10 +8,10 @@
       ! Name collision occured. The following variable names already exists:
       i  Dan_year
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      date_rec <- prep(date_rec, training = examples, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
       'keep_original_cols' was added to `step_date()` after this recipe was created.

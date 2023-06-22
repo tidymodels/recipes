@@ -120,10 +120,10 @@
       ! Name collision occured. The following variable names already exists:
       i  Species_versicolor
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
       'keep_original_cols' was added to `step_dummy()` after this recipe was created.

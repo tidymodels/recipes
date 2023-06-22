@@ -35,10 +35,10 @@
       ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use the `keep_original_cols` argument instead.
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      pls_trained <- prep(pls_rec, training = biom_tr, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
       'keep_original_cols' was added to `step_pls()` after this recipe was created.

@@ -27,13 +27,13 @@
       ! Name collision occured. The following variable names already exists:
       i  kPC1
 
-# can prep recipes with no keep_original_cols
+# keep_original_cols - can prep recipes with it missing
 
     Code
-      kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+      rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_kpca_poly()` after this recipe was created.
+      'keep_original_cols' was added to `step_kpca_rbf()` after this recipe was created.
       Regenerate your recipe to avoid this warning.
 
 # empty printing

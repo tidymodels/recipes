@@ -56,15 +56,6 @@
       ! Name collision occured. The following variable names already exists:
       i  PC1
 
-# can prep recipes with no keep_original_cols
-
-    Code
-      pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
-    Condition
-      Warning:
-      'keep_original_cols' was added to `step_pca()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
-
 # case weights
 
     Code
@@ -104,6 +95,15 @@
       
       -- Operations 
       * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained, ignored weights
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_pca()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
 
 # empty printing
 

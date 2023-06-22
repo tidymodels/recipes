@@ -133,6 +133,48 @@ test_that("factor levels are preserved", {
   expect_identical(ncol(data1), ncol(data2))
 })
 
+test_that("keep_original_cols works", {
+  new_names <- paste0("lang_1_", c("Armenian", "English", "Spanish"))
+
+  rec <- recipe(~ lang_1, data = languages) %>%
+    step_dummy_multi_choice(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ lang_1, data = languages) %>%
+    step_dummy_multi_choice(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("lang_1", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ lang_1, data = languages) %>%
+    step_dummy_multi_choice(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = languages),
+    NA
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

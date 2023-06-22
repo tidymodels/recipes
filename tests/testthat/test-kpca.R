@@ -82,41 +82,45 @@ test_that("No kPCA comps", {
 
 test_that("keep_original_cols works", {
   skip_if_not_installed("kernlab")
+  new_names <- paste0("kPC", 1:5)
 
-  kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, id = "", keep_original_cols = TRUE)
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors(), keep_original_cols = FALSE)
 
-  kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
-
-  pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
 
   expect_equal(
-    colnames(pca_pred),
-    c(
-      "X2", "X3", "X4", "X5", "X6",
-      "kPC1", "kPC2", "kPC3", "kPC4", "kPC5"
-    )
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
   )
 })
 
-test_that("can prep recipes with no keep_original_cols", {
+test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("kernlab")
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_kpca(all_predictors())
 
-  kpca_rec <- rec %>%
-    step_kpca(X2, X3, X4, X5, X6, id = "")
+  rec$steps[[1]]$keep_original_cols <- NULL
 
-  kpca_rec$steps[[1]]$keep_original_cols <- NULL
-
-  suppressWarnings(
-    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+  expect_snapshot(
+    rec <- prep(rec)
   )
 
   expect_error(
-    pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors()),
+    bake(rec, new_data = mtcars),
     NA
-  )
-  expect_snapshot(
-    kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE),
   )
 })
 
