@@ -44,7 +44,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_rename} creates a \emph{specification} of a recipe step that will add
+\code{step_rename()} creates a \emph{specification} of a recipe step that will add
 variables using \code{\link[dplyr:rename]{dplyr::rename()}}.
 }
 \details{

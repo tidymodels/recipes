@@ -1,7 +1,7 @@
 #' Basis Splines
 #'
-#' `step_spline_b` creates a *specification* of a recipe
-#'  step that creates b-spline features.
+#' `step_spline_b()` creates a *specification* of a recipe step that creates
+#' b-spline features.
 #'
 #' @inheritParams step_center
 #' @param deg_free The degrees of freedom for the b-spline. As the

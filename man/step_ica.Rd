@@ -38,7 +38,7 @@ preprocessing have been estimated.}
 If \code{num_comp} is greater than the number of columns or the number of
 possible components, a smaller value will be used. If \code{num_comp = 0}
 is set then no transformation is done and selected variables will
-stay unchanged.}
+stay unchanged, regardless of the value of \code{keep_original_cols}.}
 
 \item{options}{A list of options to
 \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
@@ -75,9 +75,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_ica} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more independent
-components.
+\code{step_ica()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more independent components.
 }
 \details{
 Independent component analysis (ICA) is a
@@ -96,14 +95,12 @@ methodology (see reference below). This step requires the
 \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
 step will stop with a note about installing these packages.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
-If \code{num_comp = 101}, the names would be \code{IC001} -
-\code{IC101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}. If \code{num_comp = 101},
+the names would be \code{IC1} - \code{IC101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

@@ -1,7 +1,7 @@
 #' Detect a regular expression
 #'
-#' `step_regex` creates a *specification* of a recipe step that will
-#'   create a new dummy variable based on a regular expression.
+#' `step_regex()` creates a *specification* of a recipe step that will create a
+#' new dummy variable based on a regular expression.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

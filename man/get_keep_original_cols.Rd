@@ -15,4 +15,7 @@ A logical to keep the original variables in the output
 \description{
 Get the \code{keep_original_cols} value of a recipe step
 }
+\seealso{
+\link{developer_functions}
+}
 \keyword{internal}

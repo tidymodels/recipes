@@ -1,8 +1,7 @@
 #' Non-Negative Matrix Factorization Signal Extraction with lasso Penalization
 #'
-#' `step_nnmf_sparse()` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more non-negative
-#'  components.
+#' `step_nnmf_sparse()` creates a *specification* of a recipe step that will
+#' convert numeric data into one or more non-negative components.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -24,12 +23,11 @@
 #'  have non-negative values and take into account that the original data have
 #'  non-negative values.
 #'
-#'   The argument `num_comp` controls the number of components that will be
-#'  retained (the original variables that are used to derive the components are
-#'  removed from the data). The new components will have names that begin with
-#'  `prefix` and a sequence of numbers. The variable names are padded with
-#'  zeros. For example, if `num < 10`, their names will be `NNMF1` - `NNMF9`. If
-#'  `num = 101`, the names would be `NNMF001` - `NNMF101`.
+#' ```{r, echo = FALSE, results="asis"}
+#' prefix <- "NNMF"
+#' result <- knitr::knit_child("man/rmd/num_comp.Rmd")
+#' cat(result)
+#' ```
 #'
 #'  # Tidying
 #'

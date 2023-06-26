@@ -61,8 +61,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_regex} creates a \emph{specification} of a recipe step that will
-create a new dummy variable based on a regular expression.
+\code{step_regex()} creates a \emph{specification} of a recipe step that will create a
+new dummy variable based on a regular expression.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

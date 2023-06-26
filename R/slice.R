@@ -1,7 +1,7 @@
 #' Filter rows by position using dplyr
 #'
-#' `step_slice` creates a *specification* of a recipe step
-#'  that will filter rows using [dplyr::slice()].
+#' `step_slice()` creates a *specification* of a recipe step that will filter
+#' rows using [dplyr::slice()].
 #'
 #' @template row-ops
 #' @inheritParams step_center

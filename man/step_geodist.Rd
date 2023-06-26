@@ -66,9 +66,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_geodist} creates a \emph{specification} of a
-recipe step that will calculate the distance between
-points on a map to a reference location.
+\code{step_geodist()} creates a \emph{specification} of a recipe step that will
+calculate the distance between points on a map to a reference location.
 }
 \details{
 \code{step_geodist} uses the Pythagorean theorem to calculate Euclidean

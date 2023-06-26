@@ -1,7 +1,7 @@
 #' Select variables using dplyr
 #'
-#' `step_select()` creates a *specification* of a recipe step
-#'  that will select variables using [dplyr::select()].
+#' `step_select()` creates a *specification* of a recipe step that will select
+#' variables using [dplyr::select()].
 #'
 #' @inheritParams step_center
 #' @param role For model terms selected by this step, what analysis

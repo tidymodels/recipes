@@ -65,9 +65,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_count} creates a \emph{specification} of a recipe
-step that will create a variable that counts instances of a
-regular expression pattern in text.
+\code{step_count()} creates a \emph{specification} of a recipe step that will create a
+variable that counts instances of a regular expression pattern in text.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

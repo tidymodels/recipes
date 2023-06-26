@@ -1,8 +1,7 @@
 #' Ratio Variable Creation
 #'
-#' `step_ratio` creates a *specification* of a recipe
-#'  step that will create one or more ratios out of numeric
-#'  variables.
+#' `step_ratio()` creates a *specification* of a recipe step that will create
+#' one or more ratios from selected numeric variables.
 #'
 #' @inheritParams step_date
 #' @inheritParams step_pca

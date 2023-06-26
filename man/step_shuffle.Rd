@@ -44,9 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_shuffle} creates a \emph{specification} of a recipe
-step that will randomly change the order of rows for selected
-variables.
+\code{step_shuffle()} creates a \emph{specification} of a recipe step that will
+randomly change the order of rows for selected variables.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column

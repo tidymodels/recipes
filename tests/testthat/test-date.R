@@ -103,19 +103,6 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("keep_original_cols works", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
-
-  date_rec <- prep(date_rec, training = examples)
-  date_res <- bake(date_rec, new_data = examples)
-
-  expect_equal(
-    colnames(date_res),
-    c(paste0("Dan_", feats), paste0("Stefan_", feats))
-  )
-})
-
 test_that("locale argument have recipe work in different locale", {
   old_locale <- Sys.getlocale("LC_TIME")
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
@@ -194,22 +181,6 @@ test_that("can bake and recipes with no locale", {
   )
 })
 
-test_that("can prep recipes with no keep_original_cols", {
-  date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = feats, keep_original_cols = FALSE)
-
-  date_rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    date_rec <- prep(date_rec, training = examples, verbose = FALSE)
-  )
-
-  expect_error(
-    date_res <- bake(date_rec, new_data = examples, all_predictors()),
-    NA
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -265,6 +236,48 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  new_names <- c("Dan_dow", "Dan_month", "Dan_year")
+
+  rec <- recipe(~ Dan, examples) %>%
+    step_date(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ Dan, examples) %>%
+    step_date(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("Dan", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ Dan, examples) %>%
+    step_date(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = examples),
+    NA
+  )
 })
 
 test_that("printing", {

@@ -77,11 +77,10 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_profile} creates a \emph{specification} of a recipe step that
-will fix the levels of all variables but one and will create a
-sequence of values for the remaining variable. This step can be
-helpful when creating partial regression plots for additive
-models.
+\code{step_profile()} creates a \emph{specification} of a recipe step that will fix the
+levels of all variables but one and will create a sequence of values for the
+remaining variable. This step can be helpful when creating partial regression
+plots for additive models.
 }
 \details{
 This step is atypical in that, when baked, the

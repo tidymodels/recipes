@@ -1,8 +1,8 @@
 #' High Correlation Filter
 #'
-#' `step_corr` creates a *specification* of a recipe
-#'  step that will potentially remove variables that have large
-#'  absolute correlations with other variables.
+#' `step_corr()` creates a *specification* of a recipe step that will
+#' potentially remove variables that have large absolute correlations with other
+#' variables.
 #'
 #' @inheritParams step_center
 #' @param threshold A value for the threshold of absolute

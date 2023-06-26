@@ -54,9 +54,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_nzv} creates a \emph{specification} of a recipe step
-that will potentially remove variables that are highly sparse
-and unbalanced.
+\code{step_nzv()} creates a \emph{specification} of a recipe step that will potentially
+remove variables that are highly sparse and unbalanced.
 }
 \details{
 This step can potentially remove columns from the data set. This may

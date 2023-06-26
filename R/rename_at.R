@@ -1,7 +1,8 @@
 #' Rename multiple columns using dplyr
 #'
-#' `step_rename_at` creates a *specification* of a recipe step that will rename
-#' the selected variables using a common function via [dplyr::rename_at()].
+#' `step_rename_at()` creates a *specification* of a recipe step that will
+#' rename the selected variables using a common function via
+#' [dplyr::rename_at()].
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

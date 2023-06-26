@@ -44,8 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_sqrt} creates a \emph{specification} of a recipe
-step that will square root transform the data.
+\code{step_sqrt()} creates a \emph{specification} of a recipe step that will apply
+square root transform to the variables.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column

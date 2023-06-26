@@ -68,9 +68,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_roll} creates a \emph{specification} of a
-recipe step that will substitute missing values of numeric
-variables by the measure of location (e.g. median) within a moving window.
+\code{step_impute_roll()} creates a \emph{specification} of a recipe step that will
+substitute missing values of numeric variables by the measure of location
+(e.g. median) within a moving window.
 }
 \details{
 On the tails, the window is shifted towards the ends.

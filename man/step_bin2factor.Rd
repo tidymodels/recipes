@@ -53,9 +53,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_bin2factor} creates a \emph{specification} of a
-recipe step that will create a two-level factor from a single
-dummy variable.
+\code{step_bin2factor()} creates a \emph{specification} of a recipe step that will
+create a two-level factor from a single dummy variable.
 }
 \details{
 This operation may be useful for situations where a

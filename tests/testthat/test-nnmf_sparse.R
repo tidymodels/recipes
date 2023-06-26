@@ -14,6 +14,19 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
+
+  rec <- recipe(~ ., data = mtcars) %>%
+    step_nnmf_sparse(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
+    prep()
+
+  res <- bake(rec, new_data = NULL)
+
+  expect_identical(res, tibble::as_tibble(mtcars))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -77,6 +90,52 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
+  new_names <- c("NNMF1")
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_nnmf_sparse(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_nnmf_sparse(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("mpg", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
+  rec <- recipe(~ mpg, mtcars) %>%
+    step_nnmf_sparse(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 test_that("printing", {

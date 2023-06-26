@@ -49,9 +49,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_indicate_na} creates a \emph{specification} of a recipe step that will
-create and append additional binary columns to the dataset to indicate
-which observations are missing.
+\code{step_indicate_na()} creates a \emph{specification} of a recipe step that will
+create and append additional binary columns to the data set to indicate which
+observations are missing.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

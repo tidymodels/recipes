@@ -1,8 +1,7 @@
 #' Shuffle Variables
 #'
-#' `step_shuffle` creates a *specification* of a recipe
-#'  step that will randomly change the order of rows for selected
-#'  variables.
+#' `step_shuffle()` creates a *specification* of a recipe step that will
+#' randomly change the order of rows for selected variables.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

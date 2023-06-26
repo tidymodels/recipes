@@ -1,7 +1,7 @@
 #' Logarithmic Transformation
 #'
-#' `step_log` creates a *specification* of a recipe step
-#'  that will log transform data.
+#' `step_log()` creates a *specification* of a recipe step that will log
+#' transform data.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

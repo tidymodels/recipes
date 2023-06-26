@@ -1,7 +1,7 @@
 #' Centering numeric data
 #'
-#' `step_center` creates a *specification* of a recipe
-#'  step that will normalize numeric data to have a mean of zero.
+#' `step_center()` creates a *specification* of a recipe step that will
+#' normalize numeric data to have a mean of zero.
 #'
 #' @param recipe A recipe object. The step will be added to the
 #'  sequence of operations for this recipe.

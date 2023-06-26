@@ -14,13 +14,11 @@
 #' prior to computing PCA components ([step_normalize()] can be used for
 #' this purpose).
 #'
-#' The argument `num_comp` controls the number of components that will be
-#' retained; the original variables that are used to derive the components are
-#' removed from the data when `keep_original_cols = FALSE`. The new components
-#' will have names that begin with `prefix` and a sequence of numbers. The
-#' variable names are padded with zeros. For example, if `num_comp < 10`, the
-#' new names will be `kPC1` - `kPC9`. If `num_comp = 101`, the names would be
-#' `kPC001` - `kPC101`.
+#' ```{r, echo = FALSE, results="asis"}
+#' prefix <- "kPC"
+#' result <- knitr::knit_child("man/rmd/num_comp.Rmd")
+#' cat(result)
+#' ```
 #'
 #' # tidy() results
 #'
@@ -34,8 +32,3 @@
 #' Karatzoglou, K., Smola, A., Hornik, K., and Zeileis, A. (2004).
 #'  kernlab - An S4 package for kernel methods in R. *Journal
 #'  of Statistical Software*, 11(1), 1-20.
-
-
-
-
-

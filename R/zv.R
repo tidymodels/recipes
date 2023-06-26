@@ -1,7 +1,7 @@
 #' Zero Variance Filter
 #'
-#' `step_zv` creates a *specification* of a recipe step
-#'  that will remove variables that contain only a single value.
+#' `step_zv()` creates a *specification* of a recipe step that will remove
+#' variables that contain only a single value.
 #'
 #' @inheritParams step_center
 #' @param removals A character string that contains the names of

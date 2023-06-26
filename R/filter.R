@@ -1,7 +1,7 @@
 #' Filter rows using dplyr
 #'
-#' `step_filter` creates a *specification* of a recipe step
-#'  that will remove rows using [dplyr::filter()].
+#' `step_filter()` creates a *specification* of a recipe step that will remove
+#' rows using [dplyr::filter()].
 #'
 #' @template row-ops
 #' @inheritParams step_center

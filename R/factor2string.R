@@ -1,6 +1,7 @@
 #' Convert Factors to Strings
 #'
-#' `step_factor2string` will convert one or more factor vectors to strings.
+#' `step_factor2string()` creates a *specification* of a recipe step that will
+#' convert one or more factor vectors to strings.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

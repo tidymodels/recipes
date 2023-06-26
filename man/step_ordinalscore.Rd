@@ -48,9 +48,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_ordinalscore} creates a \emph{specification} of a
-recipe step that will convert ordinal factor variables into
-numeric scores.
+\code{step_ordinalscore()} creates a \emph{specification} of a recipe step that will
+convert ordinal factor variables into numeric scores.
 }
 \details{
 Dummy variables from ordered factors with \code{C}

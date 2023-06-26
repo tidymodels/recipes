@@ -1,7 +1,7 @@
 #' Partial Least Squares Feature Extraction
 #'
-#' `step_pls` creates a *specification* of a recipe step that will
-#'  convert numeric data into one or more new dimensions.
+#' `step_pls()` creates a *specification* of a recipe step that will convert
+#' numeric data into one or more new dimensions.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -27,13 +27,11 @@
 #' This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
-#' The argument `num_comp` controls the number of components that will
-#'  be retained (the original variables that are used to derive the
-#'  components are removed from the data). The new components will
-#'  have names that begin with `prefix` and a sequence of numbers.
-#'  The variable names are padded with zeros. For example, if `num_comp <
-#'  10`, their names will be `PLS1` - `PLS9`. If `num_comp = 101`, the
-#'  names would be `PLS001` - `PLS101`.
+#' ```{r, echo = FALSE, results="asis"}
+#' prefix <- "PLS"
+#' result <- knitr::knit_child("man/rmd/num_comp.Rmd")
+#' cat(result)
+#' ```
 #'
 #' Sparsity can be encouraged using the `predictor_prop` parameter. This affects
 #' each PLS component, and indicates the maximum proportion of predictors with

@@ -1,11 +1,9 @@
 #' Create a lagged predictor
 #'
-#' `step_lag` creates a *specification* of a recipe step that
-#'   will add new columns of lagged data. Lagged data will
-#'   by default include NA values where the lag was induced.
-#'   These can be removed with [step_naomit()], or you may
-#'   specify an alternative filler value with the `default`
-#'   argument.
+#' `step_lag()` creates a *specification* of a recipe step that will add new
+#' columns of lagged data. Lagged data will by default include NA values where
+#' the lag was induced. These can be removed with [step_naomit()], or you may
+#' specify an alternative filler value with the `default` argument.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

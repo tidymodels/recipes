@@ -1,7 +1,7 @@
 #' Impute via bagged trees
 #'
-#' `step_impute_bag` creates a *specification* of a recipe step that will
-#'  create bagged tree models to impute missing data.
+#' `step_impute_bag()` creates a *specification* of a recipe step that will
+#' create bagged tree models to impute missing data.
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose variables to be imputed.

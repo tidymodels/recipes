@@ -106,25 +106,6 @@ test_that("check_name() is used", {
     prep(rec, training = dat)
   )
 })
-
-test_that("keep_original_cols works", {
-  examples <- data.frame(
-    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
-      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
-  )
-
-  date_rec <- recipe(~ times, examples) %>%
-    step_time(all_predictors(), keep_original_cols = FALSE)
-
-  date_rec <- prep(date_rec, training = examples)
-  date_res <- bake(date_rec, new_data = examples)
-
-  expect_equal(
-    colnames(date_res),
-    paste0("times_", c("hour", "minute", "second"))
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -181,6 +162,58 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  new_names <- c("times_hour", "times_minute", "times_second")
+
+  rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("times", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  rec <- recipe(~ times, examples) %>%
+    step_time(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = examples),
+    NA
+  )
 })
 
 test_that("printing", {

@@ -49,9 +49,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_spatialsign} is a \emph{specification} of a recipe
-step that will convert numeric data into a projection on to a
-unit sphere.
+\code{step_spatialsign()} is a \emph{specification} of a recipe step that will convert
+numeric data into a projection on to a unit sphere.
 }
 \details{
 The spatial sign transformation projects the variables

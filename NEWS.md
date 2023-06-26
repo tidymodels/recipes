@@ -20,6 +20,9 @@
 
 * New `extract_fit_time()` method has been added that return the time it took to train the recipe. (#1071)
 
+* `step_bs()` and `step_ns()` have gained `keep_original_cols` argument.
+
+
 # recipes 1.0.6
 
 ## Improvements
@@ -82,6 +85,7 @@
 
 * `step_range()` has gained a argument `clipping` that when set to `FALSE` no longer clips the data to be between `min` and `max`.
 
+* Added documentation regarding developer functions `?developer_functions`. (#1163)
 
 # recipes 1.0.2
 

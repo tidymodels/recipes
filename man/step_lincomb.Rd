@@ -48,9 +48,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_lincomb} creates a \emph{specification} of a recipe
-step that will potentially remove numeric variables that have
-linear combinations between them.
+\code{step_lincomb()} creates a \emph{specification} of a recipe step that will
+potentially remove numeric variables that have exact linear combinations
+between them.
 }
 \details{
 This step can potentially remove columns from the data set. This may

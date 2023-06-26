@@ -1,8 +1,7 @@
 #' Create Counts of Patterns using Regular Expressions
 #'
-#' `step_count` creates a *specification* of a recipe
-#'  step that will create a variable that counts instances of a
-#'  regular expression pattern in text.
+#' `step_count()` creates a *specification* of a recipe step that will create a
+#' variable that counts instances of a regular expression pattern in text.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
