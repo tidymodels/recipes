@@ -125,7 +125,7 @@
       -- Operations 
       * Moving 3-point mean on: <none> | Trained
 
----
+# printing
 
     Code
       print(rec)
