@@ -13,6 +13,7 @@ step_regex(
   options = list(),
   result = make.names(pattern),
   input = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("regex")
 )
@@ -46,6 +47,9 @@ variable. It should be a valid column name.}
 \item{input}{A single character value for the name of the
 variable being searched. This is \code{NULL} until computed by
 \code{\link[=prep]{prep()}}.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

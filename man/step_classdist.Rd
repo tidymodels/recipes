@@ -16,6 +16,7 @@ step_classdist(
   log = TRUE,
   objects = NULL,
   prefix = "classdist_",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("classdist")
 )
@@ -53,6 +54,9 @@ been trained by \code{\link[=prep]{prep()}}.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

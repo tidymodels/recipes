@@ -226,6 +226,52 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec3, number = 1), expect)
 })
 
+test_that("keep_original_cols works", {
+  new_names <- c("Species", "classdist_setosa", "classdist_versicolor",
+                 "classdist_virginica")
+
+  rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
+    step_classdist(all_predictors(), class = "Species",
+                   keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
+    step_classdist(all_predictors(), class = "Species",
+                   keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("Sepal.Length", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
+    step_classdist(all_predictors(), class = "Species")
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = iris),
+    NA
+  )
+})
+
+
 test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species")
