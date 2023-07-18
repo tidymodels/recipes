@@ -248,7 +248,7 @@ bake.step_geodist <- function(object, new_data, ...) {
   geo_data <- check_name(geo_data, new_data, object, newname = object$name)
 
   new_data <- vec_cbind(new_data, geo_data)
-  new_data <- remove_original_cols(new_data, object, names(object$columns))
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 
