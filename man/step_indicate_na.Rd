@@ -11,6 +11,7 @@ step_indicate_na(
   trained = FALSE,
   columns = NULL,
   prefix = "na_ind",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("indicate_na")
 )
@@ -34,6 +35,9 @@ is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. Defaults to "na_ind".}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

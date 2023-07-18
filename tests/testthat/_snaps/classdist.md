@@ -63,6 +63,15 @@
       -- Operations 
       * Distances to Species for: <none> | Trained
 
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_classdist()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
 # printing
 
     Code

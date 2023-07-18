@@ -28,8 +28,7 @@
       Error in `step_isomap()`:
       Caused by error in `prep()`:
       ! `step_isomap` failed with error:
-      Error in do.call(.Call, args = dot_call_args) : 
-        TridiagEigen: eigen decomposition failed
+      Error : TridiagEigen: eigen decomposition failed
 
 # check_name() is used
 

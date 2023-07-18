@@ -20,6 +20,8 @@
 
 * `step_bs()` and `step_ns()` have gained `keep_original_cols` argument.
 
+* The `keep_original_cols` argument has been added to `step_classdist()`, `step_count()`, `step_depth()`, `step_geodist()`, `step_indicate_na()`, `step_interact()`, `step_lag()`, `step_poly()`, `step_regex()`, `step_window()`. The default for each step is set to preserve past behavior. This change should mean that every step that produces new columns has the `keep_original_cols` argument.
+
 # recipes 1.0.6
 
 ## Improvements

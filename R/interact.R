@@ -87,6 +87,7 @@ step_interact <-
            trained = FALSE,
            objects = NULL,
            sep = "_x_",
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("interact")) {
     add_step(
@@ -97,6 +98,7 @@ step_interact <-
         role = role,
         objects = objects,
         sep = sep,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -105,7 +107,7 @@ step_interact <-
 
 ## Initializes a new object
 step_interact_new <-
-  function(terms, role, trained, objects, sep, skip, id) {
+  function(terms, role, trained, objects, sep, keep_original_cols, skip, id) {
     step(
       subclass = "interact",
       terms = terms,
@@ -113,6 +115,7 @@ step_interact_new <-
       trained = trained,
       objects = objects,
       sep = sep,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -133,6 +136,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
         trained = TRUE,
         objects = x$objects,
         sep = x$sep,
+        keep_original_cols = x$keep_original_cols,
         skip = x$skip,
         id = x$id
       )
@@ -211,6 +215,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     objects = int_terms,
     sep = x$sep,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -262,6 +267,7 @@ bake.step_interact <- function(object, new_data, ...) {
   out <- as_tibble(out)
   out <- check_name(out, new_data, object, names(out))
   new_data <- vec_cbind(new_data, out)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

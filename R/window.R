@@ -37,6 +37,8 @@
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
 #'
+#'  `keep_original_cols` also applies to this step if `names` is specified.
+#'
 #  This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
@@ -111,6 +113,7 @@ step_window <-
            statistic = "mean",
            columns = NULL,
            names = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("window")) {
     if (!is_call(statistic) &&
@@ -163,6 +166,7 @@ step_window <-
         statistic = statistic,
         columns = columns,
         names = names,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -172,7 +176,8 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms, role, trained, size, na_rm, statistic, columns, names, skip, id) {
+  function(terms, role, trained, size, na_rm, statistic, columns, names,
+           keep_original_cols, skip, id) {
     step(
       subclass = "window",
       terms = terms,
@@ -183,6 +188,7 @@ step_window_new <-
       statistic = statistic,
       columns = columns,
       names = names,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -214,6 +220,7 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     statistic = x$statistic,
     columns = col_names,
     names = x$names,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -270,6 +277,9 @@ bake.step_window <- function(object, new_data, ...) {
           window = object$size
         )
     }
+  }
+  if (!is.null(object$names)) {
+    new_data <- remove_original_cols(new_data, object, names(object$columns))
   }
   new_data
 }

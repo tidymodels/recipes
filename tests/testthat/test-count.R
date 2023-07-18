@@ -111,6 +111,51 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
+test_that("keep_original_cols works", {
+  new_names <- c("rocks")
+
+  rec <- recipe(~ description, covers) %>%
+    step_count(description, pattern = "(rock|stony)", result = "rocks",
+               keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ description, covers) %>%
+    step_count(description, pattern = "(rock|stony)", result = "rocks",
+               keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("description", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ description, covers) %>%
+    step_count(description, pattern = "(rock|stony)", result = "rocks",
+               keep_original_cols = FALSE)
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = covers),
+    NA
+  )
+})
+
 test_that("printing", {
   rec <- rec %>%
     step_count(description, pattern = "(rock|stony)")
