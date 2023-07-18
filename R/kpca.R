@@ -1,8 +1,8 @@
 #' Kernel PCA Signal Extraction
 #'
-#' `step_kpca` creates a *specification* of a recipe step that
-#'  will convert numeric data into one or more principal components
-#'  using a kernel basis expansion.
+#' `step_kpca()` creates a *specification* of a recipe step that will convert
+#' numeric data into one or more principal components using a kernel basis
+#' expansion.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

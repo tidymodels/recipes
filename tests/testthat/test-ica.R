@@ -127,48 +127,14 @@ test_that("tunable", {
   )
 })
 
-test_that("keep_original_cols works", {
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
+test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
+  rec <- recipe(~ ., data = mtcars) %>%
+    step_ica(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
+    prep()
 
-  ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur,
-      num_comp = 2,
-      id = "", keep_original_cols = TRUE
-    )
+  res <- bake(rec, new_data = NULL)
 
-  set.seed(12)
-  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
-
-  ica_pred <- bake(ica_extract_trained, new_data = biomass_te, all_predictors())
-
-
-  expect_equal(
-    colnames(ica_pred),
-    c(
-      "carbon", "hydrogen", "oxygen", "nitrogen", "sulfur",
-      "IC1", "IC2"
-    )
-  )
-})
-
-test_that("can prep recipes with no keep_original_cols", {
-  skip_if_not_installed("dimRed")
-  skip_if_not_installed("fastICA")
-  skip_if_not_installed("RSpectra")
-
-  ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, id = "")
-
-  ica_extract$steps[[1]]$keep_original_cols <- NULL
-
-  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
-
-  expect_error(
-    ica_pred <- bake(ica_extract_trained, new_data = biomass_te, all_predictors()),
-    NA
-  )
+  expect_identical(res, tibble::as_tibble(mtcars))
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -244,6 +210,56 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  new_names <- c("IC1", "IC2", "IC3", "IC4", "IC5")
+
+  rec <- recipe(~ ., mtcars) %>%
+    step_ica(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ ., mtcars) %>%
+    step_ica(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c(colnames(mtcars), new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  rec <- recipe(~ ., mtcars) %>%
+    step_ica(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = mtcars),
+    NA
+  )
 })
 
 test_that("printing", {

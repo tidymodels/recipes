@@ -69,9 +69,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_ratio} creates a \emph{specification} of a recipe
-step that will create one or more ratios out of numeric
-variables.
+\code{step_ratio()} creates a \emph{specification} of a recipe step that will create
+one or more ratios from selected numeric variables.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

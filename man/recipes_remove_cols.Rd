@@ -21,4 +21,7 @@ overwrite \code{object$removals} if set.}
 \description{
 This helper function removes columns based on character vectors.
 }
+\seealso{
+\link{developer_functions}
+}
 \keyword{internal}

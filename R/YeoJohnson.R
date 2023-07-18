@@ -1,8 +1,7 @@
 #' Yeo-Johnson Transformation
 #'
-#' `step_YeoJohnson` creates a *specification* of a
-#'  recipe step that will transform data using a simple Yeo-Johnson
-#'  transformation.
+#' `step_YeoJohnson()` creates a *specification* of a recipe step that will
+#' transform data using a Yeo-Johnson transformation.
 #'
 #' @inheritParams step_center
 #' @param lambdas A numeric vector of transformation values. This

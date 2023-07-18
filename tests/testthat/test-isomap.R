@@ -141,54 +141,6 @@ test_that("tunable", {
   )
 })
 
-test_that("keep_original_cols works", {
-  skip_on_cran()
-  skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
-  skip_if_not_installed("RANN")
-  skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
-
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3, id = "", keep_original_cols = TRUE)
-
-  im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
-
-  im_pred <- bake(im_trained, new_data = dat2)
-
-  expect_equal(
-    colnames(im_pred),
-    c(
-      "x1", "x2", "x3",
-      "Isomap1", "Isomap2", "Isomap3"
-    )
-  )
-})
-
-test_that("can prep recipes with no keep_original_cols", {
-  skip_on_cran()
-  skip_if_not_installed("RSpectra")
-  skip_if_not_installed("igraph")
-  skip_if_not_installed("RANN")
-  skip_if_not_installed("dimRed")
-  skip_if(getRversion() <= "3.4.4")
-
-  im_rec <- rec %>%
-    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
-
-  im_rec$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    im_trained <- prep(im_rec, training = dat1, verbose = FALSE),
-    transform = scrub_timestamp
-  )
-
-  expect_error(
-    im_pred <- bake(im_trained, new_data = dat2, all_predictors()),
-    NA
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -245,6 +197,65 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  new_names <- c("Isomap1", "Isomap2", "Isomap3")
+
+  rec <- recipe(~., data = dat1) %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3,
+                keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~., data = dat1) %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3,
+                keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("x1", "x2", "x3", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  rec <- recipe(~., data = dat1) %>%
+    step_isomap(x1, x2, x3, neighbors = 3, num_terms = 3)
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec),
+    transform = scrub_timestamp
+  )
+
+  expect_error(
+    bake(rec, new_data = dat1),
+    NA
+  )
 })
 
 test_that("printing", {

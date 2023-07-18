@@ -1,9 +1,8 @@
 #' Distances to Class Centroids
 #'
-#' `step_classdist` creates a *specification* of a
-#'  recipe step that will convert numeric data into Mahalanobis
-#'  distance measurements to the data centroid. This is done for
-#'  each value of a categorical class variable.
+#' `step_classdist()` creates a *specification* of a recipe step that will
+#' convert numeric data into Mahalanobis distance measurements to the data
+#' centroid. This is done for each value of a categorical class variable.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -80,6 +79,7 @@ step_classdist <- function(recipe,
                            log = TRUE,
                            objects = NULL,
                            prefix = "classdist_",
+                           keep_original_cols = TRUE,
                            skip = FALSE,
                            id = rand_id("classdist")) {
   if (!is.character(class) || length(class) != 1) {
@@ -98,6 +98,7 @@ step_classdist <- function(recipe,
       log = log,
       objects = objects,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id,
       case_weights = NULL
@@ -106,8 +107,8 @@ step_classdist <- function(recipe,
 }
 
 step_classdist_new <-
-  function(terms, class, role, trained, mean_func,
-           cov_func, pool, log, objects, prefix, skip, id, case_weights) {
+  function(terms, class, role, trained, mean_func, cov_func, pool, log, objects,
+           prefix, keep_original_cols, skip, id, case_weights) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -120,6 +121,7 @@ step_classdist_new <-
       log = log,
       objects = objects,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id,
       case_weights = case_weights
@@ -200,6 +202,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     log = x$log,
     objects = res,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id,
     case_weights = were_weights_used
@@ -253,6 +256,7 @@ bake.step_classdist <- function(object, new_data, ...) {
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- vec_cbind(new_data, res)
+  res <- remove_original_cols(res, object, x_cols)
   res
 }
 

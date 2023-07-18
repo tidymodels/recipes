@@ -52,9 +52,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_BoxCox} creates a \emph{specification} of a recipe
-step that will transform data using a simple Box-Cox
-transformation.
+\code{step_BoxCox()} creates a \emph{specification} of a recipe step that will transform
+data using a Box-Cox transformation.
 }
 \details{
 The Box-Cox transformation, which requires a strictly

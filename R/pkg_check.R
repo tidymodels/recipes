@@ -2,11 +2,14 @@
 #'
 #' This will check to see if all required packages are installed.
 #'
+#'
 #' @param pkg A character string for the package being checked
 #' @param ... Extra arguments to pass to [utils::install.packages()]
 #' @return Nothing is returned but a message is printed to the
 #'  console about which packages (if any) should be installed along
 #'  with code to do so.
+#'
+#' @seealso [developer_functions]
 #' @export
 #' @keywords internal
 #' @examples

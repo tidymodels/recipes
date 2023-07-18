@@ -1,7 +1,7 @@
 #' Impute numeric variables via a linear model
 #'
-#' `step_impute_linear` creates a *specification* of a recipe step that will
-#'  create linear regression models to impute missing data.
+#' `step_impute_linear()` creates a *specification* of a recipe step that will
+#' create linear regression models to impute missing data.
 #'
 #' @inheritParams step_impute_bag
 #' @inheritParams step_center

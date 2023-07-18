@@ -28,3 +28,6 @@ rec \%>\%
   prep(training = iris) \%>\%
   fully_trained()
 }
+\seealso{
+\link{developer_functions}
+}

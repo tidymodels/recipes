@@ -1,9 +1,8 @@
 #' Data Depths
 #'
-#' `step_depth` creates a *specification* of a recipe
-#'  step that will convert numeric data into measurement of
-#'  *data depth*. This is done for each value of a categorical
-#'  class variable.
+#' `step_depth()` creates a *specification* of a recipe step that will convert
+#' numeric data into a measurement of *data depth*. This is done for each value of
+#' a categorical class variable.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -90,6 +89,7 @@ step_depth <-
            options = list(),
            data = NULL,
            prefix = "depth_",
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1) {
@@ -109,6 +109,7 @@ step_depth <-
         options = options,
         data = data,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -117,7 +118,7 @@ step_depth <-
 
 step_depth_new <-
   function(terms, class, role, trained, metric,
-           options, data, prefix, skip, id) {
+           options, data, prefix, keep_original_cols, skip, id) {
     step(
       subclass = "depth",
       terms = terms,
@@ -128,6 +129,7 @@ step_depth_new <-
       options = options,
       data = data,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -151,6 +153,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     options = x$options,
     data = x_dat,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -192,6 +195,7 @@ bake.step_depth <- function(object, new_data, ...) {
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
   res <- vec_cbind(new_data, res)
+  res <- remove_original_cols(res, object, x_names)
   res
 }
 

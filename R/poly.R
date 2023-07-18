@@ -1,8 +1,7 @@
 #' Orthogonal Polynomial Basis Functions
 #'
-#' `step_poly` creates a *specification* of a recipe
-#'  step that will create new columns that are basis expansions of
-#'  variables using orthogonal polynomials.
+#' `step_poly()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using orthogonal polynomials.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -64,6 +63,7 @@ step_poly <-
            objects = NULL,
            degree = 2,
            options = list(),
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("poly")) {
     if (!is_tune(degree)) {
@@ -89,6 +89,7 @@ step_poly <-
         objects = objects,
         degree = degree,
         options = options,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -96,7 +97,8 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, degree, options, skip, id) {
+  function(terms, role, trained, objects, degree, options, keep_original_cols,
+           skip, id) {
     step(
       subclass = "poly",
       terms = terms,
@@ -105,6 +107,7 @@ step_poly_new <-
       objects = objects,
       degree = degree,
       options = options,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -144,6 +147,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     objects = obj,
     degree = x$degree,
     options = x$options,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -172,7 +176,7 @@ bake.step_poly <- function(object, new_data, ...) {
 
   new_tbl <- check_name(new_tbl, new_data, object, names(new_tbl))
   new_data <- vec_cbind(new_data, new_tbl)
-  new_data <- dplyr::select(new_data, -dplyr::all_of(col_names))
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

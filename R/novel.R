@@ -1,8 +1,7 @@
 #' Simple Value Assignments for Novel Factor Levels
 #'
-#' `step_novel` creates a *specification* of a recipe
-#'  step that will assign a previously unseen factor level to a
-#'  new value.
+#' `step_novel()` creates a *specification* of a recipe step that will assign a
+#' previously unseen factor level to `"new"`.
 #'
 #' @inheritParams step_center
 #' @param new_level A single character value that will be assigned

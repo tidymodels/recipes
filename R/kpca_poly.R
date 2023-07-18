@@ -1,8 +1,8 @@
 #' Polynomial Kernel PCA Signal Extraction
 #'
-#' `step_kpca_poly` creates a *specification* of a recipe step that
-#'  will convert numeric data into one or more principal components
-#'  using a polynomial kernel basis expansion.
+#' `step_kpca_poly()` creates a *specification* of a recipe step that will
+#' convert numeric data into one or more principal components using a polynomial
+#' kernel basis expansion.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

@@ -68,3 +68,6 @@ with any missing values (equal to the "complete.obs" strategy in
 \code{are_weights_used()} is designed for developers of recipe steps and is used
 inside print method to determine how printing should be done.
 }
+\seealso{
+\link{developer_functions}
+}

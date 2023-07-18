@@ -48,9 +48,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_novel} creates a \emph{specification} of a recipe
-step that will assign a previously unseen factor level to a
-new value.
+\code{step_novel()} creates a \emph{specification} of a recipe step that will assign a
+previously unseen factor level to \code{"new"}.
 }
 \details{
 The selected variables are adjusted to have a new

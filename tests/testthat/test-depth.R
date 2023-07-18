@@ -137,6 +137,50 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
+test_that("keep_original_cols works", {
+  skip_if_not_installed("ddalpha")
+  new_names <- c("Species", "depth_setosa", "depth_versicolor", "depth_virginica")
+
+  rec <- recipe(Species ~ ., iris) %>%
+    step_depth(all_predictors(), class = "Species", keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(Species ~ ., iris) %>%
+    step_depth(all_predictors(), class = "Species", keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    unique(c(names(iris), new_names))
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("ddalpha")
+  rec <- recipe(Species ~ ., iris) %>%
+    step_depth(all_predictors(), class = "Species")
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = iris),
+    NA
+  )
+})
+
 test_that("printing", {
   skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%

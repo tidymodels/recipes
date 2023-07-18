@@ -187,7 +187,51 @@ test_that("empty selection tidy method works", {
   expect_identical(tidy(rec, number = 1), expect)
 })
 
-test_that("empty printing", {
+test_that("keep_original_cols works", {
+  skip_if_not_installed("RcppRoll")
+  new_names <- c("new_y1")
+
+  rec <- recipe(~ y1, data = sim_dat) %>%
+    step_window(y1, names = "new_y1", keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ y1, data = sim_dat) %>%
+    step_window(y1, names = "new_y1", keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("y1", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  skip_if_not_installed("RcppRoll")
+  rec <- recipe(~ y1, data = sim_dat) %>%
+    step_window(y1, names = "new_y1")
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = sim_dat),
+    NA
+  )
+})
+
+test_that("printing", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_window(rec)
 

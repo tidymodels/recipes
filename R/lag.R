@@ -1,11 +1,9 @@
 #' Create a lagged predictor
 #'
-#' `step_lag` creates a *specification* of a recipe step that
-#'   will add new columns of lagged data. Lagged data will
-#'   by default include NA values where the lag was induced.
-#'   These can be removed with [step_naomit()], or you may
-#'   specify an alternative filler value with the `default`
-#'   argument.
+#' `step_lag()` creates a *specification* of a recipe step that will add new
+#' columns of lagged data. Lagged data will by default include NA values where
+#' the lag was induced. These can be removed with [step_naomit()], or you may
+#' specify an alternative filler value with the `default` argument.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -53,6 +51,7 @@ step_lag <-
            prefix = "lag_",
            default = NA,
            columns = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("lag")) {
     add_step(
@@ -65,6 +64,7 @@ step_lag <-
         default = default,
         prefix = prefix,
         columns = columns,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -72,7 +72,8 @@ step_lag <-
   }
 
 step_lag_new <-
-  function(terms, role, trained, lag, default, prefix, columns, skip, id) {
+  function(terms, role, trained, lag, default, prefix, columns,
+           keep_original_cols, skip, id) {
     step(
       subclass = "lag",
       terms = terms,
@@ -82,6 +83,7 @@ step_lag_new <-
       default = default,
       prefix = prefix,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -97,6 +99,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
     default = x$default,
     prefix = x$prefix,
     columns = recipes_eval_select(x$terms, training, info),
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -126,6 +129,7 @@ bake.step_lag <- function(object, new_data, ...) {
   calls <- check_name(calls, new_data, object, newname, TRUE)
 
   new_data <- mutate(new_data, !!!calls)
+  new_data <- remove_original_cols(new_data, object, names(object$columns))
   new_data
 }
 

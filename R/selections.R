@@ -155,6 +155,8 @@ NULL
 #' always the same as the values, except when `allow_rename = TRUE`, in which
 #' case the names reflect the new names chosen by the user.
 #'
+#' @seealso [developer_functions]
+#'
 #' @export
 #' @examplesIf rlang::is_installed("modeldata")
 #' library(rlang)

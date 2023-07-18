@@ -1,8 +1,8 @@
 #' Impute numeric data using the mean
 #'
-#' `step_impute_mean` creates a *specification* of a recipe step that will
-#'  substitute missing values of numeric variables by the training set mean of
-#'  those variables.
+#' `step_impute_mean()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the training set mean of
+#' those variables.
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed

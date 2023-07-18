@@ -55,9 +55,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_holiday} creates a \emph{specification} of a
-recipe step that will convert date data into one or more binary
-indicator variables for common holidays.
+\code{step_holiday()} creates a \emph{specification} of a recipe step that will convert
+date data into one or more binary indicator variables for common holidays.
 }
 \details{
 Unlike some other steps, \code{step_holiday} does \emph{not}

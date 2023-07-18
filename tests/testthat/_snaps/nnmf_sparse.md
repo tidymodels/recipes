@@ -43,6 +43,15 @@
       -- Operations 
       * No non-negative matrix factorization was extracted from: <none> | Trained
 
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_nnmf_sparse()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
 # printing
 
     Code

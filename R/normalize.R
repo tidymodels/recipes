@@ -1,8 +1,8 @@
 #' Center and scale numeric data
 #'
-#' `step_normalize` creates a *specification* of a recipe
-#'  step that will normalize numeric data to have a standard
-#'  deviation of one and a mean of zero.
+#' `step_normalize()` creates a *specification* of a recipe step that will
+#' normalize numeric data to have a standard deviation of one and a mean of
+#' zero.
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed

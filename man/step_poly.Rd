@@ -12,6 +12,7 @@ step_poly(
   objects = NULL,
   degree = 2,
   options = list(),
+  keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("poly")
 )
@@ -40,6 +41,9 @@ which should not include \code{x}, \code{degree}, or \code{simple}. Note that
 the option \code{raw = TRUE} will produce the regular polynomial
 values (not orthogonalized).}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -54,9 +58,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_poly} creates a \emph{specification} of a recipe
-step that will create new columns that are basis expansions of
-variables using orthogonal polynomials.
+\code{step_poly()} creates a \emph{specification} of a recipe step that will create new
+columns that are basis expansions of variables using orthogonal polynomials.
 }
 \details{
 \code{step_poly} can create new features from a single

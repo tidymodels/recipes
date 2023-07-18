@@ -42,9 +42,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_naomit} creates a \emph{specification} of a recipe step that
-will remove observations (rows of data) if they contain \code{NA}
-or \code{NaN} values.
+\code{step_naomit()} creates a \emph{specification} of a recipe step that will remove
+observations (rows of data) if they contain \code{NA} or \code{NaN} values.
 }
 \section{Row Filtering}{
 

@@ -1,8 +1,7 @@
 #' Hyperbolic Transformations
 #'
-#' `step_hyperbolic` creates a *specification* of a
-#'  recipe step that will transform data using a hyperbolic
-#'  function.
+#' `step_hyperbolic()` creates a *specification* of a recipe step that will
+#' transform data using a hyperbolic function.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

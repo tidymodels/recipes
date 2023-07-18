@@ -1,8 +1,7 @@
 #' Near-Zero Variance Filter
 #'
-#' `step_nzv` creates a *specification* of a recipe step
-#'  that will potentially remove variables that are highly sparse
-#'  and unbalanced.
+#' `step_nzv()` creates a *specification* of a recipe step that will potentially
+#' remove variables that are highly sparse and unbalanced.
 #'
 #' @inheritParams step_center
 #' @param freq_cut,unique_cut Numeric parameters for the filtering process. See

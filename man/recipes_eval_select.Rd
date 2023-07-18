@@ -70,3 +70,6 @@ quos <- quos(all_numeric_predictors(), where(is.factor))
 recipes_eval_select(quos, scat, info)
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+\link{developer_functions}
+}

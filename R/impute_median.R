@@ -1,8 +1,8 @@
 #' Impute numeric data using the median
 #'
-#' `step_impute_median` creates a *specification* of a recipe step that will
-#'  substitute missing values of numeric variables by the training set median of
-#'  those variables.
+#' `step_impute_median()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the training set median of
+#' those variables.
 #'
 #' @inheritParams step_center
 #' @param medians A named numeric vector of medians. This is `NULL` until

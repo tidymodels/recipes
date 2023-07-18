@@ -312,16 +312,6 @@ test_that("no columns selected", {
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
-test_that("retained columns", {
-  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, zip, keep_original_cols = TRUE, id = "")
-  dummy_trained <- prep(dummy, training = sacr_fac)
-  dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
-
-  expect_true(any(colnames(dummy_pred) == "city"))
-  expect_true(any(colnames(dummy_pred) == "zip"))
-})
-
 test_that("check_name() is used", {
   dat <- iris
   dat$Species_versicolor <- dat$Species
@@ -332,37 +322,6 @@ test_that("check_name() is used", {
   expect_snapshot(
     error = TRUE,
     prep(rec, training = dat)
-  )
-})
-
-test_that("keep_original_cols works", {
-  rec <- recipe(sqft ~ city, data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, id = "", keep_original_cols = TRUE)
-  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE)
-  dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
-
-  expect_equal(
-    colnames(dummy_pred),
-    c(
-      "city",
-      paste0("city_", setdiff(gsub(" ", ".", levels(sacr_fac$city)), "ANTELOPE"))
-    )
-  )
-})
-
-test_that("can prep recipes with no keep_original_cols", {
-  rec <- recipe(sqft ~ city, data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, id = "", keep_original_cols = TRUE)
-
-  dummy$steps[[1]]$keep_original_cols <- NULL
-
-  expect_snapshot(
-    dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE)
-  )
-
-  expect_error(
-    dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors()),
-    NA
   )
 })
 
@@ -414,6 +373,48 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  new_names <- c("Species_versicolor", "Species_virginica")
+
+  rec <- recipe(~ Species, iris) %>%
+    step_dummy(all_predictors(), keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ Species, iris) %>%
+    step_dummy(all_predictors(), keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("Species", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ Species, iris) %>%
+    step_dummy(all_predictors())
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = iris),
+    NA
+  )
 })
 
 test_that("printing", {

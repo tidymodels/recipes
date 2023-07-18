@@ -1,8 +1,7 @@
 #' Distance between two locations
 #'
-#' `step_geodist` creates a *specification* of a
-#'  recipe step that will calculate the distance between
-#'  points on a map to a reference location.
+#' `step_geodist()` creates a *specification* of a recipe step that will
+#' calculate the distance between points on a map to a reference location.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -63,6 +62,7 @@ step_geodist <- function(recipe,
                          log = FALSE,
                          name = "geo_dist",
                          columns = NULL,
+                         keep_original_cols = TRUE,
                          skip = FALSE,
                          id = rand_id("geodist")) {
   if (length(ref_lon) != 1 || !is.numeric(ref_lon)) {
@@ -102,6 +102,7 @@ step_geodist <- function(recipe,
       log = log,
       name = name,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -110,7 +111,7 @@ step_geodist <- function(recipe,
 
 step_geodist_new <-
   function(lon, lat, role, trained, ref_lon, ref_lat, is_lat_lon,
-           log, name, columns, skip, id) {
+           log, name, columns, keep_original_cols, skip, id) {
     step(
       subclass = "geodist",
       lon = lon,
@@ -123,6 +124,7 @@ step_geodist_new <-
       log = log,
       name = name,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -166,6 +168,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
     log = x$log,
     name = x$name,
     columns = c(lat_name, lon_name),
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -245,7 +248,7 @@ bake.step_geodist <- function(object, new_data, ...) {
   geo_data <- check_name(geo_data, new_data, object, newname = object$name)
 
   new_data <- vec_cbind(new_data, geo_data)
-
+  new_data <- remove_original_cols(new_data, object, names(object$columns))
   new_data
 }
 

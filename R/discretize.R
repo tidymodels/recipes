@@ -1,6 +1,6 @@
 #' Discretize Numeric Variables
 #'
-#' `discretize` converts a numeric vector into a factor with
+#' `discretize()` converts a numeric vector into a factor with
 #'  bins having approximately the same number of data points (based
 #'  on a training set).
 #'
@@ -235,10 +235,9 @@ print.discretize <-
 
 #' Discretize Numeric Variables
 #'
-#' `step_discretize` creates a *specification* of a recipe
-#'  step that will convert numeric data into a factor with
-#'  bins having approximately the same number of data points (based
-#'  on a training set).
+#' `step_discretize()` creates a *specification* of a recipe step that will
+#' convert numeric data into a factor with bins having approximately the same
+#' number of data points (based on a training set).
 #'
 #' @inheritParams step_center
 #' @param num_breaks An integer defining how many cuts to make of the

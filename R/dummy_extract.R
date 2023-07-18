@@ -1,8 +1,8 @@
 #' Extract patterns from nominal data
 #'
-#' `step_dummy_extract()` creates a *specification* of a recipe
-#'  step that will convert nominal data (e.g. character or factors)
-#'  into one or more integer model terms for the extracted levels.
+#' `step_dummy_extract()` creates a *specification* of a recipe step that will
+#' convert nominal data (e.g. characters or factors) into one or more integer
+#' model terms for the extracted levels.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_other
@@ -51,7 +51,8 @@
 #'
 #' dummy_data %>%
 #'   select(starts_with("medium")) %>%
-#'   names()
+#'   names() %>%
+#'   head()
 #'
 #' # More detailed splitting
 #' dummies_specific <- recipe(~medium, data = tate_text) %>%
@@ -62,7 +63,8 @@
 #'
 #' dummy_data_specific %>%
 #'   select(starts_with("medium")) %>%
-#'   names()
+#'   names() %>%
+#'   head()
 #'
 #' tidy(dummies, number = 1)
 #' tidy(dummies_specific, number = 1)

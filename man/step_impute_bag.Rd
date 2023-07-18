@@ -83,7 +83,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_bag} creates a \emph{specification} of a recipe step that will
+\code{step_impute_bag()} creates a \emph{specification} of a recipe step that will
 create bagged tree models to impute missing data.
 }
 \details{

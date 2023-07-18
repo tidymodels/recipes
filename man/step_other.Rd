@@ -56,9 +56,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_other} creates a \emph{specification} of a recipe
-step that will potentially pool infrequently occurring values
-into an "other" category.
+\code{step_other()} creates a \emph{specification} of a recipe step that will
+potentially pool infrequently occurring values into an \code{"other"} category.
 }
 \details{
 The overall proportion (or total counts) of the categories are

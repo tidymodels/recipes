@@ -49,8 +49,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_mutate_at} creates a \emph{specification} of a recipe step that will modify
-the selected variables using a common function via \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
+\code{step_mutate_at()} creates a \emph{specification} of a recipe step that will
+modify the selected variables using a common function via
+\code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
 }
 \details{
 When using this flexible step, use extra care to avoid data leakage in your

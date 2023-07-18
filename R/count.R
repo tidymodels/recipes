@@ -1,8 +1,7 @@
 #' Create Counts of Patterns using Regular Expressions
 #'
-#' `step_count` creates a *specification* of a recipe
-#'  step that will create a variable that counts instances of a
-#'  regular expression pattern in text.
+#' `step_count()` creates a *specification* of a recipe step that will create a
+#' variable that counts instances of a regular expression pattern in text.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -59,6 +58,7 @@ step_count <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
+                       keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("count")) {
   if (!is.character(pattern)) {
@@ -91,6 +91,7 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -98,7 +99,8 @@ step_count <- function(recipe,
 }
 
 step_count_new <-
-  function(terms, role, trained, pattern, normalize, options, result, input, skip, id) {
+  function(terms, role, trained, pattern, normalize, options, result, input,
+           keep_original_cols, skip, id) {
     step(
       subclass = "count",
       terms = terms,
@@ -109,6 +111,7 @@ step_count_new <-
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -132,6 +135,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -165,6 +169,7 @@ bake.step_count <- function(object, new_data, ...) {
     totals <- nchar(as.character(new_data[[object$input]]))
     new_data[, object$result] <- new_data[, object$result] / totals
   }
+  new_data <- remove_original_cols(new_data, object, names(object$input))
   new_data
 }
 

@@ -40,8 +40,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_select()} creates a \emph{specification} of a recipe step
-that will select variables using \code{\link[dplyr:select]{dplyr::select()}}.
+\code{step_select()} creates a \emph{specification} of a recipe step that will select
+variables using \code{\link[dplyr:select]{dplyr::select()}}.
 }
 \details{
 When an object in the user's global environment is

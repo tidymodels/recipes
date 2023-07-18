@@ -1,8 +1,7 @@
 #' Scaling Numeric Data
 #'
-#' `step_scale` creates a *specification* of a recipe
-#'  step that will normalize numeric data to have a standard
-#'  deviation of one.
+#' `step_scale()` creates a *specification* of a recipe step that will normalize
+#' numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
 #' @param sds A named numeric vector of standard deviations. This is `NULL`

@@ -1,8 +1,7 @@
 #' Scaling Numeric Data to a Specific Range
 #'
-#' `step_range` creates a *specification* of a recipe
-#'  step that will normalize numeric data to be within a pre-defined
-#'  range of values.
+#' `step_range()` creates a *specification* of a recipe step that will normalize
+#' numeric data to be within a pre-defined range of values.
 #'
 #' @inheritParams step_center
 #' @param min A single numeric value for the smallest value in the

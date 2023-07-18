@@ -1,8 +1,7 @@
 #' Inverse Logit Transformation
 #'
-#' `step_invlogit` creates a *specification* of a recipe
-#'  step that will transform the data from real values to be between
-#'  zero and one.
+#' `step_invlogit()` creates a *specification* of a recipe step that will
+#' transform the data from real values to be between zero and one.
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca

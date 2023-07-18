@@ -49,8 +49,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_string2factor} will convert one or more character
-vectors to factors (ordered or unordered).
+\code{step_string2factor()} will convert one or more character vectors to factors
+(ordered or unordered).
 
 \emph{Use this step only in special cases} (see Details) and instead convert
 strings to factors before using any tidymodels functions.

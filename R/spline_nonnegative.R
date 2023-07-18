@@ -1,7 +1,7 @@
 #' Non-Negative Splines
 #'
-#' `step_spline_nonnegative` creates a *specification* of a recipe
-#'  step that creates non-negative spline features.
+#' `step_spline_nonnegative()` creates a *specification* of a recipe step that
+#' creates non-negative spline features.
 #'
 #' @inheritParams step_spline_b
 #' @param degree A nonnegative integer specifying the degree of the piecewise

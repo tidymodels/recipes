@@ -28,8 +28,7 @@
       Error in `step_isomap()`:
       Caused by error in `prep()`:
       ! `step_isomap` failed with error:
-      Error in do.call(.Call, args = dot_call_args) : 
-        TridiagEigen: eigen decomposition failed
+      Error : TridiagEigen: eigen decomposition failed
 
 # check_name() is used
 
@@ -41,16 +40,6 @@
       Caused by error in `bake()`:
       ! Name collision occured. The following variable names already exists:
       i  Isomap1
-
-# can prep recipes with no keep_original_cols
-
-    Code
-      im_trained <- prep(im_rec, training = dat1, verbose = FALSE)
-    Message
-    Condition
-      Warning:
-      'keep_original_cols' was added to `step_isomap()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
 
 # empty printing
 
@@ -86,6 +75,16 @@
       
       -- Operations 
       * Isomap approximation with: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Message
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_isomap()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
 
 # printing
 

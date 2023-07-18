@@ -1,7 +1,7 @@
 #' Detect a regular expression
 #'
-#' `step_regex` creates a *specification* of a recipe step that will
-#'   create a new dummy variable based on a regular expression.
+#' `step_regex()` creates a *specification* of a recipe step that will create a
+#' new dummy variable based on a regular expression.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -54,6 +54,7 @@ step_regex <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
+                       keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("regex")) {
   if (!is_tune(pattern)) {
@@ -87,6 +88,7 @@ step_regex <- function(recipe,
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -94,7 +96,8 @@ step_regex <- function(recipe,
 }
 
 step_regex_new <-
-  function(terms, role, trained, pattern, options, result, input, skip, id) {
+  function(terms, role, trained, pattern, options, result, input,
+           keep_original_cols, skip, id) {
     step(
       subclass = "regex",
       terms = terms,
@@ -104,6 +107,7 @@ step_regex_new <-
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -126,6 +130,7 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -155,6 +160,7 @@ bake.step_regex <- function(object, new_data, ...) {
   }
 
   new_data[, object$result] <- ifelse(eval(regex), 1L, 0L)
+  new_data <- remove_original_cols(new_data, object, object$input)
   new_data
 }
 

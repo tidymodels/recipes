@@ -197,6 +197,15 @@
       -- Operations 
       * Geographical distances from 0.5 x 0.25 using: <none> | Trained
 
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_geodist()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
 # printing
 
     Code

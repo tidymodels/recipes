@@ -1,8 +1,7 @@
 #' Spatial Sign Preprocessing
 #'
-#' `step_spatialsign` is a *specification* of a recipe
-#'  step that will convert numeric data into a projection on to a
-#'  unit sphere.
+#' `step_spatialsign()` is a *specification* of a recipe step that will convert
+#' numeric data into a projection on to a unit sphere.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center

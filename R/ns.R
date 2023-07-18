@@ -1,8 +1,7 @@
 #' Natural Spline Basis Functions
 #'
-#' `step_ns` creates a *specification* of a recipe step
-#'  that will create new columns that are basis expansions of
-#'  variables using natural splines.
+#' `step_ns()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using natural splines.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -63,6 +62,7 @@ step_ns <-
            objects = NULL,
            deg_free = 2,
            options = list(),
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("ns")) {
     add_step(
@@ -74,6 +74,7 @@ step_ns <-
         role = role,
         objects = objects,
         options = options,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -81,7 +82,8 @@ step_ns <-
   }
 
 step_ns_new <-
-  function(terms, role, trained, deg_free, objects, options, skip, id) {
+  function(terms, role, trained, deg_free, objects, options, keep_original_cols,
+           skip, id) {
     step(
       subclass = "ns",
       terms = terms,
@@ -90,6 +92,7 @@ step_ns_new <-
       deg_free = deg_free,
       objects = objects,
       options = options,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -148,6 +151,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
     deg_free = x$deg_free,
     objects = obj,
     options = x$options,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -171,7 +175,7 @@ bake.step_ns <- function(object, new_data, ...) {
       paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
     colnames(ns_values)[cols] <- new_names
     strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
+    new_data <- remove_original_cols(new_data, object, orig_var)
   }
   ns_values <- as_tibble(ns_values)
   ns_values <- check_name(ns_values, new_data, object, names(ns_values))

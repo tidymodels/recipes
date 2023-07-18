@@ -1,8 +1,7 @@
 #' Box-Cox Transformation for Non-Negative Data
 #'
-#' `step_BoxCox` creates a *specification* of a recipe
-#'  step that will transform data using a simple Box-Cox
-#'  transformation.
+#' `step_BoxCox()` creates a *specification* of a recipe step that will transform
+#' data using a Box-Cox transformation.
 #'
 #' @inheritParams step_center
 #' @param lambdas A numeric vector of transformation values. This

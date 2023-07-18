@@ -1,7 +1,7 @@
 #' General Variable Filter
 #'
-#' `step_rm` creates a *specification* of a recipe step
-#'  that will remove variables based on their name, type, or role.
+#' `step_rm()` creates a *specification* of a recipe step that will remove
+#' selected variables.
 #'
 #' @inheritParams step_center
 #' @param removals A character string that contains the names of

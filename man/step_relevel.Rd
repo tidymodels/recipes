@@ -48,11 +48,10 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_relevel} creates a \emph{specification} of a recipe
-step that will reorder the provided factor columns so that
-the level specified by ref_level is first. This is useful
-for contr.treatment contrasts which take the first level as the
-reference.
+\code{step_relevel()} creates a \emph{specification} of a recipe step that will reorder
+the provided factor columns so that the level specified by \code{ref_level} is
+first. This is useful for \code{\link[=contr.treatment]{contr.treatment()}} contrasts which take the first
+level as the reference.
 }
 \details{
 The selected variables are releveled to a level

@@ -44,8 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_filter} creates a \emph{specification} of a recipe step
-that will remove rows using \code{\link[dplyr:filter]{dplyr::filter()}}.
+\code{step_filter()} creates a \emph{specification} of a recipe step that will remove
+rows using \code{\link[dplyr:filter]{dplyr::filter()}}.
 }
 \details{
 When an object in the user's global environment is

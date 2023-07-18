@@ -1,7 +1,7 @@
 #' Sort rows using dplyr
 #'
-#' `step_arrange` creates a *specification* of a recipe step
-#'  that will sort rows using [dplyr::arrange()].
+#' `step_arrange()` creates a *specification* of a recipe step that will sort
+#' rows using [dplyr::arrange()].
 #'
 #' @inheritParams step_center
 #' @param ... Comma separated list of unquoted variable names.

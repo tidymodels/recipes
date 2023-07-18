@@ -1,7 +1,7 @@
 #' Cut a numeric variable into a factor
 #'
 #' `step_cut()` creates a *specification* of a recipe step that cuts a numeric
-#'  variable into a factor based on provided boundary values
+#' variable into a factor based on provided boundary values.
 #'
 #' @inheritParams step_center
 #' @param breaks A numeric vector with at least one cut point.
