@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
 
 test_that("basics", {
   n <- 20

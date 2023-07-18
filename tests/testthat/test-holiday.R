@@ -1,14 +1,13 @@
 library(testthat)
 library(recipes)
-library(lubridate)
 
 exp_dates <- data.frame(
-  date = ymd(c("2017-12-25", "2017-05-29", "2017-04-16")),
+  date = lubridate::ymd(c("2017-12-25", "2017-05-29", "2017-04-16")),
   holiday = c("ChristmasDay", "USMemorialDay", "Easter"),
   stringsAsFactors = FALSE
 )
 test_data <- data.frame(
-  day = c(ymd("2017-01-01") + days(0:364), NA),
+  day = c(lubridate::ymd("2017-01-01") + lubridate::days(0:364), NA),
   stringsAsFactors = FALSE
 )
 
@@ -37,7 +36,7 @@ test_that("Date class", {
   )
   expect_equal(
     holiday_ind$day[is.na(test_data$day)],
-    NA_Date_
+    lubridate::NA_Date_
   )
   expect_equal(
     holiday_ind$day_ChristmasDay[is.na(test_data$day)],

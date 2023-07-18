@@ -1,13 +1,10 @@
 library(testthat)
 library(recipes)
-library(dplyr)
-library(lubridate)
-
 
 set.seed(145)
 example_data <-
   data.frame(
-    day = ymd("2012-06-07") + days(1:12),
+    day = lubridate::ymd("2012-06-07") + lubridate::days(1:12),
     x1 = round(runif(12), 2),
     x2 = round(runif(12), 2),
     x3 = round(runif(12), 2)

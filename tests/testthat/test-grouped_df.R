@@ -1,11 +1,7 @@
-library(tibble)
-library(dplyr)
-
-
 n <- 20
 ex_dat <-
   data.frame(x1 = seq(0, 1, length = n), x2 = rep(1:5, 4)) %>%
-  group_by(x1)
+  dplyr::group_by(x1)
 
 # Test fixes for Issue #125
 test_that("grouped data frames work", {

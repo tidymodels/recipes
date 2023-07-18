@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(splines)
 
 skip_if_not_installed("modeldata")
 
@@ -10,7 +9,6 @@ data(biomass, package = "modeldata")
 
 test_that("correct nonnegative functions", {
   skip_if_not_installed("splines2")
-  library(splines2)
 
   biomass_tr <- biomass[biomass$dataset == "Training", ]
   biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -27,8 +25,8 @@ test_that("correct nonnegative functions", {
   with_ns_pred_tr <- bake(with_ns, new_data = biomass_tr)
   with_ns_pred_te <- bake(with_ns, new_data = biomass_te)
 
-  carbon_ns_tr_exp <- mSpline(biomass_tr$carbon, df = 5)
-  hydrogen_ns_tr_exp <- mSpline(biomass_tr$hydrogen, df = 5)
+  carbon_ns_tr_exp <- splines2::mSpline(biomass_tr$carbon, df = 5)
+  hydrogen_ns_tr_exp <- splines2::mSpline(biomass_tr$hydrogen, df = 5)
   carbon_ns_te_exp <- predict(carbon_ns_tr_exp, biomass_te$carbon)
   hydrogen_ns_te_exp <- predict(hydrogen_ns_tr_exp, biomass_te$hydrogen)
 

@@ -1,7 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
-
 
 n <- 20
 ex_dat <- data.frame(

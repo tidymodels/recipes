@@ -1,5 +1,4 @@
 library(recipes)
-library(dplyr)
 library(testthat)
 
 # ----------------------------------------------------------------

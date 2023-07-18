@@ -1,5 +1,4 @@
 library(testthat)
-library(tibble)
 library(recipes)
 
 skip_if_not_installed("modeldata")

@@ -1,6 +1,4 @@
 library(testthat)
-library(ipred)
-library(rpart)
 library(recipes)
 
 skip_if_not_installed("modeldata")
@@ -30,9 +28,9 @@ test_that("imputation models", {
   )
   for (i in seq_along(carb_samps)) {
     carb_data <- biomass[carb_samps[[i]], c("carbon", "hydrogen", "oxygen")]
-    carb_mod <- rpart(carbon ~ .,
+    carb_mod <- rpart::rpart(carbon ~ .,
       data = carb_data,
-      control = rpart.control(xval = 0)
+      control = rpart::rpart.control(xval = 0)
     )
     expect_equal(
       carb_mod$splits,
@@ -50,7 +48,7 @@ test_that("imputation models", {
   ## make sure we get the same trees given the same random samples
   for (i in seq_along(fac_samps)) {
     fac_data <- biomass[fac_samps[[i]], c("fac", "hydrogen", "oxygen")]
-    fac_mod <- rpart(fac ~ ., data = fac_data, control = fac_ctrl)
+    fac_mod <- rpart::rpart(fac ~ ., data = fac_data, control = fac_ctrl)
     expect_equal(
       fac_mod$splits,
       imputed_trained$steps[[1]]$models[["fac"]]$mtrees[[i]]$btree$splits
