@@ -143,16 +143,17 @@ prep.step_count <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_count <- function(object, new_data, ...) {
-  check_new_data(names(object$input), object, new_data)
+  col_name <- names(object$input)
+  check_new_data(col_name, object, new_data)
 
-  if (length(object$input) == 0L) {
+  if (length(col_name) == 0L) {
     return(new_data)
   }
 
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = new_data[[object$input]],
+      text = new_data[[col_name]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -164,17 +165,22 @@ bake.step_count <- function(object, new_data, ...) {
     regex <- rlang::call_modify(regex, !!!object$options)
   }
 
-  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
+  new_values <- tibble::tibble(
+    !!object$result := vapply(eval(regex), counter, integer(1))
+  )
+
   if (object$normalize) {
-    totals <- nchar(as.character(new_data[[object$input]]))
-    new_data[, object$result] <- new_data[, object$result] / totals
+    totals <- nchar(as.character(new_data[[col_name]]))
+    new_values[[object$result]] <- new_values[[object$result]] / totals
   }
-  new_data <- remove_original_cols(new_data, object, names(object$input))
+
+  new_values <- check_name(new_values, new_data, object, object$result)
+  new_data <- vec_cbind(new_data, new_values)
+  new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
 
 counter <- function(x) length(x[x > 0])
-
 
 print.step_count <-
   function(x, width = max(20, options()$width - 30), ...) {
