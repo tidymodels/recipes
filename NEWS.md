@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `step_regex()` and `step_count()` will now informatively error if name collision occurs.
+
 * Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection. All steps now leave data unmodified when having empty selections.
 
 * `step_classdist()`, `step_count()` and `step_depth()` no longer returns a column with all `NA`s with empty selections.
