@@ -47,6 +47,18 @@ test_that("bad selector(s)", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- iris
+
+  rec <- recipe(~., data = dat) |>
+    step_regex(Species, result = "Sepal.Width")
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
