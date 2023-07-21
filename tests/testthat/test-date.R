@@ -1,11 +1,9 @@
 library(testthat)
 library(recipes)
-library(lubridate)
-library(tibble)
 
 examples <- data.frame(
-  Dan = ymd("2002-03-04") + days(1:10),
-  Stefan = ymd("2006-01-13") + days(1:10)
+  Dan = lubridate::ymd("2002-03-04") + lubridate::days(1:10),
+  Stefan = lubridate::ymd("2006-01-13") + lubridate::days(1:10)
 )
 
 examples$Dan <- as.POSIXct(examples$Dan)

@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tidyr)
 
 test_that("step_naomit on all columns", {
   baked <- recipe(Ozone ~ ., data = airquality) %>%

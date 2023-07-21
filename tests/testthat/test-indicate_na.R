@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tidyr)
 
 train <-
   tibble::tibble(

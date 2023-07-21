@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
 
 lmh <- c("Low", "Med", "High")
 

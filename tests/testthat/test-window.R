@@ -1,7 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
-
 
 set.seed(5522)
 sim_dat <- data.frame(x1 = (20:100) / 10)

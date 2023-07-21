@@ -1,6 +1,6 @@
 library(testthat)
 library(recipes)
-library(splines)
+
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
@@ -21,8 +21,8 @@ test_that("correct basis functions", {
   with_bs_pred_tr <- bake(with_bs, new_data = biomass_tr)
   with_bs_pred_te <- bake(with_bs, new_data = biomass_te)
 
-  carbon_bs_tr_exp <- bs(biomass_tr$carbon, df = 5, degree = 2)
-  hydrogen_bs_tr_exp <- bs(biomass_tr$hydrogen, df = 5, degree = 2)
+  carbon_bs_tr_exp <- splines::bs(biomass_tr$carbon, df = 5, degree = 2)
+  hydrogen_bs_tr_exp <- splines::bs(biomass_tr$hydrogen, df = 5, degree = 2)
   carbon_bs_te_exp <- predict(carbon_bs_tr_exp, biomass_te$carbon)
   hydrogen_bs_te_exp <- predict(hydrogen_bs_tr_exp, biomass_te$hydrogen)
 

@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(dplyr)
 
 n <- 50
 set.seed(424)

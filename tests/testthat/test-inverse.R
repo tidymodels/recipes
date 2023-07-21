@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
 
 n <- 20
 set.seed(1)
