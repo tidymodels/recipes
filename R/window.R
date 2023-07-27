@@ -278,6 +278,7 @@ bake.step_window <- function(object, new_data, ...) {
   } else {
     names(new_values) <- object$names
     new_values <- tibble::new_tibble(new_values)
+    new_values <- check_name(new_values, new_data, object, newname = object$names)
     new_data <- vec_cbind(new_data, new_values)
     new_data <- remove_original_cols(new_data, object, col_names)
   }

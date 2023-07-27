@@ -128,6 +128,19 @@ test_that("tunable", {
   )
 })
 
+test_that("check_name() is used", {
+  dat <- mtcars
+  dat$new_value <- dat$mpg
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_window(mpg, names = "new_value")
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec, training = dat)
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
