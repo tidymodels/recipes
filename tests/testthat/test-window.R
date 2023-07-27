@@ -129,6 +129,8 @@ test_that("tunable", {
 })
 
 test_that("check_name() is used", {
+  skip_if_not_installed("RcppRoll")
+
   dat <- mtcars
   dat$new_value <- dat$mpg
 
