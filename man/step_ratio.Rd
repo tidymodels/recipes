@@ -99,9 +99,8 @@ data = biomass_tr
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
-  step_ratio(all_numeric_predictors(), denom = denom_vars(total)) \%>\%
-  # get rid of the original predictors
-  step_rm(all_predictors(), -ends_with("total"))
+  step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+             keep_original_cols = FALSE)
 
 ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 
