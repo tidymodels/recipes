@@ -138,17 +138,20 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
-  check_new_data(unname(object$columns$top), object, new_data)
+  col_names <- purrr::pmap(object$columns, c)
+  unique_col_names <- unique(unlist(col_names))
+  check_new_data(unique_col_names, object, new_data)
 
-  res <- purrr::map2(
-    new_data[, object$columns$top],
-    new_data[, object$columns$bottom],
-    `/`
-  )
+  res <- list()
 
-  names(res) <- apply(
-    object$columns,
-    MARGIN = 1,
+  for (col_name in col_names) {
+    value <- new_data[[col_name[["top"]]]] / new_data[[col_name[["bottom"]]]]
+    res <- c(res, list(value))
+  }
+
+  names(res) <- vapply(
+    col_names,
+    FUN.VALUE = character(1),
     function(x) object$naming(x[1], x[2])
   )
 
@@ -156,9 +159,7 @@ bake.step_ratio <- function(object, new_data, ...) {
 
   res <- check_name(res, new_data, object, names(res))
   new_data <- vec_cbind(new_data, res)
-
-  union_cols <- union(object$columns$top, object$columns$bottom)
-  new_data <- remove_original_cols(new_data, object, union_cols)
+  new_data <- remove_original_cols(new_data, object, unique_col_names)
 
   new_data
 }
