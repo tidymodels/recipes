@@ -138,16 +138,17 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_regex <- function(object, new_data, ...) {
-  if (length(object$input) == 0) {
+  col_name <- names(object$input)
+  if (length(col_name) == 0) {
     return(new_data)
   }
 
-  check_new_data(object$input, object, new_data)
+  check_new_data(col_name, object, new_data)
 
   ## sub in options
   regex <- expr(
     grepl(
-      x = new_data[[object$input]],
+      x = new_data[[col_name]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -159,8 +160,10 @@ bake.step_regex <- function(object, new_data, ...) {
     regex <- rlang::call_modify(regex, !!!object$options)
   }
 
-  new_data[, object$result] <- ifelse(eval(regex), 1L, 0L)
-  new_data <- remove_original_cols(new_data, object, object$input)
+  new_values <- tibble::tibble(!!object$result := ifelse(eval(regex), 1L, 0L))
+  new_values <- check_name(new_values, new_data, object, object$result)
+  new_data <- vec_cbind(new_data, new_values)
+  new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
 
