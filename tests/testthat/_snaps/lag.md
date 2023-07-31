@@ -4,7 +4,7 @@
       prepped_rec <- recipe(~., data = df) %>% step_lag(x, lag = 0.5) %>% prep(df)
     Condition
       Error in `step_lag()`:
-      Caused by error in `bake()`:
+      Caused by error in `prep()`:
       ! step_lag requires 'lag' argument to be integer valued.
 
 # empty printing
