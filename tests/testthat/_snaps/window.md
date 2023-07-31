@@ -90,6 +90,16 @@
       Caused by error in `prep()`:
       ! There were 2 term(s) selected but 1 values for the new features were passed to `names`.
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_window()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  new_value
+
 # empty printing
 
     Code

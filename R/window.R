@@ -257,30 +257,32 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
 #' @export
 bake.step_window <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq(along.with = object$columns)) {
-    if (!is.null(object$names)) {
-      new_data[[object$names[i]]] <-
-        roller(
-          x = new_data[[object$columns[i]]],
-          stat = object$statistic,
-          na_rm = object$na_rm,
-          window = object$size
-        )
-    } else {
-      new_data[[object$columns[i]]] <-
-        roller(
-          x = new_data[[object$columns[i]]],
-          stat = object$statistic,
-          na_rm = object$na_rm,
-          window = object$size
-        )
+  new_values <- list()
+
+  for (col_name in col_names) {
+    new_values[[col_name]] <- roller(
+      x = new_data[[col_name]],
+      stat = object$statistic,
+      na_rm = object$na_rm,
+      window = object$size
+    )
+  }
+
+  if (is.null(object$names)) {
+    for (col_name in col_names) {
+      new_data[[col_name]] <- new_values[[col_name]]
     }
+  } else {
+    names(new_values) <- object$names
+    new_values <- tibble::new_tibble(new_values)
+    new_values <- check_name(new_values, new_data, object, newname = object$names)
+    new_data <- vec_cbind(new_data, new_values)
+    new_data <- remove_original_cols(new_data, object, col_names)
   }
-  if (!is.null(object$names)) {
-    new_data <- remove_original_cols(new_data, object, names(object$columns))
-  }
+
   new_data
 }
 
