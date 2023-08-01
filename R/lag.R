@@ -92,7 +92,7 @@ step_lag_new <-
 #' @export
 prep.step_lag <- function(x, training, info = NULL, ...) {
   if (!all(x$lag == as.integer(x$lag))) {
-    rlang::abort("step_lag requires 'lag' argument to be integer valued.")
+    rlang::abort("step_lag() requires 'lag' argument to be integer-valued.")
   }
 
   step_lag_new(
@@ -120,7 +120,7 @@ bake.step_lag <- function(object, new_data, ...) {
       function(x) dplyr::lag(new_data[[col_name]], x, default = object$default)
     )
 
-    new_names <- glue("{object$prefix}{object$lag}_{col_name}")
+    new_names <- glue::glue("{object$prefix}{object$lag}_{col_name}")
     names(new_values) <- new_names
 
     new_values <- tibble::new_tibble(new_values)
