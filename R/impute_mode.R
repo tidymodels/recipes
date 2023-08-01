@@ -167,7 +167,7 @@ bake.step_impute_mode <- function(object, new_data, ...) {
         )
       )
     } else {
-      new_data[[col_name]] <- vec_cast(
+      new_data[[col_name]] <- vctrs::vec_cast(
         new_data[[col_name]],
         object$ptype[[col_name]]
       )

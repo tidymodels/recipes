@@ -152,7 +152,7 @@ bake.step_impute_median <- function(object, new_data, ...) {
   for (col_name in col_names) {
     median <- object$medians[[col_name]]
     if (any(is.na(new_data[[col_name]]))) {
-      new_data[[col_name]] <- vec_cast(new_data[[col_name]], median)
+      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
     }
     new_data[is.na(new_data[[col_name]]), col_name] <- median
   }
