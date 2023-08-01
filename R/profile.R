@@ -217,7 +217,7 @@ bake.step_profile <- function(object, new_data, ...) {
 
   # Keep the predictors in the same order
   keepers <- names(new_data)[names(new_data) %in% keepers]
-  new_data <- dplyr::select(new_data, !!keepers)
+  new_data <- new_data[keepers]
   new_data
 }
 
