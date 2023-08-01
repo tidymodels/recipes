@@ -115,7 +115,7 @@ bake.step_lag <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   for (col_name in col_names) {
-    new_values <- map(
+    new_values <- lapply(
       object$lag,
       function(x) dplyr::lag(new_data[[col_name]], x, default = object$default)
     )
