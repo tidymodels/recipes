@@ -178,7 +178,7 @@ bake.step_bs <- function(object, new_data, ...) {
 
     colnames(new_values) <- new_names
     new_values <- check_name(new_values, new_data, object, new_names)
-    new_data <- vec_cbind(new_data, new_values)
+    new_data <- vctrs::vec_cbind(new_data, new_values)
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)
