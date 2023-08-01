@@ -192,7 +192,7 @@ bake.step_impute_mean <- function(object, new_data, ...) {
   for (col_name in col_names) {
     mean <- object$means[[col_name]]
     if (any(is.na(new_data[[col_name]]))) {
-      new_data[[col_name]] <- vec_cast(new_data[[col_name]], mean)
+      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
     }
     new_data[is.na(new_data[[col_name]]), col_name] <- mean
   }

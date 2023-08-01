@@ -139,7 +139,7 @@ bake.step_time <- function(object, new_data, ...) {
       feats = object$features
     )
 
-    names(time_values) <- glue("{col_name}_{names(time_values)}")
+    names(time_values) <- glue::glue("{col_name}_{names(time_values)}")
     time_values <- check_name(time_values, new_data, object, names(time_values))
     new_data <- vec_cbind(new_data, time_values)
   }

@@ -123,7 +123,7 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     score <- object$convert(new_data[[col_name]])
-    score <- vec_cast(score, integer())
+    score <- vctrs::vec_cast(score, integer())
     new_data[[col_name]] <- score
   }
 
