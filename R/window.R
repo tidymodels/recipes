@@ -243,7 +243,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
     normalize = TRUE, na.rm = na_rm
   )
 
-  roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
+  roll_cl <- rlang::call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
   x2 <- eval(roll_cl)
 
   ## Fill in the left-hand points. Add enough data so that the
@@ -279,7 +279,7 @@ bake.step_window <- function(object, new_data, ...) {
     names(new_values) <- object$names
     new_values <- tibble::new_tibble(new_values)
     new_values <- check_name(new_values, new_data, object, newname = object$names)
-    new_data <- vec_cbind(new_data, new_values)
+    new_data <- vctrs::vec_cbind(new_data, new_values)
     new_data <- remove_original_cols(new_data, object, col_names)
   }
 
