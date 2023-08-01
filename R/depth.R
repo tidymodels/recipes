@@ -176,14 +176,15 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
-  if (ncol(object$data[[1]]) == 0) {
+  col_names <- colnames(object$data[[1]])
+  check_new_data(col_names, object, new_data)
+
+  if (length(col_names) == 0) {
     return(new_data)
   }
 
-  x_names <- colnames(object$data[[1]])
-  check_new_data(x_names, object, new_data)
+  x_data <- as.matrix(new_data[, col_names])
 
-  x_data <- as.matrix(new_data[, x_names])
   res <- lapply(
     object$data,
     get_depth,
@@ -191,12 +192,16 @@ bake.step_depth <- function(object, new_data, ...) {
     metric = object$metric,
     opts = object$options
   )
-  res <- as_tibble(res)
-  newname <- paste0(object$prefix, colnames(res))
-  res <- check_name(res, new_data, object, newname)
-  res <- vec_cbind(new_data, res)
-  res <- remove_original_cols(res, object, x_names)
-  res
+  res <- tibble::new_tibble(res)
+
+  new_names <- paste0(object$prefix, colnames(res))
+  colnames(res) <- new_names
+
+  res <- check_name(res, new_data, object, new_names)
+
+  new_data <- vec_cbind(new_data, res)
+  new_data <- remove_original_cols(new_data, object, col_names)
+  new_data
 }
 
 print.step_depth <-
