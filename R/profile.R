@@ -200,17 +200,24 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_profile <- function(object, new_data, ...) {
-  n <- length(object$profile[[1]])
-  new_data <- new_data[rep(1, n), ]
-  keepers <- c(names(object$columns), names(object$profile))
+  col_names <- names(object$columns)
+  profile_names <- names(object$profile)
+  keepers <- c(col_names, profile_names)
+
+  new_data <- list()
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- object$columns[[col_name]]
+  }
+
+  new_data[[names(object$profile)]] <- object$profile[[1]]
+
+  new_data <- vctrs::vec_recycle_common(!!!new_data)
+  new_data <- tibble::new_tibble(new_data)
+
   # Keep the predictors in the same order
   keepers <- names(new_data)[names(new_data) %in% keepers]
-  new_data <- dplyr::select(new_data, !!keepers)
-
-  for (i in names(object$columns)) {
-    new_data[[i]] <- rep(object$columns[[i]], n)
-  }
-  new_data[[names(object$profile)]] <- object$profile[[1]]
+  new_data <- new_data[keepers]
   new_data
 }
 
