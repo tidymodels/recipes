@@ -5,7 +5,7 @@
     Condition
       Error in `step_lag()`:
       Caused by error in `prep()`:
-      ! step_lag requires 'lag' argument to be integer valued.
+      ! step_lag() requires 'lag' argument to be integer-valued.
 
 # empty printing
 
