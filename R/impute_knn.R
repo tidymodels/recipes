@@ -247,41 +247,43 @@ nn_pred <- function(index, dat) {
 
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
-  col_names <- purrr::map(object$columns, function(x) unname(x$x)) %>%
-    purrr::flatten_chr() %>%
-    unique()
-  check_new_data(col_names, object, new_data)
+  col_names <- purrr::map_chr(object$columns, "y")
+  all_cols <- unique(unlist(object$columns, recursive = TRUE))
+  check_new_data(all_cols, object, new_data)
 
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)
   }
 
+  names(object$columns) <- col_names
+
   old_data <- new_data
-  for (i in seq(along.with = object$columns)) {
-    imp_var <- object$columns[[i]]$y
-    missing_rows <- !complete.cases(new_data[, imp_var])
-    if (any(missing_rows)) {
-      preds <- object$columns[[i]]$x
-      imp_data <- old_data[missing_rows, preds, drop = FALSE]
-      ## do a better job of checking this:
-      if (all(is.na(imp_data))) {
-        rlang::warn("All predictors are missing; cannot impute")
-      } else {
-        imp_var_complete <- !is.na(object$ref_data[[imp_var]])
-        nn_ind <- nn_index(
-          object$ref_data[imp_var_complete, ],
-          imp_data, preds,
-          object$neighbors,
-          object$options
-        )
-        pred_vals <-
-          apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
-        pred_vals <- cast(pred_vals, object$ref_data[[imp_var]])
-        new_data[[imp_var]] <- vec_cast(new_data[[imp_var]], pred_vals)
-        new_data[missing_rows, imp_var] <- pred_vals
-      }
+  for (col_name in col_names) {
+    missing_rows <- !complete.cases(new_data[, col_name])
+    if (!any(missing_rows)) {
+      next
     }
+    preds <- object$columns[[col_name]]$x
+    imp_data <- old_data[missing_rows, preds, drop = FALSE]
+    ## do a better job of checking this:
+    if (all(is.na(imp_data))) {
+      rlang::warn("All predictors are missing; cannot impute")
+    } else {
+      imp_var_complete <- !is.na(object$ref_data[[col_name]])
+      nn_ind <- nn_index(
+        object$ref_data[imp_var_complete, ],
+        imp_data, preds,
+        object$neighbors,
+        object$options
+      )
+      pred_vals <-
+        apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, col_name])
+      pred_vals <- cast(pred_vals, object$ref_data[[col_name]])
+      new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
+      new_data[missing_rows, col_name] <- pred_vals
+    }
+
   }
   new_data
 }
