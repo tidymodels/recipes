@@ -230,34 +230,40 @@ mah_pooled <- function(means, x, cov_mat) {
 
 #' @export
 bake.step_classdist <- function(object, new_data, ...) {
-  if (length(object$objects[[1]]$center) == 0) {
+  col_names <- names(object$objects[[1]][[1]])
+  check_new_data(col_names, object, new_data)
+
+  if (length(col_names) == 0) {
     return(new_data)
   }
 
   if (object$pool) {
-    x_cols <- names(object$objects[["center"]][[1]])
-    check_new_data(x_cols, object, new_data)
-    res <- lapply(
+    new_values <- lapply(
       object$objects$center,
       mah_pooled,
-      x = new_data[, x_cols],
+      x = new_data[, col_names],
       cov_mat = object$objects$scale
     )
   } else {
-    x_cols <- names(object$objects[[1]]$center)
-    check_new_data(x_cols, object, new_data)
-    res <-
-      lapply(object$objects, mah_by_class, x = new_data[, x_cols])
+    new_values <- lapply(
+      object$objects,
+      mah_by_class,
+      x = new_data[, col_names]
+    )
   }
+
   if (object$log) {
-    res <- lapply(res, log)
+    new_values <- lapply(new_values, log)
   }
-  res <- as_tibble(res)
-  newname <- paste0(object$prefix, colnames(res))
-  res <- check_name(res, new_data, object, newname)
-  res <- vec_cbind(new_data, res)
-  res <- remove_original_cols(res, object, x_cols)
-  res
+  new_values <- tibble::new_tibble(new_values)
+
+  new_names <- paste0(object$prefix, colnames(new_values))
+  colnames(new_values) <- new_names
+
+  new_values <- check_name(new_values, new_data, object, new_names)
+  new_data <- vec_cbind(new_data, new_values)
+  new_data <- remove_original_cols(new_data, object, col_names)
+  new_data
 }
 
 print.step_classdist <-
