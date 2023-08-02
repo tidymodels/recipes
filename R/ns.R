@@ -164,10 +164,10 @@ bake.step_ns <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     new_values <- bs_predict(object$objects[[col_name]], new_data[[col_name]])
-    new_values <- as_tibble(new_values)
-    new_names <- paste(col_name, "ns", names0(ncol(new_values), ""), sep = "_")
 
+    new_names <- paste(col_name, "ns", names0(ncol(new_values), ""), sep = "_")
     colnames(new_values) <- new_names
+
     new_values <- check_name(new_values, new_data, object, new_names)
     new_data <- vctrs::vec_cbind(new_data, new_values)
   }
