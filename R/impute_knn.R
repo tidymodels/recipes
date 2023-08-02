@@ -247,24 +247,24 @@ nn_pred <- function(index, dat) {
 
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
-  col_names <- purrr::map(object$columns, function(x) unname(x$x)) %>%
-    purrr::flatten_chr() %>%
-    unique()
-  check_new_data(col_names, object, new_data)
+  col_names <- purrr::map_chr(object$columns, "y")
+  all_cols <- unique(unlist(object$columns, recursive = TRUE))
+  check_new_data(all_cols, object, new_data)
 
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
     return(new_data)
   }
 
+  names(object$columns) <- col_names
+
   old_data <- new_data
-  for (columns in object$columns) {
-    col_name <- columns$y
+  for (col_name in col_names) {
     missing_rows <- !complete.cases(new_data[, col_name])
     if (!any(missing_rows)) {
       next
     }
-    preds <- columns$x
+    preds <- object$columns[[col_name]]$x
     imp_data <- old_data[missing_rows, preds, drop = FALSE]
     ## do a better job of checking this:
     if (all(is.na(imp_data))) {
