@@ -271,7 +271,8 @@ prep.step_bagimpute <- prep.step_impute_bag
 
 #' @export
 bake.step_impute_bag <- function(object, new_data, ...) {
-  check_new_data(names(object$models), object, new_data)
+  col_names <- names(object$models)
+  check_new_data(col_names, object, new_data)
 
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
@@ -279,21 +280,21 @@ bake.step_impute_bag <- function(object, new_data, ...) {
   }
 
   old_data <- new_data
-  for (i in seq(along.with = object$models)) {
-    imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[[imp_var]])
-    if (any(missing_rows)) {
-      preds <- object$models[[imp_var]]$..imp_vars
-      pred_data <- old_data[missing_rows, preds, drop = FALSE]
-      ## do a better job of checking this:
-      if (all(is.na(pred_data))) {
-        rlang::warn("All predictors are missing; cannot impute")
-      } else {
-        pred_vals <- predict(object$models[[imp_var]], pred_data)
-        # For an ipred bug reported on 2021-09-14:
-        pred_vals <- cast(pred_vals, object$models[[imp_var]]$y)
-        new_data[missing_rows, imp_var] <- pred_vals
-      }
+  for (col_name in col_names) {
+    missing_rows <- !complete.cases(new_data[[col_name]])
+    if (!any(missing_rows)) {
+      next
+    }
+    preds <- object$models[[col_name]]$..imp_vars
+    pred_data <- old_data[missing_rows, preds, drop = FALSE]
+    ## do a better job of checking this:
+    if (all(is.na(pred_data))) {
+      rlang::warn("All predictors are missing; cannot impute")
+    } else {
+      pred_vals <- predict(object$models[[col_name]], pred_data)
+      # For an ipred bug reported on 2021-09-14:
+      pred_vals <- cast(pred_vals, object$models[[col_name]]$y)
+      new_data[missing_rows, col_name] <- pred_vals
     }
   }
   new_data
