@@ -120,20 +120,22 @@ prep.step_range <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_range <- function(object, new_data, ...) {
-  check_new_data(colnames(object$ranges), object, new_data)
+  col_names <- colnames(object$ranges)
+  check_new_data(col_names, object, new_data)
 
-  for (column in colnames(object$ranges)) {
-    min <- object$ranges["mins", column]
-    max <- object$ranges["maxs", column]
+  for (col_name in col_names) {
+    min <- object$ranges["mins", col_name]
+    max <- object$ranges["maxs", col_name]
 
-    new_data[[column]] <- (new_data[[column]] - min) *
+    new_data[[col_name]] <- (new_data[[col_name]] - min) *
       (object$max - object$min) / (max - min) + object$min
 
     if (is.null(object$clipping) || isTRUE(object$clipping)) {
-      new_data[[column]] <- pmax(new_data[[column]], object$min)
-      new_data[[column]] <- pmin(new_data[[column]], object$max)
+      new_data[[col_name]] <- pmax(new_data[[col_name]], object$min)
+      new_data[[col_name]] <- pmin(new_data[[col_name]], object$max)
     }
   }
+
   new_data
 }
 

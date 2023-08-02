@@ -175,32 +175,36 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_other <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    if (object$objects[[i]]$collapse) {
-      tmp <- new_data[[i]]
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
 
-      if (!is.character(tmp)) {
-        tmp <- as.character(tmp)
-      }
-
-      tmp <- ifelse(
-        !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
-        object$objects[[i]]$other,
-        tmp
-      )
-
-      # assign other factor levels other here too.
-      tmp <- factor(tmp,
-        levels = c(
-          object$objects[[i]]$keep,
-          object$objects[[i]]$other
-        )
-      )
-
-      new_data[[i]] <- tmp
+  for (col_name in col_names) {
+    if (!object$objects[[col_name]]$collapse) {
+      next
     }
+    tmp <- new_data[[col_name]]
+
+    if (!is.character(tmp)) {
+      tmp <- as.character(tmp)
+    }
+
+    tmp <- ifelse(
+      !(tmp %in% object$objects[[col_name]]$keep) & !is.na(tmp),
+      object$objects[[col_name]]$other,
+      tmp
+    )
+
+    # assign other factor levels other here too.
+    tmp <- factor(tmp,
+      levels = c(
+        object$objects[[col_name]]$keep,
+        object$objects[[col_name]]$other
+      )
+    )
+
+    new_data[[col_name]] <- tmp
   }
+
   new_data
 }
 

@@ -162,11 +162,10 @@ bake.step_poly <- function(object, new_data, ...) {
   # Start with n-row, 0-col tibble for the empty selection case
   new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))
 
-  for (i in seq_along(col_names)) {
-    i_col_name <- col_names[[i]]
-    i_col <- new_data[[i_col_name]]
-    i_object <- object$objects[[i]]
-    i_new_names <- new_names[[i]]
+  for (col_name in col_names) {
+    i_col <- new_data[[col_name]]
+    i_object <- object$objects[[col_name]]
+    i_new_names <- new_names[[col_name]]
 
     new_cols <- predict(i_object, i_col)
     colnames(new_cols) <- i_new_names

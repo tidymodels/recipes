@@ -102,14 +102,14 @@ prep.step_indicate_na <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_indicate_na <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  col_names <- object$columns
+  cols <- list()
 
-  cols <- purrr::map(
-    new_data[col_names],
-    ~ ifelse(is.na(.x), 1L, 0L)
-  )
+  for (col_name in col_names) {
+    cols[[col_name]] <- ifelse(is.na(new_data[[col_name]]), 1L, 0L)
+  }
 
   cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
   cols <- dplyr::rename_with(cols, ~ vec_paste0(object$prefix, "_", .x))
@@ -117,7 +117,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
   cols <- check_name(cols, new_data, object, names(cols))
 
   new_data <- vec_cbind(new_data, cols)
-  new_data <- remove_original_cols(new_data, object, names(object$columns))
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

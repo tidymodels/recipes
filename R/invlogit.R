@@ -85,17 +85,13 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_invlogit <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
-    new_data[[object$columns[i]]] <-
-      binomial()$linkinv(
-        unlist(
-          new_data[[object$columns[i]]],
-          use.names = FALSE
-          )
-      )
+  for (col_name in col_names) {
+    new_data[[col_name]] <- binomial()$linkinv(new_data[[col_name]])
   }
+
   new_data
 }
 

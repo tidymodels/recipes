@@ -186,14 +186,17 @@ prep.step_meanimpute <- prep.step_impute_mean
 
 #' @export
 bake.step_impute_mean <- function(object, new_data, ...) {
-  check_new_data(names(object$means), object, new_data)
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$means)) {
-    if (any(is.na(new_data[[i]]))) {
-      new_data[[i]] <- vec_cast(new_data[[i]], object$means[[i]])
+  for (col_name in col_names) {
+    mean <- object$means[[col_name]]
+    if (any(is.na(new_data[[col_name]]))) {
+      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
     }
-    new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
+    new_data[is.na(new_data[[col_name]]), col_name] <- mean
   }
+
   new_data
 }
 

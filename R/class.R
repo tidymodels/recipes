@@ -184,14 +184,12 @@ bake_check_class_core <- function(x,
 }
 
 #' @export
-bake.check_class <- function(object,
-                             new_data,
-                             ...) {
+bake.check_class <- function(object, new_data, ...) {
   col_names <- names(object$class_list)
-
   check_new_data(col_names, object, new_data)
 
-  mapply(bake_check_class_core,
+  mapply(
+    bake_check_class_core,
     new_data[, col_names],
     object$class_list,
     col_names,

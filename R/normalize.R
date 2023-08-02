@@ -151,13 +151,16 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
-  check_new_data(names(object$means), object, new_data)
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-  for (column in names(object$means)) {
-    mean <- object$means[column]
-    sd <- object$sds[column]
-    new_data[[column]] <- (new_data[[column]] - mean) / sd
+  for (col_name in col_names) {
+    mean <- object$means[col_name]
+    sd <- object$sds[col_name]
+
+    new_data[[col_name]] <- (new_data[[col_name]] - mean) / sd
   }
+
   new_data
 }
 

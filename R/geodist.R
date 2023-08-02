@@ -211,9 +211,10 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  if (length(object$columns) == 0) {
+  if (length(col_names) == 0) {
     return(new_data)
   }
 
@@ -222,16 +223,16 @@ bake.step_geodist <- function(object, new_data, ...) {
   if (object$is_lat_lon) {
     dist_vals <-
       geo_dist_calc_lat_lon(
-        new_data[[object$columns[2]]], # lon
-        new_data[[object$columns[1]]], # lat
+        new_data[[col_names[2]]], # lon
+        new_data[[col_names[1]]], # lat
         object$ref_lon,
         object$ref_lat
       )
   } else {
     dist_vals <-
       geo_dist_calc_xy(
-        new_data[[object$columns[2]]], # lon
-        new_data[[object$columns[1]]], # lat
+        new_data[[col_names[2]]], # lon
+        new_data[[col_names[1]]], # lat
         object$ref_lon,
         object$ref_lat
       )
@@ -247,7 +248,7 @@ bake.step_geodist <- function(object, new_data, ...) {
   geo_data <- check_name(geo_data, new_data, object, newname = object$name)
 
   new_data <- vec_cbind(new_data, geo_data)
-  new_data <- remove_original_cols(new_data, object, names(object$columns))
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

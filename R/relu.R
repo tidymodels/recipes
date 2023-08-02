@@ -141,13 +141,15 @@ prep.step_relu <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relu <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   make_relu_call <- function(col) {
     call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
-  exprs <- purrr::map(object$columns, make_relu_call)
-  newname <- glue("{object$prefix}{object$columns}")
+
+  exprs <- purrr::map(col_names, make_relu_call)
+  newname <- glue::glue("{object$prefix}{col_names}")
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
   dplyr::mutate(new_data, !!!exprs)
 }

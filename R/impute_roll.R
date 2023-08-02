@@ -206,23 +206,27 @@ impute_rolling <- function(inds, x, statfun) {
 
 #' @export
 bake.step_impute_roll <- function(object, new_data, ...) {
-  check_new_data(unname(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   n <- nrow(new_data)
   missing_ind <- lapply(
-    new_data[, object$columns],
+    new_data[, col_names],
     function(x) which(is.na(x))
   )
   has_missing <- map_lgl(missing_ind, function(x) length(x) > 0)
   missing_ind <- missing_ind[has_missing]
   roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
 
-  for (i in seq(along.with = roll_ind)) {
-    imp_var <- names(roll_ind)[i]
-    estimates <-
-      impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)
-    new_data[missing_ind[[i]], imp_var] <- estimates
+  for (col_name in col_names) {
+    estimates <- impute_rolling(
+      roll_ind[[col_name]],
+      new_data[[col_name]],
+      object$statistic
+    )
+    new_data[missing_ind[[col_name]], col_name] <- estimates
   }
+
   new_data
 }
 

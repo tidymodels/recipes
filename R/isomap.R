@@ -192,21 +192,22 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_isomap <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  if (object$num_terms > 0 && length(object$columns) > 0L) {
-    isomap_vars <- colnames(environment(object$res@apply)$indata)
+  if (object$num_terms > 0 && length(col_names) > 0L) {
     suppressMessages({
       comps <- object$res@apply(
-        dimred_data(new_data[, isomap_vars, drop = FALSE])
+        dimred_data(new_data[, col_names, drop = FALSE])
       )@data
     })
     comps <- comps[, seq_len(object$num_terms), drop = FALSE]
     comps <- as_tibble(comps)
     comps <- check_name(comps, new_data, object)
     new_data <- vec_cbind(new_data, comps)
-    new_data <- remove_original_cols(new_data, object, isomap_vars)
+    new_data <- remove_original_cols(new_data, object, col_names)
   }
+
   new_data
 }
 

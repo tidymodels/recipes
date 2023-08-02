@@ -126,22 +126,23 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
+  for (col_name in col_names) {
     tmp <- get_holiday_features(
-      dt = new_data[[object$columns[i]]],
+      dt = new_data[[col_name]],
       hdays = object$holidays
     )
 
-    names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
+    names(tmp) <- paste(col_name, names(tmp), sep = "_")
     tmp <- purrr::map_dfc(tmp, vec_cast, integer())
 
     tmp <- check_name(tmp, new_data, object, names(tmp))
     new_data <- vec_cbind(new_data, tmp)
   }
 
-  new_data <- remove_original_cols(new_data, object, names(object$columns))
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }

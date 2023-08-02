@@ -130,20 +130,21 @@ prep.step_time <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_time <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (column in object$columns) {
+  for (col_name in col_names) {
     time_values <- get_time_features(
-      dt = new_data[[column]],
+      dt = new_data[[col_name]],
       feats = object$features
     )
 
-    names(time_values) <- glue("{column}_{names(time_values)}")
+    names(time_values) <- glue::glue("{col_name}_{names(time_values)}")
     time_values <- check_name(time_values, new_data, object, names(time_values))
     new_data <- vec_cbind(new_data, time_values)
   }
 
-  new_data <- remove_original_cols(new_data, object, object$columns)
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }

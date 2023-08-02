@@ -297,14 +297,13 @@ bake.step_harmonic <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   # calculate sin and cos columns
-  for (i in seq_along(col_names)) {
-    col_name <- col_names[i]
+  for (col_name in col_names) {
     n_frequency <- length(object$frequency)
     res <- sin_cos(
       as.numeric(new_data[[col_name]]),
       object$frequency,
-      object$starting_val[i],
-      object$cycle_size[i]
+      object$starting_val[col_name],
+      object$cycle_size[col_name]
     )
     colnames(res) <- paste0(
       col_name,

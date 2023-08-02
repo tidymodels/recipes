@@ -130,12 +130,14 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
-  check_new_data(names(object$means), object, new_data)
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-  for (column in names(object$means)) {
-    mean <- object$means[column]
-    new_data[[column]] <- new_data[[column]] - mean
+  for (col_name in col_names) {
+    mean <- object$means[col_name]
+    new_data[[col_name]] <- new_data[[col_name]] - mean
   }
+
   new_data
 }
 
