@@ -261,6 +261,10 @@ bake.step_dummy <- function(object, new_data, ...) {
   col_names <- names(object$levels)
   check_new_data(col_names, object, new_data)
 
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
   old_opt <- options()$na.action
