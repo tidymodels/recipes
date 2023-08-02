@@ -199,7 +199,7 @@ bake.step_depth <- function(object, new_data, ...) {
 
   res <- check_name(res, new_data, object, new_names)
 
-  new_data <- vec_cbind(new_data, res)
+  new_data <- vctrs::vec_cbind(new_data, res)
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
