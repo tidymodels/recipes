@@ -1,7 +1,7 @@
 #' Add sin and cos terms for harmonic analysis
 #'
-#' `step_harmonic` creates a *specification* of a recipe step that
-#'   will add sin and cos terms for harmonic analysis.
+#' `step_harmonic()` creates a *specification* of a recipe step that will add
+#' `sin()` and `cos()` terms for harmonic analysis.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_date
@@ -57,6 +57,12 @@
 #'  frequency, for example, a `POSIXct` input column given a `frequency` of
 #'  24 and a `cycle_size` equal to 86400 is equivalent to a `frequency` of
 #'  1.0 with `cycle_size` equal to 3600.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_harmonic"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -234,7 +240,7 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
 
   frequencies <- sort(unique(na.omit(x$frequency)))
 
-  names(frequencies) <- as.character(1:length(frequencies))
+  names(frequencies) <- as.character(seq_along(frequencies))
   names(starting_vals) <- col_names
   names(cycle_sizes) <- col_names
 
@@ -291,29 +297,28 @@ bake.step_harmonic <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   # calculate sin and cos columns
-  for (i in seq_along(col_names)) {
-    col_name <- col_names[i]
+  for (col_name in col_names) {
     n_frequency <- length(object$frequency)
     res <- sin_cos(
       as.numeric(new_data[[col_name]]),
       object$frequency,
-      object$starting_val[i],
-      object$cycle_size[i]
+      object$starting_val[col_name],
+      object$cycle_size[col_name]
     )
     colnames(res) <- paste0(
       col_name,
       rep(c("_sin_", "_cos_"), each = n_frequency),
-      1:n_frequency
+      seq_len(n_frequency)
     )
     res <- as_tibble(res)
-    new_data <- bind_cols(new_data, res)
+
+    res <- check_name(res, new_data, object, names(res))
+
+    new_data <- vec_cbind(new_data, res)
   }
 
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    new_data <-
-      new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
-  }
+  new_data <- remove_original_cols(new_data, object, col_names)
+
   new_data
 }
 

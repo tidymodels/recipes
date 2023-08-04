@@ -28,4 +28,7 @@ factors and ordered factors, then you should specify
 \code{types = c("double", "integer", "string", "factor", "ordered")} to get a
 clear error message.
 }
+\seealso{
+\link{developer_functions}
+}
 \keyword{internal}

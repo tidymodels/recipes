@@ -35,9 +35,8 @@ preprocessing have been estimated.}
 of the following values: \code{am} (is is AM), \code{hour}, \code{hour12}, \code{minute},
 \code{second}, \code{decimal_day}.}
 
-\item{columns}{A character string of variables that will be
-used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep]{prep()}} is used.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
@@ -56,9 +55,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_time()} creates a \emph{specification} of a recipe
-step that will convert date-time data into one or more factor or
-numeric variables.
+\code{step_time()} creates a \emph{specification} of a recipe step that will convert
+date-time data into one or more factor or numeric variables.
 }
 \details{
 Unlike some other steps, \code{step_time()} does \emph{not}

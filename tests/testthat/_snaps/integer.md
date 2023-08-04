@@ -1,36 +1,3 @@
-# printing
-
-    Code
-      print(ints)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Operations 
-      * Integer encoding for: all_predictors()
-
----
-
-    Code
-      prep(ints)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 3
-      
-      -- Training information 
-      Training data contained 10 data points and 2 incomplete rows.
-      
-      -- Operations 
-      * Integer encoding for: x, y, z | Trained
-
 # empty printing
 
     Code
@@ -65,4 +32,37 @@
       
       -- Operations 
       * Integer encoding for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Operations 
+      * Integer encoding for: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 3
+      
+      -- Training information 
+      Training data contained 10 data points and 2 incomplete rows.
+      
+      -- Operations 
+      * Integer encoding for: x, y, z | Trained
 

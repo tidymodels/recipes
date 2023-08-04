@@ -1,9 +1,8 @@
 #' Data Depths
 #'
-#' `step_depth` creates a *specification* of a recipe
-#'  step that will convert numeric data into measurement of
-#'  *data depth*. This is done for each value of a categorical
-#'  class variable.
+#' `step_depth()` creates a *specification* of a recipe step that will convert
+#' numeric data into a measurement of *data depth*. This is done for each value of
+#' a categorical class variable.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -90,6 +89,7 @@ step_depth <-
            options = list(),
            data = NULL,
            prefix = "depth_",
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("depth")) {
     if (!is.character(class) || length(class) != 1) {
@@ -109,6 +109,7 @@ step_depth <-
         options = options,
         data = data,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -117,7 +118,7 @@ step_depth <-
 
 step_depth_new <-
   function(terms, class, role, trained, metric,
-           options, data, prefix, skip, id) {
+           options, data, prefix, keep_original_cols, skip, id) {
     step(
       subclass = "depth",
       terms = terms,
@@ -128,6 +129,7 @@ step_depth_new <-
       options = options,
       data = data,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -140,8 +142,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
 
   class_var <- x$class[1]
 
-  x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+  x_dat <- split(training[, x_names], training[[class_var]])
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,
@@ -152,6 +153,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     options = x$options,
     data = x_dat,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -174,10 +176,15 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
-  x_names <- colnames(object$data[[1]])
-  check_new_data(x_names, object, new_data)
+  col_names <- colnames(object$data[[1]])
+  check_new_data(col_names, object, new_data)
 
-  x_data <- as.matrix(new_data[, x_names])
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+
+  x_data <- as.matrix(new_data[, col_names])
+
   res <- lapply(
     object$data,
     get_depth,
@@ -185,11 +192,16 @@ bake.step_depth <- function(object, new_data, ...) {
     metric = object$metric,
     opts = object$options
   )
-  res <- as_tibble(res)
-  newname <- paste0(object$prefix, colnames(res))
-  res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
-  res
+  res <- tibble::new_tibble(res)
+
+  new_names <- paste0(object$prefix, colnames(res))
+  colnames(res) <- new_names
+
+  res <- check_name(res, new_data, object, new_names)
+
+  new_data <- vctrs::vec_cbind(new_data, res)
+  new_data <- remove_original_cols(new_data, object, col_names)
+  new_data
 }
 
 print.step_depth <-

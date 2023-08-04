@@ -24,4 +24,7 @@ This will check to see if all required packages are installed.
 recipes_pkg_check("recipes")
 }
 }
+\seealso{
+\link{developer_functions}
+}
 \keyword{internal}

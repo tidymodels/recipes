@@ -27,8 +27,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variables that will be converted. This
-is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -44,7 +44,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_factor2string} will convert one or more factor vectors to strings.
+\code{step_factor2string()} creates a \emph{specification} of a recipe step that will
+convert one or more factor vectors to strings.
 }
 \details{
 \code{prep} has an option \code{strings_as_factors} that defaults to \code{TRUE}.

@@ -61,8 +61,8 @@ the computations for subsequent operations.}
 An object with classes \code{"step_poly_bernstein"} and \code{"step"}.
 }
 \description{
-\code{step_poly_bernstein} creates a \emph{specification} of a recipe
-step that creates Bernstein polynomial features.
+\code{step_poly_bernstein()} creates a \emph{specification} of a recipe step that
+creates Bernstein polynomial features.
 }
 \details{
 Polynomial transformations take a numeric column and create multiple features
@@ -77,6 +77,13 @@ remove that column's results (but will retain the original data). Use the
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{degree}: Polynomial Degree (type: integer, default: 10)
+}
 }
 
 \section{Case weights}{

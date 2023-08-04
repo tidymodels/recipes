@@ -1,8 +1,8 @@
 #' Convert Numbers to Factors
 #'
-#' `step_num2factor` will convert one or more numeric vectors to factors
-#'  (ordered or unordered). This can be useful when categories are encoded as
-#'  integers.
+#' `step_num2factor()` will convert one or more numeric vectors to factors
+#' (ordered or unordered). This can be useful when categories are encoded as
+#' integers.
 #'
 #' @inheritParams step_center
 #' @param transform A function taking a single argument `x` that can be used
@@ -170,19 +170,19 @@ make_factor_num <- function(x, lvl, ord, foo) {
 #' @export
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
-
   check_new_data(col_names, object, new_data)
 
   lvls <- object$levels[names(object$levels) == "..levels"]
-  object$levels <- object$levels[names(object$levels) != "..levels"]
 
-  new_data[, col_names] <-
-    map(new_data[, col_names],
-      make_factor_num,
+  for (col_name in col_names) {
+    new_data[[col_names]] <- make_factor_num(
+      new_data[[col_name]],
       lvl = lvls[[1]],
       ord = object$ordered[1],
       foo = object$transform
     )
+  }
+
   new_data
 }
 

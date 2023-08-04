@@ -49,9 +49,8 @@ listing.}
 \item{naming}{A function that defines the naming convention for
 new ratio columns.}
 
-\item{columns}{The column names used in the ratios. This
-argument is not populated until \code{\link[=prep]{prep()}} is
-executed.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
@@ -70,9 +69,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_ratio} creates a \emph{specification} of a recipe
-step that will create one or more ratios out of numeric
-variables.
+\code{step_ratio()} creates a \emph{specification} of a recipe step that will create
+one or more ratios from selected numeric variables.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
@@ -101,9 +99,8 @@ data = biomass_tr
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
-  step_ratio(all_numeric_predictors(), denom = denom_vars(total)) \%>\%
-  # get rid of the original predictors
-  step_rm(all_predictors(), -ends_with("total"))
+  step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+             keep_original_cols = FALSE)
 
 ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 

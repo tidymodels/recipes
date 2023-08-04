@@ -1,35 +1,7 @@
-# printing
+# wrong function
 
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Hyperbolic sin (inv) transformation on: x1, x2
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 20 data points and no incomplete rows.
-      
-      -- Operations 
-      * Hyperbolic sin (inv) transformation on: x1, x2 | Trained
+    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
+    i Did you mean "cosh"?
 
 # empty printing
 
@@ -66,8 +38,36 @@
       -- Operations 
       * Hyperbolic sin (inv) transformation on: <none> | Trained
 
-# wrong function
+# printing
 
-    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
-    i Did you mean "cosh"?
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Operations 
+      * Hyperbolic sin (inv) transformation on: x1, x2
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
+      
+      -- Operations 
+      * Hyperbolic sin (inv) transformation on: x1, x2 | Trained
 

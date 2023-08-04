@@ -1,9 +1,8 @@
 #' Create traditional dummy variables
 #'
-#' `step_dummy()` creates a *specification* of a recipe
-#'  step that will convert nominal data (e.g. character or factors)
-#'  into one or more numeric binary model terms for the levels of
-#'  the original data.
+#' `step_dummy()` creates a *specification* of a recipe step that will convert
+#' nominal data (e.g. characters or factors) into one or more numeric binary
+#' model terms corresponding to the levels of the original data.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -196,8 +195,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       ## factor levels at the end of `prep.recipe` since it is
       ## not a factor anymore. We'll save them here and reset them
       ## in `bake.step_dummy` just prior to calling `model.matrix`
-      attr(levels[[i]], "values") <-
-        levels(getElement(training, col_names[i]))
+      attr(levels[[i]], "values") <- levels(training[[col_names[i]]])
       attr(levels[[i]], ".Environment") <- NULL
     }
   } else {
@@ -260,15 +258,12 @@ warn_new_levels <- function(dat, lvl, details = NULL) {
 
 #' @export
 bake.step_dummy <- function(object, new_data, ...) {
-  check_new_data(names(object$levels), object, new_data)
+  col_names <- names(object$levels)
+  check_new_data(col_names, object, new_data)
 
-  # If no terms were selected
-  if (length(object$levels) == 0) {
+  if (length(col_names) == 0) {
     return(new_data)
   }
-
-  col_names <- names(object$levels)
-  keep_original_cols <- get_keep_original_cols(object)
 
   ## `na.action` cannot be passed to `model.matrix` but we
   ## can change it globally for a bit
@@ -276,66 +271,66 @@ bake.step_dummy <- function(object, new_data, ...) {
   options(na.action = "na.pass")
   on.exit(options(na.action = old_opt))
 
-  for (i in seq_along(object$levels)) {
+  for (col_name in col_names) {
+    levels <- object$levels[[col_name]]
+    levels_values <- attr(levels, "values")
+
     # Make sure that the incoming data has levels consistent with
     # the original (see the note above)
-    orig_var <- names(object$levels)[i]
-    fac_type <- attr(object$levels[[i]], "dataClasses")
+    is_ordered <- attr(levels, "dataClasses") == "ordered"
 
-    if (!any(names(attributes(object$levels[[i]])) == "values")) {
+    if (is.null(levels_values)) {
       rlang::abort("Factor level values not recorded")
     }
 
-    if (length(attr(object$levels[[i]], "values")) == 1) {
+    if (length(levels_values) == 1) {
       rlang::abort(
         paste0(
-          "Only one factor level in ", orig_var, ": ",
-          attr(object$levels[[i]], "values")
+          "Only one factor level in ", col_name, ": ", levels_values
         )
       )
     }
 
-    warn_new_levels(
-      new_data[[orig_var]],
-      attr(object$levels[[i]], "values")
-    )
+    warn_new_levels(new_data[[col_name]], levels_values)
 
-    new_data[, orig_var] <-
-      factor(getElement(new_data, orig_var),
-        levels = attr(object$levels[[i]], "values"),
-        ordered = fac_type == "ordered"
+    new_data[, col_name] <-
+      factor(
+        new_data[[col_name]],
+        levels = levels_values,
+        ordered = is_ordered
       )
 
     indicators <-
       model.frame(
-        rlang::new_formula(lhs = NULL, rhs = rlang::sym(orig_var)),
-        data = new_data[, orig_var],
-        xlev = attr(object$levels[[i]], "values"),
+        rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
+        data = new_data[, col_name],
+        xlev = levels_values,
         na.action = na.pass
       )
 
     indicators <-
       model.matrix(
-        object = object$levels[[i]],
+        object = levels,
         data = indicators
       )
-    indicators <- as_tibble(indicators)
-
-    options(na.action = old_opt)
-    on.exit(expr = NULL)
 
     if (!object$one_hot) {
       indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
     }
 
     ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^\\`?", col_names[i], "\\`?"), "", colnames(indicators))
-    colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
-    new_data <- bind_cols(new_data, as_tibble(indicators))
-    if (any(!object$preserve, !keep_original_cols)) {
-      new_data[, col_names[i]] <- NULL
-    }
+    used_lvl <- gsub(paste0("^\\`?", col_name, "\\`?"), "", colnames(indicators))
+    new_names <- object$naming(col_name, used_lvl, is_ordered)
+    colnames(indicators) <- new_names
+    indicators <- check_name(indicators, new_data, object, new_names)
+
+    new_data <- vec_cbind(new_data, indicators)
   }
+
+  options(na.action = old_opt)
+  on.exit(expr = NULL)
+
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

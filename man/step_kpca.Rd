@@ -37,13 +37,13 @@ preprocessing have been estimated.}
 If \code{num_comp} is greater than the number of columns or the number of
 possible components, a smaller value will be used. If \code{num_comp = 0}
 is set then no transformation is done and selected variables will
-stay unchanged.}
+stay unchanged, regardless of the value of \code{keep_original_cols}.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{options}{A list of options to \code{\link[kernlab:kpca]{kernlab::kpca()}}. Defaults are set for
 the arguments \code{kernel} and \code{kpar} but others can be passed in.
@@ -70,9 +70,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca} creates a \emph{specification} of a recipe step that
-will convert numeric data into one or more principal components
-using a kernel basis expansion.
+\code{step_kpca()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more principal components using a kernel basis
+expansion.
 }
 \details{
 When performing kPCA with \code{step_kpca()}, you must choose the kernel
@@ -98,13 +98,12 @@ As with ordinary PCA, it is important to center and scale the variables
 prior to computing PCA components (\code{\link[=step_normalize]{step_normalize()}} can be used for
 this purpose).
 
-The argument \code{num_comp} controls the number of components that will be
-retained; the original variables that are used to derive the components are
-removed from the data when \code{keep_original_cols = FALSE}. The new components
-will have names that begin with \code{prefix} and a sequence of numbers. The
-variable names are padded with zeros. For example, if \code{num_comp < 10}, the
-new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names would be
-\code{kPC001} - \code{kPC101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101},
+the names would be \code{kPC1} - \code{kPC101}.
 }
 \section{tidy() results}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column

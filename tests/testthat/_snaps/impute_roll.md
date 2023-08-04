@@ -36,41 +36,6 @@
       ! `step_rollimpute()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use `step_impute_roll()` instead.
 
-# printing
-
-    Code
-      print(seven_pt)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor:  3
-      time_index: 1
-      
-      -- Operations 
-      * Rolling imputation for: all_predictors()
-
----
-
-    Code
-      prep(seven_pt)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor:  3
-      time_index: 1
-      
-      -- Training information 
-      Training data contained 12 data points and 7 incomplete rows.
-      
-      -- Operations 
-      * Rolling imputation for: x1, x2, x3 | Trained
-
 # empty printing
 
     Code
@@ -105,4 +70,39 @@
       
       -- Operations 
       * Rolling imputation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor:  3
+      time_index: 1
+      
+      -- Operations 
+      * Rolling imputation for: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor:  3
+      time_index: 1
+      
+      -- Training information 
+      Training data contained 12 data points and 7 incomplete rows.
+      
+      -- Operations 
+      * Rolling imputation for: x1, x2, x3 | Trained
 

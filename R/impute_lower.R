@@ -1,10 +1,10 @@
 #' Impute numeric data below the threshold of measurement
 #'
-#' `step_impute_lower` creates a *specification* of a recipe step
-#'  designed for cases where the non-negative numeric data cannot be
-#'  measured below a known value. In these cases, one method for
-#'  imputing the data is to substitute the truncated value by a
-#'  random uniform number between zero and the truncation point.
+#' `step_impute_lower()` creates a *specification* of a recipe step designed for
+#' cases where the non-negative numeric data cannot be measured below a known
+#' value. In these cases, one method for imputing the data is to substitute the
+#' truncated value by a random uniform number between zero and the truncation
+#' point.
 #'
 #' @inheritParams step_center
 #' @param threshold A named numeric vector of lower bounds. This is
@@ -150,17 +150,21 @@ prep.step_lowerimpute <- prep.step_impute_lower
 
 #' @export
 bake.step_impute_lower <- function(object, new_data, ...) {
-  check_new_data(names(object$threshold), object, new_data)
+  col_names <- names(object$threshold)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$threshold)) {
-    affected <- which(new_data[[i]] <= object$threshold[[i]])
+  for (col_name in col_names) {
+    threshold <- object$threshold[[col_name]]
+    affected <- which(new_data[[col_name]] <= threshold)
+
     if (length(affected) > 0) {
-      new_data[[i]][affected] <- runif(
+      new_data[[col_name]][affected] <- runif(
         length(affected),
-        max = object$threshold[[i]]
+        max = threshold
       )
     }
   }
+
   new_data
 }
 

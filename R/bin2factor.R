@@ -1,16 +1,15 @@
 #' Create a Factors from A Dummy Variable
 #'
-#' `step_bin2factor` creates a *specification* of a
-#'  recipe step that will create a two-level factor from a single
-#'  dummy variable.
+#' `step_bin2factor()` creates a *specification* of a recipe step that will
+#' create a two-level factor from a single dummy variable.
+#'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param levels A length 2 character string that indicates the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)
 #' @param ref_first Logical. Should the first level, which replaces
 #' 1's, be the factor reference level?
-#' @param columns A vector with the selected variable names. This
-#'  is `NULL` until computed by [prep()].
 #' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
@@ -105,20 +104,24 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_bin2factor <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
-      factor(ifelse(
-        getElement(new_data, object$columns[i]) == 1,
-        object$levels[1],
-        object$levels[2]
-      ),
-      levels = levs
-      )
+
+  for (col_name in col_names) {
+    tmp <- ifelse(
+      new_data[[col_name]] == 1,
+      object$levels[1],
+      object$levels[2]
+    )
+    tmp <- factor(tmp, levels = levs)
+
+    new_data[[col_name]] <- tmp
   }
+
   new_data
 }
 

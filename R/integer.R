@@ -1,8 +1,7 @@
 #' Convert values to predefined integers
 #'
-#' `step_integer` creates a *specification* of a recipe
-#'  step that will convert new data into a set of integers based
-#'  on the original data values.
+#' `step_integer()` creates a *specification* of a recipe step that will convert
+#' new data into a set of integers based on the original data values.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -152,12 +151,18 @@ map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
 
 #' @export
 bake.step_integer <- function(object, new_data, ...) {
-  check_new_data(names(object$key), object, new_data)
+  col_names <- names(object$key)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$key)) {
-    new_data[[i]] <-
-      map_key_to_int(new_data[[i]], object$key[[i]], object$strict, object$zero_based)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- map_key_to_int(
+      new_data[[col_name]],
+      key = object$key[[col_name]],
+      strict = object$strict,
+      zero = object$zero_based
+    )
   }
+
   new_data
 }
 

@@ -1,8 +1,7 @@
 #' Holiday Feature Generator
 #'
-#' `step_holiday` creates a *specification* of a
-#'  recipe step that will convert date data into one or more binary
-#'  indicator variables for common holidays.
+#' `step_holiday()` creates a *specification* of a recipe step that will convert
+#' date data into one or more binary indicator variables for common holidays.
 #'
 #' @inheritParams step_date
 #' @inheritParams step_pca
@@ -10,9 +9,6 @@
 #' @param holidays A character string that includes at least one
 #'  holiday supported by the `timeDate` package. See
 #'  [timeDate::listHolidays()] for a complete list.
-#' @param columns A character string of variables that will be
-#'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep()] is used.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [timeDate::listHolidays()]
@@ -130,24 +126,24 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
+  for (col_name in col_names) {
     tmp <- get_holiday_features(
-      dt = new_data[[object$columns[i]]],
+      dt = new_data[[col_name]],
       hdays = object$holidays
     )
 
-    names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
+    names(tmp) <- paste(col_name, names(tmp), sep = "_")
     tmp <- purrr::map_dfc(tmp, vec_cast, integer())
 
-    new_data <- bind_cols(new_data, tmp)
+    tmp <- check_name(tmp, new_data, object, names(tmp))
+    new_data <- vec_cbind(new_data, tmp)
   }
 
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-  }
+  new_data <- remove_original_cols(new_data, object, col_names)
+
   new_data
 }
 

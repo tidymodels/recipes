@@ -27,8 +27,8 @@ created.}
 \item{trained}{A logical for whether the selectors in \code{...}
 have been resolved by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the terms argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the check be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

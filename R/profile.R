@@ -1,12 +1,12 @@
 #' Create a Profiling Version of a Data Set
 #'
-#' `step_profile` creates a *specification* of a recipe step that
-#'  will fix the levels of all variables but one and will create a
-#'  sequence of values for the remaining variable. This step can be
-#'  helpful when creating partial regression plots for additive
-#'  models.
+#' `step_profile()` creates a *specification* of a recipe step that will fix the
+#' levels of all variables but one and will create a sequence of values for the
+#' remaining variable. This step can be helpful when creating partial regression
+#' plots for additive models.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param profile A call to [dplyr::vars()]) to specify which
 #'  variable will be profiled (see [selections()]). If a column is
 #'  included in both lists to be fixed and to be profiled, an error
@@ -32,9 +32,6 @@
 #'  of their possible levels are profiled). In the case of date
 #'  variables, `pctl = FALSE` will always be used since there is no
 #'  quantile method for dates.
-#' @param columns A character string that contains the names of
-#'  columns that should be fixed and their values. These values are
-#'  not determined until [prep()] is called.
 #' @details This step is atypical in that, when baked, the
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
@@ -203,17 +200,24 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_profile <- function(object, new_data, ...) {
-  n <- length(object$profile[[1]])
-  new_data <- new_data[rep(1, n), ]
-  keepers <- c(names(object$columns), names(object$profile))
+  col_names <- names(object$columns)
+  profile_names <- names(object$profile)
+  keepers <- c(col_names, profile_names)
+
+  new_data <- list()
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- object$columns[[col_name]]
+  }
+
+  new_data[[names(object$profile)]] <- object$profile[[1]]
+
+  new_data <- vctrs::vec_recycle_common(!!!new_data)
+  new_data <- tibble::new_tibble(new_data)
+
   # Keep the predictors in the same order
   keepers <- names(new_data)[names(new_data) %in% keepers]
-  new_data <- dplyr::select(new_data, !!keepers)
-
-  for (i in names(object$columns)) {
-    new_data[[i]] <- rep(object$columns[[i]], n)
-  }
-  new_data[[names(object$profile)]] <- object$profile[[1]]
+  new_data <- new_data[keepers]
   new_data
 }
 
@@ -234,6 +238,10 @@ tidy.step_profile <- function(x, ...) {
   } else {
     fixed_names <- sel2char(x$terms)
     prof_names <- sel2char(x$profile)
+  }
+
+  if (length(fixed_names) == 0) {
+    return(tibble(terms = character(), type = character(), id = character()))
   }
   fixed_res <- tibble(
     terms = fixed_names,

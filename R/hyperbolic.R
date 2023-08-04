@@ -1,15 +1,13 @@
 #' Hyperbolic Transformations
 #'
-#' `step_hyperbolic` creates a *specification* of a
-#'  recipe step that will transform data using a hyperbolic
-#'  function.
+#' `step_hyperbolic()` creates a *specification* of a recipe step that will
+#' transform data using a hyperbolic function.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param func A character value for the function. Valid values
 #'  are "sinh", "cosh", or "tanh".
 #' @param inverse A logical: should the inverse function be used?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
@@ -105,18 +103,19 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_hyperbolic <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   func <- if (object$inverse) {
     get(paste0("a", object$func))
   } else {
     get(object$func)
   }
-  col_names <- object$columns
-  for (i in seq_along(col_names)) {
-    new_data[, col_names[i]] <-
-      func(getElement(new_data, col_names[i]))
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- func(new_data[[col_name]])
   }
+
   new_data
 }
 

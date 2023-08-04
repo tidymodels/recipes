@@ -50,9 +50,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_filter_missing} creates a \emph{specification} of a recipe
-step that will potentially remove variables that have too many missing
-values.
+\code{step_filter_missing()} creates a \emph{specification} of a recipe step that will
+potentially remove variables that have too many missing values.
 }
 \details{
 This step can potentially remove columns from the data set. This may
@@ -68,6 +67,13 @@ All variables with missing values will be removed for \code{threshold = 0}.
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{threshold}: Threshold (type: double, default: 0.1)
+}
 }
 
 \section{Case weights}{

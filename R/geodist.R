@@ -1,8 +1,7 @@
 #' Distance between two locations
 #'
-#' `step_geodist` creates a *specification* of a
-#'  recipe step that will calculate the distance between
-#'  points on a map to a reference location.
+#' `step_geodist()` creates a *specification* of a recipe step that will
+#' calculate the distance between points on a map to a reference location.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -16,8 +15,6 @@
 #'  created from previous versions of recipes, a value of `FALSE` is used.
 #' @param log A logical: should the distance be transformed by
 #'  the natural log function?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param name A single character value to use for the new
 #'  predictor column. If a column exists with this name, an error is
 #'  issued.
@@ -65,6 +62,7 @@ step_geodist <- function(recipe,
                          log = FALSE,
                          name = "geo_dist",
                          columns = NULL,
+                         keep_original_cols = TRUE,
                          skip = FALSE,
                          id = rand_id("geodist")) {
   if (length(ref_lon) != 1 || !is.numeric(ref_lon)) {
@@ -104,6 +102,7 @@ step_geodist <- function(recipe,
       log = log,
       name = name,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -112,7 +111,7 @@ step_geodist <- function(recipe,
 
 step_geodist_new <-
   function(lon, lat, role, trained, ref_lon, ref_lat, is_lat_lon,
-           log, name, columns, skip, id) {
+           log, name, columns, keep_original_cols, skip, id) {
     step(
       subclass = "geodist",
       lon = lon,
@@ -125,6 +124,7 @@ step_geodist_new <-
       log = log,
       name = name,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -157,11 +157,6 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   }
   check_type(training[, lat_name], types = c("double", "integer"))
 
-
-  if (any(names(training) == x$name)) {
-    rlang::abort("'", x$name, "' is already used in the data.")
-  }
-
   step_geodist_new(
     lon = x$lon,
     lat = x$lat,
@@ -173,6 +168,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
     log = x$log,
     name = x$name,
     columns = c(lat_name, lon_name),
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -215,34 +211,44 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
 
   object <- check_is_lat_lon(object)
 
   if (object$is_lat_lon) {
     dist_vals <-
       geo_dist_calc_lat_lon(
-        new_data[[object$columns[2]]], # lon
-        new_data[[object$columns[1]]], # lat
+        new_data[[col_names[2]]], # lon
+        new_data[[col_names[1]]], # lat
         object$ref_lon,
         object$ref_lat
       )
   } else {
     dist_vals <-
       geo_dist_calc_xy(
-        new_data[[object$columns[2]]], # lon
-        new_data[[object$columns[1]]], # lat
+        new_data[[col_names[2]]], # lon
+        new_data[[col_names[1]]], # lat
         object$ref_lon,
         object$ref_lat
       )
   }
 
   if (object$log) {
-    new_data[, object$name] <- log(dist_vals)
-  } else {
-    new_data[, object$name] <- dist_vals
+    dist_vals <- log(dist_vals)
   }
 
+  geo_data <- tibble(dist_vals)
+  names(geo_data) <- object$name
+
+  geo_data <- check_name(geo_data, new_data, object, newname = object$name)
+
+  new_data <- vec_cbind(new_data, geo_data)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 
@@ -264,7 +270,16 @@ print.step_geodist <-
 tidy.step_geodist <- function(x, ...) {
   x <- check_is_lat_lon(x)
 
-  if (is_trained(x)) {
+  if (length(x$columns) == 0) {
+    res <- tibble(
+      latitude = character(),
+      longitude = character(),
+      ref_latitude = double(),
+      ref_longitude = double(),
+      is_lat_lon = logical(),
+      name = character()
+    )
+  } else if (is_trained(x)) {
     res <- tibble(
       latitude = x$columns[1],
       longitude = x$columns[2],
@@ -283,6 +298,7 @@ tidy.step_geodist <- function(x, ...) {
       name = x$name
     )
   }
+
   res$id <- x$id
   res
 }

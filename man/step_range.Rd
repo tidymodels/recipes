@@ -59,9 +59,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_range} creates a \emph{specification} of a recipe
-step that will normalize numeric data to be within a pre-defined
-range of values.
+\code{step_range()} creates a \emph{specification} of a recipe step that will normalize
+numeric data to be within a pre-defined range of values.
 }
 \details{
 When a new data point is outside of the ranges seen in

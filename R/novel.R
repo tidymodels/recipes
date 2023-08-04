@@ -1,8 +1,7 @@
 #' Simple Value Assignments for Novel Factor Levels
 #'
-#' `step_novel` creates a *specification* of a recipe
-#'  step that will assign a previously unseen factor level to a
-#'  new value.
+#' `step_novel()` creates a *specification* of a recipe step that will assign a
+#' previously unseen factor level to `"new"`.
 #'
 #' @inheritParams step_center
 #' @param new_level A single character value that will be assigned
@@ -142,22 +141,25 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_novel <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <- ifelse(
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- ifelse(
       # Preserve NA values by adding them to the list of existing
       # possible values
-      !(new_data[[i]] %in% c(object$object[[i]], NA)),
+      !(new_data[[col_name]] %in% c(object$object[[col_name]], NA)),
       object$new_level,
-      as.character(new_data[[i]])
+      as.character(new_data[[col_name]])
     )
 
-    new_data[[i]] <-
-      factor(new_data[[i]],
-        levels = c(object$object[[i]], object$new_level),
-        ordered = attributes(object$object[[i]])$is_ordered
+    new_data[[col_name]] <-
+      factor(new_data[[col_name]],
+        levels = c(object$object[[col_name]], object$new_level),
+        ordered = attributes(object$object[[col_name]])$is_ordered
       )
   }
+
   new_data
 }
 

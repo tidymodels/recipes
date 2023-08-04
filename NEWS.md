@@ -1,6 +1,48 @@
 # recipes (development version)
 
+* `step_regex()` and `step_count()` will now informatively error if name collision occurs.
+
+* Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection. All steps now leave data unmodified when having empty selections.
+
+* `step_classdist()`, `step_count()` and `step_depth()` no longer returns a column with all `NA`s with empty selections.
+
+* `step_regex()` no longer returns a column with all 0s with empty selections.
+
+* The `tidy()` methods for `step_geodist()`, `step_nnmf_sparse()`, and `step_sample()` now correctly return zero-row tibbles when used with empty selections.
+
+* `step_poly_bernstein()`, `step_profile()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now correctly return a zero row tibble when used with empty selection. (#1133)
+
+* Fixed bug where the `tidy()` method for `step_sample()` didn't return an `id` column.
+
+* `check_class()`, `check_missing()`, `check_new_values()`, `check_range()`, `step_naomit()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and `step_string2factor()` now throw an informative error if needed non-standard role columns are missing during `bake()`.
+
+* Added developer function `remove_original_cols()` to help remove original columns that are no longer needed.
+
+* Added developer function `recipes_remove_cols()` to provide standardized way to remove columns by column names. (#1155)
+
+* `step_bs()` and `step_ns()` have gained `keep_original_cols` argument.
+
+* The `keep_original_cols` argument has been added to `step_classdist()`, `step_count()`, `step_depth()`, `step_geodist()`, `step_indicate_na()`, `step_interact()`, `step_lag()`, `step_poly()`, `step_regex()`, `step_window()`. The default for each step is set to preserve past behavior. This change should mean that every step that produces new columns has the `keep_original_cols` argument.
+
+* `step_window()` now throws an error instead of silently overwriting if `names` argument overlaps with existing columns. (#1172)
+
+# recipes 1.0.6
+
+## Improvements
+
+* Steps with tunable arguments now have those arguments listed in the documentation.
+
+* All steps that add new columns will now informatively error if name collision occurs. (#983)
+
+## Bug Fixes
+
 * Fixed bug in `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `spline_nonnegative()` where you weren't able to tune the `degree` argument.
+
+* `step_range()` now perform correctly performs clipping on recipes created before 1.0.3. (#1097)
+
+## Breaking Changes
+
+* The `tidy()` method for `step_impute_mean()`, `step_impute_median()`, and `step_impute_mode()` now the imputed value with the column name `value` instead of `model`. This is in line with the output of `step_impute_lower()`. (#826)
 
 # recipes 1.0.5
 
@@ -46,6 +88,7 @@
 
 * `step_range()` has gained a argument `clipping` that when set to `FALSE` no longer clips the data to be between `min` and `max`.
 
+* Added documentation regarding developer functions `?developer_functions`. (#1163)
 
 # recipes 1.0.2
 

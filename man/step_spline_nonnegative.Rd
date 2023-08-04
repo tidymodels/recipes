@@ -67,8 +67,8 @@ the computations for subsequent operations.}
 An object with classes \code{"step_spline_nonnegative"} and \code{"step"}.
 }
 \description{
-\code{step_spline_nonnegative} creates a \emph{specification} of a recipe
-step that creates non-negative spline features.
+\code{step_spline_nonnegative()} creates a \emph{specification} of a recipe step that
+creates non-negative spline features.
 }
 \details{
 Spline transformations take a numeric column and create multiple features
@@ -91,6 +91,14 @@ remove that column's results (but will retain the original data). Use the
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be affected) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{deg_free}: Spline Degrees of Freedom (type: integer, default: 10)
+\item \code{degree}: Polynomial Degree (type: integer, default: 3)
+}
 }
 
 \section{Case weights}{

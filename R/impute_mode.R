@@ -1,8 +1,8 @@
 #' Impute nominal data using the most common value
 #'
-#'   `step_impute_mode` creates a *specification* of a
-#'  recipe step that will substitute missing values of nominal
-#'  variables by the training set mode of those variables.
+#'  `step_impute_mode()` creates a *specification* of a recipe step that will
+#'  substitute missing values of nominal variables by the training set mode of
+#'  those variables.
 #'
 #' @inheritParams step_center
 #' @param modes A named character vector of modes. This is
@@ -152,24 +152,30 @@ prep.step_modeimpute <- prep.step_impute_mode
 
 #' @export
 bake.step_impute_mode <- function(object, new_data, ...) {
-  check_new_data(names(object$modes), object, new_data)
+  col_names <- names(object$modes)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$modes)) {
-    if (any(is.na(new_data[, i]))) {
-      if (is.null(object$ptype)) {
-        rlang::warn(
-          paste0(
-            "'ptype' was added to `step_impute_mode()` after this recipe was created.\n",
-            "Regenerate your recipe to avoid this warning."
-          )
-        )
-      } else {
-        new_data[[i]] <- vec_cast(new_data[[i]], object$ptype[[i]])
-      }
-      mode_val <- cast(object$modes[[i]], new_data[[i]])
-      new_data[is.na(new_data[[i]]), i] <- mode_val
+  for (col_name in col_names) {
+    if (!any(is.na(new_data[[col_name]]))) {
+      next
     }
+    if (is.null(object$ptype)) {
+      rlang::warn(
+        paste0(
+          "'ptype' was added to `step_impute_mode()` after this recipe was created.\n",
+          "Regenerate your recipe to avoid this warning."
+        )
+      )
+    } else {
+      new_data[[col_name]] <- vctrs::vec_cast(
+        new_data[[col_name]],
+        object$ptype[[col_name]]
+      )
+    }
+    mode_val <- cast(object$modes[[col_name]], new_data[[col_name]])
+    new_data[is.na(new_data[[col_name]]), col_name] <- mode_val
   }
+
   new_data
 }
 
@@ -207,11 +213,11 @@ tidy.step_impute_mode <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$modes),
-      model = unname(x$modes)
+      value = unname(x$modes)
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_chr)
+    res <- tibble(terms = term_names, value = na_chr)
   }
   res$id <- x$id
   res

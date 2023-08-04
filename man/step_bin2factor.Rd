@@ -36,8 +36,8 @@ factor levels for the 1's (in the first position) and the zeros
 \item{ref_first}{Logical. Should the first level, which replaces
 1's, be the factor reference level?}
 
-\item{columns}{A vector with the selected variable names. This
-is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -53,9 +53,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_bin2factor} creates a \emph{specification} of a
-recipe step that will create a two-level factor from a single
-dummy variable.
+\code{step_bin2factor()} creates a \emph{specification} of a recipe step that will
+create a two-level factor from a single dummy variable.
 }
 \details{
 This operation may be useful for situations where a

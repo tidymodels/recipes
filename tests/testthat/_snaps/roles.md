@@ -67,8 +67,8 @@
     Code
       rec <- remove_role(rec, sample)
     Condition
-      Error in `single_chr()`:
-      ! argument "old_role" is missing, with no default
+      Error in `remove_role()`:
+      ! argument "old_role" is missing, with no default.
 
 ---
 

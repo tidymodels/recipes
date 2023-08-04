@@ -78,6 +78,16 @@
       Caused by error in `bake()`:
       ! All `lon` values should be between -180 and 180
 
+# check_name() is used
+
+    Code
+      prep(rec, training = dat)
+    Condition
+      Error in `step_geodist()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  geo_dist
+
 # bad args
 
     Code
@@ -151,6 +161,50 @@
     Condition
       Error in `step_geodist()`:
       ! `is_lat_lon` should be a single logical value.
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: NULL, NULL
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Geographical distances from 0.5 x 0.25 using: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_geodist()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
 
 # printing
 

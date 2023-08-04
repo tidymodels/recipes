@@ -56,9 +56,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_other} creates a \emph{specification} of a recipe
-step that will potentially pool infrequently occurring values
-into an "other" category.
+\code{step_other()} creates a \emph{specification} of a recipe step that will
+potentially pool infrequently occurring values into an \code{"other"} category.
 }
 \details{
 The overall proportion (or total counts) of the categories are
@@ -88,6 +87,13 @@ contained in the training set), the other category is assigned.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the columns that will be affected) and \code{retained} (the factor
 levels that were not pulled into "other") is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{threshold}: Threshold (type: double, default: 0.05)
+}
 }
 
 \section{Case weights}{

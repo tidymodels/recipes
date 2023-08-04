@@ -16,6 +16,7 @@ step_classdist(
   log = TRUE,
   objects = NULL,
   prefix = "classdist_",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("classdist")
 )
@@ -54,6 +55,9 @@ been trained by \code{\link[=prep]{prep()}}.}
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -68,10 +72,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_classdist} creates a \emph{specification} of a
-recipe step that will convert numeric data into Mahalanobis
-distance measurements to the data centroid. This is done for
-each value of a categorical class variable.
+\code{step_classdist()} creates a \emph{specification} of a recipe step that will
+convert numeric data into Mahalanobis distance measurements to the data
+centroid. This is done for each value of a categorical class variable.
 }
 \details{
 \code{step_classdist} will create a new column for every

@@ -56,9 +56,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_YeoJohnson} creates a \emph{specification} of a
-recipe step that will transform data using a simple Yeo-Johnson
-transformation.
+\code{step_YeoJohnson()} creates a \emph{specification} of a recipe step that will
+transform data using a Yeo-Johnson transformation.
 }
 \details{
 The Yeo-Johnson transformation is very similar to the

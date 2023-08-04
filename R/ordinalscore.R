@@ -1,13 +1,10 @@
 #' Convert Ordinal Factors to Numeric Scores
 #'
-#' `step_ordinalscore` creates a *specification* of a
-#'  recipe step that will convert ordinal factor variables into
-#'  numeric scores.
+#' `step_ordinalscore()` creates a *specification* of a recipe step that will
+#' convert ordinal factor variables into numeric scores.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variables that will be
-#'  converted. This is `NULL` until computed by
-#'  [prep()].
+#' @inheritParams step_pca
 #' @param convert A function that takes an ordinal factor vector
 #'  as an input and outputs a single numeric variable.
 #' @template step-return
@@ -121,14 +118,15 @@ prep.step_ordinalscore <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ordinalscore <- function(object, new_data, ...) {
-  check_new_data(object$columns, object, new_data)
+  col_names <- object$columns
+  check_new_data(col_names, object, new_data)
 
-  scores <- lapply(new_data[, object$columns], object$convert)
-  scores <- lapply(scores, vec_cast, integer())
-
-  for (i in object$columns) {
-    new_data[, i] <- scores[[i]]
+  for (col_name in col_names) {
+    score <- object$convert(new_data[[col_name]])
+    score <- vctrs::vec_cast(score, integer())
+    new_data[[col_name]] <- score
   }
+
   new_data
 }
 

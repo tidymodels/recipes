@@ -1,9 +1,8 @@
 #' Handle levels in multiple predictors together
 #'
-#' `step_dummy_multi_choice()` creates a *specification* of a recipe
-#'  step that will convert multiple nominal data (e.g. character or factors)
-#'  into one or more numeric binary model terms for the levels of
-#'  the original data.
+#' `step_dummy_multi_choice()` creates a *specification* of a recipe step that
+#' will convert multiple nominal data (e.g. characters or factors) into one or
+#' more numeric binary model terms for the levels of the original data.
 #'
 #' @inheritParams step_dummy
 #' @inheritParams step_center
@@ -21,6 +20,14 @@
 #'  `threshold`.
 #'
 #' @template dummy-naming
+#'
+#' @details
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_dummy_multi_choice"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -156,7 +163,6 @@ multi_dummy_check_type <- function(dat) {
 #' @export
 bake.step_dummy_multi_choice <- function(object, new_data, ...) {
   col_names <- object$input
-
   check_new_data(col_names, object, new_data)
 
   indicators <- multi_dummy(new_data[, col_names], object$levels)
@@ -168,13 +174,12 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
 
   used_lvl <- gsub(paste0("^", prefix), "", colnames(indicators))
   colnames(indicators) <- object$naming(prefix, used_lvl)
+  indicators <- as_tibble(indicators)
 
-  new_data <- bind_cols(new_data, as_tibble(indicators))
-  keep_original_cols <- get_keep_original_cols(object)
+  indicators <- check_name(indicators, new_data, object, names(indicators))
 
-  if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% col_names), drop = FALSE]
-  }
+  new_data <- vec_cbind(new_data, indicators)
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }

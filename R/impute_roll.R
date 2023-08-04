@@ -1,15 +1,14 @@
 #' Impute numeric data using a rolling window statistic
 #'
-#' `step_impute_roll` creates a *specification* of a
-#'  recipe step that will substitute missing values of numeric
-#'  variables by the measure of location (e.g. median) within a moving window.
+#' `step_impute_roll()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the measure of location
+#' (e.g. median) within a moving window.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param ... One or more selector functions to choose variables to be imputed;
 #'  these columns must be non-integer numerics (i.e., double precision).
 #'  See [selections()] for more details.
-#' @param columns A named numeric vector of columns. This is
-#'  `NULL` until computed by [prep()].
 #' @param window The size of the window around a point to be imputed. Should be
 #'  an odd integer greater than one. See Details below for a discussion of
 #'  points at the ends of the series.
@@ -43,6 +42,12 @@
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #'  `terms` (the selectors or variables selected) and `window`
 #'  (the window size) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_roll"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -201,23 +206,27 @@ impute_rolling <- function(inds, x, statfun) {
 
 #' @export
 bake.step_impute_roll <- function(object, new_data, ...) {
-  check_new_data(unname(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   n <- nrow(new_data)
   missing_ind <- lapply(
-    new_data[, object$columns],
+    new_data[, col_names],
     function(x) which(is.na(x))
   )
   has_missing <- map_lgl(missing_ind, function(x) length(x) > 0)
   missing_ind <- missing_ind[has_missing]
   roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
 
-  for (i in seq(along.with = roll_ind)) {
-    imp_var <- names(roll_ind)[i]
-    estimates <-
-      impute_rolling(roll_ind[[i]], new_data[[imp_var]], object$statistic)
-    new_data[missing_ind[[i]], imp_var] <- estimates
+  for (col_name in col_names) {
+    estimates <- impute_rolling(
+      roll_ind[[col_name]],
+      new_data[[col_name]],
+      object$statistic
+    )
+    new_data[missing_ind[[col_name]], col_name] <- estimates
   }
+
   new_data
 }
 
@@ -259,8 +268,8 @@ tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(
     name = c("statistic", "window"),
     call_info = list(
-      list(pkg = "dials", fun = "location_stat"),
-      list(pkg = "dials", fun = "window")
+      list(pkg = "dials", fun = "summary_stat"),
+      list(pkg = "dials", fun = "window_size")
     ),
     source = "recipe",
     component = "step_impute_roll",

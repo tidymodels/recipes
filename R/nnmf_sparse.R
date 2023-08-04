@@ -1,8 +1,7 @@
 #' Non-Negative Matrix Factorization Signal Extraction with lasso Penalization
 #'
-#' `step_nnmf_sparse()` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more non-negative
-#'  components.
+#' `step_nnmf_sparse()` creates a *specification* of a recipe step that will
+#' convert numeric data into one or more non-negative components.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -24,18 +23,23 @@
 #'  have non-negative values and take into account that the original data have
 #'  non-negative values.
 #'
-#'   The argument `num_comp` controls the number of components that will be
-#'  retained (the original variables that are used to derive the components are
-#'  removed from the data). The new components will have names that begin with
-#'  `prefix` and a sequence of numbers. The variable names are padded with
-#'  zeros. For example, if `num < 10`, their names will be `NNMF1` - `NNMF9`. If
-#'  `num = 101`, the names would be `NNMF001` - `NNMF101`.
+#' ```{r, echo = FALSE, results="asis"}
+#' prefix <- "NNMF"
+#' result <- knitr::knit_child("man/rmd/num_comp.Rmd")
+#' cat(result)
+#' ```
 #'
 #'  # Tidying
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the selectors or variables selected) and the number of
 #'  components is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_nnmf_sparse"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -80,7 +84,7 @@ step_nnmf_sparse <-
     add_step(
       recipe,
       step_nnmf_sparse_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_comp = num_comp,
@@ -145,7 +149,7 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
-  if (x$num_comp > 0) {
+  if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
     dat <- tibble_to_sparse(training[, col_names], transp = TRUE)
     cl <- nnmf_pen_call(x)
@@ -166,6 +170,7 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
     }
   } else {
     nnm <- list(x_vars = col_names, w = NULL)
+    x$num_comp <- 0
   }
 
   step_nnmf_sparse_new(
@@ -188,17 +193,17 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
 bake.step_nnmf_sparse <- function(object, new_data, ...) {
   check_new_data(object$res$x_vars, object, new_data)
 
-  if (object$num_comp > 0) {
-    proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
-    proj_data <- proj_data %*% object$res$w
-    colnames(proj_data) <- names0(ncol(proj_data), object$prefix)
-    new_data <- bind_cols(new_data, as_tibble(proj_data))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% object$res$x_vars), drop = FALSE]
-    }
+  if (object$num_comp == 0) {
+    return(new_data)
   }
+
+  proj_data <- as.matrix(new_data[, object$res$x_vars, drop = FALSE])
+  proj_data <- proj_data %*% object$res$w
+  colnames(proj_data) <- names0(ncol(proj_data), object$prefix)
+  proj_data <- as_tibble(proj_data)
+  proj_data <- check_name(proj_data, new_data, object)
+  new_data <- vec_cbind(new_data, proj_data)
+  new_data <- remove_original_cols(new_data, object, object$res$x_vars)
   new_data
 }
 
@@ -236,11 +241,15 @@ tidy.step_nnmf_sparse <- function(x, ...) {
       res <- res[, c("terms", "value", "component")]
       res <- res[order(res$component, res$terms), ]
     } else {
-      res <- tibble(terms = x$res$x_vars, value = na_dbl, component = na_chr)
+      res <- tibble(
+        terms = unname(x$res$x_vars),
+        value = na_dbl,
+        component = na_chr
+      )
     }
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, value = na_dbl, component = x$num_comp)
+    res <- tibble(terms = term_names, value = na_dbl, component = na_chr)
   }
   res$id <- x$id
   res

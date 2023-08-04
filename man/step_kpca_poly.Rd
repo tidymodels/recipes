@@ -39,14 +39,14 @@ preprocessing have been estimated.}
 If \code{num_comp} is greater than the number of columns or the number of
 possible components, a smaller value will be used. If \code{num_comp = 0}
 is set then no transformation is done and selected variables will
-stay unchanged.}
+stay unchanged, regardless of the value of \code{keep_original_cols}.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{degree, scale_factor, offset}{Numeric values for the polynomial kernel function.}
 
@@ -70,9 +70,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_kpca_poly} creates a \emph{specification} of a recipe step that
-will convert numeric data into one or more principal components
-using a polynomial kernel basis expansion.
+\code{step_kpca_poly()} creates a \emph{specification} of a recipe step that will
+convert numeric data into one or more principal components using a polynomial
+kernel basis expansion.
 }
 \details{
 Kernel principal component analysis (kPCA) is an extension of a PCA analysis
@@ -90,17 +90,26 @@ As with ordinary PCA, it is important to center and scale the variables
 prior to computing PCA components (\code{\link[=step_normalize]{step_normalize()}} can be used for
 this purpose).
 
-The argument \code{num_comp} controls the number of components that will be
-retained; the original variables that are used to derive the components are
-removed from the data when \code{keep_original_cols = FALSE}. The new components
-will have names that begin with \code{prefix} and a sequence of numbers. The
-variable names are padded with zeros. For example, if \code{num_comp < 10}, the
-new names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101}, the names would be
-\code{kPC001} - \code{kPC101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{kPC1} - \code{kPC9}. If \code{num_comp = 101},
+the names would be \code{kPC1} - \code{kPC101}.
 }
 \section{tidy() results}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 4 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+\item \code{degree}: Polynomial Degree (type: double, default: 2)
+\item \code{scale_factor}: Scale Factor (type: double, default: 1)
+\item \code{offset}: Offset (type: double, default: 1)
+}
 }
 
 \section{Case weights}{

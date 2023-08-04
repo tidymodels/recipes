@@ -1,10 +1,11 @@
 #' Moving Window Functions
 #'
-#'   `step_window` creates a *specification* of a recipe
-#'  step that will create new columns that are the results of
-#'  functions that compute statistics across moving windows.
+#' `step_window()` creates a *specification* of a recipe step that will create
+#' new columns that are the results of functions that compute statistics across
+#' moving windows.
 #'
 #' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param role For model terms created by this step, what analysis
 #'  role should they be assigned? If `names` is left to be
 #'  `NULL`, the rolling statistics replace the original columns
@@ -19,9 +20,6 @@
 #'  values are: `'max'`, `'mean'`, `'median'`,
 #'  `'min'`, `'prod'`, `'sd'`, `'sum'`,
 #'  `'var'`
-#' @param columns A character string that contains the names of
-#'  columns that should be processed. These values are not
-#'  determined until [prep()] is called.
 #' @param names An optional character string that is the same
 #'  length of the number of terms selected by `terms`. If you
 #'  are not sure what columns will be selected, use the
@@ -39,6 +37,8 @@
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
 #'
+#'  `keep_original_cols` also applies to this step if `names` is specified.
+#'
 #  This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
@@ -47,6 +47,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected), `statistic` (the
 #' summary function name), and `size` is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_window"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -107,6 +113,7 @@ step_window <-
            statistic = "mean",
            columns = NULL,
            names = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("window")) {
     if (!is_call(statistic) &&
@@ -159,6 +166,7 @@ step_window <-
         statistic = statistic,
         columns = columns,
         names = names,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -168,7 +176,8 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms, role, trained, size, na_rm, statistic, columns, names, skip, id) {
+  function(terms, role, trained, size, na_rm, statistic, columns, names,
+           keep_original_cols, skip, id) {
     step(
       subclass = "window",
       terms = terms,
@@ -179,6 +188,7 @@ step_window_new <-
       statistic = statistic,
       columns = columns,
       names = names,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -210,6 +220,7 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     statistic = x$statistic,
     columns = col_names,
     names = x$names,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -237,7 +248,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   ## Fill in the left-hand points. Add enough data so that the
   ## missing values at the start can be estimated and filled in
-  x2[1:gap] <- x2[gap + 1]
+  x2[seq_len(gap)] <- x2[gap + 1]
 
   ## Right-hand points
   x2[(m - gap + 1):m] <- x2[m - gap]
@@ -246,27 +257,32 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
 #' @export
 bake.step_window <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq(along.with = object$columns)) {
-    if (!is.null(object$names)) {
-      new_data[, object$names[i]] <-
-        roller(
-          x = getElement(new_data, object$columns[i]),
-          stat = object$statistic,
-          na_rm = object$na_rm,
-          window = object$size
-        )
-    } else {
-      new_data[, object$columns[i]] <-
-        roller(
-          x = getElement(new_data, object$columns[i]),
-          stat = object$statistic,
-          na_rm = object$na_rm,
-          window = object$size
-        )
-    }
+  new_values <- list()
+
+  for (col_name in col_names) {
+    new_values[[col_name]] <- roller(
+      x = new_data[[col_name]],
+      stat = object$statistic,
+      na_rm = object$na_rm,
+      window = object$size
+    )
   }
+
+  if (is.null(object$names)) {
+    for (col_name in col_names) {
+      new_data[[col_name]] <- new_values[[col_name]]
+    }
+  } else {
+    names(new_values) <- object$names
+    new_values <- tibble::new_tibble(new_values)
+    new_values <- check_name(new_values, new_data, object, newname = object$names)
+    new_data <- vec_cbind(new_data, new_values)
+    new_data <- remove_original_cols(new_data, object, col_names)
+  }
+
   new_data
 }
 
@@ -291,7 +307,7 @@ tidy.step_window <- function(x, ...) {
 #' @export
 tunable.step_window <- function(x, ...) {
   tibble::tibble(
-    name = c("statistic", "window"),
+    name = c("statistic", "size"),
     call_info = list(
       list(pkg = "dials", fun = "summary_stat"),
       list(pkg = "dials", fun = "window_size")

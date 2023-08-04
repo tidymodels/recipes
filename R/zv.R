@@ -1,7 +1,7 @@
 #' Zero Variance Filter
 #'
-#' `step_zv` creates a *specification* of a recipe step
-#'  that will remove variables that contain only a single value.
+#' `step_zv()` creates a *specification* of a recipe step that will remove
+#' variables that contain only a single value.
 #'
 #' @inheritParams step_center
 #' @param removals A character string that contains the names of
@@ -125,9 +125,7 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_zv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  }
+  new_data <- recipes_remove_cols(new_data, object)
   new_data
 }
 

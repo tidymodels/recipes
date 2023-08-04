@@ -13,76 +13,6 @@
       ! The `options` argument of `step_nzv()` was deprecated in recipes 0.1.7 and is now defunct.
       i Please use the arguments `freq_cut` and `unique_cut` instead.
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Operations 
-      * Sparse, unbalanced variable filter on: x1, x2, x3, x4
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 50 data points and no incomplete rows.
-      
-      -- Operations 
-      * Sparse, unbalanced variable filter removed: x3, x4 | Trained
-
-# empty printing
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * Sparse, unbalanced variable filter on: <none>
-
----
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * Sparse, unbalanced variable filter removed: <none> | Trained
-
 # nzv with case weights
 
     Code
@@ -122,4 +52,74 @@
       
       -- Operations 
       * Sparse, unbalanced variable filter removed: x3, x4 | Trained, ignored weights
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * Sparse, unbalanced variable filter on: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * Sparse, unbalanced variable filter removed: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
+      
+      -- Operations 
+      * Sparse, unbalanced variable filter on: x1, x2, x3, x4
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 50 data points and no incomplete rows.
+      
+      -- Operations 
+      * Sparse, unbalanced variable filter removed: x3, x4 | Trained
 

@@ -1,13 +1,10 @@
 #' Shuffle Variables
 #'
-#' `step_shuffle` creates a *specification* of a recipe
-#'  step that will randomly change the order of rows for selected
-#'  variables.
+#' `step_shuffle()` creates a *specification* of a recipe step that will
+#' randomly change the order of rows for selected variables.
 #'
 #' @inheritParams step_center
-#' @param columns A character string that contains the names of
-#'  columns that should be shuffled. These values are not determined
-#'  until [prep()] is called.
+#' @inheritParams step_pca
 #' @template step-return
 #' @details
 #'
@@ -81,19 +78,18 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_shuffle <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   if (nrow(new_data) == 1) {
     rlang::warn("`new_data` contains a single row; unable to shuffle")
     return(new_data)
   }
 
-  if (length(object$columns) > 0) {
-    for (i in seq_along(object$columns)) {
-      new_data[, object$columns[i]] <-
-        sample(getElement(new_data, object$columns[i]))
-    }
+  for (col_name in col_names) {
+    new_data[[col_name]] <- sample(new_data[[col_name]])
   }
+
   new_data
 }
 

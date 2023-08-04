@@ -1,37 +1,12 @@
-# printing
+# check_name() is used
 
     Code
-      print(with_bs)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * B-splines on: carbon, hydrogen
-
----
-
-    Code
-      prep(with_bs)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * B-splines on: carbon, hydrogen | Trained
+      prep(rec, training = dat)
+    Condition
+      Error in `step_bs()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_bs_1
 
 # empty printing
 
@@ -67,4 +42,48 @@
       
       -- Operations 
       * B-splines on: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_bs()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
+# printing
+
+    Code
+      print(with_bs)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * B-splines on: carbon, hydrogen
+
+---
+
+    Code
+      prep(with_bs)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * B-splines on: carbon, hydrogen | Trained
 

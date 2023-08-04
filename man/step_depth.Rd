@@ -14,6 +14,7 @@ step_depth(
   options = list(),
   data = NULL,
   prefix = "depth_",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("depth")
 )
@@ -55,6 +56,9 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -69,10 +73,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_depth} creates a \emph{specification} of a recipe
-step that will convert numeric data into measurement of
-\emph{data depth}. This is done for each value of a categorical
-class variable.
+\code{step_depth()} creates a \emph{specification} of a recipe step that will convert
+numeric data into a measurement of \emph{data depth}. This is done for each value of
+a categorical class variable.
 }
 \details{
 Data depth metrics attempt to measure how close data a

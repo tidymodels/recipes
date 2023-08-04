@@ -1,8 +1,7 @@
 #' Collapse Some Categorical Levels
 #'
-#' `step_other` creates a *specification* of a recipe
-#'  step that will potentially pool infrequently occurring values
-#'  into an "other" category.
+#' `step_other()` creates a *specification* of a recipe step that will
+#' potentially pool infrequently occurring values into an `"other"` category.
 #'
 #' @inheritParams step_center
 #' @param threshold A numeric value between 0 and 1, or an integer greater or
@@ -47,6 +46,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the columns that will be affected) and `retained` (the factor
 #' levels that were not pulled into "other") is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_other"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'
@@ -170,32 +175,36 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_other <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    if (object$objects[[i]]$collapse) {
-      tmp <- if (!is.character(new_data[, i])) {
-        as.character(getElement(new_data, i))
-      } else {
-        getElement(new_data, i)
-      }
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
 
-      tmp <- ifelse(
-        !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
-        object$objects[[i]]$other,
-        tmp
-      )
-
-      # assign other factor levels other here too.
-      tmp <- factor(tmp,
-        levels = c(
-          object$objects[[i]]$keep,
-          object$objects[[i]]$other
-        )
-      )
-
-      new_data[, i] <- tmp
+  for (col_name in col_names) {
+    if (!object$objects[[col_name]]$collapse) {
+      next
     }
+    tmp <- new_data[[col_name]]
+
+    if (!is.character(tmp)) {
+      tmp <- as.character(tmp)
+    }
+
+    tmp <- ifelse(
+      !(tmp %in% object$objects[[col_name]]$keep) & !is.na(tmp),
+      object$objects[[col_name]]$other,
+      tmp
+    )
+
+    # assign other factor levels other here too.
+    tmp <- factor(tmp,
+      levels = c(
+        object$objects[[col_name]]$keep,
+        object$objects[[col_name]]$other
+      )
+    )
+
+    new_data[[col_name]] <- tmp
   }
+
   new_data
 }
 

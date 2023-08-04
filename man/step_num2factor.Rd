@@ -55,7 +55,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_num2factor} will convert one or more numeric vectors to factors
+\code{step_num2factor()} will convert one or more numeric vectors to factors
 (ordered or unordered). This can be useful when categories are encoded as
 integers.
 }

@@ -7,38 +7,15 @@
       Caused by error in `prep()`:
       ! All columns selected for the step should be nominal, or logical.
 
-# printing
+# check_name() is used
 
     Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Operations 
-      * Multi-choice dummy variables from: all_predictors()
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 4 data points and 4 incomplete rows.
-      
-      -- Operations 
-      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
+      prep(rec, training = dat)
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Species_setosa
 
 # empty printing
 
@@ -74,4 +51,46 @@
       
       -- Operations 
       * Multi-choice dummy variables from: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_dummy_multi_choice()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Operations 
+      * Multi-choice dummy variables from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 4 data points and 4 incomplete rows.
+      
+      -- Operations 
+      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
 

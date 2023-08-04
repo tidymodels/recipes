@@ -1,8 +1,8 @@
 #' Impute numeric data using the median
 #'
-#' `step_impute_median` creates a *specification* of a recipe step that will
-#'  substitute missing values of numeric variables by the training set median of
-#'  those variables.
+#' `step_impute_median()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the training set median of
+#' those variables.
 #'
 #' @inheritParams step_center
 #' @param medians A named numeric vector of medians. This is `NULL` until
@@ -146,14 +146,17 @@ prep.step_medianimpute <- prep.step_impute_median
 
 #' @export
 bake.step_impute_median <- function(object, new_data, ...) {
-  check_new_data(names(object$medians), object, new_data)
+  col_names <- names(object$medians)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$medians)) {
-    if (any(is.na(new_data[[i]]))) {
-      new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])
+  for (col_name in col_names) {
+    median <- object$medians[[col_name]]
+    if (any(is.na(new_data[[col_name]]))) {
+      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
     }
-    new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
+    new_data[is.na(new_data[[col_name]]), col_name] <- median
   }
+
   new_data
 }
 
@@ -180,11 +183,11 @@ tidy.step_impute_median <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$medians),
-      model = vctrs::list_unchop(unname(x$medians), ptype = double())
+      value = vctrs::list_unchop(unname(x$medians), ptype = double())
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_dbl)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
   res$id <- x$id
   res

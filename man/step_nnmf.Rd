@@ -39,7 +39,7 @@ preprocessing have been estimated.}
 If \code{num_comp} is greater than the number of columns or the number of
 possible components, a smaller value will be used. If \code{num_comp = 0}
 is set then no transformation is done and selected variables will
-stay unchanged.}
+stay unchanged, regardless of the value of \code{keep_original_cols}.}
 
 \item{num_run}{A positive integer for the number of computations runs used
 to obtain a consensus projection.}
@@ -53,8 +53,8 @@ processing is turned off in favor of resample-level parallelization.}
 here once this preprocessing step has been trained by
 \code{\link[=prep]{prep()}}.}
 
-\item{columns}{A character string of variable names that will
-be populated elsewhere.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -79,9 +79,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_nnmf} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more non-negative
-components.
+\code{step_nnmf()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more non-negative components.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
@@ -92,19 +91,25 @@ Non-negative matrix factorization computes latent components that
 have non-negative values and take into account that the original data
 have non-negative values.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
-If \code{num = 101}, the names would be \code{NNMF001} -
-\code{NNMF101}.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{NNMF1} - \code{NNMF9}. If \code{num_comp = 101},
+the names would be \code{NNMF1} - \code{NNMF101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the selectors or variables selected) and the number of
 components is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 2)
+\item \code{num_run}: Number of Computation Runs (type: integer, default: 30)
+}
 }
 
 \section{Case weights}{

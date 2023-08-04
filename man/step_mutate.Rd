@@ -43,8 +43,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_mutate()} creates a \emph{specification} of a recipe step
-that will add variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
+\code{step_mutate()} creates a \emph{specification} of a recipe step that will add
+variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
 When using this flexible step, use extra care to avoid data leakage in your

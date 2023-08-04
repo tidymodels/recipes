@@ -214,7 +214,7 @@ recipe.matrix <- function(x, ...) {
 }
 
 form2args <- function(formula, data, ...) {
-  if (!is_formula(formula)) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
 
@@ -681,13 +681,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     }
   }
 
-  if (composition == "dgCMatrix") {
-    new_data <- convert_matrix(new_data, sparse = TRUE)
-  } else if (composition == "matrix") {
-    new_data <- convert_matrix(new_data, sparse = FALSE)
-  } else if (composition == "data.frame") {
-    new_data <- base::as.data.frame(new_data)
-  }
+  new_data <- hardhat::recompose(new_data, composition = composition)
 
   new_data
 }
@@ -881,15 +875,7 @@ juice <- function(object, ..., composition = "tibble") {
     }
   }
 
-  if (composition == "dgCMatrix") {
-    new_data <- convert_matrix(new_data, sparse = TRUE)
-  } else if (composition == "matrix") {
-    new_data <- convert_matrix(new_data, sparse = FALSE)
-  } else if (composition == "data.frame") {
-    new_data <- base::as.data.frame(new_data)
-  } else if (composition == "tibble") {
-    new_data <- tibble::as_tibble(new_data)
-  }
+  new_data <- hardhat::recompose(new_data, composition = composition)
 
   new_data
 }

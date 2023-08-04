@@ -1,8 +1,7 @@
 #' Missing Value Column Filter
 #'
-#' `step_filter_missing` creates a *specification* of a recipe
-#'  step that will potentially remove variables that have too many missing
-#'  values.
+#' `step_filter_missing()` creates a *specification* of a recipe step that will
+#' potentially remove variables that have too many missing values.
 #'
 #' @inheritParams step_center
 #' @param threshold A value for the threshold of missing values in column. The
@@ -25,6 +24,12 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #' `terms` (the columns that will be removed) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_filter_missing"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'
@@ -112,9 +117,7 @@ prep.step_filter_missing <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_filter_missing <- function(object, new_data, ...) {
-  if (length(object$removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  }
+  new_data <- recipes_remove_cols(new_data, object)
   new_data
 }
 

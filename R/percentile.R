@@ -1,7 +1,7 @@
 #' Percentile Transformation
 #'
-#' `step_percentile` creates a *specification* of a recipe step that
-#' replaces the value of a variable with its percentile from the training set.
+#' `step_percentile()` creates a *specification* of a recipe step that replaces
+#' the value of a variable with its percentile from the training set.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -153,15 +153,16 @@ wrighted_quantile <- function(x, wts, probs, ...) {
 
 #' @export
 bake.step_percentile <- function(object, new_data, ...) {
-  vars <- names(object$ref_dist)
-  check_new_data(vars, object, new_data)
+  col_names <- names(object$ref_dist)
+  check_new_data(col_names, object, new_data)
 
-  new_data[, vars] <- purrr::map2_dfc(
-    .x = new_data[, vars],
-    .y = object$ref_dist,
-    .f = pctl_by_approx,
-    outside = object$outside
-  )
+  for (col_name in col_names) {
+    new_data[[col_name]] <- pctl_by_approx(
+      x = new_data[[col_name]],
+      ref = object$ref_dist[[col_name]],
+      outside = object$outside
+    )
+  }
 
   new_data
 }

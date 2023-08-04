@@ -1,10 +1,9 @@
 #' Relevel factors to a desired level
 #'
-#' `step_relevel` creates a *specification* of a recipe
-#'  step that will reorder the provided factor columns so that
-#'  the level specified by ref_level is first. This is useful
-#'  for contr.treatment contrasts which take the first level as the
-#'  reference.
+#' `step_relevel()` creates a *specification* of a recipe step that will reorder
+#' the provided factor columns so that the level specified by `ref_level` is
+#' first. This is useful for [contr.treatment()] contrasts which take the first
+#' level as the reference.
 #'
 #' @inheritParams step_center
 #' @param ref_level A single character value that will be used to
@@ -113,10 +112,16 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relevel <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <- stats::relevel(as.factor(new_data[[i]]), ref = object$ref_level)
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- stats::relevel(
+      as.factor(new_data[[col_name]]),
+      ref = object$ref_level
+    )
   }
+
   new_data
 }
 

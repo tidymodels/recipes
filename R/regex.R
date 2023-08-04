@@ -1,7 +1,7 @@
 #' Detect a regular expression
 #'
-#' `step_regex` creates a *specification* of a recipe step that will
-#'   create a new dummy variable based on a regular expression.
+#' `step_regex()` creates a *specification* of a recipe step that will create a
+#' new dummy variable based on a regular expression.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -54,6 +54,7 @@ step_regex <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
+                       keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("regex")) {
   if (!is_tune(pattern)) {
@@ -87,6 +88,7 @@ step_regex <- function(recipe,
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -94,7 +96,8 @@ step_regex <- function(recipe,
 }
 
 step_regex_new <-
-  function(terms, role, trained, pattern, options, result, input, skip, id) {
+  function(terms, role, trained, pattern, options, result, input,
+           keep_original_cols, skip, id) {
     step(
       subclass = "regex",
       terms = terms,
@@ -104,6 +107,7 @@ step_regex_new <-
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -126,24 +130,25 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
 }
 
+#' @export
 bake.step_regex <- function(object, new_data, ...) {
-  if (length(object$input) == 0) {
-    # Handle empty selection by adding an all `0` column
-    new_data[[object$result]] <- rep(0, times = nrow(new_data))
+  col_name <- names(object$input)
+  if (length(col_name) == 0) {
     return(new_data)
   }
 
-  check_new_data(object$input, object, new_data)
+  check_new_data(col_name, object, new_data)
 
   ## sub in options
   regex <- expr(
     grepl(
-      x = getElement(new_data, object$input),
+      x = new_data[[col_name]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -155,7 +160,10 @@ bake.step_regex <- function(object, new_data, ...) {
     regex <- rlang::call_modify(regex, !!!object$options)
   }
 
-  new_data[, object$result] <- ifelse(eval(regex), 1L, 0L)
+  new_values <- tibble::tibble(!!object$result := ifelse(eval(regex), 1L, 0L))
+  new_values <- check_name(new_values, new_data, object, object$result)
+  new_data <- vec_cbind(new_data, new_values)
+  new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
 

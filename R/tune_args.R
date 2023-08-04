@@ -6,7 +6,9 @@ tune_args.recipe <- function(object, full = FALSE, ...) {
     return(tune_tbl())
   }
 
-  res <- purrr::map_dfr(object$steps, tune_args, full = full)
+  res <- purrr::map(object$steps, tune_args, full = full)
+  res <- purrr::list_rbind(res)
+
   tune_tbl(
     res$name,
     res$tunable,

@@ -1,7 +1,7 @@
 #' Centering numeric data
 #'
-#' `step_center` creates a *specification* of a recipe
-#'  step that will normalize numeric data to have a mean of zero.
+#' `step_center()` creates a *specification* of a recipe step that will
+#' normalize numeric data to have a mean of zero.
 #'
 #' @param recipe A recipe object. The step will be added to the
 #'  sequence of operations for this recipe.
@@ -130,12 +130,14 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
-  check_new_data(names(object$means), object, new_data)
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-  for (column in names(object$means)) {
-    mean <- object$means[column]
-    new_data[[column]] <- new_data[[column]] - mean
+  for (col_name in col_names) {
+    mean <- object$means[col_name]
+    new_data[[col_name]] <- new_data[[col_name]] - mean
   }
+
   new_data
 }
 

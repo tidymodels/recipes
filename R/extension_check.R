@@ -26,6 +26,8 @@
 #' @return cli output
 #' @export
 #'
+#' @seealso [developer_functions]
+#'
 #' @examples
 #' recipes_extension_check(
 #'   pkg = "recipes"

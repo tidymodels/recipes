@@ -28,9 +28,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variables that will be
-converted. This is \code{NULL} until computed by
-\code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{convert}{A function that takes an ordinal factor vector
 as an input and outputs a single numeric variable.}
@@ -49,9 +48,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_ordinalscore} creates a \emph{specification} of a
-recipe step that will convert ordinal factor variables into
-numeric scores.
+\code{step_ordinalscore()} creates a \emph{specification} of a recipe step that will
+convert ordinal factor variables into numeric scores.
 }
 \details{
 Dummy variables from ordered factors with \code{C}

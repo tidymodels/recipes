@@ -9,73 +9,7 @@
       Caused by error:
       ! object 'const' not found
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Operations 
-      * Variable mutation for: 5
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 150 data points and no incomplete rows.
-      
-      -- Operations 
-      * Variable mutation for: ~5 | Trained
-
----
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Operations 
-      * Variable mutation for: contains("Sepal")
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 150 data points and no incomplete rows.
-      
-      -- Operations 
-      * Variable mutation for: Sepal.Length, Sepal.Width | Trained
-
-# mutate_at - empty printing
+# empty printing
 
     Code
       rec
@@ -109,4 +43,37 @@
       
       -- Operations 
       * Variable mutation for: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Operations 
+      * Variable mutation for: 5
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 150 data points and no incomplete rows.
+      
+      -- Operations 
+      * Variable mutation for: ~5 | Trained
 

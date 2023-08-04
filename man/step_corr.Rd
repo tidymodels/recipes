@@ -59,9 +59,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_corr} creates a \emph{specification} of a recipe
-step that will potentially remove variables that have large
-absolute correlations with other variables.
+\code{step_corr()} creates a \emph{specification} of a recipe step that will
+potentially remove variables that have large absolute correlations with other
+variables.
 }
 \details{
 This step can potentially remove columns from the data set. This may
@@ -84,6 +84,13 @@ are used in the recipe.
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{threshold}: Threshold (type: double, default: 0.9)
+}
 }
 
 \section{Case weights}{

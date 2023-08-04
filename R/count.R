@@ -1,8 +1,7 @@
 #' Create Counts of Patterns using Regular Expressions
 #'
-#' `step_count` creates a *specification* of a recipe
-#'  step that will create a variable that counts instances of a
-#'  regular expression pattern in text.
+#' `step_count()` creates a *specification* of a recipe step that will create a
+#' variable that counts instances of a regular expression pattern in text.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -59,6 +58,7 @@ step_count <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
+                       keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("count")) {
   if (!is.character(pattern)) {
@@ -91,6 +91,7 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -98,7 +99,8 @@ step_count <- function(recipe,
 }
 
 step_count_new <-
-  function(terms, role, trained, pattern, normalize, options, result, input, skip, id) {
+  function(terms, role, trained, pattern, normalize, options, result, input,
+           keep_original_cols, skip, id) {
     step(
       subclass = "count",
       terms = terms,
@@ -109,6 +111,7 @@ step_count_new <-
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -132,24 +135,25 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
 }
 
+#' @export
 bake.step_count <- function(object, new_data, ...) {
-  check_new_data(names(object$input), object, new_data)
+  col_name <- names(object$input)
+  check_new_data(col_name, object, new_data)
 
-  if (length(object$input) == 0L) {
-    # Empty selection, but still return the new column
-    new_data[, object$result] <- if (object$normalize) NA_real_ else NA_integer_
+  if (length(col_name) == 0L) {
     return(new_data)
   }
 
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = getElement(new_data, object$input),
+      text = new_data[[col_name]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -161,16 +165,22 @@ bake.step_count <- function(object, new_data, ...) {
     regex <- rlang::call_modify(regex, !!!object$options)
   }
 
-  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
+  new_values <- tibble::tibble(
+    !!object$result := vapply(eval(regex), counter, integer(1))
+  )
+
   if (object$normalize) {
-    totals <- nchar(as.character(getElement(new_data, object$input)))
-    new_data[, object$result] <- new_data[, object$result] / totals
+    totals <- nchar(as.character(new_data[[col_name]]))
+    new_values[[object$result]] <- new_values[[object$result]] / totals
   }
+
+  new_values <- check_name(new_values, new_data, object, object$result)
+  new_data <- vec_cbind(new_data, new_values)
+  new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
 
 counter <- function(x) length(x[x > 0])
-
 
 print.step_count <-
   function(x, width = max(20, options()$width - 30), ...) {

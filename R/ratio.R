@@ -1,8 +1,7 @@
 #' Ratio Variable Creation
 #'
-#' `step_ratio` creates a *specification* of a recipe
-#'  step that will create one or more ratios out of numeric
-#'  variables.
+#' `step_ratio()` creates a *specification* of a recipe step that will create
+#' one or more ratios from selected numeric variables.
 #'
 #' @inheritParams step_date
 #' @inheritParams step_pca
@@ -20,9 +19,6 @@
 #'  listing.
 #' @param naming A function that defines the naming convention for
 #'  new ratio columns.
-#' @param columns The column names used in the ratios. This
-#'  argument is not populated until [prep()] is
-#'  executed.
 #' @template step-return
 #' @details
 #'
@@ -50,9 +46,8 @@
 #'
 #' ratio_recipe <- rec %>%
 #'   # all predictors over total
-#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total)) %>%
-#'   # get rid of the original predictors
-#'   step_rm(all_predictors(), -ends_with("total"))
+#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+#'              keep_original_cols = FALSE)
 #'
 #' ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 #'
@@ -143,29 +138,29 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
-  check_new_data(unname(object$columns$top), object, new_data)
+  col_names <- purrr::pmap(object$columns, c)
+  unique_col_names <- unique(unlist(col_names))
+  check_new_data(unique_col_names, object, new_data)
 
-  res <- purrr::map2(
-    new_data[, object$columns$top],
-    new_data[, object$columns$bottom],
-    `/`
-  )
+  res <- list()
 
-  names(res) <- apply(
-    object$columns,
-    MARGIN = 1,
+  for (col_name in col_names) {
+    value <- new_data[[col_name[["top"]]]] / new_data[[col_name[["bottom"]]]]
+    res <- c(res, list(value))
+  }
+
+  names(res) <- vapply(
+    col_names,
+    FUN.VALUE = character(1),
     function(x) object$naming(x[1], x[2])
   )
 
   res <- tibble::new_tibble(res, nrow = nrow(new_data))
 
-  keep_original_cols <- get_keep_original_cols(object)
-  new_data <- bind_cols(new_data, res)
+  res <- check_name(res, new_data, object, names(res))
+  new_data <- vec_cbind(new_data, res)
+  new_data <- remove_original_cols(new_data, object, unique_col_names)
 
-  if (!keep_original_cols) {
-    union_cols <- union(object$columns$top, object$columns$bottom)
-    new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
-  }
   new_data
 }
 

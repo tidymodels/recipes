@@ -1,8 +1,7 @@
 #' Time Feature Generator
 #'
-#' `step_time()` creates a *specification* of a recipe
-#'  step that will convert date-time data into one or more factor or
-#'  numeric variables.
+#' `step_time()` creates a *specification* of a recipe step that will convert
+#' date-time data into one or more factor or numeric variables.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -12,9 +11,6 @@
 #' @param features A character string that includes at least one
 #'  of the following values: `am` (is is AM), `hour`, `hour12`, `minute`,
 #'  `second`, `decimal_day`.
-#' @param columns A character string of variables that will be
-#'  used as inputs. This field is a placeholder and will be
-#'  populated once [prep()] is used.
 #' @param keep_original_cols A logical to keep the original variables in the
 #'  output. Defaults to `TRUE`.
 #' @template step-return
@@ -134,22 +130,21 @@ prep.step_time <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_time <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (column in object$columns) {
+  for (col_name in col_names) {
     time_values <- get_time_features(
-      dt = new_data[[column]],
+      dt = new_data[[col_name]],
       feats = object$features
     )
 
-    names(time_values) <- glue("{column}_{names(time_values)}")
-    new_data <- bind_cols(new_data, time_values)
+    names(time_values) <- glue::glue("{col_name}_{names(time_values)}")
+    time_values <- check_name(time_values, new_data, object, names(time_values))
+    new_data <- vec_cbind(new_data, time_values)
   }
 
-  keep_original_cols <- get_keep_original_cols(object)
-  if (!keep_original_cols) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-  }
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }

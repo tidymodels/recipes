@@ -1,6 +1,6 @@
 #' Discretize Numeric Variables
 #'
-#' `discretize` converts a numeric vector into a factor with
+#' `discretize()` converts a numeric vector into a factor with
 #'  bins having approximately the same number of data points (based
 #'  on a training set).
 #'
@@ -235,10 +235,9 @@ print.discretize <-
 
 #' Discretize Numeric Variables
 #'
-#' `step_discretize` creates a *specification* of a recipe
-#'  step that will convert numeric data into a factor with
-#'  bins having approximately the same number of data points (based
-#'  on a training set).
+#' `step_discretize()` creates a *specification* of a recipe step that will
+#' convert numeric data into a factor with bins having approximately the same
+#' number of data points (based on a training set).
 #'
 #' @inheritParams step_center
 #' @param num_breaks An integer defining how many cuts to make of the
@@ -263,6 +262,12 @@ print.discretize <-
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `value`
 #' (the breaks) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_discretize"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -372,11 +377,16 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[, i] <-
-      predict(object$objects[[i]], getElement(new_data, i))
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- predict(
+      object$objects[[col_name]],
+      new_data[[col_name]]
+    )
   }
+
   new_data
 }
 

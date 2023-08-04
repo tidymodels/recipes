@@ -1,15 +1,12 @@
 #' Spatial Sign Preprocessing
 #'
-#' `step_spatialsign` is a *specification* of a recipe
-#'  step that will convert numeric data into a projection on to a
-#'  unit sphere.
+#' `step_spatialsign()` is a *specification* of a recipe step that will convert
+#' numeric data into a projection on to a unit sphere.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param na_rm A logical: should missing data be removed from the
 #'  norm computation?
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -135,13 +132,12 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_spatialsign <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
-
-  col_names <- object$columns
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   if (isTRUE(object$case_weights)) {
     wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)
-    wts <- getElement(new_data, names(which(wts_col)))
+    wts <- new_data[[names(which(wts_col))]]
     wts <- as.double(wts)
   } else {
     wts <- 1

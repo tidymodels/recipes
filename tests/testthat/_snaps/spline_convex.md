@@ -1,37 +1,12 @@
-# printing
+# check_name() is used
 
     Code
-      print(with_ns)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * Convex spline expansion: carbon, hydrogen
-
----
-
-    Code
-      prep(with_ns)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * Convex spline expansion: carbon, hydrogen | Trained
+      prep(rec, training = dat)
+    Condition
+      Error in `step_spline_convex()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  mpg_01
 
 # empty printing
 
@@ -67,4 +42,39 @@
       
       -- Operations 
       * Convex spline expansion: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * Convex spline expansion: carbon, hydrogen
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 536 data points and no incomplete rows.
+      
+      -- Operations 
+      * Convex spline expansion: carbon, hydrogen | Trained
 

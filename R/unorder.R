@@ -1,11 +1,10 @@
 #' Convert Ordered Factors to Unordered Factors
 #'
-#' `step_unorder` creates a *specification* of a recipe
-#'  step that will transform the data.
+#' `step_unorder()` creates a *specification* of a recipe step that will turn
+#' ordered factor variables into unordered factor variables.
 #'
 #' @inheritParams step_center
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
+#' @inheritParams step_pca
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
@@ -91,12 +90,14 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unorder <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
-    new_data[, object$columns[i]] <-
-      factor(as.character(getElement(new_data, object$columns[i])),
-        levels = levels(getElement(new_data, object$columns[i]))
+  for (col_name in col_names) {
+    new_data[[col_name]] <-
+      factor(
+        x = as.character(new_data[[col_name]]),
+        levels = levels(new_data[[col_name]])
       )
   }
   new_data

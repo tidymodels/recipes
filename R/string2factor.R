@@ -1,11 +1,11 @@
 #' Convert Strings to Factors
 #'
 #' @description
-#' `step_string2factor` will convert one or more character
-#'  vectors to factors (ordered or unordered).
+#' `step_string2factor()` will convert one or more character vectors to factors
+#' (ordered or unordered).
 #'
-#'  _Use this step only in special cases_ (see Details) and instead convert
-#'  strings to factors before using any tidymodels functions.
+#' _Use this step only in special cases_ (see Details) and instead convert
+#' strings to factors before using any tidymodels functions.
 #'
 #' @inheritParams step_center
 #' @param levels An options specification of the levels to be used
@@ -159,22 +159,22 @@ make_factor <- function(x, lvl, ord) {
 #' @export
 bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
+  check_new_data(col_names, object, new_data)
 
-  if (is.list(object$levels)) {
-    new_data[, col_names] <-
-      purrr::map2(new_data[, col_names],
-        object$levels,
-        make_factor,
-        ord = object$ordered[1]
-      )
-  } else {
-    new_data[, col_names] <-
-      map(new_data[, col_names],
-        make_factor,
-        lvl = object$levels,
-        ord = object$ordered[1]
-      )
+  for (col_name in col_names) {
+    if (is.list(object$levels)) {
+      levels <- object$levels[[col_name]]
+    } else {
+      levels <- object$levels
+    }
+
+    new_data[[col_name]] <- make_factor(
+      new_data[[col_name]],
+      lvl = levels,
+      ord = object$ordered[[col_name]]
+    )
   }
+
   new_data
 }
 

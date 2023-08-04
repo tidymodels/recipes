@@ -34,39 +34,6 @@
       -- Operations 
       * Unordered variables: X1 | Trained
 
-# printing
-
-    Code
-      print(rec4)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Unordered variables: X2
-
----
-
-    Code
-      prep(rec4)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 12 data points and no incomplete rows.
-      
-      -- Operations 
-      * Unordered variables: X2 | Trained
-
 # empty printing
 
     Code
@@ -101,4 +68,37 @@
       
       -- Operations 
       * Unordered variables: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Operations 
+      * Unordered variables: X2
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Training information 
+      Training data contained 12 data points and no incomplete rows.
+      
+      -- Operations 
+      * Unordered variables: X2 | Trained
 

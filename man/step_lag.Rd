@@ -13,6 +13,7 @@ step_lag(
   prefix = "lag_",
   default = NA,
   columns = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("lag")
 )
@@ -39,8 +40,11 @@ lagged for each value in the vector.}
 \item{default}{Passed to \code{dplyr::lag}, determines what fills empty rows
 left by lagging (defaults to NA).}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -56,12 +60,10 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_lag} creates a \emph{specification} of a recipe step that
-will add new columns of lagged data. Lagged data will
-by default include NA values where the lag was induced.
-These can be removed with \code{\link[=step_naomit]{step_naomit()}}, or you may
-specify an alternative filler value with the \code{default}
-argument.
+\code{step_lag()} creates a \emph{specification} of a recipe step that will add new
+columns of lagged data. Lagged data will by default include NA values where
+the lag was induced. These can be removed with \code{\link[=step_naomit]{step_naomit()}}, or you may
+specify an alternative filler value with the \code{default} argument.
 }
 \details{
 The step assumes that the data are already \emph{in the proper sequential

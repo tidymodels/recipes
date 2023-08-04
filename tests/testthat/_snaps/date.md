@@ -1,44 +1,12 @@
-# printing
+# check_name() is used
 
     Code
-      print(date_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Operations 
-      * Date features from: all_predictors()
-
----
-
-    Code
-      prep(date_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 2
-      
-      -- Training information 
-      Training data contained 10 data points and no incomplete rows.
-      
-      -- Operations 
-      * Date features from: Dan, Stefan | Trained
-
-# can prep recipes with no keep_original_cols
-
-    Code
-      date_rec <- prep(date_rec, training = examples, verbose = FALSE)
+      prep(rec, training = dat)
     Condition
-      Warning:
-      'keep_original_cols' was added to `step_date()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      Error in `step_date()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  Dan_year
 
 # empty printing
 
@@ -74,4 +42,46 @@
       
       -- Operations 
       * Date features from: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_date()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Operations 
+      * Date features from: all_predictors()
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 2
+      
+      -- Training information 
+      Training data contained 10 data points and no incomplete rows.
+      
+      -- Operations 
+      * Date features from: Dan, Stefan | Trained
 

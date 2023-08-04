@@ -1,8 +1,7 @@
 #' Scaling Numeric Data
 #'
-#' `step_scale` creates a *specification* of a recipe
-#'  step that will normalize numeric data to have a standard
-#'  deviation of one.
+#' `step_scale()` creates a *specification* of a recipe step that will normalize
+#' numeric data to have a standard deviation of one.
 #'
 #' @inheritParams step_center
 #' @param sds A named numeric vector of standard deviations. This is `NULL`
@@ -134,11 +133,12 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
-  check_new_data(names(object$sds), object, new_data)
+  col_names <- names(object$sds)
+  check_new_data(col_names, object, new_data)
 
-  for (column in names(object$sds)) {
-    sd <- object$sds[column]
-    new_data[[column]] <- new_data[[column]] / sd
+  for (col_name in col_names) {
+    sd <- object$sds[col_name]
+    new_data[[col_name]] <- new_data[[col_name]] / sd
   }
   new_data
 }

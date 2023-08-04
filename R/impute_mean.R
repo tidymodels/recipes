@@ -1,8 +1,8 @@
 #' Impute numeric data using the mean
 #'
-#' `step_impute_mean` creates a *specification* of a recipe step that will
-#'  substitute missing values of numeric variables by the training set mean of
-#'  those variables.
+#' `step_impute_mean()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the training set mean of
+#' those variables.
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed
@@ -26,6 +26,12 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `model` (the mean
 #' value) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_mean"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-unsupervised
 #'
@@ -180,14 +186,17 @@ prep.step_meanimpute <- prep.step_impute_mean
 
 #' @export
 bake.step_impute_mean <- function(object, new_data, ...) {
-  check_new_data(names(object$means), object, new_data)
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$means)) {
-    if (any(is.na(new_data[[i]]))) {
-      new_data[[i]] <- vec_cast(new_data[[i]], object$means[[i]])
+  for (col_name in col_names) {
+    mean <- object$means[[col_name]]
+    if (any(is.na(new_data[[col_name]]))) {
+      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
     }
-    new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
+    new_data[is.na(new_data[[col_name]]), col_name] <- mean
   }
+
   new_data
 }
 
@@ -214,11 +223,11 @@ tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = names(x$means),
-      model = vctrs::list_unchop(unname(x$means), ptype = double())
+      value = vctrs::list_unchop(unname(x$means), ptype = double())
     )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_dbl)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
   res$id <- x$id
   res

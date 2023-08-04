@@ -1,7 +1,7 @@
 #' Assign missing categories to "unknown"
 #'
-#' `step_unknown` creates a *specification* of a recipe
-#'  step that will assign a missing value in a factor level to"unknown".
+#' `step_unknown()` creates a *specification* of a recipe step that will assign
+#' a missing value in a factor level to `"unknown"`.
 #'
 #' @inheritParams step_center
 #' @param new_level A single character value that will be assigned
@@ -116,16 +116,21 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unknown <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <-
-      ifelse(is.na(new_data[[i]]), object$new_level, as.character(new_data[[i]]))
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
 
-    new_levels <- c(object$object[[i]], object$new_level)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- ifelse(
+      is.na(new_data[[col_name]]),
+      object$new_level,
+      as.character(new_data[[col_name]])
+    )
 
-    if (!all(new_data[[i]] %in% new_levels)) {
+    new_levels <- c(object$object[[col_name]], object$new_level)
+
+    if (!all(new_data[[col_name]] %in% new_levels)) {
       warn_new_levels(
-        new_data[[i]],
+        new_data[[col_name]],
         new_levels,
         paste0(
           "\nNew levels will be coerced to `NA` by `step_unknown()`.",
@@ -134,10 +139,10 @@ bake.step_unknown <- function(object, new_data, ...) {
       )
     }
 
-    new_data[[i]] <-
-      factor(new_data[[i]],
+    new_data[[col_name]] <-
+      factor(new_data[[col_name]],
         levels = new_levels,
-        ordered = attributes(object$object[[i]])$is_ordered
+        ordered = attributes(object$object[[col_name]])$is_ordered
       )
   }
   new_data

@@ -26,8 +26,8 @@ for this step. See \code{\link[=selections]{selections()}} for more details.}
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -42,9 +42,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_naomit} creates a \emph{specification} of a recipe step that
-will remove observations (rows of data) if they contain \code{NA}
-or \code{NaN} values.
+\code{step_naomit()} creates a \emph{specification} of a recipe step that will remove
+observations (rows of data) if they contain \code{NA} or \code{NaN} values.
 }
 \section{Row Filtering}{
 

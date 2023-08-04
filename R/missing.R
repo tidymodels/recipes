@@ -3,6 +3,7 @@
 #' `check_missing` creates a *specification* of a recipe
 #'  operation that will check if variables contain missing values.
 #'
+#' @inheritParams step_pca
 #' @param recipe A recipe object. The check will be added to the
 #'  sequence of operations for this recipe.
 #' @param ... One or more selector functions to choose variables
@@ -11,8 +12,6 @@
 #'  created.
 #' @param trained A logical for whether the selectors in `...`
 #' have been resolved by [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the terms argument.
 #' @param id A character string that is unique to this check to identify it.
 #' @param skip A logical. Should the check be skipped when the
 #'  recipe is baked by [bake()]? While all operations are baked
@@ -97,6 +96,7 @@ check_missing_new <-
     )
   }
 
+#' @export
 prep.check_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
@@ -110,8 +110,11 @@ prep.check_missing <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.check_missing <- function(object, new_data, ...) {
   col_names <- object$columns
+  check_new_data(col_names, object, new_data)
+
   subset_to_check <- new_data[col_names]
   nr_na <- colSums(is.na(subset_to_check))
   if (any(nr_na > 0)) {

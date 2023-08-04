@@ -6,41 +6,6 @@
       Error in `match.arg()`:
       ! 'arg' should be one of "coef", "variance"
 
-# printing
-
-    Code
-      print(pca_extract)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur
-
----
-
-    Code
-      prep(pca_extract)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 456 data points and no incomplete rows.
-      
-      -- Operations 
-      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
-
 # No PCA comps
 
     Code
@@ -81,49 +46,15 @@
       * Scaling for: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
       * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
 
-# can prep recipes with no keep_original_cols
+# check_name() is used
 
     Code
-      pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
+      prep(rec, training = dat)
     Condition
-      Warning:
-      'keep_original_cols' was added to `step_pca()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
-
-# empty printing
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Operations 
-      * PCA extraction with: <none>
-
----
-
-    Code
-      rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:    1
-      predictor: 10
-      
-      -- Training information 
-      Training data contained 32 data points and no incomplete rows.
-      
-      -- Operations 
-      * No PCA components were extracted from: <none> | Trained
+      Error in `step_pca()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  PC1
 
 # case weights
 
@@ -164,4 +95,83 @@
       
       -- Operations 
       * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained, ignored weights
+
+# empty printing
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Operations 
+      * PCA extraction with: <none>
+
+---
+
+    Code
+      rec
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:    1
+      predictor: 10
+      
+      -- Training information 
+      Training data contained 32 data points and no incomplete rows.
+      
+      -- Operations 
+      * No PCA components were extracted from: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_pca()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Operations 
+      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 456 data points and no incomplete rows.
+      
+      -- Operations 
+      * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
 

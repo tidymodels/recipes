@@ -14,6 +14,7 @@ step_count(
   options = list(),
   result = make.names(pattern),
   input = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("count")
 )
@@ -51,6 +52,9 @@ variable. It should be a valid column name.}
 variable being searched. This is \code{NULL} until computed by
 \code{\link[=prep]{prep()}}.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -65,9 +69,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_count} creates a \emph{specification} of a recipe
-step that will create a variable that counts instances of a
-regular expression pattern in text.
+\code{step_count()} creates a \emph{specification} of a recipe step that will create a
+variable that counts instances of a regular expression pattern in text.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns

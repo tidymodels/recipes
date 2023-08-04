@@ -62,7 +62,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_mean} creates a \emph{specification} of a recipe step that will
+\code{step_impute_mean()} creates a \emph{specification} of a recipe step that will
 substitute missing values of numeric variables by the training set mean of
 those variables.
 }
@@ -78,6 +78,13 @@ to \code{step_impute_mean()}.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{model} (the mean
 value) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{trim}: Amount of Trimming (type: double, default: 0)
+}
 }
 
 \section{Case weights}{

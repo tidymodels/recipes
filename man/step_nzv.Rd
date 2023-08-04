@@ -54,9 +54,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_nzv} creates a \emph{specification} of a recipe step
-that will potentially remove variables that are highly sparse
-and unbalanced.
+\code{step_nzv()} creates a \emph{specification} of a recipe step that will potentially
+remove variables that are highly sparse and unbalanced.
 }
 \details{
 This step can potentially remove columns from the data set. This may
@@ -91,6 +90,14 @@ value percent is 0.2\%.
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
 \code{terms} (the columns that will be removed) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{freq_cut}: Frequency Distribution Ratio (type: double, default: 95/5)
+\item \code{unique_cut}: \% Unique Values (type: double, default: 10)
+}
 }
 
 \section{Case weights}{

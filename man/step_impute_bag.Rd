@@ -83,7 +83,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_bag} creates a \emph{specification} of a recipe step that will
+\code{step_impute_bag()} creates a \emph{specification} of a recipe step that will
 create bagged tree models to impute missing data.
 }
 \details{
@@ -108,6 +108,13 @@ to \code{step_impute_bag()}.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{model}
 (the bagged tree object) is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{trees}: # Trees (type: integer, default: 25)
+}
 }
 
 \section{Case weights}{

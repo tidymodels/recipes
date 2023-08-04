@@ -1,38 +1,3 @@
-# printing
-
-    Code
-      kpca_rec
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Operations 
-      * RBF kernel PCA extraction with: X2, X3, X4, X5, X6
-
----
-
-    Code
-      prep(kpca_rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      outcome:   1
-      predictor: 5
-      
-      -- Training information 
-      Training data contained 100 data points and no incomplete rows.
-      
-      -- Operations 
-      * RBF kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
-
 # No kPCA comps
 
     Code
@@ -52,14 +17,15 @@
       -- Operations 
       * RBF kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
-# can prep recipes with no keep_original_cols
+# check_name() is used
 
     Code
-      kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
+      prep(rec, training = dat)
     Condition
-      Warning:
-      'keep_original_cols' was added to `step_kpca_poly()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      Error in `step_kpca_rbf()`:
+      Caused by error in `bake()`:
+      ! Name collision occured. The following variable names already exists:
+      i  kPC1
 
 # empty printing
 
@@ -95,4 +61,42 @@
       
       -- Operations 
       * RBF kernel PCA extraction with: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      'keep_original_cols' was added to `step_kpca_rbf()` after this recipe was created.
+      Regenerate your recipe to avoid this warning.
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      outcome:   1
+      predictor: 5
+      
+      -- Training information 
+      Training data contained 100 data points and no incomplete rows.
 

@@ -54,9 +54,8 @@ of their possible levels are profiled). In the case of date
 variables, \code{pctl = FALSE} will always be used since there is no
 quantile method for dates.}
 
-\item{columns}{A character string that contains the names of
-columns that should be fixed and their values. These values are
-not determined until \code{\link[=prep]{prep()}} is called.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -78,11 +77,10 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_profile} creates a \emph{specification} of a recipe step that
-will fix the levels of all variables but one and will create a
-sequence of values for the remaining variable. This step can be
-helpful when creating partial regression plots for additive
-models.
+\code{step_profile()} creates a \emph{specification} of a recipe step that will fix the
+levels of all variables but one and will create a sequence of values for the
+remaining variable. This step can be helpful when creating partial regression
+plots for additive models.
 }
 \details{
 This step is atypical in that, when baked, the

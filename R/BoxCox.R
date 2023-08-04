@@ -1,8 +1,7 @@
 #' Box-Cox Transformation for Non-Negative Data
 #'
-#' `step_BoxCox` creates a *specification* of a recipe
-#'  step that will transform data using a simple Box-Cox
-#'  transformation.
+#' `step_BoxCox()` creates a *specification* of a recipe step that will transform
+#' data using a Box-Cox transformation.
 #'
 #' @inheritParams step_center
 #' @param lambdas A numeric vector of transformation values. This
@@ -131,11 +130,14 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_BoxCox <- function(object, new_data, ...) {
-  param <- names(object$lambdas)
-  check_new_data(param, object, new_data)
+  col_names <- names(object$lambdas)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$lambdas)) {
-    new_data[, param[i]] <- bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
+  for (col_name in col_names) {
+    new_data[[col_name]] <- bc_trans(
+      new_data[[col_name]],
+      lambda = object$lambdas[col_name]
+    )
   }
 
   new_data

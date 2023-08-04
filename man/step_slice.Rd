@@ -42,8 +42,8 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_slice} creates a \emph{specification} of a recipe step
-that will filter rows using \code{\link[dplyr:slice]{dplyr::slice()}}.
+\code{step_slice()} creates a \emph{specification} of a recipe step that will filter
+rows using \code{\link[dplyr:slice]{dplyr::slice()}}.
 }
 \details{
 When an object in the user's global environment is

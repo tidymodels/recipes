@@ -1,7 +1,7 @@
 #' General Variable Filter
 #'
-#' `step_rm` creates a *specification* of a recipe step
-#'  that will remove variables based on their name, type, or role.
+#' `step_rm()` creates a *specification* of a recipe step that will remove
+#' selected variables.
 #'
 #' @inheritParams step_center
 #' @param removals A character string that contains the names of
@@ -89,9 +89,7 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_rm <- function(object, new_data, ...) {
-  if (length(object$removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  }
+  new_data <- recipes_remove_cols(new_data, object)
   new_data
 }
 

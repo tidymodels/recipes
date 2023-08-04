@@ -1,8 +1,7 @@
 #' ICA Signal Extraction
 #'
-#' `step_ica` creates a *specification* of a recipe step
-#'  that will convert numeric data into one or more independent
-#'  components.
+#' `step_ica()` creates a *specification* of a recipe step that will convert
+#' numeric data into one or more independent components.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -15,8 +14,6 @@
 #' @param res The [fastICA::fastICA()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
-#' @param columns A character string of variable names that will
-#'  be populated elsewhere.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
@@ -36,20 +33,23 @@
 #'  \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
 #'  step will stop with a note about installing these packages.
 #'
-#' The argument `num_comp` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_comp < 10`, their names will be `IC1` - `IC9`.
-#'  If `num_comp = 101`, the names would be `IC001` -
-#'  `IC101`.
+#' ```{r, echo = FALSE, results="asis"}
+#' prefix <- "IC"
+#' result <- knitr::knit_child("man/rmd/num_comp.Rmd")
+#' cat(result)
+#' ```
 #'
 #' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected), `value` (the loading),
 #' and `component` is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_ica"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @template case-weights-not-supported
 #'
@@ -183,23 +183,26 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_ica <- function(object, new_data, ...) {
   uses_dim_red(object)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  if (object$num_comp > 0 && length(object$columns) > 0) {
-    check_new_data(object$columns, object, new_data)
-
-    comps <- scale(as.matrix(new_data[, object$columns]),
-      center = object$res$means, scale = FALSE
-    )
-    comps <- comps %*% object$res$K %*% object$res$W
-    comps <- comps[, 1:object$num_comp, drop = FALSE]
-    colnames(comps) <- names0(ncol(comps), object$prefix)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% object$columns), drop = FALSE]
-    }
+  keep_going <- object$num_comp > 0 && length(col_names) > 0
+  if (!keep_going) {
+    return(new_data)
   }
+
+
+  comps <- scale(as.matrix(new_data[, col_names]),
+    center = object$res$means, scale = FALSE
+  )
+  comps <- comps %*% object$res$K %*% object$res$W
+  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+  colnames(comps) <- names0(ncol(comps), object$prefix)
+  comps <- as_tibble(comps)
+  comps <- check_name(comps, new_data, object)
+  new_data <- vec_cbind(new_data, comps)
+
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

@@ -63,8 +63,8 @@ Available options are currently \code{nthread} and \code{eps}.}
 done up to the point of this imputation step. This is \code{NULL} until the step
 is trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{The column names that will be imputed and used for
-imputation. This is \code{NULL} until the step is trained by \code{\link[=prep]{prep()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -80,7 +80,7 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_impute_knn} creates a \emph{specification} of a recipe step that will
+\code{step_impute_knn()} creates a \emph{specification} of a recipe step that will
 impute missing data using nearest neighbors.
 }
 \details{
@@ -105,6 +105,13 @@ to \code{step_impute_knn()}.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables for imputation), \code{predictors}
 (those variables used to impute), and \code{neighbors} is returned.
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{neighbors}: # Nearest Neighbors (type: integer, default: 5)
+}
 }
 
 \section{Case weights}{

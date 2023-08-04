@@ -1,7 +1,7 @@
 #' Generalized Bernstein Polynomial Basis
 #'
-#' `step_poly_bernstein` creates a *specification* of a recipe
-#'  step that creates Bernstein polynomial features.
+#' `step_poly_bernstein()` creates a *specification* of a recipe step that
+#' creates Bernstein polynomial features.
 #'
 #' @inheritParams step_spline_b
 #' @param degree The degrees of the polynomial. As the degrees for a polynomial
@@ -25,6 +25,12 @@
 #'
 #'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
 #'  `terms` (the columns that will be affected) is returned.
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_poly_bernstein"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
 #'
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' library(tidyr)
@@ -101,7 +107,7 @@ step_poly_bernstein_new <-
   }
 
 # ------------------------------------------------------------------------------
-
+#' @export
 prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
@@ -141,17 +147,31 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_poly_bernstein <- function(object, new_data, ...) {
-  orig_names <- names(object$results)
-  if (length(orig_names) > 0) {
-    new_cols <- purrr::map2_dfc(object$results, new_data[, orig_names], spline2_apply)
-    new_data <- bind_cols(new_data, new_cols)
-    keep_original_cols <- get_keep_original_cols(object)
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% orig_names), drop = FALSE]
-    }
+  col_names <- names(object$results)
+  check_new_data(col_names, object, new_data)
+
+  if (length(col_names) == 0) {
+    return(new_data)
   }
-  as_tibble(new_data)
+
+  new_cols <- list()
+
+  for (col_name in col_names) {
+    new_cols[[col_name]] <- spline2_apply(
+      object$results[[col_name]],
+      new_data[[col_name]]
+    )
+  }
+
+  new_cols <- purrr::list_cbind(unname(new_cols))
+  new_cols <- check_name(new_cols, new_data, object, names(new_cols))
+
+  new_data <- vec_cbind(new_data, new_cols)
+  new_data <- remove_original_cols(new_data, object, col_names)
+
+  new_data
 }
 
 # ------------------------------------------------------------------------------
@@ -172,9 +192,6 @@ print.step_poly_bernstein <-
 tidy.step_poly_bernstein <- function(x, ...) {
   if (is_trained(x)) {
     terms <- names(x$results)
-    if (length(terms) == 0) {
-      terms <- "<none>"
-    }
   } else {
     terms <- sel2char(x$terms)
   }

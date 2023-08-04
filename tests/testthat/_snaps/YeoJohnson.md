@@ -7,39 +7,6 @@
       Caused by error in `prep()`:
       ! Missing values are not allowed for the YJ transformation. See `na_rm` option
 
-# printing
-
-    Code
-      print(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Operations 
-      * Yeo-Johnson transformation on: x1, x2, x3, x4
-
----
-
-    Code
-      prep(rec)
-    Message
-      
-      -- Recipe ----------------------------------------------------------------------
-      
-      -- Inputs 
-      Number of variables by role
-      predictor: 4
-      
-      -- Training information 
-      Training data contained 20 data points and no incomplete rows.
-      
-      -- Operations 
-      * Yeo-Johnson transformation on: x1, x2, x4 | Trained
-
 # empty printing
 
     Code
@@ -74,4 +41,37 @@
       
       -- Operations 
       * Yeo-Johnson transformation on: <none> | Trained
+
+# printing
+
+    Code
+      print(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Operations 
+      * Yeo-Johnson transformation on: x1, x2, x3, x4
+
+---
+
+    Code
+      prep(rec)
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 4
+      
+      -- Training information 
+      Training data contained 20 data points and no incomplete rows.
+      
+      -- Operations 
+      * Yeo-Johnson transformation on: x1, x2, x4 | Trained
 
