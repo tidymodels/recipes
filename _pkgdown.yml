@@ -108,7 +108,7 @@ reference:
     - step_scale
   - title: Step Functions - Multivariate Transformations
     contents:
-    - step_classdist
+    - starts_with("step_classdist")
     - step_depth
     - step_geodist
     - step_ica
