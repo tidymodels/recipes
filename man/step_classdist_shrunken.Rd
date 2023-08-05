@@ -11,6 +11,7 @@ step_classdist_shrunken(
   role = NA,
   trained = FALSE,
   threshold = 1/2,
+  sd_offset = 1/2,
   prefix = "classdist_",
   keep_original_cols = FALSE,
   objects = NULL,
@@ -40,6 +41,9 @@ shrunk to the global centroid.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{objects}{Statistics are stored here once this step has
 been trained by \code{\link[=prep]{prep()}}.}
