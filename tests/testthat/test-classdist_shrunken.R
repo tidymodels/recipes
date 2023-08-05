@@ -143,3 +143,105 @@ test_that("shrunken centroids", {
     c("recipes", "dplyr", "tidyr")
   )
 })
+
+
+# Infrastructure ---------------------------------------------------------------
+
+test_that("bake method errors when needed non-standard role columns are missing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist_shrunken(Petal.Length, class = "Species", log = FALSE)  %>%
+    update_role(Petal.Length, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
+
+  trained <- prep(rec, training = iris, verbose = FALSE)
+
+  expect_error(bake(trained, new_data = iris[,c(-3)]),
+               class = "new_data_missing_column")
+})
+
+test_that("empty printing", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_classdist_shrunken(rec, class = "Species")
+
+  expect_snapshot(rec)
+
+  rec <- prep(rec, iris)
+
+  expect_snapshot(rec)
+})
+
+test_that("empty selection prep/bake is a no-op", {
+  rec1 <- recipe(Species ~ ., iris)
+  rec2 <- step_classdist_shrunken(rec1, class = "Species")
+
+  rec1 <- prep(rec1, iris)
+  rec2 <- prep(rec2, iris)
+
+  baked1 <- bake(rec1, iris)
+  baked2 <- bake(rec2, iris)
+
+  expect_identical(baked1, baked2)
+})
+
+test_that("empty selection tidy method works", {
+  rec <- recipe(Species ~ ., iris)
+  rec <- step_classdist_shrunken(rec, class = "Species")
+
+  expect <- tibble(
+    terms = character(),
+    value = double(),
+    class = character(),
+    type = character(),
+    threshold = double(),
+    id = character()
+  )
+
+  expect_identical(tidy(rec, number = 1), expect)
+
+  rec <- prep(rec, iris)
+
+  expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  new_names <- c("Species", "classdist_setosa", "classdist_versicolor",
+                 "classdist_virginica")
+
+  rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
+    step_classdist_shrunken(all_predictors(), class = "Species",
+                            keep_original_cols = FALSE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
+    step_classdist_shrunken(all_predictors(), class = "Species",
+                            keep_original_cols = TRUE)
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("Sepal.Length", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  # step_classdist_shrunken() was added after keep_original_cols
+  # Making this test case unlikely
+  expect_true(TRUE)
+})
+
+test_that("printing", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist_shrunken(all_predictors(), class = "Species")
+
+  expect_snapshot(print(rec))
+  expect_snapshot(prep(rec))
+})
