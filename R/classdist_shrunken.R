@@ -30,7 +30,7 @@
 #' Tibshirani, R., Hastie, T., Narasimhan, B., & Chu, G. (2002). Diagnosis of
 #' multiple cancer types by shrunken centroids of gene expression. _Proceedings
 #' of the National Academy of Sciences_, 99(10), 6567-6572.
-#' @examples
+#' @examplesIf rlang::is_installed(c("modeldata"))
 #' data(penguins, package = "modeldata")
 #' penguins <- penguins[complete.cases(penguins), ]
 #' penguins$island <- NULL
