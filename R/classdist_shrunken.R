@@ -294,16 +294,21 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_classdist_shrunken <- function(object, new_data, ...) {
-  pred_vars <- unique(object$objects$variable)
+  col_names <- unique(object$objects$variable)
+  check_new_data(col_names, object, new_data)
+  
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+  
   new_cols <-
     new_shrunken_scores(object$objects,
-                        new_data %>% dplyr::select(dplyr::all_of(pred_vars)),
+                        new_data %>% dplyr::select(dplyr::all_of(col_names)),
                         object$prefix, object$log)
-  if (!object$keep_original_cols) {
-    preds <- unique(object$objects$variable)
-    new_data <- new_data[, !(names(new_data) %in% preds)]
-  }
-  as_tibble(dplyr::bind_cols(new_data, new_cols))
+  new_cols <- check_name(new_cols, new_data, object, names(new_cols))
+  new_data <- vctrs::vec_cbind(new_data, new_cols)
+  new_data <- remove_original_cols(new_data, object, col_names)
+  new_data
 }
 
 print.step_classdist_shrunken <-
