@@ -268,14 +268,27 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-  stats <-
-    compute_shrunken_centroids(
-      x = training[, x_names],
-      y = training[[ y_names]],
-      wts = wts,
-      threshold = x$threshold,
-      sd_offset = x$sd_offset
+  if (length(x_names) > 0) {
+    stats <-
+      compute_shrunken_centroids(
+        x = training[, x_names],
+        y = training[[ y_names]],
+        wts = wts,
+        threshold = x$threshold,
+        sd_offset = x$sd_offset
+      )
+  } else {
+    stats <- list(
+      centroids = tibble::tibble(
+        variable = character(),
+        class = character(),
+        global = double(),
+        by_class = double(),
+        shrunken = double(),
+        std_dev = double()
+      )
     )
+  }
 
   step_classdist_shrunken_new(
     terms = x$terms,
@@ -296,11 +309,11 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
 bake.step_classdist_shrunken <- function(object, new_data, ...) {
   col_names <- unique(object$objects$variable)
   check_new_data(col_names, object, new_data)
-  
+
   if (length(col_names) == 0) {
     return(new_data)
   }
-  
+
   new_cols <-
     new_shrunken_scores(object$objects,
                         new_data %>% dplyr::select(dplyr::all_of(col_names)),
@@ -332,6 +345,7 @@ tidy.step_classdist_shrunken <- function(x, ...) {
         names_to = "type",
         values_to = "value"
       ) %>%
+      dplyr::relocate(terms, value, class, type) %>%
       dplyr::mutate(threshold = x$threshold)
   } else {
     term_names <- sel2char(x$terms)
