@@ -77,11 +77,10 @@ convert numeric data into Mahalanobis distance measurements to the data
 centroid. This is done for each value of a categorical class variable.
 }
 \details{
-\code{step_classdist} will create a new column for every
-unique value of the \code{class} variable.
-The resulting variables will not replace the original values
-and by default have the prefix \code{classdist_}. The naming format can be
-changed using the \code{prefix} argument.
+\code{step_classdist} will create a new column for every unique value of
+the \code{class} variable. The resulting variables will not replace the original
+values and, by default, have the prefix \code{classdist_}. The naming format can
+be changed using the \code{prefix} argument.
 
 Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables

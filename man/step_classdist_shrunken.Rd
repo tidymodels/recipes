@@ -12,8 +12,9 @@ step_classdist_shrunken(
   trained = FALSE,
   threshold = 1/2,
   sd_offset = 1/2,
+  log = TRUE,
   prefix = "classdist_",
-  keep_original_cols = FALSE,
+  keep_original_cols = TRUE,
   objects = NULL,
   skip = FALSE,
   id = rand_id("classdist_shrunken")
@@ -38,6 +39,12 @@ preprocessing have been estimated.}
 \item{threshold}{A regularization parameter between zero and one. Zero means
 that no regularization is used and one means that centroids should be
 shrunk to the global centroid.}
+
+\item{sd_offset}{A value between zero and one for the quantile that should
+be used to stabilize the pooled standard deviation.}
+
+\item{log}{A logical: should the distances be transformed by
+the natural log function?}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
@@ -64,12 +71,28 @@ to the class centroid. This is done for each value of a categorical class
 variable.
 }
 \details{
-\code{step_classdist} will create a new column for every
-unique value of the \code{class} variable.
-The resulting variables will not replace the original values
-and by default have the prefix \code{classdist_} using the \code{keep_original_cols}
-argument is used. The naming format can be changed using the \code{prefix} argument.
+\code{step_classdist_shrunken} will create a new column for every unique value of
+the \code{class} variable. The resulting variables will not replace the original
+values and, by default, have the prefix \code{classdist_}. The naming format can
+be changed using the \code{prefix} argument.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected), \code{value} (the centroid),
+\code{class}, and \code{type} is returned. Type has values \code{"global"}, \code{"by_class"},
+and \code{"shrunken"}. The first two types of centroids are in the original units
+while the last have been standardized.
+}
+
+\section{Case weights}{
+
+
+This step performs an supervised operation that can utilize case weights.
+As a result, case weights are used with frequency weights as well as
+importance weights. For more information,, see the documentation in
+\link{case_weights} and the examples on \code{tidymodels.org}.
+}
+
 \seealso{
 Other multivariate transformation steps: 
 \code{\link{step_classdist}()},

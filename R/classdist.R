@@ -20,11 +20,10 @@
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details `step_classdist` will create a new column for every
-#'  unique value of the `class` variable.
-#'  The resulting variables will not replace the original values
-#'  and by default have the prefix `classdist_`. The naming format can be
-#'  changed using the `prefix` argument.
+#' @details `step_classdist` will create a new column for every unique value of
+#' the `class` variable. The resulting variables will not replace the original
+#' values and, by default, have the prefix `classdist_`. The naming format can
+#' be changed using the `prefix` argument.
 #'
 #' Note that, by default, the default covariance function requires
 #'  that each class should have at least as many rows as variables
