@@ -39,7 +39,7 @@
 #'
 #' @template case-weights-supervised
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("modeldata"))
 #' data(penguins, package = "modeldata")
 #' penguins <- penguins[complete.cases(penguins), ]
 #' penguins$island <- NULL

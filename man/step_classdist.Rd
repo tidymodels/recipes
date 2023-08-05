@@ -104,6 +104,7 @@ importance weights. For more information,, see the documentation in
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(penguins, package = "modeldata")
 penguins <- penguins[complete.cases(penguins), ]
 penguins$island <- NULL
@@ -135,6 +136,7 @@ dists_to_species[, c("species", dist_cols)]
 
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other multivariate transformation steps: 
