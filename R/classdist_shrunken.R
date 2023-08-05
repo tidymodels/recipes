@@ -26,6 +26,10 @@
 #' while the last have been standardized.
 #'
 #' @template case-weights-supervised
+#' @references
+#' Tibshirani, R., Hastie, T., Narasimhan, B., & Chu, G. (2002). Diagnosis of
+#' multiple cancer types by shrunken centroids of gene expression. _Proceedings
+#' of the National Academy of Sciences_, 99(10), 6567-6572.
 #' @examples
 #' data(penguins, package = "modeldata")
 #' penguins <- penguins[complete.cases(penguins), ]
@@ -118,8 +122,10 @@ centroid_global <- function(x, wts = NULL) {
   x <- tibble::as_tibble(x)
   if (is.null(wts)) {
     wts <- rep(1, nrow(x))
+  } else {
+    wts <- as.numeric(wts)
   }
-  mns <- apply(x, 2, recipes:::wt_calcs, wts = wts)
+  mns <- apply(x, 2, wt_calcs, wts = wts)
   dplyr::tibble(variable = names(mns), global = unname(mns))
 }
 
@@ -128,6 +134,8 @@ centroid_class <- function(x, y, wts = NULL, sd_offset = 1 / 2) {
   x$..y <- as.character(y)
   if (is.null(wts)) {
     wts <- rep(1, nrow(x))
+  } else {
+    wts <- as.numeric(wts)
   }
   x$..wts <- wts
   num_class <- length(levels(y))
@@ -175,6 +183,8 @@ compute_shrunken_centroids <- function(x, y, wts = NULL, threshold = 1 / 2,
   cent_class <- centroid_class(x, y, wts, sd_offset = sd_offset)
   if (is.null(wts)) {
     wts <- rep(1, nrow(x))
+  } else {
+    wts <- as.numeric(wts)
   }
   num_class <- length(table(y))
   wts_sum <- sum(wts)

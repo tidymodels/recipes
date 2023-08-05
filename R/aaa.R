@@ -14,7 +14,10 @@ utils::globalVariables(
     "training", "x_names", "y_names",                                    # pls.R
     ".order_1", ".order_2", "role", "skip",                          # recipes.R
     "call_info",                                                     # extract.R
-    "dat"                                                        # nnmf_sparse.R
+    "dat",                                                       # nnmf_sparse.R
+    "..wts", "..y", "by_class", "class_n", "delta",       # classdist_shrunken.R
+    "delta_wts", "distance", "global", "msq", "scaled_value", "shrink",
+    "shrunken", "sq_df", "sq_diff", "std_dev"
   )
 )
 

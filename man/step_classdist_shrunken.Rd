@@ -123,6 +123,11 @@ dists_to_species[, c("species", dist_cols)]
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
 }
+\references{
+Tibshirani, R., Hastie, T., Narasimhan, B., & Chu, G. (2002). Diagnosis of
+multiple cancer types by shrunken centroids of gene expression. \emph{Proceedings
+of the National Academy of Sciences}, 99(10), 6567-6572.
+}
 \seealso{
 Other multivariate transformation steps: 
 \code{\link{step_classdist}()},
