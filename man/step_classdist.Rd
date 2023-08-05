@@ -104,30 +104,34 @@ importance weights. For more information,, see the documentation in
 }
 
 \examples{
+data(penguins, package = "modeldata")
+penguins <- penguins[complete.cases(penguins), ]
+penguins$island <- NULL
+penguins$sex <- NULL
 
 # in case of missing data...
 mean2 <- function(x) mean(x, na.rm = TRUE)
 
 # define naming convention
-rec <- recipe(Species ~ ., data = iris) \%>\%
+rec <- recipe(species ~ ., data = penguins) \%>\%
   step_classdist(all_numeric_predictors(),
-    class = "Species",
+    class = "species",
     pool = FALSE, mean_func = mean2, prefix = "centroid_"
   )
 
 # default naming
-rec <- recipe(Species ~ ., data = iris) \%>\%
+rec <- recipe(species ~ ., data = penguins) \%>\%
   step_classdist(all_numeric_predictors(),
-    class = "Species",
+    class = "species",
     pool = FALSE, mean_func = mean2
   )
 
-rec_dists <- prep(rec, training = iris)
+rec_dists <- prep(rec, training = penguins)
 
-dists_to_species <- bake(rec_dists, new_data = iris, everything())
+dists_to_species <- bake(rec_dists, new_data = penguins, everything())
 ## on log scale:
 dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
-dists_to_species[, c("Species", dist_cols)]
+dists_to_species[, c("species", dist_cols)]
 
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
