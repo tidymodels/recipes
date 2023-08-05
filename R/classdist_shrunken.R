@@ -12,13 +12,21 @@
 #' @param sd_offset A value between zero and one for the quantile that should
 #' be used to stabilize the pooled standard deviation.
 #' @family multivariate transformation steps
+#' @details `step_classdist_shrunken` will create a new column for every unique value of
+#' the `class` variable. The resulting variables will not replace the original
+#' values and, by default, have the prefix `classdist_`. The naming format can
+#' be changed using the `prefix` argument.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected), `value` (the centroid),
+#' `class`, and `type` is returned. Type has values `"global"`, `"by_class"`,
+#' and `"shrunken"`. The first two types of centroids are in the original units
+#' while the last have been standardized.
+#'
+#' @template case-weights-supervised
 #' @export
-#' @details `step_classdist_shrunken` will create a new column for every
-#'  unique value of the `class` variable.
-#'  The resulting variables will not replace the original values
-#'  and by default have the prefix `classdist_` using the `keep_original_cols`
-#'  argument is used. The naming format can be changed using the `prefix` argument.
-
 step_classdist_shrunken <-
     function(recipe,
              ...,
@@ -27,8 +35,9 @@ step_classdist_shrunken <-
              trained = FALSE,
              threshold = 1 / 2,
              sd_offset = 1 / 2,
+             log = TRUE,
              prefix = "classdist_",
-             keep_original_cols = FALSE,
+             keep_original_cols = TRUE,
              objects = NULL,
              skip = FALSE,
              id = rand_id("classdist_shrunken")) {
@@ -44,6 +53,7 @@ step_classdist_shrunken <-
           role = role,
           threshold = threshold,
           sd_offset = sd_offset,
+          log = log,
           prefix = prefix,
           keep_original_cols = keep_original_cols,
           objects = objects,
@@ -54,7 +64,7 @@ step_classdist_shrunken <-
     }
 
 step_classdist_shrunken_new <-
-  function(terms, class, trained, role, threshold, sd_offset, prefix,
+  function(terms, class, trained, role, threshold, sd_offset, log, prefix,
            keep_original_cols, objects, na_rm, skip, id) {
     step(
       subclass = "classdist_shrunken",
@@ -64,6 +74,7 @@ step_classdist_shrunken_new <-
       trained = trained,
       threshold = threshold,
       sd_offset = sd_offset,
+      log = log,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       objects = objects,
@@ -158,13 +169,14 @@ compute_shrunken_centroids <- function(x, y, wts = NULL, threshold = 1 / 2,
       shrink = abs(delta) - threshold,
       shrunken = sign(delta) * ifelse(shrink > 0, shrink, 0) * delta_wts
     )
+
   shrunken <-
     shrunken %>%
     dplyr::select(variable, class, global, by_class, shrunken, std_dev)
   list(centroids = shrunken, threshold = threshold, max_delta = max_delta)
 }
 
-new_shrunken_scores <- function(object, new_data, prefix = "classdist_") {
+new_shrunken_scores <- function(object, new_data, prefix = "classdist_", log = TRUE) {
   preds <- unique(unique(object$variable))
   res <-
     new_data %>%
@@ -179,9 +191,17 @@ new_shrunken_scores <- function(object, new_data, prefix = "classdist_") {
     dplyr::summarize(
       distance = sum(sq_diff),
       .by = c(.row, class)
-    ) %>%
+    )
+
+  if (log) {
+    res$distance <- log(res$distance)
+  }
+
+  res <-
+    res %>%
     tidyr::pivot_wider(id_cols = ".row", names_from = class, values_from = distance) %>%
     dplyr::select(-.row)
+
   names(res) <- paste0(prefix, names(res))
   res
 }
@@ -225,6 +245,7 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     threshold = x$threshold,
     sd_offset = x$sd_offset,
+    log = x$log,
     prefix = x$prefix,
     keep_original_cols = x$keep_original_cols,
     objects = stats$centroids,
@@ -238,7 +259,7 @@ bake.step_classdist_shrunken <- function(object, new_data, ...) {
   new_cols <-
     new_shrunken_scores(object$objects,
                         new_data %>% dplyr::select(dplyr::all_of(pred_vars)),
-                        object$prefix)
+                        object$prefix, object$log)
   if (!object$keep_original_cols) {
     preds <- unique(object$objects$variable)
     new_data <- new_data[, !(names(new_data) %in% preds)]
