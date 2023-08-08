@@ -282,6 +282,26 @@ test_that("missing columns", {
 #   all.equal(te_og, te_new)
 # })
 
+test_that("works when formula is passed in as an object", {
+  rec1 <- recipe(~., data = mtcars) %>%
+    step_interact(terms = ~vs:am, id = "") %>%
+    prep()
+
+  cars_formula <- ~ vs:am
+  rec2 <- recipe(~., data = mtcars) %>%
+    step_interact(terms = cars_formula, id = "") %>%
+    prep()
+
+  expect_identical(rec1, rec2)
+
+  cars_formula <- ~ vs:am
+  rec3 <- recipe(~., data = mtcars) %>%
+    step_interact(terms = !!cars_formula, id = "") %>%
+    prep()
+
+  expect_identical(rec1, rec3)
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
