@@ -145,7 +145,16 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
   # make backwards compatible with 1.0.6 (#1138)
   if (!is_formula(x)) {
-    tmp_terms <- as.formula(rlang::as_label(x$terms[[1]]))
+    tmp_terms <- rlang::as_label(x$terms[[1]])
+    if (substr(tmp_terms, 1, 1) == "~") {
+      tmp_terms <- as.formula(tmp_terms)
+    } else {
+      tmp_terms <- rlang::eval_tidy(x$terms[[1]])
+      if (!is_formula(tmp_terms)) {
+        rlang::abort("`term` must be a formula.")
+      }
+    }
+
     environment(tmp_terms) <- environment(x$terms[[1]])
     x$terms <- tmp_terms
   }
