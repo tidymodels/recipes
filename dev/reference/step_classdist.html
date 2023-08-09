@@ -181,11 +181,18 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>step_classdist</code> will create a new column for every
-unique value of the <code>class</code> variable.
-The resulting variables will not replace the original values
-and by default have the prefix <code>classdist_</code>. The naming format can be
-changed using the <code>prefix</code> argument.</p>
+    <p><code>step_classdist</code> will create a new column for every unique value of
+the <code>class</code> variable. The resulting variables will not replace the original
+values and, by default, have the prefix <code>classdist_</code>. The naming format can
+be changed using the <code>prefix</code> argument.</p>
+<p>Class-specific centroids are the multivariate averages of each predictor
+using the data from each class in the training set. When pre-processing a
+new data point, this step computes the distance from the new point to each
+of the class centroids. These distance features can be very effective at
+capturing linear class boundaries. for this reason, they can be useful to
+add to an existing predictor set used within a nonlinear model. If the true
+boundary is actually linear, the model will have an easier time learning the
+training data patterns.</p>
 <p>Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables
 listed in the <code>terms</code> argument. If <code>pool = TRUE</code>,
@@ -211,6 +218,7 @@ importance weights. For more information,, see the documentation in
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other multivariate transformation steps: 
+<code><a href="step_classdist_shrunken.html">step_classdist_shrunken</a>()</code>,
 <code><a href="step_depth.html">step_depth</a>()</code>,
 <code><a href="step_geodist.html">step_geodist</a>()</code>,
 <code><a href="step_ica.html">step_ica</a>()</code>,
@@ -229,66 +237,70 @@ importance weights. For more information,, see the documentation in
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">penguins</span>, package <span class="op">=</span> <span class="st">"modeldata"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="va">penguins</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">penguins</span><span class="op">$</span><span class="va">island</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
+<span class="r-in"><span><span class="va">penguins</span><span class="op">$</span><span class="va">sex</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># in case of missing data...</span></span></span>
 <span class="r-in"><span><span class="va">mean2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># define naming convention</span></span></span>
-<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">step_classdist</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    class <span class="op">=</span> <span class="st">"Species"</span>,</span></span>
+<span class="r-in"><span>    class <span class="op">=</span> <span class="st">"species"</span>,</span></span>
 <span class="r-in"><span>    pool <span class="op">=</span> <span class="cn">FALSE</span>, mean_func <span class="op">=</span> <span class="va">mean2</span>, prefix <span class="op">=</span> <span class="st">"centroid_"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># default naming</span></span></span>
-<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">step_classdist</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    class <span class="op">=</span> <span class="st">"Species"</span>,</span></span>
+<span class="r-in"><span>    class <span class="op">=</span> <span class="st">"species"</span>,</span></span>
 <span class="r-in"><span>    pool <span class="op">=</span> <span class="cn">FALSE</span>, mean_func <span class="op">=</span> <span class="va">mean2</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rec_dists</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rec_dists</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, training <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dists_to_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec_dists</span>, new_data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dists_to_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec_dists</span>, new_data <span class="op">=</span> <span class="va">penguins</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## on log scale:</span></span></span>
 <span class="r-in"><span><span class="va">dist_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"classdist"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dists_to_species</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dists_to_species</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="va">dist_cols</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 150 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Species classdist_setosa classdist_versicolor classdist_virginica</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> setosa            -<span style="color: #BB0000;">0.800</span>                 4.74                5.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> setosa             0.733                 4.42                5.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> setosa             0.250                 4.55                5.08</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> setosa             0.534                 4.42                4.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> setosa            -<span style="color: #BB0000;">0.272</span>                 4.79                5.22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> setosa             1.31                  4.79                5.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> setosa             1.23                  4.56                5.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> setosa            -<span style="color: #BB0000;">1.07</span>                  4.64                5.12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> setosa             1.10                  4.30                4.89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> setosa             1.16                  4.54                5.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 140 more rows</span></span>
+<span class="r-in"><span><span class="va">dists_to_species</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="va">dist_cols</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 333 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    species classdist_Adelie classdist_Chinstrap classdist_Gentoo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Adelie             1.04                 3.19             5.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Adelie             0.670                2.61             4.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Adelie             1.45                 2.39             4.68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Adelie             1.20                 3.42             5.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Adelie             1.72                 3.57             5.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Adelie             0.903                2.87             4.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Adelie             1.78                 3.61             4.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Adelie             1.66                 2.17             4.88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Adelie             2.05                 3.85             5.45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Adelie             2.72                 4.24             5.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 323 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   terms                    value class id             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric_predictors()    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>    classdist_98eTS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> all_numeric_predictors()    <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>    classdist_NTLVp</span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">rec_dists</span>, number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    terms        value class      id             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Sepal.Length 5.01  setosa     classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Sepal.Width  3.43  setosa     classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Petal.Length 1.46  setosa     classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Petal.Width  0.246 setosa     classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Sepal.Length 5.94  versicolor classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Sepal.Width  2.77  versicolor classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Petal.Length 4.26  versicolor classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Petal.Width  1.33  versicolor classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Sepal.Length 6.59  virginica  classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Sepal.Width  2.97  virginica  classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> Petal.Length 5.55  virginica  classdist_98eTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> Petal.Width  2.03  virginica  classdist_98eTS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    terms              value class     id             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> bill_length_mm      38.8 Adelie    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> bill_depth_mm       18.3 Adelie    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> flipper_length_mm  190.  Adelie    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> body_mass_g       <span style="text-decoration: underline;">3</span>706.  Adelie    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> bill_length_mm      48.8 Chinstrap classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> bill_depth_mm       18.4 Chinstrap classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> flipper_length_mm  196.  Chinstrap classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> body_mass_g       <span style="text-decoration: underline;">3</span>733.  Chinstrap classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> bill_length_mm      47.6 Gentoo    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> bill_depth_mm       15.0 Gentoo    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> flipper_length_mm  217.  Gentoo    classdist_NTLVp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> body_mass_g       <span style="text-decoration: underline;">5</span>092.  Gentoo    classdist_NTLVp</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
