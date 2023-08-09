@@ -144,6 +144,20 @@ test_that("shrunken centroids", {
   )
 })
 
+test_that("tunable", {
+  rec <-
+    recipe(~., data = iris) %>%
+    step_classdist_shrunken(all_predictors())
+  rec_param <- tunable.step_classdist_shrunken(rec$steps[[1]])
+  expect_equal(rec_param$name, "threshold")
+  expect_true(all(rec_param$source == "recipe"))
+  expect_true(is.list(rec_param$call_info))
+  expect_equal(nrow(rec_param), 1)
+  expect_equal(
+    names(rec_param),
+    c("name", "call_info", "source", "component", "component_id")
+  )
+})
 
 # Infrastructure ---------------------------------------------------------------
 
@@ -244,4 +258,17 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("tunable is setup to work with extract_parameter_set_dials", {
+  skip_if_not_installed("dials")
+  rec <- recipe(~., data = mtcars) %>%
+    step_classdist_shrunken(
+      all_predictors(), threshold = hardhat::tune()
+    )
+
+  params <- extract_parameter_set_dials(rec)
+
+  expect_s3_class(params, "parameters")
+  expect_identical(nrow(params), 1L)
 })
