@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* `step_classdist_shrunken()`, a regularized version of `step_classdist()`, was added. 
+
 * `step_regex()` and `step_count()` will now informatively error if name collision occurs.
 
 * Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection. All steps now leave data unmodified when having empty selections.
