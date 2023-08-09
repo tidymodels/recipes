@@ -71,6 +71,26 @@ to the regularized class centroid. This is done for each value of a
 categorical class variable.
 }
 \details{
+Class-specific centroids are the multivariate averages of each predictor
+using the data from each class in the training set. When pre-processing a
+new data point, this step computes the distance from the new point to each
+of the class centroids. These distance features can be very effective at
+capturing linear class boundaries. for this reason, they can be useful to
+add to an existing predictor set used within a nonlinear model. If the true
+boundary is actually linear, the model will have an easier time learning the
+training data patterns.
+
+Shrunken centroids use a form of regularization where the class-specific
+centroids are contracted to the overall class-independent centroid. If a
+predictor is uninformative, shrinking it may move it entirely to the overall
+centroid. This has the effect of removing that predictor's effect on the new
+distance features. However, it may not move all of the class-specific
+features to the center in many cases. This means that some features will
+only affect the classification of specific classes.
+
+The \code{threshold} parameter can be used to optimized how much regularization
+should be used.
+
 \code{step_classdist_shrunken} will create a new column for every unique value of
 the \code{class} variable. The resulting variables will not replace the original
 values and, by default, have the prefix \code{classdist_}. The naming format can

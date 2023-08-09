@@ -82,6 +82,15 @@ the \code{class} variable. The resulting variables will not replace the original
 values and, by default, have the prefix \code{classdist_}. The naming format can
 be changed using the \code{prefix} argument.
 
+Class-specific centroids are the multivariate averages of each predictor
+using the data from each class in the training set. When pre-processing a
+new data point, this step computes the distance from the new point to each
+of the class centroids. These distance features can be very effective at
+capturing linear class boundaries. for this reason, they can be useful to
+add to an existing predictor set used within a nonlinear model. If the true
+boundary is actually linear, the model will have an easier time learning the
+training data patterns.
+
 Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables
 listed in the \code{terms} argument. If \code{pool = TRUE},
