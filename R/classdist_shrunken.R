@@ -267,7 +267,7 @@ new_shrunken_scores <- function(object, new_data, prefix = "classdist_", log = T
 }
 # ------------------------------------------------------------------------------
 
-
+#' @export
 prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
   y_names <- recipes_eval_select(x$class, training, info)
@@ -327,6 +327,7 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_classdist_shrunken <- function(object, new_data, ...) {
   col_names <- unique(object$objects$variable)
   check_new_data(col_names, object, new_data)
