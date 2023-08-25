@@ -99,7 +99,7 @@ test_that("tunable", {
 
 test_that("works when baked with 1 row", {
   rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_bs(disp, deg_free = 3) %>%
+    step_bs(disp) %>%
     prep()
 
   expect_no_error(
