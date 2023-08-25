@@ -1,5 +1,7 @@
 # recipes (development version)
 
+## Bug Fixes
+
 * Fixed bugs where spline steps (`step_ns()`, `step_bs()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`) would error if baked with 1 row. (#1191)
 
 # recipes 1.0.7
