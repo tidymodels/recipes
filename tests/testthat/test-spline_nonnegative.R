@@ -109,6 +109,18 @@ test_that("tunable", {
   )
 })
 
+test_that("works when baked with 1 row", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_spline_nonnegative(disp) %>%
+    prep()
+
+  expect_no_error(
+    res <- bake(rec, mtcars[1, ])
+  )
+
+  expect_identical(nrow(res), 1L)
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

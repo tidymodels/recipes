@@ -132,7 +132,7 @@ bs_statistics <- function(x, args) {
 bs_predict <- function(object, x) {
   xu <- unique(x)
   ru <- predict(object, xu)
-  res <- ru[match(x, xu), ]
+  res <- ru[match(x, xu), , drop = FALSE]
   copy_attrs <- c("class", "degree", "knots", "Boundary.knots", "intercept")
   attributes(res)[copy_attrs] <- attributes(ru)[copy_attrs]
   res
