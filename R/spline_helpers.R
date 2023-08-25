@@ -45,6 +45,9 @@ spline2_apply <- function(object, new_data) {
   .cl <- rlang::call2(.ns = .ns, .fn = .fn, !!!object, x = rlang::expr(new_data))
   res <- rlang::eval_tidy(.cl)
   res <- apply(res, 2, I)
+  if (length(new_data) == 1) {
+    res <- matrix(res, nrow = 1, dimnames = dimnames(res))
+  }
   colnames(res) <- names0(ncol(res), paste0(nm, "_"))
   tibble::as_tibble(res)
 }
