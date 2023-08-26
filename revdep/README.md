@@ -1,27 +1,27 @@
 # Platform
 
-|field    |value                                          |
-|:--------|:----------------------------------------------|
-|version  |R version 4.3.0 (2023-04-21)                   |
-|os       |macOS Ventura 13.4                             |
-|system   |aarch64, darwin20                              |
-|ui       |RStudio                                        |
-|language |(EN)                                           |
-|collate  |en_US.UTF-8                                    |
-|ctype    |en_US.UTF-8                                    |
-|tz       |America/Los_Angeles                            |
-|date     |2023-08-09                                     |
-|rstudio  |2023.09.0-daily+233 Desert Sunflower (desktop) |
-|pandoc   |2.17.1.1 @ /opt/homebrew/bin/pandoc            |
+|field    |value                                                                                      |
+|:--------|:------------------------------------------------------------------------------------------|
+|version  |R version 4.3.0 (2023-04-21)                                                               |
+|os       |macOS Ventura 13.5                                                                         |
+|system   |aarch64, darwin20                                                                          |
+|ui       |RStudio                                                                                    |
+|language |(EN)                                                                                       |
+|collate  |en_US.UTF-8                                                                                |
+|ctype    |en_US.UTF-8                                                                                |
+|tz       |America/Los_Angeles                                                                        |
+|date     |2023-08-25                                                                                 |
+|rstudio  |2023.09.0-daily+343 Desert Sunflower (desktop)                                             |
+|pandoc   |3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown) |
 
 # Dependencies
 
 |package      |old        |new        |Δ  |
 |:------------|:----------|:----------|:--|
-|recipes      |1.0.6      |1.0.6.9000 |*  |
+|recipes      |1.0.7      |1.0.7.9000 |*  |
 |cli          |3.6.1      |3.6.1      |   |
 |clock        |0.7.0      |0.7.0      |   |
-|cpp11        |0.4.5      |0.4.5      |   |
+|cpp11        |0.4.6      |0.4.6      |   |
 |data.table   |1.14.8     |1.14.8     |   |
 |diagram      |1.6.5      |1.6.5      |   |
 |digest       |0.6.33     |0.6.33     |   |
@@ -46,8 +46,8 @@
 |pillar       |1.9.0      |1.9.0      |   |
 |pkgconfig    |2.0.3      |2.0.3      |   |
 |prodlim      |2023.03.31 |2023.03.31 |   |
-|progressr    |0.13.0     |0.13.0     |   |
-|purrr        |1.0.1      |1.0.1      |   |
+|progressr    |0.14.0     |0.14.0     |   |
+|purrr        |1.0.2      |1.0.2      |   |
 |R6           |2.5.1      |2.5.1      |   |
 |Rcpp         |1.0.11     |1.0.11     |   |
 |rlang        |1.1.1      |1.1.1      |   |

@@ -91,19 +91,19 @@ Run `revdepcheck::revdep_details(, "hydrorecipes")` for more info
 ** package ‘hydrorecipes’ successfully unpacked and MD5 sums checked
 ** using staged installation
 ** libs
-using C++ compiler: ‘Apple clang version 14.0.3 (clang-1403.0.22.14.1)’
+using C++ compiler: ‘Apple clang version 15.0.0 (clang-1500.0.40.1)’
 using C++11
-using SDK: ‘MacOSX13.3.sdk’
+using SDK: ‘MacOSX14.0.sdk’
 clang++ -arch arm64 -std=gnu++11 -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/include" -DNDEBUG  -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/recipes/new/Rcpp/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppArmadillo/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppParallel/include' -I/opt/R/arm64/include    -fPIC  -falign-functions=64 -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
 clang++ -arch arm64 -std=gnu++11 -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/include" -DNDEBUG  -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/recipes/new/Rcpp/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppArmadillo/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppParallel/include' -I/opt/R/arm64/include    -fPIC  -falign-functions=64 -Wall -g -O2  -c lags.cpp -o lags.o
 In file included from lags.cpp:7:
 ...
-          ^
-3 warnings generated.
 clang++ -arch arm64 -std=gnu++11 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib -L/opt/R/arm64/lib -o hydrorecipes.so RcppExports.o lags.o -L/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib -lRlapack -L/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib -lRblas -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0 -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath -F/Library/Frameworks/R.framework/Versions/4.3-arm64 -framework R -Wl,-framework -Wl,CoreFoundation
-ld: warning: directory not found for option '-L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0'
-ld: warning: directory not found for option '-L/opt/gfortran/lib'
-ld: library not found for -lgfortran
+ld: warning: -single_module is obsolete
+ld: warning: -multiply_defined is obsolete
+ld: warning: search path '/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0' not found
+ld: warning: search path '/opt/gfortran/lib' not found
+ld: library 'gfortran' not found
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 make: *** [hydrorecipes.so] Error 1
 ERROR: compilation failed for package ‘hydrorecipes’
@@ -118,19 +118,19 @@ ERROR: compilation failed for package ‘hydrorecipes’
 ** package ‘hydrorecipes’ successfully unpacked and MD5 sums checked
 ** using staged installation
 ** libs
-using C++ compiler: ‘Apple clang version 14.0.3 (clang-1403.0.22.14.1)’
+using C++ compiler: ‘Apple clang version 15.0.0 (clang-1500.0.40.1)’
 using C++11
-using SDK: ‘MacOSX13.3.sdk’
+using SDK: ‘MacOSX14.0.sdk’
 clang++ -arch arm64 -std=gnu++11 -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/include" -DNDEBUG  -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/recipes/old/Rcpp/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppArmadillo/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppParallel/include' -I/opt/R/arm64/include    -fPIC  -falign-functions=64 -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
 clang++ -arch arm64 -std=gnu++11 -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/include" -DNDEBUG  -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/recipes/old/Rcpp/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppArmadillo/include' -I'/Users/emilhvitfeldt/Github/recipes/revdep/library.noindex/hydrorecipes/RcppParallel/include' -I/opt/R/arm64/include    -fPIC  -falign-functions=64 -Wall -g -O2  -c lags.cpp -o lags.o
 In file included from lags.cpp:7:
 ...
-          ^
-3 warnings generated.
 clang++ -arch arm64 -std=gnu++11 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib -L/opt/R/arm64/lib -o hydrorecipes.so RcppExports.o lags.o -L/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib -lRlapack -L/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib -lRblas -L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0 -L/opt/gfortran/lib -lgfortran -lemutls_w -lquadmath -F/Library/Frameworks/R.framework/Versions/4.3-arm64 -framework R -Wl,-framework -Wl,CoreFoundation
-ld: warning: directory not found for option '-L/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0'
-ld: warning: directory not found for option '-L/opt/gfortran/lib'
-ld: library not found for -lgfortran
+ld: warning: -single_module is obsolete
+ld: warning: -multiply_defined is obsolete
+ld: warning: search path '/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/12.2.0' not found
+ld: warning: search path '/opt/gfortran/lib' not found
+ld: library 'gfortran' not found
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 make: *** [hydrorecipes.so] Error 1
 ERROR: compilation failed for package ‘hydrorecipes’
