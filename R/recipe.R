@@ -684,14 +684,10 @@ turn_strings_to_factors <- function(object, new_data) {
   string_names <- intersect(names(var_levels), names(new_data))
   var_levels <- var_levels[string_names]
 
-  check_values <-
-    vapply(var_levels, function(x) {
-      (!all(is.na(x)))
-    }, c(all = TRUE))
-
+  not_all_na <- purrr::map_lgl(var_levels, function(x) !all(is.na(x)))
   output_factor <- purrr::map_lgl(object$template[string_names], is.factor)
 
-  var_levels <- var_levels[check_values & output_factor]
+  var_levels <- var_levels[not_all_na & output_factor]
 
   if (length(var_levels) > 0) {
     new_data <- strings2factors(new_data, var_levels)
