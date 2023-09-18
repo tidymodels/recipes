@@ -666,11 +666,19 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
                                    check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
+  new_data <- turn_strings_to_factors(object, new_data)
+
+  new_data <- hardhat::recompose(new_data, composition = composition)
+
+  new_data
+}
+
+turn_strings_to_factors <- function(object, new_data) {
   ## The levels are not null when no nominal data are present or
   ## if strings_as_factors = FALSE in `prep`
   if (!is.null(object$levels)) {
     var_levels <- object$levels
-    var_levels <- var_levels[out_names]
+    var_levels <- var_levels[names(new_data)]
     check_values <-
       vapply(var_levels, function(x) {
         (!all(is.na(x)))
@@ -680,8 +688,6 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
       new_data <- strings2factors(new_data, var_levels)
     }
   }
-
-  new_data <- hardhat::recompose(new_data, composition = composition)
 
   new_data
 }
@@ -861,19 +867,7 @@ juice <- function(object, ..., composition = "tibble") {
                                    check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
-  ## Since most models require factors, do the conversion from character
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[out_names]
-    check_values <-
-      vapply(var_levels, function(x) {
-        (!all(is.na(x)))
-      }, c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0) {
-      new_data <- strings2factors(new_data, var_levels)
-    }
-  }
+  new_data <- turn_strings_to_factors(object, new_data)
 
   new_data <- hardhat::recompose(new_data, composition = composition)
 
