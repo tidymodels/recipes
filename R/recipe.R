@@ -676,17 +676,19 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 turn_strings_to_factors <- function(object, new_data) {
   ## The levels are not null when no nominal data are present or
   ## if strings_as_factors = FALSE in `prep`
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[names(new_data)]
-    check_values <-
-      vapply(var_levels, function(x) {
-        (!all(is.na(x)))
-      }, c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0) {
-      new_data <- strings2factors(new_data, var_levels)
-    }
+  if (is.null(object$levels)) {
+    return(new_data)
+  }
+
+  var_levels <- object$levels
+  var_levels <- var_levels[names(new_data)]
+  check_values <-
+    vapply(var_levels, function(x) {
+      (!all(is.na(x)))
+    }, c(all = TRUE))
+  var_levels <- var_levels[check_values]
+  if (length(var_levels) > 0) {
+    new_data <- strings2factors(new_data, var_levels)
   }
 
   new_data
