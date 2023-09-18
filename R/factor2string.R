@@ -8,10 +8,11 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details `prep` has an option `strings_as_factors` that defaults to `TRUE`.
-#'   If this step is used with the default option, the string(s() produced by
-#'   this step will be converted to factors after all of the steps have been
-#'   prepped.
+#' @details
+#'
+#' [prep()] has an option `strings_as_factors` that defaults to `TRUE`. If this
+#' step is used with the default option, the strings produced by this step will
+#' not be converted to factors.
 #'
 #' # Tidying
 #'

@@ -48,10 +48,9 @@ sequence of any existing operations.
 convert one or more factor vectors to strings.
 }
 \details{
-\code{prep} has an option \code{strings_as_factors} that defaults to \code{TRUE}.
-If this step is used with the default option, the string(s() produced by
-this step will be converted to factors after all of the steps have been
-prepped.
+\code{\link[=prep]{prep()}} has an option \code{strings_as_factors} that defaults to \code{TRUE}. If this
+step is used with the default option, the strings produced by this step will
+not be converted to factors.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns \code{terms}
