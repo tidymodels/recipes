@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
+
 # recipes 1.0.8
 
 ## Bug Fixes
