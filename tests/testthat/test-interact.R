@@ -233,34 +233,6 @@ test_that("replacing selectors in formulas", {
   )
 })
 
-test_that("missing columns", {
-  skip("redundant with check_new_data checks")
-
-  no_fail <-
-    rec %>%
-    step_rm(x1) %>%
-    step_interact(~ x1:x2)
-  expect_snapshot(no_fail_rec <- prep(no_fail, dat_tr))
-  no_fail_res <- bake(no_fail_rec, new_data = NULL) %>% names()
-  expect_true(!any(grepl("_x_", no_fail_res)))
-
-  one_int <-
-    rec %>%
-    step_rm(x1) %>%
-    step_interact(~ x1:x2) %>%
-    step_interact(~ x3:x2)
-  expect_snapshot(one_int_rec <- prep(one_int, dat_tr))
-  one_int_res <- bake(one_int_rec, new_data = NULL) %>% names()
-  expect_true(sum(grepl("_x_", one_int_res)) == 1)
-
-  with_selectors <-
-    rec %>%
-    step_rm(x1) %>%
-    step_interact(~ starts_with("x"):starts_with("x")) %>%
-    step_interact(~ x3:x2)
-  expect_warning(prep(with_selectors, dat_tr), regexp = NA)
-})
-
 test_that('with factors', {
   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
     step_interact(~ (. - Sepal.Width)^2, sep = ":")
