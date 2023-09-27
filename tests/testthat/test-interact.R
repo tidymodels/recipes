@@ -261,26 +261,24 @@ test_that("missing columns", {
   expect_warning(prep(with_selectors, dat_tr), regexp = NA)
 })
 
+test_that('with factors', {
+  int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
+    step_interact(~ (. - Sepal.Width)^2, sep = ":")
+  int_rec_trained <- prep(int_rec, iris)
 
-# currently failing; try to figure out why
-# test_that('with factors', {
-#   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
-#     step_interact(~ (. - Sepal.Width)^3, sep = ":")
-#   int_rec_trained <- prep(int_rec, iris)
-#
-#   te_new <- bake(int_rec_trained, new_data = iris, role = "predictor")
-#   te_new <- te_new[, sort(names(te_new))]
-#   te_new <- as.matrix(te_new)
-#
-#   og_terms <- terms(Sepal.Width ~ (.)^3, data = iris)
-#   te_og <- model.matrix(og_terms, data = iris)[, -1]
-#   te_og <- te_og[, sort(colnames(te_og))]
-#
-#   rownames(te_new) <- NULL
-#   rownames(te_og) <- NULL
-#
-#   all.equal(te_og, te_new)
-# })
+  te_new <- bake(int_rec_trained, new_data = iris, all_predictors(), - Species)
+  te_new <- te_new[, sort(names(te_new))]
+  te_new <- as.matrix(te_new)
+
+  og_terms <- terms(Sepal.Width ~ (.)^2-Species, data = iris)
+  te_og <- model.matrix(og_terms, data = iris)[, -1]
+  te_og <- te_og[, sort(colnames(te_og))]
+
+  rownames(te_new) <- NULL
+  rownames(te_og) <- NULL
+
+  expect_identical(te_og, te_new)
+})
 
 test_that("works when formula is passed in as an object", {
   rec1 <- recipe(~., data = mtcars) %>%
