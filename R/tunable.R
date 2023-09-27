@@ -3,7 +3,8 @@ tunable.recipe <- function(x, ...) {
   if (length(x$steps) == 0) {
     res <- no_param
   } else {
-    res <- purrr::map_dfr(x$steps, tunable)
+    res <- purrr::map(x$steps, tunable)
+    res <- vctrs::vec_rbind(!!!res)
     if (nrow(res) > 0) {
       res <- res[!is.na(res$name), ]
     }

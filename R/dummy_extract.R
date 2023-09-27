@@ -302,7 +302,8 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, ~ list(columns = .x), FALSE, .id = "terms")
+      res <- purrr::map(x$levels, ~ tibble(columns = .x), FALSE)
+      res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
     }

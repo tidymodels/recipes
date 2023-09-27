@@ -196,7 +196,9 @@ tidy.step_percentile <- function(x, ...) {
         percentile = numeric()
       )
     } else {
-      res <- map_dfr(x$ref_dist, format_pctl, .id = "term")
+      res <- map(x$ref_dist, format_pctl)
+      res <- purrr::list_rbind(res, names_to = "terms")
+
     }
   } else {
     term_names <- sel2char(x$terms)
