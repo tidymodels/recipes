@@ -136,7 +136,8 @@ bake.step_holiday <- function(object, new_data, ...) {
     )
 
     names(tmp) <- paste(col_name, names(tmp), sep = "_")
-    tmp <- purrr::map_dfc(tmp, vec_cast, integer())
+    tmp <- purrr::map(tmp, vec_cast, integer())
+    tmp <- vctrs::vec_cbind(!!!tmp)
 
     tmp <- check_name(tmp, new_data, object, names(tmp))
     new_data <- vec_cbind(new_data, tmp)

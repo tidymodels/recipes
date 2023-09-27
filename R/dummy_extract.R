@@ -242,7 +242,8 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
       sort(object$levels[[col_name]]),
       object$other
     )
-    indicators <- purrr::map_dfc(indicators, vec_cast, integer())
+    indicators <- purrr::map(indicators, vec_cast, integer())
+    indicators <- vctrs::vec_cbind(!!!indicators)
 
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_name), "", colnames(indicators))
