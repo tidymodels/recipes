@@ -882,8 +882,6 @@ juice <- function(object, ..., composition = "tibble") {
 
 formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")
 
-utils::globalVariables(c("number"))
-
 # ------------------------------------------------------------------------------
 
 #' S3 methods for tracking which additional packages are needed for steps.
