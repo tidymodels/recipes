@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Document that `update_role()`, `add_role()` and `remove_role()` are applied before steps and checks. (#778)
+
 # recipes 1.0.8
 
 ## Improvements
