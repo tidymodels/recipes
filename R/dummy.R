@@ -354,7 +354,8 @@ get_dummy_columns <- function(x, one_hot) {
 tidy.step_dummy <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, get_dummy_columns, x$one_hot, .id = "terms")
+      res <- purrr::map(x$levels, get_dummy_columns, x$one_hot)
+      res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
     }

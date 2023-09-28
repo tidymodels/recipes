@@ -242,7 +242,8 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
       sort(object$levels[[col_name]]),
       object$other
     )
-    indicators <- purrr::map_dfc(indicators, vec_cast, integer())
+    indicators <- purrr::map(indicators, vec_cast, integer())
+    indicators <- vctrs::vec_cbind(!!!indicators)
 
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_name), "", colnames(indicators))
@@ -301,7 +302,8 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, ~ list(columns = .x), FALSE, .id = "terms")
+      res <- purrr::map(x$levels, ~ tibble(columns = .x), FALSE)
+      res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
     }

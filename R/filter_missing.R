@@ -134,7 +134,8 @@ print.step_filter_missing <-
   }
 
 filter_missing_fun <- function(x, threshold, wts) {
-  x_na <- purrr::map_dfc(x, is.na)
+  x_na <- purrr::map(x, is.na)
+  x_na <- vctrs::vec_cbind(!!!x_na)
   missing <- averages(x_na, wts = wts)
   removal_ind <- which(missing > threshold)
   names(x)[removal_ind]
