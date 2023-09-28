@@ -46,8 +46,8 @@
 #' dplyr_test <-
 #'   iris %>%
 #'   as_tibble() %>%
-#'   slice(76:150) %>%
-#'   slice(1:3)
+#'   slice(76:150)
+#'
 #' rec_test <- bake(prepped, iris %>% slice(76:150))
 #' all.equal(dplyr_test, rec_test)
 #'
@@ -58,8 +58,8 @@
 #'
 #' qq_rec <-
 #'   recipe(~., data = iris) %>%
-#'   # Embed `keep_rows` in the call using !!
-#'   step_slice(!!keep_rows) %>%
+#'   # Embed `keep_rows` in the call using !!!
+#'   step_slice(!!!keep_rows) %>%
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
