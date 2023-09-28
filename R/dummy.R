@@ -6,52 +6,50 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose variables
-#'  for this step. See [selections()] for more details. The selected
-#'  variables _must_ be factors.
+#' @param ... One or more selector functions to choose variables for this step.
+#'   See [selections()] for more details. The selected variables _must_ be
+#'   factors.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
-#' rather than C-1?
-#' @param preserve Use `keep_original_cols` to specify whether the selected
-#'  column(s) should be retained (in addition to the new dummy variables).
-#' @param naming A function that defines the naming convention for
-#'  new dummy columns. See Details below.
-#' @param levels A list that contains the information needed to
-#'  create dummy variables for each variable contained in
-#'  `terms`. This is `NULL` until the step is trained by
-#'  [prep()].
+#'   rather than C-1?
+#' @param preserve This argument has been deprecated. Please use
+#'   `keep_original_cols` instead.
+#' @param naming A function that defines the naming convention for new dummy
+#'   columns. See Details below.
+#' @param levels A list that contains the information needed to create dummy
+#'   variables for each variable contained in `terms`. This is `NULL` until the
+#'   step is trained by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
-#' @details `step_dummy()` will create a set of binary dummy
-#'  variables from a factor variable. For example, if an unordered
-#'  factor column in the data set has levels of "red", "green",
-#'  "blue", the dummy variable bake will create two additional
-#'  columns of 0/1 data for two of those three values (and remove
-#'  the original column). For ordered factors, polynomial contrasts
-#'  are used to encode the numeric values.
+#' @details
 #'
-#' By default, the excluded dummy variable (i.e. the reference
-#'  cell) will correspond to the first level of the unordered
-#'  factor being converted.
+#' `step_dummy()` will create a set of binary dummy variables from a factor
+#' variable. For example, if an unordered factor column in the data set has
+#' levels of "red", "green", "blue", the dummy variable bake will create two
+#' additional columns of 0/1 data for two of those three values (and remove the
+#' original column). For ordered factors, polynomial contrasts are used to
+#' encode the numeric values.
+#'
+#' By default, the excluded dummy variable (i.e. the reference cell) will
+#' correspond to the first level of the unordered factor being converted.
 #'
 #' @template dummy-naming
 #'
 #' @details
 #'
-#' To change the type of contrast being used, change the global
-#' contrast option via `options`.
+#' To change the type of contrast being used, change the global contrast option
+#' via `options`.
 #'
-#' When the factor being converted has a missing value, all of the
-#'  corresponding dummy variables are also missing. See [step_unknown()] for
-#'  a solution.
+#' When the factor being converted has a missing value, all of the corresponding
+#' dummy variables are also missing. See [step_unknown()] for a solution.
 #'
-#' When data to be processed contains novel levels (i.e., not
-#' contained in the training set), a missing value is assigned to
-#' the results. See [step_other()] for an alternative.
+#' When data to be processed contains novel levels (i.e., not contained in the
+#' training set), a missing value is assigned to the results. See [step_other()]
+#' for an alternative.
 #'
-#' If no columns are selected (perhaps due to an earlier `step_zv()`),
-#'  [bake()] will return the data as-is (e.g. with no dummy variables).
+#' If no columns are selected (perhaps due to an earlier `step_zv()`), [bake()]
+#' will return the data as-is (e.g. with no dummy variables).
 #'
 #' Note that, by default, the new dummy variable column names obey the naming
 #' rules for columns. If there are levels such as "0", [dummy_names()] will put
@@ -65,11 +63,11 @@
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or original variables selected) and `columns`
-#'  (the list of corresponding binary columns) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
+#' (the selectors or original variables selected) and `columns` (the list of
+#' corresponding binary columns) is returned.
 #'
 #' @template case-weights-not-supported
 #'
