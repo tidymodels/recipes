@@ -50,13 +50,12 @@ to \code{other}.}
 
 \item{other}{A single character value for the "other" category.}
 
-\item{naming}{A function that defines the naming convention for
-new dummy columns. See Details below.}
+\item{naming}{A function that defines the naming convention for new dummy
+columns. See Details below.}
 
-\item{levels}{A list that contains the information needed to
-create dummy variables for each variable contained in
-\code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep]{prep()}}.}
+\item{levels}{A list that contains the information needed to create dummy
+variables for each variable contained in \code{terms}. This is \code{NULL} until the
+step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -81,7 +80,7 @@ model terms for the extracted levels.
 }
 \details{
 \code{step_dummy_extract()} will create a set of integer dummy
-variables from a character variable by extract individual strings
+variables from a character variable by extracting individual strings
 by either splitting or extracting then counting those to create
 count variables.
 
