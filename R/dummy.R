@@ -33,6 +33,11 @@
 #'
 #' By default, the excluded dummy variable (i.e. the reference cell) will
 #' correspond to the first level of the unordered factor being converted.
+#' `step_relevel()` can be used to create a new reference level by setting the
+#' `ref_level` argument.
+#'
+#' This
+#' can be done using `step_relevel()`.
 #'
 #' @template dummy-naming
 #'
