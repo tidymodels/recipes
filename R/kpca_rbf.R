@@ -1,4 +1,4 @@
-#' Radial Basis Function Kernel PCA Signal Extraction
+#' Radial basis function kernel PCA signal extraction
 #'
 #' `step_kpca_rbf()` creates a *specification* of a recipe step that will
 #' convert numeric data into one or more principal components using a radial

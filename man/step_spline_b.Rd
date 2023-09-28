@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_b.R
 \name{step_spline_b}
 \alias{step_spline_b}
-\title{Basis Splines}
+\title{Basis splines}
 \usage{
 step_spline_b(
   recipe,

@@ -1,4 +1,4 @@
-#' Non-Negative Splines
+#' Non-negative splines
 #'
 #' `step_spline_nonnegative()` creates a *specification* of a recipe step that
 #' creates non-negative spline features.

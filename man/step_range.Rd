@@ -2,7 +2,7 @@
 % Please edit documentation in R/range.R
 \name{step_range}
 \alias{step_range}
-\title{Scaling Numeric Data to a Specific Range}
+\title{Scaling numeric data to a specific range}
 \usage{
 step_range(
   recipe,

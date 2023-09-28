@@ -2,7 +2,7 @@
 % Please edit documentation in R/depth.R
 \name{step_depth}
 \alias{step_depth}
-\title{Data Depths}
+\title{Data depths}
 \usage{
 step_depth(
   recipe,

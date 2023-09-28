@@ -2,7 +2,7 @@
 % Please edit documentation in R/ns.R
 \name{step_ns}
 \alias{step_ns}
-\title{Natural Spline Basis Functions}
+\title{Natural spline basis functions}
 \usage{
 step_ns(
   recipe,

@@ -1,4 +1,4 @@
-#' Collapse Some Categorical Levels
+#' Collapse infrequent categorical levels
 #'
 #' `step_other()` creates a *specification* of a recipe step that will
 #' potentially pool infrequently occurring values into an `"other"` category.

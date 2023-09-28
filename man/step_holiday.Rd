@@ -2,7 +2,7 @@
 % Please edit documentation in R/holiday.R
 \name{step_holiday}
 \alias{step_holiday}
-\title{Holiday Feature Generator}
+\title{Holiday feature generator}
 \usage{
 step_holiday(
   recipe,

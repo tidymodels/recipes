@@ -2,7 +2,7 @@
 % Please edit documentation in R/kpca_rbf.R
 \name{step_kpca_rbf}
 \alias{step_kpca_rbf}
-\title{Radial Basis Function Kernel PCA Signal Extraction}
+\title{Radial basis function kernel PCA signal extraction}
 \usage{
 step_kpca_rbf(
   recipe,

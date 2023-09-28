@@ -1,4 +1,4 @@
-#' Spatial Sign Preprocessing
+#' Spatial sign preprocessing
 #'
 #' `step_spatialsign()` is a *specification* of a recipe step that will convert
 #' numeric data into a projection on to a unit sphere.

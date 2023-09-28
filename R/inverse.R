@@ -1,4 +1,4 @@
-#' Inverse Transformation
+#' Inverse transformation
 #'
 #' `step_inverse()` creates a *specification* of a recipe step that will inverse
 #' transform the data.

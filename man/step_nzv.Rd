@@ -2,7 +2,7 @@
 % Please edit documentation in R/nzv.R
 \name{step_nzv}
 \alias{step_nzv}
-\title{Near-Zero Variance Filter}
+\title{Near-zero variance filter}
 \usage{
 step_nzv(
   recipe,

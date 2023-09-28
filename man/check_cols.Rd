@@ -2,7 +2,7 @@
 % Please edit documentation in R/colcheck.R
 \name{check_cols}
 \alias{check_cols}
-\title{Check if all Columns are Present}
+\title{Check if all columns are present}
 \usage{
 check_cols(
   recipe,

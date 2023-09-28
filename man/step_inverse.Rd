@@ -2,7 +2,7 @@
 % Please edit documentation in R/inverse.R
 \name{step_inverse}
 \alias{step_inverse}
-\title{Inverse Transformation}
+\title{Inverse transformation}
 \usage{
 step_inverse(
   recipe,

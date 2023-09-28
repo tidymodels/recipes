@@ -2,7 +2,7 @@
 % Please edit documentation in R/other.R
 \name{step_other}
 \alias{step_other}
-\title{Collapse Some Categorical Levels}
+\title{Collapse infrequent categorical levels}
 \usage{
 step_other(
   recipe,

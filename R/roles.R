@@ -1,4 +1,4 @@
-#' Manually Alter Roles
+#' Manually alter roles
 #'
 #' @description
 #' `update_role()` alters an existing role in the recipe or assigns an initial

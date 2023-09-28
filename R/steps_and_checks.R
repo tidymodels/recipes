@@ -1,4 +1,4 @@
-## Overall Wrappers to Make New `step_X` or `check_Y` Objects
+## Overall wrappers to make new `step_X` or `check_Y` objects
 #'
 #' `step` sets the class of the `step` and `check` is for checks.
 #'

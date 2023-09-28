@@ -1,4 +1,4 @@
-#' Check Range Consistency
+#' Check range consistency
 #'
 #' `check_range` creates a *specification* of a recipe
 #'  check that will check if the range of a numeric

@@ -119,7 +119,7 @@
 \alias{tidy.step_unorder}
 \alias{tidy.step_window}
 \alias{tidy.step_zv}
-\title{Tidy the Result of a Recipe}
+\title{Tidy the result of a recipe}
 \usage{
 \method{tidy}{step_BoxCox}(x, ...)
 

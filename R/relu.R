@@ -1,4 +1,4 @@
-#' Apply (Smoothed) Rectified Linear Transformation
+#' Apply (smoothed) rectified linear transformation
 #'
 #' `step_relu()` creates a *specification* of a recipe step that will add the
 #' rectified linear or softplus transformations of a variable to the data set.

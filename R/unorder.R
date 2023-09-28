@@ -1,4 +1,4 @@
-#' Convert Ordered Factors to Unordered Factors
+#' Convert ordered factors to unordered factors
 #'
 #' `step_unorder()` creates a *specification* of a recipe step that will turn
 #' ordered factor variables into unordered factor variables.

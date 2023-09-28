@@ -1,4 +1,4 @@
-#' High Correlation Filter
+#' High correlation filter
 #'
 #' `step_corr()` creates a *specification* of a recipe step that will
 #' potentially remove variables that have large absolute correlations with other

@@ -2,7 +2,7 @@
 % Please edit documentation in R/kpca.R
 \name{step_kpca}
 \alias{step_kpca}
-\title{Kernel PCA Signal Extraction}
+\title{Kernel PCA signal extraction}
 \usage{
 step_kpca(
   recipe,

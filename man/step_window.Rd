@@ -2,7 +2,7 @@
 % Please edit documentation in R/window.R
 \name{step_window}
 \alias{step_window}
-\title{Moving Window Functions}
+\title{Moving window functions}
 \usage{
 step_window(
   recipe,

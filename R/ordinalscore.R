@@ -1,4 +1,4 @@
-#' Convert Ordinal Factors to Numeric Scores
+#' Convert ordinal factors to numeric scores
 #'
 #' `step_ordinalscore()` creates a *specification* of a recipe step that will
 #' convert ordinal factor variables into numeric scores.

@@ -1,4 +1,4 @@
-#' Create Missing Data Column Indicators
+#' Create missing data column indicators
 #'
 #' `step_indicate_na()` creates a *specification* of a recipe step that will
 #' create and append additional binary columns to the data set to indicate which

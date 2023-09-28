@@ -1,4 +1,4 @@
-#' Time Feature Generator
+#' Time feature generator
 #'
 #' `step_time()` creates a *specification* of a recipe step that will convert
 #' date-time data into one or more factor or numeric variables.

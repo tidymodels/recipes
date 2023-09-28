@@ -2,7 +2,7 @@
 % Please edit documentation in R/profile.R
 \name{step_profile}
 \alias{step_profile}
-\title{Create a Profiling Version of a Data Set}
+\title{Create a profiling version of a data set}
 \usage{
 step_profile(
   recipe,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/range_check.R
 \name{check_range}
 \alias{check_range}
-\title{Check Range Consistency}
+\title{Check range consistency}
 \usage{
 check_range(
   recipe,

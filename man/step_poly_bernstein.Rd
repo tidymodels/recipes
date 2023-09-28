@@ -2,7 +2,7 @@
 % Please edit documentation in R/poly_bernstein.R
 \name{step_poly_bernstein}
 \alias{step_poly_bernstein}
-\title{Generalized Bernstein Polynomial Basis}
+\title{Generalized bernstein polynomial basis}
 \usage{
 step_poly_bernstein(
   recipe,

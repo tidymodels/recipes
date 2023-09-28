@@ -2,7 +2,7 @@
 % Please edit documentation in R/factor2string.R
 \name{step_factor2string}
 \alias{step_factor2string}
-\title{Convert Factors to Strings}
+\title{Convert factors to strings}
 \usage{
 step_factor2string(
   recipe,

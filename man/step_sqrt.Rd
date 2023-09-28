@@ -2,7 +2,7 @@
 % Please edit documentation in R/sqrt.R
 \name{step_sqrt}
 \alias{step_sqrt}
-\title{Square Root Transformation}
+\title{Square root transformation}
 \usage{
 step_sqrt(
   recipe,

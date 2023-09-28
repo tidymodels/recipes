@@ -1,4 +1,4 @@
-#' Natural Splines
+#' Natural splines
 #'
 #' `step_spline_natural()` creates a *specification* of a recipe step that
 #' creates natural spline features.

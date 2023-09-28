@@ -2,7 +2,7 @@
 % Please edit documentation in R/count.R
 \name{step_count}
 \alias{step_count}
-\title{Create Counts of Patterns using Regular Expressions}
+\title{Create counts of patterns using regular expressions}
 \usage{
 step_count(
   recipe,

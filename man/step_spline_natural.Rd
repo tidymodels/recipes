@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_natural.R
 \name{step_spline_natural}
 \alias{step_spline_natural}
-\title{Natural Splines}
+\title{Natural splines}
 \usage{
 step_spline_natural(
   recipe,

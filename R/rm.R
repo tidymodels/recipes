@@ -1,4 +1,4 @@
-#' General Variable Filter
+#' General variable filter
 #'
 #' `step_rm()` creates a *specification* of a recipe step that will remove
 #' selected variables.

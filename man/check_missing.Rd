@@ -2,7 +2,7 @@
 % Please edit documentation in R/missing.R
 \name{check_missing}
 \alias{check_missing}
-\title{Check for Missing Values}
+\title{Check for missing values}
 \usage{
 check_missing(
   recipe,

@@ -1,4 +1,4 @@
-#' Basis Splines
+#' Basis splines
 #'
 #' `step_spline_b()` creates a *specification* of a recipe step that creates
 #' b-spline features.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lincomb.R
 \name{step_lincomb}
 \alias{step_lincomb}
-\title{Linear Combination Filter}
+\title{Linear combination filter}
 \usage{
 step_lincomb(
   recipe,

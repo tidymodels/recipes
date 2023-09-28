@@ -3,7 +3,7 @@
 \name{step_ratio}
 \alias{step_ratio}
 \alias{denom_vars}
-\title{Ratio Variable Creation}
+\title{Ratio variable creation}
 \usage{
 step_ratio(
   recipe,

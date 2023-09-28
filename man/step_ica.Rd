@@ -2,7 +2,7 @@
 % Please edit documentation in R/ica.R
 \name{step_ica}
 \alias{step_ica}
-\title{ICA Signal Extraction}
+\title{ICA signal extraction}
 \usage{
 step_ica(
   recipe,

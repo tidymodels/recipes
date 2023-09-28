@@ -1,4 +1,4 @@
-#' Data Depths
+#' Data depths
 #'
 #' `step_depth()` creates a *specification* of a recipe step that will convert
 #' numeric data into a measurement of *data depth*. This is done for each value of

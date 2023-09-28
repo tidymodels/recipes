@@ -1,4 +1,4 @@
-#' Ratio Variable Creation
+#' Ratio variable creation
 #'
 #' `step_ratio()` creates a *specification* of a recipe step that will create
 #' one or more ratios from selected numeric variables.

@@ -1,4 +1,4 @@
-#' Create a Formula from a Prepared Recipe
+#' Create a formula from a prepared recipe
 #'
 #' In case a model formula is required, the formula method can
 #'  be used on a recipe to show what predictors and outcome(s)

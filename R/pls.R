@@ -1,4 +1,4 @@
-#' Partial Least Squares Feature Extraction
+#' Partial least squares feature extraction
 #'
 #' `step_pls()` creates a *specification* of a recipe step that will convert
 #' numeric data into one or more new dimensions.

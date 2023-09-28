@@ -2,7 +2,7 @@
 % Please edit documentation in R/shuffle.R
 \name{step_shuffle}
 \alias{step_shuffle}
-\title{Shuffle Variables}
+\title{Shuffle variables}
 \usage{
 step_shuffle(
   recipe,

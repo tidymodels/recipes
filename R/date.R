@@ -1,4 +1,4 @@
-#' Date Feature Generator
+#' Date feature generator
 #'
 #' `step_date()` creates a *specification* of a recipe step that will convert
 #' date data into one or more factor or numeric variables.

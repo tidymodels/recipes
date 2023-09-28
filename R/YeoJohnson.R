@@ -1,4 +1,4 @@
-#' Yeo-Johnson Transformation
+#' Yeo-Johnson transformation
 #'
 #' `step_YeoJohnson()` creates a *specification* of a recipe step that will
 #' transform data using a Yeo-Johnson transformation.

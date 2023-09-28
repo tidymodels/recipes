@@ -1,4 +1,4 @@
-#' PCA Signal Extraction
+#' PCA signal extraction
 #'
 #' `step_pca()` creates a *specification* of a recipe step that will convert
 #' numeric variables into one or more principal components.

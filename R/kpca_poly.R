@@ -1,4 +1,4 @@
-#' Polynomial Kernel PCA Signal Extraction
+#' Polynomial kernel PCA signal extraction
 #'
 #' `step_kpca_poly()` creates a *specification* of a recipe step that will
 #' convert numeric data into one or more principal components using a polynomial

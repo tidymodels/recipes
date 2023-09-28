@@ -2,7 +2,7 @@
 % Please edit documentation in R/deprecated-terms_select.R
 \name{terms_select}
 \alias{terms_select}
-\title{Select Terms in a Step Function.}
+\title{Select terms in a step function.}
 \usage{
 terms_select(terms, info, empty_fun = function(x) x)
 }

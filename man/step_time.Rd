@@ -2,7 +2,7 @@
 % Please edit documentation in R/time.R
 \name{step_time}
 \alias{step_time}
-\title{Time Feature Generator}
+\title{Time feature generator}
 \usage{
 step_time(
   recipe,

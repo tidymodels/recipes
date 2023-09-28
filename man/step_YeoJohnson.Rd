@@ -2,7 +2,7 @@
 % Please edit documentation in R/YeoJohnson.R
 \name{step_YeoJohnson}
 \alias{step_YeoJohnson}
-\title{Yeo-Johnson Transformation}
+\title{Yeo-Johnson transformation}
 \usage{
 step_YeoJohnson(
   recipe,
