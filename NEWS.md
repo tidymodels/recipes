@@ -2,6 +2,10 @@
 
 # recipes 1.0.8
 
+## Improvements
+
+* Minor speed-up and reduced memory consumption for spline steps that rely on `spline2_apply` (#1200)
+
 ## Bug Fixes
 
 * Fixed bugs where spline steps (`step_ns()`, `step_bs()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`) would error if baked with 1 row. (#1191)
