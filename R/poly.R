@@ -5,28 +5,28 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param objects A list of [stats::poly()] objects
-#'  created once the step has been trained.
+#' @param objects A list of [stats::poly()] objects created once the step has
+#'   been trained.
 #' @param degree The polynomial degree (an integer).
-#' @param options A list of options for [stats::poly()]
-#'  which should not include `x`, `degree`, or `simple`. Note that
-#'  the option `raw = TRUE` will produce the regular polynomial
-#'  values (not orthogonalized).
+#' @param options A list of options for [stats::poly()] which should not include
+#'   `x`, `degree`, or `simple`. Note that the option `raw = TRUE` will produce
+#'   the regular polynomial values (not orthogonalized).
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details `step_poly` can create new features from a single
-#'  variable that enable fitting routines to model this variable in
-#'  a nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `degree` argument of
-#'  [stats::poly()]. The original variables are removed
-#'  from the data and new columns are added. The naming convention
-#'  for the new variables is `varname_poly_1` and so on.
+#' @details
 #'
-#'  # Tidying
+#' `step_poly` can create new features from a single variable that enable
+#' fitting routines to model this variable in a nonlinear manner. The extent of
+#' the possible nonlinearity is determined by the `degree` argument of
+#' [stats::poly()]. The original variables are removed from the data and new
+#' columns are added. The naming convention for the new variables is
+#' `varname_poly_1` and so on.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the columns that will be affected) and `degree` is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns `terms`
+#' (the columns that will be affected) and `degree` is returned.
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_poly"
