@@ -80,9 +80,6 @@ correspond to the first level of the unordered factor being converted.
 \code{step_relevel()} can be used to create a new reference level by setting the
 \code{ref_level} argument.
 
-This
-can be done using \code{step_relevel()}.
-
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a

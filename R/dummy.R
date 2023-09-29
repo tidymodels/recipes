@@ -36,9 +36,6 @@
 #' `step_relevel()` can be used to create a new reference level by setting the
 #' `ref_level` argument.
 #'
-#' This
-#' can be done using `step_relevel()`.
-#'
 #' @template dummy-naming
 #'
 #' @details
