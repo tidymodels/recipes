@@ -102,9 +102,9 @@ sequence of operations for this recipe.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details. The selected
-variables <em>must</em> be factors.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details. The selected variables <em>must</em> be
+factors.</p></dd>
 
 
 <dt>role</dt>
@@ -124,20 +124,19 @@ rather than C-1?</p></dd>
 
 
 <dt>preserve</dt>
-<dd><p>Use <code>keep_original_cols</code> to specify whether the selected
-column(s) should be retained (in addition to the new dummy variables).</p></dd>
+<dd><p>This argument has been deprecated. Please use
+<code>keep_original_cols</code> instead.</p></dd>
 
 
 <dt>naming</dt>
-<dd><p>A function that defines the naming convention for
-new dummy columns. See Details below.</p></dd>
+<dd><p>A function that defines the naming convention for new dummy
+columns. See Details below.</p></dd>
 
 
 <dt>levels</dt>
-<dd><p>A list that contains the information needed to
-create dummy variables for each variable contained in
-<code>terms</code>. This is <code>NULL</code> until the step is trained by
-<code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>A list that contains the information needed to create dummy
+variables for each variable contained in <code>terms</code>. This is <code>NULL</code> until the
+step is trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt>keep_original_cols</dt>
@@ -167,32 +166,31 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>step_dummy()</code> will create a set of binary dummy
-variables from a factor variable. For example, if an unordered
-factor column in the data set has levels of "red", "green",
-"blue", the dummy variable bake will create two additional
-columns of 0/1 data for two of those three values (and remove
-the original column). For ordered factors, polynomial contrasts
-are used to encode the numeric values.</p>
-<p>By default, the excluded dummy variable (i.e. the reference
-cell) will correspond to the first level of the unordered
-factor being converted.</p>
+    <p><code>step_dummy()</code> will create a set of binary dummy variables from a factor
+variable. For example, if an unordered factor column in the data set has
+levels of "red", "green", "blue", the dummy variable bake will create two
+additional columns of 0/1 data for two of those three values (and remove the
+original column). For ordered factors, polynomial contrasts are used to
+encode the numeric values.</p>
+<p>By default, the excluded dummy variable (i.e. the reference cell) will
+correspond to the first level of the unordered factor being converted.
+<code><a href="step_relevel.html">step_relevel()</a></code> can be used to create a new reference level by setting the
+<code>ref_level</code> argument.</p>
 <p>This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named <code>x</code>, with levels <code>"a"</code>
 and <code>"b"</code>, the default naming convention would be to create a
 new variable called <code>x_b</code>. The naming format can be changed using
 the <code>naming</code> argument; the function <code><a href="names0.html">dummy_names()</a></code> is the
 default.</p>
-<p>To change the type of contrast being used, change the global
-contrast option via <code>options</code>.</p>
-<p>When the factor being converted has a missing value, all of the
-corresponding dummy variables are also missing. See <code><a href="step_unknown.html">step_unknown()</a></code> for
-a solution.</p>
-<p>When data to be processed contains novel levels (i.e., not
-contained in the training set), a missing value is assigned to
-the results. See <code><a href="step_other.html">step_other()</a></code> for an alternative.</p>
-<p>If no columns are selected (perhaps due to an earlier <code><a href="step_zv.html">step_zv()</a></code>),
-<code><a href="bake.html">bake()</a></code> will return the data as-is (e.g. with no dummy variables).</p>
+<p>To change the type of contrast being used, change the global contrast option
+via <code>options</code>.</p>
+<p>When the factor being converted has a missing value, all of the corresponding
+dummy variables are also missing. See <code><a href="step_unknown.html">step_unknown()</a></code> for a solution.</p>
+<p>When data to be processed contains novel levels (i.e., not contained in the
+training set), a missing value is assigned to the results. See <code><a href="step_other.html">step_other()</a></code>
+for an alternative.</p>
+<p>If no columns are selected (perhaps due to an earlier <code><a href="step_zv.html">step_zv()</a></code>), <code><a href="bake.html">bake()</a></code>
+will return the data as-is (e.g. with no dummy variables).</p>
 <p>Note that, by default, the new dummy variable column names obey the naming
 rules for columns. If there are levels such as "0", <code><a href="names0.html">dummy_names()</a></code> will put
 a leading "X" in front of the level (since it uses <code><a href="https://rdrr.io/r/base/make.names.html" class="external-link">make.names()</a></code>). This can
@@ -205,9 +203,9 @@ and interactions has more information.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or original variables selected) and <code>columns</code>
-(the list of corresponding binary columns) is returned.</p>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns <code>terms</code>
+(the selectors or original variables selected) and <code>columns</code> (the list of
+corresponding binary columns) is returned.</p>
     </div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
