@@ -50,13 +50,12 @@ to \code{other}.}
 
 \item{other}{A single character value for the "other" category.}
 
-\item{naming}{A function that defines the naming convention for
-new dummy columns. See Details below.}
+\item{naming}{A function that defines the naming convention for new dummy
+columns. See Details below.}
 
-\item{levels}{A list that contains the information needed to
-create dummy variables for each variable contained in
-\code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep]{prep()}}.}
+\item{levels}{A list that contains the information needed to create dummy
+variables for each variable contained in \code{terms}. This is \code{NULL} until the
+step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
