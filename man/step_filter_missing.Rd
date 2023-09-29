@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter_missing.R
 \name{step_filter_missing}
 \alias{step_filter_missing}
-\title{Missing Value Column Filter}
+\title{Missing value column filter}
 \usage{
 step_filter_missing(
   recipe,

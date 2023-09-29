@@ -1,4 +1,4 @@
-#' Percentile Transformation
+#' Percentile transformation
 #'
 #' `step_percentile()` creates a *specification* of a recipe step that replaces
 #' the value of a variable with its percentile from the training set.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/num2factor.R
 \name{step_num2factor}
 \alias{step_num2factor}
-\title{Convert Numbers to Factors}
+\title{Convert numbers to factors}
 \usage{
 step_num2factor(
   recipe,

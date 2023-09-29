@@ -1,4 +1,4 @@
-#' Missing Value Column Filter
+#' Missing value column filter
 #'
 #' `step_filter_missing()` creates a *specification* of a recipe step that will
 #' potentially remove variables that have too many missing values.

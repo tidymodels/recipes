@@ -1,4 +1,4 @@
-#' Check if all Columns are Present
+#' Check if all columns are present
 #'
 #' `check_cols` creates a *specification* of a recipe
 #'  step that will check if all the columns of the training frame are

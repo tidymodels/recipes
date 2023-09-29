@@ -1,4 +1,4 @@
-#' Convert Numbers to Factors
+#' Convert numbers to factors
 #'
 #' `step_num2factor()` will convert one or more numeric vectors to factors
 #' (ordered or unordered). This can be useful when categories are encoded as

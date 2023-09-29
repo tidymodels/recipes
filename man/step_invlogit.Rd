@@ -2,7 +2,7 @@
 % Please edit documentation in R/invlogit.R
 \name{step_invlogit}
 \alias{step_invlogit}
-\title{Inverse Logit Transformation}
+\title{Inverse logit transformation}
 \usage{
 step_invlogit(
   recipe,

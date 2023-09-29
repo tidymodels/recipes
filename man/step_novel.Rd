@@ -2,7 +2,7 @@
 % Please edit documentation in R/novel.R
 \name{step_novel}
 \alias{step_novel}
-\title{Simple Value Assignments for Novel Factor Levels}
+\title{Simple value assignments for novel factor levels}
 \usage{
 step_novel(
   recipe,

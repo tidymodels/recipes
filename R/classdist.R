@@ -1,4 +1,4 @@
-#' Distances to Class Centroids
+#' Distances to class centroids
 #'
 #' `step_classdist()` creates a *specification* of a recipe step that will
 #' convert numeric data into Mahalanobis distance measurements to the data

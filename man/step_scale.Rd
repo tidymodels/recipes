@@ -2,7 +2,7 @@
 % Please edit documentation in R/scale.R
 \name{step_scale}
 \alias{step_scale}
-\title{Scaling Numeric Data}
+\title{Scaling mumeric data}
 \usage{
 step_scale(
   recipe,

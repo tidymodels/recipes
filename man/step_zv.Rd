@@ -2,7 +2,7 @@
 % Please edit documentation in R/zv.R
 \name{step_zv}
 \alias{step_zv}
-\title{Zero Variance Filter}
+\title{Zero variance filter}
 \usage{
 step_zv(
   recipe,

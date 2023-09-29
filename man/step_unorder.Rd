@@ -2,7 +2,7 @@
 % Please edit documentation in R/unorder.R
 \name{step_unorder}
 \alias{step_unorder}
-\title{Convert Ordered Factors to Unordered Factors}
+\title{Convert ordered factors to unordered factors}
 \usage{
 step_unorder(
   recipe,

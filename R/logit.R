@@ -1,4 +1,4 @@
-#' Logit Transformation
+#' Logit transformation
 #'
 #' `step_logit()` creates a *specification* of a recipe step that will logit
 #' transform the data.

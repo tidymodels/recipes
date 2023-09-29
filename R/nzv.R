@@ -1,4 +1,4 @@
-#' Near-Zero Variance Filter
+#' Near-zero variance filter
 #'
 #' `step_nzv()` creates a *specification* of a recipe step that will potentially
 #' remove variables that are highly sparse and unbalanced.

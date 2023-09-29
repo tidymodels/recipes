@@ -2,7 +2,7 @@
 % Please edit documentation in R/rm.R
 \name{step_rm}
 \alias{step_rm}
-\title{General Variable Filter}
+\title{General variable filter}
 \usage{
 step_rm(
   recipe,

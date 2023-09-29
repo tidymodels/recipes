@@ -2,7 +2,7 @@
 % Please edit documentation in R/hyperbolic.R
 \name{step_hyperbolic}
 \alias{step_hyperbolic}
-\title{Hyperbolic Transformations}
+\title{Hyperbolic transformations}
 \usage{
 step_hyperbolic(
   recipe,

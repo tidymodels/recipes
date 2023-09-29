@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_convex.R
 \name{step_spline_convex}
 \alias{step_spline_convex}
-\title{Convex Splines}
+\title{Convex splines}
 \usage{
 step_spline_convex(
   recipe,

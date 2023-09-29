@@ -2,7 +2,7 @@
 % Please edit documentation in R/pls.R
 \name{step_pls}
 \alias{step_pls}
-\title{Partial Least Squares Feature Extraction}
+\title{Partial least squares feature extraction}
 \usage{
 step_pls(
   recipe,

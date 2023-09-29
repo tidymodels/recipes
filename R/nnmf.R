@@ -1,4 +1,4 @@
-#' Non-Negative Matrix Factorization Signal Extraction
+#' Non-negative matrix factorization signal extraction
 #'
 #' @description
 #'

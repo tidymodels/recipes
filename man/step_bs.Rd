@@ -2,7 +2,7 @@
 % Please edit documentation in R/bs.R
 \name{step_bs}
 \alias{step_bs}
-\title{B-Spline Basis Functions}
+\title{B-spline basis functions}
 \usage{
 step_bs(
   recipe,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/kpca_poly.R
 \name{step_kpca_poly}
 \alias{step_kpca_poly}
-\title{Polynomial Kernel PCA Signal Extraction}
+\title{Polynomial kernel PCA signal extraction}
 \usage{
 step_kpca_poly(
   recipe,

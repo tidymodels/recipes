@@ -1,4 +1,4 @@
-#' Zero Variance Filter
+#' Zero variance filter
 #'
 #' `step_zv()` creates a *specification* of a recipe step that will remove
 #' variables that contain only a single value.

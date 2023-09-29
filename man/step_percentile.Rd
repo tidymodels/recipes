@@ -2,7 +2,7 @@
 % Please edit documentation in R/percentile.R
 \name{step_percentile}
 \alias{step_percentile}
-\title{Percentile Transformation}
+\title{Percentile transformation}
 \usage{
 step_percentile(
   recipe,

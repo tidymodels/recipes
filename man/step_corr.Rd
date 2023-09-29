@@ -2,7 +2,7 @@
 % Please edit documentation in R/corr.R
 \name{step_corr}
 \alias{step_corr}
-\title{High Correlation Filter}
+\title{High correlation filter}
 \usage{
 step_corr(
   recipe,

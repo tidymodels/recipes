@@ -1,4 +1,4 @@
-#' Linear Combination Filter
+#' Linear combination filter
 #'
 #' `step_lincomb()` creates a *specification* of a recipe step that will
 #' potentially remove numeric variables that have exact linear combinations

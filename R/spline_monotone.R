@@ -1,4 +1,4 @@
-#' Monotone Splines
+#' Monotone splines
 #'
 #' `step_spline_monotone()` creates a *specification* of a recipe step that
 #' creates monotone spline features.

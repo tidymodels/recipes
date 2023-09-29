@@ -2,7 +2,7 @@
 % Please edit documentation in R/classdist.R
 \name{step_classdist}
 \alias{step_classdist}
-\title{Distances to Class Centroids}
+\title{Distances to class centroids}
 \usage{
 step_classdist(
   recipe,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_nonnegative.R
 \name{step_spline_nonnegative}
 \alias{step_spline_nonnegative}
-\title{Non-Negative Splines}
+\title{Non-negative splines}
 \usage{
 step_spline_nonnegative(
   recipe,

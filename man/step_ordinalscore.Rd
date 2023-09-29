@@ -2,7 +2,7 @@
 % Please edit documentation in R/ordinalscore.R
 \name{step_ordinalscore}
 \alias{step_ordinalscore}
-\title{Convert Ordinal Factors to Numeric Scores}
+\title{Convert ordinal factors to numeric scores}
 \usage{
 step_ordinalscore(
   recipe,

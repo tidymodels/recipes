@@ -2,7 +2,7 @@
 % Please edit documentation in R/BoxCox.R
 \name{step_BoxCox}
 \alias{step_BoxCox}
-\title{Box-Cox Transformation for Non-Negative Data}
+\title{Box-Cox transformation for non-negative data}
 \usage{
 step_BoxCox(
   recipe,

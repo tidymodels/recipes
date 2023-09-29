@@ -2,7 +2,7 @@
 % Please edit documentation in R/logit.R
 \name{step_logit}
 \alias{step_logit}
-\title{Logit Transformation}
+\title{Logit transformation}
 \usage{
 step_logit(
   recipe,

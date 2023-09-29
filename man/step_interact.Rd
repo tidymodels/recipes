@@ -2,7 +2,7 @@
 % Please edit documentation in R/interact.R
 \name{step_interact}
 \alias{step_interact}
-\title{Create Interaction Variables}
+\title{Create interaction variables}
 \usage{
 step_interact(
   recipe,

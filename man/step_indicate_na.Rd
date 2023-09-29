@@ -2,7 +2,7 @@
 % Please edit documentation in R/indicate_na.R
 \name{step_indicate_na}
 \alias{step_indicate_na}
-\title{Create Missing Data Column Indicators}
+\title{Create missing data column indicators}
 \usage{
 step_indicate_na(
   recipe,

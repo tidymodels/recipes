@@ -5,7 +5,7 @@
 \alias{add_role}
 \alias{update_role}
 \alias{remove_role}
-\title{Manually Alter Roles}
+\title{Manually alter roles}
 \usage{
 add_role(recipe, ..., new_role = "predictor", new_type = NULL)
 

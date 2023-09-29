@@ -2,7 +2,7 @@
 % Please edit documentation in R/formula.R
 \name{formula.recipe}
 \alias{formula.recipe}
-\title{Create a Formula from a Prepared Recipe}
+\title{Create a formula from a prepared recipe}
 \usage{
 \method{formula}{recipe}(x, ...)
 }

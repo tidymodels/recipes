@@ -1,4 +1,4 @@
-#' Printing Workhorse Function
+#' Printing workhorse function
 #'
 #' This internal function is used for printing steps.
 #'

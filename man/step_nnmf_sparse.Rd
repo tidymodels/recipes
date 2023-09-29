@@ -2,7 +2,7 @@
 % Please edit documentation in R/nnmf_sparse.R
 \name{step_nnmf_sparse}
 \alias{step_nnmf_sparse}
-\title{Non-Negative Matrix Factorization Signal Extraction with lasso Penalization}
+\title{Non-negative matrix factorization signal extraction with lasso penalization}
 \usage{
 step_nnmf_sparse(
   recipe,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/nnmf.R
 \name{step_nnmf}
 \alias{step_nnmf}
-\title{Non-Negative Matrix Factorization Signal Extraction}
+\title{Non-negative matrix factorization signal extraction}
 \usage{
 step_nnmf(
   recipe,

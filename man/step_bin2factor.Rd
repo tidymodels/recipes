@@ -2,7 +2,7 @@
 % Please edit documentation in R/bin2factor.R
 \name{step_bin2factor}
 \alias{step_bin2factor}
-\title{Create a Factors from A Dummy Variable}
+\title{Create a factors from A dummy variable}
 \usage{
 step_bin2factor(
   recipe,

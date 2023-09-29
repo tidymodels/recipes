@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_monotone.R
 \name{step_spline_monotone}
 \alias{step_spline_monotone}
-\title{Monotone Splines}
+\title{Monotone splines}
 \usage{
 step_spline_monotone(
   recipe,

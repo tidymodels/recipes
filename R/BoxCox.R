@@ -1,4 +1,4 @@
-#' Box-Cox Transformation for Non-Negative Data
+#' Box-Cox transformation for non-negative data
 #'
 #' `step_BoxCox()` creates a *specification* of a recipe step that will transform
 #' data using a Box-Cox transformation.

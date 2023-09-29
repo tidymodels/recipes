@@ -1,4 +1,4 @@
-#' Tidy the Result of a Recipe
+#' Tidy the result of a recipe
 #'
 #' `tidy` will return a data frame that contains information
 #'  regarding a recipe or operation within the recipe (when a `tidy`

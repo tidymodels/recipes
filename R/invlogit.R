@@ -1,4 +1,4 @@
-#' Inverse Logit Transformation
+#' Inverse logit transformation
 #'
 #' `step_invlogit()` creates a *specification* of a recipe step that will
 #' transform the data from real values to be between zero and one.

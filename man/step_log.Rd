@@ -2,7 +2,7 @@
 % Please edit documentation in R/log.R
 \name{step_log}
 \alias{step_log}
-\title{Logarithmic Transformation}
+\title{Logarithmic transformation}
 \usage{
 step_log(
   recipe,

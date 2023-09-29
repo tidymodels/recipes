@@ -1,4 +1,4 @@
-#' Logarithmic Transformation
+#' Logarithmic transformation
 #'
 #' `step_log()` creates a *specification* of a recipe step that will log
 #' transform data.

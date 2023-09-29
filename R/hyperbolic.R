@@ -1,4 +1,4 @@
-#' Hyperbolic Transformations
+#' Hyperbolic transformations
 #'
 #' `step_hyperbolic()` creates a *specification* of a recipe step that will
 #' transform data using a hyperbolic function.

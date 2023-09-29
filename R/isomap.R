@@ -1,4 +1,4 @@
-#' Isomap Embedding
+#' Isomap embedding
 #'
 #' `step_isomap()` creates a *specification* of a recipe step that uses
 #' multidimensional scaling to convert numeric data into one or more new

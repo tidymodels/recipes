@@ -1,4 +1,4 @@
-#' Moving Window Functions
+#' Moving window functions
 #'
 #' `step_window()` creates a *specification* of a recipe step that will create
 #' new columns that are the results of functions that compute statistics across

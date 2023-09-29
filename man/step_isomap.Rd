@@ -2,7 +2,7 @@
 % Please edit documentation in R/isomap.R
 \name{step_isomap}
 \alias{step_isomap}
-\title{Isomap Embedding}
+\title{Isomap embedding}
 \usage{
 step_isomap(
   recipe,

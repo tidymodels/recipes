@@ -1,4 +1,4 @@
-#' Simple Value Assignments for Novel Factor Levels
+#' Simple value assignments for novel factor levels
 #'
 #' `step_novel()` creates a *specification* of a recipe step that will assign a
 #' previously unseen factor level to `"new"`.

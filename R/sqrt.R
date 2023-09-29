@@ -1,4 +1,4 @@
-#' Square Root Transformation
+#' Square root transformation
 #'
 #' `step_sqrt()` creates a *specification* of a recipe step that will apply
 #' square root transform to the variables.

@@ -1,4 +1,4 @@
-#' Create a Profiling Version of a Data Set
+#' Create a profiling version of a data set
 #'
 #' `step_profile()` creates a *specification* of a recipe step that will fix the
 #' levels of all variables but one and will create a sequence of values for the

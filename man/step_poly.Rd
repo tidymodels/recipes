@@ -2,7 +2,7 @@
 % Please edit documentation in R/poly.R
 \name{step_poly}
 \alias{step_poly}
-\title{Orthogonal Polynomial Basis Functions}
+\title{Orthogonal polynomial basis functions}
 \usage{
 step_poly(
   recipe,

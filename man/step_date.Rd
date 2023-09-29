@@ -2,7 +2,7 @@
 % Please edit documentation in R/date.R
 \name{step_date}
 \alias{step_date}
-\title{Date Feature Generator}
+\title{Date feature generator}
 \usage{
 step_date(
   recipe,

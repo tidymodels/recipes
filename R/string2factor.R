@@ -1,4 +1,4 @@
-#' Convert Strings to Factors
+#' Convert strings to factors
 #'
 #' @description
 #' `step_string2factor()` will convert one or more character vectors to factors

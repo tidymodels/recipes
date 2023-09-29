@@ -1,4 +1,4 @@
-#' Scaling Numeric Data to a Specific Range
+#' Scaling numeric data to a specific range
 #'
 #' `step_range()` creates a *specification* of a recipe step that will normalize
 #' numeric data to be within a pre-defined range of values.
