@@ -102,8 +102,8 @@ multiple roles.</p>
 
 
 <dt>...</dt>
-<dd><p>One or more selector functions to choose which variables are
-being assigned a role. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose which variables are being
+assigned a role. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt>new_role</dt>
@@ -118,8 +118,8 @@ as the <em>first</em> type you see for that variable in <code>summary(recipe)</c
 
 <dt>old_role</dt>
 <dd><p>A character string for the specific role to update for the
-variables selected by <code>...</code>. <code>update_role()</code> accepts a <code>NULL</code> as long as the
-variables have only a single role.</p></dd>
+variables selected by <code>...</code>. <code>update_role()</code> accepts a <code>NULL</code> as long as
+the variables have only a single role.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +130,13 @@ variables have only a single role.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Variables can have any arbitrary role (see the examples) but there are two
+    <p><code>update_role()</code>, <code>add_role()</code> and <code>remove_role()</code> will be applied on a recipe
+before any of the steps or checks, regardless of where they are located in
+position. This means that roles can only be changed with these three
+functions for columns that are already present in the original data supplied
+to <code><a href="recipe.html">recipe()</a></code>. See the <code>role</code> argument in some step functions to update
+roles for columns created by steps.</p>
+<p>Variables can have any arbitrary role (see the examples) but there are two
 special standard roles, <code>"predictor"</code> and <code>"outcome"</code>. These two roles are
 typically required when fitting a model.</p>
 <p><code>update_role()</code> should be used when a variable doesn't currently have a role
@@ -141,9 +147,8 @@ throw an error when the current role is missing (i.e. <code>NA</code>).</p>
 <code>new_role</code>, a warning is emitted and that variable is skipped so no duplicate
 roles are added.</p>
 <p>Adding or updating roles is a useful way to group certain variables that
-don't fall in the standard <code>"predictor"</code> bucket. You can perform a step
-on all of the variables that have a custom role with the selector
-<code><a href="has_role.html">has_role()</a></code>.</p><div class="section">
+don't fall in the standard <code>"predictor"</code> bucket. You can perform a step on
+all of the variables that have a custom role with the selector <code><a href="has_role.html">has_role()</a></code>.</p><div class="section">
 <h3 id="effects-of-non-standard-roles">Effects of non-standard roles<a class="anchor" aria-label="anchor" href="#effects-of-non-standard-roles"></a></h3>
 
 
