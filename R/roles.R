@@ -11,22 +11,26 @@
 #' `remove_role()` eliminates a single existing role in the recipe.
 #' @param recipe An existing [recipe()].
 #'
-#' @param ... One or more selector functions to choose which variables are
-#'   being assigned a role. See [selections()] for more details.
-#'
+#' @param ... One or more selector functions to choose which variables are being
+#'   assigned a role. See [selections()] for more details.
 #' @param new_role A character string for a single role.
-#'
 #' @param new_type A character string for specific type that the variable should
-#' be identified as. If left as `NULL`, the type is automatically identified
-#' as the _first_ type you see for that variable in `summary(recipe)`.
-#'
+#'   be identified as. If left as `NULL`, the type is automatically identified
+#'   as the _first_ type you see for that variable in `summary(recipe)`.
 #' @param old_role A character string for the specific role to update for the
-#' variables selected by `...`. `update_role()` accepts a `NULL` as long as the
-#' variables have only a single role.
+#'   variables selected by `...`. `update_role()` accepts a `NULL` as long as
+#'   the variables have only a single role.
 #'
 #' @return An updated recipe object.
 #'
 #' @details
+#'
+#' `update_role()`, `add_role()` and `remove_role()` will be applied on a recipe
+#' before any of the steps or checks, regardless of where they are located in
+#' position. This means that roles can only be changed with these three
+#' functions for columns that are already present in the original data supplied
+#' to `recipe()`. See the `role` argument in some step functions to update
+#' roles for columns created by steps.
 #'
 #' Variables can have any arbitrary role (see the examples) but there are two
 #' special standard roles, `"predictor"` and `"outcome"`. These two roles are
@@ -42,9 +46,8 @@
 #' roles are added.
 #'
 #' Adding or updating roles is a useful way to group certain variables that
-#' don't fall in the standard `"predictor"` bucket. You can perform a step
-#' on all of the variables that have a custom role with the selector
-#' [has_role()].
+#' don't fall in the standard `"predictor"` bucket. You can perform a step on
+#' all of the variables that have a custom role with the selector [has_role()].
 #'
 #' ```{r, child = "man/rmd/non-standard-roles.Rmd"}
 #' ```
