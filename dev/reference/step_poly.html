@@ -114,8 +114,8 @@ preprocessing have been estimated.</p></dd>
 
 
 <dt>objects</dt>
-<dd><p>A list of <code><a href="https://rdrr.io/r/stats/poly.html" class="external-link">stats::poly()</a></code> objects
-created once the step has been trained.</p></dd>
+<dd><p>A list of <code><a href="https://rdrr.io/r/stats/poly.html" class="external-link">stats::poly()</a></code> objects created once the step has
+been trained.</p></dd>
 
 
 <dt>degree</dt>
@@ -123,10 +123,9 @@ created once the step has been trained.</p></dd>
 
 
 <dt>options</dt>
-<dd><p>A list of options for <code><a href="https://rdrr.io/r/stats/poly.html" class="external-link">stats::poly()</a></code>
-which should not include <code>x</code>, <code>degree</code>, or <code>simple</code>. Note that
-the option <code>raw = TRUE</code> will produce the regular polynomial
-values (not orthogonalized).</p></dd>
+<dd><p>A list of options for <code><a href="https://rdrr.io/r/stats/poly.html" class="external-link">stats::poly()</a></code> which should not include
+<code>x</code>, <code>degree</code>, or <code>simple</code>. Note that the option <code>raw = TRUE</code> will produce
+the regular polynomial values (not orthogonalized).</p></dd>
 
 
 <dt>keep_original_cols</dt>
@@ -156,18 +155,22 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>step_poly</code> can create new features from a single
-variable that enable fitting routines to model this variable in
-a nonlinear manner. The extent of the possible nonlinearity is
-determined by the <code>degree</code> argument of
-<code><a href="https://rdrr.io/r/stats/poly.html" class="external-link">stats::poly()</a></code>. The original variables are removed
-from the data and new columns are added. The naming convention
-for the new variables is <code>varname_poly_1</code> and so on.</p>
+    <p><code>step_poly()</code> can create new features from a single variable that enable
+fitting routines to model this variable in a nonlinear manner. The extent of
+the possible nonlinearity is determined by the <code>degree</code> argument of
+<code><a href="https://rdrr.io/r/stats/poly.html" class="external-link">stats::poly()</a></code>. The original variables are removed from the data by default,
+but can be retained by setting <code>keep_original_cols = TRUE</code> and new columns
+are added. The naming convention for the new variables is <code>varname_poly_1</code>
+and so on.</p>
+<p>The orthogonal polynomial expansion is used by default because it yields
+variables that are uncorrelated and doesn't produce large values which would
+otherwise be a problem for large values of <code>degree</code>. Orthogonal polynomial
+expansion pick up the same signal as their uncorrelated counterpart.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the columns that will be affected) and <code>degree</code> is returned.</p>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns <code>terms</code>
+(the columns that will be affected) and <code>degree</code> is returned.</p>
     </div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
