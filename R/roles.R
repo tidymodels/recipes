@@ -27,8 +27,10 @@
 #'
 #' `update_role()`, `add_role()` and `remove_role()` will be applied on a recipe
 #' before any of the steps or checks, regardless of where they are located in
-#' position. This means that roles can only be changed on the original data supplied
-#' to `recipe()`.
+#' position. This means that roles can only be changed with these three
+#' functions for columns that are already present in the original data supplied
+#' to `recipe()`. See the `role` argument in some step functions to update
+#' roles for columns created by steps.
 #'
 #' Variables can have any arbitrary role (see the examples) but there are two
 #' special standard roles, `"predictor"` and `"outcome"`. These two roles are

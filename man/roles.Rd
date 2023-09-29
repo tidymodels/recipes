@@ -45,8 +45,10 @@ multiple roles.
 \details{
 \code{update_role()}, \code{add_role()} and \code{remove_role()} will be applied on a recipe
 before any of the steps or checks, regardless of where they are located in
-position. This means that roles can only be changed on the original data supplied
-to \code{recipe()}.
+position. This means that roles can only be changed with these three
+functions for columns that are already present in the original data supplied
+to \code{recipe()}. See the \code{role} argument in some step functions to update
+roles for columns created by steps.
 
 Variables can have any arbitrary role (see the examples) but there are two
 special standard roles, \code{"predictor"} and \code{"outcome"}. These two roles are
