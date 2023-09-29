@@ -42,7 +42,7 @@ Otherwise, the first basis will be excluded from the output. This maps to
 the \code{intercept} argument of the corresponding function from the
 \pkg{splines2} package and has the same default value.}
 
-\item{options}{A list of options for \code{\link[splines2:mSpline]{splines2::mSpline()}}
+\item{options}{A list of options for \code{\link[splines2:naturalSpline]{splines2::naturalSpline()}}
 which should not include \code{x}, \code{df}, or \code{intercept}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
