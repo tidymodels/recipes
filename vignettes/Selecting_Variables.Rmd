@@ -33,7 +33,7 @@ The manual pages for `?selections` and  `?has_role` have details about the avail
  
 To illustrate this, the palmer penguins data will be used: 
 
-```{r credit}
+```{r penguins}
 library(recipes)
 library(modeldata)
 
@@ -52,7 +52,7 @@ summary(rec, original = TRUE)
 
 This shows the types and roles. Each variable can have one or more types, so we can printing them out seperately
 
-```{r var_info_orig}
+```{r var_info_orig_type}
 summary(rec, original = TRUE)$type
 ```
 
