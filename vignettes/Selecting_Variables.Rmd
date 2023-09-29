@@ -2,7 +2,7 @@
 title: "Selecting variables"
 output: rmarkdown::html_vignette
 description: |
-  You can select which variables or features  should be used in recipes. This 
+  You can select which variables or features should be used in recipes. This 
   vignette goes over the basics of using selection functions.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
@@ -50,6 +50,14 @@ Before any steps are used the information on the original variables is:
 summary(rec, original = TRUE)
 ```
 
+This shows the types and roles. Each variable can have one or more types, so we can printing them out seperately
+
+```{r var_info_orig}
+summary(rec, original = TRUE)$type
+```
+
+Notice that integer variables have roles `"integer"` and `"numeric"`, and the factor variable have roles `"factor"`, `"unordered"`, `"nominal"`. This allows for some neat selections where the selector `all_numeric()` select double and integer variables, and more specific selectors such as `all_integer()` only selects integer variables. Full hierachy of types can be seen in `?has_role`.
+
 We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:
 
 ```{r dummy_1}
@@ -61,8 +69,10 @@ This will capture _any_ variables that are either character strings or factors: 
 ```{r dummy_2}
 dummied <- rec %>% step_dummy(Records) # or
 dummied <- rec %>% step_dummy(all_nominal(), - Status) # or
-dummied <- rec %>% step_dummy(all_nominal_predictors()) 
+dummied <- rec %>% step_dummy(all_nominal_predictors()) # recommended
 ```
+
+Whenever possible, it is recommended to use the more specific `*_predictors()` variants to avoid accidentally selecting the outcomes.
 
 Using the last definition: 
 
