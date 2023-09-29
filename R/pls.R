@@ -6,26 +6,26 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param predictor_prop The maximum number of original predictors that can have
-#'  non-zero coefficients for each PLS component (via regularization).
+#'   non-zero coefficients for each PLS component (via regularization).
 #' @param preserve Use `keep_original_cols` instead to specify whether the
-#'  original predictor data should be retained along with the new features.
-#' @param outcome When a single outcome is available, character
-#'  string or call to [dplyr::vars()] can be used to specify a single outcome
-#'  variable.
+#'   original predictor data should be retained along with the new features.
+#' @param outcome When a single outcome is available, character string or call
+#'   to [dplyr::vars()] can be used to specify a single outcome variable.
 #' @param options A list of options to `mixOmics::pls()`, `mixOmics::spls()`,
-#' `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
-#' arguments).
-#' @param res A list of results are stored here once this preprocessing step
-#'  has been trained by [prep()].
+#'   `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
+#'   arguments).
+#' @param res A list of results are stored here once this preprocessing step has
+#'   been trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details PLS is a supervised version of principal component
-#'  analysis that requires the outcome data to compute
-#'  the new features.
+#' @details
 #'
-#' This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
-#'  step will stop with a note about installing the package.
+#' PLS is a supervised version of principal component analysis that requires the
+#' outcome data to compute the new features.
+#'
+#' This step requires the Bioconductor \pkg{mixOmics} package. If not installed,
+#' the step will stop with a note about installing the package.
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "PLS"
@@ -86,7 +86,8 @@
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4 / 5)
+#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3,
+#'            predictor_prop = 4 / 5)
 #'
 #' ## -----------------------------------------------------------------------------
 #' ## PLS discriminant analysis
@@ -108,7 +109,8 @@
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1 / 4)
+#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5,
+#'            predictor_prop = 1 / 4)
 step_pls <-
   function(recipe,
            ...,
