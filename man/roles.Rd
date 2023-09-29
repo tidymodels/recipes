@@ -44,8 +44,8 @@ multiple roles.
 }
 \details{
 \code{update_role()}, \code{add_role()} and \code{remove_role()} will be applied on a recipe
-before any of the steps or checks. Regardless on where they are located in
-pipe. This means that roles can only be changed on the original data supplied
+before any of the steps or checks, regardless of where they are located in
+position. This means that roles can only be changed on the original data supplied
 to \code{recipe()}.
 
 Variables can have any arbitrary role (see the examples) but there are two
