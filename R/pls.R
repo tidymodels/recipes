@@ -25,7 +25,13 @@
 #' outcome data to compute the new features.
 #'
 #' This step requires the Bioconductor \pkg{mixOmics} package. If not installed,
-#' the step will stop with a note about installing the package.
+#' the step will stop with a note about installing the package. Install
+#' \pkg{mixOmics} using the pak package:
+#'
+#' ```r
+#' # install.packages("pak")
+#' pak::pak("mixOmics")
+#' ```
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "PLS"

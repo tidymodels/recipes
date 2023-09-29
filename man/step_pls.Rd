@@ -89,7 +89,12 @@ PLS is a supervised version of principal component analysis that requires the
 outcome data to compute the new features.
 
 This step requires the Bioconductor \pkg{mixOmics} package. If not installed,
-the step will stop with a note about installing the package.
+the step will stop with a note about installing the package. Install
+\pkg{mixOmics} using the pak package:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# install.packages("pak")
+pak::pak("mixOmics")
+}\if{html}{\out{</div>}}
 
 The argument \code{num_comp} controls the number of components that will be retained
 (the original variables that are used to derive the components are removed from
