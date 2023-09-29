@@ -96,8 +96,8 @@ all.equal(dplyr_train, rec_train)
 dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
-  slice(76:150) \%>\%
-  slice(1:3)
+  slice(76:150)
+
 rec_test <- bake(prepped, iris \%>\% slice(76:150))
 all.equal(dplyr_test, rec_test)
 
