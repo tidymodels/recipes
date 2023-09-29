@@ -81,7 +81,7 @@ model terms for the extracted levels.
 }
 \details{
 \code{step_dummy_extract()} will create a set of integer dummy
-variables from a character variable by extract individual strings
+variables from a character variable by extracting individual strings
 by either splitting or extracting then counting those to create
 count variables.
 

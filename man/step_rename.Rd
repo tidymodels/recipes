@@ -75,7 +75,7 @@ recipe(~., data = iris) \%>\%
 vars <- c(var1 = "cyl", var2 = "am")
 car_rec <-
   recipe(~., data = mtcars) \%>\%
-  step_rename(!!vars)
+  step_rename(!!!vars)
 
 car_rec \%>\%
   prep() \%>\%

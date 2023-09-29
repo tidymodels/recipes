@@ -108,8 +108,8 @@ keep_rows <- 1:6
 
 qq_rec <-
   recipe(~., data = iris) \%>\%
-  # Embed `keep_rows` in the call using !!
-  step_slice(!!keep_rows) \%>\%
+  # Embed `keep_rows` in the call using !!!
+  step_slice(!!!keep_rows) \%>\%
   prep(training = iris)
 
 tidy(qq_rec, number = 1)
