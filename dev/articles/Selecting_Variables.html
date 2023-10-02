@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="You can select which variables or features  should be used in recipes. This 
+<meta name="description" content="You can select which variables or features should be used in recipes. This 
 vignette goes over the basics of using selection functions.
 ">
 <title>Selecting variables • recipes</title>
@@ -22,7 +22,7 @@ vignette goes over the basics of using selection functions.
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Selecting variables">
-<meta property="og:description" content="You can select which variables or features  should be used in recipes. This 
+<meta property="og:description" content="You can select which variables or features should be used in recipes. This 
 vignette goes over the basics of using selection functions.
 ">
 <meta property="og:image" content="https://recipes.tidymodels.org/logo.png">
@@ -121,84 +121,143 @@ be used to select which variables or features should be used.</p>
 <p>The manual pages for <code><a href="../reference/selections.html">?selections</a></code> and
 <code><a href="../reference/has_role.html">?has_role</a></code> have details about the available selection
 methods.</p>
-<p>To illustrate this, the credit data will be used:</p>
+<p>To illustrate this, the palmer penguins data will be used:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"credit_data"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">credit_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    4454 obs. of  14 variables:</span></span>
-<span><span class="co">#&gt;  $ Status   : Factor w/ 2 levels "bad","good": 2 2 1 2 2 2 2 2 2 1 ...</span></span>
-<span><span class="co">#&gt;  $ Seniority: int  9 17 10 0 0 1 29 9 0 0 ...</span></span>
-<span><span class="co">#&gt;  $ Home     : Factor w/ 6 levels "ignore","other",..: 6 6 3 6 6 3 3 4 3 4 ...</span></span>
-<span><span class="co">#&gt;  $ Time     : int  60 60 36 60 36 60 60 12 60 48 ...</span></span>
-<span><span class="co">#&gt;  $ Age      : int  30 58 46 24 26 36 44 27 32 41 ...</span></span>
-<span><span class="co">#&gt;  $ Marital  : Factor w/ 5 levels "divorced","married",..: 2 5 2 4 4 2 2 4 2 2 ...</span></span>
-<span><span class="co">#&gt;  $ Records  : Factor w/ 2 levels "no","yes": 1 1 2 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ Job      : Factor w/ 4 levels "fixed","freelance",..: 2 1 2 1 1 1 1 1 2 4 ...</span></span>
-<span><span class="co">#&gt;  $ Expenses : int  73 48 90 63 46 75 75 35 90 90 ...</span></span>
-<span><span class="co">#&gt;  $ Income   : int  129 131 200 182 107 214 125 80 107 80 ...</span></span>
-<span><span class="co">#&gt;  $ Assets   : int  0 0 3000 2500 0 3500 10000 0 15000 0 ...</span></span>
-<span><span class="co">#&gt;  $ Debt     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">#&gt;  $ Amount   : int  800 1000 2000 900 310 650 1600 200 1200 1200 ...</span></span>
-<span><span class="co">#&gt;  $ Price    : int  846 1658 2985 1325 910 1645 1800 1093 1957 1468 ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"penguins"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">)</span></span>
+<span><span class="co">#&gt; tibble [344 × 7] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ island           : Factor w/ 3 levels "Biscoe","Dream",..: 3 3 3 3 3 3 3 3 3 3 ...</span></span>
+<span><span class="co">#&gt;  $ bill_length_mm   : num [1:344] 39.1 39.5 40.3 NA 36.7 39.3 38.9 39.2 34.1 42 ...</span></span>
+<span><span class="co">#&gt;  $ bill_depth_mm    : num [1:344] 18.7 17.4 18 NA 19.3 20.6 17.8 19.6 18.1 20.2 ...</span></span>
+<span><span class="co">#&gt;  $ flipper_length_mm: int [1:344] 181 186 195 NA 193 190 181 195 193 190 ...</span></span>
+<span><span class="co">#&gt;  $ body_mass_g      : int [1:344] 3750 3800 3250 NA 3450 3650 3625 4675 3475 4250 ...</span></span>
+<span><span class="co">#&gt;  $ sex              : Factor w/ 2 levels "female","male": 2 1 1 NA 1 2 1 2 NA NA ...</span></span>
 <span></span>
-<span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">Status</span> <span class="op">~</span> <span class="va">Seniority</span> <span class="op">+</span> <span class="va">Time</span> <span class="op">+</span> <span class="va">Age</span> <span class="op">+</span> <span class="va">Records</span>, data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span></span>
+<span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span><span class="va">rec</span></span></code></pre></div>
 <p>Before any steps are used the information on the original variables
 is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
-<span><span class="co">#&gt;   variable  type      role      source   required_to_bake</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Seniority <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original TRUE            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Time      <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original TRUE            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Age       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original TRUE            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Records   <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original TRUE            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Status    <span style="color: #949494;">&lt;chr [3]&gt;</span> outcome   original FALSE</span></span></code></pre></div>
-<p>We can add a step to compute dummy variables on the non-numeric data
-after we impute any missing data:</p>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 5</span></span></span>
+<span><span class="co">#&gt;   variable          type      role      source   required_to_bake</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> species           <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> island            <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> bill_length_mm    <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> bill_depth_mm     <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> flipper_length_mm <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> sex               <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original TRUE            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> body_mass_g       <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original FALSE</span></span></code></pre></div>
+<p>This shows the types and roles. Each variable can have one or more
+types, so we can printing them out seperately</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This will capture <em>any</em> variables that are either character
-strings or factors: <code>Status</code> and <code>Records</code>.
-However, since <code>Status</code> is our outcome, we might want to keep
-it as a factor so we can <em>subtract</em> that variable out either by
-name or by role:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rec</span>, original <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">type</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [1] "factor"    "unordered" "nominal"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; [1] "factor"    "unordered" "nominal"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span>
+<span><span class="co">#&gt; [1] "double"  "numeric"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[4]]</span></span>
+<span><span class="co">#&gt; [1] "double"  "numeric"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[5]]</span></span>
+<span><span class="co">#&gt; [1] "integer" "numeric"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[6]]</span></span>
+<span><span class="co">#&gt; [1] "factor"    "unordered" "nominal"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[7]]</span></span>
+<span><span class="co">#&gt; [1] "integer" "numeric"</span></span></code></pre></div>
+<p>Notice that integer variables have roles <code>"integer"</code> and
+<code>"numeric"</code>, and the factor variables have roles
+<code>"factor"</code>, <code>"unordered"</code>, <code>"nominal"</code>.
+This allows for some neat selections where the selector
+<code><a href="../reference/has_role.html">all_numeric()</a></code> select double and integer variables, and more
+specific selectors such as <code><a href="../reference/has_role.html">all_integer()</a></code> only select
+integer variables. A full hierarchy of types can be seen in
+<code><a href="../reference/has_role.html">?has_role</a></code>.</p>
+<p>We can add a step to normalize numeric data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Records</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="va">Status</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<p>Using the last definition:</p>
+<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>This will capture <em>any</em> variables that are either character
+integers or doubles: <code>bill_length_mm</code>,
+<code>bill_depth_mm</code>, <code>flipper_length_mm</code> and
+<code>body_mass_g</code>. However, since <code>body_mass_g</code> is our
+outcome, we might want to keep it as a factor so we can
+<em>subtract</em> that variable out either by name or by role:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span></span>
-<span><span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">credit_data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="va">bill_length_mm</span>, <span class="va">bill_depth_mm</span>, </span>
+<span>                                  <span class="va">flipper_length_mm</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span> <span class="va">body_mass_g</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># recommended</span></span></code></pre></div>
+<p>Whenever possible, it is recommended to use the more specific
+<code>*_predictors()</code> variants to avoid accidentally selecting the
+outcomes.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rec</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There are new levels in a factor: NA</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 344 × 7</span></span></span>
+<span><span class="co">#&gt;    species island    bill_length_mm bill_depth_mm flipper_length_mm</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Adelie  Torgersen           39.1          18.7               181</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Adelie  Torgersen           39.5          17.4               186</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Adelie  Torgersen           40.3          18                 195</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Adelie  Torgersen           <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>                  <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Adelie  Torgersen           36.7          19.3               193</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Adelie  Torgersen           39.3          20.6               190</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Adelie  Torgersen           38.9          17.8               181</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Adelie  Torgersen           39.2          19.6               195</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Adelie  Torgersen           34.1          18.1               193</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Adelie  Torgersen           42            20.2               190</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 334 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: body_mass_g &lt;int&gt;, sex_male &lt;dbl&gt;</span></span></span></code></pre></div>
+<p>Using the last definition:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dummied</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">dummied</span>, training <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
+<span><span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span><span class="va">with_dummy</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,454 × 5</span></span></span>
-<span><span class="co">#&gt;    Seniority  Time   Age Status Records_yes</span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         9    60    30 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        17    60    58 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        10    36    46 bad              1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         0    60    24 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         0    36    26 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1    60    36 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        29    60    44 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         9    12    27 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         0    60    32 good             0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         0    48    41 bad              0</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,444 more rows</span></span></span></code></pre></div>
-<p><code>Status</code> is unaffected.</p>
-<p>One important aspect about selecting variables in steps is that the
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 344 × 7</span></span></span>
+<span><span class="co">#&gt;    species island    bill_length_mm bill_depth_mm flipper_length_mm sex   </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.883</span>         0.784            -<span style="color: #BB0000;">1.42</span>  male  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.810</span>         0.126            -<span style="color: #BB0000;">1.06</span>  female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.663</span>         0.430            -<span style="color: #BB0000;">0.421</span> female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Adelie  Torgersen         <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Adelie  Torgersen         -<span style="color: #BB0000;">1.32</span>          1.09             -<span style="color: #BB0000;">0.563</span> female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.847</span>         1.75             -<span style="color: #BB0000;">0.776</span> male  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.920</span>         0.329            -<span style="color: #BB0000;">1.42</span>  female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.865</span>         1.24             -<span style="color: #BB0000;">0.421</span> male  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Adelie  Torgersen         -<span style="color: #BB0000;">1.80</span>          0.480            -<span style="color: #BB0000;">0.563</span> <span style="color: #BB0000;">NA</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.352</span>         1.54             -<span style="color: #BB0000;">0.776</span> <span style="color: #BB0000;">NA</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 334 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: body_mass_g &lt;int&gt;</span></span></span></code></pre></div>
+<p><code>body_mass_g</code> is unaffected.</p>
+<p>One important aspect of selecting variables in steps is that the
 variable names and types may change as steps are being executed. In the
-above example, <code>Records</code> is a factor variable before the step
-is executed. Afterwards, <code>Records</code> is gone and the binary
-variable <code>Records_yes</code> is in its place. One reason to have
-general selection routines like <code><a href="../reference/has_role.html">all_predictors()</a></code> or
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code> is to be able to select variables that have not
-be created yet.</p>
+above example, <code>sex</code> is a factor variable, if
+<code><a href="../reference/step_dummy.html">step_dummy()</a></code> was used on it, then <code>sex</code> would be
+removed and the binary variable <code>sex_male</code> is in its place.
+One reason to have general selection routines like
+<code><a href="../reference/has_role.html">all_predictors()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code> is to be able
+to select variables that have not been created yet.</p>
+<p>All steps in the recipes package support empty selections. Meaning
+that if <code><a href="../reference/has_role.html">all_date_predictors()</a></code> is used in a step, and no
+date variables was found the in the data set, then the step is applied
+without error. The calculations inside the step will be skipped. This
+allows for quite relaxed recipes as you don’t have to make sure that the
+variables exists at that point in the recipe.</p>
   </main>
 </div>
 
