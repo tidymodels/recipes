@@ -8,7 +8,7 @@
 #'  degrees of freedom for a natural spline increase, more flexible and
 #'  complex curves can be generated. This step requires at least two degrees of
 #'  freedom.
-#' @param options A list of options for [splines2::mSpline()]
+#' @param options A list of options for [splines2::naturalSpline()]
 #'  which should not include `x`, `df`, or `intercept`.
 #' @return An object with classes `"step_spline_natural"` and `"step"`.
 #' @export
