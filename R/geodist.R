@@ -28,9 +28,19 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
-#' `is_lat_lon`, `name`, and `id` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 7
+#' columns `latitude`, `longitude`, `ref_latitude`, `ref_longitude`,
+#' `is_lat_lon`, `name` and `id`:
+#'
+#' \describe{
+#'   \item{latitude}{character, name of latitude variable}
+#'   \item{longitude}{character, name of longitude variable}
+#'   \item{ref_latitude}{numeric, location of latitude reference point}
+#'   \item{ref_longitude}{numeric, location of longitude reference point}
+#'   \item{is_lat_lon}{character, the summary function name}
+#'   \item{name}{character, name of resulting variable}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

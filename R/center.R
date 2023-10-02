@@ -32,11 +32,16 @@
 #'  argument of `prep.recipe`. `bake.recipe` then applies
 #'  the centering to new data sets using these means.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the means)
-#'  is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 3
+#' columns `terms`, `value` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the means}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'

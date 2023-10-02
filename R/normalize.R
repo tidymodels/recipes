@@ -21,12 +21,17 @@
 #'  `prep.recipe`. [`bake.recipe`] then applies the scaling to new data sets using
 #'  these estimates.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected), `value` (the standard
-#'  deviations and means), and `statistic` for the type of value is
-#'  returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `statistic`, `value` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{statistic}{character, name of statistic, mean or sd}
+#'   \item{value}{integer, value statistic}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'

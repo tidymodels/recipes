@@ -31,12 +31,16 @@
 #'
 #' @details
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or original variables selected) and `columns`
-#'  (the list of corresponding columns) is returned. The `columns` is
-#'  is ordered according the frequency in the training data set.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 3
+#' columns `terms`, `columns` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{columns}{character, names of resulting columns}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'

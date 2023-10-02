@@ -19,6 +19,17 @@
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 3
+#' columns `terms`, `value` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the location of the cuts}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples

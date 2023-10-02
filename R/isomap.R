@@ -45,8 +45,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the selectors or variables selected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 2
+#' columns `terms`  and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_isomap"

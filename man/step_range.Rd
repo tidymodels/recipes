@@ -68,9 +68,15 @@ the training set, the new values are truncated at \code{min} or
 \code{max}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{min}, and \code{max} is
-returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+columns \code{terms}, \code{min}, \code{max} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{min}{numeric, lower range}
+\item{max}{numeric, upper range}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

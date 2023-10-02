@@ -37,11 +37,16 @@
 #'  As of `recipes` 0.1.16, this function name changed from `step_rollimpute()`
 #'    to `step_impute_roll()`.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `window`
-#'  (the window size) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 3
+#' columns `terms`, `window` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{window}{integer, window size}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_impute_roll"

@@ -15,9 +15,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected), `inverse`, and `func` is
-#' returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `inverse`, `func` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{inverse}{logical, is the inverse function be used}
+#'   \item{func}{character, name of function. "sinh", "cosh", or "tanh"}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

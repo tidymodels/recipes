@@ -41,17 +41,15 @@
 #'
 #' # Tidying
 #'
-#' The [`tidy()`][tidy.recipe()] method returns the coefficients that are
-#' usually defined as
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `value`, `component` and `id`:
 #'
-#' \deqn{W(P'W)^{-1}}
-#'
-#' (See the Wikipedia article below)
-#'
-#' When applied to data, these values are usually scaled by a column-specific
-#' norm. The `tidy()` method applies this same norm to the coefficients shown
-#' above. When you `tidy()` this step, a tibble with columns `terms` (the
-#' selectors or variables selected), `components`, and `values` is returned.
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, coeficients defined as \eqn{W(P'W)^{-1}}}
+#'   \item{size}{character, name of component}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_pls"

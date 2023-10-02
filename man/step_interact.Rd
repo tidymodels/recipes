@@ -93,8 +93,13 @@ so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and
 all two-way interactions are created.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the interaction effects) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

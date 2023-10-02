@@ -20,9 +20,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#' columns `terms` (the selectors or variables selected) and `model`
-#' (themedian value) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 3
+#' columns `terms`, `model` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{model}{numeric, the median value}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'

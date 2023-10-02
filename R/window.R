@@ -44,9 +44,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected), `statistic` (the
-#' summary function name), and `size` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `statistic`, `size` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{statistic}{character, the summary function name}
+#'   \item{size}{integer, window size}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_window"

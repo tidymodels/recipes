@@ -48,6 +48,18 @@
 #'  `terms` (the selectors or variables selected), `value` (the feature
 #'  names), and `ordinal` (a logical) is returned.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `value`, `ordinal` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the feature names}
+#'   \item{ordinal}{logical, are factors ordered}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples

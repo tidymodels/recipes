@@ -88,9 +88,14 @@ This step is atypical in that, when baked, the
 based on the fixed and profiled variable's information.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (which is the columns that will be affected) and \code{type} (fixed
-or profiled) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+columns \code{terms}, \code{type} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{type}{character, fixed or profiled}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

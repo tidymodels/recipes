@@ -40,11 +40,20 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected), `value` (the centroid),
-#' `class`, and `type` is returned. Type has values `"global"`, `"by_class"`,
-#' and `"shrunken"`. The first two types of centroids are in the original units
-#' while the last have been standardized.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 6
+#' columns `terms`, `value`, `class`, `type`, `threshold` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the centroid}
+#'   \item{class}{character, name of class variable}
+#'   \item{type}{character, has values global, by_class, and shrunken}
+#'   \item{threshold}{numeric, value of threshold}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' The first two types of centroids are in the original units while the last
+#' have been standardized.
 #'
 #' @template case-weights-supervised
 #' @references

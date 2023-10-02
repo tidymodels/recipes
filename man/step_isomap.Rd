@@ -100,8 +100,13 @@ if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \code{Isomap001} - \code{Isomap101}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the selectors or variables selected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+columns \code{terms}  and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

@@ -42,9 +42,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected), `value` (the centroid
-#' of the class), and `class` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `value`, `class` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, location of centroid}
+#'   \item{class}{character, name of the class}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-supervised
 #'

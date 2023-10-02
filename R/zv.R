@@ -18,8 +18,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be removed) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 2
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, names of the columns that will be removed}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

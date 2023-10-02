@@ -34,9 +34,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables for imputation), `predictors`
-#' (those variables used to impute), and `neighbors` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' columns `terms`, `predictors`, `neighbors` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{predictors}{character, selected predictors used to impute}
+#'   \item{neighbors}{integer, number of neighbors}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_impute_knn"

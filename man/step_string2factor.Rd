@@ -83,9 +83,14 @@ can also take existing factors (but will leave them as-is).
 }
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{ordered} is
-returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+columns \code{terms}, \code{ordered} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{ordered}{logical, are factors ordered}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

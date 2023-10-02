@@ -113,9 +113,14 @@ The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette
 and interactions has more information.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns \code{terms}
-(the selectors or original variables selected) and \code{columns} (the list of
-corresponding binary columns) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+columns \code{terms}, \code{columns} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{columns}{character, names of resulting columns}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

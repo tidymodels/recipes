@@ -65,13 +65,18 @@ the variable standard deviations from the data used in the
 \code{training} argument of \code{prep.recipe}.
 \code{bake.recipe} then applies the scaling to new data sets
 using these standard deviations.
-}
-\section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} (the
-standard deviations) is returned.
-}
 
+#' # Tidying
+
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+columns \code{terms}, \code{value}, and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the standard deviations}
+\item{id}{character, id of this step}
+}
+}
 \section{Case weights}{
 
 

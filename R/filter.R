@@ -17,11 +17,15 @@
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` which contains the conditional statements is returned.
-#'  These expressions are text representations and are not parsable.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 2
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
