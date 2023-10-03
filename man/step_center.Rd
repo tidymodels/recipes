@@ -64,7 +64,7 @@ columns \code{terms}, \code{value} and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
-\item{value}{character, the means}
+\item{value}{numeric, the means}
 \item{id}{character, id of this step}
 }
 }

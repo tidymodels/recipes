@@ -69,9 +69,8 @@ with a random uniform value between zero and the minimum.
 
 As of \code{recipes} 0.1.16, this function name changed from \code{step_lowerimpute()}
 to \code{step_impute_lower()}.
-
-#' # Tidying
-
+}
+\section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
 columns \code{terms}, \code{value} and \code{id}:
 
@@ -81,6 +80,7 @@ columns \code{terms}, \code{value} and \code{id}:
 \item{id}{character, id of this step}
 }
 }
+
 \section{Case weights}{
 
 
