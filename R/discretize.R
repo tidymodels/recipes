@@ -264,7 +264,7 @@ print.discretize <-
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
-#'   \item{value}{character, the breaks}
+#'   \item{value}{numeric, the breaks}
 #'   \item{id}{character, id of this step}
 #' }
 #'

@@ -23,9 +23,9 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  #' # Tidying
+#' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 4
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 3
 #' columns `terms`, `value`, and `id`:
 #'
 #' \describe{
