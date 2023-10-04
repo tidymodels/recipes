@@ -81,7 +81,7 @@ formula is used to calculate the great-circle distance in meters.
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 7
 columns \code{latitude}, \code{longitude}, \code{ref_latitude}, \code{ref_longitude},
-\code{is_lat_lon}, \code{name} and \code{id}:
+\code{is_lat_lon}, \code{name} , and \code{id}:
 
 \describe{
 \item{latitude}{character, name of latitude variable}

@@ -100,7 +100,7 @@ This step has 1 tuning parameters:
 
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
-columns \code{terms}, \code{columns} and \code{id}:
+columns \code{terms}, \code{columns} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

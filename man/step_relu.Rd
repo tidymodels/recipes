@@ -86,7 +86,7 @@ residuals only if they are within a certain margin of the decision boundary.
 
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
-columns \code{terms}, \code{shift}, \code{reverse} and \code{id}:
+columns \code{terms}, \code{shift}, \code{reverse} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

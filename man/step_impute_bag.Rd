@@ -110,7 +110,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 (the bagged tree object) is returned.
 
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
-columns \code{terms}, \code{model} and \code{id}:
+columns \code{terms}, \code{model} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

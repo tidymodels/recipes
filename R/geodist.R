@@ -30,7 +30,7 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 7
 #' columns `latitude`, `longitude`, `ref_latitude`, `ref_longitude`,
-#' `is_lat_lon`, `name` and `id`:
+#' `is_lat_lon`, `name` , and `id`:
 #'
 #' \describe{
 #'   \item{latitude}{character, name of latitude variable}

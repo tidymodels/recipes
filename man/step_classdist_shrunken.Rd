@@ -98,7 +98,7 @@ be changed using the \code{prefix} argument.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 6
-columns \code{terms}, \code{value}, \code{class}, \code{type}, \code{threshold} and \code{id}:
+columns \code{terms}, \code{value}, \code{class}, \code{type}, \code{threshold} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

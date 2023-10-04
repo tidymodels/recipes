@@ -101,7 +101,7 @@ if \code{num_terms < 10}, their names will be \code{Isomap1} -
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
-columns \code{terms}  and \code{id}:
+columns \code{terms}  , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

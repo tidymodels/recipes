@@ -92,7 +92,7 @@ the names would be \code{NNMF1} - \code{NNMF101}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
-columns \code{terms}, \code{value}, \code{component} and \code{id}:
+columns \code{terms}, \code{value}, \code{component} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

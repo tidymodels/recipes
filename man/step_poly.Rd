@@ -76,7 +76,7 @@ expansion pick up the same signal as their uncorrelated counterpart.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
-columns \code{terms}, \code{degree} and \code{id}:
+columns \code{terms}, \code{degree} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

@@ -66,7 +66,7 @@ before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
-columns \code{terms}, \code{size}, \code{replace} and \code{id}:
+columns \code{terms}, \code{size}, \code{replace} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

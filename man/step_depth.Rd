@@ -106,7 +106,7 @@ naming format can be changed using the \code{prefix} argument.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
-columns \code{terms}, \code{class} and \code{id}:
+columns \code{terms}, \code{class} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

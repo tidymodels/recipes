@@ -98,7 +98,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 names), and \code{ordinal} (a logical) is returned.
 
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
-columns \code{terms}, \code{value}, \code{ordinal} and \code{id}:
+columns \code{terms}, \code{value}, \code{ordinal} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

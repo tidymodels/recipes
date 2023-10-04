@@ -93,7 +93,7 @@ to \code{step_impute_roll()}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
-columns \code{terms}, \code{window} and \code{id}:
+columns \code{terms}, \code{window} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

@@ -114,7 +114,7 @@ This step has 1 tuning parameters:
 
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 6
-columns \code{terms}, \code{starting_val}, \code{cycle_size}, \code{frequency}, \code{key}, and \code{id}:
+columns \code{terms}, \code{starting_val}, \code{cycle_size}, \code{frequency}, \code{key} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}

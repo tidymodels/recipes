@@ -19,7 +19,7 @@
 #' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 3
-#' columns `terms`, `base` and `id`:
+#' columns `terms`, `base` , and `id`:
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}

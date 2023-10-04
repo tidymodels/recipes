@@ -62,7 +62,7 @@
 #'
 #' When you [`tidy()`][tidy.recipe()] this step two things can happen depending
 #' the `type` argument. If `type = "coef"` a tibble returned with 4 columns
-#' `terms`, `value`, `component` and `id`:
+#' `terms`, `value`, `component` , and `id`:
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
@@ -72,7 +72,7 @@
 #' }
 #'
 #' If `type = "variance"` a tibble returned with 4 columns `terms`, `value`,
-#' `component` and `id`:
+#' `component` , and `id`:
 #'
 #' \describe{
 #'   \item{terms}{character, type of variance}

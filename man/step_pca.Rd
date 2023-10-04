@@ -108,7 +108,7 @@ fraction of the total variance in the variables.
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step two things can happen depending
 the \code{type} argument. If \code{type = "coef"} a tibble returned with 4 columns
-\code{terms}, \code{value}, \code{component} and \code{id}:
+\code{terms}, \code{value}, \code{component} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
@@ -118,7 +118,7 @@ the \code{type} argument. If \code{type = "coef"} a tibble returned with 4 colum
 }
 
 If \code{type = "variance"} a tibble returned with 4 columns \code{terms}, \code{value},
-\code{component} and \code{id}:
+\code{component} , and \code{id}:
 
 \describe{
 \item{terms}{character, type of variance}
