@@ -65,7 +65,7 @@ before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
 columns \code{terms}, \code{size}, \code{replace} and \code{id}:
 
 \describe{

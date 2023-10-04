@@ -64,7 +64,7 @@ remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{holiday} and \code{id}:
 
 \describe{

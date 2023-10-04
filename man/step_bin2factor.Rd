@@ -66,7 +66,7 @@ density of numeric binary data. Note that the numeric data is
 only verified to be numeric (and does not count levels).
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
 columns \code{terms} and \code{id}:
 
 \describe{

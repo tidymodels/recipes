@@ -62,7 +62,7 @@ Note that if the original columns are character, they will be
 converted to factors by this step.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{value} and \code{id}:
 
 \describe{

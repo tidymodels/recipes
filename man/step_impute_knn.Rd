@@ -102,7 +102,7 @@ As of \code{recipes} 0.1.16, this function name changed from \code{step_knnimput
 to \code{step_impute_knn()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
 columns \code{terms}, \code{predictors}, \code{neighbors} and \code{id}:
 
 \describe{

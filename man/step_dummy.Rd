@@ -113,7 +113,7 @@ The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette
 and interactions has more information.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{columns} and \code{id}:
 
 \describe{

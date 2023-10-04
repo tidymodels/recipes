@@ -55,7 +55,7 @@ only called in the bake step. Be careful to avoid unintentional transformations
 when calling steps with \code{all_predictors()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
 columns \code{terms} and \code{id}:
 
 \describe{

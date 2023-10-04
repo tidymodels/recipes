@@ -84,7 +84,7 @@ When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{retained} and \code{id}:
 
 \describe{

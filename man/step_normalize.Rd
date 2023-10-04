@@ -65,7 +65,7 @@ deviations and means from the data used in the \code{training} argument of
 these estimates.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
 columns \code{terms}, \code{statistic}, \code{value} and \code{id}:
 
 \describe{

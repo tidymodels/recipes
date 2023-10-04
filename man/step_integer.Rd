@@ -73,7 +73,7 @@ Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{value} and \code{id}:
 
 \describe{

@@ -97,7 +97,7 @@ values and, by default, have the prefix \code{classdist_}. The naming format can
 be changed using the \code{prefix} argument.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 6
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 6
 columns \code{terms}, \code{value}, \code{class}, \code{type}, \code{threshold} and \code{id}:
 
 \describe{

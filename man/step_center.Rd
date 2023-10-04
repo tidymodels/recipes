@@ -59,7 +59,7 @@ argument of \code{prep.recipe}. \code{bake.recipe} then applies
 the centering to new data sets using these means.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{value} and \code{id}:
 
 \describe{

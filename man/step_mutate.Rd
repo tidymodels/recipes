@@ -62,7 +62,7 @@ If a preceding step removes a column that is selected by name in
 \code{step_mutate()}, the recipe will error when being estimated with \code{\link[=prep]{prep()}}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{value} and \code{id}:
 
 \describe{

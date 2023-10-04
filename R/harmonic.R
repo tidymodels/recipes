@@ -66,7 +66,7 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 6
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 6
 #' columns `terms`, `starting_val`, `cycle_size`, `frequency`, `key`, and `id`:
 #'
 #' \describe{

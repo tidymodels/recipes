@@ -103,7 +103,7 @@ sequence of numbers. The variable names are padded with zeros. For example, if
 the names would be \code{IC1} - \code{IC101}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
 columns \code{terms}, \code{component}, \code{value} and \code{id}:
 
 \describe{

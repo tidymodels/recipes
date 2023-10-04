@@ -21,7 +21,7 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble returned with 2
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 2
 #' columns `terms` and `id`:
 #'
 #' \describe{

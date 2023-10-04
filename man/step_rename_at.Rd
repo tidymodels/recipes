@@ -54,7 +54,7 @@ rename the selected variables using a common function via
 \code{\link[dplyr:select_all]{dplyr::rename_at()}}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
 columns \code{terms} and \code{id}:
 
 \describe{

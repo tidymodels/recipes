@@ -79,7 +79,7 @@ remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
 columns \code{terms} and \code{id}:
 
 \describe{

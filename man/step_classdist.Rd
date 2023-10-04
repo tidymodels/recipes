@@ -98,7 +98,7 @@ there must be at least as many data points are variables
 overall.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
 columns \code{terms}, \code{value}, \code{class} and \code{id}:
 
 \describe{

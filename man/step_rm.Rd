@@ -55,7 +55,7 @@ specifically referenced by name. To avoid this, see the advice in the
 \emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
 columns \code{terms} and \code{id}:
 
 \describe{

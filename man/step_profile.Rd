@@ -88,7 +88,7 @@ This step is atypical in that, when baked, the
 based on the fixed and profiled variable's information.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
 columns \code{terms}, \code{type} and \code{id}:
 
 \describe{
