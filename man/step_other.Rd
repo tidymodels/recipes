@@ -89,7 +89,7 @@ columns \code{terms}, \code{retained} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
-\item{retained}{character, factor levels not pulled into "other"}
+\item{retained}{character, factor levels not pulled into \code{"other"}}
 \item{id}{character, id of this step}
 }
 }

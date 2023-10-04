@@ -104,13 +104,13 @@ columns \code{terms}, \code{value}, \code{class}, \code{type}, \code{threshold} 
 \item{terms}{character, the selectors or variables selected}
 \item{value}{numeric, the centroid}
 \item{class}{character, name of class variable}
-\item{type}{character, has values global, by_class, and shrunken}
+\item{type}{character, has values \code{"global"}, \code{"by_class"}, and \code{"shrunken"}}
 \item{threshold}{numeric, value of threshold}
 \item{id}{character, id of this step}
 }
 
 The first two types of centroids are in the original units while the last
-have been standardized.
+has been standardized.
 }
 
 \section{Case weights}{

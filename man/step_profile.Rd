@@ -93,7 +93,7 @@ columns \code{terms}, \code{type} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
-\item{type}{character, fixed or profiled}
+\item{type}{character, \code{"fixed"} or \code{"profiled"}}
 \item{id}{character, id of this step}
 }
 }

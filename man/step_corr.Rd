@@ -86,7 +86,7 @@ When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms} and \code{id}:
 
 \describe{
-\item{terms}{character, the selectors or variables selected}
+\item{terms}{character, the selectors or variables selected to be removed}
 \item{id}{character, id of this step}
 }
 }

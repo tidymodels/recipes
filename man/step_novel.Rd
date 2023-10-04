@@ -77,7 +77,7 @@ columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
-\item{value}{character, the factor levels that is used for the new value}
+\item{value}{character, the factor levels that are used for the new value}
 \item{id}{character, id of this step}
 }
 }
