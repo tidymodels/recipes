@@ -2,7 +2,7 @@
 
 * Document that `update_role()`, `add_role()` and `remove_role()` are applied before steps and checks. (#778)
 
-* Documentation for tidy methods for all steps have been added when missing and improved to describe whole outcome. (#936)
+* Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
 
 # recipes 1.0.8
 

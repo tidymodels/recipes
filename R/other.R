@@ -48,7 +48,7 @@
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
-#'   \item{retained}{character, factor levels not pulled into "other"}
+#'   \item{retained}{character, factor levels not pulled into `"other"`}
 #'   \item{id}{character, id of this step}
 #' }
 #'

@@ -28,8 +28,8 @@
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
-#'   \item{statistic}{character, name of statistic, mean or sd}
-#'   \item{value}{numeric, value statistic}
+#'   \item{statistic}{character, name of statistic (`"mean"` or `"sd"`)}
+#'   \item{value}{numeric, value of the `statistic`}
 #'   \item{id}{character, id of this step}
 #' }
 #'

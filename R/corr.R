@@ -43,7 +43,7 @@
 #' columns `terms` and `id`:
 #'
 #' \describe{
-#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{terms}{character, the selectors or variables selected to be removed}
 #'   \item{id}{character, id of this step}
 #' }
 #'

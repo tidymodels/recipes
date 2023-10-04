@@ -46,7 +46,7 @@
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
-#'   \item{value}{numeric, coeficients defined as \eqn{W(P'W)^{-1}}}
+#'   \item{value}{numeric, coefficients defined as \eqn{W(P'W)^{-1}}}
 #'   \item{size}{character, name of component}
 #'   \item{id}{character, id of this step}
 #' }

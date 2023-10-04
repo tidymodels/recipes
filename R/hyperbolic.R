@@ -21,7 +21,7 @@
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
 #'   \item{inverse}{logical, is the inverse function be used}
-#'   \item{func}{character, name of function. "sinh", "cosh", or "tanh"}
+#'   \item{func}{character, name of function. `"sinh"`, `"cosh"`, or `"tanh"`}
 #'   \item{id}{character, id of this step}
 #' }
 #'
