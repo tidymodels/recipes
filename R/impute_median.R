@@ -21,11 +21,11 @@
 #' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
-#' columns `terms`, `model` , and `id`:
+#' columns `terms`, `value` , and `id`:
 #'
 #' \describe{
 #'   \item{terms}{character, the selectors or variables selected}
-#'   \item{model}{numeric, the median value}
+#'   \item{value}{numeric, the median value}
 #'   \item{id}{character, id of this step}
 #' }
 #'

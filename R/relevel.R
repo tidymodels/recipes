@@ -16,7 +16,7 @@
 #' @details
 #'
 #' The selected variables are releveled to a level
-#' (given by `ref_level`). Placing the `ref_level` in the first
+#' (given by `ref_level`), placing the `ref_level` in the first
 #' position.
 #'
 #' Note that if the original columns are character, they will be

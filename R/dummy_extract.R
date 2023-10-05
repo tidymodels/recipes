@@ -41,6 +41,8 @@
 #'   \item{columns}{character, names of resulting columns}
 #'   \item{id}{character, id of this step}
 #' }
+#' 
+#' The return value is ordered according to the frequency of `columns` entries in the training data set.
 #'
 #' @template case-weights-unsupervised
 #'
