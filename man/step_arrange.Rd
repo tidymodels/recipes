@@ -55,7 +55,7 @@ to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms} and \code{id}:
 
 \describe{

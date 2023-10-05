@@ -69,7 +69,7 @@ As of \code{recipes} 0.1.16, this function name changed from
 \code{step_medianimpute()} to \code{step_impute_median()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{model} , and \code{id}:
 
 \describe{

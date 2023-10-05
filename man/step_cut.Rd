@@ -61,7 +61,7 @@ points will end up in the last.
 \code{include.lowest} set to \code{TRUE}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{

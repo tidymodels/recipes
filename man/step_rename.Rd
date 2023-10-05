@@ -54,7 +54,7 @@ quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
 expression (to be portable between sessions).
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{

@@ -28,7 +28,7 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 7
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
 #' columns `latitude`, `longitude`, `ref_latitude`, `ref_longitude`,
 #' `is_lat_lon`, `name` , and `id`:
 #'

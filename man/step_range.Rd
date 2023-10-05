@@ -68,7 +68,7 @@ the training set, the new values are truncated at \code{min} or
 \code{max}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{min}, \code{max} , and \code{id}:
 
 \describe{

@@ -69,7 +69,7 @@ sequence of any existing operations.
 new dummy variable based on a regular expression.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{result} , and \code{id}:
 
 \describe{

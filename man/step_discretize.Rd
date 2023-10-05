@@ -67,7 +67,7 @@ convert numeric data into a factor with bins having approximately the same
 number of data points (based on a training set).
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{

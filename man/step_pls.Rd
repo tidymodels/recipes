@@ -107,7 +107,7 @@ proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} an
 \code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value}, \code{component} , and \code{id}:
 
 \describe{

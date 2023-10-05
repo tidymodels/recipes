@@ -75,7 +75,7 @@ otherwise be a problem for large values of \code{degree}. Orthogonal polynomial
 expansion pick up the same signal as their uncorrelated counterpart.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{degree} , and \code{id}:
 
 \describe{

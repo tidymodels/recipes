@@ -53,7 +53,7 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 3
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
 #' columns `terms`, `class` , and `id`:
 #'
 #' \describe{

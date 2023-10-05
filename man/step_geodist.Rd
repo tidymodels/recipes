@@ -79,7 +79,7 @@ distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haver
 formula is used to calculate the great-circle distance in meters.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 7
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{latitude}, \code{longitude}, \code{ref_latitude}, \code{ref_longitude},
 \code{is_lat_lon}, \code{name} , and \code{id}:
 

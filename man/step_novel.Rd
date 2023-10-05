@@ -72,7 +72,7 @@ When fitting a model that can deal with new factor levels, consider using
 new levels at prediction time, instead of throwing warnings or errors.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{

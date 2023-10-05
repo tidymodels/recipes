@@ -72,7 +72,7 @@ See \code{\link[=step_date]{step_date()}} if you want to calculate features that
 hours.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{

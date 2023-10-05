@@ -44,7 +44,7 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with 4
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
 #' columns `terms`, `statistic`, `size` , and `id`:
 #'
 #' \describe{

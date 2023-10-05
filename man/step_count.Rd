@@ -73,7 +73,7 @@ sequence of any existing operations.
 variable that counts instances of a regular expression pattern in text.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{result} , and \code{id}:
 
 \describe{

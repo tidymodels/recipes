@@ -100,7 +100,7 @@ if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \code{Isomap001} - \code{Isomap101}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}  , and \code{id}:
 
 \describe{

@@ -75,7 +75,7 @@ from the data and new columns are added. The naming convention
 for the new variables is \code{varname_bs_1} and so on.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 2
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms} and \code{id}:
 
 \describe{

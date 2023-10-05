@@ -60,7 +60,7 @@ sequence of any existing operations.
 integers.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{ordered} , and \code{id}:
 
 \describe{

@@ -61,7 +61,7 @@ sequence of any existing operations.
 the value of a variable with its percentile from the training set.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 4
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value}, \code{percentile} , and \code{id}:
 
 \describe{

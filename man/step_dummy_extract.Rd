@@ -97,7 +97,7 @@ the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()
 default.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with 3
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{columns} , and \code{id}:
 
 \describe{
