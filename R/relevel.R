@@ -13,12 +13,25 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details The selected variables are releveled to a level
-#' (given by `ref_level`). Placing the `ref_level` in the first
+#' @details
+#'
+#' The selected variables are releveled to a level
+#' (given by `ref_level`), placing the `ref_level` in the first
 #' position.
 #'
 #' Note that if the original columns are character, they will be
-#'  converted to factors by this step.
+#' converted to factors by this step.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the value of `ref_level`}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

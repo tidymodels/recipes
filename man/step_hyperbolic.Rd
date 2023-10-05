@@ -55,9 +55,15 @@ sequence of any existing operations.
 transform data using a hyperbolic function.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected), \code{inverse}, and \code{func} is
-returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{inverse}, \code{func} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{inverse}{logical, is the inverse function be used}
+\item{func}{character, name of function. \code{"sinh"}, \code{"cosh"}, or \code{"tanh"}}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

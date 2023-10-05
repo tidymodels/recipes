@@ -110,17 +110,15 @@ proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} an
 \code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
 }
 \section{Tidying}{
-The \code{\link[=tidy.recipe]{tidy()}} method returns the coefficients that are
-usually defined as
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{component} , and \code{id}:
 
-\deqn{W(P'W)^{-1}}
-
-(See the Wikipedia article below)
-
-When applied to data, these values are usually scaled by a column-specific
-norm. The \code{tidy()} method applies this same norm to the coefficients shown
-above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{components}, and \code{values} is returned.
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, coefficients defined as \eqn{W(P'W)^{-1}}}
+\item{size}{character, name of component}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

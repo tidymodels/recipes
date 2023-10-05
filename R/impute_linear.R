@@ -26,11 +26,16 @@
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  bagged tree object) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `model` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{model}{list, list of fitted `lm()` models}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'

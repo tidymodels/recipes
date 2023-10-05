@@ -67,9 +67,15 @@ before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} which contains the conditional statements is returned.
-These expressions are text representations and are not parsable.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+
+The expressions in \code{terms} are text representations and are not parsable.
 }
 
 \section{Case weights}{

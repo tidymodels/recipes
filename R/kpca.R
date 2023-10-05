@@ -26,6 +26,18 @@
 #'
 #' @template kpca-info
 #'
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examplesIf rlang::is_installed(c("modeldata", "ggplot2", "kernlab"))

@@ -20,6 +20,20 @@
 #' @export
 #' @rdname step_percentile
 #'
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, `percentile` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the value at the percentile}
+#'   \item{percentile}{numeric, the percentile as a percentage}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")

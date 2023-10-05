@@ -75,8 +75,14 @@ otherwise be a problem for large values of \code{degree}. Orthogonal polynomial
 expansion pick up the same signal as their uncorrelated counterpart.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns \code{terms}
-(the columns that will be affected) and \code{degree} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{degree} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{degree}{integer, the polynomial degree}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

@@ -97,10 +97,16 @@ the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()
 default.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or original variables selected) and \code{columns}
-(the list of corresponding columns) is returned. The \code{columns} is
-is ordered according the frequency in the training data set.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{columns} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{columns}{character, names of resulting columns}
+\item{id}{character, id of this step}
+}
+
+The return value is ordered according to the frequency of \code{columns} entries in the training data set.
 }
 
 \section{Case weights}{

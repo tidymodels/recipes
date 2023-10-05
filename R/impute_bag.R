@@ -47,6 +47,17 @@
 #'  `terms` (the selectors or variables selected) and `model`
 #'  (the bagged tree object) is returned.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `model` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{model}{list, the bagged tree object}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_impute_bag"
 #' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")

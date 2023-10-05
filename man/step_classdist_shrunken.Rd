@@ -97,11 +97,20 @@ values and, by default, have the prefix \code{classdist_}. The naming format can
 be changed using the \code{prefix} argument.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{value} (the centroid),
-\code{class}, and \code{type} is returned. Type has values \code{"global"}, \code{"by_class"},
-and \code{"shrunken"}. The first two types of centroids are in the original units
-while the last have been standardized.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{class}, \code{type}, \code{threshold} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the centroid}
+\item{class}{character, name of class variable}
+\item{type}{character, has values \code{"global"}, \code{"by_class"}, and \code{"shrunken"}}
+\item{threshold}{numeric, value of threshold}
+\item{id}{character, id of this step}
+}
+
+The first two types of centroids are in the original units while the last
+has been standardized.
 }
 
 \section{Case weights}{

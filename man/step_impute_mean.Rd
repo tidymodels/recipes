@@ -75,9 +75,14 @@ As of \code{recipes} 0.1.16, this function name changed from \code{step_meanimpu
 to \code{step_impute_mean()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{model} (the mean
-value) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the mean value}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

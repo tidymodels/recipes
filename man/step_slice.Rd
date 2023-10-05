@@ -65,8 +65,13 @@ before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} which contains the filtering indices is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, containing the filtering indices}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

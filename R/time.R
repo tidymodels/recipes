@@ -28,11 +28,16 @@
 #'  See [step_date()] if you want to calculate features that are larger than
 #'  hours.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the feature
-#'  names).
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the feature names}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @examples
 #' library(lubridate)

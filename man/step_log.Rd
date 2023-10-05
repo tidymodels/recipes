@@ -60,8 +60,14 @@ sequence of any existing operations.
 transform data.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) and \code{base}.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{base} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{base}{numeric, value for the base}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{
