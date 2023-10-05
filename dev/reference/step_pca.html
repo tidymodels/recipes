@@ -204,10 +204,38 @@ fraction of the total variance in the variables.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, use either <code>type = "coef"</code>
-for the variable loadings per component or <code>type = "variance"</code> for how
-much variance each component accounts for.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step two things can happen depending
+the <code>type</code> argument. If <code>type = "coef"</code> a tibble returned with 4 columns
+<code>terms</code>, <code>value</code>, <code>component</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, variable loading</p></dd>
+
+<dt>component</dt>
+<dd><p>character, principle component</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl><p>If <code>type = "variance"</code> a tibble returned with 4 columns <code>terms</code>, <code>value</code>,
+<code>component</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, type of variance</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, value of the variance</p></dd>
+
+<dt>component</dt>
+<dd><p>integer, principle component</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
     <p>This step has 2 tuning parameters:</p><ul><li><p><code>num_comp</code>: # Components (type: integer, default: 5)</p></li>
@@ -308,6 +336,26 @@ Analysis</em>. Springer.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> Assault  -<span style="color: #BB0000;">0.743</span>  PC4       pca_Esd0U</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> UrbanPop  0.134  PC4       pca_Esd0U</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> Rape      0.089<span style="text-decoration: underline;">0</span> PC4       pca_Esd0U</span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">pca_estimates</span>, number <span class="op">=</span> <span class="fl">2</span>, type <span class="op">=</span> <span class="st">"variance"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 16 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    terms                         value component id       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> variance                      2.48          1 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> variance                      0.990         2 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> variance                      0.357         3 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> variance                      0.173         4 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> cumulative variance           2.48          1 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> cumulative variance           3.47          2 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> cumulative variance           3.83          3 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> cumulative variance           4             4 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> percent variance             62.0           1 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> percent variance             24.7           2 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> percent variance              8.91          3 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> percent variance              4.34          4 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> cumulative percent variance  62.0           1 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> cumulative percent variance  86.8           2 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> cumulative percent variance  95.7           3 pca_Esd0U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> cumulative percent variance 100             4 pca_Esd0U</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

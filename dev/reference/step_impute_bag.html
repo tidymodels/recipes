@@ -200,7 +200,19 @@ to <code>step_impute_bag()</code>.</p>
     <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
 <code>terms</code> (the selectors or variables selected) and <code>model</code>
 (the bagged tree object) is returned.</p>
-    </div>
+<p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>model</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>model</dt>
+<dd><p>list, the bagged tree object</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
     <p>This step has 1 tuning parameters:</p><ul><li><p><code>trees</code>: # Trees (type: integer, default: 25)</p></li>

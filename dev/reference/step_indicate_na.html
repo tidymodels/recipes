@@ -152,10 +152,16 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or variables selected) and <code>model</code> (the
-median value) is returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code> and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

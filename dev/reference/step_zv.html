@@ -153,9 +153,16 @@ specifically referenced by name. To avoid this, see the advice in the
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with column
-<code>terms</code> (the columns that will be removed) is returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code> and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, names of the columns that will be removed</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

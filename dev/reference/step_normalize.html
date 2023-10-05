@@ -160,11 +160,22 @@ these estimates.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or variables selected), <code>value</code> (the standard
-deviations and means), and <code>statistic</code> for the type of value is
-returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>statistic</code>, <code>value</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>statistic</dt>
+<dd><p>character, name of statistic (<code>"mean"</code> or <code>"sd"</code>)</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, value of the <code>statistic</code></p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

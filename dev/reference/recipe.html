@@ -170,8 +170,8 @@ formula method is memory-inefficient with many variables.</p>
 <p>There are two different types of operations that can be sequentially
 added to a recipe.</p><ul><li><p><strong>Steps</strong> can include operations like scaling a variable, creating
 dummy variables or interactions, and so on. More computationally
-complex actions such as dimension reduction or imputation can also be
-specified.</p></li>
+complex actions such as dimension reduction or imputation can also
+be specified.</p></li>
 <li><p><strong>Checks</strong> are operations that conduct specific tests of the data.
 When the test is satisfied, the data are returned without issue or
 modification. Otherwise, an error is thrown.</p></li>
@@ -354,12 +354,12 @@ applies the estimated steps to any data set.</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 6</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     HHV    PC1    PC2     PC3     PC4     PC5</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  18.3 0.730  -0.412 -0.495   0.333   0.253 </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  17.6 0.617   1.41   0.118  -0.466   0.815 </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  17.2 0.761   1.10  -0.0550 -0.397   0.747 </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  18.9 0.0400  0.950  0.158   0.405  -0.143 </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  20.5 0.792  -0.732  0.204   0.465  -0.148 </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  18.5 0.433  -0.127 -0.354  -0.0168 -0.0888</span></span></code></pre><p></p></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  18.3 0.730   0.412  0.495   0.333   0.253 </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  17.6 0.617  -1.41  -0.118  -0.466   0.815 </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3  17.2 0.761  -1.10   0.0550 -0.397   0.747 </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4  18.9 0.0400 -0.950 -0.158   0.405  -0.143 </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5  20.5 0.792   0.732 -0.204   0.465  -0.148 </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6  18.5 0.433   0.127  0.354  -0.0168 -0.0888</span></span></code></pre><p></p></div>
 <p>In general, the workflow interface to recipes is recommended for most
 applications.</p>
 </div>

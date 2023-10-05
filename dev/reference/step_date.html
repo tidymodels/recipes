@@ -196,7 +196,22 @@ days.</p>
     <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
 <code>terms</code> (the selectors or variables selected), <code>value</code> (the feature
 names), and <code>ordinal</code> (a logical) is returned.</p>
-    </div>
+<p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>value</code>, <code>ordinal</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>value</dt>
+<dd><p>character, the feature names</p></dd>
+
+<dt>ordinal</dt>
+<dd><p>logical, are factors ordered</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

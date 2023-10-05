@@ -394,7 +394,7 @@ account for).</p></dd>
 
 
 <dt>number</dt>
-<dd><p>An integer or <code>NA</code>. If missing and <code>id</code> is not provided,
+<dd><p>An integer or <code>NA</code>. If missing, and <code>id</code> is not provided,
 the return value is a list of the operations in the recipe.
 If a number is given, a <code>tidy</code> method is executed for that operation
 in the recipe (if it exists). <code>number</code> must not be provided if
@@ -414,7 +414,7 @@ if <code>number</code> is.</p></dd>
     
 
 <p>A tibble with columns that vary depending on what
-<code>tidy</code> method is executed. When <code>number</code> and <code>id</code> are <code>NA</code>, a
+<code>tidy</code> method is executed. When <code>number</code>, and <code>id</code> are <code>NA</code>, a
 tibble with columns <code>number</code> (the operation iteration),
 <code>operation</code> (either "step" or "check"),
 <code>type</code> (the method, e.g. "nzv", "center"), a logical

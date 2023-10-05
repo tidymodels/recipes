@@ -163,10 +163,19 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or variables selected) and <code>value</code>
-(the breaks) is returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, the breaks</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
     <p>This step has 2 tuning parameters:</p><ul><li><p><code>min_unique</code>: Unique Value Threshold (type: integer, default: 10)</p></li>

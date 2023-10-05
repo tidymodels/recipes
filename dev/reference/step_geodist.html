@@ -178,10 +178,32 @@ formula is used to calculate the great-circle distance in meters.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-echoing the values of <code>lat</code>, <code>lon</code>, <code>ref_lat</code>, <code>ref_lon</code>,
-<code>is_lat_lon</code>, <code>name</code>, and <code>id</code> is returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>latitude</code>, <code>longitude</code>, <code>ref_latitude</code>, <code>ref_longitude</code>,
+<code>is_lat_lon</code>, <code>name</code> , and <code>id</code>:</p>
+<dl><dt>latitude</dt>
+<dd><p>character, name of latitude variable</p></dd>
+
+<dt>longitude</dt>
+<dd><p>character, name of longitude variable</p></dd>
+
+<dt>ref_latitude</dt>
+<dd><p>numeric, location of latitude reference point</p></dd>
+
+<dt>ref_longitude</dt>
+<dd><p>numeric, location of longitude reference point</p></dd>
+
+<dt>is_lat_lon</dt>
+<dd><p>character, the summary function name</p></dd>
+
+<dt>name</dt>
+<dd><p>character, name of resulting variable</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

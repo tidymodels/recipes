@@ -149,11 +149,26 @@ sequence of any existing operations.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The selected variables are releveled to a level
-(given by <code>ref_level</code>). Placing the <code>ref_level</code> in the first
+(given by <code>ref_level</code>), placing the <code>ref_level</code> in the first
 position.</p>
 <p>Note that if the original columns are character, they will be
 converted to factors by this step.</p>
     </div>
+    <div class="section level2">
+    <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>value</dt>
+<dd><p>character, the value of <code>ref_level</code></p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

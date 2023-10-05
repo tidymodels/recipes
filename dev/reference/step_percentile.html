@@ -152,6 +152,24 @@ the computations for subsequent operations.</p></dd>
 sequence of any existing operations.</p>
     </div>
     <div class="section level2">
+    <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>value</code>, <code>percentile</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, the value at the percentile</p></dd>
+
+<dt>percentile</dt>
+<dd><p>numeric, the percentile as a percentage</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
+    <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     
 

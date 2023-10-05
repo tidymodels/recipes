@@ -197,6 +197,30 @@ frequency, for example, a <code>POSIXct</code> input column given a <code>freque
     <p>This step has 1 tuning parameters:</p><ul><li><p><code>frequency</code>: Harmonic Frequency (type: double, default: NA)</p></li>
 </ul></div>
     <div class="section level2">
+    <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>starting_val</code>, <code>cycle_size</code>, <code>frequency</code>, <code>key</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>starting_val</dt>
+<dd><p>numeric, the starting value</p></dd>
+
+<dt>cycle_size</dt>
+<dd><p>numeric, the cycle size</p></dd>
+
+<dt>frequency</dt>
+<dd><p>numeric, the frequency</p></dd>
+
+<dt>key</dt>
+<dd><p>character, key describing the calculation</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
+    <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     
 

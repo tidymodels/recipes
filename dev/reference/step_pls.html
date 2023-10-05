@@ -210,15 +210,22 @@ proportion to determine the <code>keepX</code> parameter in <code><a href="https
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>The <code><a href="tidy.recipe.html">tidy()</a></code> method returns the coefficients that are
-usually defined as</p>
-<p>$$W(P'W)^{-1}$$</p>
-<p>(See the Wikipedia article below)</p>
-<p>When applied to data, these values are usually scaled by a column-specific
-norm. The <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method applies this same norm to the coefficients shown
-above. When you <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> this step, a tibble with columns <code>terms</code> (the
-selectors or variables selected), <code>components</code>, and <code>values</code> is returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>value</code>, <code>component</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, coefficients defined as \(W(P'W)^{-1}\)</p></dd>
+
+<dt>size</dt>
+<dd><p>character, name of component</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
     <p>This step has 2 tuning parameters:</p><ul><li><p><code>num_comp</code>: # Components (type: integer, default: 2)</p></li>

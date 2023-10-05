@@ -147,10 +147,22 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the columns that will be affected), <code>inverse</code>, and <code>func</code> is
-returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>inverse</code>, <code>func</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>inverse</dt>
+<dd><p>logical, is the inverse function be used</p></dd>
+
+<dt>func</dt>
+<dd><p>character, name of function. <code>"sinh"</code>, <code>"cosh"</code>, or <code>"tanh"</code></p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
     

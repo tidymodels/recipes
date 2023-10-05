@@ -202,10 +202,22 @@ the names would be <code>IC1</code> - <code>IC101</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or variables selected), <code>value</code> (the loading),
-and <code>component</code> is returned.</p>
-    </div>
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+columns <code>terms</code>, <code>component</code>, <code>value</code> , and <code>id</code>:</p>
+<dl><dt>terms</dt>
+<dd><p>character, the selectors or variables selected</p></dd>
+
+<dt>component</dt>
+<dd><p>character, name of component</p></dd>
+
+<dt>value</dt>
+<dd><p>numeric, the loading</p></dd>
+
+<dt>id</dt>
+<dd><p>character, id of this step</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>
     <p>This step has 1 tuning parameters:</p><ul><li><p><code>num_comp</code>: # Components (type: integer, default: 5)</p></li>
