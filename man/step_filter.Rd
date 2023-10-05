@@ -74,6 +74,8 @@ columns \code{terms} and \code{id}:
 \item{terms}{character, the selectors or variables selected}
 \item{id}{character, id of this step}
 }
+
+The expressions in \code{terms} are text representations and are not parsable.
 }
 
 \section{Case weights}{

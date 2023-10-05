@@ -26,7 +26,9 @@
 #'   \item{terms}{character, the selectors or variables selected}
 #'   \item{id}{character, id of this step}
 #' }
-#'
+#' 
+#' The expressions in `terms` are text representations and are not parsable.
+#' 
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
