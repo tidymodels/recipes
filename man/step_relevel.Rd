@@ -55,7 +55,7 @@ level as the reference.
 }
 \details{
 The selected variables are releveled to a level
-(given by \code{ref_level}). Placing the \code{ref_level} in the first
+(given by \code{ref_level}), placing the \code{ref_level} in the first
 position.
 
 Note that if the original columns are character, they will be

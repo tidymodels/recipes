@@ -70,11 +70,11 @@ As of \code{recipes} 0.1.16, this function name changed from
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
-columns \code{terms}, \code{model} , and \code{id}:
+columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
-\item{model}{numeric, the median value}
+\item{value}{numeric, the median value}
 \item{id}{character, id of this step}
 }
 }

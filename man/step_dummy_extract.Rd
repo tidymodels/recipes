@@ -105,6 +105,8 @@ columns \code{terms}, \code{columns} , and \code{id}:
 \item{columns}{character, names of resulting columns}
 \item{id}{character, id of this step}
 }
+
+The return value is ordered according to the frequency of \code{columns} entries in the training data set.
 }
 
 \section{Case weights}{

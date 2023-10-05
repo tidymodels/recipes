@@ -76,11 +76,11 @@ to \code{step_impute_mean()}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
-columns \code{terms}, \code{model} , and \code{id}:
+columns \code{terms}, \code{value} , and \code{id}:
 
 \describe{
 \item{terms}{character, the selectors or variables selected}
-\item{model}{numeric, the mean value}
+\item{value}{numeric, the mean value}
 \item{id}{character, id of this step}
 }
 }
