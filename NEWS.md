@@ -4,6 +4,8 @@
 
 * Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
 
+* `step_dummy()` now works with character input as documented. (#1233)
+
 # recipes 1.0.8
 
 ## Improvements
