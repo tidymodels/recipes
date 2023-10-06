@@ -194,7 +194,7 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_cut(rec, breaks = 5)
 
-  expect <- tibble(terms = character(), value = character(), id = character())
+  expect <- tibble(terms = character(), value = double(), id = character())
 
   expect_identical(tidy(rec, number = 1), expect)
 
