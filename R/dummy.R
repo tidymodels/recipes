@@ -174,7 +174,8 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   if (length(col_names) > 0) {
-    col_names <- check_factor_vars(training, col_names, "step_dummy")
+
+
 
     ## I hate doing this but currently we are going to have
     ## to save the terms object from the original (= training)
@@ -219,31 +220,6 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     skip = x$skip,
     id = x$id
   )
-}
-
-check_factor_vars <- function(data, col_names, step_name, call = caller_env()) {
-  fac_check <- vapply(data[, col_names], is.factor, logical(1))
-  if (any(!fac_check)) {
-    rlang::warn(
-      paste0(
-        "The following variables are not factor vectors and will be ignored: ",
-        paste0("`", names(fac_check)[!fac_check], "`", collapse = ", ")
-      )
-    )
-  }
-  col_names <- col_names[fac_check]
-  if (length(col_names) == 0) {
-    rlang::abort(
-      paste0(
-        "The `terms` argument in `",
-        step_name,
-        "` did not select ",
-        "any factor columns."
-      ),
-      call = call
-    )
-  }
-  col_names
 }
 
 warn_new_levels <- function(dat, lvl, details = NULL) {
