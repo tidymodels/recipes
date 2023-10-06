@@ -183,6 +183,10 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (i in seq_along(col_names)) {
+      if (is.character(training[[col_names[i]]])) {
+        training[[col_names[i]]] <- factor(training[[col_names[i]]])
+      }
+
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
         form <- stats::update.formula(form, ~ . -1)

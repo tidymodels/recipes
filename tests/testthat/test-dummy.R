@@ -65,23 +65,21 @@ test_that("dummy variables with factor inputs", {
   )
 })
 
-test_that("dummy variables with non-factor inputs", {
+test_that("dummy variables with character inputs", {
   rec <- recipe(sqft ~ zip + city, data = sacr)
   dummy <- rec %>% step_dummy(city, zip)
 
-  expect_snapshot(error = TRUE,
+  expect_no_error(
     prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
   )
+})
 
-  sacr_fac_ish <-
-    sacr_fac %>%
-    mutate(city = as.character(city))
-
+test_that("check_type() is used", {
   expect_snapshot(
     error = TRUE,
-    recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>%
+    recipe(sqft ~ zip + price + city, data = sacr) %>%
       step_dummy(city, zip, price) %>%
-      prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
+      prep()
   )
 })
 
