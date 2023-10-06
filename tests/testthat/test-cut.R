@@ -148,6 +148,26 @@ test_that("step_cut integration test", {
   )
 })
 
+test_that("tidy method works", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_cut(disp, hp, breaks = 200) %>%
+    prep()
+
+  res <- tidy(rec, 1)
+
+  expect_identical(
+    rep(c("disp", "hp"), each = 3),
+    res$terms
+  )
+
+  expect_identical(
+    c(min(mtcars$disp), 200, max(mtcars$disp),
+      min(mtcars$hp), 200, max(mtcars$hp)),
+    res$value
+  )
+})
+
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

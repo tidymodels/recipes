@@ -219,7 +219,7 @@ tidy.step_cut <- function(x, ...) {
   if (is_trained(x)) {
     res <- tibble(
       terms = rep(names(x$breaks), lengths(x$breaks)),
-      value = unlist(x$breaks) %||% double()
+      value = unlist(x$breaks, use.names = FALSE) %||% double()
     )
   } else {
     term_names <- sel2char(x$terms)
