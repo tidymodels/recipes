@@ -4,6 +4,8 @@
 
 * Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
 
+* It is now documented that `step_spline_b()` can be made periodic. (#1223)
+
 # recipes 1.0.8
 
 ## Improvements
