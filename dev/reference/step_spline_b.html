@@ -173,6 +173,8 @@ the computations for subsequent operations.</p></dd>
 that, when used in a model, can estimate nonlinear trends between the column
 and some outcome. The degrees of freedom determines how many new features
 are added to the data.</p>
+<p>Setting <code>periodic = TRUE</code> in the list passed to <code>options</code>, a periodic version
+of the spline is used.</p>
 <p>If the spline expansion fails for a selected column, the step will
 remove that column's results (but will retain the original data). Use the
 <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method to determine which columns were used.</p>
