@@ -65,11 +65,12 @@ test_that("dummy variables with factor inputs", {
   )
 })
 
-test_that("dummy variables with character inputs", {
+test_that("dummy variables errors with character inputs", {
   rec <- recipe(sqft ~ zip + city, data = sacr)
   dummy <- rec %>% step_dummy(city, zip)
 
-  expect_no_error(
+  expect_snapshot(
+    error = TRUE,
     prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
   )
 })

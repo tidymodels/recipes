@@ -1,8 +1,8 @@
 #' Create traditional dummy variables
 #'
 #' `step_dummy()` creates a *specification* of a recipe step that will convert
-#' nominal data (e.g. characters or factors) into one or more numeric binary
-#' model terms corresponding to the levels of the original data.
+#' nominal data (e.g. factors) into one or more numeric binary model terms
+#' corresponding to the levels of the original data.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -171,7 +171,7 @@ step_dummy_new <-
 #' @export
 prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_type(training[, col_names], types = c("factor", "ordered"))
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have

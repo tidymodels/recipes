@@ -1,3 +1,12 @@
+# dummy variables errors with character inputs
+
+    Code
+      prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! All columns selected for the step should be factor, or ordered.
+
 # check_type() is used
 
     Code
@@ -6,7 +15,7 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be string, factor, or ordered.
+      ! All columns selected for the step should be factor, or ordered.
 
 # tests for NA values in factor
 

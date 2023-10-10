@@ -4,7 +4,7 @@
 
 * Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
 
-* `step_dummy()` now works with character input as documented. (#1233)
+* `step_dummy()` will now error if passed character instead of loudly ignoring them. Only applicable when setting `strings_as_factors = FALSE`. (#1233)
 
 # recipes 1.0.8
 
