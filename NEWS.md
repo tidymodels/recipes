@@ -6,6 +6,8 @@
 
 * Fixed bug where `tidy.step_cut()` always returned zero row tibbles for trained recipes. (#1229)
 
+* It is now documented that `step_spline_b()` can be made periodic. (#1223)
+
 # recipes 1.0.8
 
 ## Improvements
