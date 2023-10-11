@@ -439,8 +439,8 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
     classes <- map_chr(info$type, function(x) x[1])
     counts <- vctrs::vec_split(info$variable, classes)
     counts$count <- lengths(counts$val)
-    counts$text_len <- cli::console_width() - 19 - (counts$count > 1) -
-      nchar(counts$key)
+    counts$text_len <- cli::console_width() - 18 - (counts$count > 1) -
+      nchar(counts$key) - (counts$count > 2)
 
     # cli::ansi_collapse() doesn't work for length(x) == 1
     # https://github.com/r-lib/cli/issues/590
@@ -448,8 +448,14 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
       x <- paste0("{.var ", x, "}")
       if (length(x) == 1) {
         res <- cli::ansi_strtrim(x, width = width)
+      } else if (length(x) == 2) {
+        res <- cli::ansi_collapse(
+          x, last = " and ", width = width, style = "head"
+        )
       } else {
-        res <- cli::ansi_collapse(x, width = width, style = "head")
+        res <- cli::ansi_collapse(
+          x, width = width, style = "head"
+        )
       }
       res
     }
