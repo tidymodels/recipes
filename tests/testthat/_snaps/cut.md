@@ -5,7 +5,8 @@
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double, or integer.
+      * 1 factor variable found: `cat_var`
 
 ---
 
@@ -14,7 +15,8 @@
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double, or integer.
+      * 1 factor variable found: `cat_var`
 
 # full_breaks_check will give warnings
 

@@ -5,7 +5,8 @@
     Condition
       Error in `step_bin2factor()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, integer, or logical.
+      x All columns selected for the step should be double, integer, or logical.
+      * 1 factor variable found: `description`
 
 ---
 

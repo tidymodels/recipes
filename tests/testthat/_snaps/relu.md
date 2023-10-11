@@ -29,7 +29,8 @@
     Condition
       Error in `step_relu()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double, or integer.
+      * 1 factor variable found: `val2`
 
 # empty printing
 

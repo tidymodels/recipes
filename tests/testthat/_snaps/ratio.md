@@ -5,7 +5,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double, or integer.
+      * 1 factor variable found: `x5`
 
 ---
 
@@ -14,7 +15,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double, or integer.
+      * 1 factor variable found: `x5`
 
 ---
 
@@ -23,7 +25,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double, or integer.
+      * 8 factor variables found: `x5`, `x5`, `x5`, `x5`, ...
 
 # check_name() is used
 

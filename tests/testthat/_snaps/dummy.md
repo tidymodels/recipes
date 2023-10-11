@@ -17,7 +17,8 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be string, factor, or ordered.
+      * 1 integer variable found: `price`
 
 # tests for NA values in factor
 

@@ -5,7 +5,8 @@
     Condition
       Error in `step_dummy_multi_choice()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be nominal, or logical.
+      x All columns selected for the step should be nominal, or logical.
+      * 11 double variables found: `mpg`, `cyl`, `disp`, `hp`, ...
 
 # check_name() is used
 
