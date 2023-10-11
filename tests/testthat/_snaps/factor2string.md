@@ -5,7 +5,7 @@
     Condition
       Error in `step_factor2string()`:
       Caused by error in `prep()`:
-      x All columns selected for the step should be factor, or ordered.
+      x All columns selected for the step should be factor or ordered.
       * 2 string variables found: `w`, and `x`
 
 # empty printing

@@ -425,14 +425,13 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
   if (is.null(types)) {
     if (quant) {
       all_good <- vapply(dat, is.numeric, logical(1))
-      label <- "numeric"
+      types <- "numeric"
     } else {
       all_good <- vapply(dat, is_qual, logical(1))
-      label <- "factor or character"
+      types <- "factor or character"
     }
   } else {
     all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
-    label <- glue::glue_collapse(types, sep = ", ", last = ", or ")
   }
 
   if (!all(all_good)) {
@@ -462,7 +461,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
     )
     names(problems) <- rep("*", length(problems))
 
-    message <- "All columns selected for the step should be {label}."
+    message <- "All columns selected for the step should be {.or {types}}."
 
     cli::cli_abort(
       c("x" = message, problems),

@@ -5,7 +5,7 @@
     Condition
       Error in `step_num2factor()`:
       Caused by error in `prep()`:
-      x All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
       * 1 factor variable found: `w`
 
 ---
