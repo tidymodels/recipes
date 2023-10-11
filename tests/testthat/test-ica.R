@@ -99,7 +99,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$IC1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_ica(mpg, disp)
 
   expect_snapshot(

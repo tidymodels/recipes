@@ -393,7 +393,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_sin_1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_harmonic(mpg, frequency = 3, cycle_size = 2.5)
 
   expect_snapshot(
