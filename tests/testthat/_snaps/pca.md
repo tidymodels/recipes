@@ -53,8 +53,8 @@
     Condition
       Error in `step_pca()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  PC1
+      ! Name collision occurred. The following variable names already exist:
+      * `PC1`
 
 # case weights
 

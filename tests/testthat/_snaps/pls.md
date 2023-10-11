@@ -23,8 +23,8 @@
     Condition
       Error in `step_pls()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  PLS1
+      ! Name collision occurred. The following variable names already exist:
+      * `PLS1`
 
 # Deprecation warning
 

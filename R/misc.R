@@ -530,8 +530,8 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
   if (any(intersection)) {
     nms <- new_data_names[intersection]
     cli::cli_abort(
-      c("Name collision occured. The following variable names already exists:",
-        i = " {nms}"),
+      c("Name collision occurred. The following variable names already exist:",
+        "*" = "{.var {nms}}"),
       call = call
     )
 

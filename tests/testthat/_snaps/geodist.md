@@ -85,8 +85,8 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  geo_dist
+      ! Name collision occurred. The following variable names already exist:
+      * `geo_dist`
 
 # bad args
 

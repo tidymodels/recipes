@@ -38,8 +38,8 @@
     Condition
       Error in `step_isomap()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Isomap1
+      ! Name collision occurred. The following variable names already exist:
+      * `Isomap1`
 
 # empty printing
 
