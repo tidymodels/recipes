@@ -678,12 +678,11 @@ get_keep_original_cols <- function(object) {
 
   if (is.null(object$keep_original_cols)) {
     ret <- FALSE
-    rlang::warn(
-      paste0(
-        "'keep_original_cols' was added to `",
-        step_class,
-        "()` after this recipe was created.\n",
-        "Regenerate your recipe to avoid this warning."
+    cli::cli_warn(
+      c(
+        "{.arg keep_original_cols} was added to {.fn {step_class}} after this \\
+         recipe was created.",
+        "i" = "Regenerate your recipe to avoid this warning."
       )
     )
   } else {

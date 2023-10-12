@@ -68,8 +68,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_kpca_poly()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_kpca_poly()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
