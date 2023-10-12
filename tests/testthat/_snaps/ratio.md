@@ -26,7 +26,7 @@
       Error in `step_ratio()`:
       Caused by error in `prep()`:
       x All columns selected for the step should be double or integer.
-      * 8 factor variables found: `x5`, `x5`, `x5`, `x5`, ...
+      * 1 factor variable found: `x5`
 
 # check_name() is used
 
