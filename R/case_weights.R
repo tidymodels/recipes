@@ -59,6 +59,7 @@ NULL
 #' @param method Used by [correlations()] or [covariances()] to pass argument to
 #'   [cor()] or [cov()]
 #' @param unsupervised Can the step handle unsupervised weights
+#' @inheritParams rlang::args_error_context
 #' @details
 #' [get_case_weights()] is designed for developers of recipe steps, to return
 #' a column with the role of "case weight" as a vector.
@@ -79,7 +80,7 @@ NULL
 #'
 #' @export
 #' @name case-weight-helpers
-get_case_weights <- function(info, .data) {
+get_case_weights <- function(info, .data, call = rlang::caller_env()) {
   wt_col <- info$variable[info$role == "case_weights" & !is.na(info$role)]
 
   if (length(wt_col) == 1) {
@@ -90,13 +91,14 @@ get_case_weights <- function(info, .data) {
           "x" = "{.arg {wt_col}} has a {.code case_weights} role,\\
                  but is not numeric.",
           "i" = "{.arg {wt_col}} is {.obj_type_friendly {wt_col}}."
-          )
+          ),
+        call = call
       )
     }
   } else if (length(wt_col) == 0) {
     res <- NULL
   } else {
-    too_many_case_weights(wt_col)
+    too_many_case_weights(wt_col, call = call)
   }
 
   res
@@ -104,7 +106,7 @@ get_case_weights <- function(info, .data) {
 
 # ------------------------------------------------------------------------------
 
-too_many_case_weights <- function(x) {
+too_many_case_weights <- function(x, call = rlang::caller_env()) {
   n <- length(x)
 
   cli::cli_abort(
@@ -112,7 +114,8 @@ too_many_case_weights <- function(x) {
       "!" = "There should only be a single column with the role \\
       {.code case_weights}.",
       "i" = "In these data, there are {n} column{?s}: {.var {x}}"
-    )
+    ),
+    call = call
   )
 }
 
