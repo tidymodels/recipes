@@ -82,20 +82,21 @@ NULL
 get_case_weights <- function(info, .data) {
   wt_col <- info$variable[info$role == "case_weights" & !is.na(info$role)]
 
-
   if (length(wt_col) == 1) {
     res <- .data[[wt_col]]
     if (!is.numeric(res)) {
-      rlang::abort(
-        paste0(
-          "Column ", wt_col, " has a 'case_weights' role but is not numeric."
-        )
+      cli::cli_abort(
+        c(
+          "x" = "{.arg {wt_col}} has a {.code case_weights} role,\\
+                 but is not numeric.",
+          "i" = "{.arg {wt_col}} is {.obj_type_friendly {wt_col}}."
+          )
       )
     }
   } else if (length(wt_col) == 0) {
     res <- NULL
   } else {
-    too_many_case_weights(length(wt_col))
+    too_many_case_weights(wt_col)
   }
 
   res
@@ -103,11 +104,14 @@ get_case_weights <- function(info, .data) {
 
 # ------------------------------------------------------------------------------
 
-too_many_case_weights <- function(n) {
-  rlang::abort(
-    paste0(
-      "There should only be a single column with the role 'case_weights'. ",
-      "In these data, there are ", n, " columns."
+too_many_case_weights <- function(x) {
+  n <- length(x)
+
+  cli::cli_abort(
+    c(
+      "!" = "There should only be a single column with the role \\
+      {.code case_weights}.",
+      "i" = "In these data, there are {n} column{?s}: {.var {x}}"
     )
   )
 }
@@ -264,7 +268,7 @@ weighted_table <- function(x, wts = NULL) {
 
 is_unsupervised_weights <- function(wts) {
   if (!hardhat::is_case_weights(wts)) {
-    rlang::abort("Must be be a case_weights variable")
+    cli::cli_abort("Must be be a {.code case_weights} variable.")
   }
 
   hardhat::is_frequency_weights(wts)

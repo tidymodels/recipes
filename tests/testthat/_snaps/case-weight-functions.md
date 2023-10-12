@@ -4,5 +4,5 @@
       is_unsupervised_weights(3)
     Condition
       Error in `is_unsupervised_weights()`:
-      ! Must be be a case_weights variable
+      ! Must be be a `case_weights` variable.
 
