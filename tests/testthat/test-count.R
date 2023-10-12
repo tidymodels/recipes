@@ -58,7 +58,7 @@ test_that("bad selector(s)", {
 test_that("check_name() is used", {
   dat <- iris
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_count(Species, result = "Sepal.Width")
 
   expect_snapshot(

@@ -157,7 +157,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$geo_dist <- dat$mpg
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_geodist(vs, am, ref_lat = 0, ref_lon = 0)
 
   expect_snapshot(

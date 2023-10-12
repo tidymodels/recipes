@@ -73,7 +73,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_bs_1 <- dat$mpg
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_bs(mpg)
 
   expect_snapshot(
