@@ -18,11 +18,8 @@
 #' @export
 formula.recipe <- function(x, ...) {
   if (!fully_trained(x)) {
-    rlang::abort(
-      paste0(
-        "The recipe must be prepped before the ",
-        "formula can be computed."
-      )
+    cli::cli_abort(
+      "The recipe must be prepped before the formula can be computed."
     )
   }
 
