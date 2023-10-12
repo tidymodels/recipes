@@ -36,7 +36,7 @@
       prepare(recipe(HHV ~ ., data = biomass), training = biomass)
     Condition
       Error in `prepare()`:
-      ! As of version 0.0.1.9006, used `prep` instead of `prepare`
+      ! As of version 0.0.1.9006 please use `prep()` instead of `prepare()`.
 
 # bake without prep
 
