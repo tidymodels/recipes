@@ -24,8 +24,8 @@
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  kPC1
+      ! Name collision occurred. The following variable names already exist:
+      * `kPC1`
 
 # empty printing
 

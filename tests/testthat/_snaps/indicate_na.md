@@ -5,8 +5,8 @@
     Condition
       Error in `step_indicate_na()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  na_ind_mpg
+      ! Name collision occurred. The following variable names already exist:
+      * `na_ind_mpg`
 
 # empty printing
 

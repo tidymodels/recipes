@@ -22,8 +22,8 @@
     Condition
       Error in `step_regex()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Sepal.Width
+      ! Name collision occurred. The following variable names already exist:
+      * `Sepal.Width`
 
 # empty printing
 

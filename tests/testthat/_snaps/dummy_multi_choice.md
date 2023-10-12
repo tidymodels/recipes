@@ -14,8 +14,8 @@
     Condition
       Error in `step_dummy_multi_choice()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Species_setosa
+      ! Name collision occurred. The following variable names already exist:
+      * `Species_setosa`
 
 # empty printing
 

@@ -5,8 +5,8 @@
     Condition
       Error in `step_date()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Dan_year
+      ! Name collision occurred. The following variable names already exist:
+      * `Dan_year`
 
 # empty printing
 

@@ -5,8 +5,8 @@
     Condition
       Error in `step_bs()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_bs_1
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_bs_1`
 
 # empty printing
 
