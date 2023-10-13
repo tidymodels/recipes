@@ -103,7 +103,7 @@
     Condition
       Error in `form2args()`:
       ! There should only be a single column with the role `case_weights`.
-      i In these data, there are 1 column: `2`
+      i In these data, there is 1 column: `2`.
 
 # case weights are being infered correctly for x interface
 
@@ -112,7 +112,7 @@
     Condition
       Error in `recipe()`:
       ! There should only be a single column with the role `case_weights`.
-      i In these data, there are 1 column: `2`
+      i In these data, there is 1 column: `2`.
 
 # verbose when printing
 
