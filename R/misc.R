@@ -650,7 +650,7 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
       cli::cli_warn(
         c(
           "!" = "The previous data will be used by {.fn prep}.",
-          "i" = "the data passed using {.arg training} will be ignored."
+          "i" = "The data passed using {.arg training} will be ignored."
         ),
         call = call
       )
