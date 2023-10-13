@@ -83,7 +83,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' @export
 names0 <- function(num, prefix = "x") {
   if (num < 1) {
-    rlang::abort("`num` should be > 0.")
+    cli::cli_abort("{.arg num} should be > 0.")
   }
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
@@ -270,10 +270,11 @@ merge_term_info <- function(.new, .old) {
 ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms)) {
-    rlang::abort(
-      paste0(
-        "Please supply at least one variable specification.",
-        "See ?selections."
+    cli::cli_abort(
+      c(
+        "!" = "Please supply at least one variable specification.",
+        "i" = "See {.help [?selections](recipes::selections)} \\
+              for more information."
       )
     )
   }
@@ -325,10 +326,9 @@ printer <- function(tr_obj = NULL,
 #' @keywords internal
 #' @rdname recipes-internal
 prepare <- function(x, ...) {
-  rlang::abort(paste0(
-    "As of version 0.0.1.9006, used `prep` ",
-    "instead of `prepare`"
-  ))
+  cli::cli_abort(
+    "As of version 0.0.1.9006 please use {.fn prep} instead of {.fn prepare}."
+  )
 }
 
 
@@ -635,30 +635,26 @@ check_nominal_type <- function(x, lvl) {
   invisible(NULL)
 }
 
-check_training_set <- function(x, rec, fresh) {
+check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
   # In case a variable has multiple roles
   vars <- unique(rec$var_info$variable)
 
   if (is.null(x)) {
     if (fresh) {
-      rlang::abort(
-        paste0(
-          "A training set must be supplied to the `training` argument ",
-          "when `fresh = TRUE`."
-        )
+      cli::cli_abort(
+        "A training set must be supplied to the {.arg training} argument \\
+        when {.code fresh = TRUE}.",
+        call = call
       )
     }
     x <- rec$template
   } else {
     in_data <- vars %in% colnames(x)
     if (!all(in_data)) {
-      rlang::abort(
-        paste0(
-          "Not all variables in the recipe are present in the supplied ",
-          "training set: ",
-          paste0("'", vars[!in_data], "'", collapse = ", "),
-          "."
-        )
+      cli::cli_abort(
+        "Not all variables in the recipe are present in the supplied training \\
+        set: {.and {.var {vars[!in_data]}}}.",
+        call = call
       )
     }
     if (!is_tibble(x)) {
@@ -671,21 +667,20 @@ check_training_set <- function(x, rec, fresh) {
   steps_trained <- vapply(rec$steps, is_trained, logical(1))
   if (any(steps_trained) & !fresh) {
     if (!rec$retained) {
-      rlang::abort(
-        paste0(
-          "To prep new steps after prepping the original ",
-          "recipe, `retain = TRUE` must be set each time that ",
-          "the recipe is trained."
-        )
+      cli::cli_abort(
+        "To prep new steps after prepping the original recipe, \\
+        {.code retain = TRUE} must be set each time that the recipe is \\
+        trained.",
+        call = call
       )
     }
-    if (!is.null(rec$training)) {
-      rlang::warn(
-        paste0(
-          "The previous data will be used by `prep`; ",
-          "the data passed using `training` will be ",
-          "ignored."
-        )
+    if (!is.null(rec$template)) {
+      cli::cli_warn(
+        c(
+          "!" = "The previous data will be used by {.fn prep}.",
+          "i" = "The data passed using {.arg training} will be ignored."
+        ),
+        call = call
       )
     }
     x <- rec$template
@@ -807,11 +802,10 @@ dimred_data <- function(dat) {
 uses_dim_red <- function(x) {
   dr <- inherits(x, "dimRedResult")
   if (dr) {
-    rlang::abort(
-      paste(
-        "Recipes version >= 0.1.17 represents the estimates using a different format.",
-        "Please recreate this recipe or use version 0.1.16 or less. See issue #823."
-      )
+    cli::cli_abort(
+      "Recipes version >= 0.1.17 represents the estimates using a different \\
+      format. Please recreate this recipe or use version 0.1.16 or less. See \\
+      issue {.href [#823](https://github.com/tidymodels/recipes/issues/823)}."
     )
   }
   invisible(NULL)
