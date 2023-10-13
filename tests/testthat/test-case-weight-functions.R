@@ -153,3 +153,10 @@ test_that("are_weights_used works", {
   expect_false(are_weights_used(importance_weights(1), unsupervised = TRUE))
   expect_true(are_weights_used(frequency_weights(1), unsupervised = TRUE))
 })
+
+test_that("is_unsupervised_weights works", {
+  expect_snapshot(
+    error = TRUE,
+    too_many_case_weights(c("var1", "var2"))
+  )
+})
