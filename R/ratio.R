@@ -130,7 +130,7 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
   check_type(
-    training[, c(col_names$top, col_names$bottom)],
+    training[, unique(c(col_names$top, col_names$bottom))],
     types = c("double", "integer")
   )
 

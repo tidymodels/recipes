@@ -61,7 +61,8 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be date, datetime, or numeric.
+      x All columns selected for the step should be date, datetime, or numeric.
+      * 1 factor variable found: `time_var`
 
 # harmonic cycle_size length
 

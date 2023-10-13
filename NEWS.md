@@ -10,6 +10,8 @@
 
 * `prep()` now correctly throws a warning when `training` argument is set when prepping a prepped recipe, telling the user that it will be ignored. (#1244)
 
+* When errors are thrown about wrongly typed input to steps, the offending variables and their types are now listed. (#1217)
+
 # recipes 1.0.8
 
 ## Improvements

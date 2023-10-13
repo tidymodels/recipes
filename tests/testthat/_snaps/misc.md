@@ -27,7 +27,7 @@
     Code
       conditionMessage(attr(res, "condition"))
     Output
-      [1] "Error in `step_dummy()`:\nCaused by error in `prep()`:\n! All columns selected for the step should be string, factor, or ordered."
+      [1] "Error in `step_dummy()`:\nCaused by error in `prep()`:\nx All columns selected for the step should be string, factor, or ordered.\n* 11 double variables found: `mpg`, `cyl`, `disp`, `hp`, ..."
 
 # check_training_set errors are thrown
 
