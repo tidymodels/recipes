@@ -646,7 +646,7 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
         call = call
       )
     }
-    if (!is.null(rec$training)) {
+    if (!is.null(rec$template)) {
       cli::cli_warn(
         c(
           "!" = "The previous data will be used by {.fn prep}.",
