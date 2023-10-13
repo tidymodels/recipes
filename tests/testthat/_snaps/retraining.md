@@ -5,7 +5,7 @@
     Condition
       Warning in `prep()`:
       ! The previous data will be used by `prep()`.
-      i the data passed using `training` will be ignored.
+      i The data passed using `training` will be ignored.
 
 ---
 
@@ -14,7 +14,7 @@
     Condition
       Warning in `prep()`:
       ! The previous data will be used by `prep()`.
-      i the data passed using `training` will be ignored.
+      i The data passed using `training` will be ignored.
 
 ---
 
@@ -23,7 +23,7 @@
     Condition
       Warning in `prep()`:
       ! The previous data will be used by `prep()`.
-      i the data passed using `training` will be ignored.
+      i The data passed using `training` will be ignored.
 
 ---
 
@@ -33,7 +33,7 @@
     Condition
       Warning in `prep()`:
       ! The previous data will be used by `prep()`.
-      i the data passed using `training` will be ignored.
+      i The data passed using `training` will be ignored.
     Message
       
       -- Recipe ----------------------------------------------------------------------
