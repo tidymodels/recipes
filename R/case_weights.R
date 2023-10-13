@@ -113,7 +113,7 @@ too_many_case_weights <- function(x, call = rlang::caller_env()) {
     c(
       "!" = "There should only be a single column with the role \\
       {.code case_weights}.",
-      "i" = "In these data, there are {n} column{?s}: {.var {x}}"
+      "i" = "{cli::qty(n)}In these data, there {?is/are} {n} column{?s}: {.var {x}}"
     ),
     call = call
   )
