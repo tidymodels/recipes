@@ -425,24 +425,52 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
   if (is.null(types)) {
     if (quant) {
       all_good <- vapply(dat, is.numeric, logical(1))
-      label <- "numeric"
+      types <- "numeric"
     } else {
       all_good <- vapply(dat, is_qual, logical(1))
-      label <- "factor or character"
+      types <- "factor or character"
     }
   } else {
     all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
-    label <- glue::glue_collapse(types, sep = ", ", last = ", or ")
   }
 
   if (!all(all_good)) {
-    rlang::abort(
-      paste0(
-        "All columns selected for the step",
-        " should be ",
-        label,
-        "."
-      ),
+    info <- get_types(dat)[!all_good, ]
+    classes <- map_chr(info$type, function(x) x[1])
+    counts <- vctrs::vec_split(info$variable, classes)
+    counts$count <- lengths(counts$val)
+    counts$text_len <- cli::console_width() - 18 - (counts$count > 1) -
+      nchar(counts$key) - (counts$count > 2)
+
+    # cli::ansi_collapse() doesn't work for length(x) == 1
+    # https://github.com/r-lib/cli/issues/590
+    variable_collapse <- function(x, width) {
+      x <- paste0("{.var ", x, "}")
+      if (length(x) == 1) {
+        res <- cli::ansi_strtrim(x, width = width)
+      } else if (length(x) == 2) {
+        res <- cli::ansi_collapse(
+          x, last = " and ", width = width, style = "head"
+        )
+      } else {
+        res <- cli::ansi_collapse(
+          x, width = width, style = "head"
+        )
+      }
+      res
+    }
+
+    problems <- glue::glue_data(
+      counts,
+      "{count} {key} variable{ifelse(count == 1, '', 's')} \\
+      found: {purrr::map2_chr(val, text_len, variable_collapse)}"
+    )
+    names(problems) <- rep("*", length(problems))
+
+    message <- "All columns selected for the step should be {.or {types}}."
+
+    cli::cli_abort(
+      c("x" = message, problems),
       call = call
     )
   }

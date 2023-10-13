@@ -5,7 +5,9 @@
     Condition
       Error in `step_ordinalscore()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be ordered.
+      x All columns selected for the step should be ordered.
+      * 1 double variable found: `numbers`
+      * 1 factor variable found: `fact`
 
 # empty printing
 
