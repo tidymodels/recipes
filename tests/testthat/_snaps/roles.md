@@ -4,7 +4,8 @@
       add_role(rec, sample, new_role = "some other role")
     Condition
       Error in `add_role()`:
-      ! No role currently exists for column(s): 'sample'. Please use `update_role()` instead.
+      ! No role currently exists for column: `sample`.
+      i Please use `update_role()` instead.
 
 # existing role is skipped
 
@@ -12,7 +13,7 @@
       rec <- add_role(rec, sample, new_role = "some other role")
     Condition
       Warning:
-      Role, 'some other role', already exists for column(s): 'sample'. Skipping.
+      Role, "some other role", already exists for column: `sample`. Skipping.
 
 # existing role is skipped, but new one is added
 
@@ -20,7 +21,7 @@
       rec <- add_role(rec, sample, dataset, new_role = "some other role")
     Condition
       Warning:
-      Role, 'some other role', already exists for column(s): 'sample'. Skipping.
+      Role, "some other role", already exists for column: `sample`. Skipping.
 
 # cannot add roles if the current one is `NA`
 
@@ -28,7 +29,8 @@
       add_role(rec, sample, sulfur)
     Condition
       Error in `add_role()`:
-      ! No role currently exists for column(s): 'sample', 'sulfur'. Please use `update_role()` instead.
+      ! No role currently exists for columns: `sample` and `sulfur`.
+      i Please use `update_role()` instead.
 
 # `update_role()` cannot be ambiguous
 
@@ -76,7 +78,7 @@
       remove_role(rec, sample, old_role = "non-existant")
     Condition
       Warning:
-      Column, 'sample', does not have role, 'non-existant'.
+      Column, `sample`, does not have role, "non-existant".
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -148,7 +150,7 @@
       recipe(x = biomass) %>% add_role(carbon, new_role = "a", new_type = letters[1:2])
     Condition
       Error in `add_role()`:
-      ! `new_type` must have length 1.
+      ! `new_type` must have length 1, not 2.
 
 ---
 
@@ -173,7 +175,7 @@
     Condition
       Error in `update_role()`:
       ! Roles of "case_weights" cannot be set using `update_role()`.
-      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+      i Please use `?hardhat::frequency_weights()` or `?hardhat::importance_weights()` to specify case weights before the data is passed to `recipe()`.
 
 ---
 
@@ -182,7 +184,7 @@
     Condition
       Error in `add_role()`:
       ! Roles of "case_weights" cannot be set using `add_role()`.
-      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+      i Please use `?hardhat::frequency_weights()` or `?hardhat::importance_weights()` to specify case weights before the data is passed to `recipe()`.
 
 ---
 

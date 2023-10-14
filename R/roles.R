@@ -124,26 +124,30 @@ NULL
 add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   single_chr(new_role, "new_", null_ok = FALSE)
 
-  if (length(new_type) != 1L & length(new_type) != 0L) {
-    rlang::abort("`new_type` must have length 1.")
+  if (length(new_type) != 1 && length(new_type) != 0) {
+    cli::cli_abort(
+      "{.arg new_type} must have length 1, not {length(new_type)}."
+    )
   }
 
-  if (!is.character(new_type) & !is.null(new_type)) {
-    rlang::abort("`new_type` must be a character vector, or `NULL`.")
+  if (!is.character(new_type) && !is.null(new_type)) {
+    cli::cli_abort(
+      "{.arg new_type} must be a character vector, or {.code NULL} \\
+      not a {.obj_type_friendly {new_type}}."
+    )
   }
+
 
   terms <- quos(...)
 
   if (new_role == "case_weights") {
-    rlang::abort(
-      c(
-        "Roles of \"case_weights\" cannot be set using `add_role()`.",
-        i = paste(
-          "Please use `frequency_weights()` or `importance_weights()`",
-          "to specify case weights before the data is passed to `recipe()`."
-        )
-      )
-    )
+    cli::cli_abort(c(
+      "!" = "Roles of {.val case_weights} cannot be set using \\
+            {.fn add_role}.",
+      "i" = "Please use {.help hardhat::frequency_weights} or \\
+            {.help hardhat::importance_weights} to specify case weights \\
+            before the data is passed to {.fn recipe}."
+    ))
   }
 
   # Roles can only be changed on the original data supplied to `recipe()`,
@@ -154,15 +158,16 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
-    rlang::warn("No columns were selected in `add_role()`.")
+    cli::cli_warn("No columns were selected in {.fn add_role}.")
     return(recipe)
   }
 
   case_weights_vars <- info %>%
     filter(role == "case_weights", variable %in% vars)
   if (nrow(case_weights_vars) > 0) {
-    rlang::abort(
-      "`add_role()` cannot be used on variables with role \"case_weights\"."
+    cli::cli_abort(
+      "{.fn add_role} cannot be used on variables with role \\
+      {.val case_weights}."
     )
   }
 
@@ -171,10 +176,9 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   existing_var_idx <- recipe$var_info$variable %in% vars
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
-    vars <- glue::glue_collapse(glue::single_quote(vars), sep = ", ")
-    rlang::abort(glue(
-      "No role currently exists for column(s): {vars}. Please use ",
-      "`update_role()` instead."
+   cli::cli_abort(c(
+      "!" = "No role currently exists for column{?s}: {.and {.var {vars}}}.",
+      "i" = "Please use {.fn update_role} instead."
     ))
   }
 
@@ -190,16 +194,9 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     existing_vars <- recipe$var_info$variable[existing_var_idx]
     vars_that_role_exists_for <- existing_vars[role_already_exists]
 
-    bad_vars <- glue::glue_collapse(
-      glue::single_quote(vars_that_role_exists_for),
-      sep = ", "
-    )
-
-    rlang::warn(
-      glue(
-        "Role, '{new_role}', already exists for column(s): {bad_vars}. ",
-        "Skipping."
-      )
+    cli::cli_warn(
+      "Role, {.val {new_role}}, already exists for column{?s}: \\
+      {.and {.var {vars_that_role_exists_for}}}. Skipping."
     )
 
     vars <- vars[!(vars %in% vars_that_role_exists_for)]
@@ -245,15 +242,13 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   terms <- quos(...)
 
   if (new_role == "case_weights") {
-    rlang::abort(
-      c(
-        "Roles of \"case_weights\" cannot be set using `update_role()`.",
-        i = paste(
-          "Please use `frequency_weights()` or `importance_weights()`",
-          "to specify case weights before the data is passed to `recipe()`."
-        )
-      )
-    )
+    cli::cli_abort(c(
+      "!" = "Roles of {.val case_weights} cannot be set using \\
+            {.fn update_role}.",
+      "i" = "Please use {.help hardhat::frequency_weights} or \\
+            {.help hardhat::importance_weights} to specify case weights \\
+            before the data is passed to {.fn recipe}."
+    ))
   }
 
   # Roles can only be changed on the original data supplied to `recipe()`,
@@ -264,15 +259,16 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
-    rlang::warn("No columns were selected in `update_role()`.")
+    cli::cli_warn("No columns were selected in {.fn update_role}.")
     return(recipe)
   }
 
   case_weights_vars <- info %>%
     filter(role == "case_weights", variable %in% vars)
   if (nrow(case_weights_vars) > 0) {
-    rlang::abort(
-      "`update_role()` cannot be used on variables with role \"case_weights\"."
+    cli::cli_abort(
+      "{.fn update_role} cannot be used on variables with role \\
+      {.val case_weights}."
     )
   }
 
@@ -284,11 +280,9 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
       dplyr::group_by(variable) %>%
       dplyr::count()
     if (any(var_counts$n > 1)) {
-      rlang::abort(
-        paste0(
-          "`old_role` can only be `NULL` when the variable(s) have ",
-          "a single existing role."
-        )
+      cli::cli_abort(
+        "{.arg old_role} can only be {.code NULL} when the variable(s) have a \\
+        single existing role."
       )
     }
   }
@@ -311,15 +305,15 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @export
 remove_role <- function(recipe, ..., old_role) {
   if (rlang::is_missing(old_role)) {
-    rlang::abort('argument "old_role" is missing, with no default.')
+    cli::cli_abort("argument {.val old_role} is missing, with no default.")
   }
   single_chr(old_role, "old_")
 
   terms <- quos(...)
 
   if (old_role == "case_weights") {
-    rlang::abort(
-      "Roles of \"case_weights\" cannot removed using `remove_role()`."
+    cli::cli_abort(
+      "Roles of {.val case_weights} cannot removed using {.fn remove_role}."
     )
   }
 
@@ -331,7 +325,7 @@ remove_role <- function(recipe, ..., old_role) {
   vars <- recipes_eval_select(terms, data, info)
 
   if (length(vars) == 0L) {
-    rlang::warn("No columns were selected in `remove_role()`.")
+    cli::cli_warn("No columns were selected in {.fn remove_role}.")
     return(recipe)
   }
 
@@ -358,11 +352,8 @@ role_rm_machine <- function(x, role, var) {
   sel_role <- x$role == role
 
   if (sum(sel_role) == 0) {
-    var <- glue::single_quote(x$variable[1])
-    role <- glue::single_quote(role)
-
-    rlang::warn(
-      glue("Column, {var}, does not have role, {role}.")
+    cli::cli_warn(
+      "Column, {.var {x$variable[1]}}, does not have role, {.val {role}}."
     )
 
     return(x)
@@ -378,22 +369,22 @@ role_rm_machine <- function(x, role, var) {
 }
 
 single_chr <- function(x, prefix = "", null_ok = FALSE) {
-  arg <- paste0("`", prefix, "role", "`")
+  arg <- paste0(prefix, "role")
 
   if (null_ok && is.null(x)) {
     return(invisible(NULL))
   }
 
   if (length(x) != 1L) {
-    rlang::abort(paste0(arg, " must have length 1."))
+    cli::cli_abort("{.var {arg}} must have length 1.")
   }
 
   if (!is.character(x)) {
-    rlang::abort(paste0(arg, " must be a character vector."))
+    cli::cli_abort("{.var {arg}} must be a character vector.")
   }
 
   if (is.na(x)) {
-    rlang::abort(paste0(arg, " must not be `NA`."))
+    cli::cli_abort("{.var {arg}} must not be {.code NA}.")
   }
 
   invisible(NULL)
