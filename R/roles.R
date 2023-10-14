@@ -368,7 +368,10 @@ role_rm_machine <- function(x, role, var) {
   x
 }
 
-single_chr <- function(x, prefix = "", null_ok = FALSE) {
+single_chr <- function(x,
+                       prefix = "",
+                       null_ok = FALSE,
+                       call = rlang::caller_env()) {
   arg <- paste0(prefix, "role")
 
   if (null_ok && is.null(x)) {
@@ -376,15 +379,15 @@ single_chr <- function(x, prefix = "", null_ok = FALSE) {
   }
 
   if (length(x) != 1L) {
-    cli::cli_abort("{.var {arg}} must have length 1.")
+    cli::cli_abort("{.var {arg}} must have length 1.", call = call)
   }
 
   if (!is.character(x)) {
-    cli::cli_abort("{.var {arg}} must be a character vector.")
+    cli::cli_abort("{.var {arg}} must be a character vector.", call = call)
   }
 
   if (is.na(x)) {
-    cli::cli_abort("{.var {arg}} must not be {.code NA}.")
+    cli::cli_abort("{.var {arg}} must not be {.code NA}.", call = call)
   }
 
   invisible(NULL)

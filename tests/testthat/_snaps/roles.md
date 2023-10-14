@@ -45,7 +45,7 @@
     Code
       add_role(rec, sample, new_role = NA_character_)
     Condition
-      Error in `single_chr()`:
+      Error in `add_role()`:
       ! `new_role` must not be `NA`.
 
 ---
@@ -53,7 +53,7 @@
     Code
       update_role(rec, sample, new_role = NA_character_)
     Condition
-      Error in `single_chr()`:
+      Error in `update_role()`:
       ! `new_role` must not be `NA`.
 
 # remove roles
@@ -61,7 +61,7 @@
     Code
       rec <- remove_role(rec, sample, old_role = NA)
     Condition
-      Error in `single_chr()`:
+      Error in `remove_role()`:
       ! `old_role` must be a character vector.
 
 ---
@@ -141,7 +141,7 @@
     Code
       recipe(x = biomass) %>% add_role(carbon, new_role = letters[1:2])
     Condition
-      Error in `single_chr()`:
+      Error in `add_role()`:
       ! `new_role` must have length 1.
 
 ---
@@ -157,7 +157,7 @@
     Code
       recipe(x = biomass) %>% update_role(carbon, new_role = c("a", "b"))
     Condition
-      Error in `single_chr()`:
+      Error in `update_role()`:
       ! `new_role` must have length 1.
 
 ---
@@ -165,7 +165,7 @@
     Code
       recipe(x = biomass) %>% update_role(carbon, old_role = c("a", "b"))
     Condition
-      Error in `single_chr()`:
+      Error in `update_role()`:
       ! `old_role` must have length 1.
 
 # role functions handle case weights correctly
