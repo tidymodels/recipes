@@ -13,7 +13,7 @@
       rec <- add_role(rec, sample, new_role = "some other role")
     Condition
       Warning:
-      Role, "some other role", already exists for column: `sample`. Skipping.
+      Role "some other role" already exists for column: `sample`. Skipping.
 
 # existing role is skipped, but new one is added
 
@@ -21,7 +21,7 @@
       rec <- add_role(rec, sample, dataset, new_role = "some other role")
     Condition
       Warning:
-      Role, "some other role", already exists for column: `sample`. Skipping.
+      Role "some other role" already exists for column: `sample`. Skipping.
 
 # cannot add roles if the current one is `NA`
 
@@ -70,7 +70,7 @@
       rec <- remove_role(rec, sample)
     Condition
       Error in `remove_role()`:
-      ! argument "old_role" is missing, with no default.
+      ! argument `old_role` is missing, with no default.
 
 ---
 
@@ -78,7 +78,7 @@
       remove_role(rec, sample, old_role = "non-existant")
     Condition
       Warning:
-      Column, `sample`, does not have role, "non-existant".
+      Column `sample` does not have role "non-existant".
     Message
       
       -- Recipe ----------------------------------------------------------------------
