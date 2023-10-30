@@ -162,7 +162,7 @@ recipe.data.frame <-
     case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
     case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
     if (case_weights_n > 1) {
-      too_many_case_weights(case_weights_n)
+      too_many_case_weights(names(case_weights_cols)[case_weights_cols])
     }
     var_info$role[case_weights_cols] <- "case_weights"
 
@@ -213,7 +213,7 @@ recipe.matrix <- function(x, ...) {
   recipe.data.frame(x, ...)
 }
 
-form2args <- function(formula, data, ...) {
+form2args <- function(formula, data, ..., call = rlang::caller_env()) {
   if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
@@ -248,7 +248,10 @@ form2args <- function(formula, data, ...) {
   case_weights_cols <- map_lgl(data, hardhat::is_case_weights)
   case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
   if (case_weights_n > 1) {
-    too_many_case_weights(case_weights_n)
+    too_many_case_weights(
+      names(case_weights_cols)[case_weights_cols],
+      call = call
+    )
   }
   roles[case_weights_cols] <- "case_weights"
 
