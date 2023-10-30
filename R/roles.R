@@ -177,7 +177,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
    cli::cli_abort(c(
-      "!" = "No role currently exists for column{?s}: {.and {.var {vars}}}.",
+      "!" = "No role currently exists for column{?s}: {.var {vars}}.",
       "i" = "Please use {.fn update_role} instead."
     ))
   }
@@ -195,7 +195,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     vars_that_role_exists_for <- existing_vars[role_already_exists]
 
     cli::cli_warn(
-      "Role, {.val {new_role}}, already exists for column{?s}: \\
+      "Role {.val {new_role}} already exists for column{?s}: \\
       {.and {.var {vars_that_role_exists_for}}}. Skipping."
     )
 
@@ -305,7 +305,7 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @export
 remove_role <- function(recipe, ..., old_role) {
   if (rlang::is_missing(old_role)) {
-    cli::cli_abort("argument {.val old_role} is missing, with no default.")
+    cli::cli_abort("argument {.arg old_role} is missing, with no default.")
   }
   single_chr(old_role, "old_")
 
@@ -353,7 +353,7 @@ role_rm_machine <- function(x, role, var) {
 
   if (sum(sel_role) == 0) {
     cli::cli_warn(
-      "Column, {.var {x$variable[1]}}, does not have role, {.val {role}}."
+      "Column {.var {x$variable[1]}} does not have role {.val {role}}."
     )
 
     return(x)
