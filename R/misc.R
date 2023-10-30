@@ -619,8 +619,8 @@ check_nominal_type <- function(x, lvl) {
     if (length(was_factor) > 0) {
       cli::cli_warn(
         c(
-          "!" = " There {?w/was/were} {length(was_factor)} column{?s} that \\
-                {?w/was a factor/were factors} when the recipe was prepped: \\
+          "!" = "There {?w/was/were} {length(was_factor)} column{?s} that \\
+                {?was a factor/were factors} when the recipe was prepped: \\
                 ",
           "*" = "{.and {.var {was_factor}}}",
           "i" = "This may cause errors when processing new data."
