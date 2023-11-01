@@ -130,7 +130,7 @@ recipe.data.frame <-
       offenders <- offenders$key[offenders$count != 1]
 
       cli::cli_abort(c(
-        x = "{.arg vars} must have unique members.",
+        x = "{.arg vars} must have unique values.",
         i = "The following values were duplicated:",
         "*" = "{.and {offenders}}"
       ))
