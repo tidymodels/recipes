@@ -14,7 +14,7 @@ recipe <- function(x, ...) {
 recipe.default <- function(x, ...) {
   cli::cli_abort(c(
     x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
-    i = "not a {.obj_type_friendly {x}}."
+    i = "{.arg x} is a {.obj_type_friendly {x}}."
   ))
 }
 
@@ -280,7 +280,7 @@ inline_check <- function(x) {
       x = "No in-line functions should be used here.",
       i = "{cli::qty(length(funs))}The following function{?s} were found:",
       "*" = "{.and {.code {funs}}}",
-      i = "Instead use steps to do transformations."
+      i = "Use steps to do transformations instead."
     ))
   }
 
@@ -434,7 +434,7 @@ prep.recipe <-
     if (nrow(needs_tuning) > 0) {
       args <- vctrs::vec_split(needs_tuning$arg, needs_tuning$step)
       msg <- c(
-        x = "You cannot {.fun prep} a tuneable recipe.",
+        x = "You cannot {.fun prep} a tunable recipe.",
         i = "{cli::qty(length(args))}The following step{?s} has {.fun tune}:"
       )
 
@@ -886,7 +886,7 @@ juice <- function(object, ..., composition = "tibble") {
   if (!isTRUE(object$retained)) {
     cli::cli_abort(
       "Use {.code retain = TRUE} in {.fun prep} to be able to extract the \\
-      training set"
+      training set."
     )
   }
 
