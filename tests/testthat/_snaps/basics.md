@@ -4,7 +4,10 @@
       recipe(HHV ~ log(nitrogen), data = biomass)
     Condition
       Error in `inline_check()`:
-      ! No in-line functions should be used here; use steps to define baking actions.
+      x No in-line functions should be used here.
+      i The following function were found:
+      * `log`
+      i Instead use steps to do transformations.
 
 ---
 
@@ -12,7 +15,10 @@
       recipe(HHV ~ (.)^2, data = biomass)
     Condition
       Error in `inline_check()`:
-      ! No in-line functions should be used here; use steps to define baking actions.
+      x No in-line functions should be used here.
+      i The following functions were found:
+      * `^` and `(`
+      i Instead use steps to do transformations.
 
 ---
 
@@ -20,7 +26,10 @@
       recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass)
     Condition
       Error in `inline_check()`:
-      ! No in-line functions should be used here; use steps to define baking actions.
+      x No in-line functions should be used here.
+      i The following function were found:
+      * `:`
+      i Instead use steps to do transformations.
 
 ---
 
@@ -28,7 +37,10 @@
       recipe(HHV ~ nitrogen^2, data = biomass)
     Condition
       Error in `inline_check()`:
-      ! No in-line functions should be used here; use steps to define baking actions.
+      x No in-line functions should be used here.
+      i The following function were found:
+      * `^`
+      i Instead use steps to do transformations.
 
 # Using prepare
 

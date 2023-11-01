@@ -12,7 +12,10 @@ recipe <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...) {
-  rlang::abort("`x` should be a data frame, matrix, or tibble")
+  cli::cli_abort(c(
+    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
+    i = "not a {.obj_type_friendly {x}}."
+  ))
 }
 
 #' @rdname recipe
@@ -100,19 +103,13 @@ recipe.data.frame <-
            roles = NULL) {
     if (!is.null(formula)) {
       if (!is.null(vars)) {
-        rlang::abort(
-          paste0(
-            "This `vars` specification will be ignored ",
-            "when a formula is used"
-          )
+        cli::cli_abort(
+          "The {.arg vars} argument will be ignored when a formula is used."
         )
       }
       if (!is.null(roles)) {
-        rlang::abort(
-          paste0(
-            "This `roles` specification will be ignored ",
-            "when a formula is used"
-          )
+        cli::cli_abort(
+          "This {.arg roles} argument will be ignored when a formula is used."
         )
       }
 
@@ -129,10 +126,22 @@ recipe.data.frame <-
     }
 
     if (any(table(vars) > 1)) {
-      rlang::abort("`vars` should have unique members")
+      offenders <- vctrs::vec_count(vars)
+      offenders <- offenders$key[offenders$count != 1]
+
+      cli::cli_abort(c(
+        x = "{.arg vars} must have unique members.",
+        i = "The following values were duplicate:",
+        "*" = "{.and {offenders}}"
+      ))
     }
     if (any(!(vars %in% colnames(x)))) {
-      rlang::abort("1+ elements of `vars` are not in `x`")
+      offenders <- vars[!(vars %in% colnames(x))]
+
+      cli::cli_abort(c(
+        x = "The following elements of {.arg vars} are not found in {.arg x}:",
+        "*" = "{.and {offenders}}"
+      ))
     }
 
     x <- x[, vars]
@@ -142,12 +151,11 @@ recipe.data.frame <-
     ## Check and add roles when available
     if (!is.null(roles)) {
       if (length(roles) != length(vars)) {
-        rlang::abort(
-          paste0(
-            "The number of roles should be the same as the number of ",
-            "variables"
-          )
-        )
+        cli::cli_abort(c(
+          x =  "{.arg vars} and {.arg roles} must have same length.",
+          "*" = "{.arg vars} has length {length(vars)}",
+          "*" = "{.arg roles} has length {length(roles)}"
+        ))
       }
       var_info$role <- roles
     } else {
@@ -188,7 +196,10 @@ recipe.formula <- function(formula, data, ...) {
   # check for minus:
   f_funcs <- fun_calls(formula)
   if (any(f_funcs == "-")) {
-    rlang::abort("`-` is not allowed in a recipe formula. Use `step_rm()` instead.")
+    cli::cli_abort(c(
+      "*" = "{.code -} is not allowed in a recipe formula.",
+      "i" = "Use {.fn recipes::step_rm} instead."
+    ))
   }
 
   if (rlang::is_missing(data)) {
@@ -265,9 +276,11 @@ inline_check <- function(x) {
   funs <- funs[!(funs %in% c("~", "+", "-"))]
 
   if (length(funs) > 0) {
-    rlang::abort(paste0(
-      "No in-line functions should be used here; ",
-      "use steps to define baking actions."
+    cli::cli_abort(c(
+      x = "No in-line functions should be used here.",
+      i = "{cli::qty(length(funs))}The following function{?s} were found:",
+      "*" = "{.and {.code {funs}}}",
+      i = "Instead use steps to do transformations."
     ))
   }
 
