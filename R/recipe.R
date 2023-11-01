@@ -425,11 +425,14 @@ prep.recipe <-
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
 
-    needs_tuning <- purrr::map(x$steps, ~ {
-      res <- map_lgl(.x, is_tune)
+    get_needs_tuning <- function(x) {
+      res <- map_lgl(x, is_tune)
       res <- names(res)[res]
-      tibble(step = class(.x)[[1L]], arg = res)
-    })
+      res <- vctrs::vec_recycle_common(step = class(x)[[1L]], arg = res)
+      tibble::new_tibble(res)
+    }
+
+    needs_tuning <- purrr::map(x$steps, get_needs_tuning)
     needs_tuning <- purrr::list_rbind(needs_tuning)
 
     if (nrow(needs_tuning) > 0) {
