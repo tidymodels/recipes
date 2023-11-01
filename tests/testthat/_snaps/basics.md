@@ -7,7 +7,7 @@
       x No in-line functions should be used here.
       i The following function were found:
       * `log`
-      i Instead use steps to do transformations.
+      i Use steps to do transformations instead.
 
 ---
 
@@ -18,7 +18,7 @@
       x No in-line functions should be used here.
       i The following functions were found:
       * `^` and `(`
-      i Instead use steps to do transformations.
+      i Use steps to do transformations instead.
 
 ---
 
@@ -29,7 +29,7 @@
       x No in-line functions should be used here.
       i The following function were found:
       * `:`
-      i Instead use steps to do transformations.
+      i Use steps to do transformations instead.
 
 ---
 
@@ -40,7 +40,7 @@
       x No in-line functions should be used here.
       i The following function were found:
       * `^`
-      i Instead use steps to do transformations.
+      i Use steps to do transformations instead.
 
 # Using prepare
 
@@ -83,7 +83,7 @@
         prep()
     Condition
       Error in `prep()`:
-      x You cannot `prep()` a tuneable recipe.
+      x You cannot `prep()` a tunable recipe.
       i The following steps has `tune()`:
       * step_ns: `deg_free`
 
@@ -95,7 +95,7 @@
       deg_free = .tune()))
     Condition
       Error in `prep()`:
-      x You cannot `prep()` a tuneable recipe.
+      x You cannot `prep()` a tunable recipe.
       i The following steps has `tune()`:
       * step_pca: `threshold`
       * step_kpca: `num_comp`
