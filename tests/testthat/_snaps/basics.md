@@ -65,7 +65,8 @@
       juice(sp_signed)
     Condition
       Error in `juice()`:
-      ! At least one step has not been trained. Please run `prep()`.
+      * At least one step has not been trained.
+      i Please run `recipes::prep()`.
 
 # bake without newdata
 

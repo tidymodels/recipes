@@ -863,20 +863,23 @@ bake_req_tibble <- function(x) {
 #' @seealso [recipe()] [prep()] [bake()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep()`.")
-  }
-
-  if (!isTRUE(object$retained)) {
-    rlang::abort(paste0(
-      "Use `retain = TRUE` in `prep()` to be able ",
-      "to extract the training set"
+    cli::cli_abort(c(
+      "*" = "At least one step has not been trained.",
+      "i" = "Please run {.fun recipes::prep}."
     ))
   }
 
+  if (!isTRUE(object$retained)) {
+    cli::cli_abort(
+      "Use {.code retain = TRUE} in {.fun prep} to be able to extract the \\
+      training set"
+    )
+  }
+
   if (!any(composition == formats)) {
-    rlang::abort(paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
+    cli::cli_abort(c(
+      "x" = "{.arg composition} cannot be {.val composition}.",
+      "i" = "Allowed values are {.or formats}."
     ))
   }
 
