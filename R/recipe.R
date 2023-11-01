@@ -109,7 +109,7 @@ recipe.data.frame <-
       }
       if (!is.null(roles)) {
         cli::cli_abort(
-          "This {.arg roles} argument will be ignored when a formula is used."
+          "The {.arg roles} argument will be ignored when a formula is used."
         )
       }
 
@@ -131,7 +131,7 @@ recipe.data.frame <-
 
       cli::cli_abort(c(
         x = "{.arg vars} must have unique members.",
-        i = "The following values were duplicate:",
+        i = "The following values were duplicated:",
         "*" = "{.and {offenders}}"
       ))
     }
@@ -278,7 +278,7 @@ inline_check <- function(x) {
   if (length(funs) > 0) {
     cli::cli_abort(c(
       x = "No in-line functions should be used here.",
-      i = "{cli::qty(length(funs))}The following function{?s} {?no/was/were} \\
+      i = "{cli::qty(length(funs))}The following function{?s} {?was/were} \\
           found:",
       "*" = "{.and {.code {funs}}}",
       i = "Use steps to do transformations instead."
@@ -398,7 +398,7 @@ prep.recipe <-
     if (any(skippers) & !retain) {
       cli::cli_warn(
         "Since some operations have {.code skip = TRUE}, using \\
-        {.code retain = TRUE} will allow those steps results to be accessible."
+        {.code retain = TRUE} will allow those step's results to be accessible."
       )
     }
 
