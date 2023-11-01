@@ -57,7 +57,7 @@
     Condition
       Error in `bake()`:
       x At least one step has not been trained.
-      i Please run `recipes::prep()`.
+      i Please run `prep()` (`?recipes::prep()`).
 
 ---
 
@@ -66,7 +66,7 @@
     Condition
       Error in `juice()`:
       x At least one step has not been trained.
-      i Please run `recipes::prep()`.
+      i Please run `prep()` (`?recipes::prep()`).
 
 # bake without newdata
 

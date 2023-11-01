@@ -198,7 +198,7 @@ recipe.formula <- function(formula, data, ...) {
   if (any(f_funcs == "-")) {
     cli::cli_abort(c(
       "x" = "{.code -} is not allowed in a recipe formula.",
-      "i" = "Use {.fn recipes::step_rm} instead."
+      "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
     ))
   }
 
@@ -635,7 +635,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!fully_trained(object)) {
     cli::cli_abort(c(
       "x" = "At least one step has not been trained.",
-      "i" = "Please run {.fun recipes::prep}."
+      "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
     ))
   }
 
@@ -879,7 +879,7 @@ juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
     cli::cli_abort(c(
       "x" = "At least one step has not been trained.",
-      "i" = "Please run {.fun recipes::prep}."
+      "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
     ))
   }
 
