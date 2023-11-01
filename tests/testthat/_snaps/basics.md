@@ -90,9 +90,9 @@
 ---
 
     Code
-      prep(step_bs(step_kpca(step_pca(recipe(~., data = mtcars), all_predictors(),
-      threshold = .tune()), all_predictors(), num_comp = .tune()), all_predictors(),
-      deg_free = .tune()))
+      recipe(~., data = mtcars) %>% step_pca(all_predictors(), threshold = .tune()) %>%
+        step_kpca(all_predictors(), num_comp = .tune()) %>% step_bs(all_predictors(),
+      deg_free = .tune()) %>% prep()
     Condition
       Error in `prep()`:
       x You cannot `prep()` a tunable recipe.
