@@ -56,7 +56,8 @@
       bake(sp_signed, new_data = biomass_te)
     Condition
       Error in `bake()`:
-      ! At least one step has not been trained. Please run `prep`.
+      * At least one step has not been trained.
+      i Please run `recipes::prep()`.
 
 ---
 
@@ -72,7 +73,7 @@
       bake(rec, newdata = biomass)
     Condition
       Error in `bake()`:
-      ! 'new_data' must be either a data frame or NULL. No value is not allowed.
+      ! `new_data` must be either a data frame or NULL. No value is not allowed.
 
 # tunable arguments at prep-time
 
@@ -143,7 +144,8 @@
       bake(rec_prepped, new_data = as_tibble(mtcars))
     Condition
       Error in `bake()`:
-      ! bake() methods should always return tibbles
+      * `bake()` methods should always return tibbles.
+      i `bake.step_testthat_helper()` returned a a data frame.
 
 ---
 

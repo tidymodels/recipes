@@ -608,7 +608,10 @@ bake <- function(object, ...) {
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
-    rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
+    cli::cli_abort(
+      "{.arg new_data} must be either a data frame or NULL. \\
+      No value is not allowed."
+    )
   }
 
   if (is.null(new_data)) {
@@ -616,16 +619,17 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep`.")
+    cli::cli_abort(c(
+      "*" = "At least one step has not been trained.",
+      "i" = "Please run {.fun recipes::prep}."
+    ))
   }
 
   if (!any(composition == formats)) {
-    rlang::abort(
-      paste0(
-        "`composition` should be one of: ",
-        paste0("'", formats, "'", collapse = ",")
-      )
-    )
+    cli::cli_abort(c(
+      "x" = "{.arg composition} cannot be {.val composition}.",
+      "i" = "Allowed values are {.or formats}."
+    ))
   }
 
   terms <- quos(...)
@@ -636,9 +640,11 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   # In case someone used the deprecated `newdata`:
   if (is.null(new_data) || is.null(ncol(new_data))) {
     if (any(names(terms) == "newdata")) {
-      rlang::abort("Please use `new_data` instead of `newdata` with `bake`.")
+      cli::cli_abort(
+        "Please use {.arg new_data} instead of {.arg newdata} with {.fun bake}."
+      )
     } else {
-      rlang::abort("Please pass a data set to `new_data`.")
+      cli::cli_abort("Please pass a data set to {.arg new_data}.")
     }
   }
 
@@ -669,7 +675,13 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     new_data <- bake(step, new_data = new_data)
 
     if (!is_tibble(new_data)) {
-      abort("bake() methods should always return tibbles")
+      step_name <- attr(step, "class")[1]
+
+      cli::cli_abort(c(
+        "*" = "{.fun bake} methods should always return tibbles.",
+        "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
+                   {.obj_type_friendly {new_data}}."
+      ))
     }
   }
 
