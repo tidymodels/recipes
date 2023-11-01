@@ -151,7 +151,8 @@
       prep(rec_spec)
     Condition
       Error in `prep()`:
-      ! bake() methods should always return tibbles
+      * `bake()` methods should always return tibbles.
+      i `bake.step_testthat_helper()` returned a a data frame.
 
 # recipe() errors if `data` is missing
 

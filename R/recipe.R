@@ -395,12 +395,9 @@ prep.recipe <-
     # use `retain = TRUE` so issue a warning if this is not the case
     skippers <- map_lgl(x$steps, is_skipable)
     if (any(skippers) & !retain) {
-      rlang::warn(
-        paste0(
-          "Since some operations have `skip = TRUE`, using ",
-          "`retain = TRUE` will allow those steps results to ",
-          "be accessible."
-        )
+      cli::cli_warn(
+        "Since some operations have {.code skip = TRUE}, using \\
+        {.code retain = TRUE} will allow those steps results to be accessible."
       )
     }
 
@@ -428,6 +425,8 @@ prep.recipe <-
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
 
     for (i in seq(along.with = x$steps)) {
+      step_name <- class(x$steps[[i]])[[1L]]
+
       needs_tuning <- map_lgl(x$steps[[i]], is_tune)
       if (any(needs_tuning)) {
         arg <- names(needs_tuning)[needs_tuning]
@@ -440,7 +439,7 @@ prep.recipe <-
           )
         rlang::abort(msg)
       }
-      note <- paste("oper", i, gsub("_", " ", class(x$steps[[i]])[1]))
+      note <- paste("oper", i, gsub("_", " ", step_name))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose) {
           cat(note, "[training]", "\n")
@@ -455,17 +454,20 @@ prep.recipe <-
             training = training,
             info = x$term_info
           ),
-          step_name = class(x$steps[[i]])[[1L]]
+          step_name = step_name
         )
         training <- recipes_error_context(
           bake(x$steps[[i]], new_data = training),
-          step_name = class(x$steps[[i]])[[1L]]
+          step_name = step_name
         )
         if (!is_tibble(training)) {
-          abort("bake() methods should always return tibbles")
+          cli::cli_abort(c(
+            "*" = "{.fun bake} methods should always return tibbles.",
+            "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
+                   {.obj_type_friendly {training}}."
+          ))
         }
-        x$term_info <-
-          merge_term_info(get_types(training), x$term_info)
+        x$term_info <- merge_term_info(get_types(training), x$term_info)
 
         # Update the roles and the term source
         if (!is.na(x$steps[[i]]$role)) {
