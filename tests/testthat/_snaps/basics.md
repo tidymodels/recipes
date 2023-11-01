@@ -87,6 +87,20 @@
       i The following steps has `tune()`:
       * step_ns: `deg_free`
 
+---
+
+    Code
+      prep(step_bs(step_kpca(step_pca(recipe(~., data = mtcars), all_predictors(),
+      threshold = .tune()), all_predictors(), num_comp = .tune()), all_predictors(),
+      deg_free = .tune()))
+    Condition
+      Error in `prep()`:
+      x You cannot `prep()` a tuneable recipe.
+      i The following steps has `tune()`:
+      * step_pca: `threshold`
+      * step_kpca: `num_comp`
+      * step_bs: `deg_free`
+
 # logging
 
     Code
