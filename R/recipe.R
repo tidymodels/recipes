@@ -197,7 +197,7 @@ recipe.formula <- function(formula, data, ...) {
   f_funcs <- fun_calls(formula)
   if (any(f_funcs == "-")) {
     cli::cli_abort(c(
-      "*" = "{.code -} is not allowed in a recipe formula.",
+      "x" = "{.code -} is not allowed in a recipe formula.",
       "i" = "Use {.fn recipes::step_rm} instead."
     ))
   }
@@ -462,7 +462,7 @@ prep.recipe <-
         )
         if (!is_tibble(training)) {
           cli::cli_abort(c(
-            "*" = "{.fun bake} methods should always return tibbles.",
+            "x" = "{.fun bake} methods should always return tibbles.",
             "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
                    {.obj_type_friendly {training}}."
           ))
@@ -620,7 +620,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
   if (!fully_trained(object)) {
     cli::cli_abort(c(
-      "*" = "At least one step has not been trained.",
+      "x" = "At least one step has not been trained.",
       "i" = "Please run {.fun recipes::prep}."
     ))
   }
@@ -678,7 +678,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
       step_name <- attr(step, "class")[1]
 
       cli::cli_abort(c(
-        "*" = "{.fun bake} methods should always return tibbles.",
+        "x" = "{.fun bake} methods should always return tibbles.",
         "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
                    {.obj_type_friendly {new_data}}."
       ))
@@ -864,7 +864,7 @@ bake_req_tibble <- function(x) {
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
     cli::cli_abort(c(
-      "*" = "At least one step has not been trained.",
+      "x" = "At least one step has not been trained.",
       "i" = "Please run {.fun recipes::prep}."
     ))
   }

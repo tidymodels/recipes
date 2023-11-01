@@ -56,7 +56,7 @@
       bake(sp_signed, new_data = biomass_te)
     Condition
       Error in `bake()`:
-      * At least one step has not been trained.
+      x At least one step has not been trained.
       i Please run `recipes::prep()`.
 
 ---
@@ -65,7 +65,7 @@
       juice(sp_signed)
     Condition
       Error in `juice()`:
-      * At least one step has not been trained.
+      x At least one step has not been trained.
       i Please run `recipes::prep()`.
 
 # bake without newdata
@@ -145,7 +145,7 @@
       bake(rec_prepped, new_data = as_tibble(mtcars))
     Condition
       Error in `bake()`:
-      * `bake()` methods should always return tibbles.
+      x `bake()` methods should always return tibbles.
       i `bake.step_testthat_helper()` returned a a data frame.
 
 ---
@@ -154,7 +154,7 @@
       prep(rec_spec)
     Condition
       Error in `prep()`:
-      * `bake()` methods should always return tibbles.
+      x `bake()` methods should always return tibbles.
       i `bake.step_testthat_helper()` returned a a data frame.
 
 # recipe() errors if `data` is missing
