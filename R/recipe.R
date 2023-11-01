@@ -641,8 +641,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
   if (!any(composition == formats)) {
     cli::cli_abort(c(
-      "x" = "{.arg composition} cannot be {.val composition}.",
-      "i" = "Allowed values are {.or formats}."
+      "x" = "{.arg composition} cannot be {.val {composition}}.",
+      "i" = "Allowed values are {.or {formats}}."
     ))
   }
 
@@ -892,8 +892,8 @@ juice <- function(object, ..., composition = "tibble") {
 
   if (!any(composition == formats)) {
     cli::cli_abort(c(
-      "x" = "{.arg composition} cannot be {.val composition}.",
-      "i" = "Allowed values are {.or formats}."
+      "x" = "{.arg composition} cannot be {.val {composition}}.",
+      "i" = "Allowed values are {.or {.val {formats}}}."
     ))
   }
 
