@@ -424,21 +424,35 @@ prep.recipe <-
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
 
+    needs_tuning <- purrr::map(x$steps, ~ {
+      res <- map_lgl(.x, is_tune)
+      res <- names(res)[res]
+      tibble(step = class(.x)[[1L]], arg = res)
+    })
+    needs_tuning <- purrr::list_rbind(needs_tuning)
+
+    if (nrow(needs_tuning) > 0) {
+      args <- vctrs::vec_split(needs_tuning$arg, needs_tuning$step)
+      msg <- c(
+        x = "You cannot {.fun prep} a tuneable recipe.",
+        i = "{cli::qty(length(args))}The following step{?s} has {.fun tune}:"
+      )
+
+      step_msg <- paste0(
+        "{needs_tuning$step[",
+        seq_len(nrow(needs_tuning)),
+        "]}: {.and {.arg {needs_tuning$arg[",
+        seq_len(nrow(needs_tuning)),
+        "]}}}"
+      )
+      names(step_msg) <- rep("*", nrow(needs_tuning))
+
+      cli::cli_abort(c(msg, step_msg))
+    }
+
     for (i in seq(along.with = x$steps)) {
       step_name <- class(x$steps[[i]])[[1L]]
 
-      needs_tuning <- map_lgl(x$steps[[i]], is_tune)
-      if (any(needs_tuning)) {
-        arg <- names(needs_tuning)[needs_tuning]
-        arg <- paste0("'", arg, "'", collapse = ", ")
-        msg <-
-          paste0(
-            "You cannot `prep()` a tuneable recipe. Argument(s) with `tune()`: ",
-            arg,
-            ". Do you want to use a tuning function such as `tune_grid()`?"
-          )
-        rlang::abort(msg)
-      }
       note <- paste("oper", i, gsub("_", " ", step_name))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose) {

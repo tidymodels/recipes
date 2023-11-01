@@ -83,7 +83,9 @@
         prep()
     Condition
       Error in `prep()`:
-      ! You cannot `prep()` a tuneable recipe. Argument(s) with `tune()`: 'deg_free'. Do you want to use a tuning function such as `tune_grid()`?
+      x You cannot `prep()` a tuneable recipe.
+      i The following steps has `tune()`:
+      * step_ns: `deg_free`
 
 # logging
 
