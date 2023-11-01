@@ -5,7 +5,7 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following function were found:
+      i The following function was found:
       * `log`
       i Use steps to do transformations instead.
 
@@ -27,7 +27,7 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following function were found:
+      i The following function was found:
       * `:`
       i Use steps to do transformations instead.
 
@@ -38,7 +38,7 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following function were found:
+      i The following function was found:
       * `^`
       i Use steps to do transformations instead.
 
@@ -84,7 +84,7 @@
     Condition
       Error in `prep()`:
       x You cannot `prep()` a tunable recipe.
-      i The following steps has `tune()`:
+      i The following step has `tune()`:
       * step_ns: `deg_free`
 
 ---
@@ -96,7 +96,7 @@
     Condition
       Error in `prep()`:
       x You cannot `prep()` a tunable recipe.
-      i The following steps has `tune()`:
+      i The following steps have `tune()`:
       * step_pca: `threshold`
       * step_kpca: `num_comp`
       * step_bs: `deg_free`

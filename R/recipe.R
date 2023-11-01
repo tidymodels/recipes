@@ -278,7 +278,8 @@ inline_check <- function(x) {
   if (length(funs) > 0) {
     cli::cli_abort(c(
       x = "No in-line functions should be used here.",
-      i = "{cli::qty(length(funs))}The following function{?s} were found:",
+      i = "{cli::qty(length(funs))}The following function{?s} {?no/was/were} \\
+          found:",
       "*" = "{.and {.code {funs}}}",
       i = "Use steps to do transformations instead."
     ))
@@ -435,7 +436,8 @@ prep.recipe <-
       args <- vctrs::vec_split(needs_tuning$arg, needs_tuning$step)
       msg <- c(
         x = "You cannot {.fun prep} a tunable recipe.",
-        i = "{cli::qty(length(args))}The following step{?s} has {.fun tune}:"
+        i = "{cli::qty(nrow(args))}The following step{?s} \\
+             {?no/has/have} {.fun tune}:"
       )
 
       step_msg <- paste0(
