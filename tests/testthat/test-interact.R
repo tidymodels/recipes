@@ -233,54 +233,24 @@ test_that("replacing selectors in formulas", {
   )
 })
 
-test_that("missing columns", {
-  skip("redundant with check_new_data checks")
+test_that('with factors', {
+  int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
+    step_interact(~ (. - Sepal.Width)^2, sep = ":")
+  int_rec_trained <- prep(int_rec, iris)
 
-  no_fail <-
-    rec %>%
-    step_rm(x1) %>%
-    step_interact(~ x1:x2)
-  expect_snapshot(no_fail_rec <- prep(no_fail, dat_tr))
-  no_fail_res <- bake(no_fail_rec, new_data = NULL) %>% names()
-  expect_true(!any(grepl("_x_", no_fail_res)))
+  te_new <- bake(int_rec_trained, new_data = iris, all_predictors(), - Species)
+  te_new <- te_new[, sort(names(te_new))]
+  te_new <- as.matrix(te_new)
 
-  one_int <-
-    rec %>%
-    step_rm(x1) %>%
-    step_interact(~ x1:x2) %>%
-    step_interact(~ x3:x2)
-  expect_snapshot(one_int_rec <- prep(one_int, dat_tr))
-  one_int_res <- bake(one_int_rec, new_data = NULL) %>% names()
-  expect_true(sum(grepl("_x_", one_int_res)) == 1)
+  og_terms <- terms(Sepal.Width ~ (.)^2-Species, data = iris)
+  te_og <- model.matrix(og_terms, data = iris)[, -1]
+  te_og <- te_og[, sort(colnames(te_og))]
 
-  with_selectors <-
-    rec %>%
-    step_rm(x1) %>%
-    step_interact(~ starts_with("x"):starts_with("x")) %>%
-    step_interact(~ x3:x2)
-  expect_warning(prep(with_selectors, dat_tr), regexp = NA)
+  rownames(te_new) <- NULL
+  rownames(te_og) <- NULL
+
+  expect_identical(te_og, te_new)
 })
-
-
-# currently failing; try to figure out why
-# test_that('with factors', {
-#   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
-#     step_interact(~ (. - Sepal.Width)^3, sep = ":")
-#   int_rec_trained <- prep(int_rec, iris)
-#
-#   te_new <- bake(int_rec_trained, new_data = iris, role = "predictor")
-#   te_new <- te_new[, sort(names(te_new))]
-#   te_new <- as.matrix(te_new)
-#
-#   og_terms <- terms(Sepal.Width ~ (.)^3, data = iris)
-#   te_og <- model.matrix(og_terms, data = iris)[, -1]
-#   te_og <- te_og[, sort(colnames(te_og))]
-#
-#   rownames(te_new) <- NULL
-#   rownames(te_og) <- NULL
-#
-#   all.equal(te_og, te_new)
-# })
 
 test_that("works when formula is passed in as an object", {
   rec1 <- recipe(~., data = mtcars) %>%

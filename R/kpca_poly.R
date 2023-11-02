@@ -1,4 +1,4 @@
-#' Polynomial Kernel PCA Signal Extraction
+#' Polynomial kernel PCA signal extraction
 #'
 #' `step_kpca_poly()` creates a *specification* of a recipe step that will
 #' convert numeric data into one or more principal components using a polynomial
@@ -22,6 +22,16 @@
 #' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
 #' cat(result)
 #' ```
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

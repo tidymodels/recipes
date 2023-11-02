@@ -23,9 +23,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `model` (the mean
-#' value) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the mean value}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_impute_mean"
@@ -163,7 +168,8 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-  trimmed <- purrr::map_dfc(training[, col_names], trim, x$trim)
+  trimmed <- purrr::map(training[, col_names], trim, x$trim)
+  trimmed <- vctrs::vec_cbind(!!!trimmed)
 
   means <- averages(trimmed, wts = wts)
   means <- purrr::map2(means, trimmed, cast)

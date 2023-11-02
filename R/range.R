@@ -1,4 +1,4 @@
-#' Scaling Numeric Data to a Specific Range
+#' Scaling numeric data to a specific range
 #'
 #' `step_range()` creates a *specification* of a recipe step that will normalize
 #' numeric data to be within a pre-defined range of values.
@@ -22,11 +22,17 @@
 #'  the training set, the new values are truncated at `min` or
 #'  `max`.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected), `min`, and `max` is
-#'  returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `min`, `max` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{min}{numeric, lower range}
+#'   \item{max}{numeric, upper range}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

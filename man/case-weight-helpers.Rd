@@ -12,7 +12,7 @@
 \alias{are_weights_used}
 \title{Helpers for steps with case weights}
 \usage{
-get_case_weights(info, .data)
+get_case_weights(info, .data, call = rlang::caller_env())
 
 averages(x, wts = NULL, na_rm = TRUE)
 
@@ -32,6 +32,11 @@ are_weights_used(wts, unsupervised = FALSE)
 \item{info}{A data frame from the \code{info} argument within steps}
 
 \item{.data}{The training data}
+
+\item{call}{The execution environment of a currently
+running function, e.g. \code{caller_env()}. The function will be
+mentioned in error messages as the source of the error. See the
+\code{call} argument of \code{\link[rlang:abort]{abort()}} for more information.}
 
 \item{x}{A numeric vector or a data frame}
 

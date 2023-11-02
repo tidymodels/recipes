@@ -1,4 +1,4 @@
-#' Moving Window Functions
+#' Moving window functions
 #'
 #' `step_window()` creates a *specification* of a recipe step that will create
 #' new columns that are the results of functions that compute statistics across
@@ -44,9 +44,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected), `statistic` (the
-#' summary function name), and `size` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `statistic`, `size` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{statistic}{character, the summary function name}
+#'   \item{size}{integer, window size}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_window"

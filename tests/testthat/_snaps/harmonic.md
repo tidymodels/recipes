@@ -61,7 +61,8 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be date, datetime, or numeric.
+      x All columns selected for the step should be date, datetime, or numeric.
+      * 1 factor variable found: `time_var`
 
 # harmonic cycle_size length
 
@@ -92,8 +93,8 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_sin_1
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_sin_1`
 
 # empty printing
 
@@ -136,8 +137,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_harmonic()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_harmonic()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

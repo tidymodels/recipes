@@ -2,7 +2,7 @@
 % Please edit documentation in R/other.R
 \name{step_other}
 \alias{step_other}
-\title{Collapse Some Categorical Levels}
+\title{Collapse infrequent categorical levels}
 \usage{
 step_other(
   recipe,
@@ -84,9 +84,14 @@ When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) and \code{retained} (the factor
-levels that were not pulled into "other") is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{retained} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{retained}{character, factor levels not pulled into \code{"other"}}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

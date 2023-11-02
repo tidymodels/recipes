@@ -1,4 +1,4 @@
-#' Inverse Transformation
+#' Inverse transformation
 #'
 #' `step_inverse()` creates a *specification* of a recipe step that will inverse
 #' transform the data.
@@ -14,8 +14,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

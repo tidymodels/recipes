@@ -4,7 +4,8 @@
       add_role(rec, sample, new_role = "some other role")
     Condition
       Error in `add_role()`:
-      ! No role currently exists for column(s): 'sample'. Please use `update_role()` instead.
+      ! No role currently exists for column: `sample`.
+      i Please use `update_role()` instead.
 
 # existing role is skipped
 
@@ -12,7 +13,7 @@
       rec <- add_role(rec, sample, new_role = "some other role")
     Condition
       Warning:
-      Role, 'some other role', already exists for column(s): 'sample'. Skipping.
+      Role "some other role" already exists for column: `sample`. Skipping.
 
 # existing role is skipped, but new one is added
 
@@ -20,7 +21,7 @@
       rec <- add_role(rec, sample, dataset, new_role = "some other role")
     Condition
       Warning:
-      Role, 'some other role', already exists for column(s): 'sample'. Skipping.
+      Role "some other role" already exists for column: `sample`. Skipping.
 
 # cannot add roles if the current one is `NA`
 
@@ -28,7 +29,8 @@
       add_role(rec, sample, sulfur)
     Condition
       Error in `add_role()`:
-      ! No role currently exists for column(s): 'sample', 'sulfur'. Please use `update_role()` instead.
+      ! No role currently exists for columns: `sample` and `sulfur`.
+      i Please use `update_role()` instead.
 
 # `update_role()` cannot be ambiguous
 
@@ -43,7 +45,7 @@
     Code
       add_role(rec, sample, new_role = NA_character_)
     Condition
-      Error in `single_chr()`:
+      Error in `add_role()`:
       ! `new_role` must not be `NA`.
 
 ---
@@ -51,7 +53,7 @@
     Code
       update_role(rec, sample, new_role = NA_character_)
     Condition
-      Error in `single_chr()`:
+      Error in `update_role()`:
       ! `new_role` must not be `NA`.
 
 # remove roles
@@ -59,7 +61,7 @@
     Code
       rec <- remove_role(rec, sample, old_role = NA)
     Condition
-      Error in `single_chr()`:
+      Error in `remove_role()`:
       ! `old_role` must be a character vector.
 
 ---
@@ -68,7 +70,7 @@
       rec <- remove_role(rec, sample)
     Condition
       Error in `remove_role()`:
-      ! argument "old_role" is missing, with no default.
+      ! argument `old_role` is missing, with no default.
 
 ---
 
@@ -76,7 +78,7 @@
       remove_role(rec, sample, old_role = "non-existant")
     Condition
       Warning:
-      Column, 'sample', does not have role, 'non-existant'.
+      Column `sample` does not have role "non-existant".
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -139,7 +141,7 @@
     Code
       recipe(x = biomass) %>% add_role(carbon, new_role = letters[1:2])
     Condition
-      Error in `single_chr()`:
+      Error in `add_role()`:
       ! `new_role` must have length 1.
 
 ---
@@ -148,14 +150,14 @@
       recipe(x = biomass) %>% add_role(carbon, new_role = "a", new_type = letters[1:2])
     Condition
       Error in `add_role()`:
-      ! `new_type` must have length 1.
+      ! `new_type` must have length 1, not 2.
 
 ---
 
     Code
       recipe(x = biomass) %>% update_role(carbon, new_role = c("a", "b"))
     Condition
-      Error in `single_chr()`:
+      Error in `update_role()`:
       ! `new_role` must have length 1.
 
 ---
@@ -163,7 +165,7 @@
     Code
       recipe(x = biomass) %>% update_role(carbon, old_role = c("a", "b"))
     Condition
-      Error in `single_chr()`:
+      Error in `update_role()`:
       ! `old_role` must have length 1.
 
 # role functions handle case weights correctly
@@ -173,7 +175,7 @@
     Condition
       Error in `update_role()`:
       ! Roles of "case_weights" cannot be set using `update_role()`.
-      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+      i Please use `?hardhat::frequency_weights()` or `?hardhat::importance_weights()` to specify case weights before the data is passed to `recipe()`.
 
 ---
 
@@ -182,7 +184,7 @@
     Condition
       Error in `add_role()`:
       ! Roles of "case_weights" cannot be set using `add_role()`.
-      i Please use `frequency_weights()` or `importance_weights()` to specify case weights before the data is passed to `recipe()`.
+      i Please use `?hardhat::frequency_weights()` or `?hardhat::importance_weights()` to specify case weights before the data is passed to `recipe()`.
 
 ---
 

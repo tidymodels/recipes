@@ -1,4 +1,4 @@
-#' Time Feature Generator
+#' Time feature generator
 #'
 #' `step_time()` creates a *specification* of a recipe step that will convert
 #' date-time data into one or more factor or numeric variables.
@@ -28,11 +28,16 @@
 #'  See [step_date()] if you want to calculate features that are larger than
 #'  hours.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the feature
-#'  names).
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the feature names}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @examples
 #' library(lubridate)
@@ -165,7 +170,9 @@ get_time_features <- function(dt, feats) {
     decimal_day = function(x) hour(x) + (second(x) + minute(x) * 60) / 3600
   )
 
-  purrr::map_dfc(features[feats], ~.x(dt))
+  res <- purrr::map(features[feats], ~.x(dt))
+  res <- vctrs::vec_cbind(!!!res)
+  res
 }
 
 

@@ -42,8 +42,8 @@
     Condition
       Error in `step_intercept()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  intercept
+      ! Name collision occurred. The following variable names already exist:
+      * `intercept`
 
 # printing
 

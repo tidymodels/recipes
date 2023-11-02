@@ -2,7 +2,7 @@
 % Please edit documentation in R/shuffle.R
 \name{step_shuffle}
 \alias{step_shuffle}
-\title{Shuffle Variables}
+\title{Shuffle variables}
 \usage{
 step_shuffle(
   recipe,
@@ -48,8 +48,13 @@ sequence of any existing operations.
 randomly change the order of rows for selected variables.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the columns that will be permuted) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

@@ -1,4 +1,4 @@
-#' Create Missing Data Column Indicators
+#' Create missing data column indicators
 #'
 #' `step_indicate_na()` creates a *specification* of a recipe step that will
 #' create and append additional binary columns to the data set to indicate which
@@ -13,9 +13,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `model` (the
-#' median value) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

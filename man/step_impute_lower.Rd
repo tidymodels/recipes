@@ -71,9 +71,14 @@ As of \code{recipes} 0.1.16, this function name changed from \code{step_lowerimp
 to \code{step_impute_lower()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} for the
-estimated threshold is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the estimated value}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

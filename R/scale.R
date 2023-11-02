@@ -1,4 +1,4 @@
-#' Scaling Numeric Data
+#' Scaling mumeric data
 #'
 #' `step_scale()` creates a *specification* of a recipe step that will normalize
 #' numeric data to have a standard deviation of one.
@@ -23,11 +23,16 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the
-#'  standard deviations) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the standard deviations}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'

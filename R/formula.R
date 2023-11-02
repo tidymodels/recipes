@@ -1,4 +1,4 @@
-#' Create a Formula from a Prepared Recipe
+#' Create a formula from a prepared recipe
 #'
 #' In case a model formula is required, the formula method can
 #'  be used on a recipe to show what predictors and outcome(s)
@@ -18,11 +18,8 @@
 #' @export
 formula.recipe <- function(x, ...) {
   if (!fully_trained(x)) {
-    rlang::abort(
-      paste0(
-        "The recipe must be prepped before the ",
-        "formula can be computed."
-      )
+    cli::cli_abort(
+      "The recipe must be prepped before the formula can be computed."
     )
   }
 

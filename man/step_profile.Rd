@@ -2,7 +2,7 @@
 % Please edit documentation in R/profile.R
 \name{step_profile}
 \alias{step_profile}
-\title{Create a Profiling Version of a Data Set}
+\title{Create a profiling version of a data set}
 \usage{
 step_profile(
   recipe,
@@ -88,9 +88,14 @@ This step is atypical in that, when baked, the
 based on the fixed and profiled variable's information.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (which is the columns that will be affected) and \code{type} (fixed
-or profiled) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{type} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{type}{character, \code{"fixed"} or \code{"profiled"}}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

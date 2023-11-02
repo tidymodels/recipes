@@ -59,9 +59,14 @@ argument of \code{prep.recipe}. \code{bake.recipe} then applies
 the centering to new data sets using these means.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} (the means)
-is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the means}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

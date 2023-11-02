@@ -1,4 +1,4 @@
-#' Create a Profiling Version of a Data Set
+#' Create a profiling version of a data set
 #'
 #' `step_profile()` creates a *specification* of a recipe step that will fix the
 #' levels of all variables but one and will create a sequence of values for the
@@ -36,11 +36,16 @@
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (which is the columns that will be affected) and `type` (fixed
-#'  or profiled) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `type` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{type}{character, `"fixed"` or `"profiled"`}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

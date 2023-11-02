@@ -2,7 +2,7 @@
 % Please edit documentation in R/num2factor.R
 \name{step_num2factor}
 \alias{step_num2factor}
-\title{Convert Numbers to Factors}
+\title{Convert numbers to factors}
 \usage{
 step_num2factor(
   recipe,
@@ -60,8 +60,14 @@ sequence of any existing operations.
 integers.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{ordered} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{ordered} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{ordered}{logical, were the factor(s) ordered}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

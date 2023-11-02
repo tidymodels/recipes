@@ -60,6 +60,17 @@ points will end up in the last.
 \code{step_cut()} will call \code{base::cut()} in the baking step with
 \code{include.lowest} set to \code{TRUE}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the location of the cuts}
+\item{id}{character, id of this step}
+}
+}
+
 \section{Case weights}{
 
 

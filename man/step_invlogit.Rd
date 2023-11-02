@@ -2,7 +2,7 @@
 % Please edit documentation in R/invlogit.R
 \name{step_invlogit}
 \alias{step_invlogit}
-\title{Inverse Logit Transformation}
+\title{Inverse logit transformation}
 \usage{
 step_invlogit(
   recipe,
@@ -53,8 +53,13 @@ real line and translates them to be between zero and one using
 the function \code{f(x) = 1/(1+exp(-x))}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

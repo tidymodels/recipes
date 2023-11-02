@@ -1,4 +1,4 @@
-#' Zero Variance Filter
+#' Zero variance filter
 #'
 #' `step_zv()` creates a *specification* of a recipe step that will remove
 #' variables that contain only a single value.
@@ -18,8 +18,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be removed) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, names of the columns that will be removed}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

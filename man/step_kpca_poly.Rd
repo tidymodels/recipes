@@ -2,7 +2,7 @@
 % Please edit documentation in R/kpca_poly.R
 \name{step_kpca_poly}
 \alias{step_kpca_poly}
-\title{Polynomial Kernel PCA Signal Extraction}
+\title{Polynomial kernel PCA signal extraction}
 \usage{
 step_kpca_poly(
   recipe,
@@ -109,6 +109,16 @@ This step has 4 tuning parameters:
 \item \code{degree}: Polynomial Degree (type: double, default: 2)
 \item \code{scale_factor}: Scale Factor (type: double, default: 1)
 \item \code{offset}: Offset (type: double, default: 1)
+}
+}
+
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
 }
 }
 

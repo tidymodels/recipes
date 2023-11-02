@@ -70,9 +70,14 @@ Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
-bagged tree object) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{model} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{model}{list, list of fitted \code{lm()} models}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

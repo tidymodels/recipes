@@ -1,4 +1,4 @@
-#' Check for Missing Values
+#' Check for missing values
 #'
 #' `check_missing` creates a *specification* of a recipe
 #'  operation that will check if variables contain missing values.

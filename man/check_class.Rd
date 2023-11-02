@@ -2,7 +2,7 @@
 % Please edit documentation in R/class.R
 \name{check_class}
 \alias{check_class}
-\title{Check Variable Class}
+\title{Check variable class}
 \usage{
 check_class(
   recipe,

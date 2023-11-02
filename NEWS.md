@@ -2,7 +2,23 @@
 
 * Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
 
+* Document that `update_role()`, `add_role()` and `remove_role()` are applied before steps and checks. (#778)
+
+* Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
+
+* Fixed bug where `tidy.step_cut()` always returned zero row tibbles for trained recipes. (#1229)
+
+* It is now documented that `step_spline_b()` can be made periodic. (#1223)
+
+* `prep()` now correctly throws a warning when `training` argument is set when prepping a prepped recipe, telling the user that it will be ignored. (#1244)
+
+* When errors are thrown about wrongly typed input to steps, the offending variables and their types are now listed. (#1217)
+
 # recipes 1.0.8
+
+## Improvements
+
+* Minor speed-up and reduced memory consumption for spline steps that rely on `spline2_apply` (#1200)
 
 ## Bug Fixes
 

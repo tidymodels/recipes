@@ -2,7 +2,7 @@
 % Please edit documentation in R/nnmf.R
 \name{step_nnmf}
 \alias{step_nnmf}
-\title{Non-Negative Matrix Factorization Signal Extraction}
+\title{Non-negative matrix factorization signal extraction}
 \usage{
 step_nnmf(
   recipe,
@@ -99,9 +99,15 @@ sequence of numbers. The variable names are padded with zeros. For example, if
 the names would be \code{NNMF1} - \code{NNMF101}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the selectors or variables selected) and the number of
-components is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{component} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, value of loading}
+\item{component}{character, name of component}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

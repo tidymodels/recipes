@@ -71,7 +71,8 @@
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `fac`
 
 ---
 
@@ -97,8 +98,8 @@
     Condition
       Error in `step_window()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  new_value
+      ! Name collision occurred. The following variable names already exist:
+      * `new_value`
 
 # empty printing
 
@@ -141,8 +142,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_window()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_window()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

@@ -1,4 +1,4 @@
-#' Isomap Embedding
+#' Isomap embedding
 #'
 #' `step_isomap()` creates a *specification* of a recipe step that uses
 #' multidimensional scaling to convert numeric data into one or more new
@@ -45,8 +45,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the selectors or variables selected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`  , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_isomap"

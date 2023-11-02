@@ -92,9 +92,14 @@ As of \code{recipes} 0.1.16, this function name changed from \code{step_rollimpu
 to \code{step_impute_roll()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{window}
-(the window size) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{window} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{window}{integer, window size}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

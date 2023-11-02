@@ -1,4 +1,4 @@
-#' Create Counts of Patterns using Regular Expressions
+#' Create counts of patterns using regular expressions
 #'
 #' `step_count()` creates a *specification* of a recipe step that will create a
 #' variable that counts instances of a regular expression pattern in text.
@@ -26,9 +26,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `result` (the
-#' new column name) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `result` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{result}{character, the new column names}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

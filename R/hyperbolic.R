@@ -1,4 +1,4 @@
-#' Hyperbolic Transformations
+#' Hyperbolic transformations
 #'
 #' `step_hyperbolic()` creates a *specification* of a recipe step that will
 #' transform data using a hyperbolic function.
@@ -15,9 +15,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected), `inverse`, and `func` is
-#' returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `inverse`, `func` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{inverse}{logical, is the inverse function be used}
+#'   \item{func}{character, name of function. `"sinh"`, `"cosh"`, or `"tanh"`}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

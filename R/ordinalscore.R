@@ -1,4 +1,4 @@
-#' Convert Ordinal Factors to Numeric Scores
+#' Convert ordinal factors to numeric scores
 #'
 #' `step_ordinalscore()` creates a *specification* of a recipe step that will
 #' convert ordinal factor variables into numeric scores.
@@ -18,10 +18,15 @@
 #'  a linear scale (1, 2, 3, ... `C`) but custom score
 #'  functions can also be used (see the example below).
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

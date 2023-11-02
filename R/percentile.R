@@ -1,4 +1,4 @@
-#' Percentile Transformation
+#' Percentile transformation
 #'
 #' `step_percentile()` creates a *specification* of a recipe step that replaces
 #' the value of a variable with its percentile from the training set.
@@ -19,6 +19,20 @@
 #' @family individual transformation steps
 #' @export
 #' @rdname step_percentile
+#'
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, `percentile` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the value at the percentile}
+#'   \item{percentile}{numeric, the percentile as a percentage}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -196,7 +210,9 @@ tidy.step_percentile <- function(x, ...) {
         percentile = numeric()
       )
     } else {
-      res <- map_dfr(x$ref_dist, format_pctl, .id = "term")
+      res <- map(x$ref_dist, format_pctl)
+      res <- purrr::list_rbind(res, names_to = "terms")
+
     }
   } else {
     term_names <- sel2char(x$terms)

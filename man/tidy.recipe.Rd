@@ -119,7 +119,7 @@
 \alias{tidy.step_unorder}
 \alias{tidy.step_window}
 \alias{tidy.step_zv}
-\title{Tidy the Result of a Recipe}
+\title{Tidy the result of a recipe}
 \usage{
 \method{tidy}{step_BoxCox}(x, ...)
 
@@ -328,7 +328,7 @@
 component) or \code{"variance"} (how much variance does each component
 account for).}
 
-\item{number}{An integer or \code{NA}. If missing and \code{id} is not provided,
+\item{number}{An integer or \code{NA}. If missing, and \code{id} is not provided,
 the return value is a list of the operations in the recipe.
 If a number is given, a \code{tidy} method is executed for that operation
 in the recipe (if it exists). \code{number} must not be provided if
@@ -342,7 +342,7 @@ if \code{number} is.}
 }
 \value{
 A tibble with columns that vary depending on what
-\code{tidy} method is executed. When \code{number} and \code{id} are \code{NA}, a
+\code{tidy} method is executed. When \code{number}, and \code{id} are \code{NA}, a
 tibble with columns \code{number} (the operation iteration),
 \code{operation} (either "step" or "check"),
 \code{type} (the method, e.g. "nzv", "center"), a logical

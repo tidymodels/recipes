@@ -2,7 +2,7 @@
 % Please edit documentation in R/kpca_rbf.R
 \name{step_kpca_rbf}
 \alias{step_kpca_rbf}
-\title{Radial Basis Function Kernel PCA Signal Extraction}
+\title{Radial basis function kernel PCA signal extraction}
 \usage{
 step_kpca_rbf(
   recipe,
@@ -105,6 +105,16 @@ This step has 2 tuning parameters:
 \itemize{
 \item \code{num_comp}: # Components (type: integer, default: 5)
 \item \code{sigma}: Radial Basis Function sigma (type: double, default: 0.2)
+}
+}
+
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
 }
 }
 

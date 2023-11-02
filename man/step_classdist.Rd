@@ -2,7 +2,7 @@
 % Please edit documentation in R/classdist.R
 \name{step_classdist}
 \alias{step_classdist}
-\title{Distances to Class Centroids}
+\title{Distances to class centroids}
 \usage{
 step_classdist(
   recipe,
@@ -98,9 +98,15 @@ there must be at least as many data points are variables
 overall.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{value} (the centroid
-of the class), and \code{class} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{class} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, location of centroid}
+\item{class}{character, name of the class}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

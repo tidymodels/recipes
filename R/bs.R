@@ -1,4 +1,4 @@
-#' B-Spline Basis Functions
+#' B-spline basis functions
 #'
 #' `step_bs()` creates a *specification* of a recipe step that will create new
 #' columns that are basis expansions of variables using B-splines.
@@ -25,10 +25,15 @@
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_bs_1` and so on.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_bs"

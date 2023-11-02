@@ -1,4 +1,4 @@
-#' Box-Cox Transformation for Non-Negative Data
+#' Box-Cox transformation for non-negative data
 #'
 #' `step_BoxCox()` creates a *specification* of a recipe step that will transform
 #' data using a Box-Cox transformation.
@@ -33,9 +33,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `value` (the
-#' lambda estimate) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the lambda estimate}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

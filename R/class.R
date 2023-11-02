@@ -1,4 +1,4 @@
-#' Check Variable Class
+#' Check variable class
 #'
 #' `check_class` creates a *specification* of a recipe
 #'  check that will check if a variable is of a designated class.

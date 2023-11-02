@@ -50,13 +50,12 @@ to \code{other}.}
 
 \item{other}{A single character value for the "other" category.}
 
-\item{naming}{A function that defines the naming convention for
-new dummy columns. See Details below.}
+\item{naming}{A function that defines the naming convention for new dummy
+columns. See Details below.}
 
-\item{levels}{A list that contains the information needed to
-create dummy variables for each variable contained in
-\code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep]{prep()}}.}
+\item{levels}{A list that contains the information needed to create dummy
+variables for each variable contained in \code{terms}. This is \code{NULL} until the
+step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -81,7 +80,7 @@ model terms for the extracted levels.
 }
 \details{
 \code{step_dummy_extract()} will create a set of integer dummy
-variables from a character variable by extract individual strings
+variables from a character variable by extracting individual strings
 by either splitting or extracting then counting those to create
 count variables.
 
@@ -98,10 +97,16 @@ the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()
 default.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or original variables selected) and \code{columns}
-(the list of corresponding columns) is returned. The \code{columns} is
-is ordered according the frequency in the training data set.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{columns} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{columns}{character, names of resulting columns}
+\item{id}{character, id of this step}
+}
+
+The return value is ordered according to the frequency of \code{columns} entries in the training data set.
 }
 
 \section{Case weights}{

@@ -1,4 +1,4 @@
-#' Data Depths
+#' Data depths
 #'
 #' `step_depth()` creates a *specification* of a recipe step that will convert
 #' numeric data into a measurement of *data depth*. This is done for each value of
@@ -51,10 +51,16 @@
 #'  replace the original values and by default have the prefix `depth_`. The
 #'  naming format can be changed using the `prefix` argument.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `class` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `class` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{class}{character, name of class variable}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

@@ -65,10 +65,15 @@ deviations and means from the data used in the \code{training} argument of
 these estimates.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{value} (the standard
-deviations and means), and \code{statistic} for the type of value is
-returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{statistic}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{statistic}{character, name of statistic (\code{"mean"} or \code{"sd"})}
+\item{value}{numeric, value of the \code{statistic}}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

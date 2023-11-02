@@ -79,9 +79,19 @@ distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haver
 formula is used to calculate the great-circle distance in meters.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-echoing the values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon},
-\code{is_lat_lon}, \code{name}, and \code{id} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{latitude}, \code{longitude}, \code{ref_latitude}, \code{ref_longitude},
+\code{is_lat_lon}, \code{name} , and \code{id}:
+
+\describe{
+\item{latitude}{character, name of latitude variable}
+\item{longitude}{character, name of longitude variable}
+\item{ref_latitude}{numeric, location of latitude reference point}
+\item{ref_longitude}{numeric, location of longitude reference point}
+\item{is_lat_lon}{character, the summary function name}
+\item{name}{character, name of resulting variable}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

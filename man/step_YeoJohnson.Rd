@@ -2,7 +2,7 @@
 % Please edit documentation in R/YeoJohnson.R
 \name{step_YeoJohnson}
 \alias{step_YeoJohnson}
-\title{Yeo-Johnson Transformation}
+\title{Yeo-Johnson transformation}
 \usage{
 step_YeoJohnson(
   recipe,
@@ -78,9 +78,14 @@ closed to the bounds, or if the optimization fails, a value of
 \code{NA} is used and no transformation is applied.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} (the
-lambda estimate) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the lambda estimate}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

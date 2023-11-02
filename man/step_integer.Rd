@@ -73,9 +73,14 @@ Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value}
-(a \emph{list column} with the conversion key) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{list, a \emph{list column} with the conversion key}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

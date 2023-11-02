@@ -1,4 +1,4 @@
-#' Select Terms in a Step Function.
+#' Select terms in a step function.
 #'
 #' @description
 #' `r lifecycle::badge("deprecated")`

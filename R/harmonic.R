@@ -64,6 +64,20 @@
 #' cat(result)
 #' ```
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `starting_val`, `cycle_size`, `frequency`, `key` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{starting_val}{numeric, the starting value}
+#'   \item{cycle_size}{numeric, the cycle size}
+#'   \item{frequency}{numeric, the frequency}
+#'   \item{key}{character, key describing the calculation}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @references Doran, H. E., & Quilkey, J. J. (1972).

@@ -1,4 +1,4 @@
-#' Holiday Feature Generator
+#' Holiday feature generator
 #'
 #' `step_holiday()` creates a *specification* of a recipe step that will convert
 #' date data into one or more binary indicator variables for common holidays.
@@ -17,10 +17,16 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the columns that will be affected) and `holiday` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `holiday` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{holiday}{character, name of holidays}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -136,7 +142,8 @@ bake.step_holiday <- function(object, new_data, ...) {
     )
 
     names(tmp) <- paste(col_name, names(tmp), sep = "_")
-    tmp <- purrr::map_dfc(tmp, vec_cast, integer())
+    tmp <- purrr::map(tmp, vec_cast, integer())
+    tmp <- vctrs::vec_cbind(!!!tmp)
 
     tmp <- check_name(tmp, new_data, object, names(tmp))
     new_data <- vec_cbind(new_data, tmp)

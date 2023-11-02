@@ -1,4 +1,4 @@
-#' Natural Splines
+#' Natural splines
 #'
 #' `step_spline_natural()` creates a *specification* of a recipe step that
 #' creates natural spline features.
@@ -8,7 +8,7 @@
 #'  degrees of freedom for a natural spline increase, more flexible and
 #'  complex curves can be generated. This step requires at least two degrees of
 #'  freedom.
-#' @param options A list of options for [splines2::mSpline()]
+#' @param options A list of options for [splines2::naturalSpline()]
 #'  which should not include `x`, `df`, or `intercept`.
 #' @return An object with classes `"step_spline_natural"` and `"step"`.
 #' @export
@@ -27,8 +27,13 @@
 #'
 #' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_spline_natural"

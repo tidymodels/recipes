@@ -1,4 +1,4 @@
-#' Basis Splines
+#' Basis splines
 #'
 #' `step_spline_b()` creates a *specification* of a recipe step that creates
 #' b-spline features.
@@ -31,14 +31,22 @@
 #' and some outcome. The degrees of freedom determines how many new features
 #' are added to the data.
 #'
+#' Setting `periodic = TRUE` in the list passed to `options`, a periodic version
+#' of the spline is used.
+#'
 #' If the spline expansion fails for a selected column, the step will
 #' remove that column's results (but will retain the original data). Use the
 #' `tidy()` method to determine which columns were used.
 #'
 #' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_spline_b"

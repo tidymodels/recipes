@@ -2,7 +2,7 @@
 % Please edit documentation in R/ica.R
 \name{step_ica}
 \alias{step_ica}
-\title{ICA Signal Extraction}
+\title{ICA signal extraction}
 \usage{
 step_ica(
   recipe,
@@ -103,9 +103,15 @@ sequence of numbers. The variable names are padded with zeros. For example, if
 the names would be \code{IC1} - \code{IC101}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{value} (the loading),
-and \code{component} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{component}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{component}{character, name of component}
+\item{value}{numeric, the loading}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

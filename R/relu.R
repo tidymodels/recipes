@@ -1,4 +1,4 @@
-#' Apply (Smoothed) Rectified Linear Transformation
+#' Apply (smoothed) rectified linear transformation
 #'
 #' `step_relu()` creates a *specification* of a recipe step that will add the
 #' rectified linear or softplus transformations of a variable to the data set.
@@ -18,15 +18,17 @@
 #' @export
 #' @rdname step_relu
 #'
-#' @details The rectified linear transformation is calculated as
-#'   \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
-#'   If `reverse` is true, then the transformation is reflected about the
-#'   y-axis, like so: \deqn{max(0, c - x)} Setting the `smooth` option
-#'   to true will instead calculate a smooth approximation to ReLu
-#'   according to \deqn{ln(1 + e^(x - c)} The `reverse` argument may
-#'   also be applied to this transformation.
+#' @details
 #'
-#' @section Connection to MARS:
+#' The rectified linear transformation is calculated as
+#' \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
+#' If `reverse` is true, then the transformation is reflected about the
+#' y-axis, like so: \deqn{max(0, c - x)} Setting the `smooth` option
+#' to true will instead calculate a smooth approximation to ReLu
+#' according to \deqn{ln(1 + e^(x - c)} The `reverse` argument may
+#' also be applied to this transformation.
+#'
+#' # Connection to MARS:
 #'
 #' The rectified linear transformation is used in Multivariate Adaptive
 #' Regression Splines as a basis function to fit piecewise linear functions to
@@ -36,6 +38,18 @@
 #' MARS when making use of ReLu activations. The hinge function also appears
 #' in the loss function of Support Vector Machines, where it penalizes
 #' residuals only if they are within a certain margin of the decision boundary.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `shift`, `reverse` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{shift}{numeric, location of hinge}
+#'   \item{reverse}{logical, whether left hinge is used}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

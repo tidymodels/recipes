@@ -1,4 +1,4 @@
-#' Create Interaction Variables
+#' Create interaction variables
 #'
 #' `step_interact()` creates a *specification* of a recipe step that will create
 #' new columns that are interaction terms between two or more variables.
@@ -50,8 +50,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the interaction effects) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/relu.R
 \name{step_relu}
 \alias{step_relu}
-\title{Apply (Smoothed) Rectified Linear Transformation}
+\title{Apply (smoothed) rectified linear transformation}
 \usage{
 step_relu(
   recipe,
@@ -73,9 +73,7 @@ to true will instead calculate a smooth approximation to ReLu
 according to \deqn{ln(1 + e^(x - c)} The \code{reverse} argument may
 also be applied to this transformation.
 }
-\section{Connection to MARS}{
-
-
+\section{Connection to MARS:}{
 The rectified linear transformation is used in Multivariate Adaptive
 Regression Splines as a basis function to fit piecewise linear functions to
 data in a strategy similar to that employed in tree based models. The
@@ -84,6 +82,18 @@ neural networks, which could then be seen as a stacked generalization of
 MARS when making use of ReLu activations. The hinge function also appears
 in the loss function of Support Vector Machines, where it penalizes
 residuals only if they are within a certain margin of the decision boundary.
+}
+
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{shift}, \code{reverse} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{shift}{numeric, location of hinge}
+\item{reverse}{logical, whether left hinge is used}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

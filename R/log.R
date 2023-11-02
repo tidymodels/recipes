@@ -1,4 +1,4 @@
-#' Logarithmic Transformation
+#' Logarithmic transformation
 #'
 #' `step_log()` creates a *specification* of a recipe step that will log
 #' transform data.
@@ -18,8 +18,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected) and `base`.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `base` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{base}{numeric, value for the base}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/pls.R
 \name{step_pls}
 \alias{step_pls}
-\title{Partial Least Squares Feature Extraction}
+\title{Partial least squares feature extraction}
 \usage{
 step_pls(
   recipe,
@@ -45,9 +45,8 @@ stay unchanged, regardless of the value of \code{keep_original_cols}.}
 \item{predictor_prop}{The maximum number of original predictors that can have
 non-zero coefficients for each PLS component (via regularization).}
 
-\item{outcome}{When a single outcome is available, character
-string or call to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome
-variable.}
+\item{outcome}{When a single outcome is available, character string or call
+to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome variable.}
 
 \item{options}{A list of options to \code{mixOmics::pls()}, \code{mixOmics::spls()},
 \code{mixOmics::plsda()}, or \code{mixOmics::splsda()} (depending on the data and
@@ -56,8 +55,8 @@ arguments).}
 \item{preserve}{Use \code{keep_original_cols} instead to specify whether the
 original predictor data should be retained along with the new features.}
 
-\item{res}{A list of results are stored here once this preprocessing step
-has been trained by \code{\link[=prep]{prep()}}.}
+\item{res}{A list of results are stored here once this preprocessing step has
+been trained by \code{\link[=prep]{prep()}}.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -86,12 +85,16 @@ sequence of any existing operations.
 numeric data into one or more new dimensions.
 }
 \details{
-PLS is a supervised version of principal component
-analysis that requires the outcome data to compute
-the new features.
+PLS is a supervised version of principal component analysis that requires the
+outcome data to compute the new features.
 
-This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
-step will stop with a note about installing the package.
+This step requires the Bioconductor \pkg{mixOmics} package. If not installed,
+the step will stop with a note about installing the package. Install
+\pkg{mixOmics} using the pak package:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# install.packages("pak")
+pak::pak("mixOmics")
+}\if{html}{\out{</div>}}
 
 The argument \code{num_comp} controls the number of components that will be retained
 (the original variables that are used to derive the components are removed from
@@ -107,17 +110,15 @@ proportion to determine the \code{keepX} parameter in \code{mixOmics::spls()} an
 \code{mixOmics::splsda()}. See the references in \code{mixOmics::spls()} for details.
 }
 \section{Tidying}{
-The \code{\link[=tidy.recipe]{tidy()}} method returns the coefficients that are
-usually defined as
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{component} , and \code{id}:
 
-\deqn{W(P'W)^{-1}}
-
-(See the Wikipedia article below)
-
-When applied to data, these values are usually scaled by a column-specific
-norm. The \code{tidy()} method applies this same norm to the coefficients shown
-above. When you \code{tidy()} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{components}, and \code{values} is returned.
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, coefficients defined as \eqn{W(P'W)^{-1}}}
+\item{size}{character, name of component}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{
@@ -154,7 +155,8 @@ dense_pls <-
 
 sparse_pls <-
   recipe(HHV ~ ., data = biom_tr) \%>\%
-  step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4 / 5)
+  step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3,
+           predictor_prop = 4 / 5)
 
 ## -----------------------------------------------------------------------------
 ## PLS discriminant analysis
@@ -176,7 +178,8 @@ dense_plsda <-
 
 sparse_plsda <-
   recipe(class ~ ., data = cell_tr) \%>\%
-  step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1 / 4)
+  step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5,
+           predictor_prop = 1 / 4)
 \dontshow{\}) # examplesIf}
 }
 \references{

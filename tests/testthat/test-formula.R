@@ -18,7 +18,9 @@ test_that("is trained?", {
   rec4 <- rec3 %>% step_scale(all_numeric())
   expect_false(fully_trained(rec4))
 
-  rec5 <- prep(rec4, training = iris)
+  expect_snapshot(
+    rec5 <- prep(rec4, training = iris)
+  )
   expect_true(fully_trained(rec5))
 })
 

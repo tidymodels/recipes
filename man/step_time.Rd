@@ -2,7 +2,7 @@
 % Please edit documentation in R/time.R
 \name{step_time}
 \alias{step_time}
-\title{Time Feature Generator}
+\title{Time feature generator}
 \usage{
 step_time(
   recipe,
@@ -72,9 +72,14 @@ See \code{\link[=step_date]{step_date()}} if you want to calculate features that
 hours.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} (the feature
-names).
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, the feature names}
+\item{id}{character, id of this step}
+}
 }
 
 \examples{

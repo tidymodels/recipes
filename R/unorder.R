@@ -1,4 +1,4 @@
-#' Convert Ordered Factors to Unordered Factors
+#' Convert ordered factors to unordered factors
 #'
 #' `step_unorder()` creates a *specification* of a recipe step that will turn
 #' ordered factor variables into unordered factor variables.
@@ -12,8 +12,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

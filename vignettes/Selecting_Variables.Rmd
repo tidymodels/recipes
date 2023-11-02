@@ -2,7 +2,7 @@
 title: "Selecting variables"
 output: rmarkdown::html_vignette
 description: |
-  You can select which variables or features  should be used in recipes. This 
+  You can select which variables or features should be used in recipes. This 
   vignette goes over the basics of using selection functions.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
@@ -31,16 +31,16 @@ The three main characteristics of variables that can be queried:
  
 The manual pages for `?selections` and  `?has_role` have details about the available selection methods. 
  
-To illustrate this, the credit data will be used: 
+To illustrate this, the palmer penguins data will be used: 
 
-```{r credit}
+```{r penguins}
 library(recipes)
 library(modeldata)
 
-data("credit_data")
-str(credit_data)
+data("penguins")
+str(penguins)
 
-rec <- recipe(Status ~ Seniority + Time + Age + Records, data = credit_data)
+rec <- recipe(body_mass_g ~ ., data = penguins)
 rec
 ```
 
@@ -50,29 +50,49 @@ Before any steps are used the information on the original variables is:
 summary(rec, original = TRUE)
 ```
 
-We can add a step to compute dummy variables on the non-numeric data after we impute any missing data:
+This shows the types and roles. Each variable can have one or more types, so we can printing them out seperately
+
+```{r var_info_orig_type}
+summary(rec, original = TRUE)$type
+```
+
+Notice that integer variables have roles `"integer"` and `"numeric"`, and the factor variables have roles `"factor"`, `"unordered"`, `"nominal"`. This allows for some neat selections where the selector `all_numeric()` select double and integer variables, and more specific selectors such as `all_integer()` only select integer variables. A full hierarchy of types can be seen in `?has_role`.
+
+We can add a step to normalize numeric data:
 
 ```{r dummy_1}
-dummied <- rec %>% step_dummy(all_nominal())
+dummied <- rec %>% step_normalize(all_numeric())
 ```
 
-This will capture _any_ variables that are either character strings or factors: `Status` and `Records`. However, since `Status` is our outcome, we might want to keep it as a factor so we can _subtract_ that variable out either by name or by role:
+This will capture _any_ variables that are either character integers or doubles: `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm` and `body_mass_g`. However, since `body_mass_g` is our outcome, we might want to keep it as a factor so we can _subtract_ that variable out either by name or by role:
 
 ```{r dummy_2}
-dummied <- rec %>% step_dummy(Records) # or
-dummied <- rec %>% step_dummy(all_nominal(), - Status) # or
-dummied <- rec %>% step_dummy(all_nominal_predictors()) 
+dummied <- rec %>% step_normalize(bill_length_mm, bill_depth_mm, 
+                                  flipper_length_mm) # or
+dummied <- rec %>% step_normalize(all_numeric(), - body_mass_g) # or
+dummied <- rec %>% step_normalize(all_numeric_predictors()) # recommended
 ```
+
+Whenever possible, it is recommended to use the more specific `*_predictors()` variants to avoid accidentally selecting the outcomes.
+
+```{r}
+rec %>%
+  step_dummy(sex) %>%
+  prep() %>%
+  juice()
+```
+
 
 Using the last definition: 
 
 ```{r dummy_3}
-dummied <- prep(dummied, training = credit_data)
-with_dummy <- bake(dummied, new_data = credit_data)
+dummied <- prep(dummied, training = penguins)
+with_dummy <- bake(dummied, new_data = penguins)
 with_dummy
 ```
 
-`Status` is unaffected. 
+`body_mass_g` is unaffected. 
 
-One important aspect about selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, `Records` is a factor variable before the step is executed. Afterwards, `Records` is gone and the binary variable `Records_yes` is in its place. One reason to have general selection routines like `all_predictors()` or `contains()` is to be able to select variables that have not be created yet. 
+One important aspect of selecting variables in steps is that the variable names and types may change as steps are being executed. In the above example, `sex` is a factor variable, if `step_dummy()` was used on it, then `sex` would be removed and the binary variable `sex_male` is in its place. One reason to have general selection routines like `all_predictors()` or `contains()` is to be able to select variables that have not been created yet. 
 
+All steps in the recipes package support empty selections. Meaning that if `all_date_predictors()` is used in a step, and no date variables was found the in the data set, then the step is applied without error. The calculations inside the step will be skipped. This allows for quite relaxed recipes as you don't have to make sure that the variables exists at that point in the recipe.

@@ -1,4 +1,4 @@
-#' Spatial Sign Preprocessing
+#' Spatial sign preprocessing
 #'
 #' `step_spatialsign()` is a *specification* of a recipe step that will convert
 #' numeric data into a projection on to a unit sphere.
@@ -20,8 +20,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @section Case weights:
 #'

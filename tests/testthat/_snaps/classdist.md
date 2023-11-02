@@ -5,8 +5,8 @@
     Condition
       Error in `step_classdist()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  classdist_setosa
+      ! Name collision occurred. The following variable names already exist:
+      * `classdist_setosa`
 
 # case weights
 
@@ -69,8 +69,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_classdist()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_classdist()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

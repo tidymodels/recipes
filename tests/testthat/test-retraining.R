@@ -24,19 +24,23 @@ test_that("training in stages", {
 
   no_sulfur <- center_first_trained %>%
     step_rm(sulfur)
-  no_sulfur_trained <-
-    prep(no_sulfur)
+
+  expect_snapshot(
+    no_sulfur_trained <- prep(no_sulfur)
+  )
 
   scale_last <- no_sulfur_trained %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen)
-  sequentially <- prep(scale_last)
-
+  expect_snapshot(
+    sequentially <- prep(scale_last)
+  )
 
   in_stages <- center_first_trained %>%
     step_rm(sulfur) %>%
     step_scale(carbon, hydrogen, oxygen, nitrogen)
-  in_stages_trained <-
-    prep(in_stages)
+  expect_snapshot(
+    in_stages_trained <- prep(in_stages)
+  )
   in_stages_retrained <-
     prep(in_stages, training = biomass, fresh = TRUE)
 
@@ -69,12 +73,11 @@ test_that("training in stages", {
     summary(in_stages_retrained)
   )
 
-  expect_error(
+  expect_snapshot(
     rec %>%
       step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
       prep(training = biomass) %>%
       step_rm(sulfur) %>%
-      prep(training = biomass),
-    regexp = NA
+      prep(training = biomass)
   )
 })

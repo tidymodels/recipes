@@ -16,9 +16,14 @@
 #'
 #'  # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#'  columns `values` which contains the `rename` expressions as character
-#'  strings (and are not reparsable) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, `rename` expression}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -34,7 +39,7 @@
 #' vars <- c(var1 = "cyl", var2 = "am")
 #' car_rec <-
 #'   recipe(~., data = mtcars) %>%
-#'   step_rename(!!vars)
+#'   step_rename(!!!vars)
 #'
 #' car_rec %>%
 #'   prep() %>%

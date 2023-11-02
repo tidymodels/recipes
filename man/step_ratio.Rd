@@ -3,7 +3,7 @@
 \name{step_ratio}
 \alias{step_ratio}
 \alias{denom_vars}
-\title{Ratio Variable Creation}
+\title{Ratio variable creation}
 \usage{
 step_ratio(
   recipe,
@@ -75,6 +75,15 @@ one or more ratios from selected numeric variables.
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected) and \code{denom} is returned.
+
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{denom} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{denom}{character, name of denominator selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

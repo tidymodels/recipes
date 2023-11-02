@@ -19,6 +19,17 @@
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the location of the cuts}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples
@@ -206,17 +217,14 @@ print.step_cut <-
 #' @export
 tidy.step_cut <- function(x, ...) {
   if (is_trained(x)) {
-    values <- vapply(
-      unname(x$class_list),
-      FUN = function(x) paste0(x, collapse = "-"),
-      FUN.VALUE = character(1)
+    res <- tibble(
+      terms = rep(names(x$breaks), lengths(x$breaks)),
+      value = unlist(x$breaks, use.names = FALSE) %||% double()
     )
-
-    res <- tibble(terms = names(x$breaks), value = values)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, value = na_chr)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
-  res$id <- x$id
+  res$id <- rep(x$id, nrow(res))
   res
 }

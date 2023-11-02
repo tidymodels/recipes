@@ -2,7 +2,7 @@
 % Please edit documentation in R/ns.R
 \name{step_ns}
 \alias{step_ns}
-\title{Natural Spline Basis Functions}
+\title{Natural spline basis functions}
 \usage{
 step_ns(
   recipe,
@@ -72,8 +72,13 @@ from the data and new columns are added. The naming convention
 for the new variables is \code{varname_ns_1} and so on.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

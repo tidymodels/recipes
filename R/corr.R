@@ -1,4 +1,4 @@
-#' High Correlation Filter
+#' High correlation filter
 #'
 #' `step_corr()` creates a *specification* of a recipe step that will
 #' potentially remove variables that have large absolute correlations with other
@@ -39,8 +39,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be removed) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected to be removed}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_corr"
