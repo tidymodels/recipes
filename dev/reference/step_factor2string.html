@@ -136,10 +136,12 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>prep</code> has an option <code>strings_as_factors</code> that defaults to <code>TRUE</code>.
-If this step is used with the default option, the string(s() produced by
-this step will be converted to factors after all of the steps have been
-prepped.</p>
+    <p><code><a href="prep.html">prep()</a></code> has an option <code>strings_as_factors</code> that defaults to <code>TRUE</code>. If this
+step is used with the default option, the strings produced by this step will
+not be converted to factors.</p>
+<p>Remember that categorical data that will be directly passed to a model should
+be encoded as factors. This step is helpful for ancillary columns (such as
+identifiers) that will not be computed on in the model.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
