@@ -14,6 +14,10 @@
 #' step is used with the default option, the strings produced by this step will
 #' not be converted to factors.
 #'
+#' Remember that categorical data that will be directly passed to a model should
+#' be encoded as factors. This step is helpful for ancillary columns (such as
+#' identifiers) that will not be computed on in the model.
+#'
 #' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
