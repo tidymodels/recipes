@@ -66,23 +66,39 @@ step_count <- function(recipe,
                        keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("count")) {
-  if (!is.character(pattern)) {
-    rlang::abort("`pattern` should be a character string")
-  }
-  if (length(pattern) != 1) {
-    rlang::abort("`pattern` should be a single pattern")
+  if (length(pattern) != 1 || !is.character(pattern)) {
+    msg <- c(x = "{.arg pattern} should be a single character string.")
+
+    if (length(pattern) != 1) {
+      msg <- c(
+        msg,
+        i = "{length(pattern)} elements were supplied."
+      )
+    }
+    if (!is.character(pattern)) {
+      msg <- c(
+        msg,
+        i = "It was a {.obj_type_friendly {pattern}}."
+      )
+    }
+    cli::cli_abort(msg)
   }
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    rlang::abort(paste0(
-      "Valid options are: ",
-      paste0(valid_args, collapse = ", ")
+    cli::cli_abort(c(
+      "x" = "The following elements of {.arg options} are not allowed:",
+      "*" = "{.and {.val {setdiff(names(options), valid_args)}}}.",
+      "i" = "Valid options are: {.and {.val {valid_args}}}."
     ))
   }
 
   terms <- enquos(...)
   if (length(terms) > 1) {
-    rlang::abort("For this step, only a single selector can be used.")
+    cli::cli_abort(c(
+      x = "For this step, only a single selector can be used.",
+      i = "The following {length(col_name)} selectors were used:\\
+          {.and {.var {as.character(terms)}}}."
+    ))
   }
 
   add_step(
@@ -128,7 +144,11 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
 
   if (length(col_name) > 1) {
-    rlang::abort("The selector should select at most a single variable")
+    cli::cli_abort(c(
+      x = "The selector should select at most a single variable.",
+      i = "The following {length(col_name)} were selected:\\
+          {.and {.var {col_name}}}."
+    ))
   }
 
   step_count_new(

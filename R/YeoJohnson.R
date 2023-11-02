@@ -238,8 +238,11 @@ estimate_yj <- function(dat,
     if (na_rm) {
       dat <- dat[-na_rows]
     } else {
-      rlang::abort(
-        "Missing values are not allowed for the YJ transformation. See `na_rm` option",
+      cli::cli_abort(
+        c(
+          x = "Missing values are not allowed for the YJ transformation.",
+          i = "See {.arg na_rm} option."
+        ),
         call = call
       )
     }
