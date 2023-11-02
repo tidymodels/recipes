@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
+
 * Document that `update_role()`, `add_role()` and `remove_role()` are applied before steps and checks. (#778)
 
 * Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
