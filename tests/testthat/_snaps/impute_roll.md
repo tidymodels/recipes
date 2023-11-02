@@ -6,7 +6,8 @@
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double.
+      x All columns selected for the step should be double.
+      * 1 date variable found: `day`
 
 ---
 
@@ -25,7 +26,8 @@
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double.
+      x All columns selected for the step should be double.
+      * 1 integer variable found: `x4`
 
 # Deprecation warning
 

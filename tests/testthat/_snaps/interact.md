@@ -5,8 +5,8 @@
     Condition
       Error in `step_interact()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  x1ax2
+      ! Name collision occurred. The following variable names already exist:
+      * `x1ax2`
 
 # bake method errors when needed non-standard role columns are missing
 
@@ -57,8 +57,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_interact()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_interact()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

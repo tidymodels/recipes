@@ -140,6 +140,23 @@ test_that("missing factors", {
   expect_snapshot(check_nominal_type(te, rec$orig_lvls))
 })
 
+test_that("missing single factor", {
+  tr <-
+    Sacramento_fac %>%
+    select(city) %>%
+    slice(1:500)
+  te <-
+    Sacramento_chr %>%
+      select(city) %>%
+    slice(501:932)
+
+  rec <-
+    recipe( ~ ., data = tr) %>%
+    prep(training = tr)
+
+  expect_snapshot(check_nominal_type(te, rec$orig_lvls))
+})
+
 test_that("missing factors with skipping", {
   tr <-
     Sacramento_fac %>%

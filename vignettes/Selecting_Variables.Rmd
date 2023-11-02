@@ -76,9 +76,9 @@ dummied <- rec %>% step_normalize(all_numeric_predictors()) # recommended
 Whenever possible, it is recommended to use the more specific `*_predictors()` variants to avoid accidentally selecting the outcomes.
 
 ```{r}
-rec |>
-  step_dummy(sex) |>
-  prep() |>
+rec %>%
+  step_dummy(sex) %>%
+  prep() %>%
   juice()
 ```
 

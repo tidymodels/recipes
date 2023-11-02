@@ -5,8 +5,8 @@
     Condition
       Error in `step_bs()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_bs_1
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_bs_1`
 
 # empty printing
 
@@ -49,8 +49,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_bs()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_bs()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

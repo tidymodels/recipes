@@ -12,7 +12,10 @@ recipe <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...) {
-  rlang::abort("`x` should be a data frame, matrix, or tibble")
+  cli::cli_abort(c(
+    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
+    i = "{.arg x} is a {.obj_type_friendly {x}}."
+  ))
 }
 
 #' @rdname recipe
@@ -100,19 +103,13 @@ recipe.data.frame <-
            roles = NULL) {
     if (!is.null(formula)) {
       if (!is.null(vars)) {
-        rlang::abort(
-          paste0(
-            "This `vars` specification will be ignored ",
-            "when a formula is used"
-          )
+        cli::cli_abort(
+          "The {.arg vars} argument will be ignored when a formula is used."
         )
       }
       if (!is.null(roles)) {
-        rlang::abort(
-          paste0(
-            "This `roles` specification will be ignored ",
-            "when a formula is used"
-          )
+        cli::cli_abort(
+          "The {.arg roles} argument will be ignored when a formula is used."
         )
       }
 
@@ -129,10 +126,22 @@ recipe.data.frame <-
     }
 
     if (any(table(vars) > 1)) {
-      rlang::abort("`vars` should have unique members")
+      offenders <- vctrs::vec_count(vars)
+      offenders <- offenders$key[offenders$count != 1]
+
+      cli::cli_abort(c(
+        x = "{.arg vars} must have unique values.",
+        i = "The following values were duplicated:",
+        "*" = "{.and {offenders}}"
+      ))
     }
     if (any(!(vars %in% colnames(x)))) {
-      rlang::abort("1+ elements of `vars` are not in `x`")
+      offenders <- vars[!(vars %in% colnames(x))]
+
+      cli::cli_abort(c(
+        x = "The following elements of {.arg vars} are not found in {.arg x}:",
+        "*" = "{.and {offenders}}"
+      ))
     }
 
     x <- x[, vars]
@@ -142,12 +151,11 @@ recipe.data.frame <-
     ## Check and add roles when available
     if (!is.null(roles)) {
       if (length(roles) != length(vars)) {
-        rlang::abort(
-          paste0(
-            "The number of roles should be the same as the number of ",
-            "variables"
-          )
-        )
+        cli::cli_abort(c(
+          x =  "{.arg vars} and {.arg roles} must have same length.",
+          "*" = "{.arg vars} has length {length(vars)}",
+          "*" = "{.arg roles} has length {length(roles)}"
+        ))
       }
       var_info$role <- roles
     } else {
@@ -162,7 +170,7 @@ recipe.data.frame <-
     case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
     case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
     if (case_weights_n > 1) {
-      too_many_case_weights(case_weights_n)
+      too_many_case_weights(names(case_weights_cols)[case_weights_cols])
     }
     var_info$role[case_weights_cols] <- "case_weights"
 
@@ -188,7 +196,10 @@ recipe.formula <- function(formula, data, ...) {
   # check for minus:
   f_funcs <- fun_calls(formula)
   if (any(f_funcs == "-")) {
-    rlang::abort("`-` is not allowed in a recipe formula. Use `step_rm()` instead.")
+    cli::cli_abort(c(
+      "x" = "{.code -} is not allowed in a recipe formula.",
+      "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
+    ))
   }
 
   if (rlang::is_missing(data)) {
@@ -213,7 +224,7 @@ recipe.matrix <- function(x, ...) {
   recipe.data.frame(x, ...)
 }
 
-form2args <- function(formula, data, ...) {
+form2args <- function(formula, data, ..., call = rlang::caller_env()) {
   if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
   }
@@ -248,7 +259,10 @@ form2args <- function(formula, data, ...) {
   case_weights_cols <- map_lgl(data, hardhat::is_case_weights)
   case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
   if (case_weights_n > 1) {
-    too_many_case_weights(case_weights_n)
+    too_many_case_weights(
+      names(case_weights_cols)[case_weights_cols],
+      call = call
+    )
   }
   roles[case_weights_cols] <- "case_weights"
 
@@ -262,9 +276,12 @@ inline_check <- function(x) {
   funs <- funs[!(funs %in% c("~", "+", "-"))]
 
   if (length(funs) > 0) {
-    rlang::abort(paste0(
-      "No in-line functions should be used here; ",
-      "use steps to define baking actions."
+    cli::cli_abort(c(
+      x = "No in-line functions should be used here.",
+      i = "{cli::qty(length(funs))}The following function{?s} {?was/were} \\
+          found:",
+      "*" = "{.and {.code {funs}}}",
+      i = "Use steps to do transformations instead."
     ))
   }
 
@@ -379,12 +396,9 @@ prep.recipe <-
     # use `retain = TRUE` so issue a warning if this is not the case
     skippers <- map_lgl(x$steps, is_skipable)
     if (any(skippers) & !retain) {
-      rlang::warn(
-        paste0(
-          "Since some operations have `skip = TRUE`, using ",
-          "`retain = TRUE` will allow those steps results to ",
-          "be accessible."
-        )
+      cli::cli_warn(
+        "Since some operations have {.code skip = TRUE}, using \\
+        {.code retain = TRUE} will allow those step's results to be accessible."
       )
     }
 
@@ -411,20 +425,40 @@ prep.recipe <-
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
 
+    get_needs_tuning <- function(x) {
+      res <- map_lgl(x, is_tune)
+      res <- names(res)[res]
+      res <- vctrs::vec_recycle_common(step = class(x)[[1L]], arg = res)
+      tibble::new_tibble(res)
+    }
+
+    needs_tuning <- purrr::map(x$steps, get_needs_tuning)
+    needs_tuning <- purrr::list_rbind(needs_tuning)
+
+    if (nrow(needs_tuning) > 0) {
+      args <- vctrs::vec_split(needs_tuning$arg, needs_tuning$step)
+      msg <- c(
+        x = "You cannot {.fun prep} a tunable recipe.",
+        i = "{cli::qty(nrow(args))}The following step{?s} \\
+             {?no/has/have} {.fun tune}:"
+      )
+
+      step_msg <- paste0(
+        "{needs_tuning$step[",
+        seq_len(nrow(needs_tuning)),
+        "]}: {.and {.arg {needs_tuning$arg[",
+        seq_len(nrow(needs_tuning)),
+        "]}}}"
+      )
+      names(step_msg) <- rep("*", nrow(needs_tuning))
+
+      cli::cli_abort(c(msg, step_msg))
+    }
+
     for (i in seq(along.with = x$steps)) {
-      needs_tuning <- map_lgl(x$steps[[i]], is_tune)
-      if (any(needs_tuning)) {
-        arg <- names(needs_tuning)[needs_tuning]
-        arg <- paste0("'", arg, "'", collapse = ", ")
-        msg <-
-          paste0(
-            "You cannot `prep()` a tuneable recipe. Argument(s) with `tune()`: ",
-            arg,
-            ". Do you want to use a tuning function such as `tune_grid()`?"
-          )
-        rlang::abort(msg)
-      }
-      note <- paste("oper", i, gsub("_", " ", class(x$steps[[i]])[1]))
+      step_name <- class(x$steps[[i]])[[1L]]
+
+      note <- paste("oper", i, gsub("_", " ", step_name))
       if (!x$steps[[i]]$trained | fresh) {
         if (verbose) {
           cat(note, "[training]", "\n")
@@ -439,17 +473,20 @@ prep.recipe <-
             training = training,
             info = x$term_info
           ),
-          step_name = class(x$steps[[i]])[[1L]]
+          step_name = step_name
         )
         training <- recipes_error_context(
           bake(x$steps[[i]], new_data = training),
-          step_name = class(x$steps[[i]])[[1L]]
+          step_name = step_name
         )
         if (!is_tibble(training)) {
-          abort("bake() methods should always return tibbles")
+          cli::cli_abort(c(
+            "x" = "{.fun bake} methods should always return tibbles.",
+            "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
+                   {.obj_type_friendly {training}}."
+          ))
         }
-        x$term_info <-
-          merge_term_info(get_types(training), x$term_info)
+        x$term_info <- merge_term_info(get_types(training), x$term_info)
 
         # Update the roles and the term source
         if (!is.na(x$steps[[i]]$role)) {
@@ -590,7 +627,10 @@ bake <- function(object, ...) {
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
-    rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
+    cli::cli_abort(
+      "{.arg new_data} must be either a data frame or NULL. \\
+      No value is not allowed."
+    )
   }
 
   if (is.null(new_data)) {
@@ -598,16 +638,17 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep`.")
+    cli::cli_abort(c(
+      "x" = "At least one step has not been trained.",
+      "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
+    ))
   }
 
   if (!any(composition == formats)) {
-    rlang::abort(
-      paste0(
-        "`composition` should be one of: ",
-        paste0("'", formats, "'", collapse = ",")
-      )
-    )
+    cli::cli_abort(c(
+      "x" = "{.arg composition} cannot be {.val {composition}}.",
+      "i" = "Allowed values are {.or {formats}}."
+    ))
   }
 
   terms <- quos(...)
@@ -618,9 +659,11 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   # In case someone used the deprecated `newdata`:
   if (is.null(new_data) || is.null(ncol(new_data))) {
     if (any(names(terms) == "newdata")) {
-      rlang::abort("Please use `new_data` instead of `newdata` with `bake`.")
+      cli::cli_abort(
+        "Please use {.arg new_data} instead of {.arg newdata} with {.fun bake}."
+      )
     } else {
-      rlang::abort("Please pass a data set to `new_data`.")
+      cli::cli_abort("Please pass a data set to {.arg new_data}.")
     }
   }
 
@@ -651,7 +694,13 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     new_data <- bake(step, new_data = new_data)
 
     if (!is_tibble(new_data)) {
-      abort("bake() methods should always return tibbles")
+      step_name <- attr(step, "class")[1]
+
+      cli::cli_abort(c(
+        "x" = "{.fun bake} methods should always return tibbles.",
+        "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
+                   {.obj_type_friendly {new_data}}."
+      ))
     }
   }
 
@@ -666,22 +715,35 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
                                    check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
-  ## The levels are not null when no nominal data are present or
-  ## if strings_as_factors = FALSE in `prep`
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[out_names]
-    check_values <-
-      vapply(var_levels, function(x) {
-        (!all(is.na(x)))
-      }, c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0) {
-      new_data <- strings2factors(new_data, var_levels)
-    }
-  }
+  new_data <- turn_strings_to_factors(object, new_data)
 
   new_data <- hardhat::recompose(new_data, composition = composition)
+
+  new_data
+}
+
+turn_strings_to_factors <- function(object, new_data) {
+  ## The levels are not null when no nominal data are present or
+  ## if strings_as_factors = FALSE in `prep`
+  if (is.null(object$levels)) {
+    return(new_data)
+  }
+
+  var_levels <- object$levels
+  string_names <- intersect(names(var_levels), names(new_data))
+  var_levels <- var_levels[string_names]
+
+  not_all_na <- purrr::map_lgl(var_levels, function(x) !all(is.na(x)))
+  if (is.null(object$template)) {
+    output_factor <- TRUE
+  } else {
+    output_factor <- purrr::map_lgl(object$template[string_names], is.factor)
+  }
+  var_levels <- var_levels[not_all_na & output_factor]
+
+  if (length(var_levels) > 0) {
+    new_data <- strings2factors(new_data, var_levels)
+  }
 
   new_data
 }
@@ -833,20 +895,23 @@ bake_req_tibble <- function(x) {
 #' @seealso [recipe()] [prep()] [bake()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep()`.")
-  }
-
-  if (!isTRUE(object$retained)) {
-    rlang::abort(paste0(
-      "Use `retain = TRUE` in `prep()` to be able ",
-      "to extract the training set"
+    cli::cli_abort(c(
+      "x" = "At least one step has not been trained.",
+      "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
     ))
   }
 
+  if (!isTRUE(object$retained)) {
+    cli::cli_abort(
+      "Use {.code retain = TRUE} in {.fun prep} to be able to extract the \\
+      training set."
+    )
+  }
+
   if (!any(composition == formats)) {
-    rlang::abort(paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
+    cli::cli_abort(c(
+      "x" = "{.arg composition} cannot be {.val {composition}}.",
+      "i" = "Allowed values are {.or {.val {formats}}}."
     ))
   }
 
@@ -861,19 +926,7 @@ juice <- function(object, ..., composition = "tibble") {
                                    check_case_weights = FALSE)
   new_data <- new_data[, out_names]
 
-  ## Since most models require factors, do the conversion from character
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[out_names]
-    check_values <-
-      vapply(var_levels, function(x) {
-        (!all(is.na(x)))
-      }, c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0) {
-      new_data <- strings2factors(new_data, var_levels)
-    }
-  }
+  new_data <- turn_strings_to_factors(object, new_data)
 
   new_data <- hardhat::recompose(new_data, composition = composition)
 

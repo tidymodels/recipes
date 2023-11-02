@@ -92,7 +92,7 @@ test_that("check_name() is used", {
   dat <- examples
   dat$Dan_year <- dat$Dan
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_date(Dan)
 
   expect_snapshot(

@@ -14,8 +14,8 @@
     Condition
       Error in `step_dummy_extract()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Species_setosa
+      ! Name collision occurred. The following variable names already exist:
+      * `Species_setosa`
 
 # case weights
 
@@ -96,8 +96,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_dummy_extract()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_dummy_extract()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

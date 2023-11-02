@@ -187,6 +187,14 @@ test_that("tunable arguments at prep-time", {
       step_ns(all_predictors(), deg_free = .tune()) %>%
       prep()
   )
+
+  expect_snapshot(error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_pca(all_predictors(), threshold = .tune()) %>%
+      step_kpca(all_predictors(), num_comp = .tune()) %>%
+      step_bs(all_predictors(), deg_free = .tune()) %>%
+      prep()
+  )
 })
 
 test_that("logging", {

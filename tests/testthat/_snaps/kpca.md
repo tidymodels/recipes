@@ -5,8 +5,8 @@
     Condition
       Error in `step_kpca()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  kPC1
+      ! Name collision occurred. The following variable names already exist:
+      * `kPC1`
 
 # No kPCA comps
 
@@ -74,8 +74,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_kpca()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_kpca()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

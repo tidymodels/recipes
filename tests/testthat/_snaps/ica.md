@@ -25,8 +25,8 @@
     Condition
       Error in `step_ica()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  IC1
+      ! Name collision occurred. The following variable names already exist:
+      * `IC1`
 
 # empty printing
 
@@ -69,8 +69,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_ica()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_ica()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

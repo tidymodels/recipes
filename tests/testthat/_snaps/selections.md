@@ -14,5 +14,5 @@
       recipes_eval_select(data = Sacramento, info = info_sac)
     Condition
       Error in `recipes_eval_select()`:
-      ! argument "quos" is missing, with no default.
+      ! Argument `quos` is missing, with no default.
 

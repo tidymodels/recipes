@@ -315,7 +315,7 @@ test_that("check_name() is used", {
   dat <- iris
   dat$Species_versicolor <- dat$Species
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_dummy(Species)
 
   expect_snapshot(

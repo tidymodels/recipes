@@ -5,7 +5,8 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be factor, or ordered.
+      x All columns selected for the step should be factor or ordered.
+      * 2 string variables found: `city` and `zip`
 
 # check_type() is used
 
@@ -15,7 +16,8 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be factor, or ordered.
+      x All columns selected for the step should be factor or ordered.
+      * 1 integer variable found: `price`
 
 # tests for NA values in factor
 
@@ -115,8 +117,8 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Species_versicolor
+      ! Name collision occurred. The following variable names already exist:
+      * `Species_versicolor`
 
 # empty printing
 
@@ -159,8 +161,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_dummy()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_dummy()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

@@ -5,8 +5,8 @@
     Condition
       Error in `step_holiday()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  day_Easter
+      ! Name collision occurred. The following variable names already exist:
+      * `day_Easter`
 
 # empty printing
 
@@ -49,8 +49,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_holiday()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_holiday()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

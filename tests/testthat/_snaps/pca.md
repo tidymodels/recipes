@@ -53,8 +53,8 @@
     Condition
       Error in `step_pca()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  PC1
+      ! Name collision occurred. The following variable names already exist:
+      * `PC1`
 
 # case weights
 
@@ -137,8 +137,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_pca()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_pca()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

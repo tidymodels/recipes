@@ -4,7 +4,7 @@
       prepped_2 <- prep(rec_1, training = iris, retain = FALSE)
     Condition
       Warning:
-      Since some operations have `skip = TRUE`, using `retain = TRUE` will allow those steps results to be accessible.
+      Since some operations have `skip = TRUE`, using `retain = TRUE` will allow those step's results to be accessible.
 
 ---
 
@@ -12,7 +12,7 @@
       prep(rec_1, training = iris, retain = FALSE)
     Condition
       Warning:
-      Since some operations have `skip = TRUE`, using `retain = TRUE` will allow those steps results to be accessible.
+      Since some operations have `skip = TRUE`, using `retain = TRUE` will allow those step's results to be accessible.
     Message
       
       -- Recipe ----------------------------------------------------------------------
