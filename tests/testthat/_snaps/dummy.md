@@ -1,23 +1,22 @@
-# dummy variables with non-factor inputs
+# dummy variables errors with character inputs
 
     Code
       prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
     Condition
-      Warning:
-      The following variables are not factor vectors and will be ignored: `city`, `zip`
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! The `terms` argument in `step_dummy` did not select any factor columns.
+      x All columns selected for the step should be factor or ordered.
+      * 2 string variables found: `city` and `zip`
 
----
+# check_type() is used
 
     Code
-      recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>% step_dummy(city, zip,
-        price) %>% prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
+      recipe(sqft ~ zip + price + city, data = sacr) %>% step_dummy(city, zip, price) %>%
+        prep()
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      x All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be factor or ordered.
       * 1 integer variable found: `price`
 
 # tests for NA values in factor

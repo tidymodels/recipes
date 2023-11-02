@@ -41,7 +41,7 @@
 #'   \item{columns}{character, names of resulting columns}
 #'   \item{id}{character, id of this step}
 #' }
-#' 
+#'
 #' The return value is ordered according to the frequency of `columns` entries in the training data set.
 #'
 #' @template case-weights-unsupervised
@@ -168,8 +168,6 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   }
 
   if (length(col_names) > 0) {
-    col_names <- check_factor_vars(training, col_names, "step_dummy_extract")
-
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (col_name in col_names) {
