@@ -6,6 +6,8 @@
 
 * Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
 
+* `step_dummy()` will now error if passed character instead of loudly ignoring them. Only applicable when setting `strings_as_factors = FALSE`. (#1233)
+
 * Fixed bug where `tidy.step_cut()` always returned zero row tibbles for trained recipes. (#1229)
 
 * It is now documented that `step_spline_b()` can be made periodic. (#1223)
