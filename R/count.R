@@ -96,7 +96,7 @@ step_count <- function(recipe,
   if (length(terms) > 1) {
     cli::cli_abort(c(
       x = "For this step, only a single selector can be used.",
-      i = "The following {length(col_name)} selectors were used:\\
+      i = "The following {length(terms)} selectors were used:\\
           {.and {.var {as.character(terms)}}}."
     ))
   }

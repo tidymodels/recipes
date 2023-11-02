@@ -108,10 +108,12 @@ step_dummy_extract <-
            id = rand_id("dummy_extract")) {
     if (!is_tune(threshold)) {
       if (threshold < 0) {
-        rlang::abort("`threshold` should not be negative.")
+        cli::cli_abort("{.arg threshold} should not be negative.")
       }
       if (threshold >= 1 && !is_integerish(threshold)) {
-        rlang::abort("If `threshold` is greater than one it should be an integer.")
+        cli::cli_abort(
+          "If {.arg threshold} is greater than one it should be an integer."
+        )
       }
     }
 
@@ -272,7 +274,7 @@ dummy_extract <- function(x, sep = NULL, pattern = NULL, call = caller_env()) {
     matches <- gregexpr(pattern = pattern, text = x, perl = TRUE)
     return(regmatches(x, m = matches))
   }
-  rlang::abort("`sep` or `pattern` must be specified.", call = call)
+  cli::cli_abort("{.arg sep} or {.arg pattern} must be specified.", call = call)
 }
 
 list_to_dummies <- function(x, dict, other = "other") {

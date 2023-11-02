@@ -83,10 +83,10 @@ step_dummy_multi_choice <- function(recipe,
                                     id = rand_id("dummy_multi_choice")) {
   if (!is_tune(threshold)) {
     if (threshold < 0) {
-      rlang::abort("`threshold` should be non-negative.")
+      cli::cli_abort("{.arg threshold} should be non-negative.")
     }
     if (threshold > 1) {
-      rlang::abort("`threshold` should be less then or equal to 1.")
+      cli::cli_abort("{.arg threshold} should be less then or equal to 1.")
     }
   }
 
@@ -157,16 +157,19 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   )
 }
 
-multi_dummy_check_type <- function(dat) {
+multi_dummy_check_type <- function(dat, call = rlang::caller_env()) {
   is_good <- function(x) {
     is.factor(x) | is.character(x) | all(is.na(x))
   }
 
   all_good <- vapply(dat, is_good, logical(1))
   if (!all(all_good)) {
-    rlang::abort(
-      "All columns selected for the step should be factor, character, or NA"
-    )
+    offenders <- names(dat)[!all_good]
+    cli::cli_abort(c(
+      "x" = "All columns selected for the step should be \\
+            factor, character, or NA. The following were not:",
+      "*" = "{.and {.var {offenders}}}."
+    ), call = call)
   }
   invisible(all_good)
 }
