@@ -157,7 +157,7 @@ bake_check_class_core <- function(x,
   missing <- setdiff(class_nm, classes)
   if (length(missing) > 0) {
     cli::cli_abort(
-      "{.var {var_nm}} should have the class{?es} {.and {.val {class_nm}}} but
+      "{.var {var_nm}} should have the class{?es} {.cls {class_nm}}} but
       only has the class{?es} {.and {.val {classes}}}."
     )
   }

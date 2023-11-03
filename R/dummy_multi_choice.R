@@ -168,7 +168,7 @@ multi_dummy_check_type <- function(dat, call = rlang::caller_env()) {
     cli::cli_abort(c(
       "x" = "All columns selected for the step should be \\
             factor, character, or NA. The following were not:",
-      "*" = "{.and {.var {offenders}}}."
+      "*" = "{.var {offenders}}."
     ), call = call)
   }
   invisible(all_good)

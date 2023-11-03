@@ -72,8 +72,8 @@ step_count <- function(recipe,
   if (any(!(names(options) %in% valid_args))) {
     cli::cli_abort(c(
       "x" = "The following elements of {.arg options} are not allowed:",
-      "*" = "{.and {.val {setdiff(names(options), valid_args)}}}.",
-      "i" = "Valid options are: {.and {.val {valid_args}}}."
+      "*" = "{.val {setdiff(names(options), valid_args)}}.",
+      "i" = "Valid options are: {.val {valid_args}}."
     ))
   }
 
@@ -81,8 +81,8 @@ step_count <- function(recipe,
   if (length(terms) > 1) {
     cli::cli_abort(c(
       x = "For this step, only a single selector can be used.",
-      i = "The following {length(terms)} selectors were used:\\
-          {.and {.var {as.character(terms)}}}."
+      i = "The following {length(terms)} selectors were used: \\
+          {.var {as.character(terms)}}."
     ))
   }
 
@@ -131,7 +131,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   if (length(col_name) > 1) {
     cli::cli_abort(c(
       x = "The selector should select at most a single variable.",
-      i = "The following {length(col_name)} were selected:\\
+      i = "The following {length(col_name)} were selected: \\
           {.and {.var {col_name}}}."
     ))
   }

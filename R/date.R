@@ -112,7 +112,7 @@ step_date <-
         cli::cli_abort(c(
           x = "Possible values of {.arg features} should include:",
           "*" = "{.or {.val {feat}}}.",
-          i = "Invalid values were: {.and {.val {offenders}}}."
+          i = "Invalid values were: {.val {offenders}}."
         ))
       }
     }
