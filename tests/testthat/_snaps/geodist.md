@@ -5,7 +5,7 @@
         log = FALSE, ref_lat = 100, ref_lon = 100, is_lat_lon = TRUE) %>% prep()
     Condition
       Error in `step_geodist()`:
-      ! `ref_lat` should be between -90 and 90
+      ! `ref_lat` must be a number between -90 and 90, not the number 100.
 
 ---
 
@@ -14,7 +14,7 @@
         log = FALSE, ref_lat = 0, ref_lon = 190, is_lat_lon = TRUE) %>% prep()
     Condition
       Error in `step_geodist()`:
-      ! `ref_lon` should be between -180 and 180
+      ! `ref_lon` must be a number between -180 and 180, not the number 190.
 
 ---
 
@@ -23,7 +23,7 @@
         log = FALSE, ref_lat = -100, ref_lon = 0, is_lat_lon = TRUE) %>% prep()
     Condition
       Error in `step_geodist()`:
-      ! `ref_lat` should be between -90 and 90
+      ! `ref_lat` must be a number between -90 and 90, not the number -100.
 
 ---
 
@@ -32,7 +32,7 @@
         log = FALSE, ref_lat = 0, ref_lon = -190, is_lat_lon = TRUE) %>% prep()
     Condition
       Error in `step_geodist()`:
-      ! `ref_lon` should be between -180 and 180
+      ! `ref_lon` must be a number between -180 and 180, not the number -190.
 
 ---
 
@@ -43,7 +43,7 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `bake()`:
-      ! All `lat` values should be between -90 and 90
+      ! All `lat` values should be between -90 and 90.
 
 ---
 
@@ -54,7 +54,7 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `bake()`:
-      ! All `lon` values should be between -180 and 180
+      ! All `lon` values should be between -180 and 180.
 
 ---
 
@@ -65,7 +65,7 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `bake()`:
-      ! All `lat` values should be between -90 and 90
+      ! All `lat` values should be between -90 and 90.
 
 ---
 
@@ -76,7 +76,7 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `bake()`:
-      ! All `lon` values should be between -180 and 180
+      ! All `lon` values should be between -180 and 180.
 
 # check_name() is used
 
@@ -96,7 +96,8 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `prep()`:
-      ! `lat` should resolve to a single column name.
+      x The `lat` selector should select at most a single variable.
+      i The following 2 were selected:`x` and `x1`.
 
 ---
 
@@ -106,7 +107,8 @@
     Condition
       Error in `step_geodist()`:
       Caused by error in `prep()`:
-      ! `lon` should resolve to a single column name.
+      x The `lon` selector should select at most a single variable.
+      i The following 2 were selected:`y` and `y1`.
 
 ---
 
@@ -115,7 +117,7 @@
         training = rand_data_2)
     Condition
       Error in `step_geodist()`:
-      ! `ref_lat` should be a single numeric value.
+      ! `ref_lat` must be a number, not a character vector.
 
 ---
 
@@ -124,7 +126,7 @@
         training = rand_data_2)
     Condition
       Error in `step_geodist()`:
-      ! `ref_lon` should be a single numeric value.
+      ! `ref_lon` must be a number, not a character vector.
 
 ---
 
@@ -133,7 +135,7 @@
         training = rand_data_2)
     Condition
       Error in `step_geodist()`:
-      ! `name` should be a single character value.
+      ! `name` must be a single string, not the number 1.
 
 ---
 
@@ -142,7 +144,7 @@
         prep(training = rand_data_2)
     Condition
       Error in `step_geodist()`:
-      ! `log` should be a single logical value.
+      ! `log` must be `TRUE` or `FALSE`, not the number 2.72.
 
 ---
 
@@ -151,7 +153,7 @@
         ref_lon = 0.25, is_lat_lon = "no", log = FALSE) %>% prep(training = rand_data)
     Condition
       Error in `step_geodist()`:
-      ! `is_lat_lon` should be a single logical value.
+      ! `is_lat_lon` must be `TRUE` or `FALSE`, not the string "no".
 
 ---
 
@@ -160,7 +162,7 @@
         ref_lon = 0.25, is_lat_lon = c(TRUE, TRUE), log = FALSE) %>% prep(training = rand_data)
     Condition
       Error in `step_geodist()`:
-      ! `is_lat_lon` should be a single logical value.
+      ! `is_lat_lon` must be `TRUE` or `FALSE`, not a logical vector.
 
 # empty printing
 

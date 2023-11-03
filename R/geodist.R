@@ -75,29 +75,16 @@ step_geodist <- function(recipe,
                          keep_original_cols = TRUE,
                          skip = FALSE,
                          id = rand_id("geodist")) {
-  if (length(ref_lon) != 1 || !is.numeric(ref_lon)) {
-    rlang::abort("`ref_lon` should be a single numeric value.")
+  check_bool(is_lat_lon)
+  if (is_lat_lon) {
+    check_number_decimal(ref_lat, min = -90, max = 90)
+    check_number_decimal(ref_lon, min = -180, max = 180)
+  } else {
+    check_number_decimal(ref_lat)
+    check_number_decimal(ref_lon)
   }
-  if (length(ref_lat) != 1 || !is.numeric(ref_lat)) {
-    rlang::abort("`ref_lat` should be a single numeric value.")
-  }
-  if (length(is_lat_lon) != 1 || !is.logical(is_lat_lon)) {
-    rlang::abort("`is_lat_lon` should be a single logical value.")
-  }
-  if (length(log) != 1 || !is.logical(log)) {
-    rlang::abort("`log` should be a single logical value.")
-  }
-  if (length(name) != 1 || !is.character(name)) {
-    rlang::abort("`name` should be a single character value.")
-  }
-
-  if (is_lat_lon && abs(ref_lat) > 90.0) {
-    rlang::abort("`ref_lat` should be between -90 and 90")
-  }
-  if (is_lat_lon && abs(ref_lon) > 180.0) {
-    rlang::abort("`ref_lon` should be between -180 and 180")
-  }
-
+  check_bool(log)
+  check_string(name)
 
   add_step(
     recipe,
@@ -158,12 +145,20 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   x <- check_is_lat_lon(x)
 
   if (length(lon_name) > 1) {
-    rlang::abort("`lon` should resolve to a single column name.")
+    cli::cli_abort(c(
+      x = "The {.arg lon} selector should select at most a single variable.",
+      i = "The following {length(lon_name)} were selected:\\
+          {.and {.var {lon_name}}}."
+    ))
   }
   check_type(training[, lon_name], types = c("double", "integer"))
 
   if (length(lat_name) > 1) {
-    rlang::abort("`lat` should resolve to a single column name.")
+    cli::cli_abort(c(
+      x = "The {.arg lat} selector should select at most a single variable.",
+      i = "The following {length(lat_name)} were selected:\\
+          {.and {.var {lat_name}}}."
+    ))
   }
   check_type(training[, lat_name], types = c("double", "integer"))
 
@@ -194,11 +189,17 @@ geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
 geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
                                   call = caller_env()) {
   if (any(abs(x_1) > 180.0)) {
-    rlang::abort("All `lon` values should be between -180 and 180", call = call)
+    cli::cli_abort(
+      "All {.var lon} values should be between -180 and 180.",
+      call = call
+    )
   }
 
   if (any(abs(y_1) > 90.0)) {
-    rlang::abort("All `lat` values should be between -90 and 90", call = call)
+    cli::cli_abort(
+      "All {.var lat} values should be between -90 and 90.",
+      call = call
+    )
   }
 
   to_rad <- pi / 180.0
