@@ -98,25 +98,8 @@ step_depth <-
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("depth")) {
-    if (!is.character(class) || length(class) != 1) {
-      msg <- c(x = "{.arg class} should be a single character value.")
 
-      if (length(class) != 1) {
-        msg <- c(
-          msg,
-          i = "{length(class)} elements were supplied."
-        )
-      }
-      if (!is.character(class)) {
-        msg <- c(
-          msg,
-          i = "It was a {.obj_type_friendly {class}}."
-        )
-      }
-      cli::cli_abort(msg)
-    }
-
-
+    check_string(class)
     recipes_pkg_check(required_pkgs.step_depth())
 
     add_step(

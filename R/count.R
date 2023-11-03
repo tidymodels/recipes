@@ -66,23 +66,8 @@ step_count <- function(recipe,
                        keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("count")) {
-  if (length(pattern) != 1 || !is.character(pattern)) {
-    msg <- c(x = "{.arg pattern} should be a single character string.")
+  check_string(pattern)
 
-    if (length(pattern) != 1) {
-      msg <- c(
-        msg,
-        i = "{length(pattern)} elements were supplied."
-      )
-    }
-    if (!is.character(pattern)) {
-      msg <- c(
-        msg,
-        i = "It was a {.obj_type_friendly {pattern}}."
-      )
-    }
-    cli::cli_abort(msg)
-  }
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
     cli::cli_abort(c(

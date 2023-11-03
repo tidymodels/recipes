@@ -81,12 +81,12 @@ step_dummy_multi_choice <- function(recipe,
                                     keep_original_cols = FALSE,
                                     skip = FALSE,
                                     id = rand_id("dummy_multi_choice")) {
+
   if (!is_tune(threshold)) {
-    if (threshold < 0) {
-      cli::cli_abort("{.arg threshold} should be non-negative.")
-    }
-    if (threshold > 1) {
-      cli::cli_abort("{.arg threshold} should be less then or equal to 1.")
+    if (threshold >= 1) {
+      check_number_whole(threshold)
+    } else {
+      check_number_decimal(threshold, min = 0)
     }
   }
 

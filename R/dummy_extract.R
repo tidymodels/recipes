@@ -106,14 +106,12 @@ step_dummy_extract <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy_extract")) {
+
     if (!is_tune(threshold)) {
-      if (threshold < 0) {
-        cli::cli_abort("{.arg threshold} should not be negative.")
-      }
-      if (threshold >= 1 && !is_integerish(threshold)) {
-        cli::cli_abort(
-          "If {.arg threshold} is greater than one it should be an integer."
-        )
+      if (threshold >= 1) {
+        check_number_whole(threshold)
+      } else {
+        check_number_decimal(threshold, min = 0)
       }
     }
 
