@@ -111,6 +111,21 @@ prep.step_range <- function(x, training, info = NULL, ...) {
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
   maxs <-
     vapply(training[, col_names], max, c(max = 0), na.rm = TRUE)
+
+  inf_cols <- col_names[is.infinite(mins) | is.infinite(maxs)]
+  if (length(inf_cols) > 0) {
+    cli::cli_warn(
+      "Column{?s} {.var {inf_cols}} returned NaN. \\
+      Consider avoiding `Inf` values before normalising.")
+  }
+  zero_range_cols <- col_names[maxs - mins == 0]
+  if (length(zero_range_cols) > 0) {
+    cli::cli_warn(
+      "Column{?s} {.var {zero_range_cols}} returned NaN. Consider using \\
+       `step_zv()` to remove variables containing only a single value."
+    )
+  }
+
   step_range_new(
     terms = x$terms,
     role = x$role,
