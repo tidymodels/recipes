@@ -14,7 +14,7 @@
       na_rm = FALSE) %>% prep()
     Condition
       Warning:
-      Column(s) `mpg`, `cyl`, `disp` and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm=TRUE` before normalizing.
+      Columns `mpg`, `cyl`, `disp`, and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm=TRUE` before normalizing.
 
 # warns on zv
 
@@ -44,7 +44,7 @@
       prep(rec1)
     Condition
       Warning:
-      Column(s) `sulfur` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm=TRUE` before normalizing.
+      Column `sulfur` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm=TRUE` before normalizing.
     Message
       
       -- Recipe ----------------------------------------------------------------------
