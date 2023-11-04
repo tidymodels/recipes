@@ -74,7 +74,7 @@
     Condition
       Error in `step_discretize()`:
       Caused by error in `recipes::discretize()`:
-      ! `cuts` must be at least 2, not 1.
+      ! There should be at least 2 `cuts` but 1 was supplied.
 
 ---
 

@@ -5,7 +5,7 @@
     Condition
       Error in `step_count()`:
       x For this step, only a single selector can be used.
-      i The following 2 selectors were used:`~description` and `~rows`.
+      i The following 2 selectors were used: `~description` and `~rows`.
 
 ---
 

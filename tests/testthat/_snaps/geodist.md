@@ -97,7 +97,7 @@
       Error in `step_geodist()`:
       Caused by error in `prep()`:
       x The `lat` selector should select at most a single variable.
-      i The following 2 were selected:`x` and `x1`.
+      i The following 2 were selected: `x` and `x1`.
 
 ---
 
@@ -108,7 +108,7 @@
       Error in `step_geodist()`:
       Caused by error in `prep()`:
       x The `lon` selector should select at most a single variable.
-      i The following 2 were selected:`y` and `y1`.
+      i The following 2 were selected: `y` and `y1`.
 
 ---
 

@@ -93,7 +93,7 @@ discretize.numeric <-
 
     if (cuts < 2) {
       cli::cli_abort(
-        "{.arg cuts} must be at least 2, not {.val {cuts}}."
+        "There should be at least 2 {.arg cuts} but {.val {cuts}} was supplied."
       )
     }
 

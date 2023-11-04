@@ -157,16 +157,16 @@ bake_check_class_core <- function(x,
   missing <- setdiff(class_nm, classes)
   if (length(missing) > 0) {
     cli::cli_abort(
-      "{.var {var_nm}} should have the class{?es} {.cls {class_nm}}} but
-      only has the class{?es} {.and {.val {classes}}}."
+      "{.var {var_nm}} should have the class{?es} {.cls {class_nm}} but
+      has the class{?es} {.and {.cls {classes}}}."
     )
   }
 
   extra <- setdiff(classes, class_nm)
   if (length(extra) > 0 && !aa) {
     cli::cli_abort(c(
-        x = "{.var {var_nm}} has class{?es} {.and {.val {classes}}} but only \\
-            the following {?is/are} asked {.and {.val {class_nm}}}.",
+        x = "{.var {var_nm}} has class{?es} {.and {.cls {classes}}} but only \\
+            the following {?is/are} asked: {.and {.cls {class_nm}}}.",
         i = "This error is shown because {.arg allow_additional} is set to \\
             {.val FALSE}."
     ))

@@ -147,7 +147,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   if (length(lon_name) > 1) {
     cli::cli_abort(c(
       x = "The {.arg lon} selector should select at most a single variable.",
-      i = "The following {length(lon_name)} were selected:\\
+      i = "The following {length(lon_name)} were selected: \\
           {.and {.var {lon_name}}}."
     ))
   }
@@ -156,7 +156,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   if (length(lat_name) > 1) {
     cli::cli_abort(c(
       x = "The {.arg lat} selector should select at most a single variable.",
-      i = "The following {length(lat_name)} were selected:\\
+      i = "The following {length(lat_name)} were selected: \\
           {.and {.var {lat_name}}}."
     ))
   }
