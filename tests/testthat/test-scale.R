@@ -88,7 +88,7 @@ test_that("na_rm argument works for step_scale", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
 
-  expect_warning({
+  expect_snapshot({
   rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
     step_scale(all_predictors(), na_rm = FALSE) %>%
     prep()
@@ -121,7 +121,7 @@ test_that("warns when NaN is returned",{
   rec1 <- rec %>%
     step_log(sulfur) %>%
     step_scale(sulfur)
-  expect_warning(prep(rec1))
+  expect_snapshot(prep(rec1))
 })
 
 test_that("scaling with case weights", {
