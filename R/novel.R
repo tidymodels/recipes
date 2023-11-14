@@ -107,8 +107,6 @@ get_existing_values <- function(x) {
     if (is.factor(x)) {
       out <- levels(x)
       attr(out, "is_ordered") <- is.ordered(x)
-    } else {
-      rlang::abort("Data should be either character or factor")
     }
   }
   out
@@ -122,14 +120,11 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
-  level_check <-
-    map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
+  level_check <- map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check)) {
-    rlang::abort(
-      paste0(
-        "Columns already contain the new level: ",
-        paste0(names(level_check)[level_check], collapse = ", ")
-      )
+    offenders <- names(level_check)[level_check]
+    cli::cli_abort(
+      "Columns already contain the new level: {offenders}."
     )
   }
 

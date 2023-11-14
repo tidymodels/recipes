@@ -154,7 +154,10 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
       silent = TRUE
     )
     if (inherits(nnm, "try-error")) {
-      rlang::abort(paste0("`step_nnmf` failed with error:\n", as.character(nnm)))
+      cli::cli_abort(c(
+        x = "Failed with error:",
+        i = as.character(nnm)
+      ))
     }
   } else {
     nnm <- NULL

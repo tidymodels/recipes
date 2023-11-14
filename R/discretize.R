@@ -15,7 +15,7 @@ discretize <- function(x, ...) {
 discretize.default <- function(x, ...) {
   cli::cli_abort(c(
     x = "Only numeric {.arg x} is accepted.",
-    i = "A {.obj_type_friendly {x}} was passed."
+    i = "{.obj_type_friendly {x}} was passed."
   ))
 }
 

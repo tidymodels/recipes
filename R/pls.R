@@ -132,7 +132,7 @@ step_pls <-
            skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome)) {
-      rlang::abort("`outcome` should select at least one column.")
+      cli::cli_abort("{.arg outcome} should select at least one column.")
     }
 
     if (lifecycle::is_present(preserve)) {
@@ -329,8 +329,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   check_type(training[, x_names], types = c("double", "integer"))
 
   if (length(y_names) > 1 && any(!map_lgl(training[y_names], is.numeric))) {
-    rlang::abort(
-      "`step_pls()` only supports multivariate models for numeric outcomes."
+    cli::cli_abort(
+      "Only multivariate models for numeric outcomes are supports."
     )
   }
 

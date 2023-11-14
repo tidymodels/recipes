@@ -54,7 +54,10 @@ step_holiday <-
     if (!is_tune(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days)) {
-        rlang::abort("Invalid `holidays` value. See timeDate::listHolidays")
+        cli::cli_abort(c(
+          "Invalid {.arg holidays} value. \\
+          See {.fn timeDate::listHolidays} for possible values."
+        ))
       }
     }
 

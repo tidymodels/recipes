@@ -131,7 +131,10 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
       )
     kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      rlang::abort(paste0("`step_kpca_rbf` failed with error:\n", as.character(kprc)))
+      cli::cli_abort(c(
+        x = "Failed with error:",
+        i = as.character(kprc)
+      ))
     }
   } else {
     kprc <- NULL

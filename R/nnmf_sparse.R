@@ -163,11 +163,16 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
     nnm <- try(rlang::eval_tidy(cl), silent = TRUE)
 
     if (inherits(nnm, "try-error")) {
-      rlang::abort(paste0("`step_nnmf_sparse` failed with error:\n", as.character(nnm)))
+      cli::cli_abort(c(
+        x = "Failed with error:",
+        i = as.character(nnm)
+      ))
     } else {
       na_w <- sum(is.na(nnm$w))
       if (na_w > 0) {
-        rlang::abort("The NNMF loadings are missing. The penalty may have been to high.")
+        cli::cli_abort(
+          "The NNMF loadings are missing. The penalty may have been to high."
+        )
       } else {
         nnm <- list(x_vars = col_names, w = nnm$w)
         rownames(nnm$w) <- col_names

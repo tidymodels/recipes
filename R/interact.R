@@ -156,7 +156,9 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     } else {
       tmp_terms <- rlang::eval_tidy(x$terms[[1]])
       if (!is_formula(tmp_terms)) {
-        rlang::abort("`term` must be a formula.")
+        cli::cli_abort(
+          "{.arg term} must be a formula. Not {.obj_type_friendly {term}}."
+        )
       }
     }
 
@@ -399,7 +401,7 @@ find_selectors <- function(f) {
     list()
   } else {
     # User supplied incorrect input
-    rlang::abort(paste0("Don't know how to handle type ", typeof(f), "."))
+    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
   }
 }
 
@@ -416,7 +418,7 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
-    rlang::abort(paste0("Don't know how to handle type ", typeof(x), "."))
+    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
   }
 }
 

@@ -171,15 +171,31 @@ step_harmonic <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("harmonic")) {
-    if (!all(is.numeric(cycle_size)) | all(is.na(cycle_size))) {
-      rlang::abort("cycle_size must have at least one non-NA numeric value.")
+
+    if (!all(is.numeric(cycle_size)) || all(is.na(cycle_size))) {
+      msg <- c(
+        x = "{.arg cycle_size} must have at least one non-NA numeric value."
+      )
+
+      if (!all(is.numeric(cycle_size))) {
+        msg <- c(msg, i = "It was {.obj_type_friendly {cycle_size}}.")
+      }
+
+      if (all(is.na(cycle_size))) {
+        msg <- c(msg, i = "Only missing values were present.")
+      }
+
+      cli::cli_abort(msg)
     }
 
     if (!all(is.na(starting_val)) &
       !all(is.numeric(starting_val)) &
       !all(inherits(starting_val, "Date")) &
       !all(inherits(starting_val, "POSIXt"))) {
-      rlang::abort("starting_val must be NA, numeric, Date or POSIXt")
+      cli::cli_abort(
+        "starting_val must be NA, numeric, Date or POSIXt. \\
+        Not {.obj_type_friendly {starting_val}}.",
+      )
     }
 
     add_step(
@@ -231,10 +247,10 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
   } else if (length(x$cycle_size) == length(col_names)) {
     cycle_sizes <- x$cycle_size
   } else {
-    rlang::abort(paste0(
-      "`cycle_size` must be length 1 or the same  ",
-      "length as the input columns"
-    ))
+    cli::cli_abort(
+      "{.arg cycle_sizes} must be length 1 or the same length as the input \\
+      columns."
+    )
   }
 
 
@@ -246,10 +262,10 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
   } else if (length(x$starting_val) == length(col_names)) {
     starting_vals <- x$starting_val
   } else {
-    rlang::abort(paste0(
-      "`starting_val` must be length 1 or the same  ",
-      "length as the input columns"
-    ))
+    cli::cli_abort(
+      "{.arg starting_val} must be length 1 or the same length as the input \\
+      columns."
+    )
   }
 
   frequencies <- sort(unique(na.omit(x$frequency)))
@@ -278,7 +294,7 @@ sin_cos <- function(x,
                     starting_val,
                     cycle_size, call = caller_env()) {
   if (all(is.na(x))) {
-    rlang::abort("variable must have at least one non-NA value", call = call)
+    cli::cli_abort("Variable must have at least one non-NA value.", call = call)
   }
 
   nc <- length(frequency)

@@ -203,8 +203,9 @@ print.step_modeimpute <- print.step_impute_mode
 
 mode_est <- function(x, wts = NULL, call = caller_env(2)) {
   if (!is.character(x) & !is.factor(x))
-    rlang::abort(
-      "The data should be character or factor to compute the mode.",
+    cli::cli_abort(
+      "The data should be character or factor to compute the mode. \\
+      Not {.obj_type_friendly {x}}.",
       call = call
     )
   tab <- weighted_table(x, wts = wts)
