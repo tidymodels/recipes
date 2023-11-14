@@ -5,7 +5,7 @@
     Condition
       Error in `step_impute_mode()`:
       Caused by error in `prep()`:
-      ! The data should be character or factor to compute the mode.
+      ! The data should be character or factor to compute the mode. Not an integer vector.
 
 # can bake recipes with no ptype
 

@@ -16,7 +16,7 @@
         step_impute_roll(all_predictors(), window = 4) %>% prep(training = example_data)
     Condition
       Error in `step_impute_roll()`:
-      ! `window` should be an odd integer >= 3
+      ! `window` should be an odd integer >= 3.
 
 ---
 

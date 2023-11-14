@@ -5,7 +5,7 @@
     Condition
       Error in `discretize()`:
       x Only numeric `x` is accepted.
-      i A a character vector was passed.
+      i a character vector was passed.
 
 # printing of discretize()
 
