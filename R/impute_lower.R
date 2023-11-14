@@ -134,9 +134,8 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
     offenders <- col_names[threshold < 0]
 
     cli::cli_abort(c(
-      x = "The following columns negative values. Lower bound imputation is \\
-          intended for data bounded at zero.",
-      "*" = "{offenders}."
+      x = "The following columns negative values: {offenders}.",
+      i = "Lower bound imputation is intended for data bounded at zero."
     ))
   }
 

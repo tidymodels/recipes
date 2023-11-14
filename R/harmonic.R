@@ -181,10 +181,6 @@ step_harmonic <-
         msg <- c(msg, i = "It was {.obj_type_friendly {cycle_size}}.")
       }
 
-      if (all(is.na(cycle_size))) {
-        msg <- c(msg, i = "Only missing values were present.")
-      }
-
       cli::cli_abort(msg)
     }
 
@@ -193,8 +189,8 @@ step_harmonic <-
       !all(inherits(starting_val, "Date")) &
       !all(inherits(starting_val, "POSIXt"))) {
       cli::cli_abort(
-        "starting_val must be NA, numeric, Date or POSIXt. \\
-        Not {.obj_type_friendly {starting_val}}.",
+        "starting_val must be NA, numeric, Date or POSIXt, \\
+        not {.obj_type_friendly {starting_val}}.",
       )
     }
 
@@ -248,7 +244,7 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
     cycle_sizes <- x$cycle_size
   } else {
     cli::cli_abort(
-      "{.arg cycle_sizes} must be length 1 or the same length as the input \\
+      "{.arg cycle_size} must be length 1 or the same length as the input \\
       columns."
     )
   }

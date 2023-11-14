@@ -7,7 +7,6 @@
       Error in `step_harmonic()`:
       x `cycle_size` must have at least one non-NA numeric value.
       i It was `NA`.
-      i Only missing values were present.
 
 ---
 
@@ -18,7 +17,6 @@
       Error in `step_harmonic()`:
       x `cycle_size` must have at least one non-NA numeric value.
       i It was `NA`.
-      i Only missing values were present.
 
 ---
 
@@ -37,7 +35,7 @@
         frequency = 1, starting_val = "a", cycle_size = 86400)
     Condition
       Error in `step_harmonic()`:
-      ! starting_val must be NA, numeric, Date or POSIXt. Not a string.
+      ! starting_val must be NA, numeric, Date or POSIXt, not a string.
 
 ---
 
@@ -46,7 +44,7 @@
         frequency = 1, starting_val = factor("a"), cycle_size = 86400)
     Condition
       Error in `step_harmonic()`:
-      ! starting_val must be NA, numeric, Date or POSIXt. Not a <factor> object.
+      ! starting_val must be NA, numeric, Date or POSIXt, not a <factor> object.
 
 # harmonic NA in term
 
@@ -78,7 +76,7 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
-      ! `cycle_sizes` must be length 1 or the same length as the input columns.
+      ! `cycle_size` must be length 1 or the same length as the input columns.
 
 # harmonic starting_val length
 
