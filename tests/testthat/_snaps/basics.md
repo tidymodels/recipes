@@ -5,9 +5,9 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following function was found:
-      * `log`
+      i The following function was found: `log`.
       i Use steps to do transformations instead.
+      i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
 ---
 
@@ -16,9 +16,9 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following functions were found:
-      * `^` and `(`
+      i The following functions were found: `^` and `(`.
       i Use steps to do transformations instead.
+      i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
 ---
 
@@ -27,9 +27,9 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following function was found:
-      * `:`
+      i The following function was found: `:`.
       i Use steps to do transformations instead.
+      i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
 ---
 
@@ -38,9 +38,9 @@
     Condition
       Error in `inline_check()`:
       x No in-line functions should be used here.
-      i The following function was found:
-      * `^`
+      i The following function was found: `^`.
       i Use steps to do transformations instead.
+      i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
 # Using prepare
 
