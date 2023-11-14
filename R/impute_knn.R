@@ -108,16 +108,18 @@ step_impute_knn <-
            skip = FALSE,
            id = rand_id("impute_knn")) {
     if (is.null(impute_with)) {
-      rlang::abort("Please list some variables in `impute_with`")
+      cli::cli_abort("{.arg impute_with} must not be empty.")
     }
 
     if (!is.list(options)) {
-      rlang::abort("`options` should be a named list.")
+      cli::cli_abort("{.arg options} should be a named list.")
     }
     opt_nms <- names(options)
     if (length(options) > 0) {
       if (any(!(opt_nms %in% c("eps", "nthread")))) {
-        rlang::abort("Availible options are 'eps', and 'nthread'.")
+        cli::cli_abort(
+          "Valid values for {.arg options} are {.val eps}, and {.val nthread}."
+        )
       }
       if (all(opt_nms != "nthread")) {
         options$nthread <- 1

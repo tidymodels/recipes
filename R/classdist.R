@@ -100,9 +100,8 @@ step_classdist <- function(recipe,
                            keep_original_cols = TRUE,
                            skip = FALSE,
                            id = rand_id("classdist")) {
-  if (!is.character(class) || length(class) != 1) {
-    rlang::abort("`class` should be a single character value.")
-  }
+  check_string(class)
+
   add_step(
     recipe,
     step_classdist_new(
@@ -148,7 +147,9 @@ step_classdist_new <-
 
 get_center <- function(x, wts = NULL, mfun = mean) {
   if (!is.null(wts) & !identical(mfun, mean)) {
-    rlang::abort("The centering function requested cannot be used with case weights.")
+    cli::cli_abort(
+      "The centering function requested cannot be used with case weights."
+    )
   }
   x <- tibble::as_tibble(x)
   if (is.null(wts)) {
@@ -161,10 +162,14 @@ get_center <- function(x, wts = NULL, mfun = mean) {
 
 get_both <- function(x, wts = NULL, mfun = mean, cfun = cov) {
   if (!is.null(wts) & !identical(mfun, mean)) {
-    rlang::abort("The centering function requested cannot be used with case weights.")
+    cli::cli_abort(
+      "The centering function requested cannot be used with case weights."
+    )
   }
   if (!is.null(wts) & !identical(cfun, cov)) {
-    rlang::abort("The variance function requested cannot be used with case weights.")
+    cli::cli_abort(
+      "The variance function requested cannot be used with case weights."
+    )
   }
 
   if (is.null(wts)) {

@@ -81,14 +81,11 @@ bake.check_cols <- function(object, new_data, ...) {
   new_cols <- names(new_data)
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
-    mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
-    rlang::abort(
-      paste0(
-        "The following cols are missing from `new_data`: ",
-        mis_cols,
-        "."
-      )
-    )
+    cli::cli_abort(c(
+      x = "{cli::qty(length(missing))}The following column{?s} {?is/are} \\
+      missing from {.arg new_data}:",
+      "*" = "{.and {.var {missing}}}."
+    ))
   }
   new_data
 }

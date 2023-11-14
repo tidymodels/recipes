@@ -4,7 +4,8 @@
       discretize(letters)
     Condition
       Error in `discretize()`:
-      ! Only numeric `x` is accepted
+      x Only numeric `x` is accepted.
+      i The `x` was passed a character vector.
 
 # printing of discretize()
 
@@ -73,7 +74,7 @@
     Condition
       Error in `step_discretize()`:
       Caused by error in `recipes::discretize()`:
-      ! There should be at least 2 cuts
+      ! There should be at least 2 `cuts` but 1 was supplied.
 
 ---
 

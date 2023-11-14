@@ -119,11 +119,9 @@ bake.check_missing <- function(object, new_data, ...) {
   nr_na <- colSums(is.na(subset_to_check))
   if (any(nr_na > 0)) {
     with_na <- names(nr_na[nr_na > 0])
-    with_na_str <- paste(paste0("`", with_na, "`"), collapse = ", ")
-    rlang::abort(paste0(
-      "The following columns contain missing values: ",
-      with_na_str, "."
-    ))
+    cli::cli_abort(
+      "The following columns contains missing values: {with_na}."
+    )
   }
   new_data
 }

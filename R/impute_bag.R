@@ -128,8 +128,9 @@ step_impute_bag <-
            skip = FALSE,
            id = rand_id("impute_bag")) {
     if (is.null(impute_with)) {
-      rlang::abort("Please list some variables in `impute_with`")
+      cli::cli_abort("{.arg impute_with} must not be empty.")
     }
+
     add_step(
       recipe,
       step_impute_bag_new(

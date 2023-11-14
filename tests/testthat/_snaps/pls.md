@@ -5,7 +5,7 @@
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
-      ! `step_pls()` only supports multivariate models for numeric outcomes.
+      ! Only multivariate models for numeric outcomes are supports.
 
 # PLS-DA, sparse loadings, multiple outcomes
 
@@ -14,7 +14,7 @@
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
-      ! `step_pls()` only supports multivariate models for numeric outcomes.
+      ! Only multivariate models for numeric outcomes are supports.
 
 # check_name() is used
 

@@ -27,8 +27,8 @@
     Condition
       Error in `step_isomap()`:
       Caused by error in `prep()`:
-      ! `step_isomap` failed with error:
-      Error : TridiagEigen: eigen decomposition failed
+      x Failed with error:
+      i Error : TridiagEigen: eigen decomposition failed
 
 # check_name() is used
 

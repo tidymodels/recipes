@@ -15,7 +15,7 @@
     Condition
       Error in `step_novel()`:
       Caused by error in `prep()`:
-      ! Columns already contain the new level: x
+      ! Columns already contain the new level: x.
 
 # empty printing
 

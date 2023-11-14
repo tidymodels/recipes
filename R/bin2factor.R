@@ -59,8 +59,22 @@ step_bin2factor <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("bin2factor")) {
-    if (length(levels) != 2 | !is.character(levels)) {
-      rlang::abort("`levels` should be a two element character string")
+    if (length(levels) != 2 || !is.character(levels)) {
+      msg <- c(x = "{.arg levels} should be a 2-element character string.")
+
+      if (length(levels) != 2) {
+        msg <- c(
+          msg,
+          i = "{length(levels)} element{?s} were supplied."
+        )
+      }
+      if (!is.character(levels)) {
+        msg <- c(
+          msg,
+          i = "It was {.obj_type_friendly {levels}}."
+        )
+      }
+      cli::cli_abort(msg)
     }
     add_step(
       recipe,

@@ -90,7 +90,7 @@ step_impute_roll <-
            id = rand_id("impute_roll")) {
     if (!is_tune(window)) {
       if (window < 3 | window %% 2 != 1) {
-        rlang::abort("`window` should be an odd integer >= 3")
+        cli::cli_abort("{.arg window} should be an odd integer >= 3.")
       }
       window <- as.integer(floor(window))
     }

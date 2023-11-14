@@ -133,7 +133,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   if (!is.character(new_type) && !is.null(new_type)) {
     cli::cli_abort(
       "{.arg new_type} must be a character vector, or {.code NULL} \\
-      not a {.obj_type_friendly {new_type}}."
+      not {.obj_type_friendly {new_type}}."
     )
   }
 

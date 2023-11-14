@@ -98,10 +98,8 @@ step_depth <-
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("depth")) {
-    if (!is.character(class) || length(class) != 1) {
-      rlang::abort("`class` should be a single character value.")
-    }
 
+    check_string(class)
     recipes_pkg_check(required_pkgs.step_depth())
 
     add_step(

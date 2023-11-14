@@ -5,7 +5,8 @@
     Condition
       Error in `step_impute_lower()`:
       Caused by error in `prep()`:
-      ! Some columns have negative values. Lower bound imputation is intended for data bounded at zero.
+      x The following columns negative values: has_neg.
+      i Lower bound imputation is intended for data bounded at zero.
 
 # Deprecation warning
 

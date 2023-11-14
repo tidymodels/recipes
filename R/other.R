@@ -108,11 +108,10 @@ step_other <-
            skip = FALSE,
            id = rand_id("other")) {
     if (!is_tune(threshold)) {
-      if (threshold < 0) {
-        rlang::abort("`threshold` should be non-negative.")
-      }
-      if (threshold >= 1 && !is_integerish(threshold)) {
-        rlang::abort("If `threshold` is greater than one it should be an integer.")
+      if (threshold >= 1) {
+        check_number_whole(threshold)
+      } else {
+        check_number_decimal(threshold, min = 0)
       }
     }
     add_step(
@@ -257,13 +256,9 @@ keep_levels <- function(x, threshold = .1, other = "other", wts = NULL,
   }
 
   if (other %in% keepers) {
-    rlang::abort(
-      paste0(
-        "The level ",
-        other,
-        " is already a factor level that will be retained. ",
-        "Please choose a different value."
-      ),
+    cli::cli_abort(
+      "The level {other} is already a factor level that will be retained. \\
+      Please choose a different value.",
       call = call
     )
   }

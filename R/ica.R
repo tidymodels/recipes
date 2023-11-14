@@ -161,11 +161,14 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     indc <- try(withr::with_seed(x$seed, rlang::eval_tidy(cl)), silent = TRUE)
 
     if (inherits(indc, "try-error")) {
-      rlang::abort(paste0("`step_ica` failed with error:\n", as.character(indc)))
-    } else {
-      indc <- indc[c("K", "W")]
-      indc$means <- colMeans(training[, col_names])
+      cli::cli_abort(c(
+        x = "Failed with error:",
+        i = as.character(indc)
+      ))
     }
+
+    indc <- indc[c("K", "W")]
+    indc$means <- colMeans(training[, col_names])
   } else {
     indc <- NULL
   }

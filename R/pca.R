@@ -128,9 +128,7 @@ step_pca <- function(recipe,
                      skip = FALSE,
                      id = rand_id("pca")) {
   if (!is_tune(threshold)) {
-    if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
-      rlang::abort("`threshold` should be on (0, 1].")
-    }
+    check_number_decimal(threshold, min = 0, max = 1, allow_na = TRUE)
   }
 
   add_step(

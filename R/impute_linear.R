@@ -79,7 +79,7 @@ step_impute_linear <-
            skip = FALSE,
            id = rand_id("impute_linear")) {
     if (is.null(impute_with)) {
-      rlang::abort("Please provide some variables to `impute_with`.")
+      cli::cli_abort("{.arg impute_with} must not be empty.")
     }
 
     add_step(
@@ -119,21 +119,17 @@ lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
   dat <- dat[complete, ]
   wts <- wts[complete]
   if (nrow(dat) == 0) {
-    rlang::abort(
-      paste(
-        "The data used by step_impute_linear() did not have any rows",
-        "where the imputation values were all complete."
-      ),
+    cli::cli_abort(
+      "The data did not have any rows where the imputation values were all \\
+      complete. Is is thus unable to fit the linear regression model.",
       call = call
     )
   }
 
   if (!is.numeric(dat[[vars$y]])) {
-    rlang::abort(
-      glue(
-        "Variable '{vars$y}' chosen for linear regression imputation ",
-        "must be of type numeric."
-      ),
+    cli::cli_abort(
+      "Variable {.var {vars$y}} chosen for linear regression imputation \\
+      must be of type numeric. Not {.obj_type_friendly {vars$y}}.",
       call = call
     )
   }

@@ -107,11 +107,10 @@ new_values_func <- function(x,
     return()
   }
   if (ignore_NA) new_vals <- new_vals[!is.na(new_vals)]
-  rlang::abort(paste0(
-    colname,
-    " contains the new value(s): ",
-    paste(new_vals, collapse = ",")
-  ))
+  cli::cli_abort(
+    "{.var {colname}} contains the new \\
+    {cli::qty(length(new_vals))}value{?s}: {.val {new_vals}}."
+  )
 }
 
 #' @export

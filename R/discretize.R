@@ -13,7 +13,10 @@ discretize <- function(x, ...) {
 #' @export
 #' @rdname discretize
 discretize.default <- function(x, ...) {
-  rlang::abort("Only numeric `x` is accepted")
+  cli::cli_abort(c(
+    x = "Only numeric {.arg x} is accepted.",
+    i = "The {.arg x} was passed {.obj_type_friendly {x}}."
+  ))
 }
 
 #' @rdname discretize
@@ -89,7 +92,9 @@ discretize.numeric <-
     missing_lab <- "_missing"
 
     if (cuts < 2) {
-      rlang::abort("There should be at least 2 cuts")
+      cli::cli_abort(
+        "There should be at least 2 {.arg cuts} but {.val {cuts}} was supplied."
+      )
     }
 
     dots <- list(...)

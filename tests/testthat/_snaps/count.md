@@ -4,7 +4,8 @@
       rec %>% step_count(description, rows, pattern = "(rock|stony)")
     Condition
       Error in `step_count()`:
-      ! For this step, only a single selector can be used.
+      x For this step, only a single selector can be used.
+      i The following 2 selectors were used: `~description` and `~rows`.
 
 ---
 

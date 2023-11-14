@@ -107,9 +107,12 @@ step_date <-
       )
     if (!is_tune(features)) {
       if (!all(features %in% feat)) {
-        rlang::abort(paste0(
-          "Possible values of `features` should include: ",
-          paste0("'", feat, "'", collapse = ", ")
+        offenders <- features[!features %in% feat]
+
+        cli::cli_abort(c(
+          x = "Possible values of {.arg features} should include:",
+          "*" = "{.or {.val {feat}}}.",
+          i = "Invalid values were: {.val {offenders}}."
         ))
       }
     }

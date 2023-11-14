@@ -162,7 +162,7 @@
     Condition
       Error in `bake()`:
       x `bake()` methods should always return tibbles.
-      i `bake.step_testthat_helper()` returned a a data frame.
+      i `bake.step_testthat_helper()` returned a data frame.
 
 ---
 
@@ -171,7 +171,7 @@
     Condition
       Error in `prep()`:
       x `bake()` methods should always return tibbles.
-      i `bake.step_testthat_helper()` returned a a data frame.
+      i `bake.step_testthat_helper()` returned a data frame.
 
 # recipe() errors if `data` is missing
 

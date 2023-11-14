@@ -14,7 +14,7 @@ recipe <- function(x, ...) {
 recipe.default <- function(x, ...) {
   cli::cli_abort(c(
     x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
-    i = "{.arg x} is a {.obj_type_friendly {x}}."
+    i = "{.arg x} is {.obj_type_friendly {x}}."
   ))
 }
 
@@ -484,7 +484,7 @@ prep.recipe <-
         if (!is_tibble(training)) {
           cli::cli_abort(c(
             "x" = "{.fun bake} methods should always return tibbles.",
-            "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
+            "i" = "{.fun {paste0('bake.', step_name)}} returned \\
                    {.obj_type_friendly {training}}."
           ))
         }
@@ -700,7 +700,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
       cli::cli_abort(c(
         "x" = "{.fun bake} methods should always return tibbles.",
-        "i" = "{.fun {paste0('bake.', step_name)}} returned a \\
+        "i" = "{.fun {paste0('bake.', step_name)}} returned \\
                    {.obj_type_friendly {new_data}}."
       ))
     }
