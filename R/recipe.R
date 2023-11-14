@@ -279,9 +279,11 @@ inline_check <- function(x) {
     cli::cli_abort(c(
       x = "No in-line functions should be used here.",
       i = "{cli::qty(length(funs))}The following function{?s} {?was/were} \\
-          found:",
-      "*" = "{.and {.code {funs}}}",
-      i = "Use steps to do transformations instead."
+          found: {.and {.code {funs}}}.",
+      i = "Use steps to do transformations instead.",
+      i = "If your modeling engine uses special terms in formulas, pass \\
+          that formula to workflows as a \\
+          {.help [model formula](parsnip::model_formula)}."
     ))
   }
 
