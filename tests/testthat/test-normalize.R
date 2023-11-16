@@ -142,6 +142,16 @@ test_that("normalizing with case weights", {
   expect_snapshot(rec)
 })
 
+test_that("warns when NaN is returned due to Inf or -Inf",{
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) |>
+    step_normalize(x)
+  expect_snapshot(prep(rec))
+
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) |>
+    step_normalize(x)
+  expect_snapshot(prep(rec))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
