@@ -16,6 +16,8 @@
 
 * When errors are thrown about wrongly typed input to steps, the offending variables and their types are now listed. (#1217)
 
+* Added warnings when `step_scale()`, `step_normalise()`, `step_center()` or `step_range()` result in `NaN` columns. (@mastoffel, #1221)
+
 # recipes 1.0.8
 
 ## Improvements

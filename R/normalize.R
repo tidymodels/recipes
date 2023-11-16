@@ -122,6 +122,16 @@ sd_check <- function(x) {
     )
     x[zero_sd] <- 1
   }
+
+  na_sd <- which(is.na(x))
+  if (length(na_sd) > 0) {
+    cli::cli_warn(
+        "Column{?s} {.var {names(na_sd)}} returned NaN, because variance \\
+        cannot be calculated and scaling cannot be used. Consider avoiding \\
+        `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before \\
+        normalizing."
+    )
+  }
   x
 }
 

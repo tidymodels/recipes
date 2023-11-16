@@ -1,3 +1,12 @@
+# na_rm argument works for step_normalize
+
+    Code
+      rec_no_na_rm <- recipe(~., data = mtcars_na) %>% step_normalize(all_predictors(),
+      na_rm = FALSE) %>% prep()
+    Condition
+      Warning:
+      Columns `mpg`, `cyl`, `disp`, and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
+
 # warns on zv
 
     Code
@@ -60,6 +69,48 @@
       -- Operations 
       * Centering and scaling for: cyl, disp, hp, drat, ... | Trained, ignored
         weights
+
+# warns when NaN is returned due to Inf or -Inf
+
+    Code
+      prep(rec)
+    Condition
+      Warning:
+      Column `x` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
+      
+      -- Operations 
+      * Centering and scaling for: x | Trained
+
+---
+
+    Code
+      prep(rec)
+    Condition
+      Warning:
+      Column `x` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
+      
+      -- Operations 
+      * Centering and scaling for: x | Trained
 
 # empty printing
 

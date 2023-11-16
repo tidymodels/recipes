@@ -88,9 +88,11 @@ test_that("na_rm argument works for step_scale", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
 
+  expect_snapshot({
   rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
     step_scale(all_predictors(), na_rm = FALSE) %>%
     prep()
+  })
 
   rec_na_rm <- recipe(~., data = mtcars_na) %>%
     step_scale(all_predictors(), na_rm = TRUE) %>%
@@ -112,6 +114,13 @@ test_that("na_rm argument works for step_scale", {
 
 test_that("warns on zv",{
   rec1 <- step_scale(rec_zv, all_numeric_predictors())
+  expect_snapshot(prep(rec1))
+})
+
+test_that("warns when NaN is returned",{
+  rec1 <- rec %>%
+    step_log(sulfur) %>%
+    step_scale(sulfur)
   expect_snapshot(prep(rec1))
 })
 

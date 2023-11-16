@@ -65,9 +65,11 @@ test_that("na_rm argument works for step_normalize", {
   mtcars_na <- mtcars
   mtcars_na[1, 1:4] <- NA
 
-  rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
-    step_normalize(all_predictors(), na_rm = FALSE) %>%
-    prep()
+  expect_snapshot(
+    rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
+      step_normalize(all_predictors(), na_rm = FALSE) %>%
+      prep()
+  )
 
   rec_na_rm <- recipe(~., data = mtcars_na) %>%
     step_normalize(all_predictors(), na_rm = TRUE) %>%
@@ -138,6 +140,16 @@ test_that("normalizing with case weights", {
   )
 
   expect_snapshot(rec)
+})
+
+test_that("warns when NaN is returned due to Inf or -Inf",{
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) |>
+    step_normalize(x)
+  expect_snapshot(prep(rec))
+
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) |>
+    step_normalize(x)
+  expect_snapshot(prep(rec))
 })
 
 # Infrastructure ---------------------------------------------------------------

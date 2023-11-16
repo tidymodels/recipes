@@ -41,6 +41,14 @@
       ! Can't update the `bake` requirement of the "outcome" role.
       i The "outcome" role is never required at `bake()` time.
 
+# will still error if a step actually used a role that set `bake = FALSE`
+
+    Code
+      rec <- prep(rec, df)
+    Condition
+      Warning:
+      Column `x` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
+
 # can update `bake` requirements after prepping
 
     Code

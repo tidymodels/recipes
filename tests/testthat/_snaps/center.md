@@ -39,6 +39,48 @@
       -- Operations 
       * Centering for: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored weights
 
+# warns when NaN is returned due to Inf or -Inf
+
+    Code
+      prep(rec)
+    Condition
+      Warning:
+      Column `x` returned NaN. Consider avoiding `Inf` values before normalising.
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
+      
+      -- Operations 
+      * Centering for: x | Trained
+
+---
+
+    Code
+      prep(rec)
+    Condition
+      Warning:
+      Column `x` returned NaN. Consider avoiding `Inf` values before normalising.
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 1
+      
+      -- Training information 
+      Training data contained 4 data points and no incomplete rows.
+      
+      -- Operations 
+      * Centering for: x | Trained
+
 # empty printing
 
     Code

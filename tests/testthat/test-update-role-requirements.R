@@ -74,8 +74,9 @@ test_that("will still error if a step actually used a role that set `bake = FALS
   rec <- update_role(rec, x, new_role = "id")
   rec <- update_role_requirements(rec, "id", bake = FALSE)
   rec <- step_scale(rec, x)
-  rec <- prep(rec, df)
-
+  expect_snapshot(
+    rec <- prep(rec, df)
+  )
   df$x <- NULL
 
   # Error is specific to details of `step_scale()`
