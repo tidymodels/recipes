@@ -78,10 +78,11 @@ step_ratio <-
            skip = FALSE,
            id = rand_id("ratio")) {
     if (is_empty(denom)) {
-      rlang::abort(
-        paste0(
-          "Please supply at least one denominator variable specification. ",
-          "See ?selections."
+      cli::cli_abort(
+        c(
+          "!" = "{.arg denom} must select at least one variable.",
+          "i" = "See {.help [?selections](recipes::selections)} \\
+              for more information."
         )
       )
     }

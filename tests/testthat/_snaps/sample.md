@@ -4,7 +4,7 @@
       iris_rec %>% step_sample(size = -1)
     Condition
       Error in `step_sample()`:
-      ! `size` should be a positive number or NULL.
+      ! `size` must be a number larger than or equal to 0 or `NULL`, not the number -1.
 
 ---
 
@@ -12,7 +12,7 @@
       iris_rec %>% step_sample(size = "a")
     Condition
       Error in `step_sample()`:
-      ! `size` should be a positive number or NULL.
+      ! `size` must be a number or `NULL`, not the string "a".
 
 ---
 
@@ -20,7 +20,7 @@
       iris_rec %>% step_sample(replace = "a")
     Condition
       Error in `step_sample()`:
-      ! `replace` should be a single logical.
+      ! `replace` should be a single logical, not a string.
 
 # sample with case weights
 

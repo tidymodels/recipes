@@ -69,10 +69,10 @@ update_fields <- function(object, changes) {
 
   for (nm in new_nms) {
     if (!(nm %in% old_nms)) {
-      rlang::abort(glue(
-        "The step you are trying to update, ",
-        "'{step_type}', does not have the '{nm}' field."
-      ))
+      cli::cli_abort(
+        "The step you are trying to update, {.fn {step_type}}, \\
+        does not have the {.field {nm}} field."
+      )
     }
 
     object[[nm]] <- changes[[nm]]
@@ -119,7 +119,9 @@ has_unique_names <- function(x) {
 
 validate_has_unique_names <- function(x) {
   if (!has_unique_names(x)) {
-    rlang::abort("All of the changes supplied in `...` must be uniquely named.")
+    cli::cli_abort(
+      "All of the changes supplied in {.arg ...} must be uniquely named."
+    )
   }
   invisible(x)
 }
@@ -128,9 +130,9 @@ validate_not_trained <- function(x) {
   if (is_trained(x)) {
     step_type <- class(x)[1]
 
-    rlang::abort(glue(
-      "To update '{step_type}', it must not be trained."
-    ))
+    cli::cli_abort(
+      "To update {.fn {step_type}}, it must not be trained."
+    )
   }
 
   invisible(x)

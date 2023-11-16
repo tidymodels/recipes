@@ -91,10 +91,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   # Check to make sure that no ordered levels are provided
   order_check <- map_lgl(objects, attr, "is_ordered")
   if (any(order_check)) {
-    rlang::abort(
-      "Columns contain ordered factors (which cannot be releveled) '",
-      x$ref_level, "': ",
-      paste0(names(order_check)[order_check], collapse = ", ")
+    offenders <- names(order_check)[order_check]
+    cli::cli_abort(
+      "Columns contain ordered factors (which cannot be releveled) \\
+      {.val {x$ref_level}}: {offenders}."
     )
   }
 
@@ -103,12 +103,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
     y = x$ref_level
   )
   if (any(ref_check)) {
-    rlang::abort(
-      paste0(
-        "Columns must contain the reference level '",
-        x$ref_level, "': ",
-        paste0(names(ref_check)[ref_check], collapse = ", ")
-      )
+    offenders <- names(order_check)[order_check]
+    cli::cli_abort(
+      "The following columns doesn't include required reference level \\
+      {.val {x$ref_level}}: {offenders}."
     )
   }
 

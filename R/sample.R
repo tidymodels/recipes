@@ -70,13 +70,14 @@ step_sample <- function(recipe,
   }
 
   if (!is_tune(size)) {
-    if (!is.null(size) & (!is.numeric(size) || size < 0)) {
-      rlang::abort("`size` should be a positive number or NULL.")
-    }
+    check_number_decimal(size, min = 0, allow_null = TRUE)
   }
   if (!is_tune(replace)) {
     if (!is.logical(replace)) {
-      rlang::abort("`replace` should be a single logical.")
+      cli::cli_abort(
+        "{.arg replace} should be a single logical, \\
+        not {.obj_type_friendly {replace}}."
+      )
     }
   }
 

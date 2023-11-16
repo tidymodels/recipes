@@ -88,14 +88,11 @@ step_string2factor <-
            ordered = FALSE,
            skip = FALSE,
            id = rand_id("string2factor")) {
+
     if (!is_tune(ordered)) {
-      if (!is.logical(ordered) || length(ordered) != 1) {
-        rlang::abort("`ordered` should be a single logical variable")
-      }
+      check_bool(ordered)
     }
-    if ((!is.null(levels) & !is.character(levels)) | is.list(levels)) {
-      rlang::abort("`levels` should be NULL or a single character vector")
-    }
+    check_character(levels, allow_null = TRUE)
 
     add_step(
       recipe,

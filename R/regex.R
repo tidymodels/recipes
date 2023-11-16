@@ -63,24 +63,24 @@ step_regex <- function(recipe,
                        skip = FALSE,
                        id = rand_id("regex")) {
   if (!is_tune(pattern)) {
-    if (!is.character(pattern)) {
-      rlang::abort("`pattern` should be a character string")
-    }
-    if (length(pattern) != 1) {
-      rlang::abort("`pattern` should be a single pattern")
-    }
+    check_string(pattern)
   }
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    rlang::abort(paste0(
-      "Valid options are: ",
-      paste0(valid_args, collapse = ", ")
+    cli::cli_abort(c(
+      "x" = "The following elements of {.arg options} are not allowed:",
+      "*" = "{.val {setdiff(names(options), valid_args)}}.",
+      "i" = "Valid options are: {.val {valid_args}}."
     ))
   }
 
   terms <- enquos(...)
   if (length(terms) > 1) {
-    rlang::abort("For this step, at most a single selector can be used.")
+    cli::cli_abort(c(
+      x = "For this step, only a single selector can be used.",
+      i = "The following {length(terms)} selectors were used: \\
+          {.var {as.character(terms)}}."
+    ))
   }
 
   add_step(
@@ -124,7 +124,11 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
 
   if (length(col_name) > 1) {
-    rlang::abort("The selector should select at most a single variable")
+    cli::cli_abort(c(
+      x = "The selector should select at most a single variable.",
+      i = "The following {length(col_name)} were selected: \\
+          {.and {.var {col_name}}}."
+    ))
   }
 
   step_regex_new(

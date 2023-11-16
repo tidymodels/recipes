@@ -100,11 +100,9 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check)) {
-    rlang::abort(
-      paste0(
-        "Columns already contain a level '", x$new_level, "': ",
-        paste0(names(level_check)[level_check], collapse = ", ")
-      )
+    offenders <- names(level_check)[level_check]
+    cli::cli_abort(
+      "Columns already contain the level {.val {x$new_level}}: {offenders}."
     )
   }
 

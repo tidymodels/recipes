@@ -15,7 +15,7 @@
     Condition
       Error in `step_relevel()`:
       Caused by error in `prep()`:
-      ! Columns must contain the reference level 'missing_level': city
+      ! The following columns doesn't include required reference level "missing_level": .
 
 # empty printing
 

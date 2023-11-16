@@ -141,7 +141,7 @@ range_check_func <- function(x,
   )
   min_x <- min(x)
   max_x <- max(x)
-  msg <- NULL
+
   if (length(slack_prop) == 1) {
     lower_allowed <- lower - ((upper - lower) * slack_prop)
     upper_allowed <- upper + ((upper - lower) * slack_prop)
@@ -149,30 +149,33 @@ range_check_func <- function(x,
     lower_allowed <- lower - ((upper - lower) * slack_prop[1])
     upper_allowed <- upper + ((upper - lower) * slack_prop[2])
   } else {
-    rlang::abort("slack_prop should be of length 1 or of length 2")
+    cli::cli_abort(
+      "{.arg slack_prop} should be of length 1 or 2, not {length(slack_prop)}."
+    )
   }
 
-  if (min_x < lower_allowed & max_x > upper_allowed) {
-    msg <- paste0(
-      "min ", colname, " is ", min_x, ", lower bound is ",
-      lower_allowed, ", max x is ", max_x, ", upper bound is ",
-      upper_allowed
-    )
-  } else if (min_x < lower_allowed) {
-    msg <- paste0(
-      "min ", colname, " is ", min_x, ", lower bound is ",
-      lower_allowed
-    )
-  } else if (max_x > upper_allowed) {
-    msg <- paste0(
-      "max ", colname, " is ", max_x, ", upper bound is ",
-      upper_allowed
+  msg <- NULL
+  if (min_x < lower_allowed) {
+    msg <- c(
+      msg,
+      "Smallest value of {.var {colname}} is {min_x}, \\
+      crossing the lower bound {lower_allowed}."
     )
   }
-  if (warn & !is.null(msg)) {
-    rlang::warn(msg)
-  } else if (!is.null(msg)) {
-    rlang::abort(msg)
+  if (max_x > upper_allowed) {
+    msg <- c(
+      msg,
+      "Largest value of {.var {colname}} is {max_x}, \\
+      crossing the upper bound {upper_allowed}."
+    )
+  }
+
+  if (!is.null(msg)) {
+    if (warn) {
+      cli::cli_warn(msg)
+    } else {
+      cli::cli_abort(msg)
+    }
   }
 }
 

@@ -124,19 +124,14 @@ step_window <-
            id = rand_id("window")) {
     if (!is_call(statistic) &&
       (!(statistic %in% roll_funs) | length(statistic) != 1)) {
-      rlang::abort(
-        paste0(
-          "`statistic` should be one of: ",
-          paste0("'", roll_funs, "'", collapse = ", ")
-        )
+      cli::cli_abort(
+        "{.arg statistic} should be one of: {roll_funs}."
       )
     }
 
     ## ensure size is odd, integer, and not too small
     if (!is_tune(size)) {
-      if (is.na(size) | is.null(size)) {
-        rlang::abort("`size` needs a value.")
-      }
+      check_number_decimal(size, min = 0)
 
       if (!is.integer(size)) {
         tmp <- size
@@ -155,10 +150,10 @@ step_window <-
         }
       }
       if (size %% 2 == 0) {
-        rlang::abort("`size` should be odd.")
+        cli::cli_abort("{.arg size} should be odd, not {size}.")
       }
       if (size < 3) {
-        rlang::abort("`size` should be at least 3.")
+        cli::cli_abort("{.arg size} should be at least 3, not {size}.")
       }
     }
     add_step(
@@ -207,12 +202,10 @@ prep.step_window <- function(x, training, info = NULL, ...) {
 
   if (!is.null(x$names)) {
     if (length(x$names) != length(col_names)) {
-      rlang::abort(
-        paste0(
-          "There were ", length(col_names), " term(s) selected but ",
-          length(x$names), " values for the new features ",
-          "were passed to `names`."
-        )
+      cli::cli_abort(
+        "There were {length(col_names)} term{?s} selected but \\
+        {length(x$names)} values for the new features were passed to \\
+        {.arg names}."
       )
     }
   }
@@ -239,7 +232,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   gap <- floor(window / 2)
   if (m - window <= 2) {
-    rlang::abort("The window is too large.")
+    cli::cli_abort("The window is too large.")
   }
 
   ## stats for centered window
