@@ -4,8 +4,8 @@
       rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1])
     Condition
       Error in `bake()`:
-      ! The following required columns are missing from `new_data`: "mpg".
-      i These columns have one of the following roles, which are required at `bake()` time: "predictor".
+      x The following required columns are missing from `new_data`: `mpg`.
+      i These columns have one of the following roles, which are required at `bake()` time: `predictor`.
 
 ---
 
@@ -13,8 +13,8 @@
       rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars[, c(2, 5)])
     Condition
       Error in `bake()`:
-      ! The following required columns are missing from `new_data`: "mpg".
-      i These columns have one of the following roles, which are required at `bake()` time: "predictor".
+      x The following required columns are missing from `new_data`: `mpg`.
+      i These columns have one of the following roles, which are required at `bake()` time: `predictor`.
 
 # empty printing
 
