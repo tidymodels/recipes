@@ -1,3 +1,12 @@
+# na_rm argument works for step_normalize
+
+    Code
+      rec_no_na_rm <- recipe(~., data = mtcars_na) %>% step_normalize(all_predictors(),
+      na_rm = FALSE) %>% prep()
+    Condition
+      Warning:
+      Columns `mpg`, `cyl`, `disp`, and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
+
 # warns on zv
 
     Code
