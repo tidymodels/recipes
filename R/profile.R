@@ -118,7 +118,7 @@ step_profile <- function(recipe,
 
   if (length(grid) != 2) {
     cli::cli_abort(c(
-      x = "`grid` should have two elements, not {length(grid)}.",
+      x = "`grid` should have 2 elements, not {length(grid)}.",
       i = "See {.help [?step_profile](recipes::step_profile)} for information."
     ))
   }
@@ -182,7 +182,8 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
     } else {
       msg <- c(
         msg,
-        i = "The {length(profile_name)} columns where selected: {profile_name}."
+        i = "The {length(profile_name)} columns where selected: \\
+        {.var {profile_name}}."
       )
     }
 

@@ -16,7 +16,7 @@
       Error in `step_profile()`:
       Caused by error in `prep()`:
       x `profile` should select only one column
-      i The 2 columns where selected: zip and beds.
+      i The 2 columns where selected: `zip` and `beds`.
 
 ---
 
@@ -33,7 +33,7 @@
         data = Sacramento)
     Condition
       Error in `step_profile()`:
-      x `grid` should have two elements, not 3.
+      x `grid` should have 2 elements, not 3.
       i See ?step_profile (`?recipes::step_profile()`) for information.
 
 ---

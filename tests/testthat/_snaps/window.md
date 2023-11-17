@@ -20,7 +20,7 @@
       rec %>% step_window(y1, statistic = "average")
     Condition
       Error in `step_window()`:
-      ! `statistic` should be one of: mean, median, sd, var, sum, prod, min, and max.
+      ! `statistic` should be one of: "mean", "median", "sd", "var", "sum", "prod", "min", or "max".
 
 ---
 

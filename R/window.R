@@ -125,7 +125,7 @@ step_window <-
     if (!is_call(statistic) &&
       (!(statistic %in% roll_funs) | length(statistic) != 1)) {
       cli::cli_abort(
-        "{.arg statistic} should be one of: {roll_funs}."
+        "{.arg statistic} should be one of: {.or {.val {roll_funs}}}."
       )
     }
 
