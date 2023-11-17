@@ -84,11 +84,9 @@ step_poly <-
 
     if (any(names(options) == "degree")) {
       degree <- options$degree
-      message(
-        paste(
-          "The `degree` argument is now a main argument instead of being",
-          "within `options`."
-        )
+      cli::cli_inform(
+        "The {.arg degree} argument is now a main argument instead of being \\
+        within {.arg options}."
       )
     }
 
