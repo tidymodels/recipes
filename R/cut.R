@@ -151,7 +151,7 @@ full_breaks_check <- function(breaks, call = rlang::caller_env()) {
     )
   }
   if (length(breaks) == 2) {
-    rlang::warn("In step_cut: this will create a factor with one value only.")
+    cli::cli_warn("This will create a factor with one value only.")
   }
 }
 

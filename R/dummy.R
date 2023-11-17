@@ -223,13 +223,10 @@ warn_new_levels <- function(dat, lvl, details = NULL) {
   ind <- which(!(dat %in% lvl))
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
-    rlang::warn(
-      paste0(
-        "There are new levels in a factor: ",
-        paste0(lvl2, collapse = ", "),
-        details
-      )
-    )
+    cli::cli_warn(c(
+      "!" = "There are new levels in a factor: {.var {lvl2}}.",
+      details
+    ))
   }
   invisible(NULL)
 }

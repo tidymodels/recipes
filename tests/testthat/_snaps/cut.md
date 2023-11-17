@@ -32,7 +32,7 @@
       full_breaks_check(c(10, 20))
     Condition
       Warning:
-      In step_cut: this will create a factor with one value only.
+      This will create a factor with one value only.
 
 # empty printing
 

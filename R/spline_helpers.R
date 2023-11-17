@@ -32,7 +32,7 @@ spline_msg <- function(x) {
   x <- as.character(x)
   x <- strsplit(x, "\\n")[[1]]
   x <- paste0(x[-1], collapse = ". ")
-  rlang::warn(trimws(x, which = "left"))
+  cli::cli_warn(trimws(x, which = "left"))
 }
 
 spline2_apply <- function(object, new_data) {

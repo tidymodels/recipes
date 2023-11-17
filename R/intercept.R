@@ -55,7 +55,7 @@ step_intercept <- function(recipe, ..., role = "predictor",
                            value = 1L,
                            skip = FALSE, id = rand_id("intercept")) {
   if (length(list(...)) > 0) {
-    rlang::warn("Selectors are not used for this step.")
+    cli::cli_warn("Selectors are not used for this step.")
   }
 
   check_number_decimal(value)

@@ -187,28 +187,25 @@ corr_filter <-
     if (any(!complete.cases(x))) {
       all_na <- apply(x, 2, function(x) all(is.na(x)))
       if (sum(all_na) >= nrow(x) - 1) {
-        rlang::warn("Too many correlations are `NA`; skipping correlation filter.")
+        cli::cli_warn(
+          "Too many correlations are `NA`; skipping correlation filter."
+        )
         return(numeric(0))
       } else {
         na_cols <- which(all_na)
         if (length(na_cols) > 0) {
           x[na_cols, ] <- 0
           x[, na_cols] <- 0
-          rlang::warn(
-            paste0(
-              "The correlation matrix has missing values. ",
-              length(na_cols),
-              " columns were excluded from the filter."
-            )
+          cli::cli_warn(
+            "The correlation matrix has missing values. \\
+            {length(na_cols)} column{?s} {?was/were} excluded from the filter."
           )
         }
       }
       if (any(is.na(x))) {
-        rlang::warn(
-          paste0(
-            "The correlation matrix has sporadic missing values. ",
-            "Some columns were excluded from the filter."
-          )
+        cli::cli_warn(
+          "The correlation matrix has sporadic missing values. \\
+          Some columns were excluded from the filter."
         )
         x[is.na(x)] <- 0
       }

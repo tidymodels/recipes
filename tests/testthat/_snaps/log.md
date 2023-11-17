@@ -4,7 +4,7 @@
       prep(rec2)
     Condition
       Warning:
-      When signed is TRUE, offset will be ignored
+      When `signed` is TRUE, `offset` will be ignored.
     Message
       
       -- Recipe ----------------------------------------------------------------------

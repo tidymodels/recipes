@@ -344,7 +344,9 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     cl <- make_pls_call(ncomp, nterm, y_names, x$options)
     res <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(res, "try-error")) {
-      rlang::warn(paste0("`step_pls()` failed: ", as.character(res)))
+      cli::cli_warn(
+        "{.fn step_pls failed with error: {as.character(res))}.",
+      )
       res <- list(x_vars = x_names, y_vars = y_names)
     } else {
       res <- butcher_pls(res)

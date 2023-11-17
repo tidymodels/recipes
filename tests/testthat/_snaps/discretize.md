@@ -36,7 +36,7 @@
       res <- discretize(1:2)
     Condition
       Warning:
-      Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
+      Data not binned; too few unique values per bin. Adjust `min_unique` as needed.
 
 ---
 
@@ -52,7 +52,7 @@
         prefix = "hello")) %>% prep()
     Condition
       Warning:
-      Note that the options `prefix` and `labels` will be applied to all variables
+      Note that the options `prefix` and `labels` will be applied to all variables.
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -82,7 +82,7 @@
       recipe(~., data = ex_tr) %>% step_discretize(x1, num_breaks = 100) %>% prep()
     Condition
       Warning:
-      Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
+      Data not binned; too few unique values per bin. Adjust `min_unique` as needed.
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -104,7 +104,7 @@
         prep()
     Condition
       Warning:
-      The prefix '@$' is not a valid R name. It has been changed to 'X..'.
+      The prefix "@$" is not a valid R name. It has been changed to "X..".
     Message
       
       -- Recipe ----------------------------------------------------------------------

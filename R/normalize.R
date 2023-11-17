@@ -111,15 +111,15 @@ step_normalize_new <-
 sd_check <- function(x) {
   zero_sd <- which(x < .Machine$double.eps)
   if (length(zero_sd) > 0) {
-    glue_cols <- glue::glue_collapse(
-      glue("`{names(zero_sd)}`"), sep = ", ", last = " and "
-    )
-    rlang::warn(
-      glue(
-        "Column(s) have zero variance so scaling cannot be used: {glue_cols}. ",
-        "Consider using `step_zv()` to remove those columns before normalizing"
-      )
-    )
+    offenders <- names(zero_sd)
+
+    cli::cli_warn(c(
+      "!" = "{cli::qty(offenders)} Column{?s} have zero variance so scaling \\
+            cannot be used: {offenders}.",
+      "i" = "Consider using {.help [?step_zv](recipes::step_zv)} to remove \\
+            those columns before normalizing."
+    ))
+
     x[zero_sd] <- 1
   }
 

@@ -5,7 +5,7 @@
         labels = "hello")) %>% prep()
     Condition
       Warning:
-      Note that the options `prefix` and `labels` will be applied to all variables
+      Note that the options `prefix` and `labels` will be applied to all variables.
       Error in `step_discretize()`:
       Caused by error in `cut.default()`:
       ! number of intervals and length of 'labels' differ
