@@ -82,7 +82,6 @@ step_time <-
 
         cli::cli_abort(c(
           x = "Possible values of {.arg features} are: {.or {.val {feat}}}.",
-          "*" = "{.or {.val {feat}}}.",
           i = "Invalid values were: {.val {offenders}}."
         ))
       }
