@@ -46,7 +46,7 @@ print_step <- function(tr_obj = NULL,
     )
   )
 
-  width_diff <- cli::console_width() * 1 - width_title
+  width_diff <- width - width_title
 
   if (trained) {
     elements <- tr_obj
