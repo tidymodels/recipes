@@ -143,9 +143,12 @@ create_full_breaks <- function(var, breaks) {
   sort(breaks)
 }
 
-full_breaks_check <- function(breaks) {
+full_breaks_check <- function(breaks, call = rlang::caller_env()) {
   if (length(breaks) == 1) {
-    rlang::abort("In step_cut: variable is invariant and equal to break point.")
+    cli::cli_abort(
+      "Variable is invariant and equal to break point.",
+      call = call
+    )
   }
   if (length(breaks) == 2) {
     rlang::warn("In step_cut: this will create a factor with one value only.")

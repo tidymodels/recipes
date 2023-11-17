@@ -23,8 +23,8 @@
     Code
       full_breaks_check(10)
     Condition
-      Error in `full_breaks_check()`:
-      ! In step_cut: variable is invariant and equal to break point.
+      Error:
+      ! Variable is invariant and equal to break point.
 
 ---
 

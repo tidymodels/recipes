@@ -5,7 +5,7 @@
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
-      ! The profiled variable cannot be in the list of variables to be fixed.
+      ! The profiled variable cannot be in the list of variables to be fixed. `sqft` was in both.
 
 ---
 
@@ -15,7 +15,8 @@
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
-      ! Only one variable should be profiled
+      x `profile` should select only one column
+      i 2 columns were selected: `zip` and `beds`.
 
 ---
 
@@ -23,7 +24,7 @@
       sacr_rec %>% step_profile(city, profile = vars(sqft), pct = -1) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
-      ! `pct should be on [0, 1]`
+      ! `pct` must be a number between 0 and 1, not the number -1.
 
 ---
 
@@ -32,7 +33,8 @@
         data = Sacramento)
     Condition
       Error in `step_profile()`:
-      ! `grid` should have two named elements. See ?step_profile
+      x `grid` should have 2 elements, not 3.
+      i See ?step_profile (`?recipes::step_profile()`) for information.
 
 ---
 
@@ -41,15 +43,15 @@
         len = 2)) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
-      ! `grid$pctl should be logical.`
+      ! `grid$pctl` must be `TRUE` or `FALSE`, not the number 1.
 
 ---
 
     Code
       fixed(rep(c(TRUE, FALSE), each = 5))
     Condition
-      Error in `error_cnd()`:
-      ! Conditions must have named data fields
+      Error in `fixed()`:
+      ! No method for determining a value to fix for objects of class: <logical>.
 
 # empty printing
 

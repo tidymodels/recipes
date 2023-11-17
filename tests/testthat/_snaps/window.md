@@ -4,7 +4,7 @@
       rec %>% step_window(y1, size = 6)
     Condition
       Error in `step_window()`:
-      ! `size` should be odd.
+      ! `size` should be odd, not 6.
 
 ---
 
@@ -12,7 +12,7 @@
       rec %>% step_window(y1, size = NA)
     Condition
       Error in `step_window()`:
-      ! `size` needs a value.
+      ! `size` must be a number, not `NA`.
 
 ---
 
@@ -20,7 +20,7 @@
       rec %>% step_window(y1, statistic = "average")
     Condition
       Error in `step_window()`:
-      ! `statistic` should be one of: 'mean', 'median', 'sd', 'var', 'sum', 'prod', 'min', 'max'
+      ! `statistic` should be one of: "mean", "median", "sd", "var", "sum", "prod", "min", or "max".
 
 ---
 
@@ -28,7 +28,7 @@
       rec %>% step_window(y1, size = 1)
     Condition
       Error in `step_window()`:
-      ! `size` should be at least 3.
+      ! `size` should be at least 3, not 1.
 
 ---
 
@@ -36,7 +36,7 @@
       rec %>% step_window(y1, size = 2)
     Condition
       Error in `step_window()`:
-      ! `size` should be odd.
+      ! `size` should be odd, not 2.
 
 ---
 
@@ -44,7 +44,7 @@
       rec %>% step_window(y1, size = -1)
     Condition
       Error in `step_window()`:
-      ! `size` should be at least 3.
+      ! `size` must be a number larger than or equal to 0, not the number -1.
 
 ---
 
@@ -80,7 +80,7 @@
       prep(rec %>% step_window(y1, size = 1000L), training = sim_dat)
     Condition
       Error in `step_window()`:
-      ! `size` should be odd.
+      ! `size` should be odd, not 1000.
 
 ---
 
@@ -89,7 +89,7 @@
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
-      ! There were 2 term(s) selected but 1 values for the new features were passed to `names`.
+      ! There were 2 terms selected but 1 value for the new features was passed to `names`.
 
 # check_name() is used
 

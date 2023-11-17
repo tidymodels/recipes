@@ -30,7 +30,7 @@
     Condition
       Error in `step_unknown()`:
       Caused by error in `prep()`:
-      ! Columns already contain a level 'FAIR_OAKS': city
+      ! Columns already contain the level "FAIR_OAKS": city.
 
 # empty printing
 

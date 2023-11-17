@@ -469,5 +469,5 @@ local_current_info <- function(nested_info, frame = parent.frame()) {
 #' @export
 #' @rdname has_role
 current_info <- function() {
-  cur_info_env %||% rlang::abort("Variable context not set")
+  cur_info_env %||% cli::cli_abort("Variable context not set.")
 }

@@ -14,7 +14,7 @@
       rec %>% step_string2factor(n, ordered = "yes") %>% prep(ex_dat)
     Condition
       Error in `step_string2factor()`:
-      ! `ordered` should be a single logical variable
+      ! `ordered` must be `TRUE` or `FALSE`, not the string "yes".
 
 # empty printing
 
