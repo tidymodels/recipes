@@ -147,7 +147,7 @@ trim <- function(x, trim) {
   n <- length(x[!na_ind])
   if (trim > 0 && n) {
     if (is.complex(x)) {
-      cli::cli_abort("trimmed means are not defined for complex data.")
+      cli::cli_abort("Trimmed means are not defined for complex data.")
     }
     if (trim >= 0.5)
       return(stats::median(x[!na_ind], na.rm = FALSE))
