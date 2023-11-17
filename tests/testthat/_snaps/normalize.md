@@ -13,7 +13,7 @@
       prep(rec1)
     Condition
       Warning:
-      !  Column have zero variance so scaling cannot be used: zero_variance.
+      !  The following column has zero variance so scaling cannot be used: zero_variance.
       i Consider using ?step_zv (`?recipes::step_zv()`) to remove those columns before normalizing.
     Message
       
