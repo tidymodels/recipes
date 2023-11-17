@@ -114,8 +114,8 @@ sd_check <- function(x) {
     offenders <- names(zero_sd)
 
     cli::cli_warn(c(
-      "!" = "{cli::qty(offenders)} Column{?s} have zero variance so scaling \\
-            cannot be used: {offenders}.",
+      "!" = "{cli::qty(offenders)} The following column{?s} {?has/have} zero \\
+            variance so scaling cannot be used: {offenders}.",
       "i" = "Consider using {.help [?step_zv](recipes::step_zv)} to remove \\
             those columns before normalizing."
     ))
