@@ -158,14 +158,14 @@ range_check_func <- function(x,
   if (min_x < lower_allowed) {
     msg <- c(
       msg,
-      "Smallest value of {.var {colname}} is {min_x}, \\
+      i = "Smallest value of {.var {colname}} is {min_x}, \\
       crossing the lower bound {lower_allowed}."
     )
   }
   if (max_x > upper_allowed) {
     msg <- c(
       msg,
-      "Largest value of {.var {colname}} is {max_x}, \\
+      i = "Largest value of {.var {colname}} is {max_x}, \\
       crossing the upper bound {upper_allowed}."
     )
   }

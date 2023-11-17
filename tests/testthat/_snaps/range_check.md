@@ -28,8 +28,8 @@
       range_check_func(x, 0, 100)
     Condition
       Error in `range_check_func()`:
-      ! Smallest value of `x` is -10, crossing the lower bound -5.
-      Largest value of `x` is 110, crossing the upper bound 105.
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 ---
 
@@ -37,7 +37,7 @@
       range_check_func(x, 0, 110)
     Condition
       Error in `range_check_func()`:
-      ! Smallest value of `x` is -10, crossing the lower bound -5.5.
+      i Smallest value of `x` is -10, crossing the lower bound -5.5.
 
 ---
 
@@ -45,7 +45,7 @@
       range_check_func(x, -5, 100)
     Condition
       Error in `range_check_func()`:
-      ! Largest value of `x` is 110, crossing the upper bound 105.25.
+      i Largest value of `x` is 110, crossing the upper bound 105.25.
 
 ---
 
@@ -53,7 +53,7 @@
       range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1))
     Condition
       Error in `range_check_func()`:
-      ! Smallest value of `x` is -10, crossing the lower bound -5.
+      i Smallest value of `x` is -10, crossing the lower bound -5.
 
 ---
 
@@ -61,7 +61,7 @@
       range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05))
     Condition
       Error in `range_check_func()`:
-      ! Largest value of `x` is 110, crossing the upper bound 105.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 ---
 
@@ -69,8 +69,8 @@
       range_check_func(x, 0, 100, warn = TRUE)
     Condition
       Warning:
-      Smallest value of `x` is -10, crossing the lower bound -5.
-      Largest value of `x` is 110, crossing the upper bound 105.
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 # in recipe
 
@@ -78,8 +78,8 @@
       bake(rec2, test)
     Condition
       Error in `range_check_func()`:
-      ! Smallest value of `x` is -10, crossing the lower bound -5.
-      Largest value of `x` is 110, crossing the upper bound 105.
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 ---
 
@@ -87,11 +87,11 @@
       bake(rec3, test)
     Condition
       Warning:
-      Smallest value of `x` is -10, crossing the lower bound -5.
-      Largest value of `x` is 110, crossing the upper bound 105.
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
       Warning:
-      Smallest value of `y` is -10, crossing the lower bound -2.5.
-      Largest value of `y` is 60, crossing the upper bound 52.5.
+      i Smallest value of `y` is -10, crossing the lower bound -2.5.
+      i Largest value of `y` is 60, crossing the upper bound 52.5.
     Output
       # A tibble: 2 x 2
             x     y
@@ -105,7 +105,7 @@
       bake(rec4, test)
     Condition
       Error in `range_check_func()`:
-      ! Largest value of `y` is 60, crossing the upper bound 55.
+      i Largest value of `y` is 60, crossing the upper bound 55.
 
 # empty printing
 

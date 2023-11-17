@@ -204,8 +204,8 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     if (length(x$names) != length(col_names)) {
       cli::cli_abort(
         "There were {length(col_names)} term{?s} selected but \\
-        {length(x$names)} values for the new features were passed to \\
-        {.arg names}."
+        {length(x$names)} value{?s} for the new features {?was/were} passed \\
+        to {.arg names}."
       )
     }
   }

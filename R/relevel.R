@@ -105,8 +105,8 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   if (any(ref_check)) {
     offenders <- names(order_check)[!order_check]
     cli::cli_abort(
-      "The following columns doesn't include required reference level \\
-      {.val {x$ref_level}}: {.var {offenders}}."
+      "{cli::qty(length(offenders))}The following column{?s} doesn't include \\
+      required reference level {.val {x$ref_level}}: {.var {offenders}}."
     )
   }
 

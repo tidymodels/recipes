@@ -16,7 +16,7 @@
       Error in `step_profile()`:
       Caused by error in `prep()`:
       x `profile` should select only one column
-      i The 2 columns where selected: `zip` and `beds`.
+      i 2 columns were selected: `zip` and `beds`.
 
 ---
 

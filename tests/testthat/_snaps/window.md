@@ -89,7 +89,7 @@
     Condition
       Error in `step_window()`:
       Caused by error in `prep()`:
-      ! There were 2 terms selected but 1 values for the new features were passed to `names`.
+      ! There were 2 terms selected but 1 value for the new features was passed to `names`.
 
 # check_name() is used
 

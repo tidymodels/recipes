@@ -182,7 +182,7 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
     } else {
       msg <- c(
         msg,
-        i = "The {length(profile_name)} columns where selected: \\
+        i = "{length(profile_name)} columns were selected: \\
         {.var {profile_name}}."
       )
     }
