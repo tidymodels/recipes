@@ -4,7 +4,7 @@
       filtering_trained <- prep(filtering, training = dat2, verbose = FALSE)
     Condition
       Warning:
-      The correlation matrix has missing values. 1 columns were excluded from the filter.
+      The correlation matrix has missing values. 1 column was excluded from the filter.
 
 # occasional missing values
 

@@ -137,15 +137,9 @@ step_window <-
         tmp <- size
         size <- as.integer(size)
         if (!isTRUE(all.equal(tmp, size))) {
-          rlang::warn(
-            paste0(
-              "`size` was not an integer (",
-              tmp,
-              ") and was ",
-              "converted to ",
-              size,
-              "."
-            )
+          cli::cli_warn(
+            "{.arg size} was not an integer ({tmp}) and was converted to \\
+            {size}."
           )
         }
       }

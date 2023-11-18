@@ -135,10 +135,12 @@ bake.step_unknown <- function(object, new_data, ...) {
       warn_new_levels(
         new_data[[col_name]],
         new_levels,
-        paste0(
-          "\nNew levels will be coerced to `NA` by `step_unknown()`.",
-          "\nConsider using `step_novel()` before `step_unknown()`."
+        c(
+          "*" = "New levels will be coerced to `NA` by {.fn step_unknown}.",
+          "i" = "Consider using {.help [?step_novel](recipes::step_novel)} \\
+                before {.fn step_unknown}."
         )
+
       )
     }
 

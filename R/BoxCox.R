@@ -115,10 +115,9 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
   )
   if (any(is.na(values))) {
     var_names <- names(values[is.na(values)])
-    vars <- glue::glue_collapse(glue::backtick(var_names), sep = ", ")
-    rlang::warn(paste(
-      "No Box-Cox transformation could be estimated for:", glue("{vars}")
-    ))
+    cli::cli_warn(
+      "No Box-Cox transformation could be estimated for: {.var {var_names}}."
+    )
   }
   values <- values[!is.na(values)]
   step_BoxCox_new(
@@ -158,10 +157,10 @@ print.step_BoxCox <-
 ## computes the new data
 bc_trans <- function(x, lambda, eps = .001) {
   if (any(x <= 0)) {
-    rlang::warn(paste0(
-      "Applying Box-Cox transformation to non-positive data in column `",
-      names(lambda), "`"
-    ))
+    cli::cli_warn(
+      "Applying Box-Cox transformation to non-positive data in column \\
+      {names(lambda)}"
+    )
   }
 
   if (is.na(lambda)) {
@@ -202,10 +201,10 @@ estimate_bc <- function(dat,
                         num_unique = 5) {
   eps <- .001
   if (length(unique(dat)) < num_unique) {
-    rlang::warn("Fewer than `num_unique` values in selected variable.")
+    cli::cli_warn("Fewer than {.arg num_unique} values in selected variable.")
     return(NA)
   } else if (any(dat <= 0)) {
-    rlang::warn("Non-positive values in selected variable.")
+    cli::cli_warn("Non-positive values in selected variable.")
     return(NA)
   }
 

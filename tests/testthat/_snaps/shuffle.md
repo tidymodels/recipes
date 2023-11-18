@@ -4,7 +4,7 @@
       dat4 <- bake(rec4, dat[1, ], everything())
     Condition
       Warning:
-      `new_data` contains a single row; unable to shuffle
+      `new_data` contains a single row; unable to shuffle.
 
 # empty printing
 

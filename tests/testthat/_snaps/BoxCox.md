@@ -8,7 +8,7 @@
       Warning:
       Fewer than `num_unique` values in selected variable.
       Warning:
-      No Box-Cox transformation could be estimated for: `x2`, `x3`
+      No Box-Cox transformation could be estimated for: `x2` and `x3`.
 
 # warnings
 
@@ -18,7 +18,7 @@
       Warning:
       Non-positive values in selected variable.
       Warning:
-      No Box-Cox transformation could be estimated for: `x1`
+      No Box-Cox transformation could be estimated for: `x1`.
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -93,7 +93,7 @@
       Warning:
       Fewer than `num_unique` values in selected variable.
       Warning:
-      No Box-Cox transformation could be estimated for: `x2`, `x3`
+      No Box-Cox transformation could be estimated for: `x2` and `x3`.
     Message
       
       -- Recipe ----------------------------------------------------------------------

@@ -133,7 +133,7 @@ bake.step_log <- function(object, new_data, ...) {
   }
 
   if (object$signed && object$offset != 0) {
-    rlang::warn("When signed is TRUE, offset will be ignored")
+    cli::cli_warn("When {.arg signed} is TRUE, {.arg offset} will be ignored.")
   }
 
   for (col_name in col_names) {

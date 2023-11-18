@@ -77,8 +77,8 @@
         all_numeric_predictors(), class = "class", threshold = -1) %>% prep()
     Condition
       Error in `step_classdist_shrunken()`:
-      Caused by error in `prep.step_classdist_shrunken()`:
-      ! all(threshold >= 0) & all(threshold <= 1) & length(threshold) ==  .... is not TRUE
+      Caused by error in `prep()`:
+      ! `threshold` must be a number between 0 and 1, not the number -1.
 
 ---
 
@@ -87,8 +87,8 @@
         all_numeric_predictors(), class = "class", sd_offset = -1) %>% prep()
     Condition
       Error in `step_classdist_shrunken()`:
-      Caused by error in `prep.step_classdist_shrunken()`:
-      ! all(sd_offset >= 0) & all(sd_offset <= 1) & length(sd_offset) ==  .... is not TRUE
+      Caused by error in `prep()`:
+      ! `sd_offset` must be a number between 0 and 1, not the number -1.
 
 # empty printing
 

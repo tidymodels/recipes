@@ -115,7 +115,10 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
   }
 
   if (x$factor != 1 & x$factor != 2) {
-    rlang::warn("Scaling `factor` should take either a value of 1 or 2")
+    cli::cli_warn(
+      "Scaling {.arg factor} should take either a value of 1 or 2, \\
+      not {x$factor}."
+    )
   }
 
   vars <- variances(training[, col_names], wts, na_rm = x$na_rm)

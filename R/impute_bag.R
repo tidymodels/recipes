@@ -301,7 +301,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
     pred_data <- old_data[missing_rows, preds, drop = FALSE]
     ## do a better job of checking this:
     if (all(is.na(pred_data))) {
-      rlang::warn("All predictors are missing; cannot impute")
+      cli::cli_warn("All predictors are missing; cannot impute.")
     } else {
       pred_vals <- predict(object$models[[col_name]], pred_data)
       # For an ipred bug reported on 2021-09-14:

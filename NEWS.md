@@ -18,6 +18,8 @@
 
 * Added warnings when `step_scale()`, `step_normalise()`, `step_center()` or `step_range()` result in `NaN` columns. (@mastoffel, #1221)
 
+* All warnings and errors have been updated to use the cli package for increased clarity and consistency. (#1237)
+
 # recipes 1.0.8
 
 ## Improvements

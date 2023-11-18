@@ -135,10 +135,19 @@ range_check_func <- function(x,
                              slack_prop = 0.05,
                              warn = FALSE,
                              colname = "x") {
-  stopifnot(
-    is.numeric(slack_prop),
-    is.numeric(x)
-  )
+  if (!is.numeric(x)) {
+    cli::cli_abort(
+      "{.arg x} must be a numeric vector, not {.obj_type_friendly {x}}."
+    )
+  }
+
+  if (!is.numeric(slack_prop)) {
+    cli::cli_abort(
+      "{.arg slack_prop} must be a numeric vector, \\
+      not {.obj_type_friendly {slack_prop}}."
+    )
+  }
+
   min_x <- min(x)
   max_x <- max(x)
 

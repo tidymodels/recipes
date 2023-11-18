@@ -5,7 +5,7 @@
         factor = 3) %>% prep(training = biomass)
     Condition
       Warning:
-      Scaling `factor` should take either a value of 1 or 2
+      Scaling `factor` should take either a value of 1 or 2, not 3.
 
 # na_rm argument works for step_scale
 
@@ -22,7 +22,8 @@
       prep(rec1)
     Condition
       Warning:
-      Column(s) have zero variance so scaling cannot be used: `zero_variance`. Consider using `step_zv()` to remove those columns before normalizing
+      !  The following column has zero variance so scaling cannot be used: zero_variance.
+      i Consider using ?step_zv (`?recipes::step_zv()`) to remove those columns before normalizing.
     Message
       
       -- Recipe ----------------------------------------------------------------------

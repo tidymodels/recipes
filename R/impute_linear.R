@@ -216,10 +216,10 @@ bake.step_impute_linear <- function(object, new_data, ...) {
     pred_data <- old_data[missing_rows, preds, drop = FALSE]
     ## do a better job of checking this:
     if (any(is.na(pred_data))) {
-      rlang::warn("
-        There were missing values in the predictor(s) used to impute;
-        imputation did not occur.
-      ")
+      cli::cli_warn(
+        "There were missing values in the predictor(s) used to impute; \\
+        imputation did not occur."
+      )
     } else {
       pred_vals <- predict(object$models[[col_name]], pred_data)
       pred_vals <- cast(pred_vals, new_data[[col_name]])

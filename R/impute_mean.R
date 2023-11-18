@@ -141,12 +141,14 @@ trim <- function(x, trim) {
   # Adapted from mean.default
   x <- sort(x, na.last = TRUE)
   na_ind <- is.na(x)
-  if (!is.numeric(trim) || length(trim) != 1L)
-    stop("'trim' must be numeric of length one")
+  if (!is.numeric(trim) || length(trim) != 1L) {
+    cli::cli_abort("{.arg trim} must be numeric of length one.")
+  }
   n <- length(x[!na_ind])
   if (trim > 0 && n) {
-    if (is.complex(x))
-      stop("trimmed means are not defined for complex data")
+    if (is.complex(x)) {
+      cli::cli_abort("Trimmed means are not defined for complex data.")
+    }
     if (trim >= 0.5)
       return(stats::median(x[!na_ind], na.rm = FALSE))
     lo <- floor(n * trim) + 1

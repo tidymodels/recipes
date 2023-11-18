@@ -4,7 +4,7 @@
       range_check_func(as.character(x), -10, 110)
     Condition
       Error in `range_check_func()`:
-      ! is.numeric(x) is not TRUE
+      ! `x` must be a numeric vector, not a character vector.
 
 ---
 
@@ -12,7 +12,7 @@
       range_check_func(x, -10, 110, "a")
     Condition
       Error in `range_check_func()`:
-      ! is.numeric(slack_prop) is not TRUE
+      ! `slack_prop` must be a numeric vector, not a string.
 
 ---
 

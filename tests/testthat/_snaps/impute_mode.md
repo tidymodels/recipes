@@ -13,8 +13,8 @@
       imputed_te <- bake(imputed, credit_te)
     Condition
       Warning:
-      'ptype' was added to `step_impute_mode()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      ! `ptype` was added to `step_impute_mode()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # Deprecation warning
 

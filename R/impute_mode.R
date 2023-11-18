@@ -165,12 +165,11 @@ bake.step_impute_mode <- function(object, new_data, ...) {
       next
     }
     if (is.null(object$ptype)) {
-      rlang::warn(
-        paste0(
-          "'ptype' was added to `step_impute_mode()` after this recipe was created.\n",
-          "Regenerate your recipe to avoid this warning."
-        )
-      )
+      cli::cli_warn(c(
+        "!" = "{.arg ptype} was added to {.fn step_impute_mode} after this \\
+              recipe was created.",
+        "i" = "Regenerate your recipe to avoid this warning."
+      ))
     } else {
       new_data[[col_name]] <- vctrs::vec_cast(
         new_data[[col_name]],

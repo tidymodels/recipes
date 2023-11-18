@@ -66,7 +66,7 @@ step_sample <- function(recipe,
                         skip = TRUE,
                         id = rand_id("sample")) {
   if (length(list(...)) > 0) {
-    rlang::warn("Selectors are not used for this step.")
+    cli::cli_warn("Selectors are not used for this step.")
   }
 
   if (!is_tune(size)) {
