@@ -208,7 +208,8 @@ columns <code>terms</code>, <code>value</code> , and <code>id</code>:</p>
 <span class="r-in"><span>  <span class="fu">step_discretize</span><span class="op">(</span><span class="va">carbon</span>, <span class="va">hydrogen</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_tr</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Note that the options `prefix` and `labels` will be applied to all variables</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Note that the options `prefix` and `labels` will be applied to all</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> variables.</span>
 <span class="r-in"><span><span class="va">binned_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_te</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">binned_te</span><span class="op">$</span><span class="va">carbon</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
