@@ -250,8 +250,7 @@ bake.step_pca <- function(object, new_data, ...) {
 
   pca_vars <- rownames(object$res$rotation)
   comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
-    object$res$rotation
-  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+    object$res$rotation[, seq_len(object$num_comp), drop = FALSE]
   comps <- check_name(comps, new_data, object)
   new_data <- vec_cbind(new_data, as_tibble(comps))
   new_data <- remove_original_cols(new_data, object, pca_vars)
