@@ -2,28 +2,16 @@
 
     Code
       no_sulfur_trained <- prep(no_sulfur)
-    Condition
-      Warning in `prep()`:
-      ! The previous data will be used by `prep()`.
-      i The data passed using `training` will be ignored.
 
 ---
 
     Code
       sequentially <- prep(scale_last)
-    Condition
-      Warning in `prep()`:
-      ! The previous data will be used by `prep()`.
-      i The data passed using `training` will be ignored.
 
 ---
 
     Code
       in_stages_trained <- prep(in_stages)
-    Condition
-      Warning in `prep()`:
-      ! The previous data will be used by `prep()`.
-      i The data passed using `training` will be ignored.
 
 ---
 
