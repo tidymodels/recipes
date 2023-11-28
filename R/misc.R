@@ -635,7 +635,8 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
   # In case a variable has multiple roles
   vars <- unique(rec$var_info$variable)
 
-  if (is.null(x)) {
+  training_null <- is.null(x)
+  if (training_null) {
     if (fresh) {
       cli::cli_abort(
         "A training set must be supplied to the {.arg training} argument \\
@@ -670,7 +671,7 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
         call = call
       )
     }
-    if (!is.null(rec$template)) {
+    if (!training_null) {
       cli::cli_warn(
         c(
           "!" = "The previous data will be used by {.fn prep}.",
