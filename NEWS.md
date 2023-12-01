@@ -1,6 +1,6 @@
 # recipes (development version)
 
-* Minor speed-up and reduced memory consumption for `step_pca` in the `bake` stage by reducing unused multiplications (#1265)
+* Minor speed-up and reduced memory consumption for `step_pca()` in the `bake()` stage by reducing unused multiplications (@jkennel, #1265)
 
 * Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
 
