@@ -80,7 +80,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Scaling for: disp, hp, drat, wt, qsec, vs, am, gear, carb | Trained, weighted
+      * Scaling for: disp, hp, drat, wt, qsec, vs, am, ... | Trained, weighted
 
 ---
 
@@ -100,8 +100,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Scaling for: cyl, disp, hp, drat, qsec, vs, am, ... | Trained, ignored
-        weights
+      * Scaling for: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored weights
 
 # empty printing
 
@@ -152,7 +151,7 @@
       predictor: 10
       
       -- Operations 
-      * Scaling for: disp, wt
+      * Scaling for: disp and wt
 
 ---
 
@@ -171,5 +170,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Scaling for: disp, wt | Trained
+      * Scaling for: disp and wt | Trained
 

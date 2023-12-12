@@ -56,7 +56,7 @@
       predictor: 4
       
       -- Operations 
-      * Character variables from: y, z
+      * Character variables from: y and z
 
 ---
 
@@ -74,5 +74,5 @@
       Training data contained 200 data points and no incomplete rows.
       
       -- Operations 
-      * Character variables from: y, z | Trained
+      * Character variables from: y and z | Trained
 

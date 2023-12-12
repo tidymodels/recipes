@@ -31,7 +31,7 @@
       Training data contained 300 data points and no incomplete rows.
       
       -- Operations 
-      * Distance to shrunken centroids with: x, y | Trained
+      * Distance to shrunken centroids with: x and y | Trained
 
 ---
 
@@ -158,5 +158,5 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Distance to shrunken centroids with: Sepal.Length, Sepal.Width, ... | Trained
+      * Distance to shrunken centroids with: Sepal.Length, ... | Trained
 

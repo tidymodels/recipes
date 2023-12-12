@@ -126,5 +126,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Check missing values for: mpg, cyl, disp, hp, drat, wt, qsec, ... | Trained
+      * Check missing values for: mpg, cyl, disp, hp, drat, wt, ... | Trained
 

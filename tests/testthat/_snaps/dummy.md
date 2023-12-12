@@ -178,7 +178,7 @@
       predictor: 7
       
       -- Operations 
-      * Dummy variables from: city, zip
+      * Dummy variables from: city and zip
 
 ---
 
@@ -197,5 +197,5 @@
       Training data contained 932 data points and no incomplete rows.
       
       -- Operations 
-      * Dummy variables from: city, zip | Trained
+      * Dummy variables from: city and zip | Trained
 

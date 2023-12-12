@@ -141,5 +141,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Checking the class(es) for: cyl, disp, hp, drat, wt, qsec, vs, ... | Trained
+      * Checking the class(es) for: cyl, disp, hp, drat, wt, qsec, ... | Trained
 

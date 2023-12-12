@@ -28,7 +28,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
+      * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
 
 # normalizing with case weights
 
@@ -48,7 +48,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: disp, hp, drat, wt, qsec, ... | Trained, weighted
+      * Centering and scaling for: disp, hp, drat, wt, ... | Trained, weighted
 
 ---
 
@@ -68,8 +68,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: cyl, disp, hp, drat, ... | Trained, ignored
-        weights
+      * Centering and scaling for: cyl, disp, hp, ... | Trained, ignored weights
 
 # warns when NaN is returned due to Inf or -Inf
 
@@ -162,7 +161,7 @@
       predictor: 10
       
       -- Operations 
-      * Centering and scaling for: disp, wt
+      * Centering and scaling for: disp and wt
 
 ---
 
@@ -181,5 +180,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: disp, wt | Trained
+      * Centering and scaling for: disp and wt | Trained
 
