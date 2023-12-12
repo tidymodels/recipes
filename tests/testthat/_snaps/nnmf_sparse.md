@@ -66,7 +66,7 @@
       predictor: 10
       
       -- Operations 
-      * Non-negative matrix factorization for: disp, drat
+      * Non-negative matrix factorization for: disp and drat
 
 ---
 
@@ -85,5 +85,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Non-negative matrix factorization for: disp, drat | Trained
+      * Non-negative matrix factorization for: disp and drat | Trained
 

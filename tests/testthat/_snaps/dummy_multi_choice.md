@@ -93,5 +93,5 @@
       Training data contained 4 data points and 4 incomplete rows.
       
       -- Operations 
-      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
+      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, ... | Trained
 

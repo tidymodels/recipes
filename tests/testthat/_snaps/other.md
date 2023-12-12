@@ -101,7 +101,7 @@
       predictor: 2
       
       -- Operations 
-      * Collapsing factor levels for: city, zip
+      * Collapsing factor levels for: city and zip
 
 ---
 
@@ -119,5 +119,5 @@
       Training data contained 732 data points and no incomplete rows.
       
       -- Operations 
-      * Collapsing factor levels for: city, zip | Trained
+      * Collapsing factor levels for: city and zip | Trained
 

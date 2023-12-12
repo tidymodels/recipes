@@ -16,8 +16,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Centering for: disp, hp, drat, wt, qsec, vs, am, gear, ... | Trained,
-        weighted
+      * Centering for: disp, hp, drat, wt, qsec, vs, am, ... | Trained, weighted
 
 ---
 
@@ -37,7 +36,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Centering for: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored weights
+      * Centering for: cyl, disp, hp, drat, qsec, ... | Trained, ignored weights
 
 # warns when NaN is returned due to Inf or -Inf
 

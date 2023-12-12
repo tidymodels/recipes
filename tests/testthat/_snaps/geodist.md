@@ -178,7 +178,7 @@
       predictor: 10
       
       -- Operations 
-      * Geographical distances from 0.5 x 0.25 using: NULL, NULL
+      * Geographical distances from 0.5 x 0.25 using: NULL and NULL
 
 ---
 
@@ -221,7 +221,7 @@
       predictor: 2
       
       -- Operations 
-      * Geographical distances from 0.5 x 0.25 using: x, y
+      * Geographical distances from 0.5 x 0.25 using: x and y
 
 ---
 
@@ -239,5 +239,5 @@
       Training data contained 10 data points and 1 incomplete row.
       
       -- Operations 
-      * Geographical distances from 0.5 x 0.25 using: x, y | Trained
+      * Geographical distances from 0.5 x 0.25 using: x and y | Trained
 

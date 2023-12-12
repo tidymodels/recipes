@@ -95,7 +95,7 @@
       predictor: 5
       
       -- Operations 
-      * Ratios from: all_numeric(), all_numeric()
+      * Ratios from: all_numeric() and all_numeric()
 
 ---
 

@@ -36,8 +36,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Spatial sign on: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored
-        weights
+      * Spatial sign on: cyl, disp, hp, drat, qsec, ... | Trained, ignored weights
 
 # empty printing
 
@@ -88,9 +87,9 @@
       predictor: 5
       
       -- Operations 
-      * Centering for: carbon, hydrogen
-      * Scaling for: carbon, hydrogen
-      * Spatial sign on: carbon, hydrogen
+      * Centering for: carbon and hydrogen
+      * Scaling for: carbon and hydrogen
+      * Spatial sign on: carbon and hydrogen
 
 ---
 
@@ -109,7 +108,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Centering for: carbon, hydrogen | Trained
-      * Scaling for: carbon, hydrogen | Trained
-      * Spatial sign on: carbon, hydrogen | Trained
+      * Centering for: carbon and hydrogen | Trained
+      * Scaling for: carbon and hydrogen | Trained
+      * Spatial sign on: carbon and hydrogen | Trained
 

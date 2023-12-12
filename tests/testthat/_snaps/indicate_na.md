@@ -85,5 +85,5 @@
       Training data contained 153 data points and 42 incomplete rows.
       
       -- Operations 
-      * Creating missing data variable indicators for: Solar.R, Wind, ... | Trained
+      * Creating missing data variable indicators for: Solar.R, ... | Trained
 
