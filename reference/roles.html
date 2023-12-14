@@ -4,7 +4,7 @@ role to variables that do not yet have a declared role.
 add_role() adds an additional role to variables that already have a role
 in the recipe. It does not overwrite old roles, as a single variable can have
 multiple roles.
-remove_role() eliminates a single existing role in the recipe."><title>Manually Alter Roles — roles • recipes</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.7/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.7/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Manually Alter Roles — roles"><meta property="og:description" content="update_role() alters an existing role in the recipe or assigns an initial
+remove_role() eliminates a single existing role in the recipe."><title>Manually alter roles — roles • recipes</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.8/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.8/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Manually alter roles — roles"><meta property="og:description" content="update_role() alters an existing role in the recipe or assigns an initial
 role to variables that do not yet have a declared role.
 add_role() adds an additional role to variables that already have a role
 in the recipe. It does not overwrite old roles, as a single variable can have
@@ -20,7 +20,7 @@ remove_role() eliminates a single existing role in the recipe."><meta property="
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ remove_role() eliminates a single existing role in the recipe."><meta property="
 </nav><div class="container template-reference-topic" id="container">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Manually Alter Roles</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Manually alter roles</h1>
       <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/HEAD/R/roles.R" class="external-link"><code>R/roles.R</code></a></small>
       <div class="d-none name"><code>roles.Rd</code></div>
     </div>
@@ -102,8 +102,8 @@ multiple roles.</p>
 
 
 <dt>...</dt>
-<dd><p>One or more selector functions to choose which variables are
-being assigned a role. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose which variables are being
+assigned a role. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt>new_role</dt>
@@ -118,8 +118,8 @@ as the <em>first</em> type you see for that variable in <code>summary(recipe)</c
 
 <dt>old_role</dt>
 <dd><p>A character string for the specific role to update for the
-variables selected by <code>...</code>. <code>update_role()</code> accepts a <code>NULL</code> as long as the
-variables have only a single role.</p></dd>
+variables selected by <code>...</code>. <code>update_role()</code> accepts a <code>NULL</code> as long as
+the variables have only a single role.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +130,13 @@ variables have only a single role.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Variables can have any arbitrary role (see the examples) but there are two
+    <p><code>update_role()</code>, <code>add_role()</code> and <code>remove_role()</code> will be applied on a recipe
+before any of the steps or checks, regardless of where they are located in
+position. This means that roles can only be changed with these three
+functions for columns that are already present in the original data supplied
+to <code><a href="recipe.html">recipe()</a></code>. See the <code>role</code> argument in some step functions to update
+roles for columns created by steps.</p>
+<p>Variables can have any arbitrary role (see the examples) but there are two
 special standard roles, <code>"predictor"</code> and <code>"outcome"</code>. These two roles are
 typically required when fitting a model.</p>
 <p><code>update_role()</code> should be used when a variable doesn't currently have a role
@@ -141,9 +147,8 @@ throw an error when the current role is missing (i.e. <code>NA</code>).</p>
 <code>new_role</code>, a warning is emitted and that variable is skipped so no duplicate
 roles are added.</p>
 <p>Adding or updating roles is a useful way to group certain variables that
-don't fall in the standard <code>"predictor"</code> bucket. You can perform a step
-on all of the variables that have a custom role with the selector
-<code><a href="has_role.html">has_role()</a></code>.</p><div class="section">
+don't fall in the standard <code>"predictor"</code> bucket. You can perform a step on
+all of the variables that have a custom role with the selector <code><a href="has_role.html">has_role()</a></code>.</p><div class="section">
 <h3 id="effects-of-non-standard-roles">Effects of non-standard roles<a class="anchor" aria-label="anchor" href="#effects-of-non-standard-roles"></a></h3>
 
 
@@ -166,9 +171,11 @@ on all of the variables that have a custom role with the selector
 <span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `bake()`:</span></span>
-<span><span class="co">#&gt; ! The following required columns are missing from `new_data`: "sample".</span></span>
-<span><span class="co">#&gt; i These columns have one of the following roles, which are required at `bake()` time: "id variable".</span></span>
-<span><span class="co">#&gt; i If these roles are not required at `bake()` time, use `update_role_requirements(role = "your_role", bake = FALSE)`.</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; x The following required columns are missing from `new_data`: `sample`.</span></span>
+<span><span class="co">#&gt; i These columns have one of the following roles, which are required at `bake()`</span></span>
+<span><span class="co">#&gt;   time: `id variable`.</span></span>
+<span><span class="co">#&gt; i If these roles are not required at `bake()` time, use</span></span>
+<span><span class="co">#&gt;   `update_role_requirements(role = "your_role", bake = FALSE)`.</span></span></code></pre><p></p></div>
 <p>As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the <code>sample</code> column from <code>biomass</code> before calling <code><a href="recipe.html">recipe()</a></code>. In general, predictors and non-standard roles that are supplied to <code><a href="recipe.html">recipe()</a></code> should be present at both <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code> time.</p>
 <p>If you can't remove <code>sample</code> for some reason, then the second best way to get around this issue is to tell recipes that the <code>"id variable"</code> role isn't required at <code><a href="bake.html">bake()</a></code> time. You can do that by using <code><a href="update_role_requirements.html">update_role_requirements()</a></code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass_train</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>

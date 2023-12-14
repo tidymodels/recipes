@@ -16,9 +16,9 @@ predictors, with special attention to interaction terms and contrasts.
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/Source_Code_Pro-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Source_Code_Pro-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Handling categorical predictors">
@@ -39,7 +39,7 @@ predictors, with special attention to interaction terms and contrasts.
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -260,10 +260,10 @@ formula, such as</p>
 model formulae</a>, using a <code>*</code> between two variables would
 expand to <code>a*b = a + b + a:b</code> so that the main effects are
 included. In <a href="https://recipes.tidymodels.org/reference/step_interact.html"><code>step_interact</code></a>,
-you can do use <code>*</code>, but only the interactions are recorded as
-columns that needs to be created.</p>
+you can use <code>*</code>, but only the interactions are recorded as
+columns that need to be created.</p>
 <p>One thing that <code>recipes</code> does differently than base R is
-to construct the design matrix in sequential iterations. This is
+it constructs the design matrix in sequential iterations. This is
 relevant when thinking about interactions between continuous and
 categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the
@@ -285,13 +285,13 @@ interactions are created:</p>
 <span><span class="co">#&gt; 101                              0                           6.3</span></span></code></pre></div>
 <p>With recipes, you create them sequentially. This raises an issue: do
 I have to type out all of the interaction effects by their specific
-names when using dummy variable?</p>
+names when using dummy variables?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Must I do this?</span></span>
 <span><span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species_versicolor</span><span class="op">:</span><span class="va">Sepal.Length</span> <span class="op">+</span> </span>
 <span>                   <span class="va">Species_virginica</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> </span></code></pre></div>
-<p>Note only is this a pain, but it may not be obvious what dummy
+<p>Not only is this a pain, but it may not be obvious what dummy
 variables are available (especially when <a href="https://recipes.tidymodels.org/reference/step_other.html"><code>step_other</code></a>
 is used).</p>
 <p>The solution is to use a selector:</p>
@@ -317,8 +317,8 @@ is used).</p>
 <p>What happens here is that <code>starts_with("Species")</code> is
 executed on the data that are available when the previous steps have
 been applied to the data. That means that the dummy variable columns are
-present. The results of this selectors are then translated to an
-additive function of the results. In this case, that means that</p>
+present. The results of this selector are then translated to an additive
+function of the results. In this case, that means that</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p>becomes</p>
@@ -384,7 +384,7 @@ will make sure that all <em>C</em> are produced:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                  1                  0                 0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></span></code></pre></div>
-<p>The option is named that way since this is that the computer
+<p>The option is named that way since this is what the computer
 scientists call <a href="https://www.google.com/search?q=one-hot+encoding" class="external-link">“one-hot
 encoding”</a>.</p>
 <p><strong><em>Warning!</em></strong> (again)</p>
@@ -433,7 +433,7 @@ it reverts back to the default encoding.</p>
 <p>When a recipe is used with new samples, some factors may have
 acquired new levels that were not present when <code>prep</code> was
 run. If <code>step_dummy</code> encounters this situation, a warning is
-issues (“There are new levels in a factor”) and the indicator variables
+issued (“There are new levels in a factor”) and the indicator variables
 that correspond to the factor are assigned missing values.</p>
 <p>One way around this is to use <code>step_other</code>. This step can
 convert infrequently occurring levels to a new category (that defaults
