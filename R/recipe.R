@@ -282,7 +282,8 @@ inline_check <- function(x) {
           found: {.and {.code {funs}}}.",
       i = "Use steps to do transformations instead.",
       i = "If your modeling engine uses special terms in formulas, pass \\
-          that formula to workflows as a model formula."
+          that formula to workflows as a \\
+          {.help [model formula](parsnip::model_formula)}."
     ))
   }
 
