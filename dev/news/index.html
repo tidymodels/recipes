@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.8.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.9.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,18 +68,27 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.9" id="recipes-109">recipes 1.0.9<a class="anchor" aria-label="anchor" href="#recipes-109"></a></h2><p class="text-muted">CRAN release: 2023-12-13</p>
+<div class="section level3">
+<h3 id="improvements-1-0-9">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-0-9"></a></h3>
 <ul><li><p>Minor speed-up and reduced memory consumption for <code><a href="../reference/step_pca.html">step_pca()</a></code> in the <code><a href="../reference/bake.html">bake()</a></code> stage by reducing unused multiplications (<a href="https://github.com/jkennel" class="external-link">@jkennel</a>, <a href="https://github.com/tidymodels/recipes/issues/1265" class="external-link">#1265</a>)</p></li>
-<li><p>Fixed bug where <code><a href="../reference/step_factor2string.html">step_factor2string()</a></code> if <code>strings_as_factors = TRUE</code> is set in <code><a href="../reference/prep.html">prep()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/317" class="external-link">#317</a>)</p></li>
 <li><p>Document that <code><a href="../reference/roles.html">update_role()</a></code>, <code><a href="../reference/roles.html">add_role()</a></code> and <code><a href="../reference/roles.html">remove_role()</a></code> are applied before steps and checks. (<a href="https://github.com/tidymodels/recipes/issues/778" class="external-link">#778</a>)</p></li>
 <li><p>Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (<a href="https://github.com/tidymodels/recipes/issues/936" class="external-link">#936</a>)</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> will now error if passed character instead of loudly ignoring them. Only applicable when setting <code>strings_as_factors = FALSE</code>. (<a href="https://github.com/tidymodels/recipes/issues/1233" class="external-link">#1233</a>)</p></li>
-<li><p>Fixed bug where <code><a href="../reference/tidy.recipe.html">tidy.step_cut()</a></code> always returned zero row tibbles for trained recipes. (<a href="https://github.com/tidymodels/recipes/issues/1229" class="external-link">#1229</a>)</p></li>
 <li><p>It is now documented that <code><a href="../reference/step_spline_b.html">step_spline_b()</a></code> can be made periodic. (<a href="https://github.com/tidymodels/recipes/issues/1223" class="external-link">#1223</a>)</p></li>
 <li><p><code><a href="../reference/prep.html">prep()</a></code> now correctly throws a warning when <code>training</code> argument is set when prepping a prepped recipe, telling the user that it will be ignored. (<a href="https://github.com/tidymodels/recipes/issues/1244" class="external-link">#1244</a>)</p></li>
 <li><p>When errors are thrown about wrongly typed input to steps, the offending variables and their types are now listed. (<a href="https://github.com/tidymodels/recipes/issues/1217" class="external-link">#1217</a>)</p></li>
-<li><p>Added warnings when <code><a href="../reference/step_scale.html">step_scale()</a></code>, <code>step_normalise()</code>, <code><a href="../reference/step_center.html">step_center()</a></code> or <code><a href="../reference/step_range.html">step_range()</a></code> result in <code>NaN</code> columns. (<a href="https://github.com/mastoffel" class="external-link">@mastoffel</a>, <a href="https://github.com/tidymodels/recipes/issues/1221" class="external-link">#1221</a>)</p></li>
 <li><p>All warnings and errors have been updated to use the cli package for increased clarity and consistency. (<a href="https://github.com/tidymodels/recipes/issues/1237" class="external-link">#1237</a>)</p></li>
+<li><p>Added warnings when <code><a href="../reference/step_scale.html">step_scale()</a></code>, <code>step_normalise()</code>, <code><a href="../reference/step_center.html">step_center()</a></code> or <code><a href="../reference/step_range.html">step_range()</a></code> result in <code>NaN</code> columns. (<a href="https://github.com/mastoffel" class="external-link">@mastoffel</a>, <a href="https://github.com/tidymodels/recipes/issues/1221" class="external-link">#1221</a>)</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-9">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-9"></a></h3>
+<ul><li><p>Fixed bug where <code><a href="../reference/step_factor2string.html">step_factor2string()</a></code> if <code>strings_as_factors = TRUE</code> is set in <code><a href="../reference/prep.html">prep()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/317" class="external-link">#317</a>)</p></li>
+<li><p>Fixed bug where <code><a href="../reference/tidy.recipe.html">tidy.step_cut()</a></code> always returned zero row tibbles for trained recipes. (<a href="https://github.com/tidymodels/recipes/issues/1229" class="external-link">#1229</a>)</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.8" id="recipes-108">recipes 1.0.8<a class="anchor" aria-label="anchor" href="#recipes-108"></a></h2><p class="text-muted">CRAN release: 2023-08-25</p>
 <div class="section level3">
