@@ -25,7 +25,7 @@
       factors <- prep(factors, training = sacr_missing)
     Condition
       Warning:
-      ! There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 ---
 
@@ -33,7 +33,7 @@
       factors_data_1 <- bake(factors, new_data = sacr_missing)
     Condition
       Warning:
-      ! There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 # tests for NA values in ordered factor
 
@@ -41,7 +41,7 @@
       factors <- prep(factors, training = sacr_ordered)
     Condition
       Warning:
-      ! There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 ---
 
@@ -49,7 +49,7 @@
       factors_data_1 <- bake(factors, new_data = sacr_ordered)
     Condition
       Warning:
-      ! There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 # new levels
 
@@ -57,7 +57,7 @@
       recipes:::warn_new_levels(testing$x1, levels(training$x1))
     Condition
       Warning:
-      ! There are new levels in a factor: C
+      ! There are new levels in a factor: `C`.
 
 ---
 
@@ -65,7 +65,7 @@
       bake(rec, new_data = testing)
     Condition
       Warning:
-      ! There are new levels in a factor: C
+      ! There are new levels in a factor: `C`.
     Output
       # A tibble: 10 x 2
          y      x1_B

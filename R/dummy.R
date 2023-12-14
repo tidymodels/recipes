@@ -224,7 +224,7 @@ warn_new_levels <- function(dat, lvl, details = NULL) {
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
     cli::cli_warn(c(
-      "!" = "There are new levels in a factor: {lvl2}",
+      "!" = "There are new levels in a factor: {.var {lvl2}}.",
       details
     ))
   }
