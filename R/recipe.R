@@ -194,7 +194,7 @@ recipe.data.frame <-
 #' @export
 recipe.formula <- function(formula, data, ...) {
   # check for minus:
-  f_funcs <- fun_calls(formula)
+  f_funcs <- fun_calls(formula, data)
   if (any(f_funcs == "-")) {
     cli::cli_abort(c(
       "x" = "{.code -} is not allowed in a recipe formula.",
@@ -230,7 +230,7 @@ form2args <- function(formula, data, ..., call = rlang::caller_env()) {
   }
 
   ## check for in-line formulas
-  inline_check(formula)
+  inline_check(formula, data)
 
   if (!is_tibble(data)) {
     data <- as_tibble(data)
@@ -271,9 +271,9 @@ form2args <- function(formula, data, ..., call = rlang::caller_env()) {
   list(x = data, vars = vars, roles = roles)
 }
 
-inline_check <- function(x) {
-  funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
+inline_check <- function(x, data) {
+  funs <- fun_calls(x, data)
+  funs <- funs[!(funs %in% c("~", "+", "-", "."))]
 
   if (length(funs) > 0) {
     cli::cli_abort(c(
