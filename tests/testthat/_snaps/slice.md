@@ -42,7 +42,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Row filtering via position: <none> | Trained
+      * Row filtering via position: | Trained
 
 # printing
 
