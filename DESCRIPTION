@@ -52,7 +52,7 @@ Suggests:
     kernlab,
     knitr,
     modeldata (>= 0.1.1),
-    parsnip (>= 1.1.1.9001),
+    parsnip (>= 1.2.0),
     RANN,
     RcppRoll,
     rmarkdown,
