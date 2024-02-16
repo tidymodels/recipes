@@ -24,6 +24,8 @@
 
 ## Bug Fixes
 
+* Fixed bug where `step_log()` breaks legacy recipe objects by indexing `names(object)` in `bake()`. (@stufield, #1284)
+
 * Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
 
 * Fixed bug where `tidy.step_cut()` always returned zero row tibbles for trained recipes. (#1229)
