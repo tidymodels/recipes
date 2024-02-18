@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.9.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.10.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,13 @@
 <h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
 </div>
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.10" id="recipes-1010">recipes 1.0.10<a class="anchor" aria-label="anchor" href="#recipes-1010"></a></h2><p class="text-muted">CRAN release: 2024-02-18</p>
+<div class="section level3">
+<h3 id="bug-fixes-1-0-10">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-10"></a></h3>
+<ul><li>Fixed bug where <code><a href="../reference/step_log.html">step_log()</a></code> breaks legacy recipe objects by indexing <code>names(object)</code> in <code><a href="../reference/bake.html">bake()</a></code>. (<a href="https://github.com/stufield" class="external-link">@stufield</a>, <a href="https://github.com/tidymodels/recipes/issues/1284" class="external-link">#1284</a>)</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.9" id="recipes-109">recipes 1.0.9<a class="anchor" aria-label="anchor" href="#recipes-109"></a></h2><p class="text-muted">CRAN release: 2023-12-13</p>
 <div class="section level3">
 <h3 id="improvements-1-0-9">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-0-9"></a></h3>
@@ -85,8 +92,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-1-0-9">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-9"></a></h3>
-<ul><li><p>Fixed bug where <code><a href="../reference/step_log.html">step_log()</a></code> breaks legacy recipe objects by indexing <code>names(object)</code> in <code><a href="../reference/bake.html">bake()</a></code>. (<a href="https://github.com/stufield" class="external-link">@stufield</a>, <a href="https://github.com/tidymodels/recipes/issues/1284" class="external-link">#1284</a>)</p></li>
-<li><p>Fixed bug where <code><a href="../reference/step_factor2string.html">step_factor2string()</a></code> if <code>strings_as_factors = TRUE</code> is set in <code><a href="../reference/prep.html">prep()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/317" class="external-link">#317</a>)</p></li>
+<ul><li><p>Fixed bug where <code><a href="../reference/step_factor2string.html">step_factor2string()</a></code> if <code>strings_as_factors = TRUE</code> is set in <code><a href="../reference/prep.html">prep()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/317" class="external-link">#317</a>)</p></li>
 <li><p>Fixed bug where <code><a href="../reference/tidy.recipe.html">tidy.step_cut()</a></code> always returned zero row tibbles for trained recipes. (<a href="https://github.com/tidymodels/recipes/issues/1229" class="external-link">#1229</a>)</p></li>
 </ul></div>
 </div>
