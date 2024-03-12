@@ -136,24 +136,9 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   nms
 }
 
-
-## As suggested by HW, brought in from the `pryr` package
-## https://github.com/hadley/pryr
-fun_calls <- function(f) {
-  if (is.function(f)) {
-    fun_calls(body(f))
-  } else if (is_quosure(f)) {
-    fun_calls(quo_get_expr(f))
-  } else if (is.call(f)) {
-    fname <- as.character(f[[1]])
-    # Calls inside .Internal are special and shouldn't be included
-    if (identical(fname, ".Internal")) {
-      return(fname)
-    }
-    unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
-  }
+fun_calls <- function(f, data) {
+  setdiff(all.names(f), colnames(data))
 }
-
 
 get_levels <- function(x) {
   if (!is.factor(x) & !is.character(x)) {
