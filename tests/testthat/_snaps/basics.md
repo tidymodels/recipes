@@ -178,6 +178,6 @@
     Code
       recipe(mpg ~ .)
     Condition
-      Error in `recipe()`:
-      ! Argument `data` is missing, with no default.
+      Error in `recipe.formula()`:
+      ! argument "data" is missing, with no default
 
