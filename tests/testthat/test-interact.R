@@ -262,8 +262,8 @@ test_that("works when formula is passed in as an object", {
     step_interact(terms = cars_formula, id = "") %>%
     prep()
 
-  rec1$fit_times <- NULL
-  rec2$fit_times <- NULL
+  rec1$fit_times$elapsed <- 0
+  rec2$fit_times$elapsed <- 0
   expect_identical(rec1, rec2)
 
   cars_formula <- ~ vs:am
@@ -271,7 +271,7 @@ test_that("works when formula is passed in as an object", {
     step_interact(terms = !!cars_formula, id = "") %>%
     prep()
 
-  rec3$fit_times <- NULL
+  rec3$fit_times$elapsed <- 0
   expect_identical(rec1, rec3)
 })
 
