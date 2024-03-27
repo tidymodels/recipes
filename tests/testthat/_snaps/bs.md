@@ -5,8 +5,8 @@
     Condition
       Error in `step_bs()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_bs_1
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_bs_1`
 
 # empty printing
 
@@ -49,8 +49,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_bs()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_bs()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -66,7 +66,7 @@
       predictor: 5
       
       -- Operations 
-      * B-splines on: carbon, hydrogen
+      * B-splines on: carbon and hydrogen
 
 ---
 
@@ -85,5 +85,5 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * B-splines on: carbon, hydrogen | Trained
+      * B-splines on: carbon and hydrogen | Trained
 

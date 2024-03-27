@@ -1,4 +1,4 @@
-#' Apply (Smoothed) Rectified Linear Transformation
+#' Apply (smoothed) rectified linear transformation
 #'
 #' `step_relu()` creates a *specification* of a recipe step that will add the
 #' rectified linear or softplus transformations of a variable to the data set.
@@ -18,15 +18,17 @@
 #' @export
 #' @rdname step_relu
 #'
-#' @details The rectified linear transformation is calculated as
-#'   \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
-#'   If `reverse` is true, then the transformation is reflected about the
-#'   y-axis, like so: \deqn{max(0, c - x)} Setting the `smooth` option
-#'   to true will instead calculate a smooth approximation to ReLu
-#'   according to \deqn{ln(1 + e^(x - c)} The `reverse` argument may
-#'   also be applied to this transformation.
+#' @details
 #'
-#' @section Connection to MARS:
+#' The rectified linear transformation is calculated as
+#' \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
+#' If `reverse` is true, then the transformation is reflected about the
+#' y-axis, like so: \deqn{max(0, c - x)} Setting the `smooth` option
+#' to true will instead calculate a smooth approximation to ReLu
+#' according to \deqn{ln(1 + e^(x - c)} The `reverse` argument may
+#' also be applied to this transformation.
+#'
+#' # Connection to MARS:
 #'
 #' The rectified linear transformation is used in Multivariate Adaptive
 #' Regression Splines as a basis function to fit piecewise linear functions to
@@ -36,6 +38,18 @@
 #' MARS when making use of ReLu activations. The hinge function also appears
 #' in the loss function of Support Vector Machines, where it penalizes
 #' residuals only if they are within a certain margin of the decision boundary.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `shift`, `reverse` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{shift}{numeric, location of hinge}
+#'   \item{reverse}{logical, whether left hinge is used}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -69,19 +83,13 @@ step_relu <-
            skip = FALSE,
            id = rand_id("relu")) {
     if (!is_tune(shift)) {
-      if (!is.numeric(shift)) {
-        rlang::abort("Shift argument must be a numeric value.")
-      }
+      check_number_decimal(shift)
     }
     if (!is_tune(reverse)) {
-      if (!is.logical(reverse)) {
-        rlang::abort("Reverse argument must be a logical value.")
-      }
+      check_bool(reverse)
     }
     if (!is_tune(smooth)) {
-      if (!is.logical(smooth)) {
-        rlang::abort("Smooth argument must be logical value.")
-      }
+      check_bool(smooth)
     }
     if (reverse & prefix == "right_relu_") {
       prefix <- "left_relu_"
@@ -141,13 +149,15 @@ prep.step_relu <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relu <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   make_relu_call <- function(col) {
     call2("relu", sym(col), object$shift, object$reverse, object$smooth)
   }
-  exprs <- purrr::map(object$columns, make_relu_call)
-  newname <- glue("{object$prefix}{object$columns}")
+
+  exprs <- purrr::map(col_names, make_relu_call)
+  newname <- glue::glue("{object$prefix}{col_names}")
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
   dplyr::mutate(new_data, !!!exprs)
 }
@@ -162,10 +172,6 @@ print.step_relu <-
 
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
-  if (!is.numeric(x)) {
-    rlang::abort("step_relu can only be applied to numeric data.")
-  }
-
   if (reverse) {
     shifted <- shift - x
   } else {

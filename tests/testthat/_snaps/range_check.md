@@ -4,7 +4,7 @@
       range_check_func(as.character(x), -10, 110)
     Condition
       Error in `range_check_func()`:
-      ! is.numeric(x) is not TRUE
+      ! `x` must be a numeric vector, not a character vector.
 
 ---
 
@@ -12,7 +12,7 @@
       range_check_func(x, -10, 110, "a")
     Condition
       Error in `range_check_func()`:
-      ! is.numeric(slack_prop) is not TRUE
+      ! `slack_prop` must be a numeric vector, not a string.
 
 ---
 
@@ -20,7 +20,7 @@
       range_check_func(x, -10, 110, c(0.05, 0.08, 0.05))
     Condition
       Error in `range_check_func()`:
-      ! slack_prop should be of length 1 or of length 2
+      ! `slack_prop` should be of length 1 or 2, not 3.
 
 # core function - workings
 
@@ -28,7 +28,8 @@
       range_check_func(x, 0, 100)
     Condition
       Error in `range_check_func()`:
-      ! min x is -10, lower bound is -5, max x is 110, upper bound is 105
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 ---
 
@@ -36,7 +37,7 @@
       range_check_func(x, 0, 110)
     Condition
       Error in `range_check_func()`:
-      ! min x is -10, lower bound is -5.5
+      i Smallest value of `x` is -10, crossing the lower bound -5.5.
 
 ---
 
@@ -44,7 +45,7 @@
       range_check_func(x, -5, 100)
     Condition
       Error in `range_check_func()`:
-      ! max x is 110, upper bound is 105.25
+      i Largest value of `x` is 110, crossing the upper bound 105.25.
 
 ---
 
@@ -52,7 +53,7 @@
       range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1))
     Condition
       Error in `range_check_func()`:
-      ! min x is -10, lower bound is -5
+      i Smallest value of `x` is -10, crossing the lower bound -5.
 
 ---
 
@@ -60,7 +61,7 @@
       range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05))
     Condition
       Error in `range_check_func()`:
-      ! max x is 110, upper bound is 105
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 ---
 
@@ -68,7 +69,8 @@
       range_check_func(x, 0, 100, warn = TRUE)
     Condition
       Warning:
-      min x is -10, lower bound is -5, max x is 110, upper bound is 105
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 # in recipe
 
@@ -76,7 +78,8 @@
       bake(rec2, test)
     Condition
       Error in `range_check_func()`:
-      ! min x is -10, lower bound is -5, max x is 110, upper bound is 105
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
 
 ---
 
@@ -84,9 +87,11 @@
       bake(rec3, test)
     Condition
       Warning:
-      min x is -10, lower bound is -5, max x is 110, upper bound is 105
+      i Smallest value of `x` is -10, crossing the lower bound -5.
+      i Largest value of `x` is 110, crossing the upper bound 105.
       Warning:
-      min y is -10, lower bound is -2.5, max x is 60, upper bound is 52.5
+      i Smallest value of `y` is -10, crossing the lower bound -2.5.
+      i Largest value of `y` is 60, crossing the upper bound 52.5.
     Output
       # A tibble: 2 x 2
             x     y
@@ -100,7 +105,7 @@
       bake(rec4, test)
     Condition
       Error in `range_check_func()`:
-      ! max y is 60, upper bound is 55
+      i Largest value of `y` is 60, crossing the upper bound 55.
 
 # empty printing
 

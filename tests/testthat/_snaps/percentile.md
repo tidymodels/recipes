@@ -24,7 +24,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Percentile transformation on: carbon, sulfur | Trained, weighted
+      * Percentile transformation on: carbon and sulfur | Trained, weighted
 
 ---
 
@@ -43,7 +43,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Percentile transformation on: carbon, sulfur | Trained, ignored weights
+      * Percentile transformation on: carbon and sulfur | Trained, ignored weights
 
 # empty printing
 
@@ -93,7 +93,7 @@
       predictor: 8
       
       -- Operations 
-      * Percentile transformation on: carbon, sulfur
+      * Percentile transformation on: carbon and sulfur
 
 ---
 
@@ -111,5 +111,5 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Percentile transformation on: carbon, sulfur | Trained
+      * Percentile transformation on: carbon and sulfur | Trained
 

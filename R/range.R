@@ -1,4 +1,4 @@
-#' Scaling Numeric Data to a Specific Range
+#' Scaling numeric data to a specific range
 #'
 #' `step_range()` creates a *specification* of a recipe step that will normalize
 #' numeric data to be within a pre-defined range of values.
@@ -22,11 +22,17 @@
 #'  the training set, the new values are truncated at `min` or
 #'  `max`.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected), `min`, and `max` is
-#'  returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `min`, `max` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{min}{numeric, lower range}
+#'   \item{max}{numeric, upper range}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -105,6 +111,21 @@ prep.step_range <- function(x, training, info = NULL, ...) {
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
   maxs <-
     vapply(training[, col_names], max, c(max = 0), na.rm = TRUE)
+
+  inf_cols <- col_names[is.infinite(mins) | is.infinite(maxs)]
+  if (length(inf_cols) > 0) {
+    cli::cli_warn(
+      "Column{?s} {.var {inf_cols}} returned NaN. \\
+      Consider avoiding `Inf` values before normalising.")
+  }
+  zero_range_cols <- col_names[maxs - mins == 0]
+  if (length(zero_range_cols) > 0) {
+    cli::cli_warn(
+      "Column{?s} {.var {zero_range_cols}} returned NaN. Consider using \\
+       `step_zv()` to remove variables containing only a single value."
+    )
+  }
+
   step_range_new(
     terms = x$terms,
     role = x$role,
@@ -120,20 +141,22 @@ prep.step_range <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_range <- function(object, new_data, ...) {
-  check_new_data(colnames(object$ranges), object, new_data)
+  col_names <- colnames(object$ranges)
+  check_new_data(col_names, object, new_data)
 
-  for (column in colnames(object$ranges)) {
-    min <- object$ranges["mins", column]
-    max <- object$ranges["maxs", column]
+  for (col_name in col_names) {
+    min <- object$ranges["mins", col_name]
+    max <- object$ranges["maxs", col_name]
 
-    new_data[[column]] <- (new_data[[column]] - min) *
+    new_data[[col_name]] <- (new_data[[col_name]] - min) *
       (object$max - object$min) / (max - min) + object$min
 
     if (is.null(object$clipping) || isTRUE(object$clipping)) {
-      new_data[[column]] <- pmax(new_data[[column]], object$min)
-      new_data[[column]] <- pmin(new_data[[column]], object$max)
+      new_data[[col_name]] <- pmax(new_data[[col_name]], object$min)
+      new_data[[col_name]] <- pmin(new_data[[col_name]], object$max)
     }
   }
+
   new_data
 }
 

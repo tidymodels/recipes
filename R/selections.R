@@ -175,7 +175,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   ellipsis::check_dots_empty()
 
   if (rlang::is_missing(quos)) {
-    rlang::abort('argument "quos" is missing, with no default.')
+    cli::cli_abort("Argument {.arg quos} is missing, with no default.")
   }
 
   # Maintain ordering between `data` column names and `info$variable` so
@@ -209,7 +209,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   if (check_case_weights &&
       any(out %in% info$variable[info$role == "case_weights"])) {
-    abort("Cannot select case weights variable.", call = call)
+    cli::cli_abort("Cannot select case weights variable.", call = call)
   }
 
   names(out) <- names
@@ -469,5 +469,5 @@ local_current_info <- function(nested_info, frame = parent.frame()) {
 #' @export
 #' @rdname has_role
 current_info <- function() {
-  cur_info_env %||% rlang::abort("Variable context not set")
+  cur_info_env %||% cli::cli_abort("Variable context not set.")
 }

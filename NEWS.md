@@ -1,24 +1,90 @@
 # recipes (development version)
 
-* Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection. All steps now leave data unmodified when having empty selections.
+* New `extract_fit_time()` method has been added that return the time it took to train the recipe. (#1071)
 
-* `step_classdist()`, `step_count()` and `step_depth()` no longer returns a column with all `NA`s with empty selections.
+# recipes 1.0.10
 
-* `step_regex()` no longer returns a column with all 0s with empty selections.
+## Bug Fixes
 
-* The `tidy()` methods for `step_geodist()`, `step_nnmf_sparse()`, and `step_sample()` now correctly return zero-row tibbles when used with empty selections.
+* Fixed bug where `step_log()` breaks legacy recipe objects by indexing `names(object)` in `bake()`. (@stufield, #1284)
+
+# recipes 1.0.9
+
+## Improvements
+
+* Minor speed-up and reduced memory consumption for `step_pca()` in the `bake()` stage by reducing unused multiplications (@jkennel, #1265)
+
+* Document that `update_role()`, `add_role()` and `remove_role()` are applied before steps and checks. (#778)
+
+* Documentation for tidy methods for all steps has been added when missing and improved to describe the return value more accurately. (#936)
+
+* `step_dummy()` will now error if passed character instead of loudly ignoring them. Only applicable when setting `strings_as_factors = FALSE`. (#1233)
+
+* It is now documented that `step_spline_b()` can be made periodic. (#1223)
+
+* `prep()` now correctly throws a warning when `training` argument is set when prepping a prepped recipe, telling the user that it will be ignored. (#1244)
+
+* When errors are thrown about wrongly typed input to steps, the offending variables and their types are now listed. (#1217)
+
+* All warnings and errors have been updated to use the cli package for increased clarity and consistency. (#1237)
+
+* Added warnings when `step_scale()`, `step_normalise()`, `step_center()` or `step_range()` result in `NaN` columns. (@mastoffel, #1221)
+
+## Bug Fixes
+
+* Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
+
+* Fixed bug where `tidy.step_cut()` always returned zero row tibbles for trained recipes. (#1229)
+
+# recipes 1.0.8
+
+## Improvements
+
+* Minor speed-up and reduced memory consumption for spline steps that rely on `spline2_apply` (#1200)
+
+## Bug Fixes
+
+* Fixed bugs where spline steps (`step_ns()`, `step_bs()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`) would error if baked with 1 row. (#1191)
+
+# recipes 1.0.7
+
+## New Steps
+
+* `step_classdist_shrunken()`, a regularized version of `step_classdist()`, was added. (#1185)
+
+## Improvements
+
+* `step_bs()` and `step_ns()` have gained `keep_original_cols` argument. (#1164)
+
+* The `keep_original_cols` argument has been added to `step_classdist()`, `step_count()`, `step_depth()`, `step_geodist()`, `step_indicate_na()`, `step_interact()`, `step_lag()`, `step_poly()`, `step_regex()`, `step_window()`. The default for each step is set to preserve past behavior. This change should mean that every step that produces new columns has the `keep_original_cols` argument. (#1167)
+
+## Bug Fixes
+
+* Fixed bugs where `step_classdist()`, `step_count()`, `step_depth()`,  `step_geodist()`,  `step_interact()`, `step_nnmf_sparse()`, and  `step_regex()` didn't work with empty selection. All steps now leave data unmodified when having empty selections. (#1142)
+
+* `step_classdist()`, `step_count()` and `step_depth()` no longer returns a column with all `NA`s with empty selections. (#1142)
+
+* `step_regex()` no longer returns a column with all 0s with empty selections. (#1142)
+
+* The `tidy()` methods for `step_geodist()`, `step_nnmf_sparse()`, and `step_sample()` now correctly return zero-row tibbles when used with empty selections. (#1144)
 
 * `step_poly_bernstein()`, `step_profile()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now correctly return a zero row tibble when used with empty selection. (#1133)
 
-* Fixed bug where the `tidy()` method for `step_sample()` didn't return an `id` column.
+* Fixed bug where the `tidy()` method for `step_sample()` didn't return an `id` column. (#1144)
 
-* `check_class()`, `check_missing()`, `check_new_values()`, `check_range()`, `step_naomit()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and `step_string2factor()` now throw an informative error if needed non-standard role columns are missing during `bake()`.
+* `check_class()`, `check_missing()`, `check_new_values()`, `check_range()`, `step_naomit()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, `step_spline_nonnegative()`, and `step_string2factor()` now throw an informative error if needed non-standard role columns are missing during `bake()`. (#1145)
 
-* Added developer function `remove_original_cols()` to help remove original columns that are no longer needed.
+## Breaking Changes
+
+* `step_window()` now throws an error instead of silently overwriting if `names` argument overlaps with existing columns. (#1172)
+
+* `step_regex()` and `step_count()` will now informatively error if name collision occurs. (#1169)
+
+## Developer
+
+* Added developer function `remove_original_cols()` to help remove original columns that are no longer needed. (#1149)
 
 * Added developer function `recipes_remove_cols()` to provide standardized way to remove columns by column names. (#1155)
-
-* New `extract_fit_time()` method has been added that return the time it took to train the recipe. (#1071)
 
 * `step_bs()` and `step_ns()` have gained `keep_original_cols` argument.
 

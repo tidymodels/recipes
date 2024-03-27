@@ -4,7 +4,7 @@
       recipe(~., data = ex_dat) %>% step_intercept(value = "Pie") %>% prep()
     Condition
       Error in `step_intercept()`:
-      ! Intercept value must be numeric.
+      ! `value` must be a number, not the string "Pie".
 
 ---
 
@@ -12,7 +12,7 @@
       recipe(~., data = ex_dat) %>% step_intercept(name = 4) %>% prep()
     Condition
       Error in `step_intercept()`:
-      ! Intercept/constant column name must be a character value.
+      ! `name` must be a single string, not the number 4.
 
 ---
 
@@ -42,8 +42,8 @@
     Condition
       Error in `step_intercept()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  intercept
+      ! Name collision occurred. The following variable names already exist:
+      * `intercept`
 
 # printing
 

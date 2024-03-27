@@ -69,10 +69,10 @@ tune_tbl <- function(name = character(),
   complete_id <- id[!is.na(id)]
   dups <- duplicated(complete_id)
   if (any(dups)) {
-    stop("There are duplicate `id` values listed in [tune()]: ",
-      paste0("'", unique(complete_id[dups]), "'", collapse = ", "),
-      ".",
-      sep = "", call. = FALSE
+    offenders <- unique(complete_id[dups])
+    cli::cli_abort(
+      "There are duplicate {.field id} values listed in {.fn tune}: \\
+      {.val {offenders}}."
     )
   }
 
@@ -176,12 +176,10 @@ find_tune_id <- function(x) {
   }
 
   if (sum(tunable_elems == "", na.rm = TRUE) > 1) {
-    stop(
-      "Only one tunable value is currently allowed per argument. ",
-      "The current argument has: `",
-      paste0(deparse(x), collapse = ""),
-      "`.",
-      call. = FALSE
+    offenders <- paste0(deparse(x), collapse = "")
+    cli::cli_abort(
+      "Only one tunable value is currently allowed per argument. \\
+      The current argument has: {offenders}."
     )
   }
 

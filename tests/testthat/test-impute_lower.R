@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(dplyr)
 
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")

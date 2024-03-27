@@ -13,7 +13,7 @@
       rec %>% step_other(city, zip, threshold = 3.14)
     Condition
       Error in `step_other()`:
-      ! If `threshold` is greater than one it should be an integer.
+      ! `threshold` must be a whole number, not the number 3.14.
 
 # othering with case weights
 
@@ -101,7 +101,7 @@
       predictor: 2
       
       -- Operations 
-      * Collapsing factor levels for: city, zip
+      * Collapsing factor levels for: city and zip
 
 ---
 
@@ -119,5 +119,5 @@
       Training data contained 732 data points and no incomplete rows.
       
       -- Operations 
-      * Collapsing factor levels for: city, zip | Trained
+      * Collapsing factor levels for: city and zip | Trained
 

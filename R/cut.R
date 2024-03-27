@@ -19,6 +19,17 @@
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the location of the cuts}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples
@@ -122,7 +133,19 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
 }
 
 create_full_breaks <- function(var, breaks) {
-  stopifnot(is.numeric(var), is.numeric(breaks))
+  if (!is.numeric(var)) {
+    cli::cli_abort(
+      "{.arg var} must be a numeric vector, not {.obj_type_friendly {var}}."
+    )
+  }
+
+  if (!is.numeric(breaks)) {
+    cli::cli_abort(
+      "{.arg breaks} must be a numeric vector, \\
+      not {.obj_type_friendly {breaks}}."
+    )
+  }
+
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
@@ -132,27 +155,31 @@ create_full_breaks <- function(var, breaks) {
   sort(breaks)
 }
 
-full_breaks_check <- function(breaks) {
+full_breaks_check <- function(breaks, call = rlang::caller_env()) {
   if (length(breaks) == 1) {
-    rlang::abort("In step_cut: variable is invariant and equal to break point.")
+    cli::cli_abort(
+      "Variable is invariant and equal to break point.",
+      call = call
+    )
   }
   if (length(breaks) == 2) {
-    rlang::warn("In step_cut: this will create a factor with one value only.")
+    cli::cli_warn("This will create a factor with one value only.")
   }
 }
 
 #' @export
 bake.step_cut <- function(object, new_data, ...) {
-  check_new_data(names(object$breaks), object, new_data)
+  col_names <- names(object$breaks)
+  check_new_data(col_names, object, new_data)
 
-  for (col_name in names(object$breaks)) {
-    res <- cut_var(
+  for (col_name in col_names) {
+    new_data[[col_name]] <- cut_var(
       new_data[[col_name]],
       object$breaks[[col_name]],
       object$include_outside_range
     )
-    new_data[[col_name]] <- res
   }
+
   new_data
 }
 
@@ -177,7 +204,12 @@ cut_var <- function(var, breaks, include_outside_range) {
 # the levels when bake.recipe itself is called. Moreover,
 # it is cleaner to show it in this way.
 adjust_levels_min_max <- function(x) {
-  stopifnot(is.factor(x))
+  if (!is.factor(x)) {
+    cli::cli_abort(
+      "{.arg x} must be a factor, not {.obj_type_friendly {x}}.",
+      .internal = TRUE
+    )
+  }
   levs <- levels(x)
   if (length(levs) == 1) {
     return(factor(rep("[min,max]", length(x))))
@@ -205,17 +237,14 @@ print.step_cut <-
 #' @export
 tidy.step_cut <- function(x, ...) {
   if (is_trained(x)) {
-    values <- vapply(
-      unname(x$class_list),
-      FUN = function(x) paste0(x, collapse = "-"),
-      FUN.VALUE = character(1)
+    res <- tibble(
+      terms = rep(names(x$breaks), lengths(x$breaks)),
+      value = unlist(x$breaks, use.names = FALSE) %||% double()
     )
-
-    res <- tibble(terms = names(x$breaks), value = values)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, value = na_chr)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
-  res$id <- x$id
+  res$id <- rep(x$id, nrow(res))
   res
 }

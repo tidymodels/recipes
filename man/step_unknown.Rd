@@ -63,9 +63,14 @@ If \code{new_level} is already in the data given to \code{prep}, an error
 is thrown.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) and \code{value} (the factor
-levels that is used for the new value) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{statistic}{character, the factor levels for the new values}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

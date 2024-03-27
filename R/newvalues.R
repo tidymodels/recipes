@@ -1,4 +1,4 @@
-#' Check for New Values
+#' Check for new values
 #'
 #' `check_new_values` creates a *specification* of a recipe
 #'  operation that will check if variables contain new values.
@@ -107,11 +107,10 @@ new_values_func <- function(x,
     return()
   }
   if (ignore_NA) new_vals <- new_vals[!is.na(new_vals)]
-  rlang::abort(paste0(
-    colname,
-    " contains the new value(s): ",
-    paste(new_vals, collapse = ",")
-  ))
+  cli::cli_abort(
+    "{.var {colname}} contains the new \\
+    {cli::qty(length(new_vals))}value{?s}: {.val {new_vals}}."
+  )
 }
 
 #' @export
@@ -133,21 +132,18 @@ prep.check_new_values <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-bake.check_new_values <- function(object,
-                                  new_data,
-                                  ...) {
+bake.check_new_values <- function(object, new_data, ...) {
   col_names <- names(object$values)
-
   check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(col_names)) {
-    colname <- col_names[i]
-    new_values_func(new_data[[colname]],
-      object$values[[colname]],
-      colname,
+  for (col_name in col_names) {
+    new_values_func(new_data[[col_name]],
+      object$values[[col_name]],
+      col_name,
       ignore_NA = object$ignore_NA
     )
   }
+
   new_data
 }
 

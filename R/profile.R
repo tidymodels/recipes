@@ -1,4 +1,4 @@
-#' Create a Profiling Version of a Data Set
+#' Create a profiling version of a data set
 #'
 #' `step_profile()` creates a *specification* of a recipe step that will fix the
 #' levels of all variables but one and will create a sequence of values for the
@@ -36,11 +36,16 @@
 #'  `new_data` argument is ignored; the resulting data set is
 #'  based on the fixed and profiled variable's information.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (which is the columns that will be affected) and `type` (fixed
-#'  or profiled) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `type` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{type}{character, `"fixed"` or `"profiled"`}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -108,21 +113,26 @@ step_profile <- function(recipe,
                          trained = FALSE,
                          skip = FALSE,
                          id = rand_id("profile")) {
-  if (pct < 0 | pct > 1) {
-    rlang::abort("`pct should be on [0, 1]`")
-  }
+
+  check_number_decimal(pct, min = 0, max = 1)
+
   if (length(grid) != 2) {
-    rlang::abort("`grid` should have two named elements. See ?step_profile")
+    cli::cli_abort(c(
+      x = "`grid` should have 2 elements, not {length(grid)}.",
+      i = "See {.help [?step_profile](recipes::step_profile)} for information."
+    ))
   }
   if (all(sort(names(grid)) == c("len", "ptcl"))) {
-    rlang::abort("`grid` should have two named elements. See ?step_profile")
+    cli::cli_abort(c(
+      x = "`grid` should have two named elements {.field len} and \\
+          {.field ptcl}, not {sort(names(grid))}.",
+      i = "See {.help [?step_profile](recipes::step_profile)} for information."
+    ))
   }
-  if (grid$len < 2) {
-    rlang::abort("`grid$len should be at least 2.`")
-  }
-  if (!is.logical(grid$pctl)) {
-    rlang::abort("`grid$pctl should be logical.`")
-  }
+
+  check_number_whole(grid$len, min = 2)
+  check_bool(grid$pctl)
+
 
   add_step(
     recipe,
@@ -163,15 +173,28 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
   fixed_names <- recipes_eval_select(x$terms, training, info)
   profile_name <- recipes_eval_select(x$profile, training, info)
 
+
   if (length(profile_name) != 1) {
-    rlang::abort("Only one variable should be profiled")
-  }
-  if (any(profile_name == fixed_names)) {
-    rlang::abort(
-      paste0(
-        "The profiled variable cannot be in the list of ",
-        "variables to be fixed."
+    msg <- c(x = "{.arg profile} should select only one column")
+
+    if (length(profile_name) == 0) {
+      msg <- c(msg, i = "No columns were selected.")
+    } else {
+      msg <- c(
+        msg,
+        i = "{length(profile_name)} columns were selected: \\
+        {.var {profile_name}}."
       )
+    }
+
+    cli::cli_abort(msg)
+  }
+
+  if (any(profile_name == fixed_names)) {
+    offenders <- fixed_names[profile_name == fixed_names]
+    cli::cli_abort(
+      "The profiled variable cannot be in the list of variables to be \\
+      fixed. {.var {offenders}} was in both."
     )
   }
   fixed_vals <- lapply(
@@ -200,17 +223,24 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_profile <- function(object, new_data, ...) {
-  n <- length(object$profile[[1]])
-  new_data <- new_data[rep(1, n), ]
-  keepers <- c(names(object$columns), names(object$profile))
+  col_names <- names(object$columns)
+  profile_names <- names(object$profile)
+  keepers <- c(col_names, profile_names)
+
+  new_data <- list()
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- object$columns[[col_name]]
+  }
+
+  new_data[[names(object$profile)]] <- object$profile[[1]]
+
+  new_data <- vctrs::vec_recycle_common(!!!new_data)
+  new_data <- tibble::new_tibble(new_data)
+
   # Keep the predictors in the same order
   keepers <- names(new_data)[names(new_data) %in% keepers]
-  new_data <- dplyr::select(new_data, !!keepers)
-
-  for (i in names(object$columns)) {
-    new_data[[i]] <- rep(object$columns[[i]], n)
-  }
-  new_data[[names(object$profile)]] <- object$profile[[1]]
+  new_data <- new_data[keepers]
   new_data
 }
 
@@ -262,10 +292,10 @@ fixed <- function(x, pct, index, ...) UseMethod("fixed")
 #' @export
 #' @rdname fixed
 fixed.default <- function(x, pct, index, ...) {
-  rlang::abort("No method for determining a value to fix for ",
-    "objects of class(s) ",
-    paste0("'", class(x), "'", collapse = ","),
-    call. = FALSE
+  classes <- class(x)
+  cli::cli_abort(
+    "No method for determining a value to fix for objects of class{?es}: \\
+    {.cls {classes}}."
   )
 }
 #' @export

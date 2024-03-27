@@ -13,12 +13,25 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details The selected variables are releveled to a level
-#' (given by `ref_level`). Placing the `ref_level` in the first
+#' @details
+#'
+#' The selected variables are releveled to a level
+#' (given by `ref_level`), placing the `ref_level` in the first
 #' position.
 #'
 #' Note that if the original columns are character, they will be
-#'  converted to factors by this step.
+#' converted to factors by this step.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the value of `ref_level`}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -78,10 +91,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   # Check to make sure that no ordered levels are provided
   order_check <- map_lgl(objects, attr, "is_ordered")
   if (any(order_check)) {
-    rlang::abort(
-      "Columns contain ordered factors (which cannot be releveled) '",
-      x$ref_level, "': ",
-      paste0(names(order_check)[order_check], collapse = ", ")
+    offenders <- names(order_check)[order_check]
+    cli::cli_abort(
+      "Columns contain ordered factors (which cannot be releveled) \\
+      {.val {x$ref_level}}: {offenders}."
     )
   }
 
@@ -90,12 +103,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
     y = x$ref_level
   )
   if (any(ref_check)) {
-    rlang::abort(
-      paste0(
-        "Columns must contain the reference level '",
-        x$ref_level, "': ",
-        paste0(names(ref_check)[ref_check], collapse = ", ")
-      )
+    offenders <- names(order_check)[!order_check]
+    cli::cli_abort(
+      "{cli::qty(length(offenders))}The following column{?s} doesn't include \\
+      required reference level {.val {x$ref_level}}: {.var {offenders}}."
     )
   }
 
@@ -112,10 +123,16 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relevel <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <- stats::relevel(as.factor(new_data[[i]]), ref = object$ref_level)
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- stats::relevel(
+      as.factor(new_data[[col_name]]),
+      ref = object$ref_level
+    )
   }
+
   new_data
 }
 

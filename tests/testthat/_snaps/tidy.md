@@ -17,7 +17,7 @@
       tidy(trained, number = 100)
     Condition
       Error in `tidy()`:
-      ! `number` should be a single value between 1 and 4.
+      ! `number` should be a single value between 1 and 4, not 100.
 
 ---
 
@@ -33,7 +33,7 @@
       tidy(trained, id = "id")
     Condition
       Error in `tidy()`:
-      ! Supplied `id` not found in the recipe.
+      ! Supplied `id` ("id") not found in the recipe.
 
 ---
 
@@ -49,7 +49,7 @@
       tidy(single_step)
     Condition
       Error in `tidy()`:
-      ! No `tidy` method for a step with classes: step_notidy, step
+      ! No <tidy> method for a step with classes: <step_notidy/step>.
 
 ---
 
@@ -57,5 +57,5 @@
       tidy(single_check)
     Condition
       Error in `tidy()`:
-      ! No `tidy` method for a check with classes: check_notidy, check
+      ! No <tidy> method for a check with classes: <check_notidy/check>.
 

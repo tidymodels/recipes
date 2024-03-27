@@ -32,11 +32,16 @@
 #'  argument of `prep.recipe`. `bake.recipe` then applies
 #'  the centering to new data sets using these means.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the means)
-#'  is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the means}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -116,6 +121,13 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
   means <- averages(training[, col_names], wts, na_rm = x$na_rm)
 
+  inf_cols <- col_names[is.infinite(means)]
+  if (length(inf_cols) > 0) {
+    cli::cli_warn(
+      "Column{?s} {.var {inf_cols}} returned NaN. \\
+      Consider avoiding `Inf` values before normalising.")
+  }
+
   step_center_new(
     terms = x$terms,
     role = x$role,
@@ -130,12 +142,14 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
-  check_new_data(names(object$means), object, new_data)
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-  for (column in names(object$means)) {
-    mean <- object$means[column]
-    new_data[[column]] <- new_data[[column]] - mean
+  for (col_name in col_names) {
+    mean <- object$means[col_name]
+    new_data[[col_name]] <- new_data[[col_name]] - mean
   }
+
   new_data
 }
 

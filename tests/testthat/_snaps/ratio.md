@@ -5,7 +5,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `x5`
 
 ---
 
@@ -14,7 +15,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `x5`
 
 ---
 
@@ -23,7 +25,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `x5`
 
 # check_name() is used
 
@@ -32,8 +35,8 @@
     Condition
       Error in `step_ratio()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_o_disp
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_o_disp`
 
 # empty printing
 
@@ -76,8 +79,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_ratio()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_ratio()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -92,7 +95,7 @@
       predictor: 5
       
       -- Operations 
-      * Ratios from: all_numeric(), all_numeric()
+      * Ratios from: all_numeric() and all_numeric()
 
 ---
 

@@ -4,7 +4,7 @@
       new_values_func(x, allowed_values[-3], colname = "MacGyver")
     Condition
       Error in `new_values_func()`:
-      ! MacGyver contains the new value(s): c
+      ! `MacGyver` contains the new value: "c".
 
 # new_values_func correctly prints multiple new values
 
@@ -12,7 +12,7 @@
       new_values_func(x, allowed_values[-c(2:3)], colname = "MacGyver")
     Condition
       Error in `new_values_func()`:
-      ! MacGyver contains the new value(s): b,c
+      ! `MacGyver` contains the new values: "b" and "c".
 
 # new_values_func breaks when NA is new value and ignore_NA is FALSE
 
@@ -20,7 +20,7 @@
       new_values_func(x_na, allowed_values, ignore_NA = FALSE, colname = "MacGyver")
     Condition
       Error in `new_values_func()`:
-      ! MacGyver contains the new value(s): NA
+      ! `MacGyver` contains the new value: NA.
 
 # new_values_func correctly prints multiple new values with NA
 
@@ -28,7 +28,7 @@
       new_values_func(x_na, allowed_values[-3], ignore_NA = FALSE, colname = "MacGyver")
     Condition
       Error in `new_values_func()`:
-      ! MacGyver contains the new value(s): c,NA
+      ! `MacGyver` contains the new values: "c" and NA.
 
 # new_values_func correctly prints only non na-values when also NA as new value and ignore_NA is TRUE
 
@@ -36,7 +36,7 @@
       new_values_func(x_na, allowed_values[-3], ignore_NA = TRUE, colname = "MacGyver")
     Condition
       Error in `new_values_func()`:
-      ! MacGyver contains the new value(s): c
+      ! `MacGyver` contains the new value: "c".
 
 # check_new_values breaks with new values
 
@@ -44,7 +44,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2[1:4, , drop = FALSE])
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): d
+      ! `a` contains the new value: "d".
 
 ---
 
@@ -52,7 +52,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): d,e
+      ! `a` contains the new values: "d" and "e".
 
 # check_new_values ignores NA by default
 
@@ -60,7 +60,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): d
+      ! `a` contains the new value: "d".
 
 # check_new_values not ignoring NA argument
 
@@ -69,7 +69,7 @@
         , drop = FALSE])
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): NA
+      ! `a` contains the new value: NA.
 
 ---
 
@@ -77,7 +77,7 @@
       recipe(x1) %>% check_new_values(a, ignore_NA = FALSE) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): d,NA
+      ! `a` contains the new values: "d" and NA.
 
 # check_new_values works on doubles
 
@@ -85,7 +85,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): 1.3
+      ! `a` contains the new value: "1.3".
 
 # check_new_values works on integers
 
@@ -93,7 +93,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): 3
+      ! `a` contains the new value: "3".
 
 # check_new_values works on factors
 
@@ -101,7 +101,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): c
+      ! `a` contains the new value: "c".
 
 # check_new_values works on characters
 
@@ -109,7 +109,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): c
+      ! `a` contains the new value: "c".
 
 # check_new_values works on logicals
 
@@ -117,7 +117,7 @@
       recipe(x1) %>% check_new_values(a) %>% prep() %>% bake(x2)
     Condition
       Error in `new_values_func()`:
-      ! a contains the new value(s): FALSE
+      ! `a` contains the new value: "FALSE".
 
 # empty printing
 

@@ -18,7 +18,7 @@
 #' @seealso [dummy_extract_names()]
 #' @export
 #' @details `step_dummy_extract()` will create a set of integer dummy
-#'  variables from a character variable by extract individual strings
+#'  variables from a character variable by extracting individual strings
 #'  by either splitting or extracting then counting those to create
 #'  count variables.
 #'
@@ -31,12 +31,18 @@
 #'
 #' @details
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or original variables selected) and `columns`
-#'  (the list of corresponding columns) is returned. The `columns` is
-#'  is ordered according the frequency in the training data set.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `columns` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{columns}{character, names of resulting columns}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' The return value is ordered according to the frequency of `columns` entries in the training data set.
 #'
 #' @template case-weights-unsupervised
 #'
@@ -100,12 +106,12 @@ step_dummy_extract <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy_extract")) {
+
     if (!is_tune(threshold)) {
-      if (threshold < 0) {
-        rlang::abort("`threshold` should not be negative.")
-      }
-      if (threshold >= 1 && !is_integerish(threshold)) {
-        rlang::abort("If `threshold` is greater than one it should be an integer.")
+      if (threshold >= 1) {
+        check_number_whole(threshold)
+      } else {
+        check_number_decimal(threshold, min = 0)
       }
     }
 
@@ -162,8 +168,6 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   }
 
   if (length(col_names) > 0) {
-    col_names <- check_factor_vars(training, col_names, "step_dummy_extract")
-
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
     for (col_name in col_names) {
@@ -223,29 +227,31 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_dummy_extract <- function(object, new_data, ...) {
-  check_new_data(names(object$levels), object, new_data)
+  col_names <- names(object$levels)
+  check_new_data(col_names, object, new_data)
 
   # If no terms were selected
   if (length(object$levels) == 0) {
     return(new_data)
   }
 
-  col_names <- names(object$levels)
-
-  for (i in seq_along(object$levels)) {
-    orig_var <- names(object$levels)[i]
-
+  for (col_name in col_names) {
     elements <- dummy_extract(
-      new_data[[orig_var]],
+      new_data[[col_name]],
       sep = object$sep, pattern = object$pattern
     )
 
-    indicators <- list_to_dummies(elements, sort(object$levels[[i]]), object$other)
-    indicators <- purrr::map_dfc(indicators, vec_cast, integer())
+    indicators <- list_to_dummies(
+      elements,
+      sort(object$levels[[col_name]]),
+      object$other
+    )
+    indicators <- purrr::map(indicators, vec_cast, integer())
+    indicators <- vctrs::vec_cbind(!!!indicators)
 
     ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
-    colnames(indicators) <- object$naming(col_names[i], used_lvl)
+    used_lvl <- gsub(paste0("^", col_name), "", colnames(indicators))
+    colnames(indicators) <- object$naming(col_name, used_lvl)
 
     indicators <- check_name(indicators, new_data, object, names(indicators))
 
@@ -266,7 +272,7 @@ dummy_extract <- function(x, sep = NULL, pattern = NULL, call = caller_env()) {
     matches <- gregexpr(pattern = pattern, text = x, perl = TRUE)
     return(regmatches(x, m = matches))
   }
-  rlang::abort("`sep` or `pattern` must be specified.", call = call)
+  cli::cli_abort("{.arg sep} or {.arg pattern} must be specified.", call = call)
 }
 
 list_to_dummies <- function(x, dict, other = "other") {
@@ -300,7 +306,8 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map_dfr(x$levels, ~ list(columns = .x), FALSE, .id = "terms")
+      res <- purrr::map(x$levels, ~ tibble(columns = .x), FALSE)
+      res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
     }

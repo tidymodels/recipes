@@ -1,4 +1,4 @@
-#' PCA Signal Extraction
+#' PCA signal extraction
 #'
 #' `step_pca()` creates a *specification* of a recipe step that will convert
 #' numeric variables into one or more principal components.
@@ -60,9 +60,26 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, use either `type = "coef"`
-#' for the variable loadings per component or `type = "variance"` for how
-#' much variance each component accounts for.
+#' When you [`tidy()`][tidy.recipe()] this step two things can happen depending
+#' the `type` argument. If `type = "coef"` a tibble returned with 4 columns
+#' `terms`, `value`, `component` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, variable loading}
+#'   \item{component}{character, principle component}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' If `type = "variance"` a tibble returned with 4 columns `terms`, `value`,
+#' `component` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, type of variance}
+#'   \item{value}{numeric, value of the variance}
+#'   \item{component}{integer, principle component}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_pca"
@@ -96,6 +113,7 @@
 #'
 #' tidy(pca_trans, number = 2)
 #' tidy(pca_estimates, number = 2)
+#' tidy(pca_estimates, number = 2, type = "variance")
 step_pca <- function(recipe,
                      ...,
                      role = "predictor",
@@ -110,9 +128,7 @@ step_pca <- function(recipe,
                      skip = FALSE,
                      id = rand_id("pca")) {
   if (!is_tune(threshold)) {
-    if (!is.na(threshold) && (threshold > 1 | threshold <= 0)) {
-      rlang::abort("`threshold` should be on (0, 1].")
-    }
+    check_number_decimal(threshold, min = 0, max = 1, allow_na = TRUE)
   }
 
   add_step(
@@ -234,8 +250,7 @@ bake.step_pca <- function(object, new_data, ...) {
 
   pca_vars <- rownames(object$res$rotation)
   comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
-    object$res$rotation
-  comps <- comps[, seq_len(object$num_comp), drop = FALSE]
+    object$res$rotation[, seq_len(object$num_comp), drop = FALSE]
   comps <- check_name(comps, new_data, object)
   new_data <- vec_cbind(new_data, as_tibble(comps))
   new_data <- remove_original_cols(new_data, object, pca_vars)

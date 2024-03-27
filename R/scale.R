@@ -1,4 +1,4 @@
-#' Scaling Numeric Data
+#' Scaling mumeric data
 #'
 #' `step_scale()` creates a *specification* of a recipe step that will normalize
 #' numeric data to have a standard deviation of one.
@@ -23,11 +23,16 @@
 #'  `bake.recipe` then applies the scaling to new data sets
 #'  using these standard deviations.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the
-#'  standard deviations) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the standard deviations}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -110,7 +115,10 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
   }
 
   if (x$factor != 1 & x$factor != 2) {
-    rlang::warn("Scaling `factor` should take either a value of 1 or 2")
+    cli::cli_warn(
+      "Scaling {.arg factor} should take either a value of 1 or 2, \\
+      not {x$factor}."
+    )
   }
 
   vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
@@ -133,11 +141,12 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
-  check_new_data(names(object$sds), object, new_data)
+  col_names <- names(object$sds)
+  check_new_data(col_names, object, new_data)
 
-  for (column in names(object$sds)) {
-    sd <- object$sds[column]
-    new_data[[column]] <- new_data[[column]] / sd
+  for (col_name in col_names) {
+    sd <- object$sds[col_name]
+    new_data[[col_name]] <- new_data[[col_name]] / sd
   }
   new_data
 }

@@ -157,7 +157,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$geo_dist <- dat$mpg
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_geodist(vs, am, ref_lat = 0, ref_lon = 0)
 
   expect_snapshot(
@@ -278,6 +278,59 @@ test_that("empty selection tidy method works", {
   rec <- prep(rec, mtcars)
 
   expect_identical(tidy(rec, number = 1), expect)
+})
+
+test_that("keep_original_cols works", {
+  new_names <- c("geo_dist")
+
+  rec <- recipe(~ x + y, data = rand_data) %>%
+    step_geodist(
+      x, y,
+      ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
+      keep_original_cols = FALSE
+    )
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    new_names
+  )
+
+  rec <- recipe(~ x + y, data = rand_data) %>%
+    step_geodist(
+      x, y,
+      ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE,
+      keep_original_cols = TRUE
+    )
+
+  rec <- prep(rec)
+  res <- bake(rec, new_data = NULL)
+
+  expect_equal(
+    colnames(res),
+    c("x", "y", new_names)
+  )
+})
+
+test_that("keep_original_cols - can prep recipes with it missing", {
+  rec <- recipe(~ x + y, data = rand_data) %>%
+    step_geodist(
+      x, y,
+      ref_lat = 0.5, ref_lon = 0.25, is_lat_lon = FALSE
+    )
+
+  rec$steps[[1]]$keep_original_cols <- NULL
+
+  expect_snapshot(
+    rec <- prep(rec)
+  )
+
+  expect_error(
+    bake(rec, new_data = rand_data),
+    NA
+  )
 })
 
 test_that("printing", {

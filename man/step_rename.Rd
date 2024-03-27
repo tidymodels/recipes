@@ -54,9 +54,14 @@ quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
 expression (to be portable between sessions).
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with
-columns \code{values} which contains the \code{rename} expressions as character
-strings (and are not reparsable) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, \code{rename} expression}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{
@@ -75,7 +80,7 @@ recipe(~., data = iris) \%>\%
 vars <- c(var1 = "cyl", var2 = "am")
 car_rec <-
   recipe(~., data = mtcars) \%>\%
-  step_rename(!!vars)
+  step_rename(!!!vars)
 
 car_rec \%>\%
   prep() \%>\%

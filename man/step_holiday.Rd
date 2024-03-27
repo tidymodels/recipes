@@ -2,7 +2,7 @@
 % Please edit documentation in R/holiday.R
 \name{step_holiday}
 \alias{step_holiday}
-\title{Holiday Feature Generator}
+\title{Holiday feature generator}
 \usage{
 step_holiday(
   recipe,
@@ -64,8 +64,14 @@ remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) and \code{holiday} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{holiday} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{holiday}{character, name of holidays}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

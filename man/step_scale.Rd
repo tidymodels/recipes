@@ -2,7 +2,7 @@
 % Please edit documentation in R/scale.R
 \name{step_scale}
 \alias{step_scale}
-\title{Scaling Numeric Data}
+\title{Scaling mumeric data}
 \usage{
 step_scale(
   recipe,
@@ -67,9 +67,14 @@ the variable standard deviations from the data used in the
 using these standard deviations.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} (the
-standard deviations) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the standard deviations}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

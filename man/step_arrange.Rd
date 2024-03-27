@@ -55,10 +55,13 @@ to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} which contains the sorting variable(s) or expression(s) is
-returned. The expressions are text representations and are not
-parsable.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

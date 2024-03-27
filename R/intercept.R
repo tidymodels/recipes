@@ -19,10 +19,16 @@
 #' @export
 #'
 #' @details
+#'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -49,14 +55,12 @@ step_intercept <- function(recipe, ..., role = "predictor",
                            value = 1L,
                            skip = FALSE, id = rand_id("intercept")) {
   if (length(list(...)) > 0) {
-    rlang::warn("Selectors are not used for this step.")
+    cli::cli_warn("Selectors are not used for this step.")
   }
-  if (!is.numeric(value)) {
-    rlang::abort("Intercept value must be numeric.")
-  }
-  if (!is.character(name) | length(name) != 1) {
-    rlang::abort("Intercept/constant column name must be a character value.")
-  }
+
+  check_number_decimal(value)
+  check_string(name)
+
   add_step(
     recipe,
     step_intercept_new(

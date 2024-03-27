@@ -15,8 +15,8 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
-      * No ICA components were extracted from: carbon, hydrogen, ... | Trained
+      * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
+      * No ICA components were extracted from: carbon and hydrogen, ... | Trained
 
 # check_name() is used
 
@@ -25,8 +25,8 @@
     Condition
       Error in `step_ica()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  IC1
+      ! Name collision occurred. The following variable names already exist:
+      * `IC1`
 
 # empty printing
 
@@ -69,8 +69,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_ica()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_ica()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -87,7 +87,7 @@
       
       -- Operations 
       * Centering and scaling for: all_predictors()
-      * ICA extraction with: carbon, hydrogen
+      * ICA extraction with: carbon and hydrogen
 
 ---
 
@@ -106,6 +106,6 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: carbon, hydrogen, oxygen, nitrogen, ... | Trained
-      * ICA extraction with: carbon, hydrogen | Trained
+      * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
+      * ICA extraction with: carbon and hydrogen | Trained
 

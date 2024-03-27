@@ -1,4 +1,4 @@
-#' Time Feature Generator
+#' Time feature generator
 #'
 #' `step_time()` creates a *specification* of a recipe step that will convert
 #' date-time data into one or more factor or numeric variables.
@@ -28,11 +28,16 @@
 #'  See [step_date()] if you want to calculate features that are larger than
 #'  hours.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `value` (the feature
-#'  names).
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the feature names}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @examples
 #' library(lubridate)
@@ -73,9 +78,11 @@ step_time <-
       )
     if (!is_tune(features)) {
       if (!all(features %in% feat)) {
-        rlang::abort(paste0(
-          "Possible values of `features` should include: ",
-          paste0("'", feat, "'", collapse = ", ")
+        offenders <- features[!features %in% feat]
+
+        cli::cli_abort(c(
+          x = "Possible values of {.arg features} are: {.or {.val {feat}}}.",
+          i = "Invalid values were: {.val {offenders}}."
         ))
       }
     }
@@ -130,20 +137,21 @@ prep.step_time <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_time <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (column in object$columns) {
+  for (col_name in col_names) {
     time_values <- get_time_features(
-      dt = new_data[[column]],
+      dt = new_data[[col_name]],
       feats = object$features
     )
 
-    names(time_values) <- glue("{column}_{names(time_values)}")
+    names(time_values) <- glue::glue("{col_name}_{names(time_values)}")
     time_values <- check_name(time_values, new_data, object, names(time_values))
     new_data <- vec_cbind(new_data, time_values)
   }
 
-  new_data <- remove_original_cols(new_data, object, object$columns)
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }
@@ -164,7 +172,9 @@ get_time_features <- function(dt, feats) {
     decimal_day = function(x) hour(x) + (second(x) + minute(x) * 60) / 3600
   )
 
-  purrr::map_dfc(features[feats], ~.x(dt))
+  res <- purrr::map(features[feats], ~.x(dt))
+  res <- vctrs::vec_cbind(!!!res)
+  res
 }
 
 

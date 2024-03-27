@@ -31,9 +31,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `value`
-#' (a _list column_ with the conversion key) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{list, a _list column_ with the conversion key}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -151,12 +156,18 @@ map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
 
 #' @export
 bake.step_integer <- function(object, new_data, ...) {
-  check_new_data(names(object$key), object, new_data)
+  col_names <- names(object$key)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$key)) {
-    new_data[[i]] <-
-      map_key_to_int(new_data[[i]], object$key[[i]], object$strict, object$zero_based)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- map_key_to_int(
+      new_data[[col_name]],
+      key = object$key[[col_name]],
+      strict = object$strict,
+      zero = object$zero_based
+    )
   }
+
   new_data
 }
 

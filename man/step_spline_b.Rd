@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_b.R
 \name{step_spline_b}
 \alias{step_spline_b}
-\title{Basis Splines}
+\title{Basis splines}
 \usage{
 step_spline_b(
   recipe,
@@ -76,13 +76,21 @@ that, when used in a model, can estimate nonlinear trends between the column
 and some outcome. The degrees of freedom determines how many new features
 are added to the data.
 
+Setting \code{periodic = TRUE} in the list passed to \code{options}, a periodic version
+of the spline is used.
+
 If the spline expansion fails for a selected column, the step will
 remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

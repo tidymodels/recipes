@@ -1,4 +1,4 @@
-#' Simple Value Assignments for Novel Factor Levels
+#' Simple value assignments for novel factor levels
 #'
 #' `step_novel()` creates a *specification* of a recipe step that will assign a
 #' previously unseen factor level to `"new"`.
@@ -33,9 +33,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected) and `value` (the factor
-#' levels that is used for the new value) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the factor levels that are used for the new value}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -102,8 +107,6 @@ get_existing_values <- function(x) {
     if (is.factor(x)) {
       out <- levels(x)
       attr(out, "is_ordered") <- is.ordered(x)
-    } else {
-      rlang::abort("Data should be either character or factor")
     }
   }
   out
@@ -117,14 +120,11 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that there are not duplicate levels
-  level_check <-
-    map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
+  level_check <- map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
   if (any(level_check)) {
-    rlang::abort(
-      paste0(
-        "Columns already contain the new level: ",
-        paste0(names(level_check)[level_check], collapse = ", ")
-      )
+    offenders <- names(level_check)[level_check]
+    cli::cli_abort(
+      "Columns already contain the new level: {offenders}."
     )
   }
 
@@ -141,22 +141,25 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_novel <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <- ifelse(
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- ifelse(
       # Preserve NA values by adding them to the list of existing
       # possible values
-      !(new_data[[i]] %in% c(object$object[[i]], NA)),
+      !(new_data[[col_name]] %in% c(object$object[[col_name]], NA)),
       object$new_level,
-      as.character(new_data[[i]])
+      as.character(new_data[[col_name]])
     )
 
-    new_data[[i]] <-
-      factor(new_data[[i]],
-        levels = c(object$object[[i]], object$new_level),
-        ordered = attributes(object$object[[i]])$is_ordered
+    new_data[[col_name]] <-
+      factor(new_data[[col_name]],
+        levels = c(object$object[[col_name]], object$new_level),
+        ordered = attributes(object$object[[col_name]])$is_ordered
       )
   }
+
   new_data
 }
 

@@ -5,8 +5,8 @@
     Condition
       Error in `step_date()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Dan_year
+      ! Name collision occurred. The following variable names already exist:
+      * `Dan_year`
 
 # empty printing
 
@@ -49,8 +49,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_date()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_date()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -83,5 +83,5 @@
       Training data contained 10 data points and no incomplete rows.
       
       -- Operations 
-      * Date features from: Dan, Stefan | Trained
+      * Date features from: Dan and Stefan | Trained
 

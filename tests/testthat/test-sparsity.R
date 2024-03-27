@@ -1,7 +1,5 @@
 library(testthat)
 library(recipes)
-library(Matrix)
-
 
 ###################################################################
 

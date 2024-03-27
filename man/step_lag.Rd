@@ -13,6 +13,7 @@ step_lag(
   prefix = "lag_",
   default = NA,
   columns = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("lag")
 )
@@ -42,6 +43,9 @@ left by lagging (defaults to NA).}
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -66,8 +70,13 @@ The step assumes that the data are already \emph{in the proper sequential
 order} for lagging.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

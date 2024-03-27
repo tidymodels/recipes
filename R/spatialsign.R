@@ -1,4 +1,4 @@
-#' Spatial Sign Preprocessing
+#' Spatial sign preprocessing
 #'
 #' `step_spatialsign()` is a *specification* of a recipe step that will convert
 #' numeric data into a projection on to a unit sphere.
@@ -20,8 +20,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @section Case weights:
 #'
@@ -132,9 +137,8 @@ prep.step_spatialsign <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_spatialsign <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
-
-  col_names <- object$columns
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   if (isTRUE(object$case_weights)) {
     wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)

@@ -29,6 +29,17 @@
 #' cat(result)
 #' ```
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `columns` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{columns}{character, names of resulting columns}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples
@@ -70,12 +81,12 @@ step_dummy_multi_choice <- function(recipe,
                                     keep_original_cols = FALSE,
                                     skip = FALSE,
                                     id = rand_id("dummy_multi_choice")) {
+
   if (!is_tune(threshold)) {
-    if (threshold < 0) {
-      rlang::abort("`threshold` should be non-negative.")
-    }
-    if (threshold > 1) {
-      rlang::abort("`threshold` should be less then or equal to 1.")
+    if (threshold >= 1) {
+      check_number_whole(threshold)
+    } else {
+      check_number_decimal(threshold, min = 0)
     }
   }
 
@@ -146,16 +157,19 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   )
 }
 
-multi_dummy_check_type <- function(dat) {
+multi_dummy_check_type <- function(dat, call = rlang::caller_env()) {
   is_good <- function(x) {
     is.factor(x) | is.character(x) | all(is.na(x))
   }
 
   all_good <- vapply(dat, is_good, logical(1))
   if (!all(all_good)) {
-    rlang::abort(
-      "All columns selected for the step should be factor, character, or NA"
-    )
+    offenders <- names(dat)[!all_good]
+    cli::cli_abort(c(
+      "x" = "All columns selected for the step should be \\
+            factor, character, or NA. The following were not:",
+      "*" = "{.var {offenders}}."
+    ), call = call)
   }
   invisible(all_good)
 }
@@ -163,7 +177,6 @@ multi_dummy_check_type <- function(dat) {
 #' @export
 bake.step_dummy_multi_choice <- function(object, new_data, ...) {
   col_names <- object$input
-
   check_new_data(col_names, object, new_data)
 
   indicators <- multi_dummy(new_data[, col_names], object$levels)

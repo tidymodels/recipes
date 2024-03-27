@@ -1,4 +1,4 @@
-#' Date Feature Generator
+#' Date feature generator
 #'
 #' `step_date()` creates a *specification* of a recipe step that will convert
 #' date data into one or more factor or numeric variables.
@@ -48,6 +48,18 @@
 #'  `terms` (the selectors or variables selected), `value` (the feature
 #'  names), and `ordinal` (a logical) is returned.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, `ordinal` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, the feature names}
+#'   \item{ordinal}{logical, are factors ordered}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples
@@ -95,9 +107,12 @@ step_date <-
       )
     if (!is_tune(features)) {
       if (!all(features %in% feat)) {
-        rlang::abort(paste0(
-          "Possible values of `features` should include: ",
-          paste0("'", feat, "'", collapse = ", ")
+        offenders <- features[!features %in% feat]
+
+        cli::cli_abort(c(
+          x = "Possible values of {.arg features} should include:",
+          "*" = "{.or {.val {feat}}}.",
+          i = "Invalid values were: {.val {offenders}}."
         ))
       }
     }
@@ -240,12 +255,14 @@ get_date_features <-
 
 #' @export
 bake.step_date <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   new_cols <- rep(
     length(object$features),
-    each = length(object$columns)
+    each = length(col_names)
   )
+  names(new_cols) <- col_names
 
   date_values <- matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
 
@@ -257,11 +274,11 @@ bake.step_date <- function(object, new_data, ...) {
   new_names <- vector("character", length = ncol(date_values))
 
   strt <- 1
-  for (i in seq_along(object$columns)) {
-    cols <- (strt):(strt + new_cols[i] - 1)
+  for (col_name in col_names) {
+    cols <- (strt):(strt + new_cols[col_name] - 1)
 
     tmp <- get_date_features(
-      dt = new_data[[object$columns[i]]],
+      dt = new_data[[col_name]],
       feats = object$features,
       locale = object$locale %||% Sys.getlocale("LC_TIME"),
       abbr = object$abbr,
@@ -271,11 +288,7 @@ bake.step_date <- function(object, new_data, ...) {
 
     date_values[, cols] <- tmp
 
-    new_names[cols] <- paste(
-      object$columns[i],
-      names(tmp),
-      sep = "_"
-    )
+    new_names[cols] <- paste(col_name, names(tmp), sep = "_")
 
     strt <- max(cols) + 1
   }
@@ -286,7 +299,7 @@ bake.step_date <- function(object, new_data, ...) {
 
   new_data <- vec_cbind(new_data, date_values)
 
-  new_data <- remove_original_cols(new_data, object, object$columns)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

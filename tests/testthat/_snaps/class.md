@@ -4,7 +4,7 @@
       bake_check_class_core(x1, "character", "x1")
     Condition
       Error in `bake_check_class_core()`:
-      ! x1 should have the class(es) character but has the class(es) numeric.
+      ! `x1` should have the class <character> but has the class <numeric>.
 
 ---
 
@@ -12,7 +12,7 @@
       bake_check_class_core(x2, c("POSIXct", "Julian"), "x2")
     Condition
       Error in `bake_check_class_core()`:
-      ! x2 should have the class(es) POSIXct, Julian but has the class(es) POSIXct, POSIXt.
+      ! `x2` should have the class <POSIXct/Julian> but has the classes <POSIXct/POSIXt>.
 
 ---
 
@@ -20,7 +20,8 @@
       bake_check_class_core(x2, "POSIXct", "x2")
     Condition
       Error in `bake_check_class_core()`:
-      ! x2 has the class(es) POSIXct, POSIXt, but only the following is/are asked POSIXct, allow_additional is FALSE.
+      x `x2` has class <POSIXct/POSIXt> but only the following are asked: <POSIXct>.
+      i This error is shown because `allow_additional` is set to "FALSE".
 
 # check_class works when class is learned
 
@@ -28,7 +29,7 @@
       bake(rec1, x_newdata)
     Condition
       Error:
-      ! x1 should have the class(es) numeric but has the class(es) character.
+      ! `x1` should have the class <numeric> but has the class <character>.
 
 ---
 
@@ -36,7 +37,8 @@
       bake(rec1, x_newdata_2)
     Condition
       Error:
-      ! x2 has the class(es) POSIXct, POSIXt, Julian, but only the following is/are asked POSIXct, POSIXt, allow_additional is FALSE.
+      x `x2` has class <POSIXct/POSIXt/Julian> but only the following are asked: <POSIXct/POSIXt>.
+      i This error is shown because `allow_additional` is set to "FALSE".
 
 # check_class works when class is provided
 
@@ -44,7 +46,7 @@
       bake(rec2, x_newdata)
     Condition
       Error:
-      ! x1 should have the class(es) numeric but has the class(es) character.
+      ! `x1` should have the class <numeric> but has the class <character>.
 
 ---
 
@@ -52,7 +54,8 @@
       bake(rec3, x_newdata_2)
     Condition
       Error:
-      ! x2 has the class(es) POSIXct, POSIXt, Julian, but only the following is/are asked POSIXct, POSIXt, allow_additional is FALSE.
+      x `x2` has class <POSIXct/POSIXt/Julian> but only the following are asked: <POSIXct/POSIXt>.
+      i This error is shown because `allow_additional` is set to "FALSE".
 
 # characters are handled correctly
 
@@ -60,7 +63,7 @@
       bake(rec6_NULL, sacr_fac[11:20, ])
     Condition
       Error:
-      ! city should have the class(es) factor but has the class(es) character.
+      ! `city` should have the class <factor> but has the class <character>.
 
 ---
 
@@ -68,7 +71,7 @@
       bake(rec6_man, sacr_fac[11:20, ])
     Condition
       Error:
-      ! type should have the class(es) factor but has the class(es) character.
+      ! `type` should have the class <factor> but has the class <character>.
 
 # empty printing
 
@@ -138,5 +141,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Checking the class(es) for: cyl, disp, hp, drat, wt, qsec, vs, ... | Trained
+      * Checking the class(es) for: cyl, disp, hp, drat, wt, qsec, ... | Trained
 

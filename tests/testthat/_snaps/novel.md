@@ -5,7 +5,8 @@
     Condition
       Error in `step_novel()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be string, factor, or ordered.
+      * 4 double variables found: `Sepal.Length`, `Sepal.Width`, ...
 
 ---
 
@@ -14,7 +15,7 @@
     Condition
       Error in `step_novel()`:
       Caused by error in `prep()`:
-      ! Columns already contain the new level: x
+      ! Columns already contain the new level: x.
 
 # empty printing
 

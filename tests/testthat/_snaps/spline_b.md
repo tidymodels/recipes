@@ -5,8 +5,8 @@
     Condition
       Error in `step_spline_b()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_01
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_01`
 
 # empty printing
 
@@ -57,7 +57,7 @@
       predictor: 5
       
       -- Operations 
-      * Basis spline expansion: carbon, hydrogen
+      * Basis spline expansion: carbon and hydrogen
 
 ---
 
@@ -76,5 +76,5 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Basis spline expansion: carbon, hydrogen | Trained
+      * Basis spline expansion: carbon and hydrogen | Trained
 

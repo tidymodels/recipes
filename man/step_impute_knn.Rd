@@ -102,9 +102,15 @@ As of \code{recipes} 0.1.16, this function name changed from \code{step_knnimput
 to \code{step_impute_knn()}.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables for imputation), \code{predictors}
-(those variables used to impute), and \code{neighbors} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{predictors}, \code{neighbors} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{predictors}{character, selected predictors used to impute}
+\item{neighbors}{integer, number of neighbors}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

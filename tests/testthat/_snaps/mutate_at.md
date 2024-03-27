@@ -64,5 +64,5 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Variable mutation for: Sepal.Length, Sepal.Width | Trained
+      * Variable mutation for: Sepal.Length and Sepal.Width | Trained
 

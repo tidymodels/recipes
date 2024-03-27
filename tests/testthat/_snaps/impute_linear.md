@@ -6,7 +6,7 @@
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
-      ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
+      ! Variable `supp` chosen for linear regression imputation must be of type numeric. Not a string.
 
 ---
 
@@ -16,7 +16,7 @@
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
-      ! Variable 'supp' chosen for linear regression imputation must be of type numeric.
+      ! Variable `supp` chosen for linear regression imputation must be of type numeric. Not a string.
 
 # case weights
 

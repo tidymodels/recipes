@@ -5,8 +5,8 @@
     Condition
       Error in `step_poly_bernstein()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_01
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_01`
 
 # empty printing
 
@@ -57,7 +57,7 @@
       predictor: 5
       
       -- Operations 
-      * Bernstein polynomial expansion: carbon, hydrogen
+      * Bernstein polynomial expansion: carbon and hydrogen
 
 ---
 
@@ -76,5 +76,5 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Bernstein polynomial expansion: carbon, hydrogen | Trained
+      * Bernstein polynomial expansion: carbon and hydrogen | Trained
 

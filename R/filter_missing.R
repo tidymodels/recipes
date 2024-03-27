@@ -1,4 +1,4 @@
-#' Missing Value Column Filter
+#' Missing value column filter
 #'
 #' `step_filter_missing()` creates a *specification* of a recipe step that will
 #' potentially remove variables that have too many missing values.
@@ -22,8 +22,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be removed) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_filter_missing"
@@ -134,7 +139,8 @@ print.step_filter_missing <-
   }
 
 filter_missing_fun <- function(x, threshold, wts) {
-  x_na <- purrr::map_dfc(x, is.na)
+  x_na <- purrr::map(x, is.na)
+  x_na <- vctrs::vec_cbind(!!!x_na)
   missing <- averages(x_na, wts = wts)
   removal_ind <- which(missing > threshold)
   names(x)[removal_ind]

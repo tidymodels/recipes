@@ -1,4 +1,4 @@
-#' Inverse Transformation
+#' Inverse transformation
 #'
 #' `step_inverse()` creates a *specification* of a recipe step that will inverse
 #' transform the data.
@@ -14,8 +14,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -91,12 +96,13 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_inverse <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
-    new_data[[object$columns[i]]] <-
-      1 / (new_data[[object$columns[i]]] + object$offset)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- 1 / (new_data[[col_name]] + object$offset)
   }
+
   new_data
 }
 

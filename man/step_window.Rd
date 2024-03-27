@@ -2,7 +2,7 @@
 % Please edit documentation in R/window.R
 \name{step_window}
 \alias{step_window}
-\title{Moving Window Functions}
+\title{Moving window functions}
 \usage{
 step_window(
   recipe,
@@ -14,6 +14,7 @@ step_window(
   statistic = "mean",
   columns = NULL,
   names = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("window")
 )
@@ -55,6 +56,9 @@ are not sure what columns will be selected, use the
 \code{summary} function (see the example below). These will be
 the names of the new columns created by the step.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -84,12 +88,20 @@ smoothed with a 5-point moving median, the first three smoothed
 values are estimated by \code{median(x[1:5])} and the fourth
 uses \code{median(x[2:6])}.
 
+\code{keep_original_cols} also applies to this step if \code{names} is specified.
+
 step will stop with a note about installing the package.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected), \code{statistic} (the
-summary function name), and \code{size} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{statistic}, \code{size} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{statistic}{character, the summary function name}
+\item{size}{integer, window size}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

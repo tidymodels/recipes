@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
 
 ex_dat <- tibble(
   cat = factor(rep(c("A", "B"), each = 5)),

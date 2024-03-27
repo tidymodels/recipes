@@ -1,23 +1,23 @@
-# dummy variables with non-factor inputs
+# dummy variables errors with character inputs
 
     Code
       prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
     Condition
-      Warning:
-      The following variables are not factor vectors and will be ignored: `city`, `zip`
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! The `terms` argument in `step_dummy` did not select any factor columns.
+      x All columns selected for the step should be factor or ordered.
+      * 2 string variables found: `city` and `zip`
 
----
+# check_type() is used
 
     Code
-      recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>% step_dummy(city, zip,
-        price) %>% prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
+      recipe(sqft ~ zip + price + city, data = sacr) %>% step_dummy(city, zip, price) %>%
+        prep()
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be factor or ordered.
+      * 1 integer variable found: `price`
 
 # tests for NA values in factor
 
@@ -25,7 +25,7 @@
       factors <- prep(factors, training = sacr_missing)
     Condition
       Warning:
-      There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 ---
 
@@ -33,7 +33,7 @@
       factors_data_1 <- bake(factors, new_data = sacr_missing)
     Condition
       Warning:
-      There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 # tests for NA values in ordered factor
 
@@ -41,7 +41,7 @@
       factors <- prep(factors, training = sacr_ordered)
     Condition
       Warning:
-      There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 ---
 
@@ -49,7 +49,7 @@
       factors_data_1 <- bake(factors, new_data = sacr_ordered)
     Condition
       Warning:
-      There are new levels in a factor: NA
+      ! There are new levels in a factor: `NA`.
 
 # new levels
 
@@ -57,7 +57,7 @@
       recipes:::warn_new_levels(testing$x1, levels(training$x1))
     Condition
       Warning:
-      There are new levels in a factor: C
+      ! There are new levels in a factor: `C`.
 
 ---
 
@@ -65,7 +65,7 @@
       bake(rec, new_data = testing)
     Condition
       Warning:
-      There are new levels in a factor: C
+      ! There are new levels in a factor: `C`.
     Output
       # A tibble: 10 x 2
          y      x1_B
@@ -117,8 +117,8 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Species_versicolor
+      ! Name collision occurred. The following variable names already exist:
+      * `Species_versicolor`
 
 # empty printing
 
@@ -161,8 +161,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_dummy()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_dummy()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -178,7 +178,7 @@
       predictor: 7
       
       -- Operations 
-      * Dummy variables from: city, zip
+      * Dummy variables from: city and zip
 
 ---
 
@@ -197,5 +197,5 @@
       Training data contained 932 data points and no incomplete rows.
       
       -- Operations 
-      * Dummy variables from: city, zip | Trained
+      * Dummy variables from: city and zip | Trained
 

@@ -20,9 +20,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#' columns `terms` (the selectors or variables selected) and `model`
-#' (themedian value) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the median value}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -146,14 +151,17 @@ prep.step_medianimpute <- prep.step_impute_median
 
 #' @export
 bake.step_impute_median <- function(object, new_data, ...) {
-  check_new_data(names(object$medians), object, new_data)
+  col_names <- names(object$medians)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$medians)) {
-    if (any(is.na(new_data[[i]]))) {
-      new_data[[i]] <- vec_cast(new_data[[i]], object$medians[[i]])
+  for (col_name in col_names) {
+    median <- object$medians[[col_name]]
+    if (any(is.na(new_data[[col_name]]))) {
+      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
     }
-    new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
+    new_data[is.na(new_data[[col_name]]), col_name] <- median
   }
+
   new_data
 }
 

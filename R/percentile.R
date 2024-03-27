@@ -1,4 +1,4 @@
-#' Percentile Transformation
+#' Percentile transformation
 #'
 #' `step_percentile()` creates a *specification* of a recipe step that replaces
 #' the value of a variable with its percentile from the training set.
@@ -19,6 +19,20 @@
 #' @family individual transformation steps
 #' @export
 #' @rdname step_percentile
+#'
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, `percentile` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the value at the percentile}
+#'   \item{percentile}{numeric, the percentile as a percentage}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -153,15 +167,16 @@ wrighted_quantile <- function(x, wts, probs, ...) {
 
 #' @export
 bake.step_percentile <- function(object, new_data, ...) {
-  vars <- names(object$ref_dist)
-  check_new_data(vars, object, new_data)
+  col_names <- names(object$ref_dist)
+  check_new_data(col_names, object, new_data)
 
-  new_data[, vars] <- purrr::map2_dfc(
-    .x = new_data[, vars],
-    .y = object$ref_dist,
-    .f = pctl_by_approx,
-    outside = object$outside
-  )
+  for (col_name in col_names) {
+    new_data[[col_name]] <- pctl_by_approx(
+      x = new_data[[col_name]],
+      ref = object$ref_dist[[col_name]],
+      outside = object$outside
+    )
+  }
 
   new_data
 }
@@ -195,7 +210,9 @@ tidy.step_percentile <- function(x, ...) {
         percentile = numeric()
       )
     } else {
-      res <- map_dfr(x$ref_dist, format_pctl, .id = "term")
+      res <- map(x$ref_dist, format_pctl)
+      res <- purrr::list_rbind(res, names_to = "terms")
+
     }
   } else {
     term_names <- sel2char(x$terms)

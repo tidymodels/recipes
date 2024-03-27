@@ -2,7 +2,7 @@
 % Please edit documentation in R/count.R
 \name{step_count}
 \alias{step_count}
-\title{Create Counts of Patterns using Regular Expressions}
+\title{Create counts of patterns using regular expressions}
 \usage{
 step_count(
   recipe,
@@ -14,6 +14,7 @@ step_count(
   options = list(),
   result = make.names(pattern),
   input = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("count")
 )
@@ -51,6 +52,9 @@ variable. It should be a valid column name.}
 variable being searched. This is \code{NULL} until computed by
 \code{\link[=prep]{prep()}}.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -69,9 +73,14 @@ sequence of any existing operations.
 variable that counts instances of a regular expression pattern in text.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{result} (the
-new column name) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{result} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{result}{character, the new column names}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

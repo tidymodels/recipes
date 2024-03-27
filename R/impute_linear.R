@@ -26,11 +26,16 @@
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  bagged tree object) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `model` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{model}{list, list of fitted `lm()` models}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -74,7 +79,7 @@ step_impute_linear <-
            skip = FALSE,
            id = rand_id("impute_linear")) {
     if (is.null(impute_with)) {
-      rlang::abort("Please provide some variables to `impute_with`.")
+      cli::cli_abort("{.arg impute_with} must not be empty.")
     }
 
     add_step(
@@ -114,21 +119,17 @@ lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
   dat <- dat[complete, ]
   wts <- wts[complete]
   if (nrow(dat) == 0) {
-    rlang::abort(
-      paste(
-        "The data used by step_impute_linear() did not have any rows",
-        "where the imputation values were all complete."
-      ),
+    cli::cli_abort(
+      "The data did not have any rows where the imputation values were all \\
+      complete. Is is thus unable to fit the linear regression model.",
       call = call
     )
   }
 
   if (!is.numeric(dat[[vars$y]])) {
-    rlang::abort(
-      glue(
-        "Variable '{vars$y}' chosen for linear regression imputation ",
-        "must be of type numeric."
-      ),
+    cli::cli_abort(
+      "Variable {.var {vars$y}} chosen for linear regression imputation \\
+      must be of type numeric. Not {.obj_type_friendly {vars$y}}.",
       call = call
     )
   }
@@ -196,7 +197,8 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
-  check_new_data(names(object$models), object, new_data)
+  col_names <- names(object$models)
+  check_new_data(col_names, object, new_data)
 
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows)) {
@@ -204,25 +206,27 @@ bake.step_impute_linear <- function(object, new_data, ...) {
   }
 
   old_data <- new_data
-  for (i in seq(along.with = object$models)) {
-    imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[[imp_var]])
-    if (any(missing_rows)) {
-      preds <- object$models[[imp_var]]$..imp_vars
-      pred_data <- old_data[missing_rows, preds, drop = FALSE]
-      ## do a better job of checking this:
-      if (any(is.na(pred_data))) {
-        rlang::warn("
-          There were missing values in the predictor(s) used to impute;
-          imputation did not occur.
-        ")
-      } else {
-        pred_vals <- predict(object$models[[imp_var]], pred_data)
-        pred_vals <- cast(pred_vals, new_data[[imp_var]])
-        new_data[[imp_var]] <- vec_cast(new_data[[imp_var]], pred_vals)
-        new_data[missing_rows, imp_var] <- pred_vals
-      }
+  for (col_name in col_names) {
+    missing_rows <- !complete.cases(new_data[[col_name]])
+    if (!any(missing_rows)) {
+      next
     }
+
+    preds <- object$models[[col_name]]$..imp_vars
+    pred_data <- old_data[missing_rows, preds, drop = FALSE]
+    ## do a better job of checking this:
+    if (any(is.na(pred_data))) {
+      cli::cli_warn(
+        "There were missing values in the predictor(s) used to impute; \\
+        imputation did not occur."
+      )
+    } else {
+      pred_vals <- predict(object$models[[col_name]], pred_data)
+      pred_vals <- cast(pred_vals, new_data[[col_name]])
+      new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
+      new_data[missing_rows, col_name] <- pred_vals
+    }
+
   }
   new_data
 }

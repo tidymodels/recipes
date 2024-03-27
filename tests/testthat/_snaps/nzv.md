@@ -51,7 +51,8 @@
       Training data contained 50 data points and no incomplete rows.
       
       -- Operations 
-      * Sparse, unbalanced variable filter removed: x3, x4 | Trained, ignored weights
+      * Sparse, unbalanced variable filter removed: x3 and x4 | Trained, ignored
+        weights
 
 # empty printing
 
@@ -121,5 +122,5 @@
       Training data contained 50 data points and no incomplete rows.
       
       -- Operations 
-      * Sparse, unbalanced variable filter removed: x3, x4 | Trained
+      * Sparse, unbalanced variable filter removed: x3 and x4 | Trained
 

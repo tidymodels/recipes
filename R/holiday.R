@@ -1,4 +1,4 @@
-#' Holiday Feature Generator
+#' Holiday feature generator
 #'
 #' `step_holiday()` creates a *specification* of a recipe step that will convert
 #' date data into one or more binary indicator variables for common holidays.
@@ -17,10 +17,16 @@
 #'  remove the original date variables by default. Set `keep_original_cols`
 #'  to `FALSE` to remove them.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the columns that will be affected) and `holiday` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `holiday` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{holiday}{character, name of holidays}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -48,7 +54,10 @@ step_holiday <-
     if (!is_tune(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days)) {
-        rlang::abort("Invalid `holidays` value. See timeDate::listHolidays")
+        cli::cli_abort(c(
+          "Invalid {.arg holidays} value. \\
+          See {.fn timeDate::listHolidays} for possible values."
+        ))
       }
     }
 
@@ -126,22 +135,24 @@ get_holiday_features <- function(dt, hdays) {
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
+  for (col_name in col_names) {
     tmp <- get_holiday_features(
-      dt = new_data[[object$columns[i]]],
+      dt = new_data[[col_name]],
       hdays = object$holidays
     )
 
-    names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
-    tmp <- purrr::map_dfc(tmp, vec_cast, integer())
+    names(tmp) <- paste(col_name, names(tmp), sep = "_")
+    tmp <- purrr::map(tmp, vec_cast, integer())
+    tmp <- vctrs::vec_cbind(!!!tmp)
 
     tmp <- check_name(tmp, new_data, object, names(tmp))
     new_data <- vec_cbind(new_data, tmp)
   }
 
-  new_data <- remove_original_cols(new_data, object, names(object$columns))
+  new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data
 }

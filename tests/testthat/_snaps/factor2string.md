@@ -5,7 +5,8 @@
     Condition
       Error in `step_factor2string()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be factor, or ordered.
+      x All columns selected for the step should be factor or ordered.
+      * 2 string variables found: `w` and `x`
 
 # empty printing
 
@@ -55,7 +56,7 @@
       predictor: 4
       
       -- Operations 
-      * Character variables from: y, z
+      * Character variables from: y and z
 
 ---
 
@@ -73,5 +74,5 @@
       Training data contained 200 data points and no incomplete rows.
       
       -- Operations 
-      * Character variables from: y, z | Trained
+      * Character variables from: y and z | Trained
 

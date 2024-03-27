@@ -28,9 +28,19 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' echoing the values of `lat`, `lon`, `ref_lat`, `ref_lon`,
-#' `is_lat_lon`, `name`, and `id` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `latitude`, `longitude`, `ref_latitude`, `ref_longitude`,
+#' `is_lat_lon`, `name` , and `id`:
+#'
+#' \describe{
+#'   \item{latitude}{character, name of latitude variable}
+#'   \item{longitude}{character, name of longitude variable}
+#'   \item{ref_latitude}{numeric, location of latitude reference point}
+#'   \item{ref_longitude}{numeric, location of longitude reference point}
+#'   \item{is_lat_lon}{character, the summary function name}
+#'   \item{name}{character, name of resulting variable}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -62,31 +72,19 @@ step_geodist <- function(recipe,
                          log = FALSE,
                          name = "geo_dist",
                          columns = NULL,
+                         keep_original_cols = TRUE,
                          skip = FALSE,
                          id = rand_id("geodist")) {
-  if (length(ref_lon) != 1 || !is.numeric(ref_lon)) {
-    rlang::abort("`ref_lon` should be a single numeric value.")
+  check_bool(is_lat_lon)
+  if (is_lat_lon) {
+    check_number_decimal(ref_lat, min = -90, max = 90)
+    check_number_decimal(ref_lon, min = -180, max = 180)
+  } else {
+    check_number_decimal(ref_lat)
+    check_number_decimal(ref_lon)
   }
-  if (length(ref_lat) != 1 || !is.numeric(ref_lat)) {
-    rlang::abort("`ref_lat` should be a single numeric value.")
-  }
-  if (length(is_lat_lon) != 1 || !is.logical(is_lat_lon)) {
-    rlang::abort("`is_lat_lon` should be a single logical value.")
-  }
-  if (length(log) != 1 || !is.logical(log)) {
-    rlang::abort("`log` should be a single logical value.")
-  }
-  if (length(name) != 1 || !is.character(name)) {
-    rlang::abort("`name` should be a single character value.")
-  }
-
-  if (is_lat_lon && abs(ref_lat) > 90.0) {
-    rlang::abort("`ref_lat` should be between -90 and 90")
-  }
-  if (is_lat_lon && abs(ref_lon) > 180.0) {
-    rlang::abort("`ref_lon` should be between -180 and 180")
-  }
-
+  check_bool(log)
+  check_string(name)
 
   add_step(
     recipe,
@@ -101,6 +99,7 @@ step_geodist <- function(recipe,
       log = log,
       name = name,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -109,7 +108,7 @@ step_geodist <- function(recipe,
 
 step_geodist_new <-
   function(lon, lat, role, trained, ref_lon, ref_lat, is_lat_lon,
-           log, name, columns, skip, id) {
+           log, name, columns, keep_original_cols, skip, id) {
     step(
       subclass = "geodist",
       lon = lon,
@@ -122,6 +121,7 @@ step_geodist_new <-
       log = log,
       name = name,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -145,12 +145,20 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   x <- check_is_lat_lon(x)
 
   if (length(lon_name) > 1) {
-    rlang::abort("`lon` should resolve to a single column name.")
+    cli::cli_abort(c(
+      x = "The {.arg lon} selector should select at most a single variable.",
+      i = "The following {length(lon_name)} were selected: \\
+          {.and {.var {lon_name}}}."
+    ))
   }
   check_type(training[, lon_name], types = c("double", "integer"))
 
   if (length(lat_name) > 1) {
-    rlang::abort("`lat` should resolve to a single column name.")
+    cli::cli_abort(c(
+      x = "The {.arg lat} selector should select at most a single variable.",
+      i = "The following {length(lat_name)} were selected: \\
+          {.and {.var {lat_name}}}."
+    ))
   }
   check_type(training[, lat_name], types = c("double", "integer"))
 
@@ -165,6 +173,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
     log = x$log,
     name = x$name,
     columns = c(lat_name, lon_name),
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -180,11 +189,17 @@ geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
 geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
                                   call = caller_env()) {
   if (any(abs(x_1) > 180.0)) {
-    rlang::abort("All `lon` values should be between -180 and 180", call = call)
+    cli::cli_abort(
+      "All {.var lon} values should be between -180 and 180.",
+      call = call
+    )
   }
 
   if (any(abs(y_1) > 90.0)) {
-    rlang::abort("All `lat` values should be between -90 and 90", call = call)
+    cli::cli_abort(
+      "All {.var lat} values should be between -90 and 90.",
+      call = call
+    )
   }
 
   to_rad <- pi / 180.0
@@ -207,9 +222,10 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  if (length(object$columns) == 0) {
+  if (length(col_names) == 0) {
     return(new_data)
   }
 
@@ -218,16 +234,16 @@ bake.step_geodist <- function(object, new_data, ...) {
   if (object$is_lat_lon) {
     dist_vals <-
       geo_dist_calc_lat_lon(
-        new_data[[object$columns[2]]], # lon
-        new_data[[object$columns[1]]], # lat
+        new_data[[col_names[2]]], # lon
+        new_data[[col_names[1]]], # lat
         object$ref_lon,
         object$ref_lat
       )
   } else {
     dist_vals <-
       geo_dist_calc_xy(
-        new_data[[object$columns[2]]], # lon
-        new_data[[object$columns[1]]], # lat
+        new_data[[col_names[2]]], # lon
+        new_data[[col_names[1]]], # lat
         object$ref_lon,
         object$ref_lat
       )
@@ -243,7 +259,7 @@ bake.step_geodist <- function(object, new_data, ...) {
   geo_data <- check_name(geo_data, new_data, object, newname = object$name)
 
   new_data <- vec_cbind(new_data, geo_data)
-
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

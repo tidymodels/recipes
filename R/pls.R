@@ -1,4 +1,4 @@
-#' Partial Least Squares Feature Extraction
+#' Partial least squares feature extraction
 #'
 #' `step_pls()` creates a *specification* of a recipe step that will convert
 #' numeric data into one or more new dimensions.
@@ -6,26 +6,32 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param predictor_prop The maximum number of original predictors that can have
-#'  non-zero coefficients for each PLS component (via regularization).
+#'   non-zero coefficients for each PLS component (via regularization).
 #' @param preserve Use `keep_original_cols` instead to specify whether the
-#'  original predictor data should be retained along with the new features.
-#' @param outcome When a single outcome is available, character
-#'  string or call to [dplyr::vars()] can be used to specify a single outcome
-#'  variable.
+#'   original predictor data should be retained along with the new features.
+#' @param outcome When a single outcome is available, character string or call
+#'   to [dplyr::vars()] can be used to specify a single outcome variable.
 #' @param options A list of options to `mixOmics::pls()`, `mixOmics::spls()`,
-#' `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
-#' arguments).
-#' @param res A list of results are stored here once this preprocessing step
-#'  has been trained by [prep()].
+#'   `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
+#'   arguments).
+#' @param res A list of results are stored here once this preprocessing step has
+#'   been trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details PLS is a supervised version of principal component
-#'  analysis that requires the outcome data to compute
-#'  the new features.
+#' @details
 #'
-#' This step requires the Bioconductor \pkg{mixOmics} package. If not installed, the
-#'  step will stop with a note about installing the package.
+#' PLS is a supervised version of principal component analysis that requires the
+#' outcome data to compute the new features.
+#'
+#' This step requires the Bioconductor \pkg{mixOmics} package. If not installed,
+#' the step will stop with a note about installing the package. Install
+#' \pkg{mixOmics} using the pak package:
+#'
+#' ```r
+#' # install.packages("pak")
+#' pak::pak("mixOmics")
+#' ```
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "PLS"
@@ -41,17 +47,15 @@
 #'
 #' # Tidying
 #'
-#' The [`tidy()`][tidy.recipe()] method returns the coefficients that are
-#' usually defined as
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, `component` , and `id`:
 #'
-#' \deqn{W(P'W)^{-1}}
-#'
-#' (See the Wikipedia article below)
-#'
-#' When applied to data, these values are usually scaled by a column-specific
-#' norm. The `tidy()` method applies this same norm to the coefficients shown
-#' above. When you `tidy()` this step, a tibble with columns `terms` (the
-#' selectors or variables selected), `components`, and `values` is returned.
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, coefficients defined as \eqn{W(P'W)^{-1}}}
+#'   \item{size}{character, name of component}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_pls"
@@ -86,7 +90,8 @@
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3, predictor_prop = 4 / 5)
+#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3,
+#'            predictor_prop = 4 / 5)
 #'
 #' ## -----------------------------------------------------------------------------
 #' ## PLS discriminant analysis
@@ -108,7 +113,8 @@
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5, predictor_prop = 1 / 4)
+#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5,
+#'            predictor_prop = 1 / 4)
 step_pls <-
   function(recipe,
            ...,
@@ -126,7 +132,7 @@ step_pls <-
            skip = FALSE,
            id = rand_id("pls")) {
     if (is.null(outcome)) {
-      rlang::abort("`outcome` should select at least one column.")
+      cli::cli_abort("{.arg outcome} should select at least one column.")
     }
 
     if (lifecycle::is_present(preserve)) {
@@ -323,8 +329,8 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   check_type(training[, x_names], types = c("double", "integer"))
 
   if (length(y_names) > 1 && any(!map_lgl(training[y_names], is.numeric))) {
-    rlang::abort(
-      "`step_pls()` only supports multivariate models for numeric outcomes."
+    cli::cli_abort(
+      "Only multivariate models for numeric outcomes are supports."
     )
   }
 
@@ -338,7 +344,9 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     cl <- make_pls_call(ncomp, nterm, y_names, x$options)
     res <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(res, "try-error")) {
-      rlang::warn(paste0("`step_pls()` failed: ", as.character(res)))
+      cli::cli_warn(
+        "{.fn step_pls failed with error: {as.character(res))}.",
+      )
       res <- list(x_vars = x_names, y_vars = y_names)
     } else {
       res <- butcher_pls(res)
@@ -367,10 +375,11 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_pls <- function(object, new_data, ...) {
-  check_new_data(get_columns_pls(object), object, new_data)
+  col_names <- get_columns_pls(object)
+  check_new_data(col_names, object, new_data)
 
   if (object$num_comp == 0 ||
-      length(get_columns_pls(object)) == 0 ||
+      length(col_names) == 0 ||
       !pls_worked(object$res)) {
     return(new_data)
   }

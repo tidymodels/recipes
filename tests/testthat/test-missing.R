@@ -1,7 +1,5 @@
 library(testthat)
 library(recipes)
-library(dplyr)
-
 
 set_with_na <- tibble(
   a = c(1, 2, NA),

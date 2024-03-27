@@ -4,13 +4,13 @@
       te_1 <- bake(rec_1, sacr_te)
     Condition
       Warning:
-      There are new levels in a factor: WEST_SACRAMENTO
-      New levels will be coerced to `NA` by `step_unknown()`.
-      Consider using `step_novel()` before `step_unknown()`.
+      ! There are new levels in a factor: `WEST_SACRAMENTO`.
+      * New levels will be coerced to `NA` by `step_unknown()`.
+      i Consider using ?step_novel (`?recipes::step_novel()`) before `step_unknown()`.
       Warning:
-      There are new levels in a factor: z95691
-      New levels will be coerced to `NA` by `step_unknown()`.
-      Consider using `step_novel()` before `step_unknown()`.
+      ! There are new levels in a factor: `z95691`.
+      * New levels will be coerced to `NA` by `step_unknown()`.
+      i Consider using ?step_novel (`?recipes::step_novel()`) before `step_unknown()`.
 
 # bad args
 
@@ -19,7 +19,8 @@
     Condition
       Error in `step_unknown()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be string, factor, or ordered.
+      * 1 integer variable found: `sqft`
 
 ---
 
@@ -29,7 +30,7 @@
     Condition
       Error in `step_unknown()`:
       Caused by error in `prep()`:
-      ! Columns already contain a level 'FAIR_OAKS': city
+      ! Columns already contain the level "FAIR_OAKS": city.
 
 # empty printing
 
@@ -79,7 +80,7 @@
       predictor: 9
       
       -- Operations 
-      * Unknown factor level assignment for: city, zip
+      * Unknown factor level assignment for: city and zip
 
 ---
 
@@ -97,5 +98,5 @@
       Training data contained 800 data points and no incomplete rows.
       
       -- Operations 
-      * Unknown factor level assignment for: city, zip | Trained
+      * Unknown factor level assignment for: city and zip | Trained
 

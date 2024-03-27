@@ -5,7 +5,8 @@
         frequency = 1, cycle_size = NA)
     Condition
       Error in `step_harmonic()`:
-      ! cycle_size must have at least one non-NA numeric value.
+      x `cycle_size` must have at least one non-NA numeric value.
+      i It was `NA`.
 
 ---
 
@@ -14,7 +15,8 @@
         frequency = 1, starting_val = 0, cycle_size = NA)
     Condition
       Error in `step_harmonic()`:
-      ! cycle_size must have at least one non-NA numeric value.
+      x `cycle_size` must have at least one non-NA numeric value.
+      i It was `NA`.
 
 ---
 
@@ -23,7 +25,8 @@
         frequency = 1, starting_val = 0, cycle_size = "a")
     Condition
       Error in `step_harmonic()`:
-      ! cycle_size must have at least one non-NA numeric value.
+      x `cycle_size` must have at least one non-NA numeric value.
+      i It was a string.
 
 ---
 
@@ -32,7 +35,7 @@
         frequency = 1, starting_val = "a", cycle_size = 86400)
     Condition
       Error in `step_harmonic()`:
-      ! starting_val must be NA, numeric, Date or POSIXt
+      ! starting_val must be NA, numeric, Date or POSIXt, not a string.
 
 ---
 
@@ -41,7 +44,7 @@
         frequency = 1, starting_val = factor("a"), cycle_size = 86400)
     Condition
       Error in `step_harmonic()`:
-      ! starting_val must be NA, numeric, Date or POSIXt
+      ! starting_val must be NA, numeric, Date or POSIXt, not a <factor> object.
 
 # harmonic NA in term
 
@@ -51,7 +54,7 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `bake()`:
-      ! variable must have at least one non-NA value
+      ! Variable must have at least one non-NA value.
 
 # harmonic character in term
 
@@ -61,7 +64,8 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be date, datetime, or numeric.
+      x All columns selected for the step should be date, datetime, or numeric.
+      * 1 factor variable found: `time_var`
 
 # harmonic cycle_size length
 
@@ -72,7 +76,7 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
-      ! `cycle_size` must be length 1 or the same  length as the input columns
+      ! `cycle_size` must be length 1 or the same length as the input columns.
 
 # harmonic starting_val length
 
@@ -83,7 +87,7 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `prep()`:
-      ! `starting_val` must be length 1 or the same  length as the input columns
+      ! `starting_val` must be length 1 or the same length as the input columns.
 
 # check_name() is used
 
@@ -92,8 +96,8 @@
     Condition
       Error in `step_harmonic()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_sin_1
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_sin_1`
 
 # empty printing
 
@@ -136,8 +140,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_harmonic()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_harmonic()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

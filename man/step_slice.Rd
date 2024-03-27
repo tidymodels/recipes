@@ -65,8 +65,13 @@ before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} which contains the filtering indices is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, containing the filtering indices}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{
@@ -96,8 +101,8 @@ all.equal(dplyr_train, rec_train)
 dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
-  slice(76:150) \%>\%
-  slice(1:3)
+  slice(76:150)
+
 rec_test <- bake(prepped, iris \%>\% slice(76:150))
 all.equal(dplyr_test, rec_test)
 
@@ -108,8 +113,8 @@ keep_rows <- 1:6
 
 qq_rec <-
   recipe(~., data = iris) \%>\%
-  # Embed `keep_rows` in the call using !!
-  step_slice(!!keep_rows) \%>\%
+  # Embed `keep_rows` in the call using !!!
+  step_slice(!!!keep_rows) \%>\%
   prep(training = iris)
 
 tidy(qq_rec, number = 1)

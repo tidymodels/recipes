@@ -1,5 +1,4 @@
 library(testthat)
-library(tibble)
 library(recipes)
 
 skip_if_not_installed("modeldata")
@@ -189,6 +188,14 @@ test_that("tunable arguments at prep-time", {
   expect_snapshot(error = TRUE,
     recipe(Species ~ ., data = iris) %>%
       step_ns(all_predictors(), deg_free = .tune()) %>%
+      prep()
+  )
+
+  expect_snapshot(error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_pca(all_predictors(), threshold = .tune()) %>%
+      step_kpca(all_predictors(), num_comp = .tune()) %>%
+      step_bs(all_predictors(), deg_free = .tune()) %>%
       prep()
   )
 })

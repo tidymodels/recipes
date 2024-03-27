@@ -2,7 +2,7 @@
 % Please edit documentation in R/inverse.R
 \name{step_inverse}
 \alias{step_inverse}
-\title{Inverse Transformation}
+\title{Inverse transformation}
 \usage{
 step_inverse(
   recipe,
@@ -52,8 +52,13 @@ sequence of any existing operations.
 transform the data.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

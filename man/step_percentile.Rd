@@ -2,7 +2,7 @@
 % Please edit documentation in R/percentile.R
 \name{step_percentile}
 \alias{step_percentile}
-\title{Percentile Transformation}
+\title{Percentile transformation}
 \usage{
 step_percentile(
   recipe,
@@ -60,6 +60,18 @@ sequence of any existing operations.
 \code{step_percentile()} creates a \emph{specification} of a recipe step that replaces
 the value of a variable with its percentile from the training set.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{percentile} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the value at the percentile}
+\item{percentile}{numeric, the percentile as a percentage}
+\item{id}{character, id of this step}
+}
+}
+
 \section{Case weights}{
 
 

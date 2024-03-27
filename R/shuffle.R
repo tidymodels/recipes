@@ -1,4 +1,4 @@
-#' Shuffle Variables
+#' Shuffle variables
 #'
 #' `step_shuffle()` creates a *specification* of a recipe step that will
 #' randomly change the order of rows for selected variables.
@@ -10,8 +10,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be permuted) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -78,18 +83,16 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_shuffle <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   if (nrow(new_data) == 1) {
-    rlang::warn("`new_data` contains a single row; unable to shuffle")
+    cli::cli_warn("{.arg new_data} contains a single row; unable to shuffle.")
     return(new_data)
   }
 
-  if (length(object$columns) > 0) {
-    for (i in seq_along(object$columns)) {
-      new_data[[object$columns[i]]] <-
-        sample(new_data[[object$columns[i]]])
-    }
+  for (col_name in col_names) {
+    new_data[[col_name]] <- sample(new_data[[col_name]])
   }
 
   new_data

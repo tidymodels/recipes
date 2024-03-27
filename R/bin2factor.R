@@ -1,4 +1,4 @@
-#' Create a Factors from A Dummy Variable
+#' Create a factors from A dummy variable
 #'
 #' `step_bin2factor()` creates a *specification* of a recipe step that will
 #' create a two-level factor from a single dummy variable.
@@ -19,10 +19,15 @@
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -54,8 +59,22 @@ step_bin2factor <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("bin2factor")) {
-    if (length(levels) != 2 | !is.character(levels)) {
-      rlang::abort("`levels` should be a two element character string")
+    if (length(levels) != 2 || !is.character(levels)) {
+      msg <- c(x = "{.arg levels} should be a 2-element character string.")
+
+      if (length(levels) != 2) {
+        msg <- c(
+          msg,
+          i = "{length(levels)} element{?s} were supplied."
+        )
+      }
+      if (!is.character(levels)) {
+        msg <- c(
+          msg,
+          i = "It was {.obj_type_friendly {levels}}."
+        )
+      }
+      cli::cli_abort(msg)
     }
     add_step(
       recipe,
@@ -106,19 +125,22 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bin2factor <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (col_name in object$columns) {
-    new_data[[col_name]] <-
-      factor(ifelse(
-        new_data[[col_name]] == 1,
-        object$levels[1],
-        object$levels[2]
-      ),
-      levels = levs
-      )
+
+  for (col_name in col_names) {
+    tmp <- ifelse(
+      new_data[[col_name]] == 1,
+      object$levels[1],
+      object$levels[2]
+    )
+    tmp <- factor(tmp, levels = levs)
+
+    new_data[[col_name]] <- tmp
   }
+
   new_data
 }
 

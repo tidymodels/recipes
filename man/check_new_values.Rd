@@ -2,7 +2,7 @@
 % Please edit documentation in R/newvalues.R
 \name{check_new_values}
 \alias{check_new_values}
-\title{Check for New Values}
+\title{Check for new values}
 \usage{
 check_new_values(
   recipe,

@@ -32,7 +32,7 @@ spline_msg <- function(x) {
   x <- as.character(x)
   x <- strsplit(x, "\\n")[[1]]
   x <- paste0(x[-1], collapse = ". ")
-  rlang::warn(trimws(x, which = "left"))
+  cli::cli_warn(trimws(x, which = "left"))
 }
 
 spline2_apply <- function(object, new_data) {
@@ -44,7 +44,10 @@ spline2_apply <- function(object, new_data) {
   object$nm <- NULL
   .cl <- rlang::call2(.ns = .ns, .fn = .fn, !!!object, x = rlang::expr(new_data))
   res <- rlang::eval_tidy(.cl)
-  res <- apply(res, 2, I)
+  attributes(res) <- list(dim = dim(res), dimnames = dimnames(res))
+  if (length(new_data) == 1) {
+    res <- matrix(res, nrow = 1, dimnames = dimnames(res))
+  }
   colnames(res) <- names0(ncol(res), paste0(nm, "_"))
   tibble::as_tibble(res)
 }

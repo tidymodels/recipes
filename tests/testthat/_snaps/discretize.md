@@ -4,7 +4,8 @@
       discretize(letters)
     Condition
       Error in `discretize()`:
-      ! Only numeric `x` is accepted
+      x Only numeric `x` is accepted.
+      i The `x` was passed a character vector.
 
 # printing of discretize()
 
@@ -35,7 +36,7 @@
       res <- discretize(1:2)
     Condition
       Warning:
-      Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
+      Data not binned; too few unique values per bin. Adjust `min_unique` as needed.
 
 ---
 
@@ -51,7 +52,7 @@
         prefix = "hello")) %>% prep()
     Condition
       Warning:
-      Note that the options `prefix` and `labels` will be applied to all variables
+      Note that the options `prefix` and `labels` will be applied to all variables.
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -64,7 +65,7 @@
       Training data contained 1000 data points and no incomplete rows.
       
       -- Operations 
-      * Discretize numeric variables from: x1, x2 | Trained
+      * Discretize numeric variables from: x1 and x2 | Trained
 
 # bad args
 
@@ -73,7 +74,7 @@
     Condition
       Error in `step_discretize()`:
       Caused by error in `recipes::discretize()`:
-      ! There should be at least 2 cuts
+      ! There should be at least 2 `cuts` but 1 was supplied.
 
 ---
 
@@ -81,7 +82,7 @@
       recipe(~., data = ex_tr) %>% step_discretize(x1, num_breaks = 100) %>% prep()
     Condition
       Warning:
-      Data not binned; too few unique values per bin. Adjust 'min_unique' as needed
+      Data not binned; too few unique values per bin. Adjust `min_unique` as needed.
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -103,7 +104,7 @@
         prep()
     Condition
       Warning:
-      The prefix '@$' is not a valid R name. It has been changed to 'X..'.
+      The prefix "@$" is not a valid R name. It has been changed to "X..".
     Message
       
       -- Recipe ----------------------------------------------------------------------

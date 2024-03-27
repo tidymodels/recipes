@@ -16,6 +16,7 @@ step_geodist(
   log = FALSE,
   name = "geo_dist",
   columns = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("geodist")
 )
@@ -52,6 +53,9 @@ issued.}
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
 when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
@@ -75,9 +79,19 @@ distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haver
 formula is used to calculate the great-circle distance in meters.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-echoing the values of \code{lat}, \code{lon}, \code{ref_lat}, \code{ref_lon},
-\code{is_lat_lon}, \code{name}, and \code{id} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{latitude}, \code{longitude}, \code{ref_latitude}, \code{ref_longitude},
+\code{is_lat_lon}, \code{name} , and \code{id}:
+
+\describe{
+\item{latitude}{character, name of latitude variable}
+\item{longitude}{character, name of longitude variable}
+\item{ref_latitude}{numeric, location of latitude reference point}
+\item{ref_longitude}{numeric, location of longitude reference point}
+\item{is_lat_lon}{character, the summary function name}
+\item{name}{character, name of resulting variable}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{
@@ -111,6 +125,7 @@ https://en.wikipedia.org/wiki/Haversine_formula
 }
 \seealso{
 Other multivariate transformation steps: 
+\code{\link{step_classdist_shrunken}()},
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_ica}()},

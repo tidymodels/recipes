@@ -18,8 +18,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `size`, `replace`, and `id` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `size`, `replace` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{size}{numeric, amount of sampling}
+#'   \item{replace}{logical, whether sampling is done with replacement}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-unsupervised
 #'
@@ -59,17 +66,18 @@ step_sample <- function(recipe,
                         skip = TRUE,
                         id = rand_id("sample")) {
   if (length(list(...)) > 0) {
-    rlang::warn("Selectors are not used for this step.")
+    cli::cli_warn("Selectors are not used for this step.")
   }
 
   if (!is_tune(size)) {
-    if (!is.null(size) & (!is.numeric(size) || size < 0)) {
-      rlang::abort("`size` should be a positive number or NULL.")
-    }
+    check_number_decimal(size, min = 0, allow_null = TRUE)
   }
   if (!is_tune(replace)) {
     if (!is.logical(replace)) {
-      rlang::abort("`replace` should be a single logical.")
+      cli::cli_abort(
+        "{.arg replace} should be a single logical, \\
+        not {.obj_type_friendly {replace}}."
+      )
     }
   }
 

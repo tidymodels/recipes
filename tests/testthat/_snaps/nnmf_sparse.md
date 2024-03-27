@@ -5,8 +5,8 @@
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  NNMF1
+      ! Name collision occurred. The following variable names already exist:
+      * `NNMF1`
 
 # empty printing
 
@@ -49,8 +49,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_nnmf_sparse()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_nnmf_sparse()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -66,7 +66,7 @@
       predictor: 10
       
       -- Operations 
-      * Non-negative matrix factorization for: disp, drat
+      * Non-negative matrix factorization for: disp and drat
 
 ---
 
@@ -85,5 +85,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Non-negative matrix factorization for: disp, drat | Trained
+      * Non-negative matrix factorization for: disp and drat | Trained
 

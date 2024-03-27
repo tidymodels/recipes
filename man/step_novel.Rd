@@ -2,7 +2,7 @@
 % Please edit documentation in R/novel.R
 \name{step_novel}
 \alias{step_novel}
-\title{Simple Value Assignments for Novel Factor Levels}
+\title{Simple value assignments for novel factor levels}
 \usage{
 step_novel(
   recipe,
@@ -72,9 +72,14 @@ When fitting a model that can deal with new factor levels, consider using
 new levels at prediction time, instead of throwing warnings or errors.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the columns that will be affected) and \code{value} (the factor
-levels that is used for the new value) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, the factor levels that are used for the new value}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

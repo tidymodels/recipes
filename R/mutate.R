@@ -18,11 +18,16 @@
 #'  If a preceding step removes a column that is selected by name in
 #'  `step_mutate()`, the recipe will error when being estimated with [prep()].
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `values`, which contains the `mutate()` expressions as character
-#'  strings (and are not reparsable), is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, expression passed to `mutate()`}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'

@@ -1,4 +1,4 @@
-#' Kernel PCA Signal Extraction
+#' Kernel PCA signal extraction
 #'
 #' `step_kpca()` creates a *specification* of a recipe step that will convert
 #' numeric data into one or more principal components using a kernel basis
@@ -25,6 +25,18 @@
 #' [step_kpca_poly()] for a polynomial kernel.
 #'
 #' @template kpca-info
+#'
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -126,7 +138,10 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     cl <- call_modify(cl, !!!x$options)
     kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      rlang::abort(paste0("`step_kpca` failed with error:\n", as.character(kprc)))
+      cli::cli_abort(c(
+        x = "Failed with error:",
+        i = as.character(kprc)
+      ))
     }
   } else {
     kprc <- NULL
@@ -150,9 +165,10 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_kpca <- function(object, new_data, ...) {
   uses_dim_red(object)
-  check_new_data(object$columns, object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  keep_going <- object$num_comp > 0 && length(object$columns) > 0
+  keep_going <- object$num_comp > 0 && length(col_names) > 0
   if (!keep_going) {
     return(new_data)
   }
@@ -162,15 +178,15 @@ bake.step_kpca <- function(object, new_data, ...) {
       "predict",
       .ns = "kernlab",
       object = object$res,
-      rlang::expr(as.matrix(new_data[, object$columns]))
+      rlang::expr(as.matrix(new_data[, col_names]))
     )
   comps <- rlang::eval_tidy(cl)
   comps <- comps[, seq_len(object$num_comp), drop = FALSE]
   colnames(comps) <- names0(ncol(comps), object$prefix)
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
-  new_data <- vec_cbind(new_data, comps)
-  new_data <- remove_original_cols(new_data, object, object$columns)
+  new_data <- vctrs::vec_cbind(new_data, comps)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

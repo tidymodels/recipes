@@ -5,7 +5,8 @@
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `cat_var`
 
 ---
 
@@ -14,15 +15,16 @@
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `cat_var`
 
 # full_breaks_check will give warnings
 
     Code
       full_breaks_check(10)
     Condition
-      Error in `full_breaks_check()`:
-      ! In step_cut: variable is invariant and equal to break point.
+      Error:
+      ! Variable is invariant and equal to break point.
 
 ---
 
@@ -30,7 +32,7 @@
       full_breaks_check(c(10, 20))
     Condition
       Warning:
-      In step_cut: this will create a factor with one value only.
+      This will create a factor with one value only.
 
 # empty printing
 

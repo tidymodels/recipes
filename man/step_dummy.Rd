@@ -22,9 +22,9 @@ step_dummy(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details. The selected
-variables \emph{must} be factors.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details. The selected variables \emph{must} be
+factors.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
@@ -36,16 +36,15 @@ preprocessing have been estimated.}
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
 
-\item{preserve}{Use \code{keep_original_cols} to specify whether the selected
-column(s) should be retained (in addition to the new dummy variables).}
+\item{preserve}{This argument has been deprecated. Please use
+\code{keep_original_cols} instead.}
 
-\item{naming}{A function that defines the naming convention for
-new dummy columns. See Details below.}
+\item{naming}{A function that defines the naming convention for new dummy
+columns. See Details below.}
 
-\item{levels}{A list that contains the information needed to
-create dummy variables for each variable contained in
-\code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep]{prep()}}.}
+\item{levels}{A list that contains the information needed to create dummy
+variables for each variable contained in \code{terms}. This is \code{NULL} until the
+step is trained by \code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -65,21 +64,21 @@ sequence of any existing operations.
 }
 \description{
 \code{step_dummy()} creates a \emph{specification} of a recipe step that will convert
-nominal data (e.g. characters or factors) into one or more numeric binary
-model terms corresponding to the levels of the original data.
+nominal data (e.g. factors) into one or more numeric binary model terms
+corresponding to the levels of the original data.
 }
 \details{
-\code{step_dummy()} will create a set of binary dummy
-variables from a factor variable. For example, if an unordered
-factor column in the data set has levels of "red", "green",
-"blue", the dummy variable bake will create two additional
-columns of 0/1 data for two of those three values (and remove
-the original column). For ordered factors, polynomial contrasts
-are used to encode the numeric values.
+\code{step_dummy()} will create a set of binary dummy variables from a factor
+variable. For example, if an unordered factor column in the data set has
+levels of "red", "green", "blue", the dummy variable bake will create two
+additional columns of 0/1 data for two of those three values (and remove the
+original column). For ordered factors, polynomial contrasts are used to
+encode the numeric values.
 
-By default, the excluded dummy variable (i.e. the reference
-cell) will correspond to the first level of the unordered
-factor being converted.
+By default, the excluded dummy variable (i.e. the reference cell) will
+correspond to the first level of the unordered factor being converted.
+\code{step_relevel()} can be used to create a new reference level by setting the
+\code{ref_level} argument.
 
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
@@ -88,19 +87,18 @@ new variable called \code{x_b}. The naming format can be changed using
 the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
 default.
 
-To change the type of contrast being used, change the global
-contrast option via \code{options}.
+To change the type of contrast being used, change the global contrast option
+via \code{options}.
 
-When the factor being converted has a missing value, all of the
-corresponding dummy variables are also missing. See \code{\link[=step_unknown]{step_unknown()}} for
-a solution.
+When the factor being converted has a missing value, all of the corresponding
+dummy variables are also missing. See \code{\link[=step_unknown]{step_unknown()}} for a solution.
 
-When data to be processed contains novel levels (i.e., not
-contained in the training set), a missing value is assigned to
-the results. See \code{\link[=step_other]{step_other()}} for an alternative.
+When data to be processed contains novel levels (i.e., not contained in the
+training set), a missing value is assigned to the results. See \code{\link[=step_other]{step_other()}}
+for an alternative.
 
-If no columns are selected (perhaps due to an earlier \code{step_zv()}),
-\code{\link[=bake]{bake()}} will return the data as-is (e.g. with no dummy variables).
+If no columns are selected (perhaps due to an earlier \code{step_zv()}), \code{\link[=bake]{bake()}}
+will return the data as-is (e.g. with no dummy variables).
 
 Note that, by default, the new dummy variable column names obey the naming
 rules for columns. If there are levels such as "0", \code{\link[=dummy_names]{dummy_names()}} will put
@@ -115,9 +113,14 @@ The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette
 and interactions has more information.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or original variables selected) and \code{columns}
-(the list of corresponding binary columns) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{columns} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{columns}{character, names of resulting columns}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

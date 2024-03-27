@@ -1,4 +1,4 @@
-#' Ratio Variable Creation
+#' Ratio variable creation
 #'
 #' `step_ratio()` creates a *specification* of a recipe step that will create
 #' one or more ratios from selected numeric variables.
@@ -27,6 +27,17 @@
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
 #' `terms` (the selectors or variables selected) and `denom` is returned.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `denom` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{denom}{character, name of denominator selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
 #' @template case-weights-not-supported
 #'
 #' @family multivariate transformation steps
@@ -46,9 +57,8 @@
 #'
 #' ratio_recipe <- rec %>%
 #'   # all predictors over total
-#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total)) %>%
-#'   # get rid of the original predictors
-#'   step_rm(all_predictors(), -ends_with("total"))
+#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+#'              keep_original_cols = FALSE)
 #'
 #' ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 #'
@@ -68,10 +78,11 @@ step_ratio <-
            skip = FALSE,
            id = rand_id("ratio")) {
     if (is_empty(denom)) {
-      rlang::abort(
-        paste0(
-          "Please supply at least one denominator variable specification. ",
-          "See ?selections."
+      cli::cli_abort(
+        c(
+          "!" = "{.arg denom} must select at least one variable.",
+          "i" = "See {.help [?selections](recipes::selections)} \\
+              for more information."
         )
       )
     }
@@ -120,7 +131,7 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
   check_type(
-    training[, c(col_names$top, col_names$bottom)],
+    training[, unique(c(col_names$top, col_names$bottom))],
     types = c("double", "integer")
   )
 
@@ -139,17 +150,20 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
-  check_new_data(unname(object$columns$top), object, new_data)
+  col_names <- purrr::pmap(object$columns, c)
+  unique_col_names <- unique(unlist(col_names))
+  check_new_data(unique_col_names, object, new_data)
 
-  res <- purrr::map2(
-    new_data[, object$columns$top],
-    new_data[, object$columns$bottom],
-    `/`
-  )
+  res <- list()
 
-  names(res) <- apply(
-    object$columns,
-    MARGIN = 1,
+  for (col_name in col_names) {
+    value <- new_data[[col_name[["top"]]]] / new_data[[col_name[["bottom"]]]]
+    res <- c(res, list(value))
+  }
+
+  names(res) <- vapply(
+    col_names,
+    FUN.VALUE = character(1),
     function(x) object$naming(x[1], x[2])
   )
 
@@ -157,9 +171,7 @@ bake.step_ratio <- function(object, new_data, ...) {
 
   res <- check_name(res, new_data, object, names(res))
   new_data <- vec_cbind(new_data, res)
-
-  union_cols <- union(object$columns$top, object$columns$bottom)
-  new_data <- remove_original_cols(new_data, object, union_cols)
+  new_data <- remove_original_cols(new_data, object, unique_col_names)
 
   new_data
 }

@@ -1,4 +1,4 @@
-#' Logarithmic Transformation
+#' Logarithmic transformation
 #'
 #' `step_log()` creates a *specification* of a recipe step that will log
 #' transform data.
@@ -18,8 +18,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the columns that will be affected) and `base`.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `base` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{base}{numeric, value for the base}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -118,32 +124,35 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_log <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  # For backward compatibility #1284
+  col_names <- names(object$columns) %||% object$columns
+  check_new_data(col_names, object, new_data)
 
-  col_names <- object$columns
   # for backward compat
   if (all(names(object) != "offset")) {
     object$offset <- 0
   }
 
-  if (!object$signed) {
-    for (i in seq_along(col_names)) {
-      new_data[[col_names[i]]] <-
-        log(new_data[[col_names[i]]] + object$offset, base = object$base)
-    }
-  } else {
-    if (object$offset != 0) {
-      rlang::warn("When signed is TRUE, offset will be ignored")
-    }
-    for (i in seq_along(col_names)) {
-      new_data[[col_names[i]]] <-
-        ifelse(abs(new_data[[col_names[i]]]) < 1,
-          0,
-          sign(new_data[[col_names[i]]]) *
-            log(abs(new_data[[col_names[i]]]), base = object$base)
-        )
-    }
+  if (object$signed && object$offset != 0) {
+    cli::cli_warn("When {.arg signed} is TRUE, {.arg offset} will be ignored.")
   }
+
+  for (col_name in col_names) {
+    tmp <- new_data[[col_name]]
+
+    if (object$signed) {
+      tmp <- ifelse(
+        abs(tmp) < 1,
+        0,
+        sign(tmp) * log(abs(tmp), base = object$base)
+      )
+    } else {
+      tmp <- log(tmp + object$offset, base = object$base)
+    }
+
+    new_data[[col_name]] <- tmp
+  }
+
   new_data
 }
 

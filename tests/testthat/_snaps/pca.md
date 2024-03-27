@@ -23,7 +23,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * No PCA components were extracted from: carbon, hydrogen, ... | Trained
+      * No PCA components were extracted from: carbon and hydrogen, ... | Trained
 
 # backwards compatible with 0.1.17
 
@@ -53,8 +53,8 @@
     Condition
       Error in `step_pca()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  PC1
+      ! Name collision occurred. The following variable names already exist:
+      * `PC1`
 
 # case weights
 
@@ -94,7 +94,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained, ignored weights
+      * PCA extraction with: carbon and hydrogen, ... | Trained, ignored weights
 
 # empty printing
 
@@ -137,8 +137,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_pca()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_pca()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

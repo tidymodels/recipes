@@ -112,6 +112,20 @@ This step has 1 tuning parameters:
 }
 }
 
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{starting_val}, \code{cycle_size}, \code{frequency}, \code{key} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{starting_val}{numeric, the starting value}
+\item{cycle_size}{numeric, the cycle size}
+\item{frequency}{numeric, the frequency}
+\item{key}{character, key describing the calculation}
+\item{id}{character, id of this step}
+}
+}
+
 \section{Case weights}{
 
 

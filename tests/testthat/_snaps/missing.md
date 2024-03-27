@@ -5,7 +5,7 @@
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:
-      ! The following columns contain missing values: `a`.
+      ! The following columns contains missing values: a.
 
 ---
 
@@ -14,7 +14,7 @@
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:
-      ! The following columns contain missing values: `b`.
+      ! The following columns contains missing values: b.
 
 ---
 
@@ -23,7 +23,7 @@
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:
-      ! The following columns contain missing values: `d`.
+      ! The following columns contains missing values: d.
 
 ---
 
@@ -32,7 +32,7 @@
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:
-      ! The following columns contain missing values: `e`.
+      ! The following columns contains missing values: e.
 
 # check_missing works on multiple columns simultaneously
 
@@ -41,7 +41,7 @@
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:
-      ! The following columns contain missing values: `a`, `e`.
+      ! The following columns contains missing values: a and e.
 
 ---
 
@@ -50,7 +50,7 @@
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:
-      ! The following columns contain missing values: `a`, `b`, `d`, `e`.
+      ! The following columns contains missing values: a, b, d, and e.
 
 # check_missing on a new set
 
@@ -58,7 +58,7 @@
       bake(rp, na)
     Condition
       Error in `bake()`:
-      ! The following columns contain missing values: `a`.
+      ! The following columns contains missing values: a.
 
 # empty printing
 
@@ -126,5 +126,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Check missing values for: mpg, cyl, disp, hp, drat, wt, qsec, ... | Trained
+      * Check missing values for: mpg, cyl, disp, hp, drat, wt, ... | Trained
 

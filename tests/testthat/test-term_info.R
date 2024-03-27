@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(tibble)
 
 # results based on second example at
 # https://github.com/tidymodels/textrecipes/issues/17#issue-382503618

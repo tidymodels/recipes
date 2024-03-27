@@ -1,6 +1,6 @@
 library(testthat)
 library(recipes)
-library(splines)
+
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
@@ -23,8 +23,8 @@ test_that("correct basis functions", {
   with_ns_pred_tr <- bake(with_ns, new_data = biomass_tr)
   with_ns_pred_te <- bake(with_ns, new_data = biomass_te)
 
-  carbon_ns_tr_exp <- ns(biomass_tr$carbon, df = 2)
-  hydrogen_ns_tr_exp <- ns(biomass_tr$hydrogen, df = 2)
+  carbon_ns_tr_exp <- splines::ns(biomass_tr$carbon, df = 2)
+  hydrogen_ns_tr_exp <- splines::ns(biomass_tr$hydrogen, df = 2)
   carbon_ns_te_exp <- predict(carbon_ns_tr_exp, biomass_te$carbon)
   hydrogen_ns_te_exp <- predict(hydrogen_ns_tr_exp, biomass_te$hydrogen)
 
@@ -97,6 +97,18 @@ test_that("tunable", {
     names(rec_param),
     c("name", "call_info", "source", "component", "component_id")
   )
+})
+
+test_that("works when baked with 1 row", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_ns(disp) %>%
+    prep()
+
+  expect_no_error(
+    res <- bake(rec, mtcars[1, ])
+  )
+
+  expect_identical(nrow(res), 1L)
 })
 
 # Infrastructure ---------------------------------------------------------------

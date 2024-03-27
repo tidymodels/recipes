@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_monotone.R
 \name{step_spline_monotone}
 \alias{step_spline_monotone}
-\title{Monotone Splines}
+\title{Monotone splines}
 \usage{
 step_spline_monotone(
   recipe,
@@ -86,8 +86,13 @@ remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

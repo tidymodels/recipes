@@ -2,7 +2,7 @@
 % Please edit documentation in R/interact.R
 \name{step_interact}
 \alias{step_interact}
-\title{Create Interaction Variables}
+\title{Create interaction variables}
 \usage{
 step_interact(
   recipe,
@@ -11,6 +11,7 @@ step_interact(
   trained = FALSE,
   objects = NULL,
   sep = "_x_",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("interact")
 )
@@ -37,6 +38,9 @@ individual interaction.}
 \item{sep}{A character value used to delineate variables in an
 interaction (e.g. \code{var1_x_var2} instead of the more
 traditional \code{var1:var2}).}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -89,8 +93,13 @@ so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and
 all two-way interactions are created.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the interaction effects) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

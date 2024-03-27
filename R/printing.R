@@ -1,4 +1,4 @@
-#' Printing Workhorse Function
+#' Printing workhorse function
 #'
 #' This internal function is used for printing steps.
 #'
@@ -64,7 +64,8 @@ print_step <- function(tr_obj = NULL,
 
   element_print_lengths <- cumsum(nchar(elements)) + # length of elements
     c(0L, cumsum(rep(2L, length(elements) - 1))) + # length of comma seperator
-    c(rep(5L, length(elements) - 1), 0L) # length of `, ...`
+    c(rep(5L, length(elements) - 1), 0L) + # length of `, ...`
+    3 # to account for possible " and " instead of ", "
 
   first_line <- which(width_diff >= element_print_lengths)
   first_line <- unname(first_line)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/depth.R
 \name{step_depth}
 \alias{step_depth}
-\title{Data Depths}
+\title{Data depths}
 \usage{
 step_depth(
   recipe,
@@ -14,6 +14,7 @@ step_depth(
   options = list(),
   data = NULL,
   prefix = "depth_",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("depth")
 )
@@ -54,6 +55,9 @@ depth functions. See \code{\link[ddalpha:depth.halfspace]{ddalpha::depth.halfspa
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -101,8 +105,14 @@ replace the original values and by default have the prefix \code{depth_}. The
 naming format can be changed using the \code{prefix} argument.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{class} is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{class} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{class}{character, name of class variable}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{
@@ -137,6 +147,7 @@ tidy(rec_dists, number = 1)
 }
 \seealso{
 Other multivariate transformation steps: 
+\code{\link{step_classdist_shrunken}()},
 \code{\link{step_classdist}()},
 \code{\link{step_geodist}()},
 \code{\link{step_ica}()},

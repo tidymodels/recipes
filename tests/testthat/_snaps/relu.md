@@ -4,7 +4,7 @@
       recipe(~., data = df) %>% step_relu(val1, shift = TRUE) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
-      ! Shift argument must be a numeric value.
+      ! `shift` must be a number, not `TRUE`.
 
 ---
 
@@ -12,7 +12,7 @@
       recipe(~., data = df) %>% step_relu(val1, reverse = 3) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
-      ! Reverse argument must be a logical value.
+      ! `reverse` must be `TRUE` or `FALSE`, not the number 3.
 
 ---
 
@@ -20,7 +20,7 @@
       recipe(~., data = df) %>% step_relu(val1, smooth = "cat") %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
-      ! Smooth argument must be logical value.
+      ! `smooth` must be `TRUE` or `FALSE`, not the string "cat".
 
 ---
 
@@ -29,7 +29,8 @@
     Condition
       Error in `step_relu()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, or integer.
+      x All columns selected for the step should be double or integer.
+      * 1 factor variable found: `val2`
 
 # empty printing
 

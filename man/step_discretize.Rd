@@ -67,9 +67,14 @@ convert numeric data into a factor with bins having approximately the same
 number of data points (based on a training set).
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value}
-(the breaks) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the breaks}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

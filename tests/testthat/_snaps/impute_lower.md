@@ -5,7 +5,8 @@
     Condition
       Error in `step_impute_lower()`:
       Caused by error in `prep()`:
-      ! Some columns have negative values. Lower bound imputation is intended for data bounded at zero.
+      x The following columns negative values: has_neg.
+      i Lower bound imputation is intended for data bounded at zero.
 
 # Deprecation warning
 
@@ -65,7 +66,7 @@
       predictor: 3
       
       -- Operations 
-      * Lower bound imputation for: carbon, hydrogen
+      * Lower bound imputation for: carbon and hydrogen
 
 ---
 
@@ -84,5 +85,5 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Lower bound imputation for: carbon, hydrogen | Trained
+      * Lower bound imputation for: carbon and hydrogen | Trained
 

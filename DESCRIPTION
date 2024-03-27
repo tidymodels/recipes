@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 1.0.6.9000
+Version: 1.0.10.9000
 Authors@R: c(
     person("Max", "Kuhn", , "max@posit.co", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
@@ -19,7 +19,7 @@ URL: https://github.com/tidymodels/recipes,
 BugReports: https://github.com/tidymodels/recipes/issues
 Depends: 
     dplyr (>= 1.1.0),
-    R (>= 3.4)
+    R (>= 3.6)
 Imports: 
     cli,
     clock (>= 0.6.1),
@@ -34,7 +34,7 @@ Imports:
     magrittr,
     Matrix,
     purrr (>= 1.0.0),
-    rlang (>= 1.0.3),
+    rlang (>= 1.1.0),
     stats,
     tibble,
     tidyr (>= 1.0.0),
@@ -52,7 +52,7 @@ Suggests:
     kernlab,
     knitr,
     modeldata (>= 0.1.1),
-    parsnip (>= 0.1.7),
+    parsnip (>= 1.2.0),
     RANN,
     RcppRoll,
     rmarkdown,

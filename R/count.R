@@ -1,4 +1,4 @@
-#' Create Counts of Patterns using Regular Expressions
+#' Create counts of patterns using regular expressions
 #'
 #' `step_count()` creates a *specification* of a recipe step that will create a
 #' variable that counts instances of a regular expression pattern in text.
@@ -26,9 +26,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `result` (the
-#' new column name) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `result` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{result}{character, the new column names}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -58,25 +63,27 @@ step_count <- function(recipe,
                        options = list(),
                        result = make.names(pattern),
                        input = NULL,
+                       keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("count")) {
-  if (!is.character(pattern)) {
-    rlang::abort("`pattern` should be a character string")
-  }
-  if (length(pattern) != 1) {
-    rlang::abort("`pattern` should be a single pattern")
-  }
+  check_string(pattern)
+
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    rlang::abort(paste0(
-      "Valid options are: ",
-      paste0(valid_args, collapse = ", ")
+    cli::cli_abort(c(
+      "x" = "The following elements of {.arg options} are not allowed:",
+      "*" = "{.val {setdiff(names(options), valid_args)}}.",
+      "i" = "Valid options are: {.val {valid_args}}."
     ))
   }
 
   terms <- enquos(...)
   if (length(terms) > 1) {
-    rlang::abort("For this step, only a single selector can be used.")
+    cli::cli_abort(c(
+      x = "For this step, only a single selector can be used.",
+      i = "The following {length(terms)} selectors were used: \\
+          {.var {as.character(terms)}}."
+    ))
   }
 
   add_step(
@@ -90,6 +97,7 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -97,7 +105,8 @@ step_count <- function(recipe,
 }
 
 step_count_new <-
-  function(terms, role, trained, pattern, normalize, options, result, input, skip, id) {
+  function(terms, role, trained, pattern, normalize, options, result, input,
+           keep_original_cols, skip, id) {
     step(
       subclass = "count",
       terms = terms,
@@ -108,6 +117,7 @@ step_count_new <-
       options = options,
       result = result,
       input = input,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -119,7 +129,11 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
 
   if (length(col_name) > 1) {
-    rlang::abort("The selector should select at most a single variable")
+    cli::cli_abort(c(
+      x = "The selector should select at most a single variable.",
+      i = "The following {length(col_name)} were selected: \\
+          {.and {.var {col_name}}}."
+    ))
   }
 
   step_count_new(
@@ -131,6 +145,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -138,16 +153,17 @@ prep.step_count <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_count <- function(object, new_data, ...) {
-  check_new_data(names(object$input), object, new_data)
+  col_name <- names(object$input)
+  check_new_data(col_name, object, new_data)
 
-  if (length(object$input) == 0L) {
+  if (length(col_name) == 0L) {
     return(new_data)
   }
 
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = new_data[[object$input]],
+      text = new_data[[col_name]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -159,16 +175,22 @@ bake.step_count <- function(object, new_data, ...) {
     regex <- rlang::call_modify(regex, !!!object$options)
   }
 
-  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
+  new_values <- tibble::tibble(
+    !!object$result := vapply(eval(regex), counter, integer(1))
+  )
+
   if (object$normalize) {
-    totals <- nchar(as.character(new_data[[object$input]]))
-    new_data[, object$result] <- new_data[, object$result] / totals
+    totals <- nchar(as.character(new_data[[col_name]]))
+    new_values[[object$result]] <- new_values[[object$result]] / totals
   }
+
+  new_values <- check_name(new_values, new_data, object, object$result)
+  new_data <- vec_cbind(new_data, new_values)
+  new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
 
 counter <- function(x) length(x[x > 0])
-
 
 print.step_count <-
   function(x, width = max(20, options()$width - 30), ...) {

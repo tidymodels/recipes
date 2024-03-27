@@ -18,8 +18,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -51,6 +56,7 @@ step_lag <-
            prefix = "lag_",
            default = NA,
            columns = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("lag")) {
     add_step(
@@ -63,6 +69,7 @@ step_lag <-
         default = default,
         prefix = prefix,
         columns = columns,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -70,7 +77,8 @@ step_lag <-
   }
 
 step_lag_new <-
-  function(terms, role, trained, lag, default, prefix, columns, skip, id) {
+  function(terms, role, trained, lag, default, prefix, columns,
+           keep_original_cols, skip, id) {
     step(
       subclass = "lag",
       terms = terms,
@@ -80,6 +88,7 @@ step_lag_new <-
       default = default,
       prefix = prefix,
       columns = columns,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -87,6 +96,13 @@ step_lag_new <-
 
 #' @export
 prep.step_lag <- function(x, training, info = NULL, ...) {
+  if (!all(x$lag == as.integer(x$lag))) {
+    cli::cli_abort(
+      "{.arg lag} argument must be integer-valued, \\
+      not {.obj_type_friendly {lag}}."
+    )
+  }
+
   step_lag_new(
     terms = x$terms,
     role = x$role,
@@ -95,6 +111,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
     default = x$default,
     prefix = x$prefix,
     columns = recipes_eval_select(x$terms, training, info),
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -102,28 +119,24 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_lag <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  if (!all(object$lag == as.integer(object$lag))) {
-    rlang::abort("step_lag requires 'lag' argument to be integer valued.")
-  }
-
-  make_call <- function(col, lag_val) {
-    call2(
-      "lag",
-      x = sym(col),
-      n = lag_val,
-      default = object$default,
-      .ns = "dplyr"
+  for (col_name in col_names) {
+    new_values <- lapply(
+      object$lag,
+      function(x) dplyr::lag(new_data[[col_name]], x, default = object$default)
     )
+
+    new_names <- glue::glue("{object$prefix}{object$lag}_{col_name}")
+    names(new_values) <- new_names
+
+    new_values <- tibble::new_tibble(new_values)
+    new_values <- check_name(new_values, new_data, object, new_names)
+    new_data <- vctrs::vec_cbind(new_data, new_values)
   }
 
-  grid <- tidyr::expand_grid(col = object$columns, lag_val = object$lag)
-  calls <- purrr::map2(grid$col, grid$lag_val, make_call)
-  newname <- as.character(glue("{object$prefix}{grid$lag_val}_{grid$col}"))
-  calls <- check_name(calls, new_data, object, newname, TRUE)
-
-  new_data <- mutate(new_data, !!!calls)
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

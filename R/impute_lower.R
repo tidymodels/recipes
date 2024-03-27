@@ -22,9 +22,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `value` for the
-#' estimated threshold is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the estimated value}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -124,16 +129,16 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
-  threshold <-
-    vapply(training[, col_names], min, numeric(1), na.rm = TRUE)
+  threshold <- vapply(training[, col_names], min, numeric(1), na.rm = TRUE)
   if (any(threshold < 0)) {
-    rlang::abort(
-      paste0(
-        "Some columns have negative values. Lower bound ",
-        "imputation is intended for data bounded at zero."
-      )
-    )
+    offenders <- col_names[threshold < 0]
+
+    cli::cli_abort(c(
+      x = "The following columns negative values: {offenders}.",
+      i = "Lower bound imputation is intended for data bounded at zero."
+    ))
   }
+
   step_impute_lower_new(
     terms = x$terms,
     role = x$role,
@@ -150,17 +155,21 @@ prep.step_lowerimpute <- prep.step_impute_lower
 
 #' @export
 bake.step_impute_lower <- function(object, new_data, ...) {
-  check_new_data(names(object$threshold), object, new_data)
+  col_names <- names(object$threshold)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$threshold)) {
-    affected <- which(new_data[[i]] <= object$threshold[[i]])
+  for (col_name in col_names) {
+    threshold <- object$threshold[[col_name]]
+    affected <- which(new_data[[col_name]] <= threshold)
+
     if (length(affected) > 0) {
-      new_data[[i]][affected] <- runif(
+      new_data[[col_name]][affected] <- runif(
         length(affected),
-        max = object$threshold[[i]]
+        max = threshold
       )
     }
   }
+
   new_data
 }
 

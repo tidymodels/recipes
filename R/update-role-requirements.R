@@ -86,12 +86,10 @@ update_role_requirements <- function(recipe,
 
   exists <- role %in% roles
   if (!exists) {
-    role <- glue::double_quote(role)
-    message <- c(
-      "`role` must be a preexisting role in the recipe.",
-      i = glue("{role} is not a preexisting role.")
-    )
-    abort(message)
+    cli::cli_abort(c(
+      x = "{.arg role} must be a preexisting role in the recipe.",
+      i = "{.val {role}} is not a preexisting role."
+    ))
   }
 
   recipe <- update_bake_role_requirements(recipe, role, bake)
@@ -138,23 +136,27 @@ update_bake_role_requirements <- function(recipe,
     return(recipe)
   }
 
-  if (!is_bool(bake)) {
-    abort("`bake` must be a single `TRUE` or `FALSE`.", call = call)
-  }
+  check_bool(bake, call = call)
 
   if (identical(role, "predictor")) {
-    message <- c(
-      "Can't update the `bake` requirement of the \"predictor\" role.",
-      i = "The \"predictor\" role is always required at `bake()` time."
+    cli::cli_abort(
+      c(
+        x = "Can't update the {.arg bake} requirement of the \\
+            {.val predictor} role.",
+        i = "The {.val predictor} role is always required at {.fn bake} time."
+      ),
+      call = call
     )
-    abort(message, call = call)
   }
   if (identical(role, "outcome")) {
-    message <- c(
-      "Can't update the `bake` requirement of the \"outcome\" role.",
-      i = "The \"outcome\" role is never required at `bake()` time."
+    cli::cli_abort(
+      c(
+        x = "Can't update the {.arg bake} requirement of the \\
+            {.val outcome} role.",
+        i = "The {.val outcome} role is never required at {.fn bake} time."
+      ),
+      call = call
     )
-    abort(message, call = call)
   }
 
   bakes <- get_bake_role_requirements(recipe)
@@ -200,25 +202,22 @@ check_bake_role_requirements <- function(recipe,
     standard <- roles == "predictor"
     any_nonstandard <- any(!standard)
 
-    names <- glue::double_quote(names)
-    names <- glue::glue_collapse(names, sep = ", ")
-
-    roles <- glue::double_quote(roles)
-    roles <- glue::glue_collapse(roles, sep = ", ")
-
-    message <- c(
-      glue("The following required columns are missing from `new_data`: {names}."),
-      i = glue("These columns have one of the following roles, which are required at `bake()` time: {roles}.")
+    msg <- c(
+      x = "The following required columns are missing from \\
+          {.arg new_data}: {.var {names}}.",
+      i = "These columns have one of the following roles, \\
+          which are required at {.fn bake} time: {.var {roles}}."
     )
 
     if (any_nonstandard) {
-      message <- c(
-        message,
-        i = "If these roles are not required at `bake()` time, use `update_role_requirements(role = \"your_role\", bake = FALSE)`."
+      msg <- c(
+        msg,
+        i = "If these roles are not required at {.fn bake} time, use \\
+        {.code update_role_requirements(role = \"your_role\", bake = FALSE)}."
       )
     }
 
-    abort(message, call = call)
+    cli::cli_abort(msg, call = call)
   }
 
   invisible(recipe)

@@ -27,9 +27,8 @@
     Condition
       Error in `step_isomap()`:
       Caused by error in `prep()`:
-      ! `step_isomap` failed with error:
-      Error in do.call(.Call, args = dot_call_args) : 
-        TridiagEigen: eigen decomposition failed
+      x Failed with error:
+      i Error : TridiagEigen: eigen decomposition failed
 
 # check_name() is used
 
@@ -39,8 +38,8 @@
     Condition
       Error in `step_isomap()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Isomap1
+      ! Name collision occurred. The following variable names already exist:
+      * `Isomap1`
 
 # empty printing
 
@@ -84,8 +83,8 @@
     Message
     Condition
       Warning:
-      'keep_original_cols' was added to `step_isomap()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_isomap()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 

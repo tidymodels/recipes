@@ -2,7 +2,7 @@
 % Please edit documentation in R/spline_natural.R
 \name{step_spline_natural}
 \alias{step_spline_natural}
-\title{Natural Splines}
+\title{Natural splines}
 \usage{
 step_spline_natural(
   recipe,
@@ -42,7 +42,7 @@ Otherwise, the first basis will be excluded from the output. This maps to
 the \code{intercept} argument of the corresponding function from the
 \pkg{splines2} package and has the same default value.}
 
-\item{options}{A list of options for \code{\link[splines2:mSpline]{splines2::mSpline()}}
+\item{options}{A list of options for \code{\link[splines2:naturalSpline]{splines2::naturalSpline()}}
 which should not include \code{x}, \code{df}, or \code{intercept}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
@@ -79,8 +79,13 @@ remove that column's results (but will retain the original data). Use the
 \code{tidy()} method to determine which columns were used.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} (the columns that will be affected) is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Tuning Parameters}{

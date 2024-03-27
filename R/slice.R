@@ -15,10 +15,15 @@
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` which contains the filtering indices is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, containing the filtering indices}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -46,8 +51,8 @@
 #' dplyr_test <-
 #'   iris %>%
 #'   as_tibble() %>%
-#'   slice(76:150) %>%
-#'   slice(1:3)
+#'   slice(76:150)
+#'
 #' rec_test <- bake(prepped, iris %>% slice(76:150))
 #' all.equal(dplyr_test, rec_test)
 #'
@@ -58,8 +63,8 @@
 #'
 #' qq_rec <-
 #'   recipe(~., data = iris) %>%
-#'   # Embed `keep_rows` in the call using !!
-#'   step_slice(!!keep_rows) %>%
+#'   # Embed `keep_rows` in the call using !!!
+#'   step_slice(!!!keep_rows) %>%
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)

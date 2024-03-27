@@ -1,6 +1,5 @@
 library(testthat)
 library(recipes)
-library(dplyr)
 
 iris_rec <- recipe(~., data = iris)
 

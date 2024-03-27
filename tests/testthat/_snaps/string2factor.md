@@ -5,7 +5,8 @@
     Condition
       Error in `step_string2factor()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be string, factor, or ordered.
+      * 1 integer variable found: `n`
 
 ---
 
@@ -13,7 +14,7 @@
       rec %>% step_string2factor(n, ordered = "yes") %>% prep(ex_dat)
     Condition
       Error in `step_string2factor()`:
-      ! `ordered` should be a single logical variable
+      ! `ordered` must be `TRUE` or `FALSE`, not the string "yes".
 
 # empty printing
 
@@ -63,7 +64,7 @@
       predictor: 5
       
       -- Operations 
-      * Factor variables from: w, x
+      * Factor variables from: w and x
 
 ---
 
@@ -81,5 +82,5 @@
       Training data contained 200 data points and no incomplete rows.
       
       -- Operations 
-      * Factor variables from: w, x | Trained
+      * Factor variables from: w and x | Trained
 

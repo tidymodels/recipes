@@ -83,7 +83,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' @export
 names0 <- function(num, prefix = "x") {
   if (num < 1) {
-    rlang::abort("`num` should be > 0.")
+    cli::cli_abort("{.arg num} should be > 0.")
   }
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
@@ -270,10 +270,11 @@ merge_term_info <- function(.new, .old) {
 ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms)) {
-    rlang::abort(
-      paste0(
-        "Please supply at least one variable specification.",
-        "See ?selections."
+    cli::cli_abort(
+      c(
+        "!" = "Please supply at least one variable specification.",
+        "i" = "See {.help [?selections](recipes::selections)} \\
+              for more information."
       )
     )
   }
@@ -325,10 +326,9 @@ printer <- function(tr_obj = NULL,
 #' @keywords internal
 #' @rdname recipes-internal
 prepare <- function(x, ...) {
-  rlang::abort(paste0(
-    "As of version 0.0.1.9006, used `prep` ",
-    "instead of `prepare`"
-  ))
+  cli::cli_abort(
+    "As of version 0.0.1.9006 please use {.fn prep} instead of {.fn prepare}."
+  )
 }
 
 
@@ -425,24 +425,52 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
   if (is.null(types)) {
     if (quant) {
       all_good <- vapply(dat, is.numeric, logical(1))
-      label <- "numeric"
+      types <- "numeric"
     } else {
       all_good <- vapply(dat, is_qual, logical(1))
-      label <- "factor or character"
+      types <- "factor or character"
     }
   } else {
     all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
-    label <- glue::glue_collapse(types, sep = ", ", last = ", or ")
   }
 
   if (!all(all_good)) {
-    rlang::abort(
-      paste0(
-        "All columns selected for the step",
-        " should be ",
-        label,
-        "."
-      ),
+    info <- get_types(dat)[!all_good, ]
+    classes <- map_chr(info$type, function(x) x[1])
+    counts <- vctrs::vec_split(info$variable, classes)
+    counts$count <- lengths(counts$val)
+    counts$text_len <- cli::console_width() - 18 - (counts$count > 1) -
+      nchar(counts$key) - (counts$count > 2)
+
+    # cli::ansi_collapse() doesn't work for length(x) == 1
+    # https://github.com/r-lib/cli/issues/590
+    variable_collapse <- function(x, width) {
+      x <- paste0("{.var ", x, "}")
+      if (length(x) == 1) {
+        res <- cli::ansi_strtrim(x, width = width)
+      } else if (length(x) == 2) {
+        res <- cli::ansi_collapse(
+          x, last = " and ", width = width, style = "head"
+        )
+      } else {
+        res <- cli::ansi_collapse(
+          x, width = width, style = "head"
+        )
+      }
+      res
+    }
+
+    problems <- glue::glue_data(
+      counts,
+      "{count} {key} variable{ifelse(count == 1, '', 's')} \\
+      found: {purrr::map2_chr(val, text_len, variable_collapse)}"
+    )
+    names(problems) <- rep("*", length(problems))
+
+    message <- "All columns selected for the step should be {.or {types}}."
+
+    cli::cli_abort(
+      c("x" = message, problems),
       call = call
     )
   }
@@ -530,8 +558,8 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
   if (any(intersection)) {
     nms <- new_data_names[intersection]
     cli::cli_abort(
-      c("Name collision occured. The following variable names already exists:",
-        i = " {nms}"),
+      c("Name collision occurred. The following variable names already exist:",
+        "*" = "{.var {nms}}"),
       call = call
     )
 
@@ -589,17 +617,13 @@ check_nominal_type <- function(x, lvl) {
     was_factor <- fac_ref_cols[!(fac_ref_cols %in% fac_act_cols)]
 
     if (length(was_factor) > 0) {
-      rlang::warn(
-        paste0(
-          " There ",
-          ifelse(length(was_factor) > 1, "were ", "was "),
-          length(was_factor),
-          ifelse(length(was_factor) > 1, " columns ", " column "),
-          "that ",
-          ifelse(length(was_factor) > 1, "were factors ", "was a factor "),
-          "when the recipe was prepped:\n ",
-          paste0("'", was_factor, "'", collapse = ", "),
-          ".\n This may cause errors when processing new data."
+      cli::cli_warn(
+        c(
+          "!" = "There {?w/was/were} {length(was_factor)} column{?s} that \\
+                {?was a factor/were factors} when the recipe was prepped: \\
+                ",
+          "*" = "{.and {.var {was_factor}}}",
+          "i" = "This may cause errors when processing new data."
         )
       )
     }
@@ -607,30 +631,27 @@ check_nominal_type <- function(x, lvl) {
   invisible(NULL)
 }
 
-check_training_set <- function(x, rec, fresh) {
+check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
   # In case a variable has multiple roles
   vars <- unique(rec$var_info$variable)
 
-  if (is.null(x)) {
+  training_null <- is.null(x)
+  if (training_null) {
     if (fresh) {
-      rlang::abort(
-        paste0(
-          "A training set must be supplied to the `training` argument ",
-          "when `fresh = TRUE`."
-        )
+      cli::cli_abort(
+        "A training set must be supplied to the {.arg training} argument \\
+        when {.code fresh = TRUE}.",
+        call = call
       )
     }
     x <- rec$template
   } else {
     in_data <- vars %in% colnames(x)
     if (!all(in_data)) {
-      rlang::abort(
-        paste0(
-          "Not all variables in the recipe are present in the supplied ",
-          "training set: ",
-          paste0("'", vars[!in_data], "'", collapse = ", "),
-          "."
-        )
+      cli::cli_abort(
+        "Not all variables in the recipe are present in the supplied training \\
+        set: {.and {.var {vars[!in_data]}}}.",
+        call = call
       )
     }
     if (!is_tibble(x)) {
@@ -643,21 +664,20 @@ check_training_set <- function(x, rec, fresh) {
   steps_trained <- vapply(rec$steps, is_trained, logical(1))
   if (any(steps_trained) & !fresh) {
     if (!rec$retained) {
-      rlang::abort(
-        paste0(
-          "To prep new steps after prepping the original ",
-          "recipe, `retain = TRUE` must be set each time that ",
-          "the recipe is trained."
-        )
+      cli::cli_abort(
+        "To prep new steps after prepping the original recipe, \\
+        {.code retain = TRUE} must be set each time that the recipe is \\
+        trained.",
+        call = call
       )
     }
-    if (!is.null(rec$training)) {
-      rlang::warn(
-        paste0(
-          "The previous data will be used by `prep`; ",
-          "the data passed using `training` will be ",
-          "ignored."
-        )
+    if (!training_null) {
+      cli::cli_warn(
+        c(
+          "!" = "The previous data will be used by {.fn prep}.",
+          "i" = "The data passed using {.arg training} will be ignored."
+        ),
+        call = call
       )
     }
     x <- rec$template
@@ -678,12 +698,11 @@ get_keep_original_cols <- function(object) {
 
   if (is.null(object$keep_original_cols)) {
     ret <- FALSE
-    rlang::warn(
-      paste0(
-        "'keep_original_cols' was added to `",
-        step_class,
-        "()` after this recipe was created.\n",
-        "Regenerate your recipe to avoid this warning."
+    cli::cli_warn(
+      c(
+        "{.arg keep_original_cols} was added to {.fn {step_class}} after this \\
+         recipe was created.",
+        "i" = "Regenerate your recipe to avoid this warning."
       )
     )
   } else {
@@ -780,11 +799,10 @@ dimred_data <- function(dat) {
 uses_dim_red <- function(x) {
   dr <- inherits(x, "dimRedResult")
   if (dr) {
-    rlang::abort(
-      paste(
-        "Recipes version >= 0.1.17 represents the estimates using a different format.",
-        "Please recreate this recipe or use version 0.1.16 or less. See issue #823."
-      )
+    cli::cli_abort(
+      "Recipes version >= 0.1.17 represents the estimates using a different \\
+      format. Please recreate this recipe or use version 0.1.16 or less. See \\
+      issue {.href [#823](https://github.com/tidymodels/recipes/issues/823)}."
     )
   }
   invisible(NULL)

@@ -5,7 +5,7 @@
     Condition
       Error in `step_impute_mode()`:
       Caused by error in `prep()`:
-      ! The data should be character or factor to compute the mode.
+      ! The data should be character or factor to compute the mode. Not an integer vector.
 
 # can bake recipes with no ptype
 
@@ -13,8 +13,8 @@
       imputed_te <- bake(imputed, credit_te)
     Condition
       Warning:
-      'ptype' was added to `step_impute_mode()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      ! `ptype` was added to `step_impute_mode()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # Deprecation warning
 

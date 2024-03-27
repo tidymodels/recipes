@@ -1,32 +1,44 @@
-#' Orthogonal Polynomial Basis Functions
+#' Orthogonal polynomial basis functions
 #'
 #' `step_poly()` creates a *specification* of a recipe step that will create new
 #' columns that are basis expansions of variables using orthogonal polynomials.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param objects A list of [stats::poly()] objects
-#'  created once the step has been trained.
+#' @param objects A list of [stats::poly()] objects created once the step has
+#'   been trained.
 #' @param degree The polynomial degree (an integer).
-#' @param options A list of options for [stats::poly()]
-#'  which should not include `x`, `degree`, or `simple`. Note that
-#'  the option `raw = TRUE` will produce the regular polynomial
-#'  values (not orthogonalized).
+#' @param options A list of options for [stats::poly()] which should not include
+#'   `x`, `degree`, or `simple`. Note that the option `raw = TRUE` will produce
+#'   the regular polynomial values (not orthogonalized).
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details `step_poly` can create new features from a single
-#'  variable that enable fitting routines to model this variable in
-#'  a nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `degree` argument of
-#'  [stats::poly()]. The original variables are removed
-#'  from the data and new columns are added. The naming convention
-#'  for the new variables is `varname_poly_1` and so on.
+#' @details
 #'
-#'  # Tidying
+#' `step_poly()` can create new features from a single variable that enable
+#' fitting routines to model this variable in a nonlinear manner. The extent of
+#' the possible nonlinearity is determined by the `degree` argument of
+#' [stats::poly()]. The original variables are removed from the data by default,
+#' but can be retained by setting `keep_original_cols = TRUE` and new columns
+#' are added. The naming convention for the new variables is `varname_poly_1`
+#' and so on.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the columns that will be affected) and `degree` is returned.
+#' The orthogonal polynomial expansion is used by default because it yields
+#' variables that are uncorrelated and doesn't produce large values which would
+#' otherwise be a problem for large values of `degree`. Orthogonal polynomial
+#' expansion pick up the same signal as their uncorrelated counterpart.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `degree` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{degree}{integer, the polynomial degree}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_poly"
@@ -63,6 +75,7 @@ step_poly <-
            objects = NULL,
            degree = 2,
            options = list(),
+           keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("poly")) {
     if (!is_tune(degree)) {
@@ -71,11 +84,9 @@ step_poly <-
 
     if (any(names(options) == "degree")) {
       degree <- options$degree
-      message(
-        paste(
-          "The `degree` argument is now a main argument instead of being",
-          "within `options`."
-        )
+      cli::cli_inform(
+        "The {.arg degree} argument is now a main argument instead of being \\
+        within {.arg options}."
       )
     }
 
@@ -88,6 +99,7 @@ step_poly <-
         objects = objects,
         degree = degree,
         options = options,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -95,7 +107,8 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, degree, options, skip, id) {
+  function(terms, role, trained, objects, degree, options, keep_original_cols,
+           skip, id) {
     step(
       subclass = "poly",
       terms = terms,
@@ -104,6 +117,7 @@ step_poly_new <-
       objects = objects,
       degree = degree,
       options = options,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -143,6 +157,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     objects = obj,
     degree = x$degree,
     options = x$options,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -157,11 +172,10 @@ bake.step_poly <- function(object, new_data, ...) {
   # Start with n-row, 0-col tibble for the empty selection case
   new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))
 
-  for (i in seq_along(col_names)) {
-    i_col_name <- col_names[[i]]
-    i_col <- new_data[[i_col_name]]
-    i_object <- object$objects[[i]]
-    i_new_names <- new_names[[i]]
+  for (col_name in col_names) {
+    i_col <- new_data[[col_name]]
+    i_object <- object$objects[[col_name]]
+    i_new_names <- new_names[[col_name]]
 
     new_cols <- predict(i_object, i_col)
     colnames(new_cols) <- i_new_names
@@ -172,7 +186,7 @@ bake.step_poly <- function(object, new_data, ...) {
 
   new_tbl <- check_name(new_tbl, new_data, object, names(new_tbl))
   new_data <- vec_cbind(new_data, new_tbl)
-  new_data <- dplyr::select(new_data, -dplyr::all_of(col_names))
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 

@@ -222,7 +222,7 @@ test_that("check_name() is used", {
   dat <- iris
   dat$Species_setosa <- dat$Species
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_dummy_extract(Species, sep = " ")
 
   expect_snapshot(

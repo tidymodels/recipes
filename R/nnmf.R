@@ -1,4 +1,4 @@
-#' Non-Negative Matrix Factorization Signal Extraction
+#' Non-negative matrix factorization signal extraction
 #'
 #' @description
 #'
@@ -39,9 +39,15 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the selectors or variables selected) and the number of
-#' components is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value`, `component` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, value of loading}
+#'   \item{component}{character, name of component}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_nnmf"
@@ -148,7 +154,10 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
       silent = TRUE
     )
     if (inherits(nnm, "try-error")) {
-      rlang::abort(paste0("`step_nnmf` failed with error:\n", as.character(nnm)))
+      cli::cli_abort(c(
+        x = "Failed with error:",
+        i = as.character(nnm)
+      ))
     }
   } else {
     nnm <- NULL

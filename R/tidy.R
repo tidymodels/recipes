@@ -1,4 +1,4 @@
-#' Tidy the Result of a Recipe
+#' Tidy the result of a recipe
 #'
 #' `tidy` will return a data frame that contains information
 #'  regarding a recipe or operation within the recipe (when a `tidy`
@@ -7,7 +7,7 @@
 #' @name tidy.recipe
 #'
 #' @param x A `recipe` object, step, or check (trained or otherwise).
-#' @param number An integer or `NA`. If missing and `id` is not provided,
+#' @param number An integer or `NA`. If missing, and `id` is not provided,
 #'  the return value is a list of the operations in the recipe.
 #'  If a number is given, a `tidy` method is executed for that operation
 #'  in the recipe (if it exists). `number` must not be provided if
@@ -19,7 +19,7 @@
 #'  if `number` is.
 #' @param ... Not currently used.
 #' @return A tibble with columns that vary depending on what
-#'  `tidy` method is executed. When `number` and `id` are `NA`, a
+#'  `tidy` method is executed. When `number`, and `id` are `NA`, a
 #'  tibble with columns `number` (the operation iteration),
 #'  `operation` (either "step" or "check"),
 #'  `type` (the method, e.g. "nzv", "center"), a logical
@@ -57,20 +57,28 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   pattern <- "(^step_)|(^check_)"
 
   if (length(id) != 1L) {
-    rlang::abort("If `id` is provided, it must be a length 1 character vector.")
+    cli::cli_abort(
+      "If {.arg id} is provided, it must be a length 1 character vector."
+    )
   }
 
   if (length(number) != 1L) {
-    rlang::abort("If `number` is provided, it must be a length 1 integer vector.")
+    cli::cli_abort(
+      "If {.arg number} is provided, it must be a length 1 integer vector."
+    )
   }
 
   if (!is.na(id)) {
     if (!is.na(number)) {
-      rlang::abort("You may specify `number` or `id`, but not both.")
+      cli::cli_abort(
+        "You may specify {.arg number} or {.arg id}, but not both."
+      )
     }
     step_ids <- vapply(x$steps, function(x) x$id, character(1))
     if (!(id %in% step_ids)) {
-      rlang::abort("Supplied `id` not found in the recipe.")
+      cli::cli_abort(
+        "Supplied {.arg id} ({.val {id}}) not found in the recipe."
+      )
     }
     number <- which(id == step_ids)
   }
@@ -100,15 +108,11 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
     )
   } else {
     if (number > num_oper || length(number) > 1) {
-      rlang::abort(
-        paste0(
-          "`number` should be a single value between 1 and ",
-          num_oper,
-          "."
-        )
+      cli::cli_abort(
+        "{.arg number} should be a single value between 1 and {num_oper}, \\
+        not {number}."
       )
     }
-
     res <- tidy(x$steps[[number]], ...)
   }
   res
@@ -117,21 +121,15 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
 #' @rdname tidy.recipe
 #' @export
 tidy.step <- function(x, ...) {
-  rlang::abort(
-    paste0(
-      "No `tidy` method for a step with classes: ",
-      paste0(class(x), collapse = ", ")
-    )
+  cli::cli_abort(
+    "No {.cls tidy} method for a step with class{?es}: {.cls {class(x)}}."
   )
 }
 
 #' @rdname tidy.recipe
 #' @export
 tidy.check <- function(x, ...) {
-  rlang::abort(
-    paste0(
-      "No `tidy` method for a check with classes: ",
-      paste0(class(x), collapse = ", ")
-    )
+  cli::cli_abort(
+    "No {.cls tidy} method for a check with class{?es}: {.cls {class(x)}}."
   )
 }

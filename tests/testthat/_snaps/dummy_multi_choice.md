@@ -5,7 +5,8 @@
     Condition
       Error in `step_dummy_multi_choice()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be nominal, or logical.
+      x All columns selected for the step should be nominal or logical.
+      * 11 double variables found: `mpg`, `cyl`, `disp`, `hp`, ...
 
 # check_name() is used
 
@@ -14,8 +15,8 @@
     Condition
       Error in `step_dummy_multi_choice()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  Species_setosa
+      ! Name collision occurred. The following variable names already exist:
+      * `Species_setosa`
 
 # empty printing
 
@@ -58,8 +59,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_dummy_multi_choice()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_dummy_multi_choice()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -92,5 +93,5 @@
       Training data contained 4 data points and 4 incomplete rows.
       
       -- Operations 
-      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, lang_4 | Trained
+      * Multi-choice dummy variables from: lang_1, lang_2, lang_3, ... | Trained
 

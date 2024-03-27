@@ -1,4 +1,4 @@
-#' Box-Cox Transformation for Non-Negative Data
+#' Box-Cox transformation for non-negative data
 #'
 #' `step_BoxCox()` creates a *specification* of a recipe step that will transform
 #' data using a Box-Cox transformation.
@@ -33,9 +33,14 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `value` (the
-#' lambda estimate) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the lambda estimate}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -110,10 +115,9 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
   )
   if (any(is.na(values))) {
     var_names <- names(values[is.na(values)])
-    vars <- glue::glue_collapse(glue::backtick(var_names), sep = ", ")
-    rlang::warn(paste(
-      "No Box-Cox transformation could be estimated for:", glue("{vars}")
-    ))
+    cli::cli_warn(
+      "No Box-Cox transformation could be estimated for: {.var {var_names}}."
+    )
   }
   values <- values[!is.na(values)]
   step_BoxCox_new(
@@ -130,13 +134,13 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_BoxCox <- function(object, new_data, ...) {
-  param <- names(object$lambdas)
-  check_new_data(param, object, new_data)
+  col_names <- names(object$lambdas)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$lambdas)) {
-    new_data[[param[i]]] <- bc_trans(
-      new_data[[param[i]]],
-      lambda = object$lambdas[i]
+  for (col_name in col_names) {
+    new_data[[col_name]] <- bc_trans(
+      new_data[[col_name]],
+      lambda = object$lambdas[col_name]
     )
   }
 
@@ -153,10 +157,10 @@ print.step_BoxCox <-
 ## computes the new data
 bc_trans <- function(x, lambda, eps = .001) {
   if (any(x <= 0)) {
-    rlang::warn(paste0(
-      "Applying Box-Cox transformation to non-positive data in column `",
-      names(lambda), "`"
-    ))
+    cli::cli_warn(
+      "Applying Box-Cox transformation to non-positive data in column \\
+      {names(lambda)}"
+    )
   }
 
   if (is.na(lambda)) {
@@ -197,10 +201,10 @@ estimate_bc <- function(dat,
                         num_unique = 5) {
   eps <- .001
   if (length(unique(dat)) < num_unique) {
-    rlang::warn("Fewer than `num_unique` values in selected variable.")
+    cli::cli_warn("Fewer than {.arg num_unique} values in selected variable.")
     return(NA)
   } else if (any(dat <= 0)) {
-    rlang::warn("Non-positive values in selected variable.")
+    cli::cli_warn("Non-positive values in selected variable.")
     return(NA)
   }
 

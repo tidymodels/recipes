@@ -60,8 +60,13 @@ When applied to new data or testing data, this transformation would use the
 mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with column
-\code{terms} which contains the columns being transformed is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{
@@ -87,6 +92,7 @@ recipe(~., data = iris) \%>\%
 }
 \seealso{
 Other multivariate transformation steps: 
+\code{\link{step_classdist_shrunken}()},
 \code{\link{step_classdist}()},
 \code{\link{step_depth}()},
 \code{\link{step_geodist}()},

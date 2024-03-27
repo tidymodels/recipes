@@ -5,7 +5,8 @@
     Condition
       Error in `step_YeoJohnson()`:
       Caused by error in `prep()`:
-      ! Missing values are not allowed for the YJ transformation. See `na_rm` option
+      x Missing values are not allowed for the YJ transformation.
+      i See `na_rm` option.
 
 # empty printing
 

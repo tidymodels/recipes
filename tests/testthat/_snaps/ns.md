@@ -5,8 +5,8 @@
     Condition
       Error in `step_ns()`:
       Caused by error in `bake()`:
-      ! Name collision occured. The following variable names already exists:
-      i  mpg_ns_1
+      ! Name collision occurred. The following variable names already exist:
+      * `mpg_ns_1`
 
 # empty printing
 
@@ -49,8 +49,8 @@
       rec <- prep(rec)
     Condition
       Warning:
-      'keep_original_cols' was added to `step_ns()` after this recipe was created.
-      Regenerate your recipe to avoid this warning.
+      `keep_original_cols` was added to `step_ns()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
@@ -66,7 +66,7 @@
       predictor: 10
       
       -- Operations 
-      * Natural splines on: disp, wt
+      * Natural splines on: disp and wt
 
 ---
 
@@ -85,5 +85,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Natural splines on: disp, wt | Trained
+      * Natural splines on: disp and wt | Trained
 

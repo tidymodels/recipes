@@ -13,7 +13,10 @@ discretize <- function(x, ...) {
 #' @export
 #' @rdname discretize
 discretize.default <- function(x, ...) {
-  rlang::abort("Only numeric `x` is accepted")
+  cli::cli_abort(c(
+    x = "Only numeric {.arg x} is accepted.",
+    i = "The {.arg x} was passed {.obj_type_friendly {x}}."
+  ))
 }
 
 #' @rdname discretize
@@ -89,7 +92,9 @@ discretize.numeric <-
     missing_lab <- "_missing"
 
     if (cuts < 2) {
-      rlang::abort("There should be at least 2 cuts")
+      cli::cli_abort(
+        "There should be at least 2 {.arg cuts} but {.val {cuts}} was supplied."
+      )
     }
 
     dots <- list(...)
@@ -109,14 +114,9 @@ discretize.numeric <-
       num_breaks <- length(breaks)
       breaks <- unique(breaks)
       if (num_breaks > length(breaks)) {
-        rlang::warn(
-          paste0(
-            "Not enough data for ",
-            cuts,
-            " breaks. Only ",
-            length(breaks),
-            " breaks were used."
-          )
+        cli::cli_warn(
+          "Not enough data for {cuts} breaks. \\
+          Only {length(breaks)} breaks were used."
         )
       }
       if (infs) {
@@ -128,13 +128,10 @@ discretize.numeric <-
       if (is.null(labels)) {
         prefix <- prefix[1]
         if (make.names(prefix) != prefix && !is.null(prefix)) {
-          rlang::warn(paste0(
-            "The prefix '",
-            prefix,
-            "' is not a valid R name. It has been changed to '",
-            make.names(prefix),
-            "'."
-          ))
+          cli::cli_warn(
+            "The prefix {.val {prefix}} is not a valid R name. \\
+            It has been changed to {.val {make.names(prefix)}}."
+          )
           prefix <- make.names(prefix)
         }
         labels <- names0(length(breaks) - 1, "")
@@ -152,11 +149,9 @@ discretize.numeric <-
       )
     } else {
       out <- list(bins = 0)
-      rlang::warn(
-        paste0(
-          "Data not binned; too few unique values per bin. ",
-          "Adjust 'min_unique' as needed"
-        )
+      cli::cli_warn(
+        "Data not binned; too few unique values per bin. \\
+        Adjust {.arg min_unique} as needed."
       )
     }
     class(out) <- "discretize"
@@ -259,9 +254,14 @@ print.discretize <-
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected) and `value`
-#' (the breaks) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the breaks}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_discretize"
@@ -350,11 +350,9 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
 
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
-    rlang::warn(
-      paste0(
-        "Note that the options `prefix` and `labels` ",
-        "will be applied to all variables"
-      )
+    cli::cli_warn(
+      "Note that the options {.arg prefix} and {.arg labels} will be applied \\
+      to all variables."
     )
   }
 
@@ -377,10 +375,16 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
-  check_new_data(names(object$objects), object, new_data)
-  for (i in names(object$objects)) {
-    new_data[[i]] <- predict(object$objects[[i]], new_data[[i]])
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- predict(
+      object$objects[[col_name]],
+      new_data[[col_name]]
+    )
   }
+
   new_data
 }
 

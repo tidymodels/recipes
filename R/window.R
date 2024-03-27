@@ -1,4 +1,4 @@
-#' Moving Window Functions
+#' Moving window functions
 #'
 #' `step_window()` creates a *specification* of a recipe step that will create
 #' new columns that are the results of functions that compute statistics across
@@ -37,14 +37,22 @@
 #'  values are estimated by `median(x[1:5])` and the fourth
 #'  uses `median(x[2:6])`.
 #'
+#'  `keep_original_cols` also applies to this step if `names` is specified.
+#'
 #  This step requires the \pkg{RcppRoll} package. If not installed, the
 #'  step will stop with a note about installing the package.
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#' `terms` (the selectors or variables selected), `statistic` (the
-#' summary function name), and `size` is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `statistic`, `size` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{statistic}{character, the summary function name}
+#'   \item{size}{integer, window size}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_window"
@@ -111,45 +119,35 @@ step_window <-
            statistic = "mean",
            columns = NULL,
            names = NULL,
+           keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("window")) {
     if (!is_call(statistic) &&
       (!(statistic %in% roll_funs) | length(statistic) != 1)) {
-      rlang::abort(
-        paste0(
-          "`statistic` should be one of: ",
-          paste0("'", roll_funs, "'", collapse = ", ")
-        )
+      cli::cli_abort(
+        "{.arg statistic} should be one of: {.or {.val {roll_funs}}}."
       )
     }
 
     ## ensure size is odd, integer, and not too small
     if (!is_tune(size)) {
-      if (is.na(size) | is.null(size)) {
-        rlang::abort("`size` needs a value.")
-      }
+      check_number_decimal(size, min = 0)
 
       if (!is.integer(size)) {
         tmp <- size
         size <- as.integer(size)
         if (!isTRUE(all.equal(tmp, size))) {
-          rlang::warn(
-            paste0(
-              "`size` was not an integer (",
-              tmp,
-              ") and was ",
-              "converted to ",
-              size,
-              "."
-            )
+          cli::cli_warn(
+            "{.arg size} was not an integer ({tmp}) and was converted to \\
+            {size}."
           )
         }
       }
       if (size %% 2 == 0) {
-        rlang::abort("`size` should be odd.")
+        cli::cli_abort("{.arg size} should be odd, not {size}.")
       }
       if (size < 3) {
-        rlang::abort("`size` should be at least 3.")
+        cli::cli_abort("{.arg size} should be at least 3, not {size}.")
       }
     }
     add_step(
@@ -163,6 +161,7 @@ step_window <-
         statistic = statistic,
         columns = columns,
         names = names,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -172,7 +171,8 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms, role, trained, size, na_rm, statistic, columns, names, skip, id) {
+  function(terms, role, trained, size, na_rm, statistic, columns, names,
+           keep_original_cols, skip, id) {
     step(
       subclass = "window",
       terms = terms,
@@ -183,6 +183,7 @@ step_window_new <-
       statistic = statistic,
       columns = columns,
       names = names,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -195,12 +196,10 @@ prep.step_window <- function(x, training, info = NULL, ...) {
 
   if (!is.null(x$names)) {
     if (length(x$names) != length(col_names)) {
-      rlang::abort(
-        paste0(
-          "There were ", length(col_names), " term(s) selected but ",
-          length(x$names), " values for the new features ",
-          "were passed to `names`."
-        )
+      cli::cli_abort(
+        "There were {length(col_names)} term{?s} selected but \\
+        {length(x$names)} value{?s} for the new features {?was/were} passed \\
+        to {.arg names}."
       )
     }
   }
@@ -214,6 +213,7 @@ prep.step_window <- function(x, training, info = NULL, ...) {
     statistic = x$statistic,
     columns = col_names,
     names = x$names,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -226,7 +226,7 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   gap <- floor(window / 2)
   if (m - window <= 2) {
-    rlang::abort("The window is too large.")
+    cli::cli_abort("The window is too large.")
   }
 
   ## stats for centered window
@@ -250,27 +250,32 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
 #' @export
 bake.step_window <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq(along.with = object$columns)) {
-    if (!is.null(object$names)) {
-      new_data[[object$names[i]]] <-
-        roller(
-          x = new_data[[object$columns[i]]],
-          stat = object$statistic,
-          na_rm = object$na_rm,
-          window = object$size
-        )
-    } else {
-      new_data[[object$columns[i]]] <-
-        roller(
-          x = new_data[[object$columns[i]]],
-          stat = object$statistic,
-          na_rm = object$na_rm,
-          window = object$size
-        )
-    }
+  new_values <- list()
+
+  for (col_name in col_names) {
+    new_values[[col_name]] <- roller(
+      x = new_data[[col_name]],
+      stat = object$statistic,
+      na_rm = object$na_rm,
+      window = object$size
+    )
   }
+
+  if (is.null(object$names)) {
+    for (col_name in col_names) {
+      new_data[[col_name]] <- new_values[[col_name]]
+    }
+  } else {
+    names(new_values) <- object$names
+    new_values <- tibble::new_tibble(new_values)
+    new_values <- check_name(new_values, new_data, object, newname = object$names)
+    new_data <- vec_cbind(new_data, new_values)
+    new_data <- remove_original_cols(new_data, object, col_names)
+  }
+
   new_data
 }
 

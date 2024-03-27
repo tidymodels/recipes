@@ -1,4 +1,4 @@
-#' Square Root Transformation
+#' Square root transformation
 #'
 #' `step_sqrt()` creates a *specification* of a recipe step that will apply
 #' square root transform to the variables.
@@ -11,8 +11,13 @@
 #'
 #' # Tidying
 #'
-#' When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#' `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -82,12 +87,13 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  col_names <- object$columns
-  for (i in seq_along(col_names)) {
-    new_data[[col_names[i]]] <- sqrt(new_data[[col_names[i]]])
+  for (col_name in col_names) {
+    new_data[[col_name]] <- sqrt(new_data[[col_name]])
   }
+
   new_data
 }
 

@@ -1,4 +1,4 @@
-#' Linear Combination Filter
+#' Linear combination filter
 #'
 #' `step_lincomb()` creates a *specification* of a recipe step that will
 #' potentially remove numeric variables that have exact linear combinations
@@ -20,10 +20,15 @@
 #'  removed to resolve the issue. This algorithm may need to be
 #'  applied multiple times (as defined by `max_steps`).
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with column
-#'  `terms` (the columns that will be removed) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -135,9 +140,6 @@ recommend_rm <- function(x, eps = 1e-6, ...) {
   if (!is.matrix(x)) {
     x <- as.matrix(x)
   }
-  if (is.null(colnames(x))) {
-    rlang::abort("`x` should have column names")
-  }
 
   qr_decomp <- qr(x)
   qr_decomp_R <- qr.R(qr_decomp) # extract R matrix
@@ -177,10 +179,6 @@ iter_lc_rm <- function(x,
   if (ncol(x) == 0L) {
     # Empty selection
     return(character())
-  }
-
-  if (is.null(colnames(x))) {
-    rlang::abort("`x` should have column names")
   }
 
   orig_names <- colnames(x)

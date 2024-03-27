@@ -47,6 +47,23 @@ test_that("check existing steps for `skip` arg", {
   step_check <- step_check[step_check != "check_role_requirements"]
   step_check <- step_check[step_check != "check_bake_role_requirements"]
 
+  # R/import-standalone-types-check.R
+  step_check <- step_check[step_check != "check_bool"]
+  step_check <- step_check[step_check != "check_string"]
+  step_check <- step_check[step_check != "check_name"]
+  step_check <- step_check[step_check != "check_number_decimal"]
+  step_check <- step_check[step_check != "check_number_whole"]
+  step_check <- step_check[step_check != "check_symbol"]
+  step_check <- step_check[step_check != "check_arg"]
+  step_check <- step_check[step_check != "check_call"]
+  step_check <- step_check[step_check != "check_environment"]
+  step_check <- step_check[step_check != "check_function"]
+  step_check <- step_check[step_check != "check_closure"]
+  step_check <- step_check[step_check != "check_formula"]
+  step_check <- step_check[step_check != "check_character"]
+  step_check <- step_check[step_check != "check_logical"]
+  step_check <- step_check[step_check != "check_data_frame"]
+
   has_skip_arg <- function(x) {
     x_code <- getFromNamespace(x, "recipes")
     x_args <- names(formals(x_code))

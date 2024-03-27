@@ -6,7 +6,8 @@
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double.
+      x All columns selected for the step should be double.
+      * 1 date variable found: `day`
 
 ---
 
@@ -15,7 +16,7 @@
         step_impute_roll(all_predictors(), window = 4) %>% prep(training = example_data)
     Condition
       Error in `step_impute_roll()`:
-      ! `window` should be an odd integer >= 3
+      ! `window` should be an odd integer >= 3.
 
 ---
 
@@ -25,7 +26,8 @@
     Condition
       Error in `step_impute_roll()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double.
+      x All columns selected for the step should be double.
+      * 1 integer variable found: `x4`
 
 # Deprecation warning
 

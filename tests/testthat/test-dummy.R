@@ -65,23 +65,22 @@ test_that("dummy variables with factor inputs", {
   )
 })
 
-test_that("dummy variables with non-factor inputs", {
+test_that("dummy variables errors with character inputs", {
   rec <- recipe(sqft ~ zip + city, data = sacr)
   dummy <- rec %>% step_dummy(city, zip)
 
-  expect_snapshot(error = TRUE,
-    prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
-  )
-
-  sacr_fac_ish <-
-    sacr_fac %>%
-    mutate(city = as.character(city))
-
   expect_snapshot(
     error = TRUE,
-    recipe(sqft ~ zip + price + city, data = sacr_fac_ish) %>%
+    prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
+  )
+})
+
+test_that("check_type() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(sqft ~ zip + price + city, data = sacr) %>%
       step_dummy(city, zip, price) %>%
-      prep(training = sacr_fac_ish, verbose = FALSE, strings_as_factors = FALSE)
+      prep()
   )
 })
 
@@ -316,7 +315,7 @@ test_that("check_name() is used", {
   dat <- iris
   dat$Species_versicolor <- dat$Species
 
-  rec <- recipe(~., data = dat) |>
+  rec <- recipe(~., data = dat) %>%
     step_dummy(Species)
 
   expect_snapshot(

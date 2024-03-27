@@ -1,4 +1,4 @@
-#' Logit Transformation
+#' Logit transformation
 #'
 #' `step_logit()` creates a *specification* of a recipe step that will logit
 #' transform the data.
@@ -14,10 +14,15 @@
 #'  zero and one and translates them to be on the real line using
 #'  the function `f(p) = log(p/(1-p))`.
 #'
-#'  # Tidying
+#' # Tidying
 #'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the columns that will be affected) is returned.
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
 #' @template case-weights-not-supported
 #'
@@ -99,13 +104,13 @@ pre_logit <- function(x, eps = 0) {
 
 #' @export
 bake.step_logit <- function(object, new_data, ...) {
-  check_new_data(names(object$columns), object, new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
 
-  for (i in seq_along(object$columns)) {
-    new_data[[object$columns[i]]] <-
-      binomial()$linkfun(
-        pre_logit(new_data[[object$columns[i]]], object$offset)
-      )
+  for (col_name in col_names) {
+    new_data[[col_name]] <- binomial()$linkfun(
+      pre_logit(new_data[[col_name]], object$offset)
+    )
   }
   new_data
 }

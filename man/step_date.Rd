@@ -2,7 +2,7 @@
 % Please edit documentation in R/date.R
 \name{step_date}
 \alias{step_date}
-\title{Date Feature Generator}
+\title{Date feature generator}
 \usage{
 step_date(
   recipe,
@@ -96,6 +96,16 @@ days.
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
 \code{terms} (the selectors or variables selected), \code{value} (the feature
 names), and \code{ordinal} (a logical) is returned.
+
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{ordinal} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, the feature names}
+\item{ordinal}{logical, are factors ordered}
+\item{id}{character, id of this step}
+}
 }
 
 \section{Case weights}{

@@ -1,4 +1,4 @@
-#' Check Variable Class
+#' Check variable class
 #'
 #' `check_class` creates a *specification* of a recipe
 #'  check that will check if a variable is of a designated class.
@@ -156,42 +156,30 @@ bake_check_class_core <- function(x,
   classes <- class(x)
   missing <- setdiff(class_nm, classes)
   if (length(missing) > 0) {
-    rlang::abort(
-      paste0(
-        var_nm,
-        " should have the class(es) ",
-        paste(class_nm, collapse = ", "),
-        " but has the class(es) ",
-        paste(classes, collapse = ", "),
-        "."
-      )
+    cli::cli_abort(
+      "{.var {var_nm}} should have the class{?es} {.cls {class_nm}} but
+      has the class{?es} {.and {.cls {classes}}}."
     )
   }
 
   extra <- setdiff(classes, class_nm)
   if (length(extra) > 0 && !aa) {
-    rlang::abort(
-      paste0(
-        var_nm,
-        " has the class(es) ",
-        paste(classes, collapse = ", "),
-        ", but only the following is/are asked ",
-        paste(class_nm, collapse = ", "),
-        ", allow_additional is FALSE."
-      )
-    )
+    cli::cli_abort(c(
+        x = "{.var {var_nm}} has class{?es} {.and {.cls {classes}}} but only \\
+            the following {?is/are} asked: {.and {.cls {class_nm}}}.",
+        i = "This error is shown because {.arg allow_additional} is set to \\
+            {.val FALSE}."
+    ))
   }
 }
 
 #' @export
-bake.check_class <- function(object,
-                             new_data,
-                             ...) {
+bake.check_class <- function(object, new_data, ...) {
   col_names <- names(object$class_list)
-
   check_new_data(col_names, object, new_data)
 
-  mapply(bake_check_class_core,
+  mapply(
+    bake_check_class_core,
     new_data[, col_names],
     object$class_list,
     col_names,

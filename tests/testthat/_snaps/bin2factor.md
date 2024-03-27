@@ -5,7 +5,8 @@
     Condition
       Error in `step_bin2factor()`:
       Caused by error in `prep()`:
-      ! All columns selected for the step should be double, integer, or logical.
+      x All columns selected for the step should be double, integer, or logical.
+      * 1 factor variable found: `description`
 
 ---
 
@@ -13,7 +14,8 @@
       rec %>% step_bin2factor(rocks, levels = letters[1:5])
     Condition
       Error in `step_bin2factor()`:
-      ! `levels` should be a two element character string
+      x `levels` should be a 2-element character string.
+      i 5 elements were supplied.
 
 ---
 
@@ -21,7 +23,8 @@
       rec %>% step_bin2factor(rocks, levels = 1:2)
     Condition
       Error in `step_bin2factor()`:
-      ! `levels` should be a two element character string
+      x `levels` should be a 2-element character string.
+      i It was an integer vector.
 
 # empty printing
 

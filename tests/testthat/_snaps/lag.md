@@ -4,8 +4,8 @@
       prepped_rec <- recipe(~., data = df) %>% step_lag(x, lag = 0.5) %>% prep(df)
     Condition
       Error in `step_lag()`:
-      Caused by error in `bake()`:
-      ! step_lag requires 'lag' argument to be integer valued.
+      Caused by error in `prep()`:
+      ! `lag` argument must be integer-valued, not a function.
 
 # empty printing
 
@@ -41,6 +41,15 @@
       
       -- Operations 
       * Lagging: <none> | Trained
+
+# keep_original_cols - can prep recipes with it missing
+
+    Code
+      rec <- prep(rec)
+    Condition
+      Warning:
+      `keep_original_cols` was added to `step_lag()` after this recipe was created.
+      i Regenerate your recipe to avoid this warning.
 
 # printing
 
