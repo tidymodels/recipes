@@ -123,7 +123,7 @@ NULL
 #'
 #' This is a developer tool that is only useful for creating new recipes steps.
 #'
-#' @inheritParams ellipsis::dots_empty
+#' @inheritParams rlang::args_dots_empty
 #'
 #' @param quos A list of quosures describing the selection. This is generally
 #'   the `...` argument of your step function, captured with [rlang::enquos()]
@@ -172,7 +172,7 @@ NULL
 #' recipes_eval_select(quos, scat, info)
 recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
                                 check_case_weights = TRUE, call = caller_env()) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
 
   if (rlang::is_missing(quos)) {
     cli::cli_abort("Argument {.arg quos} is missing, with no default.")
