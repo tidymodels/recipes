@@ -25,7 +25,8 @@ test_that("extract_fit_time() works", {
 
   rec$fit_times <- NULL
 
-  expect_snapshot_error(
+  expect_snapshot(
+    error = TRUE,
     extract_fit_time(rec)
   )
 })
