@@ -34,3 +34,7 @@ hardhat::frequency_weights
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`
+
+#' @importFrom hardhat extract_fit_time
+#' @export
+hardhat::extract_fit_time
