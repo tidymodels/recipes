@@ -156,6 +156,7 @@ bake.step_log <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_log <-
   function(x, width = max(20, options()$width - 31), ...) {
     msg <- ifelse(x$signed, "Signed log", "Log")

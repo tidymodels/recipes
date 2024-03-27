@@ -2,8 +2,8 @@
 % Please edit documentation in R/recipes-package.R
 \docType{package}
 \name{recipes}
-\alias{recipes}
 \alias{recipes-package}
+\alias{recipes}
 \title{recipes: A package for computing and preprocessing design matrices.}
 \description{
 The \code{recipes} package can be used to create design matrices for modeling

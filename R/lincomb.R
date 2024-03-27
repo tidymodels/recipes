@@ -124,6 +124,7 @@ bake.step_lincomb <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_lincomb <-
   function(x, width = max(20, options()$width - 36), ...) {
     if (x$trained) {

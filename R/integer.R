@@ -171,6 +171,7 @@ bake.step_integer <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_integer <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Integer encoding for "

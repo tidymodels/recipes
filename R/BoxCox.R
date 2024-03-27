@@ -147,6 +147,7 @@ bake.step_BoxCox <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_BoxCox <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Box-Cox transformation on "

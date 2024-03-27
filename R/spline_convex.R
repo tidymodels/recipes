@@ -189,6 +189,7 @@ bake.step_spline_convex <- function(object, new_data, ...) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 print.step_spline_convex <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Convex spline expansion "

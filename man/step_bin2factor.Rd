@@ -104,9 +104,9 @@ tidy(rec, number = 3)
 Other dummy variable and encoding steps: 
 \code{\link{step_count}()},
 \code{\link{step_date}()},
+\code{\link{step_dummy}()},
 \code{\link{step_dummy_extract}()},
 \code{\link{step_dummy_multi_choice}()},
-\code{\link{step_dummy}()},
 \code{\link{step_factor2string}()},
 \code{\link{step_holiday}()},
 \code{\link{step_indicate_na}()},

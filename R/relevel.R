@@ -136,6 +136,7 @@ bake.step_relevel <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_relevel <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Re-order factor level to ref_level for "

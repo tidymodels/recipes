@@ -176,6 +176,7 @@ bake.step_ratio <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_ratio <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Ratios from "
