@@ -279,7 +279,7 @@ bake.step_window <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_window <-
   function(x, width = max(20, options()$width - 28), ...) {
     title <- glue("Moving {x$size}-point {x$statistic} on ")

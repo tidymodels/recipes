@@ -192,6 +192,7 @@ bake.step_count <- function(object, new_data, ...) {
 
 counter <- function(x) length(x[x > 0])
 
+#' @export
 print.step_count <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Regular expression counts using "

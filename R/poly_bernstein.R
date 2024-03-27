@@ -181,6 +181,7 @@ bake.step_poly_bernstein <- function(object, new_data, ...) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 print.step_poly_bernstein <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Bernstein polynomial expansion "

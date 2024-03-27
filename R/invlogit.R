@@ -100,7 +100,7 @@ bake.step_invlogit <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_invlogit <-
   function(x, width = max(20, options()$width - 26), ...) {
     title <- "Inverse logit on "

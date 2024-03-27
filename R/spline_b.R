@@ -201,6 +201,7 @@ bake.step_spline_b <- function(object, new_data, ...) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 print.step_spline_b <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Basis spline expansion "

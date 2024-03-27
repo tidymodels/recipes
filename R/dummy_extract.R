@@ -293,6 +293,7 @@ list_to_dummies <- function(x, dict, other = "other") {
   tibble::as_tibble(out)
 }
 
+#' @export
 print.step_dummy_extract <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Extract patterns from "

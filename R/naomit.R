@@ -82,6 +82,7 @@ bake.step_naomit <- function(object, new_data, ...) {
   tibble::as_tibble(tidyr::drop_na(new_data, tidyselect::all_of(col_names)))
 }
 
+#' @export
 print.step_naomit <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Removing rows with NA values in "

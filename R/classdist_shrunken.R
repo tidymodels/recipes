@@ -353,6 +353,7 @@ bake.step_classdist_shrunken <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_classdist_shrunken <-
   function(x, width = max(20, options()$width - 30), ...) {
     preds <- unique(x$objects$variable)

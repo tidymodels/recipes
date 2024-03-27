@@ -132,7 +132,7 @@ bake.step_mutate <- function(object, new_data, ...) {
   dplyr::mutate(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_mutate <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Variable mutation for "

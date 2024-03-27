@@ -90,6 +90,7 @@ bake.check_cols <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.check_cols <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Check if the following columns are present: "

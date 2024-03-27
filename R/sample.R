@@ -162,7 +162,7 @@ bake.step_sample <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_sample <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row sampling "

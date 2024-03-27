@@ -109,7 +109,7 @@ bake.step_select <- function(object, new_data, ...) {
   dplyr::select(new_data, dplyr::all_of(object$terms))
 }
 
-
+#' @export
 print.step_select <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Variables selected "

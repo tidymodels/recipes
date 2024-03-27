@@ -90,6 +90,7 @@ bake.step_rename_at <- function(object, new_data, ...) {
   dplyr::rename_at(new_data, .vars = object$inputs, .funs = object$fn)
 }
 
+#' @export
 print.step_rename_at <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Variable renaming for "

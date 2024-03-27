@@ -289,6 +289,7 @@ bake.step_classdist <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- glue("Distances to {x$class} for ")

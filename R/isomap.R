@@ -219,7 +219,7 @@ bake.step_isomap <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
   if (x$num_terms == 0) {
     title <- "Isomap was not conducted for "

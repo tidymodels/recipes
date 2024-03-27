@@ -201,7 +201,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
   title <- "Non-negative matrix factorization for "
   print_step(colnames(x$res@org.data), x$terms, x$trained, title, width)

@@ -179,6 +179,7 @@ bake.step_normalize <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_normalize <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Centering and scaling for "

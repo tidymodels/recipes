@@ -189,6 +189,7 @@ bake.check_class <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.check_class <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Checking the class(es) for "

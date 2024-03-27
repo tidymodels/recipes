@@ -98,7 +98,7 @@ bake.step_rename <- function(object, new_data, ...) {
   dplyr::rename(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_rename <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Variable renaming for "

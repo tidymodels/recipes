@@ -97,6 +97,7 @@ bake.step_sqrt <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
   title <- "Square root transformation on "
   print_step(x$columns, x$terms, x$trained, title, width)

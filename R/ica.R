@@ -215,7 +215,7 @@ bake.step_ica <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_ica <-
   function(x, width = max(20, options()$width - 29), ...) {
     if (x$num_comp == 0) {

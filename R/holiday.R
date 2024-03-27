@@ -157,6 +157,7 @@ bake.step_holiday <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_holiday <-
   function(x, width = max(20, options()$width - 29), ...) {
     title <- "Holiday features from "

@@ -303,7 +303,7 @@ bake.step_date <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_date <-
   function(x, width = max(20, options()$width - 29), ...) {
     title <- "Date features from "

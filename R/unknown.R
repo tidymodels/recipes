@@ -153,6 +153,7 @@ bake.step_unknown <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_unknown <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Unknown factor level assignment for "

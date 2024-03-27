@@ -212,6 +212,7 @@ bake.step_other <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Collapsing factor levels for "

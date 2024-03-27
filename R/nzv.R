@@ -175,6 +175,7 @@ bake.step_nzv <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_nzv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {

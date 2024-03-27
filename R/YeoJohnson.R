@@ -147,6 +147,7 @@ bake.step_YeoJohnson <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_YeoJohnson <-
   function(x, width = max(20, options()$width - 39), ...) {
     title <- "Yeo-Johnson transformation on "

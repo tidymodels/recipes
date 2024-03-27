@@ -160,6 +160,7 @@ bake.step_range <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_range <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- glue("Range scaling to [{x$min},{x$max}] for ")

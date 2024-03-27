@@ -119,7 +119,7 @@ bake.step_slice <- function(object, new_data, ...) {
   dplyr::slice(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_slice <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row filtering via position "

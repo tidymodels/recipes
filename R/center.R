@@ -153,6 +153,7 @@ bake.step_center <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Centering for "

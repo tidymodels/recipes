@@ -98,6 +98,7 @@ bake.step_rm <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_rm <-
   function(x, width = max(20, options()$width - 22), ...) {
     title <- "Variables removed "

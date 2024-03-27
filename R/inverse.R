@@ -106,7 +106,7 @@ bake.step_inverse <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_inverse <-
   function(x, width = max(20, options()$width - 33), ...) {
     title <- "Inverse transformation on "

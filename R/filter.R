@@ -26,9 +26,9 @@
 #'   \item{terms}{character, the selectors or variables selected}
 #'   \item{id}{character, id of this step}
 #' }
-#' 
+#'
 #' The expressions in `terms` are text representations and are not parsable.
-#' 
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
@@ -118,7 +118,7 @@ bake.step_filter <- function(object, new_data, ...) {
   dplyr::filter(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_filter <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row filtering using "
