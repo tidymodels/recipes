@@ -1,6 +1,6 @@
 # recipes (development version)
 
-* New `extract_fit_time()` method has been added that return the time it took to train the recipe. (#1071)
+* New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
 
 # recipes 1.0.10
 
