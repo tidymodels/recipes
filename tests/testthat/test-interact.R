@@ -262,6 +262,8 @@ test_that("works when formula is passed in as an object", {
     step_interact(terms = cars_formula, id = "") %>%
     prep()
 
+  rec1$fit_times <- NULL
+  rec2$fit_times <- NULL
   expect_identical(rec1, rec2)
 
   cars_formula <- ~ vs:am
