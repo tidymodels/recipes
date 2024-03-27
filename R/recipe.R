@@ -491,7 +491,7 @@ prep.recipe <-
 
         fit_times[[i]] <- list(
           process_id = paste(c("prep", "bake"), x$steps[[i]]$id, sep = "."),
-          time = c(prep_time[["elapsed"]], bake_time[["elapsed"]])
+          elapsed = c(prep_time[["elapsed"]], bake_time[["elapsed"]])
         )
 
         if (!is_tibble(training)) {

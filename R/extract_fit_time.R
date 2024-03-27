@@ -11,7 +11,7 @@ extract_fit_time.recipe <- function(x, summarize = TRUE, ...) {
   if (summarize) {
     res <- tibble(
       process_id = "recipe",
-      time = sum(res$time)
+      elapsed = sum(res$elapsed)
     )
   }
 

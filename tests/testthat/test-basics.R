@@ -131,8 +131,8 @@ test_that("prep with fresh = TRUE", {
 
   new_rec <- prep(rec, training = test_data, fresh = TRUE)
 
-  rec$fit_times$time <- 0
-  new_rec$fit_times$time <- 0
+  rec$fit_times$elapsed <- 0
+  new_rec$fit_times$elapsed <- 0
 
   expect_identical(rec, new_rec)
 
