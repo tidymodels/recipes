@@ -151,6 +151,7 @@ bake.step_scale <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Scaling for "

@@ -120,7 +120,7 @@ bake.step_arrange <- function(object, new_data, ...) {
   dplyr::arrange(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_arrange <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Row arrangement using "

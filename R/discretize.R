@@ -388,6 +388,7 @@ bake.step_discretize <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_discretize <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Discretize numeric variables from "

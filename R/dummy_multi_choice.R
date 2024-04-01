@@ -241,6 +241,7 @@ multi_dummy <- function(x, y) {
   return(res)
 }
 
+#' @export
 print.step_dummy_multi_choice <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Multi-choice dummy variables from "

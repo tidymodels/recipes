@@ -226,6 +226,7 @@ adjust_levels_min_max <- function(x) {
   factor(new_x, levels = new_levs)
 }
 
+#' @export
 print.step_cut <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Cut numeric for "

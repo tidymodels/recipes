@@ -193,6 +193,7 @@ bake.step_num2factor <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_num2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Factor variables from "

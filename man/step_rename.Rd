@@ -93,8 +93,8 @@ car_rec \%>\%
 Other dplyr steps: 
 \code{\link{step_arrange}()},
 \code{\link{step_filter}()},
-\code{\link{step_mutate_at}()},
 \code{\link{step_mutate}()},
+\code{\link{step_mutate_at}()},
 \code{\link{step_rename_at}()},
 \code{\link{step_sample}()},
 \code{\link{step_select}()},

@@ -218,7 +218,7 @@ bake.step_nnmf_sparse <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_nnmf_sparse <- function(x, width = max(20, options()$width - 29), ...) {
   if (x$trained) {
     if (x$num_comp == 0) {

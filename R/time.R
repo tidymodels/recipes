@@ -177,7 +177,7 @@ get_time_features <- function(dt, feats) {
   res
 }
 
-
+#' @export
 print.step_time <-
   function(x, width = max(20, options()$width - 29), ...) {
     title <- "Time features from "

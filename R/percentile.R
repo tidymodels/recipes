@@ -191,6 +191,7 @@ pctl_by_approx <- function(x, ref, outside) {
   stats::approx(x = ref, y = grid, xout = x, rule = outside)$y / 100
 }
 
+#' @export
 print.step_percentile <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Percentile transformation on "

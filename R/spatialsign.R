@@ -156,6 +156,7 @@ bake.step_spatialsign <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
     title <- "Spatial sign on  "
