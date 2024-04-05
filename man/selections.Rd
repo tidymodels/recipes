@@ -137,20 +137,20 @@ Some examples:
 
 # No filter steps, OK for not saving the recipe
 rec_1 <-
-  recipe(mpg ~ ., data = mtcars) \%>\% 
-  step_log(all_of(some_vars)) \%>\% 
+  recipe(mpg ~ ., data = mtcars) \%>\%
+  step_log(all_of(some_vars)) \%>\%
   prep()
 
 # No filter steps, saving the recipe
 rec_2 <-
-  recipe(mpg ~ ., data = mtcars) \%>\% 
-  step_log(!!!some_vars) \%>\% 
+  recipe(mpg ~ ., data = mtcars) \%>\%
+  step_log(!!!some_vars) \%>\%
   prep()
 
 # This fails since `wt` is not in the data
-recipe(mpg ~ ., data = mtcars)  \%>\% 
-  step_rm(wt) \%>\% 
-  step_log(!!!some_vars) \%>\% 
+recipe(mpg ~ ., data = mtcars)  \%>\%
+  step_rm(wt) \%>\%
+  step_log(!!!some_vars) \%>\%
   prep()
 }\if{html}{\out{</div>}}
 
@@ -162,10 +162,10 @@ recipe(mpg ~ ., data = mtcars)  \%>\%
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Best for filters (using any_of()) and when
 # saving the recipe
-rec_4 <- 
-  recipe(mpg ~ ., data = mtcars) \%>\% 
-  step_rm(wt) \%>\% 
-  step_log(any_of(!!some_vars)) \%>\% 
+rec_4 <-
+  recipe(mpg ~ ., data = mtcars) \%>\%
+  step_rm(wt) \%>\%
+  step_log(any_of(!!some_vars)) \%>\%
   # equal to step_log(any_of(c("hp", "drat", "wt")))
   prep()
 }\if{html}{\out{</div>}}
