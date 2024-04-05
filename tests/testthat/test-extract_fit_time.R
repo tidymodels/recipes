@@ -7,17 +7,17 @@ test_that("extract_fit_time() works", {
   res <- extract_fit_time(rec)
 
   expect_true(is_tibble(res))
-  expect_identical(names(res), c("process_id", "elapsed"))
-  expect_identical(res$process_id, "recipe")
+  expect_identical(names(res), c("stage_id", "elapsed"))
+  expect_identical(res$stage_id, "recipe")
   expect_true(is.double(res$elapsed))
   expect_true(res$elapsed >= 0)
 
   res <- extract_fit_time(rec, summarize = FALSE)
 
   expect_true(is_tibble(res))
-  expect_identical(names(res), c("process_id", "elapsed"))
+  expect_identical(names(res), c("stage_id", "elapsed"))
   expect_identical(
-    res$process_id,
+    res$stage_id,
     c("prep.scale", "bake.scale", "prep.center", "bake.center")
   )
   expect_true(is.double(res$elapsed))
