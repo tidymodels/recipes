@@ -3,8 +3,9 @@ extract_fit_time.recipe <- function(x, summarize = TRUE, ...) {
   res <- x$fit_times
 
   if (is.null(res)) {
-    rlang::abort(
-      "This recipe was created before `extract_fit_time()` was added."
+    cli::cli_abort(
+      "This recipe was created before {.fn recipes::extract_fit_time} was \\
+      added. Fit time cannot be extracted."
     )
   }
 
