@@ -168,6 +168,7 @@ bake.step_corr <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_corr <-
   function(x, width = max(20, options()$width - 36), ...) {
     title <- "Correlation filter on "

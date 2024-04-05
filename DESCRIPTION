@@ -23,7 +23,6 @@ Depends:
 Imports: 
     cli,
     clock (>= 0.6.1),
-    ellipsis,
     generics (>= 0.1.2),
     glue,
     gower,

@@ -257,6 +257,7 @@ bake.step_pca <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_pca <-
   function(x, width = max(20, options()$width - 29), ...) {
     if (x$trained) {

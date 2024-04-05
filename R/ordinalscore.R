@@ -135,6 +135,7 @@ bake.step_ordinalscore <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_ordinalscore <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Scoring for "

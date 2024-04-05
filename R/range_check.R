@@ -206,6 +206,7 @@ bake.check_range <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.check_range <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Checking range of "

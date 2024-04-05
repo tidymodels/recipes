@@ -307,6 +307,7 @@ bake.step_dummy <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_dummy <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Dummy variables from "

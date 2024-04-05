@@ -162,7 +162,7 @@ bake.step_relu <- function(object, new_data, ...) {
   dplyr::mutate(new_data, !!!exprs)
 }
 
-
+#' @export
 print.step_relu <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Adding relu transform for "
