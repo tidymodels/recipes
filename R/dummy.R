@@ -247,48 +247,56 @@ bake.step_dummy <- function(object, new_data, ...) {
   on.exit(options(na.action = old_opt))
 
   for (col_name in col_names) {
-    levels <- object$levels[[col_name]]
-    levels_values <- attr(levels, "values")
+    if (isTRUE(options()$recipes.sparse)) {
+      levels <- object$levels[[col_name]]
+      is_ordered <- attr(levels, "dataClasses") == "ordered"
+      levels <- attr(levels, "values")
 
-    # Make sure that the incoming data has levels consistent with
-    # the original (see the note above)
-    is_ordered <- attr(levels, "dataClasses") == "ordered"
+      indicators <- sparse_make_dummies(new_data[[col_name]], levels)
+    } else {
+      levels <- object$levels[[col_name]]
+      levels_values <- attr(levels, "values")
 
-    if (is.null(levels_values)) {
-      cli::cli_abort("Factor level values not recorded in {.var col_name}.")
-    }
+      # Make sure that the incoming data has levels consistent with
+      # the original (see the note above)
+      is_ordered <- attr(levels, "dataClasses") == "ordered"
 
-    if (length(levels_values) == 1) {
-      cli::cli_abort(
-        "Only one factor level in {.var col_name}: {levels_values}."
-      )
-    }
+      if (is.null(levels_values)) {
+        cli::cli_abort("Factor level values not recorded in {.var col_name}.")
+      }
 
-    warn_new_levels(new_data[[col_name]], levels_values)
+      if (length(levels_values) == 1) {
+        cli::cli_abort(
+          "Only one factor level in {.var col_name}: {levels_values}."
+        )
+      }
 
-    new_data[, col_name] <-
-      factor(
-        new_data[[col_name]],
-        levels = levels_values,
-        ordered = is_ordered
-      )
+      warn_new_levels(new_data[[col_name]], levels_values)
 
-    indicators <-
-      model.frame(
-        rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
-        data = new_data[, col_name],
-        xlev = levels_values,
-        na.action = na.pass
-      )
+      new_data[, col_name] <-
+        factor(
+          new_data[[col_name]],
+          levels = levels_values,
+          ordered = is_ordered
+        )
 
-    indicators <-
-      model.matrix(
-        object = levels,
-        data = indicators
-      )
+      indicators <-
+        model.frame(
+          rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
+          data = new_data[, col_name],
+          xlev = levels_values,
+          na.action = na.pass
+        )
 
-    if (!object$one_hot) {
-      indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
+      indicators <-
+        model.matrix(
+          object = levels,
+          data = indicators
+        )
+
+      if (!object$one_hot) {
+        indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
+      }
     }
 
     ## use backticks for nonstandard factor levels here
