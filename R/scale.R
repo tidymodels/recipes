@@ -1,4 +1,4 @@
-#' Scaling mumeric data
+#' Scaling numeric data
 #'
 #' `step_scale()` creates a *specification* of a recipe step that will normalize
 #' numeric data to have a standard deviation of one.
