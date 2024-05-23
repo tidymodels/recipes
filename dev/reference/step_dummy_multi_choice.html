@@ -181,10 +181,15 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The overall proportion (or total counts) of the categories are
-computed. The "other" category is used in place of any categorical levels
-whose individual proportion (or frequency) in the training set is less than
+    <p>The overall proportion (or total counts) of the categories are computed. The
+<code>"other"</code> category is used in place of any categorical levels whose
+individual proportion (or frequency) in the training set is less than
 <code>threshold</code>.</p>
+<p>This step produces a number of columns, based on the number of categories it
+finds. The naming of the columns is determined by the function based on the
+<code>naming</code> argument. The default is to return <code>&lt;prefix&gt;_&lt;category name&gt;</code>. By
+default <code>prefix</code> is <code>NULL</code>, which means the name of the first column
+selected will be used in place.</p>
 <p>This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named <code>x</code>, with levels <code>"a"</code>
 and <code>"b"</code>, the default naming convention would be to create a
@@ -297,6 +302,7 @@ columns <code>terms</code>, <code>columns</code> , and <code>id</code>:</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> lang_1 English dummy_multi_choice_Cb4Qi</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> lang_1 other   dummy_multi_choice_Cb4Qi</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
