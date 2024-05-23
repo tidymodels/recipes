@@ -3,15 +3,6 @@ url: https://recipes.tidymodels.org
 navbar:
   components:
     home: ~
-    tutorials:
-      text: Learn more
-      menu:
-      - text: "Subsampling for class imbalance"
-        href: https://www.tidymodels.org/learn/models/sub-sampling/
-      - text: "Multivariate analysis using partial least squares"
-        href: https://www.tidymodels.org/learn/models/pls/
-      - text: "Build your own custom recipe step"
-        href: https://www.tidymodels.org/learn/develop/recipes/
 
 template:
   package: tidytemplate
@@ -171,21 +162,37 @@ reference:
     - tidy.recipe
 
 articles:
-- title: Get started
-  contents:
-  - recipes
+  - title: Get started
+    contents:
+      - recipes
+  - title: Learn more
+    navbar: ~
+    contents:
+      - Dummies
+      - Selecting_Variables
+      - Roles
+      - Skipping
+  - title: Practical advice
+    contents:
+      - Ordering
+  - title: Developer
+    contents:
+      - custom
+  - title: Examples
+    contents:
+      - subsampling
+      - pls
 
-- title: Learn more
-  navbar: ~
-  contents:
-  - Dummies
-  - Selecting_Variables
-  - Roles
-  - Skipping
-
-- title: Practical advice
-  contents:
-  - Ordering
-
-
-
+external-articles:
+  - name: subsampling
+    title: Subsampling for Class Imbalances
+    description: Improve model performance in imbalanced data sets through undersampling or oversampling.
+    href: https://www.tidymodels.org/learn/models/sub-sampling/
+  - name: pls
+    title: Multivariate Analysis using Partial Least Squares
+    description: Build and fit a predictive model with more than one outcome.
+    href: https://www.tidymodels.org/learn/models/pls/
+  - name: custom 
+    title: Custom Steps
+    description: Write a new recipe step for data preprocessing.
+    href: https://www.tidymodels.org/learn/develop/recipes/
