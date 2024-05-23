@@ -141,7 +141,6 @@ step_pls <-
         "step_pls(preserve = )",
         "step_pls(keep_original_cols = )"
       )
-      keep_original_cols <- preserve
     }
 
     recipes_pkg_check(required_pkgs.step_pls())

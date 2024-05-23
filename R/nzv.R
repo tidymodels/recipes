@@ -93,9 +93,8 @@ step_nzv <-
            skip = FALSE,
            id = rand_id("nzv")) {
     exp_list <- list(freq_cut = 95 / 5, unique_cut = 10)
+    
     if (!isTRUE(all.equal(exp_list, options))) {
-      freq_cut <- options$freq_cut
-      unique_cut <- options$unique_cut
       lifecycle::deprecate_stop(
         "0.1.7",
         "step_nzv(options)",
