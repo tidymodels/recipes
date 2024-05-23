@@ -29,15 +29,6 @@
       x All columns selected for the step should be double.
       * 1 integer variable found: `x4`
 
-# Deprecation warning
-
-    Code
-      recipe(~., data = mtcars) %>% step_rollimpute()
-    Condition
-      Error:
-      ! `step_rollimpute()` was deprecated in recipes 0.1.16 and is now defunct.
-      i Please use `step_impute_roll()` instead.
-
 # empty printing
 
     Code

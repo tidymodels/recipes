@@ -110,36 +110,6 @@ step_impute_roll <-
     )
   }
 
-#' @rdname step_impute_roll
-#' @export
-step_rollimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           statistic = median,
-           window = 5,
-           skip = FALSE,
-           id = rand_id("impute_roll")) {
-    lifecycle::deprecate_stop(
-      when = "0.1.16",
-      what = "recipes::step_rollimpute()",
-      with = "recipes::step_impute_roll()"
-    )
-    step_impute_roll(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      columns = columns,
-      statistic = statistic,
-      window = window,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_roll_new <-
   function(terms, role, trained, columns, statistic, window, skip, id) {
     step(
@@ -171,10 +141,6 @@ prep.step_impute_roll <- function(x, training, info = NULL, ...) {
     id = x$id
   )
 }
-
-#' @export
-#' @keywords internal
-prep.step_rollimpute <- prep.step_impute_roll
 
 get_window_ind <- function(i, n, k) {
   sides <- (k - 1) / 2
@@ -236,20 +202,12 @@ bake.step_impute_roll <- function(object, new_data, ...) {
 }
 
 #' @export
-#' @keywords internal
-bake.step_rollimpute <- bake.step_impute_roll
-
-#' @export
 print.step_impute_roll <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Rolling imputation for "
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
-#' @export
-#' @keywords internal
-print.step_rollimpute <- print.step_impute_roll
 
 #' @rdname tidy.recipe
 #' @export
@@ -265,10 +223,6 @@ tidy.step_impute_roll <- function(x, ...) {
 }
 
 #' @export
-#' @keywords internal
-tidy.step_rollimpute <- tidy.step_impute_roll
-
-#' @export
 tunable.step_impute_roll <- function(x, ...) {
   tibble::tibble(
     name = c("statistic", "window"),
@@ -281,7 +235,3 @@ tunable.step_impute_roll <- function(x, ...) {
     component_id = x$id
   )
 }
-
-#' @export
-#' @keywords internal
-tunable.step_rollimpute <- tunable.step_impute_roll
