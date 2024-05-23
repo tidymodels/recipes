@@ -193,6 +193,11 @@ recipe.data.frame <-
 #' @rdname recipe
 #' @export
 recipe.formula <- function(formula, data, ...) {
+  
+  if (rlang::is_missing(data)) {
+    cli::cli_abort("Argument {.var data} is missing, with no default.")
+  }
+  
   # check for minus:
   f_funcs <- fun_calls(formula, data)
   if (any(f_funcs == "-")) {
@@ -202,9 +207,6 @@ recipe.formula <- function(formula, data, ...) {
     ))
   }
 
-  if (rlang::is_missing(data)) {
-    cli::cli_abort("Argument {.var data} is missing, with no default.")
-  }
   # Check for other in-line functions
   args <- form2args(formula, data, ...)
   obj <- recipe.data.frame(
