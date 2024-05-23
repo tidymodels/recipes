@@ -88,20 +88,6 @@ impute missing data using nearest neighbors.</p>
 <span>  columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_knn"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">step_knnimpute</span><span class="op">(</span></span>
-<span>  <span class="va">recipe</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  role <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  neighbors <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  impute_with <span class="op">=</span> <span class="fu"><a href="step_impute_bag.html">imp_vars</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nthread <span class="op">=</span> <span class="fl">1</span>, eps <span class="op">=</span> <span class="fl">1e-08</span><span class="op">)</span>,</span>
-<span>  ref_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_knn"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -189,7 +175,7 @@ underlying data are integer, the mean will be converted to an integer too.</p>
 this variable will be ignored.</p>
 <p>It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.</p>
-<p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_knnimpute()</code>
+<p>As of <code>recipes</code> 0.1.16, this function name changed from <code><a href="step_knnimpute.html">step_knnimpute()</a></code>
 to <code>step_impute_knn()</code>.</p>
     </div>
     <div class="section level2">

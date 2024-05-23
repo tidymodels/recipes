@@ -88,17 +88,6 @@ those variables.</p>
 <span>  ptype <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_mode"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">step_modeimpute</span><span class="op">(</span></span>
-<span>  <span class="va">recipe</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  role <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  modes <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ptype <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_mode"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -161,7 +150,7 @@ from the data used in the <code>training</code> argument of
 <code>prep.recipe</code>. <code>bake.recipe</code> then applies the new
 values to new data sets using these values. If the training set
 data has more than one mode, one is selected at random.</p>
-<p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_modeimpute()</code>
+<p>As of <code>recipes</code> 0.1.16, this function name changed from <code><a href="step_modeimpute.html">step_modeimpute()</a></code>
 to <code>step_impute_mode()</code>.</p>
     </div>
     <div class="section level2">

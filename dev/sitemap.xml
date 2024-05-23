@@ -181,6 +181,9 @@
     <loc>https://recipes.tidymodels.org/dev/reference/step_arrange.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_bagimpute.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_bin2factor.html</loc>
   </url>
   <url>
@@ -292,6 +295,9 @@
     <loc>https://recipes.tidymodels.org/dev/reference/step_isomap.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_knnimpute.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_kpca.html</loc>
   </url>
   <url>
@@ -311,6 +317,18 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_logit.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_lowerimpute.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_meanimpute.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_medianimpute.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_modeimpute.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_mutate.html</loc>
@@ -389,6 +407,9 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_rm.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/step_rollimpute.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/dev/reference/step_sample.html</loc>

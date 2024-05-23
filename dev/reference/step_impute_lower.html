@@ -93,16 +93,6 @@ point.</p>
 <span>  threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_lower"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">step_lowerimpute</span><span class="op">(</span></span>
-<span>  <span class="va">recipe</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  role <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"impute_lower"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -159,7 +149,7 @@ sequence of any existing operations.</p>
 from the data used in the <code>training</code> argument of <code>prep.recipe</code>.
 <code>bake.recipe</code> then simulates a value for any data at the minimum
 with a random uniform value between zero and the minimum.</p>
-<p>As of <code>recipes</code> 0.1.16, this function name changed from <code>step_lowerimpute()</code>
+<p>As of <code>recipes</code> 0.1.16, this function name changed from <code><a href="step_lowerimpute.html">step_lowerimpute()</a></code>
 to <code>step_impute_lower()</code>.</p>
     </div>
     <div class="section level2">
