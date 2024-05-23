@@ -148,40 +148,6 @@ step_impute_bag <-
     )
   }
 
-#' @rdname step_impute_bag
-#' @export
-step_bagimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           trees = 25,
-           models = NULL,
-           options = list(keepX = FALSE),
-           seed_val = sample.int(10^4, 1),
-           skip = FALSE,
-           id = rand_id("impute_bag")) {
-    lifecycle::deprecate_stop(
-      when = "0.1.16",
-      what = "recipes::step_bagimpute()",
-      with = "recipes::step_impute_bag()"
-    )
-    step_impute_bag(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      impute_with = impute_with,
-      trees = trees,
-      models = models,
-      options = options,
-      seed_val = seed_val,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_bag_new <-
   function(terms, role, trained, models, options, impute_with, trees,
            seed_val, skip, id) {
@@ -278,10 +244,6 @@ prep.step_impute_bag <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-#' @keywords internal
-prep.step_bagimpute <- prep.step_impute_bag
-
-#' @export
 bake.step_impute_bag <- function(object, new_data, ...) {
   col_names <- names(object$models)
   check_new_data(col_names, object, new_data)
@@ -313,20 +275,12 @@ bake.step_impute_bag <- function(object, new_data, ...) {
 }
 
 #' @export
-#' @keywords internal
-bake.step_bagimpute <- bake.step_impute_bag
-
-#' @export
 print.step_impute_bag <-
   function(x, width = max(20, options()$width - 31), ...) {
     title <- "Bagged tree imputation for "
     print_step(names(x$models), x$terms, x$trained, title, width)
     invisible(x)
   }
-
-#' @export
-#' @keywords internal
-print.step_bagimpute <- print.step_impute_bag
 
 #' @export
 #' @rdname step_impute_bag
@@ -348,10 +302,6 @@ tidy.step_impute_bag <- function(x, ...) {
   res
 }
 
-#' @export
-#' @keywords internal
-tidy.step_bagimpute <- tidy.step_impute_bag
-
 # ------------------------------------------------------------------------------
 
 #' @export
@@ -364,5 +314,3 @@ tunable.step_impute_bag <- function(x, ...) {
     component_id = x$id
   )
 }
-
-tunable.step_bagimpute <- tunable.step_impute_bag

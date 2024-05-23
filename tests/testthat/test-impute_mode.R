@@ -96,13 +96,6 @@ test_that("can bake recipes with no ptype", {
   )
 })
 
-test_that("Deprecation warning", {
-  expect_snapshot(error = TRUE,
-    recipe(~ ., data = mtcars) %>%
-      step_modeimpute()
-  )
-})
-
 test_that('case weights', {
   fake_data <- tibble(x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
                       x2 = frequency_weights(1:150))

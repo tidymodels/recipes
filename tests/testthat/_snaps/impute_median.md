@@ -8,15 +8,6 @@
       x All columns selected for the step should be double or integer.
       * 1 factor variable found: `Job`
 
-# Deprecation warning
-
-    Code
-      recipe(~., data = mtcars) %>% step_medianimpute()
-    Condition
-      Error:
-      ! `step_medianimpute()` was deprecated in recipes 0.1.16 and is now defunct.
-      i Please use `step_impute_median()` instead.
-
 # case weights
 
     Code
