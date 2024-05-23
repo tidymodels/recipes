@@ -4,7 +4,7 @@
       extract_parameter_dials(bare_rec, parameter = "none there")
     Condition
       Error in `extract_parameter_dials()`:
-      ! No parameter exists with id 'none there'.
+      ! No parameter exists with id "none there".
 
 # extract single parameter from recipe with no tunable parameters
 
@@ -12,5 +12,5 @@
       extract_parameter_dials(rm_rec, parameter = "none there")
     Condition
       Error in `extract_parameter_dials()`:
-      ! No parameter exists with id 'none there'.
+      ! No parameter exists with id "none there".
 

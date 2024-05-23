@@ -141,7 +141,6 @@ step_pls <-
         "step_pls(preserve = )",
         "step_pls(keep_original_cols = )"
       )
-      keep_original_cols <- preserve
     }
 
     recipes_pkg_check(required_pkgs.step_pls())
@@ -410,7 +409,7 @@ bake.step_pls <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
   title <- "PLS feature extraction with "
   print_step(x$columns, x$terms, x$trained, title, width)

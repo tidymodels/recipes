@@ -190,7 +190,7 @@ bake.step_bs <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_bs <-
   function(x, width = max(20, options()$width - 28), ...) {
     title <- "B-splines on "

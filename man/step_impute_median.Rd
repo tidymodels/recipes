@@ -2,20 +2,9 @@
 % Please edit documentation in R/impute_median.R
 \name{step_impute_median}
 \alias{step_impute_median}
-\alias{step_medianimpute}
 \title{Impute numeric data using the median}
 \usage{
 step_impute_median(
-  recipe,
-  ...,
-  role = NA,
-  trained = FALSE,
-  medians = NULL,
-  skip = FALSE,
-  id = rand_id("impute_median")
-)
-
-step_medianimpute(
   recipe,
   ...,
   role = NA,

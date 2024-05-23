@@ -79,13 +79,6 @@ test_that("all NA values", {
   expect_equal(unique(imputed_te$Age), imputed$steps[[1]]$medians$Age)
 })
 
-test_that("Deprecation warning", {
-  expect_snapshot(error = TRUE,
-    recipe(~ ., data = mtcars) %>%
-      step_medianimpute()
-  )
-})
-
 test_that("case weights", {
   credit_tr_cw <- credit_tr %>%
     mutate(Amount = frequency_weights(Amount))

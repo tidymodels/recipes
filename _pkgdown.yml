@@ -78,12 +78,10 @@ reference:
     contents:
     - step_bin2factor
     - step_count
-    - step_date
     - step_dummy
     - step_dummy_extract
     - step_dummy_multi_choice
     - step_factor2string
-    - step_holiday
     - step_indicate_na
     - step_integer
     - step_novel
@@ -94,9 +92,13 @@ reference:
     - step_regex
     - step_relevel
     - step_string2factor
-    - step_time
     - step_unknown
     - step_unorder
+  - title: Step Functions - Date and Datetime
+    contents:
+    - step_date
+    - step_time
+    - step_holiday
   - title: Step Functions - Interactions
     contents:
     - step_interact

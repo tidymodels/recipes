@@ -144,6 +144,7 @@ bake.step_bin2factor <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_bin2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Dummy variable to factor conversion for "

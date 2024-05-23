@@ -124,13 +124,13 @@ step_dummy <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy")) {
+    
     if (lifecycle::is_present(preserve)) {
       lifecycle::deprecate_stop(
         "0.1.16",
         "step_dummy(preserve = )",
         "step_dummy(keep_original_cols = )"
       )
-      keep_original_cols <- preserve
     }
 
     add_step(
@@ -307,6 +307,7 @@ bake.step_dummy <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_dummy <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Dummy variables from "

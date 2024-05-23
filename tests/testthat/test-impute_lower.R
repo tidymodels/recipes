@@ -61,13 +61,6 @@ test_that("bad data", {
   )
 })
 
-test_that("Deprecation warning", {
-  expect_snapshot(error = TRUE,
-    recipe(~ ., data = mtcars) %>%
-      step_lowerimpute()
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

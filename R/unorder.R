@@ -108,7 +108,7 @@ bake.step_unorder <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_unorder <-
   function(x, width = max(20, options()$width - 33), ...) {
     title <- "Unordered variables "

@@ -163,6 +163,7 @@ bake.step_novel <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_novel <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Novel factor level assignment for "

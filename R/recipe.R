@@ -425,6 +425,8 @@ prep.recipe <-
       x$term_info <- x$var_info
     }
 
+    fit_times <- list()
+
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
 
     get_needs_tuning <- function(x) {
@@ -470,6 +472,7 @@ prep.recipe <-
 
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
+        time <- proc.time()
         x$steps[[i]] <- recipes_error_context(
           prep(x$steps[[i]],
             training = training,
@@ -477,10 +480,20 @@ prep.recipe <-
           ),
           step_name = step_name
         )
+        prep_time <- proc.time() - time
+
+        time <- proc.time()
         training <- recipes_error_context(
           bake(x$steps[[i]], new_data = training),
           step_name = step_name
         )
+        bake_time <- proc.time() - time
+
+        fit_times[[i]] <- list(
+          stage_id = paste(c("prep", "bake"), x$steps[[i]]$id, sep = "."),
+          elapsed = c(prep_time[["elapsed"]], bake_time[["elapsed"]])
+        )
+
         if (!is_tibble(training)) {
           cli::cli_abort(c(
             "x" = "{.fun bake} methods should always return tibbles.",
@@ -539,6 +552,7 @@ prep.recipe <-
     x$levels <- lvls
     x$orig_lvls <- orig_lvls
     x$retained <- retain
+    x$fit_times <- dplyr::bind_rows(fit_times)
     # In case a variable was removed, and that removal step used
     # `skip = TRUE`, we need to retain its record so that
     # selectors can be properly used with `bake`. This tibble

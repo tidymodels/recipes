@@ -263,6 +263,7 @@ bake.step_geodist <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_geodist <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- paste(

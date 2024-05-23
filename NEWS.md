@@ -1,5 +1,15 @@
 # recipes (development version)
 
+* New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
+
+* The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
+
+# recipes 1.0.10
+
+## Bug Fixes
+
+* Fixed bug where `step_log()` breaks legacy recipe objects by indexing `names(object)` in `bake()`. (@stufield, #1284)
+
 # recipes 1.0.9
 
 ## Improvements
@@ -23,8 +33,6 @@
 * Added warnings when `step_scale()`, `step_normalise()`, `step_center()` or `step_range()` result in `NaN` columns. (@mastoffel, #1221)
 
 ## Bug Fixes
-
-* Fixed bug where `step_log()` breaks legacy recipe objects by indexing `names(object)` in `bake()`. (@stufield, #1284)
 
 * Fixed bug where `step_factor2string()` if `strings_as_factors = TRUE` is set in `prep()`. (#317)
 

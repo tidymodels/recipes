@@ -2,21 +2,9 @@
 % Please edit documentation in R/impute_mode.R
 \name{step_impute_mode}
 \alias{step_impute_mode}
-\alias{step_modeimpute}
 \title{Impute nominal data using the most common value}
 \usage{
 step_impute_mode(
-  recipe,
-  ...,
-  role = NA,
-  trained = FALSE,
-  modes = NULL,
-  ptype = NULL,
-  skip = FALSE,
-  id = rand_id("impute_mode")
-)
-
-step_modeimpute(
   recipe,
   ...,
   role = NA,

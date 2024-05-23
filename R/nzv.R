@@ -93,9 +93,8 @@ step_nzv <-
            skip = FALSE,
            id = rand_id("nzv")) {
     exp_list <- list(freq_cut = 95 / 5, unique_cut = 10)
+    
     if (!isTRUE(all.equal(exp_list, options))) {
-      freq_cut <- options$freq_cut
-      unique_cut <- options$unique_cut
       lifecycle::deprecate_stop(
         "0.1.7",
         "step_nzv(options)",
@@ -175,6 +174,7 @@ bake.step_nzv <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_nzv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {

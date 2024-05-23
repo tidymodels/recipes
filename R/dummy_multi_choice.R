@@ -12,17 +12,23 @@
 #'  This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
-#' @export
+#' 
 #' @details
-#'  The overall proportion (or total counts) of the categories are
-#'  computed. The "other" category is used in place of any categorical levels
-#'  whose individual proportion (or frequency) in the training set is less than
-#'  `threshold`.
+#' The overall proportion (or total counts) of the categories are computed. The 
+#' `"other"` category is used in place of any categorical levels whose 
+#' individual proportion (or frequency) in the training set is less than
+#' `threshold`.
+#' 
+#' This step produces a number of columns, based on the number of categories it
+#' finds. The naming of the columns is determined by the function based on the 
+#' `naming` argument. The default is to return `<prefix>_<category name>`. By 
+#' default `prefix` is `NULL`, which means the name of the first column  
+#' selected will be used in place.
 #'
 #' @template dummy-naming
 #'
 #' @details
-#'
+#' 
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_dummy_multi_choice"
 #' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
@@ -68,6 +74,8 @@
 #'
 #' bake(dummy_multi_choice_rec2, new_data = NULL)
 #' tidy(dummy_multi_choice_rec2, number = 1)
+#' 
+#' @export
 step_dummy_multi_choice <- function(recipe,
                                     ...,
                                     role = "predictor",
@@ -241,6 +249,7 @@ multi_dummy <- function(x, y) {
   return(res)
 }
 
+#' @export
 print.step_dummy_multi_choice <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Multi-choice dummy variables from "
