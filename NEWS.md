@@ -2,6 +2,8 @@
 
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
 
+* The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
+
 # recipes 1.0.10
 
 ## Bug Fixes
