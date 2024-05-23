@@ -77,7 +77,7 @@
 #' 
 #' @export
 step_dummy_multi_choice <- function(recipe,
-  ...,
+                                    ...,
                                     role = "predictor",
                                     trained = FALSE,
                                     threshold = 0,
