@@ -341,7 +341,7 @@ make_small_terms <- function(forms, dat) {
   lapply(forms, terms, data = dat)
 }
 
-
+#' @export
 print.step_interact <-
   function(x, width = max(20, options()$width - 27), ...) {
     title <- "Interactions with "

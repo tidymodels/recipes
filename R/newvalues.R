@@ -147,6 +147,7 @@ bake.check_new_values <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.check_new_values <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Checking no new_values for "

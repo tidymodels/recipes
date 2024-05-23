@@ -125,6 +125,7 @@ bake.step_hyperbolic <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_hyperbolic <-
   function(x, width = max(20, options()$width - 32), ...) {
     ttl <- paste("Hyperbolic", substr(x$func, 1, 3))

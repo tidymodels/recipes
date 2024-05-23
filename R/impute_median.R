@@ -80,32 +80,6 @@ step_impute_median <-
     )
   }
 
-#' @rdname step_impute_median
-#' @export
-step_medianimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           medians = NULL,
-           skip = FALSE,
-           id = rand_id("impute_median")) {
-    lifecycle::deprecate_stop(
-      when = "0.1.16",
-      what = "recipes::step_medianimpute()",
-      with = "recipes::step_impute_median()"
-    )
-    step_impute_median(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      medians = medians,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_median_new <-
   function(terms, role, trained, medians, skip, id, case_weights) {
     step(
@@ -146,10 +120,6 @@ prep.step_impute_median <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-#' @keywords internal
-prep.step_medianimpute <- prep.step_impute_median
-
-#' @export
 bake.step_impute_median <- function(object, new_data, ...) {
   col_names <- names(object$medians)
   check_new_data(col_names, object, new_data)
@@ -166,10 +136,6 @@ bake.step_impute_median <- function(object, new_data, ...) {
 }
 
 #' @export
-#' @keywords internal
-bake.step_medianimpute <- bake.step_impute_median
-
-#' @export
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Median imputation for "
@@ -177,10 +143,6 @@ print.step_impute_median <-
                case_weights = x$case_weights)
     invisible(x)
   }
-
-#' @export
-#' @keywords internal
-print.step_medianimpute <- print.step_impute_median
 
 #' @rdname tidy.recipe
 #' @export
@@ -197,7 +159,3 @@ tidy.step_impute_median <- function(x, ...) {
   res$id <- x$id
   res
 }
-
-#' @export
-#' @keywords internal
-tidy.step_medianimpute <- tidy.step_impute_median

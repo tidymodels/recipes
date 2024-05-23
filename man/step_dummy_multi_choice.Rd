@@ -79,10 +79,16 @@ will convert multiple nominal data (e.g. characters or factors) into one or
 more numeric binary model terms for the levels of the original data.
 }
 \details{
-The overall proportion (or total counts) of the categories are
-computed. The "other" category is used in place of any categorical levels
-whose individual proportion (or frequency) in the training set is less than
+The overall proportion (or total counts) of the categories are computed. The
+\code{"other"} category is used in place of any categorical levels whose
+individual proportion (or frequency) in the training set is less than
 \code{threshold}.
+
+This step produces a number of columns, based on the number of categories it
+finds. The naming of the columns is determined by the function based on the
+\code{naming} argument. The default is to return \verb{<prefix>_<category name>}. By
+default \code{prefix} is \code{NULL}, which means the name of the first column
+selected will be used in place.
 
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
@@ -141,14 +147,15 @@ dummy_multi_choice_rec2 <- recipe(~., data = languages) \%>\%
 
 bake(dummy_multi_choice_rec2, new_data = NULL)
 tidy(dummy_multi_choice_rec2, number = 1)
+
 }
 \seealso{
 Other dummy variable and encoding steps: 
 \code{\link{step_bin2factor}()},
 \code{\link{step_count}()},
 \code{\link{step_date}()},
-\code{\link{step_dummy_extract}()},
 \code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
 \code{\link{step_factor2string}()},
 \code{\link{step_holiday}()},
 \code{\link{step_indicate_na}()},

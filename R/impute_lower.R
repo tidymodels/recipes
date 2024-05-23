@@ -86,31 +86,6 @@ step_impute_lower <-
     )
   }
 
-#' @rdname step_impute_lower
-#' @export
-step_lowerimpute <- function(recipe,
-                             ...,
-                             role = NA,
-                             trained = FALSE,
-                             threshold = NULL,
-                             skip = FALSE,
-                             id = rand_id("impute_lower")) {
-  lifecycle::deprecate_stop(
-    when = "0.1.16",
-    what = "recipes::step_lowerimpute()",
-    with = "recipes::step_impute_lower()"
-  )
-  step_impute_lower(
-    recipe,
-    ...,
-    role = role,
-    trained = trained,
-    threshold = threshold,
-    skip = skip,
-    id = id
-  )
-}
-
 step_impute_lower_new <-
   function(terms, role, trained, threshold, skip, id) {
     step(
@@ -150,10 +125,6 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-#' @keywords internal
-prep.step_lowerimpute <- prep.step_impute_lower
-
-#' @export
 bake.step_impute_lower <- function(object, new_data, ...) {
   col_names <- names(object$threshold)
   check_new_data(col_names, object, new_data)
@@ -174,20 +145,12 @@ bake.step_impute_lower <- function(object, new_data, ...) {
 }
 
 #' @export
-#' @keywords internal
-bake.step_lowerimpute <- bake.step_impute_lower
-
-#' @export
 print.step_impute_lower <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Lower bound imputation for "
     print_step(names(x$threshold), x$terms, x$trained, title, width)
     invisible(x)
   }
-
-#' @export
-#' @keywords internal
-print.step_lowerimpute <- print.step_impute_lower
 
 #' @rdname tidy.recipe
 #' @export
@@ -204,7 +167,3 @@ tidy.step_impute_lower <- function(x, ...) {
   res$id <- x$id
   res
 }
-
-#' @export
-#' @keywords internal
-tidy.step_lowerimpute <- tidy.step_impute_lower

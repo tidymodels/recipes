@@ -181,7 +181,7 @@ bake.step_ns <- function(object, new_data, ...) {
   new_data
 }
 
-
+#' @export
 print.step_ns <-
   function(x, width = max(20, options()$width - 28), ...) {
     title <- "Natural splines on "

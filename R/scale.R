@@ -1,4 +1,4 @@
-#' Scaling mumeric data
+#' Scaling numeric data
 #'
 #' `step_scale()` creates a *specification* of a recipe step that will normalize
 #' numeric data to have a standard deviation of one.
@@ -151,6 +151,7 @@ bake.step_scale <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Scaling for "

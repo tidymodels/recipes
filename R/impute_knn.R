@@ -148,40 +148,6 @@ step_impute_knn <-
     )
   }
 
-#' @rdname step_impute_knn
-#' @export
-step_knnimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           neighbors = 5,
-           impute_with = imp_vars(all_predictors()),
-           options = list(nthread = 1, eps = 1e-08),
-           ref_data = NULL,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("impute_knn")) {
-    lifecycle::deprecate_stop(
-      when = "0.1.16",
-      what = "recipes::step_knnimpute()",
-      with = "recipes::step_impute_knn()"
-    )
-    step_impute_knn(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      neighbors = neighbors,
-      impute_with = impute_with,
-      options = options,
-      ref_data = ref_data,
-      columns = columns,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_knn_new <-
   function(terms, role, trained, neighbors, impute_with, ref_data, options,
            columns, skip, id) {
@@ -225,10 +191,6 @@ prep.step_impute_knn <- function(x, training, info = NULL, ...) {
     id = x$id
   )
 }
-
-#' @export
-#' @keywords internal
-prep.step_knnimpute <- prep.step_impute_knn
 
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
@@ -297,10 +259,6 @@ bake.step_impute_knn <- function(object, new_data, ...) {
 }
 
 #' @export
-#' @keywords internal
-bake.step_knnimpute <- bake.step_impute_knn
-
-#' @export
 print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
     all_y_vars <- lapply(x$columns, function(x) x$y)
@@ -309,10 +267,6 @@ print.step_impute_knn <-
     print_step(all_y_vars, x$terms, x$trained, title, width)
     invisible(x)
   }
-
-#' @export
-#' @keywords internal
-print.step_knnimpute <- print.step_impute_knn
 
 #' @rdname tidy.recipe
 #' @export
@@ -336,10 +290,6 @@ tidy.step_impute_knn <- function(x, ...) {
 }
 
 #' @export
-#' @keywords internal
-tidy.step_knnimpute <- tidy.step_impute_knn
-
-#' @export
 tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(
     name = "neighbors",
@@ -349,7 +299,3 @@ tunable.step_impute_knn <- function(x, ...) {
     component_id = x$id
   )
 }
-
-#' @export
-#' @keywords internal
-tunable.step_knnimpute <- tunable.step_impute_knn

@@ -126,6 +126,7 @@ bake.step_filter_missing <- function(object, new_data, ...) {
   new_data
 }
 
+#' @export
 print.step_filter_missing <-
   function(x, width = max(20, options()$width - 36), ...) {
     if (x$trained) {
