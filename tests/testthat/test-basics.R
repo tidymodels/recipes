@@ -346,3 +346,15 @@ test_that("`internal data is kept as tibbles when prepping", {
 test_that("recipe() errors if `data` is missing", {
   expect_snapshot(error = TRUE, recipe(mpg ~ .))
 })
+
+test_that("NAs aren't dropped in strings2factor() (#1291)", {
+  ex_data <- tibble(
+    x = factor(c("a", NA, "c"), exclude = NULL)
+  )
+
+  rec_res <- recipe(~., data = ex_data) %>%
+    prep() %>%
+    bake(new_data = NULL)
+
+  expect_identical(rec_res, ex_data)
+})
