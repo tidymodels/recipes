@@ -4,8 +4,8 @@
       recipe(HHV ~ log(nitrogen), data = biomass)
     Condition
       Error in `recipe()`:
-      x misspelled variable name or in-line functions detected.
-      i The following function/misspellings was found: `log`.
+      x Misspelled variable name or in-line functions detected.
+      i The following function/misspelling was found: `log`.
       i Use steps to do transformations instead.
       i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
@@ -15,8 +15,8 @@
       recipe(HHV ~ (.)^2, data = biomass)
     Condition
       Error in `recipe()`:
-      x misspelled variable name or in-line functions detected.
-      i The following function/misspellingss were found: `^` and `(`.
+      x Misspelled variable name or in-line functions detected.
+      i The following functions/misspellings were found: `^` and `(`.
       i Use steps to do transformations instead.
       i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
@@ -26,8 +26,8 @@
       recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass)
     Condition
       Error in `recipe()`:
-      x misspelled variable name or in-line functions detected.
-      i The following function/misspellings was found: `:`.
+      x Misspelled variable name or in-line functions detected.
+      i The following function/misspelling was found: `:`.
       i Use steps to do transformations instead.
       i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
@@ -37,8 +37,8 @@
       recipe(HHV ~ nitrogen^2, data = biomass)
     Condition
       Error in `recipe()`:
-      x misspelled variable name or in-line functions detected.
-      i The following function/misspellings was found: `^`.
+      x Misspelled variable name or in-line functions detected.
+      i The following function/misspelling was found: `^`.
       i Use steps to do transformations instead.
       i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
@@ -48,8 +48,8 @@
       recipe(HHV ~ not_nitrogen, data = biomass)
     Condition
       Error in `recipe()`:
-      x misspelled variable name or in-line functions detected.
-      i The following function/misspellings was found: `not_nitrogen`.
+      x Misspelled variable name or in-line functions detected.
+      i The following function/misspelling was found: `not_nitrogen`.
       i Use steps to do transformations instead.
       i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
@@ -59,8 +59,8 @@
       recipe(not_HHV ~ nitrogen, data = biomass)
     Condition
       Error in `recipe()`:
-      x misspelled variable name or in-line functions detected.
-      i The following function/misspellings was found: `not_HHV`.
+      x Misspelled variable name or in-line functions detected.
+      i The following function/misspelling was found: `not_HHV`.
       i Use steps to do transformations instead.
       i If your modeling engine uses special terms in formulas, pass that formula to workflows as a model formula (`?parsnip::model_formula()`).
 
@@ -201,5 +201,5 @@
       recipe(mpg ~ .)
     Condition
       Error in `recipe()`:
-      ! Argument `data` is missing, with no default.
+      ! `data` is missing with no default.
 
