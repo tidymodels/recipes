@@ -30,6 +30,18 @@ test_that("Recipe fails on in-line functions", {
   )
 })
 
+test_that("Recipe on missspelled variables in formulas", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(HHV ~ not_nitrogen, data = biomass)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(not_HHV ~ nitrogen, data = biomass)
+  )
+})
+
 test_that("return character or factor values", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
   centered <- raw_recipe %>%
