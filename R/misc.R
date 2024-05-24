@@ -22,13 +22,22 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
 
-  outcomes_names <- all.names(rlang::f_lhs(formula), functions = FALSE)
+  outcomes_names <- all.names(
+    rlang::f_lhs(formula), 
+    functions = FALSE, 
+    unique = TRUE
+  )
 
-  formula_rhs <- rlang::f_rhs(formula)
-  if (identical(formula_rhs, quote(.))) {
-    predictors_names <- colnames(data)
-  } else {
-    predictors_names <- all.names(rlang::f_rhs(formula), functions = FALSE)
+  predictors_names <- all.names(
+    rlang::f_rhs(formula),
+    functions = FALSE,
+    unique = TRUE
+  )
+  
+  if (any(predictors_names == ".")) {
+    predictors_names <- predictors_names[predictors_names != "."]
+    predictors_names <- c(predictors_names, colnames(data))
+    predictors_names <- unique(predictors_names)
   }
 
   if (length(predictors_names) > 0 && length(outcomes_names) > 0) {

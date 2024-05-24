@@ -382,3 +382,21 @@ test_that("recipe() can handle very long formulas (#1283)", {
     rec <- recipe(long_formula, df)
   )
 })
+
+test_that("recipe() works with odd formula usage (#1283)", {
+
+  expect_identical(
+    sort(recipe(mpg ~ ., data = mtcars)$var_info$variable),
+    sort(colnames(mtcars))
+  )
+
+  expect_identical(
+    sort(recipe(mpg ~ . + disp, data = mtcars)$var_info$variable),
+    sort(colnames(mtcars))
+  )
+  
+  expect_identical(
+    sort(recipe(mpg ~ disp + disp, mtcars)$var_info$variable),
+    c("disp", "mpg")
+  )
+})
