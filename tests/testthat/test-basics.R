@@ -30,6 +30,18 @@ test_that("Recipe fails on in-line functions", {
   )
 })
 
+test_that("Recipe on missspelled variables in formulas", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(HHV ~ not_nitrogen, data = biomass)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(not_HHV ~ nitrogen, data = biomass)
+  )
+})
+
 test_that("return character or factor values", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
   centered <- raw_recipe %>%
@@ -357,4 +369,34 @@ test_that("NAs aren't dropped in strings2factor() (#1291)", {
     bake(new_data = NULL)
 
   expect_identical(rec_res, ex_data)
+})
+
+test_that("recipe() can handle very long formulas (#1283)", {
+  df <- matrix(1:10000, ncol = 10000)
+  df <- as.data.frame(df)
+  names(df) <- c(paste0("x", 1:10000))
+
+  long_formula <- as.formula(paste("~ ", paste(names(df), collapse = " + ")))
+
+  expect_no_error(
+    rec <- recipe(long_formula, df)
+  )
+})
+
+test_that("recipe() works with odd formula usage (#1283)", {
+
+  expect_identical(
+    sort(recipe(mpg ~ ., data = mtcars)$var_info$variable),
+    sort(colnames(mtcars))
+  )
+
+  expect_identical(
+    sort(recipe(mpg ~ . + disp, data = mtcars)$var_info$variable),
+    sort(colnames(mtcars))
+  )
+  
+  expect_identical(
+    sort(recipe(mpg ~ disp + disp, mtcars)$var_info$variable),
+    c("disp", "mpg")
+  )
 })

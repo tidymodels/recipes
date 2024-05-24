@@ -21,13 +21,30 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
-  data_info <- attr(model.frame(formula, data[1, ]), "terms")
-  response_info <- attr(data_info, "response")
-  predictor_names <- names(attr(data_info, "dataClasses"))
-  if (length(response_info) > 0 && all(response_info > 0)) {
-    predictor_names <- predictor_names[-response_info]
+
+  outcomes_names <- all.names(
+    rlang::f_lhs(formula), 
+    functions = FALSE, 
+    unique = TRUE
+  )
+
+  predictors_names <- all.names(
+    rlang::f_rhs(formula),
+    functions = FALSE,
+    unique = TRUE
+  )
+  
+  if (any(predictors_names == ".")) {
+    predictors_names <- predictors_names[predictors_names != "."]
+    predictors_names <- c(predictors_names, colnames(data))
+    predictors_names <- unique(predictors_names)
   }
-  predictor_names
+
+  if (length(predictors_names) > 0 && length(outcomes_names) > 0) {
+    predictors_names <- setdiff(predictors_names, outcomes_names)
+  }
+
+  predictors_names
 }
 
 #' Naming Tools
@@ -136,24 +153,9 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   nms
 }
 
-
-## As suggested by HW, brought in from the `pryr` package
-## https://github.com/hadley/pryr
-fun_calls <- function(f) {
-  if (is.function(f)) {
-    fun_calls(body(f))
-  } else if (is_quosure(f)) {
-    fun_calls(quo_get_expr(f))
-  } else if (is.call(f)) {
-    fname <- as.character(f[[1]])
-    # Calls inside .Internal are special and shouldn't be included
-    if (identical(fname, ".Internal")) {
-      return(fname)
-    }
-    unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
-  }
+fun_calls <- function(f, data) {
+  setdiff(all.names(f), colnames(data))
 }
-
 
 get_levels <- function(x) {
   if (!is.factor(x) & !is.character(x)) {

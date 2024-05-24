@@ -193,8 +193,13 @@ recipe.data.frame <-
 #' @rdname recipe
 #' @export
 recipe.formula <- function(formula, data, ...) {
+
+  if (rlang::is_missing(data)) {
+    cli::cli_abort("{.arg data} is missing with no default.")
+  }
+
   # check for minus:
-  f_funcs <- fun_calls(formula)
+  f_funcs <- fun_calls(formula, data)
   if (any(f_funcs == "-")) {
     cli::cli_abort(c(
       "x" = "{.code -} is not allowed in a recipe formula.",
@@ -202,9 +207,6 @@ recipe.formula <- function(formula, data, ...) {
     ))
   }
 
-  if (rlang::is_missing(data)) {
-    cli::cli_abort("Argument {.var data} is missing, with no default.")
-  }
   # Check for other in-line functions
   args <- form2args(formula, data, ...)
   obj <- recipe.data.frame(
@@ -230,7 +232,7 @@ form2args <- function(formula, data, ..., call = rlang::caller_env()) {
   }
 
   ## check for in-line formulas
-  inline_check(formula)
+  inline_check(formula, data, call)
 
   if (!is_tibble(data)) {
     data <- as_tibble(data)
@@ -271,20 +273,20 @@ form2args <- function(formula, data, ..., call = rlang::caller_env()) {
   list(x = data, vars = vars, roles = roles)
 }
 
-inline_check <- function(x) {
-  funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
+inline_check <- function(x, data, call) {
+  funs <- fun_calls(x, data)
+  funs <- funs[!(funs %in% c("~", "+", "-", "."))]
 
   if (length(funs) > 0) {
     cli::cli_abort(c(
-      x = "No in-line functions should be used here.",
-      i = "{cli::qty(length(funs))}The following function{?s} {?was/were} \\
-          found: {.and {.code {funs}}}.",
+      x = "Misspelled variable name or in-line functions detected.",
+      i = "{cli::qty(length(funs))}The following function{?s}/misspelling{?s} \\
+          {?was/were} found: {.and {.code {funs}}}.",
       i = "Use steps to do transformations instead.",
       i = "If your modeling engine uses special terms in formulas, pass \\
           that formula to workflows as a \\
           {.help [model formula](parsnip::model_formula)}."
-    ))
+    ), call = call)
   }
 
   invisible(x)
