@@ -65,7 +65,7 @@ test_that("nonlinear scores", {
 
 test_that("bad spec", {
   rec3 <- recipe(~., data = ex_dat) %>%
-    step_ordinalscore(everything())
+    step_ordinalscore(all_predictors())
   expect_snapshot(error = TRUE,
     prep(rec3, training = ex_dat, verbose = FALSE)
   )

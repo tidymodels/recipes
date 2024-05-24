@@ -11,7 +11,7 @@
 ---
 
     Code
-      recipe(x) %>% step_cut(everything(), breaks = 2) %>% prep()
+      recipe(~., x) %>% step_cut(all_predictors(), breaks = 2) %>% prep()
     Condition
       Error in `step_cut()`:
       Caused by error in `prep()`:

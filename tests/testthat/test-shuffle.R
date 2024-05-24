@@ -46,7 +46,7 @@ test_that("nominal data", {
 
 test_that("all data", {
   rec3 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
+    step_shuffle(all_predictors())
 
   rec3 <- prep(rec3, training = dat, verbose = FALSE)
   set.seed(2516)
@@ -62,10 +62,10 @@ test_that("all data", {
 
 test_that("bake a single row", {
   rec4 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
+    step_shuffle(all_predictors())
 
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
-  expect_snapshot(dat4 <- bake(rec4, dat[1, ], everything()))
+  expect_snapshot(dat4 <- bake(rec4, dat[1, ]))
   expect_equal(dat4, tibble(dat[1, ]))
 })
 
@@ -122,7 +122,7 @@ test_that("empty selection tidy method works", {
 
 test_that("printing", {
   rec <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
+    step_shuffle(all_predictors())
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))

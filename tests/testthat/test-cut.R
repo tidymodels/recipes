@@ -5,7 +5,7 @@ test_that("step_cut throws error on non-numerics", {
     recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
   )
   expect_snapshot(error = TRUE,
-    recipe(x) %>% step_cut(everything(), breaks = 2) %>% prep()
+    recipe(~., x) %>% step_cut(all_predictors(), breaks = 2) %>% prep()
   )
 })
 

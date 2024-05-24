@@ -10,7 +10,7 @@ set_with_na <- tibble(
 
 tst <- function(...) {
   cols <- quos(...)
-  recipe(set_with_na) %>%
+  recipe(~ ., set_with_na) %>%
     check_missing(!!!cols) %>%
     prep() %>%
     bake(set_with_na)
@@ -33,7 +33,7 @@ test_that("check_missing throws error on all types", {
 
 test_that("check_missing works on multiple columns simultaneously", {
   expect_snapshot(error = TRUE, tst(a, e))
-  expect_snapshot(error = TRUE, tst(everything()))
+  expect_snapshot(error = TRUE, tst(all_predictors()))
 })
 
 test_that("check_missing on a new set", {

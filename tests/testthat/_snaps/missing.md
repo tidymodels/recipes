@@ -46,7 +46,7 @@
 ---
 
     Code
-      tst(everything())
+      tst(all_predictors())
     Condition
       Error in `check_missing()`:
       Caused by error in `bake()`:

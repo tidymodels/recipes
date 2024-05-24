@@ -122,7 +122,7 @@
       predictor: 10
       
       -- Operations 
-      * Checking the class(es) for: everything()
+      * Checking the class(es) for: all_predictors()
 
 ---
 
