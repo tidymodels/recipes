@@ -184,9 +184,11 @@ strings2factors <- function(x, info) {
   for (i in seq_along(info)) {
     lcol <- names(info)[i]
     x[, lcol] <-
-      factor(as.character(x[[lcol]]),
+      factor(
+        as.character(x[[lcol]]),
         levels = info[[i]]$values,
-        ordered = info[[i]]$ordered
+        ordered = info[[i]]$ordered,
+        exclude = NULL
       )
   }
   x

@@ -4,6 +4,8 @@
 
 * The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
 
+* `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
+
 # recipes 1.0.10
 
 ## Bug Fixes
