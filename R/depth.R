@@ -4,6 +4,7 @@
 #' numeric data into a measurement of *data depth*. This is done for each value of
 #' a categorical class variable.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param class A single character string that specifies a single

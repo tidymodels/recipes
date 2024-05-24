@@ -4,6 +4,7 @@
 #' create and append additional binary columns to the data set to indicate which
 #' observations are missing.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param prefix A character string that will be the prefix to the

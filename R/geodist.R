@@ -3,6 +3,7 @@
 #' `step_geodist()` creates a *specification* of a recipe step that will
 #' calculate the distance between points on a map to a reference location.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param lon,lat Selector functions to choose which variables are

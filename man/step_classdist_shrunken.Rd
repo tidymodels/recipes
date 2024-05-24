@@ -50,7 +50,7 @@ the natural log function?}
 variables. See notes below.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
+output. Defaults to \code{TRUE}.}
 
 \item{objects}{Statistics are stored here once this step has
 been trained by \code{\link[=prep]{prep()}}.}
