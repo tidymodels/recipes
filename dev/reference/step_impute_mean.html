@@ -221,7 +221,7 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">imp_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">impute_rec</span>, training <span class="op">=</span> <span class="va">credit_tr</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">imputed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">imp_models</span>, new_data <span class="op">=</span> <span class="va">credit_te</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imputed_te</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">imp_models</span>, new_data <span class="op">=</span> <span class="va">credit_te</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">credit_te</span><span class="op">[</span><span class="va">missing_examples</span>, <span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Status Seniority  Home Time Age Marital Records     Job Expenses</span>
