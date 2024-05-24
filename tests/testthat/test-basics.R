@@ -346,3 +346,16 @@ test_that("`internal data is kept as tibbles when prepping", {
 test_that("recipe() errors if `data` is missing", {
   expect_snapshot(error = TRUE, recipe(mpg ~ .))
 })
+
+
+test_that("recipe() can handle very long formulas (#1283)", {
+  df <- matrix(1:10000, ncol = 10000)
+  df <- as.data.frame(df)
+  names(df) <- c(paste0("x", 1:10000))
+
+  long_formula <- as.formula(paste("~ ", paste(names(df), collapse = " + ")))
+
+  expect_no_error(
+    rec <- recipe(long_formula, df)
+  )
+})
