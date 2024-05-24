@@ -45,6 +45,11 @@
 #'   [tidyselect::one_of()], [tidyselect::all_of()], and
 #'   [tidyselect::any_of()]
 #'
+#' Note that using [tidyselect::everything()] or any of the other `tidyselect`
+#' functions aren't restricted to predictors. They will thus select outcomes,
+#' ID, and predictor columns alike. This is why these functions should be used
+#' with care, and why [tidyselect::everything()] likely isn't what you need.
+#' 
 #' For example:
 #'
 #' \preformatted{
