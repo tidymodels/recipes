@@ -21,13 +21,21 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
-  data_info <- attr(model.frame(formula, data[1, ]), "terms")
-  response_info <- attr(data_info, "response")
-  predictor_names <- names(attr(data_info, "dataClasses"))
-  if (length(response_info) > 0 && all(response_info > 0)) {
-    predictor_names <- predictor_names[-response_info]
+
+  outcomes_names <- all.names(rlang::f_lhs(formula), functions = FALSE)
+
+  formula_rhs <- rlang::f_rhs(formula)
+  if (identical(formula_rhs, quote(.))) {
+    predictors_names <- colnames(data)
+  } else {
+    predictors_names <- all.names(rlang::f_rhs(formula), functions = FALSE)
   }
-  predictor_names
+
+  if (length(predictors_names) > 0 && length(outcomes_names) > 0) {
+    predictors_names <- setdiff(predictors_names, outcomes_names)
+  }
+
+  predictors_names
 }
 
 #' Naming Tools
