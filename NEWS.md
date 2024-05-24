@@ -8,6 +8,8 @@
 
 * `recipe()` no longer crashes when given long formula expression (#1283).
 
+* `recipe()` will now show better error when columns are misspelled in formula (#1283).
+
 # recipes 1.0.10
 
 ## Bug Fixes
