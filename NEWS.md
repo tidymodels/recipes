@@ -6,7 +6,7 @@
 
 * `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
 
-* `recipe()` no longer crashes when given long formula expression. (#1283)
+* `recipe()` no longer crashes when given long formula expression (#1283).
 
 # recipes 1.0.10
 

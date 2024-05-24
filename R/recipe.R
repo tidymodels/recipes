@@ -195,7 +195,7 @@ recipe.data.frame <-
 recipe.formula <- function(formula, data, ...) {
 
   if (rlang::is_missing(data)) {
-    cli::cli_abort("Argument {.var data} is missing, with no default.")
+    cli::cli_abort("{.arg data} is missing with no default.")
   }
 
   # check for minus:
@@ -279,8 +279,8 @@ inline_check <- function(x, data, call) {
 
   if (length(funs) > 0) {
     cli::cli_abort(c(
-      x = "misspelled variable name or in-line functions detected.",
-      i = "{cli::qty(length(funs))}The following function/misspellings{?s} \\
+      x = "Misspelled variable name or in-line functions detected.",
+      i = "{cli::qty(length(funs))}The following function{?s}/misspelling{?s} \\
           {?was/were} found: {.and {.code {funs}}}.",
       i = "Use steps to do transformations instead.",
       i = "If your modeling engine uses special terms in formulas, pass \\
