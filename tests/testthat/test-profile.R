@@ -72,7 +72,7 @@ test_that("character profile", {
 test_that("bad values", {
   expect_snapshot(error = TRUE,
     sacr_rec %>%
-      step_profile(everything(), profile = vars(sqft)) %>%
+      step_profile(all_predictors(), profile = vars(sqft)) %>%
       prep(data = Sacramento)
   )
   expect_snapshot(error = TRUE,

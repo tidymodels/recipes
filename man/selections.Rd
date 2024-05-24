@@ -44,6 +44,11 @@ Select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}}, and
 \code{\link[tidyselect:all_of]{tidyselect::any_of()}}
 
+Note that using \code{\link[tidyselect:everything]{tidyselect::everything()}} or any of the other \code{tidyselect}
+functions aren't restricted to predictors. They will thus select outcomes,
+ID, and predictor columns alike. This is why these functions should be used
+with care, and why \code{\link[tidyselect:everything]{tidyselect::everything()}} likely isn't what you need.
+
 For example:
 
 \preformatted{
@@ -155,7 +160,7 @@ recipe(mpg ~ ., data = mtcars)  \%>\%
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `step_log()`:
-## Caused by error in `prep()` at recipes/R/recipe.R:476:9:
+## Caused by error in `prep()` at recipes/R/recipe.R:478:9:
 ## ! Can't select columns that don't exist.
 ## x Column `wt` doesn't exist.
 }\if{html}{\out{</div>}}

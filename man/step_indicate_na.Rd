@@ -93,7 +93,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, new_data = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

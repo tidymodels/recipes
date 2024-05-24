@@ -14,6 +14,8 @@
 
 * Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
 
+* Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
+
 # recipes 1.0.10
 
 ## Bug Fixes

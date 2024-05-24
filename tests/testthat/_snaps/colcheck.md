@@ -1,7 +1,7 @@
 # check_col works in the bake stage
 
     Code
-      rp1 %>% check_cols(everything()) %>% prep() %>% bake(mtcars[-1])
+      rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars[-1])
     Condition
       Error in `bake()`:
       x The following required columns are missing from `new_data`: `mpg`.
@@ -65,7 +65,7 @@
       predictor: 10
       
       -- Operations 
-      * Check if the following columns are present:: everything()
+      * Check if the following columns are present:: all_predictors()
 
 ---
 

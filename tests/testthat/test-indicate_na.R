@@ -43,7 +43,7 @@ test_that("step_indicate_na populates binaries correctly", {
 
 test_that("step_indicate_na on all columns", {
   baked <- recipe(Ozone ~ ., data = airquality) %>%
-    step_indicate_na(everything()) %>%
+    step_indicate_na(all_predictors()) %>%
     prep(airquality, verbose = FALSE, retain = TRUE) %>%
     bake(new_data = NULL)
 
@@ -52,7 +52,7 @@ test_that("step_indicate_na on all columns", {
     c(
       "Solar.R", "Wind", "Temp", "Month", "Day", "Ozone",
       "na_ind_Solar.R", "na_ind_Wind", "na_ind_Temp",
-      "na_ind_Month", "na_ind_Day", "na_ind_Ozone"
+      "na_ind_Month", "na_ind_Day"
     )
   )
 })

@@ -2,15 +2,15 @@ library(testthat)
 library(recipes)
 
 test_that("step_naomit on all columns", {
-  baked <- recipe(Ozone ~ ., data = airquality) %>%
-    step_naomit(everything()) %>%
+  baked <- recipe(~ ., data = airquality) %>%
+    step_naomit(all_predictors()) %>%
     prep(airquality, verbose = FALSE) %>%
     bake(new_data = NULL)
 
   na_res <- tibble(na.omit(airquality))
   attributes(na_res)$na.action <- NULL
 
-  expect_equal(baked, na_res[, c(2:6, 1)])
+  expect_equal(baked, na_res)
 })
 
 test_that("step_naomit on subset of columns", {

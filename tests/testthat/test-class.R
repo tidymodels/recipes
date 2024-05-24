@@ -29,8 +29,8 @@ test_that("bake_check_class helper function gives expected output", {
 })
 
 test_that("check_class works when class is learned", {
-  rec1 <- recipe(x) %>%
-    check_class(everything()) %>%
+  rec1 <- recipe(~ ., x) %>%
+    check_class(all_predictors()) %>%
     prep()
 
   expect_error(bake(rec1, x), NA)
@@ -76,7 +76,7 @@ test_that("check_class works when class is provided", {
 # recipes has internal coercion to character >> factor
 test_that("characters are handled correctly", {
   rec5_NULL <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
-    check_class(everything()) %>%
+    check_class(all_predictors()) %>%
     prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
   expect_error(bake(rec5_NULL, Sacramento[11:20, ]), NA)
@@ -96,7 +96,7 @@ test_that("characters are handled correctly", {
     )
 
   rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
-    check_class(everything()) %>%
+    check_class(all_predictors()) %>%
     prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
   expect_snapshot(error = TRUE,
@@ -165,7 +165,7 @@ test_that("empty selection tidy method works", {
 
 test_that("printing", {
   rec7 <- recipe(mpg ~ ., mtcars) %>%
-    check_class(everything())
+    check_class(all_predictors())
 
   expect_snapshot(print(rec7))
   expect_snapshot(prep(rec7))

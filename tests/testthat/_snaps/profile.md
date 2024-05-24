@@ -1,7 +1,8 @@
 # bad values
 
     Code
-      sacr_rec %>% step_profile(everything(), profile = vars(sqft)) %>% prep(data = Sacramento)
+      sacr_rec %>% step_profile(all_predictors(), profile = vars(sqft)) %>% prep(
+        data = Sacramento)
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
