@@ -48,7 +48,7 @@ print_step(
 \arguments{
 \item{x}{A list of selectors}
 
-\item{...}{Arguments pass in from a call to \code{step}}
+\item{...}{Arguments pass in from a call to \code{step}.}
 
 \item{tr_obj}{A character vector of names that have been
 resolved during preparing the recipe (e.g. the \code{columns} object
@@ -64,29 +64,30 @@ recipe (e.g. \code{terms} in most steps).}
 \item{title}{A character, shortly describing the action the step takes.}
 }
 \value{
-If not empty, a list of quosures. If empty, an error is thrown.
+\code{ellipse_check()}: If not empty, a list of quosures. If empty, an
+error is thrown.
 
-\code{NULL}, invisibly.
+\code{printer()}: \code{NULL}, invisibly.
 
-A logical
+\code{is_trained()}: A single logical.
 
-A character vector
+\code{sel2char()}: A character vector.
 
-\code{NULL}, invisibly.
+\code{print_step()}: \code{NULL}, invisibly.
 }
 \description{
-These are not to be used directly by the users.
-
 \code{ellipse_check()} is deprecated. Instead, empty selections should be
 supported by all steps.
 
-This internal function is used for printing steps.
+\code{printer()} is used for printing steps.
 
-This internal function takes a list of selectors (e.g. \code{terms}
-in most steps) and returns a character vector version for
-printing.
+\code{is_trained()} is a helper function that returned a single logical to
+indicate whether a recipe is traine or not.
 
-This internal function is used for printing steps.
+\code{sel2char()} takes a list of selectors (e.g. \code{terms} in most steps) and
+returns a character vector version for printing.
+
+\code{print_step()} is used for printing steps.
 }
 \seealso{
 \link{developer_functions}

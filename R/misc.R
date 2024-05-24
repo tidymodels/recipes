@@ -266,11 +266,14 @@ merge_term_info <- function(.new, .old) {
 #' `ellipse_check()` is deprecated. Instead, empty selections should be
 #' supported by all steps.
 #'
-#' @param ... Arguments pass in from a call to `step`
-#' @return If not empty, a list of quosures. If empty, an error is thrown.
-#' @export
+#' @param ... Arguments pass in from a call to `step`.
+#' 
+#' @return `ellipse_check()`: If not empty, a list of quosures. If empty, an 
+#'   error is thrown.
+#' 
 #' @keywords internal
 #' @rdname recipes-internal
+#' @export
 ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms)) {
@@ -287,7 +290,7 @@ ellipse_check <- function(...) {
 
 #' Printing Workhorse Function
 #'
-#' This internal function is used for printing steps.
+#' `printer()` is used for printing steps.
 #'
 #' @param tr_obj A character vector of names that have been
 #'  resolved during preparing the recipe (e.g. the `columns` object
@@ -296,10 +299,12 @@ ellipse_check <- function(...) {
 #'  recipe (e.g. `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
-#' @return `NULL`, invisibly.
+#' 
+#' @return `printer()`: `NULL`, invisibly.
+#' 
 #' @keywords internal
-#' @export
 #' @rdname recipes-internal
+#' @export
 printer <- function(tr_obj = NULL,
                     untr_obj = NULL,
                     trained = FALSE,
@@ -326,9 +331,9 @@ printer <- function(tr_obj = NULL,
 }
 
 
-#' @export
 #' @keywords internal
 #' @rdname recipes-internal
+#' @export
 prepare <- function(x, ...) {
   cli::cli_abort(
     "As of version 0.0.1.9006 please use {.fn prep} instead of {.fn prepare}."
@@ -485,12 +490,18 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
 ## Support functions
 
 #' Check to see if a step or check as been trained
+#' 
+#' `is_trained()` is a helper function that returned a single logical to
+#' indicate whether a recipe is traine or not.
+#' 
 #' @param x a step object.
-#' @return A logical
-#' @export
-#' @keywords internal
-#' @rdname recipes-internal
+#' @return `is_trained()`: A single logical.
+#' 
 #' @seealso [developer_functions]
+#' @keywords internal
+#' 
+#' @rdname recipes-internal
+#' @export
 is_trained <- function(x) {
   x$trained
 }
@@ -498,15 +509,17 @@ is_trained <- function(x) {
 
 #' Convert Selectors to Character
 #'
-#' This internal function takes a list of selectors (e.g. `terms`
-#'  in most steps) and returns a character vector version for
-#'  printing.
+#' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and 
+#' returns a character vector version for printing.
+#' 
 #' @param x A list of selectors
-#' @return A character vector
-#' @export
+#' @return `sel2char()`: A character vector.
+#' 
+#' @seealso [developer_functions]
+#' 
 #' @keywords internal
 #' @rdname recipes-internal
-#' @seealso [developer_functions]
+#' @export
 sel2char <- function(x) {
   unname(map_chr(x, to_character))
 }
