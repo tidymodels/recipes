@@ -144,7 +144,7 @@ rec <- recipe(species ~ ., data = penguins) \%>\%
 
 rec_dists <- prep(rec, training = penguins)
 
-dists_to_species <- bake(rec_dists, new_data = penguins, everything())
+dists_to_species <- bake(rec_dists, new_data = penguins)
 ## on log scale:
 dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 dists_to_species[, c("species", dist_cols)]

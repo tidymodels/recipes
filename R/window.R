@@ -89,7 +89,7 @@
 #'   )
 #' rec <- prep(rec, training = sim_dat)
 #'
-#' smoothed_dat <- bake(rec, sim_dat, everything())
+#' smoothed_dat <- bake(rec, sim_dat)
 #'
 #' ggplot(data = sim_dat, aes(x = x1, y = y1)) +
 #'   geom_point() +
@@ -106,7 +106,7 @@
 #' rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) %>%
 #'   step_window(starts_with("y"))
 #' rec <- prep(rec, training = sim_dat)
-#' smoothed_dat <- bake(rec, sim_dat, everything())
+#' smoothed_dat <- bake(rec, sim_dat)
 #' ggplot(smoothed_dat, aes(x = original, y = y1)) +
 #'   geom_point() +
 #'   theme_bw()
