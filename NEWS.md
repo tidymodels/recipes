@@ -12,6 +12,8 @@
 
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
 
+* Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
+
 # recipes 1.0.10
 
 ## Bug Fixes

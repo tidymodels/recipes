@@ -3,6 +3,7 @@
 #' `step_count()` creates a *specification* of a recipe step that will create a
 #' variable that counts instances of a regular expression pattern in text.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... A single selector function to choose which variable

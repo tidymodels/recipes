@@ -3,6 +3,7 @@
 #' `step_interact()` creates a *specification* of a recipe step that will create
 #' new columns that are interaction terms between two or more variables.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param terms A traditional R formula that contains interaction

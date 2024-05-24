@@ -49,7 +49,7 @@ variable being searched. This is \code{NULL} until computed by
 \code{\link[=prep]{prep()}}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked

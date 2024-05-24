@@ -4,6 +4,7 @@
 #' new columns that are the results of functions that compute statistics across
 #' moving windows.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param role For model terms created by this step, what analysis
