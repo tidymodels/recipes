@@ -179,6 +179,9 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     ## data
     levels <- vector(mode = "list", length = length(col_names))
     names(levels) <- col_names
+
+    training_slice <- vctrs::vec_slice(training, 0)
+
     for (i in seq_along(col_names)) {
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
@@ -186,7 +189,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       }
       terms <- model.frame(
         formula = form,
-        data = training[1, ],
+        data = training_slice,
         xlev = x$levels[[i]],
         na.action = na.pass
       )

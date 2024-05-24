@@ -10,6 +10,8 @@
 
 * `recipe()` will now show better error when columns are misspelled in formula (#1283).
 
+* Significant speedup in `step_dummy()` when applied to many columns. (#1305)
+
 # recipes 1.0.10
 
 ## Bug Fixes
