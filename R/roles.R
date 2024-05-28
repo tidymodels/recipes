@@ -124,24 +124,23 @@ NULL
 add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   check_string(new_role, allow_empty = FALSE)
   check_string(new_type, allow_empty = FALSE, allow_null = TRUE)
-
-  terms <- quos(...)
-
+  
   if (new_role == "case_weights") {
     cli::cli_abort(c(
       "!" = "Roles of {.val case_weights} cannot be set using \\
-            {.fn add_role}.",
+      {.fn add_role}.",
       "i" = "Please use {.help hardhat::frequency_weights} or \\
-            {.help hardhat::importance_weights} to specify case weights \\
-            before the data is passed to {.fn recipe}."
+      {.help hardhat::importance_weights} to specify case weights \\
+      before the data is passed to {.fn recipe}."
     ))
   }
-
+  
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
-
+  terms <- quos(...)
+  
   vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
@@ -225,23 +224,22 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   check_string(new_role, allow_empty = FALSE)
   check_string(old_role, allow_empty = FALSE, allow_null = TRUE)
-
-  terms <- quos(...)
-
+  
   if (new_role == "case_weights") {
     cli::cli_abort(c(
       "!" = "Roles of {.val case_weights} cannot be set using \\
-            {.fn update_role}.",
+      {.fn update_role}.",
       "i" = "Please use {.help hardhat::frequency_weights} or \\
-            {.help hardhat::importance_weights} to specify case weights \\
-            before the data is passed to {.fn recipe}."
+      {.help hardhat::importance_weights} to specify case weights \\
+      before the data is passed to {.fn recipe}."
     ))
   }
-
+  
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
+  terms <- quos(...)
 
   vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
@@ -292,19 +290,18 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @export
 remove_role <- function(recipe, ..., old_role) {
   check_string(old_role, allow_empty = FALSE)
-
-  terms <- quos(...)
-
+  
   if (old_role == "case_weights") {
     cli::cli_abort(
       "Roles of {.val case_weights} cannot removed using {.fn remove_role}."
     )
   }
-
+  
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
+  terms <- quos(...)
 
   vars <- recipes_eval_select(terms, data, info)
 
