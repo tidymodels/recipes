@@ -122,21 +122,8 @@ NULL
 #' @export
 #' @rdname roles
 add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
-  single_chr(new_role, "new_", null_ok = FALSE)
-
-  if (length(new_type) != 1 && length(new_type) != 0) {
-    cli::cli_abort(
-      "{.arg new_type} must have length 1, not {length(new_type)}."
-    )
-  }
-
-  if (!is.character(new_type) && !is.null(new_type)) {
-    cli::cli_abort(
-      "{.arg new_type} must be a character vector, or {.code NULL} \\
-      not {.obj_type_friendly {new_type}}."
-    )
-  }
-
+  check_string(new_role, allow_empty = FALSE)
+  check_string(new_type, allow_empty = FALSE, allow_null = TRUE)
 
   terms <- quos(...)
 
@@ -236,8 +223,8 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 #' @export
 #' @rdname roles
 update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
-  single_chr(new_role, "new_", null_ok = FALSE)
-  single_chr(old_role, "old_", null_ok = TRUE)
+  check_string(new_role, allow_empty = FALSE)
+  check_string(old_role, allow_empty = FALSE, allow_null = TRUE)
 
   terms <- quos(...)
 
@@ -304,10 +291,7 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @rdname roles
 #' @export
 remove_role <- function(recipe, ..., old_role) {
-  if (rlang::is_missing(old_role)) {
-    cli::cli_abort("argument {.arg old_role} is missing, with no default.")
-  }
-  single_chr(old_role, "old_")
+  check_string(old_role, allow_empty = FALSE)
 
   terms <- quos(...)
 
@@ -366,29 +350,4 @@ role_rm_machine <- function(x, role, var) {
   }
 
   x
-}
-
-single_chr <- function(x,
-                       prefix = "",
-                       null_ok = FALSE,
-                       call = rlang::caller_env()) {
-  arg <- paste0(prefix, "role")
-
-  if (null_ok && is.null(x)) {
-    return(invisible(NULL))
-  }
-
-  if (length(x) != 1L) {
-    cli::cli_abort("{.var {arg}} must have length 1.", call = call)
-  }
-
-  if (!is.character(x)) {
-    cli::cli_abort("{.var {arg}} must be a character vector.", call = call)
-  }
-
-  if (is.na(x)) {
-    cli::cli_abort("{.var {arg}} must not be {.code NA}.", call = call)
-  }
-
-  invisible(NULL)
 }
