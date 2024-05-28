@@ -199,6 +199,17 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   expr <- expr(c(!!!quos))
 
+  if ((!allow_rename) && any(names(expr) != "")) {
+    offenders <- names(expr)
+    offenders <- offenders[offenders != ""]
+
+    cli::cli_abort(
+      "The following argument{?s} {?was/were} specified but not available: \\
+      {.arg {offenders}}.", 
+      call = call
+  )
+  }
+
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,

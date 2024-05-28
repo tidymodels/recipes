@@ -16,6 +16,8 @@
 
 * Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
 
+* Improved error message for misspelled argument in step functions. (#1318)
+
 # recipes 1.0.10
 
 ## Bug Fixes

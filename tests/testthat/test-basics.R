@@ -400,3 +400,18 @@ test_that("recipe() works with odd formula usage (#1283)", {
     c("disp", "mpg")
   )
 })
+
+test_that("steps give errors when argument are misspelled", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pca(vs, am, gear, number = 2) %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_normalize(vs, AM = am, GEAR = gear) %>%
+      prep()
+  )
+})
