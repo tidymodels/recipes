@@ -12,6 +12,8 @@
 
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
 
+* `recipe()` can now take data.frames with list-columns or sf data.frames as input to `data`. (#1283)
+
 * Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
 
 * Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
