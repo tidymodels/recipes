@@ -7,6 +7,7 @@
 step_mutate(
   recipe,
   ...,
+  .pkgs = character(),
   role = "predictor",
   trained = FALSE,
   inputs = NULL,
@@ -19,6 +20,9 @@ step_mutate(
 sequence of operations for this recipe.}
 
 \item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
+
+\item{.pkgs}{character vector, package names of functions used in
+expressions \code{...}. Should be specified if using non-base functions.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
