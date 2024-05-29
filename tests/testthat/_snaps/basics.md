@@ -203,3 +203,22 @@
       Error in `recipe()`:
       ! `data` is missing with no default.
 
+# steps give errors when arguments are misspelled
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_pca(vs, am, gear, number = 2) %>% prep()
+    Condition
+      Error in `step_pca()`:
+      Caused by error in `prep()`:
+      ! The following argument was specified but do not exist: `number`.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_normalize(vs, AM = am, GEAR = gear) %>%
+        prep()
+    Condition
+      Error in `step_normalize()`:
+      Caused by error in `prep()`:
+      ! The following arguments were specified but do not exist: `AM` and `GEAR`.
+
