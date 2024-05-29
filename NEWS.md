@@ -16,6 +16,8 @@
 
 * Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
 
+* `step_mutate()` gained `.pkgs` argument to specify what packages need to be loaded for step to work. (#1282)
+
 * Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
 
 # recipes 1.0.10

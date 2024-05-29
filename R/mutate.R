@@ -6,6 +6,8 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
+#' @param .pkgs Character vector, package names of functions used in 
+#'   expressions `...`. Should be specified if using non-base functions.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
 #' @template mutate-leakage
@@ -84,19 +86,25 @@
 #'
 #' # The difference:
 #' tidy(qq_rec, number = 1)
-step_mutate <- function(recipe, ...,
+step_mutate <- function(recipe, 
+                        ...,
+                        .pkgs = character(),
                         role = "predictor",
                         trained = FALSE,
                         inputs = NULL,
                         skip = FALSE,
                         id = rand_id("mutate")) {
+  check_character(.pkgs)
+  recipes_pkg_check(required_pkgs.step_mutate(list(.pkgs = .pkgs)))
+
   inputs <- enquos(...)
 
   add_step(
     recipe,
     step_mutate_new(
-      trained = trained,
+      .pkgs = .pkgs,
       role = role,
+      trained = trained,
       inputs = inputs,
       skip = skip,
       id = id
@@ -105,9 +113,10 @@ step_mutate <- function(recipe, ...,
 }
 
 step_mutate_new <-
-  function(role, trained, inputs, skip, id) {
+  function(.pkgs, role, trained, inputs, skip, id) {
     step(
       subclass = "mutate",
+      .pkgs = .pkgs,
       role = role,
       trained = trained,
       inputs = inputs,
@@ -120,6 +129,7 @@ step_mutate_new <-
 prep.step_mutate <- function(x, training, info = NULL, ...) {
   step_mutate_new(
     trained = TRUE,
+    .pkgs = x$.pkgs,
     role = x$role,
     inputs = x$inputs,
     skip = x$skip,
@@ -153,4 +163,10 @@ tidy.step_mutate <- function(x, ...) {
     value = value,
     id = rep(x$id, length(x$inputs))
   )
+}
+
+#' @rdname required_pkgs.recipe
+#' @export
+required_pkgs.step_mutate <- function(x, ...) {
+  x$.pkgs
 }

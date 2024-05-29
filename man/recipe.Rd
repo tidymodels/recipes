@@ -80,8 +80,8 @@ added to a recipe.
 \itemize{
 \item \strong{Steps} can include operations like scaling a variable, creating
 dummy variables or interactions, and so on. More computationally
-complex actions such as dimension reduction or imputation can also be
-specified.
+complex actions such as dimension reduction or imputation can also
+be specified.
 \item \strong{Checks} are operations that conduct specific tests of the data.
 When the test is satisfied, the data are returned without issue or
 modification. Otherwise, an error is thrown.

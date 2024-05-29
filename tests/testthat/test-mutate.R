@@ -108,6 +108,51 @@ test_that("tidying allows for named and unnamed expressions", {
   expect_identical(tidied$value, "across(c(x, y), mean)")
 })
 
+test_that("required_pkgs.step_mutate() works", {
+  rec <- recipe(~., data = mtcars) %>%
+   step_mutate(new = 2)
+
+  rec_pred <- prep(rec)
+
+  expect_equal(required_pkgs(rec), "recipes")
+  expect_equal(required_pkgs(rec_pred), "recipes")
+
+  rec <- recipe(~., data = mtcars) %>%
+    step_mutate(new = 2, .pkgs = "stats")
+
+  rec_pred <- prep(rec)
+ 
+  expect_equal(required_pkgs(rec), c("recipes", "stats"))
+  expect_equal(required_pkgs(rec_pred), c("recipes", "stats"))
+
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_mutate(new = 2, .pkgs = "not-a-package")
+  )
+})
+
+test_that("step_mutate() .pkgs argument is backwards compatible", {
+  rec <- recipe(~., data = mtcars) %>%
+   step_mutate(new = 2)
+
+  rec$steps[[1]]$.pkgs <- NULL
+
+  rec_pred <- prep(rec)
+
+  expect_equal(required_pkgs(rec), "recipes")
+  expect_equal(required_pkgs(rec_pred), "recipes")
+
+  rec <- recipe(~., data = mtcars) %>%
+   step_mutate(new = 2)
+
+  rec_pred <- prep(rec)
+  
+  rec_pred$steps[[1]]$.pkgs <- NULL
+  
+  expect_equal(required_pkgs(rec), "recipes")
+  expect_equal(required_pkgs(rec_pred), "recipes")
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
