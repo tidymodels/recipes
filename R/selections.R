@@ -204,7 +204,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
     offenders <- offenders[offenders != ""]
 
     cli::cli_abort(
-      "The following argument{?s} {?was/were} specified but not available: \\
+      "The following argument{?s} {?was/were} specified but do not exist: \\
       {.arg {offenders}}.", 
       call = call
   )

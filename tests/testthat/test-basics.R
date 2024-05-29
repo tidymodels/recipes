@@ -401,7 +401,7 @@ test_that("recipe() works with odd formula usage (#1283)", {
   )
 })
 
-test_that("steps give errors when argument are misspelled", {
+test_that("steps give errors when arguments are misspelled", {
   expect_snapshot(
     error = TRUE,
     recipe(mpg ~ ., data = mtcars) %>%
