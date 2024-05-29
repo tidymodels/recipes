@@ -47,6 +47,7 @@ reference:
     - update_role_requirements
     - get_case_weights
     - case_weights
+    - ignore_step
   - title: Step Functions - Imputation
     contents:
     - starts_with("step_impute_")

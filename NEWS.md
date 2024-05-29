@@ -20,6 +20,8 @@
 
 * `step_mutate()` gained `.pkgs` argument to specify what packages need to be loaded for step to work. (#1282)
 
+* Added `ignore_step()` to modify untrained recipes by removing steps from them. (#887)
+
 * Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
 
 * Improved error message for misspelled argument in step functions. (#1318)
