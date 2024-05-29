@@ -10,7 +10,7 @@
 
 * `recipe()` will now show better error when columns are misspelled in formula (#1283).
 
-* `add_role()` now errors if one columns has role `"outcome"` and `"predictor"`. (#935)
+* `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
 
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
 
