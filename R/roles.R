@@ -222,14 +222,14 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
     if (new_role == "predictor" && any(old_roles == "outcome")) {
       cli::cli_abort(
-        "{.var {var}} cannot get {.val predictor} role as it is already \\
+        "{.var {var}} cannot get {.val predictor} role as it already \\
           has role {.val outcome}."
         )
     }
     
     if (new_role == "outcome" && any(old_roles == "predictor")) {
       cli::cli_abort(
-        "{.var {var}} cannot get {.val outcome} role as it is already \\
+        "{.var {var}} cannot get {.val outcome} role as it already \\
         has role {.val predictor}."
       )
     }

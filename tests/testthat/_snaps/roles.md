@@ -296,7 +296,7 @@
       recipe(mpg ~ ., data = mtcars) %>% add_role(mpg, new_role = "predictor")
     Condition
       Error in `add_role()`:
-      ! `mpg` cannot get "predictor" role as it is already has role "outcome".
+      ! `mpg` cannot get "predictor" role as it already has role "outcome".
 
 ---
 
@@ -304,5 +304,5 @@
       recipe(mpg ~ ., data = mtcars) %>% add_role(disp, new_role = "outcome")
     Condition
       Error in `add_role()`:
-      ! `disp` cannot get "outcome" role as it is already has role "predictor".
+      ! `disp` cannot get "outcome" role as it already has role "predictor".
 
