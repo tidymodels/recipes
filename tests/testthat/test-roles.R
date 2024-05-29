@@ -590,4 +590,16 @@ test_that("role information from summary()", {
 
 })
 
+test_that("add_roles() error if columns would be both predictor and outcome", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~., data = mtcars) %>%
+      add_role(mpg, new_role = "predictor")
+  )
 
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~., data = mtcars) %>%
+      add_role(disp, new_role = "outcome")
+  )
+})

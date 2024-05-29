@@ -290,3 +290,19 @@
       10 gear     <chr [2]> <NA>      original FALSE           
       11 carb     <chr [2]> other     original TRUE            
 
+# add_roles() error if columns would be both predictor and outcome
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% add_role(mpg, new_role = "predictor")
+    Condition
+      Error in `add_role()`:
+      ! `mpg` cannot get "predictor" role as it already has role "outcome".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% add_role(disp, new_role = "outcome")
+    Condition
+      Error in `add_role()`:
+      ! `disp` cannot get "outcome" role as it already has role "predictor".
+

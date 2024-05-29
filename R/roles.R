@@ -32,9 +32,9 @@
 #' to `recipe()`. See the `role` argument in some step functions to update
 #' roles for columns created by steps.
 #'
-#' Variables can have any arbitrary role (see the examples) but there are two
-#' special standard roles, `"predictor"` and `"outcome"`. These two roles are
-#' typically required when fitting a model.
+#' Variables can have any arbitrary role (see the examples) but there are three
+#' special standard roles, `"predictor"`, `"outcome"`, and `"case_weights"`. 
+#' The first two roles are typically required when fitting a model. 
 #'
 #' `update_role()` should be used when a variable doesn't currently have a role
 #' in the recipe, or to replace an `old_role` with a `new_role`. `add_role()`
@@ -202,6 +202,24 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     first_row_with_var <- which(recipe$var_info$variable == .x)[1]
     recipe$var_info$source[first_row_with_var]
   })
+
+  for (var in vars) {
+    old_roles <- recipe$var_info$role[recipe$var_info$variable == var]
+
+    if (new_role == "predictor" && any(old_roles == "outcome")) {
+      cli::cli_abort(
+        "{.var {var}} cannot get {.val predictor} role as it already \\
+          has role {.val outcome}."
+        )
+    }
+    
+    if (new_role == "outcome" && any(old_roles == "predictor")) {
+      cli::cli_abort(
+        "{.var {var}} cannot get {.val outcome} role as it already \\
+        has role {.val predictor}."
+      )
+    }
+  }
 
   for (i in seq_along(vars)) {
     last_row_with_var <- dplyr::last(which(recipe$var_info$variable == vars[i]))
