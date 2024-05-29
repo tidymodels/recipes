@@ -21,7 +21,7 @@ sequence of operations for this recipe.}
 
 \item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
 
-\item{.pkgs}{character vector, package names of functions used in
+\item{.pkgs}{Character vector, package names of functions used in
 expressions \code{...}. Should be specified if using non-base functions.}
 
 \item{role}{For model terms created by this step, what analysis role should
