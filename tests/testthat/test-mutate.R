@@ -124,6 +124,11 @@ test_that("required_pkgs.step_mutate() works", {
  
   expect_equal(required_pkgs(rec), c("recipes", "stats"))
   expect_equal(required_pkgs(rec_pred), c("recipes", "stats"))
+
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_mutate(new = 2, .pkgs = "not-a-package")
+  )
 })
 
 test_that("step_mutate() .pkgs argument is backwards compatible", {
