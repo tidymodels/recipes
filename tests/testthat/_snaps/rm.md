@@ -5,7 +5,7 @@
     Condition
       Error in `step_rm()`:
       Caused by error in `prep()`:
-      ! The following argument was specified but not available: `sepal_length`.
+      ! The following argument was specified but do not exist: `sepal_length`.
 
 # empty printing
 
