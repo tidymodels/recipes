@@ -79,6 +79,7 @@ variables using <code><a href="https://dplyr.tidyverse.org/reference/mutate.html
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">step_mutate</span><span class="op">(</span></span>
 <span>  <span class="va">recipe</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  .pkgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  role <span class="op">=</span> <span class="st">"predictor"</span>,</span>
 <span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  inputs <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -96,6 +97,11 @@ sequence of operations for this recipe.</p></dd>
 
 <dt>...</dt>
 <dd><p>Name-value pairs of expressions. See <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code>.</p></dd>
+
+
+<dt>.pkgs</dt>
+<dd><p>Character vector, package names of functions used in
+expressions <code>...</code>. Should be specified if using non-base functions.</p></dd>
 
 
 <dt>role</dt>
