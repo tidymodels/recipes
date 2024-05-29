@@ -27,11 +27,15 @@ a \code{recipe} object.
 in a error.
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 rec <- recipe(mpg ~ ., data = mtcars) \%>\%
   step_dummy(all_nominal_predictors()) \%>\%
   step_impute_mean(all_numeric_predictors()) \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_pca(all_numeric_predictors(), id = "PCA")
-\dontshow{\}) # examplesIf}
+
+ignore_step(rec, number = 1)
+
+ignore_step(rec, number = 1:2)
+
+ignore_step(rec, id = "PCA")
 }

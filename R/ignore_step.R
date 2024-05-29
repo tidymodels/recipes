@@ -2,7 +2,7 @@
 #'
 #' `ignore_step` will return a recipe without steps specified by the `number` or
 #' `id` argument.
-
+#' 
 #' @param x A `recipe` object.
 #' @param number An integer vector, Denoting the positions of the steps that 
 #'   should be removed.
@@ -15,12 +15,19 @@
 #' 
 #' @return a `recipe` object.
 #'
-#' @examplesIf rlang::is_installed("modeldata")
+#' @examples
 #' rec <- recipe(mpg ~ ., data = mtcars) %>%
 #'   step_dummy(all_nominal_predictors()) %>%
 #'   step_impute_mean(all_numeric_predictors()) %>%
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_pca(all_numeric_predictors(), id = "PCA")
+#' 
+#' ignore_step(rec, number = 1)
+#' 
+#' ignore_step(rec, number = 1:2)
+#' 
+#' ignore_step(rec, id = "PCA")
+#' @export
 ignore_step <- function(x, number, id) {
   if (any(map_lgl(x$steps, is_trained))) {
     cli::cli_abort(
