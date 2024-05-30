@@ -222,14 +222,28 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   )
 }
 
-warn_new_levels <- function(dat, lvl, details = NULL) {
+warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
   ind <- which(!(dat %in% lvl))
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
-    cli::cli_warn(c(
-      "!" = "There are new levels in a factor: {.var {lvl2}}.",
-      details
-    ))
+    msg <- c("!" = "There are new levels in {.var {column}}: {.val {lvl2}}.")
+    if (any(is.na(lvl2))) {
+      msg <- c(
+        msg, 
+        "i" = "Consider using {.help [step_unknown()](recipes::step_unknown)} \\
+        before {.fn {step}} to handle missing values."
+      )
+    }
+    if (!all(is.na(lvl2))) {
+      msg <- c(
+        msg, 
+        "i" = "Consider using {.help [step_novel()](recipes::step_novel)} \\ 
+        before {.fn {step}} to handle unseen values."
+      )
+    }
+    msg <- c(msg, details)
+
+    cli::cli_warn(msg)
   }
   invisible(NULL)
 }
@@ -267,7 +281,12 @@ bake.step_dummy <- function(object, new_data, ...) {
       )
     }
 
-    warn_new_levels(new_data[[col_name]], levels_values)
+    warn_new_levels(
+      new_data[[col_name]], 
+      levels_values, 
+      col_name, 
+      step = "step_dummy"
+    )
 
     new_data[, col_name] <-
       factor(

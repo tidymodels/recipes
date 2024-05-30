@@ -4,13 +4,13 @@
       te_1 <- bake(rec_1, sacr_te)
     Condition
       Warning:
-      ! There are new levels in a factor: `WEST_SACRAMENTO`.
+      ! There are new levels in `city`: "WEST_SACRAMENTO".
+      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_unknown()` to handle unseen values.
       * New levels will be coerced to `NA` by `step_unknown()`.
-      i Consider using ?step_novel (`?recipes::step_novel()`) before `step_unknown()`.
       Warning:
-      ! There are new levels in a factor: `z95691`.
+      ! There are new levels in `zip`: "z95691".
+      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_unknown()` to handle unseen values.
       * New levels will be coerced to `NA` by `step_unknown()`.
-      i Consider using ?step_novel (`?recipes::step_novel()`) before `step_unknown()`.
 
 # bad args
 
