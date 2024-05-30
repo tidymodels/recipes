@@ -25,7 +25,8 @@
       factors <- prep(factors, training = sacr_missing)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
 
 ---
 
@@ -33,7 +34,8 @@
       factors_data_1 <- bake(factors, new_data = sacr_missing)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
 
 # tests for NA values in ordered factor
 
@@ -41,7 +43,8 @@
       factors <- prep(factors, training = sacr_ordered)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
 
 ---
 
@@ -49,15 +52,18 @@
       factors_data_1 <- bake(factors, new_data = sacr_ordered)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
 
 # new levels
 
     Code
-      recipes:::warn_new_levels(testing$x1, levels(training$x1))
+      recipes:::warn_new_levels(testing$x1, levels(training$x1), "column",
+      "step_dummy")
     Condition
       Warning:
-      ! There are new levels in a factor: `C`.
+      ! There are new levels in `column`: C.
+      i Consider using `recipes::step_novel()` before `step_dummy()` to handle unseen values.
 
 ---
 
@@ -65,7 +71,8 @@
       bake(rec, new_data = testing)
     Condition
       Warning:
-      ! There are new levels in a factor: `C`.
+      ! There are new levels in `x1`: C.
+      i Consider using `recipes::step_novel()` before `step_dummy()` to handle unseen values.
     Output
       # A tibble: 10 x 2
          y      x1_B

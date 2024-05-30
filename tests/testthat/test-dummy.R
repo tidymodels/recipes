@@ -215,10 +215,10 @@ test_that("new levels", {
   testing$x1 <- as.factor(testing$x1)
 
   expect_snapshot(
-    recipes:::warn_new_levels(testing$x1, levels(training$x1))
+    recipes:::warn_new_levels(testing$x1, levels(training$x1), "column", "step_dummy")
   )
   expect_silent(
-    recipes:::warn_new_levels(training$x1, levels(training$x1))
+    recipes:::warn_new_levels(training$x1, levels(training$x1), "column", "step_dummy")
   )
 
   rec <- recipe(y ~ x1, data = training) %>%
