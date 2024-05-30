@@ -208,7 +208,9 @@ outcomes.</p>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/juice.html">juice</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> There are new levels in a factor: `NA`.</span></span>
+<span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> There are new levels in `sex`: <span style="color: #0000BB;">NA</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Consider using step_unknown() (`?recipes::step_unknown()`) before</span></span>
+<span><span class="co">#&gt;   `step_dummy()` to handle missing values.</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 344 × 7</span></span></span>
 <span><span class="co">#&gt;    species island    bill_length_mm bill_depth_mm flipper_length_mm</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
