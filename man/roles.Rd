@@ -50,9 +50,9 @@ functions for columns that are already present in the original data supplied
 to \code{recipe()}. See the \code{role} argument in some step functions to update
 roles for columns created by steps.
 
-Variables can have any arbitrary role (see the examples) but there are two
-special standard roles, \code{"predictor"} and \code{"outcome"}. These two roles are
-typically required when fitting a model.
+Variables can have any arbitrary role (see the examples) but there are three
+special standard roles, \code{"predictor"}, \code{"outcome"}, and \code{"case_weights"}.
+The first two roles are typically required when fitting a model.
 
 \code{update_role()} should be used when a variable doesn't currently have a role
 in the recipe, or to replace an \code{old_role} with a \code{new_role}. \code{add_role()}
@@ -93,10 +93,9 @@ If you really aren't using \code{sample} in your recipe, we recommend that you i
 
 bake(rec, biomass_test)
 #> Error in `bake()`:
-#> x The following required columns are missing from `new_data`:
-#>   `sample`.
-#> i These columns have one of the following roles, which are required at
-#>   `bake()` time: `id variable`.
+#> x The following required columns are missing from `new_data`: `sample`.
+#> i These columns have one of the following roles, which are required at `bake()`
+#>   time: `id variable`.
 #> i If these roles are not required at `bake()` time, use
 #>   `update_role_requirements(role = "your_role", bake = FALSE)`.
 }\if{html}{\out{</div>}}

@@ -955,3 +955,36 @@ recipes_remove_cols <- function(new_data, object, col_names = character()) {
   }
   new_data
 }
+
+#' Role indicators
+#'
+#' This helper function is meant to be used in `prep()` methods to identify
+#' predictors and outcomes by names.
+#'
+#' @param info data.frame with variable information of columns. 
+#'
+#' @return Character vector of column names.
+#' @keywords internal
+#'
+#' @seealso [developer_functions]
+#'
+#' @name recipes-role-indicator
+NULL
+
+#' @rdname recipes-role-indicator
+#' @export
+recipes_names_predictors <- function(info) {
+  get_from_info(info, "predictor")
+}
+
+#' @rdname recipes-role-indicator
+#' @export
+recipes_names_outcomes <- function(info) {
+  get_from_info(info, "outcome")
+}
+
+get_from_info <- function(info, role) {
+  res <- info$variable[info$role == role & !is.na(info$role)]
+
+  res
+}

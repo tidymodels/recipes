@@ -24,6 +24,8 @@
 
 * Improved error message for misspelled argument in step functions. (#1318)
 
+* Developer helper functions `recipes_names_predictors()` and `recipes_names_outcomes()` have been added to aid variable selection in steps. (#1026)
+
 # recipes 1.0.10
 
 ## Bug Fixes

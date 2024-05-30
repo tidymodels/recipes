@@ -116,6 +116,10 @@
 #' [recipes_remove_cols()] should be used in `prep.step_*()` functions, and is
 #' used to remove columns from the data set, either by using the
 #' `object$removals` field or by using the `col_names` argument.
+#' 
+#' [recipes_names_predictors()] and [recipes_names_outcomes()] should be used in
+#' `prep.step_*()` functions, and are used to get names of predictors and
+#' outcomes. 
 #'
 #' [get_case_weights()] and [are_weights_used()] are functions that help you
 #' extract case weights and help determine if they are used or not within the

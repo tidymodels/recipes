@@ -106,6 +106,10 @@ once and when possible should be put outside \code{for} loops.
 used to remove columns from the data set, either by using the
 \code{object$removals} field or by using the \code{col_names} argument.
 
+\code{\link[=recipes_names_predictors]{recipes_names_predictors()}} and \code{\link[=recipes_names_outcomes]{recipes_names_outcomes()}} should be used in
+\verb{prep.step_*()} functions, and are used to get names of predictors and
+outcomes.
+
 \code{\link[=get_case_weights]{get_case_weights()}} and \code{\link[=are_weights_used]{are_weights_used()}} are functions that help you
 extract case weights and help determine if they are used or not within the
 step. They will typically be used within the \verb{prep.step_*()} functions if the
