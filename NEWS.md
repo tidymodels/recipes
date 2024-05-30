@@ -12,8 +12,6 @@
 
 * `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
 
-* `step_dummy()` now give an informative error if it tried to generate too many columns to fit in memory. (#828)
-
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
 
 * `recipe()` can now take data.frames with list-columns or sf data.frames as input to `data`. (#1283)
