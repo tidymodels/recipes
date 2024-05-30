@@ -120,6 +120,15 @@
       ! Name collision occurred. The following variable names already exist:
       * `Species_versicolor`
 
+# throws a informative error for too many levels (#828)
+
+    Code
+      prep(rec)
+    Condition
+      Error in `step_dummy()`:
+      Caused by error:
+      ! `x` contains too many levels (123456), which would result in a data.frame too large to fit in memory.
+
 # empty printing
 
     Code

@@ -4,6 +4,8 @@
 
 * The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
 
+* `step_dummy()` now give an informative error if it tried to generate too many columns to fit in memory. (#828)
+
 * `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
 
 * `recipe()` no longer crashes when given long formula expression (#1283).
