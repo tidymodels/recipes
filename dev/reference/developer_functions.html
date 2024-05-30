@@ -148,6 +148,9 @@ once and when possible should be put outside <code>for</code> loops.</p>
 <p><code><a href="recipes_remove_cols.html">recipes_remove_cols()</a></code> should be used in <code>prep.step_*()</code> functions, and is
 used to remove columns from the data set, either by using the
 <code>object$removals</code> field or by using the <code>col_names</code> argument.</p>
+<p><code><a href="recipes-role-indicator.html">recipes_names_predictors()</a></code> and <code><a href="recipes-role-indicator.html">recipes_names_outcomes()</a></code> should be used in
+<code>prep.step_*()</code> functions, and are used to get names of predictors and
+outcomes.</p>
 <p><code><a href="case-weight-helpers.html">get_case_weights()</a></code> and <code><a href="case-weight-helpers.html">are_weights_used()</a></code> are functions that help you
 extract case weights and help determine if they are used or not within the
 step. They will typically be used within the <code>prep.step_*()</code> functions if the

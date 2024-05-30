@@ -136,9 +136,9 @@ position. This means that roles can only be changed with these three
 functions for columns that are already present in the original data supplied
 to <code><a href="recipe.html">recipe()</a></code>. See the <code>role</code> argument in some step functions to update
 roles for columns created by steps.</p>
-<p>Variables can have any arbitrary role (see the examples) but there are two
-special standard roles, <code>"predictor"</code> and <code>"outcome"</code>. These two roles are
-typically required when fitting a model.</p>
+<p>Variables can have any arbitrary role (see the examples) but there are three
+special standard roles, <code>"predictor"</code>, <code>"outcome"</code>, and <code>"case_weights"</code>.
+The first two roles are typically required when fitting a model.</p>
 <p><code>update_role()</code> should be used when a variable doesn't currently have a role
 in the recipe, or to replace an <code>old_role</code> with a <code>new_role</code>. <code>add_role()</code>
 only adds additional roles to variables that already have roles and will
@@ -171,10 +171,9 @@ all of the variables that have a custom role with the selector <code><a href="ha
 <span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `bake()`:</span></span>
-<span><span class="co">#&gt; x The following required columns are missing from `new_data`:</span></span>
-<span><span class="co">#&gt;   `sample`.</span></span>
-<span><span class="co">#&gt; i These columns have one of the following roles, which are required at</span></span>
-<span><span class="co">#&gt;   `bake()` time: `id variable`.</span></span>
+<span><span class="co">#&gt; x The following required columns are missing from `new_data`: `sample`.</span></span>
+<span><span class="co">#&gt; i These columns have one of the following roles, which are required at `bake()`</span></span>
+<span><span class="co">#&gt;   time: `id variable`.</span></span>
 <span><span class="co">#&gt; i If these roles are not required at `bake()` time, use</span></span>
 <span><span class="co">#&gt;   `update_role_requirements(role = "your_role", bake = FALSE)`.</span></span></code></pre><p></p></div>
 <p>As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the <code>sample</code> column from <code>biomass</code> before calling <code><a href="recipe.html">recipe()</a></code>. In general, predictors and non-standard roles that are supplied to <code><a href="recipe.html">recipe()</a></code> should be present at both <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code> time.</p>
