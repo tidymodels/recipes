@@ -303,11 +303,20 @@ bake.step_dummy <- function(object, new_data, ...) {
         na.action = na.pass
       )
 
-    indicators <-
-      model.matrix(
-        object = levels,
-        data = indicators
-      )
+    indicators <- tryCatch(
+      model.matrix(object = levels, data = indicators),
+      error = function(cnd) {
+        if (grepl("vector memory exhausted", cnd$message)) {
+          n_levels <- length(attr(levels, "values"))
+          cli::cli_abort(
+            "{.var {col_name}} contains too many levels ({n_levels}), \\
+            which would result in a data.frame too large to fit in memory.",
+            call = NULL
+          )
+        }
+        stop(cnd)
+      }
+    )
 
     if (!object$one_hot) {
       indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
