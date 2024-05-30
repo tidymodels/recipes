@@ -26,7 +26,7 @@
     Condition
       Warning:
       ! There are new levels in `city`: NA.
-      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 ---
 
@@ -35,7 +35,7 @@
     Condition
       Warning:
       ! There are new levels in `city`: NA.
-      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 # tests for NA values in ordered factor
 
@@ -44,7 +44,7 @@
     Condition
       Warning:
       ! There are new levels in `city`: NA.
-      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 ---
 
@@ -53,7 +53,7 @@
     Condition
       Warning:
       ! There are new levels in `city`: NA.
-      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 # new levels
 
@@ -63,7 +63,7 @@
     Condition
       Warning:
       ! There are new levels in `column`: C.
-      i Consider using `recipes::step_novel()` before `step_dummy()` to handle unseen values.
+      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_dummy()` to handle unseen values.
 
 ---
 
@@ -72,7 +72,7 @@
     Condition
       Warning:
       ! There are new levels in `x1`: C.
-      i Consider using `recipes::step_novel()` before `step_dummy()` to handle unseen values.
+      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_dummy()` to handle unseen values.
     Output
       # A tibble: 10 x 2
          y      x1_B
@@ -95,7 +95,7 @@
     Condition
       Warning:
       ! There are new levels in `a`: NA.
-      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 # Deprecation warning
 

@@ -230,15 +230,15 @@ warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
     if (any(is.na(lvl2))) {
       msg <- c(
         msg, 
-        "i" = "Consider using {.fn recipes::step_unknown} before \\
-        {.fn {step}} to handle missing values."
+        "i" = "Consider using {.help [step_unknown()](recipes::step_unknown)} \\
+        before {.fn {step}} to handle missing values."
       )
     }
     if (!all(is.na(lvl2))) {
       msg <- c(
         msg, 
-        "i" = "Consider using {.fn recipes::step_novel} before \\
-        {.fn {step}} to handle unseen values."
+        "i" = "Consider using {.help [step_novel()](recipes::step_novel)} \\ 
+        before {.fn {step}} to handle unseen values."
       )
     }
     msg <- c(msg, details)
