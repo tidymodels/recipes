@@ -222,3 +222,19 @@
       Caused by error in `prep()`:
       ! The following arguments were specified but do not exist: `AM` and `GEAR`.
 
+# data argument is checked in recipe.formula() (#1325)
+
+    Code
+      recipe(~a, data = data)
+    Condition
+      Error in `as.data.frame.default()`:
+      ! cannot coerce class '"function"' to a data.frame
+
+---
+
+    Code
+      recipe(~., data = data)
+    Condition
+      Error in `as.data.frame.default()`:
+      ! cannot coerce class '"function"' to a data.frame
+
