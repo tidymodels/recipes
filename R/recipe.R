@@ -207,6 +207,10 @@ recipe.formula <- function(formula, data, ...) {
     ))
   }
 
+  if (!is_tibble(data)) {
+    data <- as_tibble(data)
+  }
+
   # Check for other in-line functions
   args <- form2args(formula, data, ...)
   obj <- recipe.data.frame(
@@ -233,10 +237,6 @@ form2args <- function(formula, data, ..., call = rlang::caller_env()) {
 
   ## check for in-line formulas
   inline_check(formula, data, call)
-
-  if (!is_tibble(data)) {
-    data <- as_tibble(data)
-  }
 
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
