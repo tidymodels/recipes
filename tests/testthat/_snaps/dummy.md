@@ -88,6 +88,15 @@
        9 1        NA
       10 0         0
 
+# warns about NA in column (#450)
+
+    Code
+      tmp <- recipe(~a, data = data) %>% step_dummy(a) %>% prep()
+    Condition
+      Warning:
+      ! There are new levels in `a`: NA.
+      i Consider using `recipes::step_unknown()` before `step_dummy()` to handle missing values.
+
 # Deprecation warning
 
     Code

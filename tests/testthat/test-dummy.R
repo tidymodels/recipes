@@ -196,8 +196,6 @@ test_that("tests for NA values in ordered factor", {
   )
 })
 
-
-
 test_that("new levels", {
   df <- data.frame(
     y = c(1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0),
@@ -228,6 +226,16 @@ test_that("new levels", {
   )
   expect_snapshot(
     bake(rec, new_data = testing)
+  )
+})
+
+test_that("warns about NA in column (#450)", {
+  data <- data.frame(a = c(LETTERS, NA))
+
+  expect_snapshot(
+    tmp <- recipe(~ a, data = data) %>%
+      step_dummy(a) %>%
+      prep()
   )
 })
 
