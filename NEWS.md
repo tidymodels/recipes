@@ -18,7 +18,7 @@
 
 * `step_dummy()` and `step_unknown()` now throw more informative warnings for unseen levels. (#450)
 
-* `step_dummy()` now throw more informative warnings for `NA` values. (#450)
+* `step_dummy()` now throws more informative warnings for `NA` values. (#450)
 
 * Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
 
