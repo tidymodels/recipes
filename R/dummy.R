@@ -287,7 +287,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     indicators <- tryCatch(
       model.matrix(object = levels, data = indicators),
       error = function(cnd) {
-        if (grepl("vector memory", cnd$message)) {
+        if (grepl("(vector memory|cannot allocate)", cnd$message)) {
           n_levels <- length(attr(levels, "values"))
           cli::cli_abort(
             "{.var {col_name}} contains too many levels ({n_levels}), \\
