@@ -332,6 +332,18 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("throws a informative error for too many levels (#828)", {
+  dat <- data.frame(x = as.character(1:123456))
+
+  rec <- recipe(~ ., data = dat) %>%
+    step_dummy(x)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec)
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
