@@ -48,6 +48,9 @@ What this means in practice is that unless otherwise specified, everything
 but outcomes and case weights are required. These requirements can be changed
 with \code{update_role_requirements()} and \code{recipes_ptype()} respects those
 changes.
+
+Note that the order of the columns aren't guaranteed to align with
+\code{data_ptype} as the data internally is ordered according to roles.
 }
 \examples{
 training <- tibble(

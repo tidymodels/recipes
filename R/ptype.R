@@ -39,6 +39,9 @@
 #' with `update_role_requirements()` and `recipes_ptype()` respects those 
 #' changes.
 #' 
+#' Note that the order of the columns aren't guaranteed to align with
+#' `data_ptype` as the data internally is ordered according to roles.
+#' 
 #' @return A zero row tibble.
 #' @keywords internal
 #'
