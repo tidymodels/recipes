@@ -2,6 +2,8 @@
 
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
 
+* Developer helper function `recipes_ptype()` has been added, returning expected input data for `prep()` and `bake()` for a given recipe object. (#1329)
+
 * The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
 
 * `step_dummy()` now gives an informative error on attempt to generate too many columns to fit in memory. (#828)
