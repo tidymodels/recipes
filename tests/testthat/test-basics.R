@@ -415,3 +415,14 @@ test_that("steps give errors when arguments are misspelled", {
       prep()
   )
 })
+
+test_that("data argument is checked in recipe.formula() (#1325)", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ a, data = data)
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = data)
+  )
+})
