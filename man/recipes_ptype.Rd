@@ -9,6 +9,8 @@ recipes_ptype(x, ..., stage = "prep")
 \arguments{
 \item{x}{A \code{recipe} object.}
 
+\item{...}{currently not used.}
+
 \item{stage}{A single character. Must be one of \code{"prep"} or \code{"bake"}. See
 details for more. Defaults to \code{"prep"}.}
 }

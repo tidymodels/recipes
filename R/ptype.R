@@ -4,6 +4,7 @@
 #' the recipe object.
 #'
 #' @param x A `recipe` object.
+#' @param ... currently not used.
 #' @param stage A single character. Must be one of `"prep"` or `"bake"`. See
 #'   details for more. Defaults to `"prep"`.
 #'
@@ -100,8 +101,10 @@ recipes_ptype <- function(x, ..., stage = "prep") {
     required_roles <- compute_bake_role_requirements(x)
 
     var_info <- x$var_info
+    roles <- var_info$role
+    roles <- chr_explicit_na(roles)
     
-    required_var <- var_info$variable[required_roles[var_info$role]]
+    required_var <- var_info$variable[required_roles[roles]]
 
     ptype <- ptype[names(ptype) %in% required_var]
   }
