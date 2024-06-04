@@ -27,9 +27,9 @@ expecting. The specifics of which columns depend on the \code{stage}.
 
 At \code{prep()} time, when \code{stage = "prep"}, the ptype is the data passed to
 \code{recipe()}. The following code chunk represents a possible recipe scenario.
-Calling \code{recipes_ptype(rec_spec, stage = "prep")} and
-\code{recipes_ptype(rec_prep, stage = "prep")} both returns a ptype tibble
-correspodning to \code{data_ptype}. This information is used internally in
+\code{recipes_ptype(rec_spec, stage = "prep")} and
+\code{recipes_ptype(rec_prep, stage = "prep")} both return a ptype tibble
+corresponding to \code{data_ptype}. This information is used internally in
 \code{prep()} to verify that \code{data_training} has the right columns with the right
 types.
 
@@ -40,7 +40,7 @@ types.
 rec_prep <- prep(rec_spec, training = data_training)
 }\if{html}{\out{</div>}}
 
-At \code{bake()} time, when \code{stage = "bake"}, the ptype representents the data
+At \code{bake()} time, when \code{stage = "bake"}, the ptype represents the data
 that are required for \code{bake()} to run.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data_bake <- bake(rec_prep, new_data = data_testing)
@@ -48,7 +48,7 @@ that are required for \code{bake()} to run.
 
 What this means in practice is that unless otherwise specified, everything
 but outcomes and case weights are required. These requirements can be changed
-with \code{update_role_requirements()} and \code{recipes_ptype()} respects those
+with \code{update_role_requirements()}, and \code{recipes_ptype()} respects those
 changes.
 
 Note that the order of the columns aren't guaranteed to align with
@@ -66,14 +66,14 @@ training
 
 rec_spec <- recipe(y ~ ., data = training)
 
-# outcomes and case_weights are not requred at bake time
+# outcomes and case_weights are not required at bake time
 recipes_ptype(rec_spec, stage = "prep")
 recipes_ptype(rec_spec, stage = "bake")
 
 rec_spec <- recipe(y ~ ., data = training) \%>\%
   update_role(x1, new_role = "id")
 
-# outcomes and case_weights are not requred at bake time
+# outcomes and case_weights are not required at bake time
 # "id" column is assumed to be needed
 recipes_ptype(rec_spec, stage = "prep")
 recipes_ptype(rec_spec, stage = "bake")
