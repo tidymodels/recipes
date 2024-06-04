@@ -14,9 +14,9 @@
 #' 
 #' At `prep()` time, when `stage = "prep"`, the ptype is the data passed to 
 #' `recipe()`. The following code chunk represents a possible recipe scenario. 
-#' Calling `recipes_ptype(rec_spec, stage = "prep")` and 
-#' `recipes_ptype(rec_prep, stage = "prep")` both returns a ptype tibble
-#' correspodning to `data_ptype`. This information is used internally in 
+#' `recipes_ptype(rec_spec, stage = "prep")` and 
+#' `recipes_ptype(rec_prep, stage = "prep")` both return a ptype tibble
+#' corresponding to `data_ptype`. This information is used internally in 
 #' `prep()` to verify that `data_training` has the right columns with the right
 #' types.
 #' 
@@ -28,7 +28,7 @@
 #' rec_prep <- prep(rec_spec, training = data_training)
 #' ```
 #' 
-#' At `bake()` time, when `stage = "bake"`, the ptype representents the data
+#' At `bake()` time, when `stage = "bake"`, the ptype represents the data
 #' that are required for `bake()` to run.  
 #' 
 #' ```r
@@ -37,7 +37,7 @@
 #' 
 #' What this means in practice is that unless otherwise specified, everything
 #' but outcomes and case weights are required. These requirements can be changed
-#' with `update_role_requirements()` and `recipes_ptype()` respects those 
+#' with `update_role_requirements()`, and `recipes_ptype()` respects those 
 #' changes.
 #' 
 #' Note that the order of the columns aren't guaranteed to align with
@@ -60,14 +60,14 @@
 #' 
 #' rec_spec <- recipe(y ~ ., data = training)
 #' 
-#' # outcomes and case_weights are not requred at bake time
+#' # outcomes and case_weights are not required at bake time
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")
 #' 
 #' rec_spec <- recipe(y ~ ., data = training) %>%
 #'   update_role(x1, new_role = "id")
 #' 
-#' # outcomes and case_weights are not requred at bake time
+#' # outcomes and case_weights are not required at bake time
 #' # "id" column is assumed to be needed
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")

@@ -139,7 +139,7 @@
 #'
 #' # Interacting with recipe objects
 #'
-#' [recipes_ptype()] returns the ptype, expected variables and types, that an
+#' [recipes_ptype()] returns the ptype, expected variables and types, that a
 #' recipe object expects at `prep()` and `bake()` time. Controlled using the 
 #' `stage` argument. Can be used by functions that interact with recipes to 
 #' verify data is correct before passing it to `prep()` and `bake()`.
