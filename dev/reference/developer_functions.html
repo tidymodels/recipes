@@ -166,7 +166,11 @@ new columns.</p>
     </div>
     <div class="section level2">
     <h2 id="interacting-with-recipe-objects">Interacting with recipe objects<a class="anchor" aria-label="anchor" href="#interacting-with-recipe-objects"></a></h2>
-    <p><code><a href="detect_step.html">detect_step()</a></code> returns a logical indicator to determine if a given step or
+    <p><code><a href="recipes_ptype.html">recipes_ptype()</a></code> returns the ptype, expected variables and types, that a
+recipe object expects at <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code> time. Controlled using the
+<code>stage</code> argument. Can be used by functions that interact with recipes to
+verify data is correct before passing it to <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code>.</p>
+<p><code><a href="detect_step.html">detect_step()</a></code> returns a logical indicator to determine if a given step or
 check is included in a recipe.</p>
 <p><code><a href="fully_trained.html">fully_trained()</a></code> returns a logical indicator if the recipe is fully trained.
 The function <code><a href="recipes-internal.html">is_trained()</a></code> can be used to check in any individual steps are
