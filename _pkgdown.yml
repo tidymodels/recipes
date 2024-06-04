@@ -165,6 +165,7 @@ reference:
     - prepper
     - recipes_eval_select
     - recipes_extension_check
+    - recipes_ptype
     - recipes-role-indicator
     - update.step
   - title: Tidy Methods

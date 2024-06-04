@@ -128,6 +128,11 @@ new columns.
 }
 
 \section{Interacting with recipe objects}{
+\code{\link[=recipes_ptype]{recipes_ptype()}} returns the ptype, expected variables and types, that a
+recipe object expects at \code{prep()} and \code{bake()} time. Controlled using the
+\code{stage} argument. Can be used by functions that interact with recipes to
+verify data is correct before passing it to \code{prep()} and \code{bake()}.
+
 \code{\link[=detect_step]{detect_step()}} returns a logical indicator to determine if a given step or
 check is included in a recipe.
 

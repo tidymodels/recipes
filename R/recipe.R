@@ -184,7 +184,8 @@ recipe.data.frame <-
       template = x,
       levels = NULL,
       retained = NA,
-      requirements = requirements
+      requirements = requirements,
+      ptype = vctrs::vec_ptype(x)
     )
     class(out) <- "recipe"
     out

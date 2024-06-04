@@ -310,6 +310,9 @@ test_that("old recipes from 1.0.1 work with new get_types", {
   )
   expect_false(identical(old_rec_sac, rec_sac))
 
+  # Avoid issue with new ptype field in 1.1.0
+  rec_sac$ptype <- NULL
+  
   expect_identical(
     prep(old_rec_sac),
     prep(rec_sac)
