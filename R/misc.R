@@ -663,19 +663,12 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
     }
     x <- rec$template
   } else {
-    in_data <- vars %in% colnames(x)
-    if (!all(in_data)) {
-      cli::cli_abort(
-        "Not all variables in the recipe are present in the supplied training \\
-        set: {.and {.var {vars[!in_data]}}}.",
-        call = call
-      )
-    }
     if (!is_tibble(x)) {
-      x <- as_tibble(x[, vars, drop = FALSE])
-    } else {
-      x <- x[, vars]
+      x <- as_tibble(x)
     }
+    recipes_ptype_validate(rec, new_data = x, stage = "prep", call = call)
+
+    x <- x[, vars]
   }
 
   steps_trained <- vapply(rec$steps, is_trained, logical(1))
