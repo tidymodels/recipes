@@ -142,7 +142,7 @@ recipes_ptype_validate <- function(x,
                                    ...,
                                    stage = "prep", 
                                    call = rlang::caller_env()) {
-  old_ptype <- recipes_ptype(x)
+  old_ptype <- recipes_ptype(x, stage = stage)
   col_names <- names(old_ptype)
 
   new_ptype <- vctrs::vec_ptype(new_data)

@@ -151,6 +151,15 @@ test_that("recipes_ptype_validate() works", {
     recipes_ptype_validate(rec, data_new)
   )
 
+
+  # works at bake time
+  data_new <- data_orig
+  data_new$y <- NULL
+  expect_no_error(
+    recipes_ptype_validate(rec, data_new, stage = "bake")
+  )
+
+
   # Extra variables
   data_new <- data_orig
   data_new$new <- 1:10
