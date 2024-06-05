@@ -129,3 +129,84 @@ test_that("recipes_ptype errors on old recipes", {
     recipes_ptype(rec)
   )
 })
+
+test_that("recipes_ptype_validate() works", {
+  data_orig <- tibble(
+    y = 1:10,
+    id = 1:10,
+    x1 = letters[1:10],
+    x2 = factor(letters[1:10]),
+    cw = hardhat::importance_weights(1:10)
+  )
+
+  rec <- recipe(y ~ ., data = data_orig)
+
+  expect_no_error(
+    recipes_ptype_validate(rec, data_orig)
+  )
+
+  # different ordering
+  data_new <- data_orig[, 5:1]
+  expect_no_error(
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  # Extra variables
+  data_new <- data_orig
+  data_new$new <- 1:10
+  expect_no_error(
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  # missing variables
+  data_new <- data_orig
+  data_new$id <- NULL
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  data_new <- data_orig
+  data_new$id <- NULL
+  data_new$x1 <- NULL
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  # wrong class
+  data_new <- data_orig
+  data_new$id <- as.double(data_new$id)
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  data_new <- data_orig
+  data_new$id <- as.double(data_new$id)
+  data_new$y <- as.double(data_new$y)
+  data_new$x2 <- as.integer(data_new$x2)
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  # wrong attributes
+  data_new <- data_orig
+  attributes(data_new$x1) <- list("amount" = 4)
+  
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
+
+  # wrong attributes
+  data_new <- data_orig
+  attributes(data_new$x1) <- list("amount" = 4)
+  attributes(data_new$id) <- list("amount" = 4)
+    
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
+})

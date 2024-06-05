@@ -88,6 +88,6 @@ recipes_ptype(rec_spec, stage = "bake")
 
 }
 \seealso{
-\link{developer_functions}
+\link{developer_functions} \link{recipes_ptype_validate}
 }
 \keyword{internal}
