@@ -30,7 +30,7 @@
     Condition
       Error:
       x The following variable has the wrong class:
-      * `id` must have class <numeric> not <integer>.
+      * `id` must have class <numeric>, not <integer>.
 
 ---
 
@@ -38,10 +38,10 @@
       recipes_ptype_validate(rec, data_new)
     Condition
       Error:
-      x The following variables has the wrong class:
-      * `id` must have class <numeric> not <integer>.
-      * `x2` must have class <integer> not <factor>.
-      * `y` must have class <numeric> not <integer>.
+      x The following variables have the wrong class:
+      * `id` must have class <numeric>, not <integer>.
+      * `x2` must have class <integer>, not <factor>.
+      * `y` must have class <numeric>, not <integer>.
 
 ---
 
@@ -49,7 +49,7 @@
       recipes_ptype_validate(rec, data_new)
     Condition
       Error:
-      x The following variable has the wrong attributed: `x1`.
+      x The following variable has the wrong attributes: `x1`.
 
 ---
 
@@ -57,5 +57,5 @@
       recipes_ptype_validate(rec, data_new)
     Condition
       Error:
-      x The following variables has the wrong attributed: `id` and `x1`.
+      x The following variables have the wrong attributes: `id` and `x1`.
 

@@ -135,7 +135,7 @@ verify data is correct before passing it to \code{prep()} and \code{bake()}.
 
 \code{\link[=recipes_ptype_validate]{recipes_ptype_validate()}} checks that a recipe and its data are compatible
 using information extracted using \code{\link[=recipes_ptype]{recipes_ptype()}}. Can be used by functions
-that interact with recipes to  verify data is correct before passing it to
+that interact with recipes to verify data is correct before passing it to
 \code{prep()} and \code{bake()}.
 
 \code{\link[=detect_step]{detect_step()}} returns a logical indicator to determine if a given step or
