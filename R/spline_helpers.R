@@ -31,8 +31,7 @@ spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, complete_set
 spline_msg <- function(x) {
   x <- as.character(x)
   x <- strsplit(x, "\\n")[[1]]
-  x <- paste0(x[-1], collapse = ". ")
-  cli::cli_warn(trimws(x, which = "left"))
+  cli::cli_abort(x)
 }
 
 spline2_apply <- function(object, new_data) {
