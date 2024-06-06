@@ -166,14 +166,15 @@ recipes_ptype_validate <- function(x,
     offenders <- col_names[!offenders]
 
     msg <- c("x" = "{cli::qty(offenders)} The following variable{?s} \\
-                   has the wrong class:")
+                   {?has/have} the wrong class:")
 
+    # Use `paste0()` rather than typical glue syntax to intentionally duplicate messages
     col_msg <- paste0(
       "{.var {offenders[",
       seq_along(offenders),
       "]}} must have class {.cls {new_classes[offenders[",
       seq_along(offenders),
-      "]]}} not {.cls {old_classes[offenders[",
+      "]]}}, not {.cls {old_classes[offenders[",
       seq_along(offenders),
       "]]}}."
     )
@@ -191,7 +192,7 @@ recipes_ptype_validate <- function(x,
     offenders <- col_names[!offenders]
   
     msg <- c("x" = "{cli::qty(offenders)} The following variable{?s} \\
-                   has the wrong attributed: {.var {offenders}}.")
+                   {?has/have} the wrong attributes: {.var {offenders}}.")
   
     cli::cli_abort(msg, call = call)
   }

@@ -146,7 +146,7 @@
 #' 
 #' [recipes_ptype_validate()] checks that a recipe and its data are compatible
 #' using information extracted using [recipes_ptype()]. Can be used by functions 
-#' that interact with recipes to  verify data is correct before passing it to 
+#' that interact with recipes to verify data is correct before passing it to 
 #' `prep()` and `bake()`.
 #' 
 #' [detect_step()] returns a logical indicator to determine if a given step or
