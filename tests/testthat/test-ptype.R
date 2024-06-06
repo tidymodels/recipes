@@ -118,6 +118,29 @@ test_that("recipes_ptype() works with NA roles", {
   )
 })
 
+test_that("recipes_ptype() works with formula interface", {
+  data_orig <- tibble(
+    y = 1:10,
+    id = 1:10,
+    x1 = letters[1:10],
+    x2 = factor(letters[1:10]),
+    cw = hardhat::importance_weights(1:10)
+  )
+  
+  rec_spec <- recipe(data_orig, y ~ x1)
+  
+  exp_ptype <- vctrs::vec_ptype(data_orig)
+
+  expect_identical(
+    recipes_ptype(rec_spec, stage = "prep"),
+    exp_ptype[c("x1", "y")]
+  )
+  expect_identical(
+    recipes_ptype(rec_spec, stage = "bake"),
+    exp_ptype["x1"]
+  )
+})
+
 test_that("recipes_ptype errors on old recipes", {
   rec <- recipe(mpg ~ ., data = mtcars)
   
