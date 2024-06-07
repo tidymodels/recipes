@@ -2,6 +2,8 @@
 
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
 
+* `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `step_spline_nonnegative()` now throws informative errors if the`degree`, `deg_free`, and `complete_set` arguments causes an error. (#1170)
+
 * Developer helper function `recipes_ptype()` has been added, returning expected input data for `prep()` and `bake()` for a given recipe object. (#1329)
 
 * The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)

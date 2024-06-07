@@ -126,20 +126,19 @@ prep.step_spline_monotone <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
-  res <-
-    purrr::map2(
-      training[, col_names],
-      col_names,
-      ~ spline2_create(
-        .x,
-        nm = .y,
-        .fn = "iSpline",
-        df = x$deg_free,
-        degree = x$degree,
-        complete_set = x$complete_set,
-        fn_opts = x$options
-      )
+  res <- list()
+
+  for (col_name in col_names) {
+    res[[col_name]] <- spline2_create(
+      training[[col_name]],
+      nm = col_name,
+      .fn = "iSpline",
+      df = x$deg_free,
+      complete_set = x$complete_set,
+      degree = x$degree,
+      fn_opts = x$options
     )
+  }
   # check for errors
   bas_res <- purrr::map_lgl(res, is.null)
   res <- res[!bas_res]

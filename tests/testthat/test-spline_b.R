@@ -73,6 +73,36 @@ test_that("correct basis functions", {
   expect_equal(hydrogen_ns_te_res, hydrogen_ns_te_exp)
 })
 
+test_that("errors if degree > deg_free (#1170)", {
+  skip_if_not_installed("splines2")
+
+  expect_no_error(
+    recipe(~., data = mtcars) %>%
+      step_spline_b(mpg, degree = 2, deg_free = 3, complete_set = TRUE) %>%
+      prep()
+  )
+
+  expect_no_error(
+    recipe(~., data = mtcars) %>%
+      step_spline_b(mpg, degree = 3, deg_free = 3, complete_set = FALSE) %>%
+      prep()
+  )
+  
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_spline_b(mpg, degree = 3, deg_free = 3, complete_set = TRUE) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_spline_b(mpg, degree = 4, deg_free = 3, complete_set = FALSE) %>%
+      prep()
+  )
+})
+
 test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_01 <- dat$mpg

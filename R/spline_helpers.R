@@ -1,8 +1,24 @@
 spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, complete_set = TRUE,
-                           degree = NULL, fn_opts = NULL) {
+                           degree = NULL, fn_opts = NULL, call = rlang::caller_env()) {
   vals <- c("bSpline", "cSpline", "iSpline", "mSpline", "naturalSpline", "bernsteinPoly")
   .fn <- rlang::arg_match(.fn, vals)
   fn_opts <- c(fn_opts, degree = degree)
+                             
+  if (.fn != "bernsteinPoly" && isTRUE(degree > (df - complete_set))) {
+    if (complete_set) {
+      cli::cli_abort(
+        "{.arg degree} ({degree}) must be less than to {.arg deg_free} \\
+        ({df}) when {.code complete_set = FALSE}.",
+        call = call
+      )
+    } else {
+      cli::cli_abort(
+        "{.arg degree} ({degree}) must be less than or equal to {.arg deg_free} \\
+        ({df}) when {.code complete_set = TRUE}.",
+        call = call
+      )
+    }
+  }
 
   .cl <-
     rlang::call2(
@@ -31,8 +47,7 @@ spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, complete_set
 spline_msg <- function(x) {
   x <- as.character(x)
   x <- strsplit(x, "\\n")[[1]]
-  x <- paste0(x[-1], collapse = ". ")
-  cli::cli_warn(trimws(x, which = "left"))
+  cli::cli_abort(x)
 }
 
 spline2_apply <- function(object, new_data) {

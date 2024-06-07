@@ -1,3 +1,23 @@
+# errors if degree > deg_free (#1170)
+
+    Code
+      recipe(~., data = mtcars) %>% step_spline_nonnegative(mpg, degree = 3,
+        deg_free = 3, complete_set = TRUE) %>% prep()
+    Condition
+      Error in `step_spline_nonnegative()`:
+      Caused by error in `prep()`:
+      ! `degree` (3) must be less than to `deg_free` (3) when `complete_set = FALSE`.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_spline_nonnegative(mpg, degree = 4,
+        deg_free = 3, complete_set = FALSE) %>% prep()
+    Condition
+      Error in `step_spline_nonnegative()`:
+      Caused by error in `prep()`:
+      ! `degree` (4) must be less than or equal to `deg_free` (3) when `complete_set = TRUE`.
+
 # check_name() is used
 
     Code
