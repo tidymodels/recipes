@@ -218,4 +218,13 @@ test_that("recipes_ptype_validate() works", {
     error = TRUE,
     recipes_ptype_validate(rec, data_new)
   )
+
+  # wrong factor levels
+  data_new <- data_orig
+  levels(data_new$x2) <- letters
+      
+  expect_snapshot(
+    error = TRUE,
+    recipes_ptype_validate(rec, data_new)
+  )
 })

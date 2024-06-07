@@ -50,6 +50,7 @@
     Condition
       Error:
       x The following variable has the wrong attributes: `x1`.
+      Run `lapply(recipes_ptype(rec), attributes)` to see expected attributes. For `rec` being the name of your recipe.
 
 ---
 
@@ -58,4 +59,15 @@
     Condition
       Error:
       x The following variables have the wrong attributes: `id` and `x1`.
+      Run `lapply(recipes_ptype(rec), attributes)` to see expected attributes. For `rec` being the name of your recipe.
+
+---
+
+    Code
+      recipes_ptype_validate(rec, data_new)
+    Condition
+      Error:
+      x The following variable has the wrong attributes: `x2`.
+      * The factor levels of `x2` don't match.
+      Run `lapply(recipes_ptype(rec), attributes)` to see expected attributes. For `rec` being the name of your recipe.
 

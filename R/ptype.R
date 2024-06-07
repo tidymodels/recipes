@@ -179,7 +179,7 @@ recipes_ptype_validate <- function(x,
       "]]}}."
     )
     names(col_msg) <- rep("*", length(col_msg))
-    msg <- c(msg, col_msg)                                                           
+    msg <- c(msg, col_msg)
 
     cli::cli_abort(msg, call = call)
   }
@@ -190,9 +190,25 @@ recipes_ptype_validate <- function(x,
   
     offenders <- purrr::map2_lgl(old_attributes, new_attributes, identical)
     offenders <- col_names[!offenders]
-  
+      
     msg <- c("x" = "{cli::qty(offenders)} The following variable{?s} \\
-                   {?has/have} the wrong attributes: {.var {offenders}}.")
+    {?has/have} the wrong attributes: {.var {offenders}}.")
+
+    if (any(map_lgl(old_ptype[offenders], is.factor))) {
+      offenders_fct <- map_lgl(old_ptype[offenders], is.factor)
+      offenders_fct <- names(offenders_fct)
+    
+      fct_msg <- c(
+        "*" = "The factor levels of {.var {offenders_fct}} don't match."
+      )
+      msg <- c(msg, fct_msg)
+    }
+
+    msg <- c(
+      msg, 
+      "Run {.code lapply(recipes_ptype(rec), attributes)} to see expected \\
+      attributes. For {.code rec} being the name of your recipe."
+    )
   
     cli::cli_abort(msg, call = call)
   }
