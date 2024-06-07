@@ -105,12 +105,7 @@ test_that("high threshold - much removals", {
 
 
 test_that("low threshold - no removals", {
-  sacr_te_chr <- sacr_te %>%
-    dplyr::mutate(
-      city = as.character(city),
-      zip = as.character(zip),
-      type = as.character(type)
-    )
+  sacr_te_chr <- sacr_te
 
   others <- rec %>% step_other(city, zip, threshold = 10^-30, other = "another")
   others <- prep(others, training = sacr_te_chr, strings_as_factors = FALSE)
@@ -119,17 +114,12 @@ test_that("low threshold - no removals", {
   expect_equal(is.na(sacr_te_chr$city), is.na(others_te$city))
   expect_equal(is.na(sacr_te_chr$zip), is.na(others_te$zip))
 
-  expect_equal(sacr_te_chr$city, as.character(others_te$city))
-  expect_equal(sacr_te_chr$zip, as.character(others_te$zip))
+  expect_equal(as.character(sacr_te_chr$city), as.character(others_te$city))
+  expect_equal(as.character(sacr_te_chr$zip), as.character(others_te$zip))
 })
 
 test_that("zero threshold - no removals", {
-  sacr_te_chr <- sacr_te %>%
-    dplyr::mutate(
-      city = as.character(city),
-      zip = as.character(zip),
-      type = as.character(type)
-    )
+  sacr_te_chr <- sacr_te
 
   others <- rec %>% step_other(city, zip, threshold = 0, other = "another")
   others <- prep(others, training = sacr_te_chr, strings_as_factors = FALSE)
@@ -138,8 +128,8 @@ test_that("zero threshold - no removals", {
   expect_equal(is.na(sacr_te_chr$city), is.na(others_te$city))
   expect_equal(is.na(sacr_te_chr$zip), is.na(others_te$zip))
 
-  expect_equal(sacr_te_chr$city, as.character(others_te$city))
-  expect_equal(sacr_te_chr$zip, as.character(others_te$zip))
+  expect_equal(as.character(sacr_te_chr$city), as.character(others_te$city))
+  expect_equal(as.character(sacr_te_chr$zip), as.character(others_te$zip))
 })
 
 

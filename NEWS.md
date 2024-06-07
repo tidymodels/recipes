@@ -6,6 +6,8 @@
 
 * Developer helper function `recipes_ptype()` has been added, returning expected input data for `prep()` and `bake()` for a given recipe object. (#1329)
 
+* Developer helper function `recipes_ptype_validate()` has been added, to validate new data is compatible with recipe ptype. (#793)
+
 * The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
 
 * `step_dummy()` now gives an informative error on attempt to generate too many columns to fit in memory. (#828)

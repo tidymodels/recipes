@@ -134,7 +134,7 @@ test_that("bake without prep", {
 })
 
 test_that("prep with fresh = TRUE", {
-  test_data <- data.frame(x = factor(c(1, 2)), y = c(1, 2))
+  test_data <- data.frame(x = factor(c(1, 2), levels = 1:2), y = c(1, 2))
 
   rec <-
     recipe(y ~ ., data = test_data) %>%
@@ -153,13 +153,13 @@ test_that("prep with fresh = TRUE", {
     tibble(terms = "x", columns = "2", id = "")
   )
 
-  test_data2 <- data.frame(x = factor(c(1, 3)), y = c(1, 2))
+  test_data2 <- data.frame(x = factor(c(2, 1), levels = 1:2), y = c(1, 2))
 
   new_rec2 <- prep(rec, training = test_data2, fresh = TRUE)
 
   expect_equal(
     tidy(new_rec2, 1),
-    tibble(terms = "x", columns = "3", id = "")
+    tibble(terms = "x", columns = "2", id = "")
   )
 })
 
