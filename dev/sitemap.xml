@@ -157,6 +157,9 @@
     <loc>https://recipes.tidymodels.org/dev/reference/recipes_ptype.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/dev/reference/recipes_ptype_validate.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/dev/reference/recipes_remove_cols.html</loc>
   </url>
   <url>

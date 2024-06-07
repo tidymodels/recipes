@@ -170,6 +170,10 @@ new columns.</p>
 recipe object expects at <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code> time. Controlled using the
 <code>stage</code> argument. Can be used by functions that interact with recipes to
 verify data is correct before passing it to <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code>.</p>
+<p><code><a href="recipes_ptype_validate.html">recipes_ptype_validate()</a></code> checks that a recipe and its data are compatible
+using information extracted using <code><a href="recipes_ptype.html">recipes_ptype()</a></code>. Can be used by functions
+that interact with recipes to verify data is correct before passing it to
+<code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code>.</p>
 <p><code><a href="detect_step.html">detect_step()</a></code> returns a logical indicator to determine if a given step or
 check is included in a recipe.</p>
 <p><code><a href="fully_trained.html">fully_trained()</a></code> returns a logical indicator if the recipe is fully trained.
