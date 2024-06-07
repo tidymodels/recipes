@@ -20,7 +20,7 @@
 #' @details `step_bs` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a
 #'  nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `df`, `degree`, or `knot` arguments of
+#'  determined by the `df`, `degree`, or `knots` arguments of
 #'  [splines::bs()]. The original variables are removed
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_bs_1` and so on.
@@ -121,7 +121,11 @@ bs_statistics <- function(x, args) {
     ok <- !is.na(x) & x >= boundary[1L] & x <= boundary[2L]
     knots <- unname(quantile(x[ok], seq_len(num_knots) / (num_knots + 1L)))
   } else {
-    knots <- numeric()
+    if (is.null(args$knots)) {
+      knots <- numeric()
+    } else {
+      knots <- args$knots
+    }
   }
 
   # Only construct the data necessary for splines_predict
