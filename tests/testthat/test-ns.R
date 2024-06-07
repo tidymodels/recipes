@@ -71,6 +71,30 @@ test_that("correct basis functions", {
   expect_equal(hydrogen_ns_te_res, hydrogen_ns_te_exp)
 })
 
+test_that("options(knots) works correctly (#1297)", {
+  exmaple_data <- tibble(x = seq(-2, 2, 0.01))
+
+  rec_res <- recipe(~., data = exmaple_data) %>% 
+    step_ns(x, options = list(knots = seq(-1, 1, 0.125), 
+                              Boundary.knots = c(-1.5, 1.5))) %>% 
+    prep() %>% 
+    bake(new_data = NULL)
+
+  mm_res <- model.matrix(
+    ~ splines::ns(
+      x, 
+      knots = seq(-1, 1, 0.125), 
+      Boundary.knots = c(-1.5, 1.5)
+    ) - 1, 
+    data = exmaple_data
+  )
+
+  attr(mm_res, "assign") <- NULL
+  mm_res <- setNames(as_tibble(mm_res), names(rec_res))
+
+  expect_identical(rec_res, mm_res)
+})
+
 test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_ns_1 <- dat$mpg

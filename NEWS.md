@@ -16,6 +16,8 @@
 
 * `recipe()` will now show better error when columns are misspelled in formula (#1283).
 
+* Fixed bug in `step_ns()` where `knots` field in `options` argument wasn't correctly used. (#1297)
+
 * `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
 
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
