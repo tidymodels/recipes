@@ -24,6 +24,8 @@
 
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
 
+* Bug fixed in `step_interact()` where long formulas were used. (#1231, #1289)
+
 * `recipe()` can now take data.frames with list-columns or sf data.frames as input to `data`. (#1283)
 
 * `step_dummy()` and `step_unknown()` now throw more informative warnings for unseen levels. (#450)
