@@ -131,7 +131,6 @@ bs_statistics <- function(x, args) {
   # Only construct the data necessary for splines_predict
   out <- matrix(NA, ncol = degree + length(knots) + intercept, nrow = 1L)
   class(out) <- c("bs", "basis", "matrix")
-  attr(out, "degree") <- 3L
   attr(out, "knots") <- knots
   attr(out, "Boundary.knots") <- boundary
   attr(out, "intercept") <- intercept
