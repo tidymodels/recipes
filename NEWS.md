@@ -16,6 +16,8 @@
 
 * `recipe()` no longer crashes when given long formula expression (#1283).
 
+* `step_interact()` now gives better error if `terms` isn't a formula. (#1299)
+
 * `recipe()` will now show better error when columns are misspelled in formula (#1283).
 
 * Fixed bug in `step_ns()` and `step_bs()` where `knots` field in `options` argument wasn't correctly used. (#1297)

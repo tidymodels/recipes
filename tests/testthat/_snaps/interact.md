@@ -8,6 +8,16 @@
       ! Name collision occurred. The following variable names already exist:
       * `x1ax2`
 
+# gives informative error if terms isn't a formula (#1299)
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_interact(terms = starts_with("dis")) %>%
+        prep()
+    Condition
+      Error in `step_interact()`:
+      Caused by error:
+      ! `terms` must be supplied as a formula.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
