@@ -151,10 +151,18 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
   # make backwards compatible with 1.0.6 (#1138)
   if (!is_formula(x)) {
-    tmp_terms <- rlang::eval_tidy(x$terms[[1]])
+    tmp_terms <- tryCatch(
+      rlang::eval_tidy(x$terms[[1]]),
+      error = function(cnd) {
+        cli::cli_abort(
+          "{.arg terms} must be supplied as a formula.",
+          call = NULL
+        )
+      }
+    )
     if (!is_formula(tmp_terms)) {
       cli::cli_abort(
-        "{.arg term} must be a formula. Not {.obj_type_friendly {term}}."
+        "{.arg terms} must be a formula. Not {.obj_type_friendly {term}}."
       )
     }
 

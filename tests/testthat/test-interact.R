@@ -307,6 +307,16 @@ test_that("works with long formulas (#1231)", {
   expect_identical(res_long, res_short)
 })
 
+test_that("gives informative error if terms isn't a formula (#1299)", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>% 
+      step_interact(terms = starts_with("dis")) %>% 
+      prep()
+  )
+})
+
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
