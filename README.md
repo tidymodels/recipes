@@ -59,7 +59,7 @@ pak::pak("tidymodels/recipes")
 
 -   For questions and discussions about tidymodels packages, modeling,
     and machine learning, please [post on RStudio
-    Community](https://community.rstudio.com/c/ml/15).
+    Community](https://forum.posit.co/c/ml/15).
 
 -   If you think you have encountered a bug, please [submit an
     issue](https://github.com/tidymodels/recipes/issues).
