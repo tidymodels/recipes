@@ -10,6 +10,8 @@
 
 * `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
 
+* `prep()` will now error if the ptype of the data doesn't match which was used to define the recipe. (#793)
+
 * Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
 
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
