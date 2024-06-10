@@ -141,14 +141,13 @@ test_that("recipes_ptype() works with formula interface", {
   )
 })
 
-test_that("recipes_ptype errors on old recipes", {
+test_that("recipes_ptype returns NULL on old recipes", {
   rec <- recipe(mpg ~ ., data = mtcars)
   
   # simulate pre-1.1.0 recipe
   rec$ptype <- NULL
 
-  expect_snapshot(
-    error = TRUE,
+  expect_null(
     recipes_ptype(rec)
   )
 })
