@@ -51,6 +51,8 @@ but outcomes and case weights are required. These requirements can be changed
 with \code{update_role_requirements()}, and \code{recipes_ptype()} respects those
 changes.
 
+\code{recipes_ptype()} returns \code{NULL} on recipes created prior to version 1.1.0.
+
 Note that the order of the columns aren't guaranteed to align with
 \code{data_ptype} as the data internally is ordered according to roles.
 }

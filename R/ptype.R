@@ -40,6 +40,8 @@
 #' with `update_role_requirements()`, and `recipes_ptype()` respects those 
 #' changes.
 #' 
+#' `recipes_ptype()` returns `NULL` on recipes created prior to version 1.1.0.
+#' 
 #' Note that the order of the columns aren't guaranteed to align with
 #' `data_ptype` as the data internally is ordered according to roles.
 #' 
@@ -84,13 +86,9 @@
 recipes_ptype <- function(x, ..., stage = "prep") {
   check_dots_empty0(...)
 
+  # recipe created prior to 1.1.0
   if (is.null(x$ptype)) {
-   cli::cli_abort(
-      c(
-        x = "Doesn't work on recipes created prior to version 1.1.0.",
-        i = "Please recreate recipe."
-      )
-    )
+    return(NULL)
   }
 
   ptype <- x$ptype
@@ -111,6 +109,15 @@ recipes_ptype <- function(x, ..., stage = "prep") {
   
   ptype
 }
+
+
+long_function_name <- function(x,
+                               ...,
+                               verbose = FALSE) {
+  x
+}
+
+
 
 #' Validate prototype of recipe object
 #'
@@ -143,6 +150,12 @@ recipes_ptype_validate <- function(x,
                                    stage = "prep", 
                                    call = rlang::caller_env()) {
   old_ptype <- recipes_ptype(x, stage = stage)
+
+  # recipe created prior to 1.1.0
+  if (is.null(old_ptype)) {
+    return(invisible())
+  }
+
   col_names <- names(old_ptype)
 
   new_ptype <- vctrs::vec_ptype(new_data)

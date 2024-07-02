@@ -333,6 +333,7 @@ test_that("check_name() is used", {
 })
 
 test_that("throws a informative error for too many levels (#828)", {
+  skip_on_cran()
   dat <- data.frame(x = as.character(1:123456))
 
   rec <- recipe(~ ., data = dat) %>%
