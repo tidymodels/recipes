@@ -596,7 +596,7 @@ bake <- function(object, ...) {
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
-#'   [everything()].
+#'   [dplyr::everything()].
 #' @param composition Either "tibble", "matrix", "data.frame", or
 #'  "dgCMatrix" for the format of the processed data set. Note that
 #'  all computations during the baking process are done in a
