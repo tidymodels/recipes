@@ -142,6 +142,9 @@
     <loc>https://recipes.tidymodels.org/reference/recipes-internal.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/recipes-role-indicator.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/recipes.html</loc>
   </url>
   <url>
@@ -152,6 +155,12 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/recipes_pkg_check.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/recipes_ptype.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/recipes_ptype_validate.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/recipes_remove_cols.html</loc>
@@ -182,6 +191,9 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_arrange.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_bagimpute.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_bin2factor.html</loc>
@@ -295,6 +307,9 @@
     <loc>https://recipes.tidymodels.org/reference/step_isomap.html</loc>
   </url>
   <url>
+    <loc>https://recipes.tidymodels.org/reference/step_knnimpute.html</loc>
+  </url>
+  <url>
     <loc>https://recipes.tidymodels.org/reference/step_kpca.html</loc>
   </url>
   <url>
@@ -314,6 +329,18 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_logit.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_lowerimpute.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_meanimpute.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_medianimpute.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_modeimpute.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_mutate.html</loc>
@@ -392,6 +419,9 @@
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_rm.html</loc>
+  </url>
+  <url>
+    <loc>https://recipes.tidymodels.org/reference/step_rollimpute.html</loc>
   </url>
   <url>
     <loc>https://recipes.tidymodels.org/reference/step_sample.html</loc>
