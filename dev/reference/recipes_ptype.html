@@ -12,7 +12,7 @@ the recipe object."><meta property="og:image" content="https://recipes.tidymodel
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.10.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,6 +123,7 @@ that are required for <code><a href="bake.html">bake()</a></code> to run.</p>
 but outcomes and case weights are required. These requirements can be changed
 with <code><a href="update_role_requirements.html">update_role_requirements()</a></code>, and <code>recipes_ptype()</code> respects those
 changes.</p>
+<p><code>recipes_ptype()</code> returns <code>NULL</code> on recipes created prior to version 1.1.0.</p>
 <p>Note that the order of the columns aren't guaranteed to align with
 <code>data_ptype</code> as the data internally is ordered according to roles.</p>
     </div>

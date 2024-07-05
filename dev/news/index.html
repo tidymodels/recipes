@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.10.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,29 +68,42 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
-<ul><li><p>New <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_time()</a></code> method has been added that returns the time it took to train the recipe. (<a href="https://github.com/tidymodels/recipes/issues/1071" class="external-link">#1071</a>)</p></li>
-<li><p><code><a href="../reference/step_spline_b.html">step_spline_b()</a></code>, <code><a href="../reference/step_spline_convex.html">step_spline_convex()</a></code>, <code><a href="../reference/step_spline_monotone.html">step_spline_monotone()</a></code>, and <code><a href="../reference/step_spline_nonnegative.html">step_spline_nonnegative()</a></code> now throws informative errors if the<code>degree</code>, <code>deg_free</code>, and <code>complete_set</code> arguments causes an error. (<a href="https://github.com/tidymodels/recipes/issues/1170" class="external-link">#1170</a>)</p></li>
-<li><p>Developer helper function <code><a href="../reference/recipes_ptype.html">recipes_ptype()</a></code> has been added, returning expected input data for <code><a href="../reference/prep.html">prep()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> for a given recipe object. (<a href="https://github.com/tidymodels/recipes/issues/1329" class="external-link">#1329</a>)</p></li>
-<li><p>Developer helper function <code><a href="../reference/recipes_ptype_validate.html">recipes_ptype_validate()</a></code> has been added, to validate new data is compatible with recipe ptype. (<a href="https://github.com/tidymodels/recipes/issues/793" class="external-link">#793</a>)</p></li>
-<li><p>The <code>prefix</code> argument of <code><a href="../reference/step_dummy_multi_choice.html">step_dummy_multi_choice()</a></code> is not properly documented. (<a href="https://github.com/tidymodels/recipes/issues/1298" class="external-link">#1298</a>)</p></li>
-<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> now gives an informative error on attempt to generate too many columns to fit in memory. (<a href="https://github.com/tidymodels/recipes/issues/828" class="external-link">#828</a>)</p></li>
-<li><p><code>NA</code> levels in factors aren’t dropped when passed to <code><a href="../reference/recipe.html">recipe()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/1291" class="external-link">#1291</a>)</p></li>
-<li><p><code><a href="../reference/recipe.html">recipe()</a></code> no longer crashes when given long formula expression (<a href="https://github.com/tidymodels/recipes/issues/1283" class="external-link">#1283</a>).</p></li>
-<li><p><code><a href="../reference/step_interact.html">step_interact()</a></code> now gives better error if <code>terms</code> isn’t a formula. (<a href="https://github.com/tidymodels/recipes/issues/1299" class="external-link">#1299</a>)</p></li>
-<li><p><code><a href="../reference/recipe.html">recipe()</a></code> will now show better error when columns are misspelled in formula (<a href="https://github.com/tidymodels/recipes/issues/1283" class="external-link">#1283</a>).</p></li>
-<li><p>Fixed bug in <code><a href="../reference/step_ns.html">step_ns()</a></code> and <code><a href="../reference/step_bs.html">step_bs()</a></code> where <code>knots</code> field in <code>options</code> argument wasn’t correctly used. (<a href="https://github.com/tidymodels/recipes/issues/1297" class="external-link">#1297</a>)</p></li>
-<li><p><code><a href="../reference/roles.html">add_role()</a></code> now errors if a column would simultaneously have roles <code>"outcome"</code> and <code>"predictor"</code>. (<a href="https://github.com/tidymodels/recipes/issues/935" class="external-link">#935</a>)</p></li>
-<li><p>Significant speedup in <code><a href="../reference/step_dummy.html">step_dummy()</a></code> when applied to many columns. (<a href="https://github.com/tidymodels/recipes/issues/1305" class="external-link">#1305</a>)</p></li>
-<li><p>Bug fixed in <code><a href="../reference/step_interact.html">step_interact()</a></code> where long formulas were used. (<a href="https://github.com/tidymodels/recipes/issues/1231" class="external-link">#1231</a>, <a href="https://github.com/tidymodels/recipes/issues/1289" class="external-link">#1289</a>)</p></li>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="recipes-110">recipes 1.1.0<a class="anchor" aria-label="anchor" href="#recipes-110"></a></h2><p class="text-muted">CRAN release: 2024-07-04</p>
+<div class="section level3">
+<h3 id="improvements-1-1-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-1-0"></a></h3>
+<ul><li><p>Improved error message for misspelled argument in step functions. (<a href="https://github.com/tidymodels/recipes/issues/1318" class="external-link">#1318</a>)</p></li>
 <li><p><code><a href="../reference/recipe.html">recipe()</a></code> can now take data.frames with list-columns or sf data.frames as input to <code>data</code>. (<a href="https://github.com/tidymodels/recipes/issues/1283" class="external-link">#1283</a>)</p></li>
+<li><p><code><a href="../reference/recipe.html">recipe()</a></code> will now show better error when columns are misspelled in formula (<a href="https://github.com/tidymodels/recipes/issues/1283" class="external-link">#1283</a>).</p></li>
+<li><p><code><a href="../reference/roles.html">add_role()</a></code> now errors if a column would simultaneously have roles <code>"outcome"</code> and <code>"predictor"</code>. (<a href="https://github.com/tidymodels/recipes/issues/935" class="external-link">#935</a>)</p></li>
+<li><p><code><a href="../reference/prep.html">prep()</a></code> will now error if the ptype of the data doesn’t match which was used to define the recipe. (<a href="https://github.com/tidymodels/recipes/issues/793" class="external-link">#793</a>)</p></li>
+<li><p>Added more documentation in <code><a href="../reference/selections.html">?selections</a></code> about how <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">tidyselect::everything()</a></code> works in recipes. (<a href="https://github.com/tidymodels/recipes/issues/1259" class="external-link">#1259</a>)</p></li>
+<li><p>New <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_time()</a></code> method has been added that returns the time it took to train the recipe. (<a href="https://github.com/tidymodels/recipes/issues/1071" class="external-link">#1071</a>)</p></li>
+<li><p><code><a href="../reference/step_spline_b.html">step_spline_b()</a></code>, <code><a href="../reference/step_spline_convex.html">step_spline_convex()</a></code>, <code><a href="../reference/step_spline_monotone.html">step_spline_monotone()</a></code>, and <code><a href="../reference/step_spline_nonnegative.html">step_spline_nonnegative()</a></code> now throws informative errors if the<code>degree</code>, <code>deg_free</code>, and <code>complete_set</code> arguments causes an error. (<a href="https://github.com/tidymodels/recipes/issues/1170" class="external-link">#1170</a>)</p></li>
+<li><p><code><a href="../reference/step_mutate.html">step_mutate()</a></code> gained <code>.pkgs</code> argument to specify what packages need to be loaded for step to work. (<a href="https://github.com/tidymodels/recipes/issues/1282" class="external-link">#1282</a>)</p></li>
+<li><p><code><a href="../reference/step_interact.html">step_interact()</a></code> now gives better error if <code>terms</code> isn’t a formula. (<a href="https://github.com/tidymodels/recipes/issues/1299" class="external-link">#1299</a>)</p></li>
+<li><p>The <code>prefix</code> argument of <code><a href="../reference/step_dummy_multi_choice.html">step_dummy_multi_choice()</a></code> is now properly documented. (<a href="https://github.com/tidymodels/recipes/issues/1298" class="external-link">#1298</a>)</p></li>
+<li><p>Significant speedup in <code><a href="../reference/step_dummy.html">step_dummy()</a></code> when applied to many columns. (<a href="https://github.com/tidymodels/recipes/issues/1305" class="external-link">#1305</a>)</p></li>
+<li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> now gives an informative error on attempt to generate too many columns to fit in memory. (<a href="https://github.com/tidymodels/recipes/issues/828" class="external-link">#828</a>)</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> and <code><a href="../reference/step_unknown.html">step_unknown()</a></code> now throw more informative warnings for unseen levels. (<a href="https://github.com/tidymodels/recipes/issues/450" class="external-link">#450</a>)</p></li>
 <li><p><code><a href="../reference/step_dummy.html">step_dummy()</a></code> now throws more informative warnings for <code>NA</code> values. (<a href="https://github.com/tidymodels/recipes/issues/450" class="external-link">#450</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h3>
+<ul><li><p><code>NA</code> levels in factors aren’t dropped when passed to <code><a href="../reference/recipe.html">recipe()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/1291" class="external-link">#1291</a>)</p></li>
+<li><p><code><a href="../reference/recipe.html">recipe()</a></code> no longer crashes when given long formula expression (<a href="https://github.com/tidymodels/recipes/issues/1283" class="external-link">#1283</a>).</p></li>
+<li><p>Fixed bug in <code><a href="../reference/step_ns.html">step_ns()</a></code> and <code><a href="../reference/step_bs.html">step_bs()</a></code> where <code>knots</code> field in <code>options</code> argument wasn’t correctly used. (<a href="https://github.com/tidymodels/recipes/issues/1297" class="external-link">#1297</a>)</p></li>
+<li><p>Bug fixed in <code><a href="../reference/step_interact.html">step_interact()</a></code> where long formulas were used. (<a href="https://github.com/tidymodels/recipes/issues/1231" class="external-link">#1231</a>, <a href="https://github.com/tidymodels/recipes/issues/1289" class="external-link">#1289</a>)</p></li>
 <li><p>Fixed documentation mistake where default value of <code>keep_original_cols</code> argument were wrong. (<a href="https://github.com/tidymodels/recipes/issues/1314" class="external-link">#1314</a>)</p></li>
-<li><p><code><a href="../reference/step_mutate.html">step_mutate()</a></code> gained <code>.pkgs</code> argument to specify what packages need to be loaded for step to work. (<a href="https://github.com/tidymodels/recipes/issues/1282" class="external-link">#1282</a>)</p></li>
-<li><p>Added more documentation in <code><a href="../reference/selections.html">?selections</a></code> about how <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">tidyselect::everything()</a></code> works in recipes. (<a href="https://github.com/tidymodels/recipes/issues/1259" class="external-link">#1259</a>)</p></li>
-<li><p>Improved error message for misspelled argument in step functions. (<a href="https://github.com/tidymodels/recipes/issues/1318" class="external-link">#1318</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="developer-1-1-0">Developer<a class="anchor" aria-label="anchor" href="#developer-1-1-0"></a></h3>
+<ul><li><p>Developer helper function <code><a href="../reference/recipes_ptype.html">recipes_ptype()</a></code> has been added, returning expected input data for <code><a href="../reference/prep.html">prep()</a></code> and <code><a href="../reference/bake.html">bake()</a></code> for a given recipe object. (<a href="https://github.com/tidymodels/recipes/issues/1329" class="external-link">#1329</a>)</p></li>
+<li><p>Developer helper function <code><a href="../reference/recipes_ptype_validate.html">recipes_ptype_validate()</a></code> has been added, to validate new data is compatible with recipe ptype. (<a href="https://github.com/tidymodels/recipes/issues/793" class="external-link">#793</a>)</p></li>
 <li><p>Developer helper functions <code><a href="../reference/recipes-role-indicator.html">recipes_names_predictors()</a></code> and <code><a href="../reference/recipes-role-indicator.html">recipes_names_outcomes()</a></code> have been added to aid variable selection in steps. (<a href="https://github.com/tidymodels/recipes/issues/1026" class="external-link">#1026</a>)</p></li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.10" id="recipes-1010">recipes 1.0.10<a class="anchor" aria-label="anchor" href="#recipes-1010"></a></h2><p class="text-muted">CRAN release: 2024-02-18</p>
 <div class="section level3">
