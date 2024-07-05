@@ -1,46 +1,54 @@
-# recipes (development version)
+# recipes 1.1.0
+
+## Improvements
+
+* Improved error message for misspelled argument in step functions. (#1318)
+
+* `recipe()` can now take data.frames with list-columns or sf data.frames as input to `data`. (#1283)
+
+* `recipe()` will now show better error when columns are misspelled in formula (#1283).
+
+* `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
+
+* `prep()` will now error if the ptype of the data doesn't match which was used to define the recipe. (#793)
+
+* Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
 
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
 
 * `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `step_spline_nonnegative()` now throws informative errors if the`degree`, `deg_free`, and `complete_set` arguments causes an error. (#1170)
 
-* Developer helper function `recipes_ptype()` has been added, returning expected input data for `prep()` and `bake()` for a given recipe object. (#1329)
-
-* Developer helper function `recipes_ptype_validate()` has been added, to validate new data is compatible with recipe ptype. (#793)
-
-* The `prefix` argument of `step_dummy_multi_choice()` is not properly documented. (#1298)
-
-* `step_dummy()` now gives an informative error on attempt to generate too many columns to fit in memory. (#828)
-
-* `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
-
-* `recipe()` no longer crashes when given long formula expression (#1283).
+* `step_mutate()` gained `.pkgs` argument to specify what packages need to be loaded for step to work. (#1282)
 
 * `step_interact()` now gives better error if `terms` isn't a formula. (#1299)
 
-* `recipe()` will now show better error when columns are misspelled in formula (#1283).
-
-* Fixed bug in `step_ns()` and `step_bs()` where `knots` field in `options` argument wasn't correctly used. (#1297)
-
-* `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
+* The `prefix` argument of `step_dummy_multi_choice()` is now properly documented. (#1298)
 
 * Significant speedup in `step_dummy()` when applied to many columns. (#1305)
 
-* Bug fixed in `step_interact()` where long formulas were used. (#1231, #1289)
-
-* `recipe()` can now take data.frames with list-columns or sf data.frames as input to `data`. (#1283)
+* `step_dummy()` now gives an informative error on attempt to generate too many columns to fit in memory. (#828)
 
 * `step_dummy()` and `step_unknown()` now throw more informative warnings for unseen levels. (#450)
 
 * `step_dummy()` now throws more informative warnings for `NA` values. (#450)
 
+## Bug Fixes
+
+* `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
+
+* `recipe()` no longer crashes when given long formula expression (#1283).
+
+* Fixed bug in `step_ns()` and `step_bs()` where `knots` field in `options` argument wasn't correctly used. (#1297)
+
+* Bug fixed in `step_interact()` where long formulas were used. (#1231, #1289)
+
 * Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
 
-* `step_mutate()` gained `.pkgs` argument to specify what packages need to be loaded for step to work. (#1282)
+## Developer
 
-* Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
+* Developer helper function `recipes_ptype()` has been added, returning expected input data for `prep()` and `bake()` for a given recipe object. (#1329)
 
-* Improved error message for misspelled argument in step functions. (#1318)
+* Developer helper function `recipes_ptype_validate()` has been added, to validate new data is compatible with recipe ptype. (#793)
 
 * Developer helper functions `recipes_names_predictors()` and `recipes_names_outcomes()` have been added to aid variable selection in steps. (#1026)
 
