@@ -5,11 +5,11 @@
     Condition
       Warning:
       ! There are new levels in `city`: "WEST_SACRAMENTO".
-      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_unknown()` to handle unseen values.
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_unknown()` to handle unseen values.
       * New levels will be coerced to `NA` by `step_unknown()`.
       Warning:
       ! There are new levels in `zip`: "z95691".
-      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_unknown()` to handle unseen values.
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_unknown()` to handle unseen values.
       * New levels will be coerced to `NA` by `step_unknown()`.
 
 # bad args

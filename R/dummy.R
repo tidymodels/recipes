@@ -237,7 +237,7 @@ warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
     if (!all(is.na(lvl2))) {
       msg <- c(
         msg, 
-        "i" = "Consider using {.help [step_novel()](recipes::step_novel)} \\ 
+        "i" = "Consider using {.help [step_novel()](recipes::step_novel)} \\
         before {.fn {step}} to handle unseen values."
       )
     }

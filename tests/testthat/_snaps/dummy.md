@@ -63,7 +63,7 @@
     Condition
       Warning:
       ! There are new levels in `column`: C.
-      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_dummy()` to handle unseen values.
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()` to handle unseen values.
 
 ---
 
@@ -72,7 +72,7 @@
     Condition
       Warning:
       ! There are new levels in `x1`: C.
-      i Consider using step_novel() (`?recipes::step_novel()`) \ before `step_dummy()` to handle unseen values.
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()` to handle unseen values.
     Output
       # A tibble: 10 x 2
          y      x1_B
