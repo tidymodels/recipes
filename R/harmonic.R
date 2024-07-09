@@ -340,7 +340,7 @@ bake.step_harmonic <- function(object, new_data, ...) {
 
     res <- check_name(res, new_data, object, names(res))
 
-    new_data <- vec_cbind(new_data, res)
+    new_data <- vec_cbind(new_data, res, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)

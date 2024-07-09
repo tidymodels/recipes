@@ -196,7 +196,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
   colnames(comps) <- names0(ncol(comps), object$prefix)
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
-  new_data <- vec_cbind(new_data, comps)
+  new_data <- vec_cbind(new_data, comps, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, nnmf_vars)
   new_data
 }

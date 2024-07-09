@@ -296,8 +296,7 @@ bake.step_date <- function(object, new_data, ...) {
   names(date_values) <- new_names
 
   date_values <- check_name(date_values, new_data, object, names(date_values))
-
-  new_data <- vec_cbind(new_data, date_values)
+  new_data <- vec_cbind(new_data, date_values, .name_repair = "minimal")
 
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data

@@ -149,7 +149,7 @@ bake.step_holiday <- function(object, new_data, ...) {
     tmp <- vctrs::vec_cbind(!!!tmp)
 
     tmp <- check_name(tmp, new_data, object, names(tmp))
-    new_data <- vec_cbind(new_data, tmp)
+    new_data <- vec_cbind(new_data, tmp, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)

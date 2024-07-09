@@ -255,7 +255,7 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
 
     indicators <- check_name(indicators, new_data, object, names(indicators))
 
-    new_data <- vec_cbind(new_data, indicators)
+    new_data <- vec_cbind(new_data, indicators, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)

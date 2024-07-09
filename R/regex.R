@@ -172,7 +172,7 @@ bake.step_regex <- function(object, new_data, ...) {
 
   new_values <- tibble::tibble(!!object$result := ifelse(eval(regex), 1L, 0L))
   new_values <- check_name(new_values, new_data, object, object$result)
-  new_data <- vec_cbind(new_data, new_values)
+  new_data <- vec_cbind(new_data, new_values, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
