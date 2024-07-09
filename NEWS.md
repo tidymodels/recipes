@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where name repaied column names would get changed when baked for some steps. (#1347)
+
 # recipes 1.1.0
 
 ## Improvements

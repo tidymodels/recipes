@@ -193,7 +193,7 @@ bake.step_spline_nonnegative <- function(object, new_data, ...) {
   new_cols <- purrr::list_cbind(unname(new_cols))
   new_cols <- check_name(new_cols, new_data, object, names(new_cols))
 
-  new_data <- vec_cbind(new_data, new_cols)
+  new_data <- vec_cbind(new_data, new_cols, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data

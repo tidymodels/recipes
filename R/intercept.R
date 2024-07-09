@@ -97,7 +97,7 @@ prep.step_intercept <- function(x, training, info = NULL, ...) {
 bake.step_intercept <- function(object, new_data, ...) {
   intercept <- tibble(!!object$name := rep(object$value, nrow(new_data)))
   intercept <- check_name(intercept, new_data, object, names(intercept))
-  new_data <- vec_cbind(intercept, new_data)
+  new_data <- vec_cbind(intercept, new_data, .name_repair = "minimal")
   new_data
 }
 
