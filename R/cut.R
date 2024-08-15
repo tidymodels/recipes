@@ -154,12 +154,6 @@ create_full_breaks <- function(var, breaks) {
     var <- var[!is.na(var)]
   }
 
-  if (length(var) == 0) {
-    cli::cli_abort(
-      "All values in {.arg var} are missing, so breaks cannot be created."
-    )
-  }
-
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
