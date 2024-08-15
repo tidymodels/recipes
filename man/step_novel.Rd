@@ -94,8 +94,13 @@ data(Sacramento, package = "modeldata")
 
 sacr_tr <- Sacramento[1:800, ]
 sacr_te <- Sacramento[801:806, ]
+
+# Without converting the predictor to a character, the new level would be converted
+# to `NA`.
+sacr_te$city <- as.character(sacr_te$city)
 sacr_te$city[3] <- "beeptown"
 sacr_te$city[4] <- "boopville"
+sacr_te$city <- as.factor(sacr_te$city)
 
 rec <- recipe(~ city + zip, data = sacr_tr)
 
