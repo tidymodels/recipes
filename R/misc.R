@@ -23,8 +23,8 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## `inline_check` stops when in-line functions are used.
 
   outcomes_names <- all.names(
-    rlang::f_lhs(formula), 
-    functions = FALSE, 
+    rlang::f_lhs(formula),
+    functions = FALSE,
     unique = TRUE
   )
 
@@ -33,7 +33,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
     functions = FALSE,
     unique = TRUE
   )
-  
+
   if (any(predictors_names == ".")) {
     predictors_names <- predictors_names[predictors_names != "."]
     predictors_names <- c(predictors_names, colnames(data))
@@ -182,6 +182,18 @@ has_lvls <- function(info) {
   !vapply(info, function(x) all(is.na(x$values)), c(logic = TRUE))
 }
 
+`%nin%` <- function(x, table) match(x, table, nomatch = 0) == 0
+
+kill_levels <- function(lvls, var_info) {
+  vars <- var_info$variable
+  roles <- var_info$role
+  preds_outcomes <- unique(vars[roles %in% c("outcome", "predictor")])
+  others <- unique(setdiff(vars, preds_outcomes))
+  lvls[[others]] <- list(values = NA, ordered = NA)
+  lvls
+}
+
+
 strings2factors <- function(x, info) {
   check_lvls <- has_lvls(info)
   if (!any(check_lvls)) {
@@ -267,10 +279,10 @@ merge_term_info <- function(.new, .old) {
 #' supported by all steps.
 #'
 #' @param ... Arguments pass in from a call to `step`.
-#' 
-#' @return `ellipse_check()`: If not empty, a list of quosures. If empty, an 
+#'
+#' @return `ellipse_check()`: If not empty, a list of quosures. If empty, an
 #'   error is thrown.
-#' 
+#'
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -299,9 +311,9 @@ ellipse_check <- function(...) {
 #'  recipe (e.g. `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
-#' 
+#'
 #' @return `printer()`: `NULL`, invisibly.
-#' 
+#'
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -490,16 +502,16 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
 ## Support functions
 
 #' Check to see if a step or check as been trained
-#' 
+#'
 #' `is_trained()` is a helper function that returned a single logical to
 #' indicate whether a recipe is traine or not.
-#' 
+#'
 #' @param x a step object.
 #' @return `is_trained()`: A single logical.
-#' 
+#'
 #' @seealso [developer_functions]
 #' @keywords internal
-#' 
+#'
 #' @rdname recipes-internal
 #' @export
 is_trained <- function(x) {
@@ -509,14 +521,14 @@ is_trained <- function(x) {
 
 #' Convert Selectors to Character
 #'
-#' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and 
+#' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and
 #' returns a character vector version for printing.
-#' 
+#'
 #' @param x A list of selectors
 #' @return `sel2char()`: A character vector.
-#' 
+#'
 #' @seealso [developer_functions]
-#' 
+#'
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -954,7 +966,7 @@ recipes_remove_cols <- function(new_data, object, col_names = character()) {
 #' This helper function is meant to be used in `prep()` methods to identify
 #' predictors and outcomes by names.
 #'
-#' @param info data.frame with variable information of columns. 
+#' @param info data.frame with variable information of columns.
 #'
 #' @return Character vector of column names.
 #' @keywords internal

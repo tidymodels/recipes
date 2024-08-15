@@ -389,9 +389,9 @@ prep.recipe <-
 
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
-
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
+      lvls <- kill_levels(lvls, x$var_info)
       training <- strings2factors(training, lvls)
     } else {
       lvls <- NULL
@@ -531,6 +531,7 @@ prep.recipe <-
     ## The steps may have changed the data so reassess the levels
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
+      lvls <- kill_levels(lvls, x$term_info)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
     } else {
