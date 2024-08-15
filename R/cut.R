@@ -146,12 +146,28 @@ create_full_breaks <- function(var, breaks) {
     )
   }
 
+  if (any(is.na(var))) {
+    cli::cli_warn(
+      "{.arg var} contains missing values. These will be ignored in break \\
+      calculations."
+    )
+    var <- var[!is.na(var)]
+  }
+
+  if (length(var) == 0) {
+    cli::cli_abort(
+      "All values in {.arg var} are missing, so breaks cannot be created."
+    )
+  }
+
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
+
   if (max(var) > max(breaks)) {
     breaks <- c(max(var), breaks)
   }
+
   sort(breaks)
 }
 
