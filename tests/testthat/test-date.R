@@ -239,7 +239,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("keep_original_cols works", {
-  new_names <- c("Dan_dow", "Dan_month", "Dan_year", "Dan_mday")
+  new_names <- c("Dan_dow", "Dan_month", "Dan_year")
 
   rec <- recipe(~ Dan, examples) %>%
     step_date(all_predictors(), keep_original_cols = FALSE)
