@@ -9,7 +9,7 @@
 #'  for this step. The selected variables should have class `Date` or
 #'  `POSIXct`. See [selections()] for more details.
 #' @param features A character string that includes at least one
-#'  of the following values: `month`, `dow` (day of week),
+#'  of the following values: `month`, `dow` (day of week), `mday` (day of month),
 #'  `doy` (day of year), `week`, `month`,
 #'  `decimal` (decimal date, e.g. 2002.197), `quarter`,
 #'  `semester`, `year`.
@@ -98,6 +98,7 @@ step_date <-
       c(
         "year",
         "doy",
+        "mday",
         "week",
         "decimal",
         "semester",
@@ -201,6 +202,9 @@ get_date_features <-
     }
     if ("doy" %in% feats) {
       res[, grepl("doy$", names(res))] <- vec_cast(yday(dt), integer())
+    }
+    if ("mday" %in% feats) {
+      res[, grepl("mday$", names(res))] <- vec_cast(mday(dt), integer())
     }
     if ("week" %in% feats) {
       res[, grepl("week$", names(res))] <- vec_cast(week(dt), integer())

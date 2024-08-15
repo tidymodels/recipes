@@ -62,6 +62,7 @@
 #' @importFrom lubridate wday
 #' @importFrom lubridate week
 #' @importFrom lubridate yday
+#' @importFrom lubridate mday
 #' @importFrom lubridate year
 #' @importFrom Matrix Matrix
 #' @importFrom purrr map

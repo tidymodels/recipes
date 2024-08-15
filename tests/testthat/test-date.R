@@ -51,7 +51,7 @@ test_that("default option", {
 
 test_that("nondefault options", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
+    step_date(all_predictors(), features = c("dow", "month", "mday"), label = FALSE)
 
   date_rec <- prep(date_rec, training = examples)
   date_res <- bake(date_rec, new_data = examples)
@@ -61,8 +61,10 @@ test_that("nondefault options", {
     Stefan = examples$Stefan,
     Dan_dow = wday(examples$Dan, label = FALSE),
     Dan_month = month(examples$Dan, label = FALSE),
+    Dan_mday = mday(examples$Dan),
     Stefan_dow = wday(examples$Stefan, label = FALSE),
-    Stefan_month = month(examples$Stefan, label = FALSE)
+    Stefan_month = month(examples$Stefan, label = FALSE),
+    Stefan_mday = mday(examples$Stefan)
   )
 
   expect_equal(date_res, date_exp)
