@@ -167,6 +167,28 @@ test_that("tidy method works", {
   )
 })
 
+test_that("step_cut() provides informative error on missing values", {
+  # Single missing value
+  mtcars_with_na <- mtcars
+  mtcars_with_na[1, "mpg"] <- NA
+
+  expect_warning(
+    recipe(~ ., data = mtcars_with_na) %>%
+      step_cut(mpg, breaks = 20) %>%
+      prep()
+  )
+
+  # Multiple missing values
+  mtcars_with_nas <- mtcars
+  mtcars_with_nas[c(1, 3, 5), "mpg"] <- NA
+
+  expect_warning(
+    recipe(~ ., data = mtcars_with_nas) %>%
+      step_cut(mpg, breaks = 20) %>%
+      prep()
+  )
+})
+
 
 # Infrastructure ---------------------------------------------------------------
 
