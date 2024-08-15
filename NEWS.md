@@ -34,6 +34,8 @@
 
 * `step_dummy()` now throws more informative warnings for `NA` values. (#450)
 
+* `step_date()` now accepts `"mday"` as a possible feature. (@Edgar-Zamora, #1211)
+
 ## Bug Fixes
 
 * `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
