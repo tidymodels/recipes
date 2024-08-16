@@ -136,6 +136,9 @@ test_that("factor levels are preserved", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
+  # lang_1 is not converted automatically because it has a non-standard role
+  # but it is used like a factor variable. See also `?step_string2factor`
+  languages <- languages %>% mutate(lang_1 = factor(lang_1))
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(lang_1, lang_2, lang_3) %>%
     update_role(lang_1, new_role = "potato") %>%
