@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Example for `step_novel()` now better illustrates how it works. (@Edgar-Zamora, #1248)
+
 # recipes 1.1.0
 
 ## Improvements
