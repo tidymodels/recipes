@@ -29,7 +29,7 @@ test_that("conditionMessage method for recipes errors works", {
   expect_snapshot(conditionMessage(attr(res, "condition")))
 })
 
-test_that("check_training_set errors are thrown", {
+test_that("validate_training_data errors are thrown", {
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>% prep(fresh = TRUE)
