@@ -648,10 +648,7 @@ check_nominal_type <- function(x, lvl) {
   invisible(NULL)
 }
 
-check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
-  # In case a variable has multiple roles
-  vars <- unique(rec$var_info$variable)
-
+validate_training_data <- function(x, rec, fresh, call = rlang::caller_env()) {
   training_null <- is.null(x)
   if (training_null) {
     if (fresh) {
@@ -668,6 +665,8 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
     }
     recipes_ptype_validate(rec, new_data = x, stage = "prep", call = call)
 
+    # In case a variable has multiple roles
+    vars <- unique(rec$var_info$variable)
     x <- x[, vars]
   }
 

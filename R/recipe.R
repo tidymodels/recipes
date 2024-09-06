@@ -383,7 +383,7 @@ prep.recipe <-
            log_changes = FALSE,
            strings_as_factors = TRUE,
            ...) {
-    training <- check_training_set(training, x, fresh)
+    training <- validate_training_data(training, x, fresh)
 
     tr_data <- train_info(training)
 
