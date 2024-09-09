@@ -185,7 +185,7 @@ corr_filter <-
            method = "pearson") {
     x <- correlations(x, wts = wts, use = use, method = method)
 
-    if (any(!complete.cases(x))) {
+    if (any(!vec_detect_complete(x))) {
       all_na <- apply(x, 2, function(x) all(is.na(x)))
       if (sum(all_na) >= nrow(x) - 1) {
         cli::cli_warn(
