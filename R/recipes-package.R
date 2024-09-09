@@ -71,7 +71,6 @@
 #' @importFrom purrr map_lgl
 #' @importFrom stats as.formula
 #' @importFrom stats binomial
-#' @importFrom stats complete.cases
 #' @importFrom stats cov
 #' @importFrom stats cov.wt
 #' @importFrom stats lm
@@ -99,6 +98,7 @@
 #' @importFrom utils object.size
 #' @importFrom vctrs vec_cast
 #' @importFrom vctrs vec_cbind
+#' @importFrom vctrs vec_detect_complete
 #' @importFrom vctrs vec_slice
 ## usethis namespace: end
 NULL

@@ -206,7 +206,7 @@ strings2factors <- function(x, info) {
 
 # ------------------------------------------------------------------------------
 
-# `complete.cases` fails on list columns. This version counts a list column
+# `vec_detect_complete` fails on list columns. This version counts a list column
 # as missing if _all_ values are missing. For if a list vector element is a
 # data frame with one missing value, that element of the list column will
 # be counted as complete.
@@ -218,7 +218,7 @@ n_complete_rows <- function(x) {
     x[[pos_list_col]] <- purrr::map_lgl(x[[pos_list_col]], flatten_na)
   }
 
-  sum(complete.cases(x))
+  sum(vec_detect_complete(x))
 }
 
 flatten_na <- function(x) {
