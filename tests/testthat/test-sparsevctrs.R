@@ -1,4 +1,5 @@
 test_that("recipe() accepts sparse tibbles", {
+  skip_if_not_installed("modeldata")
 
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
