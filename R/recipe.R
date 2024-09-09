@@ -12,6 +12,13 @@ recipe <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...) {
+
+  # Doing this here since it should work for all types of Matrix classes
+  if (is_sparse_matrix(x)) {
+    x <- sparsevctrs::coerce_to_sparse_tibble(x)
+    return(recipe(x, ...))
+  }
+
   cli::cli_abort(c(
     x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
     i = "{.arg x} is {.obj_type_friendly {x}}."
@@ -206,6 +213,10 @@ recipe.formula <- function(formula, data, ...) {
       "x" = "{.code -} is not allowed in a recipe formula.",
       "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
     ))
+  }
+
+  if (is_sparse_matrix(data)) {
+    data <- sparsevctrs::coerce_to_sparse_tibble(data)
   }
 
   if (!is_tibble(data)) {

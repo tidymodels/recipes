@@ -29,3 +29,33 @@ test_that("recipe() accepts sparse tibbles", {
   )
 })
 
+test_that("recipe() accepts sparse matrices", {
+  skip_if_not_installed("modeldata")
+
+  hotel_data <- sparse_hotel_rates()
+
+  expect_no_condition(
+    rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data)
+  )
+
+  expect_true(
+    is_sparse_tibble(rec_spec$template)
+  )
+
+  expect_no_condition(
+    rec_spec <- recipe(hotel_data)
+  )
+
+  expect_true(
+    is_sparse_tibble(rec_spec$template)
+  )
+
+  expect_no_condition(
+    rec_spec <- recipe(hotel_data, avg_price_per_room ~ .)
+  )
+
+  expect_true(
+    is_sparse_tibble(rec_spec$template)
+  )
+})
+

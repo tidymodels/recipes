@@ -4,6 +4,8 @@
 
 * `recipe()` now works with sparse tibbles. (#1364)
 
+* `recipe()` now works with sparse matrices. (#1364)
+
 # recipes 1.1.0
 
 ## Improvements
