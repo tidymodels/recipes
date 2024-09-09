@@ -34,6 +34,7 @@ Imports:
     Matrix,
     purrr (>= 1.0.0),
     rlang (>= 1.1.0),
+    sparsevctrs (>= 0.1.0.9000),
     stats,
     tibble,
     tidyr (>= 1.0.0),
@@ -62,6 +63,8 @@ Suggests:
     testthat (>= 3.0.0),
     workflows,
     xml2
+Remotes:  
+    r-lib/sparsevctrs
 VignetteBuilder: 
     knitr
 RdMacros: 
