@@ -4,7 +4,7 @@
 
 * `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
 
-* `recipe()`, and `prep()` now work with sparse matrices. (#1364, 1368)
+* `recipe()` and `prep()` now work with sparse matrices. (#1364, #1368)
 
 # recipes 1.1.0
 
