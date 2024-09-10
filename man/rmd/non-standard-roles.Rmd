@@ -35,7 +35,7 @@ If you really aren't using `sample` in your recipe, we recommend that you instea
 ```{r, error=TRUE}
 biomass_test$sample <- NULL
 
-bake(rec, biomass_test)
+try(bake(rec, biomass_test))
 ```
 
 As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the `sample` column from `biomass` before calling `recipe()`. In general, predictors and non-standard roles that are supplied to `recipe()` should be present at both `prep()` and `bake()` time.
