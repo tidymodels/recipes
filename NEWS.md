@@ -2,7 +2,7 @@
 
 * Example for `step_novel()` now better illustrates how it works. (@Edgar-Zamora, #1248)
 
-* `recipe()` now works with sparse tibbles. (#1364)
+* `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
 
 * `recipe()` now works with sparse matrices. (#1364)
 
