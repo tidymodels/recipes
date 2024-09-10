@@ -660,6 +660,9 @@ validate_training_data <- function(x, rec, fresh, call = rlang::caller_env()) {
     }
     x <- rec$template
   } else {
+    if (is_sparse_matrix(x)) {
+      x <- sparsevctrs::coerce_to_sparse_tibble(x)
+    }
     if (!is_tibble(x)) {
       x <- as_tibble(x)
     }
