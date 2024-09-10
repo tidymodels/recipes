@@ -697,6 +697,10 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     }
   }
 
+  if (is_sparse_matrix(new_data)) {
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(new_data)
+  }
+
   if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
   }
