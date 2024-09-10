@@ -20,7 +20,8 @@ recipe(x, ...)
 }
 \arguments{
 \item{x, data}{A data frame, tibble, or sparse matrix from the \code{Matrix}
-package of the \emph{template} data set.
+package of the \emph{template} data set. See \link{sparse_data} for more information
+about use of sparse data.
 (see below).}
 
 \item{...}{Further arguments passed to or from other methods (not currently

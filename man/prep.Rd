@@ -25,7 +25,8 @@ prep(x, ...)
 used).}
 
 \item{training}{A data frame, tibble, or sparse matrix from the \code{Matrix}
-package, that will be used to estimate parameters for preprocessing.}
+package, that will be used to estimate parameters for preprocessing. See
+\link{sparse_data} for more information about use of sparse data.}
 
 \item{fresh}{A logical indicating whether already trained operation should be
 re-trained. If \code{TRUE}, you should pass in a data set to the argument
