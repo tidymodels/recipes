@@ -18,9 +18,11 @@ returned by the function. See \code{\link[=selections]{selections()}} for more d
 If no selectors are given, the default is to use
 \code{\link[dplyr:reexports]{dplyr::everything()}}.}
 
-\item{new_data}{A data frame or tibble for whom the preprocessing will be
-applied. If \code{NULL} is given to \code{new_data}, the pre-processed \emph{training
-data} will be returned (assuming that \code{prep(retain = TRUE)} was used).}
+\item{new_data}{A data frame, tibble, or sparse matrix from the \code{Matrix}
+package for whom the preprocessing will be applied. If \code{NULL} is given to
+\code{new_data}, the pre-processed \emph{training data} will be returned (assuming
+that \code{prep(retain = TRUE)} was used). See \link{sparse_data} for more
+information about use of sparse data.}
 
 \item{composition}{Either "tibble", "matrix", "data.frame", or
 "dgCMatrix" for the format of the processed data set. Note that

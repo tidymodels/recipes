@@ -40,7 +40,9 @@ recipe.default <- function(x, ...) {
 #'  Dots are allowed as are simple multivariate outcome terms (i.e. no need for
 #'  `cbind`; see Examples). A model formula may not be the best choice for
 #'  high-dimensional data with many columns, because of problems with memory.
-#' @param x,data A data frame or tibble of the *template* data set
+#' @param x,data A data frame, tibble, or sparse matrix from the `Matrix` 
+#'   package of the *template* data set. See [sparse_data] for more information
+#'   about use of sparse data.
 #'   (see below).
 #' @return An object of class `recipe` with sub-objects:
 #'   \item{var_info}{A tibble containing information about the original data
@@ -319,8 +321,9 @@ prep <- function(x, ...) {
 #' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
 #'   sets.
-#' @param training A data frame or tibble that will be used to estimate
-#'   parameters for preprocessing.
+#' @param training A data frame, tibble, or sparse matrix from the `Matrix` 
+#'   package, that will be used to estimate parameters for preprocessing. See 
+#'   [sparse_data] for more information about use of sparse data.
 #' @param fresh A logical indicating whether already trained operation should be
 #'   re-trained. If `TRUE`, you should pass in a data set to the argument
 #'   `training`.
@@ -601,9 +604,11 @@ bake <- function(object, ...) {
 #'   [prep()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
-#' @param new_data A data frame or tibble for whom the preprocessing will be
-#'   applied. If `NULL` is given to `new_data`, the pre-processed _training
-#'   data_ will be returned (assuming that `prep(retain = TRUE)` was used).
+#' @param new_data A data frame, tibble, or sparse matrix from the `Matrix` 
+#'   package for whom the preprocessing will be applied. If `NULL` is given to 
+#'   `new_data`, the pre-processed _training data_ will be returned (assuming
+#'   that `prep(retain = TRUE)` was used). See [sparse_data] for more 
+#'   information about use of sparse data.
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use

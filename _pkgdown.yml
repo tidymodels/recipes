@@ -168,6 +168,7 @@ reference:
     - recipes_ptype
     - recipes_ptype_validate
     - recipes-role-indicator
+    - sparse_data
     - update.step
   - title: Tidy Methods
     contents:
