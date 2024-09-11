@@ -15,7 +15,7 @@ data, ruin sparsity, or create sparsity. The documentation for each  step
 will indicate whether it will work with sparse data or create sparse columns.
 If nothing is listed it is assumed to ruin sparsity.
 
-Spare tibbles or data.frames will be return from \code{\link[=bake]{bake()}} if sparse columns
+Sparse tibbles or \code{data.frame}s will be returned from \code{\link[=bake]{bake()}} if sparse columns
 are present in data, either from being generated in steps or because sparse
 data was passed into \code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}, or \code{\link[=bake]{bake()}}.
 }
