@@ -58,6 +58,7 @@
 <url><loc>https://recipes.tidymodels.org/dev/reference/required_pkgs.recipe.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/dev/reference/roles.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/dev/reference/selections.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/dev/reference/sparse_data.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/dev/reference/step.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/dev/reference/step_BoxCox.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/dev/reference/step_YeoJohnson.html</loc></url>

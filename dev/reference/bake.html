@@ -80,9 +80,11 @@ If no selectors are given, the default is to use
 
 
 <dt id="arg-new-data">new_data<a class="anchor" aria-label="anchor" href="#arg-new-data"></a></dt>
-<dd><p>A data frame or tibble for whom the preprocessing will be
-applied. If <code>NULL</code> is given to <code>new_data</code>, the pre-processed <em>training
-data</em> will be returned (assuming that <code>prep(retain = TRUE)</code> was used).</p></dd>
+<dd><p>A data frame, tibble, or sparse matrix from the <code>Matrix</code>
+package for whom the preprocessing will be applied. If <code>NULL</code> is given to
+<code>new_data</code>, the pre-processed <em>training data</em> will be returned (assuming
+that <code>prep(retain = TRUE)</code> was used). See <a href="sparse_data.html">sparse_data</a> for more
+information about use of sparse data.</p></dd>
 
 
 <dt id="arg-composition">composition<a class="anchor" aria-label="anchor" href="#arg-composition"></a></dt>
