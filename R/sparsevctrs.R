@@ -10,7 +10,7 @@
 #' will indicate whether it will work with sparse data or create sparse columns. 
 #' If nothing is listed it is assumed to ruin sparsity.
 #' 
-#' Spare tibbles or data.frames will be return from [bake()] if sparse columns 
+#' Sparse tibbles or `data.frame`s will be returned from [bake()] if sparse columns 
 #' are present in data, either from being generated in steps or because sparse 
 #' data was passed into [recipe()], [prep()], or [bake()].
 #' 
