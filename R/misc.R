@@ -218,6 +218,8 @@ n_complete_rows <- function(x) {
     x[[pos_list_col]] <- purrr::map_lgl(x[[pos_list_col]], flatten_na)
   }
 
+  x <- x[, vapply(x, anyNA, logical(1))]
+
   sum(vec_detect_complete(x))
 }
 
