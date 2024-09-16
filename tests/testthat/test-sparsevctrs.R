@@ -1,5 +1,6 @@
 test_that("recipe() accepts sparse tibbles", {
   skip_if_not_installed("modeldata")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
@@ -31,6 +32,7 @@ test_that("recipe() accepts sparse tibbles", {
 
 test_that("prep() accepts sparse tibbles", {
   skip_if_not_installed("modeldata")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
@@ -56,6 +58,7 @@ test_that("prep() accepts sparse tibbles", {
 
 test_that("bake() accepts sparse tibbles", {
   skip_if_not_installed("modeldata")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
@@ -82,6 +85,7 @@ test_that("bake() accepts sparse tibbles", {
 
 test_that("recipe() accepts sparse matrices", {
   skip_if_not_installed("modeldata")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
 
@@ -112,6 +116,7 @@ test_that("recipe() accepts sparse matrices", {
 
 test_that("prep() accepts sparse matrices", {
   skip_if_not_installed("modeldata")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
 
@@ -136,6 +141,7 @@ test_that("prep() accepts sparse matrices", {
 
 test_that("bake() accepts sparse matrices", {
   skip_if_not_installed("modeldata")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
 

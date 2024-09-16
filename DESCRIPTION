@@ -34,7 +34,7 @@ Imports:
     Matrix,
     purrr (>= 1.0.0),
     rlang (>= 1.1.0),
-    sparsevctrs (>= 0.1.0.9000),
+    sparsevctrs (>= 0.1.0.9001),
     stats,
     tibble,
     tidyr (>= 1.0.0),
