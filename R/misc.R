@@ -220,7 +220,17 @@ n_complete_rows <- function(x) {
 
   x <- x[, vapply(x, anyNA, logical(1))]
 
-  sum(vec_detect_complete(x))
+  surv_col_ind <- purrr::map_lgl(x, inherits, "Surv")
+  if (any(surv_col_ind)) {
+    surv_cols <- stats::complete.cases(x[, surv_col_ind, drop = FALSE])
+    non_surv_cols <- vec_detect_complete(x[, !surv_col_ind, drop = FALSE])
+
+    res <- sum(surv_cols & non_surv_cols)
+  } else {
+    res <- sum(vec_detect_complete(x))
+  }
+
+  res
 }
 
 flatten_na <- function(x) {
