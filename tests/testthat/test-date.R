@@ -175,9 +175,8 @@ test_that("can bake and recipes with no locale", {
 
   date_rec$steps[[1]]$locale <- NULL
 
-  expect_error(
-    date_res <- bake(date_rec, new_data = examples, all_predictors()),
-    NA
+  expect_no_error(
+    date_res <- bake(date_rec, new_data = examples, all_predictors())
   )
 })
 
@@ -273,9 +272,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = examples),
-    NA
+  expect_no_error(
+    bake(rec, new_data = examples)
   )
 })
 

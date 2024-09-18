@@ -5,32 +5,37 @@ rp1 <- recipe(mtcars, cyl ~ .)
 rp2 <- recipe(mtcars, cyl ~ mpg + drat)
 
 test_that("check_col works in the prep stage", {
-  expect_error(rp1 %>% check_cols(all_predictors()) %>% prep(), NA)
-  expect_error(rp2 %>% check_cols(all_predictors()) %>% prep(), NA)
-  expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep(), NA)
-  expect_error(rp2 %>% check_cols(cyl, mpg) %>% prep(), NA)
+  expect_no_error(rp1 %>% check_cols(all_predictors()) %>% prep())
+  expect_no_error(rp2 %>% check_cols(all_predictors()) %>% prep())
+  expect_no_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep())
+  expect_no_error(rp2 %>% check_cols(cyl, mpg) %>% prep())
 })
 
 
 test_that("check_col works in the bake stage", {
 
-  expect_error(rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars),
-               NA)
+  expect_no_error(
+    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars)
+  )
   expect_equal(rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars),
                tibble(mtcars[ ,c(1, 3:11, 2)]))
-  expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars), NA)
+
+  expect_no_error(
+    rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars)
+  )
   expect_equal(rp2 %>% check_cols(cyl, mpg, drat) %>% prep %>% bake(mtcars),
                tibble(mtcars[ ,c(1, 5, 2)]))
 
-  expect_error(
-    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars),
-    NA
+  expect_no_error(
+    rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars)
   )
   expect_equal(
     rp1 %>% check_cols(all_predictors()) %>% prep() %>% bake(mtcars),
     tibble(mtcars[, c(1, 3:11, 2)])
   )
-  expect_error(rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars), NA)
+  expect_no_error(
+    rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars)
+  )
   expect_equal(
     rp2 %>% check_cols(cyl, mpg, drat) %>% prep() %>% bake(mtcars),
     tibble(mtcars[, c(1, 5, 2)])
@@ -86,7 +91,7 @@ test_that("non-standard roles during bake/predict", {
 
   role_fit <- fit(role_wflow, data = Chicago)
 
-  expect_error(predict(role_fit, head(Chicago)), NA)
+  expect_no_error(predict(role_fit, head(Chicago)))
 
   # This should require 'date' to predict.
   # The error comes from hardhat, so we don't snapshot it because we don't own it.
@@ -108,8 +113,8 @@ test_that("non-standard roles during bake/predict", {
   role_wts_fit <- fit(role_wts_wflow, data = Chicago)
 
   # This should require 'date' but not 'wts' to predict
-  expect_error(predict(role_wts_fit, head(Chicago)), NA)
-  expect_error(predict(role_wts_fit, head(Chicago) %>% select(-wts)), NA)
+  expect_no_error(predict(role_wts_fit, head(Chicago)))
+  expect_no_error(predict(role_wts_fit, head(Chicago) %>% select(-wts)))
   expect_error(predict(role_wts_fit, head(Chicago) %>% select(-date)))
 
   # ----------------------------------------------------------------------------
@@ -143,7 +148,7 @@ test_that("non-standard roles during bake/predict", {
   rm_wts_fit <- fit(rm_wts_wflow, data = Chicago)
 
   # This should require 'date' but not 'wts' to predict
-  expect_error(predict(rm_fit, Chicago %>% select(-wts)), NA)
+  expect_no_error(predict(rm_fit, Chicago %>% select(-wts)))
   expect_error(predict(rm_fit, Chicago %>% select(-date)))
 })
 

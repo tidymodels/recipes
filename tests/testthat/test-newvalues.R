@@ -6,7 +6,7 @@ x_na <- c(rep(letters[1:3], 2), NA)
 allowed_values <- letters[1:3]
 
 test_that("new_values_func passes when no new values", {
-  expect_error(new_values_func(x, allowed_values), NA)
+  expect_no_error(new_values_func(x, allowed_values))
 })
 
 test_that("new_values_func breaks when x contains new values", {
@@ -22,7 +22,7 @@ test_that("new_values_func correctly prints multiple new values", {
 })
 
 test_that("new_values_func by default ignores NA", {
-  expect_error(new_values_func(x_na, allowed_values), NA)
+  expect_no_error(new_values_func(x_na, allowed_values))
 })
 
 test_that("new_values_func breaks when NA is new value and ignore_NA is FALSE", {
@@ -57,10 +57,9 @@ test_that("new_values_func correctly prints only non na-values when also NA as n
 })
 
 test_that("check_new_values does nothing when no new values", {
-  expect_error(
+  expect_no_error(
     x <- recipe(credit_data) %>% check_new_values(Home) %>%
-      prep() %>% bake(credit_data),
-    NA
+      prep() %>% bake(credit_data)
   )
   expect_equal(x, as_tibble(credit_data))
 })
@@ -83,10 +82,9 @@ test_that("check_new_values breaks with new values", {
 test_that("check_new_values ignores NA by default", {
   x1 <- data.frame(a = letters[1:3])
   x2 <- data.frame(a = letters[1:4] %>% c(NA))
-  expect_error(
+  expect_no_error(
     recipe(x1) %>% check_new_values(a) %>%
-      prep() %>% bake(x2[-4, , drop = FALSE]),
-    NA
+      prep() %>% bake(x2[-4, , drop = FALSE])
   )
 
   expect_snapshot(error = TRUE,
@@ -111,10 +109,9 @@ test_that("check_new_values not ignoring NA argument", {
 })
 
 check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
-  expect_error(
+  expect_no_error(
     res <- recipe(x1) %>% check_new_values(a) %>%
-      prep(strings_as_factors = saf) %>% bake(x1),
-    NA
+      prep(strings_as_factors = saf) %>% bake(x1)
   )
 
   expect_equal(res, x1)

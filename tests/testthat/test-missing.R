@@ -20,7 +20,7 @@ test_that("check_missing passes silently when no NA", {
   no_na_rp <- recipe(mtcars) %>%
     check_missing(all_numeric()) %>%
     prep()
-  expect_error(bake(no_na_rp, mtcars), NA)
+  expect_no_error(bake(no_na_rp, mtcars))
   expect_equal(bake(no_na_rp, mtcars), tibble(mtcars))
 })
 

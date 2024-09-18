@@ -81,7 +81,7 @@ test_that("missing data", {
   rec_true <- recipe(~., data = ex_dat) %>%
     step_YeoJohnson(x1, x2, x3, x4)
 
-  expect_error(prep(rec_true, training = ex_dat, verbose = FALSE), NA)
+  expect_no_error(prep(rec_true, training = ex_dat, verbose = FALSE))
 
   rec_false <- recipe(~., data = ex_dat) %>%
     step_YeoJohnson(x1, x2, x3, x4, na_rm = FALSE)

@@ -320,9 +320,8 @@ test_that("issue #415 -  strings to factor conversion", {
   iris_no_outcome <- iris
   iris_no_outcome["Species"] <- NULL
 
-  expect_error(
-    res <- bake(prepped, iris_no_outcome),
-    regex = NA
+  expect_no_error(
+    res <- bake(prepped, iris_no_outcome)
   )
   expect_equal(names(res), names(iris[, 1:4]))
 })

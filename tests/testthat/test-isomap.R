@@ -251,9 +251,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     transform = scrub_timestamp
   )
 
-  expect_error(
-    bake(rec, new_data = dat1),
-    NA
+  expect_no_error(
+    bake(rec, new_data = dat1)
   )
 })
 
