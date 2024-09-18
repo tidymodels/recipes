@@ -34,8 +34,8 @@ test_that("full_breaks_check will give warnings", {
   expect_snapshot(
     full_breaks_check(c(10, 20))
   )
-  expect_error(full_breaks_check(c(10, 20, 30)), NA)
-  expect_warning(full_breaks_check(c(10, 20, 30)), NA)
+  expect_no_error(full_breaks_check(c(10, 20, 30)))
+  expect_no_warning(full_breaks_check(c(10, 20, 30)))
 })
 
 test_that("cut_var gives correct output", {

@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_poly_1`
 
+# old option argument
+
+    Code
+      res <- recipe(~., data = iris) %>% step_poly(Sepal.Width, options = list(
+        degree = 3)) %>% prep() %>% bake(new_data = NULL)
+    Message
+      The `degree` argument is now a main argument instead of being within `options`.
+
 # empty printing
 
     Code

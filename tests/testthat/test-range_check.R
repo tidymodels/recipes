@@ -41,8 +41,8 @@ test_that("in recipe", {
   rec1 <- recipe(train) %>%
     check_range(x, y, slack_prop = 0.2) %>%
     prep()
-  expect_error(bake(rec1, test), NA)
-  expect_warning(bake(rec1, test), NA)
+  expect_no_warning(bake(rec1, test))
+  expect_no_error(bake(rec1, test))
 
   rec2 <- recipe(train) %>%
     check_range(x, y) %>%

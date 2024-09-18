@@ -29,7 +29,7 @@
     Output
       [1] "Error in `step_dummy()`:\nCaused by error in `prep()`:\nx All columns selected for the step should be factor or ordered.\n* 11 double variables found: `mpg`, `cyl`, `disp`, `hp`, ..."
 
-# check_training_set errors are thrown
+# validate_training_data errors are thrown
 
     Code
       recipe(~., data = mtcars) %>% prep(fresh = TRUE)

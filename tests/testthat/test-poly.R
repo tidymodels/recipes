@@ -90,13 +90,12 @@ test_that("tunable", {
 })
 
 test_that("old option argument", {
-  expect_message(
+  expect_snapshot(
     res <-
       recipe(~., data = iris) %>%
       step_poly(Sepal.Width, options = list(degree = 3)) %>%
       prep() %>%
-      bake(new_data = NULL),
-    "The `degree` argument is now a main argument"
+      bake(new_data = NULL)
   )
   exp_names <- c(
     "Sepal.Length", "Petal.Length", "Petal.Width", "Species",
