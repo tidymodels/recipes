@@ -26,6 +26,14 @@
       x `levels` should be a 2-element character string.
       i It was an integer vector.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, mtcars)
+    Condition
+      Error in `step_bin2factor()`:
+      ! The following required column is missing from `new_data`: bin.
+
 # empty printing
 
     Code

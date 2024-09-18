@@ -29,6 +29,14 @@
       x All columns selected for the step should be double.
       * 1 integer variable found: `x4`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(seven_pt, new_data = example_data[, c(-2)])
+    Condition
+      Error in `step_impute_roll()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

@@ -35,6 +35,14 @@
       ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use the `keep_original_cols` argument instead.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = biom_tr[, c(-1)])
+    Condition
+      Error in `step_pls()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code

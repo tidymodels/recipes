@@ -56,6 +56,14 @@
       -- Operations 
       * Linear regression imputation for: Lot_Frontage | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = ames_dat[, 2:3])
+    Condition
+      Error in `step_impute_linear()`:
+      ! The following required column is missing from `new_data`: Lot_Frontage.
+
 # empty printing
 
     Code

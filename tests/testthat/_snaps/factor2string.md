@@ -8,6 +8,14 @@
       x All columns selected for the step should be factor or ordered.
       * 2 string variables found: `w` and `x`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(ex_1, new_data = ex_dat[, 1:3])
+    Condition
+      Error in `step_factor2string()`:
+      ! The following required column is missing from `new_data`: z.
+
 # empty printing
 
     Code

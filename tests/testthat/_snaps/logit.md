@@ -7,6 +7,14 @@
       Caused by error in `binomial()$linkfun()`:
       ! Value -0.77772 out of range (0, 1)
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 2:3])
+    Condition
+      Error in `step_logit()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

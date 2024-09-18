@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `time_hour`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = examples[, -1])
+    Condition
+      Error in `step_time()`:
+      ! The following required column is missing from `new_data`: times.
+
 # empty printing
 
     Code

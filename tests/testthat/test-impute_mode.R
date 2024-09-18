@@ -148,8 +148,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
-  expect_error(bake(imputed, new_data = credit_te[, c(-6)]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(imputed, new_data = credit_te[, c(-6)]))
 })
 
 test_that("empty printing", {

@@ -4,7 +4,7 @@
       bake(log_obj, examples[, 2:4, drop = FALSE])
     Condition
       Error in `step_log()`:
-      ! The following required column is missing from `new_data` in step 'log_IhS7o': V1.
+      ! The following required column is missing from `new_data`: V1.
 
 ---
 
@@ -12,7 +12,7 @@
       bake(log_obj, examples[, 3:4, drop = FALSE])
     Condition
       Error in `step_log()`:
-      ! The following required columns are missing from `new_data` in step 'log_IhS7o': V1 and V2.
+      ! The following required columns are missing from `new_data`: V1 and V2.
 
 ---
 
@@ -20,7 +20,7 @@
       bake(log_obj, examples[, 4, drop = FALSE])
     Condition
       Error in `step_log()`:
-      ! The following required columns are missing from `new_data` in step 'log_IhS7o': V1, V2, and V3.
+      ! The following required columns are missing from `new_data`: V1, V2, and V3.
 
 # conditionMessage method for recipes errors works
 

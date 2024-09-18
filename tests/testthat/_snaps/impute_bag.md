@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed_trained, new_data = biomass[, c(-3, -9)])
+    Condition
+      Error in `step_impute_bag()`:
+      ! The following required columns are missing from `new_data`: carbon and fac.
+
 # empty printing
 
     Code

@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = ex_dat[, 2, drop = FALSE])
+    Condition
+      Error in `step_sqrt()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

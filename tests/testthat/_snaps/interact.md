@@ -24,7 +24,7 @@
       bake(int_rec_trained, dat_tr[, 4:6])
     Condition
       Error in `step_interact()`:
-      ! The following required columns are missing from `new_data` in step '': z and x1.
+      ! The following required columns are missing from `new_data`: z and x1.
 
 # empty printing
 

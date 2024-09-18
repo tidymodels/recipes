@@ -99,6 +99,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_sin_1`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = harmonic_dat_mult[, 1:2])
+    Condition
+      Error in `step_harmonic()`:
+      ! The following required column is missing from `new_data`: time_var_2.
+
 # empty printing
 
     Code

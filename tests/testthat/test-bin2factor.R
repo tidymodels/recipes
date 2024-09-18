@@ -76,7 +76,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <- prep(rec, mtcars_bin)
 
-  expect_error(bake(rec, mtcars), class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec, mtcars))
 })
 
 test_that("empty printing", {

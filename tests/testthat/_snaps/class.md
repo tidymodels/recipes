@@ -73,6 +73,14 @@
       Error:
       ! `type` should have the class <factor> but has the class <character>.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = x[, -1])
+    Condition
+      Error in `check_class()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

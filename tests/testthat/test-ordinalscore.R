@@ -83,8 +83,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
                strings_as_factors = FALSE, verbose = FALSE
   )
 
-  expect_error(bake(rec1, new_data = ex_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec1, new_data = ex_dat[, 1:3]))
 })
 
 test_that("empty printing", {

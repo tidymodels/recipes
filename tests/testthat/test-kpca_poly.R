@@ -108,8 +108,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
-  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(kpca_trained, new_data = te_dat[, 1:3]))
 })
 
 test_that("empty printing", {

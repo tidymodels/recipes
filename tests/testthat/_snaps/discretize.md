@@ -119,6 +119,14 @@
       -- Operations 
       * Discretize numeric variables from: x1 | Trained
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = mtcars[, 2:ncol(mtcars)])
+    Condition
+      Error in `step_discretize()`:
+      ! The following required column is missing from `new_data`: mpg.
+
 # empty printing
 
     Code

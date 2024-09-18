@@ -143,8 +143,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = languages)
 
-  expect_error(bake(rec_trained, new_data = languages[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = languages[, -1]))
 })
 
 test_that("empty printing", {

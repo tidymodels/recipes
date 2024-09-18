@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `Dan_year`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(date_rec, new_data = examples[, 2, drop = FALSE])
+    Condition
+      Error in `step_date()`:
+      ! The following required column is missing from `new_data`: Dan.
+
 # empty printing
 
     Code

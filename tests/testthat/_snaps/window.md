@@ -101,6 +101,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `new_value`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = sim_dat[, -1])
+    Condition
+      Error in `step_window()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

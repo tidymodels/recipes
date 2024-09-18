@@ -27,6 +27,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `Sepal.Width`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mt_tibble[, c(-1)])
+    Condition
+      Error in `step_count()`:
+      ! The following required column is missing from `new_data`: make_model.
+
 # empty printing
 
     Code

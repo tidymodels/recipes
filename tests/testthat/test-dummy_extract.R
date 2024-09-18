@@ -306,8 +306,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   dummy_prepped <- prep(dummy)
 
-  expect_error(bake(dummy_prepped, new_data = mini_tate[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(dummy_prepped, new_data = mini_tate[, 1:3]))
 })
 
 test_that("empty printing", {

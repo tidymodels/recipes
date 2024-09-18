@@ -6,6 +6,14 @@
       Warning in `gower_work()`:
       skipping variable with zero or non-finite range.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed_trained, new_data = biomass[, c(-4)])
+    Condition
+      Error in `step_impute_knn()`:
+      ! The following required column is missing from `new_data`: hydrogen.
+
 # empty printing
 
     Code

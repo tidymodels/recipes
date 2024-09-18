@@ -27,6 +27,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `kPC1`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(kpca_trained, new_data = te_dat[, 1:3])
+    Condition
+      Error in `step_kpca_poly()`:
+      ! The following required columns are missing from `new_data`: X4, X5, and X6.
+
 # empty printing
 
     Code

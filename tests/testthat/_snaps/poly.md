@@ -16,6 +16,14 @@
     Message
       The `degree` argument is now a main argument instead of being within `options`.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(with_poly, new_data = biomass_tr[, c(-3)])
+    Condition
+      Error in `step_poly()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code

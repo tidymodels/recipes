@@ -90,6 +90,14 @@
       Caused by error in `prep()`:
       ! `sd_offset` must be a number between 0 and 1, not the number -1.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(trained, new_data = iris[, c(-3)])
+    Condition
+      Error in `step_classdist_shrunken()`:
+      ! The following required column is missing from `new_data`: Petal.Length.
+
 # empty printing
 
     Code
