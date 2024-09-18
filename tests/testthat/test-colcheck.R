@@ -95,7 +95,10 @@ test_that("non-standard roles during bake/predict", {
 
   # This should require 'date' to predict.
   # The error comes from hardhat, so we don't snapshot it because we don't own it.
-  expect_error(predict(role_fit, Chicago %>% select(-date)))
+  expect_snapshot(
+    error = TRUE,
+    predict(role_fit, Chicago %>% select(-date))
+  )
 
   # ----------------------------------------------------------------------------
   # non-standard role used in a step and case weights
@@ -115,7 +118,10 @@ test_that("non-standard roles during bake/predict", {
   # This should require 'date' but not 'wts' to predict
   expect_no_error(predict(role_wts_fit, head(Chicago)))
   expect_no_error(predict(role_wts_fit, head(Chicago) %>% select(-wts)))
-  expect_error(predict(role_wts_fit, head(Chicago) %>% select(-date)))
+  expect_snapshot(
+    error = TRUE,
+    predict(role_wts_fit, head(Chicago) %>% select(-date))
+  )
 
   # ----------------------------------------------------------------------------
   # Removing variable after use
@@ -131,7 +137,10 @@ test_that("non-standard roles during bake/predict", {
   rm_fit <- fit(rm_wflow, data = Chicago)
 
   # This should require 'date' to predict
-  expect_error(predict(rm_fit, Chicago %>% select(-date)))
+  expect_snapshot(
+    error = TRUE,
+    predict(rm_fit, Chicago %>% select(-date))
+  )
 
   # ----------------------------------------------------------------------------
   # Removing variable after use, with case weights
@@ -149,7 +158,10 @@ test_that("non-standard roles during bake/predict", {
 
   # This should require 'date' but not 'wts' to predict
   expect_no_error(predict(rm_fit, Chicago %>% select(-wts)))
-  expect_error(predict(rm_fit, Chicago %>% select(-date)))
+  expect_snapshot(
+    error = TRUE,
+    predict(rm_fit, Chicago %>% select(-date))
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------

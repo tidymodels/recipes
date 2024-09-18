@@ -17,6 +17,14 @@
 ---
 
     Code
+      rec %>% step_window(y1, size = NULL)
+    Condition
+      Error in `step_window()`:
+      ! `size` must be a number, not `NULL`.
+
+---
+
+    Code
       rec %>% step_window(y1, statistic = "average")
     Condition
       Error in `step_window()`:

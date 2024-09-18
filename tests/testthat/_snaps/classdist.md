@@ -11,6 +11,30 @@
 # case weights
 
     Code
+      recipes:::get_center(mtcars, wts = wts, mfun = median)
+    Condition
+      Error in `recipes:::get_center()`:
+      ! The centering function requested cannot be used with case weights.
+
+---
+
+    Code
+      recipes:::get_both(mtcars, wts = wts, mfun = median)
+    Condition
+      Error in `recipes:::get_both()`:
+      ! The centering function requested cannot be used with case weights.
+
+---
+
+    Code
+      recipes:::get_both(mtcars, wts = wts, cfun = mad)
+    Condition
+      Error in `recipes:::get_both()`:
+      ! The variance function requested cannot be used with case weights.
+
+---
+
+    Code
       rec_prep
     Message
       

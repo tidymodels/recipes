@@ -16,6 +16,38 @@
       x The following required columns are missing from `new_data`: `mpg`.
       i These columns have one of the following roles, which are required at `bake()` time: `predictor`.
 
+# non-standard roles during bake/predict
+
+    Code
+      predict(role_fit, Chicago %>% select(-date))
+    Condition
+      Error in `validate_column_names()`:
+      ! The following required columns are missing: 'date'.
+
+---
+
+    Code
+      predict(role_wts_fit, head(Chicago) %>% select(-date))
+    Condition
+      Error in `validate_column_names()`:
+      ! The following required columns are missing: 'date'.
+
+---
+
+    Code
+      predict(rm_fit, Chicago %>% select(-date))
+    Condition
+      Error in `validate_column_names()`:
+      ! The following required columns are missing: 'date'.
+
+---
+
+    Code
+      predict(rm_fit, Chicago %>% select(-date))
+    Condition
+      Error in `validate_column_names()`:
+      ! The following required columns are missing: 'date'.
+
 # empty printing
 
     Code

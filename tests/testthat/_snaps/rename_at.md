@@ -7,6 +7,15 @@
       Caused by error in `dplyr::rename_at()`:
       ! `.funs` must contain one renaming function, not 2.
 
+# no input
+
+    Code
+      iris_rec %>% step_rename_at() %>% prep(training = iris) %>% bake(new_data = NULL,
+        composition = "data.frame")
+    Condition
+      Error in `step_rename_at()`:
+      ! argument "fn" is missing, with no default
+
 # empty printing
 
     Code

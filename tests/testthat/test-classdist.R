@@ -113,9 +113,9 @@ test_that("case weights", {
 
   expect_equal(means_wts, means_wts_exp)
   expect_equal(means_no, means_exp)
-  expect_error(
-    recipes:::get_center(mtcars, wts = wts, mfun = median),
-    "The centering function requested cannot be used with case weights"
+  expect_snapshot(
+    error = TRUE,
+    recipes:::get_center(mtcars, wts = wts, mfun = median)
   )
 
   # ------------------------------------------------------------------------------
@@ -128,13 +128,13 @@ test_that("case weights", {
   expect_equal(cov_no$scale, cov_exp)
   expect_equal(cov_wts$center, means_wts_exp)
   expect_equal(cov_no$center, means_exp)
-  expect_error(
-    recipes:::get_both(mtcars, wts = wts, mfun = median),
-    "The centering function requested cannot be used with case weights"
+  expect_snapshot(
+    error = TRUE,
+    recipes:::get_both(mtcars, wts = wts, mfun = median)
   )
-  expect_error(
-    recipes:::get_both(mtcars, wts = wts, cfun = mad),
-    "The variance function requested cannot be used with case weights"
+  expect_snapshot(
+    error = TRUE,
+    recipes:::get_both(mtcars, wts = wts, cfun = mad)
   )
 
   # ------------------------------------------------------------------------------

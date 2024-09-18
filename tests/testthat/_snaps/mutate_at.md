@@ -1,3 +1,12 @@
+# no input
+
+    Code
+      iris_rec %>% step_mutate_at() %>% prep(training = iris) %>% bake(new_data = NULL,
+        composition = "data.frame")
+    Condition
+      Error in `step_mutate_at()`:
+      ! argument "fn" is missing, with no default
+
 # empty printing
 
     Code
