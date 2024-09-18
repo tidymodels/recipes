@@ -106,7 +106,7 @@ test_that("check_name() is used", {
 test_that("locale argument have recipe work in different locale", {
   old_locale <- Sys.getlocale("LC_TIME")
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
-  Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
+  Sys.setlocale("LC_TIME", 'fr_FR.UTF8')
 
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors()) %>%
@@ -122,6 +122,9 @@ test_that("locale argument have recipe work in different locale", {
 })
 
 test_that("locale argument works when specified", {
+  skip_if(getRversion() <= "4.3.0")
+  # Locales on GHA are weird on old versions of R
+
   old_locale <- Sys.getlocale("LC_TIME")
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
