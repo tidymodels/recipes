@@ -5,7 +5,7 @@
         composition = "data.frame")
     Condition
       Error in `step_mutate_at()`:
-      ! argument "fn" is missing, with no default
+      ! Argument `fn` must be specified.
 
 # empty printing
 
