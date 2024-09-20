@@ -218,7 +218,7 @@ strings2factors <- function(x, info) {
 
 # ------------------------------------------------------------------------------
 
-# `complete.cases` fails on list columns. This version counts a list column
+# `vec_detect_complete` fails on list columns. This version counts a list column
 # as missing if _all_ values are missing. For if a list vector element is a
 # data frame with one missing value, that element of the list column will
 # be counted as complete.
@@ -230,7 +230,19 @@ n_complete_rows <- function(x) {
     x[[pos_list_col]] <- purrr::map_lgl(x[[pos_list_col]], flatten_na)
   }
 
-  sum(complete.cases(x))
+  x <- x[, vapply(x, anyNA, logical(1))]
+
+  surv_col_ind <- purrr::map_lgl(x, inherits, "Surv")
+  if (any(surv_col_ind)) {
+    surv_cols <- stats::complete.cases(x[, surv_col_ind, drop = FALSE])
+    non_surv_cols <- vec_detect_complete(x[, !surv_col_ind, drop = FALSE])
+
+    res <- sum(surv_cols & non_surv_cols)
+  } else {
+    res <- sum(vec_detect_complete(x))
+  }
+
+  res
 }
 
 flatten_na <- function(x) {
@@ -660,10 +672,7 @@ check_nominal_type <- function(x, lvl) {
   invisible(NULL)
 }
 
-check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
-  # In case a variable has multiple roles
-  vars <- unique(rec$var_info$variable)
-
+validate_training_data <- function(x, rec, fresh, call = rlang::caller_env()) {
   training_null <- is.null(x)
   if (training_null) {
     if (fresh) {
@@ -675,11 +684,16 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
     }
     x <- rec$template
   } else {
+    if (is_sparse_matrix(x)) {
+      x <- sparsevctrs::coerce_to_sparse_tibble(x)
+    }
     if (!is_tibble(x)) {
       x <- as_tibble(x)
     }
     recipes_ptype_validate(rec, new_data = x, stage = "prep", call = call)
 
+    # In case a variable has multiple roles
+    vars <- unique(rec$var_info$variable)
     x <- x[, vars]
   }
 

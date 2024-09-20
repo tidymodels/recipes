@@ -62,7 +62,7 @@
 #' of the National Academy of Sciences_, 99(10), 6567-6572.
 #' @examplesIf rlang::is_installed(c("modeldata"))
 #' data(penguins, package = "modeldata")
-#' penguins <- penguins[complete.cases(penguins), ]
+#' penguins <- penguins[vctrs::vec_detect_complete(penguins), ]
 #' penguins$island <- NULL
 #' penguins$sex <- NULL
 #'

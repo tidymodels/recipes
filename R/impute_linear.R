@@ -115,7 +115,7 @@ step_impute_linear_new <-
 
 lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
-  complete <- stats::complete.cases(dat)
+  complete <- vec_detect_complete(dat)
   dat <- dat[complete, ]
   wts <- wts[complete]
   if (nrow(dat) == 0) {
@@ -200,14 +200,14 @@ bake.step_impute_linear <- function(object, new_data, ...) {
   col_names <- names(object$models)
   check_new_data(col_names, object, new_data)
 
-  missing_rows <- !complete.cases(new_data)
+  missing_rows <- !vec_detect_complete(new_data)
   if (!any(missing_rows)) {
     return(new_data)
   }
 
   old_data <- new_data
   for (col_name in col_names) {
-    missing_rows <- !complete.cases(new_data[[col_name]])
+    missing_rows <- !vec_detect_complete(new_data[[col_name]])
     if (!any(missing_rows)) {
       next
     }

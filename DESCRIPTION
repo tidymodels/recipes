@@ -34,6 +34,7 @@ Imports:
     Matrix,
     purrr (>= 1.0.0),
     rlang (>= 1.1.0),
+    sparsevctrs (>= 0.1.0.9001),
     stats,
     tibble,
     tidyr (>= 1.0.0),
@@ -50,6 +51,7 @@ Suggests:
     igraph,
     kernlab,
     knitr,
+    methods,
     modeldata (>= 0.1.1),
     parsnip (>= 1.2.0),
     RANN,
@@ -62,6 +64,8 @@ Suggests:
     testthat (>= 3.0.0),
     workflows,
     xml2
+Remotes:  
+    r-lib/sparsevctrs
 VignetteBuilder: 
     knitr
 RdMacros: 

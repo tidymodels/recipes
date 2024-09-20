@@ -153,19 +153,15 @@ rec_2 <-
   prep()
 
 # This fails since `wt` is not in the data
-recipe(mpg ~ ., data = mtcars)  \%>\% 
+try(
+recipe(mpg ~ ., data = mtcars) \%>\% 
   step_rm(wt) \%>\% 
   step_log(!!!some_vars) \%>\% 
-  prep()
-}\if{html}{\out{</div>}}
+  prep(),
+  silent = TRUE
+)
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `step_log()`:
-## Caused by error in `prep()` at recipes/R/recipe.R:479:9:
-## ! Can't select columns that don't exist.
-## x Column `wt` doesn't exist.
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Best for filters (using any_of()) and when
+# Best for filters (using any_of()) and when
 # saving the recipe
 rec_4 <- 
   recipe(mpg ~ ., data = mtcars) \%>\% 

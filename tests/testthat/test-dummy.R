@@ -15,7 +15,7 @@ sacr$city[sample(1:nrow(sacr), 20)] <- NA_character_
 sacr_missing <- sacr
 
 sacr$city[is.na(sacr$city)] <- "missing"
-sacr <- sacr[complete.cases(sacr), -3]
+sacr <- sacr[vec_detect_complete(sacr), -3]
 
 sacr_fac <- sacr
 sacr_fac$city <- factor(sacr_fac$city)
@@ -167,10 +167,10 @@ test_that("tests for NA values in factor", {
   )
 
   expect_true(
-    all(complete.cases(factors_data_0) == complete.cases(sacr_missing[, "city"]))
+    all(vec_detect_complete(factors_data_0) == vec_detect_complete(sacr_missing[, "city"]))
   )
   expect_true(
-    all(complete.cases(factors_data_1) == complete.cases(sacr_missing[, "city"]))
+    all(vec_detect_complete(factors_data_1) == vec_detect_complete(sacr_missing[, "city"]))
   )
 })
 
@@ -189,10 +189,10 @@ test_that("tests for NA values in ordered factor", {
   )
 
   expect_true(
-    all(complete.cases(factors_data_0) == complete.cases(sacr_ordered[, "city"]))
+    all(vec_detect_complete(factors_data_0) == vec_detect_complete(sacr_ordered[, "city"]))
   )
   expect_true(
-    all(complete.cases(factors_data_1) == complete.cases(sacr_ordered[, "city"]))
+    all(vec_detect_complete(factors_data_1) == vec_detect_complete(sacr_ordered[, "city"]))
   )
 })
 
