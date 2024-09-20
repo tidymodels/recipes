@@ -182,8 +182,6 @@ has_lvls <- function(info) {
   !vapply(info, function(x) all(is.na(x$values)), c(logic = TRUE))
 }
 
-`%nin%` <- function(x, table) match(x, table, nomatch = 0) == 0
-
 kill_levels <- function(lvls, var_info) {
   vars <- var_info$variable
   roles <- var_info$role
