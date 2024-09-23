@@ -39,7 +39,6 @@ test_that("mulitple functions", {
 })
 
 test_that("no input", {
-  # Wait for call pass through
   expect_snapshot(
     error = TRUE,
     iris_rec %>%
