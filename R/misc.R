@@ -860,7 +860,7 @@ check_new_data <- function(req, object, new_data) {
   step_id <- object$id
   cli::cli_abort(
     "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing 
-    from `new_data`: {col_diff}.",
+    from {.arg new_data}: {col_diff}.",
     call = rlang::call2(step_cls)
   )
 }
