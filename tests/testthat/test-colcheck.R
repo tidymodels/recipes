@@ -95,8 +95,7 @@ test_that("non-standard roles during bake/predict", {
 
   # This should require 'date' to predict.
   # The error comes from hardhat, so we don't snapshot it because we don't own it.
-  expect_snapshot(
-    error = TRUE,
+  expect_error(
     predict(role_fit, Chicago %>% select(-date))
   )
 

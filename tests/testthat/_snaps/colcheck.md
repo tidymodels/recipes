@@ -19,14 +19,6 @@
 # non-standard roles during bake/predict
 
     Code
-      predict(role_fit, Chicago %>% select(-date))
-    Condition
-      Error in `validate_column_names()`:
-      ! The following required columns are missing: 'date'.
-
----
-
-    Code
       predict(role_wts_fit, head(Chicago) %>% select(-date))
     Condition
       Error in `validate_column_names()`:
