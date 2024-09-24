@@ -42,6 +42,10 @@ step_rename_at <- function(recipe, ...,
                            inputs = NULL,
                            skip = FALSE,
                            id = rand_id("rename_at")) {
+  if (rlang::is_missing(fn)) {
+    cli::cli_abort("Argument {.arg fn} must be specified.")
+  }
+
   add_step(
     recipe,
     step_rename_at_new(

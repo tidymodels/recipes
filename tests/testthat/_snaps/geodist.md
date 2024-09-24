@@ -164,6 +164,14 @@
       Error in `step_geodist()`:
       ! `is_lat_lon` must be `TRUE` or `FALSE`, not a logical vector.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = rand_data[, 2, drop = FALSE])
+    Condition
+      Error in `step_geodist()`:
+      ! The following required column is missing from `new_data`: x.
+
 # empty printing
 
     Code

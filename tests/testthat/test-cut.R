@@ -1,6 +1,6 @@
 test_that("step_cut throws error on non-numerics", {
   x <- tibble(num_var = 1:3, cat_var = c("1", "2", "3"))
-  expect_error(recipe(x) %>% step_cut(num_var, breaks = 2) %>% prep(), NA)
+  expect_no_error(recipe(x) %>% step_cut(num_var, breaks = 2) %>% prep())
   expect_snapshot(error = TRUE,
     recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
   )
@@ -34,8 +34,8 @@ test_that("full_breaks_check will give warnings", {
   expect_snapshot(
     full_breaks_check(c(10, 20))
   )
-  expect_error(full_breaks_check(c(10, 20, 30)), NA)
-  expect_warning(full_breaks_check(c(10, 20, 30)), NA)
+  expect_no_error(full_breaks_check(c(10, 20, 30)))
+  expect_no_warning(full_breaks_check(c(10, 20, 30)))
 })
 
 test_that("cut_var gives correct output", {
@@ -182,8 +182,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE) %>%
     prep()
 
-  expect_error(bake(prepped, df[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(prepped, df[, 2, drop = FALSE]))
 })
 
 test_that("empty printing", {

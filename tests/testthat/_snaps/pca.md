@@ -96,6 +96,14 @@
       -- Operations 
       * PCA extraction with: carbon and hydrogen, ... | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(pca_extract_trained, new_data = biomass_te[, c(-3)])
+    Condition
+      Error in `step_pca()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code

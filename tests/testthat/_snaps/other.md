@@ -53,6 +53,14 @@
       -- Operations 
       * Collapsing factor levels for: city | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(others, new_data = sacr_te[, 3:9])
+    Condition
+      Error in `step_other()`:
+      ! The following required columns are missing from `new_data`: city and zip.
+
 # empty printing
 
     Code

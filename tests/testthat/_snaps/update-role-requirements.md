@@ -49,6 +49,14 @@
       Warning:
       Column `x` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
 
+---
+
+    Code
+      bake(rec, df)
+    Condition
+      Error in `step_scale()`:
+      ! The following required column is missing from `new_data`: x.
+
 # can update `bake` requirements after prepping
 
     Code

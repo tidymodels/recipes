@@ -11,6 +11,30 @@
 # case weights
 
     Code
+      recipes:::get_center(mtcars, wts = wts, mfun = median)
+    Condition
+      Error in `recipes:::get_center()`:
+      ! The centering function requested cannot be used with case weights.
+
+---
+
+    Code
+      recipes:::get_both(mtcars, wts = wts, mfun = median)
+    Condition
+      Error in `recipes:::get_both()`:
+      ! The centering function requested cannot be used with case weights.
+
+---
+
+    Code
+      recipes:::get_both(mtcars, wts = wts, cfun = mad)
+    Condition
+      Error in `recipes:::get_both()`:
+      ! The variance function requested cannot be used with case weights.
+
+---
+
+    Code
       rec_prep
     Message
       
@@ -27,6 +51,14 @@
       
       -- Operations 
       * Distances to Species for: Sepal.Length, ... | Trained, weighted
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(trained, new_data = iris[, c(-3)])
+    Condition
+      Error in `step_classdist()`:
+      ! The following required column is missing from `new_data`: Petal.Length.
 
 # empty printing
 

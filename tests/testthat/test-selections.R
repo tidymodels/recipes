@@ -194,39 +194,35 @@ test_that("namespaced selectors", {
 
 test_that("new dplyr selectors", {
   vnames <- c("hydrogen", "carbon")
-  expect_error(
+  expect_no_error(
     rec_1 <-
       recipe(HHV ~ ., data = biomass) %>%
       step_normalize(all_of(c("hydrogen", "carbon"))) %>%
-      prep(),
-    regex = NA
+      prep()
   )
   expect_equal(names(rec_1$steps[[1]]$means), c("hydrogen", "carbon"))
 
-  expect_error(
+  expect_no_error(
     rec_2 <-
       recipe(HHV ~ ., data = biomass) %>%
       step_normalize(all_of(!!vnames)) %>%
-      prep(),
-    regex = NA
+      prep()
   )
   expect_equal(names(rec_2$steps[[1]]$means), c("hydrogen", "carbon"))
 
-  expect_error(
+  expect_no_error(
     rec_3 <-
       recipe(HHV ~ ., data = biomass) %>%
       step_normalize(any_of(c("hydrogen", "carbon"))) %>%
-      prep(),
-    regex = NA
+      prep()
   )
   expect_equal(names(rec_3$steps[[1]]$means), c("hydrogen", "carbon"))
 
-  expect_error(
+  expect_no_error(
     rec_4 <-
       recipe(HHV ~ ., data = biomass) %>%
       step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
-      prep(),
-    regex = NA
+      prep()
   )
   expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
 })

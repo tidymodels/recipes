@@ -38,6 +38,14 @@
       -- Operations 
       * Spatial sign on: cyl, disp, hp, drat, qsec, ... | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(sp_sign_trained, new_data = biomass[, c(-3)])
+    Condition
+      Error in `step_spatialsign()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code

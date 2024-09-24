@@ -4,7 +4,7 @@
       bake(log_obj, examples[, 2:4, drop = FALSE])
     Condition
       Error in `step_log()`:
-      ! The following required column is missing from `new_data` in step 'log_IhS7o': V1.
+      ! The following required column is missing from `new_data`: V1.
 
 ---
 
@@ -12,7 +12,7 @@
       bake(log_obj, examples[, 3:4, drop = FALSE])
     Condition
       Error in `step_log()`:
-      ! The following required columns are missing from `new_data` in step 'log_IhS7o': V1 and V2.
+      ! The following required columns are missing from `new_data`: V1 and V2.
 
 ---
 
@@ -20,7 +20,7 @@
       bake(log_obj, examples[, 4, drop = FALSE])
     Condition
       Error in `step_log()`:
-      ! The following required columns are missing from `new_data` in step 'log_IhS7o': V1, V2, and V3.
+      ! The following required columns are missing from `new_data`: V1, V2, and V3.
 
 # conditionMessage method for recipes errors works
 
@@ -29,7 +29,7 @@
     Output
       [1] "Error in `step_dummy()`:\nCaused by error in `prep()`:\nx All columns selected for the step should be factor or ordered.\n* 11 double variables found: `mpg`, `cyl`, `disp`, `hp`, ..."
 
-# check_training_set errors are thrown
+# validate_training_data errors are thrown
 
     Code
       recipe(~., data = mtcars) %>% prep(fresh = TRUE)

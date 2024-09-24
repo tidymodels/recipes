@@ -32,6 +32,14 @@
       Caused by error in `prep()`:
       ! Columns already contain the level "FAIR_OAKS": city.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_1, sacr_te[3:ncol(sacr_te)])
+    Condition
+      Error in `step_unknown()`:
+      ! The following required columns are missing from `new_data`: city and zip.
+
 # empty printing
 
     Code

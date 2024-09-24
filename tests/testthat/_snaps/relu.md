@@ -32,6 +32,14 @@
       x All columns selected for the step should be double or integer.
       * 1 factor variable found: `val2`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, df[, 2, drop = FALSE])
+    Condition
+      Error in `step_relu()`:
+      ! The following required column is missing from `new_data`: val1.
+
 # empty printing
 
     Code

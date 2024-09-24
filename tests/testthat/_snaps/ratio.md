@@ -38,6 +38,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_o_disp`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1, ex_dat[, 2:5])
+    Condition
+      Error in `step_ratio()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, te_dat[, 2:3], all_predictors())
+    Condition
+      Error in `step_integer()`:
+      ! The following required column is missing from `new_data`: x.
+
 # empty printing
 
     Code

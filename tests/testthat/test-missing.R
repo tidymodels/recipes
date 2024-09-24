@@ -20,7 +20,7 @@ test_that("check_missing passes silently when no NA", {
   no_na_rp <- recipe(mtcars) %>%
     check_missing(all_numeric()) %>%
     prep()
-  expect_error(bake(no_na_rp, mtcars), NA)
+  expect_no_error(bake(no_na_rp, mtcars))
   expect_equal(bake(no_na_rp, mtcars), tibble(mtcars))
 })
 
@@ -57,8 +57,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = mtcars)
 
-  expect_error(bake(rec_trained, new_data = mtcars[, -3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = mtcars[, -3]))
 })
 
 test_that("empty printing", {

@@ -3,6 +3,14 @@
     `func` must be one of "sinh", "cosh", or "tanh", not "cos".
     i Did you mean "cosh"?
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE])
+    Condition
+      Error in `step_hyperbolic()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

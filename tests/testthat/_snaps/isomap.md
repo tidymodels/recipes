@@ -41,6 +41,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `Isomap1`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(im_trained, new_data = dat2[, 1:2])
+    Condition
+      Error in `step_isomap()`:
+      ! The following required column is missing from `new_data`: x3.
+
 # empty printing
 
     Code

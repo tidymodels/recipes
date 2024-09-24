@@ -51,6 +51,10 @@ step_mutate_at <- function(recipe, ...,
                            inputs = NULL,
                            skip = FALSE,
                            id = rand_id("mutate_at")) {
+  if (rlang::is_missing(fn)) {
+    cli::cli_abort("Argument {.arg fn} must be specified.")
+  }
+
   add_step(
     recipe,
     step_mutate_at_new(

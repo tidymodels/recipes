@@ -145,6 +145,14 @@
       Caused by error:
       ! `x` contains too many levels (123456), which would result in a data.frame too large to fit in memory.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors())
+    Condition
+      Error in `step_dummy()`:
+      ! The following required columns are missing from `new_data`: city and zip.
+
 # empty printing
 
     Code

@@ -34,6 +34,14 @@
       -- Operations 
       * Unordered variables: X1 | Trained
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1_trained, new_data = examples[, 1, drop = FALSE])
+    Condition
+      Error in `step_unorder()`:
+      ! The following required column is missing from `new_data`: X2.
+
 # empty printing
 
     Code

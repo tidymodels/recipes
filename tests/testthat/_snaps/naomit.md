@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = airquality[, -3])
+    Condition
+      Error in `step_naomit()`:
+      ! The following required column is missing from `new_data`: Wind.
+
 # empty printing
 
     Code

@@ -34,6 +34,14 @@
       Warning:
       This will create a factor with one value only.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(prepped, df[, 2, drop = FALSE])
+    Condition
+      Error in `step_cut()`:
+      ! The following required column is missing from `new_data`: x.
+
 # empty printing
 
     Code

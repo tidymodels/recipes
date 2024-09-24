@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `day_Easter`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(holiday_rec, exp_dates[, 2, drop = FALSE])
+    Condition
+      Error in `step_holiday()`:
+      ! The following required column is missing from `new_data`: day.
+
 # empty printing
 
     Code

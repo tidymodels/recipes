@@ -61,6 +61,14 @@
       -- Operations 
       * Range scaling to [0,1] for: x | Trained
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(standardized_trained, new_data = biomass_te[, 1:3])
+    Condition
+      Error in `step_range()`:
+      ! The following required column is missing from `new_data`: hydrogen.
+
 # empty printing
 
     Code

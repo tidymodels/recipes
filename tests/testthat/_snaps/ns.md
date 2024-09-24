@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_ns_1`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(with_ns, new_data = biomass_tr[, c(-3)])
+    Condition
+      Error in `step_ns()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code

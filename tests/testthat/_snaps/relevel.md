@@ -17,6 +17,14 @@
       Caused by error in `prep()`:
       ! The following column doesn't include required reference level "missing_level": `city`.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))])
+    Condition
+      Error in `step_relevel()`:
+      ! The following required column is missing from `new_data`: zip.
+
 # empty printing
 
     Code

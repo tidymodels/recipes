@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 1:3])
+    Condition
+      Error in `step_inverse()`:
+      ! The following required column is missing from `new_data`: x4.
+
 # empty printing
 
     Code
