@@ -6,6 +6,8 @@
 
 * `recipe()`, `prep()`, and `bake()` now work with sparse matrices. (#1364, #1368, #1369)
 
+* `prep.recipe(..., strings_as_factors = TRUE)` now only converts string variables that have role "predictor" or "outcome". (@dajmcdon, #1358, #1376)
+
 # recipes 1.1.0
 
 ## Improvements
