@@ -188,7 +188,9 @@ kill_levels <- function(lvls, var_info) {
   preds_outcomes <- unique(vars[roles %in% c("outcome", "predictor")])
   others <- unique(setdiff(vars, preds_outcomes))
   if (length(others) > 0L) {
-    for (o in others) lvls[[o]] <- list(values = NA, ordered = NA)
+    for (var in others) {
+      lvls[[var]] <- list(values = NA, ordered = NA)
+    }
   }
   lvls
 }
