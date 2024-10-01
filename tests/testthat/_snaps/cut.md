@@ -6,7 +6,7 @@
       Error in `step_cut()`:
       Caused by error in `prep()`:
       x All columns selected for the step should be double or integer.
-      * 1 factor variable found: `cat_var`
+      * 1 string variable found: `cat_var`
 
 ---
 
