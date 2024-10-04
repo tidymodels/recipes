@@ -164,3 +164,20 @@ test_that("bake() accepts sparse matrices", {
     is_sparse_tibble(res)
   )
 })
+
+test_that("recipe() errors if sparse matrix has no colnames", {
+  skip_if_not_installed("modeldata")
+
+  hotel_data <- sparse_hotel_rates()
+  colnames(hotel_data) <- NULL
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = hotel_data)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(hotel_data)
+  )
+})
