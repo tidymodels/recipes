@@ -3,8 +3,8 @@
 \name{recipe}
 \alias{recipe}
 \alias{recipe.default}
-\alias{recipe.formula}
 \alias{recipe.data.frame}
+\alias{recipe.formula}
 \alias{recipe.matrix}
 \title{Create a recipe for preprocessing data}
 \usage{

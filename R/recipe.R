@@ -2,30 +2,7 @@
 #'
 #' A recipe is a description of the steps to be applied to a data set in
 #'   order to prepare it for data analysis.
-#'
-#' @aliases recipe recipe.default recipe.formula
-#' @export
-recipe <- function(x, ...) {
-  UseMethod("recipe")
-}
-
-#' @rdname recipe
-#' @export
-recipe.default <- function(x, ...) {
-
-  # Doing this here since it should work for all types of Matrix classes
-  if (is_sparse_matrix(x)) {
-    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
-    return(recipe(x, ...))
-  }
-
-  cli::cli_abort(c(
-    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
-    i = "{.arg x} is {.obj_type_friendly {x}}."
-  ))
-}
-
-#' @rdname recipe
+#' 
 #' @param vars A character string of column names corresponding to variables
 #'   that will be used in any context (see below)
 #' @param roles A character string (the same length of `vars`) that
@@ -59,7 +36,6 @@ recipe.default <- function(x, ...) {
 #'
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
-#' @export
 #' @examplesIf rlang::is_installed("modeldata")
 #'
 #' # formula example with single outcome:
@@ -104,6 +80,30 @@ recipe.default <- function(x, ...) {
 #'   update_role(sample, new_role = "id variable") %>%
 #'   update_role(dataset, new_role = "splitting indicator")
 #' rec
+#' 
+#' @export
+recipe <- function(x, ...) {
+  UseMethod("recipe")
+}
+
+#' @rdname recipe
+#' @export
+recipe.default <- function(x, ...) {
+
+  # Doing this here since it should work for all types of Matrix classes
+  if (is_sparse_matrix(x)) {
+    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
+    return(recipe(x, ...))
+  }
+
+  cli::cli_abort(c(
+    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
+    i = "{.arg x} is {.obj_type_friendly {x}}."
+  ))
+}
+
+#' @rdname recipe
+#' @export
 recipe.data.frame <-
   function(x,
            formula = NULL,
@@ -307,20 +307,14 @@ inline_check <- function(x, data, call) {
 }
 
 
-#' @aliases prep prep.recipe
-#' @param x an object
-#' @param ... further arguments passed to or from other methods (not currently
-#'   used).
-#' @export
-prep <- function(x, ...) {
-  UseMethod("prep")
-}
-
 #' Estimate a preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
 #'   sets.
+#' @param x an object
+#' @param ... further arguments passed to or from other methods (not currently
+#'   used).
 #' @param training A data frame, tibble, or sparse matrix from the `Matrix`
 #'   package, that will be used to estimate parameters for preprocessing. See
 #'   [sparse_data] for more information about use of sparse data.
@@ -387,6 +381,12 @@ prep <- function(x, ...) {
 #' prep(ames_rec, verbose = TRUE)
 #'
 #' prep(ames_rec, log_changes = TRUE)
+#' @export
+prep <- function(x, ...) {
+  UseMethod("prep")
+}
+
+
 #' @rdname prep
 #' @export
 prep.recipe <-
@@ -593,13 +593,6 @@ prep.recipe <-
     x
   }
 
-#' @rdname bake
-#' @aliases bake bake.recipe
-#' @export
-bake <- function(object, ...) {
-  UseMethod("bake")
-}
-
 #' Apply a trained preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation that has been trained by
@@ -637,7 +630,6 @@ bake <- function(object, ...) {
 #'   data when [bake()] is invoked with a data set in `new_data`.
 #'   `bake(object, new_data = NULL)` will always have all of the steps applied.
 #' @seealso [recipe()], [prep()]
-#' @rdname bake
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
@@ -661,6 +653,13 @@ bake <- function(object, ...) {
 #' # only return selected variables:
 #' bake(ames_rec, new_data = head(ames), all_numeric_predictors())
 #' bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
+#' @export
+bake <- function(object, ...) {
+  UseMethod("bake")
+}
+  
+  
+#' @rdname bake
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
