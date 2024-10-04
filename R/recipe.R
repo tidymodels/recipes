@@ -12,14 +12,14 @@
 #'   (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types
 #'   of transformations should be enacted using `step` functions in this
 #'   package. Dots are allowed as are simple multivariate outcome terms (i.e. no
-#'   need for `cbind`; see Examples). A model formula may not be the best choice
-#'   for high-dimensional data with many columns, because of problems with
-#'   memory.
+#'   need for [cbind()]; see Examples). A model formula may not be the best
+#'   choice for high-dimensional data with many columns, because of problems
+#'   with memory.
 #' @param vars A character string of column names corresponding to variables
 #'   that will be used in any context (see below)
 #' @param roles A character string (the same length of `vars`) that describes a
 #'   single role that the variable will take. This value could be anything but
-#'   common roles are `"outcome"`, `"predictor"`, `"case_weight"`, or `"ID"`
+#'   common roles are `"outcome"`, `"predictor"`, `"case_weight"`, or `"ID"`.
 #'
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
@@ -27,13 +27,13 @@
 #'
 #' An object of class `recipe` with sub-objects:
 #' \item{var_info}{A tibble containing information about the original data set
-#' columns}
+#' columns.}
 #' \item{term_info}{A tibble that contains the current set of terms in the
 #' data set. This initially defaults to the same data contained in
 #' `var_info`.}
 #' \item{steps}{A list of `step` or `check` objects that define the sequence
 #' of preprocessing operations that will be applied to data. The default value
-#' is `NULL`}
+#' is `NULL`.}
 #' \item{template}{A tibble of the data. This is initialized to be the same as
 #' the data given in the `data` argument but can be different after the recipe
 #' is trained.}
@@ -314,7 +314,7 @@ inline_check <- function(x, data, call) {
 #' For a recipe with at least one preprocessing operation, estimate the required
 #' parameters from a training set that can be later applied to other data sets.
 #'
-#' @param x an object
+#' @param x an [recipe()] object.
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @param training A data frame, tibble, or sparse matrix from the `Matrix`
@@ -336,9 +336,9 @@ inline_check <- function(x, data, call) {
 #' @param log_changes A logical for printing a summary for each step regarding
 #'   which (if any) columns were added or removed during training.
 #' @param strings_as_factors A logical: should character columns that have role
-#'   "predictor" or "outcome" be converted to factors? This affects the
+#'   `"predictor"` or `"outcome"` be converted to factors? This affects the
 #'   preprocessed training set (when `retain = TRUE`) as well as the results of
-#'   `bake.recipe`.
+#'   [bake()].
 #'
 #' @details
 #'
@@ -613,11 +613,12 @@ prep.recipe <-
 #'   `new_data`, the pre-processed _training data_ will be returned (assuming
 #'   that `prep(retain = TRUE)` was used). See [sparse_data] for more
 #'   information about use of sparse data.
-#' @param composition Either "tibble", "matrix", "data.frame", or "dgCMatrix"
-#'   for the format of the processed data set. Note that all computations during
-#'   the baking process are done in a non-sparse format. Also, note that this
-#'   argument should be called **after** any selectors and the selectors should
-#'   only resolve to numeric columns (otherwise an error is thrown).
+#' @param composition Either `"tibble"`, `"matrix"`, `"data.frame"`, or
+#'   `"dgCMatrix"``for the format of the processed data set. Note that all
+#'   computations during the baking process are done in a non-sparse format.
+#'   Also, note that this argument should be called **after** any selectors and
+#'   the selectors should only resolve to numeric columns (otherwise an error is
+#'   thrown).
 #'
 #' @details
 #'
@@ -636,6 +637,7 @@ prep.recipe <-
 #' NULL)` will always have all of the steps applied.
 #'
 #' @return
+#'
 #' A tibble, matrix, or sparse matrix that may have different columns than the
 #' original columns in `new_data`.
 #'

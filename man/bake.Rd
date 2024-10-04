@@ -23,11 +23,12 @@ package for whom the preprocessing will be applied. If \code{NULL} is given to
 that \code{prep(retain = TRUE)} was used). See \link{sparse_data} for more
 information about use of sparse data.}
 
-\item{composition}{Either "tibble", "matrix", "data.frame", or "dgCMatrix"
-for the format of the processed data set. Note that all computations during
-the baking process are done in a non-sparse format. Also, note that this
-argument should be called \strong{after} any selectors and the selectors should
-only resolve to numeric columns (otherwise an error is thrown).}
+\item{composition}{Either \code{"tibble"}, \code{"matrix"}, \code{"data.frame"}, or
+`"dgCMatrix"``for the format of the processed data set. Note that all
+computations during the baking process are done in a non-sparse format.
+Also, note that this argument should be called \strong{after} any selectors and
+the selectors should only resolve to numeric columns (otherwise an error is
+thrown).}
 }
 \value{
 A tibble, matrix, or sparse matrix that may have different columns than the

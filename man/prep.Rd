@@ -19,7 +19,7 @@ prep(x, ...)
 )
 }
 \arguments{
-\item{x}{an object}
+\item{x}{an \code{\link[=recipe]{recipe()}} object.}
 
 \item{...}{further arguments passed to or from other methods (not currently
 used).}
@@ -48,9 +48,9 @@ environments into account.}
 which (if any) columns were added or removed during training.}
 
 \item{strings_as_factors}{A logical: should character columns that have role
-"predictor" or "outcome" be converted to factors? This affects the
+\code{"predictor"} or \code{"outcome"} be converted to factors? This affects the
 preprocessed training set (when \code{retain = TRUE}) as well as the results of
-\code{bake.recipe}.}
+\code{\link[=bake]{bake()}}.}
 }
 \value{
 A recipe whose step objects have been updated with the required quantities
