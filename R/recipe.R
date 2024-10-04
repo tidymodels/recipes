@@ -15,7 +15,7 @@ recipe.default <- function(x, ...) {
 
   # Doing this here since it should work for all types of Matrix classes
   if (is_sparse_matrix(x)) {
-    x <- sparsevctrs::coerce_to_sparse_tibble(x)
+    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
     return(recipe(x, ...))
   }
 
@@ -218,7 +218,7 @@ recipe.formula <- function(formula, data, ...) {
   }
 
   if (is_sparse_matrix(data)) {
-    data <- sparsevctrs::coerce_to_sparse_tibble(data)
+    data <- sparsevctrs::coerce_to_sparse_tibble(data, call = caller_env(0))
   }
 
   if (!is_tibble(data)) {
@@ -705,7 +705,10 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   if (is_sparse_matrix(new_data)) {
-    new_data <- sparsevctrs::coerce_to_sparse_tibble(new_data)
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(
+      new_data,
+      call = caller_env(0)
+    )
   }
 
   if (!is_tibble(new_data)) {

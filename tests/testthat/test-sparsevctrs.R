@@ -2,15 +2,14 @@ test_that("recipe() accepts sparse tibbles", {
   skip_if_not_installed("modeldata")
   withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
-  hotel_data <- sparse_hotel_rates()
-  hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
+  hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
   expect_no_condition(
     rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data)
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -18,7 +17,7 @@ test_that("recipe() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -26,7 +25,7 @@ test_that("recipe() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 })
 
@@ -34,8 +33,7 @@ test_that("prep() accepts sparse tibbles", {
   skip_if_not_installed("modeldata")
   withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
-  hotel_data <- sparse_hotel_rates()
-  hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
+  hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
   rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data)
   
@@ -44,7 +42,7 @@ test_that("prep() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
   
   expect_no_error(
@@ -52,7 +50,7 @@ test_that("prep() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
 })
 
@@ -60,8 +58,7 @@ test_that("bake() accepts sparse tibbles", {
   skip_if_not_installed("modeldata")
   withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
-  hotel_data <- sparse_hotel_rates()
-  hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
+  hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
   rec_spec <- recipe(avg_price_per_room ~ ., data = hotel_data) %>%
     prep()
@@ -71,7 +68,7 @@ test_that("bake() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
   
   expect_no_error(
@@ -79,7 +76,7 @@ test_that("bake() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
 })
 
@@ -94,7 +91,7 @@ test_that("recipe() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -102,7 +99,7 @@ test_that("recipe() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -110,7 +107,7 @@ test_that("recipe() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 })
 
@@ -127,7 +124,7 @@ test_that("prep() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
   
   expect_no_error(
@@ -135,7 +132,7 @@ test_that("prep() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
 })
 
@@ -153,7 +150,7 @@ test_that("bake() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
   
   expect_no_error(
@@ -161,6 +158,23 @@ test_that("bake() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
+  )
+})
+
+test_that("recipe() errors if sparse matrix has no colnames", {
+  skip_if_not_installed("modeldata")
+
+  hotel_data <- sparse_hotel_rates()
+  colnames(hotel_data) <- NULL
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = hotel_data)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(hotel_data)
   )
 })
