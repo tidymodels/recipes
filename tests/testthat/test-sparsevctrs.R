@@ -9,7 +9,7 @@ test_that("recipe() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -17,7 +17,7 @@ test_that("recipe() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -25,7 +25,7 @@ test_that("recipe() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 })
 
@@ -42,7 +42,7 @@ test_that("prep() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
   
   expect_no_error(
@@ -50,7 +50,7 @@ test_that("prep() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
 })
 
@@ -68,7 +68,7 @@ test_that("bake() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
   
   expect_no_error(
@@ -76,7 +76,7 @@ test_that("bake() accepts sparse tibbles", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
 })
 
@@ -91,7 +91,7 @@ test_that("recipe() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -99,7 +99,7 @@ test_that("recipe() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 
   expect_no_condition(
@@ -107,7 +107,7 @@ test_that("recipe() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec_spec$template)
+    sparsevctrs::has_sparse_elements(rec_spec$template)
   )
 })
 
@@ -124,7 +124,7 @@ test_that("prep() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
   
   expect_no_error(
@@ -132,7 +132,7 @@ test_that("prep() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(rec$template)
+    sparsevctrs::has_sparse_elements(rec$template)
   )
 })
 
@@ -150,7 +150,7 @@ test_that("bake() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
   
   expect_no_error(
@@ -158,7 +158,7 @@ test_that("bake() accepts sparse matrices", {
   )
 
   expect_true(
-    is_sparse_tibble(res)
+    sparsevctrs::has_sparse_elements(res)
   )
 })
 
