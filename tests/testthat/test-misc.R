@@ -109,3 +109,13 @@ test_that("vars without role in predictor/outcome avoid string processing", {
   expect_identical(new_lvls$chr_only_lime, list(values = NA, ordered = NA))
 })
 
+test_that("spline error messages", {
+  expect_snapshot(
+    recipes:::spline_msg("Error in if (df < 0) { : missing blah blah\n"),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipes:::spline_msg("craaazzyy {{}}{}{}"),
+    error = TRUE
+  )
+})
