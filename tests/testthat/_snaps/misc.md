@@ -64,3 +64,19 @@
       ! The previous data will be used by `prep()`.
       i The data passed using `training` will be ignored.
 
+# spline error messages
+
+    Code
+      recipes:::spline_msg("Error in if (df < 0) { : missing blah blah\n")
+    Condition
+      Error in `recipes:::spline_msg()`:
+      ! Error in if (df < 0) { : missing blah blah
+
+---
+
+    Code
+      recipes:::spline_msg("craaazzyy {{}}{}{}")
+    Condition
+      Error in `recipes:::spline_msg()`:
+      ! craaazzyy {{}}{}{}
+
