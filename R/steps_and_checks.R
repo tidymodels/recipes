@@ -5,7 +5,8 @@
 #' @param subclass A character string for the resulting class. For example,
 #'   if `subclass = "blah"` the step object that is returned has class
 #'   `step_blah` or `check_blah` depending on the context.
-#' @param ... All arguments to the operator that should be returned.
+#' @param ... All arguments to the operator that should be returned. Required
+#' arguments are `trained`, `skip`, and `id`.
 #' @param .prefix Prefix to the subclass created.
 #'
 #' @seealso [developer_functions]
@@ -13,16 +14,30 @@
 #' @keywords internal
 #' @return An updated step or check with the new class.
 #' @export
-step <- function(subclass, ..., .prefix = "step_") {
-  structure(list(...),
+step <- function(subclass, ..., .prefix = "step_",
+                 call = rlang::caller_env()) {
+  args <- list(...)
+
+  check_string(subclass, call = call)
+  check_string(.prefix, call = call)
+  check_step_check_args(args, call = call)
+
+  structure(args,
     class = c(paste0(.prefix, subclass), "step")
   )
 }
 
 #' @rdname step
 #' @export
-check <- function(subclass, ..., .prefix = "check_") {
-  structure(list(...),
+check <- function(subclass, ..., .prefix = "check_",
+                  call = rlang::caller_env()) {
+  args <- list(...)
+
+  check_string(subclass, call = call)
+  check_string(.prefix, call = call)
+  check_step_check_args(args, call = call)
+
+  structure(args,
     class = c(paste0(.prefix, subclass), "check")
   )
 }
@@ -51,3 +66,22 @@ add_check <- function(rec, object) {
   rec$steps[[length(rec$steps) + 1]] <- object
   rec
 }
+
+# ------------------------------------------------------------------------------
+
+check_step_check_args <- function(x, call = rlang::caller_env()) {
+  req_args <- c("trained", "id", "skip")
+  nms <- names(x)
+  has_req_args <- req_args %in% nms
+  if (!all(has_req_args)) {
+    miss_args <- req_args[!has_req_args]
+    cli::cli_abort("Some required arguments are missing: {.arg {miss_args}}.",
+                   call = call)
+  }
+  check_bool(x$trained, call = call, arg = "trained")
+  check_bool(x$skip, call = call, arg = "skip")
+  check_string(x$id, call = call, arg = "id")
+  invisible(x)
+}
+
+
