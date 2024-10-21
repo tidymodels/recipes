@@ -98,9 +98,9 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #'
 #' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
-names0 <- function(num, prefix = "x") {
+names0 <- function(num, prefix = "x", call = rlang::caller_env()) {
   if (num < 1) {
-    cli::cli_abort("{.arg num} should be > 0.")
+    cli::cli_abort("{.arg num} should be > 0.", call = call)
   }
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
@@ -635,7 +635,7 @@ rand_id <- function(prefix = "step", len = 5) {
 }
 
 
-check_nominal_type <- function(x, lvl) {
+check_nominal_type <- function(x, lvl, call = rlang::caller_env()) {
   all_act_cols <- names(x)
 
   # What columns do we expect to be factors based on the data
@@ -667,7 +667,8 @@ check_nominal_type <- function(x, lvl) {
                 ",
           "*" = "{.and {.var {was_factor}}}",
           "i" = "This may cause errors when processing new data."
-        )
+        ),
+        call = call
       )
     }
   }
@@ -873,7 +874,7 @@ check_new_data <- function(req, object, new_data) {
   step_cls <- class(object)[1]
   step_id <- object$id
   cli::cli_abort(
-    "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing 
+    "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing
     from {.arg new_data}: {col_diff}.",
     call = rlang::call2(step_cls)
   )

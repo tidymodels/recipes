@@ -19,7 +19,8 @@ step <- function(subclass, ..., .prefix = "step_",
   args <- list(...)
 
   check_string(subclass, call = call)
-  check_string(.prefix, call = call)
+  .prefix <- rlang::arg_match0(.prefix, c("step_", "check_", ""),
+                               error_call = call)
   check_step_check_args(args, call = call)
 
   structure(args,
@@ -34,7 +35,8 @@ check <- function(subclass, ..., .prefix = "check_",
   args <- list(...)
 
   check_string(subclass, call = call)
-  check_string(.prefix, call = call)
+  .prefix <- rlang::arg_match0(.prefix, c("step_", "check_", ""),
+                               error_call = call)
   check_step_check_args(args, call = call)
 
   structure(args,

@@ -17,16 +17,16 @@ test_that("Recipe correctly identifies output variable", {
 
 test_that("Recipe fails on in-line functions", {
   expect_snapshot(error = TRUE,
-    recipe(HHV ~ log(nitrogen), data = biomass)
+                  recipe(HHV ~ log(nitrogen), data = biomass)
   )
   expect_snapshot(error = TRUE,
-    recipe(HHV ~ (.)^2, data = biomass)
+                  recipe(HHV ~ (.)^2, data = biomass)
   )
   expect_snapshot(error = TRUE,
-    recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass)
+                  recipe(HHV ~ nitrogen + sulfur + nitrogen:sulfur, data = biomass)
   )
   expect_snapshot(error = TRUE,
-    recipe(HHV ~ nitrogen^2, data = biomass)
+                  recipe(HHV ~ nitrogen^2, data = biomass)
   )
 })
 
@@ -60,9 +60,9 @@ test_that("return character or factor values", {
 
 test_that("Using prepare", {
   expect_snapshot(error = TRUE,
-    prepare(recipe(HHV ~ ., data = biomass),
-      training = biomass
-    )
+                  prepare(recipe(HHV ~ ., data = biomass),
+                          training = biomass
+                  )
   )
 })
 
@@ -126,10 +126,10 @@ test_that("bake without prep", {
     step_scale(all_predictors()) %>%
     step_spatialsign(all_predictors())
   expect_snapshot(error = TRUE,
-    bake(sp_signed, new_data = biomass_te)
+                  bake(sp_signed, new_data = biomass_te)
   )
   expect_snapshot(error = TRUE,
-    juice(sp_signed)
+                  juice(sp_signed)
   )
 })
 
@@ -170,7 +170,7 @@ test_that("bake without newdata", {
     prep(training = biomass)
 
   expect_snapshot(error = TRUE,
-    bake(rec, newdata = biomass)
+                  bake(rec, newdata = biomass)
   )
 })
 
@@ -198,17 +198,17 @@ test_that("tunable arguments at prep-time", {
   .tune <- function() rlang::call2("tune")
 
   expect_snapshot(error = TRUE,
-    recipe(Species ~ ., data = iris) %>%
-      step_ns(all_predictors(), deg_free = .tune()) %>%
-      prep()
+                  recipe(Species ~ ., data = iris) %>%
+                    step_ns(all_predictors(), deg_free = .tune()) %>%
+                    prep()
   )
 
   expect_snapshot(error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_pca(all_predictors(), threshold = .tune()) %>%
-      step_kpca(all_predictors(), num_comp = .tune()) %>%
-      step_bs(all_predictors(), deg_free = .tune()) %>%
-      prep()
+                  recipe(~., data = mtcars) %>%
+                    step_pca(all_predictors(), threshold = .tune()) %>%
+                    step_kpca(all_predictors(), num_comp = .tune()) %>%
+                    step_bs(all_predictors(), deg_free = .tune()) %>%
+                    prep()
   )
 })
 
@@ -278,7 +278,7 @@ test_that("case weights are being infered correctly for formula interface", {
   mtcars2$cyl <- importance_weights(mtcars2$cyl)
 
   expect_snapshot(error = TRUE,
-    recipe(mpg ~ cyl + disp, data = mtcars2)
+                  recipe(mpg ~ cyl + disp, data = mtcars2)
   )
 })
 
@@ -304,7 +304,7 @@ test_that("case weights are being infered correctly for x interface", {
   mtcars2$cyl <- importance_weights(mtcars2$cyl)
 
   expect_snapshot(error = TRUE,
-    recipe(mtcars2)
+                  recipe(mtcars2)
   )
 
 })
@@ -346,7 +346,7 @@ test_that("`internal data is kept as tibbles when prepping", {
 
   # Will ignore new_data and return `output`
   expect_snapshot(error = TRUE,
-    bake(rec_prepped, new_data = as_tibble(mtcars))
+                  bake(rec_prepped, new_data = as_tibble(mtcars))
   )
 
   rec_spec <- recipe(mpg ~ ., data = mtcars) %>%
@@ -424,5 +424,39 @@ test_that("data argument is checked in recipe.formula() (#1325)", {
   expect_snapshot(
     error = TRUE,
     recipe(~ ., data = data)
+  )
+})
+
+test_that("step constructor", {
+
+  step_lightly  <-
+    function(trained = FALSE, skip = FALSE, id = "id") {
+      step(
+        subclass = "lightly",
+        trained = trained,
+        skip = skip,
+        id = id
+      )
+    }
+
+  expect_snapshot(
+    step_lightly(trained = "yes"),
+    error = TRUE
+  )
+  expect_snapshot(
+    step_lightly(id = TRUE),
+    error = TRUE
+  )
+  expect_snapshot(
+    step_lightly(skip = "you betcha"),
+    error = TRUE
+  )
+  expect_snapshot(
+    step(subclass = "heavy"),
+    error = TRUE
+  )
+  expect_snapshot(
+    step(),
+    error = TRUE
   )
 })
