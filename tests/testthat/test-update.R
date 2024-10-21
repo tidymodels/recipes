@@ -1,6 +1,6 @@
 test_that("can update a step", {
-  stp_4 <- recipes::step("stp", x = 4, trained = FALSE)
-  stp_5 <- recipes::step("stp", x = 5, trained = FALSE)
+  stp_4 <- recipes::step("stp", x = 4, trained = FALSE, id = "a", skip = TRUE)
+  stp_5 <- recipes::step("stp", x = 5, trained = FALSE, id = "a", skip = TRUE)
 
   update(stp_4, x = 5)
 
@@ -8,7 +8,7 @@ test_that("can update a step", {
 })
 
 test_that("cannot create new fields for a step", {
-  stp <- recipes::step("stp", x = 4, trained = FALSE)
+  stp <- recipes::step("stp", x = 4, trained = FALSE, id = "a", skip = TRUE)
 
   expect_snapshot(error = TRUE,
     update(stp, y = 5)
@@ -16,7 +16,7 @@ test_that("cannot create new fields for a step", {
 })
 
 test_that("cannot update trained steps", {
-  stp <- recipes::step("stp", x = 4, trained = TRUE)
+  stp <- recipes::step("stp", x = 4, trained = TRUE, id = "a", skip = TRUE)
 
   expect_snapshot(error = TRUE,
     update(stp, x = 5)
