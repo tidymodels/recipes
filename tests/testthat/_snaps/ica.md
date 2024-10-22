@@ -28,6 +28,17 @@
       ! Name collision occurred. The following variable names already exist:
       * `IC1`
 
+# Error is correctly rethrown from implementation function
+
+    Code
+      recipe(~., data = mtcars) %>% step_ica(all_predictors(), options = list(method = "wrong")) %>%
+        prep()
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in match.arg(method) : 'arg' should be one of "R", "C"
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

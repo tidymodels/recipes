@@ -35,6 +35,23 @@
       ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
       i Please use the `keep_original_cols` argument instead.
 
+# rethrows error correctly from implementation
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = "mpg",
+      options = list(kernel = "wrong")) %>% prep()
+    Condition
+      Warning:
+      `step_pls()` failed with error: Error in mixOmics::pls(X = x, Y = y, ncomp = 2, kernel = ~"wrong") : unused argument (kernel = ~"wrong") .
+
+# error on no outcome
+
+    Code
+      recipe(~., data = mtcars) %>% step_pls(all_predictors()) %>% prep()
+    Condition
+      Error in `step_pls()`:
+      ! `outcome` should select at least one column.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

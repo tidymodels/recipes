@@ -8,6 +8,28 @@
       ! Name collision occurred. The following variable names already exist:
       * `NNMF1`
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_nnmf_sparse(all_predictors(), options = list(
+        kernel = "wrong")) %>% prep()
+    Condition
+      Error in `step_nnmf_sparse()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in RcppML::nmf(A = dat, k = 2, L1 = c(0.001, 0.001), verbose = FALSE, : unused argument (kernel = "wrong")
+
+# errors for missing data
+
+    Code
+      recipe(~., data = mtcars) %>% step_nnmf_sparse(all_predictors()) %>% prep()
+    Condition
+      Error in `step_nnmf_sparse()`:
+      Caused by error in `prep()`:
+      x The NNMF loadings are missing.
+      i The penalty may have been to high.
+      i Or missing values are present in data.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
