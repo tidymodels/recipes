@@ -138,7 +138,9 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 })
 
 test_that("Error is correctly rethrown from implementation function", {
-  
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
   expect_snapshot(
     error = TRUE,
     recipe(~ ., data = mtcars) %>%
