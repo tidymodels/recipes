@@ -324,3 +324,14 @@ test_that("old recipes from 1.0.1 work with new get_types", {
       bake(new_data = Sacramento)
   )
 })
+
+test_that("error when selecting case weights", {
+  mtcars$hp <- hardhat::importance_weights(mtcars$hp)
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_normalize(hp) %>%
+      prep()
+  )
+})

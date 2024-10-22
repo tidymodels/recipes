@@ -160,7 +160,7 @@ bc_trans <- function(x, lambda, eps = .001) {
   if (any(x <= 0)) {
     cli::cli_warn(
       "Applying Box-Cox transformation to non-positive data in column \\
-      {names(lambda)}"
+      {.field {names(lambda)}}."
     )
   }
 

@@ -143,6 +143,17 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("error on too large window size", {
+  skip_if_not_installed("RcppRoll")
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_window(mpg, size = 999) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

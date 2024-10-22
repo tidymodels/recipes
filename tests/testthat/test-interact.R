@@ -236,7 +236,10 @@ test_that("replacing selectors in formulas", {
 test_that('with factors', {
   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
     step_interact(~ (. - Sepal.Width)^2, sep = ":")
-  int_rec_trained <- prep(int_rec, iris)
+  
+  suppressWarnings(
+    int_rec_trained <- prep(int_rec, iris)
+  )
 
   te_new <- bake(int_rec_trained, new_data = iris, all_predictors(), - Species)
   te_new <- te_new[, sort(names(te_new))]
@@ -316,6 +319,15 @@ test_that("gives informative error if terms isn't a formula (#1299)", {
   )
 })
 
+test_that("gives informative error if terms isn't a formula (#1299)", {
+  mtcars$am <- as.character(mtcars$am)
+
+  expect_snapshot(
+    tmp <- recipe(mpg ~ ., data = mtcars) %>% 
+      step_interact(~disp:am) %>% 
+      prep(strings_as_factors = FALSE)
+  )
+})
 
 # Infrastructure ---------------------------------------------------------------
 
@@ -421,3 +433,4 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+

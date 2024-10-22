@@ -27,6 +27,16 @@
       ! Name collision occurred. The following variable names already exist:
       * `kPC1`
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_kpca_poly(all_predictors(), options = list(
+        kernel = "wrong")) %>% prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! The following argument was specified but do not exist: `options`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

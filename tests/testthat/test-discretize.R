@@ -171,6 +171,12 @@ test_that("tunable", {
   )
 })
 
+test_that("war when less breaks are generated", {
+  expect_snapshot(
+    tmp <- discretize(c(rep(1, 50), 1:50), cuts = 5, min_unique = 1)
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

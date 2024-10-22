@@ -5,7 +5,7 @@
     Condition
       Error in `step_relevel()`:
       Caused by error in `prep()`:
-      x All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be string or factor.
       * 1 integer variable found: `sqft`
 
 ---

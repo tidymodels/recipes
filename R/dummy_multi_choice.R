@@ -142,8 +142,6 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("nominal", "logical"))
 
-  multi_dummy_check_type(training[, col_names])
-
   levels <- purrr::map(training[, col_names], levels)
   levels <- vctrs::list_unchop(levels, ptype = character(), name_spec = rlang::zap())
   levels <- levels[!is.na(levels)]
@@ -163,23 +161,6 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
     skip = x$skip,
     id = x$id
   )
-}
-
-multi_dummy_check_type <- function(dat, call = rlang::caller_env()) {
-  is_good <- function(x) {
-    is.factor(x) | is.character(x) | all(is.na(x))
-  }
-
-  all_good <- vapply(dat, is_good, logical(1))
-  if (!all(all_good)) {
-    offenders <- names(dat)[!all_good]
-    cli::cli_abort(c(
-      "x" = "All columns selected for the step should be \\
-            factor, character, or NA. The following were not:",
-      "*" = "{.var {offenders}}."
-    ), call = call)
-  }
-  invisible(all_good)
 }
 
 #' @export

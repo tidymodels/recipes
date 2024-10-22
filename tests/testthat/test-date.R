@@ -186,6 +186,27 @@ test_that("can bake and recipes with no locale", {
   )
 })
 
+test_that("errors on wrong values of features", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), features = "yearly") %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), features = c("daily", "monthly", "yearly")) %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), features = c("daily", "month", "yearly")) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

@@ -84,19 +84,12 @@ step_relevel_new <-
 #' @export
 prep.step_relevel <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
-  check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_type(training[, col_names], types = c("string", "factor"))
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
   # Check to make sure that no ordered levels are provided
   order_check <- map_lgl(objects, attr, "is_ordered")
-  if (any(order_check)) {
-    offenders <- names(order_check)[order_check]
-    cli::cli_abort(
-      "Columns contain ordered factors (which cannot be releveled) \\
-      {.val {x$ref_level}}: {offenders}."
-    )
-  }
 
   # Check to make sure that the reference level exists in the factor
   ref_check <- map_lgl(objects, function(x, y) !y %in% x,

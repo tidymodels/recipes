@@ -160,3 +160,15 @@ test_that("is_unsupervised_weights works", {
     too_many_case_weights(c("var1", "var2"))
   )
 })
+
+test_that("get_case_weights() catches non-numeric case weights", {
+  mtcars$vs <- as.character(mtcars$vs)
+  class(mtcars$vs) <- c("hardhat_case_weights", "non_numeric_weights")
+  
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_normalize(all_predictors()) %>%
+      prep()
+  )
+})

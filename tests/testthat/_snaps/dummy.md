@@ -145,6 +145,15 @@
       Caused by error:
       ! `x` contains too many levels (123456), which would result in a data.frame too large to fit in memory.
 
+# throws an informative error for single level
+
+    Code
+      recipe(~., data = data.frame(x = "only-level")) %>% step_dummy(x) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `bake()`:
+      ! Only one factor level in `x`: "only-level".
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

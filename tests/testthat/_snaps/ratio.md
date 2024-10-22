@@ -38,6 +38,15 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_o_disp`
 
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_ratio(mpg, denom = NULL)
+    Condition
+      Error in `step_ratio()`:
+      ! `denom` must select at least one variable.
+      i See ?selections (`?recipes::selections()`) for more information.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

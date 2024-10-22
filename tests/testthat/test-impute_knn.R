@@ -172,6 +172,39 @@ test_that("tunable", {
   )
 })
 
+test_that("impute_with errors with nothing selected", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_impute_knn(all_predictors(), impute_with = NULL) %>%
+      prep()
+  )
+})
+
+test_that("warn if all values of predictor are missing", {
+  mtcars[, 1:11] <- NA_real_
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>%
+      step_impute_knn(mpg, disp, vs) %>%
+      prep()
+  )
+})
+
+test_that("error on wrong options argument", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_impute_knn(all_predictors(), options = list(wrong = "wrong")) %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_impute_knn(all_predictors(), options = c(wrong = "wrong")) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

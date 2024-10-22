@@ -132,6 +132,16 @@ test_that("case weights", {
   expect_snapshot(filtering_trained)
 })
 
+test_that("corr_filter() warns on many NA values", {
+  mtcars[, 1:10] <- NA_real_
+
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>%
+      step_corr(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

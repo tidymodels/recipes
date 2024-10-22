@@ -109,6 +109,15 @@
       ! Name collision occurred. The following variable names already exist:
       * `new_value`
 
+# error on too large window size
+
+    Code
+      recipe(~., data = mtcars) %>% step_window(mpg, size = 999) %>% prep()
+    Condition
+      Error in `step_window()`:
+      Caused by error in `roller()`:
+      ! The window is too large.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

@@ -136,6 +136,13 @@ test_that("sample with case weights", {
   expect_snapshot(rec)
 })
 
+test_that("warn when selectors are provided", {
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>% 
+      step_sample(all_predictors())
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

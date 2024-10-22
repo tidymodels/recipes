@@ -18,6 +18,15 @@
       Caused by error:
       ! `terms` must be supplied as a formula.
 
+---
+
+    Code
+      tmp <- recipe(mpg ~ ., data = mtcars) %>% step_interact(~ disp:am) %>% prep(
+        strings_as_factors = FALSE)
+    Condition
+      Warning:
+      Categorical variables used in `step_interact()` should probably be avoided; This can lead to differences in dummy variable values that are produced by ?step_dummy (`?recipes::step_dummy()`). Please convert all involved variables to dummy variables first.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

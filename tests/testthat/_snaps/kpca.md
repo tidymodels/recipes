@@ -33,6 +33,17 @@
       -- Operations 
       * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_kpca(all_predictors(), options = list(
+        kernel = "wrong")) %>% prep()
+    Condition
+      Error in `step_kpca()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in wrong(sigma = 0.1) : could not find function "wrong"
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

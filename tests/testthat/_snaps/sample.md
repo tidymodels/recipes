@@ -60,6 +60,14 @@
       -- Operations 
       * Row sampling: <none> | Trained, weighted
 
+# warn when selectors are provided
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_sample(all_predictors())
+    Condition
+      Warning:
+      Selectors are not used for this step.
+
 # empty printing
 
     Code

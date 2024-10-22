@@ -345,6 +345,15 @@ test_that("throws a informative error for too many levels (#828)", {
   )
 })
 
+test_that("throws an informative error for single level", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = data.frame(x = "only-level")) %>%
+      step_dummy(x) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

@@ -271,13 +271,9 @@ bake.step_dummy <- function(object, new_data, ...) {
     # the original (see the note above)
     is_ordered <- attr(levels, "dataClasses") == "ordered"
 
-    if (is.null(levels_values)) {
-      cli::cli_abort("Factor level values not recorded in {.var col_name}.")
-    }
-
     if (length(levels_values) == 1) {
       cli::cli_abort(
-        "Only one factor level in {.var col_name}: {levels_values}."
+        "Only one factor level in {.var {col_name}}: {.val {levels_values}}."
       )
     }
 

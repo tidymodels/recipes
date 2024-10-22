@@ -16,3 +16,12 @@
       Error in `recipes_eval_select()`:
       ! Argument `quos` is missing, with no default.
 
+# error when selecting case weights
+
+    Code
+      recipe(~., data = mtcars) %>% step_normalize(hp) %>% prep()
+    Condition
+      Error in `step_normalize()`:
+      Caused by error in `prep()`:
+      ! Cannot select case weights variable.
+

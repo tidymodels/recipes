@@ -119,6 +119,14 @@
       -- Operations 
       * Discretize numeric variables from: x1 | Trained
 
+# war when less breaks are generated
+
+    Code
+      tmp <- discretize(c(rep(1, 50), 1:50), cuts = 5, min_unique = 1)
+    Condition
+      Warning:
+      Not enough data for 5 breaks. Only 4 breaks were used.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
