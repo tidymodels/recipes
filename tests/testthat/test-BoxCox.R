@@ -85,7 +85,15 @@ test_that("warnings", {
       step_BoxCox(x1) %>%
       prep()
   )
+
+  expect_snapshot(
+    recipe(~ mpg + disp, data = mtcars) %>%
+      step_BoxCox(mpg, disp) %>%
+      prep() %>%
+      bake(new_data = tibble(mpg = -1, disp = -1))
+  )
 })
+
 
 # Infrastructure ---------------------------------------------------------------
 
