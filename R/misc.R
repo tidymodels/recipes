@@ -65,7 +65,10 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' @param ordinal A logical; was the original factor ordered?
 #' @param sep A single character value for the separator between the names and
 #'  levels.
-#'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
 #' @details When using `dummy_names()`, factor levels that are not valid
 #'  variable names (e.g. "some text  with spaces") will be changed to valid
 #'  names by [base::make.names()]; see example below. This function will also
