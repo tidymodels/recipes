@@ -238,3 +238,43 @@
       Error in `as.data.frame.default()`:
       ! cannot coerce class '"function"' to a data.frame
 
+# step constructor
+
+    Code
+      step_lightly(trained = "yes")
+    Condition
+      Error in `step_lightly()`:
+      ! `trained` must be `TRUE` or `FALSE`, not the string "yes".
+
+---
+
+    Code
+      step_lightly(id = TRUE)
+    Condition
+      Error in `step_lightly()`:
+      ! `id` must be a single string, not `TRUE`.
+
+---
+
+    Code
+      step_lightly(skip = "you betcha")
+    Condition
+      Error in `step_lightly()`:
+      ! `skip` must be `TRUE` or `FALSE`, not the string "you betcha".
+
+---
+
+    Code
+      step(subclass = "heavy")
+    Condition
+      Error:
+      ! Some required arguments are missing: `trained`, `id`, and `skip`.
+
+---
+
+    Code
+      step()
+    Condition
+      Error:
+      ! `subclass` must be a single string, not absent.
+

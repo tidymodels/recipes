@@ -6,7 +6,7 @@
 \alias{dummy_extract_names}
 \title{Naming Tools}
 \usage{
-names0(num, prefix = "x")
+names0(num, prefix = "x", call = rlang::caller_env())
 
 dummy_names(var, lvl, ordinal = FALSE, sep = "_")
 
@@ -16,6 +16,11 @@ dummy_extract_names(var, lvl, ordinal = FALSE, sep = "_")
 \item{num}{A single integer for how many elements are created.}
 
 \item{prefix}{A character string that will start each name.}
+
+\item{call}{The execution environment of a currently running function, e.g.
+\code{caller_env()}. The function will be mentioned in error messages as the
+source of the error. See the call argument of \code{\link[rlang:abort]{rlang::abort()}} for more
+information.}
 
 \item{var}{A single string for the original factor name.}
 
