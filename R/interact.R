@@ -162,7 +162,8 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     )
     if (!is_formula(tmp_terms)) {
       cli::cli_abort(
-        "{.arg terms} must be a formula. Not {.obj_type_friendly {term}}."
+        "{.arg terms} must be a formula. Not {.obj_type_friendly {term}}.",
+        .internal = TRUE
       )
     }
 
@@ -401,7 +402,10 @@ find_selectors <- function(f) {
     list()
   } else {
     # User supplied incorrect input
-    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
+    cli::cli_abort(
+      "Don't know how to handle type {typeof(f)}.", 
+      .internal = TRUE
+    )
   }
 }
 
