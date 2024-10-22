@@ -210,7 +210,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     vars <-
       unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
     var_check <- info[info$variable %in% vars, ]
-    if (any(var_check$type == "nominal")) {
+    if (any(vapply(var_check$type, function(x) "nominal" %in% x, logical(1)))) {
       cli::cli_warn(
         "Categorical variables used in {.fn step_interact} should probably be \\
         avoided; This can lead to differences in dummy variable values that \\
@@ -422,7 +422,10 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
-    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
+    cli::cli_abort(
+      "Don't know how to handle type {typeof(f)}.", 
+      .internal = TRUE
+    )
   }
 }
 
