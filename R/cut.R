@@ -116,7 +116,7 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   if (!is.numeric(x$breaks)) {
     cli::cli_abort(
       "{.arg breaks} must be a numeric vector, \\
-      not {.obj_type_friendly {breaks}}."
+      not {.obj_type_friendly {x$breaks}}."
     )
   }
 

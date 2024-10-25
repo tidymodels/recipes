@@ -40,10 +40,8 @@
       recipe(~., data = mtcars) %>% step_cut(disp, hp, breaks = TRUE) %>% prep()
     Condition
       Error in `step_cut()`:
-      Caused by error:
-      ! Could not evaluate cli `{}` expression: `breaks`.
-      Caused by error:
-      ! object 'breaks' not found
+      Caused by error in `prep()`:
+      ! `breaks` must be a numeric vector, not `TRUE`.
 
 ---
 
@@ -52,10 +50,8 @@
         prep()
     Condition
       Error in `step_cut()`:
-      Caused by error:
-      ! Could not evaluate cli `{}` expression: `breaks`.
-      Caused by error:
-      ! object 'breaks' not found
+      Caused by error in `prep()`:
+      ! `breaks` must be a numeric vector, not a character vector.
 
 # bake method errors when needed non-standard role columns are missing
 
