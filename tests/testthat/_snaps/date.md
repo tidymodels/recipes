@@ -15,8 +15,7 @@
         prep()
     Condition
       Error in `step_date()`:
-      x Possible values of `features` should include:
-      * "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
+      x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
       i Invalid values were: "yearly".
 
 ---
@@ -26,8 +25,7 @@
         "daily", "monthly", "yearly")) %>% prep()
     Condition
       Error in `step_date()`:
-      x Possible values of `features` should include:
-      * "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
+      x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
       i Invalid values were: "daily", "monthly", and "yearly".
 
 ---
@@ -37,8 +35,7 @@
         "daily", "month", "yearly")) %>% prep()
     Condition
       Error in `step_date()`:
-      x Possible values of `features` should include:
-      * "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
+      x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
       i Invalid values were: "daily" and "yearly".
 
 # bake method errors when needed non-standard role columns are missing
