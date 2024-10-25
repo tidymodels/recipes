@@ -59,6 +59,26 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("error on multiple selections", {
+  mtcars$vs <- as.character(mtcars$vs)
+  mtcars$am <- as.character(mtcars$am)
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_regex(vs, am)
+  )
+})
+
+test_that("checks for grepl arguments", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_regex(options = list(not_real_option = TRUE))
+  )
+})
+
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

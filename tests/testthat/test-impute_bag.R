@@ -112,6 +112,24 @@ test_that("non-factor imputation", {
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 
+test_that("impute_with errors with nothing selected", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_impute_bag(all_predictors(), impute_with = NULL) %>%
+      prep()
+  )
+})
+
+test_that("impute_with errors with nothing selected", {
+  mtcars[, 1:11] <- NA_real_
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>%
+      step_impute_bag(mpg, disp, vs) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
