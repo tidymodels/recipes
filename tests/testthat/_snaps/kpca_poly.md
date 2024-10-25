@@ -30,12 +30,12 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_kpca_poly(all_predictors(), options = list(
-        kernel = "wrong")) %>% prep()
+      recipe(~., data = mtcars) %>% step_kpca_poly(all_predictors()) %>% prep()
     Condition
       Error in `step_kpca_poly()`:
       Caused by error in `prep()`:
-      ! The following argument was specified but do not exist: `options`.
+      x Failed with error:
+      i Error in kernlab::kpca(x = as.matrix(training[, col_names]), features = 5, : mocked error
 
 # bake method errors when needed non-standard role columns are missing
 

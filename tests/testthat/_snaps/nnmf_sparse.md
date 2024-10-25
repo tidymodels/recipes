@@ -11,13 +11,12 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_nnmf_sparse(all_predictors(), options = list(
-        kernel = "wrong")) %>% prep()
+      recipe(~., data = mtcars) %>% step_nnmf_sparse(all_predictors()) %>% prep()
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
       x Failed with error:
-      i Error in RcppML::nmf(A = dat, k = 2, L1 = c(0.001, 0.001), verbose = FALSE, : unused argument (kernel = "wrong")
+      i Error in RcppML::nmf(A = dat, k = 2, L1 = c(0.001, 0.001), verbose = FALSE, : mocked error
 
 # errors for missing data
 

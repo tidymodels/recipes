@@ -273,10 +273,15 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 
 test_that("rethrows error correctly from implementation", {
   skip_if_not_installed("mixOmics")
+  local_mocked_bindings(
+    .package = "mixOmics",
+    pls = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
   expect_snapshot(
     tmp <- recipe(~ ., data = mtcars) %>%
-      step_pls(all_predictors(), outcome = "mpg", 
-               options = list(kernel = "wrong")) %>%
+      step_pls(all_predictors(), outcome = "mpg") %>%
       prep()
   )
 })

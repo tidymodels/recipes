@@ -38,11 +38,11 @@
 # rethrows error correctly from implementation
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = "mpg",
-      options = list(kernel = "wrong")) %>% prep()
+      tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = "mpg") %>%
+        prep()
     Condition
       Warning:
-      `step_pls()` failed with error: Error in mixOmics::pls(X = x, Y = y, ncomp = 2, kernel = ~"wrong") : unused argument (kernel = ~"wrong") .
+      `step_pls()` failed with error: Error in mixOmics::pls(X = x, Y = y, ncomp = 2, scale = TRUE) : mocked error .
 
 # error on no outcome
 

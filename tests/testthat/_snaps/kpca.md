@@ -36,13 +36,12 @@
 # rethrows error correctly from implementation
 
     Code
-      recipe(~., data = mtcars) %>% step_kpca(all_predictors(), options = list(
-        kernel = "wrong")) %>% prep()
+      recipe(~., data = mtcars) %>% step_kpca(all_predictors()) %>% prep()
     Condition
       Error in `step_kpca()`:
       Caused by error in `prep()`:
       x Failed with error:
-      i Error in wrong(sigma = 0.1) : could not find function "wrong"
+      i Error in kernlab::kpca(x = as.matrix(training[, col_names]), features = 5, : mocked error
 
 # bake method errors when needed non-standard role columns are missing
 

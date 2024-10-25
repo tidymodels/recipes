@@ -144,7 +144,7 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
       cli::cli_abort(c(
         x = "Failed with error:",
         i = as.character(kprc)
-      ), .internal = TRUE)
+      ))
     }
   } else {
     kprc <- NULL

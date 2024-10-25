@@ -137,14 +137,21 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
-test_that("Error is correctly rethrown from implementation function", {
+test_that("rethrows error correctly from implementation", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
+
+  local_mocked_bindings(
+    .package = "fastICA",
+    fastICA = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
   expect_snapshot(
     error = TRUE,
     recipe(~ ., data = mtcars) %>%
-      step_ica(all_predictors(), options = list(method = "wrong")) %>%
+      step_ica(all_predictors()) %>%
       prep()
   )
 })

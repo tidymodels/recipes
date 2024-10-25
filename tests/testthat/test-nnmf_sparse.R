@@ -30,10 +30,17 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 test_that("rethrows error correctly from implementation", {
   skip_if_not_installed("RcppML")
   library(Matrix)
+
+  local_mocked_bindings(
+    .package = "RcppML",
+    nmf = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
   expect_snapshot(
     error = TRUE,
     recipe(~ ., data = mtcars) %>%
-      step_nnmf_sparse(all_predictors(), options = list(kernel = "wrong")) %>%
+      step_nnmf_sparse(all_predictors()) %>%
       prep()
   )
 })

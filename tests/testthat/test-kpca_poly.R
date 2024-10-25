@@ -97,10 +97,16 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 })
 
 test_that("rethrows error correctly from implementation", {
+  local_mocked_bindings(
+    .package = "kernlab",
+    kpca = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
   expect_snapshot(
     error = TRUE,
     recipe(~ ., data = mtcars) %>%
-      step_kpca_poly(all_predictors(), options = list(kernel = "wrong")) %>%
+      step_kpca_poly(all_predictors()) %>%
       prep()
   )
 })
