@@ -90,6 +90,8 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 })
 
 test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("kernlab")
+
   local_mocked_bindings(
     .package = "kernlab",
     kpca = function(...) {
