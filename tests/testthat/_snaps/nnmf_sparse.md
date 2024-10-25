@@ -27,8 +27,7 @@
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
       x The NNMF loadings are missing.
-      i The penalty may have been to high.
-      i Or missing values are present in data.
+      i The penalty may have been too high or missing values are present in data.
 
 # bake method errors when needed non-standard role columns are missing
 
