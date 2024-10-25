@@ -83,7 +83,7 @@ bake.check_cols <- function(object, new_data, ...) {
   if (length(missing) > 0) {
     # This is functionally not reachable after we added ptype checking in
     # https://github.com/tidymodels/recipes/pull/1330
-    # but it feels to harsh to deprecate this check function.
+    # but it feels too harsh to deprecate this check function.
     cli::cli_abort(c(
       x = "{cli::qty(length(missing))}The following column{?s} {?is/are} \\
       missing from {.arg new_data}:",

@@ -122,7 +122,7 @@ step_profile <- function(recipe,
       i = "See {.help [?step_profile](recipes::step_profile)} for information."
     ))
   }
-  if (any(sort(names(grid)) != c("len", "pctl"))) {
+  if (!identical(sort(names(grid)), c("len", "pctl"))) {
     cli::cli_abort(c(
       x = "`grid` should have two named elements {.field len} and \\
           {.field pctl}, not {.val {sort(names(grid))}}.",

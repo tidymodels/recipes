@@ -172,8 +172,7 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
       if (na_w > 0) {
         cli::cli_abort(c(
           x = "The NNMF loadings are missing.",
-          i = "The penalty may have been to high.",
-          i = "Or missing values are present in data."
+          i = "The penalty may have been too high or missing values are present in data."
         ))
       } else {
         nnm <- list(x_vars = col_names, w = nnm$w)

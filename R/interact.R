@@ -162,7 +162,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     )
     if (!is_formula(tmp_terms)) {
       cli::cli_abort(
-        "{.arg terms} must be a formula. Not {.obj_type_friendly {term}}.",
+        "{.arg terms} must be a formula, not {.obj_type_friendly {term}}.",
         .internal = TRUE
       )
     }
@@ -403,7 +403,7 @@ find_selectors <- function(f) {
   } else {
     # User supplied incorrect input
     cli::cli_abort(
-      "Don't know how to handle type {typeof(f)}.", 
+      "Don't know how to handle type {.code {typeof(f)}}.", 
       .internal = TRUE
     )
   }
@@ -423,7 +423,7 @@ replace_selectors <- function(x, elem, value) {
   } else {
     # User supplied incorrect input
     cli::cli_abort(
-      "Don't know how to handle type {typeof(f)}.", 
+      "Don't know how to handle type {.code {typeof(f)}}.", 
       .internal = TRUE
     )
   }
