@@ -1,3 +1,7 @@
+# step is tested on extratests, and is getting deprecated
+
+# nocov start
+
 #' Non-negative matrix factorization signal extraction
 #'
 #' @description
@@ -256,3 +260,5 @@ tunable.step_nnmf <- function(x, ...) {
 required_pkgs.step_nnmf <- function(x, ...) {
   c("dimRed", "NMF")
 }
+
+# nocov end
