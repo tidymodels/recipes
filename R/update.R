@@ -59,7 +59,7 @@ update.step <- function(object, ...) {
   reconstruct_step(object)
 }
 
-update_fields <- function(object, changes) {
+update_fields <- function(object, changes, call = rlang::caller_env()) {
   validate_has_unique_names(changes)
 
   new_nms <- names(changes)
@@ -71,7 +71,8 @@ update_fields <- function(object, changes) {
     if (!(nm %in% old_nms)) {
       cli::cli_abort(
         "The step you are trying to update, {.fn {step_type}}, \\
-        does not have the {.field {nm}} field."
+        does not have the {.field {nm}} field.",
+        call = call
       )
     }
 

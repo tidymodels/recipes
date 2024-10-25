@@ -3,7 +3,7 @@
     Code
       update(stp, y = 5)
     Condition
-      Error in `update_fields()`:
+      Error in `update()`:
       ! The step you are trying to update, `step_stp()`, does not have the y field.
 
 # cannot update trained steps
