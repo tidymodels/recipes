@@ -11,6 +11,6 @@
     Code
       update(stp, x = 5)
     Condition
-      Error in `validate_not_trained()`:
+      Error in `update()`:
       ! To update `step_stp()`, it must not be trained.
 
