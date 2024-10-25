@@ -99,9 +99,8 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
 names0 <- function(num, prefix = "x") {
-  if (num < 1) {
-    cli::cli_abort("{.arg num} should be > 0.")
-  }
+  check_number_whole(num, min = 1)
+
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)

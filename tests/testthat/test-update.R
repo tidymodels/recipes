@@ -2,8 +2,6 @@ test_that("can update a step", {
   stp_4 <- recipes::step("stp", x = 4, trained = FALSE)
   stp_5 <- recipes::step("stp", x = 5, trained = FALSE)
 
-  update(stp_4, x = 5)
-
   expect_equal(update(stp_4, x = 5), stp_5)
 })
 
@@ -20,5 +18,14 @@ test_that("cannot update trained steps", {
 
   expect_snapshot(error = TRUE,
     update(stp, x = 5)
+  )
+})
+
+test_that("update() errors on duplicate assignments", {
+  step <- recipes::step("stp", x = 4, trained = FALSE)
+
+  expect_snapshot(
+    error = TRUE,
+    update(step, x = 5, x = 6)
   )
 })

@@ -14,3 +14,11 @@
       Error in `validate_not_trained()`:
       ! To update `step_stp()`, it must not be trained.
 
+# update() errors on duplicate assignments
+
+    Code
+      update(step, x = 5, x = 6)
+    Condition
+      Error in `validate_has_unique_names()`:
+      ! All of the changes supplied in `...` must be uniquely named.
+
