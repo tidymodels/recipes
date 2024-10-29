@@ -4,12 +4,7 @@
       recipe(~., data = mtcars) %>% step_pca(all_predictors(), num_comp = ~ tune() +
         tune()) %>% tune_args()
     Condition
-      Error in `purrr::map()`:
-      i In index: 1.
-      Caused by error in `purrr::map_chr()`:
-      i In index: 1.
-      i With name: num_comp.
-      Caused by error in `find_tune_id()`:
+      Error in `find_tune_id()`:
       ! Only one tunable value is currently allowed per argument. The current argument has: tune() + tune().
 
 # tune_tbl() errors on duplicate ids
