@@ -65,7 +65,7 @@ step_bin2factor <-
       if (length(levels) != 2) {
         msg <- c(
           msg,
-          i = "{length(levels)} element{?s} were supplied."
+          i = "{length(levels)} element{?s} were supplied; two were expected."
         )
       }
       if (!is.character(levels)) {
@@ -76,6 +76,8 @@ step_bin2factor <-
       }
       cli::cli_abort(msg)
     }
+    check_bool(ref_first)
+
     add_step(
       recipe,
       step_bin2factor_new(

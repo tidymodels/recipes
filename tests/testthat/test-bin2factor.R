@@ -31,6 +31,11 @@ test_that("works with logicals", {
     factor(mtcars$am, levels = c(TRUE, FALSE), labels = c("yes", "no")),
     res$am
   )
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_bin2factor(all_logical_predictors(), ref_first = 1),
+    error = TRUE
+  )
 })
 
 

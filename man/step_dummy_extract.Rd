@@ -161,10 +161,10 @@ dummies_color <- recipe(~colors, data = color_examples) \%>\%
   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") \%>\%
   prep()
 
-dommies_data_color <- dummies_color \%>\%
+dummies_data_color <- dummies_color \%>\%
   bake(new_data = NULL)
 
-dommies_data_color
+dummies_data_color
 \dontshow{\}) # examplesIf}
 }
 \seealso{

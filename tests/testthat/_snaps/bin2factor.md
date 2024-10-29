@@ -1,3 +1,12 @@
+# works with logicals
+
+    Code
+      recipe(~., data = mtcars) %>% step_bin2factor(all_logical_predictors(),
+      ref_first = 1)
+    Condition
+      Error in `step_bin2factor()`:
+      ! `ref_first` must be `TRUE` or `FALSE`, not the number 1.
+
 # bad options
 
     Code
@@ -15,7 +24,7 @@
     Condition
       Error in `step_bin2factor()`:
       x `levels` should be a 2-element character string.
-      i 5 elements were supplied.
+      i 5 elements were supplied; two were expected.
 
 ---
 
