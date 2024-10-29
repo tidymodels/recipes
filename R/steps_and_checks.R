@@ -15,7 +15,7 @@
 #' @return An updated step or check with the new class.
 #' @export
 step <- function(subclass, ..., .prefix = "step_",
-                 call = rlang::caller_env()) {
+                 call = rlang::caller_env(2)) {
   args <- list(...)
 
   check_string(subclass, call = call)
@@ -31,7 +31,7 @@ step <- function(subclass, ..., .prefix = "step_",
 #' @rdname step
 #' @export
 check <- function(subclass, ..., .prefix = "check_",
-                  call = rlang::caller_env()) {
+                  call = rlang::caller_env(2)) {
   args <- list(...)
 
   check_string(subclass, call = call)

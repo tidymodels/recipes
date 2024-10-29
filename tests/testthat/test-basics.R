@@ -440,7 +440,7 @@ test_that("step constructor", {
     }
 
   expect_snapshot(
-    step_lightly(trained = "yes"),
+    recipe(~., mtcars) %>% step_normalize(trained = "yes"),
     error = TRUE
   )
   expect_snapshot(
