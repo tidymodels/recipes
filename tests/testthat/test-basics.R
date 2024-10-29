@@ -456,6 +456,10 @@ test_that("step constructor", {
     error = TRUE
   )
   expect_snapshot(
+    recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0),
+    error = TRUE
+  )
+  expect_snapshot(
     step(subclass = list()),
     error = TRUE
   )

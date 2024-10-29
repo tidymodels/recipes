@@ -273,6 +273,14 @@
 ---
 
     Code
+      recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0)
+    Condition
+      Error in `step_pca()`:
+      ! `keep_original_cols` must be `TRUE` or `FALSE`, not the number 0.
+
+---
+
+    Code
       step(subclass = list())
     Condition
       Error:

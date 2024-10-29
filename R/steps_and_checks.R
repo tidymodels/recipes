@@ -82,6 +82,11 @@ check_step_check_args <- function(x, call = rlang::caller_env()) {
   check_bool(x$skip, call = call, arg = "skip")
   check_string(x$id, call = call, arg = "id")
   check_string(x$role, allow_empty = FALSE, allow_na = TRUE, call = call)
+
+  if (any(names(x) == "keep_original_cols")) {
+    check_bool(x$keep_original_cols, call = call, arg = "keep_original_cols")
+  }
+
   invisible(x)
 }
 
