@@ -444,15 +444,19 @@ test_that("step constructor", {
     error = TRUE
   )
   expect_snapshot(
-    step_lightly(id = TRUE),
+    recipe(~., mtcars) %>% step_normalize(id = TRUE),
     error = TRUE
   )
   expect_snapshot(
-    step_lightly(skip = "you betcha"),
+    recipe(~., mtcars) %>% step_normalize(skip = "you betcha"),
     error = TRUE
   )
   expect_snapshot(
-    step(subclass = "heavy"),
+    recipe(~., mtcars) %>% step_normalize(role = 13),
+    error = TRUE
+  )
+  expect_snapshot(
+    step(subclass = list()),
     error = TRUE
   )
   expect_snapshot(

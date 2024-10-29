@@ -23,8 +23,7 @@ step <- function(subclass, ..., .prefix = "step_",
                                error_call = call)
   check_step_check_args(args, call = call)
 
-  structure(args,
-    class = c(paste0(.prefix, subclass), "step")
+  structure(args, class = c(paste0(.prefix, subclass), "step")
   )
 }
 
@@ -39,8 +38,7 @@ check <- function(subclass, ..., .prefix = "check_",
                                error_call = call)
   check_step_check_args(args, call = call)
 
-  structure(args,
-    class = c(paste0(.prefix, subclass), "check")
+  structure(args, class = c(paste0(.prefix, subclass), "check")
   )
 }
 
@@ -72,7 +70,7 @@ add_check <- function(rec, object) {
 # ------------------------------------------------------------------------------
 
 check_step_check_args <- function(x, call = rlang::caller_env()) {
-  req_args <- c("trained", "id", "skip")
+  req_args <- c("trained", "id", "skip", "role")
   nms <- names(x)
   has_req_args <- req_args %in% nms
   if (!all(has_req_args)) {
@@ -83,6 +81,7 @@ check_step_check_args <- function(x, call = rlang::caller_env()) {
   check_bool(x$trained, call = call, arg = "trained")
   check_bool(x$skip, call = call, arg = "skip")
   check_string(x$id, call = call, arg = "id")
+  check_string(x$role, allow_empty = FALSE, allow_na = TRUE, call = call)
   invisible(x)
 }
 

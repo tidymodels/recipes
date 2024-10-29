@@ -5,9 +5,9 @@
 \alias{check}
 \title{\code{step} sets the class of the \code{step} and \code{check} is for checks.}
 \usage{
-step(subclass, ..., .prefix = "step_", call = rlang::caller_env())
+step(subclass, ..., .prefix = "step_", call = rlang::caller_env(2))
 
-check(subclass, ..., .prefix = "check_", call = rlang::caller_env())
+check(subclass, ..., .prefix = "check_", call = rlang::caller_env(2))
 }
 \arguments{
 \item{subclass}{A character string for the resulting class. For example,

@@ -241,34 +241,42 @@
 # step constructor
 
     Code
-      step_lightly(trained = "yes")
+      recipe(~., mtcars) %>% step_normalize(trained = "yes")
     Condition
-      Error in `step_lightly()`:
+      Error in `step_normalize()`:
       ! `trained` must be `TRUE` or `FALSE`, not the string "yes".
 
 ---
 
     Code
-      step_lightly(id = TRUE)
+      recipe(~., mtcars) %>% step_normalize(id = TRUE)
     Condition
-      Error in `step_lightly()`:
+      Error in `step_normalize()`:
       ! `id` must be a single string, not `TRUE`.
 
 ---
 
     Code
-      step_lightly(skip = "you betcha")
+      recipe(~., mtcars) %>% step_normalize(skip = "you betcha")
     Condition
-      Error in `step_lightly()`:
+      Error in `step_normalize()`:
       ! `skip` must be `TRUE` or `FALSE`, not the string "you betcha".
 
 ---
 
     Code
-      step(subclass = "heavy")
+      recipe(~., mtcars) %>% step_normalize(role = 13)
+    Condition
+      Error in `step_normalize()`:
+      ! `x$role` must be a single string or `NA`, not the number 13.
+
+---
+
+    Code
+      step(subclass = list())
     Condition
       Error:
-      ! Some required arguments are missing: `trained`, `id`, and `skip`.
+      ! `subclass` must be a single string, not an empty list.
 
 ---
 
