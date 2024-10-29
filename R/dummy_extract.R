@@ -157,6 +157,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   } else {
     check_number_decimal(x$threshold, min = 0, arg = "threshold")
   }
+  check_string(x$other, arg = "other", allow_null = TRUE)
   check_string(x$sep, arg = "sep", allow_null = TRUE)
   check_string(x$pattern, arg = "pattern", allow_null = TRUE)
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
