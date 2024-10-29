@@ -289,6 +289,8 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
 
   sd_offset <- x$sd_offset
   check_number_decimal(sd_offset, min = 0, max = 1)
+  check_bool(x$log)
+  check_string(x$prefix)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts)
