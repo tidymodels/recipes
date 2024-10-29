@@ -33,11 +33,11 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{sep}{Character vector containing a regular expression to use
+\item{sep}{Character string containing a regular expression to use
 for splitting. \code{\link[=strsplit]{strsplit()}} is used to perform the split. \code{sep} takes
 priority if \code{pattern} is also specified.}
 
-\item{pattern}{Character vector containing a regular expression used
+\item{pattern}{Character string containing a regular expression used
 for extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} are used to perform
 pattern extraction using \code{perl = TRUE}.}
 

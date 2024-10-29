@@ -140,10 +140,16 @@ step_depth_new <-
     )
   }
 
+depth_metric <- c("potential", "halfspace", "Mahalanobis", "simplicialVolume",
+                  "spatial", "zonoid")
+
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, x_names], types = c("double", "integer"))
+  metric <- x$metric
+  rlang::arg_match(metric, depth_metric)
+  check_string(x$prefix, allow_empty = FALSE, arg = "prefix")
 
   class_var <- x$class[1]
 
