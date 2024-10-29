@@ -59,7 +59,7 @@ update.step <- function(object, ...) {
   reconstruct_step(object)
 }
 
-update_fields <- function(object, changes) {
+update_fields <- function(object, changes, call = rlang::caller_env()) {
   validate_has_unique_names(changes)
 
   new_nms <- names(changes)
@@ -71,7 +71,8 @@ update_fields <- function(object, changes) {
     if (!(nm %in% old_nms)) {
       cli::cli_abort(
         "The step you are trying to update, {.fn {step_type}}, \\
-        does not have the {.field {nm}} field."
+        does not have the {.field {nm}} field.",
+        call = call
       )
     }
 
@@ -126,12 +127,13 @@ validate_has_unique_names <- function(x) {
   invisible(x)
 }
 
-validate_not_trained <- function(x) {
+validate_not_trained <- function(x, call = rlang::caller_env()) {
   if (is_trained(x)) {
     step_type <- class(x)[1]
 
     cli::cli_abort(
-      "To update {.fn {step_type}}, it must not be trained."
+      "To update {.fn {step_type}}, it must not be trained.",
+      call = call
     )
   }
 

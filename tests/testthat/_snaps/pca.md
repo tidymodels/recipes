@@ -3,8 +3,9 @@
     Code
       tidy(pca_extract_trained, number = 3, type = "variances")
     Condition
-      Error in `match.arg()`:
-      ! 'arg' should be one of "coef", "variance"
+      Error in `tidy()`:
+      ! `type` must be one of "coef" or "variance", not "variances".
+      i Did you mean "variance"?
 
 # No PCA comps
 

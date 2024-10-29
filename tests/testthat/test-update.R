@@ -10,7 +10,8 @@ test_that("can update a step", {
 test_that("cannot create new fields for a step", {
   stp <- recipes::step("stp", x = 4, trained = FALSE, id = "a", skip = TRUE)
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     update(stp, y = 5)
   )
 })

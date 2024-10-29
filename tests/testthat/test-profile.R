@@ -123,6 +123,14 @@ test_that("tidy", {
   expect_equal(tidy_4, exp_4)
 })
 
+test_that("error on wrong grid names", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_profile(grid = list(pctl = TRUE, not_len = 100))
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

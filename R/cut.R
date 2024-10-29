@@ -113,6 +113,13 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
+  if (!is.numeric(x$breaks)) {
+    cli::cli_abort(
+      "{.arg breaks} must be a numeric vector, \\
+      not {.obj_type_friendly {x$breaks}}."
+    )
+  }
+
   all_breaks <- vector("list", length(col_names))
   names(all_breaks) <- col_names
   for (col_name in col_names) {
@@ -133,19 +140,6 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
 }
 
 create_full_breaks <- function(var, breaks) {
-  if (!is.numeric(var)) {
-    cli::cli_abort(
-      "{.arg var} must be a numeric vector, not {.obj_type_friendly {var}}."
-    )
-  }
-
-  if (!is.numeric(breaks)) {
-    cli::cli_abort(
-      "{.arg breaks} must be a numeric vector, \\
-      not {.obj_type_friendly {breaks}}."
-    )
-  }
-
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
@@ -204,12 +198,6 @@ cut_var <- function(var, breaks, include_outside_range) {
 # the levels when bake.recipe itself is called. Moreover,
 # it is cleaner to show it in this way.
 adjust_levels_min_max <- function(x) {
-  if (!is.factor(x)) {
-    cli::cli_abort(
-      "{.arg x} must be a factor, not {.obj_type_friendly {x}}.",
-      .internal = TRUE
-    )
-  }
   levs <- levels(x)
   if (length(levs) == 1) {
     return(factor(rep("[min,max]", length(x))))

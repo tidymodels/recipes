@@ -271,6 +271,31 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
+test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("mixOmics")
+  local_mocked_bindings(
+    .package = "mixOmics",
+    pls = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+  expect_snapshot(
+    tmp <- recipe(~ ., data = mtcars) %>%
+      step_pls(all_predictors(), outcome = "mpg") %>%
+      prep()
+  )
+})
+
+test_that("error on no outcome", {
+  skip_if_not_installed("mixOmics")
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_pls(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

@@ -137,6 +137,25 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
+test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
+  local_mocked_bindings(
+    .package = "fastICA",
+    fastICA = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_ica(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

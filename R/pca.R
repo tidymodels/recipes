@@ -351,7 +351,11 @@ tidy.step_pca <- function(x, type = "coef", ...) {
       component = na_chr
     )
   } else {
-    type <- match.arg(type, c("coef", "variance"))
+    type <- rlang::arg_match(
+      type, 
+      c("coef", "variance"), 
+      error_call = rlang::caller_env()
+    )
     if (type == "coef") {
       res <- pca_coefs(x)
     } else {

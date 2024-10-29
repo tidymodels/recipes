@@ -27,6 +27,16 @@
       ! Name collision occurred. The following variable names already exist:
       * `Sepal.Width`
 
+# checks for grepl arguments
+
+    Code
+      recipe(~., data = mtcars) %>% step_count(options = list(not_real_option = TRUE))
+    Condition
+      Error in `step_count()`:
+      x The following elements of `options` are not allowed:
+      * "not_real_option".
+      i Valid options are: "ignore.case", "perl", "fixed", and "useBytes".
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

@@ -8,6 +8,36 @@
       ! Name collision occurred. The following variable names already exist:
       * `Dan_year`
 
+# errors on wrong values of features
+
+    Code
+      recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(), features = "yearly") %>%
+        prep()
+    Condition
+      Error in `step_date()`:
+      x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
+      i Invalid values were: "yearly".
+
+---
+
+    Code
+      recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(), features = c(
+        "daily", "monthly", "yearly")) %>% prep()
+    Condition
+      Error in `step_date()`:
+      x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
+      i Invalid values were: "daily", "monthly", and "yearly".
+
+---
+
+    Code
+      recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(), features = c(
+        "daily", "month", "yearly")) %>% prep()
+    Condition
+      Error in `step_date()`:
+      x Possible values of `features` are "year", "doy", "mday", "week", "decimal", "semester", "quarter", "dow", or "month".
+      i Invalid values were: "daily" and "yearly".
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

@@ -79,7 +79,8 @@ test_that("correct PCA values", {
     var_obj$value[var_obj$terms == "cumulative percent variance"],
     cumsum(variances) / sum(variances) * 100
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     tidy(pca_extract_trained, number = 3, type = "variances")
   )
 })

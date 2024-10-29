@@ -227,16 +227,16 @@
     Code
       recipe(~a, data = data)
     Condition
-      Error in `as.data.frame.default()`:
-      ! cannot coerce class '"function"' to a data.frame
+      Error in `recipe()`:
+      ! `data` must be a data frame, matrix, or sparse matrix, not a function.
 
 ---
 
     Code
       recipe(~., data = data)
     Condition
-      Error in `as.data.frame.default()`:
-      ! cannot coerce class '"function"' to a data.frame
+      Error in `recipe()`:
+      ! `data` must be a data frame, matrix, or sparse matrix, not a function.
 
 # step constructor
 

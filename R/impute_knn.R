@@ -118,7 +118,7 @@ step_impute_knn <-
     if (length(options) > 0) {
       if (any(!(opt_nms %in% c("eps", "nthread")))) {
         cli::cli_abort(
-          "Valid values for {.arg options} are {.val eps}, and {.val nthread}."
+          "Valid values for {.arg options} are {.val eps} and {.val nthread}."
         )
       }
       if (all(opt_nms != "nthread")) {

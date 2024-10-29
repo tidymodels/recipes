@@ -27,6 +27,37 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
+test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
+
+  local_mocked_bindings(
+    .package = "RcppML",
+    nmf = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_nnmf_sparse(all_predictors()) %>%
+      prep()
+  )
+})
+
+test_that("errors for missing data", {
+  skip_if_not_installed("RcppML")
+  library(Matrix)
+  mtcars$mpg[1] <- NA
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_nnmf_sparse(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

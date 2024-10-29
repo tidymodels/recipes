@@ -167,6 +167,21 @@ test_that("tidy method works", {
   )
 })
 
+test_that("breaks argument are type checked", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_cut(disp, hp, breaks = TRUE) %>%
+      prep()
+  )
+  
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_cut(disp, hp, breaks = c("100", "200")) %>%
+      prep()
+  )
+})
 
 # Infrastructure ---------------------------------------------------------------
 
