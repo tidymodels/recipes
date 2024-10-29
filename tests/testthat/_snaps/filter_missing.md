@@ -104,3 +104,13 @@
       -- Operations 
       * Missing value column filter removed: dbl2, dbl3, dbl4, dbl5, ... | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = dat) %>% step_filter_missing(all_predictors(), threshold = -
+      0.2) %>% prep()
+    Condition
+      Error in `step_filter_missing()`:
+      Caused by error in `prep()`:
+      ! `threshold` must be a number between 0 and 1, not the number -0.2.
+

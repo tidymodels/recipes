@@ -124,7 +124,7 @@ step_dummy <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy")) {
-    
+
     if (lifecycle::is_present(preserve)) {
       lifecycle::deprecate_stop(
         "0.1.16",
@@ -172,6 +172,8 @@ step_dummy_new <-
 prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("factor", "ordered"))
+  check_bool(x$one_hot, arg = "one_hot")
+  check_function(x$naming, arg = "naming", allow_empty = FALSE)
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -229,14 +231,14 @@ warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
     msg <- c("!" = "There are new levels in {.var {column}}: {.val {lvl2}}.")
     if (any(is.na(lvl2))) {
       msg <- c(
-        msg, 
+        msg,
         "i" = "Consider using {.help [step_unknown()](recipes::step_unknown)} \\
         before {.fn {step}} to handle missing values."
       )
     }
     if (!all(is.na(lvl2))) {
       msg <- c(
-        msg, 
+        msg,
         "i" = "Consider using {.help [step_novel()](recipes::step_novel)} \\
         before {.fn {step}} to handle unseen values."
       )
@@ -278,9 +280,9 @@ bake.step_dummy <- function(object, new_data, ...) {
     }
 
     warn_new_levels(
-      new_data[[col_name]], 
-      levels_values, 
-      col_name, 
+      new_data[[col_name]],
+      levels_values,
+      col_name,
       step = "step_dummy"
     )
 
