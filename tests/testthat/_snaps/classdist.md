@@ -139,3 +139,43 @@
       -- Operations 
       * Distances to Species for: Sepal.Length and Sepal.Width, ... | Trained
 
+# bad args
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      mean_func = 2) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$mean_func` must be a function, not the number 2.
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      cov_func = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$cov_func` must be a function, not `NULL`.
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      prefix = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$prefix` must be a single string, not `NULL`.
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      pool = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$pool` must be `TRUE` or `FALSE`, not `NULL`.
+
