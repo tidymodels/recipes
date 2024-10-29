@@ -311,3 +311,26 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+
+  expect_snapshot(
+    date_rec <- recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), abbr = "nope") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    date_rec <- recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), label = "no!") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    date_rec <- recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), ordinal = "never") %>%
+      prep(),
+    error = TRUE
+  )
+})
+

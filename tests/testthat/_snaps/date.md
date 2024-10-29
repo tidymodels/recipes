@@ -123,3 +123,33 @@
       -- Operations 
       * Date features from: Dan and Stefan | Trained
 
+# bad args
+
+    Code
+      date_rec <- recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(),
+      abbr = "nope") %>% prep()
+    Condition
+      Error in `step_date()`:
+      Caused by error in `prep()`:
+      ! `abbr` must be `TRUE` or `FALSE`, not the string "nope".
+
+---
+
+    Code
+      date_rec <- recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(),
+      label = "no!") %>% prep()
+    Condition
+      Error in `step_date()`:
+      Caused by error in `prep()`:
+      ! `label` must be `TRUE` or `FALSE`, not the string "no!".
+
+---
+
+    Code
+      date_rec <- recipe(~ Dan + Stefan, examples) %>% step_date(all_predictors(),
+      ordinal = "never") %>% prep()
+    Condition
+      Error in `step_date()`:
+      Caused by error in `prep()`:
+      ! `ordinal` must be `TRUE` or `FALSE`, not the string "never".
+

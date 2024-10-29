@@ -7,6 +7,11 @@ test_that("step_cut throws error on non-numerics", {
   expect_snapshot(error = TRUE,
     recipe(~., x) %>% step_cut(all_predictors(), breaks = 2) %>% prep()
   )
+  expect_snapshot(error = TRUE,
+    recipe(~., x) %>%
+      step_cut(num_var, breaks = 2, include_outside_range = 2) %>%
+      prep()
+  )
 })
 
 test_that("create_full_breaks helper function", {
@@ -174,7 +179,7 @@ test_that("breaks argument are type checked", {
       step_cut(disp, hp, breaks = TRUE) %>%
       prep()
   )
-  
+
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%
@@ -244,3 +249,5 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+

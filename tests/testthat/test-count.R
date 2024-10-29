@@ -181,3 +181,27 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+  skip_if_not_installed("modeldata")
+  data(covers, package = "modeldata")
+
+  expect_snapshot(
+    recipe(~description, covers) %>%
+      step_count(description, pattern = character(0)) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~description, covers) %>%
+      step_count(description, pattern = "(rock|stony)", result = letters) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~description, covers) %>%
+      step_count(description, pattern = "(rock|stony)", normalize = "yes") %>%
+      prep(),
+    error = TRUE
+  )
+})
