@@ -118,3 +118,43 @@
       -- Training information 
       Training data contained 100 data points and no incomplete rows.
 
+# bad args
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
+        prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number, not the number 1.1.
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(),
+      scale_factor = -1.1) %>% prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `scale_factor` must be a number larger than or equal to 0, not the number -1.1.
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), offset = "a") %>%
+        prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `offset` must be a number, not the string "a".
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), prefix = 1) %>%
+        prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 1.
+

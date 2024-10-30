@@ -121,6 +121,8 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
     types = c("string", "factor", "ordered", "integer", "double", "logical",
               "date", "datetime")
   )
+  check_bool(x$strict, arg = "strict")
+  check_bool(x$zero_based, arg = "zero_based")
 
   step_integer_new(
     terms = x$terms,

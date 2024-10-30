@@ -236,7 +236,7 @@ test_that("replacing selectors in formulas", {
 test_that('with factors', {
   int_rec <- recipe(Sepal.Width ~ ., data = iris) %>%
     step_interact(~ (. - Sepal.Width)^2, sep = ":")
-  
+
   suppressWarnings(
     int_rec_trained <- prep(int_rec, iris)
   )
@@ -285,7 +285,7 @@ test_that("works with long formulas (#1231)", {
     ccccccccccccccccccc = 1:10,
     d = 1:10
   )
-  
+
   df_short <- data.frame(
     a = 1:10,
     b = 1:10,
@@ -294,14 +294,14 @@ test_that("works with long formulas (#1231)", {
   )
 
   res_long <- recipe(df_long) %>%
-    step_interact(~starts_with('bbbbbbbbbbbbbb'):starts_with('cccccccccccccc') + 
+    step_interact(~starts_with('bbbbbbbbbbbbbb'):starts_with('cccccccccccccc') +
                      starts_with('bbbbbbbbbbbbbb'):starts_with('d')) %>%
     prep() %>%
     bake(new_data = NULL) %>%
     unname()
 
   res_short <- recipe(df_short) %>%
-    step_interact(~starts_with('b'):starts_with('c') + 
+    step_interact(~starts_with('b'):starts_with('c') +
                      starts_with('b'):starts_with('d')) %>%
     prep() %>%
     bake(new_data = NULL) %>%
@@ -313,8 +313,8 @@ test_that("works with long formulas (#1231)", {
 test_that("gives informative error if terms isn't a formula (#1299)", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~ ., data = mtcars) %>% 
-      step_interact(terms = starts_with("dis")) %>% 
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_interact(terms = starts_with("dis")) %>%
       prep()
   )
 })
@@ -323,8 +323,8 @@ test_that("gives informative error if terms isn't a formula (#1299)", {
   mtcars$am <- as.character(mtcars$am)
 
   expect_snapshot(
-    tmp <- recipe(mpg ~ ., data = mtcars) %>% 
-      step_interact(~disp:am) %>% 
+    tmp <- recipe(mpg ~ ., data = mtcars) %>%
+      step_interact(~disp:am) %>%
       prep(strings_as_factors = FALSE)
   )
 })
@@ -343,7 +343,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   )
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(int_rec_trained, dat_tr[, 4:6])
   )
 })
@@ -434,3 +434,17 @@ test_that("printing", {
   expect_snapshot(prep(rec))
 })
 
+test_that("bad args", {
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_interact(~ disp::wt, sep = TRUE) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ x + y + z, data = tr_dat) %>%
+      step_integer(all_predictors(), zero_based = "sure!") %>%
+      prep(),
+    error = TRUE
+  )
+})

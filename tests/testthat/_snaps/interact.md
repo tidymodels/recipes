@@ -114,3 +114,21 @@
       -- Operations 
       * Interactions with: x1:x2 | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_interact(~ disp::wt, sep = TRUE) %>%
+        prep()
+    Condition
+      Error in `step_interact()`:
+      ! `sep` must be a single string, not `TRUE`.
+
+---
+
+    Code
+      recipe(~ x + y + z, data = tr_dat) %>% step_integer(all_predictors(),
+      zero_based = "sure!") %>% prep()
+    Condition
+      Error:
+      ! object 'tr_dat' not found
+
