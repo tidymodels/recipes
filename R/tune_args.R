@@ -40,6 +40,7 @@ tune_args.step <- function(object, full = FALSE, ...) {
   object <- object[!purrr::map_lgl(object, is.null)]
 
   res <- character(length(object))
+  names(res) <- names(object)
 
   for (i in seq_along(res)) {
     res[[i]] <- find_tune_id(object[[i]])
