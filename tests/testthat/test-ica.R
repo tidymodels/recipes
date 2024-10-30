@@ -315,6 +315,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 
 test_that("bad args", {
+  skip_if_not_installed("fastICA")
 
   expect_snapshot(
     rec %>%

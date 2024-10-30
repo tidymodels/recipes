@@ -13,6 +13,6 @@
       tune_tbl(name = c("a", "b"), tunable = c(TRUE, TRUE), id = c("a", "a"), source = c(
         "a", "b"), component = c("a", "b"), component_id = c("a", "b"), full = TRUE)
     Condition
-      Error in `tune_tbl()`:
+      Error:
       ! There are duplicate id values listed in `tune()`: "a".
 

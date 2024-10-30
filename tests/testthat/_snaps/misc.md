@@ -85,7 +85,7 @@
     Code
       names0(0)
     Condition
-      Error in `names0()`:
+      Error:
       ! `num` must be a whole number larger than or equal to 1, not the number 0.
 
 # ellipse_check() errors on empty selection
