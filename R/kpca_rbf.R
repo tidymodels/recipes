@@ -6,7 +6,8 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param sigma A numeric value for the radial basis function parameter.
+#' @param sigma A numeric value for the radial basis function parameter. See
+#' the documentation at [kernlab::rbfdot()].
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
@@ -120,10 +121,9 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
   check_number_decimal(x$sigma, arg = "sigma", min = .Machine$double.eps)
   check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   if (x$num_comp > 0 && length(col_names) > 0) {
-    check_number_whole(x$num_comp, arg = "num_comp", min = 0)
-
     cl <-
       rlang::call2(
         "kpca",

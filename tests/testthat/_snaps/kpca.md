@@ -130,3 +130,23 @@
       -- Operations 
       * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca(all_numeric_predictors(), num_comp = -1) %>%
+        prep()
+    Condition
+      Error in `step_kpca()`:
+      Caused by error in `prep()`:
+      ! `num_comp` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca(all_numeric_predictors(), prefix = 1) %>%
+        prep()
+    Condition
+      Error in `step_kpca()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 1.
+

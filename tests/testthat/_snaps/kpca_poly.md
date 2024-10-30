@@ -121,6 +121,16 @@
 # bad args
 
     Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(),
+      num_comp = -1) %>% prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `num_comp` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
       recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
         prep()
     Condition

@@ -126,6 +126,8 @@ step_kpca_new <-
 prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-

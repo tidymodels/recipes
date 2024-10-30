@@ -244,6 +244,12 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 test_that("bad args", {
   expect_snapshot(
     recipe(~ ., data = tr_dat) %>%
+      step_kpca_poly(all_numeric_predictors(), num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
       step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
       prep(),
     error = TRUE
