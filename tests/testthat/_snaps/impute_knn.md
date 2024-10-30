@@ -123,3 +123,13 @@
       -- Operations 
       * K-nearest neighbor imputation for: carbon and nitrogen | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), neighbors = 0L) %>%
+        prep()
+    Condition
+      Error in `step_impute_knn()`:
+      Caused by error in `prep()`:
+      ! `neighbors` must be a whole number larger than or equal to 1, not the number 0.
+

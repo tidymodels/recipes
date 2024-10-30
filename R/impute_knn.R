@@ -168,6 +168,7 @@ step_impute_knn_new <-
 
 #' @export
 prep.step_impute_knn <- function(x, training, info = NULL, ...) {
+  check_number_whole(x$neighbors, arg = "neighbors", min = 1)
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,

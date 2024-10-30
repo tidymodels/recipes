@@ -118,7 +118,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     prep(training = example_data)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(seven_pt, new_data = example_data[, c(-2)])
   )
 })
@@ -181,4 +181,35 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_roll(
+        all_predictors(),
+        statistic = mean, window = 1
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_roll(
+        all_predictors(),
+        statistic = mean, window = 4
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_roll(
+        all_predictors(),
+        statistic = NULL
+      ) %>%
+      prep(),
+    error = TRUE
+  )
 })

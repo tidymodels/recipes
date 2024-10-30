@@ -54,9 +54,10 @@ test_that("simple hyperbolic trans", {
 
 })
 
-test_that("wrong function", {
+test_that("wrong arguments", {
   rec <- recipe(mpg ~ ., mtcars)
-  expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
+  expect_snapshot(step_hyperbolic(rec, func = "cos") %>% prep(), error = TRUE)
+  expect_snapshot(step_hyperbolic(rec, inverse = 2) %>% prep(), error = TRUE)
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -70,7 +71,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE])
   )
 })

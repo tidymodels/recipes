@@ -97,3 +97,23 @@
       -- Operations 
       * Bagged tree imputation for: carbon | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_bag(all_predictors(), trees = -1) %>%
+        prep()
+    Condition
+      Error in `step_impute_bag()`:
+      Caused by error in `prep()`:
+      ! `trees` must be a whole number larger than or equal to 1, not the number -1.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_bag(all_predictors(), seed_val = 1:4) %>%
+        prep()
+    Condition
+      Error in `step_impute_bag()`:
+      Caused by error in `prep()`:
+      ! `seed_val` must be a whole number, not an integer vector.
+
