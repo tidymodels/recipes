@@ -286,6 +286,12 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 })
 
 test_that("bad args", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+
   expect_snapshot(
     recipe(~., data = mtcars) %>%
       step_isomap(all_predictors(), num_terms = 2, neighbors = -1/3) %>%

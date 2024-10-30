@@ -211,6 +211,8 @@ test_that("printing", {
 })
 
 test_that("bad args", {
+  skip_if_not_installed("kernlab")
+
   expect_snapshot(
     recipe(~ ., data = tr_dat) %>%
       step_kpca(all_numeric_predictors(), num_comp = -1) %>%

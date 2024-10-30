@@ -217,6 +217,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 
 test_that("bad args", {
+  skip_if_not_installed("kernlab")
+
   expect_snapshot(
     recipe(~ ., data = tr_dat) %>%
       step_kpca_rbf(all_numeric_predictors(), num_comp = -1) %>%
