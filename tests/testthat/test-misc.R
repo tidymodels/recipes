@@ -119,3 +119,26 @@ test_that("spline error messages", {
     error = TRUE
   )
 })
+
+test_that("names0() error on non-positive number", {
+  expect_snapshot(
+    error = TRUE,
+    names0(0)
+  )
+})
+
+test_that("ellipse_check() errors on empty selection", {
+  expect_snapshot(
+    error = TRUE,
+    ellipse_check()
+  )
+})
+
+test_that("ellipse_check() errors on empty selection", {
+  x <- 2
+  class(x) <- "dimRedResult"
+  expect_snapshot(
+    error = TRUE,
+    uses_dim_red(x)
+  )
+})

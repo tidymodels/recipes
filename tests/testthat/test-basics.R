@@ -468,3 +468,76 @@ test_that("step constructor", {
     error = TRUE
   )
 })
+
+test_that("bake() error on wrong composition", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      prep() %>%
+      bake(mtcars, composition = "wrong")
+  )
+})
+
+test_that("juice() error on wrong composition", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      prep() %>%
+      juice(composition = "wrong")
+  )
+})
+
+test_that("juice() error if prep(retain = FALSE)", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      prep(retain = FALSE) %>%
+      juice()
+  )
+})
+
+test_that("recipe() error with minus in formula", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ . - 1, data = mtcars)
+  )
+})
+
+test_that("recipe() error if vars and roles have different lengths", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mtcars, vars = c("mpg", "disp"), roles = c("predictor"))
+  )
+})
+
+test_that("recipe() error if vars not in data", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mtcars, vars = c("wrong", "disp-wrong"))
+  )
+})
+
+test_that("recipe() error if vars contains duplicates", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mtcars, vars = c("mpg", "mpg"))
+  )
+})
+
+test_that("recipe() error if vars and roles are used with formula", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mtcars, ~., vars = c("mpg"))
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(mtcars, ~., roles = c("mpg"))
+  )
+})
+
+test_that("recipe() error for unsupported data types", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(list())
+  )
+})

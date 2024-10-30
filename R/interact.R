@@ -162,6 +162,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       }
     )
     if (!is_formula(tmp_terms)) {
+      # Have not been able to reach
       cli::cli_abort(
         "{.arg terms} must be a formula, not {.obj_type_friendly {term}}.",
         .internal = TRUE
@@ -329,6 +330,7 @@ get_term_names <- function(form, vnames) {
     silent = TRUE
   )
   if (inherits(nms, "try-error")) {
+    # have not been able to reach
     cli::cli_warn(c(
       "!" = "Interaction specification failed for:",
       "*" = deparse(form),
@@ -403,6 +405,7 @@ find_selectors <- function(f) {
     list()
   } else {
     # User supplied incorrect input
+    # have not been able to reach
     cli::cli_abort(
       "Don't know how to handle type {.code {typeof(f)}}.",
       .internal = TRUE
@@ -423,6 +426,7 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
+    # have not been able to reach
     cli::cli_abort(
       "Don't know how to handle type {.code {typeof(f)}}.",
       .internal = TRUE

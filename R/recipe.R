@@ -140,8 +140,7 @@ recipe.data.frame <-
 
       cli::cli_abort(c(
         x = "{.arg vars} must have unique values.",
-        i = "The following values were duplicated:",
-        "*" = "{.and {offenders}}"
+        i = "The following values were duplicated: {.and {.field {offenders}}}."
       ))
     }
     if (any(!(vars %in% colnames(x)))) {
@@ -149,7 +148,7 @@ recipe.data.frame <-
 
       cli::cli_abort(c(
         x = "The following elements of {.arg vars} are not found in {.arg x}:",
-        "*" = "{.and {offenders}}"
+        "*" = "{.and {.field {offenders}}}."
       ))
     }
 
@@ -691,24 +690,13 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!any(composition == formats)) {
     cli::cli_abort(c(
       "x" = "{.arg composition} cannot be {.val {composition}}.",
-      "i" = "Allowed values are {.or {formats}}."
+      "i" = "Allowed values are {.or {.val {formats}}}."
     ))
   }
 
   terms <- quos(...)
   if (is_empty(terms)) {
     terms <- quos(everything())
-  }
-
-  # In case someone used the deprecated `newdata`:
-  if (is.null(new_data) || is.null(ncol(new_data))) {
-    if (any(names(terms) == "newdata")) {
-      cli::cli_abort(
-        "Please use {.arg new_data} instead of {.arg newdata} with {.fun bake}."
-      )
-    } else {
-      cli::cli_abort("Please pass a data set to {.arg new_data}.")
-    }
   }
 
   if (is_sparse_matrix(new_data)) {
