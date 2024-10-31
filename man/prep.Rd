@@ -47,9 +47,10 @@ since it does not take environments into account.}
 \item{log_changes}{A logical for printing a summary for each step regarding
 which (if any) columns were added or removed during training.}
 
-\item{strings_as_factors}{A logical: should character columns be converted to
-factors? This affects the preprocessed training set (when
-\code{retain = TRUE}) as well as the results of \code{bake.recipe}.}
+\item{strings_as_factors}{A logical: should character columns that have role
+"predictor" or "outcome" be converted to factors? This affects the
+preprocessed training set (when \code{retain = TRUE}) as well as the results of
+\code{bake.recipe}.}
 }
 \value{
 A recipe whose step objects have been updated with the required
