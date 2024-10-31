@@ -89,6 +89,23 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
+test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("kernlab")
+
+  local_mocked_bindings(
+    .package = "kernlab",
+    kpca = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_kpca(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -100,8 +117,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
-  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(kpca_trained, new_data = te_dat[, 1:3]))
 })
 
 test_that("empty printing", {
@@ -179,9 +195,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
+  expect_no_error(
+    bake(rec, new_data = mtcars)
   )
 })
 

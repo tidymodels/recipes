@@ -8,6 +8,23 @@
       ! Name collision occurred. The following variable names already exist:
       * `day_Easter`
 
+# error on incorrect holidays argument
+
+    Code
+      recipe(~., mtcars) %>% step_holiday(holidays = c("Invalid Holiday",
+        "NewYearsDay"))
+    Condition
+      Error in `step_holiday()`:
+      ! Invalid `holidays` value. See `timeDate::listHolidays()` for possible values.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(holiday_rec, exp_dates[, 2, drop = FALSE])
+    Condition
+      Error in `step_holiday()`:
+      ! The following required column is missing from `new_data`: day.
+
 # empty printing
 
     Code

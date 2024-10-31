@@ -88,10 +88,10 @@ get_case_weights <- function(info, .data, call = rlang::caller_env()) {
     if (!is.numeric(res)) {
       cli::cli_abort(
         c(
-          "x" = "{.arg {wt_col}} has a {.code case_weights} role,\\
-                 but is not numeric.",
-          "i" = "{.arg {wt_col}} is {.obj_type_friendly {wt_col}}."
-          ),
+          x = "{.field {wt_col}} has a {.code case_weights} role and should be 
+              numeric, but is {.obj_type_friendly {wt_col}}.",
+          i = "Only numeric case weights are supported in recipes."
+        ),
         call = call
       )
     }
@@ -131,7 +131,7 @@ wt_calcs <- function(x, wts, statistic = "mean") {
     wts <- rep(1L, nrow(x))
   }
 
-  complete <- stats::complete.cases(x) & !is.na(wts)
+  complete <- vec_detect_complete(x) & !is.na(wts)
   wts <- wts[complete]
   x <- x[complete,,drop = FALSE]
   res <- stats::cov.wt(x, wt = wts, cor = statistic == "cor")

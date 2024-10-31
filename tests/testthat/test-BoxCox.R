@@ -85,7 +85,15 @@ test_that("warnings", {
       step_BoxCox(x1) %>%
       prep()
   )
+
+  expect_snapshot(
+    recipe(~ mpg + disp, data = mtcars) %>%
+      step_BoxCox(mpg, disp) %>%
+      prep() %>%
+      bake(new_data = tibble(mpg = -1, disp = -1))
+  )
 })
+
 
 # Infrastructure ---------------------------------------------------------------
 
@@ -100,8 +108,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
   )
 
-  expect_error(bake(rec_trained, new_data = ex_dat[, 1:2]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = ex_dat[, 1:2]))
 })
 
 test_that("empty printing", {

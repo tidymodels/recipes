@@ -55,6 +55,14 @@
       -- Operations 
       * Extract patterns from: medium | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(dummy_prepped, new_data = mini_tate[, 1:3])
+    Condition
+      Error in `step_dummy_extract()`:
+      ! The following required column is missing from `new_data`: medium.
+
 # empty printing
 
     Code

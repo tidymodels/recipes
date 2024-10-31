@@ -15,7 +15,7 @@ sacr$city[sample(1:nrow(sacr), 20)] <- NA_character_
 sacr_missing <- sacr
 
 sacr$city[is.na(sacr$city)] <- "missing"
-sacr <- sacr[complete.cases(sacr), -3]
+sacr <- sacr[vec_detect_complete(sacr), -3]
 
 sacr_fac <- sacr
 sacr_fac$city <- factor(sacr_fac$city)
@@ -167,10 +167,10 @@ test_that("tests for NA values in factor", {
   )
 
   expect_true(
-    all(complete.cases(factors_data_0) == complete.cases(sacr_missing[, "city"]))
+    all(vec_detect_complete(factors_data_0) == vec_detect_complete(sacr_missing[, "city"]))
   )
   expect_true(
-    all(complete.cases(factors_data_1) == complete.cases(sacr_missing[, "city"]))
+    all(vec_detect_complete(factors_data_1) == vec_detect_complete(sacr_missing[, "city"]))
   )
 })
 
@@ -189,10 +189,10 @@ test_that("tests for NA values in ordered factor", {
   )
 
   expect_true(
-    all(complete.cases(factors_data_0) == complete.cases(sacr_ordered[, "city"]))
+    all(vec_detect_complete(factors_data_0) == vec_detect_complete(sacr_ordered[, "city"]))
   )
   expect_true(
-    all(complete.cases(factors_data_1) == complete.cases(sacr_ordered[, "city"]))
+    all(vec_detect_complete(factors_data_1) == vec_detect_complete(sacr_ordered[, "city"]))
   )
 })
 
@@ -345,6 +345,15 @@ test_that("throws a informative error for too many levels (#828)", {
   )
 })
 
+test_that("throws an informative error for single level", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = data.frame(x = "only-level")) %>%
+      step_dummy(x) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -354,8 +363,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE)
   dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
 
-  expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
-               class = "new_data_missing_column")
+  expect_snapshot(
+    error = TRUE, 
+    bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors())
+  )
 })
 
 test_that("empty printing", {
@@ -431,9 +442,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = iris),
-    NA
+  expect_no_error(
+    bake(rec, new_data = iris)
   )
 })
 

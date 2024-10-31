@@ -18,6 +18,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `Species_setosa`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = languages[, -1])
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      ! The following required column is missing from `new_data`: lang_1.
+
 # empty printing
 
     Code

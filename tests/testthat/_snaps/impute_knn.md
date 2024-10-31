@@ -6,6 +6,53 @@
       Warning in `gower_work()`:
       skipping variable with zero or non-finite range.
 
+# impute_with errors with nothing selected
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), impute_with = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_knn()`:
+      ! `impute_with` must not be empty.
+
+# warn if all values of predictor are missing
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_impute_knn(mpg, disp, vs) %>% prep()
+    Condition
+      Warning:
+      All predictors are missing; cannot impute.
+      Warning:
+      All predictors are missing; cannot impute.
+      Warning:
+      All predictors are missing; cannot impute.
+
+# error on wrong options argument
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), options = list(
+        wrong = "wrong")) %>% prep()
+    Condition
+      Error in `step_impute_knn()`:
+      ! Valid values for `options` are "eps" and "nthread".
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_knn(all_predictors(), options = c(
+        wrong = "wrong")) %>% prep()
+    Condition
+      Error in `step_impute_knn()`:
+      ! `options` should be a named list.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed_trained, new_data = biomass[, c(-4)])
+    Condition
+      Error in `step_impute_knn()`:
+      ! The following required column is missing from `new_data`: hydrogen.
+
 # empty printing
 
     Code

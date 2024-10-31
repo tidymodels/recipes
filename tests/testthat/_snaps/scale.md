@@ -102,6 +102,14 @@
       -- Operations 
       * Scaling for: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(std_trained, new_data = biomass[, 1:2])
+    Condition
+      Error in `step_scale()`:
+      ! The following required columns are missing from `new_data`: carbon, hydrogen, oxygen, nitrogen, and sulfur.
+
 # empty printing
 
     Code

@@ -5,7 +5,7 @@
     Condition
       Error in `step_relevel()`:
       Caused by error in `prep()`:
-      x All columns selected for the step should be string, factor, or ordered.
+      x All columns selected for the step should be string or factor.
       * 1 integer variable found: `sqft`
 
 ---
@@ -16,6 +16,14 @@
       Error in `step_relevel()`:
       Caused by error in `prep()`:
       ! The following column doesn't include required reference level "missing_level": `city`.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))])
+    Condition
+      Error in `step_relevel()`:
+      ! The following required column is missing from `new_data`: zip.
 
 # empty printing
 

@@ -19,8 +19,8 @@ test_that("error checks", {
   expect_snapshot(error = TRUE,
     rec %>% step_window(y1, size = NA)
   )
-  # Wait for call pass through
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     rec %>% step_window(y1, size = NULL)
   )
   expect_snapshot(error = TRUE,
@@ -143,6 +143,17 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("error on too large window size", {
+  skip_if_not_installed("RcppRoll")
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = mtcars) %>%
+      step_window(mpg, size = 999) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -154,8 +165,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = sim_dat)
 
-  expect_error(bake(rec_trained, new_data = sim_dat[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = sim_dat[, -1]))
 })
 
 test_that("empty printing", {
@@ -238,9 +248,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = sim_dat),
-    NA
+  expect_no_error(
+    bake(rec, new_data = sim_dat)
   )
 })
 

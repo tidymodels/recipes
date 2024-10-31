@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(trained, new_data = iris[, 2:5])
+    Condition
+      Error in `step_depth()`:
+      ! The following required column is missing from `new_data`: Sepal.Length.
+
 # empty printing
 
     Code

@@ -33,6 +33,24 @@
       -- Operations 
       * Kernel PCA extraction with: X2, X3, X4, X5, X6 | Trained
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_kpca(all_predictors()) %>% prep()
+    Condition
+      Error in `step_kpca()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in kernlab::kpca(x = as.matrix(training[, col_names]), features = 5, : mocked error
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(kpca_trained, new_data = te_dat[, 1:3])
+    Condition
+      Error in `step_kpca()`:
+      ! The following required columns are missing from `new_data`: X4, X5, and X6.
+
 # empty printing
 
     Code

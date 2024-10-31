@@ -16,6 +16,14 @@
       Error in `step_num2factor()`:
       ! Please provide a character vector of appropriate length for `levels`.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(ex_1, new_data = ex_dat[, 1:2])
+    Condition
+      Error in `step_num2factor()`:
+      ! The following required column is missing from `new_data`: z.
+
 # empty printing
 
     Code

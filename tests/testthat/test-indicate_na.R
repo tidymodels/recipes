@@ -107,8 +107,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE)%>%
     prep(train, verbose = FALSE, retain = TRUE)
 
-  expect_error(bake(rec1, new_data = test[, 2:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec1, new_data = test[, 2:3]))
 })
 
 test_that("empty printing", {
@@ -184,9 +183,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
+  expect_no_error(
+    bake(rec, new_data = mtcars)
   )
 })
 

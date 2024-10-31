@@ -136,6 +136,9 @@ test_that("factor levels are preserved", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
+  # lang_1 is not converted automatically because it has a non-standard role
+  # but it is used like a factor variable. See also `?step_string2factor`
+  languages <- languages %>% mutate(lang_1 = factor(lang_1))
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(lang_1, lang_2, lang_3) %>%
     update_role(lang_1, new_role = "potato") %>%
@@ -143,8 +146,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = languages)
 
-  expect_error(bake(rec_trained, new_data = languages[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = languages[, -1]))
 })
 
 test_that("empty printing", {
@@ -220,9 +222,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = languages),
-    NA
+  expect_no_error(
+    bake(rec, new_data = languages)
   )
 })
 

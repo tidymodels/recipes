@@ -75,11 +75,10 @@ test_that("quasiquotation", {
   rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
-  expect_error(
+  expect_no_error(
     rec_2 <-
       iris_rec %>%
-      step_slice(!!values),
-    regexp = NA
+      step_slice(!!values)
   )
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
@@ -88,9 +87,8 @@ test_that("quasiquotation", {
   expect_snapshot(error = TRUE,
     prep(rec_1, training = iris %>% slice(1:75))
   )
-  expect_error(
-    prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
-    regexp = NA
+  expect_no_error(
+    prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
   )
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)

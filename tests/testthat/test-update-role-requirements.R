@@ -80,7 +80,10 @@ test_that("will still error if a step actually used a role that set `bake = FALS
   df$x <- NULL
 
   # Error is specific to details of `step_scale()`
-  expect_error(bake(rec, df))
+  expect_snapshot(
+    error = TRUE,
+    bake(rec, df)
+  )
 })
 
 test_that("can `bake()` without roles that set `bake = FALSE`", {

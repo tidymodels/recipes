@@ -12,6 +12,13 @@ recipe <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...) {
+
+  # Doing this here since it should work for all types of Matrix classes
+  if (is_sparse_matrix(x)) {
+    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
+    return(recipe(x, ...))
+  }
+
   cli::cli_abort(c(
     x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
     i = "{.arg x} is {.obj_type_friendly {x}}."
@@ -33,7 +40,9 @@ recipe.default <- function(x, ...) {
 #'  Dots are allowed as are simple multivariate outcome terms (i.e. no need for
 #'  `cbind`; see Examples). A model formula may not be the best choice for
 #'  high-dimensional data with many columns, because of problems with memory.
-#' @param x,data A data frame or tibble of the *template* data set
+#' @param x,data A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package of the *template* data set. See [sparse_data] for more information
+#'   about use of sparse data.
 #'   (see below).
 #' @return An object of class `recipe` with sub-objects:
 #'   \item{var_info}{A tibble containing information about the original data
@@ -131,8 +140,7 @@ recipe.data.frame <-
 
       cli::cli_abort(c(
         x = "{.arg vars} must have unique values.",
-        i = "The following values were duplicated:",
-        "*" = "{.and {offenders}}"
+        i = "The following values were duplicated: {.and {.field {offenders}}}."
       ))
     }
     if (any(!(vars %in% colnames(x)))) {
@@ -140,7 +148,7 @@ recipe.data.frame <-
 
       cli::cli_abort(c(
         x = "The following elements of {.arg vars} are not found in {.arg x}:",
-        "*" = "{.and {offenders}}"
+        "*" = "{.and {.field {offenders}}}."
       ))
     }
 
@@ -199,6 +207,13 @@ recipe.formula <- function(formula, data, ...) {
     cli::cli_abort("{.arg data} is missing with no default.")
   }
 
+  if (!is.data.frame(data) && !is.matrix(data) && !is_sparse_matrix(data)) {
+    cli::cli_abort(
+      "{.arg data} must be a data frame, matrix, or sparse matrix, 
+      not {.obj_type_friendly {data}}."
+    )
+  }
+
   # check for minus:
   f_funcs <- fun_calls(formula, data)
   if (any(f_funcs == "-")) {
@@ -206,6 +221,10 @@ recipe.formula <- function(formula, data, ...) {
       "x" = "{.code -} is not allowed in a recipe formula.",
       "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
     ))
+  }
+
+  if (is_sparse_matrix(data)) {
+    data <- sparsevctrs::coerce_to_sparse_tibble(data, call = caller_env(0))
   }
 
   if (!is_tibble(data)) {
@@ -308,8 +327,9 @@ prep <- function(x, ...) {
 #' For a recipe with at least one preprocessing operation, estimate the required
 #'   parameters from a training set that can be later applied to other data
 #'   sets.
-#' @param training A data frame or tibble that will be used to estimate
-#'   parameters for preprocessing.
+#' @param training A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package, that will be used to estimate parameters for preprocessing. See
+#'   [sparse_data] for more information about use of sparse data.
 #' @param fresh A logical indicating whether already trained operation should be
 #'   re-trained. If `TRUE`, you should pass in a data set to the argument
 #'   `training`.
@@ -325,9 +345,10 @@ prep <- function(x, ...) {
 #'     the final recipe size large. When `verbose = TRUE`, a message is written
 #'     with the approximate object size in memory but may be an underestimate
 #'     since it does not take environments into account.
-#' @param strings_as_factors A logical: should character columns be converted to
-#'   factors? This affects the preprocessed training set (when
-#'   `retain = TRUE`) as well as the results of `bake.recipe`.
+#' @param strings_as_factors A logical: should character columns that have role
+#'   "predictor" or "outcome" be converted to factors? This affects the
+#'   preprocessed training set (when `retain = TRUE`) as well as the results of
+#'  `bake.recipe`.
 #' @return A recipe whose step objects have been updated with the required
 #'   quantities (e.g. parameter estimates, model objects, etc). Also, the
 #'   `term_info` object is likely to be modified as the operations are
@@ -383,15 +404,15 @@ prep.recipe <-
            log_changes = FALSE,
            strings_as_factors = TRUE,
            ...) {
-    training <- check_training_set(training, x, fresh)
+    training <- validate_training_data(training, x, fresh)
 
     tr_data <- train_info(training)
 
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
-
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
+      lvls <- kill_levels(lvls, x$var_info)
       training <- strings2factors(training, lvls)
     } else {
       lvls <- NULL
@@ -531,6 +552,7 @@ prep.recipe <-
     ## The steps may have changed the data so reassess the levels
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
+      lvls <- kill_levels(lvls, x$term_info)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
     } else {
@@ -590,9 +612,11 @@ bake <- function(object, ...) {
 #'   [prep()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
-#' @param new_data A data frame or tibble for whom the preprocessing will be
-#'   applied. If `NULL` is given to `new_data`, the pre-processed _training
-#'   data_ will be returned (assuming that `prep(retain = TRUE)` was used).
+#' @param new_data A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package for whom the preprocessing will be applied. If `NULL` is given to
+#'   `new_data`, the pre-processed _training data_ will be returned (assuming
+#'   that `prep(retain = TRUE)` was used). See [sparse_data] for more
+#'   information about use of sparse data.
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
@@ -666,7 +690,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (!any(composition == formats)) {
     cli::cli_abort(c(
       "x" = "{.arg composition} cannot be {.val {composition}}.",
-      "i" = "Allowed values are {.or {formats}}."
+      "i" = "Allowed values are {.or {.val {formats}}}."
     ))
   }
 
@@ -675,15 +699,11 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     terms <- quos(everything())
   }
 
-  # In case someone used the deprecated `newdata`:
-  if (is.null(new_data) || is.null(ncol(new_data))) {
-    if (any(names(terms) == "newdata")) {
-      cli::cli_abort(
-        "Please use {.arg new_data} instead of {.arg newdata} with {.fun bake}."
-      )
-    } else {
-      cli::cli_abort("Please pass a data set to {.arg new_data}.")
-    }
+  if (is_sparse_matrix(new_data)) {
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(
+      new_data,
+      call = caller_env(0)
+    )
   }
 
   if (!is_tibble(new_data)) {

@@ -202,8 +202,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
-  expect_error(bake(standardized_trained, new_data = biomass_te[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(
+    error = TRUE, 
+    bake(standardized_trained, new_data = biomass_te[, 1:3])
+  )
 })
 
 test_that("empty printing", {

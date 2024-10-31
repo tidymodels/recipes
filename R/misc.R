@@ -23,8 +23,8 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## `inline_check` stops when in-line functions are used.
 
   outcomes_names <- all.names(
-    rlang::f_lhs(formula), 
-    functions = FALSE, 
+    rlang::f_lhs(formula),
+    functions = FALSE,
     unique = TRUE
   )
 
@@ -33,7 +33,7 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
     functions = FALSE,
     unique = TRUE
   )
-  
+
   if (any(predictors_names == ".")) {
     predictors_names <- predictors_names[predictors_names != "."]
     predictors_names <- c(predictors_names, colnames(data))
@@ -99,9 +99,8 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
 names0 <- function(num, prefix = "x") {
-  if (num < 1) {
-    cli::cli_abort("{.arg num} should be > 0.")
-  }
+  check_number_whole(num, min = 1)
+
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
@@ -182,6 +181,20 @@ has_lvls <- function(info) {
   !vapply(info, function(x) all(is.na(x$values)), c(logic = TRUE))
 }
 
+kill_levels <- function(lvls, var_info) {
+  vars <- var_info$variable
+  roles <- var_info$role
+  preds_outcomes <- unique(vars[roles %in% c("outcome", "predictor")])
+  others <- unique(setdiff(vars, preds_outcomes))
+  if (length(others) > 0L) {
+    for (var in others) {
+      lvls[[var]] <- list(values = NA, ordered = NA)
+    }
+  }
+  lvls
+}
+
+
 strings2factors <- function(x, info) {
   check_lvls <- has_lvls(info)
   if (!any(check_lvls)) {
@@ -206,7 +219,7 @@ strings2factors <- function(x, info) {
 
 # ------------------------------------------------------------------------------
 
-# `complete.cases` fails on list columns. This version counts a list column
+# `vec_detect_complete` fails on list columns. This version counts a list column
 # as missing if _all_ values are missing. For if a list vector element is a
 # data frame with one missing value, that element of the list column will
 # be counted as complete.
@@ -218,7 +231,19 @@ n_complete_rows <- function(x) {
     x[[pos_list_col]] <- purrr::map_lgl(x[[pos_list_col]], flatten_na)
   }
 
-  sum(complete.cases(x))
+  x <- x[, vapply(x, anyNA, logical(1))]
+
+  surv_col_ind <- purrr::map_lgl(x, inherits, "Surv")
+  if (any(surv_col_ind)) {
+    surv_cols <- stats::complete.cases(x[, surv_col_ind, drop = FALSE])
+    non_surv_cols <- vec_detect_complete(x[, !surv_col_ind, drop = FALSE])
+
+    res <- sum(surv_cols & non_surv_cols)
+  } else {
+    res <- sum(vec_detect_complete(x))
+  }
+
+  res
 }
 
 flatten_na <- function(x) {
@@ -267,10 +292,10 @@ merge_term_info <- function(.new, .old) {
 #' supported by all steps.
 #'
 #' @param ... Arguments pass in from a call to `step`.
-#' 
-#' @return `ellipse_check()`: If not empty, a list of quosures. If empty, an 
+#'
+#' @return `ellipse_check()`: If not empty, a list of quosures. If empty, an
 #'   error is thrown.
-#' 
+#'
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -299,9 +324,9 @@ ellipse_check <- function(...) {
 #'  recipe (e.g. `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
-#' 
+#'
 #' @return `printer()`: `NULL`, invisibly.
-#' 
+#'
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -490,16 +515,16 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
 ## Support functions
 
 #' Check to see if a step or check as been trained
-#' 
+#'
 #' `is_trained()` is a helper function that returned a single logical to
 #' indicate whether a recipe is traine or not.
-#' 
+#'
 #' @param x a step object.
 #' @return `is_trained()`: A single logical.
-#' 
+#'
 #' @seealso [developer_functions]
 #' @keywords internal
-#' 
+#'
 #' @rdname recipes-internal
 #' @export
 is_trained <- function(x) {
@@ -509,14 +534,14 @@ is_trained <- function(x) {
 
 #' Convert Selectors to Character
 #'
-#' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and 
+#' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and
 #' returns a character vector version for printing.
-#' 
+#'
 #' @param x A list of selectors
 #' @return `sel2char()`: A character vector.
-#' 
+#'
 #' @seealso [developer_functions]
-#' 
+#'
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -648,10 +673,7 @@ check_nominal_type <- function(x, lvl) {
   invisible(NULL)
 }
 
-check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
-  # In case a variable has multiple roles
-  vars <- unique(rec$var_info$variable)
-
+validate_training_data <- function(x, rec, fresh, call = rlang::caller_env()) {
   training_null <- is.null(x)
   if (training_null) {
     if (fresh) {
@@ -663,11 +685,16 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
     }
     x <- rec$template
   } else {
+    if (is_sparse_matrix(x)) {
+      x <- sparsevctrs::coerce_to_sparse_tibble(x, call = call)
+    }
     if (!is_tibble(x)) {
       x <- as_tibble(x)
     }
     recipes_ptype_validate(rec, new_data = x, stage = "prep", call = call)
 
+    # In case a variable has multiple roles
+    vars <- unique(rec$var_info$variable)
     x <- x[, vars]
   }
 
@@ -845,9 +872,8 @@ check_new_data <- function(req, object, new_data) {
   step_cls <- class(object)[1]
   step_id <- object$id
   cli::cli_abort(
-    "The following required {cli::qty(col_diff)} column{?s} {?is/are} \
-    missing from `new_data` in step '{step_id}': {col_diff}.",
-    class = "new_data_missing_column",
+    "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing 
+    from {.arg new_data}: {col_diff}.",
     call = rlang::call2(step_cls)
   )
 }
@@ -954,7 +980,7 @@ recipes_remove_cols <- function(new_data, object, col_names = character()) {
 #' This helper function is meant to be used in `prep()` methods to identify
 #' predictors and outcomes by names.
 #'
-#' @param info data.frame with variable information of columns. 
+#' @param info data.frame with variable information of columns.
 #'
 #' @return Character vector of column names.
 #' @keywords internal

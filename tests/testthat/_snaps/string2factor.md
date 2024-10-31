@@ -16,6 +16,14 @@
       Error in `step_string2factor()`:
       ! `ordered` must be `TRUE` or `FALSE`, not the string "yes".
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, -1])
+    Condition
+      Error in `step_string2factor()`:
+      ! The following required column is missing from `new_data`: w.
+
 # empty printing
 
     Code

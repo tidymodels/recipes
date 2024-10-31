@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `na_ind_mpg`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1, new_data = test[, 2:3])
+    Condition
+      Error in `step_indicate_na()`:
+      ! The following required column is missing from `new_data`: col1.
+
 # empty printing
 
     Code

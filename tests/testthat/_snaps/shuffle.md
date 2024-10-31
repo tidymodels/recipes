@@ -6,6 +6,14 @@
       Warning:
       `new_data` contains a single row; unable to shuffle.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1, dat[, 2:5])
+    Condition
+      Error in `step_shuffle()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code

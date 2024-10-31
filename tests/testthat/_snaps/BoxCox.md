@@ -33,6 +33,30 @@
       -- Operations 
       * Box-Cox transformation on: <none> | Trained
 
+---
+
+    Code
+      recipe(~ mpg + disp, data = mtcars) %>% step_BoxCox(mpg, disp) %>% prep() %>%
+        bake(new_data = tibble(mpg = -1, disp = -1))
+    Condition
+      Warning:
+      Applying Box-Cox transformation to non-positive data in column mpg.
+      Warning:
+      Applying Box-Cox transformation to non-positive data in column disp.
+    Output
+      # A tibble: 1 x 2
+          mpg  disp
+        <dbl> <dbl>
+      1   NaN   NaN
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 1:2])
+    Condition
+      Error in `step_BoxCox()`:
+      ! The following required column is missing from `new_data`: x4.
+
 # empty printing
 
     Code

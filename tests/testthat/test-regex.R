@@ -59,6 +59,26 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("error on multiple selections", {
+  mtcars$vs <- as.character(mtcars$vs)
+  mtcars$am <- as.character(mtcars$am)
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_regex(vs, am)
+  )
+})
+
+test_that("checks for grepl arguments", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_regex(options = list(not_real_option = TRUE))
+  )
+})
+
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -72,8 +92,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(mt_tibble)
 
-  expect_error(bake(rec, new_data = mt_tibble[, c(-1)]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec, new_data = mt_tibble[, c(-1)]))
 })
 
 test_that("empty printing", {
@@ -151,9 +170,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = covers),
-    NA
+  expect_no_error(
+    bake(rec, new_data = covers)
   )
 })
 

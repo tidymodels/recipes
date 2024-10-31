@@ -106,6 +106,21 @@ test_that("check_name() is used", {
     prep(rec, training = dat)
   )
 })
+
+test_that("errors on wrong values of features", {
+  examples <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) + lubridate::minutes(1:5) + lubridate::seconds(1:5)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ times, examples) %>%
+      step_time(all_predictors(), features = "hourly") %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -123,8 +138,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = examples)
 
-  expect_error(bake(rec_trained, new_data = examples[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = examples[, -1]))
 })
 
 test_that("empty printing", {
@@ -210,9 +224,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = examples),
-    NA
+  expect_no_error(
+    bake(rec, new_data = examples)
   )
 })
 

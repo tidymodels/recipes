@@ -1,3 +1,32 @@
+# impute_with errors with nothing selected
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_bag(all_predictors(), impute_with = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_bag()`:
+      ! `impute_with` must not be empty.
+
+---
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_impute_bag(mpg, disp, vs) %>% prep()
+    Condition
+      Warning:
+      All predictors are missing; cannot impute.
+      Warning:
+      All predictors are missing; cannot impute.
+      Warning:
+      All predictors are missing; cannot impute.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed_trained, new_data = biomass[, c(-3, -9)])
+    Condition
+      Error in `step_impute_bag()`:
+      ! The following required columns are missing from `new_data`: carbon and fac.
+
 # empty printing
 
     Code

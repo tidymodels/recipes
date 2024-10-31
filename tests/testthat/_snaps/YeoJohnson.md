@@ -8,6 +8,14 @@
       x Missing values are not allowed for the YJ transformation.
       i See `na_rm` option.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 1:2])
+    Condition
+      Error in `step_YeoJohnson()`:
+      ! The following required column is missing from `new_data`: x4.
+
 # empty printing
 
     Code

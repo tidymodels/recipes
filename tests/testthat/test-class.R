@@ -14,15 +14,15 @@ class(x3) <- c(class(x3), "Julian")
 x_newdata_2 <- tibble(x1 = x1, x2 = x3)
 
 test_that("bake_check_class helper function gives expected output", {
-  expect_error(bake_check_class_core(x1, "numeric", "x1"), NA)
-  expect_error(bake_check_class_core(x2, c("POSIXct", "POSIXt"), "x1"), NA)
+  expect_no_error(bake_check_class_core(x1, "numeric", "x1"))
+  expect_no_error(bake_check_class_core(x2, c("POSIXct", "POSIXt"), "x1"))
   expect_snapshot(error = TRUE,
     bake_check_class_core(x1, "character", "x1")
   )
   expect_snapshot(error = TRUE,
     bake_check_class_core(x2, c("POSIXct", "Julian"), "x2")
   )
-  expect_error(bake_check_class_core(x2, "POSIXct", "x2", TRUE), NA)
+  expect_no_error(bake_check_class_core(x2, "POSIXct", "x2", TRUE))
   expect_snapshot(error = TRUE,
     bake_check_class_core(x2, "POSIXct", "x2")
   )
@@ -33,7 +33,7 @@ test_that("check_class works when class is learned", {
     check_class(all_predictors()) %>%
     prep()
 
-  expect_error(bake(rec1, x), NA)
+  expect_no_error(bake(rec1, x))
   expect_equal(bake(rec1, x), x)
   expect_snapshot(error = TRUE,
     bake(rec1, x_newdata)
@@ -48,7 +48,7 @@ test_that("check_class works when class is provided", {
     check_class(x1, class_nm = "numeric") %>%
     prep()
 
-  expect_error(bake(rec2, x), NA)
+  expect_no_error(bake(rec2, x))
   expect_equal(bake(rec2, x), x)
   expect_snapshot(error = TRUE,
     bake(rec2, x_newdata)
@@ -58,7 +58,7 @@ test_that("check_class works when class is provided", {
     check_class(x2, class_nm = c("POSIXct", "POSIXt")) %>%
     prep()
 
-  expect_error(bake(rec3, x), NA)
+  expect_no_error(bake(rec3, x))
   expect_equal(bake(rec3, x), x)
   expect_snapshot(error = TRUE,
     bake(rec3, x_newdata_2)
@@ -70,7 +70,7 @@ test_that("check_class works when class is provided", {
       allow_additional = TRUE
     ) %>%
     prep()
-  expect_error(bake(rec4, x_newdata_2), NA)
+  expect_no_error(bake(rec4, x_newdata_2))
 })
 
 # recipes has internal coercion to character >> factor
@@ -79,13 +79,13 @@ test_that("characters are handled correctly", {
     check_class(all_predictors()) %>%
     prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
-  expect_error(bake(rec5_NULL, Sacramento[11:20, ]), NA)
+  expect_no_error(bake(rec5_NULL, Sacramento[11:20, ]))
 
   rec5_man <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
     check_class(city, zip) %>%
     prep(Sacramento[1:10, ], strings_as_factors = FALSE)
 
-  expect_error(bake(rec5_man, Sacramento[11:20, ]), NA)
+  expect_no_error(bake(rec5_man, Sacramento[11:20, ]))
 
   sacr_fac <-
     dplyr::mutate(
@@ -122,8 +122,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec)
 
-  expect_error(bake(rec_trained, new_data = x[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = x[, -1]))
 })
 
 test_that("empty printing", {

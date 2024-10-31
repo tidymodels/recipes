@@ -28,6 +28,24 @@
       ! Name collision occurred. The following variable names already exist:
       * `IC1`
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_ica(all_predictors()) %>% prep()
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in fastICA::fastICA(n.comp = 5, X = as.matrix(training[, col_names]), : mocked error
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(ica_extract_trained, new_data = biomass_tr[, c(-3)])
+    Condition
+      Error in `step_ica()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code

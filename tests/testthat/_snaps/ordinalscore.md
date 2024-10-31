@@ -9,6 +9,14 @@
       * 1 double variable found: `numbers`
       * 1 factor variable found: `fact`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1, new_data = ex_dat[, 1:3])
+    Condition
+      Error in `step_ordinalscore()`:
+      ! The following required columns are missing from `new_data`: ord2 and ord3.
+
 # empty printing
 
     Code

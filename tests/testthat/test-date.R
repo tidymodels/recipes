@@ -51,7 +51,7 @@ test_that("default option", {
 
 test_that("nondefault options", {
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
-    step_date(all_predictors(), features = c("dow", "month"), label = FALSE)
+    step_date(all_predictors(), features = c("dow", "month", "mday"), label = FALSE)
 
   date_rec <- prep(date_rec, training = examples)
   date_res <- bake(date_rec, new_data = examples)
@@ -61,8 +61,10 @@ test_that("nondefault options", {
     Stefan = examples$Stefan,
     Dan_dow = wday(examples$Dan, label = FALSE),
     Dan_month = month(examples$Dan, label = FALSE),
+    Dan_mday = mday(examples$Dan),
     Stefan_dow = wday(examples$Stefan, label = FALSE),
-    Stefan_month = month(examples$Stefan, label = FALSE)
+    Stefan_month = month(examples$Stefan, label = FALSE),
+    Stefan_mday = mday(examples$Stefan)
   )
 
   expect_equal(date_res, date_exp)
@@ -102,9 +104,12 @@ test_that("check_name() is used", {
 })
 
 test_that("locale argument have recipe work in different locale", {
+  skip_if(getRversion() < "4.3.0")
+  # Locales on GHA are weird on old versions of R
+
   old_locale <- Sys.getlocale("LC_TIME")
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
-  Sys.setlocale("LC_TIME", 'fr_FR.UTF-8')
+  Sys.setlocale("LC_TIME", 'fr_FR.UTF8')
 
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
     step_date(all_predictors()) %>%
@@ -120,6 +125,9 @@ test_that("locale argument have recipe work in different locale", {
 })
 
 test_that("locale argument works when specified", {
+  skip_if(getRversion() < "4.3.0")
+  # Locales on GHA are weird on old versions of R
+
   old_locale <- Sys.getlocale("LC_TIME")
   withr::defer(Sys.setlocale("LC_TIME", old_locale))
   date_rec <- recipe(~ Dan + Stefan, examples) %>%
@@ -173,9 +181,29 @@ test_that("can bake and recipes with no locale", {
 
   date_rec$steps[[1]]$locale <- NULL
 
-  expect_error(
-    date_res <- bake(date_rec, new_data = examples, all_predictors()),
-    NA
+  expect_no_error(
+    date_res <- bake(date_rec, new_data = examples, all_predictors())
+  )
+})
+
+test_that("errors on wrong values of features", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), features = "yearly") %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), features = c("daily", "monthly", "yearly")) %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ Dan + Stefan, examples) %>%
+      step_date(all_predictors(), features = c("daily", "month", "yearly")) %>%
+      prep()
   )
 })
 
@@ -190,8 +218,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   date_rec <- prep(date_rec, training = examples)
   date_res <- bake(date_rec, new_data = examples)
 
-  expect_error(bake(date_rec, new_data = examples[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(date_rec, new_data = examples[, 2, drop = FALSE]))
 })
 
 test_that("empty printing", {
@@ -272,9 +299,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = examples),
-    NA
+  expect_no_error(
+    bake(rec, new_data = examples)
   )
 })
 

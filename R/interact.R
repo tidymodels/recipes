@@ -161,8 +161,10 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
       }
     )
     if (!is_formula(tmp_terms)) {
+      # Have not been able to reach
       cli::cli_abort(
-        "{.arg terms} must be a formula. Not {.obj_type_friendly {term}}."
+        "{.arg terms} must be a formula, not {.obj_type_friendly {term}}.",
+        .internal = TRUE
       )
     }
 
@@ -209,7 +211,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     vars <-
       unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
     var_check <- info[info$variable %in% vars, ]
-    if (any(var_check$type == "nominal")) {
+    if (any(vapply(var_check$type, function(x) "nominal" %in% x, logical(1)))) {
       cli::cli_warn(
         "Categorical variables used in {.fn step_interact} should probably be \\
         avoided; This can lead to differences in dummy variable values that \\
@@ -327,6 +329,7 @@ get_term_names <- function(form, vnames) {
     silent = TRUE
   )
   if (inherits(nms, "try-error")) {
+    # have not been able to reach
     cli::cli_warn(c(
       "!" = "Interaction specification failed for:",
       "*" = deparse(form),
@@ -401,7 +404,11 @@ find_selectors <- function(f) {
     list()
   } else {
     # User supplied incorrect input
-    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
+    # have not been able to reach
+    cli::cli_abort(
+      "Don't know how to handle type {.code {typeof(f)}}.", 
+      .internal = TRUE
+    )
   }
 }
 
@@ -418,7 +425,11 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
-    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
+    # have not been able to reach
+    cli::cli_abort(
+      "Don't know how to handle type {.code {typeof(f)}}.", 
+      .internal = TRUE
+    )
   }
 }
 

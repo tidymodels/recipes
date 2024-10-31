@@ -58,7 +58,7 @@
 #'
 #' @examplesIf rlang::is_installed(c("modeldata"))
 #' data(penguins, package = "modeldata")
-#' penguins <- penguins[complete.cases(penguins), ]
+#' penguins <- penguins[vctrs::vec_detect_complete(penguins), ]
 #' penguins$island <- NULL
 #' penguins$sex <- NULL
 #'

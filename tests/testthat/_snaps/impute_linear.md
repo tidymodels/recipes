@@ -56,6 +56,41 @@
       -- Operations 
       * Linear regression imputation for: Lot_Frontage | Trained, ignored weights
 
+# impute_with errors with nothing selected
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_linear(all_predictors(), impute_with = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_linear()`:
+      ! `impute_with` must not be empty.
+
+# warns if impute_with columns contains missing values
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_impute_linear(mpg, impute_with = imp_vars(
+        disp)) %>% prep()
+    Condition
+      Warning:
+      There were missing values in the predictor(s) used to impute; imputation did not occur.
+
+# errors if there are no rows without missing values
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_linear(all_predictors()) %>% prep()
+    Condition
+      Error in `step_impute_linear()`:
+      Caused by error in `prep()`:
+      ! The data did not have any rows where the imputation values were all complete. Is is thus unable to fit the linear regression model.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = ames_dat[, 2:3])
+    Condition
+      Error in `step_impute_linear()`:
+      ! The following required column is missing from `new_data`: Lot_Frontage.
+
 # empty printing
 
     Code

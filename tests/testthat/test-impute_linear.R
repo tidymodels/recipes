@@ -134,6 +134,35 @@ test_that("case weights", {
   expect_snapshot(rec_prepped)
 })
 
+test_that("impute_with errors with nothing selected", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_impute_linear(all_predictors(), impute_with = NULL) %>%
+      prep()
+  )
+})
+
+test_that("warns if impute_with columns contains missing values", {
+  mtcars$mpg[3] <- NA
+  mtcars$disp[3] <- NA
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>%
+      step_impute_linear(mpg, impute_with = imp_vars(disp)) %>%
+      prep()
+  )
+})
+
+test_that("errors if there are no rows without missing values", {
+  mtcars$am <- NA
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_impute_linear(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -143,8 +172,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(ames_dat)
 
-  expect_error(bake(rec, new_data = ames_dat[, 2:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(
+    error = TRUE,
+    bake(rec, new_data = ames_dat[, 2:3])
+  )
 })
 
 test_that("empty printing", {

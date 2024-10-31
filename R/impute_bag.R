@@ -248,14 +248,14 @@ bake.step_impute_bag <- function(object, new_data, ...) {
   col_names <- names(object$models)
   check_new_data(col_names, object, new_data)
 
-  missing_rows <- !complete.cases(new_data)
+  missing_rows <- !vec_detect_complete(new_data)
   if (!any(missing_rows)) {
     return(new_data)
   }
 
   old_data <- new_data
   for (col_name in col_names) {
-    missing_rows <- !complete.cases(new_data[[col_name]])
+    missing_rows <- !vec_detect_complete(new_data[[col_name]])
     if (!any(missing_rows)) {
       next
     }
