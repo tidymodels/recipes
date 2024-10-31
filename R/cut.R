@@ -139,13 +139,38 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   )
 }
 
-create_full_breaks <- function(var, breaks) {
+create_full_breaks <- function(var, breaks, call = rlang::caller_env()) {
+  if (!is.numeric(var)) {
+    cli::cli_abort(
+      "{.arg var} must be a numeric vector, not {.obj_type_friendly {var}}.",
+      call = call
+    )
+  }
+
+  if (!is.numeric(breaks)) {
+    cli::cli_abort(
+      "{.arg breaks} must be a numeric vector, not {.obj_type_friendly {breaks}}.",
+      call = call
+    )
+  }
+
+  if (any(is.na(var))) {
+    cli::cli_warn(
+      "{.arg var} contains missing values. These will be ignored in break
+       calculations.",
+      call = call
+    )
+    var <- var[!is.na(var)]
+  }
+
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
+
   if (max(var) > max(breaks)) {
     breaks <- c(max(var), breaks)
   }
+
   sort(breaks)
 }
 
