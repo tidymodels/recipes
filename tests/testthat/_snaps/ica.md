@@ -28,6 +28,16 @@
       ! Name collision occurred. The following variable names already exist:
       * `IC1`
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_ica(all_predictors()) %>% prep()
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in fastICA::fastICA(n.comp = 5, X = as.matrix(training[, col_names]), : mocked error
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

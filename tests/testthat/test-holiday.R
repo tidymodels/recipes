@@ -182,6 +182,14 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("error on incorrect holidays argument", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., mtcars) %>%
+      step_holiday(holidays = c("Invalid Holiday", "NewYearsDay"))
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

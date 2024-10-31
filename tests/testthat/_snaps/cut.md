@@ -34,6 +34,25 @@
       Warning:
       This will create a factor with one value only.
 
+# breaks argument are type checked
+
+    Code
+      recipe(~., data = mtcars) %>% step_cut(disp, hp, breaks = TRUE) %>% prep()
+    Condition
+      Error in `step_cut()`:
+      Caused by error in `prep()`:
+      ! `breaks` must be a numeric vector, not `TRUE`.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_cut(disp, hp, breaks = c("100", "200")) %>%
+        prep()
+    Condition
+      Error in `step_cut()`:
+      Caused by error in `prep()`:
+      ! `breaks` must be a numeric vector, not a character vector.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

@@ -54,6 +54,15 @@
       Error in `fixed()`:
       ! No method for determining a value to fix for objects of class: <logical>.
 
+# error on wrong grid names
+
+    Code
+      recipe(~., data = mtcars) %>% step_profile(grid = list(pctl = TRUE, not_len = 100))
+    Condition
+      Error in `step_profile()`:
+      x `grid` should have two named elements len and pctl, not "not_len" and "pctl".
+      i See ?step_profile (`?recipes::step_profile()`) for information.
+
 # empty printing
 
     Code

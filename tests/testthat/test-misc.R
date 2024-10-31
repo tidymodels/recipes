@@ -109,3 +109,36 @@ test_that("vars without role in predictor/outcome avoid string processing", {
   expect_identical(new_lvls$chr_only_lime, list(values = NA, ordered = NA))
 })
 
+test_that("spline error messages", {
+  expect_snapshot(
+    recipes:::spline_msg("Error in if (df < 0) { : missing blah blah\n"),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipes:::spline_msg("craaazzyy {{}}{}{}"),
+    error = TRUE
+  )
+})
+
+test_that("names0() error on non-positive number", {
+  expect_snapshot(
+    error = TRUE,
+    names0(0)
+  )
+})
+
+test_that("ellipse_check() errors on empty selection", {
+  expect_snapshot(
+    error = TRUE,
+    ellipse_check()
+  )
+})
+
+test_that("ellipse_check() errors on empty selection", {
+  x <- 2
+  class(x) <- "dimRedResult"
+  expect_snapshot(
+    error = TRUE,
+    uses_dim_red(x)
+  )
+})

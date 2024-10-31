@@ -52,6 +52,14 @@
       -- Operations 
       * Correlation filter on: V6, V1, V3 | Trained, ignored weights
 
+# corr_filter() warns on many NA values
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_corr(all_predictors()) %>% prep()
+    Condition
+      Warning:
+      Too many correlations are `NA`; skipping correlation filter.
+
 # empty printing
 
     Code

@@ -27,6 +27,25 @@
       ! Name collision occurred. The following variable names already exist:
       * `Sepal.Width`
 
+# error on multiple selections
+
+    Code
+      recipe(~., data = mtcars) %>% step_regex(vs, am)
+    Condition
+      Error in `step_regex()`:
+      x For this step, only a single selector can be used.
+      i The following 2 selectors were used: `~vs` and `~am`.
+
+# checks for grepl arguments
+
+    Code
+      recipe(~., data = mtcars) %>% step_regex(options = list(not_real_option = TRUE))
+    Condition
+      Error in `step_regex()`:
+      x The following elements of `options` are not allowed:
+      * "not_real_option".
+      i Valid options are: "ignore.case", "perl", "fixed", and "useBytes".
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

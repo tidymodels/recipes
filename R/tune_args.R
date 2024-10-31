@@ -6,7 +6,11 @@ tune_args.recipe <- function(object, full = FALSE, ...) {
     return(tune_tbl())
   }
 
-  res <- purrr::map(object$steps, tune_args, full = full)
+  res <- list()
+  for (i in seq_along(object$steps)) {
+    step <- object$steps[[i]]
+    res[[i]] <- tune_args(step, full = full)
+  }
   res <- purrr::list_rbind(res)
 
   tune_tbl(
@@ -35,7 +39,12 @@ tune_args.step <- function(object, full = FALSE, ...) {
   # for deprecated args or those set at prep() time.
   object <- object[!purrr::map_lgl(object, is.null)]
 
-  res <- purrr::map_chr(object, find_tune_id)
+  res <- character(length(object))
+  names(res) <- names(object)
+
+  for (i in seq_along(res)) {
+    res[[i]] <- find_tune_id(object[[i]])
+  }
   res <- ifelse(res == "", names(res), res)
 
   tune_tbl(
