@@ -441,10 +441,4 @@ test_that("bad args", {
       prep(),
     error = TRUE
   )
-  expect_snapshot(
-    recipe(~ x + y + z, data = tr_dat) %>%
-      step_integer(all_predictors(), zero_based = "sure!") %>%
-      prep(),
-    error = TRUE
-  )
 })

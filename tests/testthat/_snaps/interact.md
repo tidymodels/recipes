@@ -123,12 +123,3 @@
       Error in `step_interact()`:
       ! `sep` must be a single string, not `TRUE`.
 
----
-
-    Code
-      recipe(~ x + y + z, data = tr_dat) %>% step_integer(all_predictors(),
-      zero_based = "sure!") %>% prep()
-    Condition
-      Error:
-      ! object 'tr_dat' not found
-
