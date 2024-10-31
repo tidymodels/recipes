@@ -1,67 +1,46 @@
 #' Create a recipe for preprocessing data
 #'
-#' A recipe is a description of the steps to be applied to a data set in
-#'   order to prepare it for data analysis.
+#' A recipe is a description of the steps to be applied to a data set in order
+#' to prepare it for data analysis.
 #'
-#' @aliases recipe recipe.default recipe.formula
-#' @export
-recipe <- function(x, ...) {
-  UseMethod("recipe")
-}
-
-#' @rdname recipe
-#' @export
-recipe.default <- function(x, ...) {
-
-  # Doing this here since it should work for all types of Matrix classes
-  if (is_sparse_matrix(x)) {
-    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
-    return(recipe(x, ...))
-  }
-
-  cli::cli_abort(c(
-    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
-    i = "{.arg x} is {.obj_type_friendly {x}}."
-  ))
-}
-
-#' @rdname recipe
-#' @param vars A character string of column names corresponding to variables
-#'   that will be used in any context (see below)
-#' @param roles A character string (the same length of `vars`) that
-#'   describes a single role that the variable will take. This value could be
-#'   anything but common roles are `"outcome"`, `"predictor"`,
-#'   `"case_weight"`, or `"ID"`
+#' @param x,data A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package of the *template* data set. See [sparse_data] for more information
+#'   about use of sparse data. (see below).
 #' @param ... Further arguments passed to or from other methods (not currently
 #'   used).
 #' @param formula A model formula. No in-line functions should be used here
-#'  (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types of
-#'  transformations should be enacted using `step` functions in this package.
-#'  Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-#'  `cbind`; see Examples). A model formula may not be the best choice for
-#'  high-dimensional data with many columns, because of problems with memory.
-#' @param x,data A data frame, tibble, or sparse matrix from the `Matrix`
-#'   package of the *template* data set. See [sparse_data] for more information
-#'   about use of sparse data.
-#'   (see below).
-#' @return An object of class `recipe` with sub-objects:
-#'   \item{var_info}{A tibble containing information about the original data
-#'   set columns}
-#'   \item{term_info}{A tibble that contains the current set of terms in the
-#'   data set. This initially defaults to the same data contained in
-#'   `var_info`.}
-#'   \item{steps}{A list of `step`  or `check` objects that define the sequence of
-#'   preprocessing operations that will be applied to data. The default value is
-#'   `NULL`}
-#'   \item{template}{A tibble of the data. This is initialized to be the same
-#'   as the data given in the `data` argument but can be different after
-#'   the recipe is trained.}
+#'   (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types
+#'   of transformations should be enacted using `step` functions in this
+#'   package. Dots are allowed as are simple multivariate outcome terms (i.e. no
+#'   need for [cbind()]; see Examples). A model formula may not be the best
+#'   choice for high-dimensional data with many columns, because of problems
+#'   with memory.
+#' @param vars A character string of column names corresponding to variables
+#'   that will be used in any context (see below)
+#' @param roles A character string (the same length of `vars`) that describes a
+#'   single role that the variable will take. This value could be anything but
+#'   common roles are `"outcome"`, `"predictor"`, `"case_weight"`, or `"ID"`.
 #'
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
-#' @export
-#' @examplesIf rlang::is_installed("modeldata")
+#' @return
 #'
+#' An object of class `recipe` with sub-objects:
+#' \item{var_info}{A tibble containing information about the original data set
+#' columns.}
+#' \item{term_info}{A tibble that contains the current set of terms in the
+#' data set. This initially defaults to the same data contained in
+#' `var_info`.}
+#' \item{steps}{A list of `step` or `check` objects that define the sequence
+#' of preprocessing operations that will be applied to data. The default value
+#' is `NULL`.}
+#' \item{template}{A tibble of the data. This is initialized to be the same as
+#' the data given in the `data` argument but can be different after the recipe
+#' is trained.}
+#'
+#' @seealso [prep()] and [bake()]
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' # formula example with single outcome:
 #' data(biomass, package = "modeldata")
 #'
@@ -104,6 +83,29 @@ recipe.default <- function(x, ...) {
 #'   update_role(sample, new_role = "id variable") %>%
 #'   update_role(dataset, new_role = "splitting indicator")
 #' rec
+#' @export
+recipe <- function(x, ...) {
+  UseMethod("recipe")
+}
+
+#' @rdname recipe
+#' @export
+recipe.default <- function(x, ...) {
+
+  # Doing this here since it should work for all types of Matrix classes
+  if (is_sparse_matrix(x)) {
+    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
+    return(recipe(x, ...))
+  }
+
+  cli::cli_abort(c(
+    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
+    i = "{.arg x} is {.obj_type_friendly {x}}."
+  ))
+}
+
+#' @rdname recipe
+#' @export
 recipe.data.frame <-
   function(x,
            formula = NULL,
@@ -313,65 +315,63 @@ inline_check <- function(x, data, call) {
 }
 
 
-#' @aliases prep prep.recipe
-#' @param x an object
-#' @param ... further arguments passed to or from other methods (not currently
-#'   used).
-#' @export
-prep <- function(x, ...) {
-  UseMethod("prep")
-}
-
 #' Estimate a preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation, estimate the required
-#'   parameters from a training set that can be later applied to other data
-#'   sets.
+#' parameters from a training set that can be later applied to other data sets.
+#'
+#' @param x an [recipe()] object.
+#' @param ... further arguments passed to or from other methods (not currently
+#'   used).
 #' @param training A data frame, tibble, or sparse matrix from the `Matrix`
 #'   package, that will be used to estimate parameters for preprocessing. See
 #'   [sparse_data] for more information about use of sparse data.
 #' @param fresh A logical indicating whether already trained operation should be
 #'   re-trained. If `TRUE`, you should pass in a data set to the argument
 #'   `training`.
-#' @param verbose A logical that controls whether progress is reported as operations
-#'   are executed.
+#' @param verbose A logical that controls whether progress is reported as
+#'   operations are executed.
+#' @param retain A logical: should the *preprocessed* training set be saved into
+#'   the `template` slot of the recipe after training? This is a good idea if
+#'   you want to add more steps later but want to avoid re-training the existing
+#'   steps. Also, it is advisable to use `retain = TRUE` if any steps use the
+#'   option `skip = FALSE`. **Note** that this can make the final recipe size
+#'   large. When `verbose = TRUE`, a message is written with the approximate
+#'   object size in memory but may be an underestimate since it does not take
+#'   environments into account.
 #' @param log_changes A logical for printing a summary for each step regarding
-#'  which (if any) columns were added or removed during training.
-#' @param retain A logical: should the *preprocessed* training set be saved
-#'   into the `template` slot of the recipe after training? This is a good
-#'     idea if you want to add more steps later but want to avoid re-training
-#'     the existing steps. Also, it is advisable to use `retain = TRUE`
-#'     if any steps use the option `skip = FALSE`. **Note** that this can make
-#'     the final recipe size large. When `verbose = TRUE`, a message is written
-#'     with the approximate object size in memory but may be an underestimate
-#'     since it does not take environments into account.
+#'   which (if any) columns were added or removed during training.
 #' @param strings_as_factors A logical: should character columns that have role
-#'   "predictor" or "outcome" be converted to factors? This affects the
+#'   `"predictor"` or `"outcome"` be converted to factors? This affects the
 #'   preprocessed training set (when `retain = TRUE`) as well as the results of
-#'  `bake.recipe`.
-#' @return A recipe whose step objects have been updated with the required
-#'   quantities (e.g. parameter estimates, model objects, etc). Also, the
-#'   `term_info` object is likely to be modified as the operations are
-#'   executed.
+#'   [bake()].
+#'
 #' @details
 #'
 #' Given a data set, this function estimates the required quantities and
-#' statistics needed by any operations. [prep()] returns an updated recipe
-#' with the estimates. If you are using a recipe as a preprocessor for modeling,
-#' we **highly recommend** that you use a `workflow()` instead of manually
+#' statistics needed by any operations. [prep()] returns an updated recipe with
+#' the estimates. If you are using a recipe as a preprocessor for modeling, we
+#' **highly recommend** that you use a `workflow()` instead of manually
 #' estimating a recipe (see the example in [recipe()]).
 #'
-#' Note that missing data is handled in the steps; there is no global
-#'   `na.rm` option at the recipe level or in [prep()].
+#' Note that missing data is handled in the steps; there is no global `na.rm`
+#' option at the recipe level or in [prep()].
 #'
-#' Also, if a recipe has been trained using [prep()] and then steps
-#'   are added, [prep()] will only update the new operations. If
-#'   `fresh = TRUE`, all of the operations will be (re)estimated.
+#' Also, if a recipe has been trained using [prep()] and then steps are added,
+#' [prep()] will only update the new operations. If `fresh = TRUE`, all of the
+#' operations will be (re)estimated.
 #'
-#' As the steps are executed, the `training` set is updated. For example,
-#'   if the first step is to center the data and the second is to scale the
-#'   data, the step for scaling is given the centered data.
+#' As the steps are executed, the `training` set is updated. For example, if the
+#' first step is to center the data and the second is to scale the data, the
+#' step for scaling is given the centered data.
 #'
+#' @return
+#'
+#' A recipe whose step objects have been updated with the required quantities
+#' (e.g. parameter estimates, model objects, etc). Also, the `term_info` object
+#' is likely to be modified as the operations are executed.
+#'
+#' @seealso [recipe()] and [bake()]
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
@@ -393,6 +393,11 @@ prep <- function(x, ...) {
 #' prep(ames_rec, verbose = TRUE)
 #'
 #' prep(ames_rec, log_changes = TRUE)
+#' @export
+prep <- function(x, ...) {
+  UseMethod("prep")
+}
+
 #' @rdname prep
 #' @export
 prep.recipe <-
@@ -599,51 +604,51 @@ prep.recipe <-
     x
   }
 
-#' @rdname bake
-#' @aliases bake bake.recipe
-#' @export
-bake <- function(object, ...) {
-  UseMethod("bake")
-}
-
 #' Apply a trained preprocessing recipe
 #'
-#' For a recipe with at least one preprocessing operation that has been trained by
-#'   [prep()], apply the computations to new data.
-#' @param object A trained object such as a [recipe()] with at least
-#'   one preprocessing operation.
+#' For a recipe with at least one preprocessing operation that has been trained
+#' by [prep()], apply the computations to new data.
+#'
+#' @param object A trained object such as a [recipe()] with at least one
+#'   preprocessing operation.
+#' @param ... One or more selector functions to choose which variables will be
+#'   returned by the function. See [selections()] for more details. If no
+#'   selectors are given, the default is to use [dplyr::everything()].
 #' @param new_data A data frame, tibble, or sparse matrix from the `Matrix`
 #'   package for whom the preprocessing will be applied. If `NULL` is given to
 #'   `new_data`, the pre-processed _training data_ will be returned (assuming
 #'   that `prep(retain = TRUE)` was used). See [sparse_data] for more
 #'   information about use of sparse data.
-#' @param ... One or more selector functions to choose which variables will be
-#'   returned by the function. See [selections()] for more details.
-#'   If no selectors are given, the default is to use
-#'   [dplyr::everything()].
-#' @param composition Either "tibble", "matrix", "data.frame", or
-#'  "dgCMatrix" for the format of the processed data set. Note that
-#'  all computations during the baking process are done in a
-#'  non-sparse format. Also, note that this argument should be
-#'  called **after** any selectors and the selectors should only
-#'  resolve to numeric columns (otherwise an error is thrown).
-#' @return A tibble, matrix, or sparse matrix that may have different
-#'  columns than the original columns in `new_data`.
-#' @details [bake()] takes a trained recipe and applies its operations to a
-#'  data set to create a design matrix. If you are using a recipe as a
-#'  preprocessor for modeling, we **highly recommend** that you use a `workflow()`
-#'  instead of manually applying a recipe (see the example in [recipe()]).
+#' @param composition Either `"tibble"`, `"matrix"`, `"data.frame"`, or
+#'   `"dgCMatrix"``for the format of the processed data set. Note that all
+#'   computations during the baking process are done in a non-sparse format.
+#'   Also, note that this argument should be called **after** any selectors and
+#'   the selectors should only resolve to numeric columns (otherwise an error is
+#'   thrown).
 #'
-#' If the data set is not too large, time can be saved by using the
-#'  `retain = TRUE` option of [prep()]. This stores the processed version of the
-#'  training set. With this option set, `bake(object, new_data = NULL)`
-#'  will return it for free.
+#' @details
 #'
-#' Also, any steps with `skip = TRUE` will not be applied to the
-#'   data when [bake()] is invoked with a data set in `new_data`.
-#'   `bake(object, new_data = NULL)` will always have all of the steps applied.
-#' @seealso [recipe()], [prep()]
-#' @rdname bake
+#' [bake()] takes a trained recipe and applies its operations to a data set to
+#' create a design matrix. If you are using a recipe as a preprocessor for
+#' modeling, we **highly recommend** that you use a `workflow()` instead of
+#' manually applying a recipe (see the example in [recipe()]).
+#'
+#' If the data set is not too large, time can be saved by using the `retain =
+#' TRUE` option of [prep()]. This stores the processed version of the training
+#' set. With this option set, `bake(object, new_data = NULL)` will return it for
+#' free.
+#'
+#' Also, any steps with `skip = TRUE` will not be applied to the data when
+#' [bake()] is invoked with a data set in `new_data`. `bake(object, new_data =
+#' NULL)` will always have all of the steps applied.
+#'
+#' @return
+#'
+#' A tibble, matrix, or sparse matrix that may have different columns than the
+#' original columns in `new_data`.
+#'
+#' @seealso [recipe()] and [prep()]
+#'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
@@ -667,6 +672,13 @@ bake <- function(object, ...) {
 #' # only return selected variables:
 #' bake(ames_rec, new_data = head(ames), all_numeric_predictors())
 #' bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
+#' @export
+bake <- function(object, ...) {
+  UseMethod("bake")
+}
+
+
+#' @rdname bake
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
