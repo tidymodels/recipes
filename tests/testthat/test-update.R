@@ -23,7 +23,7 @@ test_that("cannot update trained steps", {
 })
 
 test_that("update() errors on duplicate assignments", {
-  step <- recipes::step("stp", x = 4, trained = FALSE)
+  step <- recipes::step("stp", x = 4, trained = TRUE, id = "a", skip = TRUE, role = "a")
 
   expect_snapshot(
     error = TRUE,
