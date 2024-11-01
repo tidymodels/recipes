@@ -127,3 +127,12 @@
       * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
       * ICA extraction with: carbon and hydrogen | Trained
 
+# bad args
+
+    Code
+      rec %>% step_ica(carbon, hydrogen, prefix = 2) %>% prep()
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 2.
+

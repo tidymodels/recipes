@@ -241,3 +241,23 @@
       -- Operations 
       * Dummy variables from: city and zip | Trained
 
+# bad args
+
+    Code
+      recipe(~ city + sqft + price, data = Sacramento) %>% step_dummy(city, one_hot = 2) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! `one_hot` must be `TRUE` or `FALSE`, not the number 2.
+
+---
+
+    Code
+      recipe(~ city + sqft + price, data = Sacramento) %>% step_dummy(city, naming = NULL) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
+

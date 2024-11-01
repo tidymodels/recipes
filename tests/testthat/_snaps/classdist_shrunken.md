@@ -90,6 +90,26 @@
       Caused by error in `prep()`:
       ! `sd_offset` must be a number between 0 and 1, not the number -1.
 
+---
+
+    Code
+      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
+        all_numeric_predictors(), class = "class", log = 2) %>% prep()
+    Condition
+      Error in `step_classdist_shrunken()`:
+      Caused by error in `prep()`:
+      ! `x$log` must be `TRUE` or `FALSE`, not the number 2.
+
+---
+
+    Code
+      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
+        all_numeric_predictors(), class = "class", prefix = 2) %>% prep()
+    Condition
+      Error in `step_classdist_shrunken()`:
+      Caused by error in `prep()`:
+      ! `x$prefix` must be a single string, not the number 2.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

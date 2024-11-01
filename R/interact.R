@@ -114,6 +114,7 @@ step_interact <-
 ## Initializes a new object
 step_interact_new <-
   function(terms, role, trained, objects, sep, keep_original_cols, skip, id) {
+    check_string(sep, call = rlang::call2("step_interact"))
     step(
       subclass = "interact",
       terms = terms,
@@ -406,7 +407,7 @@ find_selectors <- function(f) {
     # User supplied incorrect input
     # have not been able to reach
     cli::cli_abort(
-      "Don't know how to handle type {.code {typeof(f)}}.", 
+      "Don't know how to handle type {.code {typeof(f)}}.",
       .internal = TRUE
     )
   }
@@ -427,7 +428,7 @@ replace_selectors <- function(x, elem, value) {
     # User supplied incorrect input
     # have not been able to reach
     cli::cli_abort(
-      "Don't know how to handle type {.code {typeof(f)}}.", 
+      "Don't know how to handle type {.code {typeof(f)}}.",
       .internal = TRUE
     )
   }

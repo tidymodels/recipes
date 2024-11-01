@@ -144,7 +144,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(imputed_trained, new_data = biomass[, c(-3, -9)])
   )
 })
@@ -208,3 +208,27 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
 })
+
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_bag(
+        all_predictors(),
+        trees = -1
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_bag(
+        all_predictors(),
+        seed_val = 1:4
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+})
+

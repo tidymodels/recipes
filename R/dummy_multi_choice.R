@@ -12,23 +12,23 @@
 #'  This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
-#' 
+#'
 #' @details
-#' The overall proportion (or total counts) of the categories are computed. The 
-#' `"other"` category is used in place of any categorical levels whose 
+#' The overall proportion (or total counts) of the categories are computed. The
+#' `"other"` category is used in place of any categorical levels whose
 #' individual proportion (or frequency) in the training set is less than
 #' `threshold`.
-#' 
+#'
 #' This step produces a number of columns, based on the number of categories it
-#' finds. The naming of the columns is determined by the function based on the 
-#' `naming` argument. The default is to return `<prefix>_<category name>`. By 
-#' default `prefix` is `NULL`, which means the name of the first column  
+#' finds. The naming of the columns is determined by the function based on the
+#' `naming` argument. The default is to return `<prefix>_<category name>`. By
+#' default `prefix` is `NULL`, which means the name of the first column
 #' selected will be used in place.
 #'
 #' @template dummy-naming
 #'
 #' @details
-#' 
+#'
 #' ```{r, echo = FALSE, results="asis"}
 #' step <- "step_dummy_multi_choice"
 #' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
@@ -74,7 +74,7 @@
 #'
 #' bake(dummy_multi_choice_rec2, new_data = NULL)
 #' tidy(dummy_multi_choice_rec2, number = 1)
-#' 
+#'
 #' @export
 step_dummy_multi_choice <- function(recipe,
                                     ...,
@@ -89,14 +89,6 @@ step_dummy_multi_choice <- function(recipe,
                                     keep_original_cols = FALSE,
                                     skip = FALSE,
                                     id = rand_id("dummy_multi_choice")) {
-
-  if (!is_tune(threshold)) {
-    if (threshold >= 1) {
-      check_number_whole(threshold)
-    } else {
-      check_number_decimal(threshold, min = 0)
-    }
-  }
 
   add_step(
     recipe,
@@ -141,6 +133,13 @@ step_dummy_multi_choice_new <-
 prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("nominal", "logical"))
+  if (x$threshold >= 1) {
+    check_number_whole(x$threshold, arg = "threshold")
+  } else {
+    check_number_decimal(x$threshold, min = 0, arg = "threshold")
+  }
+  check_string(x$other, arg = "other", allow_null = TRUE)
+  check_function(x$naming, arg = "naming", allow_empty = FALSE)
 
   levels <- purrr::map(training[, col_names], levels)
   levels <- vctrs::list_unchop(levels, ptype = character(), name_spec = rlang::zap())

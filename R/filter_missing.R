@@ -91,6 +91,7 @@ step_filter_missing_new <-
 #' @export
 prep.step_filter_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_number_decimal(x$threshold, min = 0, max = 1, arg = "threshold")
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

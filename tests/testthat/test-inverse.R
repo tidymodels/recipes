@@ -92,3 +92,12 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_inverse(x1, x2, x3, x4, offset = function(x) x/3) %>%
+      prep(),
+    error = TRUE
+  )
+})

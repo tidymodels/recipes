@@ -122,3 +122,32 @@
       -- Operations 
       * Regular expression counts using: description | Trained
 
+# bad args
+
+    Code
+      recipe(~description, covers) %>% step_count(description, pattern = character(0)) %>%
+        prep()
+    Condition
+      Error in `step_count()`:
+      ! `pattern` must be a single string, not an empty character vector.
+
+---
+
+    Code
+      recipe(~description, covers) %>% step_count(description, pattern = "(rock|stony)",
+        result = letters) %>% prep()
+    Condition
+      Error in `step_count()`:
+      Caused by error in `prep()`:
+      ! `result` must be a single string, not a character vector.
+
+---
+
+    Code
+      recipe(~description, covers) %>% step_count(description, pattern = "(rock|stony)",
+        normalize = "yes") %>% prep()
+    Condition
+      Error in `step_count()`:
+      Caused by error in `prep()`:
+      ! `normalize` must be `TRUE` or `FALSE`, not the string "yes".
+

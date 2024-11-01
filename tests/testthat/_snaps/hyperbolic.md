@@ -1,7 +1,20 @@
-# wrong function
+# wrong arguments
 
-    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
-    i Did you mean "cosh"?
+    Code
+      step_hyperbolic(rec, func = "cos") %>% prep()
+    Condition
+      Error in `step_hyperbolic()`:
+      ! `func` must be one of "sinh", "cosh", or "tanh", not "cos".
+      i Did you mean "cosh"?
+
+---
+
+    Code
+      step_hyperbolic(rec, inverse = 2) %>% prep()
+    Condition
+      Error in `step_hyperbolic()`:
+      Caused by error in `prep()`:
+      ! `x$inverse` must be `TRUE` or `FALSE`, not the number 2.
 
 # bake method errors when needed non-standard role columns are missing
 

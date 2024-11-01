@@ -18,6 +18,16 @@
       x All columns selected for the step should be double or integer.
       * 1 factor variable found: `cat_var`
 
+---
+
+    Code
+      recipe(~., x) %>% step_cut(num_var, breaks = 2, include_outside_range = 2) %>%
+        prep()
+    Condition
+      Error in `step_cut()`:
+      Caused by error in `prep()`:
+      ! `include_outside_range` must be `TRUE` or `FALSE`, not the number 2.
+
 # full_breaks_check will give warnings
 
     Code

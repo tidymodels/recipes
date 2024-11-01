@@ -103,3 +103,23 @@
       -- Operations 
       * Multi-choice dummy variables from: lang_1, lang_2, lang_3, ... | Trained
 
+# bad args
+
+    Code
+      dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+        step_dummy_multi_choice(starts_with("lang"), other = 2) %>% prep()
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `prep()`:
+      ! `other` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+        step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>% prep()
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
+

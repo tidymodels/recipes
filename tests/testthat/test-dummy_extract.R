@@ -396,3 +396,38 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~colors, data = color_examples) %>%
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", other = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~colors, data = color_examples) %>%
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", other = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~colors, data = color_examples) %>%
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", sep = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~colors, data = color_examples) %>%
+      step_dummy_extract(colors, pattern = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~colors, data = color_examples) %>%
+      step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')", naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+})
+

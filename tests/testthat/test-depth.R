@@ -187,3 +187,22 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+  skip_if_not_installed("ddalpha")
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_depth(all_numeric_predictors(), class = "Species",
+                 metric = "circular") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_depth(all_numeric_predictors(), class = "Species",
+                 prefix = 0L) %>%
+      prep(),
+    error = TRUE
+  )
+})
+

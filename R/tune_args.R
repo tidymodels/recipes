@@ -74,14 +74,16 @@ tune_tbl <- function(name = character(),
                      source = character(),
                      component = character(),
                      component_id = character(),
-                     full = FALSE) {
+                     full = FALSE,
+                     call = rlang::caller_env()) {
   complete_id <- id[!is.na(id)]
   dups <- duplicated(complete_id)
   if (any(dups)) {
     offenders <- unique(complete_id[dups])
     cli::cli_abort(
       "There are duplicate {.field id} values listed in {.fn tune}: \\
-      {.val {offenders}}."
+      {.val {offenders}}.",
+      call = call
     )
   }
 

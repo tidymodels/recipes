@@ -65,7 +65,10 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' @param ordinal A logical; was the original factor ordered?
 #' @param sep A single character value for the separator between the names and
 #'  levels.
-#'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
 #' @details When using `dummy_names()`, factor levels that are not valid
 #'  variable names (e.g. "some text  with spaces") will be changed to valid
 #'  names by [base::make.names()]; see example below. This function will also
@@ -98,9 +101,8 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #'
 #' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
-names0 <- function(num, prefix = "x") {
-  check_number_whole(num, min = 1)
-
+names0 <- function(num, prefix = "x", call = rlang::caller_env()) {
+  check_number_whole(num, min = 1, call = call)
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
@@ -634,7 +636,7 @@ rand_id <- function(prefix = "step", len = 5) {
 }
 
 
-check_nominal_type <- function(x, lvl) {
+check_nominal_type <- function(x, lvl, call = rlang::caller_env()) {
   all_act_cols <- names(x)
 
   # What columns do we expect to be factors based on the data
@@ -666,7 +668,8 @@ check_nominal_type <- function(x, lvl) {
                 ",
           "*" = "{.and {.var {was_factor}}}",
           "i" = "This may cause errors when processing new data."
-        )
+        ),
+        call = call
       )
     }
   }
@@ -872,7 +875,7 @@ check_new_data <- function(req, object, new_data) {
   step_cls <- class(object)[1]
   step_id <- object$id
   cli::cli_abort(
-    "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing 
+    "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing
     from {.arg new_data}: {col_diff}.",
     call = rlang::call2(step_cls)
   )

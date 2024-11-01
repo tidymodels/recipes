@@ -240,3 +240,38 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 4L)
 })
+
+test_that("bad args", {
+  skip_if_not_installed("kernlab")
+
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_poly(all_numeric_predictors(), num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_poly(all_numeric_predictors(), scale_factor = -1.1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_poly(all_numeric_predictors(), offset = "a") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_poly(all_numeric_predictors(), prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+})

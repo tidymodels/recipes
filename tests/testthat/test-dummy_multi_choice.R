@@ -248,3 +248,21 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
 })
+
+
+test_that("bad args", {
+
+  expect_snapshot(
+    dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+      step_dummy_multi_choice(starts_with("lang"), other = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+      step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+})
+

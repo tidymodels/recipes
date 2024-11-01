@@ -174,7 +174,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(ica_extract_trained, new_data = biomass_tr[, c(-3)])
   )
 })
@@ -311,4 +311,16 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+
+test_that("bad args", {
+  skip_if_not_installed("fastICA")
+
+  expect_snapshot(
+    rec %>%
+      step_ica(carbon, hydrogen, prefix = 2) %>%
+      prep(),
+    error = TRUE
+  )
 })

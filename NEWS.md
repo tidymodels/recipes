@@ -8,6 +8,8 @@
 
 * `prep.recipe(..., strings_as_factors = TRUE)` now only converts string variables that have role "predictor" or "outcome". (@dajmcdon, #1358, #1376)
 
+* All steps and checks now require arguments `trained`, `skip`, `role`, and `id` at all times.
+
 # recipes 1.1.0
 
 ## Improvements

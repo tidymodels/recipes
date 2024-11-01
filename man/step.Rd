@@ -5,16 +5,17 @@
 \alias{check}
 \title{\code{step} sets the class of the \code{step} and \code{check} is for checks.}
 \usage{
-step(subclass, ..., .prefix = "step_")
+step(subclass, ..., .prefix = "step_", call = rlang::caller_env(2))
 
-check(subclass, ..., .prefix = "check_")
+check(subclass, ..., .prefix = "check_", call = rlang::caller_env(2))
 }
 \arguments{
 \item{subclass}{A character string for the resulting class. For example,
 if \code{subclass = "blah"} the step object that is returned has class
 \code{step_blah} or \code{check_blah} depending on the context.}
 
-\item{...}{All arguments to the operator that should be returned.}
+\item{...}{All arguments to the operator that should be returned. Required
+arguments are \code{trained}, \code{skip}, and \code{id}.}
 
 \item{.prefix}{Prefix to the subclass created.}
 }

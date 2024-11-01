@@ -269,3 +269,17 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
 })
+
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_mean(
+        all_predictors(),
+        trim = 0.6
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+})
+

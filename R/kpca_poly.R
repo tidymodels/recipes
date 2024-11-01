@@ -6,7 +6,8 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param degree,scale_factor,offset Numeric values for the polynomial kernel function.
+#' @param degree,scale_factor,offset Numeric values for the polynomial kernel
+#' function. See the documentation at [kernlab::polydot()].
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
@@ -124,6 +125,11 @@ step_kpca_poly_new <-
 prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$degree, arg = "degree", min = 1)
+  check_number_decimal(x$scale_factor, arg = "scale_factor", min = 0)
+  check_number_decimal(x$offset, arg = "offset")
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-

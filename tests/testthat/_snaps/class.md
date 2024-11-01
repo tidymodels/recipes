@@ -151,3 +151,19 @@
       -- Operations 
       * Checking the class(es) for: cyl, disp, hp, drat, wt, qsec, ... | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), class_nm = 1)
+    Condition
+      Error:
+      ! `class_nm` must be a character vector or `NULL`, not the number 1.
+
+---
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), allow_additional = "yes")
+    Condition
+      Error:
+      ! `allow_additional` must be `TRUE` or `FALSE`, not the string "yes".
+

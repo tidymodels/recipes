@@ -209,3 +209,20 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+  skip_if_not_installed("kernlab")
+
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca(all_numeric_predictors(), num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca(all_numeric_predictors(), prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+})

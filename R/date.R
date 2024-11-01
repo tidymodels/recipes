@@ -160,6 +160,9 @@ step_date_new <-
 prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("date", "datetime"))
+  check_bool(x$abbr, arg = "abbr")
+  check_bool(x$label, arg = "label")
+  check_bool(x$ordinal, arg = "ordinal")
 
   step_date_new(
     terms = x$terms,

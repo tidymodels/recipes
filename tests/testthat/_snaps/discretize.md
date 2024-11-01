@@ -74,7 +74,7 @@
     Condition
       Error in `step_discretize()`:
       Caused by error in `recipes::discretize()`:
-      ! There should be at least 2 `cuts` but 1 was supplied.
+      ! `cuts` must be a whole number larger than or equal to 2, not the number 1.
 
 ---
 
@@ -118,6 +118,26 @@
       
       -- Operations 
       * Discretize numeric variables from: x1 | Trained
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_discretize(disp, num_breaks = 0) %>%
+        prep()
+    Condition
+      Error in `step_discretize()`:
+      Caused by error in `prep()`:
+      ! `num_breaks` must be a whole number larger than or equal to 1, not the number 0.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_discretize(disp, min_unique = -1) %>%
+        prep()
+    Condition
+      Error in `step_discretize()`:
+      Caused by error in `prep()`:
+      ! `min_unique` must be a whole number larger than or equal to 2, not the number -1.
 
 # war when less breaks are generated
 

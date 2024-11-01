@@ -364,7 +364,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors())
   )
 })
@@ -453,4 +453,23 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+
+test_that("bad args", {
+  skip_if_not_installed("modeldata")
+  data(Sacramento, package = "modeldata")
+
+  expect_snapshot(
+    recipe(~ city + sqft + price, data = Sacramento) %>%
+      step_dummy(city, one_hot = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ city + sqft + price, data = Sacramento) %>%
+      step_dummy(city, naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
 })

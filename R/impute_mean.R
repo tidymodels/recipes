@@ -129,6 +129,7 @@ trim <- function(x, trim) {
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$trim, arg = "trim", min = 0, max = 1/2)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

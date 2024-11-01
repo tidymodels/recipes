@@ -127,3 +127,23 @@
       -- Operations 
       * Isomap approximation with: x1, x2, x3 | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = mtcars) %>% step_isomap(all_predictors(), num_terms = 2,
+      neighbors = -1 / 3) %>% prep()
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `prep()`:
+      ! `neighbors` must be a whole number, not the number -0.33.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_isomap(all_predictors(), prefix = NULL) %>%
+        prep()
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not `NULL`.
+

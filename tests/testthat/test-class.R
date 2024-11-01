@@ -169,3 +169,16 @@ test_that("printing", {
   expect_snapshot(print(rec7))
   expect_snapshot(prep(rec7))
 })
+
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), class_nm = 1),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), allow_additional = "yes"),
+    error = TRUE
+  )
+})
+

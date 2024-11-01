@@ -5,12 +5,15 @@
 # ---
 # repo: r-lib/rlang
 # file: standalone-obj-type.R
-# last-updated: 2023-05-01
+# last-updated: 2024-02-14
 # license: https://unlicense.org
 # imports: rlang (>= 1.1.0)
 # ---
 #
 # ## Changelog
+#
+# 2024-02-14:
+# - `obj_type_friendly()` now works for S7 objects.
 #
 # 2023-05-01:
 # - `obj_type_friendly()` now only displays the first class of S3 objects.
@@ -267,19 +270,19 @@ vec_type_friendly <- function(x, length = FALSE) {
 #' Return OO type
 #' @param x Any R object.
 #' @return One of `"bare"` (for non-OO objects), `"S3"`, `"S4"`,
-#'   `"R6"`, or `"R7"`.
+#'   `"R6"`, or `"S7"`.
 #' @noRd
 obj_type_oo <- function(x) {
   if (!is.object(x)) {
     return("bare")
   }
 
-  class <- inherits(x, c("R6", "R7_object"), which = TRUE)
+  class <- inherits(x, c("R6", "S7_object"), which = TRUE)
 
   if (class[[1]]) {
     "R6"
   } else if (class[[2]]) {
-    "R7"
+    "S7"
   } else if (isS4(x)) {
     "S4"
   } else {

@@ -90,12 +90,7 @@ discretize.numeric <-
            ...) {
     unique_vals <- length(unique(x))
     missing_lab <- "_missing"
-
-    if (cuts < 2) {
-      cli::cli_abort(
-        "There should be at least 2 {.arg cuts} but {.val {cuts}} was supplied."
-      )
-    }
+    check_number_whole(cuts, min = 2)
 
     dots <- list(...)
     if (keep_na) {
@@ -115,8 +110,8 @@ discretize.numeric <-
       breaks <- unique(breaks)
       if (num_breaks > length(breaks)) {
         cli::cli_warn(
-          "Not enough data for {cuts} breaks. \\
-          Only {length(breaks)} breaks were used."
+          "Not enough data for {cuts} breaks. Only {length(breaks)} breaks
+           were used."
         )
       }
       if (infs) {
@@ -129,8 +124,8 @@ discretize.numeric <-
         prefix <- prefix[1]
         if (make.names(prefix) != prefix && !is.null(prefix)) {
           cli::cli_warn(
-            "The prefix {.val {prefix}} is not a valid R name. \\
-            It has been changed to {.val {make.names(prefix)}}."
+            "The prefix {.val {prefix}} is not a valid R name. It has been
+            changed to {.val {make.names(prefix)}}."
           )
           prefix <- make.names(prefix)
         }
@@ -150,8 +145,8 @@ discretize.numeric <-
     } else {
       out <- list(bins = 0)
       cli::cli_warn(
-        "Data not binned; too few unique values per bin. \\
-        Adjust {.arg min_unique} as needed."
+        "Data not binned; too few unique values per bin. Adjust
+         {.arg min_unique} as needed."
       )
     }
     class(out) <- "discretize"
@@ -301,8 +296,10 @@ step_discretize <- function(recipe,
                             options = list(prefix = "bin"),
                             skip = FALSE,
                             id = rand_id("discretize")) {
-  if (any(names(options) %in% c("cuts", "min_unique"))) {
+  if (any(names(options) == "cuts")) {
     num_breaks <- options$cuts
+  }
+  if (any(names(options) == "min_unique")) {
     min_unique <- options$min_unique
   }
 
@@ -348,6 +345,8 @@ bin_wrapper <- function(x, args) {
 prep.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$num_breaks, min = 1, arg = "num_breaks")
+  check_number_whole(x$min_unique, min = 2, arg = "min_unique")
 
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     cli::cli_warn(

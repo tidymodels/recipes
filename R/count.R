@@ -128,6 +128,9 @@ step_count_new <-
 prep.step_count <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
+  check_string(x$pattern, allow_empty = TRUE, arg = "pattern")
+  check_string(x$result,  allow_empty = FALSE, arg = "result")
+  check_bool(x$normalize, arg = "normalize")
 
   step_count_new(
     terms = x$terms,

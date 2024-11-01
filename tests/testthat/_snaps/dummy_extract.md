@@ -140,3 +140,53 @@
       -- Operations 
       * Extract patterns from: medium | Trained
 
+# bad args
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        other = 2) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `other` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        other = 2) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `other` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        sep = 2) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `sep` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = 2) %>%
+        prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `pattern` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        naming = NULL) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
+

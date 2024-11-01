@@ -137,3 +137,19 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~ x + y + z, data = tr_dat) %>%
+      step_integer(all_predictors(), strict = "yes") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ x + y + z, data = tr_dat) %>%
+      step_integer(all_predictors(), zero_based = "sure!") %>%
+      prep(),
+    error = TRUE
+  )
+})

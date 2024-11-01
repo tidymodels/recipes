@@ -277,3 +277,32 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_classdist(all_predictors(), class = "Species", mean_func = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_classdist(all_predictors(), class = "Species", cov_func = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_classdist(all_predictors(), class = "Species", prefix = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_classdist(all_predictors(), class = "Species", pool = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+})
+

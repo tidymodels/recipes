@@ -7,10 +7,10 @@
 #' @inheritParams step_center
 #' @inheritParams step_other
 #' @inheritParams step_dummy
-#' @param sep Character vector containing a regular expression to use
+#' @param sep Character string containing a regular expression to use
 #'   for splitting. [strsplit()] is used to perform the split. `sep` takes
 #'   priority if `pattern` is also specified.
-#' @param pattern Character vector containing a regular expression used
+#' @param pattern Character string containing a regular expression used
 #'   for extraction. [gregexpr()] and [regmatches()] are used to perform
 #'   pattern extraction using `perl = TRUE`.
 #' @template step-return
@@ -88,10 +88,10 @@
 #'   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") %>%
 #'   prep()
 #'
-#' dommies_data_color <- dummies_color %>%
+#' dummies_data_color <- dummies_color %>%
 #'   bake(new_data = NULL)
 #'
-#' dommies_data_color
+#' dummies_data_color
 step_dummy_extract <-
   function(recipe,
            ...,
@@ -106,14 +106,6 @@ step_dummy_extract <-
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy_extract")) {
-
-    if (!is_tune(threshold)) {
-      if (threshold >= 1) {
-        check_number_whole(threshold)
-      } else {
-        check_number_decimal(threshold, min = 0)
-      }
-    }
 
     add_step(
       recipe,
@@ -160,6 +152,15 @@ step_dummy_extract_new <-
 prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  if (x$threshold >= 1) {
+    check_number_whole(x$threshold, arg = "threshold")
+  } else {
+    check_number_decimal(x$threshold, min = 0, arg = "threshold")
+  }
+  check_string(x$other, arg = "other", allow_null = TRUE)
+  check_string(x$sep, arg = "sep", allow_null = TRUE)
+  check_string(x$pattern, arg = "pattern", allow_null = TRUE)
+  check_function(x$naming, arg = "naming", allow_empty = FALSE)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

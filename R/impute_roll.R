@@ -85,15 +85,9 @@ step_impute_roll <-
            trained = FALSE,
            columns = NULL,
            statistic = median,
-           window = 5,
+           window = 5L,
            skip = FALSE,
            id = rand_id("impute_roll")) {
-    if (!is_tune(window)) {
-      if (window < 3 | window %% 2 != 1) {
-        cli::cli_abort("{.arg window} should be an odd integer >= 3.")
-      }
-      window <- as.integer(floor(window))
-    }
 
     add_step(
       recipe,
@@ -129,6 +123,12 @@ step_impute_roll_new <-
 prep.step_impute_roll <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = "double")
+  check_function(x$statistic, arg = "statistic", )
+  check_number_whole(x$window, arg = "window", min = 3)
+  if (x$window %% 2 != 1) {
+    cli::cli_abort("{.arg window} should be an odd integer >= 3.")
+  }
+  x$window <- as.integer(x$window)
 
   step_impute_roll_new(
     terms = x$terms,

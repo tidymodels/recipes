@@ -115,10 +115,10 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
 
   if (!is.numeric(x$breaks)) {
     cli::cli_abort(
-      "{.arg breaks} must be a numeric vector, \\
-      not {.obj_type_friendly {x$breaks}}."
+      "{.arg breaks} must be a numeric vector, not {.obj_type_friendly {x$breaks}}."
     )
   }
+  check_bool(x$include_outside_range, arg = "include_outside_range")
 
   all_breaks <- vector("list", length(col_names))
   names(all_breaks) <- col_names

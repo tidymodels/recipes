@@ -238,6 +238,62 @@
       Error in `recipe()`:
       ! `data` must be a data frame, matrix, or sparse matrix, not a function.
 
+# step constructor
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(trained = "yes")
+    Condition
+      Error in `step_normalize()`:
+      ! `trained` must be `TRUE` or `FALSE`, not the string "yes".
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(id = TRUE)
+    Condition
+      Error in `step_normalize()`:
+      ! `id` must be a single string, not `TRUE`.
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(skip = "you betcha")
+    Condition
+      Error in `step_normalize()`:
+      ! `skip` must be `TRUE` or `FALSE`, not the string "you betcha".
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(role = 13)
+    Condition
+      Error in `step_normalize()`:
+      ! `x$role` must be a single string or `NA`, not the number 13.
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0)
+    Condition
+      Error in `step_pca()`:
+      ! `keep_original_cols` must be `TRUE` or `FALSE`, not the number 0.
+
+---
+
+    Code
+      step(subclass = list())
+    Condition
+      Error:
+      ! `subclass` must be a single string, not an empty list.
+
+---
+
+    Code
+      step()
+    Condition
+      Error:
+      ! `subclass` must be a single string, not absent.
+
 # bake() error on wrong composition
 
     Code

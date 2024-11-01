@@ -102,6 +102,8 @@ check_class <-
 check_class_new <-
   function(terms, role, trained, class_nm,
            allow_additional, class_list, skip, id) {
+    check_character(class_nm, allow_null = TRUE, call = rlang::caller_env(2))
+    check_bool(allow_additional, call = rlang::caller_env(2))
     check(
       subclass         = "class",
       terms            = terms,

@@ -231,3 +231,27 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
 })
+
+
+test_that("bad args", {
+  skip_if_not_installed("kernlab")
+
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_rbf(all_numeric_predictors(), num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_rbf(all_numeric_predictors(), sigma = 0) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = tr_dat) %>%
+      step_kpca_rbf(all_numeric_predictors(), prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+})
