@@ -102,13 +102,13 @@ preprocessing have been estimated.</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>Character vector containing a regular expression to use
+<dd><p>Character string containing a regular expression to use
 for splitting. <code><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit()</a></code> is used to perform the split. <code>sep</code> takes
 priority if <code>pattern</code> is also specified.</p></dd>
 
 
 <dt id="arg-pattern">pattern<a class="anchor" aria-label="anchor" href="#arg-pattern"></a></dt>
-<dd><p>Character vector containing a regular expression used
+<dd><p>Character string containing a regular expression used
 for extraction. <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gregexpr()</a></code> and <code><a href="https://rdrr.io/r/base/regmatches.html" class="external-link">regmatches()</a></code> are used to perform
 pattern extraction using <code>perl = TRUE</code>.</p></dd>
 
@@ -308,10 +308,10 @@ information, see the documentation in <a href="case_weights.html">case_weights</
 <span class="r-in"><span>  <span class="fu">step_dummy_extract</span><span class="op">(</span><span class="va">colors</span>, pattern <span class="op">=</span> <span class="st">"(?&lt;=')[^',]+(?=')"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dommies_data_color</span> <span class="op">&lt;-</span> <span class="va">dummies_color</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">dummies_data_color</span> <span class="op">&lt;-</span> <span class="va">dummies_color</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span>new_data <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dommies_data_color</span></span></span>
+<span class="r-in"><span><span class="va">dummies_data_color</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   colors_blue colors_red colors_white colors_other</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
