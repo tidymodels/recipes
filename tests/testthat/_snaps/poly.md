@@ -103,3 +103,12 @@
       -- Operations 
       * Orthogonal polynomials on: carbon and hydrogen | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_poly(disp, degree = 0) %>% prep()
+    Condition
+      Error in `step_poly()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number larger than or equal to 1, not the number 0.
+

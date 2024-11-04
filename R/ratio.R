@@ -134,6 +134,7 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     training[, unique(c(col_names$top, col_names$bottom))],
     types = c("double", "integer")
   )
+  check_function(x$naming, arg = "naming")
 
   step_ratio_new(
     terms = x$terms,

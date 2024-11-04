@@ -139,3 +139,31 @@
       -- Operations 
       * Range scaling to [0,1] for: disp and wt | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_range(disp, wt, max = "max") %>% prep()
+    Condition
+      Error in `step_range()`:
+      Caused by error in `prep()`:
+      ! `max` must be a number, not the string "max".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_range(disp, wt, min = "min") %>% prep()
+    Condition
+      Error in `step_range()`:
+      Caused by error in `prep()`:
+      ! `min` must be a number, not the string "min".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_range(disp, wt, clipping = "never") %>%
+        prep()
+    Condition
+      Error in `step_range()`:
+      Caused by error in `prep()`:
+      ! `clipping` must be `TRUE` or `FALSE`, not the string "never".
+

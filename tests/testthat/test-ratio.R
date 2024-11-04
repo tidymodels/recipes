@@ -251,3 +251,14 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~ mpg + disp, mtcars) %>%
+      step_ratio(mpg, denom = denom_vars(disp), naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+
+})

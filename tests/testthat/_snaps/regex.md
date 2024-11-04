@@ -131,3 +131,12 @@
       -- Operations 
       * Regular expression dummy variable using: "(rock|stony)" | Trained
 
+# bad args
+
+    Code
+      rec %>% step_regex(description, pattern = character(0)) %>% prep()
+    Condition
+      Error in `step_regex()`:
+      Caused by error in `prep()`:
+      ! `pattern` must be a single string, not an empty character vector.
+

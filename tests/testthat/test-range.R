@@ -203,7 +203,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   standardized_trained <- prep(standardized, training = biomass_tr, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(standardized_trained, new_data = biomass_te[, 1:3])
   )
 })
@@ -251,4 +251,27 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_range(disp, wt, max = "max") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_range(disp, wt, min = "min") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_range(disp, wt, clipping = "never") %>%
+      prep(),
+    error = TRUE
+  )
+
 })

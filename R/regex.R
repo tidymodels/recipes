@@ -63,9 +63,7 @@ step_regex <- function(recipe,
                        keep_original_cols = TRUE,
                        skip = FALSE,
                        id = rand_id("regex")) {
-  if (!is_tune(pattern)) {
-    check_string(pattern)
-  }
+
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
     cli::cli_abort(c(
@@ -123,6 +121,7 @@ step_regex_new <-
 prep.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
+  check_string(x$pattern, arg = "pattern", allow_empty = FALSE)
 
   step_regex_new(
     terms = x$terms,
