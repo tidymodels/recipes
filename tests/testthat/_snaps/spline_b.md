@@ -106,3 +106,31 @@
       -- Operations 
       * Basis spline expansion: carbon and hydrogen | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(disp, degree = -1) %>% prep()
+    Condition
+      Error in `step_spline_b()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(disp, deg_free = "a") %>% prep()
+    Condition
+      Error in `step_spline_b()`:
+      Caused by error in `prep()`:
+      ! `deg_free` must be a whole number, not the string "a".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_b(disp, complete_set = 1) %>%
+        prep()
+    Condition
+      Error in `step_spline_b()`:
+      Caused by error in `prep()`:
+      ! `complete_set` must be `TRUE` or `FALSE`, not the number 1.
+

@@ -86,3 +86,23 @@
       -- Operations 
       * Natural spline expansion: carbon and hydrogen | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_natural(disp, deg_free = "a") %>%
+        prep()
+    Condition
+      Error in `step_spline_natural()`:
+      Caused by error in `prep()`:
+      ! `deg_free` must be a whole number, not the string "a".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_natural(disp, complete_set = 1) %>%
+        prep()
+    Condition
+      Error in `step_spline_natural()`:
+      Caused by error in `prep()`:
+      ! `complete_set` must be `TRUE` or `FALSE`, not the number 1.
+

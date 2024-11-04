@@ -212,3 +212,20 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
 })
+
+test_that("bad args", {
+  skip_if_not_installed("splines2")
+
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_poly_bernstein(disp, degree = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_poly_bernstein(disp, complete_set = 1) %>%
+      prep(),
+    error = TRUE
+  )
+})

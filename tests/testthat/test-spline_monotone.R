@@ -87,7 +87,7 @@ test_that("errors if degree > deg_free (#1170)", {
       step_spline_monotone(mpg, degree = 3, deg_free = 3, complete_set = FALSE) %>%
       prep()
   )
-  
+
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%
@@ -254,4 +254,27 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+test_that("bad args", {
+  skip_if_not_installed("splines2")
+
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_spline_monotone(disp, degree = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_spline_monotone(disp, deg_free = "a") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_spline_monotone(disp, complete_set = 1) %>%
+      prep(),
+    error = TRUE
+  )
 })
