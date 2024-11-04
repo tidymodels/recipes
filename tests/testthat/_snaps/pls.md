@@ -139,3 +139,33 @@
       -- Operations 
       * PLS feature extraction with: carbon, hydrogen, oxygen, ... | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = "mpg", num_comp = -
+        1) %>% prep()
+    Condition
+      Error in `step_pls()`:
+      Caused by error in `prep()`:
+      ! `num_comp` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = "mpg", prefix = 1) %>%
+        prep()
+    Condition
+      Error in `step_pls()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 1.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = "mpg",
+        predictor_prop = -1) %>% prep()
+    Condition
+      Error in `step_pls()`:
+      Caused by error in `prep()`:
+      ! `predictor_prop` must be a number between 0 and 1, not the number -1.
+

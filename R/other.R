@@ -107,13 +107,7 @@ step_other <-
            objects = NULL,
            skip = FALSE,
            id = rand_id("other")) {
-    if (!is_tune(threshold)) {
-      if (threshold >= 1) {
-        check_number_whole(threshold)
-      } else {
-        check_number_decimal(threshold, min = 0)
-      }
-    }
+
     add_step(
       recipe,
       step_other_new(
@@ -151,6 +145,18 @@ step_other_new <-
 prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+
+  if (!is.numeric(x$threshold)) {
+    cli::cli_abort("{.arg threshold} should be a single numeric value
+                   {.obj_type_friendly {x$threshold}}")
+  }
+
+  if (x$threshold >= 1) {
+    check_number_whole(x$threshold, arg = "threshold", min = 1)
+  } else {
+    check_number_decimal(x$threshold, arg = "threshold", min = 0)
+  }
+
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

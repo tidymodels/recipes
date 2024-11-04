@@ -86,3 +86,23 @@
       -- Operations 
       * Bernstein polynomial expansion: carbon and hydrogen | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_poly_bernstein(disp, degree = -1) %>%
+        prep()
+    Condition
+      Error in `step_poly_bernstein()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_poly_bernstein(disp, complete_set = 1) %>%
+        prep()
+    Condition
+      Error in `step_poly_bernstein()`:
+      Caused by error in `prep()`:
+      ! `complete_set` must be `TRUE` or `FALSE`, not the number 1.
+

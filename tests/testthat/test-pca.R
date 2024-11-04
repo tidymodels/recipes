@@ -264,7 +264,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   pca_extract_trained <- prep(pca_extract, training = biomass_tr, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(pca_extract_trained, new_data = biomass_te[, c(-3)])
   )
 })
@@ -373,4 +373,26 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~ ., data = mtcars) %>%
+      step_pca(all_numeric_predictors(), num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = mtcars) %>%
+      step_pca(all_numeric_predictors(), prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~ ., data = mtcars) %>%
+      step_pca(all_numeric_predictors(), threshold = -1) %>%
+      prep(),
+    error = TRUE
+  )
 })
