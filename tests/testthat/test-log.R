@@ -115,3 +115,25 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_log(x1, base = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_log(x1, offset = "none") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_log(x1, signed = "yes") %>%
+      prep(),
+    error = TRUE
+  )
+})

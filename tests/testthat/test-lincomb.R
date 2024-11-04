@@ -118,3 +118,13 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+  expect_snapshot(
+    dum_rec %>%
+      step_lincomb(all_predictors(), max_steps = 0) %>%
+      prep(),
+    error = TRUE
+  )
+})
