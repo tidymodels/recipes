@@ -116,6 +116,7 @@ new_values_func <- function(x,
 #' @export
 prep.check_new_values <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_bool(x$ignore_NA, arg = "ignore_NA")
 
   values <- lapply(training[, col_names], unique)
 

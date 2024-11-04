@@ -115,3 +115,31 @@
       -- Operations 
       * Non-negative matrix factorization for: disp and drat | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% step_nnmf_sparse(disp, drat, num_comp = -1) %>%
+        prep()
+    Condition
+      Error in `step_nnmf_sparse()`:
+      Caused by error in `prep()`:
+      ! `num_comp` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% step_nnmf_sparse(disp, drat, penalty = -1) %>% prep()
+    Condition
+      Error in `step_nnmf_sparse()`:
+      Caused by error in `prep()`:
+      ! `penalty` must be a number larger than or equal to 2.22044604925031e-16, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% step_nnmf_sparse(disp, drat, prefix = 1) %>% prep()
+    Condition
+      Error in `step_nnmf_sparse()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 1.
+
