@@ -17,6 +17,15 @@
       Caused by error in `prep()`:
       ! Columns already contain the new level: x.
 
+---
+
+    Code
+      rec %>% step_novel(all_predictors(), new_level = letters) %>% prep()
+    Condition
+      Error in `step_novel()`:
+      Caused by error in `prep()`:
+      ! `new_level` must be a single string, not a character vector.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

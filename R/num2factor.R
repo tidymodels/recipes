@@ -146,6 +146,7 @@ get_ord_lvls_num <- function(x, foo) {
 prep.step_num2factor <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_function(x$transform, arg = "transform")
 
   res <- lapply(training[, col_names], get_ord_lvls_num, foo = x$transform)
   res <- c(res, ..levels = list(x$levels))

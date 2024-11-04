@@ -7,6 +7,16 @@
       Warning:
       Columns `mpg`, `cyl`, `disp`, and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
 
+---
+
+    Code
+      recipe(~., data = mtcars_na) %>% step_normalize(all_predictors(), na_rm = 2) %>%
+        prep()
+    Condition
+      Error in `step_normalize()`:
+      Caused by error in `prep()`:
+      ! `na_rm` must be `TRUE` or `FALSE`, not the number 2.
+
 # warns on zv
 
     Code

@@ -71,6 +71,13 @@ test_that("na_rm argument works for step_normalize", {
       prep()
   )
 
+  expect_snapshot(
+    recipe(~., data = mtcars_na) %>%
+      step_normalize(all_predictors(), na_rm = 2) %>%
+      prep(),
+    error = TRUE
+  )
+
   rec_na_rm <- recipe(~., data = mtcars_na) %>%
     step_normalize(all_predictors(), na_rm = TRUE) %>%
     prep()

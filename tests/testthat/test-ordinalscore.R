@@ -130,3 +130,14 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_ordinalscore(starts_with("ord"), convert = NULL) %>%
+      prep(),
+    error = TRUE
+  )
+})
