@@ -132,3 +132,13 @@
       -- Operations 
       * Ratios from: x2, x3, x4, x1, x1, x2, x3, x4 | Trained
 
+# bad args
+
+    Code
+      recipe(~ mpg + disp, mtcars) %>% step_ratio(mpg, denom = denom_vars(disp),
+      naming = NULL) %>% prep()
+    Condition
+      Error in `step_ratio()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
+

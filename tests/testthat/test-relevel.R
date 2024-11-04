@@ -32,6 +32,11 @@ test_that("bad args", {
       step_relevel(city, ref_level = "missing_level") %>%
       prep()
   )
+  expect_snapshot( error = TRUE,
+    rec %>%
+      step_relevel(city, ref_level = character(0)) %>%
+      prep()
+  )
 })
 
 test_that("tidy methods", {

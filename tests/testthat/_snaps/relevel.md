@@ -17,6 +17,15 @@
       Caused by error in `prep()`:
       ! The following column doesn't include required reference level "missing_level": `city`.
 
+---
+
+    Code
+      rec %>% step_relevel(city, ref_level = character(0)) %>% prep()
+    Condition
+      Error in `step_relevel()`:
+      Caused by error in `prep()`:
+      ! `ref_level` must be a single string, not an empty character vector.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
