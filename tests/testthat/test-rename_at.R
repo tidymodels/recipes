@@ -49,7 +49,7 @@ test_that("no input", {
   expect_snapshot(
     error = TRUE,
     iris_rec %>%
-      step_rename_at(fn = "(ツ)") %>%
+      step_rename_at(fn = ":=O") %>%
       prep(training = iris) %>%
       bake(new_data = NULL, composition = "data.frame")
   )
