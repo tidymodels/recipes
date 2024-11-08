@@ -13,6 +13,8 @@ sim_dat$fac <- sample(letters[1:3], size = n, replace = TRUE)
 rec <- recipe(~., data = sim_dat)
 
 test_that("error checks", {
+  skip_if_not_installed("RcppRoll")
+
   expect_snapshot(error = TRUE,
     rec %>% step_window(y1, size = 6) %>% prep()
   )
