@@ -123,34 +123,10 @@ step_window <-
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("window")) {
-    if (!is_call(statistic) &&
-      (!(statistic %in% roll_funs) | length(statistic) != 1)) {
-      cli::cli_abort(
-        "{.arg statistic} should be one of: {.or {.val {roll_funs}}}."
-      )
+    if (!is_call(statistic)) {
+      statistic <- rlang::arg_match(statistic, roll_funs)
     }
 
-    ## ensure size is odd, integer, and not too small
-    if (!is_tune(size)) {
-      check_number_decimal(size, min = 0)
-
-      if (!is.integer(size)) {
-        tmp <- size
-        size <- as.integer(size)
-        if (!isTRUE(all.equal(tmp, size))) {
-          cli::cli_warn(
-            "{.arg size} was not an integer ({tmp}) and was converted to \\
-            {size}."
-          )
-        }
-      }
-      if (size %% 2 == 0) {
-        cli::cli_abort("{.arg size} should be odd, not {size}.")
-      }
-      if (size < 3) {
-        cli::cli_abort("{.arg size} should be at least 3, not {size}.")
-      }
-    }
     add_step(
       recipe,
       step_window_new(
@@ -195,11 +171,30 @@ prep.step_window <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
+  ## ensure size is odd, integer, and not too small
+  check_number_whole(x$size, arg = "size", min = 3)
+
+  if (!is.integer(x$size)) {
+    tmp <- x$size
+    x$size <- as.integer(x$size)
+    if (!isTRUE(all.equal(tmp, x$size))) {
+      cli::cli_warn(
+        "{.arg size} was not an integer ({tmp}) and was converted to {x$size}."
+      )
+    }
+  }
+  if (x$size %% 2 == 0) {
+    cli::cli_abort("{.arg size} should be odd, not {x$size}.")
+  }
+  if (x$size < 3) {
+    cli::cli_abort("{.arg size} should be at least 3, not {x$size}.")
+  }
+
   if (!is.null(x$names)) {
     if (length(x$names) != length(col_names)) {
       cli::cli_abort(
-        "There were {length(col_names)} term{?s} selected but \\
-        {length(x$names)} value{?s} for the new features {?was/were} passed \\
+        "There were {length(col_names)} term{?s} selected but
+        {length(x$names)} value{?s} for the new features {?was/were} passed
         to {.arg names}."
       )
     }

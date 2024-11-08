@@ -66,6 +66,10 @@ test_that("bad args", {
       step_unknown(city, new_level = "FAIR_OAKS") %>%
       prep()
   )
+  expect_snapshot(error = TRUE,
+    recipe(~., data = sacr_tr) %>%
+      step_unknown(city, new_level = 2) %>% prep()
+  )
 })
 
 test_that("tidy methods", {

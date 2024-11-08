@@ -1,26 +1,29 @@
 # error checks
 
     Code
-      rec %>% step_window(y1, size = 6)
+      rec %>% step_window(y1, size = 6) %>% prep()
     Condition
       Error in `step_window()`:
+      Caused by error in `prep()`:
       ! `size` should be odd, not 6.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = NA)
+      rec %>% step_window(y1, size = NA) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` must be a number, not `NA`.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number, not `NA`.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = NULL)
+      rec %>% step_window(y1, size = NULL) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` must be a number, not `NULL`.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number, not `NULL`.
 
 ---
 
@@ -28,39 +31,39 @@
       rec %>% step_window(y1, statistic = "average")
     Condition
       Error in `step_window()`:
-      ! `statistic` should be one of: "mean", "median", "sd", "var", "sum", "prod", "min", or "max".
+      ! `statistic` must be one of "mean", "median", "sd", "var", "sum", "prod", "min", or "max", not "average".
 
 ---
 
     Code
-      rec %>% step_window(y1, size = 1)
+      rec %>% step_window(y1, size = 1) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` should be at least 3, not 1.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number larger than or equal to 3, not the number 1.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = 2)
+      rec %>% step_window(y1, size = 2) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` should be odd, not 2.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number larger than or equal to 3, not the number 2.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = -1)
+      rec %>% step_window(y1, size = -1) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` must be a number larger than or equal to 0, not the number -1.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number larger than or equal to 3, not the number -1.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = pi)
-    Condition
-      Warning:
-      `size` was not an integer (3.14159265358979) and was converted to 3.
+      rec %>% step_window(y1, size = 3 + .Machine$double.eps) %>% prep()
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -69,8 +72,20 @@
       Number of variables by role
       predictor: 6
       
+      -- Training information 
+      Training data contained 81 data points and no incomplete rows.
+      
       -- Operations 
-      * Moving 3-point mean on: y1
+      * Moving 3-point mean on: y1 | Trained
+
+---
+
+    Code
+      rec %>% step_window(y1, size = 3 + 2 * .Machine$double.eps) %>% prep()
+    Condition
+      Error in `step_window()`:
+      Caused by error in `prep()`:
+      ! `size` must be a whole number, not the number 3.
 
 ---
 
@@ -85,9 +100,10 @@
 ---
 
     Code
-      prep(rec %>% step_window(y1, size = 1000L), training = sim_dat)
+      prep(rec %>% step_window(y1, size = 1000L), training = sim_dat) %>% prep()
     Condition
       Error in `step_window()`:
+      Caused by error in `prep()`:
       ! `size` should be odd, not 1000.
 
 ---

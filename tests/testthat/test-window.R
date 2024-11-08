@@ -14,35 +14,39 @@ rec <- recipe(~., data = sim_dat)
 
 test_that("error checks", {
   expect_snapshot(error = TRUE,
-    rec %>% step_window(y1, size = 6)
+    rec %>% step_window(y1, size = 6) %>% prep()
   )
   expect_snapshot(error = TRUE,
-    rec %>% step_window(y1, size = NA)
+    rec %>% step_window(y1, size = NA) %>% prep()
   )
   expect_snapshot(
     error = TRUE,
-    rec %>% step_window(y1, size = NULL)
+    rec %>% step_window(y1, size = NULL) %>% prep()
   )
   expect_snapshot(error = TRUE,
     rec %>% step_window(y1, statistic = "average")
   )
   expect_snapshot(error = TRUE,
-    rec %>% step_window(y1, size = 1)
+    rec %>% step_window(y1, size = 1) %>% prep()
   )
   expect_snapshot(error = TRUE,
-    rec %>% step_window(y1, size = 2)
+    rec %>% step_window(y1, size = 2) %>% prep()
   )
   expect_snapshot(error = TRUE,
-    rec %>% step_window(y1, size = -1)
+    rec %>% step_window(y1, size = -1) %>% prep()
   )
   expect_snapshot(
-    rec %>% step_window(y1, size = pi)
+    rec %>% step_window(y1, size = 3 + .Machine$double.eps) %>% prep()
+  )
+  expect_snapshot(
+    rec %>% step_window(y1, size = 3 + 2 * .Machine$double.eps) %>% prep(),
+    error = TRUE
   )
   expect_snapshot(error = TRUE,
     prep(rec %>% step_window(fac), training = sim_dat)
   )
   expect_snapshot(error = TRUE,
-    prep(rec %>% step_window(y1, size = 1000L), training = sim_dat)
+    prep(rec %>% step_window(y1, size = 1000L), training = sim_dat) %>% prep()
   )
   bad_names <- rec %>%
     step_window(starts_with("y"), names = "only_one_name")
@@ -194,7 +198,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_window(rec)
+  rec <- step_window(rec, size = 3L)
 
   expect <- tibble(
     terms = character(),

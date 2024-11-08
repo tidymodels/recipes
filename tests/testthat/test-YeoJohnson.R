@@ -148,3 +148,28 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_YeoJohnson(x1, x2, x3, x4, na_rm = "yes") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_YeoJohnson(x1, x2, x3, x4, num_unique = "yes") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_YeoJohnson(x1, x2, x3, x4, limits = NA_real_) %>%
+      prep(),
+    error = TRUE
+  )
+})
+
+
