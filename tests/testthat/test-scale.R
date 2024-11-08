@@ -110,6 +110,11 @@ test_that("na_rm argument works for step_scale", {
     tidy(rec_na_rm, 1)$value,
     unname(exp_na_rm)
   )
+  expect_snapshot(
+    rec_no_na_rm <- recipe(~., data = mtcars_na) %>%
+      step_scale(all_predictors(), na_rm = "FALSE") %>%
+      prep(),
+    error = TRUE)
 })
 
 test_that("warns on zv",{

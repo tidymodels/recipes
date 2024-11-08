@@ -4,6 +4,7 @@
       recipe(~., data = df) %>% step_relu(val1, shift = TRUE) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
+      Caused by error in `prep()`:
       ! `shift` must be a number, not `TRUE`.
 
 ---
@@ -12,6 +13,7 @@
       recipe(~., data = df) %>% step_relu(val1, reverse = 3) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
+      Caused by error in `prep()`:
       ! `reverse` must be `TRUE` or `FALSE`, not the number 3.
 
 ---
@@ -20,6 +22,7 @@
       recipe(~., data = df) %>% step_relu(val1, smooth = "cat") %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
+      Caused by error in `prep()`:
       ! `smooth` must be `TRUE` or `FALSE`, not the string "cat".
 
 ---

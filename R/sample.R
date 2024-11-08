@@ -69,18 +69,6 @@ step_sample <- function(recipe,
     cli::cli_warn("Selectors are not used for this step.")
   }
 
-  if (!is_tune(size)) {
-    check_number_decimal(size, min = 0, allow_null = TRUE)
-  }
-  if (!is_tune(replace)) {
-    if (!is.logical(replace)) {
-      cli::cli_abort(
-        "{.arg replace} should be a single logical, \\
-        not {.obj_type_friendly {replace}}."
-      )
-    }
-  }
-
   add_step(
     recipe,
     step_sample_new(
@@ -113,11 +101,14 @@ step_sample_new <-
 
 #' @export
 prep.step_sample <- function(x, training, info = NULL, ...) {
+
+  check_number_decimal(x$size, min = 0, allow_null = TRUE, arg = "size")
+  check_bool(x$replace, arg = "replace")
   if (is.null(x$size)) {
     x$size <- nrow(training)
   }
 
-  wts <- get_case_weights(info, training)
+    wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
