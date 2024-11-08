@@ -108,7 +108,7 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
     x$size <- nrow(training)
   }
 
-    wts <- get_case_weights(info, training)
+  wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
