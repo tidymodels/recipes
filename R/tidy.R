@@ -56,17 +56,8 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   num_oper <- length(x$steps)
   pattern <- "(^step_)|(^check_)"
 
-  if (length(id) != 1L) {
-    cli::cli_abort(
-      "If {.arg id} is provided, it must be a length 1 character vector."
-    )
-  }
-
-  if (length(number) != 1L) {
-    cli::cli_abort(
-      "If {.arg number} is provided, it must be a length 1 integer vector."
-    )
-  }
+  check_string(id, allow_na = TRUE, allow_empty = FALSE)
+  check_number_whole(number, allow_na = TRUE)
 
   if (!is.na(id)) {
     if (!is.na(number)) {
@@ -75,11 +66,7 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
       )
     }
     step_ids <- vapply(x$steps, function(x) x$id, character(1))
-    if (!(id %in% step_ids)) {
-      cli::cli_abort(
-        "Supplied {.arg id} ({.val {id}}) not found in the recipe."
-      )
-    }
+    id <- rlang::arg_match(id, step_ids)
     number <- which(id == step_ids)
   }
   if (is.na(number)) {
@@ -109,8 +96,8 @@ tidy.recipe <- function(x, number = NA, id = NA, ...) {
   } else {
     if (number > num_oper || length(number) > 1) {
       cli::cli_abort(
-        "{.arg number} should be a single value between 1 and {num_oper}, \\
-        not {number}."
+        "{.arg number} should be a single value between 1 and {num_oper},
+         not {.obj_type_friendly {number}}."
       )
     }
     res <- tidy(x$steps[[number]], ...)

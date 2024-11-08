@@ -1,3 +1,12 @@
+# spatial sign
+
+    Code
+      rec %>% step_spatialsign(carbon, hydrogen, na_rm = 12) %>% prep()
+    Condition
+      Error in `step_spatialsign()`:
+      Caused by error in `prep()`:
+      ! `na_rm` must be `TRUE` or `FALSE`, not the number 12.
+
 # centering with case weights
 
     Code

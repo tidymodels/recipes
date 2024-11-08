@@ -67,25 +67,7 @@ step_time <-
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("time")) {
-    feat <-
-      c(
-        "am",
-        "hour",
-        "hour12",
-        "minute",
-        "second",
-        "decimal_day"
-      )
-    if (!is_tune(features)) {
-      if (!all(features %in% feat)) {
-        offenders <- features[!features %in% feat]
 
-        cli::cli_abort(c(
-          x = "Possible values of {.arg features} are: {.or {.val {feat}}}.",
-          i = "Invalid values were: {.val {offenders}}."
-        ))
-      }
-    }
     add_step(
       recipe,
       step_time_new(
@@ -117,11 +99,26 @@ step_time_new <-
     )
   }
 
+feat_list <-
+  c(
+    "am",
+    "hour",
+    "hour12",
+    "minute",
+    "second",
+    "decimal_day"
+  )
 
 #' @export
 prep.step_time <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = "datetime")
+
+
+  features <- x$features
+  check_character(features, allow_na = FALSE)
+  x$features <- rlang::arg_match(features, feat_list, multiple = TRUE,
+                                 error_arg = "features")
 
   step_time_new(
     terms = x$terms,

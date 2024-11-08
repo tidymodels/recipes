@@ -43,7 +43,7 @@ test_that("bad args", {
   )
   expect_snapshot(error = TRUE,
     rec %>%
-      step_string2factor(n, ordered = "yes") %>%
+      step_string2factor(w, x, ordered = "yes") %>%
       prep(ex_dat)
   )
 })

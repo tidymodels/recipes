@@ -15,8 +15,9 @@
         prep()
     Condition
       Error in `step_time()`:
-      x Possible values of `features` are: "am", "hour", "hour12", "minute", "second", or "decimal_day".
-      i Invalid values were: "hourly".
+      Caused by error in `prep()`:
+      ! `features` must be one of "am", "hour", "hour12", "minute", "second", or "decimal_day", not "hourly".
+      i Did you mean "hour12"?
 
 # bake method errors when needed non-standard role columns are missing
 

@@ -9,7 +9,7 @@
       tidy(trained, number = NULL)
     Condition
       Error in `tidy()`:
-      ! If `number` is provided, it must be a length 1 integer vector.
+      ! `number` must be a whole number or `NA`, not `NULL`.
 
 ---
 
@@ -17,7 +17,7 @@
       tidy(trained, number = 100)
     Condition
       Error in `tidy()`:
-      ! `number` should be a single value between 1 and 4, not 100.
+      ! `number` should be a single value between 1 and 4, not a number.
 
 ---
 
@@ -33,7 +33,7 @@
       tidy(trained, id = "id")
     Condition
       Error in `tidy()`:
-      ! Supplied `id` ("id") not found in the recipe.
+      ! `id` must be one of "other_MvKZG", "center_p66OR", "dummy_5eKj5", or "cols_z8tZQ", not "id".
 
 ---
 
@@ -41,7 +41,7 @@
       tidy(trained, id = c("id", "id2"))
     Condition
       Error in `tidy()`:
-      ! If `id` is provided, it must be a length 1 character vector.
+      ! `id` must be a single string or `NA`, not a character vector.
 
 # bag args
 

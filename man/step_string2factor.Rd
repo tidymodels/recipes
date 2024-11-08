@@ -28,7 +28,7 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{levels}{An options specification of the levels to be used
+\item{levels}{An optional specification of the levels to be used
 for the new factor. If left \code{NULL}, the sorted unique
 values present when \code{bake} is called will be used.}
 
