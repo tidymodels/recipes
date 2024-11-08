@@ -421,6 +421,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
 
 test_that("bad args", {
+  skip_if_not_installed("mixOmics")
 
   expect_snapshot(
     recipe(mpg ~ ., data = mtcars) %>%
