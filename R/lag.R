@@ -103,6 +103,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
       not {.obj_type_friendly {lag}}."
     )
   }
+  check_string(x$prefix, arg = "prefix")
 
   step_lag_new(
     terms = x$terms,

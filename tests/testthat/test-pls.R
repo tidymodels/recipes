@@ -418,3 +418,27 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
 })
+
+
+test_that("bad args", {
+  skip_if_not_installed("mixOmics")
+
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pls(-mpg, outcome = "mpg", num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pls(-mpg, outcome = "mpg", prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pls(-mpg, outcome = "mpg", predictor_prop = -1) %>%
+      prep(),
+    error = TRUE
+  )
+})

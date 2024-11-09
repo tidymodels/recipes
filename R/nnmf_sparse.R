@@ -154,6 +154,9 @@ nnmf_pen_call <- function(x) {
 prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
+  check_number_decimal(x$penalty, arg = "penalty", min = .Machine$double.eps)
+  check_string(x$prefix, arg = "prefix")
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))

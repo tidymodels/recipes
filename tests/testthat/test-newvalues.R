@@ -209,3 +209,13 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      check_new_values(disp, ignore_NA = 2) %>%
+      prep(),
+    error = TRUE
+  )
+})

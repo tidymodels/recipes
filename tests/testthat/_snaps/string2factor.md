@@ -11,9 +11,10 @@
 ---
 
     Code
-      rec %>% step_string2factor(n, ordered = "yes") %>% prep(ex_dat)
+      rec %>% step_string2factor(w, x, ordered = "yes") %>% prep(ex_dat)
     Condition
       Error in `step_string2factor()`:
+      Caused by error in `prep()`:
       ! `ordered` must be `TRUE` or `FALSE`, not the string "yes".
 
 # bake method errors when needed non-standard role columns are missing

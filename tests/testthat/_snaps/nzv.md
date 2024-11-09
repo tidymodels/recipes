@@ -124,3 +124,21 @@
       -- Operations 
       * Sparse, unbalanced variable filter removed: x3 and x4 | Trained
 
+# bad args
+
+    Code
+      recipe(y ~ ., data = dat) %>% step_nzv(x1, freq_cut = -1) %>% prep()
+    Condition
+      Error in `step_nzv()`:
+      Caused by error in `prep()`:
+      ! `freq_cut` must be a number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(y ~ ., data = dat) %>% step_nzv(x1, unique_cut = 101) %>% prep()
+    Condition
+      Error in `step_nzv()`:
+      Caused by error in `prep()`:
+      ! `unique_cut` must be a number between 0 and 100, not the number 101.
+

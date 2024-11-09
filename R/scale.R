@@ -107,6 +107,13 @@ step_scale_new <-
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_bool(x$na_rm, arg = "na_rm")
+  if (x$factor != 1 & x$factor != 2) {
+    cli::cli_warn(
+      "Scaling {.arg factor} should take either a value of 1 or 2, not
+       {.obj_type_friendly {x$factor}}."
+    )
+  }
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -114,12 +121,6 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-  if (x$factor != 1 & x$factor != 2) {
-    cli::cli_warn(
-      "Scaling {.arg factor} should take either a value of 1 or 2, \\
-      not {x$factor}."
-    )
-  }
 
   vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
   sds <- sqrt(vars)

@@ -109,6 +109,14 @@ step_YeoJohnson_new <-
 prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$num_unique, args = "num_unique")
+  check_bool(x$na_rm, arg = "na_rm")
+  if (!is.numeric(x$limits) || any(is.na(x$limits)) || length(x$limits) != 2) {
+    cli::cli_abort("{.arg limits} should be a numeric vector with two values,
+                    not {.obj_type_friendly {x$limits}}")
+  }
+
+  x$limits <- sort(x$limits)
 
   values <- vapply(
     training[, col_names],

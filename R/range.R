@@ -4,10 +4,8 @@
 #' numeric data to be within a pre-defined range of values.
 #'
 #' @inheritParams step_center
-#' @param min A single numeric value for the smallest value in the
-#'  range.
-#' @param max A single numeric value for the largest value in the
-#'  range.
+#' @param min,max Single numeric values for the smallest (or largest) value in
+#' the transformed data.
 #' @param clipping A single logical value for determining whether
 #'  application of transformation onto new data should be forced
 #'  to be inside `min` and `max`. Defaults to TRUE.
@@ -106,6 +104,9 @@ step_range_new <-
 prep.step_range <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$min, arg = "min")
+  check_number_decimal(x$max, arg = "max")
+  check_bool(x$clipping, arg = "clipping")
 
   mins <-
     vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)

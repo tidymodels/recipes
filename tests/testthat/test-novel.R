@@ -86,6 +86,12 @@ test_that("bad args", {
       step_novel(all_predictors()) %>%
       prep(tr_bad)
   )
+  expect_snapshot(
+    rec %>%
+      step_novel(all_predictors(), new_level = letters) %>%
+      prep(),
+    error = TRUE
+  )
 })
 
 test_that("missing values", {

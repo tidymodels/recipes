@@ -16,6 +16,16 @@
       Error in `step_rename_at()`:
       ! Argument `fn` must be specified.
 
+---
+
+    Code
+      iris_rec %>% step_rename_at(fn = ":=O") %>% prep(training = iris) %>% bake(
+        new_data = NULL, composition = "data.frame")
+    Condition
+      Error in `step_rename_at()`:
+      Caused by error in `get()`:
+      ! object ':=O' of mode 'function' was not found
+
 # empty printing
 
     Code

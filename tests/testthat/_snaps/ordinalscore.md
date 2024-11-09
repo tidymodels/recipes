@@ -85,3 +85,13 @@
       -- Operations 
       * Scoring for: ord1, ord2, ord3 | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_ordinalscore(starts_with("ord"), convert = NULL) %>%
+        prep()
+    Condition
+      Error in `step_ordinalscore()`:
+      Caused by error in `prep()`:
+      ! `convert` must be a function, not `NULL`.
+

@@ -45,6 +45,12 @@ test_that("bad args", {
       step_num2factor(w, x) %>%
       prep(ex_dat)
   )
+  expect_snapshot(
+    rec %>%
+      step_num2factor(z, levels = rev(LETTERS[1:10]), transform = 2) %>%
+      prep(),
+    error = TRUE
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------

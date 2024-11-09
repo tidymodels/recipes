@@ -109,6 +109,7 @@ step_ordinalscore_new <-
 prep.step_ordinalscore <- function(x, training, info = NULL, ...) {
     col_names <- recipes_eval_select(x$terms, training, info)
     check_type(training[, col_names], types = "ordered")
+    check_function(x$convert, arg = "convert")
 
     step_ordinalscore_new(
       terms = x$terms,

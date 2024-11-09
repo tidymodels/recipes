@@ -101,6 +101,7 @@ step_lincomb_new <-
 prep.step_lincomb <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$max_steps, arg = "max_steps", min = 1)
 
   filter <- iter_lc_rm(
     x = training[, col_names],

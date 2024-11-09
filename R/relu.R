@@ -82,18 +82,6 @@ step_relu <-
            columns = NULL,
            skip = FALSE,
            id = rand_id("relu")) {
-    if (!is_tune(shift)) {
-      check_number_decimal(shift)
-    }
-    if (!is_tune(reverse)) {
-      check_bool(reverse)
-    }
-    if (!is_tune(smooth)) {
-      check_bool(smooth)
-    }
-    if (reverse & prefix == "right_relu_") {
-      prefix <- "left_relu_"
-    }
     add_step(
       recipe,
       step_relu_new(
@@ -132,6 +120,12 @@ step_relu_new <-
 prep.step_relu <- function(x, training, info = NULL, ...) {
   columns <- recipes_eval_select(x$terms, training, info)
   check_type(training[, columns], types = c("double", "integer"))
+  check_number_decimal(x$shift, arg = "shift")
+  check_bool(x$reverse, arg = "reverse")
+  check_bool(x$smooth, arg = "smooth")
+  if (x$reverse & x$prefix == "right_relu_") {
+    x$prefix <- "left_relu_"
+  }
 
   step_relu_new(
     terms = x$terms,

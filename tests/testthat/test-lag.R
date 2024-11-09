@@ -42,6 +42,13 @@ test_that("default lag works on a single feature", {
       step_lag(x, lag = 0.5) %>%
       prep(df)
   )
+
+  expect_snapshot(
+    recipe(~., data = df) %>%
+      step_lag(x, prefix = 2) %>%
+      prep(),
+    error = TRUE
+  )
 })
 
 test_that("specification of multiple lags in a vector", {

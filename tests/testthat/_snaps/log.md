@@ -95,3 +95,30 @@
       -- Operations 
       * Log transformation on: x1, x2, x3, x4 | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_log(x1, base = -1) %>% prep()
+    Condition
+      Error in `step_log()`:
+      Caused by error in `prep()`:
+      ! `base` must be a number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(~., data = ex_dat) %>% step_log(x1, offset = "none") %>% prep()
+    Condition
+      Error in `step_log()`:
+      Caused by error in `prep()`:
+      ! `offset` must be a number, not the string "none".
+
+---
+
+    Code
+      recipe(~., data = ex_dat) %>% step_log(x1, signed = "yes") %>% prep()
+    Condition
+      Error in `step_log()`:
+      Caused by error in `prep()`:
+      ! `signed` must be `TRUE` or `FALSE`, not the string "yes".
+

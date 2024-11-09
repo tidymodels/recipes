@@ -22,6 +22,13 @@ test_that("spatial sign", {
   x <- t(apply(x, 1, function(x) x / sqrt(sum(x^2))))
 
   expect_equal(sp_sign_pred, x)
+
+  expect_snapshot(
+    rec %>%
+      step_spatialsign(carbon, hydrogen, na_rm = 12) %>%
+      prep(),
+    error = TRUE
+  )
 })
 
 test_that("Missing values", {
@@ -101,7 +108,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(sp_sign_trained, new_data = biomass[,c(-3)])
   )
 })

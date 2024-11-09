@@ -176,3 +176,27 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+
+test_that("bad args", {
+  skip_if_not_installed("RcppML")
+
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      step_nnmf_sparse(disp, drat, num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      step_nnmf_sparse(disp, drat, penalty = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      step_nnmf_sparse(disp, drat, prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+})

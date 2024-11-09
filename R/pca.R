@@ -127,9 +127,6 @@ step_pca <- function(recipe,
                      keep_original_cols = FALSE,
                      skip = FALSE,
                      id = rand_id("pca")) {
-  if (!is_tune(threshold)) {
-    check_number_decimal(threshold, min = 0, max = 1, allow_na = TRUE)
-  }
 
   add_step(
     recipe,
@@ -176,6 +173,10 @@ step_pca_new <-
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$threshold, arg = "threshold", min = 0, max = 1,
+                       allow_na = TRUE)
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -352,8 +353,8 @@ tidy.step_pca <- function(x, type = "coef", ...) {
     )
   } else {
     type <- rlang::arg_match(
-      type, 
-      c("coef", "variance"), 
+      type,
+      c("coef", "variance"),
       error_call = rlang::caller_env()
     )
     if (type == "coef") {

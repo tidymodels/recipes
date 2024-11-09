@@ -197,3 +197,12 @@
       -- Operations 
       * Checking no new_values for: disp | Trained
 
+# bad args
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% check_new_values(disp, ignore_NA = 2) %>% prep()
+    Condition
+      Error in `check_new_values()`:
+      Caused by error in `prep()`:
+      ! `ignore_NA` must be `TRUE` or `FALSE`, not the number 2.
+

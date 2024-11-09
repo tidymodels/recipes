@@ -73,14 +73,11 @@ step_poly <-
            role = "predictor",
            trained = FALSE,
            objects = NULL,
-           degree = 2,
+           degree = 2L,
            options = list(),
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("poly")) {
-    if (!is_tune(degree)) {
-      degree <- as.integer(degree)
-    }
 
     if (any(names(options) == "degree")) {
       degree <- options$degree
@@ -142,6 +139,8 @@ poly_wrapper <- function(x, args) {
 prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$degree, arg = "degree", min = 1)
+  x$degree <- as.integer(x$degree)
 
   opts <- x$options
   opts$degree <- x$degree

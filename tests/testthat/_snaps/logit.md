@@ -83,3 +83,12 @@
       -- Operations 
       * Logit transformation on: x1 | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_logit(x1, offset = "sure") %>% prep()
+    Condition
+      Error in `step_logit()`:
+      Caused by error in `prep()`:
+      ! `offset` must be a number, not the string "sure".
+

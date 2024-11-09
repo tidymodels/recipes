@@ -93,6 +93,7 @@ step_unknown_new <-
 prep.step_unknown <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_string(x$new_level, arg = "new_level", allow_empty = FALSE)
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)

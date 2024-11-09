@@ -184,3 +184,33 @@
       -- Operations 
       * PCA extraction with: carbon, hydrogen, oxygen, nitrogen, sulfur | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = mtcars) %>% step_pca(all_numeric_predictors(), num_comp = -1) %>%
+        prep()
+    Condition
+      Error in `step_pca()`:
+      Caused by error in `prep()`:
+      ! `num_comp` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_pca(all_numeric_predictors(), prefix = 1) %>%
+        prep()
+    Condition
+      Error in `step_pca()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 1.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_pca(all_numeric_predictors(), threshold = -1) %>%
+        prep()
+    Condition
+      Error in `step_pca()`:
+      Caused by error in `prep()`:
+      ! `threshold` must be a number between 0 and 1 or `NA`, not the number -1.
+

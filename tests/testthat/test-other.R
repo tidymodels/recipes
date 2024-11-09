@@ -268,7 +268,16 @@ test_that(
   desc = "if the threshold argument is greather than one then it should be an integer(ish)",
   code = {
     expect_snapshot(error = TRUE,
-      rec %>% step_other(city, zip, threshold = 3.14)
+      rec %>% step_other(city, zip, threshold = 3.14) %>% prep()
+    )
+  }
+)
+
+test_that(
+  desc = "bad values of threshold are treated correctly",
+  code = {
+    expect_snapshot(error = TRUE,
+      rec %>% step_other(city, zip, threshold = letters) %>% prep()
     )
   }
 )

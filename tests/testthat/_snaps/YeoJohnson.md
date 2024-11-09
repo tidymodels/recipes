@@ -84,3 +84,33 @@
       -- Operations 
       * Yeo-Johnson transformation on: x1, x2, x4 | Trained
 
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, na_rm = "yes") %>%
+        prep()
+    Condition
+      Error in `step_YeoJohnson()`:
+      Caused by error in `prep()`:
+      ! `na_rm` must be `TRUE` or `FALSE`, not the string "yes".
+
+---
+
+    Code
+      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, num_unique = "yes") %>%
+        prep()
+    Condition
+      Error in `step_YeoJohnson()`:
+      Caused by error in `prep()`:
+      ! `x$num_unique` must be a whole number, not the string "yes".
+
+---
+
+    Code
+      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, limits = NA_real_) %>%
+        prep()
+    Condition
+      Error in `step_YeoJohnson()`:
+      Caused by error in `prep()`:
+      ! `limits` should be a numeric vector with two values, not a double vector
+

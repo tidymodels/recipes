@@ -93,7 +93,7 @@ step_nzv <-
            skip = FALSE,
            id = rand_id("nzv")) {
     exp_list <- list(freq_cut = 95 / 5, unique_cut = 10)
-    
+
     if (!isTRUE(all.equal(exp_list, options))) {
       lifecycle::deprecate_stop(
         "0.1.7",
@@ -140,6 +140,8 @@ step_nzv_new <-
 #' @export
 prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_number_decimal(x$unique_cut, arg = "unique_cut", min = 0, max = 100)
+  check_number_decimal(x$freq_cut, arg = "freq_cut", min = 0)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

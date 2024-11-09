@@ -68,3 +68,12 @@
       -- Operations 
       * Linear combination filter removed: N1, P1, K1 | Trained
 
+# bad args
+
+    Code
+      dum_rec %>% step_lincomb(all_predictors(), max_steps = 0) %>% prep()
+    Condition
+      Error in `step_lincomb()`:
+      Caused by error in `prep()`:
+      ! `max_steps` must be a whole number larger than or equal to 1, not the number 0.
+
