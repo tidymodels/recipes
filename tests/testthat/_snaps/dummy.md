@@ -162,7 +162,7 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `bake()`:
-      ! when `sparse = TRUE`, only "contr.treatment" contrasts are supported. Not "contr.helmert".
+      ! When `sparse = TRUE`, only "contr.treatment" contrasts are supported, not "contr.helmert".
 
 # bake method errors when needed non-standard role columns are missing
 
