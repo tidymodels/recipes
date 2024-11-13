@@ -304,8 +304,8 @@ bake.step_dummy <- function(object, new_data, ...) {
       current_contrast <- getOption("contrasts")[is_ordered + 1]
       if (current_contrast != "contr.treatment") {
         cli::cli_abort(
-          "when {.code sparse = TRUE}, only {.val contr.treatment} contrasts are
-          supported. Not {.val {current_contrast}}."
+          "When {.code sparse = TRUE}, only {.val contr.treatment} contrasts are
+          supported, not {.val {current_contrast}}."
         )
       } 
 
