@@ -10,6 +10,8 @@
 
 * All steps and checks now require arguments `trained`, `skip`, `role`, and `id` at all times.
 
+* `step_dummy()` gained `sparse` argument. When set to `TRUE`, `step_dummy()` will produce sparse vectors.
+
 # recipes 1.1.0
 
 ## Improvements

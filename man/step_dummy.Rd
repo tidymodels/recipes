@@ -13,6 +13,7 @@ step_dummy(
   preserve = deprecated(),
   naming = dummy_names,
   levels = NULL,
+  sparse = FALSE,
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy")
@@ -45,6 +46,10 @@ columns. See Details below.}
 \item{levels}{A list that contains the information needed to create dummy
 variables for each variable contained in \code{terms}. This is \code{NULL} until the
 step is trained by \code{\link[=prep]{prep()}}.}
+
+\item{sparse}{A logical. Should the columns produced be sparse vectors.
+Sparsity is only supported for \code{"contr.treatment"} contrasts. Defaults to
+\code{FALSE}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}

@@ -18,6 +18,9 @@
 #' @param levels A list that contains the information needed to create dummy
 #'   variables for each variable contained in `terms`. This is `NULL` until the
 #'   step is trained by [prep()].
+#' @param sparse A logical. Should the columns produced be sparse vectors.
+#'   Sparsity is only supported for `"contr.treatment"` contrasts. Defaults to 
+#'   `FALSE`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -121,6 +124,7 @@ step_dummy <-
            preserve = deprecated(),
            naming = dummy_names,
            levels = NULL,
+           sparse = FALSE,
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy")) {
@@ -143,6 +147,7 @@ step_dummy <-
         preserve = keep_original_cols,
         naming = naming,
         levels = levels,
+        sparse = sparse,
         keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
@@ -151,7 +156,7 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms, role, trained, one_hot, preserve, naming, levels,
+  function(terms, role, trained, one_hot, preserve, naming, levels, sparse,
            keep_original_cols, skip, id) {
     step(
       subclass = "dummy",
@@ -162,6 +167,7 @@ step_dummy_new <-
       preserve = preserve,
       naming = naming,
       levels = levels,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -174,6 +180,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("factor", "ordered"))
   check_bool(x$one_hot, arg = "one_hot")
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
+  check_bool(x$sparse, arg = "sparse")
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -218,6 +225,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     preserve = x$preserve,
     naming = x$naming,
     levels = levels,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -285,43 +293,60 @@ bake.step_dummy <- function(object, new_data, ...) {
       col_name,
       step = "step_dummy"
     )
-
-    new_data[, col_name] <-
-      factor(
-        new_data[[col_name]],
-        levels = levels_values,
-        ordered = is_ordered
-      )
-
-    indicators <-
-      model.frame(
-        rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
-        data = new_data[, col_name],
-        xlev = levels_values,
-        na.action = na.pass
-      )
-
-    indicators <- tryCatch(
-      model.matrix(object = levels, data = indicators),
-      error = function(cnd) {
-        if (grepl("(vector memory|cannot allocate)", cnd$message)) {
-          n_levels <- length(attr(levels, "values"))
-          cli::cli_abort(
-            "{.var {col_name}} contains too many levels ({n_levels}), \\
-            which would result in a data.frame too large to fit in memory.",
-            call = NULL
-          )
-        }
-        stop(cnd)
-      }
+  
+    new_data[, col_name] <- factor(
+      new_data[[col_name]],
+      levels = levels_values,
+      ordered = is_ordered
     )
 
-    if (!object$one_hot) {
-      indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
-    }
+    if (object$sparse) {
+      current_contrast <- getOption("contrasts")[is_ordered + 1]
+      if (current_contrast != "contr.treatment") {
+        cli::cli_abort(
+          "when {.code sparse = TRUE}, only {.val contr.treatment} contrasts are
+          supported. Not {.val {current_contrast}}."
+        )
+      } 
 
-    ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^\\`?", col_name, "\\`?"), "", colnames(indicators))
+      indicators <- sparsevctrs::sparse_dummy(
+        x = new_data[[col_name]],
+        one_hot = object$one_hot
+      )
+      indicators <- tibble::new_tibble(indicators)
+      used_lvl <- colnames(indicators)
+    } else {
+      indicators <-
+        model.frame(
+          rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
+          data = new_data[, col_name],
+          xlev = levels_values,
+          na.action = na.pass
+        )
+  
+      indicators <- tryCatch(
+        model.matrix(object = levels, data = indicators),
+        error = function(cnd) {
+          if (grepl("(vector memory|cannot allocate)", cnd$message)) {
+            n_levels <- length(attr(levels, "values"))
+            cli::cli_abort(
+              "{.var {col_name}} contains too many levels ({n_levels}), \\
+              which would result in a data.frame too large to fit in memory.",
+              call = NULL
+            )
+          }
+          stop(cnd)
+        }
+      )
+  
+      if (!object$one_hot) {
+        indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
+      }
+      
+      ## use backticks for nonstandard factor levels here
+      used_lvl <- gsub(paste0("^\\`?", col_name, "\\`?"), "", colnames(indicators))
+    }
+    
     new_names <- object$naming(col_name, used_lvl, is_ordered)
     colnames(indicators) <- new_names
     indicators <- check_name(indicators, new_data, object, new_names)
