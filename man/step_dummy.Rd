@@ -112,7 +112,8 @@ be changed by passing in a different function to the \code{naming} argument for
 this step.
 
 Also, there are a number of contrast methods that return fractional values.
-The columns returned by this step are doubles (not integers).
+The columns returned by this step are doubles (not integers) when
+\code{sparse = FALSE}. The columns returned when \code{sparse = TRUE} are integers.
 
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.

@@ -63,7 +63,8 @@
 #' this step.
 #'
 #' Also, there are a number of contrast methods that return fractional values.
-#' The columns returned by this step are doubles (not integers).
+#' The columns returned by this step are doubles (not integers) when 
+#' `sparse = FALSE`. The columns returned when `sparse = TRUE` are integers.
 #'
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
