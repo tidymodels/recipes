@@ -154,6 +154,16 @@
       Caused by error in `bake()`:
       ! Only one factor level in `x`: "only-level".
 
+# sparse = TRUE errors on unsupported contrasts
+
+    Code
+      recipe(~., data = tibble(x = letters)) %>% step_dummy(x, sparse = TRUE) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `bake()`:
+      ! When `sparse = TRUE`, only "contr.treatment" contrasts are supported, not "contr.helmert".
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

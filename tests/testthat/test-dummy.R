@@ -354,6 +354,34 @@ test_that("throws an informative error for single level", {
   )
 })
 
+test_that("sparse = TRUE works", {
+  rec <- recipe(~ ., data = tibble(x = c(NA, letters)))
+
+  suppressWarnings({
+    dense <- rec %>% step_dummy(x, sparse = FALSE) %>% prep() %>% bake(NULL)
+    dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
+    sparse <- rec %>% step_dummy(x, sparse = TRUE) %>% prep() %>% bake(NULL)
+  })
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse = TRUE errors on unsupported contrasts", {
+  go_helmert <- getOption("contrasts")
+  go_helmert["unordered"] <- "contr.helmert"
+  withr::local_options(contrasts = go_helmert)
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~ ., data = tibble(x = letters)) %>% 
+      step_dummy(x, sparse = TRUE) %>% 
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
