@@ -49,7 +49,7 @@
 #' functions aren't restricted to predictors. They will thus select outcomes,
 #' ID, and predictor columns alike. This is why these functions should be used
 #' with care, and why [tidyselect::everything()] likely isn't what you need.
-#' 
+#'
 #' For example:
 #'
 #' \preformatted{
@@ -204,8 +204,8 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
     offenders <- offenders[offenders != ""]
 
     cli::cli_abort(
-      "The following argument{?s} {?was/were} specified but do not exist: \\
-      {.arg {offenders}}.", 
+      "The following argument{?s} {?was/were} specified but do{?es/} not exist: \\
+      {.arg {offenders}}.",
       call = call
   )
   }
