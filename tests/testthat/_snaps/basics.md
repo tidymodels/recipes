@@ -210,7 +210,7 @@
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:
-      ! The following argument was specified but do not exist: `number`.
+      ! The following argument was specified but does not exist: `number`.
 
 ---
 
