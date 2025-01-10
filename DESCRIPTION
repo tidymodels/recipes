@@ -26,7 +26,7 @@ Imports:
     generics (>= 0.1.2),
     glue,
     gower,
-    hardhat (>= 1.4.0),
+    hardhat (>= 1.4.0.9000),
     ipred (>= 0.9-12),
     lifecycle (>= 1.0.3),
     lubridate (>= 1.8.0),
@@ -65,7 +65,8 @@ Suggests:
     workflows,
     xml2
 Remotes:  
-    r-lib/sparsevctrs
+    r-lib/sparsevctrs,
+    tidymodels/hardhat
 VignetteBuilder: 
     knitr
 RdMacros: 
