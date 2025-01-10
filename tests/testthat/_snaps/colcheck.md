@@ -21,24 +21,24 @@
     Code
       predict(role_wts_fit, head(Chicago) %>% select(-date))
     Condition
-      Error in `validate_column_names()`:
-      ! The following required columns are missing: 'date'.
+      Error in `hardhat::forge()`:
+      ! The required column "date" is missing.
 
 ---
 
     Code
       predict(rm_fit, Chicago %>% select(-date))
     Condition
-      Error in `validate_column_names()`:
-      ! The following required columns are missing: 'date'.
+      Error in `hardhat::forge()`:
+      ! The required column "date" is missing.
 
 ---
 
     Code
       predict(rm_fit, Chicago %>% select(-date))
     Condition
-      Error in `validate_column_names()`:
-      ! The following required columns are missing: 'date'.
+      Error in `hardhat::forge()`:
+      ! The required column "date" is missing.
 
 # empty printing
 
