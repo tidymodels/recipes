@@ -154,10 +154,10 @@
       Caused by error in `bake()`:
       ! Only one factor level in `x`: "only-level".
 
-# sparse = TRUE errors on unsupported contrasts
+# sparse = 'yes' errors on unsupported contrasts
 
     Code
-      recipe(~., data = tibble(x = letters)) %>% step_dummy(x, sparse = TRUE) %>%
+      recipe(~., data = tibble(x = letters)) %>% step_dummy(x, sparse = "yes") %>%
         prep()
     Condition
       Error in `step_dummy()`:
