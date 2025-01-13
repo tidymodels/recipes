@@ -18,9 +18,10 @@
 #' @param levels A list that contains the information needed to create dummy
 #'   variables for each variable contained in `terms`. This is `NULL` until the
 #'   step is trained by [prep()].
-#' @param sparse A logical. Should the columns produced be sparse vectors.
-#'   Sparsity is only supported for `"contr.treatment"` contrasts. Defaults to 
-#'   `FALSE`.
+#' @param sparse A single string. Should the columns produced be sparse vectors.
+#'   Can take the values `"yes"`, `"no"`, and `"auto"`. If `sparse = "auto"`
+#'   then workflows can determine the best option. Sparsity is only  supported 
+#'   for `"contr.treatment"` contrasts. Defaults to `"auto"`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -125,7 +126,7 @@ step_dummy <-
            preserve = deprecated(),
            naming = dummy_names,
            levels = NULL,
-           sparse = FALSE,
+           sparse = "auto",
            keep_original_cols = FALSE,
            skip = FALSE,
            id = rand_id("dummy")) {
@@ -181,7 +182,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("factor", "ordered"))
   check_bool(x$one_hot, arg = "one_hot")
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
-  check_bool(x$sparse, arg = "sparse")
+  rlang::arg_match0(x$sparse, c("auto", "yes", "no"), arg_nm = "sparse")
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -301,19 +302,21 @@ bake.step_dummy <- function(object, new_data, ...) {
       ordered = is_ordered
     )
 
-    if (object$sparse) {
+    if (object$sparse == "yes") {
       current_contrast <- getOption("contrasts")[is_ordered + 1]
-      if (current_contrast != "contr.treatment") {
+      if (!current_contrast %in% c("contr.treatment", "contr_one_hot")) {
         cli::cli_abort(
-          "When {.code sparse = TRUE}, only {.val contr.treatment} contrasts are
-          supported, not {.val {current_contrast}}."
+          "When {.code sparse = TRUE}, only {.val contr.treatment} and
+          {.val contr_one_hot} contrasts are supported, not
+          {.val {current_contrast}}."
         )
-      } 
+      }
 
       indicators <- sparsevctrs::sparse_dummy(
         x = new_data[[col_name]],
         one_hot = object$one_hot
       )
+
       indicators <- tibble::new_tibble(indicators)
       used_lvl <- colnames(indicators)
     } else {

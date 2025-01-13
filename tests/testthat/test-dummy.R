@@ -354,13 +354,13 @@ test_that("throws an informative error for single level", {
   )
 })
 
-test_that("sparse = TRUE works", {
+test_that("sparse = 'yes' works", {
   rec <- recipe(~ ., data = tibble(x = c(NA, letters)))
 
   suppressWarnings({
-    dense <- rec %>% step_dummy(x, sparse = FALSE) %>% prep() %>% bake(NULL)
+    dense <- rec %>% step_dummy(x, sparse = "no") %>% prep() %>% bake(NULL)
     dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
-    sparse <- rec %>% step_dummy(x, sparse = TRUE) %>% prep() %>% bake(NULL)
+    sparse <- rec %>% step_dummy(x, sparse = "yes") %>% prep() %>% bake(NULL)
   })
 
   expect_identical(dense, sparse)
@@ -369,7 +369,7 @@ test_that("sparse = TRUE works", {
   expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
 })
 
-test_that("sparse = TRUE errors on unsupported contrasts", {
+test_that("sparse = 'yes' errors on unsupported contrasts", {
   go_helmert <- getOption("contrasts")
   go_helmert["unordered"] <- "contr.helmert"
   withr::local_options(contrasts = go_helmert)
@@ -377,7 +377,7 @@ test_that("sparse = TRUE errors on unsupported contrasts", {
   expect_snapshot(
     error = TRUE,
     recipe(~ ., data = tibble(x = letters)) %>% 
-      step_dummy(x, sparse = TRUE) %>% 
+      step_dummy(x, sparse = "yes") %>% 
       prep()
   )
 })
