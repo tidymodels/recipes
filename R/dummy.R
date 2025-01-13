@@ -304,17 +304,19 @@ bake.step_dummy <- function(object, new_data, ...) {
 
     if (object$sparse == "yes") {
       current_contrast <- getOption("contrasts")[is_ordered + 1]
-      if (current_contrast != "contr.treatment") {
+      if (!current_contrast %in% c("contr.treatment", "contr_one_hot")) {
         cli::cli_abort(
-          "When {.code sparse = TRUE}, only {.val contr.treatment} contrasts are
-          supported, not {.val {current_contrast}}."
+          "When {.code sparse = TRUE}, only {.val contr.treatment} and
+          {.val contr_one_hot} contrasts are supported, not
+          {.val {current_contrast}}."
         )
-      } 
+      }
 
       indicators <- sparsevctrs::sparse_dummy(
         x = new_data[[col_name]],
         one_hot = object$one_hot
       )
+
       indicators <- tibble::new_tibble(indicators)
       used_lvl <- colnames(indicators)
     } else {
