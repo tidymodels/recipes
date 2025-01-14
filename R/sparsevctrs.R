@@ -22,23 +22,23 @@ is_sparse_matrix <- function(x) {
 }
 
 #' Toggle all auto sparse arguments
-#' 
+#'
 #' @param x A recipe.
 #' @param choice A character string for separating values.
-#' 
+#'
 #' @details
-#' If a step has an argument `sparse = "auto"`, then workflows can use this 
+#' If a step has an argument `sparse = "auto"`, then workflows can use this
 #' function to fill these values with the preferred action. This preferred
 #' action is calculated in workflows dependent on the model and data heuristics.
 #' Hence why it has to be passed in.
-#' 
-#' Only arguments where `sparse = "auto"` are affected, thus a user can set 
+#'
+#' Only arguments where `sparse = "auto"` are affected, thus a user can set
 #' `sparse = "no"` and it will be respected.
-#' 
+#'
 #' @return A recipe
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 #' @export
 .recipes_toggle_sparse_args <- function(x, choice) {
   for (i in seq_along(x$steps)) {

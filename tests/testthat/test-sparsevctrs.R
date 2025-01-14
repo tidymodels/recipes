@@ -178,3 +178,106 @@ test_that("recipe() errors if sparse matrix has no colnames", {
     recipe(hotel_data)
   )
 })
+
+test_that(".recipes_toggle_sparse_args works", {
+  skip_if_not_installed("modeldata")
+  data("ames", package = "modeldata")
+
+  rec_spec <- recipe(Sale_Price ~ ., data = ames) |>
+    step_center(all_numeric_predictors()) |>
+    step_center(all_numeric_predictors())
+
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec, "yes"),
+    rec_spec
+  )
+
+  rec_spec_yes_yes <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  rec_spec_no_no <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  rec_spec_yes_no <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  rec_spec_no_yes <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  rec_spec_auto_yes <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "yes", id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  rec_spec_auto_no <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), sparse = "no", id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  rec_spec_auto_auto <- recipe(Sale_Price ~ ., data = ames) |>
+    step_dummy(MS_Zoning, Street, id = "") |>
+    step_center(all_numeric_predictors(), id = "") |>
+    step_dummy(all_nominal_predictors(), id = "") |>
+    step_center(all_numeric_predictors(), id = "")
+
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_yes_yes, "yes"),
+    rec_spec_yes_yes
+  )
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_yes_yes, "no"),
+    rec_spec_yes_yes
+  )
+
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_no_no, "yes"),
+    rec_spec_no_no
+  )
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_no_no, "no"),
+    rec_spec_no_no
+  )
+
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_auto_auto, "yes"),
+    rec_spec_yes_yes
+  )
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_auto_auto, "no"),
+    rec_spec_no_no
+  )
+
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_auto_yes, "yes"),
+    rec_spec_yes_yes
+  )
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_auto_yes, "no"),
+    rec_spec_no_yes
+  )
+
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_auto_no, "yes"),
+    rec_spec_yes_no
+  )
+  expect_identical(
+    .recipes_toggle_sparse_args(rec_spec_auto_no, "no"),
+    rec_spec_no_no
+  )
+
+
+})
