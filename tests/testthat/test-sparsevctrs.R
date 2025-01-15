@@ -278,6 +278,21 @@ test_that(".recipes_toggle_sparse_args works", {
     .recipes_toggle_sparse_args(rec_spec_auto_no, "no"),
     rec_spec_no_no
   )
+})
 
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~., mtcars)
 
+  expect_identical(
+    .recipes_estimate_sparsity(rec),
+    sparsevctrs::sparsity(mtcars)
+  )
+
+  rec <- recipe(~., iris) %>%
+    step_dummy(all_nominal_predictors())
+
+ expect_equal(
+    .recipes_estimate_sparsity(rec),
+    rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+  )
 })

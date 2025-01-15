@@ -48,3 +48,74 @@ is_sparse_matrix <- function(x) {
   }
   x
 }
+
+#' Estimate sparity of a recipe
+#'
+#' @param x A recipe.
+#'
+#' @details
+#' Takes a untrained recipe an provides a rough estimate of the sparsity of the
+#' prepped version of the recipe.
+#'
+#' Sampling of the input is done to avoid slowdown for larger data sets.
+#'
+#' An estimated sparsity of the input data is calculated. Then each step where
+#' `sparse = "auto"` or `sparse = "yes"` is set, an estimate of how many
+#' predictores will be created and used to modify the estimate.
+#'
+#' @return A recipe
+#'
+#' @keywords internal
+#'
+#' @export
+.recipes_estimate_sparsity <- function(x, ...) {
+  UseMethod(".recipes_estimate_sparsity")
+}
+
+#' @export
+.recipes_estimate_sparsity.default <- function(x, ...) {
+  NULL
+}
+
+#' @export
+.recipes_estimate_sparsity.recipe <- function(x, ...) {
+  template <- x$template
+  n_rows <- nrow(template)
+  n_cols <- ncol(template)
+
+  if (n_rows == 0) {
+    est_sparsity <- 0
+    n_rows <- 1 # messed the math up otherwise
+  } else {
+    est_sparsity <- sparsevctrs::sparsity(template, sample = 1000)
+  }
+  zeroes <- est_sparsity * n_rows * n_cols
+
+  for (step in x$steps) {
+    if (!is.null(step$sparse) && step$sparse != "no") {
+      col_names <- recipes_eval_select(step$terms, template, x$term_info)
+
+      adjustments <- .recipes_estimate_sparsity(step, template[col_names])
+
+      for (adjustment in adjustments) {
+        zeroes <- zeroes +
+          n_rows * adjustment[["sparsity"]] * adjustment[["n_cols"]]
+        n_cols <- n_cols + adjustment[["n_cols"]] - 1
+      }
+    }
+  }
+
+  zeroes / (n_rows * n_cols)
+}
+
+#' @export
+.recipes_estimate_sparsity.step_dummy <- function(x, data, ...) {
+  n_levels <- lapply(data, function(x) length(levels(x)))
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = ifelse(x$one_hot, n_lvl, n_lvl - 1),
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
+}
