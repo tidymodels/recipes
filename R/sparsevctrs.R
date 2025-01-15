@@ -51,7 +51,7 @@ is_sparse_matrix <- function(x) {
 
 #' Estimate sparity of a recipe
 #'
-#' @param x A recipe.
+#' @param x An object.
 #'
 #' @details
 #' Takes a untrained recipe an provides a rough estimate of the sparsity of the
