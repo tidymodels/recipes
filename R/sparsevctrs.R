@@ -62,6 +62,10 @@ is_sparse_matrix <- function(x) {
 #' An estimated sparsity of the input data is calculated. Then each step where
 #' `sparse = "auto"` or `sparse = "yes"` is set, an estimate of how many
 #' predictores will be created and used to modify the estimate.
+#' 
+#' An initial sparsity of 0 will be used if a zero-row data frame is used in
+#' specification of recipe. This is likely a under-estimate of the true
+#' sparsity of the data.
 #'
 #' @return A recipe
 #'
