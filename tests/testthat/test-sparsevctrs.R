@@ -289,10 +289,22 @@ test_that(".recipes_toggle_sparse_args works", {
   )
 
   rec <- recipe(~., iris) %>%
+    step_normalize(all_numeric_predictors()) %>%
+    step_dummy(all_nominal_predictors())
+
+exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+ expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp
+  )
+
+  rec <- recipe(~., iris[0, ]) %>%
+    step_normalize(all_numeric_predictors()) %>%
     step_dummy(all_nominal_predictors())
 
  expect_equal(
     .recipes_estimate_sparsity(rec),
-    rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+    exp
   )
 })
