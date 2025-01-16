@@ -382,6 +382,30 @@ test_that("sparse = 'yes' errors on unsupported contrasts", {
   )
 })
 
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~., iris) %>%
+    step_dummy(all_nominal_predictors())
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+ expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp
+  )
+
+  iris$Species <- as.character(iris$Species)
+
+  rec <- recipe(~., iris) %>%
+    step_dummy(all_nominal_predictors())
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+ expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

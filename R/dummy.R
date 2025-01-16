@@ -397,3 +397,23 @@ tidy.step_dummy <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_estimate_sparsity.step_dummy <- function(x, data, ...) {
+  get_levels <- function(x) {
+    if (is.factor(x)) {
+      return(length(levels(x)))
+    } else {
+      return(vctrs::vec_unique_count(x))
+    }
+  }
+  
+  n_levels <- lapply(data, get_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = ifelse(x$one_hot, n_lvl, n_lvl - 1),
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
+}
