@@ -177,17 +177,17 @@ test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
 })
 
 test_that("warns when NaN is returned due to zero variance",{
-  rec <- recipe(~., data = data.frame(x = rep(1, 10))) |>
+  rec <- recipe(~., data = data.frame(x = rep(1, 10))) %>%
     step_range(x)
   expect_snapshot(prep(rec))
 })
 
 test_that("warns when NaN is returned due to Inf or -Inf",{
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) |>
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) %>%
     step_range(x)
   expect_snapshot(prep(rec))
 
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) |>
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) %>%
     step_range(x)
   expect_snapshot(prep(rec))
 })
