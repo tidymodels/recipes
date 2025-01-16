@@ -111,15 +111,3 @@ is_sparse_matrix <- function(x) {
 
   zeroes / (n_rows * n_cols)
 }
-
-#' @export
-.recipes_estimate_sparsity.step_dummy <- function(x, data, ...) {
-  n_levels <- lapply(data, function(x) length(levels(x)))
-
-  lapply(n_levels, function(n_lvl) {
-    c(
-      n_cols = ifelse(x$one_hot, n_lvl, n_lvl - 1),
-      sparsity = 1 - 1 / n_lvl
-    )
-  })
-}
