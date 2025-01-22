@@ -182,7 +182,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("factor", "ordered"))
   check_bool(x$one_hot, arg = "one_hot")
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
-  rlang::arg_match0(x$sparse, c("auto", "yes", "no"), arg_nm = "sparse")
+  check_sparse_arg(x$sparse)
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -302,7 +302,7 @@ bake.step_dummy <- function(object, new_data, ...) {
       ordered = is_ordered
     )
 
-    if (object$sparse == "yes") {
+    if (sparse_is_yes(object$sparse)) {
       current_contrast <- getOption("contrasts")[is_ordered + 1]
       if (!current_contrast %in% c("contr.treatment", "contr_one_hot")) {
         cli::cli_abort(

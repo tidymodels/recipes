@@ -111,3 +111,13 @@ is_sparse_matrix <- function(x) {
 
   zeroes / (n_rows * n_cols)
 }
+
+check_sparse_arg <- function(x) {
+  if (!is.null(x)) {
+    rlang::arg_match0(x, c("auto", "yes", "no"), arg_nm = "sparse")
+  }
+}
+
+sparse_is_yes <- function(x) {
+  !is.null(x) && x == "yes"
+}

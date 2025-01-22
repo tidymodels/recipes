@@ -382,6 +382,23 @@ test_that("sparse = 'yes' errors on unsupported contrasts", {
   )
 })
 
+test_that("sparse argument is backwards compatible", {
+  dat <- tibble(x = c(letters))
+  rec <- recipe(~ ., data = dat) %>%
+    step_dummy(x) %>%
+    prep()
+
+  exp <- bake(rec, dat)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, dat),
+    exp
+  )
+})
+
 test_that(".recipes_toggle_sparse_args works", {
   rec <- recipe(~., iris) %>%
     step_dummy(all_nominal_predictors())
