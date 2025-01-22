@@ -209,6 +209,10 @@ recipe.formula <- function(formula, data, ...) {
     cli::cli_abort("{.arg data} is missing with no default.")
   }
 
+  if (is.table(data)) {
+    data <- as_tibble(data)
+  }
+
   if (!is.data.frame(data) && !is.matrix(data) && !is_sparse_matrix(data)) {
     cli::cli_abort(
       "{.arg data} must be a data frame, matrix, or sparse matrix, 
