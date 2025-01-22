@@ -210,6 +210,10 @@ recipe.formula <- function(formula, data, ...) {
   }
 
   if (is.table(data)) {
+    cli::cli_warn(
+      "Passing a table to {.fn recipe} is undocumented unsupported behavior.
+      This will no longer be possible in the next release of {.pkg recipes}."
+    )
     data <- as_tibble(data)
   }
 
