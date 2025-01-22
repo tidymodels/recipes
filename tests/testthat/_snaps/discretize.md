@@ -137,7 +137,7 @@
     Condition
       Error in `step_discretize()`:
       Caused by error in `prep()`:
-      ! `min_unique` must be a whole number larger than or equal to 2, not the number -1.
+      ! `min_unique` must be a whole number larger than or equal to 1, not the number -1.
 
 # war when less breaks are generated
 

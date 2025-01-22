@@ -346,7 +346,7 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
   check_number_whole(x$num_breaks, min = 1, arg = "num_breaks")
-  check_number_whole(x$min_unique, min = 2, arg = "min_unique")
+  check_number_whole(x$min_unique, min = 1, arg = "min_unique")
 
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     cli::cli_warn(
