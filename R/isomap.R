@@ -11,8 +11,8 @@
 #'  or the number of possible dimensions, a smaller value will be
 #'  used.
 #' @param neighbors The number of neighbors.
-#' @param options A list of options to [dimRed::Isomap()].
-#' @param res The [dimRed::Isomap()] object is stored
+#' @param options A list of options to `dimRed::Isomap()``.
+#' @param res The `dimRed::Isomap()`` object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
 #' @template step-return
