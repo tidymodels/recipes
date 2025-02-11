@@ -21,7 +21,6 @@ step <- function(subclass, ..., .prefix = "step_",
   check_string(subclass, call = call)
   .prefix <- rlang::arg_match0(.prefix, c("step_", "check_", ""),
                                error_call = call)
-  check_step_check_args(args, call = call)
 
   structure(args, class = c(paste0(.prefix, subclass), "step")
   )
@@ -36,7 +35,6 @@ check <- function(subclass, ..., .prefix = "check_",
   check_string(subclass, call = call)
   .prefix <- rlang::arg_match0(.prefix, c("step_", "check_", ""),
                                error_call = call)
-  check_step_check_args(args, call = call)
 
   structure(args, class = c(paste0(.prefix, subclass), "check")
   )
@@ -66,28 +64,3 @@ add_check <- function(rec, object) {
   rec$steps[[length(rec$steps) + 1]] <- object
   rec
 }
-
-# ------------------------------------------------------------------------------
-
-check_step_check_args <- function(x, call = rlang::caller_env()) {
-  req_args <- c("trained", "id", "skip", "role")
-  nms <- names(x)
-  has_req_args <- req_args %in% nms
-  if (!all(has_req_args)) {
-    miss_args <- req_args[!has_req_args]
-    cli::cli_abort("Some required arguments are missing: {.arg {miss_args}}.",
-                   call = call)
-  }
-  check_bool(x$trained, call = call, arg = "trained")
-  check_bool(x$skip, call = call, arg = "skip")
-  check_string(x$id, call = call, arg = "id")
-  check_string(x$role, allow_empty = FALSE, allow_na = TRUE, call = call)
-
-  if (any(names(x) == "keep_original_cols")) {
-    check_bool(x$keep_original_cols, call = call, arg = "keep_original_cols")
-  }
-
-  invisible(x)
-}
-
-
