@@ -401,7 +401,7 @@ test_that("sparse argument is backwards compatible", {
 
 test_that(".recipes_toggle_sparse_args works", {
   rec <- recipe(~., iris) %>%
-    step_dummy(all_nominal_predictors())
+    step_dummy(all_nominal_predictors(), sparse = "auto")
 
   exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
 
@@ -413,7 +413,7 @@ test_that(".recipes_toggle_sparse_args works", {
   iris$Species <- as.character(iris$Species)
 
   rec <- recipe(~., iris) %>%
-    step_dummy(all_nominal_predictors())
+    step_dummy(all_nominal_predictors(), sparse = "auto")
 
   exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
 
