@@ -114,7 +114,7 @@ tidy(scaled_obj, number = 1)
 \references{
 Gelman, A. (2007) "Scaling regression inputs by
 dividing by two standard deviations." Unpublished. Source:
-\url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
+\url{https://sites.stat.columbia.edu/gelman/research/unpublished/standardizing.pdf}.
 }
 \seealso{
 Other normalization steps: 
