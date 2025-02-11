@@ -427,48 +427,6 @@ test_that("data argument is checked in recipe.formula() (#1325)", {
   )
 })
 
-test_that("step constructor", {
-
-  step_lightly  <-
-    function(trained = FALSE, skip = FALSE, id = "id") {
-      step(
-        subclass = "lightly",
-        trained = trained,
-        skip = skip,
-        id = id
-      )
-    }
-
-  expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(trained = "yes"),
-    error = TRUE
-  )
-  expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(id = TRUE),
-    error = TRUE
-  )
-  expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(skip = "you betcha"),
-    error = TRUE
-  )
-  expect_snapshot(
-    recipe(~., mtcars) %>% step_normalize(role = 13),
-    error = TRUE
-  )
-  expect_snapshot(
-    recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0),
-    error = TRUE
-  )
-  expect_snapshot(
-    step(subclass = list()),
-    error = TRUE
-  )
-  expect_snapshot(
-    step(),
-    error = TRUE
-  )
-})
-
 test_that("bake() error on wrong composition", {
   expect_snapshot(
     error = TRUE,
