@@ -20,3 +20,4 @@ tests/testthat/NMF*
 ^man-roxygen$
 ^LICENSE\.md$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

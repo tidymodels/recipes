@@ -13,7 +13,7 @@ step_dummy(
   preserve = deprecated(),
   naming = dummy_names,
   levels = NULL,
-  sparse = "no",
+  sparse = "auto",
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy")

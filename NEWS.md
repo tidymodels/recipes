@@ -1,5 +1,13 @@
 # recipes (development version)
 
+* `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
+
+* `recipe()`, `prep()`, and `bake()` now work with sparse matrices. (#1364, #1368, #1369)
+
+* All steps and checks now require arguments `trained`, `skip`, `role`, and `id` at all times.
+
+* `step_dummy()` gained `sparse` argument. When set to `"yes"`, `step_dummy()` will produce sparse vectors. (#1392)
+
 # recipes 1.1.1
 
 ## Improvements
