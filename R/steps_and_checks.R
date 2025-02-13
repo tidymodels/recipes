@@ -22,7 +22,7 @@ step <- function(subclass, ..., .prefix = "step_",
   .prefix <- rlang::arg_match0(.prefix, c("step_", "check_", ""),
                                error_call = call)
   check_step_check_args(args, call = call)
-
+  
   structure(args, class = c(paste0(.prefix, subclass), "step")
   )
 }
@@ -37,7 +37,7 @@ check <- function(subclass, ..., .prefix = "check_",
   .prefix <- rlang::arg_match0(.prefix, c("step_", "check_", ""),
                                error_call = call)
   check_step_check_args(args, call = call)
-
+  
   structure(args, class = c(paste0(.prefix, subclass), "check")
   )
 }
@@ -89,5 +89,3 @@ check_step_check_args <- function(x, call = rlang::caller_env()) {
 
   invisible(x)
 }
-
-

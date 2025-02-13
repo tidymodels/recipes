@@ -229,23 +229,23 @@ test_that(".recipes_toggle_sparse_args works", {
     clean_environments()
 
   rec_spec_auto_yes <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, id = "") %>%
+    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") %>%
     step_center(all_numeric_predictors(), id = "") %>%
     step_dummy(all_nominal_predictors(), sparse = "yes", id = "") %>%
     step_center(all_numeric_predictors(), id = "") %>%
     clean_environments()
 
   rec_spec_auto_no <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, id = "") %>%
+    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") %>%
     step_center(all_numeric_predictors(), id = "") %>%
     step_dummy(all_nominal_predictors(), sparse = "no", id = "") %>%
     step_center(all_numeric_predictors(), id = "") %>%
     clean_environments()
 
   rec_spec_auto_auto <- recipe(Sale_Price ~ ., data = ames) %>%
-    step_dummy(MS_Zoning, Street, id = "") %>%
+    step_dummy(MS_Zoning, Street, sparse = "auto", id = "") %>%
     step_center(all_numeric_predictors(), id = "") %>%
-    step_dummy(all_nominal_predictors(), id = "") %>%
+    step_dummy(all_nominal_predictors(), sparse = "auto", id = "") %>%
     step_center(all_numeric_predictors(), id = "") %>%
     clean_environments()
 
@@ -305,7 +305,7 @@ test_that(".recipes_toggle_sparse_args works", {
 
   rec <- recipe(~., iris) %>%
     step_normalize(all_numeric_predictors()) %>%
-    step_dummy(all_nominal_predictors())
+    step_dummy(all_nominal_predictors(), sparse = "auto")
 
   exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
 
@@ -316,7 +316,7 @@ test_that(".recipes_toggle_sparse_args works", {
 
   rec <- recipe(~., iris[0, ]) %>%
     step_normalize(all_numeric_predictors()) %>%
-    step_dummy(all_nominal_predictors())
+    step_dummy(all_nominal_predictors(), sparse = "auto")
 
   expect_equal(
     .recipes_estimate_sparsity(rec),

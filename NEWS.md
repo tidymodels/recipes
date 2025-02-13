@@ -1,16 +1,20 @@
 # recipes (development version)
 
-* Example for `step_novel()` now better illustrates how it works. (@Edgar-Zamora, #1248)
-
 * `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
 
 * `recipe()`, `prep()`, and `bake()` now work with sparse matrices. (#1364, #1368, #1369)
 
-* `prep.recipe(..., strings_as_factors = TRUE)` now only converts string variables that have role "predictor" or "outcome". (@dajmcdon, #1358, #1376)
-
 * All steps and checks now require arguments `trained`, `skip`, `role`, and `id` at all times.
 
 * `step_dummy()` gained `sparse` argument. When set to `"yes"`, `step_dummy()` will produce sparse vectors. (#1392)
+
+# recipes 1.1.1
+
+## Improvements
+
+* Example for `step_novel()` now better illustrates how it works. (@Edgar-Zamora, #1248)
+
+* `prep.recipe(..., strings_as_factors = TRUE)` now only converts string variables that have role "predictor" or "outcome". (@dajmcdon, #1358, #1376)
 
 # recipes 1.1.0
 

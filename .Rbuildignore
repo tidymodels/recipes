@@ -19,3 +19,5 @@ tests/testthat/NMF*
 ^CODE_OF_CONDUCT\.md$
 ^man-roxygen$
 ^LICENSE\.md$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
