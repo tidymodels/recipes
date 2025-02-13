@@ -37,7 +37,7 @@ vignette goes over the basics of using selection functions.
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -216,18 +216,18 @@ outcomes.</p>
 <span><span class="va">with_dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">dummied</span>, new_data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span><span class="va">with_dummy</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 344 × 7</span></span></span>
-<span><span class="co">#&gt;    species island    bill_length_mm bill_depth_mm flipper_length_mm sex   </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.883</span>         0.784            -<span style="color: #BB0000;">1.42</span>  male  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.810</span>         0.126            -<span style="color: #BB0000;">1.06</span>  female</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.663</span>         0.430            -<span style="color: #BB0000;">0.421</span> female</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Adelie  Torgersen         <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Adelie  Torgersen         -<span style="color: #BB0000;">1.32</span>          1.09             -<span style="color: #BB0000;">0.563</span> female</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.847</span>         1.75             -<span style="color: #BB0000;">0.776</span> male  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.920</span>         0.329            -<span style="color: #BB0000;">1.42</span>  female</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.865</span>         1.24             -<span style="color: #BB0000;">0.421</span> male  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Adelie  Torgersen         -<span style="color: #BB0000;">1.80</span>          0.480            -<span style="color: #BB0000;">0.563</span> <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Adelie  Torgersen         -<span style="color: #BB0000;">0.352</span>         1.54             -<span style="color: #BB0000;">0.776</span> <span style="color: #BB0000;">NA</span>    </span></span>
+<span><span class="co">#&gt;    species island  bill_length_mm bill_depth_mm flipper_length_mm sex  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Adelie  Torger…         -<span style="color: #BB0000;">0.883</span>         0.784            -<span style="color: #BB0000;">1.42</span>  male </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Adelie  Torger…         -<span style="color: #BB0000;">0.810</span>         0.126            -<span style="color: #BB0000;">1.06</span>  fema…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Adelie  Torger…         -<span style="color: #BB0000;">0.663</span>         0.430            -<span style="color: #BB0000;">0.421</span> fema…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Adelie  Torger…         <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>                <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Adelie  Torger…         -<span style="color: #BB0000;">1.32</span>          1.09             -<span style="color: #BB0000;">0.563</span> fema…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Adelie  Torger…         -<span style="color: #BB0000;">0.847</span>         1.75             -<span style="color: #BB0000;">0.776</span> male </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Adelie  Torger…         -<span style="color: #BB0000;">0.920</span>         0.329            -<span style="color: #BB0000;">1.42</span>  fema…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Adelie  Torger…         -<span style="color: #BB0000;">0.865</span>         1.24             -<span style="color: #BB0000;">0.421</span> male </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Adelie  Torger…         -<span style="color: #BB0000;">1.80</span>          0.480            -<span style="color: #BB0000;">0.563</span> <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Adelie  Torger…         -<span style="color: #BB0000;">0.352</span>         1.54             -<span style="color: #BB0000;">0.776</span> <span style="color: #BB0000;">NA</span>   </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 334 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: body_mass_g &lt;int&gt;</span></span></span></code></pre></div>
 <p><code>body_mass_g</code> is unaffected.</p>

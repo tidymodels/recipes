@@ -13,7 +13,7 @@ strings to factors before using any tidymodels functions."><meta property="og:im
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -218,7 +218,7 @@ columns <code>terms</code>, <code>ordered</code> , and <code>id</code>:</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">make_factor</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inputs </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of variables by role</span>
@@ -245,14 +245,14 @@ columns <code>terms</code>, <code>ordered</code> , and <code>id</code>:</p>
 <span class="r-in"><span><span class="co"># ...but remains a string in the data</span></span></span>
 <span class="r-in"><span><span class="va">Sacramento</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   city       zip     beds baths  sqft type        price latitude longitude</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> SACRAMENTO z95838     2     1   836 Residential <span style="text-decoration: underline;">59</span>222     38.6     -<span style="color: #BB0000;">121.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> SACRAMENTO z95823     3     1  <span style="text-decoration: underline;">1</span>167 Residential <span style="text-decoration: underline;">68</span>212     38.5     -<span style="color: #BB0000;">121.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> SACRAMENTO z95815     2     1   796 Residential <span style="text-decoration: underline;">68</span>880     38.6     -<span style="color: #BB0000;">121.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> SACRAMENTO z95815     2     1   852 Residential <span style="text-decoration: underline;">69</span>307     38.6     -<span style="color: #BB0000;">121.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> SACRAMENTO z95824     2     1   797 Residential <span style="text-decoration: underline;">81</span>900     38.5     -<span style="color: #BB0000;">121.</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> SACRAMENTO z95841     3     1  <span style="text-decoration: underline;">1</span>122 Condo       <span style="text-decoration: underline;">89</span>921     38.7     -<span style="color: #BB0000;">121.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   city       zip     beds baths  sqft type     price latitude longitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> SACRAMENTO z95838     2     1   836 Residen… <span style="text-decoration: underline;">59</span>222     38.6     -<span style="color: #BB0000;">121.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> SACRAMENTO z95823     3     1  <span style="text-decoration: underline;">1</span>167 Residen… <span style="text-decoration: underline;">68</span>212     38.5     -<span style="color: #BB0000;">121.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> SACRAMENTO z95815     2     1   796 Residen… <span style="text-decoration: underline;">68</span>880     38.6     -<span style="color: #BB0000;">121.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> SACRAMENTO z95815     2     1   852 Residen… <span style="text-decoration: underline;">69</span>307     38.6     -<span style="color: #BB0000;">121.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> SACRAMENTO z95824     2     1   797 Residen… <span style="text-decoration: underline;">81</span>900     38.5     -<span style="color: #BB0000;">121.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> SACRAMENTO z95841     3     1  <span style="text-decoration: underline;">1</span>122 Condo    <span style="text-decoration: underline;">89</span>921     38.7     -<span style="color: #BB0000;">121.</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

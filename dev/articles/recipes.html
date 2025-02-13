@@ -37,7 +37,7 @@ basic usage, steps, selectors, and checks.
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -257,37 +257,41 @@ the variables:</p>
 <span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span>
 <span><span class="va">test_data</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,114 × 23</span></span></span>
-<span><span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount    Price</span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1.09   0.924  1.88    -<span style="color: #BB0000;">0.385</span> -<span style="color: #BB0000;">0.131</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.297  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    -<span style="color: #BB0000;">0.977</span>  0.924 -<span style="color: #BB0000;">0.459</span>    1.77  -<span style="color: #BB0000;">0.437</span>   0.845 -<span style="color: #BB0000;">0.295</span>  0.333   0.760  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    -<span style="color: #BB0000;">0.977</span>  0.103  0.349    1.77  -<span style="color: #BB0000;">0.783</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.333   0.002<span style="text-decoration: underline;">54</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    -<span style="color: #BB0000;">0.247</span>  0.103 -<span style="color: #BB0000;">0.280</span>    0.231 -<span style="color: #BB0000;">0.207</span>  -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  0.229   0.171  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    -<span style="color: #BB0000;">0.125</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">0.729</span>    0.231 -<span style="color: #BB0000;">0.258</span>  -<span style="color: #BB0000;">0.222</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.807</span>  -<span style="color: #BB0000;">0.854</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    -<span style="color: #BB0000;">0.855</span>  0.924 -<span style="color: #BB0000;">0.549</span>   -<span style="color: #BB0000;">1.05</span>  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">9</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.436  -<span style="color: #BB0000;">0.331</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     2.31   0.924  0.349    0.949 -<span style="color: #BB0000;">0.015</span><span style="color: #BB0000; text-decoration: underline;">5</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span>   0.047<span style="text-decoration: underline;">5</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.848 -<span style="color: #BB0000;">0.718</span>  0.529    1.00   1.40   -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  1.58    1.69   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    -<span style="color: #BB0000;">0.977</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">1.27</span>    -<span style="color: #BB0000;">0.538</span> -<span style="color: #BB0000;">0.246</span>  -<span style="color: #BB0000;">0.266</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">1.32</span>   -<span style="color: #BB0000;">1.65</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    -<span style="color: #BB0000;">0.855</span>  0.514 -<span style="color: #BB0000;">0.100</span>    0.744 -<span style="color: #BB0000;">0.540</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span>  -<span style="color: #BB0000;">0.800</span>  </span></span>
+<span><span class="co">#&gt;    Seniority   Time    Age Expenses  Income Assets   Debt  Amount</span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1.09   0.924  1.88    -<span style="color: #BB0000;">0.385</span> -<span style="color: #BB0000;">0.131</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.081</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    -<span style="color: #BB0000;">0.977</span>  0.924 -<span style="color: #BB0000;">0.459</span>    1.77  -<span style="color: #BB0000;">0.437</span>   0.845 -<span style="color: #BB0000;">0.295</span>  0.333 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    -<span style="color: #BB0000;">0.977</span>  0.103  0.349    1.77  -<span style="color: #BB0000;">0.783</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.333 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    -<span style="color: #BB0000;">0.247</span>  0.103 -<span style="color: #BB0000;">0.280</span>    0.231 -<span style="color: #BB0000;">0.207</span>  -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  0.229 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    -<span style="color: #BB0000;">0.125</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">0.729</span>    0.231 -<span style="color: #BB0000;">0.258</span>  -<span style="color: #BB0000;">0.222</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.807</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    -<span style="color: #BB0000;">0.855</span>  0.924 -<span style="color: #BB0000;">0.549</span>   -<span style="color: #BB0000;">1.05</span>  -<span style="color: #BB0000;">0.053</span><span style="color: #BB0000; text-decoration: underline;">9</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span>  0.436 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     2.31   0.924  0.349    0.949 -<span style="color: #BB0000;">0.015</span><span style="color: #BB0000; text-decoration: underline;">5</span> -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     0.848 -<span style="color: #BB0000;">0.718</span>  0.529    1.00   1.40   -<span style="color: #BB0000;">0.133</span> -<span style="color: #BB0000;">0.295</span>  1.58  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    -<span style="color: #BB0000;">0.977</span> -<span style="color: #BB0000;">0.718</span> -<span style="color: #BB0000;">1.27</span>    -<span style="color: #BB0000;">0.538</span> -<span style="color: #BB0000;">0.246</span>  -<span style="color: #BB0000;">0.266</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">1.32</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    -<span style="color: #BB0000;">0.855</span>  0.514 -<span style="color: #BB0000;">0.100</span>    0.744 -<span style="color: #BB0000;">0.540</span>  -<span style="color: #BB0000;">0.488</span> -<span style="color: #BB0000;">0.295</span> -<span style="color: #BB0000;">0.185</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,104 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 14 more variables: Status &lt;fct&gt;, Home_other &lt;dbl&gt;, Home_owner &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;, Home_rent &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;, Marital_single &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Marital_widow &lt;dbl&gt;, Records_yes &lt;dbl&gt;, Job_freelance &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Job_others &lt;dbl&gt;, Job_partime &lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 15 more variables: Price &lt;dbl&gt;, Status &lt;fct&gt;, Home_other &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Home_owner &lt;dbl&gt;, Home_parents &lt;dbl&gt;, Home_priv &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Home_rent &lt;dbl&gt;, Marital_married &lt;dbl&gt;, Marital_separated &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Marital_single &lt;dbl&gt;, Marital_widow &lt;dbl&gt;, Records_yes &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Job_freelance &lt;dbl&gt;, Job_others &lt;dbl&gt;, Job_partime &lt;dbl&gt;</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">test_data</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         Seniority              Time               Age          Expenses </span></span>
-<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;            Income            Assets              Debt            Amount </span></span>
-<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;             Price            Status        Home_other        Home_owner </span></span>
-<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;      Home_parents         Home_priv         Home_rent   Marital_married </span></span>
-<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
-<span><span class="co">#&gt; Marital_separated    Marital_single     Marital_widow       Records_yes </span></span>
-<span><span class="co">#&gt;                 1                 1                 1                 1 </span></span>
-<span><span class="co">#&gt;     Job_freelance        Job_others       Job_partime </span></span>
-<span><span class="co">#&gt;                 1                 1                 1</span></span></code></pre></div>
+<span><span class="co">#&gt;         Seniority              Time               Age </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;          Expenses            Income            Assets </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;              Debt            Amount             Price </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;            Status        Home_other        Home_owner </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;      Home_parents         Home_priv         Home_rent </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;   Marital_married Marital_separated    Marital_single </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;     Marital_widow       Records_yes     Job_freelance </span></span>
+<span><span class="co">#&gt;                 1                 1                 1 </span></span>
+<span><span class="co">#&gt;        Job_others       Job_partime </span></span>
+<span><span class="co">#&gt;                 1                 1</span></span></code></pre></div>
 <p>Selectors can also be used. For example, if only the predictors are
 needed, you can use
 <code>bake(object, new_data, all_predictors())</code>.</p>

@@ -9,7 +9,7 @@ one or more ratios from selected numeric variables."><meta property="og:image" c
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -213,20 +213,20 @@ columns <code>terms</code>, <code>denom</code> , and <code>id</code>:</p>
 <span class="r-in"><span><span class="va">ratio_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">ratio_recipe</span>, <span class="va">biomass_te</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ratio_data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 80 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      HHV carbon_o_total hydrogen_o_total oxygen_o_total nitrogen_o_total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  18.3          0.465           0.056<span style="text-decoration: underline;">8</span>          0.473          0.003<span style="text-decoration: underline;">01</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  17.6          0.432           0.055           0.481          0.028<span style="text-decoration: underline;">5</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  17.2          0.427           0.055           0.491          0.024  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  18.9          0.504           0.066<span style="text-decoration: underline;">2</span>          0.405          0.019<span style="text-decoration: underline;">5</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  20.5          0.497           0.064<span style="text-decoration: underline;">5</span>          0.436          0.002<span style="text-decoration: underline;">04</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  18.5          0.479           0.059<span style="text-decoration: underline;">5</span>          0.451          0.007<span style="text-decoration: underline;">58</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  15.1          0.389           0.052<span style="text-decoration: underline;">3</span>          0.541          0.011<span style="text-decoration: underline;">9</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  16.2          0.515           0.057<span style="text-decoration: underline;">0</span>          0.414          0.011<span style="text-decoration: underline;">6</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  11.1          0.419           0.063<span style="text-decoration: underline;">1</span>          0.446          0.002<span style="text-decoration: underline;">01</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  10.8          0.456           0.061<span style="text-decoration: underline;">9</span>          0.389          0.076<span style="text-decoration: underline;">0</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      HHV carbon_o_total hydrogen_o_total oxygen_o_total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  18.3          0.465           0.056<span style="text-decoration: underline;">8</span>          0.473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  17.6          0.432           0.055           0.481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  17.2          0.427           0.055           0.491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  18.9          0.504           0.066<span style="text-decoration: underline;">2</span>          0.405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  20.5          0.497           0.064<span style="text-decoration: underline;">5</span>          0.436</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  18.5          0.479           0.059<span style="text-decoration: underline;">5</span>          0.451</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  15.1          0.389           0.052<span style="text-decoration: underline;">3</span>          0.541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  16.2          0.515           0.057<span style="text-decoration: underline;">0</span>          0.414</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  11.1          0.419           0.063<span style="text-decoration: underline;">1</span>          0.446</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  10.8          0.456           0.061<span style="text-decoration: underline;">9</span>          0.389</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 70 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: sulfur_o_total &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: nitrogen_o_total &lt;dbl&gt;, sulfur_o_total &lt;dbl&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
