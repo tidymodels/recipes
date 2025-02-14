@@ -6,6 +6,7 @@
 #' @inheritParams step_date
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @inheritParams step_dummy
 #' @param holidays A character string that includes at least one
 #'  holiday supported by the `timeDate` package. See
 #'  [timeDate::listHolidays()] for a complete list.
@@ -48,6 +49,7 @@ step_holiday <-
            trained = FALSE,
            holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
            columns = NULL,
+           sparse = "auto",
            keep_original_cols = TRUE,
            skip = FALSE,
            id = rand_id("holiday")) {
@@ -69,6 +71,7 @@ step_holiday <-
         trained = trained,
         holidays = holidays,
         columns = columns,
+        sparse = sparse,
         keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
@@ -77,7 +80,8 @@ step_holiday <-
   }
 
 step_holiday_new <-
-  function(terms, role, trained, holidays, columns, keep_original_cols, skip, id) {
+  function(terms, role, trained, holidays, columns, sparse, keep_original_cols, 
+           skip, id) {
     step(
       subclass = "holiday",
       terms = terms,
@@ -85,6 +89,7 @@ step_holiday_new <-
       trained = trained,
       holidays = holidays,
       columns = columns,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -102,13 +107,14 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     holidays = x$holidays,
     columns = col_names,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
 }
 
-is_holiday <- function(hol, dt) {
+is_holiday <- function(hol, dt, sparse) {
   years <- unique(year(dt))
   na_year <- which(is.na(years))
   if (length(na_year) > 0) {
@@ -116,21 +122,39 @@ is_holiday <- function(hol, dt) {
   }
   hdate <- holiday(year = years, Holiday = hol)
   hdate <- as.Date(hdate)
-  out <- rep(0, length(dt))
-  out[dt %in% hdate] <- 1
-  out[is.na(dt)] <- NA
+
+  matches <- which(dt %in% hdate)
+  if (sparse) {
+    which_na <- which(is.na(dt))
+    if (length(which_na) != 0) {
+      values <- rep(c(1, NA), c(length(matches), length(which_na)))
+      positions <- c(matches, which_na)
+      pos_order <- order(positions)
+      values <- values[pos_order]
+      positions <- positions[pos_order]
+    } else {
+      values <- rep(1, length(matches))
+      positions <- matches
+    }
+    out <- sparsevctrs::sparse_integer(values, positions, length(dt))
+
+  } else {
+    out <- rep(0, length(dt))
+    out[dt %in% hdate] <- 1
+    out[is.na(dt)] <- NA
+  }
+
   out
 }
 
-get_holiday_features <- function(dt, hdays) {
+get_holiday_features <- function(dt, hdays, sparse) {
   if (!is.Date(dt)) {
     dt <- as.Date(dt)
   }
   hdays <- as.list(hdays)
-  hfeat <- lapply(hdays, is_holiday, dt = dt)
-  hfeat <- do.call("cbind", hfeat)
-  colnames(hfeat) <- unlist(hdays)
-  as_tibble(hfeat)
+  hfeat <- lapply(hdays, is_holiday, dt = dt, sparse = sparse)
+  names(hfeat) <- unlist(hdays)
+  tibble::new_tibble(hfeat)
 }
 
 #' @export
@@ -141,12 +165,15 @@ bake.step_holiday <- function(object, new_data, ...) {
   for (col_name in col_names) {
     tmp <- get_holiday_features(
       dt = new_data[[col_name]],
-      hdays = object$holidays
+      hdays = object$holidays,
+      sparse = sparse_is_yes(object$sparse)
     )
 
     names(tmp) <- paste(col_name, names(tmp), sep = "_")
-    tmp <- purrr::map(tmp, vec_cast, integer())
-    tmp <- vctrs::vec_cbind(!!!tmp)
+    if (!sparse_is_yes(object$sparse)) {
+      tmp <- purrr::map(tmp, vec_cast, integer())
+      tmp <- tibble::new_tibble(tmp)
+    }
 
     tmp <- check_name(tmp, new_data, object, names(tmp))
     new_data <- vec_cbind(new_data, tmp)

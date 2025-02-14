@@ -11,6 +11,7 @@ step_holiday(
   trained = FALSE,
   holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
   columns = NULL,
+  sparse = "auto",
   keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("holiday")
@@ -37,6 +38,11 @@ holiday supported by the \code{timeDate} package. See
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
+
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Sparsity is only  supported
+for \code{"contr.treatment"} contrasts. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}

@@ -190,6 +190,41 @@ test_that("error on incorrect holidays argument", {
   )
 })
 
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~ ., data = test_data)
+
+  dense <- rec %>% 
+    step_holiday(day, sparse = "no", keep_original_cols = FALSE) %>%
+    prep() %>%
+    bake(NULL)
+  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
+  sparse <- rec %>%
+    step_holiday(day, sparse = "yes", keep_original_cols = FALSE) %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  rec <- recipe(~ ., data = test_data) %>%
+    step_holiday(day) %>%
+    prep()
+
+  exp <- bake(rec, test_data)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, test_data),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
