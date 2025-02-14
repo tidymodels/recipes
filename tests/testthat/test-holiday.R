@@ -225,6 +225,16 @@ test_that("sparse argument is backwards compatible", {
   )
 })
 
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~ ., data = test_data) %>%
+    step_holiday(day, sparse = "auto", keep_original_cols = TRUE)
+
+  expect_equal(
+    .recipes_estimate_sparsity(rec),
+    364/365
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

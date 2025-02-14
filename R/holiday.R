@@ -200,3 +200,16 @@ tidy.step_holiday <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_estimate_sparsity.step_holiday <- function(x, data, ...) {
+  n_holidays <- length(x$holidays)
+  n_cols <- ncol(data)
+  
+  lapply(
+    seq_len(n_cols), 
+    function(x) {
+      c(n_cols = n_holidays,sparsity = 364/365)
+    }
+  )
+}
