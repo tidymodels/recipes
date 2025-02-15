@@ -74,7 +74,7 @@
       predictor: 5
       
       -- Operations 
-      * B-splines on: carbon and hydrogen
+      * B-splines on: carbon hydrogen
 
 ---
 
@@ -93,5 +93,5 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * B-splines on: carbon and hydrogen | Trained
+      * B-splines on: carbon hydrogen | Trained
 

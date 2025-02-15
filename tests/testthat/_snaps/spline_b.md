@@ -85,7 +85,7 @@
       predictor: 5
       
       -- Operations 
-      * Basis spline expansion: carbon and hydrogen
+      * Basis spline expansion: carbon hydrogen
 
 ---
 
@@ -104,7 +104,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Basis spline expansion: carbon and hydrogen | Trained
+      * Basis spline expansion: carbon hydrogen | Trained
 
 # bad args
 

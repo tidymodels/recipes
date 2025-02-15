@@ -65,7 +65,7 @@
       predictor: 5
       
       -- Operations 
-      * Natural spline expansion: carbon and hydrogen
+      * Natural spline expansion: carbon hydrogen
 
 ---
 
@@ -84,7 +84,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Natural spline expansion: carbon and hydrogen | Trained
+      * Natural spline expansion: carbon hydrogen | Trained
 
 # bad args
 

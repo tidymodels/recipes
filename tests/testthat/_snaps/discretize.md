@@ -65,7 +65,7 @@
       Training data contained 1000 data points and no incomplete rows.
       
       -- Operations 
-      * Discretize numeric variables from: x1 and x2 | Trained
+      * Discretize numeric variables from: x1 x2 | Trained
 
 # bad args
 

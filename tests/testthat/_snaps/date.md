@@ -121,7 +121,7 @@
       Training data contained 10 data points and no incomplete rows.
       
       -- Operations 
-      * Date features from: Dan and Stefan | Trained
+      * Date features from: Dan Stefan | Trained
 
 # bad args
 

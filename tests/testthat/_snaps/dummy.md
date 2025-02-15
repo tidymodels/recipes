@@ -230,7 +230,7 @@
       predictor: 7
       
       -- Operations 
-      * Dummy variables from: city and zip
+      * Dummy variables from: city zip
 
 ---
 
@@ -249,7 +249,7 @@
       Training data contained 932 data points and no incomplete rows.
       
       -- Operations 
-      * Dummy variables from: city and zip | Trained
+      * Dummy variables from: city zip | Trained
 
 # bad args
 

@@ -126,7 +126,7 @@
       Training data contained 100 data points and no incomplete rows.
       
       -- Operations 
-      * Correlation filter on: V6 and V1 | Trained
+      * Correlation filter on: V6 V1 | Trained
 
 # bad args
 

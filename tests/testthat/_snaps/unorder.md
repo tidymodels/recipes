@@ -14,7 +14,7 @@
       Training data contained 12 data points and no incomplete rows.
       
       -- Operations 
-      * Unordered variables: X1 and X2 | Trained
+      * Unordered variables: X1 X2 | Trained
 
 ---
 

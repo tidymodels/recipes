@@ -82,7 +82,7 @@
       predictor: 5
       
       -- Operations 
-      * Orthogonal polynomials on: carbon and hydrogen
+      * Orthogonal polynomials on: carbon hydrogen
 
 ---
 
@@ -101,7 +101,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Orthogonal polynomials on: carbon and hydrogen | Trained
+      * Orthogonal polynomials on: carbon hydrogen | Trained
 
 # bad args
 

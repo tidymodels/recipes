@@ -15,7 +15,7 @@
       Training data contained 100 data points and 100 incomplete rows.
       
       -- Operations 
-      * Missing value column filter removed: dbl2 and dbl3, ... | Trained, weighted
+      * Missing value column filter removed: dbl2 dbl3, ... | Trained, weighted
 
 ---
 

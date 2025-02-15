@@ -85,7 +85,7 @@
       predictor: 5
       
       -- Operations 
-      * Monotone spline expansion: carbon and hydrogen
+      * Monotone spline expansion: carbon hydrogen
 
 ---
 
@@ -104,7 +104,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Monotone spline expansion: carbon and hydrogen | Trained
+      * Monotone spline expansion: carbon hydrogen | Trained
 
 # bad args
 

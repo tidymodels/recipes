@@ -24,7 +24,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * No PCA components were extracted from: carbon and hydrogen, ... | Trained
+      * No PCA components were extracted from: carbon hydrogen, ... | Trained
 
 # backwards compatible with 0.1.17
 
@@ -95,7 +95,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * PCA extraction with: carbon and hydrogen, ... | Trained, ignored weights
+      * PCA extraction with: carbon hydrogen, ... | Trained, ignored weights
 
 # bake method errors when needed non-standard role columns are missing
 

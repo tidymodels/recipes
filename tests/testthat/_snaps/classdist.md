@@ -137,7 +137,7 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Distances to Species for: Sepal.Length and Sepal.Width, ... | Trained
+      * Distances to Species for: Sepal.Length Sepal.Width, ... | Trained
 
 # bad args
 

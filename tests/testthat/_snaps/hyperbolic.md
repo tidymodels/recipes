@@ -72,7 +72,7 @@
       predictor: 2
       
       -- Operations 
-      * Hyperbolic sin (inv) transformation on: x1 and x2
+      * Hyperbolic sin (inv) transformation on: x1 x2
 
 ---
 
@@ -90,5 +90,5 @@
       Training data contained 20 data points and no incomplete rows.
       
       -- Operations 
-      * Hyperbolic sin (inv) transformation on: x1 and x2 | Trained
+      * Hyperbolic sin (inv) transformation on: x1 x2 | Trained
 

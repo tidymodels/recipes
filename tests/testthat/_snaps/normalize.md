@@ -179,7 +179,7 @@
       predictor: 10
       
       -- Operations 
-      * Centering and scaling for: disp and wt
+      * Centering and scaling for: disp wt
 
 ---
 
@@ -198,5 +198,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Centering and scaling for: disp and wt | Trained
+      * Centering and scaling for: disp wt | Trained
 
