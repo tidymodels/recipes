@@ -31,7 +31,7 @@
       Training data contained 300 data points and no incomplete rows.
       
       -- Operations 
-      * Distance to shrunken centroids with: x and y | Trained
+      * Distance to shrunken centroids with: x y | Trained
 
 ---
 

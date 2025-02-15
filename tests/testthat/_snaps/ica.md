@@ -16,7 +16,7 @@
       
       -- Operations 
       * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
-      * No ICA components were extracted from: carbon and hydrogen, ... | Trained
+      * No ICA components were extracted from: carbon hydrogen, ... | Trained
 
 # check_name() is used
 
@@ -105,7 +105,7 @@
       
       -- Operations 
       * Centering and scaling for: all_predictors()
-      * ICA extraction with: carbon and hydrogen
+      * ICA extraction with: carbon hydrogen
 
 ---
 
@@ -125,7 +125,7 @@
       
       -- Operations 
       * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
-      * ICA extraction with: carbon and hydrogen | Trained
+      * ICA extraction with: carbon hydrogen | Trained
 
 # bad args
 

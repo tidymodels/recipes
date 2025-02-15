@@ -97,7 +97,7 @@
       predictor: 9
       
       -- Operations 
-      * Unknown factor level assignment for: city and zip
+      * Unknown factor level assignment for: city zip
 
 ---
 
@@ -115,5 +115,5 @@
       Training data contained 800 data points and no incomplete rows.
       
       -- Operations 
-      * Unknown factor level assignment for: city and zip | Trained
+      * Unknown factor level assignment for: city zip | Trained
 

@@ -130,5 +130,5 @@
       Training data contained 20 data points and no incomplete rows.
       
       -- Operations 
-      * Box-Cox transformation on: x1 and x4 | Trained
+      * Box-Cox transformation on: x1 x4 | Trained
 

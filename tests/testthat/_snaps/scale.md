@@ -169,7 +169,7 @@
       predictor: 10
       
       -- Operations 
-      * Scaling for: disp and wt
+      * Scaling for: disp wt
 
 ---
 
@@ -188,5 +188,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Scaling for: disp and wt | Trained
+      * Scaling for: disp wt | Trained
 

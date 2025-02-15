@@ -104,9 +104,9 @@
       predictor: 5
       
       -- Operations 
-      * Centering for: carbon and hydrogen
-      * Scaling for: carbon and hydrogen
-      * Spatial sign on: carbon and hydrogen
+      * Centering for: carbon hydrogen
+      * Scaling for: carbon hydrogen
+      * Spatial sign on: carbon hydrogen
 
 ---
 
@@ -125,7 +125,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Centering for: carbon and hydrogen | Trained
-      * Scaling for: carbon and hydrogen | Trained
-      * Spatial sign on: carbon and hydrogen | Trained
+      * Centering for: carbon hydrogen | Trained
+      * Scaling for: carbon hydrogen | Trained
+      * Spatial sign on: carbon hydrogen | Trained
 

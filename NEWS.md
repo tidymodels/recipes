@@ -8,6 +8,8 @@
 
 * `step_dummy()` gained `sparse` argument. When set to `"yes"`, `step_dummy()` will produce sparse vectors. (#1392)
 
+* `step_holiday()` gained `sparse` argument. When set to `"yes"`, `step_holiday()` will produce sparse vectors. (#1422)
+
 # recipes 1.1.1
 
 ## Improvements

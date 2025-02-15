@@ -74,7 +74,7 @@
       predictor: 10
       
       -- Operations 
-      * Natural splines on: disp and wt
+      * Natural splines on: disp wt
 
 ---
 
@@ -93,5 +93,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Natural splines on: disp and wt | Trained
+      * Natural splines on: disp wt | Trained
 

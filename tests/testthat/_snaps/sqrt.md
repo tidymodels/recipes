@@ -54,7 +54,7 @@
       predictor: 2
       
       -- Operations 
-      * Square root transformation on: x1 and x2
+      * Square root transformation on: x1 x2
 
 ---
 
@@ -72,5 +72,5 @@
       Training data contained 20 data points and no incomplete rows.
       
       -- Operations 
-      * Square root transformation on: x1 and x2 | Trained
+      * Square root transformation on: x1 x2 | Trained
 

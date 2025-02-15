@@ -102,7 +102,7 @@
       predictor: 5
       
       -- Operations 
-      * K-nearest neighbor imputation for: carbon and nitrogen
+      * K-nearest neighbor imputation for: carbon nitrogen
 
 ---
 
@@ -121,7 +121,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * K-nearest neighbor imputation for: carbon and nitrogen | Trained
+      * K-nearest neighbor imputation for: carbon nitrogen | Trained
 
 # bad args
 

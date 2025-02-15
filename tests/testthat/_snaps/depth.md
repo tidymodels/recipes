@@ -83,7 +83,7 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Data depth by Species for: Sepal.Length and Sepal.Width, ... | Trained
+      * Data depth by Species for: Sepal.Length Sepal.Width, ... | Trained
 
 # bad args
 

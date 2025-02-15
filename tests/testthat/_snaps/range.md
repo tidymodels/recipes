@@ -118,7 +118,7 @@
       predictor: 10
       
       -- Operations 
-      * Range scaling to [0,1] for: disp and wt
+      * Range scaling to [0,1] for: disp wt
 
 ---
 
@@ -137,7 +137,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Range scaling to [0,1] for: disp and wt | Trained
+      * Range scaling to [0,1] for: disp wt | Trained
 
 # bad args
 

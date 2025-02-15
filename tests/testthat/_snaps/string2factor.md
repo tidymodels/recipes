@@ -73,7 +73,7 @@
       predictor: 5
       
       -- Operations 
-      * Factor variables from: w and x
+      * Factor variables from: w x
 
 ---
 
@@ -91,5 +91,5 @@
       Training data contained 200 data points and no incomplete rows.
       
       -- Operations 
-      * Factor variables from: w and x | Trained
+      * Factor variables from: w x | Trained
 
