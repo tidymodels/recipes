@@ -10,6 +10,8 @@
 
 * `step_holiday()` gained `sparse` argument. When set to `"yes"`, `step_holiday()` will produce sparse vectors. (#1422)
 
+* `step_indicate_na()` gained `sparse` argument. When set to `"yes"`, `step_indicate_na()` will produce sparse vectors. (#1424)
+
 # recipes 1.1.1
 
 ## Improvements

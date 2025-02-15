@@ -98,6 +98,53 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~ ., data = tibble(x = c(NA, letters)))
+
+  dense <- rec %>%
+    step_indicate_na(x, sparse = "no", keep_original_cols = FALSE) %>%
+    prep() %>%
+    bake(NULL)
+  sparse <- rec %>%
+    step_indicate_na(x, sparse = "yes", keep_original_cols = FALSE) %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  dat <- tibble(x = c(letters))
+  rec <- recipe(~ ., data = dat) %>%
+    step_indicate_na(x) %>%
+    prep()
+
+  exp <- bake(rec, dat)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, dat),
+    exp
+  )
+})
+
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~., mtcars) %>%
+    step_indicate_na(all_numeric_predictors(), sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp + exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
