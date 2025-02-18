@@ -1,16 +1,13 @@
 library(testthat)
 library(recipes)
 
-
 n <- 20
 
 set.seed(752)
 as_fact <- data.frame(
   numbers = rnorm(n),
   fact = factor(sample(letters[1:3], n, replace = TRUE)),
-  ord = factor(sample(LETTERS[22:26], n, replace = TRUE),
-    ordered = TRUE
-  )
+  ord = factor(sample(LETTERS[22:26], n, replace = TRUE), ordered = TRUE)
 )
 as_str <- as_fact
 as_str$fact <- as.character(as_str$fact)
@@ -19,9 +16,11 @@ as_str$ord <- as.character(as_str$ord)
 test_that("strings_as_factors = FALSE", {
   rec1 <- recipe(~., data = as_fact) %>%
     step_center(numbers)
-  rec1 <- prep(rec1,
+  rec1 <- prep(
+    rec1,
     training = as_fact,
-    strings_as_factors = FALSE, verbose = FALSE
+    strings_as_factors = FALSE,
+    verbose = FALSE
   )
   rec1_as_fact <- bake(rec1, new_data = as_fact)
   expect_snapshot(rec1_as_str <- bake(rec1, new_data = as_str))
@@ -34,9 +33,11 @@ test_that("strings_as_factors = FALSE", {
 test_that("strings_as_factors = TRUE", {
   rec2 <- recipe(~., data = as_fact) %>%
     step_center(numbers)
-  rec2 <- prep(rec2,
+  rec2 <- prep(
+    rec2,
     training = as_fact,
-    strings_as_factors = TRUE, verbose = FALSE
+    strings_as_factors = TRUE,
+    verbose = FALSE
   )
   rec2_as_fact <- bake(rec2, new_data = as_fact)
   expect_snapshot(rec2_as_str <- bake(rec2, new_data = as_str))

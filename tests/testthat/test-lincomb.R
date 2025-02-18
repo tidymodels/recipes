@@ -1,10 +1,11 @@
 library(testthat)
 library(recipes)
 
-dummies <- cbind(model.matrix(~ block - 1, npk),
-  model.matrix(~ N - 1, npk),
-  model.matrix(~ P - 1, npk),
-  model.matrix(~ K - 1, npk),
+dummies <- cbind(
+  model.matrix(~block - 1, npk),
+  model.matrix(~N - 1, npk),
+  model.matrix(~P - 1, npk),
+  model.matrix(~K - 1, npk),
   yield = npk$yield
 )
 
@@ -28,9 +29,9 @@ biomass$new_2 <- with(
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-biomass_rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-  sulfur + new_1 + new_2,
-data = biomass_tr
+biomass_rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + new_1 + new_2,
+  data = biomass_tr
 )
 
 ###################################################################
@@ -59,7 +60,11 @@ test_that("no exclusions", {
     step_lincomb(all_predictors())
 
   filtering_trained_2 <- prep(lincomb_filter_2, training = biomass_tr)
-  test_res_2 <- bake(filtering_trained_2, new_data = biomass_te, all_predictors())
+  test_res_2 <- bake(
+    filtering_trained_2,
+    new_data = biomass_te,
+    all_predictors()
+  )
 
   expect_true(length(filtering_trained_2$steps[[1]]$removals) == 0)
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))
@@ -118,7 +123,6 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
-
 
 test_that("bad args", {
   expect_snapshot(

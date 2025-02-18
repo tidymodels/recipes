@@ -7,30 +7,48 @@ biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ][1:5, ]
 
 rec <-
-  recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
     data = biomass_tr
   ) %>%
-  step_normalize(all_predictors())
+    step_normalize(all_predictors())
 
 # From directly calling fastICA
 exp_comp <-
-  structure(c(
-    0.129863464905676, 0.0759034631963958, 0.345979256585598,
-    0.126579800253201, 0.156772622077837, 0.397465725824992, 0.697584509101097,
-    0.783403578028365, 0.838717872383214, -1.22958413032623, 0.274166588383082,
-    -0.429295233592478
-  ),
-  .Dim = c(6L, 2L),
-  .Dimnames = list(NULL, c("IC1", "IC2"))
+  structure(
+    c(
+      0.129863464905676,
+      0.0759034631963958,
+      0.345979256585598,
+      0.126579800253201,
+      0.156772622077837,
+      0.397465725824992,
+      0.697584509101097,
+      0.783403578028365,
+      0.838717872383214,
+      -1.22958413032623,
+      0.274166588383082,
+      -0.429295233592478
+    ),
+    .Dim = c(6L, 2L),
+    .Dimnames = list(NULL, c("IC1", "IC2"))
   )
 
 exp_load <-
-  structure(c(
-    -0.41723456724402, 0.364056809629112, 0.406544129493068,
-    0.132202024893928, -0.0815957464153714, 0.192529689854096, -0.0343644772231862,
-    0.139740384225697, -0.656590943491334, -0.519748239614668
-  ),
-  .Dim = c(5L, 2L)
+  structure(
+    c(
+      -0.41723456724402,
+      0.364056809629112,
+      0.406544129493068,
+      0.132202024893928,
+      -0.0815957464153714,
+      0.192529689854096,
+      -0.0343644772231862,
+      0.139740384225697,
+      -0.656590943491334,
+      -0.519748239614668
+    ),
+    .Dim = c(5L, 2L)
   )
 colnames(exp_load) <- c("IC1", "IC2")
 
@@ -40,10 +58,23 @@ test_that("correct ICA values", {
   skip_if_not_installed("RSpectra")
 
   ica_extract <- rec %>%
-    step_ica(carbon, hydrogen, oxygen, nitrogen, sulfur, num_comp = 2, seed = 1, id = "")
+    step_ica(
+      carbon,
+      hydrogen,
+      oxygen,
+      nitrogen,
+      sulfur,
+      num_comp = 2,
+      seed = 1,
+      id = ""
+    )
 
   set.seed(12)
-  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
+  ica_extract_trained <- prep(
+    ica_extract,
+    training = biomass_tr,
+    verbose = FALSE
+  )
 
   ica_pred <- bake(ica_extract_trained, new_data = NULL, all_predictors())
   ica_pred <- head(as.matrix(ica_pred))
@@ -61,7 +92,6 @@ test_that("correct ICA values", {
   ) %>%
     arrange(terms, component)
   expect_equal(tidy_exp_un, tidy(ica_extract, number = 2))
-
 
   loadings <- stack(as.data.frame(exp_load))
 
@@ -108,14 +138,13 @@ test_that("check_name() is used", {
   )
 })
 
-
 test_that("tunable", {
   skip_if_not_installed("dimRed")
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
   rec <-
     recipe(~., data = iris) %>%
-    step_ica(all_predictors())
+      step_ica(all_predictors())
   rec_param <- tunable.step_ica(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp"))
   expect_true(all(rec_param$source == "recipe"))
@@ -128,7 +157,7 @@ test_that("tunable", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(~ ., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) %>%
     step_ica(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
     prep()
 
@@ -150,7 +179,7 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+    recipe(~., data = mtcars) %>%
       step_ica(all_predictors()) %>%
       prep()
   )
@@ -164,14 +193,19 @@ test_that("bake method errors when needed non-standard role columns are missing"
   skip_if_not_installed("RSpectra")
 
   ica_extract <-
-    recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-           data = biomass_tr
+    recipe(
+      HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+      data = biomass_tr
     ) %>%
-    step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
-    update_role(carbon, hydrogen, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+      step_ica(carbon, hydrogen, num_comp = 2, seed = 1) %>%
+      update_role(carbon, hydrogen, new_role = "potato") %>%
+      update_role_requirements(role = "potato", bake = FALSE)
 
-  ica_extract_trained <- prep(ica_extract, training = biomass_tr, verbose = FALSE)
+  ica_extract_trained <- prep(
+    ica_extract,
+    training = biomass_tr,
+    verbose = FALSE
+  )
 
   expect_snapshot(
     error = TRUE,
@@ -240,7 +274,7 @@ test_that("keep_original_cols works", {
 
   new_names <- c("IC1", "IC2", "IC3", "IC4", "IC5")
 
-  rec <- recipe(~ ., mtcars) %>%
+  rec <- recipe(~., mtcars) %>%
     step_ica(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -251,7 +285,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ ., mtcars) %>%
+  rec <- recipe(~., mtcars) %>%
     step_ica(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -268,7 +302,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
 
-  rec <- recipe(~ ., mtcars) %>%
+  rec <- recipe(~., mtcars) %>%
     step_ica(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -287,8 +321,10 @@ test_that("printing", {
   skip_if_not_installed("fastICA")
   skip_if_not_installed("RSpectra")
 
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr) %>%
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass_tr
+  ) %>%
     step_normalize(all_predictors()) %>%
     step_ica(carbon, hydrogen, num_comp = 2)
 
@@ -312,7 +348,6 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
 })
-
 
 test_that("bad args", {
   skip_if_not_installed("fastICA")

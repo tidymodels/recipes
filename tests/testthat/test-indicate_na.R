@@ -50,9 +50,17 @@ test_that("step_indicate_na on all columns", {
   expect_named(
     baked,
     c(
-      "Solar.R", "Wind", "Temp", "Month", "Day", "Ozone",
-      "na_ind_Solar.R", "na_ind_Wind", "na_ind_Temp",
-      "na_ind_Month", "na_ind_Day"
+      "Solar.R",
+      "Wind",
+      "Temp",
+      "Month",
+      "Day",
+      "Ozone",
+      "na_ind_Solar.R",
+      "na_ind_Wind",
+      "na_ind_Temp",
+      "na_ind_Month",
+      "na_ind_Day"
     )
   )
 })
@@ -66,8 +74,14 @@ test_that("step_indicate_na on subset of columns", {
   expect_named(
     baked,
     c(
-      "Solar.R", "Wind", "Temp", "Month", "Day",
-      "Ozone", "na_ind_Ozone", "na_ind_Solar.R"
+      "Solar.R",
+      "Wind",
+      "Temp",
+      "Month",
+      "Day",
+      "Ozone",
+      "na_ind_Ozone",
+      "na_ind_Solar.R"
     )
   )
 
@@ -79,8 +93,13 @@ test_that("step_indicate_na on subset of columns", {
   expect_named(
     baked2,
     c(
-      "Solar.R", "Wind", "Temp", "Month", "Day",
-      "Ozone", "na_ind_Solar.R"
+      "Solar.R",
+      "Wind",
+      "Temp",
+      "Month",
+      "Day",
+      "Ozone",
+      "na_ind_Solar.R"
     )
   )
 })
@@ -89,7 +108,7 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(mtcars)
   dat$na_ind_mpg <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_indicate_na(mpg)
 
   expect_snapshot(
@@ -99,7 +118,7 @@ test_that("check_name() is used", {
 })
 
 test_that("sparse = 'yes' works", {
-  rec <- recipe(~ ., data = tibble(x = c(NA, letters)))
+  rec <- recipe(~., data = tibble(x = c(NA, letters)))
 
   dense <- rec %>%
     step_indicate_na(x, sparse = "no", keep_original_cols = FALSE) %>%
@@ -118,7 +137,7 @@ test_that("sparse = 'yes' works", {
 
 test_that("sparse argument is backwards compatible", {
   dat <- tibble(x = c(letters))
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_indicate_na(x) %>%
     prep()
 
@@ -151,7 +170,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec1 <- recipe(train) %>%
     step_indicate_na(col1) %>%
     update_role(col1, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)%>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(train, verbose = FALSE, retain = TRUE)
 
   expect_snapshot(error = TRUE, bake(rec1, new_data = test[, 2:3]))
@@ -197,7 +216,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("na_ind_mpg")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_indicate_na(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -208,7 +227,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_indicate_na(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -221,7 +240,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_indicate_na(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL

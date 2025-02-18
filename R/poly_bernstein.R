@@ -62,18 +62,19 @@
 #' @template case-weights-not-supported
 #' @seealso [splines2::bernsteinPoly()]
 step_poly_bernstein <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           degree = 10,
-           complete_set = FALSE,
-           options = NULL,
-           keep_original_cols = FALSE,
-           results = NULL,
-           skip = FALSE,
-           id = rand_id("poly_bernstein")) {
-
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    degree = 10,
+    complete_set = FALSE,
+    options = NULL,
+    keep_original_cols = FALSE,
+    results = NULL,
+    skip = FALSE,
+    id = rand_id("poly_bernstein")
+  ) {
     recipes_pkg_check(required_pkgs.step_poly_bernstein())
 
     add_step(
@@ -94,8 +95,19 @@ step_poly_bernstein <-
   }
 
 step_poly_bernstein_new <-
-  function(terms, trained, role, degree, complete_set, options, keep_original_cols,
-           results, na_rm, skip, id) {
+  function(
+    terms,
+    trained,
+    role,
+    degree,
+    complete_set,
+    options,
+    keep_original_cols,
+    results,
+    na_rm,
+    skip,
+    id
+  ) {
     step(
       subclass = "poly_bernstein",
       terms = terms,
@@ -125,7 +137,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
     purrr::map2(
       training[, col_names],
       col_names,
-      ~ spline2_create(
+      ~spline2_create(
         .x,
         nm = .y,
         .fn = "bernsteinPoly",

@@ -80,15 +80,16 @@
 #' # ...but remains a string in the data
 #' Sacramento %>% head()
 step_string2factor <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ordered = FALSE,
-           skip = FALSE,
-           id = rand_id("string2factor")) {
-
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    levels = NULL,
+    ordered = FALSE,
+    skip = FALSE,
+    id = rand_id("string2factor")
+  ) {
     check_character(levels, allow_null = TRUE)
 
     add_step(
@@ -184,7 +185,6 @@ print.step_string2factor <-
     print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

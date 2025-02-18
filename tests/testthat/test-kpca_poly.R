@@ -20,12 +20,15 @@ test_that("correct kernel PCA values", {
   pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
-  pca_exp <- kernlab::kpca(as.matrix(tr_dat[, -1]),
+  pca_exp <- kernlab::kpca(
+    as.matrix(tr_dat[, -1]),
     kernel = "polydot",
     kpar = list(degree = 3, scale = .1)
   )
 
-  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num_comp]
+  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[,
+    1:kpca_trained$steps[[1]]$num_comp
+  ]
   colnames(pca_pred_exp) <- paste0("kPC", 1:kpca_trained$steps[[1]]$num_comp)
 
   rownames(pca_pred) <- NULL
@@ -62,7 +65,7 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(tr_dat)
   dat$kPC1 <- dat$X1
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_kpca_poly(X2, X3, X4, X5, X6)
 
   expect_snapshot(
@@ -74,9 +77,12 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_kpca_poly(all_predictors())
+      step_kpca_poly(all_predictors())
   rec_param <- tunable.step_kpca_poly(rec$steps[[1]])
-  expect_equal(rec_param$name, c("num_comp", "degree", "scale_factor", "offset"))
+  expect_equal(
+    rec_param$name,
+    c("num_comp", "degree", "scale_factor", "offset")
+  )
   expect_true(all(rec_param$source == "recipe"))
   expect_true(is.list(rec_param$call_info))
   expect_equal(nrow(rec_param), 4)
@@ -87,8 +93,12 @@ test_that("tunable", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(~ ., data = mtcars) %>%
-    step_kpca_poly(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
+  rec <- recipe(~., data = mtcars) %>%
+    step_kpca_poly(
+      all_predictors(),
+      num_comp = 0,
+      keep_original_cols = FALSE
+    ) %>%
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -107,7 +117,7 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+    recipe(~., data = mtcars) %>%
       step_kpca_poly(all_predictors()) %>%
       prep()
   )
@@ -175,7 +185,7 @@ test_that("keep_original_cols works", {
   skip_if_not_installed("kernlab")
   new_names <- paste0("kPC", 1:5)
 
-  rec <- recipe(~ ., tr_dat) %>%
+  rec <- recipe(~., tr_dat) %>%
     step_kpca_poly(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -186,7 +196,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ ., tr_dat) %>%
+  rec <- recipe(~., tr_dat) %>%
     step_kpca_poly(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -200,7 +210,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("kernlab")
-  rec <- recipe(~ ., tr_dat) %>%
+  rec <- recipe(~., tr_dat) %>%
     step_kpca_poly(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -245,31 +255,31 @@ test_that("bad args", {
   skip_if_not_installed("kernlab")
 
   expect_snapshot(
-    recipe(~ ., data = tr_dat) %>%
+    recipe(~., data = tr_dat) %>%
       step_kpca_poly(all_numeric_predictors(), num_comp = -1) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~ ., data = tr_dat) %>%
+    recipe(~., data = tr_dat) %>%
       step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~ ., data = tr_dat) %>%
+    recipe(~., data = tr_dat) %>%
       step_kpca_poly(all_numeric_predictors(), scale_factor = -1.1) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~ ., data = tr_dat) %>%
+    recipe(~., data = tr_dat) %>%
       step_kpca_poly(all_numeric_predictors(), offset = "a") %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~ ., data = tr_dat) %>%
+    recipe(~., data = tr_dat) %>%
       step_kpca_poly(all_numeric_predictors(), prefix = 1) %>%
       prep(),
     error = TRUE

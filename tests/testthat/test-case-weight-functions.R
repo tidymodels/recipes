@@ -14,7 +14,7 @@ test_that('correct means', {
   expect_equal(exp_means, calc_means)
 
   # Missing case weight
-  exp_means <- cov.wt(mtcars[-1,], freq_wts[-1])$center
+  exp_means <- cov.wt(mtcars[-1, ], freq_wts[-1])$center
   calc_means <- averages(mtcars, miss_wts)
   expect_equal(exp_means, calc_means)
 
@@ -24,7 +24,6 @@ test_that('correct means', {
   exp_means[3] <- weighted.mean(mtcar_mis[[3]], freq_wts, na.rm = TRUE)
   calc_means <- averages(mtcar_mis, freq_wts)
   expect_equal(exp_means, calc_means)
-
 })
 
 test_that('correct medians', {
@@ -67,14 +66,14 @@ test_that('correct variances', {
   expect_equal(exp_vars, calc_vars)
 
   # Missing case weight
-  exp_vars <- diag(cov.wt(mtcars[-1,], freq_wts[-1])$cov)
+  exp_vars <- diag(cov.wt(mtcars[-1, ], freq_wts[-1])$cov)
   calc_vars <- variances(mtcars, miss_wts)
   expect_equal(exp_vars, calc_vars)
 
   # Missing data in x
   exp_vars <- diag(cov.wt(mtcars, freq_wts)$cov)
-  exp_vars[2] <- diag(cov.wt(mtcar_mis[-1,2,drop = FALSE], freq_wts[-1])$cov)
-  exp_vars[3] <- diag(cov.wt(mtcar_mis[-2,3,drop = FALSE], freq_wts[-2])$cov)
+  exp_vars[2] <- diag(cov.wt(mtcar_mis[-1, 2, drop = FALSE], freq_wts[-1])$cov)
+  exp_vars[3] <- diag(cov.wt(mtcar_mis[-2, 3, drop = FALSE], freq_wts[-2])$cov)
   calc_vars <- variances(mtcar_mis, freq_wts)
   expect_equal(exp_vars, calc_vars)
 
@@ -84,7 +83,6 @@ test_that('correct variances', {
 
   calc_vars <- variances(mtcar_mis, freq_wts, na_rm = FALSE)
   expect_equal(exp_vars, calc_vars)
-
 })
 
 test_that('correct covariances', {
@@ -101,7 +99,7 @@ test_that('correct covariances', {
   expect_equal(exp_cors, calc_cors)
 
   # Missing case weight
-  exp_cors <- cov.wt(mtcars[-1,], freq_wts[-1], cor = FALSE)$cov
+  exp_cors <- cov.wt(mtcars[-1, ], freq_wts[-1], cor = FALSE)$cov
   calc_cors <- covariances(mtcars, miss_wts)
   expect_equal(exp_cors, calc_cors)
 
@@ -109,7 +107,6 @@ test_that('correct covariances', {
   exp_cors <- cov.wt(mtcars[-(1:2), 1:3], freq_wts[-(1:2)], cor = FALSE)$cov
   calc_cors <- covariances(mtcar_mis[, 1:3], freq_wts)
   expect_equal(exp_cors, calc_cors)
-
 })
 
 test_that('correct correlations', {
@@ -126,7 +123,7 @@ test_that('correct correlations', {
   expect_equal(exp_cors, calc_cors)
 
   # Missing case weight
-  exp_cors <- cov.wt(mtcars[-1,], freq_wts[-1], cor = TRUE)$cor
+  exp_cors <- cov.wt(mtcars[-1, ], freq_wts[-1], cor = TRUE)$cor
   calc_cors <- correlations(mtcars, miss_wts)
   expect_equal(exp_cors, calc_cors)
 
@@ -134,7 +131,6 @@ test_that('correct correlations', {
   exp_cors <- cov.wt(mtcars[-(1:2), 1:3], freq_wts[-(1:2)], cor = TRUE)$cor
   calc_cors <- correlations(mtcar_mis[, 1:3], freq_wts)
   expect_equal(exp_cors, calc_cors)
-
 })
 
 test_that("is_unsupervised_weights works", {
@@ -164,7 +160,7 @@ test_that("is_unsupervised_weights works", {
 test_that("get_case_weights() catches non-numeric case weights", {
   mtcars$vs <- as.character(mtcars$vs)
   class(mtcars$vs) <- c("hardhat_case_weights", "non_numeric_weights")
-  
+
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%

@@ -88,20 +88,21 @@ obj_type_friendly <- function(x, value = TRUE) {
   if (!n_dim) {
     if (!is_list(x) && length(x) == 1) {
       if (is_na(x)) {
-        return(switch(
-          typeof(x),
-          logical = "`NA`",
-          integer = "an integer `NA`",
-          double =
-            if (is.nan(x)) {
+        return(
+          switch(
+            typeof(x),
+            logical = "`NA`",
+            integer = "an integer `NA`",
+            double = if (is.nan(x)) {
               "`NaN`"
             } else {
               "a numeric `NA`"
             },
-          complex = "a complex `NA`",
-          character = "a character `NA`",
-          .rlang_stop_unexpected_typeof(x)
-        ))
+            complex = "a complex `NA`",
+            character = "a character `NA`",
+            .rlang_stop_unexpected_typeof(x)
+          )
+        )
       }
 
       show_infinites <- function(x) {
@@ -130,42 +131,48 @@ obj_type_friendly <- function(x, value = TRUE) {
           return(paste(what, number))
         }
 
-        return(switch(
-          typeof(x),
-          logical = if (x) "`TRUE`" else "`FALSE`",
-          character = {
-            what <- if (nzchar(x)) "the string" else "the empty string"
-            paste(what, str_encode(x, quote = "\""))
-          },
-          raw = paste("the raw value", as.character(x)),
-          .rlang_stop_unexpected_typeof(x)
-        ))
+        return(
+          switch(
+            typeof(x),
+            logical = if (x) "`TRUE`" else "`FALSE`",
+            character = {
+              what <- if (nzchar(x)) "the string" else "the empty string"
+              paste(what, str_encode(x, quote = "\""))
+            },
+            raw = paste("the raw value", as.character(x)),
+            .rlang_stop_unexpected_typeof(x)
+          )
+        )
       }
 
-      return(switch(
-        typeof(x),
-        logical = "a logical value",
-        integer = "an integer",
-        double = if (is.infinite(x)) show_infinites(x) else "a number",
-        complex = "a complex number",
-        character = if (nzchar(x)) "a string" else "\"\"",
-        raw = "a raw value",
-        .rlang_stop_unexpected_typeof(x)
-      ))
+      return(
+        switch(
+          typeof(x),
+          logical = "a logical value",
+          integer = "an integer",
+          double = if (is.infinite(x)) show_infinites(x) else "a number",
+          complex = "a complex number",
+          character = if (nzchar(x)) "a string" else "\"\"",
+          raw = "a raw value",
+          .rlang_stop_unexpected_typeof(x)
+        )
+      )
     }
 
     if (length(x) == 0) {
-      return(switch(
-        typeof(x),
-        logical = "an empty logical vector",
-        integer = "an empty integer vector",
-        double = "an empty numeric vector",
-        complex = "an empty complex vector",
-        character = "an empty character vector",
-        raw = "an empty raw vector",
-        list = "an empty list",
-        .rlang_stop_unexpected_typeof(x)
-      ))
+      return(
+        switch(
+          typeof(x),
+          logical = "an empty logical vector",
+          integer = "an empty integer vector",
+          double = "an empty numeric vector",
+          complex = "an empty complex vector",
+          character = "an empty character vector",
+          raw = "an empty raw vector",
+          list = "an empty list",
+          .rlang_stop_unexpected_typeof(x)
+        )
+      )
     }
   }
 
@@ -299,14 +306,16 @@ obj_type_oo <- function(x) {
 #' @param ... Arguments passed to [abort()].
 #' @inheritParams args_error_context
 #' @noRd
-stop_input_type <- function(x,
-                            what,
-                            ...,
-                            allow_na = FALSE,
-                            allow_null = FALSE,
-                            show_value = TRUE,
-                            arg = caller_arg(x),
-                            call = caller_env()) {
+stop_input_type <- function(
+  x,
+  what,
+  ...,
+  allow_na = FALSE,
+  allow_null = FALSE,
+  show_value = TRUE,
+  arg = caller_arg(x),
+  call = caller_env()
+) {
   # From standalone-cli.R
   cli <- env_get_list(
     nms = c("format_arg", "format_code"),

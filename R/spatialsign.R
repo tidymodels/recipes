@@ -74,14 +74,16 @@
 #' tidy(ss_trans, number = 3)
 #' tidy(ss_obj, number = 3)
 step_spatialsign <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           na_rm = TRUE,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("spatialsign")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    na_rm = TRUE,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("spatialsign")
+  ) {
     add_step(
       recipe,
       step_spatialsign_new(
@@ -150,7 +152,7 @@ bake.step_spatialsign <- function(object, new_data, ...) {
   }
 
   res <- as.matrix(new_data[, col_names])
-  res <- res / sqrt(rowSums((sqrt(1/wts) * res)^2, na.rm = object$na_rm))
+  res <- res / sqrt(rowSums((sqrt(1 / wts) * res)^2, na.rm = object$na_rm))
 
   res <- tibble::as_tibble(res)
   new_data[, col_names] <- res
@@ -161,8 +163,14 @@ bake.step_spatialsign <- function(object, new_data, ...) {
 print.step_spatialsign <-
   function(x, width = max(20, options()$width - 26), ...) {
     title <- "Spatial sign on  "
-    print_step(x$columns, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      x$columns,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 

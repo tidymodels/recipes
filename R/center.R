@@ -69,14 +69,16 @@
 #' tidy(center_trans, number = 1)
 #' tidy(center_obj, number = 1)
 step_center <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           na_rm = TRUE,
-           skip = FALSE,
-           id = rand_id("center")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    means = NULL,
+    na_rm = TRUE,
+    skip = FALSE,
+    id = rand_id("center")
+  ) {
     add_step(
       recipe,
       step_center_new(
@@ -125,7 +127,8 @@ prep.step_center <- function(x, training, info = NULL, ...) {
   if (length(inf_cols) > 0) {
     cli::cli_warn(
       "Column{?s} {.var {inf_cols}} returned NaN. \\
-      Consider avoiding `Inf` values before normalising.")
+      Consider avoiding `Inf` values before normalising."
+    )
   }
 
   step_center_new(
@@ -157,11 +160,16 @@ bake.step_center <- function(object, new_data, ...) {
 print.step_center <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Centering for "
-    print_step(names(x$means), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$means),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

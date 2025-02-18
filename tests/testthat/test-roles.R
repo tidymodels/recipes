@@ -38,7 +38,8 @@ test_that("changing roles", {
 test_that("change existing role", {
   rec <- recipe(x = biomass)
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     add_role(rec, sample, new_role = "some other role")
   )
 
@@ -62,8 +63,8 @@ test_that("change only 1 role of variable with multiple roles", {
   rec <- recipe(x = biomass)
   rec <-
     rec %>%
-    update_role(sample, new_role = "role 1") %>%
-    add_role(sample, new_role = "role 2")
+      update_role(sample, new_role = "role 1") %>%
+      add_role(sample, new_role = "role 2")
 
   orig_roles <- rec
 
@@ -95,7 +96,9 @@ test_that("update only NA role", {
   rec <- update_role(rec, sample, dataset, new_role = "some other role")
 
   exp_res <- orig_rec %>% arrange(variable)
-  exp_res$role[exp_res$variable %in% c("sample", "dataset")] <- "some other role"
+  exp_res$role[
+    exp_res$variable %in% c("sample", "dataset")
+  ] <- "some other role"
   exp_res$required_to_bake <- TRUE
 
   expect_equal(summary(rec, TRUE) %>% arrange(variable), exp_res)
@@ -121,7 +124,12 @@ test_that("new role for existing NA role", {
 test_that("new role with specified type", {
   rec <- recipe(x = biomass)
   rec <- update_role(rec, sample, new_role = "blah")
-  rec <- add_role(rec, sample, new_role = "some other role", new_type = "new type")
+  rec <- add_role(
+    rec,
+    sample,
+    new_role = "some other role",
+    new_type = "new type"
+  )
 
   exp_res <- tibble(
     variable = c("sample", colnames(biomass)),
@@ -139,11 +147,15 @@ test_that("new role with specified type", {
 })
 
 test_that("add new role when two already exist with different types", {
-
   # type of the first existing role found is used
   rec <- recipe(x = biomass)
   rec <- update_role(rec, sample, new_role = "blah")
-  rec <- add_role(rec, sample, new_role = "some other role", new_type = "new type")
+  rec <- add_role(
+    rec,
+    sample,
+    new_role = "some other role",
+    new_type = "new type"
+  )
   rec <- add_role(rec, sample, new_role = "another role")
 
   exp_res <- tibble(
@@ -214,28 +226,23 @@ test_that("existing role is skipped, but new one is added", {
 
 test_that("cannot add roles if the current one is `NA`", {
   rec <- recipe(x = biomass)
-  expect_snapshot(error = TRUE,
-    add_role(rec, sample, sulfur)
-  )
+  expect_snapshot(error = TRUE, add_role(rec, sample, sulfur))
 })
 
 test_that("`update_role()` cannot be ambiguous", {
   rec <- recipe(HHV ~ ., data = biomass)
   rec <- add_role(rec, sample, new_role = "x")
 
-  expect_snapshot(error = TRUE,
-    update_role(rec, sample, new_role = "y")
-  )
+  expect_snapshot(error = TRUE, update_role(rec, sample, new_role = "y"))
 })
 
 test_that("`new_role` cannot be `NA_character_`", {
   rec <- recipe(x = biomass)
 
-  expect_snapshot(error = TRUE,
-    add_role(rec, sample, new_role = NA_character_)
-  )
+  expect_snapshot(error = TRUE, add_role(rec, sample, new_role = NA_character_))
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     update_role(rec, sample, new_role = NA_character_)
   )
 })
@@ -243,12 +250,8 @@ test_that("`new_role` cannot be `NA_character_`", {
 test_that("remove roles", {
   rec <- recipe(x = biomass)
   rec <- update_role(rec, sample, new_role = "role1")
-  expect_snapshot(error = TRUE,
-    rec <- remove_role(rec, sample, old_role = NA)
-  )
-  expect_snapshot(error = TRUE,
-    rec <- remove_role(rec, sample)
-  )
+  expect_snapshot(error = TRUE, rec <- remove_role(rec, sample, old_role = NA))
+  expect_snapshot(error = TRUE, rec <- remove_role(rec, sample))
 
   expect_snapshot(
     remove_role(rec, sample, old_role = "non-existant")
@@ -331,7 +334,6 @@ test_that("can use tidyselect ops in role selection", {
   )
 })
 
-
 test_that("empty dots and zero column selections return input with a warning", {
   rec <- recipe(x = biomass)
 
@@ -367,27 +369,30 @@ test_that("empty dots and zero column selections return input with a warning", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(x = biomass) %>%
       add_role(carbon, new_role = letters[1:2])
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(x = biomass) %>%
       add_role(carbon, new_role = "a", new_type = letters[1:2])
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(x = biomass) %>%
       update_role(carbon, new_role = c("a", "b"))
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(x = biomass) %>%
       update_role(carbon, old_role = c("a", "b"))
   )
 })
-
 
 # ------------------------------------------------------------------------------
 # Multiples roles + Selection testing
@@ -480,7 +485,6 @@ test_that("Existing `NA` roles are not modified in prep() when new columns are g
   )
 })
 
-
 test_that("Existing `NA` roles are not modified in prep() when multiple new columns are generated", {
   rec <- recipe(x = iris) %>%
     update_role(Sepal.Length, new_role = "outcome") %>%
@@ -519,12 +523,14 @@ test_that("Roles are correcly selected in bake", {
 })
 
 test_that("role functions handle case weights correctly", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(mpg ~ ., data = mtcars) %>%
       update_role("disp", new_role = "case_weights")
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(mpg ~ ., data = mtcars) %>%
       add_role("disp", new_role = "case_weights")
   )
@@ -532,25 +538,26 @@ test_that("role functions handle case weights correctly", {
   mtcars1 <- mtcars %>%
     mutate(wt = importance_weights(wt))
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(mpg ~ ., data = mtcars1) %>%
       remove_role(wt, old_role = "case_weights")
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(mpg ~ ., data = mtcars1) %>%
       update_role(wt)
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(mpg ~ ., data = mtcars1) %>%
       add_role(wt)
   )
 })
 
-
 test_that("role information from summary()", {
-
   # ----------------------------------------------------------------------------
   # non-formula method
 
@@ -563,8 +570,8 @@ test_that("role information from summary()", {
 
   req_roles <-
     rec_roles %>%
-    update_role_requirements("important", bake = FALSE) %>%
-    prep()
+      update_role_requirements("important", bake = FALSE) %>%
+      prep()
 
   expect_snapshot(summary(rec_roles, original = TRUE))
   expect_snapshot(summary(req_roles, original = TRUE))
@@ -574,32 +581,31 @@ test_that("role information from summary()", {
 
   na_rec <-
     mtcars %>%
-    recipe() %>%
-    update_role(mpg, new_role = "outcome") %>%
-    update_role(disp, wt, new_role = "predictor") %>%
-    update_role(carb, new_role = "other") %>%
-    prep()
+      recipe() %>%
+      update_role(mpg, new_role = "outcome") %>%
+      update_role(disp, wt, new_role = "predictor") %>%
+      update_role(carb, new_role = "other") %>%
+      prep()
 
   na_req_rec <-
     na_rec %>%
-    update_role_requirements("NA", bake = FALSE) %>%
-    prep()
+      update_role_requirements("NA", bake = FALSE) %>%
+      prep()
 
   expect_snapshot(summary(na_rec, original = TRUE))
   expect_snapshot(summary(na_req_rec, original = TRUE))
-
 })
 
 test_that("add_roles() error if columns would be both predictor and outcome", {
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~., data = mtcars) %>%
+    recipe(mpg ~ ., data = mtcars) %>%
       add_role(mpg, new_role = "predictor")
   )
 
   expect_snapshot(
     error = TRUE,
-    recipe(mpg ~., data = mtcars) %>%
+    recipe(mpg ~ ., data = mtcars) %>%
       add_role(disp, new_role = "outcome")
   )
 })

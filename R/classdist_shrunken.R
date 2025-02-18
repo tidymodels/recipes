@@ -91,44 +91,58 @@
 #' tidy(rec_dists, number = 1)
 #' @export
 step_classdist_shrunken <-
-    function(recipe,
-             ...,
-             class = NULL,
-             role = NA,
-             trained = FALSE,
-             threshold = 1 / 2,
-             sd_offset = 1 / 2,
-             log = TRUE,
-             prefix = "classdist_",
-             keep_original_cols = TRUE,
-             objects = NULL,
-             skip = FALSE,
-             id = rand_id("classdist_shrunken")) {
+  function(
+    recipe,
+    ...,
+    class = NULL,
+    role = NA,
+    trained = FALSE,
+    threshold = 1 / 2,
+    sd_offset = 1 / 2,
+    log = TRUE,
+    prefix = "classdist_",
+    keep_original_cols = TRUE,
+    objects = NULL,
+    skip = FALSE,
+    id = rand_id("classdist_shrunken")
+  ) {
+    recipes_pkg_check(required_pkgs.step_classdist_shrunken())
 
-      recipes_pkg_check(required_pkgs.step_classdist_shrunken())
-
-      add_step(
-        recipe,
-        step_classdist_shrunken_new(
-          terms = enquos(...),
-          class = class,
-          trained = trained,
-          role = role,
-          threshold = threshold,
-          sd_offset = sd_offset,
-          log = log,
-          prefix = prefix,
-          keep_original_cols = keep_original_cols,
-          objects = objects,
-          skip = skip,
-          id = id
-        )
+    add_step(
+      recipe,
+      step_classdist_shrunken_new(
+        terms = enquos(...),
+        class = class,
+        trained = trained,
+        role = role,
+        threshold = threshold,
+        sd_offset = sd_offset,
+        log = log,
+        prefix = prefix,
+        keep_original_cols = keep_original_cols,
+        objects = objects,
+        skip = skip,
+        id = id
       )
-    }
+    )
+  }
 
 step_classdist_shrunken_new <-
-  function(terms, class, trained, role, threshold, sd_offset, log, prefix,
-           keep_original_cols, objects, na_rm, skip, id) {
+  function(
+    terms,
+    class,
+    trained,
+    role,
+    threshold,
+    sd_offset,
+    log,
+    prefix,
+    keep_original_cols,
+    objects,
+    na_rm,
+    skip,
+    id
+  ) {
     step(
       subclass = "classdist_shrunken",
       terms = terms,
@@ -177,25 +191,25 @@ centroid_class <- function(x, y, wts = NULL, sd_offset = 1 / 2) {
 
   centroids <-
     x %>%
-    dplyr::summarize(
-      by_class = stats::weighted.mean(value, ..wts, na.rm = TRUE),
-      class_n  = sum(..wts),
-      .by = c(variable, ..y)
-    )
+      dplyr::summarize(
+        by_class = stats::weighted.mean(value, ..wts, na.rm = TRUE),
+        class_n = sum(..wts),
+        .by = c(variable, ..y)
+      )
 
   # ------------------------------------------------------------------------------
 
   std_dev_est <-
     centroids[, c("variable", "..y", "by_class")] %>%
-    dplyr::full_join(x, by = c("variable", "..y")) %>%
-    dplyr::mutate(sq_df  = (value - by_class)^2) %>%
-    dplyr::summarize(
-      # use mean * n for weighted sum
-      msq = ( stats::weighted.mean(sq_df, ..wts, na.rm = TRUE) * n ) /
-            (n - num_class),
-      .by = "variable"
-    ) %>%
-    dplyr::mutate(std_dev = sqrt(msq))
+      dplyr::full_join(x, by = c("variable", "..y")) %>%
+      dplyr::mutate(sq_df = (value - by_class)^2) %>%
+      dplyr::summarize(
+        # use mean * n for weighted sum
+        msq = (stats::weighted.mean(sq_df, ..wts, na.rm = TRUE) * n) /
+          (n - num_class),
+        .by = "variable"
+      ) %>%
+      dplyr::mutate(std_dev = sqrt(msq))
   std_dev_off <- stats::quantile(std_dev_est$std_dev, prob = sd_offset)
   std_dev_est$std_dev <- std_dev_est$std_dev + unname(std_dev_off)
 
@@ -203,12 +217,15 @@ centroid_class <- function(x, y, wts = NULL, sd_offset = 1 / 2) {
 
   dplyr::full_join(centroids, std_dev_est, by = c("variable")) %>%
     dplyr::select(variable, class = ..y, by_class, std_dev, class_n)
-
 }
 
-
-compute_shrunken_centroids <- function(x, y, wts = NULL, threshold = 1 / 2,
-                                       sd_offset = 1 / 2) {
+compute_shrunken_centroids <- function(
+  x,
+  y,
+  wts = NULL,
+  threshold = 1 / 2,
+  sd_offset = 1 / 2
+) {
   cent_global <- centroid_global(x, wts)
   cent_class <- centroid_class(x, y, wts, sd_offset = sd_offset)
   if (is.null(wts)) {
@@ -221,46 +238,58 @@ compute_shrunken_centroids <- function(x, y, wts = NULL, threshold = 1 / 2,
 
   centroids <-
     dplyr::full_join(cent_global, cent_class, by = "variable") %>%
-    dplyr::mutate(
-      delta = (by_class - global) / std_dev,
-      delta_wts = sqrt( ( 1 / class_n ) - ( 1 / !!wts_sum) ),
-      delta = delta / delta_wts
-    )
-
+      dplyr::mutate(
+        delta = (by_class - global) / std_dev,
+        delta_wts = sqrt((1 / class_n) - (1 / !!wts_sum)),
+        delta = delta / delta_wts
+      )
 
   max_delta <- max(centroids$delta)
   threshold <- threshold * max_delta
 
   shrunken <-
     centroids %>%
-    dplyr::mutate(
-      threshold = !!threshold,
-      shrink = abs(delta) - threshold,
-      shrunken = sign(delta) * ifelse(shrink > 0, shrink, 0) * delta_wts
-    )
+      dplyr::mutate(
+        threshold = !!threshold,
+        shrink = abs(delta) - threshold,
+        shrunken = sign(delta) * ifelse(shrink > 0, shrink, 0) * delta_wts
+      )
 
   shrunken <-
     shrunken %>%
-    dplyr::select(variable, class, global, by_class, shrunken, std_dev)
+      dplyr::select(variable, class, global, by_class, shrunken, std_dev)
   list(centroids = shrunken, threshold = threshold, max_delta = max_delta)
 }
 
-new_shrunken_scores <- function(object, new_data, prefix = "classdist_", log = TRUE) {
+new_shrunken_scores <- function(
+  object,
+  new_data,
+  prefix = "classdist_",
+  log = TRUE
+) {
   preds <- unique(unique(object$variable))
   res <-
     new_data %>%
-    dplyr::select(dplyr::all_of(preds)) %>%
-    dplyr::mutate(.row = dplyr::row_number()) %>%
-    tidyr::pivot_longer(c(-.row), names_to = "variable", values_to = "value") %>%
-    dplyr::right_join(object, by = "variable", relationship = "many-to-many") %>%
-    dplyr::mutate(
-      scaled_value = ( value - global ) / std_dev,
-      sq_diff = (scaled_value - shrunken)^2
-    ) %>%
-    dplyr::summarize(
-      distance = sum(sq_diff),
-      .by = c(.row, class)
-    )
+      dplyr::select(dplyr::all_of(preds)) %>%
+      dplyr::mutate(.row = dplyr::row_number()) %>%
+      tidyr::pivot_longer(
+        c(-.row),
+        names_to = "variable",
+        values_to = "value"
+      ) %>%
+      dplyr::right_join(
+        object,
+        by = "variable",
+        relationship = "many-to-many"
+      ) %>%
+      dplyr::mutate(
+        scaled_value = (value - global) / std_dev,
+        sq_diff = (scaled_value - shrunken)^2
+      ) %>%
+      dplyr::summarize(
+        distance = sum(sq_diff),
+        .by = c(.row, class)
+      )
 
   if (log) {
     res$distance <- log(res$distance)
@@ -268,8 +297,12 @@ new_shrunken_scores <- function(object, new_data, prefix = "classdist_", log = T
 
   res <-
     res %>%
-    tidyr::pivot_wider(id_cols = ".row", names_from = class, values_from = distance) %>%
-    dplyr::select(-.row)
+      tidyr::pivot_wider(
+        id_cols = ".row",
+        names_from = class,
+        values_from = distance
+      ) %>%
+      dplyr::select(-.row)
 
   names(res) <- paste0(prefix, names(res))
   res
@@ -302,7 +335,7 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
     stats <-
       compute_shrunken_centroids(
         x = training[, x_names],
-        y = training[[ y_names]],
+        y = training[[y_names]],
         wts = wts,
         threshold = x$threshold,
         sd_offset = x$sd_offset
@@ -346,9 +379,12 @@ bake.step_classdist_shrunken <- function(object, new_data, ...) {
   }
 
   new_cols <-
-    new_shrunken_scores(object$objects,
-                        new_data %>% dplyr::select(dplyr::all_of(col_names)),
-                        object$prefix, object$log)
+    new_shrunken_scores(
+      object$objects,
+      new_data %>% dplyr::select(dplyr::all_of(col_names)),
+      object$prefix,
+      object$log
+    )
   new_cols <- check_name(new_cols, new_data, object, names(new_cols))
   new_data <- vctrs::vec_cbind(new_data, new_cols)
   new_data <- remove_original_cols(new_data, object, col_names)
@@ -364,21 +400,20 @@ print.step_classdist_shrunken <-
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_classdist_shrunken <- function(x, ...) {
   if (is_trained(x)) {
     res <-
       x$object %>%
-      dplyr::select(terms = variable, class, global, by_class, shrunken) %>%
-      tidyr::pivot_longer(
-        cols = c(global, by_class, shrunken),
-        names_to = "type",
-        values_to = "value"
-      ) %>%
-      dplyr::relocate(terms, value, class, type) %>%
-      dplyr::mutate(threshold = x$threshold)
+        dplyr::select(terms = variable, class, global, by_class, shrunken) %>%
+        tidyr::pivot_longer(
+          cols = c(global, by_class, shrunken),
+          names_to = "type",
+          values_to = "value"
+        ) %>%
+        dplyr::relocate(terms, value, class, type) %>%
+        dplyr::mutate(threshold = x$threshold)
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(
@@ -393,13 +428,11 @@ tidy.step_classdist_shrunken <- function(x, ...) {
   res
 }
 
-
 #' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_classdist_shrunken <- function(x, ...) {
   c("dplyr", "tidyr")
 }
-
 
 #' @export
 tunable.step_classdist_shrunken <- function(x, ...) {
@@ -413,4 +446,3 @@ tunable.step_classdist_shrunken <- function(x, ...) {
     component_id = x$id
   )
 }
-

@@ -41,7 +41,7 @@ test_that("bake() and juice() doens't turn strings into factors #317", {
       step_factor2string(f1) %>%
       prep(strings_as_factors = TRUE) %>%
       juice(),
-      tibble(f1 = "1", f2 = factor(1), c1 = factor(1))
+    tibble(f1 = "1", f2 = factor(1), c1 = factor(1))
   )
 
   # bake(new_data = NULL)

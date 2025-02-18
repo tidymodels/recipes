@@ -26,25 +26,22 @@ test_that("simple logit trans", {
   rec_trans <- bake(rec_trained, new_data = ex_dat)
   exp_res <-
     as_tibble(ex_dat) %>%
-    mutate(
-      x3 = case_when(
-        x3 == 1.0 ~ 1 - 0.1,
-        x3 == 0.0 ~ 0.1,
-        TRUE ~ x3
+      mutate(
+        x3 = case_when(
+          x3 == 1.0 ~ 1 - 0.1,
+          x3 == 0.0 ~ 0.1,
+          TRUE ~ x3
+        )
       )
-    )
   exp_res$x3 <- binomial()$linkfun(exp_res$x3)
   expect_equal(rec_trans, exp_res)
 })
-
 
 test_that("out of bounds logit trans", {
   rec <- recipe(~., data = ex_dat) %>%
     step_logit(x1, x2)
 
-  expect_snapshot(error = TRUE,
-    prep(rec, training = ex_dat, verbose = FALSE)
-  )
+  expect_snapshot(error = TRUE, prep(rec, training = ex_dat, verbose = FALSE))
 })
 
 # Infrastructure ---------------------------------------------------------------

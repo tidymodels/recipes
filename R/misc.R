@@ -142,9 +142,13 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   }
 
   while (any(duplicated(nms))) {
-    dupe_count <- vapply(seq_along(nms), function(i) {
-      sum(nms[i] == nms[1:i])
-    }, 1L)
+    dupe_count <- vapply(
+      seq_along(nms),
+      function(i) {
+        sum(nms[i] == nms[1:i])
+      },
+      1L
+    )
     nms[dupe_count > 1] <- paste(
       nms[dupe_count > 1],
       dupe_count[dupe_count > 1],
@@ -196,7 +200,6 @@ kill_levels <- function(lvls, var_info) {
   lvls
 }
 
-
 strings2factors <- function(x, info) {
   check_lvls <- has_lvls(info)
   if (!any(check_lvls)) {
@@ -217,7 +220,6 @@ strings2factors <- function(x, info) {
   }
   x
 }
-
 
 # ------------------------------------------------------------------------------
 
@@ -266,13 +268,10 @@ train_info <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-
-
 ## `merge_term_info` takes the information on the current variable
 ## list and the information on the new set of variables (after each step)
 ## and merges them. Special attention is paid to cases where the
 ## _type_ of data is changed for a common column in the data.
-
 
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
@@ -286,7 +285,6 @@ merge_term_info <- function(.new, .old) {
     ) %>%
     dplyr::select(-new_type)
 }
-
 
 #' Check for Empty Ellipses
 #'
@@ -332,10 +330,12 @@ ellipse_check <- function(...) {
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
-printer <- function(tr_obj = NULL,
-                    untr_obj = NULL,
-                    trained = FALSE,
-                    width = max(20, options()$width - 30)) {
+printer <- function(
+  tr_obj = NULL,
+  untr_obj = NULL,
+  trained = FALSE,
+  width = max(20, options()$width - 30)
+) {
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
   } else {
@@ -357,7 +357,6 @@ printer <- function(tr_obj = NULL,
   invisible(NULL)
 }
 
-
 #' @keywords internal
 #' @rdname recipes-internal
 #' @export
@@ -366,7 +365,6 @@ prepare <- function(x, ...) {
     "As of version 0.0.1.9006 please use {.fn prep} instead of {.fn prepare}."
   )
 }
-
 
 #' Check to see if a recipe is trained/prepared
 #'
@@ -467,7 +465,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
       types <- "factor or character"
     }
   } else {
-    all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
+    all_good <- purrr::map_lgl(get_types(dat)$type, ~any(.x %in% types))
   }
 
   if (!all(all_good)) {
@@ -475,8 +473,11 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
     classes <- map_chr(info$type, function(x) x[1])
     counts <- vctrs::vec_split(info$variable, classes)
     counts$count <- lengths(counts$val)
-    counts$text_len <- cli::console_width() - 18 - (counts$count > 1) -
-      nchar(counts$key) - (counts$count > 2)
+    counts$text_len <- cli::console_width() -
+      18 -
+      (counts$count > 1) -
+      nchar(counts$key) -
+      (counts$count > 2)
 
     # cli::ansi_collapse() doesn't work for length(x) == 1
     # https://github.com/r-lib/cli/issues/590
@@ -486,11 +487,16 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
         res <- cli::ansi_strtrim(x, width = width)
       } else if (length(x) == 2) {
         res <- cli::ansi_collapse(
-          x, last = " and ", width = width, style = "head"
+          x,
+          last = " and ",
+          width = width,
+          style = "head"
         )
       } else {
         res <- cli::ansi_collapse(
-          x, width = width, style = "head"
+          x,
+          width = width,
+          style = "head"
         )
       }
       res
@@ -533,7 +539,6 @@ is_trained <- function(x) {
   x$trained
 }
 
-
 #' Convert Selectors to Character
 #'
 #' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and
@@ -559,7 +564,6 @@ to_character <- function(x) {
   }
   res
 }
-
 
 simple_terms <- function(x, ...) {
   if (is_trained(x)) {
@@ -592,8 +596,14 @@ simple_terms <- function(x, ...) {
 #'
 #' @export
 #' @keywords internal
-check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
-                       call = caller_env()) {
+check_name <- function(
+  res,
+  new_data,
+  object,
+  newname = NULL,
+  names = FALSE,
+  call = caller_env()
+) {
   if (is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
   }
@@ -602,11 +612,12 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
   if (any(intersection)) {
     nms <- new_data_names[intersection]
     cli::cli_abort(
-      c("Name collision occurred. The following variable names already exist:",
-        "*" = "{.var {nms}}"),
+      c(
+        "Name collision occurred. The following variable names already exist:",
+        "*" = "{.var {nms}}"
+      ),
       call = call
     )
-
   }
   if (names) {
     names(res) <- newname
@@ -629,12 +640,12 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
 #' @keywords internal
 rand_id <- function(prefix = "step", len = 5) {
   candidates <- c(letters, LETTERS, paste(0:9))
-  paste(prefix,
+  paste(
+    prefix,
     paste0(sample(candidates, len, replace = TRUE), collapse = ""),
     sep = "_"
   )
 }
-
 
 check_nominal_type <- function(x, lvl, call = rlang::caller_env()) {
   all_act_cols <- names(x)
@@ -651,7 +662,6 @@ check_nominal_type <- function(x, lvl, call = rlang::caller_env()) {
   fac_ref_cols <- names(lvl)[fac_ref_cols]
 
   if (length(fac_ref_cols) > 0) {
-
     # Which are actual factors?
     fac_act_cols <- purrr::map_lgl(x, is.factor)
 
@@ -768,7 +778,6 @@ is_tune <- function(x) {
   FALSE
 }
 
-
 # ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:
 # vctrs's cast functions would be better but we'll deal with the known cases
@@ -881,9 +890,7 @@ check_new_data <- function(req, object, new_data) {
   )
 }
 
-stop_recipes <- function(class = NULL,
-                         call = NULL,
-                         parent = NULL) {
+stop_recipes <- function(class = NULL, call = NULL, parent = NULL) {
   rlang::abort(
     class = c(class, "recipes_error"),
     call = call,
@@ -891,8 +898,7 @@ stop_recipes <- function(class = NULL,
   )
 }
 
-stop_recipes_step <- function(call = NULL,
-                              parent = NULL) {
+stop_recipes_step <- function(call = NULL, parent = NULL) {
   stop_recipes(
     class = "recipes_error_step",
     call = call,

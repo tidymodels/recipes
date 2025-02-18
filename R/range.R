@@ -58,16 +58,18 @@
 #' tidy(ranged_trans, number = 1)
 #' tidy(ranged_obj, number = 1)
 step_range <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           min = 0,
-           max = 1,
-           clipping = TRUE,
-           ranges = NULL,
-           skip = FALSE,
-           id = rand_id("range")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    min = 0,
+    max = 1,
+    clipping = TRUE,
+    ranges = NULL,
+    skip = FALSE,
+    id = rand_id("range")
+  ) {
     add_step(
       recipe,
       step_range_new(
@@ -117,7 +119,8 @@ prep.step_range <- function(x, training, info = NULL, ...) {
   if (length(inf_cols) > 0) {
     cli::cli_warn(
       "Column{?s} {.var {inf_cols}} returned NaN. \\
-      Consider avoiding `Inf` values before normalising.")
+      Consider avoiding `Inf` values before normalising."
+    )
   }
   zero_range_cols <- col_names[maxs - mins == 0]
   if (length(zero_range_cols) > 0) {
@@ -150,7 +153,9 @@ bake.step_range <- function(object, new_data, ...) {
     max <- object$ranges["maxs", col_name]
 
     new_data[[col_name]] <- (new_data[[col_name]] - min) *
-      (object$max - object$min) / (max - min) + object$min
+      (object$max - object$min) /
+      (max - min) +
+      object$min
 
     if (is.null(object$clipping) || isTRUE(object$clipping)) {
       new_data[[col_name]] <- pmax(new_data[[col_name]], object$min)

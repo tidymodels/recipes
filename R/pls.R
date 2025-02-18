@@ -116,21 +116,23 @@
 #'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5,
 #'            predictor_prop = 1 / 4)
 step_pls <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 2,
-           predictor_prop = 1,
-           outcome = NULL,
-           options = list(scale = TRUE),
-           preserve = deprecated(),
-           res = NULL,
-           columns = NULL,
-           prefix = "PLS",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("pls")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 2,
+    predictor_prop = 1,
+    outcome = NULL,
+    options = list(scale = TRUE),
+    preserve = deprecated(),
+    res = NULL,
+    columns = NULL,
+    prefix = "PLS",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("pls")
+  ) {
     if (is.null(outcome)) {
       cli::cli_abort("{.arg outcome} should select at least one column.")
     }
@@ -167,8 +169,22 @@ step_pls <-
   }
 
 step_pls_new <-
-  function(terms, role, trained, num_comp, predictor_prop, outcome, options,
-           preserve, res, columns, prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    predictor_prop,
+    outcome,
+    options,
+    preserve,
+    res,
+    columns,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "pls",
       terms = terms,
@@ -187,7 +203,6 @@ step_pls_new <-
       id = id
     )
   }
-
 
 ## -----------------------------------------------------------------------------
 ## Taken from plsmod
@@ -211,15 +226,45 @@ pls_fit <- function(x, y, ncomp = NULL, keepX = NULL, ...) {
   }
   if (is.factor(y)) {
     if (all(keepX == p)) {
-      cl <- rlang::call2("plsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
+      cl <- rlang::call2(
+        "plsda",
+        .ns = "mixOmics",
+        X = quote(x),
+        Y = quote(y),
+        ncomp = ncomp,
+        !!!dots
+      )
     } else {
-      cl <- rlang::call2("splsda", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
+      cl <- rlang::call2(
+        "splsda",
+        .ns = "mixOmics",
+        X = quote(x),
+        Y = quote(y),
+        ncomp = ncomp,
+        keepX = keepX,
+        !!!dots
+      )
     }
   } else {
     if (all(keepX == p)) {
-      cl <- rlang::call2("pls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, !!!dots)
+      cl <- rlang::call2(
+        "pls",
+        .ns = "mixOmics",
+        X = quote(x),
+        Y = quote(y),
+        ncomp = ncomp,
+        !!!dots
+      )
     } else {
-      cl <- rlang::call2("spls", .ns = "mixOmics", X = quote(x), Y = quote(y), ncomp = ncomp, keepX = keepX, !!!dots)
+      cl <- rlang::call2(
+        "spls",
+        .ns = "mixOmics",
+        X = quote(x),
+        Y = quote(y),
+        ncomp = ncomp,
+        keepX = keepX,
+        !!!dots
+      )
     }
   }
   res <- rlang::eval_tidy(cl)
@@ -279,7 +324,7 @@ pls_project <- function(object, x) {
   z <- sweep(z, 2, STATS = object$sd, "/")
   res <- z %*% object$coefs
   res <- tibble::as_tibble(res)
-  res <- purrr::map2_dfc(res, object$col_norms, ~ .x * .y)
+  res <- purrr::map2_dfc(res, object$col_norms, ~.x * .y)
   res
 }
 
@@ -304,7 +349,6 @@ use_old_pls <- function(x) {
   any(names(x) == "Xmeans")
 }
 
-
 prop2int <- function(x, p) {
   cuts <- seq(0, p, length.out = p + 1)
   as.integer(cut(x * p, breaks = cuts, include.lowest = TRUE))
@@ -326,7 +370,12 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   y_names <- recipes_eval_select(x$outcome, training, info)
 
   check_type(training[, x_names], types = c("double", "integer"))
-  check_number_decimal(x$predictor_prop, arg = "predictor_prop", min = 0, max = 1)
+  check_number_decimal(
+    x$predictor_prop,
+    arg = "predictor_prop",
+    min = 0,
+    max = 1
+  )
   check_string(x$prefix, arg = "prefix")
   check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
@@ -380,9 +429,11 @@ bake.step_pls <- function(object, new_data, ...) {
   col_names <- get_columns_pls(object)
   check_new_data(col_names, object, new_data)
 
-  if (object$num_comp == 0 ||
+  if (
+    object$num_comp == 0 ||
       length(col_names) == 0 ||
-      !pls_worked(object$res)) {
+      !pls_worked(object$res)
+  ) {
     return(new_data)
   }
 
@@ -419,20 +470,31 @@ print.step_pls <- function(x, width = max(20, options()$width - 35), ...) {
   invisible(x)
 }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_pls <- function(x, ...) {
   if (is_trained(x)) {
     if (x$num_comp > 0 && length(get_columns_pls(x)) > 0) {
       res <-
-        purrr::map2_dfc(as.data.frame(x$res$coefs), x$res$col_norms, ~ .x * .y) %>%
-        dplyr::mutate(terms = rownames(x$res$coefs)) %>%
-        tidyr::pivot_longer(c(-terms), names_to = "component", values_to = "value")
+        purrr::map2_dfc(
+          as.data.frame(x$res$coefs),
+          x$res$col_norms,
+          ~.x * .y
+        ) %>%
+          dplyr::mutate(terms = rownames(x$res$coefs)) %>%
+          tidyr::pivot_longer(
+            c(-terms),
+            names_to = "component",
+            values_to = "value"
+          )
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {
-      res <- tibble(terms = unname(get_columns_pls(x)), value = na_dbl, component = na_chr)
+      res <- tibble(
+        terms = unname(get_columns_pls(x)),
+        value = na_dbl,
+        component = na_chr
+      )
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -455,7 +517,6 @@ tunable.step_pls <- function(x, ...) {
     component_id = x$id
   )
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

@@ -62,15 +62,17 @@
 #' tidy(bc_trans, number = 1)
 #' tidy(bc_estimates, number = 1)
 step_BoxCox <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           lambdas = NULL,
-           limits = c(-5, 5),
-           num_unique = 5,
-           skip = FALSE,
-           id = rand_id("BoxCox")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    lambdas = NULL,
+    limits = c(-5, 5),
+    num_unique = 5,
+    skip = FALSE,
+    id = rand_id("BoxCox")
+  ) {
     add_step(
       recipe,
       step_BoxCox_new(
@@ -189,17 +191,13 @@ ll_bc <- function(lambda, y, gm, eps = .001) {
   -.5 * n * log(var_z)
 }
 
-
 ## eliminates missing data and returns -llh
 bc_obj <- function(lam, dat, geo_mean) {
   ll_bc(lambda = lam, y = dat, gm = geo_mean)
 }
 
-
 ## estimates the values
-estimate_bc <- function(dat,
-                        limits = c(-5, 5),
-                        num_unique = 5) {
+estimate_bc <- function(dat, limits = c(-5, 5), num_unique = 5) {
   eps <- .001
   if (length(unique(dat)) < num_unique) {
     cli::cli_warn("Fewer than {.arg num_unique} values in selected variable.")
@@ -225,7 +223,6 @@ estimate_bc <- function(dat,
   }
   lam
 }
-
 
 #' @rdname tidy.recipe
 #' @export

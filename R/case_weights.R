@@ -122,7 +122,10 @@ too_many_case_weights <- function(x, call = rlang::caller_env()) {
 # ------------------------------------------------------------------------------
 
 wt_calcs <- function(x, wts, statistic = "mean") {
-  statistic <- rlang::arg_match(statistic, c("mean", "var", "cor", "cov", "pca", "median"))
+  statistic <- rlang::arg_match(
+    statistic,
+    c("mean", "var", "cor", "cov", "pca", "median")
+  )
   if (!is.data.frame(x)) {
     x <- data.frame(x)
   }
@@ -133,7 +136,7 @@ wt_calcs <- function(x, wts, statistic = "mean") {
 
   complete <- vec_detect_complete(x) & !is.na(wts)
   wts <- wts[complete]
-  x <- x[complete,,drop = FALSE]
+  x <- x[complete, , drop = FALSE]
   res <- stats::cov.wt(x, wt = wts, cor = statistic == "cor")
 
   if (statistic == "mean") {
@@ -162,7 +165,7 @@ averages <- function(x, wts = NULL, na_rm = TRUE) {
     res <- colMeans(x, na.rm = TRUE)
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
+    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts))
   }
   if (!na_rm) {
     res[map_lgl(x, ~any(is.na(.x)))] <- NA
@@ -180,7 +183,7 @@ medians <- function(x, wts = NULL) {
     res <- apply(x, 2, median, na.rm = TRUE)
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "median"))
+    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "median"))
   }
   res
 }
@@ -203,10 +206,10 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
     return(vapply(x, sd, c(sd = 0), na.rm = na_rm))
   }
   if (is.null(wts)) {
-    res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = na_rm))
+    res <- purrr::map_dbl(x, ~stats::var(.x, na.rm = na_rm))
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "var"))
+    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "var"))
     if (!na_rm) {
       res[map_lgl(x, ~any(is.na(.x)))] <- NA
     }
@@ -216,7 +219,12 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
 
 #' @export
 #' @rdname case-weight-helpers
-correlations <- function(x, wts = NULL, use = "everything", method = "pearson") {
+correlations <- function(
+  x,
+  wts = NULL,
+  use = "everything",
+  method = "pearson"
+) {
   if (is.null(wts)) {
     res <- stats::cor(x, use = use, method = method)
   } else {
@@ -237,7 +245,6 @@ covariances <- function(x, wts = NULL, use = "everything", method = "pearson") {
   }
   res
 }
-
 
 #' @export
 #' @rdname case-weight-helpers

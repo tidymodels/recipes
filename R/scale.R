@@ -62,15 +62,17 @@
 #' tidy(scaled_trans, number = 1)
 #' tidy(scaled_obj, number = 1)
 step_scale <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           sds = NULL,
-           factor = 1,
-           na_rm = TRUE,
-           skip = FALSE,
-           id = rand_id("scale")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    sds = NULL,
+    factor = 1,
+    na_rm = TRUE,
+    skip = FALSE,
+    id = rand_id("scale")
+  ) {
     add_step(
       recipe,
       step_scale_new(
@@ -121,7 +123,6 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
-
   vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
   sds <- sqrt(vars)
   sds <- sd_check(sds)
@@ -156,11 +157,16 @@ bake.step_scale <- function(object, new_data, ...) {
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Scaling for "
-    print_step(names(x$sds), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$sds),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

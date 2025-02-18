@@ -11,7 +11,6 @@ dat <- data.frame(
   y = runif(n)
 )
 
-
 ratios <- function(x) {
   tab <- sort(table(x), decreasing = TRUE)
   if (length(tab) > 1) {
@@ -21,7 +20,9 @@ ratios <- function(x) {
   }
 }
 
-pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) / nrow(dat) * 100
+pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) /
+  nrow(dat) *
+  100
 f_ratio <- vapply(dat[, -5], ratios, c(val = 0))
 vars <- names(pct_uni)
 

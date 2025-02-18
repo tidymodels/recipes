@@ -22,17 +22,20 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_relevel(sqft, ref_level = 23) %>%
       prep()
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_relevel(city, ref_level = "missing_level") %>%
       prep()
   )
-  expect_snapshot( error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_relevel(city, ref_level = character(0)) %>%
       prep()

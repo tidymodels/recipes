@@ -68,14 +68,16 @@
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 step_impute_mean <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           trim = 0,
-           skip = FALSE,
-           id = rand_id("impute_mean")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    means = NULL,
+    trim = 0,
+    skip = FALSE,
+    id = rand_id("impute_mean")
+  ) {
     add_step(
       recipe,
       step_impute_mean_new(
@@ -115,8 +117,7 @@ trim <- function(x, trim) {
   na_ind <- is.na(x)
   n <- length(x[!na_ind])
   if (trim > 0 && n) {
-    if (trim >= 0.5)
-      return(stats::median(x[!na_ind], na.rm = FALSE))
+    if (trim >= 0.5) return(stats::median(x[!na_ind], na.rm = FALSE))
     lo <- floor(n * trim) + 1
     hi <- n + 1 - lo
     x[seq(1, lo - 1)] <- NA
@@ -129,7 +130,7 @@ trim <- function(x, trim) {
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
-  check_number_decimal(x$trim, arg = "trim", min = 0, max = 1/2)
+  check_number_decimal(x$trim, arg = "trim", min = 0, max = 1 / 2)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -175,8 +176,14 @@ bake.step_impute_mean <- function(object, new_data, ...) {
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Mean imputation for "
-    print_step(names(x$means), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$means),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 

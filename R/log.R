@@ -62,16 +62,18 @@
 #'   prep(training = examples2) %>%
 #'   bake(examples2)
 step_log <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           base = exp(1),
-           offset = 0,
-           columns = NULL,
-           skip = FALSE,
-           signed = FALSE,
-           id = rand_id("log")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    base = exp(1),
+    offset = 0,
+    columns = NULL,
+    skip = FALSE,
+    signed = FALSE,
+    id = rand_id("log")
+  ) {
     add_step(
       recipe,
       step_log_new(

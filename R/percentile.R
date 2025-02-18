@@ -56,18 +56,21 @@
 #' tidy(rec, 1)
 #' tidy(prepped_rec, 1)
 step_percentile <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           ref_dist = NULL,
-           options = list(probs = (0:100) / 100),
-           outside = "none",
-           skip = FALSE,
-           id = rand_id("percentile")) {
-
-    outside <- rlang::arg_match(outside,
-                                values = c("none", "both", "upper", "lower"))
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    ref_dist = NULL,
+    options = list(probs = (0:100) / 100),
+    outside = "none",
+    skip = FALSE,
+    id = rand_id("percentile")
+  ) {
+    outside <- rlang::arg_match(
+      outside,
+      values = c("none", "both", "upper", "lower")
+    )
 
     add_step(
       recipe,
@@ -86,7 +89,17 @@ step_percentile <-
   }
 
 step_percentile_new <-
-  function(terms, role, trained, ref_dist, options, outside, skip, id, case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    ref_dist,
+    options,
+    outside,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "percentile",
       terms = terms,
@@ -195,8 +208,14 @@ pctl_by_approx <- function(x, ref, outside) {
 print.step_percentile <-
   function(x, width = max(20, options()$width - 35), ...) {
     title <- "Percentile transformation on "
-    print_step(names(x$ref_dist), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$ref_dist),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
@@ -213,7 +232,6 @@ tidy.step_percentile <- function(x, ...) {
     } else {
       res <- map(x$ref_dist, format_pctl)
       res <- purrr::list_rbind(res, names_to = "terms")
-
     }
   } else {
     term_names <- sel2char(x$terms)

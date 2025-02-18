@@ -39,10 +39,15 @@
 #'
 #' tidy(sqrt_trans, number = 1)
 #' tidy(sqrt_obj, number = 1)
-step_sqrt <- function(recipe, ..., role = NA,
-                      trained = FALSE, columns = NULL,
-                      skip = FALSE,
-                      id = rand_id("sqrt")) {
+step_sqrt <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("sqrt")
+) {
   add_step(
     recipe,
     step_sqrt_new(
@@ -68,7 +73,6 @@ step_sqrt_new <-
       id = id
     )
   }
-
 
 #' @export
 prep.step_sqrt <- function(x, training, info = NULL, ...) {

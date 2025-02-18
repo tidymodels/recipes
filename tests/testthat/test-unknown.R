@@ -30,7 +30,6 @@ test_that("basic functionality", {
   loc_lvl <- c(sort(unique(sacr_tr$zip)), "unknown")
   expect_equal(loc_lvl, levels(tr_1$zip))
 
-
   expect_snapshot(
     te_1 <- bake(rec_1, sacr_te)
   )
@@ -56,24 +55,29 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = sacr_tr) %>%
       step_unknown(sqft) %>%
       prep()
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = sacr_tr) %>%
       step_unknown(city, new_level = "FAIR_OAKS") %>%
       prep()
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = sacr_tr) %>%
-      step_unknown(city, new_level = 2) %>% prep()
+      step_unknown(city, new_level = 2) %>%
+      prep()
   )
 })
 
 test_that("tidy methods", {
-  rec_raw <- rec %>% step_unknown(all_nominal(), new_level = "cake", id = "cheese")
+  rec_raw <- rec %>%
+    step_unknown(all_nominal(), new_level = "cake", id = "cheese")
 
   expect_equal(
     tidy(rec_raw, 1),

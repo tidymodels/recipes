@@ -96,17 +96,19 @@
 #' tidy(ratio_recipe, number = 1)
 #' tidy(ratio_recipe2, number = 1)
 step_impute_knn <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           neighbors = 5,
-           impute_with = imp_vars(all_predictors()),
-           options = list(nthread = 1, eps = 1e-08),
-           ref_data = NULL,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("impute_knn")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    neighbors = 5,
+    impute_with = imp_vars(all_predictors()),
+    options = list(nthread = 1, eps = 1e-08),
+    ref_data = NULL,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("impute_knn")
+  ) {
     if (is.null(impute_with)) {
       cli::cli_abort("{.arg impute_with} must not be empty.")
     }
@@ -149,8 +151,18 @@ step_impute_knn <-
   }
 
 step_impute_knn_new <-
-  function(terms, role, trained, neighbors, impute_with, ref_data, options,
-           columns, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    neighbors,
+    impute_with,
+    ref_data,
+    options,
+    columns,
+    skip,
+    id
+  ) {
     step(
       subclass = "impute_knn",
       terms = terms,
@@ -215,7 +227,6 @@ nn_pred <- function(index, dat) {
   est
 }
 
-
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
   col_names <- purrr::map_chr(object$columns, "y")
@@ -244,17 +255,22 @@ bake.step_impute_knn <- function(object, new_data, ...) {
       imp_var_complete <- !is.na(object$ref_data[[col_name]])
       nn_ind <- nn_index(
         object$ref_data[imp_var_complete, ],
-        imp_data, preds,
+        imp_data,
+        preds,
         object$neighbors,
         object$options
       )
       pred_vals <-
-        apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, col_name])
+        apply(
+          nn_ind,
+          2,
+          nn_pred,
+          dat = object$ref_data[imp_var_complete, col_name]
+        )
       pred_vals <- cast(pred_vals, object$ref_data[[col_name]])
       new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
       new_data[missing_rows, col_name] <- pred_vals
     }
-
   }
   new_data
 }
@@ -284,7 +300,11 @@ tidy.step_impute_knn <- function(x, ...) {
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, predictors = na_chr, neighbors = x$neighbors)
+    res <- tibble(
+      terms = term_names,
+      predictors = na_chr,
+      neighbors = x$neighbors
+    )
   }
   res$id <- x$id
   res
@@ -294,7 +314,9 @@ tidy.step_impute_knn <- function(x, ...) {
 tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(
     name = "neighbors",
-    call_info = list(list(pkg = "dials", fun = "neighbors", range = c(1L, 10L))),
+    call_info = list(
+      list(pkg = "dials", fun = "neighbors", range = c(1L, 10L))
+    ),
     source = "recipe",
     component = "step_impute_knn",
     component_id = x$id

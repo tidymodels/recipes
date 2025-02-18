@@ -16,31 +16,24 @@ x_newdata_2 <- tibble(x1 = x1, x2 = x3)
 test_that("bake_check_class helper function gives expected output", {
   expect_no_error(bake_check_class_core(x1, "numeric", "x1"))
   expect_no_error(bake_check_class_core(x2, c("POSIXct", "POSIXt"), "x1"))
-  expect_snapshot(error = TRUE,
-    bake_check_class_core(x1, "character", "x1")
-  )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(error = TRUE, bake_check_class_core(x1, "character", "x1"))
+  expect_snapshot(
+    error = TRUE,
     bake_check_class_core(x2, c("POSIXct", "Julian"), "x2")
   )
   expect_no_error(bake_check_class_core(x2, "POSIXct", "x2", TRUE))
-  expect_snapshot(error = TRUE,
-    bake_check_class_core(x2, "POSIXct", "x2")
-  )
+  expect_snapshot(error = TRUE, bake_check_class_core(x2, "POSIXct", "x2"))
 })
 
 test_that("check_class works when class is learned", {
-  rec1 <- recipe(~ ., x) %>%
+  rec1 <- recipe(~., x) %>%
     check_class(all_predictors()) %>%
     prep()
 
   expect_no_error(bake(rec1, x))
   expect_equal(bake(rec1, x), x)
-  expect_snapshot(error = TRUE,
-    bake(rec1, x_newdata)
-  )
-  expect_snapshot(error = TRUE,
-    bake(rec1, x_newdata_2)
-  )
+  expect_snapshot(error = TRUE, bake(rec1, x_newdata))
+  expect_snapshot(error = TRUE, bake(rec1, x_newdata_2))
 })
 
 test_that("check_class works when class is provided", {
@@ -50,9 +43,7 @@ test_that("check_class works when class is provided", {
 
   expect_no_error(bake(rec2, x))
   expect_equal(bake(rec2, x), x)
-  expect_snapshot(error = TRUE,
-    bake(rec2, x_newdata)
-  )
+  expect_snapshot(error = TRUE, bake(rec2, x_newdata))
 
   rec3 <- recipe(x) %>%
     check_class(x2, class_nm = c("POSIXct", "POSIXt")) %>%
@@ -60,12 +51,11 @@ test_that("check_class works when class is provided", {
 
   expect_no_error(bake(rec3, x))
   expect_equal(bake(rec3, x), x)
-  expect_snapshot(error = TRUE,
-    bake(rec3, x_newdata_2)
-  )
+  expect_snapshot(error = TRUE, bake(rec3, x_newdata_2))
 
   rec4 <- recipe(x) %>%
-    check_class(x2,
+    check_class(
+      x2,
       class_nm = c("POSIXct", "POSIXt"),
       allow_additional = TRUE
     ) %>%
@@ -99,17 +89,13 @@ test_that("characters are handled correctly", {
     check_class(all_predictors()) %>%
     prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
-  expect_snapshot(error = TRUE,
-    bake(rec6_NULL, sacr_fac[11:20, ])
-  )
+  expect_snapshot(error = TRUE, bake(rec6_NULL, sacr_fac[11:20, ]))
 
   rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
     check_class(type) %>%
     prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
 
-  expect_snapshot(error = TRUE,
-    bake(rec6_man, sacr_fac[11:20, ])
-  )
+  expect_snapshot(error = TRUE, bake(rec6_man, sacr_fac[11:20, ]))
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -170,15 +156,14 @@ test_that("printing", {
   expect_snapshot(prep(rec7))
 })
 
-
 test_that("bad args", {
   expect_snapshot(
     recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), class_nm = 1),
     error = TRUE
   )
   expect_snapshot(
-    recipe(mpg ~ ., mtcars) %>% check_class(all_predictors(), allow_additional = "yes"),
+    recipe(mpg ~ ., mtcars) %>%
+      check_class(all_predictors(), allow_additional = "yes"),
     error = TRUE
   )
 })
-

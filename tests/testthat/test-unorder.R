@@ -5,11 +5,9 @@ lmh <- c("Low", "Med", "High")
 
 examples <- data.frame(
   X1 = factor(rep(letters[1:4], each = 3)),
-  X2 = ordered(rep(lmh, each = 4),
-    levels = lmh
-  )
+  X2 = ordered(rep(lmh, each = 4), levels = lmh)
 )
-rec <- recipe(~ X1 + X2, data = examples)
+rec <- recipe(~X1 + X2, data = examples)
 
 test_that("correct var", {
   rec1 <- rec %>% step_unorder(X2)
@@ -34,14 +32,15 @@ test_that("wrong vars", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- rec %>% step_unorder(X2) %>%
+  rec1 <- rec %>%
+    step_unorder(X2) %>%
     update_role(X2, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec1_trained <- prep(rec1, training = examples, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(rec1_trained, new_data = examples[, 1, drop = FALSE])
   )
 })
@@ -84,7 +83,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ X1 + X2, data = examples) %>%
+  rec <- recipe(~X1 + X2, data = examples) %>%
     step_unorder(X2)
 
   expect_snapshot(print(rec))

@@ -8,13 +8,10 @@ biomass$carbon <- ifelse(biomass$carbon > 40, biomass$carbon, 40)
 biomass$hydrogen <- ifelse(biomass$hydrogen > 5, biomass$carbon, 5)
 biomass$has_neg <- runif(nrow(biomass), min = -2)
 
-rec <- recipe(HHV ~ carbon + hydrogen + has_neg,
-  data = biomass
-)
+rec <- recipe(HHV ~ carbon + hydrogen + has_neg, data = biomass)
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
-
 
 test_that("basic usage", {
   rec1 <- rec %>%
@@ -54,7 +51,8 @@ test_that("basic usage", {
 })
 
 test_that("bad data", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_impute_lower(carbon, hydrogen, has_neg) %>%
       prep()
@@ -72,7 +70,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(imputed_trained, new_data = biomass[, 4:7])
   )
 })
@@ -115,8 +113,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + has_neg,
-                 data = biomass) %>%
+  rec <- recipe(HHV ~ carbon + hydrogen + has_neg, data = biomass) %>%
     step_impute_lower(carbon, hydrogen)
 
   expect_snapshot(print(rec))

@@ -73,19 +73,21 @@
 #'   geom_point()
 #' }
 step_nnmf_sparse <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 2,
-           penalty = 0.001,
-           options = list(),
-           res = NULL,
-           prefix = "NNMF",
-           seed = sample.int(10^5, 1),
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("nnmf_sparse")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 2,
+    penalty = 0.001,
+    options = list(),
+    res = NULL,
+    prefix = "NNMF",
+    seed = sample.int(10^5, 1),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("nnmf_sparse")
+  ) {
     recipes_pkg_check(required_pkgs.step_nnmf_sparse())
     add_step(
       recipe,
@@ -107,8 +109,20 @@ step_nnmf_sparse <-
   }
 
 step_nnmf_sparse_new <-
-  function(terms, role, trained, num_comp, penalty, options, res,
-           prefix, seed, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    penalty,
+    options,
+    res,
+    prefix,
+    seed,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "nnmf_sparse",
       terms = terms,
@@ -166,17 +180,21 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
     nnm <- try(rlang::eval_tidy(cl), silent = TRUE)
 
     if (inherits(nnm, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(nnm)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(nnm)
+        )
+      )
     } else {
       na_w <- sum(is.na(nnm$w))
       if (na_w > 0) {
-        cli::cli_abort(c(
-          x = "The NNMF loadings are missing.",
-          i = "The penalty may have been too high or missing values are present in data."
-        ))
+        cli::cli_abort(
+          c(
+            x = "The NNMF loadings are missing.",
+            i = "The penalty may have been too high or missing values are present in data."
+          )
+        )
       } else {
         nnm <- list(x_vars = col_names, w = nnm$w)
         rownames(nnm$w) <- col_names
@@ -223,7 +241,11 @@ bake.step_nnmf_sparse <- function(object, new_data, ...) {
 }
 
 #' @export
-print.step_nnmf_sparse <- function(x, width = max(20, options()$width - 29), ...) {
+print.step_nnmf_sparse <- function(
+  x,
+  width = max(20, options()$width - 29),
+  ...
+) {
   if (x$trained) {
     if (x$num_comp == 0) {
       title <- "No non-negative matrix factorization was extracted from "
@@ -238,7 +260,6 @@ print.step_nnmf_sparse <- function(x, width = max(20, options()$width - 29), ...
   invisible(x)
 }
 
-
 #' @rdname tidy.recipe
 #' @param x A `step_nnmf_sparse` object.
 tidy.step_nnmf_sparse <- function(x, ...) {
@@ -249,9 +270,11 @@ tidy.step_nnmf_sparse <- function(x, ...) {
       var_nms <- rownames(res)
       res <- tibble::as_tibble(res)
       res$terms <- var_nms
-      res <- tidyr::pivot_longer(res,
+      res <- tidyr::pivot_longer(
+        res,
         cols = c(-terms),
-        names_to = "component", values_to = "value"
+        names_to = "component",
+        values_to = "value"
       )
       res <- res[, c("terms", "value", "component")]
       res <- res[order(res$component, res$terms), ]

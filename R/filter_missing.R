@@ -50,14 +50,16 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(filter_obj, number = 1)
-step_filter_missing <- function(recipe,
-                                ...,
-                                role = NA,
-                                trained = FALSE,
-                                threshold = 0.1,
-                                removals = NULL,
-                                skip = FALSE,
-                                id = rand_id("filter_missing")) {
+step_filter_missing <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  threshold = 0.1,
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("filter_missing")
+) {
   add_step(
     recipe,
     step_filter_missing_new(
@@ -135,8 +137,14 @@ print.step_filter_missing <-
     } else {
       title <- "Missing value column filter on "
     }
-    print_step(x$removals, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      x$removals,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 

@@ -81,19 +81,21 @@
 #'
 #' tidy(date_rec, number = 1)
 step_date <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           features = c("dow", "month", "year"),
-           abbr = TRUE,
-           label = TRUE,
-           ordinal = FALSE,
-           locale = clock::clock_locale()$labels,
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("date")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    features = c("dow", "month", "year"),
+    abbr = TRUE,
+    label = TRUE,
+    ordinal = FALSE,
+    locale = clock::clock_locale()$labels,
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("date")
+  ) {
     feat <-
       c(
         "year",
@@ -110,10 +112,12 @@ step_date <-
       if (!all(features %in% feat)) {
         offenders <- features[!features %in% feat]
 
-        cli::cli_abort(c(
-          x = "Possible values of {.arg features} are {.or {.val {feat}}}.",
-          i = "Invalid values were: {.val {offenders}}."
-        ))
+        cli::cli_abort(
+          c(
+            x = "Possible values of {.arg features} are {.or {.val {feat}}}.",
+            i = "Invalid values were: {.val {offenders}}."
+          )
+        )
       }
     }
     add_step(
@@ -136,8 +140,20 @@ step_date <-
   }
 
 step_date_new <-
-  function(terms, role, trained, features, abbr, label, ordinal, locale,
-           columns, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    features,
+    abbr,
+    label,
+    ordinal,
+    locale,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "date",
       terms = terms,
@@ -154,7 +170,6 @@ step_date_new <-
       id = id
     )
   }
-
 
 #' @export
 prep.step_date <- function(x, training, info = NULL, ...) {
@@ -180,20 +195,13 @@ prep.step_date <- function(x, training, info = NULL, ...) {
   )
 }
 
-
 ord2fac <- function(x, what) {
   x <- x[[what]]
   factor(as.character(x), levels = levels(x), ordered = FALSE)
 }
 
-
 get_date_features <-
-  function(dt,
-           feats,
-           locale,
-           abbr = TRUE,
-           label = TRUE,
-           ord = FALSE) {
+  function(dt, feats, locale, abbr = TRUE, label = TRUE, ord = FALSE) {
     ## pre-allocate values
     res <- matrix(NA_integer_, nrow = length(dt), ncol = length(feats))
     colnames(res) <- feats
@@ -223,7 +231,9 @@ get_date_features <-
     if ("dow" %in% feats) {
       if (inherits(locale, "clock_labels")) {
         dow <- clock::date_weekday_factor(
-          x = dt, abbreviate = abbr, labels = locale
+          x = dt,
+          abbreviate = abbr,
+          labels = locale
         )
         if (!label) {
           dow <- as.integer(dow)
@@ -241,7 +251,9 @@ get_date_features <-
     if ("month" %in% feats) {
       if (inherits(locale, "clock_labels")) {
         month <- clock::date_month_factor(
-          dt, abbreviate = abbr, labels = locale
+          dt,
+          abbreviate = abbr,
+          labels = locale
         )
         if (!label) {
           month <- as.integer(month)

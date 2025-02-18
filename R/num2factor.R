@@ -88,15 +88,17 @@
 #'
 #' bake(rec, ceo)
 step_num2factor <-
-  function(recipe,
-           ...,
-           role = NA,
-           transform = function(x) x,
-           trained = FALSE,
-           levels,
-           ordered = FALSE,
-           skip = FALSE,
-           id = rand_id("num2factor")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    transform = function(x) x,
+    trained = FALSE,
+    levels,
+    ordered = FALSE,
+    skip = FALSE,
+    id = rand_id("num2factor")
+  ) {
     if (!is_tune(ordered)) {
       check_bool(ordered)
     }
@@ -174,7 +176,6 @@ make_factor_num <- function(x, lvl, ord, foo) {
   factor(lvl[y], levels = lvl, ordered = ord)
 }
 
-
 #' @export
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
@@ -201,7 +202,6 @@ print.step_num2factor <-
     print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

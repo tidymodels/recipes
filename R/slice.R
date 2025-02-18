@@ -68,12 +68,15 @@
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
-step_slice <- function(recipe, ...,
-                       role = NA,
-                       trained = FALSE,
-                       inputs = NULL,
-                       skip = TRUE,
-                       id = rand_id("slice")) {
+step_slice <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = TRUE,
+  id = rand_id("slice")
+) {
   inputs <- enquos(...)
 
   add_step(

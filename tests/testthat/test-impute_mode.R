@@ -3,7 +3,6 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(credit_data, package = "modeldata")
 
-
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
@@ -40,7 +39,8 @@ test_that("simple modes", {
 
   modes <- vapply(
     credit_tr[, c("Status", "Home", "Marital")],
-    recipes:::mode_est, character(1)
+    recipes:::mode_est,
+    character(1)
   )
   imp_tibble_un <-
     tibble(
@@ -59,13 +59,13 @@ test_that("simple modes", {
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 })
 
-
 test_that("non-nominal", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
     step_impute_mode(Assets, Job)
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     prep(impute_rec, training = credit_tr, verbose = FALSE)
   )
 })
@@ -83,7 +83,6 @@ test_that("all NA values", {
   )
 })
 
-
 test_that("can bake recipes with no ptype", {
   imputed <- recipe(Price ~ ., data = credit_tr) %>%
     step_impute_mode(Status, Home) %>%
@@ -97,10 +96,12 @@ test_that("can bake recipes with no ptype", {
 })
 
 test_that('case weights', {
-  fake_data <- tibble(x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
-                      x2 = frequency_weights(1:150))
+  fake_data <- tibble(
+    x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
+    x2 = frequency_weights(1:150)
+  )
 
-  impute_rec <- recipe(~ ., data = fake_data) %>%
+  impute_rec <- recipe(~., data = fake_data) %>%
     step_impute_mode(x1, id = "")
   imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = fake_data)
@@ -118,10 +119,12 @@ test_that('case weights', {
 
   # ----------------------------------------------------------------------------
 
-  fake_data <- tibble(x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
-                      x2 = importance_weights(1:150))
+  fake_data <- tibble(
+    x1 = rep(letters[c(1:4, NA)], c(50, 40, 30, 20, 10)),
+    x2 = importance_weights(1:150)
+  )
 
-  impute_rec <- recipe(~ ., data = fake_data) %>%
+  impute_rec <- recipe(~., data = fake_data) %>%
     step_impute_mode(x1, id = "")
   imputed <- prep(impute_rec, training = fake_data, verbose = FALSE)
   te_imputed <- bake(imputed, new_data = fake_data)

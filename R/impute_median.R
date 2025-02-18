@@ -59,13 +59,15 @@
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 step_impute_median <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           medians = NULL,
-           skip = FALSE,
-           id = rand_id("impute_median")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    medians = NULL,
+    skip = FALSE,
+    id = rand_id("impute_median")
+  ) {
     add_step(
       recipe,
       step_impute_median_new(
@@ -139,8 +141,14 @@ bake.step_impute_median <- function(object, new_data, ...) {
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Median imputation for "
-    print_step(names(x$medians), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$medians),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 

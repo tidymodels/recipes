@@ -61,12 +61,14 @@
 #'
 #' # Note that `sepal_vars` is inlined in the second approach
 #' qq_rec
-step_select <- function(recipe,
-                        ...,
-                        role = NA,
-                        trained = FALSE,
-                        skip = FALSE,
-                        id = rand_id("select")) {
+step_select <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  skip = FALSE,
+  id = rand_id("select")
+) {
   add_step(
     recipe,
     step_select_new(

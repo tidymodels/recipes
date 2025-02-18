@@ -87,19 +87,20 @@
 #' tidy(rec, number = 1)
 #' tidy(rec_dists, number = 1)
 step_depth <-
-  function(recipe,
-           ...,
-           class,
-           role = "predictor",
-           trained = FALSE,
-           metric = "halfspace",
-           options = list(),
-           data = NULL,
-           prefix = "depth_",
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("depth")) {
-
+  function(
+    recipe,
+    ...,
+    class,
+    role = "predictor",
+    trained = FALSE,
+    metric = "halfspace",
+    options = list(),
+    data = NULL,
+    prefix = "depth_",
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("depth")
+  ) {
     check_string(class)
     recipes_pkg_check(required_pkgs.step_depth())
 
@@ -122,8 +123,19 @@ step_depth <-
   }
 
 step_depth_new <-
-  function(terms, class, role, trained, metric,
-           options, data, prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    class,
+    role,
+    trained,
+    metric,
+    options,
+    data,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "depth",
       terms = terms,
@@ -140,8 +152,14 @@ step_depth_new <-
     )
   }
 
-depth_metric <- c("potential", "halfspace", "Mahalanobis", "simplicialVolume",
-                  "spatial", "zonoid")
+depth_metric <- c(
+  "potential",
+  "halfspace",
+  "Mahalanobis",
+  "simplicialVolume",
+  "spatial",
+  "zonoid"
+)
 
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
@@ -230,8 +248,6 @@ print.step_depth <-
     invisible(x)
   }
 
-
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_depth <- function(x, ...) {
@@ -250,7 +266,6 @@ tidy.step_depth <- function(x, ...) {
   res$id <- x$id
   res
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

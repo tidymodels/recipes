@@ -46,13 +46,15 @@
 #' filtered_te
 #'
 #' tidy(smaller_set, number = 1)
-step_rm <- function(recipe,
-                    ...,
-                    role = NA,
-                    trained = FALSE,
-                    removals = NULL,
-                    skip = FALSE,
-                    id = rand_id("rm")) {
+step_rm <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("rm")
+) {
   add_step(
     recipe,
     step_rm_new(
@@ -105,7 +107,6 @@ print.step_rm <-
     print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

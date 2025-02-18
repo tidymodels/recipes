@@ -82,16 +82,18 @@
 #' tidy(nzv_filter, number = 1)
 #' tidy(filter_obj, number = 1)
 step_nzv <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           freq_cut = 95 / 5,
-           unique_cut = 10,
-           options = list(freq_cut = 95 / 5, unique_cut = 10),
-           removals = NULL,
-           skip = FALSE,
-           id = rand_id("nzv")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    freq_cut = 95 / 5,
+    unique_cut = 10,
+    options = list(freq_cut = 95 / 5, unique_cut = 10),
+    removals = NULL,
+    skip = FALSE,
+    id = rand_id("nzv")
+  ) {
     exp_list <- list(freq_cut = 95 / 5, unique_cut = 10)
 
     if (!isTRUE(all.equal(exp_list, options))) {
@@ -120,8 +122,18 @@ step_nzv <-
   }
 
 step_nzv_new <-
-  function(terms, role, trained, freq_cut, unique_cut, options,
-           removals, skip, id, case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    freq_cut,
+    unique_cut,
+    options,
+    removals,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "nzv",
       terms = terms,
@@ -184,15 +196,18 @@ print.step_nzv <-
     } else {
       title <- "Sparse, unbalanced variable filter on "
     }
-    print_step(x$removals, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      x$removals,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
-nzv <- function(x,
-                wts,
-                freq_cut = 95 / 5,
-                unique_cut = 10) {
+nzv <- function(x, wts, freq_cut = 95 / 5, unique_cut = 10) {
   if (is.null(dim(x))) {
     x <- matrix(x, ncol = 1)
   }
@@ -220,8 +235,13 @@ nzv <- function(x,
   zero_var <- (lunique == 1) | vapply(x, zero_func, c(zv = TRUE))
 
   out <-
-    which((freq_ratio > freq_cut &
-      pct_unique <= unique_cut) | zero_var)
+    which(
+      (
+        freq_ratio > freq_cut &
+          pct_unique <= unique_cut
+      ) |
+        zero_var
+    )
   names(out) <- NULL
   colnames(x)[out]
 }

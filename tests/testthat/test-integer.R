@@ -6,7 +6,8 @@ tr_dat <-
   data.frame(
     x = c("a", "d", "c", "a", "c", "a", "a", "d", "c", "c"),
     y = factor(c("B", "B", "D", "B", "C", "D", "A", "D", "C", "C")),
-    z = ordered(c("Jul", "Apr", "Sep", "Jul", "Nov", "Dec", "Jun", "Feb", "Jan", "Sep"),
+    z = ordered(
+      c("Jul", "Apr", "Sep", "Jul", "Nov", "Dec", "Jun", "Feb", "Jan", "Sep"),
       levels = month.abb
     )
   )
@@ -18,13 +19,16 @@ te_dat <-
   data.frame(
     x = c("d", "c", "c", "a", "?"),
     y = factor(c("E", "D", "C", "C", "??")),
-    z = ordered(c("Feb", "Aug", "Dec", "Aug", "???"), levels = c(month.abb, "???"))
+    z = ordered(
+      c("Feb", "Aug", "Dec", "Aug", "???"),
+      levels = c(month.abb, "???")
+    )
   )
 te_dat$x[1] <- NA
 te_dat$y[1] <- NA
 
 test_that("basic functionality", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~x + y + z, data = tr_dat) %>%
     step_integer(all_predictors())
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -42,9 +46,8 @@ test_that("basic functionality", {
   expect_true(all(vapply(te_int, is.integer, logical(1))))
 })
 
-
 test_that("zero-based", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~x + y + z, data = tr_dat) %>%
     step_integer(all_predictors(), zero_based = TRUE)
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -63,7 +66,7 @@ test_that("zero-based", {
 })
 
 test_that("not integers", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~x + y + z, data = tr_dat) %>%
     step_integer(all_predictors(), strict = FALSE)
   rec_trained <- prep(rec, training = tr_dat)
 
@@ -79,7 +82,7 @@ test_that("not integers", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~x + y + z, data = tr_dat) %>%
     step_integer(x) %>%
     update_role(x, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
@@ -131,23 +134,22 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ x + y + z, data = tr_dat) %>%
+  rec <- recipe(~x + y + z, data = tr_dat) %>%
     step_integer(all_predictors())
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
 
-
 test_that("bad args", {
   expect_snapshot(
-    recipe(~ x + y + z, data = tr_dat) %>%
+    recipe(~x + y + z, data = tr_dat) %>%
       step_integer(all_predictors(), strict = "yes") %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~ x + y + z, data = tr_dat) %>%
+    recipe(~x + y + z, data = tr_dat) %>%
       step_integer(all_predictors(), zero_based = "sure!") %>%
       prep(),
     error = TRUE

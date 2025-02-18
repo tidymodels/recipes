@@ -3,7 +3,6 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(credit_data, package = "modeldata")
 
-
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
@@ -34,11 +33,17 @@ test_that("simple mean", {
     rep(inc_pred, sum(is.na(credit_te$Income)))
   )
 
-  means <- vapply(credit_tr[, c("Age", "Assets", "Income")],
-    mean, numeric(1),
+  means <- vapply(
+    credit_tr[, c("Age", "Assets", "Income")],
+    mean,
+    numeric(1),
     na.rm = TRUE
   )
-  means <- purrr::map2(means, credit_tr[, c("Age", "Assets", "Income")], recipes:::cast)
+  means <- purrr::map2(
+    means,
+    credit_tr[, c("Age", "Assets", "Income")],
+    recipes:::cast
+  )
   means <- unlist(means)
 
   imp_tibble_un <-
@@ -79,7 +84,8 @@ test_that("non-numeric", {
 
   impute_rec <- rec %>%
     step_impute_mean(Assets, Job)
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     prep(impute_rec, training = credit_tr, verbose = FALSE)
   )
 })
@@ -98,7 +104,7 @@ test_that("all NA values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_impute_mean(all_predictors())
+      step_impute_mean(all_predictors())
   rec_param <- tunable.step_impute_mean(rec$steps[[1]])
   expect_equal(rec_param$name, c("trim"))
   expect_true(all(rec_param$source == "recipe"))
@@ -147,9 +153,11 @@ test_that("case weights", {
   ref_means <- credit_tr %>%
     dplyr::select(Age, Assets, Income) %>%
     purrr::map(trim, trim = 0.2) %>%
-    purrr::map(weighted.mean,
-               w = as.numeric(credit_tr_cw$Amount),
-               na.rm = TRUE) %>%
+    purrr::map(
+      weighted.mean,
+      w = as.numeric(credit_tr_cw$Amount),
+      na.rm = TRUE
+    ) %>%
     purrr::map(round, 0)
 
   expect_equal(
@@ -270,7 +278,6 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 1L)
 })
 
-
 test_that("bad args", {
   expect_snapshot(
     recipe(~., data = mtcars) %>%
@@ -282,4 +289,3 @@ test_that("bad args", {
     error = TRUE
   )
 })
-

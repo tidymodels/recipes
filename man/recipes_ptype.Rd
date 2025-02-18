@@ -35,7 +35,7 @@ types.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rec_spec <- recipe(outcome ~ ., data = data_ptype) \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
-  step_dummy(all_nominal_predictors()) 
+  step_dummy(all_nominal_predictors())
 
 rec_prep <- prep(rec_spec, training = data_training)
 }\if{html}{\out{</div>}}

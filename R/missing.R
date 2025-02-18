@@ -62,13 +62,15 @@
 #' bake(rp, test_data)
 #' }
 check_missing <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("missing")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("missing")
+  ) {
     add_check(
       recipe,
       check_missing_new(

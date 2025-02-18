@@ -49,17 +49,19 @@
 #'   prep(df) %>%
 #'   bake(df)
 step_lag <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           lag = 1,
-           prefix = "lag_",
-           default = NA,
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("lag")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    lag = 1,
+    prefix = "lag_",
+    default = NA,
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("lag")
+  ) {
     add_step(
       recipe,
       step_lag_new(
@@ -78,8 +80,18 @@ step_lag <-
   }
 
 step_lag_new <-
-  function(terms, role, trained, lag, default, prefix, columns,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    lag,
+    default,
+    prefix,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "lag",
       terms = terms,

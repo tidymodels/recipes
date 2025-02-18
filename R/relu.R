@@ -71,17 +71,19 @@
 #'
 #' transformed_te
 step_relu <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           shift = 0,
-           reverse = FALSE,
-           smooth = FALSE,
-           prefix = "right_relu_",
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("relu")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    shift = 0,
+    reverse = FALSE,
+    smooth = FALSE,
+    prefix = "right_relu_",
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("relu")
+  ) {
     add_step(
       recipe,
       step_relu_new(
@@ -100,7 +102,18 @@ step_relu <-
   }
 
 step_relu_new <-
-  function(terms, role, trained, shift, reverse, smooth, prefix, columns, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    shift,
+    reverse,
+    smooth,
+    prefix,
+    columns,
+    skip,
+    id
+  ) {
     step(
       subclass = "relu",
       terms = terms,
@@ -163,7 +176,6 @@ print.step_relu <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   if (reverse) {

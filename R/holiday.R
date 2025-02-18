@@ -43,23 +43,27 @@
 #' holiday_values
 #' @import timeDate
 step_holiday <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
-           columns = NULL,
-           sparse = "auto",
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("holiday")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
+    columns = NULL,
+    sparse = "auto",
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("holiday")
+  ) {
     if (!is_tune(holidays)) {
       all_days <- listHolidays()
       if (!all(holidays %in% all_days)) {
-        cli::cli_abort(c(
-          "Invalid {.arg holidays} value. \\
+        cli::cli_abort(
+          c(
+            "Invalid {.arg holidays} value. \\
           See {.fn timeDate::listHolidays} for possible values."
-        ))
+          )
+        )
       }
     }
 
@@ -80,8 +84,17 @@ step_holiday <-
   }
 
 step_holiday_new <-
-  function(terms, role, trained, holidays, columns, sparse, keep_original_cols, 
-           skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    holidays,
+    columns,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "holiday",
       terms = terms,
@@ -137,7 +150,6 @@ is_holiday <- function(hol, dt, sparse) {
       positions <- matches
     }
     out <- sparsevctrs::sparse_integer(values, positions, length(dt))
-
   } else {
     out <- rep(0, length(dt))
     out[dt %in% hdate] <- 1
@@ -205,11 +217,11 @@ tidy.step_holiday <- function(x, ...) {
 .recipes_estimate_sparsity.step_holiday <- function(x, data, ...) {
   n_holidays <- length(x$holidays)
   n_cols <- ncol(data)
-  
+
   lapply(
-    seq_len(n_cols), 
+    seq_len(n_cols),
     function(x) {
-      c(n_cols = n_holidays,sparsity = 364/365)
+      c(n_cols = n_holidays, sparsity = 364 / 365)
     }
   )
 }

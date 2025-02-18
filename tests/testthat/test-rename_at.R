@@ -6,24 +6,24 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-    step_rename_at(contains("Length"), fn = ~ tolower(.))
+      step_rename_at(contains("Length"), fn = ~tolower(.))
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    rename_at(vars(contains("Length")), ~ tolower(.))
+      as_tibble() %>%
+      slice(1:75) %>%
+      rename_at(vars(contains("Length")), ~tolower(.))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-    as_tibble() %>%
-    slice(76:150) %>%
-    rename_at(vars(contains("Length")), ~ tolower(.))
+      as_tibble() %>%
+      slice(76:150) %>%
+      rename_at(vars(contains("Length")), ~tolower(.))
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -31,11 +31,9 @@ test_that("basic usage", {
 test_that("mulitple functions", {
   rec <-
     iris_rec %>%
-    step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
+      step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
 
-  expect_snapshot(error = TRUE,
-                  prep(rec, training = iris %>% slice(1:75))
-  )
+  expect_snapshot(error = TRUE, prep(rec, training = iris %>% slice(1:75)))
 })
 
 test_that("no input", {

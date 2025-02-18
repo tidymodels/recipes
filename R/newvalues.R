@@ -55,15 +55,17 @@
 #'   bake(credit_data)
 #' }
 check_new_values <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           ignore_NA = TRUE,
-           values = NULL,
-           skip = FALSE,
-           id = rand_id("new_values")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    ignore_NA = TRUE,
+    values = NULL,
+    skip = FALSE,
+    id = rand_id("new_values")
+  ) {
     add_check(
       recipe,
       check_new_values_new(
@@ -95,10 +97,12 @@ check_new_values_new <-
     )
   }
 
-new_values_func <- function(x,
-                            allowed_values,
-                            colname = "x",
-                            ignore_NA = TRUE) {
+new_values_func <- function(
+  x,
+  allowed_values,
+  colname = "x",
+  ignore_NA = TRUE
+) {
   new_vals <- setdiff(as.character(x), as.character(allowed_values))
   if (length(new_vals) == 0) {
     return()
@@ -138,7 +142,8 @@ bake.check_new_values <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   for (col_name in col_names) {
-    new_values_func(new_data[[col_name]],
+    new_values_func(
+      new_data[[col_name]],
       object$values[[col_name]],
       col_name,
       ignore_NA = object$ignore_NA

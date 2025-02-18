@@ -7,8 +7,8 @@ extract_parameter_set_dials.recipe <- function(x, ...) {
       tuning_param %>% dplyr::select(-tunable),
       all_args,
       by = c("name", "source", "component", "component_id")
-    ) 
-  
+    )
+
   objects <- list()
   for (i in seq_len(nrow(res))) {
     objects[[i]] <- eval_call_info(res$call_info[[i]])
@@ -33,7 +33,10 @@ eval_call_info <- function(x, call) {
     } else {
       opts <- list()
     }
-    res <- try(rlang::eval_tidy(rlang::call2(x$fun, .ns = x$pkg, !!!opts)), silent = TRUE)
+    res <- try(
+      rlang::eval_tidy(rlang::call2(x$fun, .ns = x$pkg, !!!opts)),
+      silent = TRUE
+    )
     if (inherits(res, "try-error")) {
       cli::cli_abort(
         "Error when calling {.fn {x$fun}}: {as.character(res)}",

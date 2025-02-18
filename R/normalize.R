@@ -67,15 +67,17 @@
 #' keep_orig_te <- bake(keep_orig_obj, biomass_te)
 #' keep_orig_te
 step_normalize <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           sds = NULL,
-           na_rm = TRUE,
-           skip = FALSE,
-           id = rand_id("normalize")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    means = NULL,
+    sds = NULL,
+    na_rm = TRUE,
+    skip = FALSE,
+    id = rand_id("normalize")
+  ) {
     add_step(
       recipe,
       step_normalize_new(
@@ -113,12 +115,14 @@ sd_check <- function(x) {
   if (length(zero_sd) > 0) {
     offenders <- names(zero_sd)
 
-    cli::cli_warn(c(
-      "!" = "{cli::qty(offenders)} The following column{?s} {?has/have} zero \\
+    cli::cli_warn(
+      c(
+        "!" = "{cli::qty(offenders)} The following column{?s} {?has/have} zero \\
             variance so scaling cannot be used: {offenders}.",
-      "i" = "Consider using {.help [?step_zv](recipes::step_zv)} to remove \\
+        "i" = "Consider using {.help [?step_zv](recipes::step_zv)} to remove \\
             those columns before normalizing."
-    ))
+      )
+    )
 
     x[zero_sd] <- 1
   }
@@ -126,7 +130,7 @@ sd_check <- function(x) {
   na_sd <- which(is.na(x))
   if (length(na_sd) > 0) {
     cli::cli_warn(
-        "Column{?s} {.var {names(na_sd)}} returned NaN, because variance \\
+      "Column{?s} {.var {names(na_sd)}} returned NaN, because variance \\
         cannot be calculated and scaling cannot be used. Consider avoiding \\
         `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before \\
         normalizing."
@@ -184,11 +188,16 @@ bake.step_normalize <- function(object, new_data, ...) {
 print.step_normalize <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Centering and scaling for "
-    print_step(names(x$sds), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$sds),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

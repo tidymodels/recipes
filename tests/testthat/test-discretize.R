@@ -14,7 +14,13 @@ ex_tr_mis$x3[10] <- NA
 
 ex_te <- data.frame(x1 = c(1, 50, 101, NA))
 
-lvls_breaks_4 <- c("[missing]", "[-Inf,25.8]", "(25.8,50.5]", "(50.5,75.2]", "(75.2, Inf]")
+lvls_breaks_4 <- c(
+  "[missing]",
+  "[-Inf,25.8]",
+  "(25.8,50.5]",
+  "(50.5,75.2]",
+  "(75.2, Inf]"
+)
 lvls_breaks_4_bin <- c("bin_missing", "bin1", "bin2", "bin3", "bin4")
 
 test_that("default args", {
@@ -25,7 +31,10 @@ test_that("default args", {
 
   bin_1 <- discretize(ex_tr$x1)
   pred_1 <- predict(bin_1, ex_te$x1)
-  exp_1 <- factor(c("bin1", "bin2", "bin4", "bin_missing"), levels = lvls_breaks_4_bin)
+  exp_1 <- factor(
+    c("bin1", "bin2", "bin4", "bin_missing"),
+    levels = lvls_breaks_4_bin
+  )
   expect_equal(pred_1, exp_1)
 })
 
@@ -70,7 +79,6 @@ test_that("NA values from out of range", {
   exp_3 <- factor(c("bin1", "bin2", NA, NA), levels = lvls_breaks_4_bin[-1])
   expect_equal(pred_3, exp_3)
 })
-
 
 test_that("NA values with step_discretize (issue #127)", {
   iris_na <- iris
@@ -129,7 +137,8 @@ test_that("multiple column prefix", {
       prep()
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = example_data) %>%
       step_discretize(x1, x2, options = list(labels = "hello")) %>%
       prep(),
@@ -137,12 +146,12 @@ test_that("multiple column prefix", {
   )
 })
 
-
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
-                  recipe(~., data = ex_tr) %>%
-                    step_discretize(x1, num_breaks = 1) %>%
-                    prep()
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = ex_tr) %>%
+      step_discretize(x1, num_breaks = 1) %>%
+      prep()
   )
   expect_snapshot(
     recipe(~., data = ex_tr) %>%
@@ -159,7 +168,7 @@ test_that("bad args", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_discretize(all_predictors())
+      step_discretize(all_predictors())
   rec_param <- tunable.step_discretize(rec$steps[[1]])
   expect_equal(rec_param$name, c("min_unique", "num_breaks"))
   expect_true(all(rec_param$source == "recipe"))
@@ -239,7 +248,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   rec <- recipe(~., data = mtcars) %>%
     step_discretize(
       all_predictors(),
-      min_unique = hardhat::tune(), num_breaks = hardhat::tune()
+      min_unique = hardhat::tune(),
+      num_breaks = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)
@@ -247,7 +257,6 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
 })
-
 
 test_that("bad args", {
   expect_snapshot(
@@ -263,4 +272,3 @@ test_that("bad args", {
     error = TRUE
   )
 })
-

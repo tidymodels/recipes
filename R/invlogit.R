@@ -45,8 +45,15 @@
 #' transformed_te <- bake(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
 step_invlogit <-
-  function(recipe, ..., role = NA, trained = FALSE, columns = NULL,
-           skip = FALSE, id = rand_id("invlogit")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("invlogit")
+  ) {
     add_step(
       recipe,
       step_invlogit_new(

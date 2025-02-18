@@ -10,7 +10,7 @@ set_with_na <- tibble(
 
 tst <- function(...) {
   cols <- quos(...)
-  recipe(~ ., set_with_na) %>%
+  recipe(~., set_with_na) %>%
     check_missing(!!!cols) %>%
     prep() %>%
     bake(set_with_na)
@@ -42,9 +42,7 @@ test_that("check_missing on a new set", {
   rp <- recipe(no_na) %>%
     check_missing(a) %>%
     prep(no_na)
-  expect_snapshot(error = TRUE,
-    bake(rp, na)
-  )
+  expect_snapshot(error = TRUE, bake(rp, na))
 })
 
 # Infrastructure ---------------------------------------------------------------

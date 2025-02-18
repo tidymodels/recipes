@@ -33,9 +33,12 @@ test_that("simple skip", {
   expect_snapshot(prep(rec_1, training = iris, retain = FALSE))
 })
 
-
 test_that("check existing steps for `skip` arg", {
-  step_check <- grep(pattern = "(^step_)|(^check_)", x = names(asNamespace("recipes")), value = TRUE)
+  step_check <- grep(
+    pattern = "(^step_)|(^check_)",
+    x = names(asNamespace("recipes")),
+    value = TRUE
+  )
   # These ones are not operations
   step_check <- step_check[step_check != "check_type"]
   step_check <- step_check[step_check != "check_nominal_type"]
@@ -80,12 +83,11 @@ test_that("check existing steps for `skip` arg", {
   }
 })
 
-
 test_that("skips for steps that remove columns (#239)", {
   simple_ex <-
     recipe(Species ~ ., data = iris) %>%
-    step_interact(terms = ~ Sepal.Length:Sepal.Width) %>%
-    step_rm(Sepal.Length, skip = TRUE)
+      step_interact(terms = ~Sepal.Length:Sepal.Width) %>%
+      step_rm(Sepal.Length, skip = TRUE)
 
   prep_simple <- prep(simple_ex, iris)
   simple_juiced <- juice(prep_simple)
@@ -119,11 +121,11 @@ test_that("skips for steps that remove columns (#239)", {
 
   complex_ex <-
     recipe(Species ~ ., data = iris) %>%
-    step_interact(terms = ~ Sepal.Length:Sepal.Width) %>%
-    step_rm(Sepal.Length) %>%
-    step_pca(contains("Sepal")) %>%
-    step_rm(PC1, skip = TRUE) %>%
-    prep()
+      step_interact(terms = ~Sepal.Length:Sepal.Width) %>%
+      step_rm(Sepal.Length) %>%
+      step_pca(contains("Sepal")) %>%
+      step_rm(PC1, skip = TRUE) %>%
+      prep()
 
   complex_juiced <- juice(complex_ex)
   complex_baked <- bake(complex_ex, new_data = iris)
@@ -139,15 +141,15 @@ test_that("skips for steps that remove columns (#239)", {
 
   iris_dups <-
     iris %>%
-    mutate(
-      dup_1 = Sepal.Width,
-      dup_2 = Sepal.Width
-    )
+      mutate(
+        dup_1 = Sepal.Width,
+        dup_2 = Sepal.Width
+      )
 
   corr_example <-
     recipe(Species ~ ., data = iris_dups) %>%
-    step_corr(all_predictors(), skip = TRUE) %>%
-    prep()
+      step_corr(all_predictors(), skip = TRUE) %>%
+      prep()
 
   corr_juiced <- juice(corr_example)
   corr_baked <- bake(corr_example, new_data = iris_dups)

@@ -37,11 +37,13 @@ test_that("simple percentile trans", {
   )
   sulfur_values <- as.numeric(gsub("%$", "", names(sulfur_quantiles)))
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y / 100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y /
+      100,
     biomass_tr_baked$sulfur
   )
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y / 100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y /
+      100,
     biomass_te_baked$sulfur
   )
 })
@@ -68,11 +70,21 @@ test_that("works works with fewer unique values than percentiles requested", {
 
   carbon1_values <- as.numeric(gsub("%$", "", names(carbon1_quantiles)))
   expect_equal(
-    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_tr1$carbon1)$y / 100,
+    approx(
+      carbon1_quantiles,
+      y = carbon1_values,
+      xout = biomass_tr1$carbon1
+    )$y /
+      100,
     biomass_tr_baked$carbon1
   )
   expect_equal(
-    approx(carbon1_quantiles, y = carbon1_values, xout = biomass_te1$carbon1)$y / 100,
+    approx(
+      carbon1_quantiles,
+      y = carbon1_values,
+      xout = biomass_te1$carbon1
+    )$y /
+      100,
     biomass_te_baked$carbon1
   )
 })
@@ -93,11 +105,13 @@ test_that("passing new probs works", {
 
   sulfur_values <- as.numeric(gsub("%$", "", names(sulfur_quantiles)))
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y / 100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_tr$sulfur)$y /
+      100,
     biomass_tr_baked$sulfur
   )
   expect_equal(
-    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y / 100,
+    approx(sulfur_quantiles, y = sulfur_values, xout = biomass_te$sulfur)$y /
+      100,
     biomass_te_baked$sulfur
   )
 })
@@ -108,7 +122,7 @@ test_that("outside argument", {
   new_df <- tibble(a = c(0.99, 5, 9.01))
 
   expect_identical(
-    recipe(~ a, data = train_df) %>%
+    recipe(~a, data = train_df) %>%
       step_percentile(a, outside = "none") %>%
       prep() %>%
       bake(new_data = new_df),
@@ -116,7 +130,7 @@ test_that("outside argument", {
   )
 
   expect_identical(
-    recipe(~ a, data = train_df) %>%
+    recipe(~a, data = train_df) %>%
       step_percentile(a, outside = "lower") %>%
       prep() %>%
       bake(new_data = new_df),
@@ -124,7 +138,7 @@ test_that("outside argument", {
   )
 
   expect_identical(
-    recipe(~ a, data = train_df) %>%
+    recipe(~a, data = train_df) %>%
       step_percentile(a, outside = "upper") %>%
       prep() %>%
       bake(new_data = new_df),
@@ -132,7 +146,7 @@ test_that("outside argument", {
   )
 
   expect_identical(
-    recipe(~ a, data = train_df) %>%
+    recipe(~a, data = train_df) %>%
       step_percentile(a, outside = "both") %>%
       prep() %>%
       bake(new_data = new_df),
@@ -141,7 +155,7 @@ test_that("outside argument", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~ a, data = train_df) %>%
+    recipe(~a, data = train_df) %>%
       step_percentile(a, outside = "left") %>%
       prep() %>%
       bake(new_data = new_df)
@@ -235,7 +249,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec_trained <- prep(rec)
 
   expect_snapshot(
-    error = TRUE, 
+    error = TRUE,
     bake(rec_trained, new_data = biomass_tr[, c(-3, -7)])
   )
 })
