@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-
 n <- 50
 set.seed(424)
 dat <- data.frame(

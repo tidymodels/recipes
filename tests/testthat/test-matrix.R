@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-
 ###################################################################
 
 skip_if_not_installed("modeldata")
@@ -27,17 +26,9 @@ rec <- recipe(~., data = sacr_tr) %>%
 test_that("correct types", {
   bake_default <- bake(rec, new_data = sacr_te, all_numeric())
   bake_sparse <-
-    bake(rec,
-      new_data = sacr_te,
-      all_numeric(),
-      composition = "matrix"
-    )
+    bake(rec, new_data = sacr_te, all_numeric(), composition = "matrix")
   bake_sparse_1d <-
-    bake(rec,
-      new_data = sacr_te,
-      sqft,
-      composition = "matrix"
-    )
+    bake(rec, new_data = sacr_te, sqft, composition = "matrix")
   juice_default <- juice(rec, all_numeric())
   juice_sparse <-
     juice(rec, all_numeric(), composition = "matrix")
@@ -64,10 +55,9 @@ test_that("correct types", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     bake(rec, new_data = sacr_te, composition = "matrix")
   )
-  expect_snapshot(error = TRUE,
-    juice(rec, composition = "matrix")
-  )
+  expect_snapshot(error = TRUE, juice(rec, composition = "matrix"))
 })

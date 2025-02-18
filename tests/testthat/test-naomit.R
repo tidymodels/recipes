@@ -2,7 +2,7 @@ library(testthat)
 library(recipes)
 
 test_that("step_naomit on all columns", {
-  baked <- recipe(~ ., data = airquality) %>%
+  baked <- recipe(~., data = airquality) %>%
     step_naomit(all_predictors()) %>%
     prep(airquality, verbose = FALSE) %>%
     bake(new_data = NULL)
@@ -36,7 +36,7 @@ test_that("step_naomit on subset of columns", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <-  recipe(airquality) %>%
+  rec <- recipe(airquality) %>%
     step_naomit(Wind, Temp, skip = FALSE) %>%
     update_role(Wind, Temp, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)

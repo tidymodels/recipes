@@ -68,17 +68,18 @@
 #'
 #' tidy(quadratic, number = 1)
 step_poly <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           objects = NULL,
-           degree = 2L,
-           options = list(),
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("poly")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    objects = NULL,
+    degree = 2L,
+    options = list(),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("poly")
+  ) {
     if (any(names(options) == "degree")) {
       degree <- options$degree
       cli::cli_inform(
@@ -104,8 +105,17 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, degree, options, keep_original_cols,
-           skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    objects,
+    degree,
+    options,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "poly",
       terms = terms,
@@ -120,7 +130,6 @@ step_poly_new <-
     )
   }
 
-
 poly_wrapper <- function(x, args) {
   args$x <- x
   args$simple <- FALSE
@@ -133,7 +142,6 @@ poly_wrapper <- function(x, args) {
   attr(out, "coefs") <- attr(poly_obj, "coefs")
   out
 }
-
 
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
@@ -166,7 +174,10 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
-  new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_"))
+  new_names <- purrr::map(
+    object$objects,
+    ~paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
+  )
 
   # Start with n-row, 0-col tibble for the empty selection case
   new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))

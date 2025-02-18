@@ -36,12 +36,14 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_string2factor(w, n) %>%
       prep(ex_dat)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_string2factor(w, x, ordered = "yes") %>%
       prep(ex_dat)

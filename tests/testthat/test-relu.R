@@ -15,7 +15,6 @@ test_that("default relu settings", {
   expect_equal(baked, expected_baked)
 })
 
-
 test_that("shifted and reversed relu", {
   baked <- recipe(~., data = df) %>%
     step_relu(val1, shift = 5, reverse = TRUE) %>%
@@ -28,7 +27,6 @@ test_that("shifted and reversed relu", {
   expect_equal(baked, expected_baked)
 })
 
-
 test_that("reversed softplus", {
   baked <- recipe(~., data = df) %>%
     step_relu(val1, smooth = TRUE, reverse = TRUE) %>%
@@ -40,7 +38,6 @@ test_that("reversed softplus", {
 
   expect_equal(baked, expected_baked)
 })
-
 
 test_that("shifted and prefixed softplus", {
   baked <- recipe(~., data = df) %>%
@@ -63,27 +60,30 @@ test_that("works with all_predictors() selector", {
   expect_silent(prepped_rec <- prep(rec, iris))
 })
 
-
 test_that("input checking", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val1, shift = TRUE) %>% # wrong argument type to shift
       prep(df, verbose = FALSE)
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val1, reverse = 3) %>% # wrong argument type to reverse
       prep(df, verbose = FALSE)
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val1, smooth = "cat") %>% # wrong argument type to smooth
       prep(df, verbose = FALSE)
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = df) %>%
       step_relu(val2) %>% # apply to non-numeric column
       prep(df, verbose = FALSE)

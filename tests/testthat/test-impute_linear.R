@@ -11,7 +11,6 @@ ames_dat <- ames %>%
 tg_dat <- ToothGrowth %>%
   mutate(dose = na_if(dose, 0.5))
 
-
 test_that("Does the imputation (no NAs), and does it correctly.", {
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
@@ -45,10 +44,13 @@ test_that("All NA values", {
   expect_equal(sum(is.na(imputed_te$Lot_Frontage)), 0)
 })
 
-
 test_that("Returns correct models.", {
   imputed <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, Total_Bsmt_SF, impute_with = c("Lot_Area")) %>%
+    step_impute_linear(
+      Lot_Frontage,
+      Total_Bsmt_SF,
+      impute_with = c("Lot_Area")
+    ) %>%
     prep(ames_dat)
 
   expect_equal(length(imputed$steps[[1]]$models), 2)
@@ -59,27 +61,33 @@ test_that("Returns correct models.", {
 })
 
 test_that("Fails when one of the variables to impute is non-numeric.", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(tg_dat) %>%
       step_impute_linear(supp, impute_with = c("len")) %>%
       prep(tg_dat)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(tg_dat) %>%
       step_impute_linear(supp, dose, impute_with = c("len")) %>%
       prep(tg_dat)
   )
 })
 
-
 test_that("Maintain data type", {
   ames_integer <- ames
   ames_integer$TotRms_AbvGrd[1:10] <- NA_integer_
   integer_rec <- recipe(~., data = ames_integer) %>%
-    step_impute_linear(TotRms_AbvGrd, impute_with = vars(Bedroom_AbvGr, Gr_Liv_Area)) %>%
+    step_impute_linear(
+      TotRms_AbvGrd,
+      impute_with = vars(Bedroom_AbvGr, Gr_Liv_Area)
+    ) %>%
     prep()
   expect_true(
-    is.integer(bake(integer_rec, ames_integer, TotRms_AbvGrd) %>% pull(TotRms_AbvGrd))
+    is.integer(
+      bake(integer_rec, ames_integer, TotRms_AbvGrd) %>% pull(TotRms_AbvGrd)
+    )
   )
 })
 
@@ -98,8 +106,11 @@ test_that("case weights", {
     pull(Lot_Frontage) %>%
     .[missing_ind]
 
-  lm_predicted <- lm(Lot_Frontage ~ Lot_Area, data = ames_dat,
-                     weights = Total_Bsmt_SF) %>%
+  lm_predicted <- lm(
+    Lot_Frontage ~ Lot_Area,
+    data = ames_dat,
+    weights = Total_Bsmt_SF
+  ) %>%
     predict(newdata = ames_dat[missing_ind, ]) %>%
     unname()
 

@@ -48,16 +48,18 @@
 #'
 #' imputed_te <- bake(imp_models, new_data = credit_te)
 step_indicate_na <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           columns = NULL,
-           prefix = "na_ind",
-           sparse = "auto",
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("indicate_na")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    columns = NULL,
+    prefix = "na_ind",
+    sparse = "auto",
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("indicate_na")
+  ) {
     terms <- enquos(...)
 
     add_step(
@@ -77,8 +79,17 @@ step_indicate_na <-
   }
 
 step_indicate_na_new <-
-  function(terms, role, trained, columns, prefix, sparse, keep_original_cols, 
-           skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    columns,
+    prefix,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "indicate_na",
       terms = terms,
@@ -131,7 +142,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
   }
 
   cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
-  cols <- dplyr::rename_with(cols, ~ vec_paste0(object$prefix, "_", .x))
+  cols <- dplyr::rename_with(cols, ~vec_paste0(object$prefix, "_", .x))
 
   cols <- check_name(cols, new_data, object, names(cols))
 

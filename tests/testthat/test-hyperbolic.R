@@ -18,9 +18,7 @@ get_exp <- function(x, f) {
   as_tibble(lapply(x, f))
 }
 
-
 test_that("simple hyperbolic trans", {
-
   for (func in c("sinh", "cosh", "tanh")) {
     rec <- recipe(~., data = ex_dat) %>%
       step_hyperbolic(x1, x2, func = func, inverse = FALSE)
@@ -51,7 +49,6 @@ test_that("simple hyperbolic trans", {
   rec_trans <- bake(rec_trained, new_data = ex_dat1)
   exp_res <- get_exp(ex_dat1, "acosh")
   expect_equal(rec_trans, exp_res)
-
 })
 
 test_that("wrong arguments", {

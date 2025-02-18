@@ -102,37 +102,41 @@
 #' ggplot(plot_data, aes(x = disp, y = pred)) +
 #'   geom_point(alpha = .5, cex = 1) +
 #'   facet_wrap(~method)
-step_profile <- function(recipe,
-                         ...,
-                         profile = NULL,
-                         pct = 0.5,
-                         index = 1,
-                         grid = list(pctl = TRUE, len = 100),
-                         columns = NULL,
-                         role = NA,
-                         trained = FALSE,
-                         skip = FALSE,
-                         id = rand_id("profile")) {
-
+step_profile <- function(
+  recipe,
+  ...,
+  profile = NULL,
+  pct = 0.5,
+  index = 1,
+  grid = list(pctl = TRUE, len = 100),
+  columns = NULL,
+  role = NA,
+  trained = FALSE,
+  skip = FALSE,
+  id = rand_id("profile")
+) {
   check_number_decimal(pct, min = 0, max = 1)
 
   if (length(grid) != 2) {
-    cli::cli_abort(c(
-      x = "`grid` should have 2 elements, not {length(grid)}.",
-      i = "See {.help [?step_profile](recipes::step_profile)} for information."
-    ))
+    cli::cli_abort(
+      c(
+        x = "`grid` should have 2 elements, not {length(grid)}.",
+        i = "See {.help [?step_profile](recipes::step_profile)} for information."
+      )
+    )
   }
   if (!identical(sort(names(grid)), c("len", "pctl"))) {
-    cli::cli_abort(c(
-      x = "`grid` should have two named elements {.field len} and \\
+    cli::cli_abort(
+      c(
+        x = "`grid` should have two named elements {.field len} and \\
           {.field pctl}, not {.val {sort(names(grid))}}.",
-      i = "See {.help [?step_profile](recipes::step_profile)} for information."
-    ))
+        i = "See {.help [?step_profile](recipes::step_profile)} for information."
+      )
+    )
   }
 
   check_number_whole(grid$len, min = 2)
   check_bool(grid$pctl)
-
 
   add_step(
     recipe,
@@ -172,7 +176,6 @@ step_profile_new <-
 prep.step_profile <- function(x, training, info = NULL, ...) {
   fixed_names <- recipes_eval_select(x$terms, training, info)
   profile_name <- recipes_eval_select(x$profile, training, info)
-
 
   if (length(profile_name) != 1) {
     msg <- c(x = "{.arg profile} should select only one column")

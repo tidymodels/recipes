@@ -13,8 +13,9 @@ test_that("correct basis functions", {
   biomass_tr <- biomass[biomass$dataset == "Training", ]
   biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass_tr
   )
 
   with_ns <- rec %>%
@@ -47,14 +48,22 @@ test_that("correct basis functions", {
     with_ns$steps[[1]]$results$hydrogen$Boundary.knots
   )
 
-  carbon_ns_tr_res <- as.matrix(with_ns_pred_tr[, grep("carbon", names(with_ns_pred_tr))])
+  carbon_ns_tr_res <- as.matrix(
+    with_ns_pred_tr[, grep("carbon", names(with_ns_pred_tr))]
+  )
   colnames(carbon_ns_tr_res) <- NULL
-  hydrogen_ns_tr_res <- as.matrix(with_ns_pred_tr[, grep("hydrogen", names(with_ns_pred_tr))])
+  hydrogen_ns_tr_res <- as.matrix(
+    with_ns_pred_tr[, grep("hydrogen", names(with_ns_pred_tr))]
+  )
   colnames(hydrogen_ns_tr_res) <- NULL
 
-  carbon_ns_te_res <- as.matrix(with_ns_pred_te[, grep("carbon", names(with_ns_pred_te))])
+  carbon_ns_te_res <- as.matrix(
+    with_ns_pred_te[, grep("carbon", names(with_ns_pred_te))]
+  )
   colnames(carbon_ns_te_res) <- 1:ncol(carbon_ns_te_res)
-  hydrogen_ns_te_res <- as.matrix(with_ns_pred_te[, grep("hydrogen", names(with_ns_pred_te))])
+  hydrogen_ns_te_res <- as.matrix(
+    with_ns_pred_te[, grep("hydrogen", names(with_ns_pred_te))]
+  )
   colnames(hydrogen_ns_te_res) <- 1:ncol(hydrogen_ns_te_res)
 
   ## remove attributes
@@ -107,7 +116,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_01 <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_spline_b(mpg)
 
   expect_snapshot(
@@ -117,17 +126,17 @@ test_that("check_name() is used", {
 })
 
 test_that("tunable", {
-
   biomass_tr <- biomass[biomass$dataset == "Training", ]
   biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass_tr
   )
 
   rec <-
     recipe(~., data = iris) %>%
-    step_spline_b(all_predictors())
+      step_spline_b(all_predictors())
   rec_param <- tunable.step_spline_b(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free", "degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -204,7 +213,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("mpg_", formatC(1:10, width = 2, flag = "0"))
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_spline_b(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -215,7 +224,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_spline_b(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -234,8 +243,10 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass) %>%
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass
+  ) %>%
     step_spline_b(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -247,7 +258,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   rec <- recipe(~., data = mtcars) %>%
     step_spline_b(
       all_predictors(),
-      deg_free = hardhat::tune(), degree = hardhat::tune()
+      deg_free = hardhat::tune(),
+      degree = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)

@@ -70,14 +70,16 @@
 #'   coord_equal() +
 #'   labs(title = "Imputed Values")
 step_impute_linear <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           models = NULL,
-           skip = FALSE,
-           id = rand_id("impute_linear")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    impute_with = imp_vars(all_predictors()),
+    models = NULL,
+    skip = FALSE,
+    id = rand_id("impute_linear")
+  ) {
     if (is.null(impute_with)) {
       cli::cli_abort("{.arg impute_with} must not be empty.")
     }
@@ -98,8 +100,7 @@ step_impute_linear <-
   }
 
 step_impute_linear_new <-
-  function(terms, role, trained, models, impute_with,
-           skip, id, case_weights) {
+  function(terms, role, trained, models, impute_with, skip, id, case_weights) {
     step(
       subclass = "impute_linear",
       terms = terms,
@@ -140,8 +141,12 @@ lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
     wts <- as.double(wts)
   }
 
-  out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, weights = wts,
-            model = FALSE)
+  out <- lm(
+    as.formula(paste0(vars$y, "~", ".")),
+    data = dat,
+    weights = wts,
+    model = FALSE
+  )
   out$..imp_vars <- vars$x
   attr(out$terms, ".Environment") <- rlang::base_env()
 
@@ -159,7 +164,6 @@ lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
 
 #' @export
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
-
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
@@ -226,7 +230,6 @@ bake.step_impute_linear <- function(object, new_data, ...) {
       new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
       new_data[missing_rows, col_name] <- pred_vals
     }
-
   }
   new_data
 }
@@ -235,8 +238,14 @@ bake.step_impute_linear <- function(object, new_data, ...) {
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
     title <- "Linear regression imputation for "
-    print_step(names(x$models), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$models),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 

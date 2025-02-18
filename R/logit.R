@@ -44,14 +44,16 @@
 #' tidy(logit_trans, number = 1)
 #' tidy(logit_obj, number = 1)
 step_logit <-
-  function(recipe,
-           ...,
-           offset = 0,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("logit")) {
+  function(
+    recipe,
+    ...,
+    offset = 0,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("logit")
+  ) {
     add_step(
       recipe,
       step_logit_new(

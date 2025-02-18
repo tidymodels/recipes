@@ -53,14 +53,16 @@
 #'
 #' tidy(rec, number = 1)
 step_unknown <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           new_level = "unknown",
-           objects = NULL,
-           skip = FALSE,
-           id = rand_id("unknown")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    new_level = "unknown",
+    objects = NULL,
+    skip = FALSE,
+    id = rand_id("unknown")
+  ) {
     add_step(
       recipe,
       step_unknown_new(
@@ -143,7 +145,8 @@ bake.step_unknown <- function(object, new_data, ...) {
     }
 
     new_data[[col_name]] <-
-      factor(new_data[[col_name]],
+      factor(
+        new_data[[col_name]],
         levels = new_levels,
         ordered = attributes(object$object[[col_name]])$is_ordered
       )

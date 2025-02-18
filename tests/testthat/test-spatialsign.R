@@ -3,7 +3,8 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass
 )
 
@@ -69,8 +70,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-    step_spatialsign(all_numeric_predictors()) %>%
-    prep()
+      step_spatialsign(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(cyl, mpg))^2),
@@ -86,8 +87,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-    step_spatialsign(all_numeric_predictors()) %>%
-    prep()
+      step_spatialsign(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),
@@ -109,7 +110,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   expect_snapshot(
     error = TRUE,
-    bake(sp_sign_trained, new_data = biomass[,c(-3)])
+    bake(sp_sign_trained, new_data = biomass[, c(-3)])
   )
 })
 
@@ -151,8 +152,10 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass) %>%
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass
+  ) %>%
     step_center(carbon, hydrogen) %>%
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)

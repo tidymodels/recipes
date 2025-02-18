@@ -55,7 +55,12 @@ test_that("defaults", {
 
 test_that("alt args", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species", log = FALSE, mean_func = median)
+    step_classdist(
+      all_predictors(),
+      class = "Species",
+      log = FALSE,
+      mean_func = median
+    )
   trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, new_data = iris)
   dists <- dists[, grepl("classdist", names(dists))]
@@ -80,7 +85,10 @@ test_that("check_name() is used", {
 
   rec <- recipe(Species ~ ., data = dat) %>%
     step_classdist(
-      Sepal.Length, Sepal.Width, Petal.Length, Petal.Width,
+      Sepal.Length,
+      Sepal.Width,
+      Petal.Length,
+      Petal.Width,
       class = "Species"
     )
 
@@ -92,9 +100,11 @@ test_that("check_name() is used", {
 
 test_that("prefix", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(),
+    step_classdist(
+      all_predictors(),
       class = "Species",
-      log = FALSE, prefix = "centroid_"
+      log = FALSE,
+      prefix = "centroid_"
     )
   trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, new_data = iris)
@@ -108,7 +118,7 @@ test_that("case weights", {
 
   means_exp <- colMeans(mtcars)
   means_wts <- recipes:::get_center(mtcars, wts = wts)
-  means_no  <- recipes:::get_center(mtcars)
+  means_no <- recipes:::get_center(mtcars)
   means_wts_exp <- purrr::map_dbl(mtcars, weighted.mean, w = wts)
 
   expect_equal(means_wts, means_wts_exp)
@@ -122,7 +132,7 @@ test_that("case weights", {
 
   cov_exp <- cov(mtcars)
   cov_wts <- recipes:::get_both(mtcars, wts = wts)
-  cov_no  <- recipes:::get_both(mtcars)
+  cov_no <- recipes:::get_both(mtcars)
   cov_wts_exp <- cov.wt(mtcars, wt = wts)$cov
   expect_equal(cov_wts$scale, cov_wts_exp)
   expect_equal(cov_no$scale, cov_exp)
@@ -147,7 +157,9 @@ test_that("case weights", {
     prep()
 
   ref_objects <- split(iris1, ~Species) %>%
-    purrr::map(~get_both(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts)))
+    purrr::map(
+      ~get_both(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts))
+    )
 
   expect_equal(
     rec_prep$steps[[1]]$objects,
@@ -159,7 +171,9 @@ test_that("case weights", {
     prep()
 
   ref_objects_means <- split(iris1, ~Species) %>%
-    purrr::map(~averages(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts)))
+    purrr::map(
+      ~averages(.x %>% select(-Species, -wts), wts = as.numeric(.x$wts))
+    )
 
   ref_object_cov <- covariances(iris1[1:4], wts = iris1$wts)
 
@@ -175,13 +189,13 @@ test_that("case weights", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(Petal.Length, class = "Species", log = FALSE)  %>%
+    step_classdist(Petal.Length, class = "Species", log = FALSE) %>%
     update_role(Petal.Length, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   trained <- prep(rec, training = iris, verbose = FALSE)
 
-  expect_snapshot(error = TRUE, bake(trained, new_data = iris[,c(-3)]))
+  expect_snapshot(error = TRUE, bake(trained, new_data = iris[, c(-3)]))
 })
 
 test_that("empty printing", {
@@ -213,7 +227,12 @@ test_that("empty selection tidy method works", {
   rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
   rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
 
-  expect <- tibble(terms = character(), value = double(), class = character(), id = character())
+  expect <- tibble(
+    terms = character(),
+    value = double(),
+    class = character(),
+    id = character()
+  )
 
   expect_identical(tidy(rec2, number = 1), expect)
   expect_identical(tidy(rec3, number = 1), expect)
@@ -226,12 +245,19 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("keep_original_cols works", {
-  new_names <- c("Species", "classdist_setosa", "classdist_versicolor",
-                 "classdist_virginica")
+  new_names <- c(
+    "Species",
+    "classdist_setosa",
+    "classdist_versicolor",
+    "classdist_virginica"
+  )
 
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
-    step_classdist(all_predictors(), class = "Species",
-                   keep_original_cols = FALSE)
+    step_classdist(
+      all_predictors(),
+      class = "Species",
+      keep_original_cols = FALSE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -242,8 +268,11 @@ test_that("keep_original_cols works", {
   )
 
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
-    step_classdist(all_predictors(), class = "Species",
-                   keep_original_cols = TRUE)
+    step_classdist(
+      all_predictors(),
+      class = "Species",
+      keep_original_cols = TRUE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -269,7 +298,6 @@ test_that("keep_original_cols - can prep recipes with it missing", {
   )
 })
 
-
 test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(all_predictors(), class = "Species")
@@ -277,7 +305,6 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
-
 
 test_that("bad args", {
   expect_snapshot(
@@ -305,4 +332,3 @@ test_that("bad args", {
     error = TRUE
   )
 })
-

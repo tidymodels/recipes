@@ -1,6 +1,21 @@
-spline2_create <- function(x, nm = "pred", .fn = "bSpline", df = 3, complete_set = TRUE,
-                           degree = NULL, fn_opts = NULL, call = rlang::caller_env()) {
-  vals <- c("bSpline", "cSpline", "iSpline", "mSpline", "naturalSpline", "bernsteinPoly")
+spline2_create <- function(
+  x,
+  nm = "pred",
+  .fn = "bSpline",
+  df = 3,
+  complete_set = TRUE,
+  degree = NULL,
+  fn_opts = NULL,
+  call = rlang::caller_env()
+) {
+  vals <- c(
+    "bSpline",
+    "cSpline",
+    "iSpline",
+    "mSpline",
+    "naturalSpline",
+    "bernsteinPoly"
+  )
   .fn <- rlang::arg_match(.fn, vals)
   fn_opts <- c(fn_opts, degree = degree)
 
@@ -65,7 +80,12 @@ spline2_apply <- function(object, new_data) {
   object$.ns <- NULL
   object$.fn <- NULL
   object$nm <- NULL
-  .cl <- rlang::call2(.ns = .ns, .fn = .fn, !!!object, x = rlang::expr(new_data))
+  .cl <- rlang::call2(
+    .ns = .ns,
+    .fn = .fn,
+    !!!object,
+    x = rlang::expr(new_data)
+  )
   res <- rlang::eval_tidy(.cl)
   attributes(res) <- list(dim = dim(res), dimnames = dimnames(res))
   if (length(new_data) == 1) {

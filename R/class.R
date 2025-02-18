@@ -74,55 +74,62 @@
 #'   prep(x_df) %>%
 #'   bake(x_df)
 check_class <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           class_nm = NULL,
-           allow_additional = FALSE,
-           skip = FALSE,
-           class_list = NULL,
-           id = rand_id("class")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    class_nm = NULL,
+    allow_additional = FALSE,
+    skip = FALSE,
+    class_list = NULL,
+    id = rand_id("class")
+  ) {
     add_check(
       recipe,
       check_class_new(
-        terms            = enquos(...),
-        trained          = trained,
-        role             = role,
-        class_nm         = class_nm,
+        terms = enquos(...),
+        trained = trained,
+        role = role,
+        class_nm = class_nm,
         allow_additional = allow_additional,
-        class_list       = class_list,
-        skip             = skip,
-        id               = id
+        class_list = class_list,
+        skip = skip,
+        id = id
       )
     )
   }
 
 ## Initializes a new object
 check_class_new <-
-  function(terms, role, trained, class_nm,
-           allow_additional, class_list, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    class_nm,
+    allow_additional,
+    class_list,
+    skip,
+    id
+  ) {
     check_character(class_nm, allow_null = TRUE, call = rlang::caller_env(2))
     check_bool(allow_additional, call = rlang::caller_env(2))
     check(
-      subclass         = "class",
-      terms            = terms,
-      role             = role,
-      skip             = skip,
-      trained          = trained,
-      class_nm         = class_nm,
+      subclass = "class",
+      terms = terms,
+      role = role,
+      skip = skip,
+      trained = trained,
+      class_nm = class_nm,
       allow_additional = allow_additional,
-      class_list       = class_list,
-      skip             = skip,
-      id               = id
+      class_list = class_list,
+      skip = skip,
+      id = id
     )
   }
 
 #' @export
-prep.check_class <- function(x,
-                             training,
-                             info = NULL,
-                             ...) {
+prep.check_class <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   # vapply requires a very specific return here
@@ -136,14 +143,14 @@ prep.check_class <- function(x,
   }
 
   check_class_new(
-    terms            = x$terms,
-    role             = x$role,
-    skip             = x$skip,
-    trained          = TRUE,
-    class_nm         = x$class_nm,
+    terms = x$terms,
+    role = x$role,
+    skip = x$skip,
+    trained = TRUE,
+    class_nm = x$class_nm,
     allow_additional = x$allow_additional,
-    class_list       = class_list,
-    id               = x$id
+    class_list = class_list,
+    id = x$id
   )
 }
 
@@ -151,10 +158,7 @@ prep.check_class <- function(x,
 # can be of length > 1. inherits will result
 # in TRUE if just one of the classes in class_nm
 # is present in x.
-bake_check_class_core <- function(x,
-                                  class_nm,
-                                  var_nm,
-                                  aa = FALSE) {
+bake_check_class_core <- function(x, class_nm, var_nm, aa = FALSE) {
   classes <- class(x)
   missing <- setdiff(class_nm, classes)
   if (length(missing) > 0) {
@@ -166,12 +170,14 @@ bake_check_class_core <- function(x,
 
   extra <- setdiff(classes, class_nm)
   if (length(extra) > 0 && !aa) {
-    cli::cli_abort(c(
+    cli::cli_abort(
+      c(
         x = "{.var {var_nm}} has class{?es} {.and {.cls {classes}}} but only \\
             the following {?is/are} asked: {.and {.cls {class_nm}}}.",
         i = "This error is shown because {.arg allow_additional} is set to \\
             {.val FALSE}."
-    ))
+      )
+    )
   }
 }
 
@@ -198,7 +204,6 @@ print.check_class <-
     print_step(names(x$class_list), x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

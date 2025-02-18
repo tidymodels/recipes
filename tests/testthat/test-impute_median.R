@@ -3,7 +3,6 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(credit_data, package = "modeldata")
 
-
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
@@ -34,11 +33,17 @@ test_that("simple median", {
     rep(inc_pred, sum(is.na(credit_te$Income)))
   )
 
-  medians <- vapply(credit_tr[, c("Age", "Assets", "Income")],
-    median, double(1),
+  medians <- vapply(
+    credit_tr[, c("Age", "Assets", "Income")],
+    median,
+    double(1),
     na.rm = TRUE
   )
-  medians <- purrr::map2(medians, credit_tr[, c("Age", "Assets", "Income")], recipes:::cast)
+  medians <- purrr::map2(
+    medians,
+    credit_tr[, c("Age", "Assets", "Income")],
+    recipes:::cast
+  )
   medians <- unlist(medians)
   imp_tibble_un <-
     tibble(
@@ -57,13 +62,13 @@ test_that("simple median", {
   expect_equal(as.data.frame(tidy(imputed, 1)), as.data.frame(imp_tibble_tr))
 })
 
-
 test_that("non-numeric", {
   rec <- recipe(Price ~ ., data = credit_tr)
 
   impute_rec <- rec %>%
     step_impute_median(Assets, Job)
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     prep(impute_rec, training = credit_tr, verbose = FALSE)
   )
 })

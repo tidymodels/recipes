@@ -1,4 +1,3 @@
-
 set.seed(1)
 freq_wts <- floor(runif(32, max = 9)) + 1
 freq_wts <- as.integer(freq_wts)

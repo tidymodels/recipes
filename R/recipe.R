@@ -91,27 +91,24 @@ recipe <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...) {
-
   # Doing this here since it should work for all types of Matrix classes
   if (is_sparse_matrix(x)) {
     x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
     return(recipe(x, ...))
   }
 
-  cli::cli_abort(c(
-    x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
-    i = "{.arg x} is {.obj_type_friendly {x}}."
-  ))
+  cli::cli_abort(
+    c(
+      x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
+      i = "{.arg x} is {.obj_type_friendly {x}}."
+    )
+  )
 }
 
 #' @rdname recipe
 #' @export
 recipe.data.frame <-
-  function(x,
-           formula = NULL,
-           ...,
-           vars = NULL,
-           roles = NULL) {
+  function(x, formula = NULL, ..., vars = NULL, roles = NULL) {
     if (!is.null(formula)) {
       if (!is.null(vars)) {
         cli::cli_abort(
@@ -140,18 +137,22 @@ recipe.data.frame <-
       offenders <- vctrs::vec_count(vars)
       offenders <- offenders$key[offenders$count != 1]
 
-      cli::cli_abort(c(
-        x = "{.arg vars} must have unique values.",
-        i = "The following values were duplicated: {.and {.field {offenders}}}."
-      ))
+      cli::cli_abort(
+        c(
+          x = "{.arg vars} must have unique values.",
+          i = "The following values were duplicated: {.and {.field {offenders}}}."
+        )
+      )
     }
     if (any(!(vars %in% colnames(x)))) {
       offenders <- vars[!(vars %in% colnames(x))]
 
-      cli::cli_abort(c(
-        x = "The following elements of {.arg vars} are not found in {.arg x}:",
-        "*" = "{.and {.field {offenders}}}."
-      ))
+      cli::cli_abort(
+        c(
+          x = "The following elements of {.arg vars} are not found in {.arg x}:",
+          "*" = "{.and {.field {offenders}}}."
+        )
+      )
     }
 
     x <- x[, vars]
@@ -161,11 +162,13 @@ recipe.data.frame <-
     ## Check and add roles when available
     if (!is.null(roles)) {
       if (length(roles) != length(vars)) {
-        cli::cli_abort(c(
-          x =  "{.arg vars} and {.arg roles} must have same length.",
-          "*" = "{.arg vars} has length {length(vars)}",
-          "*" = "{.arg roles} has length {length(roles)}"
-        ))
+        cli::cli_abort(
+          c(
+            x = "{.arg vars} and {.arg roles} must have same length.",
+            "*" = "{.arg vars} has length {length(vars)}",
+            "*" = "{.arg roles} has length {length(roles)}"
+          )
+        )
       }
       var_info$role <- roles
     } else {
@@ -204,7 +207,6 @@ recipe.data.frame <-
 #' @rdname recipe
 #' @export
 recipe.formula <- function(formula, data, ...) {
-
   if (rlang::is_missing(data)) {
     cli::cli_abort("{.arg data} is missing with no default.")
   }
@@ -227,10 +229,12 @@ recipe.formula <- function(formula, data, ...) {
   # check for minus:
   f_funcs <- fun_calls(formula, data)
   if (any(f_funcs == "-")) {
-    cli::cli_abort(c(
-      "x" = "{.code -} is not allowed in a recipe formula.",
-      "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "{.code -} is not allowed in a recipe formula.",
+        "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
+      )
+    )
   }
 
   if (is_sparse_matrix(data)) {
@@ -308,20 +312,22 @@ inline_check <- function(x, data, call) {
   funs <- funs[!(funs %in% c("~", "+", "-", "."))]
 
   if (length(funs) > 0) {
-    cli::cli_abort(c(
-      x = "Misspelled variable name or in-line functions detected.",
-      i = "{cli::qty(length(funs))}The following function{?s}/misspelling{?s} \\
+    cli::cli_abort(
+      c(
+        x = "Misspelled variable name or in-line functions detected.",
+        i = "{cli::qty(length(funs))}The following function{?s}/misspelling{?s} \\
           {?was/were} found: {.and {.code {funs}}}.",
-      i = "Use steps to do transformations instead.",
-      i = "If your modeling engine uses special terms in formulas, pass \\
+        i = "Use steps to do transformations instead.",
+        i = "If your modeling engine uses special terms in formulas, pass \\
           that formula to workflows as a \\
           {.help [model formula](parsnip::model_formula)}."
-    ), call = call)
+      ),
+      call = call
+    )
   }
 
   invisible(x)
 }
-
 
 #' Estimate a preprocessing recipe
 #'
@@ -409,14 +415,16 @@ prep <- function(x, ...) {
 #' @rdname prep
 #' @export
 prep.recipe <-
-  function(x,
-           training = NULL,
-           fresh = FALSE,
-           verbose = FALSE,
-           retain = TRUE,
-           log_changes = FALSE,
-           strings_as_factors = TRUE,
-           ...) {
+  function(
+    x,
+    training = NULL,
+    fresh = FALSE,
+    verbose = FALSE,
+    retain = TRUE,
+    log_changes = FALSE,
+    strings_as_factors = TRUE,
+    ...
+  ) {
     training <- validate_training_data(training, x, fresh)
 
     tr_data <- train_info(training)
@@ -442,19 +450,31 @@ prep.recipe <-
     }
 
     # Recalculate types of old recipes (>= 1.0.1) if possible and necessary
-    if (all(x$var_info$source == "original") &
-        inherits(x$var_info$type, "character")) {
+    if (
+      all(x$var_info$source == "original") &
+        inherits(x$var_info$type, "character")
+    ) {
       x$var_info <- x$var_info %>%
         dplyr::select(-type) %>%
-        dplyr::left_join(get_types(training), by = "variable", multiple = "all") %>%
+        dplyr::left_join(
+          get_types(training),
+          by = "variable",
+          multiple = "all"
+        ) %>%
         dplyr::select(variable, type, role, source)
     }
 
-    if (all(x$term_info$source == "original") &
-        inherits(x$term_info$type, "character")) {
+    if (
+      all(x$term_info$source == "original") &
+        inherits(x$term_info$type, "character")
+    ) {
       x$term_info <- x$term_info %>%
         dplyr::select(-type) %>%
-        dplyr::left_join(get_types(training), by = "variable", multiple = "all") %>%
+        dplyr::left_join(
+          get_types(training),
+          by = "variable",
+          multiple = "all"
+        ) %>%
         dplyr::select(variable, type, role, source)
     }
 
@@ -511,10 +531,7 @@ prep.recipe <-
         # then apply it to the current training set
         time <- proc.time()
         x$steps[[i]] <- recipes_error_context(
-          prep(x$steps[[i]],
-            training = training,
-            info = x$term_info
-          ),
+          prep(x$steps[[i]], training = training, info = x$term_info),
           step_name = step_name
         )
         prep_time <- proc.time() - time
@@ -532,11 +549,13 @@ prep.recipe <-
         )
 
         if (!is_tibble(training)) {
-          cli::cli_abort(c(
-            "x" = "{.fun bake} methods should always return tibbles.",
-            "i" = "{.fun {paste0('bake.', step_name)}} returned \\
+          cli::cli_abort(
+            c(
+              "x" = "{.fun bake} methods should always return tibbles.",
+              "i" = "{.fun {paste0('bake.', step_name)}} returned \\
                    {.obj_type_friendly {training}}."
-          ))
+            )
+          )
         }
         x$term_info <- merge_term_info(get_types(training), x$term_info)
 
@@ -599,16 +618,16 @@ prep.recipe <-
     # that variable was available.
     x$last_term_info <-
       running_info %>%
-      group_by(variable) %>%
-      arrange(desc(number)) %>%
-      summarise(
-        type = list(dplyr::first(type)),
-        role = list(unique(unlist(role))),
-        source = dplyr::first(source),
-        number = dplyr::first(number),
-        skip = dplyr::first(skip),
-        .groups = "keep"
-      )
+        group_by(variable) %>%
+        arrange(desc(number)) %>%
+        summarise(
+          type = list(dplyr::first(type)),
+          role = list(unique(unlist(role))),
+          source = dplyr::first(source),
+          number = dplyr::first(number),
+          skip = dplyr::first(skip),
+          .groups = "keep"
+        )
     x
   }
 
@@ -685,7 +704,6 @@ bake <- function(object, ...) {
   UseMethod("bake")
 }
 
-
 #' @rdname bake
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
@@ -701,17 +719,21 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   }
 
   if (!fully_trained(object)) {
-    cli::cli_abort(c(
-      "x" = "At least one step has not been trained.",
-      "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "At least one step has not been trained.",
+        "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
+      )
+    )
   }
 
   if (!any(composition == formats)) {
-    cli::cli_abort(c(
-      "x" = "{.arg composition} cannot be {.val {composition}}.",
-      "i" = "Allowed values are {.or {.val {formats}}}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "{.arg composition} cannot be {.val {composition}}.",
+        "i" = "Allowed values are {.or {.val {formats}}}."
+      )
+    )
   }
 
   terms <- quos(...)
@@ -755,11 +777,13 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     if (!is_tibble(new_data)) {
       step_name <- attr(step, "class")[1]
 
-      cli::cli_abort(c(
-        "x" = "{.fun bake} methods should always return tibbles.",
-        "i" = "{.fun {paste0('bake.', step_name)}} returned \\
+      cli::cli_abort(
+        c(
+          "x" = "{.fun bake} methods should always return tibbles.",
+          "i" = "{.fun {paste0('bake.', step_name)}} returned \\
                    {.obj_type_friendly {new_data}}."
-      ))
+        )
+      )
     }
   }
 
@@ -770,8 +794,12 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   info <- object$last_term_info
 
   # Now reduce to only user selected columns
-  out_names <- recipes_eval_select(terms, new_data, info,
-                                   check_case_weights = FALSE)
+  out_names <- recipes_eval_select(
+    terms,
+    new_data,
+    info,
+    check_case_weights = FALSE
+  )
   new_data <- new_data[, out_names]
 
   new_data <- turn_strings_to_factors(object, new_data)
@@ -840,8 +868,10 @@ print.recipe <- function(x, form_width = 30, ...) {
 
   cli::cli_text("Number of variables by role")
 
-  spaces_needed <- max(nchar(names(tab))) - nchar(names(tab)) +
-    max(nchar(tab)) - nchar(tab)
+  spaces_needed <- max(nchar(names(tab))) -
+    nchar(names(tab)) +
+    max(nchar(tab)) -
+    nchar(tab)
 
   cli::cli_verbatim(
     glue("{names(tab)}: {strrep('\ua0', spaces_needed)}{tab}")
@@ -862,7 +892,7 @@ print.recipe <- function(x, form_width = 30, ...) {
     cli::cli_h3("Operations")
   }
 
-    for (step in x$steps) {
+  for (step in x$steps) {
     print(step, form_width = form_width)
   }
   cli::cli_end()
@@ -920,11 +950,9 @@ bake_req_tibble <- function(x) {
   req <- compute_bake_role_requirements(x)
   req <-
     tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
-    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+      dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
   req
 }
-
-
 
 #' Extract transformed training set
 #'
@@ -954,10 +982,12 @@ bake_req_tibble <- function(x) {
 #' @seealso [recipe()] [prep()] [bake()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    cli::cli_abort(c(
-      "x" = "At least one step has not been trained.",
-      "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "At least one step has not been trained.",
+        "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
+      )
+    )
   }
 
   if (!isTRUE(object$retained)) {
@@ -968,10 +998,12 @@ juice <- function(object, ..., composition = "tibble") {
   }
 
   if (!any(composition == formats)) {
-    cli::cli_abort(c(
-      "x" = "{.arg composition} cannot be {.val {composition}}.",
-      "i" = "Allowed values are {.or {.val {formats}}}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "{.arg composition} cannot be {.val {composition}}.",
+        "i" = "Allowed values are {.or {.val {formats}}}."
+      )
+    )
   }
 
   terms <- quos(...)
@@ -981,8 +1013,12 @@ juice <- function(object, ..., composition = "tibble") {
 
   # Get user requested columns
   new_data <- object$template
-  out_names <- recipes_eval_select(terms, new_data, object$term_info,
-                                   check_case_weights = FALSE)
+  out_names <- recipes_eval_select(
+    terms,
+    new_data,
+    object$term_info,
+    check_case_weights = FALSE
+  )
   new_data <- new_data[, out_names]
 
   new_data <- turn_strings_to_factors(object, new_data)

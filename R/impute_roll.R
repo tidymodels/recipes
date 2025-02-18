@@ -79,16 +79,17 @@
 #' # The training set:
 #' bake(seven_pt, new_data = NULL)
 step_impute_roll <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           statistic = median,
-           window = 5L,
-           skip = FALSE,
-           id = rand_id("impute_roll")) {
-
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    statistic = median,
+    window = 5L,
+    skip = FALSE,
+    id = rand_id("impute_roll")
+  ) {
     add_step(
       recipe,
       step_impute_roll_new(

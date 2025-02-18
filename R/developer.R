@@ -116,10 +116,10 @@
 #' [recipes_remove_cols()] should be used in `prep.step_*()` functions, and is
 #' used to remove columns from the data set, either by using the
 #' `object$removals` field or by using the `col_names` argument.
-#' 
+#'
 #' [recipes_names_predictors()] and [recipes_names_outcomes()] should be used in
 #' `prep.step_*()` functions, and are used to get names of predictors and
-#' outcomes. 
+#' outcomes.
 #'
 #' [get_case_weights()] and [are_weights_used()] are functions that help you
 #' extract case weights and help determine if they are used or not within the
@@ -140,15 +140,15 @@
 #' # Interacting with recipe objects
 #'
 #' [recipes_ptype()] returns the ptype, expected variables and types, that a
-#' recipe object expects at `prep()` and `bake()` time. Controlled using the 
-#' `stage` argument. Can be used by functions that interact with recipes to 
+#' recipe object expects at `prep()` and `bake()` time. Controlled using the
+#' `stage` argument. Can be used by functions that interact with recipes to
 #' verify data is correct before passing it to `prep()` and `bake()`.
-#' 
+#'
 #' [recipes_ptype_validate()] checks that a recipe and its data are compatible
-#' using information extracted using [recipes_ptype()]. Can be used by functions 
-#' that interact with recipes to verify data is correct before passing it to 
+#' using information extracted using [recipes_ptype()]. Can be used by functions
+#' that interact with recipes to verify data is correct before passing it to
 #' `prep()` and `bake()`.
-#' 
+#'
 #' [detect_step()] returns a logical indicator to determine if a given step or
 #' check is included in a recipe.
 #'

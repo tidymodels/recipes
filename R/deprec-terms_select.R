@@ -4,7 +4,7 @@
 #' `r lifecycle::badge("deprecated")`
 #'
 #' Please use [recipes_eval_select()] instead.
-#' 
+#'
 #' @keywords internal
 #' @export
 terms_select <- function(terms, info, empty_fun = function(x) x) {

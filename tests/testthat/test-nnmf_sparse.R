@@ -5,7 +5,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$NNMF1 <- as.character(dat$mpg)
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_nnmf_sparse(all_numeric_predictors())
 
   expect_snapshot(
@@ -18,8 +18,12 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   skip_if_not_installed("RcppML")
   library(Matrix)
 
-  rec <- recipe(~ ., data = mtcars) %>%
-    step_nnmf_sparse(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
+  rec <- recipe(~., data = mtcars) %>%
+    step_nnmf_sparse(
+      all_predictors(),
+      num_comp = 0,
+      keep_original_cols = FALSE
+    ) %>%
     prep()
 
   res <- bake(rec, new_data = NULL)
@@ -39,7 +43,7 @@ test_that("rethrows error correctly from implementation", {
   )
   expect_snapshot(
     error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+    recipe(~., data = mtcars) %>%
       step_nnmf_sparse(all_predictors()) %>%
       prep()
   )
@@ -52,7 +56,7 @@ test_that("errors for missing data", {
 
   expect_snapshot(
     error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+    recipe(~., data = mtcars) %>%
       step_nnmf_sparse(all_predictors()) %>%
       prep()
   )
@@ -127,7 +131,7 @@ test_that("keep_original_cols works", {
   library(Matrix)
   new_names <- c("NNMF1")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_nnmf_sparse(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -138,7 +142,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_nnmf_sparse(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -153,7 +157,7 @@ test_that("keep_original_cols works", {
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("RcppML")
   library(Matrix)
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_nnmf_sparse(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -176,7 +180,6 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
-
 
 test_that("bad args", {
   skip_if_not_installed("RcppML")

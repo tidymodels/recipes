@@ -45,14 +45,16 @@
 #' data <- bake(rec, Sacramento)
 #' levels(data$city)
 step_relevel <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           ref_level,
-           objects = NULL,
-           skip = FALSE,
-           id = rand_id("relevel")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    ref_level,
+    objects = NULL,
+    skip = FALSE,
+    id = rand_id("relevel")
+  ) {
     add_step(
       recipe,
       step_relevel_new(
@@ -93,9 +95,7 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   order_check <- map_lgl(objects, attr, "is_ordered")
 
   # Check to make sure that the reference level exists in the factor
-  ref_check <- map_lgl(objects, function(x, y) !y %in% x,
-    y = x$ref_level
-  )
+  ref_check <- map_lgl(objects, function(x, y) !y %in% x, y = x$ref_level)
   if (any(ref_check)) {
     offenders <- names(order_check)[!order_check]
     cli::cli_abort(

@@ -61,17 +61,19 @@
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
 step_bs <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           deg_free = NULL,
-           degree = 3,
-           objects = NULL,
-           options = list(),
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("bs")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    deg_free = NULL,
+    degree = 3,
+    objects = NULL,
+    options = list(),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("bs")
+  ) {
     add_step(
       recipe,
       step_bs_new(
@@ -90,8 +92,18 @@ step_bs <-
   }
 
 step_bs_new <-
-  function(terms, role, trained, deg_free, degree, objects, options,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    deg_free,
+    degree,
+    objects,
+    options,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "bs",
       terms = terms,
@@ -116,7 +128,11 @@ bs_statistics <- function(x, args) {
 
   # This behaves differently from splines::bs() and splines::ns() if num_knots < 0L
   # the original implementations issue a warning.
-  if (!is.null(args$df) && is.null(args$knots) && args$df - degree - intercept >= 1L) {
+  if (
+    !is.null(args$df) &&
+      is.null(args$knots) &&
+      args$df - degree - intercept >= 1L
+  ) {
     num_knots <- args$df - degree - intercept
     ok <- !is.na(x) & x >= boundary[1L] & x <= boundary[2L]
     knots <- unname(quantile(x[ok], seq_len(num_knots) / (num_knots + 1L)))

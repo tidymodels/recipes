@@ -3,11 +3,11 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
-
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass_tr
 )
 
@@ -22,7 +22,6 @@ test_that("correct basis functions", {
   )
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
 
-
   with_poly <- prep(with_poly, training = biomass_tr, verbose = FALSE)
 
   expect_equal(exp_tidy_un, tidy(with_poly, number = 1))
@@ -35,14 +34,22 @@ test_that("correct basis functions", {
   carbon_poly_te_exp <- predict(carbon_poly_tr_exp, biomass_te$carbon)
   hydrogen_poly_te_exp <- predict(hydrogen_poly_tr_exp, biomass_te$hydrogen)
 
-  carbon_poly_tr_res <- as.matrix(with_poly_pred_tr[, grep("carbon", names(with_poly_pred_tr))])
+  carbon_poly_tr_res <- as.matrix(
+    with_poly_pred_tr[, grep("carbon", names(with_poly_pred_tr))]
+  )
   colnames(carbon_poly_tr_res) <- NULL
-  hydrogen_poly_tr_res <- as.matrix(with_poly_pred_tr[, grep("hydrogen", names(with_poly_pred_tr))])
+  hydrogen_poly_tr_res <- as.matrix(
+    with_poly_pred_tr[, grep("hydrogen", names(with_poly_pred_tr))]
+  )
   colnames(hydrogen_poly_tr_res) <- NULL
 
-  carbon_poly_te_res <- as.matrix(with_poly_pred_te[, grep("carbon", names(with_poly_pred_te))])
+  carbon_poly_te_res <- as.matrix(
+    with_poly_pred_te[, grep("carbon", names(with_poly_pred_te))]
+  )
   colnames(carbon_poly_te_res) <- 1:ncol(carbon_poly_te_res)
-  hydrogen_poly_te_res <- as.matrix(with_poly_pred_te[, grep("hydrogen", names(with_poly_pred_te))])
+  hydrogen_poly_te_res <- as.matrix(
+    with_poly_pred_te[, grep("hydrogen", names(with_poly_pred_te))]
+  )
   colnames(hydrogen_poly_te_res) <- 1:ncol(hydrogen_poly_te_res)
 
   ## remove attributes
@@ -65,7 +72,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_poly_1 <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_poly(mpg)
 
   expect_snapshot(
@@ -77,7 +84,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_poly(all_predictors())
+      step_poly(all_predictors())
   rec_param <- tunable.step_poly(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -93,13 +100,18 @@ test_that("old option argument", {
   expect_snapshot(
     res <-
       recipe(~., data = iris) %>%
-      step_poly(Sepal.Width, options = list(degree = 3)) %>%
-      prep() %>%
-      bake(new_data = NULL)
+        step_poly(Sepal.Width, options = list(degree = 3)) %>%
+        prep() %>%
+        bake(new_data = NULL)
   )
   exp_names <- c(
-    "Sepal.Length", "Petal.Length", "Petal.Width", "Species",
-    "Sepal.Width_poly_1", "Sepal.Width_poly_2", "Sepal.Width_poly_3"
+    "Sepal.Length",
+    "Petal.Length",
+    "Petal.Width",
+    "Species",
+    "Sepal.Width_poly_1",
+    "Sepal.Width_poly_2",
+    "Sepal.Width_poly_3"
   )
   expect_equal(
     names(res),
@@ -166,7 +178,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_poly_1", "mpg_poly_2")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_poly(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -177,7 +189,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_poly(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -190,7 +202,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_poly(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -205,8 +217,10 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr) %>%
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass_tr
+  ) %>%
     step_poly(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -228,12 +242,10 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 })
 
 test_that("bad args", {
-
   expect_snapshot(
     recipe(mpg ~ ., data = mtcars) %>%
       step_poly(disp, degree = 0) %>%
       prep(),
     error = TRUE
   )
-
 })

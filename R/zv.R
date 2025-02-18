@@ -55,14 +55,16 @@
 #' tidy(zv_filter, number = 1)
 #' tidy(filter_obj, number = 1)
 step_zv <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           group = NULL,
-           removals = NULL,
-           skip = FALSE,
-           id = rand_id("zv")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    group = NULL,
+    removals = NULL,
+    skip = FALSE,
+    id = rand_id("zv")
+  ) {
     add_step(
       recipe,
       step_zv_new(
@@ -145,7 +147,6 @@ print.step_zv <-
     print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

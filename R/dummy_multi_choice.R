@@ -76,20 +76,21 @@
 #' tidy(dummy_multi_choice_rec2, number = 1)
 #'
 #' @export
-step_dummy_multi_choice <- function(recipe,
-                                    ...,
-                                    role = "predictor",
-                                    trained = FALSE,
-                                    threshold = 0,
-                                    levels = NULL,
-                                    input = NULL,
-                                    other = "other",
-                                    naming = dummy_names,
-                                    prefix = NULL,
-                                    keep_original_cols = FALSE,
-                                    skip = FALSE,
-                                    id = rand_id("dummy_multi_choice")) {
-
+step_dummy_multi_choice <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  threshold = 0,
+  levels = NULL,
+  input = NULL,
+  other = "other",
+  naming = dummy_names,
+  prefix = NULL,
+  keep_original_cols = FALSE,
+  skip = FALSE,
+  id = rand_id("dummy_multi_choice")
+) {
   add_step(
     recipe,
     step_dummy_multi_choice_new(
@@ -110,8 +111,20 @@ step_dummy_multi_choice <- function(recipe,
 }
 
 step_dummy_multi_choice_new <-
-  function(terms, role, trained, threshold, levels, input, other, naming,
-           prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    threshold,
+    levels,
+    input,
+    other,
+    naming,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "dummy_multi_choice",
       terms = terms,
@@ -142,7 +155,11 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
 
   levels <- purrr::map(training[, col_names], levels)
-  levels <- vctrs::list_unchop(levels, ptype = character(), name_spec = rlang::zap())
+  levels <- vctrs::list_unchop(
+    levels,
+    ptype = character(),
+    name_spec = rlang::zap()
+  )
   levels <- levels[!is.na(levels)]
   levels <- keep_levels(levels, x$threshold, other = x$other)
 
@@ -200,7 +217,6 @@ multi_dummy <- function(x, y) {
 
   row_id <- row_id[!is.na(values)]
   values <- values[!is.na(values)]
-
 
   original_levels <- c(y$keep, y$other)
 

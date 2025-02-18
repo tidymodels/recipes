@@ -1,4 +1,3 @@
-
 test_that("basic usage", {
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
@@ -88,10 +87,10 @@ test_that("quasiquotation", {
 
   rec_1 <-
     recipe(~., data = iris_train) %>%
-    step_select(all_of(sepal_vars))
+      step_select(all_of(sepal_vars))
   rec_2 <-
     recipe(~., data = iris_train) %>%
-    step_select(all_of(!!sepal_vars))
+      step_select(all_of(!!sepal_vars))
 
   # both work when local variable is available
   prepped_1 <- prep(rec_1, training = iris_train)
@@ -116,7 +115,9 @@ test_that("tidying", {
   set.seed(403)
   rec <- recipe(~., data = iris) %>%
     step_select(
-      species = Species, starts_with("Sepal"), all_of(petal),
+      species = Species,
+      starts_with("Sepal"),
+      all_of(petal),
       id = "select_no_qq"
     ) %>%
     step_select(all_of(!!petal), id = "select_qq")

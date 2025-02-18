@@ -10,7 +10,7 @@ in_test <- 1:200
 sacr_tr <- Sacramento[-in_test, ]
 sacr_te <- Sacramento[in_test, ]
 
-rec <- recipe(~ city + zip, data = sacr_tr)
+rec <- recipe(~city + zip, data = sacr_tr)
 
 # assume no novel levels here but test later:
 # all(sort(unique(sacr_tr$zip)) == sort(unique(Sacramento$zip)))
@@ -67,7 +67,6 @@ test_that("default inputs", {
   expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
 })
 
-
 test_that("high threshold - much removals", {
   others <- rec %>% step_other(city, zip, threshold = .5)
   others <- prep(others, training = sacr_tr)
@@ -103,7 +102,6 @@ test_that("high threshold - much removals", {
   expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
 })
 
-
 test_that("low threshold - no removals", {
   sacr_te_chr <- sacr_te
 
@@ -132,7 +130,6 @@ test_that("zero threshold - no removals", {
   expect_equal(as.character(sacr_te_chr$zip), as.character(others_te$zip))
 })
 
-
 test_that("factor inputs", {
   Sacramento$city <- as.factor(Sacramento$city)
   Sacramento$zip <- as.factor(Sacramento$zip)
@@ -140,7 +137,7 @@ test_that("factor inputs", {
   sacr_tr <- Sacramento[-in_test, ]
   sacr_te <- Sacramento[in_test, ]
 
-  rec <- recipe(~ city + zip, data = sacr_tr)
+  rec <- recipe(~city + zip, data = sacr_tr)
 
   others <- rec %>% step_other(city, zip)
   others <- prep(others, training = sacr_tr)
@@ -178,13 +175,30 @@ test_that("factor inputs", {
   expect_equal(is.na(sacr_te$zip), is.na(others_te$zip))
 })
 
-
 test_that("novel levels", {
   df <- data.frame(
     y = c(1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0),
     x1 = c(
-      "A", "B", "B", "B", "B", "A", "A", "A", "B", "A", "A", "B",
-      "A", "C", "C", "B", "A", "B", "C", "D"
+      "A",
+      "B",
+      "B",
+      "B",
+      "B",
+      "A",
+      "A",
+      "A",
+      "B",
+      "A",
+      "A",
+      "B",
+      "A",
+      "C",
+      "C",
+      "B",
+      "A",
+      "B",
+      "C",
+      "D"
     ),
     stringsAsFactors = FALSE
   )
@@ -231,84 +245,75 @@ test_that("'other' already in use", {
 
   sacr_tr_chr$city[1] <- "other"
 
-  rec <- recipe(~ city + zip, data = sacr_tr_chr)
+  rec <- recipe(~city + zip, data = sacr_tr_chr)
 
   others <- rec %>% step_other(city, zip, threshold = 10^-10)
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     prep(others, training = sacr_tr_chr, strings_as_factors = FALSE)
   )
 })
 
-test_that(
-  desc = "if threshold argument is an integer greater than one
-          then it's treated as a frequency",
-  code = {
-    others <- rec %>% step_other(city, zip, threshold = 80, other = "another", id = "")
+test_that(desc = "if threshold argument is an integer greater than one
+          then it's treated as a frequency", code = {
+  others <- rec %>%
+    step_other(city, zip, threshold = 80, other = "another", id = "")
 
-    tidy_exp_un <- tibble(
-      terms = c("city", "zip"),
-      retained = rep(NA_character_, 2),
-      id = ""
-    )
+  tidy_exp_un <- tibble(
+    terms = c("city", "zip"),
+    retained = rep(NA_character_, 2),
+    id = ""
+  )
 
-    expect_equal(tidy_exp_un, tidy(others, number = 1))
+  expect_equal(tidy_exp_un, tidy(others, number = 1))
 
-    others <- prep(others, training = sacr_tr)
+  others <- prep(others, training = sacr_tr)
 
-    tidy_exp_tr <- tibble(
-      terms = c("city", "zip"),
-      retained = c("SACRAMENTO", "z95823"),
-      id = ""
-    )
-    expect_equal(tidy_exp_tr, tidy(others, number = 1))
-  }
-)
+  tidy_exp_tr <- tibble(
+    terms = c("city", "zip"),
+    retained = c("SACRAMENTO", "z95823"),
+    id = ""
+  )
+  expect_equal(tidy_exp_tr, tidy(others, number = 1))
+})
 
-test_that(
-  desc = "if the threshold argument is greather than one then it should be an integer(ish)",
-  code = {
-    expect_snapshot(error = TRUE,
-      rec %>% step_other(city, zip, threshold = 3.14) %>% prep()
-    )
-  }
-)
+test_that(desc = "if the threshold argument is greather than one then it should be an integer(ish)", code = {
+  expect_snapshot(
+    error = TRUE,
+    rec %>% step_other(city, zip, threshold = 3.14) %>% prep()
+  )
+})
 
-test_that(
-  desc = "bad values of threshold are treated correctly",
-  code = {
-    expect_snapshot(error = TRUE,
-      rec %>% step_other(city, zip, threshold = letters) %>% prep()
-    )
-  }
-)
+test_that(desc = "bad values of threshold are treated correctly", code = {
+  expect_snapshot(
+    error = TRUE,
+    rec %>% step_other(city, zip, threshold = letters) %>% prep()
+  )
+})
 
-test_that(
-  desc = "if threshold is equal to 1 then the function removes every factor
-          level that is not present in the data",
-  code = {
-    fake_data <- data.frame(
-      test_factor = factor(c("A", "B"), levels = c("A", "B", "C"))
-    )
+test_that(desc = "if threshold is equal to 1 then the function removes every factor
+          level that is not present in the data", code = {
+  fake_data <- data.frame(
+    test_factor = factor(c("A", "B"), levels = c("A", "B", "C"))
+  )
 
-    rec <- recipe(~test_factor, data = fake_data)
-    others <- rec %>%
-      step_other(test_factor, threshold = 1, id = "") %>%
-      prep()
+  rec <- recipe(~test_factor, data = fake_data)
+  others <- rec %>%
+    step_other(test_factor, threshold = 1, id = "") %>%
+    prep()
 
-    tidy_exp_tr <- tibble(
-      terms = rep("test_factor", 2),
-      retained = c("A", "B"),
-      id = ""
-    )
-    expect_equal(tidy_exp_tr, tidy(others, number = 1))
-  }
-)
-
+  tidy_exp_tr <- tibble(
+    terms = rep("test_factor", 2),
+    retained = c("A", "B"),
+    id = ""
+  )
+  expect_equal(tidy_exp_tr, tidy(others, number = 1))
+})
 
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_other(all_predictors())
+      step_other(all_predictors())
   rec_param <- tunable.step_other(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -344,9 +349,13 @@ test_that("othering with case weights", {
     mutate(sqft = frequency_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
-      step_other(city, other = "another", id = "",
-                 threshold = weighted_props$prop[n_cols])
+    others <- recipe(~city + sqft, data = sacr_tr_caseweights) %>%
+      step_other(
+        city,
+        other = "another",
+        id = "",
+        threshold = weighted_props$prop[n_cols]
+      )
 
     others <- prep(others, training = sacr_tr_caseweights)
     expect_equal(n_cols, nrow(tidy(others, number = 1)))
@@ -363,9 +372,13 @@ test_that("othering with case weights", {
     mutate(sqft = importance_weights(sqft))
 
   for (n_cols in 1:5) {
-    others <- recipe(~ city + sqft, data = sacr_tr_caseweights) %>%
-      step_other(city, other = "another", id = "",
-                 threshold = unweighted_props$prop[n_cols])
+    others <- recipe(~city + sqft, data = sacr_tr_caseweights) %>%
+      step_other(
+        city,
+        other = "another",
+        id = "",
+        threshold = unweighted_props$prop[n_cols]
+      )
 
     others <- prep(others, training = sacr_tr_caseweights)
     expect_equal(n_cols, nrow(tidy(others, number = 1)))
@@ -377,7 +390,8 @@ test_that("othering with case weights", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  others <- rec %>% step_other(city, zip, other = "another", id = "") %>%
+  others <- rec %>%
+    step_other(city, zip, other = "another", id = "") %>%
     update_role(city, zip, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
@@ -420,7 +434,11 @@ test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_other(rec)
 
-  expect <- tibble(terms = character(), retained = character(), id = character())
+  expect <- tibble(
+    terms = character(),
+    retained = character(),
+    id = character()
+  )
 
   expect_identical(tidy(rec, number = 1), expect)
 
@@ -430,7 +448,7 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~ city + zip, data = sacr_tr) %>%
+  rec <- recipe(~city + zip, data = sacr_tr) %>%
     step_other(city, zip)
 
   expect_snapshot(print(rec))

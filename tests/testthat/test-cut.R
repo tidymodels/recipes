@@ -1,13 +1,16 @@
 test_that("step_cut throws error on non-numerics", {
   x <- tibble(num_var = 1:3, cat_var = c("1", "2", "3"))
   expect_no_error(recipe(x) %>% step_cut(num_var, breaks = 2) %>% prep())
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(x) %>% step_cut(cat_var, breaks = 2) %>% prep()
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., x) %>% step_cut(all_predictors(), breaks = 2) %>% prep()
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., x) %>%
       step_cut(num_var, breaks = 2, include_outside_range = 2) %>%
       prep()
@@ -33,9 +36,7 @@ test_that("create_full_breaks helper function", {
 })
 
 test_that("full_breaks_check will give warnings", {
-  expect_snapshot(error = TRUE,
-    full_breaks_check(10)
-  )
+  expect_snapshot(error = TRUE, full_breaks_check(10))
   expect_snapshot(
     full_breaks_check(c(10, 20))
   )
@@ -50,21 +51,24 @@ test_that("cut_var gives correct output", {
 
   expect_equal(
     cut_var(var1, breaks, TRUE),
-    factor(rep(c("[min,5]", "(5,max]"), each = 5),
+    factor(
+      rep(c("[min,5]", "(5,max]"), each = 5),
       levels = c("[min,5]", "(5,max]")
     )
   )
 
   expect_equal(
     cut_var(var2, breaks, TRUE),
-    factor(rep(c("[min,5]", "(5,max]"), c(4, 6)),
+    factor(
+      rep(c("[min,5]", "(5,max]"), c(4, 6)),
       levels = c("[min,5]", "(5,max]")
     )
   )
 
   expect_equal(
     cut_var(var2, breaks, FALSE),
-    factor(c(rep(c("[1,5]", "(5,10]"), c(4, 5)), NA),
+    factor(
+      c(rep(c("[1,5]", "(5,10]"), c(4, 5)), NA),
       levels = c("[1,5]", "(5,10]")
     )
   )
@@ -74,10 +78,12 @@ test_that("adjust_levels_min_max gives correct output", {
   f1 <- cut(c(3, 5, 9), c(1, 4, 7, 10), include.lowest = TRUE)
   f2 <- cut(c(3, 5, 9), c(1, 7, 10), include.lowest = TRUE)
   f3 <- cut(c(3, 5, 9), c(1, 10), include.lowest = TRUE)
-  f1_res <- factor(c("[min,4]", "(4,7]", "(7,max]"),
+  f1_res <- factor(
+    c("[min,4]", "(4,7]", "(7,max]"),
     levels = c("[min,4]", "(4,7]", "(7,max]")
   )
-  f2_res <- factor(c("[min,7]", "[min,7]", "(7,max]"),
+  f2_res <- factor(
+    c("[min,7]", "[min,7]", "(7,max]"),
     levels = c("[min,7]", "(7,max]")
   )
   f3_res <- factor(rep("[min,max]", 3))
@@ -97,9 +103,7 @@ test_that("step_cut integration test", {
       prep() %>%
       bake(tb) %>%
       pull(x),
-    factor(c("[2,5]", "[2,5]", "(5,7]"),
-      levels = c("[2,5]", "(5,7]")
-    )
+    factor(c("[2,5]", "[2,5]", "(5,7]"), levels = c("[2,5]", "(5,7]"))
   )
 
   expect_equal(
@@ -108,16 +112,19 @@ test_that("step_cut integration test", {
       prep() %>%
       bake(tb) %>%
       pull(y),
-    factor(c("[1,3]", "(3,9]", "(9,12]"),
+    factor(
+      c("[1,3]", "(3,9]", "(9,12]"),
       levels = c("[1,3]", "(3,9]", "(9,12]")
     )
   )
 
   result <- tibble(
-    x = factor(c("[2,4]", "(4,6]", "(6,7]"),
+    x = factor(
+      c("[2,4]", "(4,6]", "(6,7]"),
       levels = c("[2,4]", "(4,6]", "(6,7]")
     ),
-    y = factor(c("[1,4]", "(6,12]", "(6,12]"),
+    y = factor(
+      c("[1,4]", "(6,12]", "(6,12]"),
       levels = c("[1,4]", "(4,6]", "(6,12]")
     )
   )
@@ -136,9 +143,7 @@ test_that("step_cut integration test", {
       prep() %>%
       bake(tb2) %>%
       pull(x),
-    factor(c("[min,5]", "(5,max]"),
-      levels = c("[min,5]", "(5,max]")
-    )
+    factor(c("[min,5]", "(5,max]"), levels = c("[min,5]", "(5,max]"))
   )
 
   expect_equal(
@@ -147,9 +152,7 @@ test_that("step_cut integration test", {
       prep() %>%
       bake(tb3) %>%
       pull(x),
-    factor(c("[min,5]", "(5,max]"),
-      levels = c("[min,5]", "(5,max]")
-    )
+    factor(c("[min,5]", "(5,max]"), levels = c("[min,5]", "(5,max]"))
   )
 })
 
@@ -166,8 +169,14 @@ test_that("tidy method works", {
   )
 
   expect_identical(
-    c(min(mtcars$disp), 200, max(mtcars$disp),
-      min(mtcars$hp), 200, max(mtcars$hp)),
+    c(
+      min(mtcars$disp),
+      200,
+      max(mtcars$disp),
+      min(mtcars$hp),
+      200,
+      max(mtcars$hp)
+    ),
     res$value
   )
 })
@@ -178,7 +187,7 @@ test_that("step_cut() provides informative error on missing values", {
   mtcars_with_na[1, "mpg"] <- NA
 
   expect_warning(
-    recipe(~ ., data = mtcars_with_na) %>%
+    recipe(~., data = mtcars_with_na) %>%
       step_cut(mpg, breaks = 20) %>%
       prep()
   )
@@ -188,7 +197,7 @@ test_that("step_cut() provides informative error on missing values", {
   mtcars_with_nas[c(1, 3, 5), "mpg"] <- NA
 
   expect_warning(
-    recipe(~ ., data = mtcars_with_nas) %>%
+    recipe(~., data = mtcars_with_nas) %>%
       step_cut(mpg, breaks = 20) %>%
       prep()
   )
@@ -209,7 +218,6 @@ test_that("breaks argument are type checked", {
       prep()
   )
 })
-
 
 # Infrastructure ---------------------------------------------------------------
 
@@ -272,5 +280,3 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
-
-

@@ -37,7 +37,8 @@ test_that("default lag works on a single feature", {
   expect_equal(baked, expected)
 
   # errors out on non-integer lag
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     prepped_rec <- recipe(~., data = df) %>%
       step_lag(x, lag = 0.5) %>%
       prep(df)
@@ -91,7 +92,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec <- recipe(~., data = df) %>%
     step_lag(t, lag = 2) %>%
     update_role(t, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)%>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(df)
 
   expect_snapshot(error = TRUE, bake(rec, new_data = df[, 1, drop = FALSE]))
@@ -137,7 +138,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("lag_1_mpg")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_lag(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -148,7 +149,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_lag(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -161,7 +162,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_lag(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL

@@ -11,7 +11,6 @@ dat <- data.frame(
   y = runif(n)
 )
 
-
 ratios <- function(x) {
   tab <- sort(table(x), decreasing = TRUE)
   if (length(tab) > 1) {
@@ -21,7 +20,9 @@ ratios <- function(x) {
   }
 }
 
-pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) / nrow(dat) * 100
+pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) /
+  nrow(dat) *
+  100
 f_ratio <- vapply(dat[, -5], ratios, c(val = 0))
 vars <- names(pct_uni)
 
@@ -68,8 +69,9 @@ test_that("altered freq_cut and unique_cut", {
 })
 
 test_that("Deprecation warning", {
-  expect_snapshot(error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
       step_nzv(options = list(freq_cut = 95 / 5, unique_cut = 20))
   )
 })
@@ -77,7 +79,7 @@ test_that("Deprecation warning", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_nzv(all_predictors())
+      step_nzv(all_predictors())
   rec_param <- tunable.step_nzv(rec$steps[[1]])
   expect_equal(rec_param$name, c("freq_cut", "unique_cut"))
   expect_true(all(rec_param$source == "recipe"))
@@ -238,7 +240,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   rec <- recipe(~., data = mtcars) %>%
     step_nzv(
       all_predictors(),
-      freq_cut = hardhat::tune(), unique_cut = hardhat::tune()
+      freq_cut = hardhat::tune(),
+      unique_cut = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)
@@ -248,7 +251,6 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 })
 
 test_that("bad args", {
-
   expect_snapshot(
     recipe(y ~ ., data = dat) %>%
       step_nzv(x1, freq_cut = -1) %>%

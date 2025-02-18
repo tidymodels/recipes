@@ -48,16 +48,17 @@
 #' tidy(cos_trans, number = 1)
 #' tidy(cos_obj, number = 1)
 step_hyperbolic <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           func = c("sinh", "cosh", "tanh"),
-           inverse = TRUE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("hyperbolic")) {
-
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    func = c("sinh", "cosh", "tanh"),
+    inverse = TRUE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("hyperbolic")
+  ) {
     if (!is_tune(func)) {
       func <- rlang::arg_match(func)
     }
@@ -96,7 +97,11 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
   func <- x$func
-  x$func <- rlang::arg_match(func, c("sinh", "cosh", "tanh"), error_arg = "func")
+  x$func <- rlang::arg_match(
+    func,
+    c("sinh", "cosh", "tanh"),
+    error_arg = "func"
+  )
   check_bool(x$inverse, error_arg = "inverse")
 
   step_hyperbolic_new(

@@ -67,12 +67,15 @@
 #'   step_filter(Sepal.Length > 4.5, Species %in% !!values)
 #'
 #' tidy(qq_rec, number = 1)
-step_filter <- function(recipe, ...,
-                        role = NA,
-                        trained = FALSE,
-                        inputs = NULL,
-                        skip = TRUE,
-                        id = rand_id("filter")) {
+step_filter <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = TRUE,
+  id = rand_id("filter")
+) {
   inputs <- enquos(...)
 
   add_step(

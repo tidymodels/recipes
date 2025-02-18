@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-
 test_that("is trained?", {
   rec1 <- recipe(~., data = iris)
   expect_false(fully_trained(rec1))
@@ -28,7 +27,9 @@ test_that("formulas", {
   rec6 <- recipe(Species ~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec6),
-    as.formula(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width),
+    as.formula(
+      Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width
+    ),
     ignore_formula_env = TRUE
   )
 
@@ -44,14 +45,18 @@ test_that("formulas", {
   rec8 <- recipe(~., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec8),
-    as.formula(~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species),
+    as.formula(
+      ~Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species
+    ),
     ignore_formula_env = TRUE
   )
 
   rec9 <- recipe(Species + Sepal.Length ~ ., data = iris) %>% prep(iris)
   expect_equal(
     formula(rec9),
-    as.formula(Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width),
+    as.formula(
+      Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
+    ),
     ignore_formula_env = TRUE
   )
 })

@@ -93,20 +93,21 @@
 #'
 #' dummies_data_color
 step_dummy_extract <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           sep = NULL,
-           pattern = NULL,
-           threshold = 0.0,
-           other = "other",
-           naming = dummy_extract_names,
-           levels = NULL,
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("dummy_extract")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    sep = NULL,
+    pattern = NULL,
+    threshold = 0.0,
+    other = "other",
+    naming = dummy_extract_names,
+    levels = NULL,
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("dummy_extract")
+  ) {
     add_step(
       recipe,
       step_dummy_extract_new(
@@ -128,8 +129,21 @@ step_dummy_extract <-
   }
 
 step_dummy_extract_new <-
-  function(terms, role, trained, sep, pattern, threshold, other, naming, levels,
-           keep_original_cols, skip, id, case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    sep,
+    pattern,
+    threshold,
+    other,
+    naming,
+    levels,
+    keep_original_cols,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "dummy_extract",
       terms = terms,
@@ -174,7 +188,8 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     for (col_name in col_names) {
       elements <- dummy_extract(
         training[[col_name]],
-        sep = x$sep, pattern = x$pattern
+        sep = x$sep,
+        pattern = x$pattern
       )
 
       lvls <- map(elements, unique)
@@ -239,7 +254,8 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
   for (col_name in col_names) {
     elements <- dummy_extract(
       new_data[[col_name]],
-      sep = object$sep, pattern = object$pattern
+      sep = object$sep,
+      pattern = object$pattern
     )
 
     indicators <- list_to_dummies(
@@ -284,7 +300,8 @@ list_to_dummies <- function(x, dict, other = "other") {
   j[is.na(j)] <- length(dict)
 
   out <- Matrix::sparseMatrix(
-    i = i, j = j,
+    i = i,
+    j = j,
     dims = c(length(x), length(dict)),
     x = 1
   )
@@ -298,8 +315,14 @@ list_to_dummies <- function(x, dict, other = "other") {
 print.step_dummy_extract <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Extract patterns from "
-    print_step(names(x$levels), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$levels),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
@@ -308,7 +331,7 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map(x$levels, ~ tibble(columns = .x), FALSE)
+      res <- purrr::map(x$levels, ~tibble(columns = .x), FALSE)
       res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())

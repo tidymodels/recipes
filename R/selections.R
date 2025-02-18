@@ -175,8 +175,15 @@ NULL
 #' quos <- quos(all_numeric_predictors(), where(is.factor))
 #'
 #' recipes_eval_select(quos, scat, info)
-recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
-                                check_case_weights = TRUE, call = caller_env()) {
+recipes_eval_select <- function(
+  quos,
+  data,
+  info,
+  ...,
+  allow_rename = FALSE,
+  check_case_weights = TRUE,
+  call = caller_env()
+) {
   check_dots_empty()
 
   if (rlang::is_missing(quos)) {
@@ -185,7 +192,11 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
-  matches <- vctrs::vec_locate_matches(names(data), info$variable, no_match = "error")
+  matches <- vctrs::vec_locate_matches(
+    names(data),
+    info$variable,
+    no_match = "error"
+  )
   data_info <- vec_slice(info, matches$haystack)
 
   data_nest <- data_info[names(data_info) != "variable"]
@@ -193,7 +204,10 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 
   nested_info <- vctrs::vec_split(data_nest, by = data_info$variable)
   nested_info <- list(variable = nested_info$key, data = nested_info$val)
-  nested_info <- tibble::new_tibble(nested_info, nrow = length(nested_info$variable))
+  nested_info <- tibble::new_tibble(
+    nested_info,
+    nrow = length(nested_info$variable)
+  )
 
   local_current_info(nested_info)
 
@@ -207,7 +221,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
       "The following argument{?s} {?was/were} specified but do{?es/} not exist: \\
       {.arg {offenders}}.",
       call = call
-  )
+    )
   }
 
   sel <- tidyselect::eval_select(
@@ -223,8 +237,10 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
   out <- names(data)[sel]
   names <- names(sel)
 
-  if (check_case_weights &&
-      any(out %in% info$variable[info$role == "case_weights"])) {
+  if (
+    check_case_weights &&
+      any(out %in% info$variable[info$role == "case_weights"])
+  ) {
     cli::cli_abort("Cannot select case weights variable.", call = call)
   }
 
@@ -300,7 +316,7 @@ recipes_eval_select <- function(quos, data, info, ..., allow_rename = FALSE,
 has_role <- function(match = "predictor") {
   roles <- peek_roles()
   # roles is potentially a list columns so we unlist `.x` below.
-  lgl_matches <- purrr::map_lgl(roles, ~ any(unlist(.x) %in% match))
+  lgl_matches <- purrr::map_lgl(roles, ~any(unlist(.x) %in% match))
   which(lgl_matches)
 }
 
@@ -308,7 +324,7 @@ has_role <- function(match = "predictor") {
 #' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
-  lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
+  lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
   which(lgl_matches)
 }
 
@@ -322,7 +338,7 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~ unlist(.x[[col]]))
+  purrr::map(.data, ~unlist(.x[[col]]))
 }
 
 #' @export

@@ -48,7 +48,7 @@ test_that("Remove all columns with missing data", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_filter_missing(all_predictors())
+      step_filter_missing(all_predictors())
   rec_param <- tunable.step_filter_missing(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -162,14 +162,11 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 1L)
 })
 
-
 test_that("bad args", {
-
   expect_snapshot(
     recipe(~., data = dat) %>%
       step_filter_missing(all_predictors(), threshold = -.2) %>%
       prep(),
     error = TRUE
   )
-
 })

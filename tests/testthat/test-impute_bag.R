@@ -4,17 +4,23 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
-biomass$fac <- factor(sample(letters[1:2], size = nrow(biomass), replace = TRUE))
+biomass$fac <- factor(
+  sample(letters[1:2], size = nrow(biomass), replace = TRUE)
+)
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
   data = biomass
 )
 
 test_that("imputation models", {
   imputed <- rec %>%
-    step_impute_bag(carbon, fac,
+    step_impute_bag(
+      carbon,
+      fac,
       impute_with = imp_vars(hydrogen, oxygen),
-      seed_val = 12, trees = 5
+      seed_val = 12,
+      trees = 5
     )
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
@@ -28,7 +34,8 @@ test_that("imputation models", {
   )
   for (i in seq_along(carb_samps)) {
     carb_data <- biomass[carb_samps[[i]], c("carbon", "hydrogen", "oxygen")]
-    carb_mod <- rpart::rpart(carbon ~ .,
+    carb_mod <- rpart::rpart(
+      carbon ~ .,
       data = carb_data,
       control = rpart::rpart.control(xval = 0)
     )
@@ -43,7 +50,9 @@ test_that("imputation models", {
     function(x) x$bindx
   )
 
-  fac_ctrl <- imputed_trained$steps[[1]]$models[["fac"]]$mtrees[[1]]$btree$control
+  fac_ctrl <- imputed_trained$steps[[1]]$models[["fac"]]$mtrees[[
+    1
+  ]]$btree$control
 
   ## make sure we get the same trees given the same random samples
   for (i in seq_along(fac_samps)) {
@@ -73,12 +82,14 @@ test_that("imputation models", {
   expect_equal(tidy(imputed_trained, 1)$model, imp_tibble_tr$model)
 })
 
-
 test_that("All NA values", {
   imputed <- rec %>%
-    step_impute_bag(carbon, fac,
+    step_impute_bag(
+      carbon,
+      fac,
       impute_with = imp_vars(hydrogen, oxygen),
-      seed_val = 12, trees = 5
+      seed_val = 12,
+      trees = 5
     ) %>%
     prep(biomass)
 
@@ -89,7 +100,10 @@ test_that("All NA values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_impute_bag(all_predictors(), impute_with = imp_vars(all_predictors()))
+      step_impute_bag(
+        all_predictors(),
+        impute_with = imp_vars(all_predictors())
+      )
   rec_param <- tunable.step_impute_bag(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))
   expect_true(all(rec_param$source == "recipe"))
@@ -107,8 +121,8 @@ test_that("non-factor imputation", {
   scat$Location[1] <- NA
   rec <-
     recipe(Species ~ ., data = scat) %>%
-    step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
-    prep(strings_as_factors = FALSE)
+      step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
+      prep(strings_as_factors = FALSE)
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 
@@ -134,9 +148,12 @@ test_that("impute_with errors with nothing selected", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   imputed <- rec %>%
-    step_impute_bag(carbon, fac,
-                    impute_with = imp_vars(hydrogen, oxygen),
-                    seed_val = 12, trees = 5
+    step_impute_bag(
+      carbon,
+      fac,
+      impute_with = imp_vars(hydrogen, oxygen),
+      seed_val = 12,
+      trees = 5
     ) %>%
     update_role(carbon, fac, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
@@ -187,8 +204,10 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
-                    data = biomass) %>%
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
+    data = biomass
+  ) %>%
     step_impute_bag(carbon, impute_with = imp_vars(hydrogen))
 
   expect_snapshot(print(rec))
@@ -209,9 +228,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 1L)
 })
 
-
 test_that("bad args", {
-
   expect_snapshot(
     recipe(~., data = mtcars) %>%
       step_impute_bag(
@@ -231,4 +248,3 @@ test_that("bad args", {
     error = TRUE
   )
 })
-

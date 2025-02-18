@@ -22,7 +22,6 @@ test_that("simple log trans", {
   expect_equal(rec_trans, exp_res)
 })
 
-
 test_that("alt base", {
   rec <- recipe(~., data = ex_dat) %>%
     step_log(x1, x2, x3, x4, base = pi)
@@ -117,7 +116,6 @@ test_that("printing", {
 })
 
 test_that("bad args", {
-
   expect_snapshot(
     recipe(~., data = ex_dat) %>%
       step_log(x1, base = -1) %>%

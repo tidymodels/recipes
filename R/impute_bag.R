@@ -116,17 +116,19 @@
 #' tidy(imp_models, number = 1)
 #' }
 step_impute_bag <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           trees = 25,
-           models = NULL,
-           options = list(keepX = FALSE),
-           seed_val = sample.int(10^4, 1),
-           skip = FALSE,
-           id = rand_id("impute_bag")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    impute_with = imp_vars(all_predictors()),
+    trees = 25,
+    models = NULL,
+    options = list(keepX = FALSE),
+    seed_val = sample.int(10^4, 1),
+    skip = FALSE,
+    id = rand_id("impute_bag")
+  ) {
     if (is.null(impute_with)) {
       cli::cli_abort("{.arg impute_with} must not be empty.")
     }
@@ -149,8 +151,18 @@ step_impute_bag <-
   }
 
 step_impute_bag_new <-
-  function(terms, role, trained, models, options, impute_with, trees,
-           seed_val, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    models,
+    options,
+    impute_with,
+    trees,
+    seed_val,
+    skip,
+    id
+  ) {
     step(
       subclass = "impute_bag",
       terms = terms,
@@ -165,7 +177,6 @@ step_impute_bag_new <-
       id = id
     )
   }
-
 
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]

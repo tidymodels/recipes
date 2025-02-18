@@ -8,26 +8,20 @@ test_that("core function - correct input", {
   expect_snapshot(error = TRUE, range_check_func(x, -10, 110, "a"))
   expect_no_error(range_check_func(x, -10, 110, .05))
   expect_no_error(range_check_func(x, -10, 110, c(.05, .08)))
-  expect_snapshot(error = TRUE,
-    range_check_func(x, -10, 110, c(.05, .08, .05))
-  )
+  expect_snapshot(error = TRUE, range_check_func(x, -10, 110, c(.05, .08, .05)))
 })
 
 test_that("core function - workings", {
   expect_no_error(range_check_func(x, -5, 110))
-  expect_snapshot(error = TRUE,
-    range_check_func(x, 0, 100)
-  )
-  expect_snapshot(error = TRUE,
-    range_check_func(x, 0, 110)
-  )
-  expect_snapshot(error = TRUE,
-    range_check_func(x, -5, 100)
-  )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(error = TRUE, range_check_func(x, 0, 100))
+  expect_snapshot(error = TRUE, range_check_func(x, 0, 110))
+  expect_snapshot(error = TRUE, range_check_func(x, -5, 100))
+  expect_snapshot(
+    error = TRUE,
     range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1))
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05))
   )
   expect_snapshot(

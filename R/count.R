@@ -55,36 +55,42 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec2, number = 1)
-step_count <- function(recipe,
-                       ...,
-                       role = "predictor",
-                       trained = FALSE,
-                       pattern = ".",
-                       normalize = FALSE,
-                       options = list(),
-                       result = make.names(pattern),
-                       input = NULL,
-                       keep_original_cols = TRUE,
-                       skip = FALSE,
-                       id = rand_id("count")) {
+step_count <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  pattern = ".",
+  normalize = FALSE,
+  options = list(),
+  result = make.names(pattern),
+  input = NULL,
+  keep_original_cols = TRUE,
+  skip = FALSE,
+  id = rand_id("count")
+) {
   check_string(pattern)
 
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    cli::cli_abort(c(
-      "x" = "The following elements of {.arg options} are not allowed:",
-      "*" = "{.val {setdiff(names(options), valid_args)}}.",
-      "i" = "Valid options are: {.val {valid_args}}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "The following elements of {.arg options} are not allowed:",
+        "*" = "{.val {setdiff(names(options), valid_args)}}.",
+        "i" = "Valid options are: {.val {valid_args}}."
+      )
+    )
   }
 
   terms <- enquos(...)
   if (length(terms) > 1) {
-    cli::cli_abort(c(
-      x = "For this step, only a single selector can be used.",
-      i = "The following {length(terms)} selectors were used: \\
+    cli::cli_abort(
+      c(
+        x = "For this step, only a single selector can be used.",
+        i = "The following {length(terms)} selectors were used: \\
           {.var {as.character(terms)}}."
-    ))
+      )
+    )
   }
 
   add_step(
@@ -106,8 +112,19 @@ step_count <- function(recipe,
 }
 
 step_count_new <-
-  function(terms, role, trained, pattern, normalize, options, result, input,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    pattern,
+    normalize,
+    options,
+    result,
+    input,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "count",
       terms = terms,
@@ -129,7 +146,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
   check_string(x$pattern, allow_empty = TRUE, arg = "pattern")
-  check_string(x$result,  allow_empty = FALSE, arg = "result")
+  check_string(x$result, allow_empty = FALSE, arg = "result")
   check_bool(x$normalize, arg = "normalize")
 
   step_count_new(
@@ -195,7 +212,6 @@ print.step_count <-
     print_step(x$input, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

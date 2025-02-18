@@ -1,22 +1,15 @@
 library(testthat)
 library(recipes)
 
-
 n <- 20
 
 set.seed(752)
 ex_dat <- data.frame(
   numbers = rnorm(n),
   fact = factor(sample(letters[1:3], n, replace = TRUE)),
-  ord1 = factor(sample(LETTERS[1:3], n, replace = TRUE),
-    ordered = TRUE
-  ),
-  ord2 = factor(sample(LETTERS[4:8], n, replace = TRUE),
-    ordered = TRUE
-  ),
-  ord3 = factor(sample(LETTERS[10:20], n, replace = TRUE),
-    ordered = TRUE
-  )
+  ord1 = factor(sample(LETTERS[1:3], n, replace = TRUE), ordered = TRUE),
+  ord2 = factor(sample(LETTERS[4:8], n, replace = TRUE), ordered = TRUE),
+  ord3 = factor(sample(LETTERS[10:20], n, replace = TRUE), ordered = TRUE)
 )
 
 ex_miss <- ex_dat
@@ -28,9 +21,11 @@ score <- function(x) as.numeric(x)^2
 test_that("linear scores", {
   rec1 <- recipe(~., data = ex_dat) %>%
     step_ordinalscore(starts_with("ord"))
-  rec1 <- prep(rec1,
+  rec1 <- prep(
+    rec1,
     training = ex_dat,
-    strings_as_factors = FALSE, verbose = FALSE
+    strings_as_factors = FALSE,
+    verbose = FALSE
   )
   rec1_scores <- bake(rec1, new_data = ex_dat)
   rec1_scores_NA <- bake(rec1, new_data = ex_miss)
@@ -45,12 +40,12 @@ test_that("linear scores", {
 
 test_that("nonlinear scores", {
   rec2 <- recipe(~., data = ex_dat) %>%
-    step_ordinalscore(starts_with("ord"),
-      convert = score
-    )
-  rec2 <- prep(rec2,
+    step_ordinalscore(starts_with("ord"), convert = score)
+  rec2 <- prep(
+    rec2,
     training = ex_dat,
-    strings_as_factors = FALSE, verbose = FALSE
+    strings_as_factors = FALSE,
+    verbose = FALSE
   )
   rec2_scores <- bake(rec2, new_data = ex_dat)
   rec2_scores_NA <- bake(rec2, new_data = ex_miss)
@@ -66,9 +61,7 @@ test_that("nonlinear scores", {
 test_that("bad spec", {
   rec3 <- recipe(~., data = ex_dat) %>%
     step_ordinalscore(all_predictors())
-  expect_snapshot(error = TRUE,
-    prep(rec3, training = ex_dat, verbose = FALSE)
-  )
+  expect_snapshot(error = TRUE, prep(rec3, training = ex_dat, verbose = FALSE))
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -78,9 +71,11 @@ test_that("bake method errors when needed non-standard role columns are missing"
     step_ordinalscore(starts_with("ord")) %>%
     update_role(starts_with("ord"), new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
-  rec1 <- prep(rec1,
-               training = ex_dat,
-               strings_as_factors = FALSE, verbose = FALSE
+  rec1 <- prep(
+    rec1,
+    training = ex_dat,
+    strings_as_factors = FALSE,
+    verbose = FALSE
   )
 
   expect_snapshot(error = TRUE, bake(rec1, new_data = ex_dat[, 1:3]))
@@ -131,9 +126,7 @@ test_that("printing", {
   expect_snapshot(prep(rec))
 })
 
-
 test_that("bad args", {
-
   expect_snapshot(
     recipe(~., data = ex_dat) %>%
       step_ordinalscore(starts_with("ord"), convert = NULL) %>%

@@ -111,18 +111,20 @@
 #'   geom_point() +
 #'   theme_bw()
 step_window <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           size = 3,
-           na_rm = TRUE,
-           statistic = "mean",
-           columns = NULL,
-           names = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("window")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    size = 3,
+    na_rm = TRUE,
+    statistic = "mean",
+    columns = NULL,
+    names = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("window")
+  ) {
     if (!is_call(statistic)) {
       statistic <- rlang::arg_match(statistic, roll_funs)
     }
@@ -148,8 +150,19 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms, role, trained, size, na_rm, statistic, columns, names,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    size,
+    na_rm,
+    statistic,
+    columns,
+    names,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "window",
       terms = terms,
@@ -227,9 +240,13 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   ## stats for centered window
   opts <- list(
-    x = x, n = window, by = 1L,
-    fill = NA, partial = FALSE,
-    normalize = TRUE, na.rm = na_rm
+    x = x,
+    n = window,
+    by = 1L,
+    fill = NA,
+    partial = FALSE,
+    normalize = TRUE,
+    na.rm = na_rm
   )
 
   roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
@@ -267,7 +284,12 @@ bake.step_window <- function(object, new_data, ...) {
   } else {
     names(new_values) <- object$names
     new_values <- tibble::new_tibble(new_values)
-    new_values <- check_name(new_values, new_data, object, newname = object$names)
+    new_values <- check_name(
+      new_values,
+      new_data,
+      object,
+      newname = object$names
+    )
     new_data <- vec_cbind(new_data, new_values)
     new_data <- remove_original_cols(new_data, object, col_names)
   }
@@ -306,7 +328,6 @@ tunable.step_window <- function(x, ...) {
     component_id = x$id
   )
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

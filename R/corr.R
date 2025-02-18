@@ -80,16 +80,18 @@
 #'
 #' tidy(corr_filter, number = 1)
 #' tidy(filter_obj, number = 1)
-step_corr <- function(recipe,
-                      ...,
-                      role = NA,
-                      trained = FALSE,
-                      threshold = 0.9,
-                      use = "pairwise.complete.obs",
-                      method = "pearson",
-                      removals = NULL,
-                      skip = FALSE,
-                      id = rand_id("corr")) {
+step_corr <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  threshold = 0.9,
+  use = "pairwise.complete.obs",
+  method = "pearson",
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("corr")
+) {
   add_step(
     recipe,
     step_corr_new(
@@ -108,8 +110,18 @@ step_corr <- function(recipe,
 }
 
 step_corr_new <-
-  function(terms, role, trained, threshold, use, method,
-           removals, skip, id, case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    threshold,
+    use,
+    method,
+    removals,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "corr",
       terms = terms,
@@ -131,8 +143,16 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
   check_number_decimal(x$threshold, min = 0, max = 1, arg = "threshold")
   use <- x$use
-  rlang::arg_match(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
-                            "everything", "na.or.complete"))
+  rlang::arg_match(
+    use,
+    c(
+      "all.obs",
+      "complete.obs",
+      "pairwise.complete.obs",
+      "everything",
+      "na.or.complete"
+    )
+  )
   method <- x$method
   rlang::arg_match(method, c("pearson", "kendall", "spearman"))
 
@@ -178,17 +198,25 @@ bake.step_corr <- function(object, new_data, ...) {
 print.step_corr <-
   function(x, width = max(20, options()$width - 36), ...) {
     title <- "Correlation filter on "
-    print_step(x$removals, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      x$removals,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
 corr_filter <-
-  function(x,
-           wts = NULL,
-           cutoff = .90,
-           use = "pairwise.complete.obs",
-           method = "pearson") {
+  function(
+    x,
+    wts = NULL,
+    cutoff = .90,
+    use = "pairwise.complete.obs",
+    method = "pearson"
+  ) {
     x <- correlations(x, wts = wts, use = use, method = method)
 
     if (any(!vec_detect_complete(x))) {

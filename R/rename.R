@@ -47,12 +47,15 @@
 #'
 #' car_rec %>%
 #'   tidy(number = 1)
-step_rename <- function(recipe, ...,
-                        role = "predictor",
-                        trained = FALSE,
-                        inputs = NULL,
-                        skip = FALSE,
-                        id = rand_id("rename")) {
+step_rename <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("rename")
+) {
   inputs <- enquos(..., .named = TRUE)
 
   add_step(

@@ -58,24 +58,24 @@ tune_args.step <- function(object, full = FALSE, ...) {
   )
 }
 
-
 #' @export
 tune_args.check <- tune_args.step
-
 
 # helpers for tune_args() methods -----------------------------------------
 # they also exist in parsnip for the `tune_args()` method there
 
 # useful for standardization and for creating a 0 row tunable tbl
 # (i.e. for when there are no steps in a recipe)
-tune_tbl <- function(name = character(),
-                     tunable = logical(),
-                     id = character(),
-                     source = character(),
-                     component = character(),
-                     component_id = character(),
-                     full = FALSE,
-                     call = rlang::caller_env()) {
+tune_tbl <- function(
+  name = character(),
+  tunable = logical(),
+  id = character(),
+  source = character(),
+  component = character(),
+  component_id = character(),
+  full = FALSE,
+  call = rlang::caller_env()
+) {
   complete_id <- id[!is.na(id)]
   dups <- duplicated(complete_id)
   if (any(dups)) {
@@ -142,7 +142,6 @@ tune_id <- function(x) {
 }
 
 find_tune_id <- function(x) {
-
   # STEP 1 - Early exits
 
   # Early exit for empty elements (like list())

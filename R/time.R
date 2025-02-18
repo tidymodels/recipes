@@ -58,16 +58,17 @@
 #'
 #' tidy(time_rec, number = 1)
 step_time <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           features = c("hour", "minute", "second"),
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("time")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    features = c("hour", "minute", "second"),
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("time")
+  ) {
     add_step(
       recipe,
       step_time_new(
@@ -84,8 +85,16 @@ step_time <-
   }
 
 step_time_new <-
-  function(terms, role, trained, features, columns, keep_original_cols, skip,
-           id) {
+  function(
+    terms,
+    role,
+    trained,
+    features,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "time",
       terms = terms,
@@ -114,11 +123,14 @@ prep.step_time <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = "datetime")
 
-
   features <- x$features
   check_character(features, allow_na = FALSE)
-  x$features <- rlang::arg_match(features, feat_list, multiple = TRUE,
-                                 error_arg = "features")
+  x$features <- rlang::arg_match(
+    features,
+    feat_list,
+    multiple = TRUE,
+    error_arg = "features"
+  )
 
   step_time_new(
     terms = x$terms,
@@ -154,7 +166,6 @@ bake.step_time <- function(object, new_data, ...) {
 }
 
 get_time_features <- function(dt, feats) {
-
   features <- list(
     am = am,
     hour = hour,

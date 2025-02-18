@@ -3,24 +3,26 @@ test_that("check_new_data works", {
   examples <- matrix(exp(rnorm(40)), ncol = 4)
   examples <- as.data.frame(examples)
 
-  log_trans <- recipe(~ V1 + V2 + V3 + V4, data = examples) %>%
+  log_trans <- recipe(~V1 + V2 + V3 + V4, data = examples) %>%
     step_log(V1, V2, V3) %>%
     update_role(V1, V2, V3, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   log_obj <- prep(log_trans, training = examples)
 
-  expect_snapshot(bake(log_obj, examples[,2:4, drop = FALSE]), error = TRUE)
-  expect_snapshot(bake(log_obj, examples[,3:4, drop = FALSE]), error = TRUE)
-  expect_snapshot(bake(log_obj, examples[,  4, drop = FALSE]), error = TRUE)
+  expect_snapshot(bake(log_obj, examples[, 2:4, drop = FALSE]), error = TRUE)
+  expect_snapshot(bake(log_obj, examples[, 3:4, drop = FALSE]), error = TRUE)
+  expect_snapshot(bake(log_obj, examples[, 4, drop = FALSE]), error = TRUE)
 })
 
 test_that("conditionMessage method for recipes errors works", {
   res <-
-    try({
-      recipe(~ ., data = mtcars) %>%
-        step_dummy(all_numeric_predictors()) %>%
-        prep()},
+    try(
+      {
+        recipe(~., data = mtcars) %>%
+          step_dummy(all_numeric_predictors()) %>%
+          prep()
+      },
       silent = TRUE
     )
 
@@ -57,7 +59,6 @@ test_that("validate_training_data errors are thrown", {
 })
 
 test_that("vars without role in predictor/outcome avoid string processing", {
-
   x <- tibble(
     real_pred = 1:5,
     chr_pred_and_lime = letters[1:5],
@@ -94,7 +95,6 @@ test_that("vars without role in predictor/outcome avoid string processing", {
     orig_lvls$chr_only_lime, # gets converted to fctr
     list(values = letters[1:5], ordered = FALSE, factor = FALSE)
   )
-
 
   new_lvls <- kill_levels(orig_lvls, var_info)
   new_expect <- original_expectation

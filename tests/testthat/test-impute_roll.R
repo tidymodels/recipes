@@ -46,7 +46,6 @@ test_that("imputation values with 3-pt mean", {
     step_impute_roll(all_predictors(), window = 3, id = "") %>%
     prep(training = example_data)
 
-
   three_pt_exp <- example_data
   three_pt_exp$x1[1] <- mean(three_pt_exp$x1[1:3], na.rm = TRUE)
   three_pt_exp$x1[5] <- mean(three_pt_exp$x1[4:6], na.rm = TRUE)
@@ -68,15 +67,16 @@ test_that("imputation values with 3-pt mean", {
   expect_equal(three_pt_tidy_tr, tidy(three_pt, number = 1))
 })
 
-
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = example_data) %>%
       step_impute_roll(all_predictors(), window = 3) %>%
       prep(training = example_data)
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_impute_roll(all_predictors(), window = 4) %>%
@@ -84,7 +84,8 @@ test_that("bad args", {
   )
 
   example_data$x4 <- 1:12
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = example_data) %>%
       update_role(day, new_role = "time_index") %>%
       step_impute_roll(all_predictors(), window = 3) %>%
@@ -95,7 +96,7 @@ test_that("bad args", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_impute_roll(all_predictors(), outcome = "Species")
+      step_impute_roll(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_impute_roll(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "window"))
   expect_true(all(rec_param$source == "recipe"))
@@ -174,7 +175,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   rec <- recipe(~., data = mtcars) %>%
     step_impute_roll(
       all_predictors(),
-      statistic = hardhat::tune(), window = hardhat::tune()
+      statistic = hardhat::tune(),
+      window = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)
@@ -183,13 +185,13 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 2L)
 })
 
-
 test_that("bad args", {
   expect_snapshot(
     recipe(~., data = mtcars) %>%
       step_impute_roll(
         all_predictors(),
-        statistic = mean, window = 1
+        statistic = mean,
+        window = 1
       ) %>%
       prep(),
     error = TRUE
@@ -198,7 +200,8 @@ test_that("bad args", {
     recipe(~., data = mtcars) %>%
       step_impute_roll(
         all_predictors(),
-        statistic = mean, window = 4
+        statistic = mean,
+        window = 4
       ) %>%
       prep(),
     error = TRUE

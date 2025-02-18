@@ -64,20 +64,22 @@
 #' tidy(kpca_trans, number = 3)
 #' tidy(kpca_estimates, number = 3)
 step_kpca_poly <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 5,
-           res = NULL,
-           columns = NULL,
-           degree = 2,
-           scale_factor = 1,
-           offset = 1,
-           prefix = "kPC",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("kpca_poly")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 5,
+    res = NULL,
+    columns = NULL,
+    degree = 2,
+    scale_factor = 1,
+    offset = 1,
+    prefix = "kPC",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("kpca_poly")
+  ) {
     recipes_pkg_check(required_pkgs.step_kpca_poly())
 
     add_step(
@@ -101,8 +103,21 @@ step_kpca_poly <-
   }
 
 step_kpca_poly_new <-
-  function(terms, role, trained, num_comp, res, columns, degree, scale_factor, offset,
-           prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    res,
+    columns,
+    degree,
+    scale_factor,
+    offset,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "kpca_poly",
       terms = terms,
@@ -147,10 +162,12 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
       )
     kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(kprc)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(kprc)
+        )
+      )
     }
   } else {
     kprc <- NULL
@@ -202,12 +219,15 @@ bake.step_kpca_poly <- function(object, new_data, ...) {
 }
 
 #' @export
-print.step_kpca_poly <- function(x, width = max(20, options()$width - 40), ...) {
+print.step_kpca_poly <- function(
+  x,
+  width = max(20, options()$width - 40),
+  ...
+) {
   title <- "Polynomial kernel PCA extraction with "
   print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -238,7 +258,6 @@ tunable.step_kpca_poly <- function(x, ...) {
     component_id = x$id
   )
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

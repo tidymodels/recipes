@@ -42,14 +42,16 @@
 #' tidy(inverse_trans, number = 1)
 #' tidy(inverse_obj, number = 1)
 step_inverse <-
-  function(recipe,
-           ...,
-           role = NA,
-           offset = 0,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("inverse")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    offset = 0,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("inverse")
+  ) {
     add_step(
       recipe,
       step_inverse_new(

@@ -2,19 +2,54 @@ library(testthat)
 library(recipes)
 
 languages <- tribble(
-  ~lang_1,    ~lang_2,   ~lang_3,  ~lang_4,
-  "English",  "Italian", NA,       NA,
-  "Spanish",  NA,        "French", NA,
-  "Armenian", "English", "French", NA,
-  NA,         NA,        NA,       NA
+  ~lang_1,
+  ~lang_2,
+  ~lang_3,
+  ~lang_4,
+  "English",
+  "Italian",
+  NA,
+  NA,
+  "Spanish",
+  NA,
+  "French",
+  NA,
+  "Armenian",
+  "English",
+  "French",
+  NA,
+  NA,
+  NA,
+  NA,
+  NA
 )
 
 result <- tribble(
-  ~Armenian, ~English, ~French, ~Italian, ~Spanish,
-  0L,        1L,       0L,      1L,       0L,
-  0L,        0L,       1L,      0L,       1L,
-  1L,        1L,       1L,      0L,       0L,
-  0L,        0L,       0L,      0L,       0L
+  ~Armenian,
+  ~English,
+  ~French,
+  ~Italian,
+  ~Spanish,
+  0L,
+  1L,
+  0L,
+  1L,
+  0L,
+  0L,
+  0L,
+  1L,
+  0L,
+  1L,
+  1L,
+  1L,
+  1L,
+  0L,
+  0L,
+  0L,
+  0L,
+  0L,
+  0L,
+  0L
 )
 
 test_that("dummy variables with factor inputs", {
@@ -58,7 +93,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = languages) %>%
-    step_dummy_multi_choice(all_predictors())
+      step_dummy_multi_choice(all_predictors())
   rec_param <- tunable.step_dummy_multi_choice(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -89,7 +124,11 @@ test_that("no columns selected", {
 
   expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
-  exp_tidy <- tibble(terms = character(), columns = character(), id = character())
+  exp_tidy <- tibble(
+    terms = character(),
+    columns = character(),
+    id = character()
+  )
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
@@ -114,10 +153,14 @@ test_that("one columns selected", {
 
 test_that("factor levels are preserved", {
   # old data
-  tr <- data.frame(x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+  tr <- data.frame(
+    x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g"))
+  )
 
   # new data
-  te <- data.frame(x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+  te <- data.frame(
+    x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g"))
+  )
   data1 <- tr %>%
     recipe() %>%
     step_dummy(x, one_hot = T) %>%
@@ -189,7 +232,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("lang_1_", c("Armenian", "English", "Spanish"))
 
-  rec <- recipe(~ lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) %>%
     step_dummy_multi_choice(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -200,7 +243,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) %>%
     step_dummy_multi_choice(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -213,7 +256,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) %>%
     step_dummy_multi_choice(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -249,9 +292,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   expect_identical(nrow(params), 1L)
 })
 
-
 test_that("bad args", {
-
   expect_snapshot(
     dummy_multi_choice_rec <- recipe(~., data = languages) %>%
       step_dummy_multi_choice(starts_with("lang"), other = 2) %>%
@@ -265,4 +306,3 @@ test_that("bad args", {
     error = TRUE
   )
 })
-

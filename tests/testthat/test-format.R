@@ -57,7 +57,8 @@ test_that("format_selectors handles a long expression (#1083)", {
   }
 
   rec <- recipe(mpg ~ ., data = mtcars) %>%
-    step_mutate(vs = function_call(
+    step_mutate(
+      vs = function_call(
         .x = vs,
         very_very_very_long_text = "long1",
         also_very_very_long_text = "long2"

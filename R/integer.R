@@ -60,15 +60,17 @@
 #' bake(rec, sacr_te, all_predictors())
 #' tidy(rec, number = 1)
 step_integer <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           strict = TRUE,
-           zero_based = FALSE,
-           key = NULL,
-           skip = FALSE,
-           id = rand_id("integer")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    strict = TRUE,
+    zero_based = FALSE,
+    key = NULL,
+    skip = FALSE,
+    id = rand_id("integer")
+  ) {
     add_step(
       recipe,
       step_integer_new(
@@ -118,8 +120,16 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(
     training[, col_names],
-    types = c("string", "factor", "ordered", "integer", "double", "logical",
-              "date", "datetime")
+    types = c(
+      "string",
+      "factor",
+      "ordered",
+      "integer",
+      "double",
+      "logical",
+      "date",
+      "datetime"
+    )
   )
   check_bool(x$strict, arg = "strict")
   check_bool(x$zero_based, arg = "zero_based")
@@ -141,7 +151,11 @@ map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
     dat <- as.character(dat)
   }
 
-  res <- full_join(tibble(value = dat, .row = seq_along(dat)), key, by = "value")
+  res <- full_join(
+    tibble(value = dat, .row = seq_along(dat)),
+    key,
+    by = "value"
+  )
   res <- dplyr::filter(res, !is.na(.row))
   res <- arrange(res, .row)
   if (zero) {

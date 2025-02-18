@@ -4,11 +4,11 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
-
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass_tr
 )
 
@@ -43,14 +43,22 @@ test_that("correct basis functions", {
     attr(with_bs$steps[[1]]$objects$hydrogen, "Boundary.knots")
   )
 
-  carbon_bs_tr_res <- as.matrix(with_bs_pred_tr[, grep("carbon", names(with_bs_pred_tr))])
+  carbon_bs_tr_res <- as.matrix(
+    with_bs_pred_tr[, grep("carbon", names(with_bs_pred_tr))]
+  )
   colnames(carbon_bs_tr_res) <- NULL
-  hydrogen_bs_tr_res <- as.matrix(with_bs_pred_tr[, grep("hydrogen", names(with_bs_pred_tr))])
+  hydrogen_bs_tr_res <- as.matrix(
+    with_bs_pred_tr[, grep("hydrogen", names(with_bs_pred_tr))]
+  )
   colnames(hydrogen_bs_tr_res) <- NULL
 
-  carbon_bs_te_res <- as.matrix(with_bs_pred_te[, grep("carbon", names(with_bs_pred_te))])
+  carbon_bs_te_res <- as.matrix(
+    with_bs_pred_te[, grep("carbon", names(with_bs_pred_te))]
+  )
   colnames(carbon_bs_te_res) <- 1:ncol(carbon_bs_te_res)
-  hydrogen_bs_te_res <- as.matrix(with_bs_pred_te[, grep("hydrogen", names(with_bs_pred_te))])
+  hydrogen_bs_te_res <- as.matrix(
+    with_bs_pred_te[, grep("hydrogen", names(with_bs_pred_te))]
+  )
   colnames(hydrogen_bs_te_res) <- 1:ncol(hydrogen_bs_te_res)
 
   ## remove attributes
@@ -72,18 +80,21 @@ test_that("correct basis functions", {
 test_that("options(knots) works correctly (#1297)", {
   exmaple_data <- tibble(x = seq(-2, 2, 0.01))
 
-  rec_res <- recipe(~., data = exmaple_data) %>% 
-    step_bs(x, options = list(knots = seq(-1, 1, 0.125), 
-                              Boundary.knots = c(-2.5, 2.5))) %>% 
-    prep() %>% 
+  rec_res <- recipe(~., data = exmaple_data) %>%
+    step_bs(
+      x,
+      options = list(knots = seq(-1, 1, 0.125), Boundary.knots = c(-2.5, 2.5))
+    ) %>%
+    prep() %>%
     bake(new_data = NULL)
 
   mm_res <- model.matrix(
-    ~ splines::bs(
-      x, 
-      knots = seq(-1, 1, 0.125), 
+    ~splines::bs(
+      x,
+      knots = seq(-1, 1, 0.125),
       Boundary.knots = c(-2.5, 2.5)
-    ) - 1, 
+    ) -
+      1,
     data = exmaple_data
   )
 
@@ -109,7 +120,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_bs(all_predictors())
+      step_bs(all_predictors())
   rec_param <- tunable.step_bs(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free", "degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -143,7 +154,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   with_bs <- prep(with_bs, training = biomass_tr, verbose = FALSE)
 
-  expect_snapshot(error = TRUE, bake(with_bs, new_data = biomass_tr[,c(-4)]))
+  expect_snapshot(error = TRUE, bake(with_bs, new_data = biomass_tr[, c(-4)]))
 })
 
 test_that("empty printing", {
@@ -186,7 +197,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_bs_1", "mpg_bs_2", "mpg_bs_3")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_bs(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -197,7 +208,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_bs(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -210,7 +221,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_bs(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -235,8 +246,11 @@ test_that("printing", {
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
   rec <- recipe(~., data = mtcars) %>%
-    step_bs(all_predictors(),
-            deg_free = hardhat::tune(), degree = hardhat::tune())
+    step_bs(
+      all_predictors(),
+      deg_free = hardhat::tune(),
+      degree = hardhat::tune()
+    )
 
   params <- extract_parameter_set_dials(rec)
 

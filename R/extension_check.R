@@ -38,9 +38,11 @@
 #'   exclude_steps = "step_testthat_helper",
 #'   exclude_methods = c("required_pkgs")
 #' )
-recipes_extension_check <- function(pkg,
-                                    exclude_steps = character(),
-                                    exclude_methods = character()) {
+recipes_extension_check <- function(
+  pkg,
+  exclude_steps = character(),
+  exclude_methods = character()
+) {
   exclude_methods <- rlang::arg_match(
     exclude_methods,
     values = c("prep", "bake", "print", "tidy", "required_pkgs"),
@@ -100,8 +102,13 @@ recipes_extension_check <- function(pkg,
     cli::cli_ul(steps[required_pkgss])
   }
 
-  if (!any(preps) && !any(bakes) && !any(prints) && !any(tidys) &&
-      !any(required_pkgss)) {
+  if (
+    !any(preps) &&
+      !any(bakes) &&
+      !any(prints) &&
+      !any(tidys) &&
+      !any(required_pkgss)
+  ) {
     cli::cli_alert_success("All steps have all method!")
   }
   cli::cli_end()

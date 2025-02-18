@@ -6,7 +6,7 @@ data(covers, package = "modeldata")
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
 
-rec <- recipe(~ description + rows + ch_rows, covers)
+rec <- recipe(~description + rows + ch_rows, covers)
 
 counts <- gregexpr(pattern = "(rock|stony)", text = covers$description)
 counts <- vapply(counts, function(x) length(x[x > 0]), integer(1))
@@ -16,9 +16,11 @@ test_that("default options", {
   rec1 <- rec %>%
     step_count(description, pattern = "(rock|stony)") %>%
     step_count(description, pattern = "", result = "every thing") %>%
-    step_count(description,
+    step_count(
+      description,
       pattern = "(rock|stony)",
-      result = "pct", normalize = TRUE
+      result = "pct",
+      normalize = TRUE
     )
   rec1 <- prep(rec1, training = covers)
   res1 <- bake(rec1, new_data = covers)
@@ -31,10 +33,10 @@ test_that("default options", {
   expect_false(is.integer(res1$pct))
 })
 
-
 test_that("nondefault options", {
   rec2 <- rec %>%
-    step_count(description,
+    step_count(
+      description,
       pattern = "(rock|stony)",
       result = "rocks",
       options = list(fixed = TRUE)
@@ -44,15 +46,13 @@ test_that("nondefault options", {
   expect_equal(res2$rocks, rep(0, nrow(covers)))
 })
 
-
 test_that("bad selector(s)", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>% step_count(description, rows, pattern = "(rock|stony)")
   )
   rec2 <- rec %>% step_count(rows, pattern = "(rock|stony)")
-  expect_snapshot(error = TRUE,
-    prep(rec2, training = covers)
-  )
+  expect_snapshot(error = TRUE, prep(rec2, training = covers))
 })
 
 test_that("check_name() is used", {
@@ -83,14 +83,17 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <-
     mt_tibble %>%
-    recipe(mpg ~ ., data = .) %>%
-    step_count(make_model, pattern = "Toyota", result = "is_toyota") %>%
-    update_role(make_model, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)
+      recipe(mpg ~ ., data = .) %>%
+      step_count(make_model, pattern = "Toyota", result = "is_toyota") %>%
+      update_role(make_model, new_role = "potato") %>%
+      update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = mt_tibble)
 
-  expect_snapshot(error = TRUE, bake(rec_trained, new_data = mt_tibble[,c(-1)]))
+  expect_snapshot(
+    error = TRUE,
+    bake(rec_trained, new_data = mt_tibble[, c(-1)])
+  )
 })
 
 test_that("empty printing", {
@@ -133,9 +136,13 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("rocks")
 
-  rec <- recipe(~ description, covers) %>%
-    step_count(description, pattern = "(rock|stony)", result = "rocks",
-               keep_original_cols = FALSE)
+  rec <- recipe(~description, covers) %>%
+    step_count(
+      description,
+      pattern = "(rock|stony)",
+      result = "rocks",
+      keep_original_cols = FALSE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -145,9 +152,13 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ description, covers) %>%
-    step_count(description, pattern = "(rock|stony)", result = "rocks",
-               keep_original_cols = TRUE)
+  rec <- recipe(~description, covers) %>%
+    step_count(
+      description,
+      pattern = "(rock|stony)",
+      result = "rocks",
+      keep_original_cols = TRUE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -159,9 +170,13 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ description, covers) %>%
-    step_count(description, pattern = "(rock|stony)", result = "rocks",
-               keep_original_cols = FALSE)
+  rec <- recipe(~description, covers) %>%
+    step_count(
+      description,
+      pattern = "(rock|stony)",
+      result = "rocks",
+      keep_original_cols = FALSE
+    )
 
   rec$steps[[1]]$keep_original_cols <- NULL
 

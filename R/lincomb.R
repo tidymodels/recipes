@@ -61,14 +61,16 @@
 #' tidy(lincomb_filter, number = 1)
 #' tidy(lincomb_filter_trained, number = 1)
 step_lincomb <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           max_steps = 5,
-           removals = NULL,
-           skip = FALSE,
-           id = rand_id("lincomb")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    max_steps = 5,
+    removals = NULL,
+    skip = FALSE,
+    id = rand_id("lincomb")
+  ) {
     add_step(
       recipe,
       step_lincomb_new(
@@ -137,7 +139,6 @@ print.step_lincomb <-
     invisible(x)
   }
 
-
 recommend_rm <- function(x, eps = 1e-6, ...) {
   if (!is.matrix(x)) {
     x <- as.matrix(x)
@@ -167,17 +168,17 @@ recommend_rm <- function(x, eps = 1e-6, ...) {
         c(pivot[rank + i], pivot[which(b[, i] != 0)])
       }
     )
-    rm_list <- unlist(lapply(combos, function(x) {
-      x[1]
-    }))
+    rm_list <- unlist(
+      lapply(combos, function(x) {
+        x[1]
+      })
+    )
     rm_list <- colnames(x)[rm_list]
   }
   rm_list
 }
 
-iter_lc_rm <- function(x,
-                       max_steps = 10,
-                       verbose = FALSE) {
+iter_lc_rm <- function(x, max_steps = 10, verbose = FALSE) {
   if (ncol(x) == 0L) {
     # Empty selection
     return(character())
@@ -218,7 +219,6 @@ iter_lc_rm <- function(x,
   name_df <- name_df[!(name_df$current %in% colnames(x)), ]
   name_df$orig
 }
-
 
 #' @rdname tidy.recipe
 #' @export

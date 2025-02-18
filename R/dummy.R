@@ -20,7 +20,7 @@
 #'   step is trained by [prep()].
 #' @param sparse A single string. Should the columns produced be sparse vectors.
 #'   Can take the values `"yes"`, `"no"`, and `"auto"`. If `sparse = "auto"`
-#'   then workflows can determine the best option. Sparsity is only  supported 
+#'   then workflows can determine the best option. Sparsity is only  supported
 #'   for `"contr.treatment"` contrasts. Defaults to `"auto"`.
 #' @template step-return
 #' @family dummy variable and encoding steps
@@ -64,7 +64,7 @@
 #' this step.
 #'
 #' Also, there are a number of contrast methods that return fractional values.
-#' The columns returned by this step are doubles (not integers) when 
+#' The columns returned by this step are doubles (not integers) when
 #' `sparse = FALSE`. The columns returned when `sparse = TRUE` are integers.
 #'
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
@@ -118,19 +118,20 @@
 #' tidy(dummies, number = 1)
 #' tidy(dummies_one_hot, number = 1)
 step_dummy <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           one_hot = FALSE,
-           preserve = deprecated(),
-           naming = dummy_names,
-           levels = NULL,
-           sparse = "auto",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("dummy")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    one_hot = FALSE,
+    preserve = deprecated(),
+    naming = dummy_names,
+    levels = NULL,
+    sparse = "auto",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("dummy")
+  ) {
     if (lifecycle::is_present(preserve)) {
       lifecycle::deprecate_stop(
         "0.1.16",
@@ -158,8 +159,19 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms, role, trained, one_hot, preserve, naming, levels, sparse,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    one_hot,
+    preserve,
+    naming,
+    levels,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "dummy",
       terms = terms,
@@ -196,7 +208,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     for (i in seq_along(col_names)) {
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form <- stats::update.formula(form, ~ . -1)
+        form <- stats::update.formula(form, ~. - 1)
       }
       terms <- model.frame(
         formula = form,
@@ -295,7 +307,7 @@ bake.step_dummy <- function(object, new_data, ...) {
       col_name,
       step = "step_dummy"
     )
-  
+
     new_data[, col_name] <- factor(
       new_data[[col_name]],
       levels = levels_values,
@@ -327,7 +339,7 @@ bake.step_dummy <- function(object, new_data, ...) {
           xlev = levels_values,
           na.action = na.pass
         )
-  
+
       indicators <- tryCatch(
         model.matrix(object = levels, data = indicators),
         error = function(cnd) {
@@ -342,15 +354,22 @@ bake.step_dummy <- function(object, new_data, ...) {
           stop(cnd)
         }
       )
-  
+
       if (!object$one_hot) {
-        indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
+        indicators <- indicators[,
+          colnames(indicators) != "(Intercept)",
+          drop = FALSE
+        ]
       }
-      
+
       ## use backticks for nonstandard factor levels here
-      used_lvl <- gsub(paste0("^\\`?", col_name, "\\`?"), "", colnames(indicators))
+      used_lvl <- gsub(
+        paste0("^\\`?", col_name, "\\`?"),
+        "",
+        colnames(indicators)
+      )
     }
-    
+
     new_names <- object$naming(col_name, used_lvl, is_ordered)
     colnames(indicators) <- new_names
     indicators <- check_name(indicators, new_data, object, new_names)
@@ -373,13 +392,11 @@ print.step_dummy <-
     invisible(x)
   }
 
-
 get_dummy_columns <- function(x, one_hot) {
   x <- attr(x, "values")
   if (!one_hot) x <- x[-1]
   tibble(columns = x)
 }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -407,7 +424,7 @@ tidy.step_dummy <- function(x, ...) {
       return(vctrs::vec_unique_count(x))
     }
   }
-  
+
   n_levels <- lapply(data, get_levels)
 
   lapply(n_levels, function(n_lvl) {

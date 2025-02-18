@@ -36,13 +36,15 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rand_set, number = 1)
-step_shuffle <- function(recipe,
-                         ...,
-                         role = NA,
-                         trained = FALSE,
-                         columns = NULL,
-                         skip = FALSE,
-                         id = rand_id("shuffle")) {
+step_shuffle <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("shuffle")
+) {
   add_step(
     recipe,
     step_shuffle_new(

@@ -52,34 +52,39 @@
 #' with_dummies
 #' tidy(rec, number = 1)
 #' tidy(rec2, number = 1)
-step_regex <- function(recipe,
-                       ...,
-                       role = "predictor",
-                       trained = FALSE,
-                       pattern = ".",
-                       options = list(),
-                       result = make.names(pattern),
-                       input = NULL,
-                       keep_original_cols = TRUE,
-                       skip = FALSE,
-                       id = rand_id("regex")) {
-
+step_regex <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  pattern = ".",
+  options = list(),
+  result = make.names(pattern),
+  input = NULL,
+  keep_original_cols = TRUE,
+  skip = FALSE,
+  id = rand_id("regex")
+) {
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    cli::cli_abort(c(
-      "x" = "The following elements of {.arg options} are not allowed:",
-      "*" = "{.val {setdiff(names(options), valid_args)}}.",
-      "i" = "Valid options are: {.val {valid_args}}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "The following elements of {.arg options} are not allowed:",
+        "*" = "{.val {setdiff(names(options), valid_args)}}.",
+        "i" = "Valid options are: {.val {valid_args}}."
+      )
+    )
   }
 
   terms <- enquos(...)
   if (length(terms) > 1) {
-    cli::cli_abort(c(
-      x = "For this step, only a single selector can be used.",
-      i = "The following {length(terms)} selectors were used: \\
+    cli::cli_abort(
+      c(
+        x = "For this step, only a single selector can be used.",
+        i = "The following {length(terms)} selectors were used: \\
           {.var {as.character(terms)}}."
-    ))
+      )
+    )
   }
 
   add_step(
@@ -100,8 +105,18 @@ step_regex <- function(recipe,
 }
 
 step_regex_new <-
-  function(terms, role, trained, pattern, options, result, input,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    pattern,
+    options,
+    result,
+    input,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "regex",
       terms = terms,
@@ -177,7 +192,6 @@ print.step_regex <-
     print_step(pattern, untrained_terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

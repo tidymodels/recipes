@@ -98,16 +98,17 @@
 #' # sacr_tr %>% count(city, sort = TRUE) %>% top_n(4)
 #' # sacr_tr %>% count(zip, sort = TRUE) %>% top_n(3)
 step_other <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           threshold = .05,
-           other = "other",
-           objects = NULL,
-           skip = FALSE,
-           id = rand_id("other")) {
-
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    threshold = .05,
+    other = "other",
+    objects = NULL,
+    skip = FALSE,
+    id = rand_id("other")
+  ) {
     add_step(
       recipe,
       step_other_new(
@@ -125,8 +126,17 @@ step_other <-
   }
 
 step_other_new <-
-  function(terms, role, trained, threshold, other, objects, skip, id,
-           case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    threshold,
+    other,
+    objects,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "other",
       terms = terms,
@@ -147,8 +157,10 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   if (!is.numeric(x$threshold)) {
-    cli::cli_abort("{.arg threshold} should be a single numeric value
-                   {.obj_type_friendly {x$threshold}}")
+    cli::cli_abort(
+      "{.arg threshold} should be a single numeric value
+                   {.obj_type_friendly {x$threshold}}"
+    )
   }
 
   if (x$threshold >= 1) {
@@ -157,18 +169,19 @@ prep.step_other <- function(x, training, info = NULL, ...) {
     check_number_decimal(x$threshold, arg = "threshold", min = 0)
   }
 
-
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
   }
 
-  objects <- lapply(training[, col_names],
-                    keep_levels,
-                    threshold = x$threshold,
-                    other = x$other,
-                    wts = wts)
+  objects <- lapply(
+    training[, col_names],
+    keep_levels,
+    threshold = x$threshold,
+    other = x$other,
+    wts = wts
+  )
 
   step_other_new(
     terms = x$terms,
@@ -205,7 +218,8 @@ bake.step_other <- function(object, new_data, ...) {
     )
 
     # assign other factor levels other here too.
-    tmp <- factor(tmp,
+    tmp <- factor(
+      tmp,
       levels = c(
         object$objects[[col_name]]$keep,
         object$objects[[col_name]]$other
@@ -223,18 +237,29 @@ print.step_other <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Collapsing factor levels for "
     if (x$trained) {
-      columns <- map_lgl(x$objects, ~ .x$collapse)
+      columns <- map_lgl(x$objects, ~.x$collapse)
       columns <- names(columns)[columns]
     } else {
       columns <- names(x$objects)
     }
-    print_step(columns, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      columns,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
-keep_levels <- function(x, threshold = .1, other = "other", wts = NULL,
-                        call = caller_env(2)) {
+keep_levels <- function(
+  x,
+  threshold = .1,
+  other = "other",
+  wts = NULL,
+  call = caller_env(2)
+) {
   if (!is.factor(x)) {
     x <- factor(x)
   }
@@ -243,9 +268,9 @@ keep_levels <- function(x, threshold = .1, other = "other", wts = NULL,
 
   if (threshold < 1) {
     if (is.null(wts)) {
-        xtab <- xtab / sum(!is.na(x))
+      xtab <- xtab / sum(!is.na(x))
     } else {
-        xtab <- xtab / sum(as.double(wts)[!is.na(x)])
+      xtab <- xtab / sum(as.double(wts)[!is.na(x)])
     }
   }
 
@@ -277,14 +302,17 @@ keep_levels <- function(x, threshold = .1, other = "other", wts = NULL,
   )
 }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_other <- function(x, ...) {
   if (is_trained(x)) {
     values <- purrr::map(x$objects, function(x) x$keep)
     n <- vapply(values, length, integer(1))
-    values <- vctrs::list_unchop(values, ptype = character(), name_spec = rlang::zap())
+    values <- vctrs::list_unchop(
+      values,
+      ptype = character(),
+      name_spec = rlang::zap()
+    )
     res <- tibble(
       terms = rep(names(n), n),
       retained = values

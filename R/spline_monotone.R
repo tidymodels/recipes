@@ -68,19 +68,20 @@
 #' @template case-weights-not-supported
 #' @seealso [splines2::iSpline()]
 step_spline_monotone <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           deg_free = 10,
-           degree = 3,
-           complete_set = TRUE,
-           options = NULL,
-           keep_original_cols = FALSE,
-           results = NULL,
-           skip = FALSE,
-           id = rand_id("spline_monotone")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    deg_free = 10,
+    degree = 3,
+    complete_set = TRUE,
+    options = NULL,
+    keep_original_cols = FALSE,
+    results = NULL,
+    skip = FALSE,
+    id = rand_id("spline_monotone")
+  ) {
     recipes_pkg_check(required_pkgs.step_spline_monotone())
 
     add_step(
@@ -102,8 +103,20 @@ step_spline_monotone <-
   }
 
 step_spline_monotone_new <-
-  function(terms, trained, role, deg_free, degree, complete_set, options,
-           keep_original_cols, results, na_rm, skip, id) {
+  function(
+    terms,
+    trained,
+    role,
+    deg_free,
+    degree,
+    complete_set,
+    options,
+    keep_original_cols,
+    results,
+    na_rm,
+    skip,
+    id
+  ) {
     step(
       subclass = "spline_monotone",
       terms = terms,

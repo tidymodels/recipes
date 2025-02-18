@@ -69,12 +69,15 @@
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
-step_arrange <- function(recipe, ...,
-                         role = NA,
-                         trained = FALSE,
-                         inputs = NULL,
-                         skip = FALSE,
-                         id = rand_id("arrange")) {
+step_arrange <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("arrange")
+) {
   inputs <- enquos(...)
 
   add_step(

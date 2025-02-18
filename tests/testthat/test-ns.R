@@ -9,7 +9,8 @@ data(biomass, package = "modeldata")
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
   data = biomass_tr
 )
 # ------------------------------------------------------------------------------
@@ -45,14 +46,22 @@ test_that("correct basis functions", {
     attr(with_ns$steps[[1]]$objects$hydrogen, "Boundary.knots")
   )
 
-  carbon_ns_tr_res <- as.matrix(with_ns_pred_tr[, grep("carbon", names(with_ns_pred_tr))])
+  carbon_ns_tr_res <- as.matrix(
+    with_ns_pred_tr[, grep("carbon", names(with_ns_pred_tr))]
+  )
   colnames(carbon_ns_tr_res) <- NULL
-  hydrogen_ns_tr_res <- as.matrix(with_ns_pred_tr[, grep("hydrogen", names(with_ns_pred_tr))])
+  hydrogen_ns_tr_res <- as.matrix(
+    with_ns_pred_tr[, grep("hydrogen", names(with_ns_pred_tr))]
+  )
   colnames(hydrogen_ns_tr_res) <- NULL
 
-  carbon_ns_te_res <- as.matrix(with_ns_pred_te[, grep("carbon", names(with_ns_pred_te))])
+  carbon_ns_te_res <- as.matrix(
+    with_ns_pred_te[, grep("carbon", names(with_ns_pred_te))]
+  )
   colnames(carbon_ns_te_res) <- 1:ncol(carbon_ns_te_res)
-  hydrogen_ns_te_res <- as.matrix(with_ns_pred_te[, grep("hydrogen", names(with_ns_pred_te))])
+  hydrogen_ns_te_res <- as.matrix(
+    with_ns_pred_te[, grep("hydrogen", names(with_ns_pred_te))]
+  )
   colnames(hydrogen_ns_te_res) <- 1:ncol(hydrogen_ns_te_res)
 
   ## remove attributes
@@ -74,18 +83,21 @@ test_that("correct basis functions", {
 test_that("options(knots) works correctly (#1297)", {
   exmaple_data <- tibble(x = seq(-2, 2, 0.01))
 
-  rec_res <- recipe(~., data = exmaple_data) %>% 
-    step_ns(x, options = list(knots = seq(-1, 1, 0.125), 
-                              Boundary.knots = c(-1.5, 1.5))) %>% 
-    prep() %>% 
+  rec_res <- recipe(~., data = exmaple_data) %>%
+    step_ns(
+      x,
+      options = list(knots = seq(-1, 1, 0.125), Boundary.knots = c(-1.5, 1.5))
+    ) %>%
+    prep() %>%
     bake(new_data = NULL)
 
   mm_res <- model.matrix(
-    ~ splines::ns(
-      x, 
-      knots = seq(-1, 1, 0.125), 
+    ~splines::ns(
+      x,
+      knots = seq(-1, 1, 0.125),
       Boundary.knots = c(-1.5, 1.5)
-    ) - 1, 
+    ) -
+      1,
     data = exmaple_data
   )
 
@@ -99,7 +111,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_ns_1 <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_ns(mpg)
 
   expect_snapshot(
@@ -111,7 +123,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_ns(all_predictors())
+      step_ns(all_predictors())
   rec_param <- tunable.step_ns(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free"))
   expect_true(all(rec_param$source == "recipe"))
@@ -188,7 +200,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_ns_1", "mpg_ns_2")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_ns(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -199,7 +211,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_ns(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -212,7 +224,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_ns(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
