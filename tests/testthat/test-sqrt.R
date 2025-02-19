@@ -18,6 +18,20 @@ test_that("simple sqrt trans", {
   expect_equal(rec_trans, exp_res)
 })
 
+test_that("doesn't destroy sparsity", {
+  ex_dat$x1 <- sparsevctrs::as_sparse_double(ex_dat$x1)
+  ex_dat$x2 <- sparsevctrs::as_sparse_integer(ex_dat$x2)
+  rec <- recipe(~., data = ex_dat) %>%
+    step_sqrt(x1, x2)
+
+  rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = ex_dat)
+
+  expect_true(all(vapply(rec_trans, sparsevctrs::is_sparse_double, logical(1))))
+
+  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
