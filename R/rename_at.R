@@ -117,3 +117,8 @@ tidy.step_rename_at <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_destroy_sparsity.step_rename_at <- function(x, ...) {
+  FALSE
+}
