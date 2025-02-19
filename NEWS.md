@@ -22,6 +22,8 @@
 
 * `step_sqrt()` doesn't destroy sparsity when applied. (#1432)
 
+* `step_arrange()`, `step_filter()`, `step_rename_at()`, `step_rename()`, `step_sample()`, `step_select()`, `step_shuffle()`, and `step_slice()` doesn't destroy sparsity when applied. (#1433)
+
 # recipes 1.1.1
 
 ## Improvements
