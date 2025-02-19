@@ -13,6 +13,7 @@ step_regex(
   options = list(),
   result = make.names(pattern),
   input = NULL,
+  sparse = "auto",
   keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("regex")
@@ -47,6 +48,11 @@ variable. It should be a valid column name.}
 \item{input}{A single character value for the name of the
 variable being searched. This is \code{NULL} until computed by
 \code{\link[=prep]{prep()}}.}
+
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Sparsity is only  supported
+for \code{"contr.treatment"} contrasts. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
