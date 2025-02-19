@@ -87,6 +87,7 @@ step_dummy_multi_choice <- function(
   other = "other",
   naming = dummy_names,
   prefix = NULL,
+  sparse = "auto",
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy_multi_choice")
@@ -103,6 +104,7 @@ step_dummy_multi_choice <- function(
       other = other,
       naming = naming,
       prefix = prefix,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -121,6 +123,7 @@ step_dummy_multi_choice_new <-
     other,
     naming,
     prefix,
+    sparse,
     keep_original_cols,
     skip,
     id
@@ -136,6 +139,7 @@ step_dummy_multi_choice_new <-
       other = other,
       naming = naming,
       prefix = prefix,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -153,6 +157,7 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
   }
   check_string(x$other, arg = "other", allow_null = TRUE)
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
+  check_sparse_arg(x$sparse)
 
   levels <- purrr::map(training[, col_names], levels)
   levels <- vctrs::list_unchop(
@@ -173,6 +178,7 @@ prep.step_dummy_multi_choice <- function(x, training, info = NULL, ...) {
     other = x$other,
     naming = x$naming,
     prefix = x$prefix,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -184,7 +190,23 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
   col_names <- object$input
   check_new_data(col_names, object, new_data)
 
-  indicators <- multi_dummy(new_data[, col_names], object$levels)
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+
+  indicators <- multi_dummy(
+    new_data[, col_names],
+    object$levels,
+    sparse_is_yes(object$sparse)
+  )
+
+  if (sparse_is_yes(object$sparse)) {
+    indicators <- purrr::map(indicators, sparsevctrs::as_sparse_integer)
+  } else {
+    indicators <- purrr::map(indicators, vec_cast, integer())
+  }
+
+  indicators <- tibble::new_tibble(indicators)
 
   prefix <- object$prefix
   if (is.null(prefix)) {
@@ -203,7 +225,7 @@ bake.step_dummy_multi_choice <- function(object, new_data, ...) {
   new_data
 }
 
-multi_dummy <- function(x, y) {
+multi_dummy <- function(x, y, sparse = FALSE) {
   row_id <- rep(seq_len(nrow(x)), times = ncol(x))
   values <- vctrs::list_unchop(
     purrr::map(x, as.character),
@@ -230,19 +252,18 @@ multi_dummy <- function(x, y) {
 
   colnames(res) <- levels(values)
 
-  res <- as.matrix(res)
-  if (ncol(res) > 0) {
-    res <- apply(res, 2, as.integer, simplify = FALSE)
+  if (sparse) {
+    res <- sparsevctrs::coerce_to_sparse_tibble(res)
+  } else {
+    res <- as.matrix(res)
+    res <- as_tibble(res)
   }
-
-  # to preserve old behavior drop other if empty
-  res <- as_tibble(res)
 
   if (sum(res[y$other]) == 0) {
     res <- dplyr::select(res, -y$other)
   }
 
-  return(res)
+  res
 }
 
 #' @export
@@ -288,4 +309,28 @@ tunable.step_dummy_multi_choice <- function(x, ...) {
     component = "step_dummy_multi_choice",
     component_id = x$id
   )
+}
+
+#' @export
+.recipes_estimate_sparsity.step_dummy_multi_choice <- function(x, data, ...) {
+  get_levels <- function(x) {
+    if (is.factor(x)) {
+      return(levels(x))
+    } else {
+      return(unique(x))
+    }
+  }
+
+  n_levels <- purrr::map(data, get_levels)
+  n_levels <- unlist(n_levels)
+  n_levels <- unique(n_levels)
+  n_levels <- na.omit(n_levels)
+  n_levels <- length(n_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
 }
