@@ -310,3 +310,27 @@ tunable.step_dummy_multi_choice <- function(x, ...) {
     component_id = x$id
   )
 }
+
+#' @export
+.recipes_estimate_sparsity.step_dummy_multi_choice <- function(x, data, ...) {
+  get_levels <- function(x) {
+    if (is.factor(x)) {
+      return(levels(x))
+    } else {
+      return(unique(x))
+    }
+  }
+
+  n_levels <- purrr::map(data, get_levels)
+  n_levels <- unlist(n_levels)
+  n_levels <- unique(n_levels)
+  n_levels <- na.omit(n_levels)
+  n_levels <- length(n_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
+}
