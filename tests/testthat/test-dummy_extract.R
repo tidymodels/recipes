@@ -318,6 +318,41 @@ test_that("case weights", {
   expect_snapshot(dummy_prepped)
 })
 
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~medium, data = mini_tate)
+
+  dense <- rec %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", sparse = "no") %>%
+    prep() %>%
+    bake(NULL)
+  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
+  sparse <- rec %>%
+    step_dummy_extract(medium, sep = "( and )|( on )", sparse = "yes") %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  rec <- recipe(~medium, data = mini_tate) %>%
+    step_dummy_extract(medium, sep = "( and )|( on )") %>%
+    prep()
+
+  exp <- bake(rec, mini_tate)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, mini_tate),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
