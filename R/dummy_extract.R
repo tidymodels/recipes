@@ -362,3 +362,27 @@ tidy.step_dummy_extract <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_estimate_sparsity.step_dummy_extract <- function(x, data, ...) {
+  get_levels <- function(col) {
+    elements <- dummy_extract(
+      col[seq(1, min(10, length(col)))],
+      sep = x$sep,
+      pattern = x$pattern
+    )
+
+    lvls <- map(elements, unique)
+    lvls <- unlist(lvls)
+    length(lvls)
+  }
+
+  n_levels <- lapply(data, get_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
+}
