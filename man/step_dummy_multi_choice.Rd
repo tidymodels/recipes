@@ -15,6 +15,7 @@ step_dummy_multi_choice(
   other = "other",
   naming = dummy_names,
   prefix = NULL,
+  sparse = "auto",
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy_multi_choice")
@@ -56,6 +57,11 @@ columns. See Details below.}
 
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
+
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Sparsity is only  supported
+for \code{"contr.treatment"} contrasts. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}

@@ -176,6 +176,41 @@ test_that("factor levels are preserved", {
   expect_identical(ncol(data1), ncol(data2))
 })
 
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~., data = languages)
+
+  dense <- rec %>%
+    step_dummy_multi_choice(all_predictors(), sparse = "no") %>%
+    prep() %>%
+    bake(NULL)
+  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
+  sparse <- rec %>%
+    step_dummy_multi_choice(all_predictors(), sparse = "yes") %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  rec <- recipe(~., data = languages) %>%
+    step_dummy_multi_choice(all_predictors()) %>%
+    prep()
+
+  exp <- bake(rec, languages)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, languages),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
