@@ -251,3 +251,13 @@ tidy.step_count <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_estimate_sparsity.step_count <- function(x, data, ...) {
+  lapply(1, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 0.5
+    )
+  })
+}

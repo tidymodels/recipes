@@ -121,6 +121,17 @@ test_that("sparse argument is backwards compatible", {
   )
 })
 
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~description, covers) %>%
+    step_count(description, pattern = "stony", sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_true(
+    .recipes_estimate_sparsity(rec) > exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
