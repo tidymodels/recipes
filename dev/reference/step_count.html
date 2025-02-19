@@ -67,6 +67,7 @@ variable that counts instances of a regular expression pattern in text.</p>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  result <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/make.names.html" class="external-link">make.names</a></span><span class="op">(</span><span class="va">pattern</span><span class="op">)</span>,</span>
 <span>  input <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sparse <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  keep_original_cols <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"count"</span><span class="op">)</span></span>
@@ -125,6 +126,13 @@ variable. It should be a valid column name.</p></dd>
 <dd><p>A single character value for the name of the
 variable being searched. This is <code>NULL</code> until computed by
 <code><a href="prep.html">prep()</a></code>.</p></dd>
+
+
+<dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
+<dd><p>A single string. Should the columns produced be sparse vectors.
+Can take the values <code>"yes"</code>, <code>"no"</code>, and <code>"auto"</code>. If <code>sparse = "auto"</code>
+then workflows can determine the best option. Sparsity is only  supported
+for <code>"contr.treatment"</code> contrasts. Defaults to <code>"auto"</code>.</p></dd>
 
 
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
