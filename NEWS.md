@@ -12,6 +12,8 @@
 
 * `step_indicate_na()` gained `sparse` argument. When set to `"yes"`, `step_indicate_na()` will produce sparse vectors. (#1424)
 
+* `step_dummy_extract()` gained `sparse` argument. When set to `"yes"`, `step_dummy_extract()` will produce sparse vectors. (#1426)
+
 # recipes 1.1.1
 
 ## Improvements

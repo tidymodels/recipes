@@ -104,6 +104,7 @@ step_dummy_extract <-
     other = "other",
     naming = dummy_extract_names,
     levels = NULL,
+    sparse = "auto",
     keep_original_cols = FALSE,
     skip = FALSE,
     id = rand_id("dummy_extract")
@@ -120,6 +121,7 @@ step_dummy_extract <-
         other = other,
         naming = naming,
         levels = levels,
+        sparse = sparse,
         keep_original_cols = keep_original_cols,
         skip = skip,
         id = id,
@@ -139,6 +141,7 @@ step_dummy_extract_new <-
     other,
     naming,
     levels,
+    sparse,
     keep_original_cols,
     skip,
     id,
@@ -155,6 +158,7 @@ step_dummy_extract_new <-
       other = other,
       naming = naming,
       levels = levels,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id,
@@ -175,6 +179,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   check_string(x$sep, arg = "sep", allow_null = TRUE)
   check_string(x$pattern, arg = "pattern", allow_null = TRUE)
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
+  check_sparse_arg(x$sparse)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -234,6 +239,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     other = x$other,
     naming = x$naming,
     levels = levels,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id,
@@ -261,10 +267,17 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
     indicators <- list_to_dummies(
       elements,
       sort(object$levels[[col_name]]),
-      object$other
+      object$other,
+      sparse_is_yes(object$sparse)
     )
-    indicators <- purrr::map(indicators, vec_cast, integer())
-    indicators <- vctrs::vec_cbind(!!!indicators)
+
+    if (sparse_is_yes(object$sparse)) {
+      indicators <- purrr::map(indicators, sparsevctrs::as_sparse_integer)
+    } else {
+      indicators <- purrr::map(indicators, vec_cast, integer())
+    }
+
+    indicators <- tibble::new_tibble(indicators)
 
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_name), "", colnames(indicators))
@@ -292,7 +305,7 @@ dummy_extract <- function(x, sep = NULL, pattern = NULL, call = caller_env()) {
   cli::cli_abort("{.arg sep} or {.arg pattern} must be specified.", call = call)
 }
 
-list_to_dummies <- function(x, dict, other = "other") {
+list_to_dummies <- function(x, dict, other = "other", sparse = FALSE) {
   i <- rep(seq_along(x), lengths(x))
   j <- match(unlist(x), dict)
 
@@ -307,8 +320,15 @@ list_to_dummies <- function(x, dict, other = "other") {
   )
 
   out@Dimnames[[2]] <- dict
-  out <- as.matrix(out)
-  tibble::as_tibble(out)
+
+  if (sparse) {
+    out <- sparsevctrs::coerce_to_sparse_tibble(out)
+  } else {
+    out <- as.matrix(out)
+    out <- tibble::as_tibble(out)
+  }
+
+  out
 }
 
 #' @export
@@ -341,4 +361,28 @@ tidy.step_dummy_extract <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_dummy_extract <- function(x, data, ...) {
+  get_levels <- function(col) {
+    elements <- dummy_extract(
+      col[seq(1, min(10, length(col)))],
+      sep = x$sep,
+      pattern = x$pattern
+    )
+
+    lvls <- map(elements, unique)
+    lvls <- unlist(lvls)
+    length(lvls)
+  }
+
+  n_levels <- lapply(data, get_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
 }
