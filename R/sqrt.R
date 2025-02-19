@@ -95,7 +95,11 @@ bake.step_sqrt <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   for (col_name in col_names) {
-    new_data[[col_name]] <- sqrt(new_data[[col_name]])
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_sqrt(new_data[[col_name]])
+    } else {
+      new_data[[col_name]] <- sqrt(new_data[[col_name]])
+    }
   }
 
   new_data
@@ -114,4 +118,9 @@ tidy.step_sqrt <- function(x, ...) {
   res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_destroy_sparsity.step_sqrt <- function(x, ...) {
+  FALSE
 }

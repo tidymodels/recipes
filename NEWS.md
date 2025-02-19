@@ -20,6 +20,8 @@
 
 * `step_regex()` gained `sparse` argument. When set to `"yes"`, `step_regex()` will produce sparse vectors. (#1429)
 
+* `step_sqrt()` doesn't destroy sparsity when applied. (#1432)
+
 # recipes 1.1.1
 
 ## Improvements
