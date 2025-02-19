@@ -68,6 +68,19 @@ test_that("bake a single row", {
   expect_equal(dat4, tibble(dat[1, ]))
 })
 
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~., mtcars) %>%
+    step_shuffle(vs, am) %>%
+    prep()
+
+  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
