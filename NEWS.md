@@ -18,6 +18,8 @@
 
 * `step_count()` gained `sparse` argument. When set to `"yes"`, `step_count()` will produce sparse vectors. (#1428)
 
+* `step_regex()` gained `sparse` argument. When set to `"yes"`, `step_regex()` will produce sparse vectors. (#1429)
+
 # recipes 1.1.1
 
 ## Improvements

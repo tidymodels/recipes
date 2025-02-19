@@ -6,6 +6,7 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @inheritParams step_dummy
 #' @param ... A single selector function to choose which variable
 #'  will be searched for the regex pattern. The selector should resolve
 #'  to a single variable. See [selections()] for more details.
@@ -61,6 +62,7 @@ step_regex <- function(
   options = list(),
   result = make.names(pattern),
   input = NULL,
+  sparse = "auto",
   keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("regex")
@@ -97,6 +99,7 @@ step_regex <- function(
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -113,6 +116,7 @@ step_regex_new <-
     options,
     result,
     input,
+    sparse,
     keep_original_cols,
     skip,
     id
@@ -126,6 +130,7 @@ step_regex_new <-
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -137,6 +142,7 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
   check_string(x$pattern, arg = "pattern", allow_empty = FALSE)
+  check_sparse_arg(x$sparse)
 
   step_regex_new(
     terms = x$terms,
@@ -146,6 +152,7 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -177,6 +184,13 @@ bake.step_regex <- function(object, new_data, ...) {
   }
 
   new_values <- tibble::tibble(!!object$result := ifelse(eval(regex), 1L, 0L))
+
+  if (sparse_is_yes(object$sparse)) {
+    new_values[[object$result]] <- sparsevctrs::as_sparse_integer(
+      new_values[[object$result]]
+    )
+  }
+
   new_values <- check_name(new_values, new_data, object, object$result)
   new_data <- vec_cbind(new_data, new_values)
   new_data <- remove_original_cols(new_data, object, col_name)
@@ -211,4 +225,14 @@ tidy.step_regex <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_regex <- function(x, data, ...) {
+  lapply(1, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 0.5
+    )
+  })
 }
