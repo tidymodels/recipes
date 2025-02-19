@@ -142,3 +142,8 @@ tidy.step_arrange <- function(x, ...) {
     id = rep(x$id, length(x$inputs))
   )
 }
+
+#' @export
+.recipes_destroy_sparsity.step_arrange <- function(x, ...) {
+  FALSE
+}

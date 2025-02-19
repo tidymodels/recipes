@@ -130,7 +130,7 @@ sparse_is_yes <- function(x) {
 #' This function return `TRUE` if modifications by this step is expected to
 #' destroy sparsity of its columns. It does not know whether it will happen or
 #' not since it doesn't know if the step will select sparse columns or not.
-#' 
+#'
 #' It returns `FALSE` for steps that have been modified to handle sparse columns
 #' correctly.
 #'
