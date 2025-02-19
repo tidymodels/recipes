@@ -132,3 +132,8 @@ tidy.step_select <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_destroy_sparsity.step_select <- function(x, ...) {
+  FALSE
+}
