@@ -75,6 +75,52 @@ test_that("checks for grepl arguments", {
   )
 })
 
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~description, covers)
+
+  suppressWarnings({
+    dense <- rec %>%
+      step_count(
+        description,
+        pattern = "stony",
+        sparse = "no",
+        keep_original_cols = FALSE
+      ) %>%
+      prep() %>%
+      bake(NULL)
+    sparse <- rec %>%
+      step_count(
+        description,
+        pattern = "stony",
+        sparse = "yes",
+        keep_original_cols = FALSE
+      ) %>%
+      prep() %>%
+      bake(NULL)
+  })
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  rec <- recipe(~description, covers) %>%
+    step_count(description, pattern = "stony") %>%
+    prep()
+
+  exp <- bake(rec, covers)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, covers),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

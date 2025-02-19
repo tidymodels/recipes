@@ -6,6 +6,7 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @inheritParams step_dummy
 #' @param ... A single selector function to choose which variable
 #'  will be searched for the regex pattern. The selector should
 #'  resolve to a single variable. See [selections()] for more details.
@@ -65,6 +66,7 @@ step_count <- function(
   options = list(),
   result = make.names(pattern),
   input = NULL,
+  sparse = "auto",
   keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("count")
@@ -104,6 +106,7 @@ step_count <- function(
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -121,6 +124,7 @@ step_count_new <-
     options,
     result,
     input,
+    sparse,
     keep_original_cols,
     skip,
     id
@@ -135,6 +139,7 @@ step_count_new <-
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -148,6 +153,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   check_string(x$pattern, allow_empty = TRUE, arg = "pattern")
   check_string(x$result, allow_empty = FALSE, arg = "result")
   check_bool(x$normalize, arg = "normalize")
+  check_sparse_arg(x$sparse)
 
   step_count_new(
     terms = x$terms,
@@ -158,6 +164,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -195,6 +202,18 @@ bake.step_count <- function(object, new_data, ...) {
   if (object$normalize) {
     totals <- nchar(as.character(new_data[[col_name]]))
     new_values[[object$result]] <- new_values[[object$result]] / totals
+  }
+
+  if (sparse_is_yes(object$sparse)) {
+    if (object$normalize) {
+      new_values[[object$result]] <- sparsevctrs::as_sparse_double(
+        new_values[[object$result]]
+      )
+    } else {
+      new_values[[object$result]] <- sparsevctrs::as_sparse_integer(
+        new_values[[object$result]]
+      )
+    }
   }
 
   new_values <- check_name(new_values, new_data, object, object$result)

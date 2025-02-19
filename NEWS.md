@@ -16,6 +16,8 @@
 
 * `step_dummy_multi_choice()` gained `sparse` argument. When set to `"yes"`, `step_dummy_multi_choice()` will produce sparse vectors. (#1427)
 
+* `step_count()` gained `sparse` argument. When set to `"yes"`, `step_count()` will produce sparse vectors. (#1428)
+
 # recipes 1.1.1
 
 ## Improvements
