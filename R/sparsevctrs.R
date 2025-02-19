@@ -121,3 +121,36 @@ check_sparse_arg <- function(x) {
 sparse_is_yes <- function(x) {
   !is.null(x) && x == "yes"
 }
+
+#' Does step destroy sparsity of columns
+#'
+#' @param x An object.
+#'
+#' @details
+#' This function return `TRUE` if modifications by this step is expected to
+#' destroy sparsity of its columns. It does not know whether it will happen or
+#' not since it doesn't know if the step will select sparse columns or not.
+#' 
+#' It returns `FALSE` for steps that have been modified to handle sparse columns
+#' correctly.
+#'
+#' @return Single logical.
+#'
+#' @keywords internal
+#'
+#' @export
+.recipes_destroy_sparsity <- function(x, ...) {
+  UseMethod(".recipes_destroy_sparsity")
+}
+
+#' @export
+.recipes_destroy_sparsity.default <- function(x, ...) {
+  if (!inherits(x, "step")) {
+    cli::cli_abort(
+      "{.fn .recipes_destroy_sparsity} is only applicable to steps, 
+      not {.obj_type_friendly {x}}."
+    )
+  }
+
+  TRUE
+}
