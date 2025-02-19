@@ -127,3 +127,8 @@ tidy.step_rename <- function(x, ...) {
     id = rep(x$id, length(x$inputs))
   )
 }
+
+#' @export
+.recipes_destroy_sparsity.step_rename <- function(x, ...) {
+  FALSE
+}

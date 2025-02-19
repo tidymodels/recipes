@@ -190,3 +190,8 @@ tidy.step_sample <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_destroy_sparsity.step_sample <- function(x, ...) {
+  FALSE
+}

@@ -140,6 +140,27 @@ test_that("warn when selectors are provided", {
   )
 })
 
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~., mtcars) %>%
+    step_sample(size = 10) %>%
+    prep()
+
+  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
+
+  rec <- recipe(~., mtcars) %>%
+    step_sample(size = 0.5) %>%
+    prep()
+
+  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

@@ -141,3 +141,8 @@ tidy.step_slice <- function(x, ...) {
     id = rep(x$id, length(x$inputs))
   )
 }
+
+#' @export
+.recipes_destroy_sparsity.step_slice <- function(x, ...) {
+  FALSE
+}
