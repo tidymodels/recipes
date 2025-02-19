@@ -128,10 +128,17 @@ bake.step_impute_median <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     median <- object$medians[[col_name]]
-    if (any(is.na(new_data[[col_name]]))) {
-      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
+        new_data[[col_name]],
+        median
+      )
+    } else {
+      if (any(is.na(new_data[[col_name]]))) {
+        new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
+      }
+      new_data[is.na(new_data[[col_name]]), col_name] <- median
     }
-    new_data[is.na(new_data[[col_name]]), col_name] <- median
   }
 
   new_data
@@ -166,4 +173,9 @@ tidy.step_impute_median <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_destroy_sparsity.step_impute_median <- function(x, ...) {
+  FALSE
 }

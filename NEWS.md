@@ -24,6 +24,8 @@
 
 * `step_arrange()`, `step_filter()`, `step_rename_at()`, `step_rename()`, `step_sample()`, `step_select()`, `step_shuffle()`, and `step_slice()` doesn't destroy sparsity when applied. (#1433)
 
+* `step_impute_mean()` and `step_impute_median()` doesn't destroy sparsity when applied. (#1434)
+
 # recipes 1.1.1
 
 ## Improvements
