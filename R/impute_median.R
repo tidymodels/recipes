@@ -134,7 +134,7 @@ bake.step_impute_median <- function(object, new_data, ...) {
         median
       )
     } else {
-      if (any(is.na(new_data[[col_name]]))) {
+      if (anyNA(new_data[[col_name]])) {
         new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
       }
       new_data[is.na(new_data[[col_name]]), col_name] <- median
@@ -176,6 +176,6 @@ tidy.step_impute_median <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_impute_median <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_impute_median <- function(x, ...) {
+  TRUE
 }

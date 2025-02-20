@@ -29,7 +29,7 @@ test_that("doesn't destroy sparsity", {
 
   expect_true(all(vapply(rec_trans, sparsevctrs::is_sparse_double, logical(1))))
 
-  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
 })
 
 # Infrastructure ---------------------------------------------------------------

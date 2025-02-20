@@ -165,10 +165,11 @@ bake.step_impute_mean <- function(object, new_data, ...) {
     mean <- object$means[[col_name]]
     if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
       new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
-        new_data[[col_name]], mean
+        new_data[[col_name]],
+        mean
       )
     } else {
-      if (any(is.na(new_data[[col_name]]))) {
+      if (anyNA(new_data[[col_name]])) {
         new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
       }
       new_data[is.na(new_data[[col_name]]), col_name] <- mean
@@ -223,6 +224,6 @@ tunable.step_impute_mean <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_impute_mean <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_impute_mean <- function(x, ...) {
+  TRUE
 }

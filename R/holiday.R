@@ -41,7 +41,6 @@
 #' holiday_rec <- prep(holiday_rec, training = examples)
 #' holiday_values <- bake(holiday_rec, new_data = examples)
 #' holiday_values
-#' @import timeDate
 step_holiday <-
   function(
     recipe,

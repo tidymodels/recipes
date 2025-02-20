@@ -219,7 +219,7 @@ bake.step_impute_linear <- function(object, new_data, ...) {
     preds <- object$models[[col_name]]$..imp_vars
     pred_data <- old_data[missing_rows, preds, drop = FALSE]
     ## do a better job of checking this:
-    if (any(is.na(pred_data))) {
+    if (anyNA(pred_data)) {
       cli::cli_warn(
         "There were missing values in the predictor(s) used to impute; \\
         imputation did not occur."

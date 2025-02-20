@@ -117,6 +117,6 @@ tidy.step_shuffle <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_shuffle <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_shuffle <- function(x, ...) {
+  TRUE
 }

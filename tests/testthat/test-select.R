@@ -141,7 +141,7 @@ test_that("doesn't destroy sparsity", {
     step_select(vs, mpg, disp) %>%
     prep()
 
-  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
 })
 

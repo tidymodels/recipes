@@ -143,6 +143,6 @@ tidy.step_slice <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_slice <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_slice <- function(x, ...) {
+  TRUE
 }

@@ -115,7 +115,7 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
     limits = x$limits,
     num_unique = x$num_unique
   )
-  if (any(is.na(values))) {
+  if (anyNA(values)) {
     var_names <- names(values[is.na(values)])
     cli::cli_warn(
       "No Box-Cox transformation could be estimated for: {.var {var_names}}."

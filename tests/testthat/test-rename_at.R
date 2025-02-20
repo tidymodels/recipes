@@ -61,7 +61,7 @@ test_that("doesn't destroy sparsity", {
     step_rename_at(starts_with("v"), fn = ~toupper(.)) %>%
     prep()
 
-  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$VS))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 })

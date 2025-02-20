@@ -1,13 +1,7 @@
 test_that("shrunken centroids", {
-  library(dplyr)
-  library(purrr)
-  library(hardhat)
-
-  # ----------------------------------------------------------------------------
-
   set.seed(1)
   nsc_test <-
-    tibble(
+    dplyr::tibble(
       x = rnorm(300),
       y = rnorm(300),
       class = rep(letters[1:3], each = 100)
@@ -153,10 +147,10 @@ test_that("shrunken centroids", {
   tidy_weights_prep <- tidy(nsc_rec_weights_prep, 1)
   global_unwt <- tidy_prep %>%
     dplyr::filter(type == "global") %>%
-    pluck("value")
+    purrr::pluck("value")
   global_wt <- tidy_weights_prep %>%
     dplyr::filter(type == "global") %>%
-    pluck("value")
+    purrr::pluck("value")
 
   expect_true(all(global_unwt != global_wt))
   expect_equal(unique(tidy_weights_prep$terms), c("x", "y"))

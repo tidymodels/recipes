@@ -32,10 +32,16 @@ This means that `sample` is no longer treated as a `"predictor"` (the default ro
 
 If you really aren't using `sample` in your recipe, we recommend that you instead remove `sample` from your dataset before passing it to `recipe()`. The reason for this is because recipes assumes that all non-standard roles are required at `bake()` time (or `predict()` time, if you are using a workflow). Since you didn't use `sample` in any steps of the recipe, you might think that you don't need to pass it to `bake()`, but this isn't true because recipes doesn't know that you didn't use it:
 
-```{r, error=TRUE}
+```{r, error=TRUE, eval=FALSE}
 biomass_test$sample <- NULL
 
-try(bake(rec, biomass_test))
+bake(rec, biomass_test)
+#> Error in `bake()`:
+#> ✖ The following required columns are missing from `new_data`: `sample`.
+#> ℹ These columns have one of the following roles, which are required at `bake()`
+#>   time: `id variable`.
+#> ℹ If these roles are not required at `bake()` time, use
+#>   `update_role_requirements(role = "your_role", bake = FALSE)`.
 ```
 
 As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the `sample` column from `biomass` before calling `recipe()`. In general, predictors and non-standard roles that are supplied to `recipe()` should be present at both `prep()` and `bake()` time.

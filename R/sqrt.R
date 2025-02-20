@@ -121,6 +121,6 @@ tidy.step_sqrt <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_sqrt <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_sqrt <- function(x, ...) {
+  TRUE
 }

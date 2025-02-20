@@ -99,8 +99,8 @@ test_that("na_rm argument works for step_window", {
     prep() %>%
     bake(new_data = NULL)
 
-  expect_false(any(is.na(simple_ma_rm_na$y1)))
-  expect_false(any(is.na(simple_ma_rm_na$y2)))
+  expect_false(anyNA(simple_ma_rm_na$y1))
+  expect_false(anyNA(simple_ma_rm_na$y2))
 
   exp_rm_na <- simple_ma_rm_na
   exp_rm_na[6:8, 2:3] <- NA

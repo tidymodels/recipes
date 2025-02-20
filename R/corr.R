@@ -237,7 +237,7 @@ corr_filter <-
           )
         }
       }
-      if (any(is.na(x))) {
+      if (anyNA(x)) {
         cli::cli_warn(
           "The correlation matrix has sporadic missing values. \\
           Some columns were excluded from the filter."

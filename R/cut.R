@@ -155,7 +155,7 @@ create_full_breaks <- function(var, breaks, call = rlang::caller_env()) {
     )
   }
 
-  if (any(is.na(var))) {
+  if (anyNA(var)) {
     cli::cli_warn(
       "{.arg var} contains missing values. These will be ignored in break
        calculations.",
