@@ -35,6 +35,7 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @import timeDate
 #' @importFrom dplyr arrange
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr desc
