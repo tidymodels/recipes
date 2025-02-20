@@ -124,6 +124,19 @@ test_that("case weights", {
   expect_snapshot(impute_rec)
 })
 
+test_that("doesn't destroy sparsity", {
+  credit_tr$Debt <- sparsevctrs::as_sparse_double(credit_tr$Debt)
+  rec <- recipe(~Debt, data = credit_tr) %>%
+    step_impute_median(Debt)
+
+  rec_trained <- prep(rec, training = credit_tr, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = credit_tr)
+
+  expect_true(all(vapply(rec_trans, sparsevctrs::is_sparse_double, logical(1))))
+
+  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
