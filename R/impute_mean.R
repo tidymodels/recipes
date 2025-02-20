@@ -165,7 +165,8 @@ bake.step_impute_mean <- function(object, new_data, ...) {
     mean <- object$means[[col_name]]
     if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
       new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
-        new_data[[col_name]], mean
+        new_data[[col_name]],
+        mean
       )
     } else {
       if (anyNA(new_data[[col_name]])) {
