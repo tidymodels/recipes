@@ -168,7 +168,7 @@ averages <- function(x, wts = NULL, na_rm = TRUE) {
     res <- purrr::map_dbl(x, ~wt_calcs(.x, wts))
   }
   if (!na_rm) {
-    res[map_lgl(x, ~any(is.na(.x)))] <- NA
+    res[map_lgl(x, ~anyNA(.x))] <- NA
   }
   res
 }
@@ -211,7 +211,7 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
     wts <- as.double(wts)
     res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "var"))
     if (!na_rm) {
-      res[map_lgl(x, ~any(is.na(.x)))] <- NA
+      res[map_lgl(x, ~anyNA(.x))] <- NA
     }
   }
   res

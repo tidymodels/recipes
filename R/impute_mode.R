@@ -131,7 +131,7 @@ bake.step_impute_mode <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   for (col_name in col_names) {
-    if (!any(is.na(new_data[[col_name]]))) {
+    if (!anyNA(new_data[[col_name]])) {
       next
     }
     if (is.null(object$ptype)) {

@@ -185,7 +185,7 @@ predict.discretize <- function(object, new_data, ...) {
     if (object$keep_na) {
       out_levels <- levels(out)
       out <- as.character(out)
-      if (any(is.na(new_data))) {
+      if (anyNA(new_data)) {
         missing_label <- object$labels[1] %||% "[missing]"
 
         out[is.na(new_data)] <- missing_label

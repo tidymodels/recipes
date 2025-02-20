@@ -251,7 +251,7 @@ warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
     msg <- c("!" = "There are new levels in {.var {column}}: {.val {lvl2}}.")
-    if (any(is.na(lvl2))) {
+    if (anyNA(lvl2)) {
       msg <- c(
         msg,
         "i" = "Consider using {.help [step_unknown()](recipes::step_unknown)} \\
