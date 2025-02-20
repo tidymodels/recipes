@@ -150,15 +150,13 @@ all of the variables that have a custom role with the selector <code><a href="ha
 <p>If you really aren't using <code>sample</code> in your recipe, we recommend that you instead remove <code>sample</code> from your dataset before passing it to <code><a href="recipe.html">recipe()</a></code>. The reason for this is because recipes assumes that all non-standard roles are required at <code><a href="bake.html">bake()</a></code> time (or <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> time, if you are using a workflow). Since you didn't use <code>sample</code> in any steps of the recipe, you might think that you don't need to pass it to <code><a href="bake.html">bake()</a></code>, but this isn't true because recipes doesn't know that you didn't use it:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">biomass_test</span><span class="op">$</span><span class="va">sample</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_test</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in bake(rec, biomass_test) : x The following required columns are</span></span>
-<span><span class="co">#&gt;   missing from `new_data`: `sample`.</span></span>
-<span><span class="co">#&gt; i These columns have one of the following</span></span>
-<span><span class="co">#&gt;   roles, which are required at `bake()` time:</span></span>
-<span><span class="co">#&gt;   `id variable`.</span></span>
-<span><span class="co">#&gt; i If these roles are not required at `bake()`</span></span>
-<span><span class="co">#&gt;   time, use `update_role_requirements(role =</span></span>
-<span><span class="co">#&gt;   "your_role", bake = FALSE)`.</span></span></code></pre><p></p></div>
+<span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_test</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `bake()`:</span></span>
+<span><span class="co">#&gt; ✖ The following required columns are missing from `new_data`: `sample`.</span></span>
+<span><span class="co">#&gt; ℹ These columns have one of the following roles, which are required at `bake()`</span></span>
+<span><span class="co">#&gt;   time: `id variable`.</span></span>
+<span><span class="co">#&gt; ℹ If these roles are not required at `bake()` time, use</span></span>
+<span><span class="co">#&gt;   `update_role_requirements(role = "your_role", bake = FALSE)`.</span></span></code></pre><p></p></div>
 <p>As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the <code>sample</code> column from <code>biomass</code> before calling <code><a href="recipe.html">recipe()</a></code>. In general, predictors and non-standard roles that are supplied to <code><a href="recipe.html">recipe()</a></code> should be present at both <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code> time.</p>
 <p>If you can't remove <code>sample</code> for some reason, then the second best way to get around this issue is to tell recipes that the <code>"id variable"</code> role isn't required at <code><a href="bake.html">bake()</a></code> time. You can do that by using <code><a href="update_role_requirements.html">update_role_requirements()</a></code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass_train</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
