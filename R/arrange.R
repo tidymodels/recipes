@@ -144,6 +144,6 @@ tidy.step_arrange <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_arrange <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_arrange <- function(x, ...) {
+  TRUE
 }

@@ -134,6 +134,6 @@ tidy.step_select <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_select <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_select <- function(x, ...) {
+  TRUE
 }

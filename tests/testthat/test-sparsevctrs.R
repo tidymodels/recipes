@@ -328,7 +328,7 @@ test_that(".recipes_toggle_sparse_args works", {
   rec <- recipe(~., mtcars) |>
     step_dummy()
 
-  expect_true(
-    .recipes_destroy_sparsity(rec$steps[[1]])
+  expect_false(
+    .recipes_preserve_sparsity(rec$steps[[1]])
   )
 })

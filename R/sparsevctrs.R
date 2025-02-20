@@ -139,18 +139,18 @@ sparse_is_yes <- function(x) {
 #' @keywords internal
 #'
 #' @export
-.recipes_destroy_sparsity <- function(x, ...) {
-  UseMethod(".recipes_destroy_sparsity")
+.recipes_preserve_sparsity <- function(x, ...) {
+  UseMethod(".recipes_preserve_sparsity")
 }
 
 #' @export
-.recipes_destroy_sparsity.default <- function(x, ...) {
+.recipes_preserve_sparsity.default <- function(x, ...) {
   if (!inherits(x, "step")) {
     cli::cli_abort(
-      "{.fn .recipes_destroy_sparsity} is only applicable to steps, 
+      "{.fn .recipes_preserve_sparsity} is only applicable to steps, 
       not {.obj_type_friendly {x}}."
     )
   }
 
-  TRUE
+  FALSE
 }

@@ -119,6 +119,6 @@ tidy.step_rename_at <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_rename_at <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_rename_at <- function(x, ...) {
+  TRUE
 }

@@ -141,6 +141,6 @@ tidy.step_filter <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_filter <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_filter <- function(x, ...) {
+  TRUE
 }

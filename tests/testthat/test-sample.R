@@ -148,7 +148,7 @@ test_that("doesn't destroy sparsity", {
     step_sample(size = 10) %>%
     prep()
 
-  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 
@@ -156,7 +156,7 @@ test_that("doesn't destroy sparsity", {
     step_sample(size = 0.5) %>%
     prep()
 
-  expect_false(.recipes_destroy_sparsity(rec$steps[[1]]))
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 })

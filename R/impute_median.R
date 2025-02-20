@@ -176,6 +176,6 @@ tidy.step_impute_median <- function(x, ...) {
 }
 
 #' @export
-.recipes_destroy_sparsity.step_impute_median <- function(x, ...) {
-  FALSE
+.recipes_preserve_sparsity.step_impute_median <- function(x, ...) {
+  TRUE
 }
