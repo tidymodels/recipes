@@ -111,3 +111,8 @@ print.step_rm <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_rm <- tidy_filter
+
+#' @export
+.recipes_preserve_sparsity.step_rm <- function(x, ...) {
+  TRUE
+}

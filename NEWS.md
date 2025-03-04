@@ -28,6 +28,8 @@
 
 * `step_scale()` doesn't destroy sparsity when applied. (#1436)
 
+* `step_rm()` doesn't destroy sparsity when applied. (#1437)
+
 # recipes 1.1.1
 
 ## Improvements
