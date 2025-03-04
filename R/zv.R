@@ -95,7 +95,12 @@ step_zv_new <-
 
 one_unique <- function(x) {
   x <- x[!is.na(x)]
-  length(unique(x)) < 2
+  if (sparsevctrs::is_sparse_vector(x)) {
+    res <- length(unique(sparsevctrs::sparse_values(x))) == 0
+  } else {
+    res <- length(unique(x)) < 2
+  }
+  res
 }
 
 group_one_unique <- function(x, f) {
@@ -151,3 +156,8 @@ print.step_zv <-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_zv <- tidy_filter
+
+#' @export
+.recipes_preserve_sparsity.step_zv <- function(x, ...) {
+  TRUE
+}
