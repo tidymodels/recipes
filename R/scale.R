@@ -148,7 +148,14 @@ bake.step_scale <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     sd <- object$sds[col_name]
-    new_data[[col_name]] <- new_data[[col_name]] / sd
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_division_scalar(
+        new_data[[col_name]],
+        sd
+      )
+    } else {
+      new_data[[col_name]] <- new_data[[col_name]] / sd
+    }
   }
   new_data
 }
@@ -185,4 +192,9 @@ tidy.step_scale <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_scale <- function(x, ...) {
+  TRUE
 }

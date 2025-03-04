@@ -26,6 +26,8 @@
 
 * `step_impute_mean()` and `step_impute_median()` doesn't destroy sparsity when applied. (#1434)
 
+* `step_scale()` doesn't destroy sparsity when applied. (#1436)
+
 # recipes 1.1.1
 
 ## Improvements
