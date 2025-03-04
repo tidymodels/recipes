@@ -85,6 +85,22 @@ test_that("mssing values in zero-variance screen", {
   expect_true(recipes:::one_unique(z))
 })
 
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+  rec <- recipe(~am + vs, data = mtcars) %>%
+    step_zv(all_predictors())
+
+  rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = mtcars)
+
+  expect_true(
+    all(vapply(rec_trans, sparsevctrs::is_sparse_integer, logical(1)))
+  )
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

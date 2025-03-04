@@ -30,6 +30,8 @@
 
 * `step_rm()` doesn't destroy sparsity when applied. (#1437)
 
+* `step_zv()` doesn't destroy sparsity when applied. (#1438)
+
 # recipes 1.1.1
 
 ## Improvements
