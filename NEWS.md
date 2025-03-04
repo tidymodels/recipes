@@ -32,6 +32,8 @@
 
 * `step_zv()` doesn't destroy sparsity when applied. (#1438)
 
+* `step_filter_missing()` doesn't destroy sparsity when applied. (#1439)
+
 # recipes 1.1.1
 
 ## Improvements
