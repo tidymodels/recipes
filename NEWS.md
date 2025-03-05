@@ -36,6 +36,8 @@
 
 * `step_lag()` doesn't destroy sparsity when applied. (#1440)
 
+* `step_lag()` doesn't destroy sparsity when applied. (#1441)
+
 # recipes 1.1.1
 
 ## Improvements
