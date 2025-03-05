@@ -34,6 +34,8 @@
 
 * `step_filter_missing()` doesn't destroy sparsity when applied. (#1439)
 
+* `step_lag()` doesn't destroy sparsity when applied. (#1440)
+
 # recipes 1.1.1
 
 ## Improvements
