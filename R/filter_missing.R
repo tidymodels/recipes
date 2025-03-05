@@ -36,6 +36,8 @@
 #' cat(result)
 #' ```
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
