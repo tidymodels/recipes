@@ -55,8 +55,7 @@ variable being searched. This is \code{NULL} until computed by
 
 \item{sparse}{A single string. Should the columns produced be sparse vectors.
 Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
-then workflows can determine the best option. Sparsity is only  supported
-for \code{"contr.treatment"} contrasts. Defaults to \code{"auto"}.}
+then workflows can determine the best option. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
@@ -87,6 +86,20 @@ columns \code{terms}, \code{result} , and \code{id}:
 \item{result}{character, the new column names}
 \item{id}{character, id of this step}
 }
+}
+
+\section{Sparse data}{
+
+
+This step produces sparse columns if \code{sparse = "yes"} is being set. The
+default value \code{"auto"} won't trigger production fo sparse columns if a recipe
+is \code{\link[=prep]{prep()}}ed, but allows for a workflow to toggle to \code{"yes"} or \code{"no"}
+depending on whether the model supports \link{sparse_data} and if the model is
+is expected to run faster with the data.
+
+The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+\code{sparse = "yes"} or \code{sparse = "no"}.
 }
 
 \section{Case weights}{
