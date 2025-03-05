@@ -10,8 +10,8 @@ matrices are converted to sparse tibbles internally as each step expects a
 tibble as its input, and is expected to return a tibble as well.
 }
 \details{
-Several steps work with sparse data. A step can either work with  sparse
-data, ruin sparsity, or create sparsity. The documentation for each  step
+Several steps work with sparse data. A step can either work with sparse
+data, ruin sparsity, or create sparsity. The documentation for each step
 will indicate whether it will work with sparse data or create sparse columns.
 If nothing is listed it is assumed to ruin sparsity.
 

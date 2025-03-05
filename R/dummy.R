@@ -20,8 +20,7 @@
 #'   step is trained by [prep()].
 #' @param sparse A single string. Should the columns produced be sparse vectors.
 #'   Can take the values `"yes"`, `"no"`, and `"auto"`. If `sparse = "auto"`
-#'   then workflows can determine the best option. Sparsity is only  supported
-#'   for `"contr.treatment"` contrasts. Defaults to `"auto"`.
+#'   then workflows can determine the best option. Defaults to `"auto"`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -63,6 +62,8 @@
 #' be changed by passing in a different function to the `naming` argument for
 #' this step.
 #'
+#'
+#'
 #' Also, there are a number of contrast methods that return fractional values.
 #' The columns returned by this step are doubles (not integers) when
 #' `sparse = FALSE`. The columns returned when `sparse = TRUE` are integers.
@@ -80,6 +81,8 @@
 #'   \item{columns}{character, names of resulting columns}
 #'   \item{id}{character, id of this step}
 #' }
+#'
+#' @template sparse-creation
 #'
 #' @template case-weights-not-supported
 #'

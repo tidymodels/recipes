@@ -44,6 +44,8 @@
 #'
 #' The return value is ordered according to the frequency of `columns` entries in the training data set.
 #'
+#' @template sparse-creation
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
