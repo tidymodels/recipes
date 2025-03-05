@@ -149,10 +149,25 @@ print.step_filter_missing <-
   }
 
 filter_missing_fun <- function(x, threshold, wts) {
-  x_na <- purrr::map(x, is.na)
-  x_na <- vctrs::vec_cbind(!!!x_na)
-  missing <- averages(x_na, wts = wts)
-  removal_ind <- which(missing > threshold)
+  n <- NCOL(x)
+  removal_ind <- logical(n)
+
+  for (i in seq_len(n)) {
+    values <- x[[i]]
+
+    if (sparsevctrs::is_sparse_vector(values)) {
+      nas <- sparsevctrs::sparse_is_na(values, type = "integer")
+      missing <- sparsevctrs::sparse_mean(nas, wts = wts)
+    } else {
+      nas <- is.na(values)
+      missing <- averages(data.frame(nas), wts = wts)
+    }
+
+    if (missing > threshold) {
+      removal_ind[[i]] <- TRUE
+    }
+  }
+
   names(x)[removal_ind]
 }
 
@@ -171,4 +186,9 @@ tunable.step_filter_missing <- function(x, ...) {
     component = "step_filter_missing",
     component_id = x$id
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_filter_missing <- function(x, ...) {
+  TRUE
 }
