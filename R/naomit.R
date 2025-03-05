@@ -103,3 +103,8 @@ tidy.step_naomit <- function(x, ...) {
   res$id <- x$id
   res
 }
+
+#' @export
+.recipes_preserve_sparsity.step_naomit <- function(x, ...) {
+  TRUE
+}
