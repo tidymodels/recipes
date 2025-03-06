@@ -80,6 +80,13 @@ This step has 1 tuning parameters:
 }
 }
 
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
 \section{Case weights}{
 
 

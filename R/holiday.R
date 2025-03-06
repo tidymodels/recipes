@@ -29,6 +29,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-creation
+#'
 #' @template case-weights-not-supported
 #'
 #' @examples

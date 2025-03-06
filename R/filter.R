@@ -29,6 +29,8 @@
 #'
 #' The expressions in `terms` are text representations and are not parsable.
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps

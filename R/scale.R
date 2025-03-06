@@ -34,6 +34,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @references Gelman, A. (2007) "Scaling regression inputs by
