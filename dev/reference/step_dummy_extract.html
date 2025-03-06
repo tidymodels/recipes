@@ -141,8 +141,7 @@ step is trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 <dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
 <dd><p>A single string. Should the columns produced be sparse vectors.
 Can take the values <code>"yes"</code>, <code>"no"</code>, and <code>"auto"</code>. If <code>sparse = "auto"</code>
-then workflows can determine the best option. Sparsity is only  supported
-for <code>"contr.treatment"</code> contrasts. Defaults to <code>"auto"</code>.</p></dd>
+then workflows can determine the best option. Defaults to <code>"auto"</code>.</p></dd>
 
 
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
@@ -200,6 +199,20 @@ columns <code>terms</code>, <code>columns</code> , and <code>id</code>:</p>
 
 
 </dl><p>The return value is ordered according to the frequency of <code>columns</code> entries in the training data set.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="sparse-data">Sparse data<a class="anchor" aria-label="anchor" href="#sparse-data"></a></h2>
+
+
+
+<p>This step produces sparse columns if <code>sparse = "yes"</code> is being set. The
+default value <code>"auto"</code> won't trigger production fo sparse columns if a recipe
+is <code><a href="prep.html">prep()</a></code>ed, but allows for a workflow to toggle to <code>"yes"</code> or <code>"no"</code>
+depending on whether the model supports <a href="sparse_data.html">sparse_data</a> and if the model is
+is expected to run faster with the data.</p>
+<p>The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+<code>sparse = "yes"</code> or <code>sparse = "no"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>
