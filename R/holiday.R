@@ -114,6 +114,7 @@ step_holiday_new <-
 prep.step_holiday <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("date", "datetime"))
+  check_sparse_arg(x$sparse)
 
   step_holiday_new(
     terms = x$terms,
