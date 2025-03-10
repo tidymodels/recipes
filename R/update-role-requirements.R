@@ -69,10 +69,7 @@
 #'
 #' # Now you can `bake()` on `new_data` even though `var` is missing
 #' bake(prepped, new_data)
-update_role_requirements <- function(recipe,
-                                     role,
-                                     ...,
-                                     bake = NULL) {
+update_role_requirements <- function(recipe, role, ..., bake = NULL) {
   check_dots_empty0(...)
 
   role <- vctrs::vec_cast(role, to = character())
@@ -86,10 +83,12 @@ update_role_requirements <- function(recipe,
 
   exists <- role %in% roles
   if (!exists) {
-    cli::cli_abort(c(
-      x = "{.arg role} must be a preexisting role in the recipe.",
-      i = "{.val {role}} is not a preexisting role."
-    ))
+    cli::cli_abort(
+      c(
+        x = "{.arg role} must be a preexisting role in the recipe.",
+        i = "{.val {role}} is not a preexisting role."
+      )
+    )
   }
 
   recipe <- update_bake_role_requirements(recipe, role, bake)
@@ -103,10 +102,12 @@ new_role_requirements <- function() {
   )
 }
 
-check_role_requirements <- function(recipe,
-                                    new_data,
-                                    ...,
-                                    call = caller_env()) {
+check_role_requirements <- function(
+  recipe,
+  new_data,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty0(...)
   check_bake_role_requirements(recipe, new_data, call = call)
   invisible(recipe)
@@ -124,11 +125,13 @@ set_role_requirements <- function(recipe, requirements) {
 # ------------------------------------------------------------------------------
 # `bake`
 
-update_bake_role_requirements <- function(recipe,
-                                          role,
-                                          bake,
-                                          ...,
-                                          call = caller_env()) {
+update_bake_role_requirements <- function(
+  recipe,
+  role,
+  bake,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty0(...)
 
   if (is.null(bake)) {
@@ -172,10 +175,12 @@ new_bake_role_requirements <- function() {
   set_names(logical(), nms = character())
 }
 
-check_bake_role_requirements <- function(recipe,
-                                         new_data,
-                                         ...,
-                                         call = caller_env()) {
+check_bake_role_requirements <- function(
+  recipe,
+  new_data,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty0(...)
 
   var_info <- recipe$var_info

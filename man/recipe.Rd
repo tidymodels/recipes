@@ -3,8 +3,8 @@
 \name{recipe}
 \alias{recipe}
 \alias{recipe.default}
-\alias{recipe.formula}
 \alias{recipe.data.frame}
+\alias{recipe.formula}
 \alias{recipe.matrix}
 \title{Create a recipe for preprocessing data}
 \usage{
@@ -19,44 +19,45 @@ recipe(x, ...)
 \method{recipe}{matrix}(x, ...)
 }
 \arguments{
-\item{x, data}{A data frame or tibble of the \emph{template} data set
-(see below).}
+\item{x, data}{A data frame, tibble, or sparse matrix from the \code{Matrix}
+package of the \emph{template} data set. See \link{sparse_data} for more information
+about use of sparse data. (see below).}
 
 \item{...}{Further arguments passed to or from other methods (not currently
 used).}
 
 \item{formula}{A model formula. No in-line functions should be used here
-(e.g. \code{log(x)}, \code{x:y}, etc.) and minus signs are not allowed. These types of
-transformations should be enacted using \code{step} functions in this package.
-Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-\code{cbind}; see Examples). A model formula may not be the best choice for
-high-dimensional data with many columns, because of problems with memory.}
+(e.g. \code{log(x)}, \code{x:y}, etc.) and minus signs are not allowed. These types
+of transformations should be enacted using \code{step} functions in this
+package. Dots are allowed as are simple multivariate outcome terms (i.e. no
+need for \code{\link[=cbind]{cbind()}}; see Examples). A model formula may not be the best
+choice for high-dimensional data with many columns, because of problems
+with memory.}
 
 \item{vars}{A character string of column names corresponding to variables
 that will be used in any context (see below)}
 
-\item{roles}{A character string (the same length of \code{vars}) that
-describes a single role that the variable will take. This value could be
-anything but common roles are \code{"outcome"}, \code{"predictor"},
-\code{"case_weight"}, or \code{"ID"}}
+\item{roles}{A character string (the same length of \code{vars}) that describes a
+single role that the variable will take. This value could be anything but
+common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}.}
 }
 \value{
 An object of class \code{recipe} with sub-objects:
-\item{var_info}{A tibble containing information about the original data
-set columns}
+\item{var_info}{A tibble containing information about the original data set
+columns.}
 \item{term_info}{A tibble that contains the current set of terms in the
 data set. This initially defaults to the same data contained in
 \code{var_info}.}
-\item{steps}{A list of \code{step}  or \code{check} objects that define the sequence of
-preprocessing operations that will be applied to data. The default value is
-\code{NULL}}
-\item{template}{A tibble of the data. This is initialized to be the same
-as the data given in the \code{data} argument but can be different after
-the recipe is trained.}
+\item{steps}{A list of \code{step} or \code{check} objects that define the sequence
+of preprocessing operations that will be applied to data. The default value
+is \code{NULL}.}
+\item{template}{A tibble of the data. This is initialized to be the same as
+the data given in the \code{data} argument but can be different after the recipe
+is trained.}
 }
 \description{
-A recipe is a description of the steps to be applied to a data set in
-order to prepare it for data analysis.
+A recipe is a description of the steps to be applied to a data set in order
+to prepare it for data analysis.
 }
 \details{
 \subsection{Defining recipes}{
@@ -265,7 +266,7 @@ pca_rec
 
 ## -- Operations
 
-## * Centering and scaling for: carbon and hydrogen, ... | Trained
+## * Centering and scaling for: carbon hydrogen, ... | Trained
 
 ## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained
 }\if{html}{\out{</div>}}
@@ -316,7 +317,6 @@ applications.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-
 # formula example with single outcome:
 data(biomass, package = "modeldata")
 
@@ -360,4 +360,7 @@ rec <- recipe(biomass_tr) \%>\%
   update_role(dataset, new_role = "splitting indicator")
 rec
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=prep]{prep()}} and \code{\link[=bake]{bake()}}
 }

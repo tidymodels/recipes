@@ -1,6 +1,6 @@
 Package: recipes
 Title: Preprocessing and Feature Engineering Steps for Modeling
-Version: 1.1.0.9000
+Version: 1.1.1.9000
 Authors@R: c(
     person("Max", "Kuhn", , "max@posit.co", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
@@ -26,7 +26,7 @@ Imports:
     generics (>= 0.1.2),
     glue,
     gower,
-    hardhat (>= 1.4.0),
+    hardhat (>= 1.4.1),
     ipred (>= 0.9-12),
     lifecycle (>= 1.0.3),
     lubridate (>= 1.8.0),
@@ -34,6 +34,7 @@ Imports:
     Matrix,
     purrr (>= 1.0.0),
     rlang (>= 1.1.0),
+    sparsevctrs (>= 0.2.0.9006),
     stats,
     tibble,
     tidyr (>= 1.0.0),
@@ -50,6 +51,7 @@ Suggests:
     igraph,
     kernlab,
     knitr,
+    methods,
     modeldata (>= 0.1.1),
     parsnip (>= 1.2.0),
     RANN,
@@ -62,6 +64,8 @@ Suggests:
     testthat (>= 3.0.0),
     workflows,
     xml2
+Remotes:
+    r-lib/sparsevctrs
 VignetteBuilder: 
     knitr
 RdMacros: 
@@ -70,4 +74,4 @@ Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2

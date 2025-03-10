@@ -10,10 +10,20 @@
 # if the threshold argument is greather than one then it should be an integer(ish)
 
     Code
-      rec %>% step_other(city, zip, threshold = 3.14)
+      rec %>% step_other(city, zip, threshold = 3.14) %>% prep()
     Condition
       Error in `step_other()`:
+      Caused by error in `prep()`:
       ! `threshold` must be a whole number, not the number 3.14.
+
+# bad values of threshold are treated correctly
+
+    Code
+      rec %>% step_other(city, zip, threshold = letters) %>% prep()
+    Condition
+      Error in `step_other()`:
+      Caused by error in `prep()`:
+      ! `threshold` should be a single numeric value a character vector
 
 # othering with case weights
 
@@ -52,6 +62,14 @@
       
       -- Operations 
       * Collapsing factor levels for: city | Trained, ignored weights
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(others, new_data = sacr_te[, 3:9])
+    Condition
+      Error in `step_other()`:
+      ! The following required columns are missing from `new_data`: city and zip.
 
 # empty printing
 
@@ -101,7 +119,7 @@
       predictor: 2
       
       -- Operations 
-      * Collapsing factor levels for: city and zip
+      * Collapsing factor levels for: city zip
 
 ---
 
@@ -119,5 +137,5 @@
       Training data contained 732 data points and no incomplete rows.
       
       -- Operations 
-      * Collapsing factor levels for: city and zip | Trained
+      * Collapsing factor levels for: city zip | Trained
 

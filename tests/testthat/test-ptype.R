@@ -6,9 +6,9 @@ test_that("recipes_ptype() works", {
     x2 = factor(letters[1:10]),
     cw = hardhat::importance_weights(1:10)
   )
-  
+
   rec_spec <- recipe(y ~ ., data = data_orig)
-  
+
   exp_ptype <- vctrs::vec_ptype(data_orig)
 
   expect_identical(
@@ -29,11 +29,11 @@ test_that("recipes_ptype() isn't affected by prepping recipe", {
     x2 = factor(letters[1:10]),
     cw = hardhat::importance_weights(1:10)
   )
-  
+
   rec_spec <- recipe(y ~ ., data = data_orig) %>%
     step_dummy(all_nominal_predictors()) %>%
     prep()
-  
+
   exp_ptype <- vctrs::vec_ptype(data_orig)
 
   expect_identical(
@@ -54,10 +54,10 @@ test_that("recipes_ptype() works with update_role()", {
     x2 = factor(letters[1:10]),
     cw = hardhat::importance_weights(1:10)
   )
-  
+
   rec_spec <- recipe(y ~ ., data = data_orig) %>%
     update_role(id, new_role = "id")
-  
+
   exp_ptype <- vctrs::vec_ptype(data_orig)
 
   expect_identical(
@@ -78,11 +78,11 @@ test_that("recipes_ptype() works with update_role_requirements()", {
     x2 = factor(letters[1:10]),
     cw = hardhat::importance_weights(1:10)
   )
-  
+
   rec_spec <- recipe(y ~ ., data = data_orig) %>%
     update_role(id, new_role = "id") %>%
     update_role_requirements("id", bake = FALSE)
-  
+
   exp_ptype <- vctrs::vec_ptype(data_orig)
 
   expect_identical(
@@ -103,9 +103,9 @@ test_that("recipes_ptype() works with NA roles", {
     x2 = factor(letters[1:10]),
     cw = hardhat::importance_weights(1:10)
   )
-  
+
   rec_spec <- recipe(data_orig)
-  
+
   exp_ptype <- vctrs::vec_ptype(data_orig)
 
   expect_identical(
@@ -126,9 +126,9 @@ test_that("recipes_ptype() works with formula interface", {
     x2 = factor(letters[1:10]),
     cw = hardhat::importance_weights(1:10)
   )
-  
+
   rec_spec <- recipe(data_orig, y ~ x1)
-  
+
   exp_ptype <- vctrs::vec_ptype(data_orig)
 
   expect_identical(
@@ -143,7 +143,7 @@ test_that("recipes_ptype() works with formula interface", {
 
 test_that("recipes_ptype returns NULL on old recipes", {
   rec <- recipe(mpg ~ ., data = mtcars)
-  
+
   # simulate pre-1.1.0 recipe
   rec$ptype <- NULL
 
@@ -173,14 +173,12 @@ test_that("recipes_ptype_validate() works", {
     recipes_ptype_validate(rec, data_new)
   )
 
-
   # works at bake time
   data_new <- data_orig
   data_new$y <- NULL
   expect_no_error(
     recipes_ptype_validate(rec, data_new, stage = "bake")
   )
-
 
   # Extra variables
   data_new <- data_orig
@@ -225,7 +223,7 @@ test_that("recipes_ptype_validate() works", {
   # wrong attributes
   data_new <- data_orig
   attributes(data_new$x1) <- list("amount" = 4)
-  
+
   expect_snapshot(
     error = TRUE,
     recipes_ptype_validate(rec, data_new)
@@ -235,7 +233,7 @@ test_that("recipes_ptype_validate() works", {
   data_new <- data_orig
   attributes(data_new$x1) <- list("amount" = 4)
   attributes(data_new$id) <- list("amount" = 4)
-    
+
   expect_snapshot(
     error = TRUE,
     recipes_ptype_validate(rec, data_new)
@@ -244,7 +242,7 @@ test_that("recipes_ptype_validate() works", {
   # wrong factor levels
   data_new <- data_orig
   levels(data_new$x2) <- letters
-      
+
   expect_snapshot(
     error = TRUE,
     recipes_ptype_validate(rec, data_new)

@@ -6,7 +6,7 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
-#' @param .pkgs Character vector, package names of functions used in 
+#' @param .pkgs Character vector, package names of functions used in
 #'   expressions `...`. Should be specified if using non-base functions.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
@@ -86,14 +86,16 @@
 #'
 #' # The difference:
 #' tidy(qq_rec, number = 1)
-step_mutate <- function(recipe, 
-                        ...,
-                        .pkgs = character(),
-                        role = "predictor",
-                        trained = FALSE,
-                        inputs = NULL,
-                        skip = FALSE,
-                        id = rand_id("mutate")) {
+step_mutate <- function(
+  recipe,
+  ...,
+  .pkgs = character(),
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("mutate")
+) {
   check_character(.pkgs)
   recipes_pkg_check(required_pkgs.step_mutate(list(.pkgs = .pkgs)))
 

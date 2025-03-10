@@ -8,6 +8,14 @@
       x The following columns negative values: has_neg.
       i Lower bound imputation is intended for data bounded at zero.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed_trained, new_data = biomass[, 4:7])
+    Condition
+      Error in `step_impute_lower()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code
@@ -57,7 +65,7 @@
       predictor: 3
       
       -- Operations 
-      * Lower bound imputation for: carbon and hydrogen
+      * Lower bound imputation for: carbon hydrogen
 
 ---
 
@@ -76,5 +84,5 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Lower bound imputation for: carbon and hydrogen | Trained
+      * Lower bound imputation for: carbon hydrogen | Trained
 

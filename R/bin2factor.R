@@ -50,22 +50,24 @@
 #'
 #' tidy(rec, number = 3)
 step_bin2factor <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           levels = c("yes", "no"),
-           ref_first = TRUE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("bin2factor")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    levels = c("yes", "no"),
+    ref_first = TRUE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("bin2factor")
+  ) {
     if (length(levels) != 2 || !is.character(levels)) {
       msg <- c(x = "{.arg levels} should be a 2-element character string.")
 
       if (length(levels) != 2) {
         msg <- c(
           msg,
-          i = "{length(levels)} element{?s} were supplied."
+          i = "{length(levels)} element{?s} were supplied; two were expected."
         )
       }
       if (!is.character(levels)) {
@@ -76,6 +78,8 @@ step_bin2factor <-
       }
       cli::cli_abort(msg)
     }
+    check_bool(ref_first)
+
     add_step(
       recipe,
       step_bin2factor_new(
@@ -151,7 +155,6 @@ print.step_bin2factor <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

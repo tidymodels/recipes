@@ -29,6 +29,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -59,13 +61,15 @@
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 step_impute_median <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           medians = NULL,
-           skip = FALSE,
-           id = rand_id("impute_median")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    medians = NULL,
+    skip = FALSE,
+    id = rand_id("impute_median")
+  ) {
     add_step(
       recipe,
       step_impute_median_new(
@@ -126,10 +130,17 @@ bake.step_impute_median <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     median <- object$medians[[col_name]]
-    if (any(is.na(new_data[[col_name]]))) {
-      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
+        new_data[[col_name]],
+        median
+      )
+    } else {
+      if (anyNA(new_data[[col_name]])) {
+        new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], median)
+      }
+      new_data[is.na(new_data[[col_name]]), col_name] <- median
     }
-    new_data[is.na(new_data[[col_name]]), col_name] <- median
   }
 
   new_data
@@ -139,8 +150,14 @@ bake.step_impute_median <- function(object, new_data, ...) {
 print.step_impute_median <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Median imputation for "
-    print_step(names(x$medians), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$medians),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
@@ -158,4 +175,9 @@ tidy.step_impute_median <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_impute_median <- function(x, ...) {
+  TRUE
 }

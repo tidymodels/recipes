@@ -61,14 +61,16 @@
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 step_impute_mode <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           modes = NULL,
-           ptype = NULL,
-           skip = FALSE,
-           id = rand_id("impute_mode")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    modes = NULL,
+    ptype = NULL,
+    skip = FALSE,
+    id = rand_id("impute_mode")
+  ) {
     add_step(
       recipe,
       step_impute_mode_new(
@@ -129,15 +131,17 @@ bake.step_impute_mode <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   for (col_name in col_names) {
-    if (!any(is.na(new_data[[col_name]]))) {
+    if (!anyNA(new_data[[col_name]])) {
       next
     }
     if (is.null(object$ptype)) {
-      cli::cli_warn(c(
-        "!" = "{.arg ptype} was added to {.fn step_impute_mode} after this \\
+      cli::cli_warn(
+        c(
+          "!" = "{.arg ptype} was added to {.fn step_impute_mode} after this \\
               recipe was created.",
-        "i" = "Regenerate your recipe to avoid this warning."
-      ))
+          "i" = "Regenerate your recipe to avoid this warning."
+        )
+      )
     } else {
       new_data[[col_name]] <- vctrs::vec_cast(
         new_data[[col_name]],
@@ -155,8 +159,14 @@ bake.step_impute_mode <- function(object, new_data, ...) {
 print.step_impute_mode <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Mode imputation for "
-    print_step(names(x$modes), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$modes),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 

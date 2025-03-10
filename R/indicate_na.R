@@ -7,6 +7,7 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @inheritParams step_dummy
 #' @param prefix A character string that will be the prefix to the
 #'  resulting new variables. Defaults to "na_ind".
 #' @template step-return
@@ -21,6 +22,8 @@
 #'   \item{terms}{character, the selectors or variables selected}
 #'   \item{id}{character, id of this step}
 #' }
+#'
+#' @template sparse-creation
 #'
 #' @template case-weights-not-supported
 #'
@@ -47,15 +50,18 @@
 #'
 #' imputed_te <- bake(imp_models, new_data = credit_te)
 step_indicate_na <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           columns = NULL,
-           prefix = "na_ind",
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("indicate_na")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    columns = NULL,
+    prefix = "na_ind",
+    sparse = "auto",
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("indicate_na")
+  ) {
     terms <- enquos(...)
 
     add_step(
@@ -66,6 +72,7 @@ step_indicate_na <-
         trained = trained,
         columns = columns,
         prefix = prefix,
+        sparse = sparse,
         keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
@@ -74,8 +81,17 @@ step_indicate_na <-
   }
 
 step_indicate_na_new <-
-  function(terms, role, trained, columns, prefix, keep_original_cols, skip,
-           id) {
+  function(
+    terms,
+    role,
+    trained,
+    columns,
+    prefix,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "indicate_na",
       terms = terms,
@@ -83,6 +99,7 @@ step_indicate_na_new <-
       trained = trained,
       columns = columns,
       prefix = prefix,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -92,6 +109,7 @@ step_indicate_na_new <-
 #' @export
 prep.step_indicate_na <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_sparse_arg(x$sparse)
 
   step_indicate_na_new(
     terms = x$terms,
@@ -99,6 +117,7 @@ prep.step_indicate_na <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     columns = col_names,
     prefix = x$prefix,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -113,7 +132,16 @@ bake.step_indicate_na <- function(object, new_data, ...) {
   cols <- list()
 
   for (col_name in col_names) {
-    cols[[col_name]] <- ifelse(is.na(new_data[[col_name]]), 1L, 0L)
+    if (sparse_is_yes(object$sparse)) {
+      positions <- which(is.na(new_data[[col_name]]))
+      cols[[col_name]] <- sparsevctrs::sparse_integer(
+        values = rep(1, length(positions)),
+        positions = positions,
+        length = length(new_data[[col_name]])
+      )
+    } else {
+      cols[[col_name]] <- ifelse(is.na(new_data[[col_name]]), 1L, 0L)
+    }
   }
 
   cols <- tibble::new_tibble(cols, nrow = nrow(new_data))
@@ -144,4 +172,12 @@ tidy.step_indicate_na <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_indicate_na <- function(x, data, ...) {
+  lapply(
+    seq_len(ncol(data)),
+    function(x) c(n_cols = 1, sparsity = 1)
+  )
 }

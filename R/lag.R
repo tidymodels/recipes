@@ -27,6 +27,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
@@ -49,17 +51,19 @@
 #'   prep(df) %>%
 #'   bake(df)
 step_lag <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           lag = 1,
-           prefix = "lag_",
-           default = NA,
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("lag")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    lag = 1,
+    prefix = "lag_",
+    default = NA,
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("lag")
+  ) {
     add_step(
       recipe,
       step_lag_new(
@@ -78,8 +82,18 @@ step_lag <-
   }
 
 step_lag_new <-
-  function(terms, role, trained, lag, default, prefix, columns,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    lag,
+    default,
+    prefix,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "lag",
       terms = terms,
@@ -103,6 +117,7 @@ prep.step_lag <- function(x, training, info = NULL, ...) {
       not {.obj_type_friendly {lag}}."
     )
   }
+  check_string(x$prefix, arg = "prefix")
 
   step_lag_new(
     terms = x$terms,
@@ -126,7 +141,17 @@ bake.step_lag <- function(object, new_data, ...) {
   for (col_name in col_names) {
     new_values <- lapply(
       object$lag,
-      function(x) dplyr::lag(new_data[[col_name]], x, default = object$default)
+      function(x) {
+        if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+          sparsevctrs::sparse_lag(
+            new_data[[col_name]],
+            x,
+            default = object$default
+          )
+        } else {
+          dplyr::lag(new_data[[col_name]], x, default = object$default)
+        }
+      }
     )
 
     new_names <- glue::glue("{object$prefix}{object$lag}_{col_name}")
@@ -155,4 +180,9 @@ tidy.step_lag <- function(x, ...) {
   res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_lag <- function(x, ...) {
+  TRUE
 }

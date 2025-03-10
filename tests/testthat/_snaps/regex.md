@@ -27,6 +27,33 @@
       ! Name collision occurred. The following variable names already exist:
       * `Sepal.Width`
 
+# error on multiple selections
+
+    Code
+      recipe(~., data = mtcars) %>% step_regex(vs, am)
+    Condition
+      Error in `step_regex()`:
+      x For this step, only a single selector can be used.
+      i The following 2 selectors were used: `~vs` and `~am`.
+
+# checks for grepl arguments
+
+    Code
+      recipe(~., data = mtcars) %>% step_regex(options = list(not_real_option = TRUE))
+    Condition
+      Error in `step_regex()`:
+      x The following elements of `options` are not allowed:
+      * "not_real_option".
+      i Valid options are: "ignore.case", "perl", "fixed", and "useBytes".
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = mt_tibble[, c(-1)])
+    Condition
+      Error in `step_regex()`:
+      ! The following required column is missing from `new_data`: make_model.
+
 # empty printing
 
     Code
@@ -103,4 +130,13 @@
       
       -- Operations 
       * Regular expression dummy variable using: "(rock|stony)" | Trained
+
+# bad args
+
+    Code
+      rec %>% step_regex(description, pattern = character(0)) %>% prep()
+    Condition
+      Error in `step_regex()`:
+      Caused by error in `prep()`:
+      ! `pattern` must be a single string, not an empty character vector.
 

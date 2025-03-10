@@ -23,7 +23,10 @@ cell_te <- cells %>%
 
 # pls 1 outcome ----------------------------------------------------------------
 bm_pls_fit <- pls(
-  X = biom_tr[, -6], biom_tr[, 6], ncomp = 3, scale = TRUE
+  X = biom_tr[, -6],
+  biom_tr[, 6],
+  ncomp = 3,
+  scale = TRUE
 )
 
 bm_pls_tr <- bm_pls_fit$variates$X %>%
@@ -36,7 +39,10 @@ bm_pls_te <- predict(bm_pls_fit, biom_te[, -6])$variates %>%
 
 # pls 2 outcomes ---------------------------------------------------------------
 bm_pls_multi_fit <- pls(
-  X = biom_tr[, -c(1, 6)], biom_tr[, c(1, 6)], ncomp = 3, scale = TRUE
+  X = biom_tr[, -c(1, 6)],
+  biom_tr[, c(1, 6)],
+  ncomp = 3,
+  scale = TRUE
 )
 
 bm_pls_multi_tr <- bm_pls_multi_fit$variates$X %>%
@@ -49,7 +55,11 @@ bm_pls_multi_te <- predict(bm_pls_multi_fit, biom_te[, -c(1, 6)])$variates %>%
 
 # spls 1 outcome ---------------------------------------------------------------
 bm_spls_fit <- spls(
-  X = biom_tr[, -6], biom_tr[, 6], ncomp = 3, keepX = c(3, 3, 3), scale = TRUE
+  X = biom_tr[, -6],
+  biom_tr[, 6],
+  ncomp = 3,
+  keepX = c(3, 3, 3),
+  scale = TRUE
 )
 
 bm_spls_tr <- bm_spls_fit$variates$X %>%
@@ -62,7 +72,11 @@ bm_spls_te <- predict(bm_spls_fit, biom_te[, -6])$variates %>%
 
 # spls 2 outcomes --------------------------------------------------------------
 bm_spls_multi_fit <- spls(
-  X = biom_tr[, -c(1, 6)], biom_tr[, c(1, 6)], ncomp = 3, keepX = c(3, 3, 3), scale = TRUE
+  X = biom_tr[, -c(1, 6)],
+  biom_tr[, c(1, 6)],
+  ncomp = 3,
+  keepX = c(3, 3, 3),
+  scale = TRUE
 )
 
 bm_spls_multi_tr <- bm_spls_multi_fit$variates$X %>%
@@ -75,7 +89,10 @@ bm_spls_multi_te <- predict(bm_spls_multi_fit, biom_te[, -c(1, 6)])$variates %>%
 
 # plsda 1 outcome --------------------------------------------------------------
 cell_plsda_fit <- plsda(
-  X = cell_tr[, -1], cell_tr[[1]], ncomp = 3, scale = TRUE
+  X = cell_tr[, -1],
+  cell_tr[[1]],
+  ncomp = 3,
+  scale = TRUE
 )
 
 cell_plsda_tr <- cell_plsda_fit$variates$X %>%
@@ -88,7 +105,11 @@ cell_plsda_te <- predict(cell_plsda_fit, cell_te)$variates %>%
 
 # splsda 1 outcome -------------------------------------------------------------
 cell_splsda_fit <- splsda(
-  X = cell_tr[, -1], cell_tr[[1]], ncomp = 3, keepX = c(50, 50, 50), scale = TRUE
+  X = cell_tr[, -1],
+  cell_tr[[1]],
+  ncomp = 3,
+  keepX = c(50, 50, 50),
+  scale = TRUE
 )
 
 cell_splsda_tr <- cell_splsda_fit$variates$X %>%

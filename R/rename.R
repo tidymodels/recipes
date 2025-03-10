@@ -25,6 +25,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family dplyr steps
@@ -47,12 +49,15 @@
 #'
 #' car_rec %>%
 #'   tidy(number = 1)
-step_rename <- function(recipe, ...,
-                        role = "predictor",
-                        trained = FALSE,
-                        inputs = NULL,
-                        skip = FALSE,
-                        id = rand_id("rename")) {
+step_rename <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  inputs = NULL,
+  skip = FALSE,
+  id = rand_id("rename")
+) {
   inputs <- enquos(..., .named = TRUE)
 
   add_step(
@@ -123,4 +128,9 @@ tidy.step_rename <- function(x, ...) {
     value = unname(var_expr) %||% character(),
     id = rep(x$id, length(x$inputs))
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_rename <- function(x, ...) {
+  TRUE
 }

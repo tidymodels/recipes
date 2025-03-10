@@ -1,7 +1,28 @@
-# wrong function
+# wrong arguments
 
-    `func` must be one of "sinh", "cosh", or "tanh", not "cos".
-    i Did you mean "cosh"?
+    Code
+      step_hyperbolic(rec, func = "cos") %>% prep()
+    Condition
+      Error in `step_hyperbolic()`:
+      ! `func` must be one of "sinh", "cosh", or "tanh", not "cos".
+      i Did you mean "cosh"?
+
+---
+
+    Code
+      step_hyperbolic(rec, inverse = 2) %>% prep()
+    Condition
+      Error in `step_hyperbolic()`:
+      Caused by error in `prep()`:
+      ! `x$inverse` must be `TRUE` or `FALSE`, not the number 2.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE])
+    Condition
+      Error in `step_hyperbolic()`:
+      ! The following required column is missing from `new_data`: x1.
 
 # empty printing
 
@@ -51,7 +72,7 @@
       predictor: 2
       
       -- Operations 
-      * Hyperbolic sin (inv) transformation on: x1 and x2
+      * Hyperbolic sin (inv) transformation on: x1 x2
 
 ---
 
@@ -69,5 +90,5 @@
       Training data contained 20 data points and no incomplete rows.
       
       -- Operations 
-      * Hyperbolic sin (inv) transformation on: x1 and x2 | Trained
+      * Hyperbolic sin (inv) transformation on: x1 x2 | Trained
 

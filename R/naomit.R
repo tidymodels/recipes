@@ -22,6 +22,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @template step-return
@@ -34,9 +36,15 @@
 #'   step_naomit(Solar.R) %>%
 #'   prep(airquality, verbose = FALSE) %>%
 #'   bake(new_data = NULL)
-step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
-                        columns = NULL, skip = TRUE,
-                        id = rand_id("naomit")) {
+step_naomit <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = TRUE,
+  id = rand_id("naomit")
+) {
   add_step(
     recipe,
     step_naomit_new(
@@ -96,4 +104,9 @@ tidy.step_naomit <- function(x, ...) {
   res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_naomit <- function(x, ...) {
+  TRUE
 }

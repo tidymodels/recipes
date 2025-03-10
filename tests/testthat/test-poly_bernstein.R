@@ -12,8 +12,9 @@ test_that("correct nonnegative functions", {
   biomass_tr <- biomass[biomass$dataset == "Training", ]
   biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass_tr
   )
 
   with_ns <- rec %>%
@@ -46,14 +47,22 @@ test_that("correct nonnegative functions", {
     with_ns$steps[[1]]$results$hydrogen$Boundary.knots
   )
 
-  carbon_ns_tr_res <- as.matrix(with_ns_pred_tr[, grep("carbon", names(with_ns_pred_tr))])
+  carbon_ns_tr_res <- as.matrix(
+    with_ns_pred_tr[, grep("carbon", names(with_ns_pred_tr))]
+  )
   colnames(carbon_ns_tr_res) <- NULL
-  hydrogen_ns_tr_res <- as.matrix(with_ns_pred_tr[, grep("hydrogen", names(with_ns_pred_tr))])
+  hydrogen_ns_tr_res <- as.matrix(
+    with_ns_pred_tr[, grep("hydrogen", names(with_ns_pred_tr))]
+  )
   colnames(hydrogen_ns_tr_res) <- NULL
 
-  carbon_ns_te_res <- as.matrix(with_ns_pred_te[, grep("carbon", names(with_ns_pred_te))])
+  carbon_ns_te_res <- as.matrix(
+    with_ns_pred_te[, grep("carbon", names(with_ns_pred_te))]
+  )
   colnames(carbon_ns_te_res) <- 1:ncol(carbon_ns_te_res)
-  hydrogen_ns_te_res <- as.matrix(with_ns_pred_te[, grep("hydrogen", names(with_ns_pred_te))])
+  hydrogen_ns_te_res <- as.matrix(
+    with_ns_pred_te[, grep("hydrogen", names(with_ns_pred_te))]
+  )
   colnames(hydrogen_ns_te_res) <- 1:ncol(hydrogen_ns_te_res)
 
   ## remove attributes
@@ -76,7 +85,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_01 <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_poly_bernstein(mpg)
 
   expect_snapshot(
@@ -86,17 +95,17 @@ test_that("check_name() is used", {
 })
 
 test_that("tunable", {
-
   biomass_tr <- biomass[biomass$dataset == "Training", ]
   biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass_tr
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass_tr
   )
 
   rec <-
     recipe(~., data = iris) %>%
-    step_poly_bernstein(all_predictors())
+      step_poly_bernstein(all_predictors())
   rec_param <- tunable.step_poly_bernstein(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -118,8 +127,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = mtcars)
 
-  expect_error(bake(rec_trained, new_data = mtcars[, -3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = mtcars[, -3]))
 })
 
 test_that("empty printing", {
@@ -162,7 +170,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("mpg_", formatC(1:10, width = 2, flag = "0"))
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_poly_bernstein(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -173,7 +181,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_poly_bernstein(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -192,8 +200,10 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-                data = biomass) %>%
+  rec <- recipe(
+    HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+    data = biomass
+  ) %>%
     step_poly_bernstein(carbon, hydrogen)
 
   expect_snapshot(print(rec))
@@ -212,4 +222,21 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("bad args", {
+  skip_if_not_installed("splines2")
+
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_poly_bernstein(disp, degree = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_poly_bernstein(disp, complete_set = 1) %>%
+      prep(),
+    error = TRUE
+  )
 })

@@ -60,6 +60,14 @@
       Error in `bake()`:
       ! The following columns contains missing values: a.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mtcars[, -3])
+    Condition
+      Error in `check_missing()`:
+      ! The following required column is missing from `new_data`: disp.
+
 # empty printing
 
     Code

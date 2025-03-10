@@ -28,6 +28,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_01`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mtcars[, -3])
+    Condition
+      Error in `step_spline_monotone()`:
+      ! The following required column is missing from `new_data`: disp.
+
 # empty printing
 
     Code
@@ -77,7 +85,7 @@
       predictor: 5
       
       -- Operations 
-      * Monotone spline expansion: carbon and hydrogen
+      * Monotone spline expansion: carbon hydrogen
 
 ---
 
@@ -96,5 +104,35 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Monotone spline expansion: carbon and hydrogen | Trained
+      * Monotone spline expansion: carbon hydrogen | Trained
+
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(disp, degree = -1) %>%
+        prep()
+    Condition
+      Error in `step_spline_monotone()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(disp, deg_free = "a") %>%
+        prep()
+    Condition
+      Error in `step_spline_monotone()`:
+      Caused by error in `prep()`:
+      ! `deg_free` must be a whole number, not the string "a".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(disp, complete_set = 1) %>%
+        prep()
+    Condition
+      Error in `step_spline_monotone()`:
+      Caused by error in `prep()`:
+      ! `complete_set` must be `TRUE` or `FALSE`, not the number 1.
 

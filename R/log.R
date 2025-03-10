@@ -62,16 +62,18 @@
 #'   prep(training = examples2) %>%
 #'   bake(examples2)
 step_log <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           base = exp(1),
-           offset = 0,
-           columns = NULL,
-           skip = FALSE,
-           signed = FALSE,
-           id = rand_id("log")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    base = exp(1),
+    offset = 0,
+    columns = NULL,
+    skip = FALSE,
+    signed = FALSE,
+    id = rand_id("log")
+  ) {
     add_step(
       recipe,
       step_log_new(
@@ -108,6 +110,9 @@ step_log_new <-
 prep.step_log <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$offset, arg = "offset")
+  check_bool(x$signed, arg = "signed")
+  check_number_decimal(x$base, arg = "base", min = 0)
 
   step_log_new(
     terms = x$terms,

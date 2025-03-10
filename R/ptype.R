@@ -9,47 +9,47 @@
 #'   details for more. Defaults to `"prep"`.
 #'
 #' @details
-#' The returned ptype is a tibble of the data set that the recipe object is 
-#' expecting. The specifics of which columns depend on the `stage`. 
-#' 
-#' At `prep()` time, when `stage = "prep"`, the ptype is the data passed to 
-#' `recipe()`. The following code chunk represents a possible recipe scenario. 
-#' `recipes_ptype(rec_spec, stage = "prep")` and 
+#' The returned ptype is a tibble of the data set that the recipe object is
+#' expecting. The specifics of which columns depend on the `stage`.
+#'
+#' At `prep()` time, when `stage = "prep"`, the ptype is the data passed to
+#' `recipe()`. The following code chunk represents a possible recipe scenario.
+#' `recipes_ptype(rec_spec, stage = "prep")` and
 #' `recipes_ptype(rec_prep, stage = "prep")` both return a ptype tibble
-#' corresponding to `data_ptype`. This information is used internally in 
+#' corresponding to `data_ptype`. This information is used internally in
 #' `prep()` to verify that `data_training` has the right columns with the right
 #' types.
-#' 
+#'
 #' ```r
 #' rec_spec <- recipe(outcome ~ ., data = data_ptype) %>%
 #'   step_normalize(all_numeric_predictors()) %>%
-#'   step_dummy(all_nominal_predictors()) 
-#' 
+#'   step_dummy(all_nominal_predictors())
+#'
 #' rec_prep <- prep(rec_spec, training = data_training)
 #' ```
-#' 
+#'
 #' At `bake()` time, when `stage = "bake"`, the ptype represents the data
-#' that are required for `bake()` to run.  
-#' 
+#' that are required for `bake()` to run.
+#'
 #' ```r
 #' data_bake <- bake(rec_prep, new_data = data_testing)
 #' ```
-#' 
+#'
 #' What this means in practice is that unless otherwise specified, everything
 #' but outcomes and case weights are required. These requirements can be changed
-#' with `update_role_requirements()`, and `recipes_ptype()` respects those 
+#' with `update_role_requirements()`, and `recipes_ptype()` respects those
 #' changes.
-#' 
+#'
 #' `recipes_ptype()` returns `NULL` on recipes created prior to version 1.1.0.
-#' 
+#'
 #' Note that the order of the columns aren't guaranteed to align with
 #' `data_ptype` as the data internally is ordered according to roles.
-#' 
+#'
 #' @return A zero row tibble.
 #' @keywords internal
 #'
 #' @seealso [developer_functions] [recipes_ptype_validate]
-#' 
+#'
 #' @examples
 #' training <- tibble(
 #'   y = 1:10,
@@ -59,29 +59,29 @@
 #'   cw = hardhat::importance_weights(1:10)
 #' )
 #' training
-#' 
+#'
 #' rec_spec <- recipe(y ~ ., data = training)
-#' 
+#'
 #' # outcomes and case_weights are not required at bake time
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")
-#' 
+#'
 #' rec_spec <- recipe(y ~ ., data = training) %>%
 #'   update_role(x1, new_role = "id")
-#' 
+#'
 #' # outcomes and case_weights are not required at bake time
 #' # "id" column is assumed to be needed
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")
-#' 
+#'
 #' rec_spec <- recipe(y ~ ., data = training) %>%
 #'   update_role(x1, new_role = "id") %>%
 #'   update_role_requirements("id", bake = FALSE)
-#' 
+#'
 #' # update_role_requirements() is used to specify that "id" isn't needed
 #' recipes_ptype(rec_spec, stage = "prep")
 #' recipes_ptype(rec_spec, stage = "bake")
-#' 
+#'
 #' @export
 recipes_ptype <- function(x, ..., stage = "prep") {
   check_dots_empty0(...)
@@ -101,23 +101,18 @@ recipes_ptype <- function(x, ..., stage = "prep") {
     var_info <- x$var_info
     roles <- var_info$role
     roles <- chr_explicit_na(roles)
-    
+
     required_var <- var_info$variable[required_roles[roles]]
 
     ptype <- ptype[names(ptype) %in% required_var]
   }
-  
+
   ptype
 }
 
-
-long_function_name <- function(x,
-                               ...,
-                               verbose = FALSE) {
+long_function_name <- function(x, ..., verbose = FALSE) {
   x
 }
-
-
 
 #' Validate prototype of recipe object
 #'
@@ -132,23 +127,25 @@ long_function_name <- function(x,
 #'   `caller_env()`. The function will be mentioned in error messages as the
 #'   source of the error. See the call argument of [rlang::abort()] for more
 #'   information.
-#' 
+#'
 #' @return Nothing or an error.
 #' @keywords internal
 #'
 #' @seealso [developer_functions] [recipes_ptype]
-#' 
+#'
 #' @examples
 #' rec <- recipe(mpg ~ disp, data = mtcars)
-#' 
+#'
 #' recipes_ptype_validate(rec, mtcars)
-#' 
+#'
 #' @export
-recipes_ptype_validate <- function(x,
-                                   new_data,
-                                   ...,
-                                   stage = "prep", 
-                                   call = rlang::caller_env()) {
+recipes_ptype_validate <- function(
+  x,
+  new_data,
+  ...,
+  stage = "prep",
+  call = rlang::caller_env()
+) {
   old_ptype <- recipes_ptype(x, stage = stage)
 
   # recipe created prior to 1.1.0
@@ -178,8 +175,10 @@ recipes_ptype_validate <- function(x,
     offenders <- purrr::map2_lgl(old_classes, new_classes, identical)
     offenders <- col_names[!offenders]
 
-    msg <- c("x" = "{cli::qty(offenders)} The following variable{?s} \\
-                   {?has/have} the wrong class:")
+    msg <- c(
+      "x" = "{cli::qty(offenders)} The following variable{?s} \\
+                   {?has/have} the wrong class:"
+    )
 
     # Use `paste0()` rather than typical glue syntax to intentionally duplicate messages
     col_msg <- paste0(
@@ -196,21 +195,25 @@ recipes_ptype_validate <- function(x,
 
     cli::cli_abort(msg, call = call)
   }
-    
-  if (!identical(lapply(old_ptype, attributes), lapply(new_ptype, attributes))) {
+
+  if (
+    !identical(lapply(old_ptype, attributes), lapply(new_ptype, attributes))
+  ) {
     old_attributes <- lapply(old_ptype, attributes)
     new_attributes <- lapply(new_ptype, attributes)
-  
+
     offenders <- purrr::map2_lgl(old_attributes, new_attributes, identical)
     offenders <- col_names[!offenders]
-      
-    msg <- c("x" = "{cli::qty(offenders)} The following variable{?s} \\
-    {?has/have} the wrong attributes: {.var {offenders}}.")
+
+    msg <- c(
+      "x" = "{cli::qty(offenders)} The following variable{?s} \\
+    {?has/have} the wrong attributes: {.var {offenders}}."
+    )
 
     if (any(map_lgl(old_ptype[offenders], is.factor))) {
       offenders_fct <- map_lgl(old_ptype[offenders], is.factor)
       offenders_fct <- names(offenders_fct)
-    
+
       fct_msg <- c(
         "*" = "The factor levels of {.var {offenders_fct}} don't match."
       )
@@ -218,13 +221,13 @@ recipes_ptype_validate <- function(x,
     }
 
     msg <- c(
-      msg, 
+      msg,
       "Run {.code lapply(recipes_ptype(rec), attributes)} to see expected \\
       attributes. For {.code rec} being the name of your recipe."
     )
-  
+
     cli::cli_abort(msg, call = call)
   }
-      
+
   invisible()
-}  
+}

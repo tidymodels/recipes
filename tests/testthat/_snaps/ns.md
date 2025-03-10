@@ -8,6 +8,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_ns_1`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(with_ns, new_data = biomass_tr[, c(-3)])
+    Condition
+      Error in `step_ns()`:
+      ! The following required column is missing from `new_data`: carbon.
+
 # empty printing
 
     Code
@@ -66,7 +74,7 @@
       predictor: 10
       
       -- Operations 
-      * Natural splines on: disp and wt
+      * Natural splines on: disp wt
 
 ---
 
@@ -85,5 +93,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Natural splines on: disp and wt | Trained
+      * Natural splines on: disp wt | Trained
 

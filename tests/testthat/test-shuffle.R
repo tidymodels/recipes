@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-
 n <- 50
 set.seed(424)
 dat <- data.frame(
@@ -69,6 +68,19 @@ test_that("bake a single row", {
   expect_equal(dat4, tibble(dat[1, ]))
 })
 
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~., mtcars) %>%
+    step_shuffle(vs, am) %>%
+    prep()
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -79,8 +91,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec1 <- prep(rec1, training = dat, verbose = FALSE)
 
-  expect_error(bake(rec1, dat[, 2:5]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec1, dat[, 2:5]))
 })
 
 test_that("empty printing", {

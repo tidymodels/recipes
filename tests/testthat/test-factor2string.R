@@ -1,7 +1,6 @@
 library(recipes)
 library(testthat)
 
-
 n <- 200
 
 set.seed(8575)
@@ -25,7 +24,8 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_factor2string(w, x) %>%
       prep(ex_dat, strings_as_factors = FALSE)
@@ -41,8 +41,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(ex_dat, strings_as_factors = FALSE)
 
-  expect_error(bake(ex_1, new_data = ex_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(ex_1, new_data = ex_dat[, 1:3]))
 })
 
 test_that("empty printing", {

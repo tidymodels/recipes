@@ -21,6 +21,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family variable filter steps
@@ -46,13 +48,15 @@
 #' filtered_te
 #'
 #' tidy(smaller_set, number = 1)
-step_rm <- function(recipe,
-                    ...,
-                    role = NA,
-                    trained = FALSE,
-                    removals = NULL,
-                    skip = FALSE,
-                    id = rand_id("rm")) {
+step_rm <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("rm")
+) {
   add_step(
     recipe,
     step_rm_new(
@@ -106,7 +110,11 @@ print.step_rm <-
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_rm <- tidy_filter
+
+#' @export
+.recipes_preserve_sparsity.step_rm <- function(x, ...) {
+  TRUE
+}

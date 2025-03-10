@@ -9,7 +9,7 @@
 #'  for this step. The selected variables should have class `Date` or
 #'  `POSIXct`. See [selections()] for more details.
 #' @param features A character string that includes at least one
-#'  of the following values: `month`, `dow` (day of week),
+#'  of the following values: `month`, `dow` (day of week), `mday` (day of month),
 #'  `doy` (day of year), `week`, `month`,
 #'  `decimal` (decimal date, e.g. 2002.197), `quarter`,
 #'  `semester`, `year`.
@@ -81,23 +81,26 @@
 #'
 #' tidy(date_rec, number = 1)
 step_date <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           features = c("dow", "month", "year"),
-           abbr = TRUE,
-           label = TRUE,
-           ordinal = FALSE,
-           locale = clock::clock_locale()$labels,
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("date")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    features = c("dow", "month", "year"),
+    abbr = TRUE,
+    label = TRUE,
+    ordinal = FALSE,
+    locale = clock::clock_locale()$labels,
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("date")
+  ) {
     feat <-
       c(
         "year",
         "doy",
+        "mday",
         "week",
         "decimal",
         "semester",
@@ -109,11 +112,12 @@ step_date <-
       if (!all(features %in% feat)) {
         offenders <- features[!features %in% feat]
 
-        cli::cli_abort(c(
-          x = "Possible values of {.arg features} should include:",
-          "*" = "{.or {.val {feat}}}.",
-          i = "Invalid values were: {.val {offenders}}."
-        ))
+        cli::cli_abort(
+          c(
+            x = "Possible values of {.arg features} are {.or {.val {feat}}}.",
+            i = "Invalid values were: {.val {offenders}}."
+          )
+        )
       }
     }
     add_step(
@@ -136,8 +140,20 @@ step_date <-
   }
 
 step_date_new <-
-  function(terms, role, trained, features, abbr, label, ordinal, locale,
-           columns, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    features,
+    abbr,
+    label,
+    ordinal,
+    locale,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "date",
       terms = terms,
@@ -155,11 +171,13 @@ step_date_new <-
     )
   }
 
-
 #' @export
 prep.step_date <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("date", "datetime"))
+  check_bool(x$abbr, arg = "abbr")
+  check_bool(x$label, arg = "label")
+  check_bool(x$ordinal, arg = "ordinal")
 
   step_date_new(
     terms = x$terms,
@@ -177,20 +195,13 @@ prep.step_date <- function(x, training, info = NULL, ...) {
   )
 }
 
-
 ord2fac <- function(x, what) {
   x <- x[[what]]
   factor(as.character(x), levels = levels(x), ordered = FALSE)
 }
 
-
 get_date_features <-
-  function(dt,
-           feats,
-           locale,
-           abbr = TRUE,
-           label = TRUE,
-           ord = FALSE) {
+  function(dt, feats, locale, abbr = TRUE, label = TRUE, ord = FALSE) {
     ## pre-allocate values
     res <- matrix(NA_integer_, nrow = length(dt), ncol = length(feats))
     colnames(res) <- feats
@@ -201,6 +212,9 @@ get_date_features <-
     }
     if ("doy" %in% feats) {
       res[, grepl("doy$", names(res))] <- vec_cast(yday(dt), integer())
+    }
+    if ("mday" %in% feats) {
+      res[, grepl("mday$", names(res))] <- vec_cast(mday(dt), integer())
     }
     if ("week" %in% feats) {
       res[, grepl("week$", names(res))] <- vec_cast(week(dt), integer())
@@ -217,7 +231,9 @@ get_date_features <-
     if ("dow" %in% feats) {
       if (inherits(locale, "clock_labels")) {
         dow <- clock::date_weekday_factor(
-          x = dt, abbreviate = abbr, labels = locale
+          x = dt,
+          abbreviate = abbr,
+          labels = locale
         )
         if (!label) {
           dow <- as.integer(dow)
@@ -235,7 +251,9 @@ get_date_features <-
     if ("month" %in% feats) {
       if (inherits(locale, "clock_labels")) {
         month <- clock::date_month_factor(
-          dt, abbreviate = abbr, labels = locale
+          dt,
+          abbreviate = abbr,
+          labels = locale
         )
         if (!label) {
           month <- as.integer(month)

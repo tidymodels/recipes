@@ -71,14 +71,16 @@
 #'   prep() %>%
 #'   bake(new_df)
 step_cut <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           breaks,
-           include_outside_range = FALSE,
-           skip = FALSE,
-           id = rand_id("cut")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    breaks,
+    include_outside_range = FALSE,
+    skip = FALSE,
+    id = rand_id("cut")
+  ) {
     add_step(
       recipe,
       step_cut_new(
@@ -94,8 +96,7 @@ step_cut <-
   }
 
 step_cut_new <-
-  function(terms, role, trained,
-           breaks, include_outside_range, skip, id) {
+  function(terms, role, trained, breaks, include_outside_range, skip, id) {
     step(
       subclass = "cut",
       terms = terms,
@@ -112,6 +113,13 @@ step_cut_new <-
 prep.step_cut <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+
+  if (!is.numeric(x$breaks)) {
+    cli::cli_abort(
+      "{.arg breaks} must be a numeric vector, not {.obj_type_friendly {x$breaks}}."
+    )
+  }
+  check_bool(x$include_outside_range, arg = "include_outside_range")
 
   all_breaks <- vector("list", length(col_names))
   names(all_breaks) <- col_names
@@ -132,26 +140,38 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   )
 }
 
-create_full_breaks <- function(var, breaks) {
+create_full_breaks <- function(var, breaks, call = rlang::caller_env()) {
   if (!is.numeric(var)) {
     cli::cli_abort(
-      "{.arg var} must be a numeric vector, not {.obj_type_friendly {var}}."
+      "{.arg var} must be a numeric vector, not {.obj_type_friendly {var}}.",
+      call = call
     )
   }
 
   if (!is.numeric(breaks)) {
     cli::cli_abort(
-      "{.arg breaks} must be a numeric vector, \\
-      not {.obj_type_friendly {breaks}}."
+      "{.arg breaks} must be a numeric vector, not {.obj_type_friendly {breaks}}.",
+      call = call
     )
+  }
+
+  if (anyNA(var)) {
+    cli::cli_warn(
+      "{.arg var} contains missing values. These will be ignored in break
+       calculations.",
+      call = call
+    )
+    var <- var[!is.na(var)]
   }
 
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
+
   if (max(var) > max(breaks)) {
     breaks <- c(max(var), breaks)
   }
+
   sort(breaks)
 }
 
@@ -204,12 +224,6 @@ cut_var <- function(var, breaks, include_outside_range) {
 # the levels when bake.recipe itself is called. Moreover,
 # it is cleaner to show it in this way.
 adjust_levels_min_max <- function(x) {
-  if (!is.factor(x)) {
-    cli::cli_abort(
-      "{.arg x} must be a factor, not {.obj_type_friendly {x}}.",
-      .internal = TRUE
-    )
-  }
   levs <- levels(x)
   if (length(levs) == 1) {
     return(factor(rep("[min,max]", length(x))))

@@ -63,7 +63,7 @@ test_that("occasional missing values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_corr(all_predictors())
+      step_corr(all_predictors())
   rec_param <- tunable.step_corr(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -77,9 +77,11 @@ test_that("tunable", {
 
 test_that("case weights", {
   dat_caseweights <- dat %>%
-    mutate(V3_dup = V3 + rep(c(0, 1), c(50, 50)),
-           wts = rep(c(1, 2), c(50, 50)),
-           wts = frequency_weights(wts))
+    mutate(
+      V3_dup = V3 + rep(c(0, 1), c(50, 50)),
+      wts = rep(c(1, 2), c(50, 50)),
+      wts = frequency_weights(wts)
+    )
 
   # low filter
   filtering <- recipe(~., data = dat_caseweights) %>%
@@ -105,9 +107,11 @@ test_that("case weights", {
 
   # ----------------------------------------------------------------------------
   dat_caseweights <- dat %>%
-    mutate(V3_dup = V3 + rep(c(0, 1), c(50, 50)),
-           wts = rep(c(1, 2), c(50, 50)),
-           wts = importance_weights(wts))
+    mutate(
+      V3_dup = V3 + rep(c(0, 1), c(50, 50)),
+      wts = rep(c(1, 2), c(50, 50)),
+      wts = importance_weights(wts)
+    )
 
   # low filter
   filtering <- recipe(~., data = dat_caseweights) %>%
@@ -130,6 +134,16 @@ test_that("case weights", {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 
   expect_snapshot(filtering_trained)
+})
+
+test_that("corr_filter() warns on many NA values", {
+  mtcars[, 1:10] <- NA_real_
+
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>%
+      step_corr(all_predictors()) %>%
+      prep()
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -189,11 +203,31 @@ test_that("printing", {
 test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
   rec <- recipe(~., data = mtcars) %>%
-    step_corr(all_predictors(),
-              threshold = hardhat::tune())
+    step_corr(all_predictors(), threshold = hardhat::tune())
 
   params <- extract_parameter_set_dials(rec)
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      step_corr(all_predictors(), threshold = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      step_corr(all_predictors(), use = "this") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., mtcars) %>%
+      step_corr(all_predictors(), method = "my dissertation") %>%
+      prep(),
+    error = TRUE
+  )
 })

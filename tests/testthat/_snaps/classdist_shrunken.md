@@ -31,7 +31,7 @@
       Training data contained 300 data points and no incomplete rows.
       
       -- Operations 
-      * Distance to shrunken centroids with: x and y | Trained
+      * Distance to shrunken centroids with: x y | Trained
 
 ---
 
@@ -89,6 +89,34 @@
       Error in `step_classdist_shrunken()`:
       Caused by error in `prep()`:
       ! `sd_offset` must be a number between 0 and 1, not the number -1.
+
+---
+
+    Code
+      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
+        all_numeric_predictors(), class = "class", log = 2) %>% prep()
+    Condition
+      Error in `step_classdist_shrunken()`:
+      Caused by error in `prep()`:
+      ! `x$log` must be `TRUE` or `FALSE`, not the number 2.
+
+---
+
+    Code
+      recipe(class ~ x + y, data = nsc_test) %>% step_classdist_shrunken(
+        all_numeric_predictors(), class = "class", prefix = 2) %>% prep()
+    Condition
+      Error in `step_classdist_shrunken()`:
+      Caused by error in `prep()`:
+      ! `x$prefix` must be a single string, not the number 2.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(trained, new_data = iris[, c(-3)])
+    Condition
+      Error in `step_classdist_shrunken()`:
+      ! The following required column is missing from `new_data`: Petal.Length.
 
 # empty printing
 

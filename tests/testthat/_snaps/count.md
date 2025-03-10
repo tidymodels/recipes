@@ -27,6 +27,24 @@
       ! Name collision occurred. The following variable names already exist:
       * `Sepal.Width`
 
+# checks for grepl arguments
+
+    Code
+      recipe(~., data = mtcars) %>% step_count(options = list(not_real_option = TRUE))
+    Condition
+      Error in `step_count()`:
+      x The following elements of `options` are not allowed:
+      * "not_real_option".
+      i Valid options are: "ignore.case", "perl", "fixed", and "useBytes".
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mt_tibble[, c(-1)])
+    Condition
+      Error in `step_count()`:
+      ! The following required column is missing from `new_data`: make_model.
+
 # empty printing
 
     Code
@@ -103,4 +121,33 @@
       
       -- Operations 
       * Regular expression counts using: description | Trained
+
+# bad args
+
+    Code
+      recipe(~description, covers) %>% step_count(description, pattern = character(0)) %>%
+        prep()
+    Condition
+      Error in `step_count()`:
+      ! `pattern` must be a single string, not an empty character vector.
+
+---
+
+    Code
+      recipe(~description, covers) %>% step_count(description, pattern = "(rock|stony)",
+        result = letters) %>% prep()
+    Condition
+      Error in `step_count()`:
+      Caused by error in `prep()`:
+      ! `result` must be a single string, not a character vector.
+
+---
+
+    Code
+      recipe(~description, covers) %>% step_count(description, pattern = "(rock|stony)",
+        normalize = "yes") %>% prep()
+    Condition
+      Error in `step_count()`:
+      Caused by error in `prep()`:
+      ! `normalize` must be `TRUE` or `FALSE`, not the string "yes".
 

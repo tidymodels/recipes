@@ -1,3 +1,12 @@
+# spatial sign
+
+    Code
+      rec %>% step_spatialsign(carbon, hydrogen, na_rm = 12) %>% prep()
+    Condition
+      Error in `step_spatialsign()`:
+      Caused by error in `prep()`:
+      ! `na_rm` must be `TRUE` or `FALSE`, not the number 12.
+
 # centering with case weights
 
     Code
@@ -37,6 +46,14 @@
       
       -- Operations 
       * Spatial sign on: cyl, disp, hp, drat, qsec, ... | Trained, ignored weights
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(sp_sign_trained, new_data = biomass[, c(-3)])
+    Condition
+      Error in `step_spatialsign()`:
+      ! The following required column is missing from `new_data`: carbon.
 
 # empty printing
 
@@ -87,9 +104,9 @@
       predictor: 5
       
       -- Operations 
-      * Centering for: carbon and hydrogen
-      * Scaling for: carbon and hydrogen
-      * Spatial sign on: carbon and hydrogen
+      * Centering for: carbon hydrogen
+      * Scaling for: carbon hydrogen
+      * Spatial sign on: carbon hydrogen
 
 ---
 
@@ -108,7 +125,7 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Centering for: carbon and hydrogen | Trained
-      * Scaling for: carbon and hydrogen | Trained
-      * Spatial sign on: carbon and hydrogen | Trained
+      * Centering for: carbon hydrogen | Trained
+      * Scaling for: carbon hydrogen | Trained
+      * Spatial sign on: carbon hydrogen | Trained
 

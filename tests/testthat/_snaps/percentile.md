@@ -24,7 +24,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Percentile transformation on: carbon and sulfur | Trained, weighted
+      * Percentile transformation on: carbon sulfur | Trained, weighted
 
 ---
 
@@ -43,7 +43,15 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Percentile transformation on: carbon and sulfur | Trained, ignored weights
+      * Percentile transformation on: carbon sulfur | Trained, ignored weights
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = biomass_tr[, c(-3, -7)])
+    Condition
+      Error in `step_percentile()`:
+      ! The following required columns are missing from `new_data`: carbon and sulfur.
 
 # empty printing
 
@@ -93,7 +101,7 @@
       predictor: 8
       
       -- Operations 
-      * Percentile transformation on: carbon and sulfur
+      * Percentile transformation on: carbon sulfur
 
 ---
 
@@ -111,5 +119,5 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Percentile transformation on: carbon and sulfur | Trained
+      * Percentile transformation on: carbon sulfur | Trained
 

@@ -30,15 +30,16 @@ test_that("adds arbitrary numeric column", {
   expect_identical(rec_trans, exp_res)
 })
 
-
 test_that("deals with bad input", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = ex_dat) %>%
       step_intercept(value = "Pie") %>%
       prep()
   )
 
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = ex_dat) %>%
       step_intercept(name = 4) %>%
       prep()
@@ -55,7 +56,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$intercept <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_intercept()
 
   expect_snapshot(

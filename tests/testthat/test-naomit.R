@@ -2,7 +2,7 @@ library(testthat)
 library(recipes)
 
 test_that("step_naomit on all columns", {
-  baked <- recipe(~ ., data = airquality) %>%
+  baked <- recipe(~., data = airquality) %>%
     step_naomit(all_predictors()) %>%
     prep(airquality, verbose = FALSE) %>%
     bake(new_data = NULL)
@@ -33,18 +33,32 @@ test_that("step_naomit on subset of columns", {
   expect_equal(baked2, na_res2[, c(2:6, 1)])
 })
 
+test_that("doesn't destroy sparsity", {
+  mtcars$vs[c(1, 5, 7)] <- NA
+  mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_double(mtcars$am)
+  rec <- recipe(~am + vs, data = mtcars) %>%
+    step_naomit(am, vs)
+
+  rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = mtcars)
+
+  expect_true(all(vapply(rec_trans, sparsevctrs::is_sparse_double, logical(1))))
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <-  recipe(airquality) %>%
+  rec <- recipe(airquality) %>%
     step_naomit(Wind, Temp, skip = FALSE) %>%
     update_role(Wind, Temp, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = airquality)
 
-  expect_error(bake(rec_trained, new_data = airquality[, -3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = airquality[, -3]))
 })
 
 test_that("empty printing", {

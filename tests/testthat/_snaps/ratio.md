@@ -38,6 +38,23 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_o_disp`
 
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_ratio(mpg, denom = NULL)
+    Condition
+      Error in `step_ratio()`:
+      ! `denom` must select at least one variable.
+      i See ?selections (`?recipes::selections()`) for more information.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1, ex_dat[, 2:5])
+    Condition
+      Error in `step_ratio()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code
@@ -95,7 +112,7 @@
       predictor: 5
       
       -- Operations 
-      * Ratios from: all_numeric() and all_numeric()
+      * Ratios from: all_numeric() all_numeric()
 
 ---
 
@@ -114,4 +131,14 @@
       
       -- Operations 
       * Ratios from: x2, x3, x4, x1, x1, x2, x3, x4 | Trained
+
+# bad args
+
+    Code
+      recipe(~ mpg + disp, mtcars) %>% step_ratio(mpg, denom = denom_vars(disp),
+      naming = NULL) %>% prep()
+    Condition
+      Error in `step_ratio()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
 

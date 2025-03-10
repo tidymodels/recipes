@@ -54,6 +54,14 @@
       -- Operations 
       * Mode imputation for: x1 | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed, new_data = credit_te[, c(-6)])
+    Condition
+      Error in `step_impute_mode()`:
+      ! The following required column is missing from `new_data`: Marital.
+
 # empty printing
 
     Code

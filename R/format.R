@@ -7,13 +7,9 @@
 #' @keywords internal
 #' @export
 format_ch_vec <-
-  function(x,
-           sep = ", ",
-           width = options()$width - 9) {
+  function(x, sep = ", ", width = options()$width - 9) {
     as.character(glue::glue_collapse(x, sep = sep, width = width))
   }
-
-
 
 #' @keywords internal
 #' @rdname format_ch_vec

@@ -36,14 +36,16 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_string2factor(w, n) %>%
       prep(ex_dat)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
-      step_string2factor(n, ordered = "yes") %>%
+      step_string2factor(w, x, ordered = "yes") %>%
       prep(ex_dat)
   )
 })
@@ -73,8 +75,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = ex_dat)
 
-  expect_error(bake(rec_trained, new_data = ex_dat[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = ex_dat[, -1]))
 })
 
 test_that("empty printing", {

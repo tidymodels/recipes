@@ -11,7 +11,6 @@ dat <- data.frame(
   y = runif(n)
 )
 
-
 ratios <- function(x) {
   tab <- sort(table(x), decreasing = TRUE)
   if (length(tab) > 1) {
@@ -21,7 +20,9 @@ ratios <- function(x) {
   }
 }
 
-pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) / nrow(dat) * 100
+pct_uni <- vapply(dat[, -5], function(x) length(unique(x)), c(val = 0)) /
+  nrow(dat) *
+  100
 f_ratio <- vapply(dat[, -5], ratios, c(val = 0))
 vars <- names(pct_uni)
 
@@ -82,6 +83,22 @@ test_that("mssing values in zero-variance screen", {
   expect_true(recipes:::one_unique(x))
   expect_true(recipes:::one_unique(y))
   expect_true(recipes:::one_unique(z))
+})
+
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+  rec <- recipe(~am + vs, data = mtcars) %>%
+    step_zv(all_predictors())
+
+  rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = mtcars)
+
+  expect_true(
+    all(vapply(rec_trans, sparsevctrs::is_sparse_integer, logical(1)))
+  )
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
 })
 
 # Infrastructure ---------------------------------------------------------------

@@ -68,21 +68,23 @@
 #' tidy(kpca_trans, number = 3)
 #' tidy(kpca_estimates, number = 3)
 step_kpca <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 5,
-           res = NULL,
-           columns = NULL,
-           options = list(
-             kernel = "rbfdot",
-             kpar = list(sigma = 0.2)
-           ),
-           prefix = "kPC",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("kpca")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 5,
+    res = NULL,
+    columns = NULL,
+    options = list(
+      kernel = "rbfdot",
+      kpar = list(sigma = 0.2)
+    ),
+    prefix = "kPC",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("kpca")
+  ) {
     recipes_pkg_check(required_pkgs.step_kpca())
 
     add_step(
@@ -104,8 +106,19 @@ step_kpca <-
   }
 
 step_kpca_new <-
-  function(terms, role, trained, num_comp, res, columns, options, prefix,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    res,
+    columns,
+    options,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "kpca",
       terms = terms,
@@ -126,6 +139,8 @@ step_kpca_new <-
 prep.step_kpca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-
@@ -138,10 +153,12 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
     cl <- call_modify(cl, !!!x$options)
     kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(kprc)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(kprc)
+        )
+      )
     }
   } else {
     kprc <- NULL
@@ -197,7 +214,6 @@ print.step_kpca <- function(x, width = max(20, options()$width - 40), ...) {
   invisible(x)
 }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_kpca <- function(x, ...) {
@@ -211,8 +227,6 @@ tidy.step_kpca <- function(x, ...) {
   res$id <- x$id
   res
 }
-
-
 
 #' @rdname required_pkgs.recipe
 #' @export

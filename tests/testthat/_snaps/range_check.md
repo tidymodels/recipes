@@ -107,6 +107,14 @@
       Error in `range_check_func()`:
       i Largest value of `y` is 60, crossing the upper bound 55.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mtcars[, -3])
+    Condition
+      Error in `check_range()`:
+      ! The following required column is missing from `new_data`: disp.
+
 # empty printing
 
     Code

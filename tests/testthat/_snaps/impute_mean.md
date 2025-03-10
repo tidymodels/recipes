@@ -48,6 +48,14 @@
       -- Operations 
       * Mean imputation for: Age, Assets, Income | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed, new_data = credit_te[, c(-5)])
+    Condition
+      Error in `step_impute_mean()`:
+      ! The following required column is missing from `new_data`: Age.
+
 # empty printing
 
     Code
@@ -117,4 +125,14 @@
       
       -- Operations 
       * Mean imputation for: Age, Assets, Income | Trained
+
+# bad args
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_mean(all_predictors(), trim = 0.6) %>%
+        prep()
+    Condition
+      Error in `step_impute_mean()`:
+      Caused by error in `prep()`:
+      ! `trim` must be a number between 0 and 0.5, not the number 0.6.
 

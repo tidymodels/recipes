@@ -10,24 +10,24 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-    step_arrange(desc(Sepal.Length), 1 / Petal.Length)
+      step_arrange(desc(Sepal.Length), 1 / Petal.Length)
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
+      as_tibble() %>%
+      slice(1:75) %>%
+      dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-    as_tibble() %>%
-    slice(76:150) %>%
-    dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
+      as_tibble() %>%
+      slice(76:150) %>%
+      dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -37,15 +37,15 @@ test_that("quasiquotation", {
   sort_vars <- syms(sort_vars)
   rec_1 <-
     iris_rec %>%
-    step_arrange(!!!sort_vars)
+      step_arrange(!!!sort_vars)
 
   prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    arrange(Sepal.Length, Petal.Length)
+      as_tibble() %>%
+      slice(1:75) %>%
+      arrange(Sepal.Length, Petal.Length)
 
   rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
@@ -54,10 +54,23 @@ test_that("quasiquotation", {
 test_that("no input", {
   no_inputs <-
     iris_rec %>%
-    step_arrange() %>%
-    prep(training = iris) %>%
-    bake(new_data = NULL, composition = "data.frame")
+      step_arrange() %>%
+      prep(training = iris) %>%
+      bake(new_data = NULL, composition = "data.frame")
   expect_equal(no_inputs, iris)
+})
+
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~., mtcars) %>%
+    step_arrange(vs) %>%
+    prep()
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 })
 
 # Infrastructure ---------------------------------------------------------------

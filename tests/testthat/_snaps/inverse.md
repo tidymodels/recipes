@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 1:3])
+    Condition
+      Error in `step_inverse()`:
+      ! The following required column is missing from `new_data`: x4.
+
 # empty printing
 
     Code
@@ -65,4 +73,14 @@
       
       -- Operations 
       * Inverse transformation on: x1, x2, x3, x4 | Trained
+
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_inverse(x1, x2, x3, x4, offset = function(x)
+        x / 3) %>% prep()
+    Condition
+      Error in `step_inverse()`:
+      Caused by error in `prep()`:
+      ! `offset` must be a number, not a function.
 

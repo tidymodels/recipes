@@ -30,11 +30,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{min}{A single numeric value for the smallest value in the
-range.}
-
-\item{max}{A single numeric value for the largest value in the
-range.}
+\item{min, max}{Single numeric values for the smallest (or largest) value in
+the transformed data.}
 
 \item{clipping}{A single logical value for determining whether
 application of transformation onto new data should be forced

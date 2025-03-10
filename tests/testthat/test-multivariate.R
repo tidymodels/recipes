@@ -3,9 +3,11 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(biomass, package = "modeldata")
 
-
 test_that("multivariate outcome", {
-  raw_recipe <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur, data = biomass)
+  raw_recipe <- recipe(
+    carbon + hydrogen ~ oxygen + nitrogen + sulfur,
+    data = biomass
+  )
   rec <- raw_recipe %>%
     step_center(all_outcomes()) %>%
     step_scale(all_predictors())

@@ -18,6 +18,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
@@ -36,13 +38,15 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rand_set, number = 1)
-step_shuffle <- function(recipe,
-                         ...,
-                         role = NA,
-                         trained = FALSE,
-                         columns = NULL,
-                         skip = FALSE,
-                         id = rand_id("shuffle")) {
+step_shuffle <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("shuffle")
+) {
   add_step(
     recipe,
     step_shuffle_new(
@@ -112,4 +116,9 @@ tidy.step_shuffle <- function(x, ...) {
   res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_shuffle <- function(x, ...) {
+  TRUE
 }

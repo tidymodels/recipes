@@ -9,6 +9,14 @@
       * 1 double variable found: `numbers`
       * 1 factor variable found: `fact`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec1, new_data = ex_dat[, 1:3])
+    Condition
+      Error in `step_ordinalscore()`:
+      ! The following required columns are missing from `new_data`: ord2 and ord3.
+
 # empty printing
 
     Code
@@ -76,4 +84,14 @@
       
       -- Operations 
       * Scoring for: ord1, ord2, ord3 | Trained
+
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_ordinalscore(starts_with("ord"), convert = NULL) %>%
+        prep()
+    Condition
+      Error in `step_ordinalscore()`:
+      Caused by error in `prep()`:
+      ! `convert` must be a function, not `NULL`.
 

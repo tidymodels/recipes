@@ -65,7 +65,7 @@
       Training data contained 1000 data points and no incomplete rows.
       
       -- Operations 
-      * Discretize numeric variables from: x1 and x2 | Trained
+      * Discretize numeric variables from: x1 x2 | Trained
 
 # bad args
 
@@ -74,7 +74,7 @@
     Condition
       Error in `step_discretize()`:
       Caused by error in `recipes::discretize()`:
-      ! There should be at least 2 `cuts` but 1 was supplied.
+      ! `cuts` must be a whole number larger than or equal to 2, not the number 1.
 
 ---
 
@@ -118,6 +118,42 @@
       
       -- Operations 
       * Discretize numeric variables from: x1 | Trained
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_discretize(disp, num_breaks = 0) %>%
+        prep()
+    Condition
+      Error in `step_discretize()`:
+      Caused by error in `prep()`:
+      ! `num_breaks` must be a whole number larger than or equal to 1, not the number 0.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_discretize(disp, min_unique = -1) %>%
+        prep()
+    Condition
+      Error in `step_discretize()`:
+      Caused by error in `prep()`:
+      ! `min_unique` must be a whole number larger than or equal to 1, not the number -1.
+
+# war when less breaks are generated
+
+    Code
+      tmp <- discretize(c(rep(1, 50), 1:50), cuts = 5, min_unique = 1)
+    Condition
+      Warning:
+      Not enough data for 5 breaks. Only 4 breaks were used.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = mtcars[, 2:ncol(mtcars)])
+    Condition
+      Error in `step_discretize()`:
+      ! The following required column is missing from `new_data`: mpg.
 
 # empty printing
 

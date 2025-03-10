@@ -71,29 +71,19 @@
 #'
 #' transformed_te
 step_relu <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           shift = 0,
-           reverse = FALSE,
-           smooth = FALSE,
-           prefix = "right_relu_",
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("relu")) {
-    if (!is_tune(shift)) {
-      check_number_decimal(shift)
-    }
-    if (!is_tune(reverse)) {
-      check_bool(reverse)
-    }
-    if (!is_tune(smooth)) {
-      check_bool(smooth)
-    }
-    if (reverse & prefix == "right_relu_") {
-      prefix <- "left_relu_"
-    }
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    shift = 0,
+    reverse = FALSE,
+    smooth = FALSE,
+    prefix = "right_relu_",
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("relu")
+  ) {
     add_step(
       recipe,
       step_relu_new(
@@ -112,7 +102,18 @@ step_relu <-
   }
 
 step_relu_new <-
-  function(terms, role, trained, shift, reverse, smooth, prefix, columns, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    shift,
+    reverse,
+    smooth,
+    prefix,
+    columns,
+    skip,
+    id
+  ) {
     step(
       subclass = "relu",
       terms = terms,
@@ -132,6 +133,12 @@ step_relu_new <-
 prep.step_relu <- function(x, training, info = NULL, ...) {
   columns <- recipes_eval_select(x$terms, training, info)
   check_type(training[, columns], types = c("double", "integer"))
+  check_number_decimal(x$shift, arg = "shift")
+  check_bool(x$reverse, arg = "reverse")
+  check_bool(x$smooth, arg = "smooth")
+  if (x$reverse & x$prefix == "right_relu_") {
+    x$prefix <- "left_relu_"
+  }
 
   step_relu_new(
     terms = x$terms,
@@ -169,7 +176,6 @@ print.step_relu <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   if (reverse) {

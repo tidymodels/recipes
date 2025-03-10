@@ -8,6 +8,25 @@
       ! Name collision occurred. The following variable names already exist:
       * `time_hour`
 
+# errors on wrong values of features
+
+    Code
+      recipe(~times, examples) %>% step_time(all_predictors(), features = "hourly") %>%
+        prep()
+    Condition
+      Error in `step_time()`:
+      Caused by error in `prep()`:
+      ! `features` must be one of "am", "hour", "hour12", "minute", "second", or "decimal_day", not "hourly".
+      i Did you mean "hour12"?
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = examples[, -1])
+    Condition
+      Error in `step_time()`:
+      ! The following required column is missing from `new_data`: times.
+
 # empty printing
 
     Code

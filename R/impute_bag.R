@@ -116,17 +116,19 @@
 #' tidy(imp_models, number = 1)
 #' }
 step_impute_bag <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           trees = 25,
-           models = NULL,
-           options = list(keepX = FALSE),
-           seed_val = sample.int(10^4, 1),
-           skip = FALSE,
-           id = rand_id("impute_bag")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    impute_with = imp_vars(all_predictors()),
+    trees = 25,
+    models = NULL,
+    options = list(keepX = FALSE),
+    seed_val = sample.int(10^4, 1),
+    skip = FALSE,
+    id = rand_id("impute_bag")
+  ) {
     if (is.null(impute_with)) {
       cli::cli_abort("{.arg impute_with} must not be empty.")
     }
@@ -149,8 +151,18 @@ step_impute_bag <-
   }
 
 step_impute_bag_new <-
-  function(terms, role, trained, models, options, impute_with, trees,
-           seed_val, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    models,
+    options,
+    impute_with,
+    trees,
+    seed_val,
+    skip,
+    id
+  ) {
     step(
       subclass = "impute_bag",
       terms = terms,
@@ -165,7 +177,6 @@ step_impute_bag_new <-
       id = id
     )
   }
-
 
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]
@@ -210,6 +221,8 @@ impute_var_lists <- function(to_impute, impute_using, training, info) {
 
 #' @export
 prep.step_impute_bag <- function(x, training, info = NULL, ...) {
+  check_number_whole(x$trees, arg = "trees", min = 1)
+  check_number_whole(x$seed_val, arg = "seed_val")
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -248,14 +261,14 @@ bake.step_impute_bag <- function(object, new_data, ...) {
   col_names <- names(object$models)
   check_new_data(col_names, object, new_data)
 
-  missing_rows <- !complete.cases(new_data)
+  missing_rows <- !vec_detect_complete(new_data)
   if (!any(missing_rows)) {
     return(new_data)
   }
 
   old_data <- new_data
   for (col_name in col_names) {
-    missing_rows <- !complete.cases(new_data[[col_name]])
+    missing_rows <- !vec_detect_complete(new_data[[col_name]])
     if (!any(missing_rows)) {
       next
     }

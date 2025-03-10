@@ -26,17 +26,9 @@ rec <- recipe(~., data = sacr_tr) %>%
 test_that("correct types", {
   bake_default <- bake(rec, new_data = sacr_te, all_numeric())
   bake_df <-
-    bake(rec,
-      new_data = sacr_te,
-      all_numeric(),
-      composition = "data.frame"
-    )
+    bake(rec, new_data = sacr_te, all_numeric(), composition = "data.frame")
   bake_df_1d <-
-    bake(rec,
-      new_data = sacr_te,
-      sqft,
-      composition = "data.frame"
-    )
+    bake(rec, new_data = sacr_te, sqft, composition = "data.frame")
   juice_default <- juice(rec, all_numeric())
   juice_df <-
     juice(rec, all_numeric(), composition = "data.frame")

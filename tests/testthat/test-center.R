@@ -7,8 +7,9 @@ biomass <- as_tibble(biomass)
 
 means <- vapply(biomass[, 3:7], mean, c(mean = 0))
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass
 )
 
 test_that("working correctly", {
@@ -64,7 +65,12 @@ test_that("na_rm argument works for step_center", {
     prep()
 
   exp_no_na_rm <- vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1))
-  exp_na_rm <- vapply(mtcars_na, FUN = mean, FUN.VALUE = numeric(1), na.rm = TRUE)
+  exp_na_rm <- vapply(
+    mtcars_na,
+    FUN = mean,
+    FUN.VALUE = numeric(1),
+    na.rm = TRUE
+  )
 
   expect_equal(
     tidy(rec_no_na_rm, 1)$value,
@@ -83,8 +89,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-    step_center(all_numeric_predictors()) %>%
-    prep()
+      step_center(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
@@ -98,8 +104,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-    step_center(all_numeric_predictors()) %>%
-    prep()
+      step_center(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     tidy(rec, number = 1)[["value"]],
@@ -109,12 +115,12 @@ test_that("centering with case weights", {
   expect_snapshot(rec)
 })
 
-test_that("warns when NaN is returned due to Inf or -Inf",{
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) |>
+test_that("warns when NaN is returned due to Inf or -Inf", {
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, Inf))) %>%
     step_center(x)
   expect_snapshot(prep(rec))
 
-  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) |>
+  rec <- recipe(~., data = data.frame(x = c(2, 3, 4, -Inf))) %>%
     step_center(x)
   expect_snapshot(prep(rec))
 })
@@ -123,13 +129,19 @@ test_that("warns when NaN is returned due to Inf or -Inf",{
 test_that("bake method errors when needed non-standard role columns are missing", {
   std <- rec %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur) %>%
-    update_role(carbon, hydrogen, oxygen, nitrogen, sulfur, new_role = "potato") %>%
+    update_role(
+      carbon,
+      hydrogen,
+      oxygen,
+      nitrogen,
+      sulfur,
+      new_role = "potato"
+    ) %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   std_trained <- prep(std, training = biomass)
 
-  expect_error(bake(std_trained, new_data = biomass[, 1:2]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(std_trained, new_data = biomass[, 1:2]))
 })
 
 test_that("empty printing", {

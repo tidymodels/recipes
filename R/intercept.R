@@ -50,10 +50,16 @@
 #'
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
-step_intercept <- function(recipe, ..., role = "predictor",
-                           trained = FALSE, name = "intercept",
-                           value = 1L,
-                           skip = FALSE, id = rand_id("intercept")) {
+step_intercept <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  name = "intercept",
+  value = 1L,
+  skip = FALSE,
+  id = rand_id("intercept")
+) {
   if (length(list(...)) > 0) {
     cli::cli_warn("Selectors are not used for this step.")
   }

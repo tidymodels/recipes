@@ -62,20 +62,22 @@
 #'   arrange(geo_dist)
 #'
 #' tidy(near_station, number = 1)
-step_geodist <- function(recipe,
-                         lat = NULL,
-                         lon = NULL,
-                         role = "predictor",
-                         trained = FALSE,
-                         ref_lat = NULL,
-                         ref_lon = NULL,
-                         is_lat_lon = TRUE,
-                         log = FALSE,
-                         name = "geo_dist",
-                         columns = NULL,
-                         keep_original_cols = TRUE,
-                         skip = FALSE,
-                         id = rand_id("geodist")) {
+step_geodist <- function(
+  recipe,
+  lat = NULL,
+  lon = NULL,
+  role = "predictor",
+  trained = FALSE,
+  ref_lat = NULL,
+  ref_lon = NULL,
+  is_lat_lon = TRUE,
+  log = FALSE,
+  name = "geo_dist",
+  columns = NULL,
+  keep_original_cols = TRUE,
+  skip = FALSE,
+  id = rand_id("geodist")
+) {
   check_bool(is_lat_lon)
   if (is_lat_lon) {
     check_number_decimal(ref_lat, min = -90, max = 90)
@@ -108,8 +110,21 @@ step_geodist <- function(recipe,
 }
 
 step_geodist_new <-
-  function(lon, lat, role, trained, ref_lon, ref_lat, is_lat_lon,
-           log, name, columns, keep_original_cols, skip, id) {
+  function(
+    lon,
+    lat,
+    role,
+    trained,
+    ref_lon,
+    ref_lat,
+    is_lat_lon,
+    log,
+    name,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "geodist",
       lon = lon,
@@ -136,7 +151,6 @@ check_is_lat_lon <- function(x) {
   x
 }
 
-
 #' @export
 prep.step_geodist <- function(x, training, info = NULL, ...) {
   lon_name <- recipes_eval_select(x$lon, training, info)
@@ -146,20 +160,24 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   x <- check_is_lat_lon(x)
 
   if (length(lon_name) > 1) {
-    cli::cli_abort(c(
-      x = "The {.arg lon} selector should select at most a single variable.",
-      i = "The following {length(lon_name)} were selected: \\
+    cli::cli_abort(
+      c(
+        x = "The {.arg lon} selector should select at most a single variable.",
+        i = "The following {length(lon_name)} were selected: \\
           {.and {.var {lon_name}}}."
-    ))
+      )
+    )
   }
   check_type(training[, lon_name], types = c("double", "integer"))
 
   if (length(lat_name) > 1) {
-    cli::cli_abort(c(
-      x = "The {.arg lat} selector should select at most a single variable.",
-      i = "The following {length(lat_name)} were selected: \\
+    cli::cli_abort(
+      c(
+        x = "The {.arg lat} selector should select at most a single variable.",
+        i = "The following {length(lat_name)} were selected: \\
           {.and {.var {lat_name}}}."
-    ))
+      )
+    )
   }
   check_type(training[, lat_name], types = c("double", "integer"))
 
@@ -185,10 +203,15 @@ geo_dist_calc_xy <- function(x_1, y_1, x_2, y_2) {
   sqrt((x_1 - x_2)^2L + (y_1 - y_2)^2L)
 }
 
-
 # earth_radius = 6371e3 in meters
-geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
-                                  call = caller_env()) {
+geo_dist_calc_lat_lon <- function(
+  x_1,
+  y_1,
+  x_2,
+  y_2,
+  earth_radius = 6371e3,
+  call = caller_env()
+) {
   if (any(abs(x_1) > 180.0)) {
     cli::cli_abort(
       "All {.var lon} values should be between -180 and 180.",
@@ -219,7 +242,6 @@ geo_dist_calc_lat_lon <- function(x_1, y_1, x_2, y_2, earth_radius = 6371e3,
 
   earth_radius * c
 }
-
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
@@ -269,14 +291,14 @@ print.step_geodist <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- paste(
       "Geographical distances from",
-      format(x$ref_lat, digits = 10), "x",
-      format(x$ref_lon, digits = 10), "using "
+      format(x$ref_lat, digits = 10),
+      "x",
+      format(x$ref_lon, digits = 10),
+      "using "
     )
     print_step(x$columns, c(x$lat, x$lon), x$trained, title, width)
     invisible(x)
   }
-
-
 
 #' @rdname tidy.recipe
 #' @export

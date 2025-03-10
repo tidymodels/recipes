@@ -11,7 +11,7 @@ step_impute_roll(
   trained = FALSE,
   columns = NULL,
   statistic = median,
-  window = 5,
+  window = 5L,
   skip = FALSE,
   id = rand_id("impute_roll")
 )

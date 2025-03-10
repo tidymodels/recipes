@@ -15,6 +15,7 @@ step_dummy_extract(
   other = "other",
   naming = dummy_extract_names,
   levels = NULL,
+  sparse = "auto",
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy_extract")
@@ -33,11 +34,11 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{sep}{Character vector containing a regular expression to use
+\item{sep}{Character string containing a regular expression to use
 for splitting. \code{\link[=strsplit]{strsplit()}} is used to perform the split. \code{sep} takes
 priority if \code{pattern} is also specified.}
 
-\item{pattern}{Character vector containing a regular expression used
+\item{pattern}{Character string containing a regular expression used
 for extraction. \code{\link[=gregexpr]{gregexpr()}} and \code{\link[=regmatches]{regmatches()}} are used to perform
 pattern extraction using \code{perl = TRUE}.}
 
@@ -56,6 +57,10 @@ columns. See Details below.}
 \item{levels}{A list that contains the information needed to create dummy
 variables for each variable contained in \code{terms}. This is \code{NULL} until the
 step is trained by \code{\link[=prep]{prep()}}.}
+
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -107,6 +112,20 @@ columns \code{terms}, \code{columns} , and \code{id}:
 }
 
 The return value is ordered according to the frequency of \code{columns} entries in the training data set.
+}
+
+\section{Sparse data}{
+
+
+This step produces sparse columns if \code{sparse = "yes"} is being set. The
+default value \code{"auto"} won't trigger production fo sparse columns if a recipe
+is \code{\link[=prep]{prep()}}ed, but allows for a workflow to toggle to \code{"yes"} or \code{"no"}
+depending on whether the model supports \link{sparse_data} and if the model is
+is expected to run faster with the data.
+
+The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+\code{sparse = "yes"} or \code{sparse = "no"}.
 }
 
 \section{Case weights}{
@@ -161,10 +180,10 @@ dummies_color <- recipe(~colors, data = color_examples) \%>\%
   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") \%>\%
   prep()
 
-dommies_data_color <- dummies_color \%>\%
+dummies_data_color <- dummies_color \%>\%
   bake(new_data = NULL)
 
-dommies_data_color
+dummies_data_color
 \dontshow{\}) # examplesIf}
 }
 \seealso{

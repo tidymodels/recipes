@@ -6,7 +6,7 @@ data(covers, package = "modeldata")
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
 
-rec <- recipe(~ description + rows + ch_rows, covers)
+rec <- recipe(~description + rows + ch_rows, covers)
 
 test_that("default options", {
   rec1 <- rec %>%
@@ -23,10 +23,10 @@ test_that("default options", {
   expect_true(is.integer(res1$`all ones`))
 })
 
-
 test_that("nondefault options", {
   rec2 <- rec %>%
-    step_regex(description,
+    step_regex(
+      description,
       pattern = "(rock|stony)",
       result = "rocks",
       options = list(fixed = TRUE)
@@ -36,15 +36,13 @@ test_that("nondefault options", {
   expect_equal(res2$rocks, rep(0, nrow(covers)))
 })
 
-
 test_that("bad selector(s)", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>% step_regex(description, rows, pattern = "(rock|stony)")
   )
   rec4 <- rec %>% step_regex(rows, pattern = "(rock|stony)")
-  expect_snapshot(error = TRUE,
-    prep(rec4, training = covers)
-  )
+  expect_snapshot(error = TRUE, prep(rec4, training = covers))
 })
 
 test_that("check_name() is used", {
@@ -59,6 +57,82 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("error on multiple selections", {
+  mtcars$vs <- as.character(mtcars$vs)
+  mtcars$am <- as.character(mtcars$am)
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_regex(vs, am)
+  )
+})
+
+test_that("checks for grepl arguments", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_regex(options = list(not_real_option = TRUE))
+  )
+})
+
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~description, covers)
+
+  suppressWarnings({
+    dense <- rec %>%
+      step_regex(
+        description,
+        pattern = "stony",
+        sparse = "no",
+        keep_original_cols = FALSE
+      ) %>%
+      prep() %>%
+      bake(NULL)
+    sparse <- rec %>%
+      step_regex(
+        description,
+        pattern = "stony",
+        sparse = "yes",
+        keep_original_cols = FALSE
+      ) %>%
+      prep() %>%
+      bake(NULL)
+  })
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  rec <- recipe(~description, covers) %>%
+    step_regex(description, pattern = "stony") %>%
+    prep()
+
+  exp <- bake(rec, covers)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, covers),
+    exp
+  )
+})
+
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~description, covers) %>%
+    step_regex(description, pattern = "stony", sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_true(
+    .recipes_estimate_sparsity(rec) > exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -67,13 +141,12 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <-
     recipe(mpg ~ ., data = mt_tibble) %>%
-    step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
-    update_role(make_model, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE) %>%
-    prep(mt_tibble)
+      step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
+      update_role(make_model, new_role = "potato") %>%
+      update_role_requirements(role = "potato", bake = FALSE) %>%
+      prep(mt_tibble)
 
-  expect_error(bake(rec, new_data = mt_tibble[, c(-1)]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec, new_data = mt_tibble[, c(-1)]))
 })
 
 test_that("empty printing", {
@@ -116,9 +189,13 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("rocks")
 
-  rec <-  recipe(~ description, covers) %>%
-    step_regex(description, pattern = "(rock|stony)", result = "rocks",
-               keep_original_cols = FALSE)
+  rec <- recipe(~description, covers) %>%
+    step_regex(
+      description,
+      pattern = "(rock|stony)",
+      result = "rocks",
+      keep_original_cols = FALSE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -128,9 +205,13 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ description, covers) %>%
-    step_regex(description, pattern = "(rock|stony)", result = "rocks",
-               keep_original_cols = TRUE)
+  rec <- recipe(~description, covers) %>%
+    step_regex(
+      description,
+      pattern = "(rock|stony)",
+      result = "rocks",
+      keep_original_cols = TRUE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -142,7 +223,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ description, covers) %>%
+  rec <- recipe(~description, covers) %>%
     step_regex(description, pattern = "(rock|stony)")
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -151,16 +232,24 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = covers),
-    NA
+  expect_no_error(
+    bake(rec, new_data = covers)
   )
 })
 
 test_that("printing", {
-  rec <- recipe(~ description + rows + ch_rows, covers) %>%
+  rec <- recipe(~description + rows + ch_rows, covers) %>%
     step_regex(description, pattern = "(rock|stony)")
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    rec %>%
+      step_regex(description, pattern = character(0)) %>%
+      prep(),
+    error = TRUE
+  )
 })

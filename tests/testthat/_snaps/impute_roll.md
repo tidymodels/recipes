@@ -16,6 +16,7 @@
         step_impute_roll(all_predictors(), window = 4) %>% prep(training = example_data)
     Condition
       Error in `step_impute_roll()`:
+      Caused by error in `prep()`:
       ! `window` should be an odd integer >= 3.
 
 ---
@@ -28,6 +29,44 @@
       Caused by error in `prep()`:
       x All columns selected for the step should be double.
       * 1 integer variable found: `x4`
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_roll(all_predictors(), statistic = mean,
+      window = 1) %>% prep()
+    Condition
+      Error in `step_impute_roll()`:
+      Caused by error in `prep()`:
+      ! `window` must be a whole number larger than or equal to 3, not the number 1.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_roll(all_predictors(), statistic = mean,
+      window = 4) %>% prep()
+    Condition
+      Error in `step_impute_roll()`:
+      Caused by error in `prep()`:
+      ! `window` should be an odd integer >= 3.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_impute_roll(all_predictors(), statistic = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_roll()`:
+      Caused by error in `prep()`:
+      ! `statistic` must be a function, not `NULL`.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(seven_pt, new_data = example_data[, c(-2)])
+    Condition
+      Error in `step_impute_roll()`:
+      ! The following required column is missing from `new_data`: x1.
 
 # empty printing
 

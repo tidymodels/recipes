@@ -210,7 +210,7 @@
     Condition
       Error in `step_pca()`:
       Caused by error in `prep()`:
-      ! The following argument was specified but do not exist: `number`.
+      ! The following argument was specified but does not exist: `number`.
 
 ---
 
@@ -227,14 +227,158 @@
     Code
       recipe(~a, data = data)
     Condition
-      Error in `as.data.frame.default()`:
-      ! cannot coerce class '"function"' to a data.frame
+      Error in `recipe()`:
+      ! `data` must be a data frame, matrix, or sparse matrix, not a function.
 
 ---
 
     Code
       recipe(~., data = data)
     Condition
-      Error in `as.data.frame.default()`:
-      ! cannot coerce class '"function"' to a data.frame
+      Error in `recipe()`:
+      ! `data` must be a data frame, matrix, or sparse matrix, not a function.
+
+# step constructor
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(trained = "yes")
+    Condition
+      Error in `step_normalize()`:
+      ! `trained` must be `TRUE` or `FALSE`, not the string "yes".
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(id = TRUE)
+    Condition
+      Error in `step_normalize()`:
+      ! `id` must be a single string, not `TRUE`.
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(skip = "you betcha")
+    Condition
+      Error in `step_normalize()`:
+      ! `skip` must be `TRUE` or `FALSE`, not the string "you betcha".
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_normalize(role = 13)
+    Condition
+      Error in `step_normalize()`:
+      ! `x$role` must be a single string or `NA`, not the number 13.
+
+---
+
+    Code
+      recipe(~., mtcars) %>% step_pca(all_predictors(), keep_original_cols = 0)
+    Condition
+      Error in `step_pca()`:
+      ! `keep_original_cols` must be `TRUE` or `FALSE`, not the number 0.
+
+---
+
+    Code
+      step(subclass = list())
+    Condition
+      Error:
+      ! `subclass` must be a single string, not an empty list.
+
+---
+
+    Code
+      step()
+    Condition
+      Error:
+      ! `subclass` must be a single string, not absent.
+
+# bake() error on wrong composition
+
+    Code
+      recipe(~., data = mtcars) %>% prep() %>% bake(mtcars, composition = "wrong")
+    Condition
+      Error in `bake()`:
+      x `composition` cannot be "wrong".
+      i Allowed values are "tibble", "dgCMatrix", "matrix", or "data.frame".
+
+# juice() error on wrong composition
+
+    Code
+      recipe(~., data = mtcars) %>% prep() %>% juice(composition = "wrong")
+    Condition
+      Error in `juice()`:
+      x `composition` cannot be "wrong".
+      i Allowed values are "tibble", "dgCMatrix", "matrix", or "data.frame".
+
+# juice() error if prep(retain = FALSE)
+
+    Code
+      recipe(~., data = mtcars) %>% prep(retain = FALSE) %>% juice()
+    Condition
+      Error in `juice()`:
+      ! Use `retain = TRUE` in `prep()` to be able to extract the training set.
+
+# recipe() error with minus in formula
+
+    Code
+      recipe(~ . - 1, data = mtcars)
+    Condition
+      Error in `recipe()`:
+      x `-` is not allowed in a recipe formula.
+      i Use `step_rm()` (`?recipes::step_rm()`) instead.
+
+# recipe() error if vars and roles have different lengths
+
+    Code
+      recipe(mtcars, vars = c("mpg", "disp"), roles = c("predictor"))
+    Condition
+      Error in `recipe()`:
+      x `vars` and `roles` must have same length.
+      * `vars` has length 2
+      * `roles` has length 1
+
+# recipe() error if vars not in data
+
+    Code
+      recipe(mtcars, vars = c("wrong", "disp-wrong"))
+    Condition
+      Error in `recipe()`:
+      x The following elements of `vars` are not found in `x`:
+      * wrong and disp-wrong.
+
+# recipe() error if vars contains duplicates
+
+    Code
+      recipe(mtcars, vars = c("mpg", "mpg"))
+    Condition
+      Error in `recipe()`:
+      x `vars` must have unique values.
+      i The following values were duplicated: mpg.
+
+# recipe() error if vars and roles are used with formula
+
+    Code
+      recipe(mtcars, ~., vars = c("mpg"))
+    Condition
+      Error in `recipe()`:
+      ! The `vars` argument will be ignored when a formula is used.
+
+---
+
+    Code
+      recipe(mtcars, ~., roles = c("mpg"))
+    Condition
+      Error in `recipe()`:
+      ! The `roles` argument will be ignored when a formula is used.
+
+# recipe() error for unsupported data types
+
+    Code
+      recipe(list())
+    Condition
+      Error in `recipe()`:
+      x `x` should be a data frame, matrix, formula, or tibble.
+      i `x` is an empty list.
 

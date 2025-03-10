@@ -48,6 +48,14 @@
       -- Operations 
       * Median imputation for: Age, Assets, Income | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(imputed, new_data = credit_te[, c(-5)])
+    Condition
+      Error in `step_impute_median()`:
+      ! The following required column is missing from `new_data`: Age.
+
 # empty printing
 
     Code

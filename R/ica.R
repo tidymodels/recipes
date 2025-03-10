@@ -88,19 +88,21 @@
 #' tidy(ica_trans, number = 3)
 #' tidy(ica_estimates, number = 3)
 step_ica <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 5,
-           options = list(method = "C"),
-           seed = sample.int(10000, 5),
-           res = NULL,
-           columns = NULL,
-           prefix = "IC",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("ica")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 5,
+    options = list(method = "C"),
+    seed = sample.int(10000, 5),
+    res = NULL,
+    columns = NULL,
+    prefix = "IC",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("ica")
+  ) {
     recipes_pkg_check(required_pkgs.step_ica())
 
     add_step(
@@ -123,8 +125,20 @@ step_ica <-
   }
 
 step_ica_new <-
-  function(terms, role, trained, num_comp, options, seed, res, columns,
-           prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    options,
+    seed,
+    res,
+    columns,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "ica",
       terms = terms,
@@ -146,6 +160,7 @@ step_ica_new <-
 prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_string(x$prefix, arg = "prefix")
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
@@ -161,10 +176,12 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     indc <- try(withr::with_seed(x$seed, rlang::eval_tidy(cl)), silent = TRUE)
 
     if (inherits(indc, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(indc)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(indc)
+        )
+      )
     }
 
     indc <- indc[c("K", "W")]
@@ -200,9 +217,10 @@ bake.step_ica <- function(object, new_data, ...) {
     return(new_data)
   }
 
-
-  comps <- scale(as.matrix(new_data[, col_names]),
-    center = object$res$means, scale = FALSE
+  comps <- scale(
+    as.matrix(new_data[, col_names]),
+    center = object$res$means,
+    scale = FALSE
   )
   comps <- comps %*% object$res$K %*% object$res$W
   comps <- comps[, seq_len(object$num_comp), drop = FALSE]
@@ -282,7 +300,6 @@ tunable.step_ica <- function(x, ...) {
     component_id = x$id
   )
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

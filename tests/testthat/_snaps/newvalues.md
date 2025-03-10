@@ -119,6 +119,14 @@
       Error in `new_values_func()`:
       ! `a` contains the new value: "FALSE".
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mtcars[, -3])
+    Condition
+      Error in `check_new_values()`:
+      ! The following required column is missing from `new_data`: disp.
+
 # empty printing
 
     Code
@@ -188,4 +196,13 @@
       
       -- Operations 
       * Checking no new_values for: disp | Trained
+
+# bad args
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% check_new_values(disp, ignore_NA = 2) %>% prep()
+    Condition
+      Error in `check_new_values()`:
+      Caused by error in `prep()`:
+      ! `ignore_NA` must be `TRUE` or `FALSE`, not the number 2.
 

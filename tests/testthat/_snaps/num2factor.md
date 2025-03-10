@@ -16,6 +16,23 @@
       Error in `step_num2factor()`:
       ! Please provide a character vector of appropriate length for `levels`.
 
+---
+
+    Code
+      rec %>% step_num2factor(z, levels = rev(LETTERS[1:10]), transform = 2) %>% prep()
+    Condition
+      Error in `step_num2factor()`:
+      Caused by error in `prep()`:
+      ! `transform` must be a function, not the number 2.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(ex_1, new_data = ex_dat[, 1:2])
+    Condition
+      Error in `step_num2factor()`:
+      ! The following required column is missing from `new_data`: z.
+
 # empty printing
 
     Code

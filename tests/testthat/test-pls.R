@@ -25,7 +25,6 @@ cell_te <- cells %>%
 
 load(test_path("test_pls_new.RData"))
 
-
 ## -----------------------------------------------------------------------------
 
 test_that("PLS, dense loadings", {
@@ -46,7 +45,6 @@ test_that("PLS, dense loadings", {
   expect_equal(te_new, bm_pls_te)
 })
 
-
 test_that("PLS, dense loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV + carbon ~ ., data = biom_tr) %>%
@@ -65,12 +63,15 @@ test_that("PLS, dense loadings, multiple outcomes", {
   expect_equal(te_new, bm_pls_multi_te)
 })
 
-
 test_that("PLS, sparse loadings", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = "HHV", num_comp = 3,
-             predictor_prop = 3 / 5)
+    step_pls(
+      all_predictors(),
+      outcome = "HHV",
+      num_comp = 3,
+      predictor_prop = 3 / 5
+    )
 
   rec <- prep(rec)
 
@@ -85,12 +86,15 @@ test_that("PLS, sparse loadings", {
   expect_equal(te_new, bm_spls_te)
 })
 
-
 test_that("PLS, dense loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(HHV + carbon ~ ., data = biom_tr) %>%
-    step_pls(all_predictors(), outcome = c("HHV", "carbon"), num_comp = 3,
-             predictor_prop = 3 / 5)
+    step_pls(
+      all_predictors(),
+      outcome = c("HHV", "carbon"),
+      num_comp = 3,
+      predictor_prop = 3 / 5
+    )
 
   rec <- prep(rec)
 
@@ -125,7 +129,6 @@ test_that("PLS-DA, dense loadings", {
   expect_equal(te_new, cell_plsda_te)
 })
 
-
 test_that("PLS-DA, dense loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(class + case ~ ., data = cells) %>%
@@ -134,12 +137,15 @@ test_that("PLS-DA, dense loadings, multiple outcomes", {
   expect_snapshot(error = TRUE, prep(rec))
 })
 
-
 test_that("PLS-DA, sparse loadings", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(class ~ ., data = cell_tr) %>%
-    step_pls(all_predictors(), outcome = "class", num_comp = 3,
-             predictor_prop = 50 / 56)
+    step_pls(
+      all_predictors(),
+      outcome = "class",
+      num_comp = 3,
+      predictor_prop = 50 / 56
+    )
 
   rec <- prep(rec)
 
@@ -154,12 +160,15 @@ test_that("PLS-DA, sparse loadings", {
   expect_equal(te_new, cell_splsda_te)
 })
 
-
 test_that("PLS-DA, sparse loadings, multiple outcomes", {
   skip_if_not_installed("mixOmics")
   rec <- recipe(class + case ~ ., data = cells) %>%
-    step_pls(all_predictors(), outcome = c("class", "case"), num_comp = 3,
-             predictor_prop = 50 / 56)
+    step_pls(
+      all_predictors(),
+      outcome = c("class", "case"),
+      num_comp = 3,
+      predictor_prop = 50 / 56
+    )
 
   expect_snapshot(error = TRUE, prep(rec))
 })
@@ -193,8 +202,14 @@ test_that("tidy method", {
 
   tidy_pre <- tidy(rec, number = 1)
   exp_pre <- tibble::tribble(
-    ~terms, ~value, ~component, ~id,
-    "all_predictors()", NA_real_, NA_character_, "dork"
+    ~terms,
+    ~value,
+    ~component,
+    ~id,
+    "all_predictors()",
+    NA_real_,
+    NA_character_,
+    "dork"
   )
   expect_equal(tidy_pre, exp_pre)
 
@@ -202,22 +217,70 @@ test_that("tidy method", {
   tidy_post <- tidy(rec, number = 1)
   exp_post <-
     tibble::tribble(
-      ~terms, ~value, ~component, ~id,
-      "carbon", 0.82813459059393, "PLS1", "dork",
-      "carbon", 0.718469477422311, "PLS2", "dork",
-      "carbon", 0.476111929729498, "PLS3", "dork",
-      "hydrogen", -0.206963356355556, "PLS1", "dork",
-      "hydrogen", 0.642998926998282, "PLS2", "dork",
-      "hydrogen", 0.262836631090453, "PLS3", "dork",
-      "oxygen", -0.49241242430895, "PLS1", "dork",
-      "oxygen", 0.299176769170812, "PLS2", "dork",
-      "oxygen", 0.418081563632953, "PLS3", "dork",
-      "nitrogen", -0.122633995804743, "PLS1", "dork",
-      "nitrogen", -0.172719084680244, "PLS2", "dork",
-      "nitrogen", 0.642403301090588, "PLS3", "dork",
-      "sulfur", 0.11768677260853, "PLS1", "dork",
-      "sulfur", -0.217341766567037, "PLS2", "dork",
-      "sulfur", 0.521114256955661, "PLS3", "dork"
+      ~terms,
+      ~value,
+      ~component,
+      ~id,
+      "carbon",
+      0.82813459059393,
+      "PLS1",
+      "dork",
+      "carbon",
+      0.718469477422311,
+      "PLS2",
+      "dork",
+      "carbon",
+      0.476111929729498,
+      "PLS3",
+      "dork",
+      "hydrogen",
+      -0.206963356355556,
+      "PLS1",
+      "dork",
+      "hydrogen",
+      0.642998926998282,
+      "PLS2",
+      "dork",
+      "hydrogen",
+      0.262836631090453,
+      "PLS3",
+      "dork",
+      "oxygen",
+      -0.49241242430895,
+      "PLS1",
+      "dork",
+      "oxygen",
+      0.299176769170812,
+      "PLS2",
+      "dork",
+      "oxygen",
+      0.418081563632953,
+      "PLS3",
+      "dork",
+      "nitrogen",
+      -0.122633995804743,
+      "PLS1",
+      "dork",
+      "nitrogen",
+      -0.172719084680244,
+      "PLS2",
+      "dork",
+      "nitrogen",
+      0.642403301090588,
+      "PLS3",
+      "dork",
+      "sulfur",
+      0.11768677260853,
+      "PLS1",
+      "dork",
+      "sulfur",
+      -0.217341766567037,
+      "PLS2",
+      "dork",
+      "sulfur",
+      0.521114256955661,
+      "PLS3",
+      "dork"
     )
   expect_equal(tidy_post, exp_post, tolerance = 0.01)
 })
@@ -227,7 +290,7 @@ test_that("check_name() is used", {
   dat <- mtcars
   dat$PLS1 <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_pls(mpg, disp, vs, outcome = "am")
 
   expect_snapshot(
@@ -239,8 +302,9 @@ test_that("check_name() is used", {
 ## -----------------------------------------------------------------------------
 
 test_that("Deprecation warning", {
-  expect_snapshot(error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
       step_pls(outcome = "mpg", preserve = TRUE)
   )
 })
@@ -248,7 +312,7 @@ test_that("Deprecation warning", {
 test_that("tunable", {
   rec <-
     recipe(Species ~ ., data = iris) %>%
-    step_pls(all_predictors(), outcome = "Species")
+      step_pls(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_pls(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "predictor_prop"))
   expect_true(all(rec_param$source == "recipe"))
@@ -262,13 +326,42 @@ test_that("tunable", {
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   rec <- recipe(carb ~ ., data = mtcars) %>%
-    step_pls(all_predictors(), outcome = "carb",
-             num_comp = 0, keep_original_cols = FALSE) %>%
+    step_pls(
+      all_predictors(),
+      outcome = "carb",
+      num_comp = 0,
+      keep_original_cols = FALSE
+    ) %>%
     prep()
 
   res <- bake(rec, new_data = NULL)
 
   expect_identical(res, tibble::as_tibble(mtcars))
+})
+
+test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("mixOmics")
+  local_mocked_bindings(
+    .package = "mixOmics",
+    pls = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+  expect_snapshot(
+    tmp <- recipe(~., data = mtcars) %>%
+      step_pls(all_predictors(), outcome = "mpg") %>%
+      prep()
+  )
+})
+
+test_that("error on no outcome", {
+  skip_if_not_installed("mixOmics")
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_pls(all_predictors()) %>%
+      prep()
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -282,8 +375,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <- prep(rec)
 
-  expect_error(bake(rec, new_data = biom_tr[, c(-1)]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec, new_data = biom_tr[, c(-1)]))
 })
 
 test_that("empty printing", {
@@ -366,9 +458,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
+  expect_no_error(
+    bake(rec, new_data = mtcars)
   )
 })
 
@@ -387,11 +478,35 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
     step_pls(
       all_predictors(),
       outcome = "mpg",
-      num_comp = hardhat::tune(), predictor_prop = hardhat::tune()
+      num_comp = hardhat::tune(),
+      predictor_prop = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+test_that("bad args", {
+  skip_if_not_installed("mixOmics")
+
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pls(-mpg, outcome = "mpg", num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pls(-mpg, outcome = "mpg", prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_pls(-mpg, outcome = "mpg", predictor_prop = -1) %>%
+      prep(),
+    error = TRUE
+  )
 })

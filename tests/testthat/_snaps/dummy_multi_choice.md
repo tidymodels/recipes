@@ -18,6 +18,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `Species_setosa`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = languages[, -1])
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      ! The following required column is missing from `new_data`: lang_1.
+
 # empty printing
 
     Code
@@ -94,4 +102,24 @@
       
       -- Operations 
       * Multi-choice dummy variables from: lang_1, lang_2, lang_3, ... | Trained
+
+# bad args
+
+    Code
+      dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+        step_dummy_multi_choice(starts_with("lang"), other = 2) %>% prep()
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `prep()`:
+      ! `other` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+        step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>% prep()
+    Condition
+      Error in `step_dummy_multi_choice()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
 

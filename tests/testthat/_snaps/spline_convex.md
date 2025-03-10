@@ -28,6 +28,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_01`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = mtcars[, -3])
+    Condition
+      Error in `step_spline_convex()`:
+      ! The following required column is missing from `new_data`: disp.
+
 # empty printing
 
     Code
@@ -77,7 +85,7 @@
       predictor: 5
       
       -- Operations 
-      * Convex spline expansion: carbon and hydrogen
+      * Convex spline expansion: carbon hydrogen
 
 ---
 
@@ -96,5 +104,25 @@
       Training data contained 536 data points and no incomplete rows.
       
       -- Operations 
-      * Convex spline expansion: carbon and hydrogen | Trained
+      * Convex spline expansion: carbon hydrogen | Trained
+
+# bad args
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_convex(disp, degree = -1) %>%
+        prep()
+    Condition
+      Error in `step_spline_convex()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_convex(disp, complete_set = 1) %>%
+        prep()
+    Condition
+      Error in `step_spline_convex()`:
+      Caused by error in `prep()`:
+      ! `complete_set` must be `TRUE` or `FALSE`, not the number 1.
 

@@ -44,14 +44,16 @@
 #' tidy(logit_trans, number = 1)
 #' tidy(logit_obj, number = 1)
 step_logit <-
-  function(recipe,
-           ...,
-           offset = 0,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("logit")) {
+  function(
+    recipe,
+    ...,
+    offset = 0,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("logit")
+  ) {
     add_step(
       recipe,
       step_logit_new(
@@ -84,6 +86,7 @@ step_logit_new <-
 prep.step_logit <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$offset, arg = "offset")
 
   step_logit_new(
     terms = x$terms,

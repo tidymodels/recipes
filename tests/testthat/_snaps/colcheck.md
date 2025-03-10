@@ -16,6 +16,30 @@
       x The following required columns are missing from `new_data`: `mpg`.
       i These columns have one of the following roles, which are required at `bake()` time: `predictor`.
 
+# non-standard roles during bake/predict
+
+    Code
+      predict(role_wts_fit, head(Chicago) %>% select(-date))
+    Condition
+      Error in `hardhat::forge()`:
+      ! The required column "date" is missing.
+
+---
+
+    Code
+      predict(rm_fit, Chicago %>% select(-date))
+    Condition
+      Error in `hardhat::forge()`:
+      ! The required column "date" is missing.
+
+---
+
+    Code
+      predict(rm_fit, Chicago %>% select(-date))
+    Condition
+      Error in `hardhat::forge()`:
+      ! The required column "date" is missing.
+
 # empty printing
 
     Code

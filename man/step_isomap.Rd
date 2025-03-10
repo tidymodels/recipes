@@ -41,9 +41,9 @@ used.}
 
 \item{neighbors}{The number of neighbors.}
 
-\item{options}{A list of options to \code{\link[dimRed:Isomap-class]{dimRed::Isomap()}}.}
+\item{options}{A list of options to `dimRed::Isomap()``.}
 
-\item{res}{The \code{\link[dimRed:Isomap-class]{dimRed::Isomap()}} object is stored
+\item{res}{The `dimRed::Isomap()`` object is stored
 here once this preprocessing step has be trained by
 \code{\link[=prep]{prep()}}.}
 

@@ -19,6 +19,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @export
@@ -39,10 +41,15 @@
 #'
 #' tidy(sqrt_trans, number = 1)
 #' tidy(sqrt_obj, number = 1)
-step_sqrt <- function(recipe, ..., role = NA,
-                      trained = FALSE, columns = NULL,
-                      skip = FALSE,
-                      id = rand_id("sqrt")) {
+step_sqrt <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("sqrt")
+) {
   add_step(
     recipe,
     step_sqrt_new(
@@ -69,7 +76,6 @@ step_sqrt_new <-
     )
   }
 
-
 #' @export
 prep.step_sqrt <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
@@ -91,7 +97,11 @@ bake.step_sqrt <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
 
   for (col_name in col_names) {
-    new_data[[col_name]] <- sqrt(new_data[[col_name]])
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_sqrt(new_data[[col_name]])
+    } else {
+      new_data[[col_name]] <- sqrt(new_data[[col_name]])
+    }
   }
 
   new_data
@@ -110,4 +120,9 @@ tidy.step_sqrt <- function(x, ...) {
   res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_sqrt <- function(x, ...) {
+  TRUE
 }

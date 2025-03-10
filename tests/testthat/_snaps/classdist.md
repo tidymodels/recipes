@@ -11,6 +11,30 @@
 # case weights
 
     Code
+      recipes:::get_center(mtcars, wts = wts, mfun = median)
+    Condition
+      Error in `recipes:::get_center()`:
+      ! The centering function requested cannot be used with case weights.
+
+---
+
+    Code
+      recipes:::get_both(mtcars, wts = wts, mfun = median)
+    Condition
+      Error in `recipes:::get_both()`:
+      ! The centering function requested cannot be used with case weights.
+
+---
+
+    Code
+      recipes:::get_both(mtcars, wts = wts, cfun = mad)
+    Condition
+      Error in `recipes:::get_both()`:
+      ! The variance function requested cannot be used with case weights.
+
+---
+
+    Code
       rec_prep
     Message
       
@@ -27,6 +51,14 @@
       
       -- Operations 
       * Distances to Species for: Sepal.Length, ... | Trained, weighted
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(trained, new_data = iris[, c(-3)])
+    Condition
+      Error in `step_classdist()`:
+      ! The following required column is missing from `new_data`: Petal.Length.
 
 # empty printing
 
@@ -105,5 +137,45 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Distances to Species for: Sepal.Length and Sepal.Width, ... | Trained
+      * Distances to Species for: Sepal.Length Sepal.Width, ... | Trained
+
+# bad args
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      mean_func = 2) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$mean_func` must be a function, not the number 2.
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      cov_func = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$cov_func` must be a function, not `NULL`.
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      prefix = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$prefix` must be a single string, not `NULL`.
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      pool = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `x$pool` must be `TRUE` or `FALSE`, not `NULL`.
 

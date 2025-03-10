@@ -2,19 +2,54 @@ library(testthat)
 library(recipes)
 
 languages <- tribble(
-  ~lang_1,    ~lang_2,   ~lang_3,  ~lang_4,
-  "English",  "Italian", NA,       NA,
-  "Spanish",  NA,        "French", NA,
-  "Armenian", "English", "French", NA,
-  NA,         NA,        NA,       NA
+  ~lang_1,
+  ~lang_2,
+  ~lang_3,
+  ~lang_4,
+  "English",
+  "Italian",
+  NA,
+  NA,
+  "Spanish",
+  NA,
+  "French",
+  NA,
+  "Armenian",
+  "English",
+  "French",
+  NA,
+  NA,
+  NA,
+  NA,
+  NA
 )
 
 result <- tribble(
-  ~Armenian, ~English, ~French, ~Italian, ~Spanish,
-  0L,        1L,       0L,      1L,       0L,
-  0L,        0L,       1L,      0L,       1L,
-  1L,        1L,       1L,      0L,       0L,
-  0L,        0L,       0L,      0L,       0L
+  ~Armenian,
+  ~English,
+  ~French,
+  ~Italian,
+  ~Spanish,
+  0L,
+  1L,
+  0L,
+  1L,
+  0L,
+  0L,
+  0L,
+  1L,
+  0L,
+  1L,
+  1L,
+  1L,
+  1L,
+  0L,
+  0L,
+  0L,
+  0L,
+  0L,
+  0L,
+  0L
 )
 
 test_that("dummy variables with factor inputs", {
@@ -58,7 +93,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = languages) %>%
-    step_dummy_multi_choice(all_predictors())
+      step_dummy_multi_choice(all_predictors())
   rec_param <- tunable.step_dummy_multi_choice(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -89,7 +124,11 @@ test_that("no columns selected", {
 
   expect_equal(names(bake(rec, zdat)), c("z", "y"))
 
-  exp_tidy <- tibble(terms = character(), columns = character(), id = character())
+  exp_tidy <- tibble(
+    terms = character(),
+    columns = character(),
+    id = character()
+  )
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
@@ -114,10 +153,14 @@ test_that("one columns selected", {
 
 test_that("factor levels are preserved", {
   # old data
-  tr <- data.frame(x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+  tr <- data.frame(
+    x = factor(c("a", "b", "c"), levels = c("a", "b", "c", "d", "e", "f", "g"))
+  )
 
   # new data
-  te <- data.frame(x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g")))
+  te <- data.frame(
+    x = factor(c("c", "d", "e"), levels = c("a", "b", "c", "d", "e", "f", "g"))
+  )
   data1 <- tr %>%
     recipe() %>%
     step_dummy(x, one_hot = T) %>%
@@ -133,9 +176,58 @@ test_that("factor levels are preserved", {
   expect_identical(ncol(data1), ncol(data2))
 })
 
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~., data = languages)
+
+  dense <- rec %>%
+    step_dummy_multi_choice(all_predictors(), sparse = "no") %>%
+    prep() %>%
+    bake(NULL)
+  dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
+  sparse <- rec %>%
+    step_dummy_multi_choice(all_predictors(), sparse = "yes") %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  rec <- recipe(~., data = languages) %>%
+    step_dummy_multi_choice(all_predictors()) %>%
+    prep()
+
+  exp <- bake(rec, languages)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, languages),
+    exp
+  )
+})
+
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~., data = languages) %>%
+    step_dummy_multi_choice(all_predictors(), sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_true(
+    .recipes_estimate_sparsity(rec) < exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
+  # lang_1 is not converted automatically because it has a non-standard role
+  # but it is used like a factor variable. See also `?step_string2factor`
+  languages <- languages %>% mutate(lang_1 = factor(lang_1))
   rec <- recipe(~., data = languages) %>%
     step_dummy_multi_choice(lang_1, lang_2, lang_3) %>%
     update_role(lang_1, new_role = "potato") %>%
@@ -143,8 +235,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = languages)
 
-  expect_error(bake(rec_trained, new_data = languages[, -1]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = languages[, -1]))
 })
 
 test_that("empty printing", {
@@ -187,7 +278,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- paste0("lang_1_", c("Armenian", "English", "Spanish"))
 
-  rec <- recipe(~ lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) %>%
     step_dummy_multi_choice(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -198,7 +289,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) %>%
     step_dummy_multi_choice(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -211,7 +302,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ lang_1, data = languages) %>%
+  rec <- recipe(~lang_1, data = languages) %>%
     step_dummy_multi_choice(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -220,9 +311,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = languages),
-    NA
+  expect_no_error(
+    bake(rec, new_data = languages)
   )
 })
 
@@ -246,4 +336,19 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+      step_dummy_multi_choice(starts_with("lang"), other = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    dummy_multi_choice_rec <- recipe(~., data = languages) %>%
+      step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
 })

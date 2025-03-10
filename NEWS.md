@@ -2,6 +2,52 @@
 
 * Fixed bug where name repaied column names would get changed when baked for some steps. (#1347)
 
+* `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
+
+* `recipe()`, `prep()`, and `bake()` now work with sparse matrices. (#1364, #1368, #1369)
+
+* All steps and checks now require arguments `trained`, `skip`, `role`, and `id` at all times.
+
+* `step_dummy()` gained `sparse` argument. When set to `"yes"`, `step_dummy()` will produce sparse vectors. (#1392)
+
+* `step_holiday()` gained `sparse` argument. When set to `"yes"`, `step_holiday()` will produce sparse vectors. (#1422)
+
+* `step_indicate_na()` gained `sparse` argument. When set to `"yes"`, `step_indicate_na()` will produce sparse vectors. (#1424)
+
+* `step_dummy_extract()` gained `sparse` argument. When set to `"yes"`, `step_dummy_extract()` will produce sparse vectors. (#1426)
+
+* `step_dummy_multi_choice()` gained `sparse` argument. When set to `"yes"`, `step_dummy_multi_choice()` will produce sparse vectors. (#1427)
+
+* `step_count()` gained `sparse` argument. When set to `"yes"`, `step_count()` will produce sparse vectors. (#1428)
+
+* `step_regex()` gained `sparse` argument. When set to `"yes"`, `step_regex()` will produce sparse vectors. (#1429)
+
+* `step_sqrt()` doesn't destroy sparsity when applied. (#1432)
+
+* `step_arrange()`, `step_filter()`, `step_rename_at()`, `step_rename()`, `step_sample()`, `step_select()`, `step_shuffle()`, and `step_slice()` doesn't destroy sparsity when applied. (#1433)
+
+* `step_impute_mean()` and `step_impute_median()` doesn't destroy sparsity when applied. (#1434)
+
+* `step_scale()` doesn't destroy sparsity when applied. (#1436)
+
+* `step_rm()` doesn't destroy sparsity when applied. (#1437)
+
+* `step_zv()` doesn't destroy sparsity when applied. (#1438)
+
+* `step_filter_missing()` doesn't destroy sparsity when applied. (#1439)
+
+* `step_lag()` doesn't destroy sparsity when applied. (#1440)
+
+* `step_lag()` doesn't destroy sparsity when applied. (#1441)
+
+# recipes 1.1.1
+
+## Improvements
+
+* Example for `step_novel()` now better illustrates how it works. (@Edgar-Zamora, #1248)
+
+* `prep.recipe(..., strings_as_factors = TRUE)` now only converts string variables that have role "predictor" or "outcome". (@dajmcdon, #1358, #1376)
+
 # recipes 1.1.0
 
 ## Improvements
@@ -35,6 +81,8 @@
 * `step_dummy()` and `step_unknown()` now throw more informative warnings for unseen levels. (#450)
 
 * `step_dummy()` now throws more informative warnings for `NA` values. (#450)
+
+* `step_date()` now accepts `"mday"` as a possible feature. (@Edgar-Zamora, #1211)
 
 ## Bug Fixes
 

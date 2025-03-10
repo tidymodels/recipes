@@ -22,14 +22,22 @@ test_that("basic functionality", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_relevel(sqft, ref_level = 23) %>%
       prep()
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     rec %>%
       step_relevel(city, ref_level = "missing_level") %>%
+      prep()
+  )
+  expect_snapshot(
+    error = TRUE,
+    rec %>%
+      step_relevel(city, ref_level = character(0)) %>%
       prep()
   )
 })
@@ -55,8 +63,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE) %>%
     prep()
 
-  expect_error(bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_1, sacr_te[, c(1, 3:ncol(sacr_te))]))
 })
 
 test_that("empty printing", {

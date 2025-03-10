@@ -28,6 +28,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @family row operation steps
@@ -57,28 +59,18 @@
 #'
 #' bake(smaller_cars, new_data = NULL) %>% nrow()
 #' bake(smaller_cars, new_data = mtcars %>% slice(21:32)) %>% nrow()
-step_sample <- function(recipe,
-                        ...,
-                        role = NA,
-                        trained = FALSE,
-                        size = NULL,
-                        replace = FALSE,
-                        skip = TRUE,
-                        id = rand_id("sample")) {
+step_sample <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  size = NULL,
+  replace = FALSE,
+  skip = TRUE,
+  id = rand_id("sample")
+) {
   if (length(list(...)) > 0) {
     cli::cli_warn("Selectors are not used for this step.")
-  }
-
-  if (!is_tune(size)) {
-    check_number_decimal(size, min = 0, allow_null = TRUE)
-  }
-  if (!is_tune(replace)) {
-    if (!is.logical(replace)) {
-      cli::cli_abort(
-        "{.arg replace} should be a single logical, \\
-        not {.obj_type_friendly {replace}}."
-      )
-    }
   }
 
   add_step(
@@ -113,6 +105,8 @@ step_sample_new <-
 
 #' @export
 prep.step_sample <- function(x, training, info = NULL, ...) {
+  check_number_decimal(x$size, min = 0, allow_null = TRUE, arg = "size")
+  check_bool(x$replace, arg = "replace")
   if (is.null(x$size)) {
     x$size <- nrow(training)
   }
@@ -135,10 +129,8 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
   )
 }
 
-
 #' @export
 bake.step_sample <- function(object, new_data, ...) {
-
   if (isTRUE(object$case_weights)) {
     wts_col <- purrr::map_lgl(new_data, hardhat::is_case_weights)
     wts <- new_data[[names(which(wts_col))]]
@@ -151,12 +143,18 @@ bake.step_sample <- function(object, new_data, ...) {
     n <- min(object$size, nrow(new_data))
     new_data <-
       dplyr::sample_n(
-        new_data, size = floor(n), replace = object$replace, weight = wts
+        new_data,
+        size = floor(n),
+        replace = object$replace,
+        weight = wts
       )
   } else {
     new_data <-
       dplyr::sample_frac(
-        new_data, size = object$size, replace = object$replace, weight = wts
+        new_data,
+        size = object$size,
+        replace = object$replace,
+        weight = wts
       )
   }
   new_data
@@ -169,11 +167,16 @@ print.step_sample <-
     if (x$replace) {
       title <- paste(title, "with replacement ")
     }
-    print_step(NULL, NULL, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      NULL,
+      NULL,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -188,4 +191,9 @@ tidy.step_sample <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_sample <- function(x, ...) {
+  TRUE
 }

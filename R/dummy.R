@@ -18,6 +18,9 @@
 #' @param levels A list that contains the information needed to create dummy
 #'   variables for each variable contained in `terms`. This is `NULL` until the
 #'   step is trained by [prep()].
+#' @param sparse A single string. Should the columns produced be sparse vectors.
+#'   Can take the values `"yes"`, `"no"`, and `"auto"`. If `sparse = "auto"`
+#'   then workflows can determine the best option. Defaults to `"auto"`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
@@ -59,8 +62,11 @@
 #' be changed by passing in a different function to the `naming` argument for
 #' this step.
 #'
+#'
+#'
 #' Also, there are a number of contrast methods that return fractional values.
-#' The columns returned by this step are doubles (not integers).
+#' The columns returned by this step are doubles (not integers) when
+#' `sparse = FALSE`. The columns returned when `sparse = TRUE` are integers.
 #'
 #' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
 #' and interactions has more information.
@@ -75,6 +81,8 @@
 #'   \item{columns}{character, names of resulting columns}
 #'   \item{id}{character, id of this step}
 #' }
+#'
+#' @template sparse-creation
 #'
 #' @template case-weights-not-supported
 #'
@@ -113,18 +121,20 @@
 #' tidy(dummies, number = 1)
 #' tidy(dummies_one_hot, number = 1)
 step_dummy <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           one_hot = FALSE,
-           preserve = deprecated(),
-           naming = dummy_names,
-           levels = NULL,
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("dummy")) {
-    
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    one_hot = FALSE,
+    preserve = deprecated(),
+    naming = dummy_names,
+    levels = NULL,
+    sparse = "auto",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("dummy")
+  ) {
     if (lifecycle::is_present(preserve)) {
       lifecycle::deprecate_stop(
         "0.1.16",
@@ -143,6 +153,7 @@ step_dummy <-
         preserve = keep_original_cols,
         naming = naming,
         levels = levels,
+        sparse = sparse,
         keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
@@ -151,8 +162,19 @@ step_dummy <-
   }
 
 step_dummy_new <-
-  function(terms, role, trained, one_hot, preserve, naming, levels,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    one_hot,
+    preserve,
+    naming,
+    levels,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "dummy",
       terms = terms,
@@ -162,6 +184,7 @@ step_dummy_new <-
       preserve = preserve,
       naming = naming,
       levels = levels,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -172,6 +195,9 @@ step_dummy_new <-
 prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("factor", "ordered"))
+  check_bool(x$one_hot, arg = "one_hot")
+  check_function(x$naming, arg = "naming", allow_empty = FALSE)
+  check_sparse_arg(x$sparse)
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -185,7 +211,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     for (i in seq_along(col_names)) {
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form <- stats::update.formula(form, ~ . -1)
+        form <- stats::update.formula(form, ~. - 1)
       }
       terms <- model.frame(
         formula = form,
@@ -216,6 +242,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     preserve = x$preserve,
     naming = x$naming,
     levels = levels,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -227,16 +254,16 @@ warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
   if (length(ind) > 0) {
     lvl2 <- unique(dat[ind])
     msg <- c("!" = "There are new levels in {.var {column}}: {.val {lvl2}}.")
-    if (any(is.na(lvl2))) {
+    if (anyNA(lvl2)) {
       msg <- c(
-        msg, 
+        msg,
         "i" = "Consider using {.help [step_unknown()](recipes::step_unknown)} \\
         before {.fn {step}} to handle missing values."
       )
     }
     if (!all(is.na(lvl2))) {
       msg <- c(
-        msg, 
+        msg,
         "i" = "Consider using {.help [step_novel()](recipes::step_novel)} \\
         before {.fn {step}} to handle unseen values."
       )
@@ -271,59 +298,81 @@ bake.step_dummy <- function(object, new_data, ...) {
     # the original (see the note above)
     is_ordered <- attr(levels, "dataClasses") == "ordered"
 
-    if (is.null(levels_values)) {
-      cli::cli_abort("Factor level values not recorded in {.var col_name}.")
-    }
-
     if (length(levels_values) == 1) {
       cli::cli_abort(
-        "Only one factor level in {.var col_name}: {levels_values}."
+        "Only one factor level in {.var {col_name}}: {.val {levels_values}}."
       )
     }
 
     warn_new_levels(
-      new_data[[col_name]], 
-      levels_values, 
-      col_name, 
+      new_data[[col_name]],
+      levels_values,
+      col_name,
       step = "step_dummy"
     )
 
-    new_data[, col_name] <-
-      factor(
-        new_data[[col_name]],
-        levels = levels_values,
-        ordered = is_ordered
-      )
-
-    indicators <-
-      model.frame(
-        rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
-        data = new_data[, col_name],
-        xlev = levels_values,
-        na.action = na.pass
-      )
-
-    indicators <- tryCatch(
-      model.matrix(object = levels, data = indicators),
-      error = function(cnd) {
-        if (grepl("(vector memory|cannot allocate)", cnd$message)) {
-          n_levels <- length(attr(levels, "values"))
-          cli::cli_abort(
-            "{.var {col_name}} contains too many levels ({n_levels}), \\
-            which would result in a data.frame too large to fit in memory.",
-            call = NULL
-          )
-        }
-        stop(cnd)
-      }
+    new_data[, col_name] <- factor(
+      new_data[[col_name]],
+      levels = levels_values,
+      ordered = is_ordered
     )
 
-    if (!object$one_hot) {
-      indicators <- indicators[, colnames(indicators) != "(Intercept)", drop = FALSE]
+    if (sparse_is_yes(object$sparse)) {
+      current_contrast <- getOption("contrasts")[is_ordered + 1]
+      if (!current_contrast %in% c("contr.treatment", "contr_one_hot")) {
+        cli::cli_abort(
+          "When {.code sparse = TRUE}, only {.val contr.treatment} and
+          {.val contr_one_hot} contrasts are supported, not
+          {.val {current_contrast}}."
+        )
+      }
+
+      indicators <- sparsevctrs::sparse_dummy(
+        x = new_data[[col_name]],
+        one_hot = object$one_hot
+      )
+
+      indicators <- tibble::new_tibble(indicators)
+      used_lvl <- colnames(indicators)
+    } else {
+      indicators <-
+        model.frame(
+          rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_name)),
+          data = new_data[, col_name],
+          xlev = levels_values,
+          na.action = na.pass
+        )
+
+      indicators <- tryCatch(
+        model.matrix(object = levels, data = indicators),
+        error = function(cnd) {
+          if (grepl("(vector memory|cannot allocate)", cnd$message)) {
+            n_levels <- length(attr(levels, "values"))
+            cli::cli_abort(
+              "{.var {col_name}} contains too many levels ({n_levels}), \\
+              which would result in a data.frame too large to fit in memory.",
+              call = NULL
+            )
+          }
+          stop(cnd)
+        }
+      )
+
+      if (!object$one_hot) {
+        indicators <- indicators[,
+          colnames(indicators) != "(Intercept)",
+          drop = FALSE
+        ]
+      }
+
+      ## use backticks for nonstandard factor levels here
+      used_lvl <- gsub(
+        paste0("^\\`?", col_name, "\\`?"),
+        "",
+        colnames(indicators)
+      )
     }
 
-    ## use backticks for nonstandard factor levels here
-    used_lvl <- gsub(paste0("^\\`?", col_name, "\\`?"), "", colnames(indicators))
     new_names <- object$naming(col_name, used_lvl, is_ordered)
     colnames(indicators) <- new_names
     indicators <- check_name(indicators, new_data, object, new_names)
@@ -346,13 +395,11 @@ print.step_dummy <-
     invisible(x)
   }
 
-
 get_dummy_columns <- function(x, one_hot) {
   x <- attr(x, "values")
   if (!one_hot) x <- x[-1]
   tibble(columns = x)
 }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -369,4 +416,24 @@ tidy.step_dummy <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_dummy <- function(x, data, ...) {
+  get_levels <- function(x) {
+    if (is.factor(x)) {
+      return(length(levels(x)))
+    } else {
+      return(vctrs::vec_unique_count(x))
+    }
+  }
+
+  n_levels <- lapply(data, get_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = ifelse(x$one_hot, n_lvl, n_lvl - 1),
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
 }

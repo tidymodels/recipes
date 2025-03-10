@@ -41,6 +41,14 @@
       ! Name collision occurred. The following variable names already exist:
       * `Isomap1`
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(im_trained, new_data = dat2[, 1:2])
+    Condition
+      Error in `step_isomap()`:
+      ! The following required column is missing from `new_data`: x3.
+
 # empty printing
 
     Code
@@ -118,4 +126,24 @@
       
       -- Operations 
       * Isomap approximation with: x1, x2, x3 | Trained
+
+# bad args
+
+    Code
+      recipe(~., data = mtcars) %>% step_isomap(all_predictors(), num_terms = 2,
+      neighbors = -1 / 3) %>% prep()
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `prep()`:
+      ! `neighbors` must be a whole number, not the number -0.33.
+
+---
+
+    Code
+      recipe(~., data = mtcars) %>% step_isomap(all_predictors(), prefix = NULL) %>%
+        prep()
+    Condition
+      Error in `step_isomap()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not `NULL`.
 

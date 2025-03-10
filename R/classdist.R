@@ -58,7 +58,7 @@
 #'
 #' @examplesIf rlang::is_installed(c("modeldata"))
 #' data(penguins, package = "modeldata")
-#' penguins <- penguins[complete.cases(penguins), ]
+#' penguins <- penguins[vctrs::vec_detect_complete(penguins), ]
 #' penguins$island <- NULL
 #' penguins$sex <- NULL
 #'
@@ -88,20 +88,22 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec_dists, number = 1)
-step_classdist <- function(recipe,
-                           ...,
-                           class,
-                           role = "predictor",
-                           trained = FALSE,
-                           mean_func = mean,
-                           cov_func = cov,
-                           pool = FALSE,
-                           log = TRUE,
-                           objects = NULL,
-                           prefix = "classdist_",
-                           keep_original_cols = TRUE,
-                           skip = FALSE,
-                           id = rand_id("classdist")) {
+step_classdist <- function(
+  recipe,
+  ...,
+  class,
+  role = "predictor",
+  trained = FALSE,
+  mean_func = mean,
+  cov_func = cov,
+  pool = FALSE,
+  log = TRUE,
+  objects = NULL,
+  prefix = "classdist_",
+  keep_original_cols = TRUE,
+  skip = FALSE,
+  id = rand_id("classdist")
+) {
   check_string(class)
 
   add_step(
@@ -126,8 +128,22 @@ step_classdist <- function(recipe,
 }
 
 step_classdist_new <-
-  function(terms, class, role, trained, mean_func, cov_func, pool, log, objects,
-           prefix, keep_original_cols, skip, id, case_weights) {
+  function(
+    terms,
+    class,
+    role,
+    trained,
+    mean_func,
+    cov_func,
+    pool,
+    log,
+    objects,
+    prefix,
+    keep_original_cols,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "classdist",
       terms = terms,
@@ -195,6 +211,11 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
     wts <- NULL
   }
 
+  check_function(x$mean_func)
+  check_function(x$cov_func)
+  check_bool(x$pool)
+  check_string(x$prefix)
+
   x_dat <- split(training[, x_names], training[[class_var]])
   if (is.null(wts)) {
     wts_split <- map(x_dat, ~NULL)
@@ -252,7 +273,6 @@ mah_pooled <- function(means, x, cov_mat) {
   mahalanobis(x, means, cov_mat)
 }
 
-
 #' @export
 bake.step_classdist <- function(object, new_data, ...) {
   col_names <- names(object$objects[[1]][[1]])
@@ -304,12 +324,16 @@ print.step_classdist <-
     } else {
       x_names <- NULL
     }
-    print_step(x_names, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      x_names,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
-
-
 
 get_centroid <- function(x) {
   tibble(

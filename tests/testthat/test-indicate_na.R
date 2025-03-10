@@ -50,9 +50,17 @@ test_that("step_indicate_na on all columns", {
   expect_named(
     baked,
     c(
-      "Solar.R", "Wind", "Temp", "Month", "Day", "Ozone",
-      "na_ind_Solar.R", "na_ind_Wind", "na_ind_Temp",
-      "na_ind_Month", "na_ind_Day"
+      "Solar.R",
+      "Wind",
+      "Temp",
+      "Month",
+      "Day",
+      "Ozone",
+      "na_ind_Solar.R",
+      "na_ind_Wind",
+      "na_ind_Temp",
+      "na_ind_Month",
+      "na_ind_Day"
     )
   )
 })
@@ -66,8 +74,14 @@ test_that("step_indicate_na on subset of columns", {
   expect_named(
     baked,
     c(
-      "Solar.R", "Wind", "Temp", "Month", "Day",
-      "Ozone", "na_ind_Ozone", "na_ind_Solar.R"
+      "Solar.R",
+      "Wind",
+      "Temp",
+      "Month",
+      "Day",
+      "Ozone",
+      "na_ind_Ozone",
+      "na_ind_Solar.R"
     )
   )
 
@@ -79,8 +93,13 @@ test_that("step_indicate_na on subset of columns", {
   expect_named(
     baked2,
     c(
-      "Solar.R", "Wind", "Temp", "Month", "Day",
-      "Ozone", "na_ind_Solar.R"
+      "Solar.R",
+      "Wind",
+      "Temp",
+      "Month",
+      "Day",
+      "Ozone",
+      "na_ind_Solar.R"
     )
   )
 })
@@ -89,12 +108,59 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(mtcars)
   dat$na_ind_mpg <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_indicate_na(mpg)
 
   expect_snapshot(
     error = TRUE,
     prep(rec, training = dat)
+  )
+})
+
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~., data = tibble(x = c(NA, letters)))
+
+  dense <- rec %>%
+    step_indicate_na(x, sparse = "no", keep_original_cols = FALSE) %>%
+    prep() %>%
+    bake(NULL)
+  sparse <- rec %>%
+    step_indicate_na(x, sparse = "yes", keep_original_cols = FALSE) %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse argument is backwards compatible", {
+  dat <- tibble(x = c(letters))
+  rec <- recipe(~., data = dat) %>%
+    step_indicate_na(x) %>%
+    prep()
+
+  exp <- bake(rec, dat)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, dat),
+    exp
+  )
+})
+
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~., mtcars) %>%
+    step_indicate_na(all_numeric_predictors(), sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp + exp
   )
 })
 
@@ -104,11 +170,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
   rec1 <- recipe(train) %>%
     step_indicate_na(col1) %>%
     update_role(col1, new_role = "potato") %>%
-    update_role_requirements(role = "potato", bake = FALSE)%>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(train, verbose = FALSE, retain = TRUE)
 
-  expect_error(bake(rec1, new_data = test[, 2:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec1, new_data = test[, 2:3]))
 })
 
 test_that("empty printing", {
@@ -151,7 +216,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("na_ind_mpg")
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_indicate_na(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -162,7 +227,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_indicate_na(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -175,7 +240,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_indicate_na(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -184,9 +249,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
+  expect_no_error(
+    bake(rec, new_data = mtcars)
   )
 })
 

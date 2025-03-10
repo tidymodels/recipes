@@ -8,6 +8,14 @@
       x Missing values are not allowed for the YJ transformation.
       i See `na_rm` option.
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = ex_dat[, 1:2])
+    Condition
+      Error in `step_YeoJohnson()`:
+      ! The following required column is missing from `new_data`: x4.
+
 # empty printing
 
     Code
@@ -75,4 +83,34 @@
       
       -- Operations 
       * Yeo-Johnson transformation on: x1, x2, x4 | Trained
+
+# bad args
+
+    Code
+      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, na_rm = "yes") %>%
+        prep()
+    Condition
+      Error in `step_YeoJohnson()`:
+      Caused by error in `prep()`:
+      ! `na_rm` must be `TRUE` or `FALSE`, not the string "yes".
+
+---
+
+    Code
+      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, num_unique = "yes") %>%
+        prep()
+    Condition
+      Error in `step_YeoJohnson()`:
+      Caused by error in `prep()`:
+      ! `x$num_unique` must be a whole number, not the string "yes".
+
+---
+
+    Code
+      recipe(~., data = ex_dat) %>% step_YeoJohnson(x1, x2, x3, x4, limits = NA_real_) %>%
+        prep()
+    Condition
+      Error in `step_YeoJohnson()`:
+      Caused by error in `prep()`:
+      ! `limits` should be a numeric vector with two values, not a double vector
 

@@ -12,7 +12,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple inverse trans", {
-  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) %>%
+  rec <- recipe(~x1 + x2 + x3 + x4, data = ex_dat) %>%
     step_inverse(x1, x2, x3, x4)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -38,15 +38,14 @@ test_that("alt offset", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) %>%
+  rec <- recipe(~x1 + x2 + x3 + x4, data = ex_dat) %>%
     step_inverse(x1, x2, x3, x4) %>%
     update_role(x1, x2, x3, x4, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
 
-  expect_error(bake(rec_trained, new_data = ex_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = ex_dat[, 1:3]))
 })
 
 test_that("empty printing", {
@@ -92,4 +91,13 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_inverse(x1, x2, x3, x4, offset = function(x) x / 3) %>%
+      prep(),
+    error = TRUE
+  )
 })
