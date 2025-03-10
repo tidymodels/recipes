@@ -16,7 +16,7 @@
       
       -- Operations 
       * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
-      * No ICA components were extracted from: carbon and hydrogen, ... | Trained
+      * No ICA components were extracted from: carbon hydrogen, ... | Trained
 
 # check_name() is used
 
@@ -27,6 +27,24 @@
       Caused by error in `bake()`:
       ! Name collision occurred. The following variable names already exist:
       * `IC1`
+
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_ica(all_predictors()) %>% prep()
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in fastICA::fastICA(n.comp = 5, X = as.matrix(training[, col_names]), : mocked error
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(ica_extract_trained, new_data = biomass_tr[, c(-3)])
+    Condition
+      Error in `step_ica()`:
+      ! The following required column is missing from `new_data`: carbon.
 
 # empty printing
 
@@ -87,7 +105,7 @@
       
       -- Operations 
       * Centering and scaling for: all_predictors()
-      * ICA extraction with: carbon and hydrogen
+      * ICA extraction with: carbon hydrogen
 
 ---
 
@@ -107,5 +125,14 @@
       
       -- Operations 
       * Centering and scaling for: carbon, hydrogen, oxygen, ... | Trained
-      * ICA extraction with: carbon and hydrogen | Trained
+      * ICA extraction with: carbon hydrogen | Trained
+
+# bad args
+
+    Code
+      rec %>% step_ica(carbon, hydrogen, prefix = 2) %>% prep()
+    Condition
+      Error in `step_ica()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 2.
 

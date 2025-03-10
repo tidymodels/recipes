@@ -56,7 +56,7 @@ been trained by \code{\link[=prep]{prep()}}.}
 variables. See notes below.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -121,7 +121,7 @@ importance weights. For more information,, see the documentation in
 \examples{
 \dontshow{if (rlang::is_installed(c("modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(penguins, package = "modeldata")
-penguins <- penguins[complete.cases(penguins), ]
+penguins <- penguins[vctrs::vec_detect_complete(penguins), ]
 penguins$island <- NULL
 penguins$sex <- NULL
 
@@ -144,7 +144,7 @@ rec <- recipe(species ~ ., data = penguins) \%>\%
 
 rec_dists <- prep(rec, training = penguins)
 
-dists_to_species <- bake(rec_dists, new_data = penguins, everything())
+dists_to_species <- bake(rec_dists, new_data = penguins)
 ## on log scale:
 dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
 dists_to_species[, c("species", dist_cols)]

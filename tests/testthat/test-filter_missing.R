@@ -48,7 +48,7 @@ test_that("Remove all columns with missing data", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_filter_missing(all_predictors())
+      step_filter_missing(all_predictors())
   rec_param <- tunable.step_filter_missing(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -92,6 +92,20 @@ test_that("case weights", {
   expect_equal(filtering_trained$steps[[1]]$removals, removed)
 
   expect_snapshot(filtering_trained)
+})
+
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+  rec <- recipe(~am + vs, data = mtcars) %>%
+    step_scale(am, vs)
+
+  rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = mtcars)
+
+  expect_true(all(vapply(rec_trans, sparsevctrs::is_sparse_double, logical(1))))
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -160,4 +174,13 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = dat) %>%
+      step_filter_missing(all_predictors(), threshold = -.2) %>%
+      prep(),
+    error = TRUE
+  )
 })

@@ -35,6 +35,7 @@
 
 ## usethis namespace: start
 #' @import rlang
+#' @import timeDate
 #' @importFrom dplyr arrange
 #' @importFrom dplyr bind_rows
 #' @importFrom dplyr desc
@@ -62,6 +63,7 @@
 #' @importFrom lubridate wday
 #' @importFrom lubridate week
 #' @importFrom lubridate yday
+#' @importFrom lubridate mday
 #' @importFrom lubridate year
 #' @importFrom Matrix Matrix
 #' @importFrom purrr map
@@ -70,7 +72,6 @@
 #' @importFrom purrr map_lgl
 #' @importFrom stats as.formula
 #' @importFrom stats binomial
-#' @importFrom stats complete.cases
 #' @importFrom stats cov
 #' @importFrom stats cov.wt
 #' @importFrom stats lm
@@ -98,6 +99,7 @@
 #' @importFrom utils object.size
 #' @importFrom vctrs vec_cast
 #' @importFrom vctrs vec_cbind
+#' @importFrom vctrs vec_detect_complete
 #' @importFrom vctrs vec_slice
 ## usethis namespace: end
 NULL

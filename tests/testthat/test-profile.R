@@ -30,7 +30,6 @@ test_that("numeric profile", {
   expect_true(inherits(num_rec$sqft, "integer"))
 })
 
-
 test_that("factor profile", {
   fact_rec <- sacr_rec %>%
     step_profile(-city, profile = vars(city)) %>%
@@ -42,7 +41,6 @@ test_that("factor profile", {
   expect_true(is_unq(fact_rec$beds))
   expect_true(is_unq(fact_rec$sqft))
 })
-
 
 test_that("beds profile", {
   beds_rec <- sacr_rec %>%
@@ -68,36 +66,42 @@ test_that("character profile", {
   expect_true(is_unq(chr_rec$sqft))
 })
 
-
 test_that("bad values", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     sacr_rec %>%
-      step_profile(everything(), profile = vars(sqft)) %>%
+      step_profile(all_predictors(), profile = vars(sqft)) %>%
       prep(data = Sacramento)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     sacr_rec %>%
       step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
       prep(data = Sacramento)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     sacr_rec %>%
       step_profile(city, profile = vars(sqft), pct = -1) %>%
       prep(data = Sacramento)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     sacr_rec %>%
       step_profile(city, profile = vars(sqft), grid = 1:3) %>%
       prep(data = Sacramento)
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     sacr_rec %>%
-      step_profile(city, profile = vars(sqft), grid = list(pctl = 1, len = 2)) %>%
+      step_profile(
+        city,
+        profile = vars(sqft),
+        grid = list(pctl = 1, len = 2)
+      ) %>%
       prep(data = Sacramento)
   )
-  expect_snapshot(error = TRUE,
-    fixed(rep(c(TRUE, FALSE), each = 5))
-  )
+  expect_snapshot(error = TRUE, fixed(rep(c(TRUE, FALSE), each = 5)))
 })
 
 test_that("tidy", {
@@ -115,12 +119,30 @@ test_that("tidy", {
 
   tidy_4 <- tidy(num_rec_4, 1)
   exp_4 <- tibble(
-    terms = c("city", "zip", "beds", "baths", "type", "price", "latitude",
-              "longitude", "int", "sqft"),
+    terms = c(
+      "city",
+      "zip",
+      "beds",
+      "baths",
+      "type",
+      "price",
+      "latitude",
+      "longitude",
+      "int",
+      "sqft"
+    ),
     type = c(rep("fixed", 9), "profiled"),
     id = ""
   )
   expect_equal(tidy_4, exp_4)
+})
+
+test_that("error on wrong grid names", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_profile(grid = list(pctl = TRUE, not_len = 100))
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------

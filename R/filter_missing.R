@@ -36,6 +36,8 @@
 #' cat(result)
 #' ```
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -50,14 +52,16 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(filter_obj, number = 1)
-step_filter_missing <- function(recipe,
-                                ...,
-                                role = NA,
-                                trained = FALSE,
-                                threshold = 0.1,
-                                removals = NULL,
-                                skip = FALSE,
-                                id = rand_id("filter_missing")) {
+step_filter_missing <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  threshold = 0.1,
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("filter_missing")
+) {
   add_step(
     recipe,
     step_filter_missing_new(
@@ -91,6 +95,7 @@ step_filter_missing_new <-
 #' @export
 prep.step_filter_missing <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
+  check_number_decimal(x$threshold, min = 0, max = 1, arg = "threshold")
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -134,16 +139,37 @@ print.step_filter_missing <-
     } else {
       title <- "Missing value column filter on "
     }
-    print_step(x$removals, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      x$removals,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
 filter_missing_fun <- function(x, threshold, wts) {
-  x_na <- purrr::map(x, is.na)
-  x_na <- vctrs::vec_cbind(!!!x_na)
-  missing <- averages(x_na, wts = wts)
-  removal_ind <- which(missing > threshold)
+  n <- NCOL(x)
+  removal_ind <- logical(n)
+
+  for (i in seq_len(n)) {
+    values <- x[[i]]
+
+    if (sparsevctrs::is_sparse_vector(values)) {
+      nas <- sparsevctrs::sparse_is_na(values, type = "integer")
+      missing <- sparsevctrs::sparse_mean(nas, wts = wts)
+    } else {
+      nas <- is.na(values)
+      missing <- averages(data.frame(nas), wts = wts)
+    }
+
+    if (missing > threshold) {
+      removal_ind[[i]] <- TRUE
+    }
+  }
+
   names(x)[removal_ind]
 }
 
@@ -162,4 +188,9 @@ tunable.step_filter_missing <- function(x, ...) {
     component = "step_filter_missing",
     component_id = x$id
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_filter_missing <- function(x, ...) {
+  TRUE
 }

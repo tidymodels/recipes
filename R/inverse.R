@@ -42,14 +42,16 @@
 #' tidy(inverse_trans, number = 1)
 #' tidy(inverse_obj, number = 1)
 step_inverse <-
-  function(recipe,
-           ...,
-           role = NA,
-           offset = 0,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("inverse")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    offset = 0,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("inverse")
+  ) {
     add_step(
       recipe,
       step_inverse_new(
@@ -82,6 +84,7 @@ step_inverse_new <-
 prep.step_inverse <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$offset, arg = "offset")
 
   step_inverse_new(
     terms = x$terms,

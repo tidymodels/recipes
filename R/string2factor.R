@@ -8,7 +8,7 @@
 #' strings to factors before using any tidymodels functions.
 #'
 #' @inheritParams step_center
-#' @param levels An options specification of the levels to be used
+#' @param levels An optional specification of the levels to be used
 #'  for the new factor. If left `NULL`, the sorted unique
 #'  values present when `bake` is called will be used.
 #' @param ordered A single logical value; should the factor(s) be
@@ -80,18 +80,16 @@
 #' # ...but remains a string in the data
 #' Sacramento %>% head()
 step_string2factor <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           levels = NULL,
-           ordered = FALSE,
-           skip = FALSE,
-           id = rand_id("string2factor")) {
-
-    if (!is_tune(ordered)) {
-      check_bool(ordered)
-    }
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    levels = NULL,
+    ordered = FALSE,
+    skip = FALSE,
+    id = rand_id("string2factor")
+  ) {
     check_character(levels, allow_null = TRUE)
 
     add_step(
@@ -130,6 +128,7 @@ get_ord_lvls <- function(x) {
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_bool(x$ordered, arg = "ordered")
 
   if (is.null(x$levels)) {
     res <- lapply(training[, col_names], get_ord_lvls)
@@ -186,7 +185,6 @@ print.step_string2factor <-
     print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

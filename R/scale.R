@@ -34,11 +34,13 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @references Gelman, A. (2007) "Scaling regression inputs by
 #'  dividing by two standard deviations." Unpublished. Source:
-#'  \url{http://www.stat.columbia.edu/~gelman/research/unpublished/standardizing.pdf}.
+#'  \url{https://sites.stat.columbia.edu/gelman/research/unpublished/standardizing.pdf}.
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(biomass, package = "modeldata")
 #'
@@ -62,15 +64,17 @@
 #' tidy(scaled_trans, number = 1)
 #' tidy(scaled_obj, number = 1)
 step_scale <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           sds = NULL,
-           factor = 1,
-           na_rm = TRUE,
-           skip = FALSE,
-           id = rand_id("scale")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    sds = NULL,
+    factor = 1,
+    na_rm = TRUE,
+    skip = FALSE,
+    id = rand_id("scale")
+  ) {
     add_step(
       recipe,
       step_scale_new(
@@ -107,18 +111,18 @@ step_scale_new <-
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_bool(x$na_rm, arg = "na_rm")
+  if (x$factor != 1 & x$factor != 2) {
+    cli::cli_warn(
+      "Scaling {.arg factor} should take either a value of 1 or 2, not
+       {.obj_type_friendly {x$factor}}."
+    )
+  }
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
   if (isFALSE(were_weights_used)) {
     wts <- NULL
-  }
-
-  if (x$factor != 1 & x$factor != 2) {
-    cli::cli_warn(
-      "Scaling {.arg factor} should take either a value of 1 or 2, \\
-      not {x$factor}."
-    )
   }
 
   vars <- variances(training[, col_names], wts, na_rm = x$na_rm)
@@ -146,7 +150,14 @@ bake.step_scale <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     sd <- object$sds[col_name]
-    new_data[[col_name]] <- new_data[[col_name]] / sd
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_division_scalar(
+        new_data[[col_name]],
+        sd
+      )
+    } else {
+      new_data[[col_name]] <- new_data[[col_name]] / sd
+    }
   }
   new_data
 }
@@ -155,11 +166,16 @@ bake.step_scale <- function(object, new_data, ...) {
 print.step_scale <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Scaling for "
-    print_step(names(x$sds), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$sds),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -178,4 +194,9 @@ tidy.step_scale <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_scale <- function(x, ...) {
+  TRUE
 }

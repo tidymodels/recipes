@@ -42,7 +42,8 @@ test_that("defaults", {
 test_that("alt args", {
   skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(),
+    step_depth(
+      all_predictors(),
       class = "Species",
       metric = "Mahalanobis",
       options = list(mah.estimate = "MCD", mah.parMcd = .75)
@@ -54,7 +55,12 @@ test_that("alt args", {
 
   split_up <- split(iris[, 1:4], iris$Species)
   Mahalanobis <- function(x, y) {
-    ddalpha::depth.Mahalanobis(x = y, data = x, mah.estimate = "MCD", mah.parMcd = .75)
+    ddalpha::depth.Mahalanobis(
+      x = y,
+      data = x,
+      mah.estimate = "MCD",
+      mah.parMcd = .75
+    )
   }
 
   exp_res <- lapply(split_up, Mahalanobis, y = iris[, 1:4])
@@ -71,9 +77,11 @@ test_that("alt args", {
 test_that("prefix", {
   skip_if_not_installed("ddalpha")
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(),
+    step_depth(
+      all_predictors(),
       class = "Species",
-      metric = "spatial", prefix = "spatial_"
+      metric = "spatial",
+      prefix = "spatial_"
     )
   trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, new_data = iris)
@@ -93,8 +101,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   trained <- prep(rec, training = iris, verbose = FALSE)
 
-  expect_error(bake(trained, new_data = iris[, 2:5]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(trained, new_data = iris[, 2:5]))
 })
 
 test_that("empty printing", {
@@ -139,7 +146,12 @@ test_that("empty selection tidy method works", {
 
 test_that("keep_original_cols works", {
   skip_if_not_installed("ddalpha")
-  new_names <- c("Species", "depth_setosa", "depth_versicolor", "depth_virginica")
+  new_names <- c(
+    "Species",
+    "depth_setosa",
+    "depth_versicolor",
+    "depth_virginica"
+  )
 
   rec <- recipe(Species ~ ., iris) %>%
     step_depth(all_predictors(), class = "Species", keep_original_cols = FALSE)
@@ -175,9 +187,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = iris),
-    NA
+  expect_no_error(
+    bake(rec, new_data = iris)
   )
 })
 
@@ -188,4 +199,24 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  skip_if_not_installed("ddalpha")
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_depth(
+        all_numeric_predictors(),
+        class = "Species",
+        metric = "circular"
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_depth(all_numeric_predictors(), class = "Species", prefix = 0L) %>%
+      prep(),
+    error = TRUE
+  )
 })

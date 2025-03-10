@@ -18,9 +18,7 @@ get_exp <- function(x, f) {
   as_tibble(lapply(x, f))
 }
 
-
 test_that("simple hyperbolic trans", {
-
   for (func in c("sinh", "cosh", "tanh")) {
     rec <- recipe(~., data = ex_dat) %>%
       step_hyperbolic(x1, x2, func = func, inverse = FALSE)
@@ -51,12 +49,12 @@ test_that("simple hyperbolic trans", {
   rec_trans <- bake(rec_trained, new_data = ex_dat1)
   exp_res <- get_exp(ex_dat1, "acosh")
   expect_equal(rec_trans, exp_res)
-
 })
 
-test_that("wrong function", {
+test_that("wrong arguments", {
   rec <- recipe(mpg ~ ., mtcars)
-  expect_snapshot_error(step_hyperbolic(rec, func = "cos"))
+  expect_snapshot(step_hyperbolic(rec, func = "cos") %>% prep(), error = TRUE)
+  expect_snapshot(step_hyperbolic(rec, inverse = 2) %>% prep(), error = TRUE)
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -69,8 +67,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
 
-  expect_error(bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE]),
-               class = "new_data_missing_column")
+  expect_snapshot(
+    error = TRUE,
+    bake(rec_trained, new_data = ex_dat[, 2, drop = FALSE])
+  )
 })
 
 test_that("empty printing", {

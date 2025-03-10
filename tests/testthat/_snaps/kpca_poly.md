@@ -27,6 +27,24 @@
       ! Name collision occurred. The following variable names already exist:
       * `kPC1`
 
+# rethrows error correctly from implementation
+
+    Code
+      recipe(~., data = mtcars) %>% step_kpca_poly(all_predictors()) %>% prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      x Failed with error:
+      i Error in kernlab::kpca(x = as.matrix(training[, col_names]), features = 5, : mocked error
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(kpca_trained, new_data = te_dat[, 1:3])
+    Condition
+      Error in `step_kpca_poly()`:
+      ! The following required columns are missing from `new_data`: X4, X5, and X6.
+
 # empty printing
 
     Code
@@ -99,4 +117,54 @@
       
       -- Training information 
       Training data contained 100 data points and no incomplete rows.
+
+# bad args
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(),
+      num_comp = -1) %>% prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `num_comp` must be a whole number larger than or equal to 0, not the number -1.
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), degree = 1.1) %>%
+        prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `degree` must be a whole number, not the number 1.1.
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(),
+      scale_factor = -1.1) %>% prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `scale_factor` must be a number larger than or equal to 0, not the number -1.1.
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), offset = "a") %>%
+        prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `offset` must be a number, not the string "a".
+
+---
+
+    Code
+      recipe(~., data = tr_dat) %>% step_kpca_poly(all_numeric_predictors(), prefix = 1) %>%
+        prep()
+    Condition
+      Error in `step_kpca_poly()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 1.
 

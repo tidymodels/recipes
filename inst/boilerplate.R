@@ -4,8 +4,7 @@ library(glue)
 # creates a prefilled script in /R
 # and an empty script in /tests
 # consider using @inheritParams where appropriate instead of full boilerplate
-make_new <- function(name,
-                     which = c("step", "check")) {
+make_new <- function(name, which = c("step", "check")) {
   which <- match.arg(which)
   stopifnot(is.character(name))
 
@@ -20,7 +19,8 @@ make_new <- function(name,
   }
 
   boilerplate <-
-    glue("
+    glue(
+      "
 {create_documentation(name, which)}
 {create_function(name, which)}
 {create_generator(name, which)}
@@ -28,16 +28,17 @@ make_new <- function(name,
 {create_bake_method(name, which)}
 {create_print_method(name, which)}
 {create_tidy_method(name, which)}
-    ")
+    "
+    )
 
   file.create(glue("./R/{name}.R"))
   cat(boilerplate, file = glue("./R/{name}.R"))
   file.create(glue("./tests/testthat/test_{name}.R"))
 }
 
-create_documentation <- function(name,
-                                 which) {
-  glue("
+create_documentation <- function(name, which) {
+  glue(
+    "
 #' <Title>
 #'
 #' `{which}_{name}` creates a *specification* of a recipe
@@ -73,11 +74,13 @@ create_documentation <- function(name,
 #'
 #' @examples
 
-  ")
+  "
+  )
 }
 
 create_function <- function(name, which) {
-  glue('
+  glue(
+    '
 {which}_{name} <-
     function(recipe,
              ...,
@@ -99,11 +102,13 @@ create_function <- function(name, which) {
       )
     }}
 
-')
+'
+  )
 }
 
 create_generator <- function(name, which) {
-  glue('
+  glue(
+    '
   {which}_{name}_new <-
     function(terms, role, <additional args here>, na_rm, skip, id) {{
       step(
@@ -117,11 +122,13 @@ create_generator <- function(name, which) {
       )
     }}
 
-  ')
+  '
+  )
 }
 
 create_prep_method <- function(name, which) {
-  glue("
+  glue(
+    "
 #' @export
 prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
   col_names <- recipes_eval_select(x$terms, training, info)
@@ -139,22 +146,26 @@ prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
   )
 }}
 
-")
+"
+  )
 }
 
 create_bake_method <- function(name, which) {
-  glue("
+  glue(
+    "
 #' @export
 bake.{which}_{name} <- function(object, new_data, ...) {{
   <baking actions here>
   as_tibble(new_data)
 }}
 
-")
+"
+  )
 }
 
 create_print_method <- function(name, which) {
-  glue('
+  glue(
+    '
 print.{which}_{name} <-
   function(x, width = max(20, options()$width - 30), ...) {{
     title <- "<describe action here> "
@@ -162,11 +173,13 @@ print.{which}_{name} <-
     invisible(x)
   }}
 
-')
+'
+  )
 }
 
 create_tidy_method <- function(name, which) {
-  glue("
+  glue(
+    "
 #' @rdname tidy.recipe
 #' @export
 tidy.{which}_{name} <- function(x, ...) {{
@@ -181,5 +194,6 @@ tidy.{which}_{name} <- function(x, ...) {{
   res$id <- x$id
   res
 }}
-  ")
+  "
+  )
 }

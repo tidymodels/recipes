@@ -25,7 +25,8 @@
       factors <- prep(factors, training = sacr_missing)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 ---
 
@@ -33,7 +34,8 @@
       factors_data_1 <- bake(factors, new_data = sacr_missing)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 # tests for NA values in ordered factor
 
@@ -41,7 +43,8 @@
       factors <- prep(factors, training = sacr_ordered)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 ---
 
@@ -49,15 +52,18 @@
       factors_data_1 <- bake(factors, new_data = sacr_ordered)
     Condition
       Warning:
-      ! There are new levels in a factor: `NA`.
+      ! There are new levels in `city`: NA.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 # new levels
 
     Code
-      recipes:::warn_new_levels(testing$x1, levels(training$x1))
+      recipes:::warn_new_levels(testing$x1, levels(training$x1), "column",
+      "step_dummy")
     Condition
       Warning:
-      ! There are new levels in a factor: `C`.
+      ! There are new levels in `column`: C.
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()` to handle unseen values.
 
 ---
 
@@ -65,7 +71,8 @@
       bake(rec, new_data = testing)
     Condition
       Warning:
-      ! There are new levels in a factor: `C`.
+      ! There are new levels in `x1`: C.
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_dummy()` to handle unseen values.
     Output
       # A tibble: 10 x 2
          y      x1_B
@@ -80,6 +87,15 @@
        8 0         1
        9 1        NA
       10 0         0
+
+# warns about NA in column (#450)
+
+    Code
+      tmp <- recipe(~a, data = data) %>% step_dummy(a) %>% prep()
+    Condition
+      Warning:
+      ! There are new levels in `a`: NA.
+      i Consider using step_unknown() (`?recipes::step_unknown()`) before `step_dummy()` to handle missing values.
 
 # Deprecation warning
 
@@ -119,6 +135,42 @@
       Caused by error in `bake()`:
       ! Name collision occurred. The following variable names already exist:
       * `Species_versicolor`
+
+# throws a informative error for too many levels (#828)
+
+    Code
+      prep(rec)
+    Condition
+      Error in `step_dummy()`:
+      Caused by error:
+      ! `x` contains too many levels (123456), which would result in a data.frame too large to fit in memory.
+
+# throws an informative error for single level
+
+    Code
+      recipe(~., data = data.frame(x = "only-level")) %>% step_dummy(x) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `bake()`:
+      ! Only one factor level in `x`: "only-level".
+
+# sparse = 'yes' errors on unsupported contrasts
+
+    Code
+      recipe(~., data = tibble(x = letters)) %>% step_dummy(x, sparse = "yes") %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `bake()`:
+      ! When `sparse = TRUE`, only "contr.treatment" and "contr_one_hot" contrasts are supported, not "contr.helmert".
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors())
+    Condition
+      Error in `step_dummy()`:
+      ! The following required columns are missing from `new_data`: city and zip.
 
 # empty printing
 
@@ -178,7 +230,7 @@
       predictor: 7
       
       -- Operations 
-      * Dummy variables from: city and zip
+      * Dummy variables from: city zip
 
 ---
 
@@ -197,5 +249,25 @@
       Training data contained 932 data points and no incomplete rows.
       
       -- Operations 
-      * Dummy variables from: city and zip | Trained
+      * Dummy variables from: city zip | Trained
+
+# bad args
+
+    Code
+      recipe(~ city + sqft + price, data = Sacramento) %>% step_dummy(city, one_hot = 2) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! `one_hot` must be `TRUE` or `FALSE`, not the number 2.
+
+---
+
+    Code
+      recipe(~ city + sqft + price, data = Sacramento) %>% step_dummy(city, naming = NULL) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
 

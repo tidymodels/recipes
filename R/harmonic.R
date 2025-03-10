@@ -160,18 +160,19 @@
 #'   ggplot(aes(x = date_time, y = co2, color = type)) +
 #'   geom_line()
 step_harmonic <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           frequency = NA_real_,
-           cycle_size = NA_real_,
-           starting_val = NA_real_,
-           keep_original_cols = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("harmonic")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    frequency = NA_real_,
+    cycle_size = NA_real_,
+    starting_val = NA_real_,
+    keep_original_cols = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("harmonic")
+  ) {
     if (!all(is.numeric(cycle_size)) || all(is.na(cycle_size))) {
       msg <- c(
         x = "{.arg cycle_size} must have at least one non-NA numeric value."
@@ -184,10 +185,12 @@ step_harmonic <-
       cli::cli_abort(msg)
     }
 
-    if (!all(is.na(starting_val)) &
-      !all(is.numeric(starting_val)) &
-      !all(inherits(starting_val, "Date")) &
-      !all(inherits(starting_val, "POSIXt"))) {
+    if (
+      !all(is.na(starting_val)) &
+        !all(is.numeric(starting_val)) &
+        !all(inherits(starting_val, "Date")) &
+        !all(inherits(starting_val, "POSIXt"))
+    ) {
       cli::cli_abort(
         "starting_val must be NA, numeric, Date or POSIXt, \\
         not {.obj_type_friendly {starting_val}}.",
@@ -212,10 +215,19 @@ step_harmonic <-
   }
 
 step_harmonic_new <-
-  function(terms, role, trained,
-           frequency, cycle_size,
-           starting_val, columns,
-           keep_original_cols, objects, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    frequency,
+    cycle_size,
+    starting_val,
+    columns,
+    keep_original_cols,
+    objects,
+    skip,
+    id
+  ) {
     step(
       subclass = "harmonic",
       terms = terms,
@@ -230,7 +242,6 @@ step_harmonic_new <-
       id = id
     )
   }
-
 
 #' @export
 prep.step_harmonic <- function(x, training, info = NULL, ...) {
@@ -248,7 +259,6 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
       columns."
     )
   }
-
 
   # check starting_val
   if (all(is.na(x$starting_val))) {
@@ -284,11 +294,13 @@ prep.step_harmonic <- function(x, training, info = NULL, ...) {
   )
 }
 
-
-sin_cos <- function(x,
-                    frequency,
-                    starting_val,
-                    cycle_size, call = caller_env()) {
+sin_cos <- function(
+  x,
+  frequency,
+  starting_val,
+  cycle_size,
+  call = caller_env()
+) {
   if (all(is.na(x))) {
     cli::cli_abort("Variable must have at least one non-NA value.", call = call)
   }
@@ -302,10 +314,7 @@ sin_cos <- function(x,
   # cycles per unit
   cycle <- 2.0 * (pi * (x / cycle_size))
 
-  m <- matrix(NA_real_,
-    ncol = nc * 2L,
-    nrow = nr
-  )
+  m <- matrix(NA_real_, ncol = nc * 2L, nrow = nr)
 
   for (i in seq_along(frequency)) {
     m[, i] <- sin(cycle * frequency[i])
@@ -314,8 +323,6 @@ sin_cos <- function(x,
 
   return(m)
 }
-
-
 
 #' @export
 bake.step_harmonic <- function(object, new_data, ...) {
@@ -340,7 +347,7 @@ bake.step_harmonic <- function(object, new_data, ...) {
 
     res <- check_name(res, new_data, object, names(res))
 
-    new_data <- vec_cbind(new_data, res)
+    new_data <- vec_cbind(new_data, res, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)
@@ -355,7 +362,6 @@ print.step_harmonic <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -374,9 +380,7 @@ tidy.step_harmonic <- function(x, ...) {
       )
     res$key <- paste0(
       res$terms,
-      rep(rep(c("_sin_", "_cos_"), each = n_frequency),
-        times = n_terms
-      ),
+      rep(rep(c("_sin_", "_cos_"), each = n_frequency), times = n_terms),
       res$frequency
     )
   } else {

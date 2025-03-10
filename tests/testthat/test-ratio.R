@@ -10,23 +10,25 @@ ex_dat <- data.frame(
   x5 = letters[1:10]
 )
 
-rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat)
+rec <- recipe(~x1 + x2 + x3 + x4 + x5, data = ex_dat)
 
 test_that("1:many", {
   rec1 <- rec %>%
     step_ratio(x1, denom = denom_vars(all_numeric()), id = "")
 
   exp_un_1 <- tibble(
-    terms = "x1", denom = "all_numeric()", id = ""
+    terms = "x1",
+    denom = "all_numeric()",
+    id = ""
   )
   expect_equal(tidy(rec1, number = 1), exp_un_1)
 
   rec1 <- prep(rec1, ex_dat, verbose = FALSE)
   obs1 <- bake(rec1, ex_dat)
   res1 <- tibble(
-    x1_o_x2   = ex_dat$x1 / ex_dat$x2,
-    x1_o_x3   = ex_dat$x1 / ex_dat$x3,
-    x1_o_x4   = ex_dat$x1 / ex_dat$x4
+    x1_o_x2 = ex_dat$x1 / ex_dat$x2,
+    x1_o_x3 = ex_dat$x1 / ex_dat$x3,
+    x1_o_x4 = ex_dat$x1 / ex_dat$x4
   )
   for (i in names(res1)) {
     expect_equal(res1[i], obs1[i])
@@ -40,23 +42,23 @@ test_that("1:many", {
   expect_equal(tidy(rec1, number = 1), exp_tr_1)
 })
 
-
 test_that("many:1", {
   rec2 <- rec %>%
     step_ratio(all_numeric(), denom = denom_vars(x1), id = "")
 
   exp_un_2 <- tibble(
-    terms = "all_numeric()", denom = "x1", id = ""
+    terms = "all_numeric()",
+    denom = "x1",
+    id = ""
   )
   expect_equal(tidy(rec2, number = 1), exp_un_2)
-
 
   rec2 <- prep(rec2, ex_dat, verbose = FALSE)
   obs2 <- bake(rec2, ex_dat)
   res2 <- tibble(
-    x2_o_x1   = ex_dat$x2 / ex_dat$x1,
-    x3_o_x1   = ex_dat$x3 / ex_dat$x1,
-    x4_o_x1   = ex_dat$x4 / ex_dat$x1
+    x2_o_x1 = ex_dat$x2 / ex_dat$x1,
+    x3_o_x1 = ex_dat$x3 / ex_dat$x1,
+    x4_o_x1 = ex_dat$x4 / ex_dat$x1
   )
   for (i in names(res2)) {
     expect_equal(res2[i], obs2[i])
@@ -70,31 +72,32 @@ test_that("many:1", {
   expect_equal(tidy(rec2, number = 1), exp_tr_2)
 })
 
-
 test_that("many:many", {
   rec3 <- rec %>%
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()), id = "")
 
   exp_un_3 <- tibble(
-    terms = "all_numeric()", denom = "all_numeric()", id = ""
+    terms = "all_numeric()",
+    denom = "all_numeric()",
+    id = ""
   )
   expect_equal(tidy(rec3, number = 1), exp_un_3)
 
   rec3 <- prep(rec3, ex_dat, verbose = FALSE)
   obs3 <- bake(rec3, ex_dat)
   res3 <- tibble(
-    x2_o_x1   = ex_dat$x2 / ex_dat$x1,
-    x3_o_x1   = ex_dat$x3 / ex_dat$x1,
-    x4_o_x1   = ex_dat$x4 / ex_dat$x1,
-    x1_o_x2   = ex_dat$x1 / ex_dat$x2,
-    x3_o_x2   = ex_dat$x3 / ex_dat$x2,
-    x4_o_x2   = ex_dat$x4 / ex_dat$x2,
-    x1_o_x3   = ex_dat$x1 / ex_dat$x3,
-    x2_o_x3   = ex_dat$x2 / ex_dat$x3,
-    x4_o_x3   = ex_dat$x4 / ex_dat$x3,
-    x1_o_x4   = ex_dat$x1 / ex_dat$x4,
-    x2_o_x4   = ex_dat$x2 / ex_dat$x4,
-    x3_o_x4   = ex_dat$x3 / ex_dat$x4
+    x2_o_x1 = ex_dat$x2 / ex_dat$x1,
+    x3_o_x1 = ex_dat$x3 / ex_dat$x1,
+    x4_o_x1 = ex_dat$x4 / ex_dat$x1,
+    x1_o_x2 = ex_dat$x1 / ex_dat$x2,
+    x3_o_x2 = ex_dat$x3 / ex_dat$x2,
+    x4_o_x2 = ex_dat$x4 / ex_dat$x2,
+    x1_o_x3 = ex_dat$x1 / ex_dat$x3,
+    x2_o_x3 = ex_dat$x2 / ex_dat$x3,
+    x4_o_x3 = ex_dat$x4 / ex_dat$x3,
+    x1_o_x4 = ex_dat$x1 / ex_dat$x4,
+    x2_o_x4 = ex_dat$x2 / ex_dat$x4,
+    x3_o_x4 = ex_dat$x3 / ex_dat$x4
   )
   for (i in names(res3)) {
     expect_equal(res3[i], obs3[i])
@@ -110,38 +113,38 @@ test_that("many:many", {
   expect_equal(tidy(rec3, number = 1), exp_tr_3)
 })
 
-
-
 test_that("wrong type", {
   rec4 <- rec %>%
     step_ratio(x1, denom = denom_vars(all_predictors()))
-  expect_snapshot(error = TRUE,
-    prep(rec4, ex_dat, verbose = FALSE)
-  )
+  expect_snapshot(error = TRUE, prep(rec4, ex_dat, verbose = FALSE))
 
   rec5 <- rec %>%
     step_ratio(all_predictors(), denom = denom_vars(x1))
-  expect_snapshot(error = TRUE,
-    prep(rec5, ex_dat, verbose = FALSE)
-  )
+  expect_snapshot(error = TRUE, prep(rec5, ex_dat, verbose = FALSE))
 
   rec6 <- rec %>%
     step_ratio(all_predictors(), denom = denom_vars(all_predictors()))
-  expect_snapshot(error = TRUE,
-    prep(rec6, ex_dat, verbose = FALSE)
-  )
+  expect_snapshot(error = TRUE, prep(rec6, ex_dat, verbose = FALSE))
 })
 
 test_that("check_name() is used", {
   dat <- mtcars
   dat$mpg_o_disp <- dat$mpg
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_ratio(mpg, denom = denom_vars(disp))
 
   expect_snapshot(
     error = TRUE,
     prep(rec, training = dat)
+  )
+})
+
+test_that("check_name() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_ratio(mpg, denom = NULL)
   )
 })
 
@@ -155,8 +158,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec1 <- prep(rec1, ex_dat, verbose = FALSE)
 
-  expect_error(bake(rec1, ex_dat[, 2:5]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec1, ex_dat[, 2:5]))
 })
 
 test_that("empty printing", {
@@ -199,7 +201,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("mpg_o_disp")
 
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~mpg + disp, mtcars) %>%
     step_ratio(mpg, denom = denom_vars(disp), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -210,7 +212,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~mpg + disp, mtcars) %>%
     step_ratio(mpg, denom = denom_vars(disp), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -223,7 +225,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ mpg + disp, mtcars) %>%
+  rec <- recipe(~mpg + disp, mtcars) %>%
     step_ratio(mpg, denom = denom_vars(disp))
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -232,16 +234,24 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
+  expect_no_error(
+    bake(rec, new_data = mtcars)
   )
 })
 
 test_that("printing", {
-  rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
+  rec <- recipe(~x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
     step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~mpg + disp, mtcars) %>%
+      step_ratio(mpg, denom = denom_vars(disp), naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
 })

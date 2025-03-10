@@ -1,6 +1,6 @@
 #' Printing workhorse function
 #'
-#' This internal function is used for printing steps.
+#' `print_step()` is used for printing steps.
 #'
 #' @param tr_obj A character vector of names that have been
 #'  resolved during preparing the recipe (e.g. the `columns` object
@@ -10,20 +10,22 @@
 #' @param trained A logical for whether the step has been trained.
 #' @param title A character, shortly describing the action the step takes.
 #' @param width An integer denoting where the output should be wrapped.
-#' @return `NULL`, invisibly.
+#'
+#' @return `print_step()`: `NULL`, invisibly.
 #' @keywords internal
-#' @export
 #'
 #' @seealso [developer_functions]
 #'
 #' @rdname recipes-internal
-print_step <- function(tr_obj = NULL,
-                       untr_obj = NULL,
-                       trained = FALSE,
-                       title = NULL,
-                       width = max(20, options()$width - 30),
-                       case_weights = NULL) {
-
+#' @export
+print_step <- function(
+  tr_obj = NULL,
+  untr_obj = NULL,
+  trained = FALSE,
+  title = NULL,
+  width = max(20, options()$width - 30),
+  case_weights = NULL
+) {
   title <- trimws(title)
 
   trained_text <- dplyr::if_else(trained, "Trained", "")
@@ -36,13 +38,23 @@ print_step <- function(tr_obj = NULL,
   vline_seperator <- dplyr::if_else(trained_text == "", "", "|")
   comma_seperator <- dplyr::if_else(
     trained_text != "" && case_weights_text != "",
-    true = ",", false = ""
+    true = ",",
+    false = ""
   )
 
   width_title <- nchar(
     paste0(
-      "* ", title, ":", " ", vline_seperator, " ", trained_text, " ",
-      comma_seperator, " ", case_weights_text
+      "* ",
+      title,
+      ":",
+      " ",
+      vline_seperator,
+      " ",
+      trained_text,
+      " ",
+      comma_seperator,
+      " ",
+      case_weights_text
     )
   )
 
@@ -78,7 +90,8 @@ print_step <- function(tr_obj = NULL,
   more_dots <- ifelse(first_line == length(elements), "", ", ...")
 
   cli::cli_bullets(
-    c("*" = "
+    c(
+      "*" = "
     {title}: \\
     {.pkg {elements[seq_len(first_line)]}}\\
     {more_dots} \\
@@ -86,7 +99,8 @@ print_step <- function(tr_obj = NULL,
     {.emph {trained_text}}\\
     {comma_seperator} \\
     {.emph {case_weights_text}}
-    ")
+    "
+    )
   )
 
   invisible(NULL)

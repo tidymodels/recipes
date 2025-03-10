@@ -21,13 +21,30 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
   ## or should it? what about Y ~ log(x)?
   ## Answer: when called from `form2args`, the function
   ## `inline_check` stops when in-line functions are used.
-  data_info <- attr(model.frame(formula, data[1, ]), "terms")
-  response_info <- attr(data_info, "response")
-  predictor_names <- names(attr(data_info, "dataClasses"))
-  if (length(response_info) > 0 && all(response_info > 0)) {
-    predictor_names <- predictor_names[-response_info]
+
+  outcomes_names <- all.names(
+    rlang::f_lhs(formula),
+    functions = FALSE,
+    unique = TRUE
+  )
+
+  predictors_names <- all.names(
+    rlang::f_rhs(formula),
+    functions = FALSE,
+    unique = TRUE
+  )
+
+  if (any(predictors_names == ".")) {
+    predictors_names <- predictors_names[predictors_names != "."]
+    predictors_names <- c(predictors_names, colnames(data))
+    predictors_names <- unique(predictors_names)
   }
-  predictor_names
+
+  if (length(predictors_names) > 0 && length(outcomes_names) > 0) {
+    predictors_names <- setdiff(predictors_names, outcomes_names)
+  }
+
+  predictors_names
 }
 
 #' Naming Tools
@@ -48,7 +65,10 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #' @param ordinal A logical; was the original factor ordered?
 #' @param sep A single character value for the separator between the names and
 #'  levels.
-#'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
 #' @details When using `dummy_names()`, factor levels that are not valid
 #'  variable names (e.g. "some text  with spaces") will be changed to valid
 #'  names by [base::make.names()]; see example below. This function will also
@@ -81,10 +101,8 @@ get_rhs_vars <- function(formula, data, no_lhs = FALSE) {
 #'
 #' dummy_names("x", substring(after_mm, 2), ordinal = TRUE)
 #' @export
-names0 <- function(num, prefix = "x") {
-  if (num < 1) {
-    cli::cli_abort("{.arg num} should be > 0.")
-  }
+names0 <- function(num, prefix = "x", call = rlang::caller_env()) {
+  check_number_whole(num, min = 1, call = call)
   ind <- format(seq_len(num))
   ind <- gsub(" ", "0", ind)
   paste0(prefix, ind)
@@ -124,9 +142,13 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   }
 
   while (any(duplicated(nms))) {
-    dupe_count <- vapply(seq_along(nms), function(i) {
-      sum(nms[i] == nms[1:i])
-    }, 1L)
+    dupe_count <- vapply(
+      seq_along(nms),
+      function(i) {
+        sum(nms[i] == nms[1:i])
+      },
+      1L
+    )
     nms[dupe_count > 1] <- paste(
       nms[dupe_count > 1],
       dupe_count[dupe_count > 1],
@@ -136,24 +158,9 @@ dummy_extract_names <- function(var, lvl, ordinal = FALSE, sep = "_") {
   nms
 }
 
-
-## As suggested by HW, brought in from the `pryr` package
-## https://github.com/hadley/pryr
-fun_calls <- function(f) {
-  if (is.function(f)) {
-    fun_calls(body(f))
-  } else if (is_quosure(f)) {
-    fun_calls(quo_get_expr(f))
-  } else if (is.call(f)) {
-    fname <- as.character(f[[1]])
-    # Calls inside .Internal are special and shouldn't be included
-    if (identical(fname, ".Internal")) {
-      return(fname)
-    }
-    unique(c(fname, unlist(lapply(f[-1], fun_calls), use.names = FALSE)))
-  }
+fun_calls <- function(f, data) {
+  setdiff(all.names(f), colnames(data))
 }
-
 
 get_levels <- function(x) {
   if (!is.factor(x) & !is.character(x)) {
@@ -180,6 +187,19 @@ has_lvls <- function(info) {
   !vapply(info, function(x) all(is.na(x$values)), c(logic = TRUE))
 }
 
+kill_levels <- function(lvls, var_info) {
+  vars <- var_info$variable
+  roles <- var_info$role
+  preds_outcomes <- unique(vars[roles %in% c("outcome", "predictor")])
+  others <- unique(setdiff(vars, preds_outcomes))
+  if (length(others) > 0L) {
+    for (var in others) {
+      lvls[[var]] <- list(values = NA, ordered = NA)
+    }
+  }
+  lvls
+}
+
 strings2factors <- function(x, info) {
   check_lvls <- has_lvls(info)
   if (!any(check_lvls)) {
@@ -191,18 +211,19 @@ strings2factors <- function(x, info) {
   for (i in seq_along(info)) {
     lcol <- names(info)[i]
     x[, lcol] <-
-      factor(as.character(x[[lcol]]),
+      factor(
+        as.character(x[[lcol]]),
         levels = info[[i]]$values,
-        ordered = info[[i]]$ordered
+        ordered = info[[i]]$ordered,
+        exclude = NULL
       )
   }
   x
 }
 
-
 # ------------------------------------------------------------------------------
 
-# `complete.cases` fails on list columns. This version counts a list column
+# `vec_detect_complete` fails on list columns. This version counts a list column
 # as missing if _all_ values are missing. For if a list vector element is a
 # data frame with one missing value, that element of the list column will
 # be counted as complete.
@@ -214,7 +235,19 @@ n_complete_rows <- function(x) {
     x[[pos_list_col]] <- purrr::map_lgl(x[[pos_list_col]], flatten_na)
   }
 
-  sum(complete.cases(x))
+  x <- x[, vapply(x, anyNA, logical(1))]
+
+  surv_col_ind <- purrr::map_lgl(x, inherits, "Surv")
+  if (any(surv_col_ind)) {
+    surv_cols <- stats::complete.cases(x[, surv_col_ind, drop = FALSE])
+    non_surv_cols <- vec_detect_complete(x[, !surv_col_ind, drop = FALSE])
+
+    res <- sum(surv_cols & non_surv_cols)
+  } else {
+    res <- sum(vec_detect_complete(x))
+  }
+
+  res
 }
 
 flatten_na <- function(x) {
@@ -235,13 +268,10 @@ train_info <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-
-
 ## `merge_term_info` takes the information on the current variable
 ## list and the information on the new set of variables (after each step)
 ## and merges them. Special attention is paid to cases where the
 ## _type_ of data is changed for a common column in the data.
-
 
 merge_term_info <- function(.new, .old) {
   # Look for conflicts where the new variable type is different from
@@ -256,17 +286,19 @@ merge_term_info <- function(.new, .old) {
     dplyr::select(-new_type)
 }
 
-
 #' Check for Empty Ellipses
 #'
 #' `ellipse_check()` is deprecated. Instead, empty selections should be
 #' supported by all steps.
 #'
-#' @param ... Arguments pass in from a call to `step`
-#' @return If not empty, a list of quosures. If empty, an error is thrown.
-#' @export
+#' @param ... Arguments pass in from a call to `step`.
+#'
+#' @return `ellipse_check()`: If not empty, a list of quosures. If empty, an
+#'   error is thrown.
+#'
 #' @keywords internal
 #' @rdname recipes-internal
+#' @export
 ellipse_check <- function(...) {
   terms <- quos(...)
   if (is_empty(terms)) {
@@ -283,7 +315,7 @@ ellipse_check <- function(...) {
 
 #' Printing Workhorse Function
 #'
-#' This internal function is used for printing steps.
+#' `printer()` is used for printing steps.
 #'
 #' @param tr_obj A character vector of names that have been
 #'  resolved during preparing the recipe (e.g. the `columns` object
@@ -292,14 +324,18 @@ ellipse_check <- function(...) {
 #'  recipe (e.g. `terms` in most steps).
 #' @param trained A logical for whether the step has been trained.
 #' @param width An integer denoting where the output should be wrapped.
-#' @return `NULL`, invisibly.
+#'
+#' @return `printer()`: `NULL`, invisibly.
+#'
 #' @keywords internal
-#' @export
 #' @rdname recipes-internal
-printer <- function(tr_obj = NULL,
-                    untr_obj = NULL,
-                    trained = FALSE,
-                    width = max(20, options()$width - 30)) {
+#' @export
+printer <- function(
+  tr_obj = NULL,
+  untr_obj = NULL,
+  trained = FALSE,
+  width = max(20, options()$width - 30)
+) {
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
   } else {
@@ -321,16 +357,14 @@ printer <- function(tr_obj = NULL,
   invisible(NULL)
 }
 
-
-#' @export
 #' @keywords internal
 #' @rdname recipes-internal
+#' @export
 prepare <- function(x, ...) {
   cli::cli_abort(
     "As of version 0.0.1.9006 please use {.fn prep} instead of {.fn prepare}."
   )
 }
-
 
 #' Check to see if a recipe is trained/prepared
 #'
@@ -431,7 +465,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
       types <- "factor or character"
     }
   } else {
-    all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
+    all_good <- purrr::map_lgl(get_types(dat)$type, ~any(.x %in% types))
   }
 
   if (!all(all_good)) {
@@ -439,8 +473,11 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
     classes <- map_chr(info$type, function(x) x[1])
     counts <- vctrs::vec_split(info$variable, classes)
     counts$count <- lengths(counts$val)
-    counts$text_len <- cli::console_width() - 18 - (counts$count > 1) -
-      nchar(counts$key) - (counts$count > 2)
+    counts$text_len <- cli::console_width() -
+      18 -
+      (counts$count > 1) -
+      nchar(counts$key) -
+      (counts$count > 2)
 
     # cli::ansi_collapse() doesn't work for length(x) == 1
     # https://github.com/r-lib/cli/issues/590
@@ -450,11 +487,16 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
         res <- cli::ansi_strtrim(x, width = width)
       } else if (length(x) == 2) {
         res <- cli::ansi_collapse(
-          x, last = " and ", width = width, style = "head"
+          x,
+          last = " and ",
+          width = width,
+          style = "head"
         )
       } else {
         res <- cli::ansi_collapse(
-          x, width = width, style = "head"
+          x,
+          width = width,
+          style = "head"
         )
       }
       res
@@ -481,28 +523,35 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
 ## Support functions
 
 #' Check to see if a step or check as been trained
+#'
+#' `is_trained()` is a helper function that returned a single logical to
+#' indicate whether a recipe is traine or not.
+#'
 #' @param x a step object.
-#' @return A logical
-#' @export
-#' @keywords internal
-#' @rdname recipes-internal
+#' @return `is_trained()`: A single logical.
+#'
 #' @seealso [developer_functions]
+#' @keywords internal
+#'
+#' @rdname recipes-internal
+#' @export
 is_trained <- function(x) {
   x$trained
 }
 
-
 #' Convert Selectors to Character
 #'
-#' This internal function takes a list of selectors (e.g. `terms`
-#'  in most steps) and returns a character vector version for
-#'  printing.
+#' `sel2char()` takes a list of selectors (e.g. `terms` in most steps) and
+#' returns a character vector version for printing.
+#'
 #' @param x A list of selectors
-#' @return A character vector
-#' @export
+#' @return `sel2char()`: A character vector.
+#'
+#' @seealso [developer_functions]
+#'
 #' @keywords internal
 #' @rdname recipes-internal
-#' @seealso [developer_functions]
+#' @export
 sel2char <- function(x) {
   unname(map_chr(x, to_character))
 }
@@ -515,7 +564,6 @@ to_character <- function(x) {
   }
   res
 }
-
 
 simple_terms <- function(x, ...) {
   if (is_trained(x)) {
@@ -548,8 +596,14 @@ simple_terms <- function(x, ...) {
 #'
 #' @export
 #' @keywords internal
-check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
-                       call = caller_env()) {
+check_name <- function(
+  res,
+  new_data,
+  object,
+  newname = NULL,
+  names = FALSE,
+  call = caller_env()
+) {
   if (is.null(newname)) {
     newname <- names0(ncol(res), object$prefix)
   }
@@ -558,11 +612,12 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
   if (any(intersection)) {
     nms <- new_data_names[intersection]
     cli::cli_abort(
-      c("Name collision occurred. The following variable names already exist:",
-        "*" = "{.var {nms}}"),
+      c(
+        "Name collision occurred. The following variable names already exist:",
+        "*" = "{.var {nms}}"
+      ),
       call = call
     )
-
   }
   if (names) {
     names(res) <- newname
@@ -585,14 +640,14 @@ check_name <- function(res, new_data, object, newname = NULL, names = FALSE,
 #' @keywords internal
 rand_id <- function(prefix = "step", len = 5) {
   candidates <- c(letters, LETTERS, paste(0:9))
-  paste(prefix,
+  paste(
+    prefix,
     paste0(sample(candidates, len, replace = TRUE), collapse = ""),
     sep = "_"
   )
 }
 
-
-check_nominal_type <- function(x, lvl) {
+check_nominal_type <- function(x, lvl, call = rlang::caller_env()) {
   all_act_cols <- names(x)
 
   # What columns do we expect to be factors based on the data
@@ -607,7 +662,6 @@ check_nominal_type <- function(x, lvl) {
   fac_ref_cols <- names(lvl)[fac_ref_cols]
 
   if (length(fac_ref_cols) > 0) {
-
     # Which are actual factors?
     fac_act_cols <- purrr::map_lgl(x, is.factor)
 
@@ -624,17 +678,15 @@ check_nominal_type <- function(x, lvl) {
                 ",
           "*" = "{.and {.var {was_factor}}}",
           "i" = "This may cause errors when processing new data."
-        )
+        ),
+        call = call
       )
     }
   }
   invisible(NULL)
 }
 
-check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
-  # In case a variable has multiple roles
-  vars <- unique(rec$var_info$variable)
-
+validate_training_data <- function(x, rec, fresh, call = rlang::caller_env()) {
   training_null <- is.null(x)
   if (training_null) {
     if (fresh) {
@@ -646,19 +698,17 @@ check_training_set <- function(x, rec, fresh, call = rlang::caller_env()) {
     }
     x <- rec$template
   } else {
-    in_data <- vars %in% colnames(x)
-    if (!all(in_data)) {
-      cli::cli_abort(
-        "Not all variables in the recipe are present in the supplied training \\
-        set: {.and {.var {vars[!in_data]}}}.",
-        call = call
-      )
+    if (is_sparse_matrix(x)) {
+      x <- sparsevctrs::coerce_to_sparse_tibble(x, call = call)
     }
     if (!is_tibble(x)) {
-      x <- as_tibble(x[, vars, drop = FALSE])
-    } else {
-      x <- x[, vars]
+      x <- as_tibble(x)
     }
+    recipes_ptype_validate(rec, new_data = x, stage = "prep", call = call)
+
+    # In case a variable has multiple roles
+    vars <- unique(rec$var_info$variable)
+    x <- x[, vars]
   }
 
   steps_trained <- vapply(rec$steps, is_trained, logical(1))
@@ -727,7 +777,6 @@ is_tune <- function(x) {
   }
   FALSE
 }
-
 
 # ------------------------------------------------------------------------------
 # For all imputation functions that substitute elements into an existing vector:
@@ -835,16 +884,13 @@ check_new_data <- function(req, object, new_data) {
   step_cls <- class(object)[1]
   step_id <- object$id
   cli::cli_abort(
-    "The following required {cli::qty(col_diff)} column{?s} {?is/are} \
-    missing from `new_data` in step '{step_id}': {col_diff}.",
-    class = "new_data_missing_column",
+    "The following required {cli::qty(col_diff)} column{?s} {?is/are} missing
+    from {.arg new_data}: {col_diff}.",
     call = rlang::call2(step_cls)
   )
 }
 
-stop_recipes <- function(class = NULL,
-                         call = NULL,
-                         parent = NULL) {
+stop_recipes <- function(class = NULL, call = NULL, parent = NULL) {
   rlang::abort(
     class = c(class, "recipes_error"),
     call = call,
@@ -852,8 +898,7 @@ stop_recipes <- function(class = NULL,
   )
 }
 
-stop_recipes_step <- function(call = NULL,
-                              parent = NULL) {
+stop_recipes_step <- function(call = NULL, parent = NULL) {
   stop_recipes(
     class = "recipes_error_step",
     call = call,
@@ -937,4 +982,37 @@ recipes_remove_cols <- function(new_data, object, col_names = character()) {
     new_data <- new_data[, !(colnames(new_data) %in% removals), drop = FALSE]
   }
   new_data
+}
+
+#' Role indicators
+#'
+#' This helper function is meant to be used in `prep()` methods to identify
+#' predictors and outcomes by names.
+#'
+#' @param info data.frame with variable information of columns.
+#'
+#' @return Character vector of column names.
+#' @keywords internal
+#'
+#' @seealso [developer_functions]
+#'
+#' @name recipes-role-indicator
+NULL
+
+#' @rdname recipes-role-indicator
+#' @export
+recipes_names_predictors <- function(info) {
+  get_from_info(info, "predictor")
+}
+
+#' @rdname recipes-role-indicator
+#' @export
+recipes_names_outcomes <- function(info) {
+  get_from_info(info, "outcome")
+}
+
+get_from_info <- function(info, role) {
+  res <- info$variable[info$role == role & !is.na(info$role)]
+
+  res
 }

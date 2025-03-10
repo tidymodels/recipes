@@ -11,6 +11,7 @@ step_indicate_na(
   trained = FALSE,
   columns = NULL,
   prefix = "na_ind",
+  sparse = "auto",
   keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("indicate_na")
@@ -36,8 +37,12 @@ is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. Defaults to "na_ind".}
 
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Defaults to \code{"auto"}.}
+
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -67,6 +72,20 @@ columns \code{terms} and \code{id}:
 }
 }
 
+\section{Sparse data}{
+
+
+This step produces sparse columns if \code{sparse = "yes"} is being set. The
+default value \code{"auto"} won't trigger production fo sparse columns if a recipe
+is \code{\link[=prep]{prep()}}ed, but allows for a workflow to toggle to \code{"yes"} or \code{"no"}
+depending on whether the model supports \link{sparse_data} and if the model is
+is expected to run faster with the data.
+
+The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+\code{sparse = "yes"} or \code{sparse = "no"}.
+}
+
 \section{Case weights}{
 
 
@@ -93,7 +112,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, new_data = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

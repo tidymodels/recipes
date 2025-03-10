@@ -1,3 +1,12 @@
+# no input
+
+    Code
+      iris_rec %>% step_mutate_at() %>% prep(training = iris) %>% bake(new_data = NULL,
+        composition = "data.frame")
+    Condition
+      Error in `step_mutate_at()`:
+      ! Argument `fn` must be specified.
+
 # empty printing
 
     Code
@@ -64,5 +73,5 @@
       Training data contained 150 data points and no incomplete rows.
       
       -- Operations 
-      * Variable mutation for: Sepal.Length and Sepal.Width | Trained
+      * Variable mutation for: Sepal.Length Sepal.Width | Trained
 

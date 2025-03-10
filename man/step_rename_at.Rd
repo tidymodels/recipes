@@ -63,6 +63,13 @@ columns \code{terms} and \code{id}:
 }
 }
 
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
 \section{Case weights}{
 
 
@@ -72,7 +79,7 @@ The underlying operation does not allow for case weights.
 \examples{
 library(dplyr)
 recipe(~., data = iris) \%>\%
-  step_rename_at(everything(), fn = ~ gsub(".", "_", ., fixed = TRUE)) \%>\%
+  step_rename_at(all_predictors(), fn = ~ gsub(".", "_", ., fixed = TRUE)) \%>\%
   prep() \%>\%
   bake(new_data = NULL) \%>\%
   slice(1:10)

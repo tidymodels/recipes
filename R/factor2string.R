@@ -51,13 +51,15 @@
 #' # ...but remains a factor in the original data
 #' Sacramento %>% head()
 step_factor2string <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = FALSE,
-           skip = FALSE,
-           id = rand_id("factor2string")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = FALSE,
+    skip = FALSE,
+    id = rand_id("factor2string")
+  ) {
     add_step(
       recipe,
       step_factor2string_new(
@@ -118,7 +120,6 @@ print.step_factor2string <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

@@ -3,7 +3,6 @@ library(recipes)
 skip_if_not_installed("modeldata")
 data(credit_data, package = "modeldata")
 
-
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
@@ -34,11 +33,17 @@ test_that("simple mean", {
     rep(inc_pred, sum(is.na(credit_te$Income)))
   )
 
-  means <- vapply(credit_tr[, c("Age", "Assets", "Income")],
-    mean, numeric(1),
+  means <- vapply(
+    credit_tr[, c("Age", "Assets", "Income")],
+    mean,
+    numeric(1),
     na.rm = TRUE
   )
-  means <- purrr::map2(means, credit_tr[, c("Age", "Assets", "Income")], recipes:::cast)
+  means <- purrr::map2(
+    means,
+    credit_tr[, c("Age", "Assets", "Income")],
+    recipes:::cast
+  )
   means <- unlist(means)
 
   imp_tibble_un <-
@@ -79,7 +84,8 @@ test_that("non-numeric", {
 
   impute_rec <- rec %>%
     step_impute_mean(Assets, Job)
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     prep(impute_rec, training = credit_tr, verbose = FALSE)
   )
 })
@@ -98,7 +104,7 @@ test_that("all NA values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_impute_mean(all_predictors())
+      step_impute_mean(all_predictors())
   rec_param <- tunable.step_impute_mean(rec$steps[[1]])
   expect_equal(rec_param$name, c("trim"))
   expect_true(all(rec_param$source == "recipe"))
@@ -147,9 +153,11 @@ test_that("case weights", {
   ref_means <- credit_tr %>%
     dplyr::select(Age, Assets, Income) %>%
     purrr::map(trim, trim = 0.2) %>%
-    purrr::map(weighted.mean,
-               w = as.numeric(credit_tr_cw$Amount),
-               na.rm = TRUE) %>%
+    purrr::map(
+      weighted.mean,
+      w = as.numeric(credit_tr_cw$Amount),
+      na.rm = TRUE
+    ) %>%
     purrr::map(round, 0)
 
   expect_equal(
@@ -197,6 +205,19 @@ test_that("case weights", {
   expect_snapshot(impute_rec)
 })
 
+test_that("doesn't destroy sparsity", {
+  credit_tr$Debt <- sparsevctrs::as_sparse_double(credit_tr$Debt)
+  rec <- recipe(~Debt, data = credit_tr) %>%
+    step_impute_mean(Debt)
+
+  rec_trained <- prep(rec, training = credit_tr, verbose = FALSE)
+  rec_trans <- bake(rec_trained, new_data = credit_tr)
+
+  expect_true(all(vapply(rec_trans, sparsevctrs::is_sparse_double, logical(1))))
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -208,8 +229,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     update_role_requirements(role = "potato", bake = FALSE)
   imputed <- prep(impute_rec, training = credit_tr, verbose = FALSE)
 
-  expect_error(bake(imputed, new_data = credit_te[, c(-5)]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(imputed, new_data = credit_te[, c(-5)]))
 })
 
 test_that("empty printing", {
@@ -269,4 +289,16 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_impute_mean(
+        all_predictors(),
+        trim = 0.6
+      ) %>%
+      prep(),
+    error = TRUE
+  )
 })

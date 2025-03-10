@@ -58,16 +58,18 @@
 #'   bake(slack_new_data)
 #' }
 check_range <-
-  function(recipe,
-           ...,
-           role = NA,
-           skip = FALSE,
-           trained = FALSE,
-           slack_prop = 0.05,
-           warn = FALSE,
-           lower = NULL,
-           upper = NULL,
-           id = rand_id("range_check_")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    skip = FALSE,
+    trained = FALSE,
+    slack_prop = 0.05,
+    warn = FALSE,
+    lower = NULL,
+    upper = NULL,
+    id = rand_id("range_check_")
+  ) {
     add_check(
       recipe,
       check_range_new(
@@ -102,39 +104,34 @@ check_range_new <-
   }
 
 #' @export
-prep.check_range <- function(x,
-                             training,
-                             info = NULL,
-                             ...) {
+prep.check_range <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
 
   ## TODO add informative error for nonnumerics
 
-  lower_vals <- vapply(training[, col_names], min, c(min = 1),
-    na.rm = TRUE
-  )
-  upper_vals <- vapply(training[, col_names], max, c(max = 1),
-    na.rm = TRUE
-  )
+  lower_vals <- vapply(training[, col_names], min, c(min = 1), na.rm = TRUE)
+  upper_vals <- vapply(training[, col_names], max, c(max = 1), na.rm = TRUE)
   check_range_new(
-    terms      = x$terms,
-    role       = x$role,
-    trained    = TRUE,
-    skip       = x$skip,
-    warn       = x$warn,
-    lower      = lower_vals,
-    upper      = upper_vals,
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    skip = x$skip,
+    warn = x$warn,
+    lower = lower_vals,
+    upper = upper_vals,
     slack_prop = x$slack_prop,
-    id         = x$id
+    id = x$id
   )
 }
 
-range_check_func <- function(x,
-                             lower,
-                             upper,
-                             slack_prop = 0.05,
-                             warn = FALSE,
-                             colname = "x") {
+range_check_func <- function(
+  x,
+  lower,
+  upper,
+  slack_prop = 0.05,
+  warn = FALSE,
+  colname = "x"
+) {
   if (!is.numeric(x)) {
     cli::cli_abort(
       "{.arg x} must be a numeric vector, not {.obj_type_friendly {x}}."
@@ -213,7 +210,6 @@ print.check_range <-
     print_step(names(x$lower), x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

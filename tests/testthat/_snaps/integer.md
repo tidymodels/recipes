@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, te_dat[, 2:3], all_predictors())
+    Condition
+      Error in `step_integer()`:
+      ! The following required column is missing from `new_data`: x.
+
 # empty printing
 
     Code
@@ -65,4 +73,24 @@
       
       -- Operations 
       * Integer encoding for: x, y, z | Trained
+
+# bad args
+
+    Code
+      recipe(~ x + y + z, data = tr_dat) %>% step_integer(all_predictors(), strict = "yes") %>%
+        prep()
+    Condition
+      Error in `step_integer()`:
+      Caused by error in `prep()`:
+      ! `strict` must be `TRUE` or `FALSE`, not the string "yes".
+
+---
+
+    Code
+      recipe(~ x + y + z, data = tr_dat) %>% step_integer(all_predictors(),
+      zero_based = "sure!") %>% prep()
+    Condition
+      Error in `step_integer()`:
+      Caused by error in `prep()`:
+      ! `zero_based` must be `TRUE` or `FALSE`, not the string "sure!".
 

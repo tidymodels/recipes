@@ -31,8 +31,12 @@ test_that("works with logicals", {
     factor(mtcars$am, levels = c(TRUE, FALSE), labels = c("yes", "no")),
     res$am
   )
+  expect_snapshot(
+    recipe(~., data = mtcars) %>%
+      step_bin2factor(all_logical_predictors(), ref_first = 1),
+    error = TRUE
+  )
 })
-
 
 test_that("nondefault options", {
   rec2 <- rec %>% step_bin2factor(rocks, levels = letters[2:1])
@@ -41,18 +45,14 @@ test_that("nondefault options", {
   expect_true(all(diag(table(res2$rocks, res2$more_rocks)) == 0))
 })
 
-
 test_that("bad options", {
   rec3 <- rec %>% step_bin2factor(description)
-  expect_snapshot(error = TRUE,
-    prep(rec3, training = covers)
-  )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(error = TRUE, prep(rec3, training = covers))
+  expect_snapshot(
+    error = TRUE,
     rec %>% step_bin2factor(rocks, levels = letters[1:5])
   )
-  expect_snapshot(error = TRUE,
-    rec %>% step_bin2factor(rocks, levels = 1:2)
-  )
+  expect_snapshot(error = TRUE, rec %>% step_bin2factor(rocks, levels = 1:2))
 })
 
 test_that("choose reference level", {
@@ -76,7 +76,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <- prep(rec, mtcars_bin)
 
-  expect_error(bake(rec, mtcars), class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec, mtcars))
 })
 
 test_that("empty printing", {

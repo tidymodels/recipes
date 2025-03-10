@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-
 n <- 50
 set.seed(424)
 dat <- data.frame(
@@ -46,7 +45,7 @@ test_that("nominal data", {
 
 test_that("all data", {
   rec3 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
+    step_shuffle(all_predictors())
 
   rec3 <- prep(rec3, training = dat, verbose = FALSE)
   set.seed(2516)
@@ -62,11 +61,24 @@ test_that("all data", {
 
 test_that("bake a single row", {
   rec4 <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
+    step_shuffle(all_predictors())
 
   rec4 <- prep(rec4, training = dat, verbose = FALSE)
-  expect_snapshot(dat4 <- bake(rec4, dat[1, ], everything()))
+  expect_snapshot(dat4 <- bake(rec4, dat[1, ]))
   expect_equal(dat4, tibble(dat[1, ]))
+})
+
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~., mtcars) %>%
+    step_shuffle(vs, am) %>%
+    prep()
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -79,8 +91,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec1 <- prep(rec1, training = dat, verbose = FALSE)
 
-  expect_error(bake(rec1, dat[, 2:5]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec1, dat[, 2:5]))
 })
 
 test_that("empty printing", {
@@ -122,7 +133,7 @@ test_that("empty selection tidy method works", {
 
 test_that("printing", {
   rec <- recipe(y ~ ., data = dat) %>%
-    step_shuffle(everything())
+    step_shuffle(all_predictors())
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))

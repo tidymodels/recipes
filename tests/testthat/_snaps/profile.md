@@ -1,7 +1,8 @@
 # bad values
 
     Code
-      sacr_rec %>% step_profile(everything(), profile = vars(sqft)) %>% prep(data = Sacramento)
+      sacr_rec %>% step_profile(all_predictors(), profile = vars(sqft)) %>% prep(
+        data = Sacramento)
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
@@ -52,6 +53,15 @@
     Condition
       Error in `fixed()`:
       ! No method for determining a value to fix for objects of class: <logical>.
+
+# error on wrong grid names
+
+    Code
+      recipe(~., data = mtcars) %>% step_profile(grid = list(pctl = TRUE, not_len = 100))
+    Condition
+      Error in `step_profile()`:
+      x `grid` should have two named elements len and pctl, not "not_len" and "pctl".
+      i See ?step_profile (`?recipes::step_profile()`) for information.
 
 # empty printing
 

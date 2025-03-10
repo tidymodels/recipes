@@ -7,6 +7,23 @@
       Caused by error in `prep()`:
       ! `lag` argument must be integer-valued, not a function.
 
+---
+
+    Code
+      recipe(~., data = df) %>% step_lag(x, prefix = 2) %>% prep()
+    Condition
+      Error in `step_lag()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 2.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = df[, 1, drop = FALSE])
+    Condition
+      Error in `step_lag()`:
+      ! The following required column is missing from `new_data`: t.
+
 # empty printing
 
     Code

@@ -52,6 +52,14 @@
       -- Operations 
       * Correlation filter on: V6, V1, V3 | Trained, ignored weights
 
+# corr_filter() warns on many NA values
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_corr(all_predictors()) %>% prep()
+    Condition
+      Warning:
+      Too many correlations are `NA`; skipping correlation filter.
+
 # empty printing
 
     Code
@@ -118,5 +126,33 @@
       Training data contained 100 data points and no incomplete rows.
       
       -- Operations 
-      * Correlation filter on: V6 and V1 | Trained
+      * Correlation filter on: V6 V1 | Trained
+
+# bad args
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% step_corr(all_predictors(), threshold = 2) %>% prep()
+    Condition
+      Error in `step_corr()`:
+      Caused by error in `prep()`:
+      ! `threshold` must be a number between 0 and 1, not the number 2.
+
+---
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% step_corr(all_predictors(), use = "this") %>% prep()
+    Condition
+      Error in `step_corr()`:
+      Caused by error in `prep()`:
+      ! `use` must be one of "all.obs", "complete.obs", "pairwise.complete.obs", "everything", or "na.or.complete", not "this".
+
+---
+
+    Code
+      recipe(mpg ~ ., mtcars) %>% step_corr(all_predictors(), method = "my dissertation") %>%
+        prep()
+    Condition
+      Error in `step_corr()`:
+      Caused by error in `prep()`:
+      ! `method` must be one of "pearson", "kendall", or "spearman", not "my dissertation".
 

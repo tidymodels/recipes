@@ -5,7 +5,7 @@
         factor = 3) %>% prep(training = biomass)
     Condition
       Warning:
-      Scaling `factor` should take either a value of 1 or 2, not 3.
+      Scaling `factor` should take either a value of 1 or 2, not a number.
 
 # na_rm argument works for step_scale
 
@@ -15,6 +15,16 @@
     Condition
       Warning:
       Columns `mpg`, `cyl`, `disp`, and `hp` returned NaN, because variance cannot be calculated and scaling cannot be used. Consider avoiding `Inf` or `-Inf` values and/or setting `na_rm = TRUE` before normalizing.
+
+---
+
+    Code
+      rec_no_na_rm <- recipe(~., data = mtcars_na) %>% step_scale(all_predictors(),
+      na_rm = "FALSE") %>% prep()
+    Condition
+      Error in `step_scale()`:
+      Caused by error in `prep()`:
+      ! `na_rm` must be `TRUE` or `FALSE`, not the string "FALSE".
 
 # warns on zv
 
@@ -102,6 +112,14 @@
       -- Operations 
       * Scaling for: cyl, disp, hp, drat, qsec, vs, ... | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(std_trained, new_data = biomass[, 1:2])
+    Condition
+      Error in `step_scale()`:
+      ! The following required columns are missing from `new_data`: carbon, hydrogen, oxygen, nitrogen, and sulfur.
+
 # empty printing
 
     Code
@@ -151,7 +169,7 @@
       predictor: 10
       
       -- Operations 
-      * Scaling for: disp and wt
+      * Scaling for: disp wt
 
 ---
 
@@ -170,5 +188,5 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Scaling for: disp and wt | Trained
+      * Scaling for: disp wt | Trained
 

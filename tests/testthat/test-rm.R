@@ -38,19 +38,18 @@ test_that("basics", {
 #   expect_equal(colnames(tr_res), c("x1", "x2"))
 # })
 
-
 test_that("basic usage", {
   rec <-
     recipe(~., data = iris) %>%
-    step_rm(Species, starts_with("Sepal"))
+      step_rm(Species, starts_with("Sepal"))
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(-Species, -starts_with("Sepal"))
+      as_tibble() %>%
+      slice(1:75) %>%
+      select(-Species, -starts_with("Sepal"))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
@@ -62,7 +61,7 @@ test_that("basic usage", {
     slice(76:150)
   dplyr_test <-
     iris_test %>%
-    select(-Species, -starts_with("Sepal"))
+      select(-Species, -starts_with("Sepal"))
 
   rec_test <- bake(prepped, iris_test)
   expect_equal(dplyr_test, rec_test)
@@ -71,25 +70,23 @@ test_that("basic usage", {
 test_that("basic rename", {
   rec <-
     recipe(~., data = iris) %>%
-    step_rm(sepal_length = Sepal.Length)
+      step_rm(sepal_length = Sepal.Length)
 
-  expect_snapshot(error = TRUE,
-    prep(rec, training = iris %>% slice(1:75))
-  )
+  expect_snapshot(error = TRUE, prep(rec, training = iris %>% slice(1:75)))
 })
 
 test_that("remove via type", {
   rec <-
     recipe(~., data = iris) %>%
-    step_rm(all_numeric())
+      step_rm(all_numeric())
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select_if(~ !is.numeric(.))
+      as_tibble() %>%
+      slice(1:75) %>%
+      select_if(~!is.numeric(.))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
@@ -101,7 +98,7 @@ test_that("remove via type", {
     slice(76:150)
   dplyr_test <-
     iris_test %>%
-    select_if(~ !is.numeric(.))
+      select_if(~!is.numeric(.))
 
   rec_test <- bake(prepped, iris_test)
   expect_equal(dplyr_test, rec_test)
@@ -110,15 +107,15 @@ test_that("remove via type", {
 test_that("remove via role", {
   rec <-
     recipe(Species ~ ., data = iris) %>%
-    step_rm(all_predictors())
+      step_rm(all_predictors())
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(Species)
+      as_tibble() %>%
+      slice(1:75) %>%
+      select(Species)
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
@@ -130,7 +127,7 @@ test_that("remove via role", {
     slice(76:150)
   dplyr_test <-
     iris_test %>%
-    select(Species)
+      select(Species)
 
   rec_test <- bake(prepped, iris_test)
   expect_equal(dplyr_test, rec_test)
@@ -141,31 +138,42 @@ test_that("remove with quasi-quotation", {
 
   rec_1 <-
     recipe(~., data = iris) %>%
-    step_rm(all_of(sepal_vars))
+      step_rm(all_of(sepal_vars))
 
   prepped_1 <- prep(rec_1, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    select(-all_of(sepal_vars))
+      as_tibble() %>%
+      slice(1:75) %>%
+      select(-all_of(sepal_vars))
 
   rec_1_train <- bake(prepped_1, new_data = NULL)
   expect_equal(dplyr_train, rec_1_train)
 
   rec_2 <-
     recipe(~., data = iris) %>%
-    step_rm(!!sepal_vars)
+      step_rm(!!sepal_vars)
 
   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
 
-  # expect_error(
-  #   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75)),
-  #   regexp = NA
+  # expect_no_error(
+  #   prepped_2 <- prep(rec_2, training = iris %>% slice(1:75))
   # )
   rec_2_train <- bake(prepped_2, new_data = NULL)
   expect_equal(dplyr_train, rec_2_train)
+})
+
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~vs + am, mtcars) %>%
+    step_rm(vs) %>%
+    prep()
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 })
 
 # Infrastructure ---------------------------------------------------------------

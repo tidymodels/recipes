@@ -66,13 +66,15 @@
 #'   ylab = "pre-imputation", xlab = "imputed"
 #' )
 step_impute_lower <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           threshold = NULL,
-           skip = FALSE,
-           id = rand_id("impute_lower")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    threshold = NULL,
+    skip = FALSE,
+    id = rand_id("impute_lower")
+  ) {
     add_step(
       recipe,
       step_impute_lower_new(
@@ -108,10 +110,12 @@ prep.step_impute_lower <- function(x, training, info = NULL, ...) {
   if (any(threshold < 0)) {
     offenders <- col_names[threshold < 0]
 
-    cli::cli_abort(c(
-      x = "The following columns negative values: {offenders}.",
-      i = "Lower bound imputation is intended for data bounded at zero."
-    ))
+    cli::cli_abort(
+      c(
+        x = "The following columns negative values: {offenders}.",
+        i = "Lower bound imputation is intended for data bounded at zero."
+      )
+    )
   }
 
   step_impute_lower_new(

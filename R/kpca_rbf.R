@@ -6,7 +6,8 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param sigma A numeric value for the radial basis function parameter.
+#' @param sigma A numeric value for the radial basis function parameter. See
+#' the documentation at [kernlab::rbfdot()].
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
@@ -63,18 +64,20 @@
 #' tidy(kpca_trans, number = 3)
 #' tidy(kpca_estimates, number = 3)
 step_kpca_rbf <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 5,
-           res = NULL,
-           columns = NULL,
-           sigma = 0.2,
-           prefix = "kPC",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("kpca_rbf")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 5,
+    res = NULL,
+    columns = NULL,
+    sigma = 0.2,
+    prefix = "kPC",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("kpca_rbf")
+  ) {
     recipes_pkg_check(required_pkgs.step_kpca_rbf())
 
     add_step(
@@ -96,8 +99,19 @@ step_kpca_rbf <-
   }
 
 step_kpca_rbf_new <-
-  function(terms, role, trained, num_comp, res, columns, sigma, prefix,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    res,
+    columns,
+    sigma,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "kpca_rbf",
       terms = terms,
@@ -118,6 +132,9 @@ step_kpca_rbf_new <-
 prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$sigma, arg = "sigma", min = .Machine$double.eps)
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-
@@ -131,10 +148,12 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
       )
     kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(kprc)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(kprc)
+        )
+      )
     }
   } else {
     kprc <- NULL
@@ -178,7 +197,7 @@ bake.step_kpca_rbf <- function(object, new_data, ...) {
   colnames(comps) <- names0(ncol(comps), object$prefix)
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
-  new_data <- vec_cbind(new_data, comps)
+  new_data <- vec_cbind(new_data, comps, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
@@ -189,7 +208,6 @@ print.step_kpca_rbf <- function(x, width = max(20, options()$width - 40), ...) {
   print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
-
 
 #' @rdname tidy.recipe
 #' @export

@@ -3,6 +3,7 @@
 #' `step_interact()` creates a *specification* of a recipe step that will create
 #' new columns that are interaction terms between two or more variables.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param terms A traditional R formula that contains interaction
@@ -86,15 +87,17 @@
 #' tidy(int_mod_1, number = 1)
 #' tidy(int_mod_2, number = 2)
 step_interact <-
-  function(recipe,
-           terms,
-           role = "predictor",
-           trained = FALSE,
-           objects = NULL,
-           sep = "_x_",
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("interact")) {
+  function(
+    recipe,
+    terms,
+    role = "predictor",
+    trained = FALSE,
+    objects = NULL,
+    sep = "_x_",
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("interact")
+  ) {
     add_step(
       recipe,
       step_interact_new(
@@ -113,6 +116,7 @@ step_interact <-
 ## Initializes a new object
 step_interact_new <-
   function(terms, role, trained, objects, sep, keep_original_cols, skip, id) {
+    check_string(sep, call = rlang::call2("step_interact"))
     step(
       subclass = "interact",
       terms = terms,
@@ -126,16 +130,14 @@ step_interact_new <-
     )
   }
 
-
 ## The idea is to save a bunch of x-factor interaction terms instead of
 ## one large set of collected terms.
 #' @export
 prep.step_interact <- function(x, training, info = NULL, ...) {
-
   # Empty selection
   if (identical(x$terms[[1]], quo())) {
     return(
-        step_interact_new(
+      step_interact_new(
         terms = x$terms,
         role = x$role,
         trained = TRUE,
@@ -150,16 +152,21 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
 
   # make backwards compatible with 1.0.6 (#1138)
   if (!is_formula(x)) {
-    tmp_terms <- rlang::as_label(x$terms[[1]])
-    if (substr(tmp_terms, 1, 1) == "~") {
-      tmp_terms <- as.formula(tmp_terms)
-    } else {
-      tmp_terms <- rlang::eval_tidy(x$terms[[1]])
-      if (!is_formula(tmp_terms)) {
+    tmp_terms <- tryCatch(
+      rlang::eval_tidy(x$terms[[1]]),
+      error = function(cnd) {
         cli::cli_abort(
-          "{.arg term} must be a formula. Not {.obj_type_friendly {term}}."
+          "{.arg terms} must be supplied as a formula.",
+          call = NULL
         )
       }
+    )
+    if (!is_formula(tmp_terms)) {
+      # Have not been able to reach
+      cli::cli_abort(
+        "{.arg terms} must be a formula, not {.obj_type_friendly {term}}.",
+        .internal = TRUE
+      )
     }
 
     environment(tmp_terms) <- environment(x$terms[[1]])
@@ -205,7 +212,7 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
     vars <-
       unique(unlist(lapply(make_new_formula(int_terms), all.vars)))
     var_check <- info[info$variable %in% vars, ]
-    if (any(var_check$type == "nominal")) {
+    if (any(vapply(var_check$type, function(x) "nominal" %in% x, logical(1)))) {
       cli::cli_warn(
         "Categorical variables used in {.fn step_interact} should probably be \\
         avoided; This can lead to differences in dummy variable values that \\
@@ -235,16 +242,16 @@ prep.step_interact <- function(x, training, info = NULL, ...) {
   )
 }
 
-
 #' @export
 bake.step_interact <- function(object, new_data, ...) {
-
   # empty selection
   if (is.null(object$objects)) {
     return(new_data)
   }
 
-  col_names <- unlist(lapply(object$objects, function(x) all.vars(rlang::f_rhs(x))))
+  col_names <- unlist(
+    lapply(object$objects, function(x) all.vars(rlang::f_rhs(x)))
+  )
   check_new_data(col_names, object, new_data)
 
   # When the interaction specification failed, just move on
@@ -280,7 +287,7 @@ bake.step_interact <- function(object, new_data, ...) {
     gsub(":", object$sep, unlist(lapply(res, colnames)))
   out <- as_tibble(out)
   out <- check_name(out, new_data, object, names(out))
-  new_data <- vec_cbind(new_data, out)
+  new_data <- vec_cbind(new_data, out, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
@@ -302,8 +309,6 @@ make_new_formula <- function(x) {
   lapply(splitup, x_fac_int)
 }
 
-
-
 ## Given a standard model formula and some data, get the
 ## term expansion (without `.`s). This returns the factor
 ## names and would not expand dummy variables.
@@ -323,11 +328,14 @@ get_term_names <- function(form, vnames) {
     silent = TRUE
   )
   if (inherits(nms, "try-error")) {
-    cli::cli_warn(c(
-      "!" = "Interaction specification failed for:",
-      "*" = deparse(form),
-      "i" = "No interactions will be created"
-    ))
+    # have not been able to reach
+    cli::cli_warn(
+      c(
+        "!" = "Interaction specification failed for:",
+        "*" = deparse(form),
+        "i" = "No interactions will be created"
+      )
+    )
     return(rlang::na_chr)
   }
   nms <- nms[nms != "(Intercept)"]
@@ -370,7 +378,6 @@ int_name <- function(x) {
   res
 }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_interact <- function(x, ...) {
@@ -381,7 +388,6 @@ tidy.step_interact <- function(x, ...) {
 
 map_call <- function(x, f, ...) as.call(lapply(x, f, ...))
 map_pairlist <- function(x, f, ...) as.pairlist(lapply(x, f, ...))
-
 
 # In a formula, find the selectors (if any) and return the call(s)
 find_selectors <- function(f) {
@@ -397,7 +403,11 @@ find_selectors <- function(f) {
     list()
   } else {
     # User supplied incorrect input
-    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
+    # have not been able to reach
+    cli::cli_abort(
+      "Don't know how to handle type {.code {typeof(f)}}.",
+      .internal = TRUE
+    )
   }
 }
 
@@ -414,7 +424,11 @@ replace_selectors <- function(x, elem, value) {
     map_pairlist(x, replace_selectors, elem, value)
   } else {
     # User supplied incorrect input
-    cli::cli_abort("Don't know how to handle type {typeof(f)}.")
+    # have not been able to reach
+    cli::cli_abort(
+      "Don't know how to handle type {.code {typeof(f)}}.",
+      .internal = TRUE
+    )
   }
 }
 

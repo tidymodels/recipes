@@ -36,7 +36,7 @@ the original variables will be used as \emph{predictors} in a model.}
 preprocessing have been estimated.}
 
 \item{features}{A character string that includes at least one
-of the following values: \code{month}, \code{dow} (day of week),
+of the following values: \code{month}, \code{dow} (day of week), \code{mday} (day of month),
 \code{doy} (day of year), \code{week}, \code{month},
 \code{decimal} (decimal date, e.g. 2002.197), \code{quarter},
 \code{semester}, \code{year}.}

@@ -3,8 +3,10 @@
 #' `step_count()` creates a *specification* of a recipe step that will create a
 #' variable that counts instances of a regular expression pattern in text.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
+#' @inheritParams step_dummy
 #' @param ... A single selector function to choose which variable
 #'  will be searched for the regex pattern. The selector should
 #'  resolve to a single variable. See [selections()] for more details.
@@ -35,6 +37,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-creation
+#'
 #' @template case-weights-not-supported
 #'
 #' @family dummy variable and encoding steps
@@ -54,36 +58,43 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec2, number = 1)
-step_count <- function(recipe,
-                       ...,
-                       role = "predictor",
-                       trained = FALSE,
-                       pattern = ".",
-                       normalize = FALSE,
-                       options = list(),
-                       result = make.names(pattern),
-                       input = NULL,
-                       keep_original_cols = TRUE,
-                       skip = FALSE,
-                       id = rand_id("count")) {
+step_count <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  pattern = ".",
+  normalize = FALSE,
+  options = list(),
+  result = make.names(pattern),
+  input = NULL,
+  sparse = "auto",
+  keep_original_cols = TRUE,
+  skip = FALSE,
+  id = rand_id("count")
+) {
   check_string(pattern)
 
   valid_args <- names(formals(grepl))[-(1:2)]
   if (any(!(names(options) %in% valid_args))) {
-    cli::cli_abort(c(
-      "x" = "The following elements of {.arg options} are not allowed:",
-      "*" = "{.val {setdiff(names(options), valid_args)}}.",
-      "i" = "Valid options are: {.val {valid_args}}."
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "The following elements of {.arg options} are not allowed:",
+        "*" = "{.val {setdiff(names(options), valid_args)}}.",
+        "i" = "Valid options are: {.val {valid_args}}."
+      )
+    )
   }
 
   terms <- enquos(...)
   if (length(terms) > 1) {
-    cli::cli_abort(c(
-      x = "For this step, only a single selector can be used.",
-      i = "The following {length(terms)} selectors were used: \\
+    cli::cli_abort(
+      c(
+        x = "For this step, only a single selector can be used.",
+        i = "The following {length(terms)} selectors were used: \\
           {.var {as.character(terms)}}."
-    ))
+      )
+    )
   }
 
   add_step(
@@ -97,6 +108,7 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -105,8 +117,20 @@ step_count <- function(recipe,
 }
 
 step_count_new <-
-  function(terms, role, trained, pattern, normalize, options, result, input,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    pattern,
+    normalize,
+    options,
+    result,
+    input,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "count",
       terms = terms,
@@ -117,6 +141,7 @@ step_count_new <-
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
@@ -127,14 +152,10 @@ step_count_new <-
 prep.step_count <- function(x, training, info = NULL, ...) {
   col_name <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
-
-  if (length(col_name) > 1) {
-    cli::cli_abort(c(
-      x = "The selector should select at most a single variable.",
-      i = "The following {length(col_name)} were selected: \\
-          {.and {.var {col_name}}}."
-    ))
-  }
+  check_string(x$pattern, allow_empty = TRUE, arg = "pattern")
+  check_string(x$result, allow_empty = FALSE, arg = "result")
+  check_bool(x$normalize, arg = "normalize")
+  check_sparse_arg(x$sparse)
 
   step_count_new(
     terms = x$terms,
@@ -145,6 +166,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
@@ -184,8 +206,20 @@ bake.step_count <- function(object, new_data, ...) {
     new_values[[object$result]] <- new_values[[object$result]] / totals
   }
 
+  if (sparse_is_yes(object$sparse)) {
+    if (object$normalize) {
+      new_values[[object$result]] <- sparsevctrs::as_sparse_double(
+        new_values[[object$result]]
+      )
+    } else {
+      new_values[[object$result]] <- sparsevctrs::as_sparse_integer(
+        new_values[[object$result]]
+      )
+    }
+  }
+
   new_values <- check_name(new_values, new_data, object, object$result)
-  new_data <- vec_cbind(new_data, new_values)
+  new_data <- vec_cbind(new_data, new_values, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
@@ -199,7 +233,6 @@ print.step_count <-
     print_step(x$input, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -219,4 +252,14 @@ tidy.step_count <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_count <- function(x, data, ...) {
+  lapply(1, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 0.5
+    )
+  })
 }

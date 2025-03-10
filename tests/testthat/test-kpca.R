@@ -1,7 +1,6 @@
 library(testthat)
 library(recipes)
 
-
 set.seed(131)
 tr_dat <- matrix(rnorm(100 * 6), ncol = 6)
 te_dat <- matrix(rnorm(20 * 6), ncol = 6)
@@ -20,12 +19,15 @@ test_that("correct kernel PCA values", {
   pca_pred <- bake(kpca_trained, new_data = te_dat, all_predictors())
   pca_pred <- as.matrix(pca_pred)
 
-  pca_exp <- kernlab::kpca(as.matrix(tr_dat[, -1]),
+  pca_exp <- kernlab::kpca(
+    as.matrix(tr_dat[, -1]),
     kernel = kpca_rec$steps[[1]]$options$kernel,
     kpar = kpca_rec$steps[[1]]$options$kpar
   )
 
-  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[, 1:kpca_trained$steps[[1]]$num_comp]
+  pca_pred_exp <- kernlab::predict(pca_exp, te_dat[, -1])[,
+    1:kpca_trained$steps[[1]]$num_comp
+  ]
   colnames(pca_pred_exp) <- paste0("kPC", 1:kpca_trained$steps[[1]]$num_comp)
 
   rownames(pca_pred) <- NULL
@@ -45,7 +47,7 @@ test_that("check_name() is used", {
   dat <- dplyr::as_tibble(tr_dat)
   dat$kPC1 <- dat$X1
 
-  rec <- recipe(~ ., data = dat) %>%
+  rec <- recipe(~., data = dat) %>%
     step_kpca(X2, X3, X4, X5, X6)
 
   expect_snapshot(
@@ -80,7 +82,7 @@ test_that("No kPCA comps", {
 })
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
-  rec <- recipe(~ ., data = mtcars) %>%
+  rec <- recipe(~., data = mtcars) %>%
     step_kpca(all_predictors(), num_comp = 0, keep_original_cols = FALSE) %>%
     prep()
 
@@ -89,19 +91,36 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
   expect_identical(res, tibble::as_tibble(mtcars))
 })
 
+test_that("rethrows error correctly from implementation", {
+  skip_if_not_installed("kernlab")
+
+  local_mocked_bindings(
+    .package = "kernlab",
+    kpca = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
+      step_kpca(all_predictors()) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("kernlab")
 
-  kpca_rec <- rec %>% step_kpca(X2, X3, X4, X5, X6) %>%
+  kpca_rec <- rec %>%
+    step_kpca(X2, X3, X4, X5, X6) %>%
     update_role(X2, X3, X4, X5, X6, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   kpca_trained <- prep(kpca_rec, training = tr_dat, verbose = FALSE)
 
-  expect_error(bake(kpca_trained, new_data = te_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(kpca_trained, new_data = te_dat[, 1:3]))
 })
 
 test_that("empty printing", {
@@ -145,7 +164,7 @@ test_that("keep_original_cols works", {
   skip_if_not_installed("kernlab")
   new_names <- paste0("kPC", 1:5)
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_kpca(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -156,7 +175,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_kpca(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -170,7 +189,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("kernlab")
-  rec <- recipe(~ mpg, mtcars) %>%
+  rec <- recipe(~mpg, mtcars) %>%
     step_kpca(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -179,9 +198,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = mtcars),
-    NA
+  expect_no_error(
+    bake(rec, new_data = mtcars)
   )
 })
 
@@ -193,4 +211,21 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  skip_if_not_installed("kernlab")
+
+  expect_snapshot(
+    recipe(~., data = tr_dat) %>%
+      step_kpca(all_numeric_predictors(), num_comp = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = tr_dat) %>%
+      step_kpca(all_numeric_predictors(), prefix = 1) %>%
+      prep(),
+    error = TRUE
+  )
 })

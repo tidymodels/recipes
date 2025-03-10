@@ -6,24 +6,24 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-    step_rename_at(contains("Length"), fn = ~ tolower(.))
+      step_rename_at(contains("Length"), fn = ~tolower(.))
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-    as_tibble() %>%
-    slice(1:75) %>%
-    rename_at(vars(contains("Length")), ~ tolower(.))
+      as_tibble() %>%
+      slice(1:75) %>%
+      rename_at(vars(contains("Length")), ~tolower(.))
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-    as_tibble() %>%
-    slice(76:150) %>%
-    rename_at(vars(contains("Length")), ~ tolower(.))
+      as_tibble() %>%
+      slice(76:150) %>%
+      rename_at(vars(contains("Length")), ~tolower(.))
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -31,21 +31,39 @@ test_that("basic usage", {
 test_that("mulitple functions", {
   rec <-
     iris_rec %>%
-    step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
+      step_rename_at(contains("Length"), fn = list(a = log, b = sqrt))
 
-  expect_snapshot(error = TRUE,
-                  prep(rec, training = iris %>% slice(1:75))
-  )
+  expect_snapshot(error = TRUE, prep(rec, training = iris %>% slice(1:75)))
 })
 
 test_that("no input", {
-  # Wait for call pass through
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     iris_rec %>%
       step_rename_at() %>%
       prep(training = iris) %>%
       bake(new_data = NULL, composition = "data.frame")
   )
+  expect_snapshot(
+    error = TRUE,
+    iris_rec %>%
+      step_rename_at(fn = ":=O") %>%
+      prep(training = iris) %>%
+      bake(new_data = NULL, composition = "data.frame")
+  )
+})
+
+test_that("doesn't destroy sparsity", {
+  mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
+  mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
+
+  rec <- recipe(~., mtcars) %>%
+    step_rename_at(starts_with("v"), fn = ~toupper(.)) %>%
+    prep()
+
+  expect_true(.recipes_preserve_sparsity(rec$steps[[1]]))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$VS))
+  expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$am))
 })
 
 # Infrastructure ---------------------------------------------------------------

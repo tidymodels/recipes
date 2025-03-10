@@ -5,7 +5,7 @@
     Condition
       Error in `step_rm()`:
       Caused by error in `prep()`:
-      ! Can't rename variables in this context.
+      ! The following argument was specified but does not exist: `sepal_length`.
 
 # empty printing
 

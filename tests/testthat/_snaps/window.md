@@ -1,18 +1,29 @@
 # error checks
 
     Code
-      rec %>% step_window(y1, size = 6)
+      rec %>% step_window(y1, size = 6) %>% prep()
     Condition
       Error in `step_window()`:
+      Caused by error in `prep()`:
       ! `size` should be odd, not 6.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = NA)
+      rec %>% step_window(y1, size = NA) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` must be a number, not `NA`.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number, not `NA`.
+
+---
+
+    Code
+      rec %>% step_window(y1, size = NULL) %>% prep()
+    Condition
+      Error in `step_window()`:
+      Caused by error in `prep()`:
+      ! `size` must be a whole number, not `NULL`.
 
 ---
 
@@ -20,39 +31,39 @@
       rec %>% step_window(y1, statistic = "average")
     Condition
       Error in `step_window()`:
-      ! `statistic` should be one of: "mean", "median", "sd", "var", "sum", "prod", "min", or "max".
+      ! `statistic` must be one of "mean", "median", "sd", "var", "sum", "prod", "min", or "max", not "average".
 
 ---
 
     Code
-      rec %>% step_window(y1, size = 1)
+      rec %>% step_window(y1, size = 1) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` should be at least 3, not 1.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number larger than or equal to 3, not the number 1.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = 2)
+      rec %>% step_window(y1, size = 2) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` should be odd, not 2.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number larger than or equal to 3, not the number 2.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = -1)
+      rec %>% step_window(y1, size = -1) %>% prep()
     Condition
       Error in `step_window()`:
-      ! `size` must be a number larger than or equal to 0, not the number -1.
+      Caused by error in `prep()`:
+      ! `size` must be a whole number larger than or equal to 3, not the number -1.
 
 ---
 
     Code
-      rec %>% step_window(y1, size = pi)
-    Condition
-      Warning:
-      `size` was not an integer (3.14159265358979) and was converted to 3.
+      rec %>% step_window(y1, size = 3 + .Machine$double.eps) %>% prep()
     Message
       
       -- Recipe ----------------------------------------------------------------------
@@ -61,8 +72,20 @@
       Number of variables by role
       predictor: 6
       
+      -- Training information 
+      Training data contained 81 data points and no incomplete rows.
+      
       -- Operations 
-      * Moving 3-point mean on: y1
+      * Moving 3-point mean on: y1 | Trained
+
+---
+
+    Code
+      rec %>% step_window(y1, size = 3 + 2 * .Machine$double.eps) %>% prep()
+    Condition
+      Error in `step_window()`:
+      Caused by error in `prep()`:
+      ! `size` must be a whole number, not the number 3.
 
 ---
 
@@ -77,9 +100,10 @@
 ---
 
     Code
-      prep(rec %>% step_window(y1, size = 1000L), training = sim_dat)
+      prep(rec %>% step_window(y1, size = 1000L), training = sim_dat) %>% prep()
     Condition
       Error in `step_window()`:
+      Caused by error in `prep()`:
       ! `size` should be odd, not 1000.
 
 ---
@@ -100,6 +124,23 @@
       Caused by error in `bake()`:
       ! Name collision occurred. The following variable names already exist:
       * `new_value`
+
+# error on too large window size
+
+    Code
+      recipe(~., data = mtcars) %>% step_window(mpg, size = 999) %>% prep()
+    Condition
+      Error in `step_window()`:
+      Caused by error in `roller()`:
+      ! The window is too large.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_trained, new_data = sim_dat[, -1])
+    Condition
+      Error in `step_window()`:
+      ! The following required column is missing from `new_data`: x1.
 
 # empty printing
 

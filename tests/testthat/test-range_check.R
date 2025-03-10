@@ -3,31 +3,25 @@ library(testthat)
 x <- -10:110
 
 test_that("core function - correct input", {
-  expect_error(range_check_func(x, -10, 110), NA)
+  expect_no_error(range_check_func(x, -10, 110))
   expect_snapshot(error = TRUE, range_check_func(as.character(x), -10, 110))
   expect_snapshot(error = TRUE, range_check_func(x, -10, 110, "a"))
-  expect_error(range_check_func(x, -10, 110, .05), NA)
-  expect_error(range_check_func(x, -10, 110, c(.05, .08)), NA)
-  expect_snapshot(error = TRUE,
-    range_check_func(x, -10, 110, c(.05, .08, .05))
-  )
+  expect_no_error(range_check_func(x, -10, 110, .05))
+  expect_no_error(range_check_func(x, -10, 110, c(.05, .08)))
+  expect_snapshot(error = TRUE, range_check_func(x, -10, 110, c(.05, .08, .05)))
 })
 
 test_that("core function - workings", {
-  expect_error(range_check_func(x, -5, 110), NA)
-  expect_snapshot(error = TRUE,
-    range_check_func(x, 0, 100)
-  )
-  expect_snapshot(error = TRUE,
-    range_check_func(x, 0, 110)
-  )
-  expect_snapshot(error = TRUE,
-    range_check_func(x, -5, 100)
-  )
-  expect_snapshot(error = TRUE,
+  expect_no_error(range_check_func(x, -5, 110))
+  expect_snapshot(error = TRUE, range_check_func(x, 0, 100))
+  expect_snapshot(error = TRUE, range_check_func(x, 0, 110))
+  expect_snapshot(error = TRUE, range_check_func(x, -5, 100))
+  expect_snapshot(
+    error = TRUE,
     range_check_func(x, 0, 100, slack_prop = c(0.05, 0.1))
   )
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     range_check_func(x, 0, 100, slack_prop = c(0.1, 0.05))
   )
   expect_snapshot(
@@ -41,8 +35,8 @@ test_that("in recipe", {
   rec1 <- recipe(train) %>%
     check_range(x, y, slack_prop = 0.2) %>%
     prep()
-  expect_error(bake(rec1, test), NA)
-  expect_warning(bake(rec1, test), NA)
+  expect_no_warning(bake(rec1, test))
+  expect_no_error(bake(rec1, test))
 
   rec2 <- recipe(train) %>%
     check_range(x, y) %>%
@@ -70,8 +64,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = mtcars)
 
-  expect_error(bake(rec_trained, new_data = mtcars[, -3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = mtcars[, -3]))
 })
 
 test_that("empty printing", {

@@ -79,19 +79,20 @@
 #' @template case-weights-not-supported
 #' @seealso [splines2::mSpline()]
 step_spline_nonnegative <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           deg_free = 10,
-           degree = 3,
-           complete_set = FALSE,
-           options = NULL,
-           keep_original_cols = FALSE,
-           results = NULL,
-           skip = FALSE,
-           id = rand_id("spline_nonnegative")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    deg_free = 10,
+    degree = 3,
+    complete_set = FALSE,
+    options = NULL,
+    keep_original_cols = FALSE,
+    results = NULL,
+    skip = FALSE,
+    id = rand_id("spline_nonnegative")
+  ) {
     recipes_pkg_check(required_pkgs.step_spline_nonnegative())
 
     add_step(
@@ -113,8 +114,20 @@ step_spline_nonnegative <-
   }
 
 step_spline_nonnegative_new <-
-  function(terms, trained, role, deg_free, degree, complete_set, options,
-           keep_original_cols, results, na_rm, skip, id) {
+  function(
+    terms,
+    trained,
+    role,
+    deg_free,
+    degree,
+    complete_set,
+    options,
+    keep_original_cols,
+    results,
+    na_rm,
+    skip,
+    id
+  ) {
     step(
       subclass = "spline_nonnegative",
       terms = terms,
@@ -136,21 +149,24 @@ step_spline_nonnegative_new <-
 prep.step_spline_nonnegative <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_bool(x$complete_set, arg = "complete_set")
+  check_number_whole(x$degree, arg = "degree", min = 0)
+  check_number_whole(x$deg_free, arg = "deg_free", min = 0)
 
-  res <-
-    purrr::map2(
-      training[, col_names],
-      col_names,
-      ~ spline2_create(
-        .x,
-        nm = .y,
-        .fn = "mSpline",
-        df = x$deg_free,
-        complete_set = x$complete_set,
-        degree = x$degree,
-        fn_opts = x$options
-      )
+  res <- list()
+
+  for (col_name in col_names) {
+    res[[col_name]] <- spline2_create(
+      training[[col_name]],
+      nm = col_name,
+      .fn = "mSpline",
+      df = x$deg_free,
+      complete_set = x$complete_set,
+      degree = x$degree,
+      fn_opts = x$options
     )
+  }
+
   # check for errors
   bas_res <- purrr::map_lgl(res, is.null)
   res <- res[!bas_res]
@@ -193,7 +209,7 @@ bake.step_spline_nonnegative <- function(object, new_data, ...) {
   new_cols <- purrr::list_cbind(unname(new_cols))
   new_cols <- check_name(new_cols, new_data, object, names(new_cols))
 
-  new_data <- vec_cbind(new_data, new_cols)
+  new_data <- vec_cbind(new_data, new_cols, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
 
   new_data

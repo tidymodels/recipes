@@ -45,13 +45,15 @@
 #' tidy(factor_trans, number = 1)
 #' tidy(factor_obj, number = 1)
 step_unorder <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("unorder")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("unorder")
+  ) {
     add_step(
       recipe,
       step_unorder_new(
@@ -115,7 +117,6 @@ print.step_unorder <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

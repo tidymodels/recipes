@@ -13,10 +13,12 @@ discretize <- function(x, ...) {
 #' @export
 #' @rdname discretize
 discretize.default <- function(x, ...) {
-  cli::cli_abort(c(
-    x = "Only numeric {.arg x} is accepted.",
-    i = "The {.arg x} was passed {.obj_type_friendly {x}}."
-  ))
+  cli::cli_abort(
+    c(
+      x = "Only numeric {.arg x} is accepted.",
+      i = "The {.arg x} was passed {.obj_type_friendly {x}}."
+    )
+  )
 }
 
 #' @rdname discretize
@@ -80,22 +82,19 @@ discretize.default <- function(x, ...) {
 #' carbon_no_infs <- discretize(biomass_tr$carbon, infs = FALSE)
 #' predict(carbon_no_infs, c(50, 100))
 discretize.numeric <-
-  function(x,
-           cuts = 4,
-           labels = NULL,
-           prefix = "bin",
-           keep_na = TRUE,
-           infs = TRUE,
-           min_unique = 10,
-           ...) {
+  function(
+    x,
+    cuts = 4,
+    labels = NULL,
+    prefix = "bin",
+    keep_na = TRUE,
+    infs = TRUE,
+    min_unique = 10,
+    ...
+  ) {
     unique_vals <- length(unique(x))
     missing_lab <- "_missing"
-
-    if (cuts < 2) {
-      cli::cli_abort(
-        "There should be at least 2 {.arg cuts} but {.val {cuts}} was supplied."
-      )
-    }
+    check_number_whole(cuts, min = 2)
 
     dots <- list(...)
     if (keep_na) {
@@ -115,8 +114,8 @@ discretize.numeric <-
       breaks <- unique(breaks)
       if (num_breaks > length(breaks)) {
         cli::cli_warn(
-          "Not enough data for {cuts} breaks. \\
-          Only {length(breaks)} breaks were used."
+          "Not enough data for {cuts} breaks. Only {length(breaks)} breaks
+           were used."
         )
       }
       if (infs) {
@@ -129,8 +128,8 @@ discretize.numeric <-
         prefix <- prefix[1]
         if (make.names(prefix) != prefix && !is.null(prefix)) {
           cli::cli_warn(
-            "The prefix {.val {prefix}} is not a valid R name. \\
-            It has been changed to {.val {make.names(prefix)}}."
+            "The prefix {.val {prefix}} is not a valid R name. It has been
+            changed to {.val {make.names(prefix)}}."
           )
           prefix <- make.names(prefix)
         }
@@ -150,8 +149,8 @@ discretize.numeric <-
     } else {
       out <- list(bins = 0)
       cli::cli_warn(
-        "Data not binned; too few unique values per bin. \\
-        Adjust {.arg min_unique} as needed."
+        "Data not binned; too few unique values per bin. Adjust
+         {.arg min_unique} as needed."
       )
     }
     class(out) <- "discretize"
@@ -163,8 +162,10 @@ discretize.numeric <-
 #' @param new_data A new numeric object to be binned.
 #' @export
 predict.discretize <- function(object, new_data, ...) {
-  if (is.matrix(new_data) |
-    is.data.frame(new_data)) {
+  if (
+    is.matrix(new_data) |
+      is.data.frame(new_data)
+  ) {
     new_data <- new_data[, 1]
   }
   object$labels <- if (is.null(object$prefix)) {
@@ -179,16 +180,12 @@ predict.discretize <- function(object, new_data, ...) {
       object$labels
     }
     out <-
-      cut(new_data,
-        object$breaks,
-        labels = labs,
-        include.lowest = TRUE
-      )
+      cut(new_data, object$breaks, labels = labs, include.lowest = TRUE)
 
     if (object$keep_na) {
       out_levels <- levels(out)
       out <- as.character(out)
-      if (any(is.na(new_data))) {
+      if (anyNA(new_data)) {
         missing_label <- object$labels[1] %||% "[missing]"
 
         out[is.na(new_data)] <- missing_label
@@ -291,18 +288,22 @@ print.discretize <-
 #' table(binned_te$carbon)
 #'
 #' tidy(rec, 1)
-step_discretize <- function(recipe,
-                            ...,
-                            role = NA,
-                            trained = FALSE,
-                            num_breaks = 4,
-                            min_unique = 10,
-                            objects = NULL,
-                            options = list(prefix = "bin"),
-                            skip = FALSE,
-                            id = rand_id("discretize")) {
-  if (any(names(options) %in% c("cuts", "min_unique"))) {
+step_discretize <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  num_breaks = 4,
+  min_unique = 10,
+  objects = NULL,
+  options = list(prefix = "bin"),
+  skip = FALSE,
+  id = rand_id("discretize")
+) {
+  if (any(names(options) == "cuts")) {
     num_breaks <- options$cuts
+  }
+  if (any(names(options) == "min_unique")) {
     min_unique <- options$min_unique
   }
 
@@ -323,7 +324,17 @@ step_discretize <- function(recipe,
 }
 
 step_discretize_new <-
-  function(terms, role, trained, objects, num_breaks, min_unique, options, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    objects,
+    num_breaks,
+    min_unique,
+    options,
+    skip,
+    id
+  ) {
     step(
       subclass = "discretize",
       terms = terms,
@@ -348,8 +359,12 @@ bin_wrapper <- function(x, args) {
 prep.step_discretize <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$num_breaks, min = 1, arg = "num_breaks")
+  check_number_whole(x$min_unique, min = 1, arg = "min_unique")
 
-  if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
+  if (
+    length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))
+  ) {
     cli::cli_warn(
       "Note that the options {.arg prefix} and {.arg labels} will be applied \\
       to all variables."

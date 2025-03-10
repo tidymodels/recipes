@@ -156,6 +156,10 @@ reference:
     - prepper
     - recipes_eval_select
     - recipes_extension_check
+    - recipes_ptype
+    - recipes_ptype_validate
+    - recipes-role-indicator
+    - sparse_data
     - update.step
   - title: Tidy Methods
     contents:

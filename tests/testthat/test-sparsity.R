@@ -26,17 +26,9 @@ rec <- recipe(~., data = sacr_tr) %>%
 test_that("correct types", {
   bake_default <- bake(rec, new_data = sacr_te, all_numeric())
   bake_sparse <-
-    bake(rec,
-      new_data = sacr_te,
-      all_numeric(),
-      composition = "dgCMatrix"
-    )
+    bake(rec, new_data = sacr_te, all_numeric(), composition = "dgCMatrix")
   bake_sparse_1d <-
-    bake(rec,
-      new_data = sacr_te,
-      sqft,
-      composition = "dgCMatrix"
-    )
+    bake(rec, new_data = sacr_te, sqft, composition = "dgCMatrix")
   juice_default <- juice(rec, all_numeric())
   juice_sparse <-
     juice(rec, all_numeric(), composition = "dgCMatrix")
@@ -63,15 +55,15 @@ test_that("correct types", {
 })
 
 test_that("bad args", {
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     bake(rec, new_data = sacr_te, composition = "dgCMatrix")
   )
-  expect_snapshot(error = TRUE,
-    juice(rec, composition = "dgCMatrix")
-  )
+  expect_snapshot(error = TRUE, juice(rec, composition = "dgCMatrix"))
 
   data("ames", package = "modeldata")
-  expect_snapshot(error = TRUE,
+  expect_snapshot(
+    error = TRUE,
     recipe(~., data = ames) %>%
       prep() %>%
       bake(new_data = NULL, composition = "dgCMatrix")

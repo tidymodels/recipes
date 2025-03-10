@@ -38,6 +38,8 @@
 #' cat(result)
 #' ```
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-unsupervised
 #'
 #' @examplesIf rlang::is_installed("modeldata")
@@ -60,7 +62,7 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te)
 #'
 #' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
@@ -68,14 +70,16 @@
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 step_impute_mean <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           trim = 0,
-           skip = FALSE,
-           id = rand_id("impute_mean")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    means = NULL,
+    trim = 0,
+    skip = FALSE,
+    id = rand_id("impute_mean")
+  ) {
     add_step(
       recipe,
       step_impute_mean_new(
@@ -113,16 +117,9 @@ trim <- function(x, trim) {
   # Adapted from mean.default
   x <- sort(x, na.last = TRUE)
   na_ind <- is.na(x)
-  if (!is.numeric(trim) || length(trim) != 1L) {
-    cli::cli_abort("{.arg trim} must be numeric of length one.")
-  }
   n <- length(x[!na_ind])
   if (trim > 0 && n) {
-    if (is.complex(x)) {
-      cli::cli_abort("Trimmed means are not defined for complex data.")
-    }
-    if (trim >= 0.5)
-      return(stats::median(x[!na_ind], na.rm = FALSE))
+    if (trim >= 0.5) return(stats::median(x[!na_ind], na.rm = FALSE))
     lo <- floor(n * trim) + 1
     hi <- n + 1 - lo
     x[seq(1, lo - 1)] <- NA
@@ -135,6 +132,7 @@ trim <- function(x, trim) {
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$trim, arg = "trim", min = 0, max = 1 / 2)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -167,10 +165,17 @@ bake.step_impute_mean <- function(object, new_data, ...) {
 
   for (col_name in col_names) {
     mean <- object$means[[col_name]]
-    if (any(is.na(new_data[[col_name]]))) {
-      new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
+        new_data[[col_name]],
+        mean
+      )
+    } else {
+      if (anyNA(new_data[[col_name]])) {
+        new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
+      }
+      new_data[is.na(new_data[[col_name]]), col_name] <- mean
     }
-    new_data[is.na(new_data[[col_name]]), col_name] <- mean
   }
 
   new_data
@@ -180,8 +185,14 @@ bake.step_impute_mean <- function(object, new_data, ...) {
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
     title <- "Mean imputation for "
-    print_step(names(x$means), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$means),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
@@ -212,4 +223,9 @@ tunable.step_impute_mean <- function(x, ...) {
     component = "step_impute_mean",
     component_id = x$id
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_impute_mean <- function(x, ...) {
+  TRUE
 }

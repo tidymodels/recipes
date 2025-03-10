@@ -23,7 +23,6 @@ test_that("untrained", {
   expect_equal(tidy(Sacramento_rec), exp_res_1)
 })
 
-
 test_that("trained", {
   exp_res_2 <- tibble(
     number = 1:4,
@@ -46,7 +45,10 @@ test_that("select step", {
     id = Sacramento_rec$steps[[2]][["id"]]
   )
   expect_equal(tidy(Sacramento_rec, number = 2), exp_res_3)
-  expect_equal(tidy(Sacramento_rec, id = Sacramento_rec$steps[[2]][["id"]]), exp_res_3)
+  expect_equal(
+    tidy(Sacramento_rec, id = Sacramento_rec$steps[[2]][["id"]]),
+    exp_res_3
+  )
 })
 
 test_that("empty recipe", {
@@ -62,7 +64,6 @@ test_that("empty recipe", {
     )
   )
 })
-
 
 test_that("bad args", {
   trained <- prep(Sacramento_rec, training = Sacramento)

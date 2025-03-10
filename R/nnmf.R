@@ -1,3 +1,7 @@
+# step is tested on extratests, and is getting deprecated
+
+# nocov start
+
 #' Non-negative matrix factorization signal extraction
 #'
 #' @description
@@ -72,20 +76,22 @@
 #' # bake(rec, new_data = NULL) %>%
 #' #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
 step_nnmf <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 2,
-           num_run = 30,
-           options = list(),
-           res = NULL,
-           columns = NULL,
-           prefix = "NNMF",
-           seed = sample.int(10^5, 1),
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("nnmf")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 2,
+    num_run = 30,
+    options = list(),
+    res = NULL,
+    columns = NULL,
+    prefix = "NNMF",
+    seed = sample.int(10^5, 1),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("nnmf")
+  ) {
     recipes_pkg_check(required_pkgs.step_nnmf())
     lifecycle::deprecate_warn("0.2.0", "step_nnmf()", "step_nnmf_sparse()")
     add_step(
@@ -109,8 +115,21 @@ step_nnmf <-
   }
 
 step_nnmf_new <-
-  function(terms, role, trained, num_comp, num_run, options, res, columns,
-           prefix, seed, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    num_run,
+    options,
+    res,
+    columns,
+    prefix,
+    seed,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "nnmf",
       terms = terms,
@@ -154,10 +173,12 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
       silent = TRUE
     )
     if (inherits(nnm, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(nnm)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(nnm)
+        )
+      )
     }
   } else {
     nnm <- NULL
@@ -196,7 +217,7 @@ bake.step_nnmf <- function(object, new_data, ...) {
   colnames(comps) <- names0(ncol(comps), object$prefix)
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
-  new_data <- vec_cbind(new_data, comps)
+  new_data <- vec_cbind(new_data, comps, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, nnmf_vars)
   new_data
 }
@@ -208,7 +229,6 @@ print.step_nnmf <- function(x, width = max(20, options()$width - 29), ...) {
   invisible(x)
 }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_nnmf <- function(x, ...) {
@@ -218,14 +238,20 @@ tidy.step_nnmf <- function(x, ...) {
       var_nms <- rownames(res)
       res <- tibble::as_tibble(res)
       res$terms <- var_nms
-      res <- tidyr::pivot_longer(res,
+      res <- tidyr::pivot_longer(
+        res,
         cols = c(-terms),
-        names_to = "component", values_to = "value"
+        names_to = "component",
+        values_to = "value"
       )
       res <- res[, c("terms", "value", "component")]
       res <- res[order(res$component, res$terms), ]
     } else {
-      res <- tibble(terms = unname(x$columns), value = na_dbl, component = na_dbl)
+      res <- tibble(
+        terms = unname(x$columns),
+        value = na_dbl,
+        component = na_dbl
+      )
     }
   } else {
     term_names <- sel2char(x$terms)
@@ -256,3 +282,5 @@ tunable.step_nnmf <- function(x, ...) {
 required_pkgs.step_nnmf <- function(x, ...) {
   c("dimRed", "NMF")
 }
+
+# nocov end

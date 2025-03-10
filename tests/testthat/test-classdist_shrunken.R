@@ -1,13 +1,7 @@
 test_that("shrunken centroids", {
-  library(dplyr)
-  library(purrr)
-  library(hardhat)
-
-  # ----------------------------------------------------------------------------
-
   set.seed(1)
   nsc_test <-
-    tibble(
+    dplyr::tibble(
       x = rnorm(300),
       y = rnorm(300),
       class = rep(letters[1:3], each = 100)
@@ -20,12 +14,12 @@ test_that("shrunken centroids", {
 
   nsc_rec_zero <-
     recipe(class ~ x + y, data = nsc_test) %>%
-    step_classdist_shrunken(
-      all_numeric_predictors(),
-      class = "class",
-      threshold = 0
-    ) %>%
-    prep()
+      step_classdist_shrunken(
+        all_numeric_predictors(),
+        class = "class",
+        threshold = 0
+      ) %>%
+      prep()
 
   exp_res <-
     dplyr::tibble(
@@ -37,7 +31,7 @@ test_that("shrunken centroids", {
       std_dev = numeric(0)
     )
   cent_zero <- nsc_rec_zero$steps[[1]]$objects
-  expect_equal(cent_zero[0,], exp_res)
+  expect_equal(cent_zero[0, ], exp_res)
   expect_equal(nrow(cent_zero), 6)
   expect_true(!any(cent_zero$shrunken == 0))
 
@@ -50,17 +44,17 @@ test_that("shrunken centroids", {
 
   nsc_rec_one <-
     recipe(class ~ x + y, data = nsc_test) %>%
-    step_classdist_shrunken(
-      all_numeric_predictors(),
-      class = "class",
-      threshold = 1,
-      log = FALSE,
-      prefix = "potato_"
-    ) %>%
-    prep()
+      step_classdist_shrunken(
+        all_numeric_predictors(),
+        class = "class",
+        threshold = 1,
+        log = FALSE,
+        prefix = "potato_"
+      ) %>%
+      prep()
 
   cent_one <- nsc_rec_one$steps[[1]]$objects
-  expect_equal(cent_one[0,], exp_res)
+  expect_equal(cent_one[0, ], exp_res)
   expect_equal(nrow(cent_one), 6)
   expect_true(all(cent_one$shrunken == 0))
 
@@ -73,12 +67,12 @@ test_that("shrunken centroids", {
 
   nsc_rec_half <-
     recipe(class ~ x + y, data = nsc_test) %>%
-    step_classdist_shrunken(
-      all_numeric_predictors(),
-      class = "class",
-      threshold = 1 / 2,
-      keep_original_cols = FALSE
-    )
+      step_classdist_shrunken(
+        all_numeric_predictors(),
+        class = "class",
+        threshold = 1 / 2,
+        keep_original_cols = FALSE
+      )
   nsc_rec_half_prep <- prep(nsc_rec_half)
 
   expect_snapshot(print(nsc_rec_half))
@@ -94,7 +88,6 @@ test_that("shrunken centroids", {
     c("class", "classdist_a", "classdist_b", "classdist_c")
   )
 
-
   # ----------------------------------------------------------------------------
 
   expect_snapshot(
@@ -103,7 +96,8 @@ test_that("shrunken centroids", {
         all_numeric_predictors(),
         class = "class",
         threshold = -1
-      ) %>% prep(),
+      ) %>%
+      prep(),
     error = TRUE
   )
   expect_snapshot(
@@ -112,7 +106,28 @@ test_that("shrunken centroids", {
         all_numeric_predictors(),
         class = "class",
         sd_offset = -1
-      ) %>% prep(),
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(class ~ x + y, data = nsc_test) %>%
+      step_classdist_shrunken(
+        all_numeric_predictors(),
+        class = "class",
+        log = 2
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(class ~ x + y, data = nsc_test) %>%
+      step_classdist_shrunken(
+        all_numeric_predictors(),
+        class = "class",
+        prefix = 2
+      ) %>%
+      prep(),
     error = TRUE
   )
 
@@ -121,17 +136,21 @@ test_that("shrunken centroids", {
   nsc_test$weights <- importance_weights(1:nrow(nsc_test))
   nsc_rec_weights <-
     recipe(class ~ ., data = nsc_test) %>%
-    step_classdist_shrunken(
-      all_numeric_predictors(),
-      class = "class",
-      threshold = 1 / 2,
-      keep_original_cols = FALSE
-    )
+      step_classdist_shrunken(
+        all_numeric_predictors(),
+        class = "class",
+        threshold = 1 / 2,
+        keep_original_cols = FALSE
+      )
   nsc_rec_weights_prep <- prep(nsc_rec_weights)
 
   tidy_weights_prep <- tidy(nsc_rec_weights_prep, 1)
-  global_unwt <- tidy_prep %>% dplyr::filter(type == "global") %>% pluck("value")
-  global_wt <- tidy_weights_prep %>% dplyr::filter(type == "global") %>% pluck("value")
+  global_unwt <- tidy_prep %>%
+    dplyr::filter(type == "global") %>%
+    purrr::pluck("value")
+  global_wt <- tidy_weights_prep %>%
+    dplyr::filter(type == "global") %>%
+    purrr::pluck("value")
 
   expect_true(all(global_unwt != global_wt))
   expect_equal(unique(tidy_weights_prep$terms), c("x", "y"))
@@ -147,7 +166,7 @@ test_that("shrunken centroids", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_classdist_shrunken(all_predictors())
+      step_classdist_shrunken(all_predictors())
   rec_param <- tunable.step_classdist_shrunken(rec$steps[[1]])
   expect_equal(rec_param$name, "threshold")
   expect_true(all(rec_param$source == "recipe"))
@@ -163,14 +182,13 @@ test_that("tunable", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist_shrunken(Petal.Length, class = "Species", log = FALSE)  %>%
+    step_classdist_shrunken(Petal.Length, class = "Species", log = FALSE) %>%
     update_role(Petal.Length, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
   trained <- prep(rec, training = iris, verbose = FALSE)
 
-  expect_error(bake(trained, new_data = iris[,c(-3)]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(trained, new_data = iris[, c(-3)]))
 })
 
 test_that("empty printing", {
@@ -218,12 +236,19 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("keep_original_cols works", {
-  new_names <- c("Species", "classdist_setosa", "classdist_versicolor",
-                 "classdist_virginica")
+  new_names <- c(
+    "Species",
+    "classdist_setosa",
+    "classdist_versicolor",
+    "classdist_virginica"
+  )
 
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
-    step_classdist_shrunken(all_predictors(), class = "Species",
-                            keep_original_cols = FALSE)
+    step_classdist_shrunken(
+      all_predictors(),
+      class = "Species",
+      keep_original_cols = FALSE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -234,8 +259,11 @@ test_that("keep_original_cols works", {
   )
 
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
-    step_classdist_shrunken(all_predictors(), class = "Species",
-                            keep_original_cols = TRUE)
+    step_classdist_shrunken(
+      all_predictors(),
+      class = "Species",
+      keep_original_cols = TRUE
+    )
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -264,7 +292,8 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
   skip_if_not_installed("dials")
   rec <- recipe(~., data = mtcars) %>%
     step_classdist_shrunken(
-      all_predictors(), threshold = hardhat::tune()
+      all_predictors(),
+      threshold = hardhat::tune()
     )
 
   params <- extract_parameter_set_dials(rec)

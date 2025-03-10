@@ -19,7 +19,7 @@
 #' @details `step_ns` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a
 #'  nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `df` or `knot` arguments of
+#'  determined by the `df` or `knots` arguments of
 #'  [splines::ns()]. The original variables are removed
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_ns_1` and so on.
@@ -60,16 +60,18 @@
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
 step_ns <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           objects = NULL,
-           deg_free = 2,
-           options = list(),
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("ns")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    objects = NULL,
+    deg_free = 2,
+    options = list(),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("ns")
+  ) {
     add_step(
       recipe,
       step_ns_new(
@@ -87,8 +89,17 @@ step_ns <-
   }
 
 step_ns_new <-
-  function(terms, role, trained, deg_free, objects, options, keep_original_cols,
-           skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    deg_free,
+    objects,
+    options,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "ns",
       terms = terms,
@@ -112,17 +123,26 @@ ns_statistics <- function(x, args) {
 
   # This behaves differently from splines::bs() and splines::ns() if num_knots < 0L
   # the original implementations issue a warning.
-  if (!is.null(args$df) && is.null(args$knots) && args$df - degree - intercept >= 1L) {
+  if (
+    !is.null(args$df) &&
+      is.null(args$knots) &&
+      args$df - degree - intercept >= 1L
+  ) {
     num_knots <- args$df - degree - intercept
     ok <- !is.na(x) & x >= boundary[1L] & x <= boundary[2L]
     knots <- unname(quantile(x[ok], seq_len(num_knots) / (num_knots + 1L)))
   } else {
-    knots <- numeric()
+    if (is.null(args$knots)) {
+      knots <- numeric()
+    } else {
+      knots <- args$knots
+    }
   }
 
   # Only construct the data necessary for splines_predict
   out <- matrix(NA, ncol = degree + length(knots) + intercept, nrow = 1L)
   class(out) <- c("ns", "basis", "matrix")
+  attr(out, "degree") <- 3L
   attr(out, "knots") <- knots
   attr(out, "Boundary.knots") <- boundary
   attr(out, "intercept") <- intercept
@@ -174,7 +194,7 @@ bake.step_ns <- function(object, new_data, ...) {
     colnames(new_values) <- new_names
 
     new_values <- check_name(new_values, new_data, object, new_names)
-    new_data <- vctrs::vec_cbind(new_data, new_values)
+    new_data <- vctrs::vec_cbind(new_data, new_values, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)

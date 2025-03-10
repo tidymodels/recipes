@@ -114,23 +114,21 @@
 #' tidy(pca_trans, number = 2)
 #' tidy(pca_estimates, number = 2)
 #' tidy(pca_estimates, number = 2, type = "variance")
-step_pca <- function(recipe,
-                     ...,
-                     role = "predictor",
-                     trained = FALSE,
-                     num_comp = 5,
-                     threshold = NA,
-                     options = list(),
-                     res = NULL,
-                     columns = NULL,
-                     prefix = "PC",
-                     keep_original_cols = FALSE,
-                     skip = FALSE,
-                     id = rand_id("pca")) {
-  if (!is_tune(threshold)) {
-    check_number_decimal(threshold, min = 0, max = 1, allow_na = TRUE)
-  }
-
+step_pca <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  num_comp = 5,
+  threshold = NA,
+  options = list(),
+  res = NULL,
+  columns = NULL,
+  prefix = "PC",
+  keep_original_cols = FALSE,
+  skip = FALSE,
+  id = rand_id("pca")
+) {
   add_step(
     recipe,
     step_pca_new(
@@ -152,8 +150,21 @@ step_pca <- function(recipe,
 }
 
 step_pca_new <-
-  function(terms, role, trained, num_comp, threshold, options, res, columns,
-           prefix, keep_original_cols, skip, id, case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    threshold,
+    options,
+    res,
+    columns,
+    prefix,
+    keep_original_cols,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "pca",
       terms = terms,
@@ -176,6 +187,15 @@ step_pca_new <-
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(
+    x$threshold,
+    arg = "threshold",
+    min = 0,
+    max = 1,
+    allow_na = TRUE
+  )
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -186,12 +206,14 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   if (x$num_comp > 0 && length(col_names) > 0) {
     if (is.null(wts)) {
       prc_call <-
-        expr(prcomp(
-          retx = FALSE,
-          center = FALSE,
-          scale. = FALSE,
-          tol = NULL
-        ))
+        expr(
+          prcomp(
+            retx = FALSE,
+            center = FALSE,
+            scale. = FALSE,
+            tol = NULL
+          )
+        )
       if (length(x$options) > 0) {
         prc_call <- rlang::call_modify(prc_call, !!!x$options)
       }
@@ -214,7 +236,6 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
       }
       x$num_comp <- num_comp
     }
-
   } else {
     prc_obj <- NULL
   }
@@ -252,7 +273,7 @@ bake.step_pca <- function(object, new_data, ...) {
   comps <- scale(new_data[, pca_vars], object$res$center, object$res$scale) %*%
     object$res$rotation[, seq_len(object$num_comp), drop = FALSE]
   comps <- check_name(comps, new_data, object)
-  new_data <- vec_cbind(new_data, as_tibble(comps))
+  new_data <- vec_cbind(new_data, as_tibble(comps), .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, pca_vars)
   new_data
 }
@@ -275,8 +296,14 @@ print.step_pca <-
     } else {
       title <- "PCA extraction with "
     }
-    print_step(columns, x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      columns,
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
@@ -291,7 +318,8 @@ pca_coefs <- function(x) {
     res <- as_tibble(res)[, c("terms", "value", "component")]
   } else {
     res <- tibble::tibble(
-      terms = unname(x$columns), value = rlang::na_dbl,
+      terms = unname(x$columns),
+      value = rlang::na_dbl,
       component = rlang::na_chr
     )
   }
@@ -335,8 +363,6 @@ pca_variances <- function(x) {
   res
 }
 
-
-
 #' @rdname tidy.recipe
 #' @param type For `step_pca`, either `"coef"` (for the variable loadings per
 #' component) or `"variance"` (how much variance does each component
@@ -351,7 +377,11 @@ tidy.step_pca <- function(x, type = "coef", ...) {
       component = na_chr
     )
   } else {
-    type <- match.arg(type, c("coef", "variance"))
+    type <- rlang::arg_match(
+      type,
+      c("coef", "variance"),
+      error_call = rlang::caller_env()
+    )
     if (type == "coef") {
       res <- pca_coefs(x)
     } else {

@@ -68,11 +68,18 @@
 #' tidy(yj_transform, number = 1)
 #' tidy(yj_estimates, number = 1)
 step_YeoJohnson <-
-  function(recipe, ..., role = NA, trained = FALSE,
-           lambdas = NULL, limits = c(-5, 5), num_unique = 5,
-           na_rm = TRUE,
-           skip = FALSE,
-           id = rand_id("YeoJohnson")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    lambdas = NULL,
+    limits = c(-5, 5),
+    num_unique = 5,
+    na_rm = TRUE,
+    skip = FALSE,
+    id = rand_id("YeoJohnson")
+  ) {
     add_step(
       recipe,
       step_YeoJohnson_new(
@@ -109,6 +116,16 @@ step_YeoJohnson_new <-
 prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$num_unique, args = "num_unique")
+  check_bool(x$na_rm, arg = "na_rm")
+  if (!is.numeric(x$limits) || anyNA(x$limits) || length(x$limits) != 2) {
+    cli::cli_abort(
+      "{.arg limits} should be a numeric vector with two values,
+                    not {.obj_type_friendly {x$limits}}"
+    )
+  }
+
+  x$limits <- sort(x$limits)
 
   values <- vapply(
     training[, col_names],
@@ -158,10 +175,9 @@ print.step_YeoJohnson <-
 ## computes the new data given a lambda
 #' Internal Functions
 #'
-#' These are not to be used directly by the users.
-#' @export
 #' @keywords internal
 #' @rdname recipes-internal
+#' @export
 yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
   if (is.na(lambda)) {
     return(x)
@@ -207,7 +223,6 @@ yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
   x
 }
 
-
 ## Helper for the log-likelihood calc for eq 3.1 of Yeo, I. K.,
 ## & Johnson, R. A. (2000). A new family of power transformations
 ## to improve normality or symmetry. Biometrika. page 957
@@ -226,14 +241,16 @@ yj_obj <- function(lam, dat, ind_neg, const) {
 }
 
 ## estimates the values
-#' @export
 #' @keywords internal
 #' @rdname recipes-internal
-estimate_yj <- function(dat,
-                        limits = c(-5, 5),
-                        num_unique = 5,
-                        na_rm = TRUE,
-                        call = caller_env(2)) {
+#' @export
+estimate_yj <- function(
+  dat,
+  limits = c(-5, 5),
+  num_unique = 5,
+  na_rm = TRUE,
+  call = caller_env(2)
+) {
   na_rows <- which(is.na(dat))
   if (length(na_rows) > 0) {
     if (na_rm) {
@@ -273,7 +290,6 @@ estimate_yj <- function(dat,
   }
   lam
 }
-
 
 #' @rdname tidy.recipe
 #' @export

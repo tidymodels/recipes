@@ -50,7 +50,7 @@
 #'
 #' linear_values <- prep(linear_values, training = ord_data)
 #'
-#' bake(linear_values, new_data = NULL, everything())
+#' bake(linear_values, new_data = NULL)
 #'
 #' custom <- function(x) {
 #'   new_values <- c(1, 3, 7)
@@ -65,18 +65,20 @@
 #'
 #' nonlin_scores <- prep(nonlin_scores, training = ord_data)
 #'
-#' bake(nonlin_scores, new_data = NULL, everything())
+#' bake(nonlin_scores, new_data = NULL)
 #'
 #' tidy(nonlin_scores, number = 2)
 step_ordinalscore <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           convert = as.numeric,
-           skip = FALSE,
-           id = rand_id("ordinalscore")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    convert = as.numeric,
+    skip = FALSE,
+    id = rand_id("ordinalscore")
+  ) {
     add_step(
       recipe,
       step_ordinalscore_new(
@@ -107,19 +109,20 @@ step_ordinalscore_new <-
 
 #' @export
 prep.step_ordinalscore <- function(x, training, info = NULL, ...) {
-    col_names <- recipes_eval_select(x$terms, training, info)
-    check_type(training[, col_names], types = "ordered")
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = "ordered")
+  check_function(x$convert, arg = "convert")
 
-    step_ordinalscore_new(
-      terms = x$terms,
-      role = x$role,
-      trained = TRUE,
-      columns = col_names,
-      convert = x$convert,
-      skip = x$skip,
-      id = x$id
-    )
-  }
+  step_ordinalscore_new(
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    columns = col_names,
+    convert = x$convert,
+    skip = x$skip,
+    id = x$id
+  )
+}
 
 #' @export
 bake.step_ordinalscore <- function(object, new_data, ...) {
@@ -142,7 +145,6 @@ print.step_ordinalscore <-
     print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
-
 
 #' @rdname tidy.recipe
 #' @export

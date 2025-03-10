@@ -53,14 +53,16 @@
 #'
 #' tidy(rec, number = 1)
 step_unknown <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           new_level = "unknown",
-           objects = NULL,
-           skip = FALSE,
-           id = rand_id("unknown")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    new_level = "unknown",
+    objects = NULL,
+    skip = FALSE,
+    id = rand_id("unknown")
+  ) {
     add_step(
       recipe,
       step_unknown_new(
@@ -93,6 +95,7 @@ step_unknown_new <-
 prep.step_unknown <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_string(x$new_level, arg = "new_level", allow_empty = FALSE)
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
@@ -135,17 +138,15 @@ bake.step_unknown <- function(object, new_data, ...) {
       warn_new_levels(
         new_data[[col_name]],
         new_levels,
-        c(
-          "*" = "New levels will be coerced to `NA` by {.fn step_unknown}.",
-          "i" = "Consider using {.help [?step_novel](recipes::step_novel)} \\
-                before {.fn step_unknown}."
-        )
-
+        column = col_name,
+        step = "step_unknown",
+        c("*" = "New levels will be coerced to `NA` by {.fn step_unknown}.")
       )
     }
 
     new_data[[col_name]] <-
-      factor(new_data[[col_name]],
+      factor(
+        new_data[[col_name]],
         levels = new_levels,
         ordered = attributes(object$object[[col_name]])$is_ordered
       )

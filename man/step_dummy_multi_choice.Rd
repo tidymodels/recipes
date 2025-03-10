@@ -15,6 +15,7 @@ step_dummy_multi_choice(
   other = "other",
   naming = dummy_names,
   prefix = NULL,
+  sparse = "auto",
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy_multi_choice")
@@ -57,6 +58,10 @@ columns. See Details below.}
 \item{prefix}{A character string for the prefix of the resulting new
 variables. See notes below.}
 
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Defaults to \code{"auto"}.}
+
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
@@ -79,10 +84,16 @@ will convert multiple nominal data (e.g. characters or factors) into one or
 more numeric binary model terms for the levels of the original data.
 }
 \details{
-The overall proportion (or total counts) of the categories are
-computed. The "other" category is used in place of any categorical levels
-whose individual proportion (or frequency) in the training set is less than
+The overall proportion (or total counts) of the categories are computed. The
+\code{"other"} category is used in place of any categorical levels whose
+individual proportion (or frequency) in the training set is less than
 \code{threshold}.
+
+This step produces a number of columns, based on the number of categories it
+finds. The naming of the columns is determined by the function based on the
+\code{naming} argument. The default is to return \verb{<prefix>_<category name>}. By
+default \code{prefix} is \code{NULL}, which means the name of the first column
+selected will be used in place.
 
 This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
@@ -107,6 +118,20 @@ columns \code{terms}, \code{columns} , and \code{id}:
 \item{columns}{character, names of resulting columns}
 \item{id}{character, id of this step}
 }
+}
+
+\section{Sparse data}{
+
+
+This step produces sparse columns if \code{sparse = "yes"} is being set. The
+default value \code{"auto"} won't trigger production fo sparse columns if a recipe
+is \code{\link[=prep]{prep()}}ed, but allows for a workflow to toggle to \code{"yes"} or \code{"no"}
+depending on whether the model supports \link{sparse_data} and if the model is
+is expected to run faster with the data.
+
+The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+\code{sparse = "yes"} or \code{sparse = "no"}.
 }
 
 \section{Case weights}{
@@ -141,6 +166,7 @@ dummy_multi_choice_rec2 <- recipe(~., data = languages) \%>\%
 
 bake(dummy_multi_choice_rec2, new_data = NULL)
 tidy(dummy_multi_choice_rec2, number = 1)
+
 }
 \seealso{
 Other dummy variable and encoding steps: 

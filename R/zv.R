@@ -26,6 +26,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family variable filter steps
@@ -55,14 +57,16 @@
 #' tidy(zv_filter, number = 1)
 #' tidy(filter_obj, number = 1)
 step_zv <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           group = NULL,
-           removals = NULL,
-           skip = FALSE,
-           id = rand_id("zv")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    group = NULL,
+    removals = NULL,
+    skip = FALSE,
+    id = rand_id("zv")
+  ) {
     add_step(
       recipe,
       step_zv_new(
@@ -93,7 +97,12 @@ step_zv_new <-
 
 one_unique <- function(x) {
   x <- x[!is.na(x)]
-  length(unique(x)) < 2
+  if (sparsevctrs::is_sparse_vector(x)) {
+    res <- length(unique(sparsevctrs::sparse_values(x))) == 0
+  } else {
+    res <- length(unique(x)) < 2
+  }
+  res
 }
 
 group_one_unique <- function(x, f) {
@@ -146,7 +155,11 @@ print.step_zv <-
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
 #' @export
 tidy.step_zv <- tidy_filter
+
+#' @export
+.recipes_preserve_sparsity.step_zv <- function(x, ...) {
+  TRUE
+}

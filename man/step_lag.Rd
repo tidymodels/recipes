@@ -44,7 +44,7 @@ left by lagging (defaults to NA).}
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
-output. Defaults to \code{FALSE}.}
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
 recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
@@ -77,6 +77,13 @@ columns \code{terms} and \code{id}:
 \item{terms}{character, the selectors or variables selected}
 \item{id}{character, id of this step}
 }
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
 }
 
 \section{Case weights}{

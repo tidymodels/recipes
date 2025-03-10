@@ -6,7 +6,8 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param degree,scale_factor,offset Numeric values for the polynomial kernel function.
+#' @param degree,scale_factor,offset Numeric values for the polynomial kernel
+#' function. See the documentation at [kernlab::polydot()].
 #' @param res An S4 [kernlab::kpca()] object is stored
 #'  here once this preprocessing step has be trained by
 #'  [prep()].
@@ -63,20 +64,22 @@
 #' tidy(kpca_trans, number = 3)
 #' tidy(kpca_estimates, number = 3)
 step_kpca_poly <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_comp = 5,
-           res = NULL,
-           columns = NULL,
-           degree = 2,
-           scale_factor = 1,
-           offset = 1,
-           prefix = "kPC",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("kpca_poly")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_comp = 5,
+    res = NULL,
+    columns = NULL,
+    degree = 2,
+    scale_factor = 1,
+    offset = 1,
+    prefix = "kPC",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("kpca_poly")
+  ) {
     recipes_pkg_check(required_pkgs.step_kpca_poly())
 
     add_step(
@@ -100,8 +103,21 @@ step_kpca_poly <-
   }
 
 step_kpca_poly_new <-
-  function(terms, role, trained, num_comp, res, columns, degree, scale_factor, offset,
-           prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_comp,
+    res,
+    columns,
+    degree,
+    scale_factor,
+    offset,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "kpca_poly",
       terms = terms,
@@ -124,6 +140,11 @@ step_kpca_poly_new <-
 prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$degree, arg = "degree", min = 1)
+  check_number_decimal(x$scale_factor, arg = "scale_factor", min = 0)
+  check_number_decimal(x$offset, arg = "offset")
+  check_string(x$prefix, arg = "prefix")
+  check_number_whole(x$num_comp, arg = "num_comp", min = 0)
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-
@@ -141,10 +162,12 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
       )
     kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
     if (inherits(kprc, "try-error")) {
-      cli::cli_abort(c(
-        x = "Failed with error:",
-        i = as.character(kprc)
-      ))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(kprc)
+        )
+      )
     }
   } else {
     kprc <- NULL
@@ -190,18 +213,21 @@ bake.step_kpca_poly <- function(object, new_data, ...) {
   colnames(comps) <- names0(ncol(comps), object$prefix)
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
-  new_data <- vctrs::vec_cbind(new_data, comps)
+  new_data <- vctrs::vec_cbind(new_data, comps, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 
 #' @export
-print.step_kpca_poly <- function(x, width = max(20, options()$width - 40), ...) {
+print.step_kpca_poly <- function(
+  x,
+  width = max(20, options()$width - 40),
+  ...
+) {
   title <- "Polynomial kernel PCA extraction with "
   print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
-
 
 #' @rdname tidy.recipe
 #' @export
@@ -232,7 +258,6 @@ tunable.step_kpca_poly <- function(x, ...) {
     component_id = x$id
   )
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

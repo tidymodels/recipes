@@ -22,7 +22,6 @@ test_that("simple log trans", {
   expect_equal(rec_trans, exp_res)
 })
 
-
 test_that("alt base", {
   rec <- recipe(~., data = ex_dat) %>%
     step_log(x1, x2, x3, x4, base = pi)
@@ -68,8 +67,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
 
-  expect_error(bake(rec_trained, new_data = ex_dat[, 1:3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = ex_dat[, 1:3]))
 })
 
 test_that("empty printing", {
@@ -115,4 +113,25 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_log(x1, base = -1) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_log(x1, offset = "none") %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~., data = ex_dat) %>%
+      step_log(x1, signed = "yes") %>%
+      prep(),
+    error = TRUE
+  )
 })

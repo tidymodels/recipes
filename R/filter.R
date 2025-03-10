@@ -29,6 +29,8 @@
 #'
 #' The expressions in `terms` are text representations and are not parsable.
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
@@ -67,12 +69,15 @@
 #'   step_filter(Sepal.Length > 4.5, Species %in% !!values)
 #'
 #' tidy(qq_rec, number = 1)
-step_filter <- function(recipe, ...,
-                        role = NA,
-                        trained = FALSE,
-                        inputs = NULL,
-                        skip = TRUE,
-                        id = rand_id("filter")) {
+step_filter <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = TRUE,
+  id = rand_id("filter")
+) {
   inputs <- enquos(...)
 
   add_step(
@@ -135,4 +140,9 @@ tidy.step_filter <- function(x, ...) {
     terms = cond_expr,
     id = rep(x$id, length(x$inputs))
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_filter <- function(x, ...) {
+  TRUE
 }

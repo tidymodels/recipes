@@ -4,13 +4,13 @@
       te_1 <- bake(rec_1, sacr_te)
     Condition
       Warning:
-      ! There are new levels in a factor: `WEST_SACRAMENTO`.
+      ! There are new levels in `city`: "WEST_SACRAMENTO".
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_unknown()` to handle unseen values.
       * New levels will be coerced to `NA` by `step_unknown()`.
-      i Consider using ?step_novel (`?recipes::step_novel()`) before `step_unknown()`.
       Warning:
-      ! There are new levels in a factor: `z95691`.
+      ! There are new levels in `zip`: "z95691".
+      i Consider using step_novel() (`?recipes::step_novel()`) before `step_unknown()` to handle unseen values.
       * New levels will be coerced to `NA` by `step_unknown()`.
-      i Consider using ?step_novel (`?recipes::step_novel()`) before `step_unknown()`.
 
 # bad args
 
@@ -31,6 +31,23 @@
       Error in `step_unknown()`:
       Caused by error in `prep()`:
       ! Columns already contain the level "FAIR_OAKS": city.
+
+---
+
+    Code
+      recipe(~., data = sacr_tr) %>% step_unknown(city, new_level = 2) %>% prep()
+    Condition
+      Error in `step_unknown()`:
+      Caused by error in `prep()`:
+      ! `new_level` must be a single string, not the number 2.
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec_1, sacr_te[3:ncol(sacr_te)])
+    Condition
+      Error in `step_unknown()`:
+      ! The following required columns are missing from `new_data`: city and zip.
 
 # empty printing
 
@@ -80,7 +97,7 @@
       predictor: 9
       
       -- Operations 
-      * Unknown factor level assignment for: city and zip
+      * Unknown factor level assignment for: city zip
 
 ---
 
@@ -98,5 +115,5 @@
       Training data contained 800 data points and no incomplete rows.
       
       -- Operations 
-      * Unknown factor level assignment for: city and zip | Trained
+      * Unknown factor level assignment for: city zip | Trained
 

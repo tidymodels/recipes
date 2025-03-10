@@ -1,4 +1,3 @@
-
 #' @importFrom generics tidy
 #' @export
 generics::tidy
@@ -38,3 +37,7 @@ magrittr::`%>%`
 #' @importFrom hardhat extract_fit_time
 #' @export
 hardhat::extract_fit_time
+
+#' @importFrom stats update
+#' @export
+stats::update

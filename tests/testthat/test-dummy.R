@@ -15,7 +15,7 @@ sacr$city[sample(1:nrow(sacr), 20)] <- NA_character_
 sacr_missing <- sacr
 
 sacr$city[is.na(sacr$city)] <- "missing"
-sacr <- sacr[complete.cases(sacr), -3]
+sacr <- sacr[vec_detect_complete(sacr), -3]
 
 sacr_fac <- sacr
 sacr_fac$city <- factor(sacr_fac$city)
@@ -24,7 +24,12 @@ sacr_fac$zip <- factor(sacr_fac$zip)
 test_that("dummy variables with factor inputs", {
   rec <- recipe(sqft ~ zip + city, data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip, id = "")
-  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE,
+    strings_as_factors = FALSE
+  )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
 
   expect_false(any(colnames(dummy_pred) == "city"))
@@ -51,13 +56,15 @@ test_that("dummy variables with factor inputs", {
       terms = "city",
       columns = attributes(dummy_trained$steps[[1]]$levels$city)$values,
       id = ""
-    ) %>% slice(-1)
+    ) %>%
+      slice(-1)
   dum_tibble_prepped_2 <-
     tibble(
       terms = "zip",
       columns = attributes(dummy_trained$steps[[1]]$levels$zip)$values,
       id = ""
-    ) %>% slice(-1)
+    ) %>%
+      slice(-1)
   expect_equal(tidy(dummy, 1), dum_tibble)
   expect_equal(
     tidy(dummy_trained, 1),
@@ -87,7 +94,12 @@ test_that("check_type() is used", {
 test_that("create double dummy variables", {
   rec <- recipe(sqft ~ zip + city, data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip, id = "")
-  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE,
+    strings_as_factors = FALSE
+  )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
   expect_true(all(vapply(dummy_pred, is.double, logical(1))))
 })
@@ -95,7 +107,12 @@ test_that("create double dummy variables", {
 test_that("create all dummy variables", {
   rec <- recipe(sqft ~ zip + city + price, data = sacr_fac)
   dummy <- rec %>% step_dummy(city, zip, one_hot = TRUE, id = "")
-  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE,
+    strings_as_factors = FALSE
+  )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
   dummy_pred <- as.data.frame(dummy_pred)
@@ -139,7 +156,10 @@ test_that("tests for issue #91", {
   factors <- prep(factors, training = sacr)
   factors_data_1 <- bake(factors, new_data = sacr)
   # Remove one category in city
-  factors_data_2 <- bake(factors, new_data = sacr %>% filter(city != "SACRAMENTO"))
+  factors_data_2 <- bake(
+    factors,
+    new_data = sacr %>% filter(city != "SACRAMENTO")
+  )
   expect_equal(names(factors_data_1), names(factors_data_2))
 
   # now with ordered factor
@@ -150,7 +170,10 @@ test_that("tests for issue #91", {
   orderedfac <- prep(orderedfac, training = sacr)
   ordered_data_1 <- bake(orderedfac, new_data = sacr)
   # Remove one category in city
-  ordered_data_2 <- bake(orderedfac, new_data = sacr %>% filter(city != "SACRAMENTO"))
+  ordered_data_2 <- bake(
+    orderedfac,
+    new_data = sacr %>% filter(city != "SACRAMENTO")
+  )
   expect_equal(names(ordered_data_1), names(ordered_data_2))
 })
 
@@ -167,10 +190,16 @@ test_that("tests for NA values in factor", {
   )
 
   expect_true(
-    all(complete.cases(factors_data_0) == complete.cases(sacr_missing[, "city"]))
+    all(
+      vec_detect_complete(factors_data_0) ==
+        vec_detect_complete(sacr_missing[, "city"])
+    )
   )
   expect_true(
-    all(complete.cases(factors_data_1) == complete.cases(sacr_missing[, "city"]))
+    all(
+      vec_detect_complete(factors_data_1) ==
+        vec_detect_complete(sacr_missing[, "city"])
+    )
   )
 })
 
@@ -189,21 +218,43 @@ test_that("tests for NA values in ordered factor", {
   )
 
   expect_true(
-    all(complete.cases(factors_data_0) == complete.cases(sacr_ordered[, "city"]))
+    all(
+      vec_detect_complete(factors_data_0) ==
+        vec_detect_complete(sacr_ordered[, "city"])
+    )
   )
   expect_true(
-    all(complete.cases(factors_data_1) == complete.cases(sacr_ordered[, "city"]))
+    all(
+      vec_detect_complete(factors_data_1) ==
+        vec_detect_complete(sacr_ordered[, "city"])
+    )
   )
 })
-
-
 
 test_that("new levels", {
   df <- data.frame(
     y = c(1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0),
     x1 = c(
-      "A", "B", "B", "B", "B", "A", "A", "A", "B", "A", "A", "B",
-      "A", "C", "C", "B", "A", "B", "C", "A"
+      "A",
+      "B",
+      "B",
+      "B",
+      "B",
+      "A",
+      "A",
+      "A",
+      "B",
+      "A",
+      "A",
+      "B",
+      "A",
+      "C",
+      "C",
+      "B",
+      "A",
+      "B",
+      "C",
+      "A"
     ),
     stringsAsFactors = FALSE
   )
@@ -215,10 +266,20 @@ test_that("new levels", {
   testing$x1 <- as.factor(testing$x1)
 
   expect_snapshot(
-    recipes:::warn_new_levels(testing$x1, levels(training$x1))
+    recipes:::warn_new_levels(
+      testing$x1,
+      levels(training$x1),
+      "column",
+      "step_dummy"
+    )
   )
   expect_silent(
-    recipes:::warn_new_levels(training$x1, levels(training$x1))
+    recipes:::warn_new_levels(
+      training$x1,
+      levels(training$x1),
+      "column",
+      "step_dummy"
+    )
   )
 
   rec <- recipe(y ~ x1, data = training) %>%
@@ -228,6 +289,16 @@ test_that("new levels", {
   )
   expect_snapshot(
     bake(rec, new_data = testing)
+  )
+})
+
+test_that("warns about NA in column (#450)", {
+  data <- data.frame(a = c(LETTERS, NA))
+
+  expect_snapshot(
+    tmp <- recipe(~a, data = data) %>%
+      step_dummy(a) %>%
+      prep()
   )
 })
 
@@ -241,7 +312,10 @@ test_that("tests for issue #301", {
   saveRDS(dummies, file = saved_recipe)
   read_recipe <- readRDS(file = saved_recipe)
   unlink(saved_recipe)
-  expect_equal(bake(dummies, new_data = iris), bake(read_recipe, new_data = iris))
+  expect_equal(
+    bake(dummies, new_data = iris),
+    bake(read_recipe, new_data = iris)
+  )
 
   saved_dummies <- dummies
   saved_recipe <- tempfile()
@@ -249,7 +323,10 @@ test_that("tests for issue #301", {
   rm(saved_dummies)
   load(file = saved_recipe)
   unlink(saved_recipe)
-  expect_equal(bake(dummies, new_data = iris), bake(saved_dummies, new_data = iris))
+  expect_equal(
+    bake(dummies, new_data = iris),
+    bake(saved_dummies, new_data = iris)
+  )
 })
 
 test_that("works with non-standard column names", {
@@ -283,8 +360,9 @@ test_that("naming function", {
 })
 
 test_that("Deprecation warning", {
-  expect_snapshot(error = TRUE,
-    recipe(~ ., data = mtcars) %>%
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = mtcars) %>%
       step_dummy(preserve = TRUE)
   )
 })
@@ -307,7 +385,11 @@ test_that("no columns selected", {
 
   expect_snapshot(print(rec))
 
-  exp_tidy <- tibble(terms = character(), columns = character(), id = character())
+  exp_tidy <- tibble(
+    terms = character(),
+    columns = character(),
+    id = character()
+  )
   expect_equal(exp_tidy, tidy(rec, number = 2))
 })
 
@@ -324,17 +406,116 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("throws a informative error for too many levels (#828)", {
+  skip_on_cran()
+  dat <- data.frame(x = as.character(1:123456))
+
+  rec <- recipe(~., data = dat) %>%
+    step_dummy(x)
+
+  expect_snapshot(
+    error = TRUE,
+    prep(rec)
+  )
+})
+
+test_that("throws an informative error for single level", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = data.frame(x = "only-level")) %>%
+      step_dummy(x) %>%
+      prep()
+  )
+})
+
+test_that("sparse = 'yes' works", {
+  rec <- recipe(~., data = tibble(x = c(NA, letters)))
+
+  suppressWarnings({
+    dense <- rec %>% step_dummy(x, sparse = "no") %>% prep() %>% bake(NULL)
+    dense <- purrr::map(dense, as.integer) %>% tibble::new_tibble()
+    sparse <- rec %>% step_dummy(x, sparse = "yes") %>% prep() %>% bake(NULL)
+  })
+
+  expect_identical(dense, sparse)
+
+  expect_false(any(vapply(dense, sparsevctrs::is_sparse_vector, logical(1))))
+  expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
+})
+
+test_that("sparse = 'yes' errors on unsupported contrasts", {
+  go_helmert <- getOption("contrasts")
+  go_helmert["unordered"] <- "contr.helmert"
+  withr::local_options(contrasts = go_helmert)
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., data = tibble(x = letters)) %>%
+      step_dummy(x, sparse = "yes") %>%
+      prep()
+  )
+})
+
+test_that("sparse argument is backwards compatible", {
+  dat <- tibble(x = c(letters))
+  rec <- recipe(~., data = dat) %>%
+    step_dummy(x) %>%
+    prep()
+
+  exp <- bake(rec, dat)
+
+  # Simulate old recipe
+  rec$steps[[1]]$sparse <- NULL
+
+  expect_identical(
+    bake(rec, dat),
+    exp
+  )
+})
+
+test_that(".recipes_toggle_sparse_args works", {
+  rec <- recipe(~., iris) %>%
+    step_dummy(all_nominal_predictors(), sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp
+  )
+
+  iris$Species <- as.character(iris$Species)
+
+  rec <- recipe(~., iris) %>%
+    step_dummy(all_nominal_predictors(), sparse = "auto")
+
+  exp <- rec %>% prep() %>% bake(NULL) %>% sparsevctrs::sparsity()
+
+  expect_equal(
+    .recipes_estimate_sparsity(rec),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(sqft ~ zip + city, data = sacr_fac)
-  dummy <- rec %>% step_dummy(city, zip, id = "") %>%
+  dummy <- rec %>%
+    step_dummy(city, zip, id = "") %>%
     update_role(city, zip, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
-  dummy_trained <- prep(dummy, training = sacr_fac, verbose = FALSE, strings_as_factors = FALSE)
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE,
+    strings_as_factors = FALSE
+  )
 
-  expect_error(bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors()),
-               class = "new_data_missing_column")
+  expect_snapshot(
+    error = TRUE,
+    bake(dummy_trained, new_data = sacr_fac[, 3:4], all_predictors())
+  )
 })
 
 test_that("empty printing", {
@@ -377,7 +558,7 @@ test_that("empty selection tidy method works", {
 test_that("keep_original_cols works", {
   new_names <- c("Species_versicolor", "Species_virginica")
 
-  rec <- recipe(~ Species, iris) %>%
+  rec <- recipe(~Species, iris) %>%
     step_dummy(all_predictors(), keep_original_cols = FALSE)
 
   rec <- prep(rec)
@@ -388,7 +569,7 @@ test_that("keep_original_cols works", {
     new_names
   )
 
-  rec <- recipe(~ Species, iris) %>%
+  rec <- recipe(~Species, iris) %>%
     step_dummy(all_predictors(), keep_original_cols = TRUE)
 
   rec <- prep(rec)
@@ -401,7 +582,7 @@ test_that("keep_original_cols works", {
 })
 
 test_that("keep_original_cols - can prep recipes with it missing", {
-  rec <- recipe(~ Species, iris) %>%
+  rec <- recipe(~Species, iris) %>%
     step_dummy(all_predictors())
 
   rec$steps[[1]]$keep_original_cols <- NULL
@@ -410,9 +591,8 @@ test_that("keep_original_cols - can prep recipes with it missing", {
     rec <- prep(rec)
   )
 
-  expect_error(
-    bake(rec, new_data = iris),
-    NA
+  expect_no_error(
+    bake(rec, new_data = iris)
   )
 })
 
@@ -422,4 +602,22 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("bad args", {
+  skip_if_not_installed("modeldata")
+  data(Sacramento, package = "modeldata")
+
+  expect_snapshot(
+    recipe(~city + sqft + price, data = Sacramento) %>%
+      step_dummy(city, one_hot = 2) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(~city + sqft + price, data = Sacramento) %>%
+      step_dummy(city, naming = NULL) %>%
+      prep(),
+    error = TRUE
+  )
 })

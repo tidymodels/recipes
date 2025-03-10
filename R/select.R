@@ -23,6 +23,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family variable filter steps
@@ -61,12 +63,14 @@
 #'
 #' # Note that `sepal_vars` is inlined in the second approach
 #' qq_rec
-step_select <- function(recipe,
-                        ...,
-                        role = NA,
-                        trained = FALSE,
-                        skip = FALSE,
-                        id = rand_id("select")) {
+step_select <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  skip = FALSE,
+  id = rand_id("select")
+) {
   add_step(
     recipe,
     step_select_new(
@@ -129,4 +133,9 @@ tidy.step_select <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_select <- function(x, ...) {
+  TRUE
 }

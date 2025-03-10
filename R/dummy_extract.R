@@ -7,10 +7,10 @@
 #' @inheritParams step_center
 #' @inheritParams step_other
 #' @inheritParams step_dummy
-#' @param sep Character vector containing a regular expression to use
+#' @param sep Character string containing a regular expression to use
 #'   for splitting. [strsplit()] is used to perform the split. `sep` takes
 #'   priority if `pattern` is also specified.
-#' @param pattern Character vector containing a regular expression used
+#' @param pattern Character string containing a regular expression used
 #'   for extraction. [gregexpr()] and [regmatches()] are used to perform
 #'   pattern extraction using `perl = TRUE`.
 #' @template step-return
@@ -43,6 +43,8 @@
 #' }
 #'
 #' The return value is ordered according to the frequency of `columns` entries in the training data set.
+#'
+#' @template sparse-creation
 #'
 #' @template case-weights-unsupervised
 #'
@@ -88,33 +90,27 @@
 #'   step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')") %>%
 #'   prep()
 #'
-#' dommies_data_color <- dummies_color %>%
+#' dummies_data_color <- dummies_color %>%
 #'   bake(new_data = NULL)
 #'
-#' dommies_data_color
+#' dummies_data_color
 step_dummy_extract <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           sep = NULL,
-           pattern = NULL,
-           threshold = 0.0,
-           other = "other",
-           naming = dummy_extract_names,
-           levels = NULL,
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("dummy_extract")) {
-
-    if (!is_tune(threshold)) {
-      if (threshold >= 1) {
-        check_number_whole(threshold)
-      } else {
-        check_number_decimal(threshold, min = 0)
-      }
-    }
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    sep = NULL,
+    pattern = NULL,
+    threshold = 0.0,
+    other = "other",
+    naming = dummy_extract_names,
+    levels = NULL,
+    sparse = "auto",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("dummy_extract")
+  ) {
     add_step(
       recipe,
       step_dummy_extract_new(
@@ -127,6 +123,7 @@ step_dummy_extract <-
         other = other,
         naming = naming,
         levels = levels,
+        sparse = sparse,
         keep_original_cols = keep_original_cols,
         skip = skip,
         id = id,
@@ -136,8 +133,22 @@ step_dummy_extract <-
   }
 
 step_dummy_extract_new <-
-  function(terms, role, trained, sep, pattern, threshold, other, naming, levels,
-           keep_original_cols, skip, id, case_weights) {
+  function(
+    terms,
+    role,
+    trained,
+    sep,
+    pattern,
+    threshold,
+    other,
+    naming,
+    levels,
+    sparse,
+    keep_original_cols,
+    skip,
+    id,
+    case_weights
+  ) {
     step(
       subclass = "dummy_extract",
       terms = terms,
@@ -149,6 +160,7 @@ step_dummy_extract_new <-
       other = other,
       naming = naming,
       levels = levels,
+      sparse = sparse,
       keep_original_cols = keep_original_cols,
       skip = skip,
       id = id,
@@ -160,6 +172,16 @@ step_dummy_extract_new <-
 prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  if (x$threshold >= 1) {
+    check_number_whole(x$threshold, arg = "threshold")
+  } else {
+    check_number_decimal(x$threshold, min = 0, arg = "threshold")
+  }
+  check_string(x$other, arg = "other", allow_null = TRUE)
+  check_string(x$sep, arg = "sep", allow_null = TRUE)
+  check_string(x$pattern, arg = "pattern", allow_null = TRUE)
+  check_function(x$naming, arg = "naming", allow_empty = FALSE)
+  check_sparse_arg(x$sparse)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -173,7 +195,8 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     for (col_name in col_names) {
       elements <- dummy_extract(
         training[[col_name]],
-        sep = x$sep, pattern = x$pattern
+        sep = x$sep,
+        pattern = x$pattern
       )
 
       lvls <- map(elements, unique)
@@ -218,6 +241,7 @@ prep.step_dummy_extract <- function(x, training, info = NULL, ...) {
     other = x$other,
     naming = x$naming,
     levels = levels,
+    sparse = x$sparse,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id,
@@ -238,16 +262,24 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
   for (col_name in col_names) {
     elements <- dummy_extract(
       new_data[[col_name]],
-      sep = object$sep, pattern = object$pattern
+      sep = object$sep,
+      pattern = object$pattern
     )
 
     indicators <- list_to_dummies(
       elements,
       sort(object$levels[[col_name]]),
-      object$other
+      object$other,
+      sparse_is_yes(object$sparse)
     )
-    indicators <- purrr::map(indicators, vec_cast, integer())
-    indicators <- vctrs::vec_cbind(!!!indicators)
+
+    if (sparse_is_yes(object$sparse)) {
+      indicators <- purrr::map(indicators, sparsevctrs::as_sparse_integer)
+    } else {
+      indicators <- purrr::map(indicators, vec_cast, integer())
+    }
+
+    indicators <- tibble::new_tibble(indicators)
 
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_name), "", colnames(indicators))
@@ -255,7 +287,7 @@ bake.step_dummy_extract <- function(object, new_data, ...) {
 
     indicators <- check_name(indicators, new_data, object, names(indicators))
 
-    new_data <- vec_cbind(new_data, indicators)
+    new_data <- vec_cbind(new_data, indicators, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)
@@ -275,7 +307,7 @@ dummy_extract <- function(x, sep = NULL, pattern = NULL, call = caller_env()) {
   cli::cli_abort("{.arg sep} or {.arg pattern} must be specified.", call = call)
 }
 
-list_to_dummies <- function(x, dict, other = "other") {
+list_to_dummies <- function(x, dict, other = "other", sparse = FALSE) {
   i <- rep(seq_along(x), lengths(x))
   j <- match(unlist(x), dict)
 
@@ -283,22 +315,36 @@ list_to_dummies <- function(x, dict, other = "other") {
   j[is.na(j)] <- length(dict)
 
   out <- Matrix::sparseMatrix(
-    i = i, j = j,
+    i = i,
+    j = j,
     dims = c(length(x), length(dict)),
     x = 1
   )
 
   out@Dimnames[[2]] <- dict
-  out <- as.matrix(out)
-  tibble::as_tibble(out)
+
+  if (sparse) {
+    out <- sparsevctrs::coerce_to_sparse_tibble(out)
+  } else {
+    out <- as.matrix(out)
+    out <- tibble::as_tibble(out)
+  }
+
+  out
 }
 
 #' @export
 print.step_dummy_extract <-
   function(x, width = max(20, options()$width - 20), ...) {
     title <- "Extract patterns from "
-    print_step(names(x$levels), x$terms, x$trained, title, width,
-               case_weights = x$case_weights)
+    print_step(
+      names(x$levels),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
@@ -307,7 +353,7 @@ print.step_dummy_extract <-
 tidy.step_dummy_extract <- function(x, ...) {
   if (is_trained(x)) {
     if (length(x$levels) > 0) {
-      res <- purrr::map(x$levels, ~ tibble(columns = .x), FALSE)
+      res <- purrr::map(x$levels, ~tibble(columns = .x), FALSE)
       res <- purrr::list_rbind(res, names_to = "terms")
     } else {
       res <- tibble(terms = character(), columns = character())
@@ -317,4 +363,28 @@ tidy.step_dummy_extract <- function(x, ...) {
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_dummy_extract <- function(x, data, ...) {
+  get_levels <- function(col) {
+    elements <- dummy_extract(
+      col[seq(1, min(10, length(col)))],
+      sep = x$sep,
+      pattern = x$pattern
+    )
+
+    lvls <- map(elements, unique)
+    lvls <- unlist(lvls)
+    length(lvls)
+  }
+
+  n_levels <- lapply(data, get_levels)
+
+  lapply(n_levels, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 1 - 1 / n_lvl
+    )
+  })
 }

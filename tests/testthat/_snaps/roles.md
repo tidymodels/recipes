@@ -46,7 +46,7 @@
       add_role(rec, sample, new_role = NA_character_)
     Condition
       Error in `add_role()`:
-      ! `new_role` must not be `NA`.
+      ! `new_role` must be a single string, not a character `NA`.
 
 ---
 
@@ -54,7 +54,7 @@
       update_role(rec, sample, new_role = NA_character_)
     Condition
       Error in `update_role()`:
-      ! `new_role` must not be `NA`.
+      ! `new_role` must be a single string, not a character `NA`.
 
 # remove roles
 
@@ -62,7 +62,7 @@
       rec <- remove_role(rec, sample, old_role = NA)
     Condition
       Error in `remove_role()`:
-      ! `old_role` must be a character vector.
+      ! `old_role` must be a single string, not `NA`.
 
 ---
 
@@ -70,7 +70,7 @@
       rec <- remove_role(rec, sample)
     Condition
       Error in `remove_role()`:
-      ! argument `old_role` is missing, with no default.
+      ! `old_role` must be a single string, not absent.
 
 ---
 
@@ -142,7 +142,7 @@
       recipe(x = biomass) %>% add_role(carbon, new_role = letters[1:2])
     Condition
       Error in `add_role()`:
-      ! `new_role` must have length 1.
+      ! `new_role` must be a single string, not a character vector.
 
 ---
 
@@ -150,7 +150,7 @@
       recipe(x = biomass) %>% add_role(carbon, new_role = "a", new_type = letters[1:2])
     Condition
       Error in `add_role()`:
-      ! `new_type` must have length 1, not 2.
+      ! `new_type` must be a single string or `NULL`, not a character vector.
 
 ---
 
@@ -158,7 +158,7 @@
       recipe(x = biomass) %>% update_role(carbon, new_role = c("a", "b"))
     Condition
       Error in `update_role()`:
-      ! `new_role` must have length 1.
+      ! `new_role` must be a single string, not a character vector.
 
 ---
 
@@ -166,7 +166,7 @@
       recipe(x = biomass) %>% update_role(carbon, old_role = c("a", "b"))
     Condition
       Error in `update_role()`:
-      ! `old_role` must have length 1.
+      ! `old_role` must be a single string or `NULL`, not a character vector.
 
 # role functions handle case weights correctly
 
@@ -289,4 +289,20 @@
        9 am       <chr [2]> <NA>      original FALSE           
       10 gear     <chr [2]> <NA>      original FALSE           
       11 carb     <chr [2]> other     original TRUE            
+
+# add_roles() error if columns would be both predictor and outcome
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% add_role(mpg, new_role = "predictor")
+    Condition
+      Error in `add_role()`:
+      ! `mpg` cannot get "predictor" role as it already has role "outcome".
+
+---
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% add_role(disp, new_role = "outcome")
+    Condition
+      Error in `add_role()`:
+      ! `disp` cannot get "outcome" role as it already has role "predictor".
 

@@ -55,6 +55,14 @@
       -- Operations 
       * Extract patterns from: medium | Trained, ignored weights
 
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(dummy_prepped, new_data = mini_tate[, 1:3])
+    Condition
+      Error in `step_dummy_extract()`:
+      ! The following required column is missing from `new_data`: medium.
+
 # empty printing
 
     Code
@@ -131,4 +139,54 @@
       
       -- Operations 
       * Extract patterns from: medium | Trained
+
+# bad args
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        other = 2) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `other` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        other = 2) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `other` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        sep = 2) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `sep` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = 2) %>%
+        prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `pattern` must be a single string or `NULL`, not the number 2.
+
+---
+
+    Code
+      recipe(~colors, data = color_examples) %>% step_dummy_extract(colors, pattern = "(?<=')[^',]+(?=')",
+        naming = NULL) %>% prep()
+    Condition
+      Error in `step_dummy_extract()`:
+      Caused by error in `prep()`:
+      ! `naming` must be a function, not `NULL`.
 

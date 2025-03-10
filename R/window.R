@@ -4,6 +4,7 @@
 #' new columns that are the results of functions that compute statistics across
 #' moving windows.
 #'
+#' @inheritParams step_classdist
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param role For model terms created by this step, what analysis
@@ -88,7 +89,7 @@
 #'   )
 #' rec <- prep(rec, training = sim_dat)
 #'
-#' smoothed_dat <- bake(rec, sim_dat, everything())
+#' smoothed_dat <- bake(rec, sim_dat)
 #'
 #' ggplot(data = sim_dat, aes(x = x1, y = y1)) +
 #'   geom_point() +
@@ -105,51 +106,29 @@
 #' rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) %>%
 #'   step_window(starts_with("y"))
 #' rec <- prep(rec, training = sim_dat)
-#' smoothed_dat <- bake(rec, sim_dat, everything())
+#' smoothed_dat <- bake(rec, sim_dat)
 #' ggplot(smoothed_dat, aes(x = original, y = y1)) +
 #'   geom_point() +
 #'   theme_bw()
 step_window <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           size = 3,
-           na_rm = TRUE,
-           statistic = "mean",
-           columns = NULL,
-           names = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("window")) {
-    if (!is_call(statistic) &&
-      (!(statistic %in% roll_funs) | length(statistic) != 1)) {
-      cli::cli_abort(
-        "{.arg statistic} should be one of: {.or {.val {roll_funs}}}."
-      )
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    size = 3,
+    na_rm = TRUE,
+    statistic = "mean",
+    columns = NULL,
+    names = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("window")
+  ) {
+    if (!is_call(statistic)) {
+      statistic <- rlang::arg_match(statistic, roll_funs)
     }
 
-    ## ensure size is odd, integer, and not too small
-    if (!is_tune(size)) {
-      check_number_decimal(size, min = 0)
-
-      if (!is.integer(size)) {
-        tmp <- size
-        size <- as.integer(size)
-        if (!isTRUE(all.equal(tmp, size))) {
-          cli::cli_warn(
-            "{.arg size} was not an integer ({tmp}) and was converted to \\
-            {size}."
-          )
-        }
-      }
-      if (size %% 2 == 0) {
-        cli::cli_abort("{.arg size} should be odd, not {size}.")
-      }
-      if (size < 3) {
-        cli::cli_abort("{.arg size} should be at least 3, not {size}.")
-      }
-    }
     add_step(
       recipe,
       step_window_new(
@@ -171,8 +150,19 @@ step_window <-
 roll_funs <- c("mean", "median", "sd", "var", "sum", "prod", "min", "max")
 
 step_window_new <-
-  function(terms, role, trained, size, na_rm, statistic, columns, names,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    size,
+    na_rm,
+    statistic,
+    columns,
+    names,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "window",
       terms = terms,
@@ -194,11 +184,30 @@ prep.step_window <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
 
+  ## ensure size is odd, integer, and not too small
+  check_number_whole(x$size, arg = "size", min = 3)
+
+  if (!is.integer(x$size)) {
+    tmp <- x$size
+    x$size <- as.integer(x$size)
+    if (!isTRUE(all.equal(tmp, x$size))) {
+      cli::cli_warn(
+        "{.arg size} was not an integer ({tmp}) and was converted to {x$size}."
+      )
+    }
+  }
+  if (x$size %% 2 == 0) {
+    cli::cli_abort("{.arg size} should be odd, not {x$size}.")
+  }
+  if (x$size < 3) {
+    cli::cli_abort("{.arg size} should be at least 3, not {x$size}.")
+  }
+
   if (!is.null(x$names)) {
     if (length(x$names) != length(col_names)) {
       cli::cli_abort(
-        "There were {length(col_names)} term{?s} selected but \\
-        {length(x$names)} value{?s} for the new features {?was/were} passed \\
+        "There were {length(col_names)} term{?s} selected but
+        {length(x$names)} value{?s} for the new features {?was/were} passed
         to {.arg names}."
       )
     }
@@ -231,9 +240,13 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
   ## stats for centered window
   opts <- list(
-    x = x, n = window, by = 1L,
-    fill = NA, partial = FALSE,
-    normalize = TRUE, na.rm = na_rm
+    x = x,
+    n = window,
+    by = 1L,
+    fill = NA,
+    partial = FALSE,
+    normalize = TRUE,
+    na.rm = na_rm
   )
 
   roll_cl <- call2(paste0("roll_", stat), !!!opts, .ns = "RcppRoll")
@@ -271,8 +284,13 @@ bake.step_window <- function(object, new_data, ...) {
   } else {
     names(new_values) <- object$names
     new_values <- tibble::new_tibble(new_values)
-    new_values <- check_name(new_values, new_data, object, newname = object$names)
-    new_data <- vec_cbind(new_data, new_values)
+    new_values <- check_name(
+      new_values,
+      new_data,
+      object,
+      newname = object$names
+    )
+    new_data <- vec_cbind(new_data, new_values, .name_repair = "minimal")
     new_data <- remove_original_cols(new_data, object, col_names)
   }
 
@@ -310,7 +328,6 @@ tunable.step_window <- function(x, ...) {
     component_id = x$id
   )
 }
-
 
 #' @rdname required_pkgs.recipe
 #' @export

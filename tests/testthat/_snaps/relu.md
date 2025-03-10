@@ -4,6 +4,7 @@
       recipe(~., data = df) %>% step_relu(val1, shift = TRUE) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
+      Caused by error in `prep()`:
       ! `shift` must be a number, not `TRUE`.
 
 ---
@@ -12,6 +13,7 @@
       recipe(~., data = df) %>% step_relu(val1, reverse = 3) %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
+      Caused by error in `prep()`:
       ! `reverse` must be `TRUE` or `FALSE`, not the number 3.
 
 ---
@@ -20,6 +22,7 @@
       recipe(~., data = df) %>% step_relu(val1, smooth = "cat") %>% prep(df, verbose = FALSE)
     Condition
       Error in `step_relu()`:
+      Caused by error in `prep()`:
       ! `smooth` must be `TRUE` or `FALSE`, not the string "cat".
 
 ---
@@ -31,6 +34,14 @@
       Caused by error in `prep()`:
       x All columns selected for the step should be double or integer.
       * 1 factor variable found: `val2`
+
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, df[, 2, drop = FALSE])
+    Condition
+      Error in `step_relu()`:
+      ! The following required column is missing from `new_data`: val1.
 
 # empty printing
 

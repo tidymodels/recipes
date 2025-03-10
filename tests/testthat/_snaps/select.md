@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = mtcars[, c(-2)])
+    Condition
+      Error in `step_select()`:
+      ! The following required column is missing from `new_data`: cyl.
+
 # empty printing
 
     Code

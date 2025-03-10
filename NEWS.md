@@ -1,6 +1,108 @@
 # recipes (development version)
 
+* Fixed bug where name repaied column names would get changed when baked for some steps. (#1347)
+
+* `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
+
+* `recipe()`, `prep()`, and `bake()` now work with sparse matrices. (#1364, #1368, #1369)
+
+* All steps and checks now require arguments `trained`, `skip`, `role`, and `id` at all times.
+
+* `step_dummy()` gained `sparse` argument. When set to `"yes"`, `step_dummy()` will produce sparse vectors. (#1392)
+
+* `step_holiday()` gained `sparse` argument. When set to `"yes"`, `step_holiday()` will produce sparse vectors. (#1422)
+
+* `step_indicate_na()` gained `sparse` argument. When set to `"yes"`, `step_indicate_na()` will produce sparse vectors. (#1424)
+
+* `step_dummy_extract()` gained `sparse` argument. When set to `"yes"`, `step_dummy_extract()` will produce sparse vectors. (#1426)
+
+* `step_dummy_multi_choice()` gained `sparse` argument. When set to `"yes"`, `step_dummy_multi_choice()` will produce sparse vectors. (#1427)
+
+* `step_count()` gained `sparse` argument. When set to `"yes"`, `step_count()` will produce sparse vectors. (#1428)
+
+* `step_regex()` gained `sparse` argument. When set to `"yes"`, `step_regex()` will produce sparse vectors. (#1429)
+
+* `step_sqrt()` doesn't destroy sparsity when applied. (#1432)
+
+* `step_arrange()`, `step_filter()`, `step_rename_at()`, `step_rename()`, `step_sample()`, `step_select()`, `step_shuffle()`, and `step_slice()` doesn't destroy sparsity when applied. (#1433)
+
+* `step_impute_mean()` and `step_impute_median()` doesn't destroy sparsity when applied. (#1434)
+
+* `step_scale()` doesn't destroy sparsity when applied. (#1436)
+
+* `step_rm()` doesn't destroy sparsity when applied. (#1437)
+
+* `step_zv()` doesn't destroy sparsity when applied. (#1438)
+
+* `step_filter_missing()` doesn't destroy sparsity when applied. (#1439)
+
+* `step_lag()` doesn't destroy sparsity when applied. (#1440)
+
+* `step_lag()` doesn't destroy sparsity when applied. (#1441)
+
+# recipes 1.1.1
+
+## Improvements
+
+* Example for `step_novel()` now better illustrates how it works. (@Edgar-Zamora, #1248)
+
+* `prep.recipe(..., strings_as_factors = TRUE)` now only converts string variables that have role "predictor" or "outcome". (@dajmcdon, #1358, #1376)
+
+# recipes 1.1.0
+
+## Improvements
+
+* Improved error message for misspelled argument in step functions. (#1318)
+
+* `recipe()` can now take data.frames with list-columns or sf data.frames as input to `data`. (#1283)
+
+* `recipe()` will now show better error when columns are misspelled in formula (#1283).
+
+* `add_role()` now errors if a column would simultaneously have roles `"outcome"` and `"predictor"`. (#935)
+
+* `prep()` will now error if the ptype of the data doesn't match which was used to define the recipe. (#793)
+
+* Added more documentation in `?selections` about how `tidyselect::everything()` works in recipes. (#1259)
+
 * New `extract_fit_time()` method has been added that returns the time it took to train the recipe. (#1071)
+
+* `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, and `step_spline_nonnegative()` now throws informative errors if the`degree`, `deg_free`, and `complete_set` arguments causes an error. (#1170)
+
+* `step_mutate()` gained `.pkgs` argument to specify what packages need to be loaded for step to work. (#1282)
+
+* `step_interact()` now gives better error if `terms` isn't a formula. (#1299)
+
+* The `prefix` argument of `step_dummy_multi_choice()` is now properly documented. (#1298)
+
+* Significant speedup in `step_dummy()` when applied to many columns. (#1305)
+
+* `step_dummy()` now gives an informative error on attempt to generate too many columns to fit in memory. (#828)
+
+* `step_dummy()` and `step_unknown()` now throw more informative warnings for unseen levels. (#450)
+
+* `step_dummy()` now throws more informative warnings for `NA` values. (#450)
+
+* `step_date()` now accepts `"mday"` as a possible feature. (@Edgar-Zamora, #1211)
+
+## Bug Fixes
+
+* `NA` levels in factors aren't dropped when passed to `recipe()`. (#1291)
+
+* `recipe()` no longer crashes when given long formula expression (#1283).
+
+* Fixed bug in `step_ns()` and `step_bs()` where `knots` field in `options` argument wasn't correctly used. (#1297)
+
+* Bug fixed in `step_interact()` where long formulas were used. (#1231, #1289)
+
+* Fixed documentation mistake where default value of `keep_original_cols` argument were wrong. (#1314)
+
+## Developer
+
+* Developer helper function `recipes_ptype()` has been added, returning expected input data for `prep()` and `bake()` for a given recipe object. (#1329)
+
+* Developer helper function `recipes_ptype_validate()` has been added, to validate new data is compatible with recipe ptype. (#793)
+
+* Developer helper functions `recipes_names_predictors()` and `recipes_names_outcomes()` have been added to aid variable selection in steps. (#1026)
 
 # recipes 1.0.10
 

@@ -136,7 +136,7 @@ get_types <- function(x) {
 all_get_data_types <- list(
   default = recipes:::.get_data_types.default(),
   character = recipes:::.get_data_types.character(),
-  ordered  = recipes:::.get_data_types.ordered (),
+  ordered = recipes:::.get_data_types.ordered(),
   factor = recipes:::.get_data_types.factor(),
   integer = recipes:::.get_data_types.integer(),
   numeric = recipes:::.get_data_types.numeric(),
@@ -151,5 +151,8 @@ all_get_data_types <- list(
 )
 
 all_get_data_types <- lapply(
-  all_get_data_types, glue::glue_collapse, sep = ", ", last = ", and "
+  all_get_data_types,
+  glue::glue_collapse,
+  sep = ", ",
+  last = ", and "
 )

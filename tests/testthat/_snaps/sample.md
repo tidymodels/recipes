@@ -1,26 +1,29 @@
 # bad input
 
     Code
-      iris_rec %>% step_sample(size = -1)
+      iris_rec %>% step_sample(size = -1) %>% prep()
     Condition
       Error in `step_sample()`:
+      Caused by error in `prep()`:
       ! `size` must be a number larger than or equal to 0 or `NULL`, not the number -1.
 
 ---
 
     Code
-      iris_rec %>% step_sample(size = "a")
+      iris_rec %>% step_sample(size = "a") %>% prep()
     Condition
       Error in `step_sample()`:
+      Caused by error in `prep()`:
       ! `size` must be a number or `NULL`, not the string "a".
 
 ---
 
     Code
-      iris_rec %>% step_sample(replace = "a")
+      iris_rec %>% step_sample(replace = "a") %>% prep()
     Condition
       Error in `step_sample()`:
-      ! `replace` should be a single logical, not a string.
+      Caused by error in `prep()`:
+      ! `replace` must be `TRUE` or `FALSE`, not the string "a".
 
 # sample with case weights
 
@@ -59,6 +62,14 @@
       
       -- Operations 
       * Row sampling: <none> | Trained, weighted
+
+# warn when selectors are provided
+
+    Code
+      tmp <- recipe(~., data = mtcars) %>% step_sample(all_predictors())
+    Condition
+      Warning:
+      Selectors are not used for this step.
 
 # empty printing
 

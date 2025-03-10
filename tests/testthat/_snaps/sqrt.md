@@ -1,3 +1,11 @@
+# bake method errors when needed non-standard role columns are missing
+
+    Code
+      bake(rec, new_data = ex_dat[, 2, drop = FALSE])
+    Condition
+      Error in `step_sqrt()`:
+      ! The following required column is missing from `new_data`: x1.
+
 # empty printing
 
     Code
@@ -46,7 +54,7 @@
       predictor: 2
       
       -- Operations 
-      * Square root transformation on: x1 and x2
+      * Square root transformation on: x1 x2
 
 ---
 
@@ -64,5 +72,5 @@
       Training data contained 20 data points and no incomplete rows.
       
       -- Operations 
-      * Square root transformation on: x1 and x2 | Trained
+      * Square root transformation on: x1 x2 | Trained
 

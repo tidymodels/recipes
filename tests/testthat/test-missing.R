@@ -10,7 +10,7 @@ set_with_na <- tibble(
 
 tst <- function(...) {
   cols <- quos(...)
-  recipe(set_with_na) %>%
+  recipe(~., set_with_na) %>%
     check_missing(!!!cols) %>%
     prep() %>%
     bake(set_with_na)
@@ -20,7 +20,7 @@ test_that("check_missing passes silently when no NA", {
   no_na_rp <- recipe(mtcars) %>%
     check_missing(all_numeric()) %>%
     prep()
-  expect_error(bake(no_na_rp, mtcars), NA)
+  expect_no_error(bake(no_na_rp, mtcars))
   expect_equal(bake(no_na_rp, mtcars), tibble(mtcars))
 })
 
@@ -33,7 +33,7 @@ test_that("check_missing throws error on all types", {
 
 test_that("check_missing works on multiple columns simultaneously", {
   expect_snapshot(error = TRUE, tst(a, e))
-  expect_snapshot(error = TRUE, tst(everything()))
+  expect_snapshot(error = TRUE, tst(all_predictors()))
 })
 
 test_that("check_missing on a new set", {
@@ -42,9 +42,7 @@ test_that("check_missing on a new set", {
   rp <- recipe(no_na) %>%
     check_missing(a) %>%
     prep(no_na)
-  expect_snapshot(error = TRUE,
-    bake(rp, na)
-  )
+  expect_snapshot(error = TRUE, bake(rp, na))
 })
 
 # Infrastructure ---------------------------------------------------------------
@@ -57,8 +55,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec_trained <- prep(rec, training = mtcars)
 
-  expect_error(bake(rec_trained, new_data = mtcars[, -3]),
-               class = "new_data_missing_column")
+  expect_snapshot(error = TRUE, bake(rec_trained, new_data = mtcars[, -3]))
 })
 
 test_that("empty printing", {

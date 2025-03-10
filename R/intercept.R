@@ -50,10 +50,16 @@
 #'
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
-step_intercept <- function(recipe, ..., role = "predictor",
-                           trained = FALSE, name = "intercept",
-                           value = 1L,
-                           skip = FALSE, id = rand_id("intercept")) {
+step_intercept <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  name = "intercept",
+  value = 1L,
+  skip = FALSE,
+  id = rand_id("intercept")
+) {
   if (length(list(...)) > 0) {
     cli::cli_warn("Selectors are not used for this step.")
   }
@@ -97,7 +103,7 @@ prep.step_intercept <- function(x, training, info = NULL, ...) {
 bake.step_intercept <- function(object, new_data, ...) {
   intercept <- tibble(!!object$name := rep(object$value, nrow(new_data)))
   intercept <- check_name(intercept, new_data, object, names(intercept))
-  new_data <- vec_cbind(intercept, new_data)
+  new_data <- vec_cbind(intercept, new_data, .name_repair = "minimal")
   new_data
 }
 

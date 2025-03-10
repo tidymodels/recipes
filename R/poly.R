@@ -68,20 +68,18 @@
 #'
 #' tidy(quadratic, number = 1)
 step_poly <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           objects = NULL,
-           degree = 2,
-           options = list(),
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("poly")) {
-    if (!is_tune(degree)) {
-      degree <- as.integer(degree)
-    }
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    objects = NULL,
+    degree = 2L,
+    options = list(),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("poly")
+  ) {
     if (any(names(options) == "degree")) {
       degree <- options$degree
       cli::cli_inform(
@@ -107,8 +105,17 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, degree, options, keep_original_cols,
-           skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    objects,
+    degree,
+    options,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "poly",
       terms = terms,
@@ -123,7 +130,6 @@ step_poly_new <-
     )
   }
 
-
 poly_wrapper <- function(x, args) {
   args$x <- x
   args$simple <- FALSE
@@ -137,11 +143,12 @@ poly_wrapper <- function(x, args) {
   out
 }
 
-
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$degree, arg = "degree", min = 1)
+  x$degree <- as.integer(x$degree)
 
   opts <- x$options
   opts$degree <- x$degree
@@ -167,7 +174,10 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   check_new_data(col_names, object, new_data)
-  new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_"))
+  new_names <- purrr::map(
+    object$objects,
+    ~paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
+  )
 
   # Start with n-row, 0-col tibble for the empty selection case
   new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))
@@ -185,7 +195,7 @@ bake.step_poly <- function(object, new_data, ...) {
   }
 
   new_tbl <- check_name(new_tbl, new_data, object, names(new_tbl))
-  new_data <- vec_cbind(new_data, new_tbl)
+  new_data <- vec_cbind(new_data, new_tbl, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }

@@ -80,6 +80,13 @@ This step has 1 tuning parameters:
 }
 }
 
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
 \section{Case weights}{
 
 
@@ -110,7 +117,7 @@ impute_rec <- rec \%>\%
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, new_data = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te)
 
 credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]

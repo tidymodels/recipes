@@ -65,18 +65,20 @@
 #' ratio_data <- bake(ratio_recipe, biomass_te)
 #' ratio_data
 step_ratio <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           denom = denom_vars(),
-           naming = function(numer, denom) {
-             make.names(paste(numer, denom, sep = "_o_"))
-           },
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("ratio")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    denom = denom_vars(),
+    naming = function(numer, denom) {
+      make.names(paste(numer, denom, sep = "_o_"))
+    },
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("ratio")
+  ) {
     if (is_empty(denom)) {
       cli::cli_abort(
         c(
@@ -103,8 +105,17 @@ step_ratio <-
   }
 
 step_ratio_new <-
-  function(terms, role, trained, denom, naming, columns,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    denom,
+    naming,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "ratio",
       terms = terms,
@@ -118,7 +129,6 @@ step_ratio_new <-
       id = id
     )
   }
-
 
 #' @export
 prep.step_ratio <- function(x, training, info = NULL, ...) {
@@ -134,6 +144,7 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
     training[, unique(c(col_names$top, col_names$bottom))],
     types = c("double", "integer")
   )
+  check_function(x$naming, arg = "naming")
 
   step_ratio_new(
     terms = x$terms,
@@ -170,7 +181,7 @@ bake.step_ratio <- function(object, new_data, ...) {
   res <- tibble::new_tibble(res, nrow = nrow(new_data))
 
   res <- check_name(res, new_data, object, names(res))
-  new_data <- vec_cbind(new_data, res)
+  new_data <- vec_cbind(new_data, res, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, unique_col_names)
 
   new_data

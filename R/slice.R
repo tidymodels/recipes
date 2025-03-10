@@ -25,6 +25,8 @@
 #'   \item{id}{character, id of this step}
 #' }
 #'
+#' @template sparse-preserve
+#'
 #' @template case-weights-not-supported
 #'
 #' @family row operation steps
@@ -68,12 +70,15 @@
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
-step_slice <- function(recipe, ...,
-                       role = NA,
-                       trained = FALSE,
-                       inputs = NULL,
-                       skip = TRUE,
-                       id = rand_id("slice")) {
+step_slice <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  inputs = NULL,
+  skip = TRUE,
+  id = rand_id("slice")
+) {
   inputs <- enquos(...)
 
   add_step(
@@ -137,4 +142,9 @@ tidy.step_slice <- function(x, ...) {
     terms = unname(cond_expr),
     id = rep(x$id, length(x$inputs))
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_slice <- function(x, ...) {
+  TRUE
 }

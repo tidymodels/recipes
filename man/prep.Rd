@@ -19,65 +19,65 @@ prep(x, ...)
 )
 }
 \arguments{
-\item{x}{an object}
+\item{x}{an \code{\link[=recipe]{recipe()}} object.}
 
 \item{...}{further arguments passed to or from other methods (not currently
 used).}
 
-\item{training}{A data frame or tibble that will be used to estimate
-parameters for preprocessing.}
+\item{training}{A data frame, tibble, or sparse matrix from the \code{Matrix}
+package, that will be used to estimate parameters for preprocessing. See
+\link{sparse_data} for more information about use of sparse data.}
 
 \item{fresh}{A logical indicating whether already trained operation should be
 re-trained. If \code{TRUE}, you should pass in a data set to the argument
 \code{training}.}
 
-\item{verbose}{A logical that controls whether progress is reported as operations
-are executed.}
+\item{verbose}{A logical that controls whether progress is reported as
+operations are executed.}
 
-\item{retain}{A logical: should the \emph{preprocessed} training set be saved
-into the \code{template} slot of the recipe after training? This is a good
-idea if you want to add more steps later but want to avoid re-training
-the existing steps. Also, it is advisable to use \code{retain = TRUE}
-if any steps use the option \code{skip = FALSE}. \strong{Note} that this can make
-the final recipe size large. When \code{verbose = TRUE}, a message is written
-with the approximate object size in memory but may be an underestimate
-since it does not take environments into account.}
+\item{retain}{A logical: should the \emph{preprocessed} training set be saved into
+the \code{template} slot of the recipe after training? This is a good idea if
+you want to add more steps later but want to avoid re-training the existing
+steps. Also, it is advisable to use \code{retain = TRUE} if any steps use the
+option \code{skip = FALSE}. \strong{Note} that this can make the final recipe size
+large. When \code{verbose = TRUE}, a message is written with the approximate
+object size in memory but may be an underestimate since it does not take
+environments into account.}
 
 \item{log_changes}{A logical for printing a summary for each step regarding
 which (if any) columns were added or removed during training.}
 
-\item{strings_as_factors}{A logical: should character columns be converted to
-factors? This affects the preprocessed training set (when
-\code{retain = TRUE}) as well as the results of \code{bake.recipe}.}
+\item{strings_as_factors}{A logical: should character columns that have role
+\code{"predictor"} or \code{"outcome"} be converted to factors? This affects the
+preprocessed training set (when \code{retain = TRUE}) as well as the results of
+\code{\link[=bake]{bake()}}.}
 }
 \value{
-A recipe whose step objects have been updated with the required
-quantities (e.g. parameter estimates, model objects, etc). Also, the
-\code{term_info} object is likely to be modified as the operations are
-executed.
+A recipe whose step objects have been updated with the required quantities
+(e.g. parameter estimates, model objects, etc). Also, the \code{term_info} object
+is likely to be modified as the operations are executed.
 }
 \description{
 For a recipe with at least one preprocessing operation, estimate the required
-parameters from a training set that can be later applied to other data
-sets.
+parameters from a training set that can be later applied to other data sets.
 }
 \details{
 Given a data set, this function estimates the required quantities and
-statistics needed by any operations. \code{\link[=prep]{prep()}} returns an updated recipe
-with the estimates. If you are using a recipe as a preprocessor for modeling,
-we \strong{highly recommend} that you use a \code{workflow()} instead of manually
+statistics needed by any operations. \code{\link[=prep]{prep()}} returns an updated recipe with
+the estimates. If you are using a recipe as a preprocessor for modeling, we
+\strong{highly recommend} that you use a \code{workflow()} instead of manually
 estimating a recipe (see the example in \code{\link[=recipe]{recipe()}}).
 
-Note that missing data is handled in the steps; there is no global
-\code{na.rm} option at the recipe level or in \code{\link[=prep]{prep()}}.
+Note that missing data is handled in the steps; there is no global \code{na.rm}
+option at the recipe level or in \code{\link[=prep]{prep()}}.
 
-Also, if a recipe has been trained using \code{\link[=prep]{prep()}} and then steps
-are added, \code{\link[=prep]{prep()}} will only update the new operations. If
-\code{fresh = TRUE}, all of the operations will be (re)estimated.
+Also, if a recipe has been trained using \code{\link[=prep]{prep()}} and then steps are added,
+\code{\link[=prep]{prep()}} will only update the new operations. If \code{fresh = TRUE}, all of the
+operations will be (re)estimated.
 
-As the steps are executed, the \code{training} set is updated. For example,
-if the first step is to center the data and the second is to scale the
-data, the step for scaling is given the centered data.
+As the steps are executed, the \code{training} set is updated. For example, if the
+first step is to center the data and the second is to scale the data, the
+step for scaling is given the centered data.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -101,4 +101,7 @@ prep(ames_rec, verbose = TRUE)
 
 prep(ames_rec, log_changes = TRUE)
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=recipe]{recipe()}} and \code{\link[=bake]{bake()}}
 }

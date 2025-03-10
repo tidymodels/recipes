@@ -10,7 +10,7 @@ step_poly(
   role = "predictor",
   trained = FALSE,
   objects = NULL,
-  degree = 2,
+  degree = 2L,
   options = list(),
   keep_original_cols = FALSE,
   skip = FALSE,

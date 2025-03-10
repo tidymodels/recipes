@@ -1,12 +1,14 @@
 # This step is created solely for testing purposes
 step_testthat_helper <-
-  function(recipe,
-           ...,
-           output = NULL,
-           role = "predictor",
-           trained = FALSE,
-           skip = FALSE,
-           id = rand_id("testthat_helper")) {
+  function(
+    recipe,
+    ...,
+    output = NULL,
+    role = "predictor",
+    trained = FALSE,
+    skip = FALSE,
+    id = rand_id("testthat_helper")
+  ) {
     add_step(
       recipe,
       step_testthat_helper_new(

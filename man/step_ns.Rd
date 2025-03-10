@@ -66,7 +66,7 @@ columns that are basis expansions of variables using natural splines.
 \code{step_ns} can create new features from a single variable
 that enable fitting routines to model this variable in a
 nonlinear manner. The extent of the possible nonlinearity is
-determined by the \code{df} or \code{knot} arguments of
+determined by the \code{df} or \code{knots} arguments of
 \code{\link[splines:ns]{splines::ns()}}. The original variables are removed
 from the data and new columns are added. The naming convention
 for the new variables is \code{varname_ns_1} and so on.

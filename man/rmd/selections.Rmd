@@ -30,10 +30,13 @@ rec_2 <-
   prep()
 
 # This fails since `wt` is not in the data
-recipe(mpg ~ ., data = mtcars)  %>% 
+try(
+recipe(mpg ~ ., data = mtcars) %>% 
   step_rm(wt) %>% 
   step_log(!!!some_vars) %>% 
-  prep()
+  prep(),
+  silent = TRUE
+)
 
 # Best for filters (using any_of()) and when
 # saving the recipe

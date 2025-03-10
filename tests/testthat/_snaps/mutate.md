@@ -9,6 +9,23 @@
       Caused by error:
       ! object 'const' not found
 
+# required_pkgs.step_mutate() works
+
+    Code
+      recipe(~., data = mtcars) %>% step_mutate(new = 2, .pkgs = "not-a-package")
+    Message
+      1 package (not-a-package) is needed for this step but is not installed.
+      To install run: `install.packages("not-a-package")`
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Operations 
+      * Variable mutation for: 2
+
 # empty printing
 
     Code

@@ -44,6 +44,11 @@ Select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}}, and
 \code{\link[tidyselect:all_of]{tidyselect::any_of()}}
 
+Note that using \code{\link[tidyselect:everything]{tidyselect::everything()}} or any of the other \code{tidyselect}
+functions aren't restricted to predictors. They will thus select outcomes,
+ID, and predictor columns alike. This is why these functions should be used
+with care, and why \code{\link[tidyselect:everything]{tidyselect::everything()}} likely isn't what you need.
+
 For example:
 
 \preformatted{
@@ -148,19 +153,15 @@ rec_2 <-
   prep()
 
 # This fails since `wt` is not in the data
-recipe(mpg ~ ., data = mtcars)  \%>\% 
+try(
+recipe(mpg ~ ., data = mtcars) \%>\% 
   step_rm(wt) \%>\% 
   step_log(!!!some_vars) \%>\% 
-  prep()
-}\if{html}{\out{</div>}}
+  prep(),
+  silent = TRUE
+)
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in `step_log()`:
-## Caused by error in `prep()` at recipes/R/recipe.R:476:9:
-## ! Can't select columns that don't exist.
-## x Column `wt` doesn't exist.
-}\if{html}{\out{</div>}}
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Best for filters (using any_of()) and when
+# Best for filters (using any_of()) and when
 # saving the recipe
 rec_4 <- 
   recipe(mpg ~ ., data = mtcars) \%>\% 

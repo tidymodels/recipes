@@ -49,8 +49,13 @@
 #'
 #' sacr_tr <- Sacramento[1:800, ]
 #' sacr_te <- Sacramento[801:806, ]
+#'
+#' # Without converting the predictor to a character, the new level would be converted
+#' # to `NA`.
+#' sacr_te$city <- as.character(sacr_te$city)
 #' sacr_te$city[3] <- "beeptown"
 #' sacr_te$city[4] <- "boopville"
+#' sacr_te$city <- as.factor(sacr_te$city)
 #'
 #' rec <- recipe(~ city + zip, data = sacr_tr)
 #'
@@ -63,14 +68,16 @@
 #'
 #' tidy(rec, number = 1)
 step_novel <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           new_level = "new",
-           objects = NULL,
-           skip = FALSE,
-           id = rand_id("novel")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    new_level = "new",
+    objects = NULL,
+    skip = FALSE,
+    id = rand_id("novel")
+  ) {
     add_step(
       recipe,
       step_novel_new(
@@ -116,6 +123,7 @@ get_existing_values <- function(x) {
 prep.step_novel <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("string", "factor", "ordered"))
+  check_string(x$new_level, arg = "new_level")
 
   # Get existing levels and their factor type (i.e. ordered)
   objects <- lapply(training[, col_names], get_existing_values)
@@ -154,7 +162,8 @@ bake.step_novel <- function(object, new_data, ...) {
     )
 
     new_data[[col_name]] <-
-      factor(new_data[[col_name]],
+      factor(
+        new_data[[col_name]],
         levels = c(object$object[[col_name]], object$new_level),
         ordered = attributes(object$object[[col_name]])$is_ordered
       )
