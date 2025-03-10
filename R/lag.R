@@ -159,7 +159,7 @@ bake.step_lag <- function(object, new_data, ...) {
 
     new_values <- tibble::new_tibble(new_values)
     new_values <- check_name(new_values, new_data, object, new_names)
-    new_data <- vctrs::vec_cbind(new_data, new_values)
+    new_data <- vctrs::vec_cbind(new_data, new_values, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)

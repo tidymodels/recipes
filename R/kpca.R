@@ -202,7 +202,7 @@ bake.step_kpca <- function(object, new_data, ...) {
   colnames(comps) <- names0(ncol(comps), object$prefix)
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
-  new_data <- vctrs::vec_cbind(new_data, comps)
+  new_data <- vctrs::vec_cbind(new_data, comps, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }

@@ -377,7 +377,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     colnames(indicators) <- new_names
     indicators <- check_name(indicators, new_data, object, new_names)
 
-    new_data <- vec_cbind(new_data, indicators)
+    new_data <- vec_cbind(new_data, indicators, .name_repair = "minimal")
   }
 
   options(na.action = old_opt)

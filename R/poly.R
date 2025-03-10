@@ -195,7 +195,7 @@ bake.step_poly <- function(object, new_data, ...) {
   }
 
   new_tbl <- check_name(new_tbl, new_data, object, names(new_tbl))
-  new_data <- vec_cbind(new_data, new_tbl)
+  new_data <- vec_cbind(new_data, new_tbl, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }

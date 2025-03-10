@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* Fixed bug where name repaied column names would get changed when baked for some steps. (#1347)
+
 * `recipe()`, `prep()`, and `bake()` now work with sparse tibbles. (#1364, #1366)
 
 * `recipe()`, `prep()`, and `bake()` now work with sparse matrices. (#1364, #1368, #1369)

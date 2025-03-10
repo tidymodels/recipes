@@ -230,7 +230,7 @@ bake.step_isomap <- function(object, new_data, ...) {
     comps <- comps[, seq_len(object$num_terms), drop = FALSE]
     comps <- as_tibble(comps)
     comps <- check_name(comps, new_data, object)
-    new_data <- vec_cbind(new_data, comps)
+    new_data <- vec_cbind(new_data, comps, .name_repair = "minimal")
     new_data <- remove_original_cols(new_data, object, col_names)
   }
 

@@ -149,7 +149,7 @@ bake.step_indicate_na <- function(object, new_data, ...) {
 
   cols <- check_name(cols, new_data, object, names(cols))
 
-  new_data <- vec_cbind(new_data, cols)
+  new_data <- vec_cbind(new_data, cols, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }

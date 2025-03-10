@@ -447,7 +447,7 @@ bake.step_pls <- function(object, new_data, ...) {
   comps <- as_tibble(comps)
   comps <- check_name(comps, new_data, object)
 
-  new_data <- vec_cbind(new_data, comps)
+  new_data <- vec_cbind(new_data, comps, .name_repair = "minimal")
 
   # Old pls never preserved original columns,
   # but didn't have the `preserve` option

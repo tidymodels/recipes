@@ -157,7 +157,7 @@ bake.step_time <- function(object, new_data, ...) {
 
     names(time_values) <- glue::glue("{col_name}_{names(time_values)}")
     time_values <- check_name(time_values, new_data, object, names(time_values))
-    new_data <- vec_cbind(new_data, time_values)
+    new_data <- vec_cbind(new_data, time_values, .name_repair = "minimal")
   }
 
   new_data <- remove_original_cols(new_data, object, col_names)

@@ -386,7 +386,7 @@ bake.step_classdist_shrunken <- function(object, new_data, ...) {
       object$log
     )
   new_cols <- check_name(new_cols, new_data, object, names(new_cols))
-  new_data <- vctrs::vec_cbind(new_data, new_cols)
+  new_data <- vctrs::vec_cbind(new_data, new_cols, .name_repair = "minimal")
   new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
