@@ -1,27 +1,28 @@
 # Platform
 
-|field    |value                                   |
-|:--------|:---------------------------------------|
-|version  |R version 4.4.2 (2024-10-31)            |
-|os       |macOS Sequoia 15.3                      |
-|system   |aarch64, darwin20                       |
-|ui       |X11                                     |
-|language |(EN)                                    |
-|collate  |en_US.UTF-8                             |
-|ctype    |en_US.UTF-8                             |
-|tz       |America/Los_Angeles                     |
-|date     |2025-02-11                              |
-|pandoc   |3.6.1 @ /usr/local/bin/ (via rmarkdown) |
+|field    |value                                    |
+|:--------|:----------------------------------------|
+|version  |R version 4.4.2 (2024-10-31)             |
+|os       |macOS Sequoia 15.3.1                     |
+|system   |aarch64, darwin20                        |
+|ui       |X11                                      |
+|language |(EN)                                     |
+|collate  |en_US.UTF-8                              |
+|ctype    |en_US.UTF-8                              |
+|tz       |America/Los_Angeles                      |
+|date     |2025-03-17                               |
+|pandoc   |3.6.1 @ /usr/local/bin/pandoc            |
+|quarto   |1.6.42 @ /Applications/quarto/bin/quarto |
 
 # Dependencies
 
 |package      |old        |new        |Δ  |
 |:------------|:----------|:----------|:--|
-|recipes      |1.1.0      |1.1.0.9001 |*  |
-|cli          |3.6.3      |3.6.3      |   |
+|recipes      |1.1.1      |1.1.1.9000 |*  |
+|cli          |3.6.4      |3.6.4      |   |
 |clock        |0.7.2      |0.7.2      |   |
-|cpp11        |0.5.1      |0.5.1      |   |
-|data.table   |1.16.4     |1.16.4     |   |
+|cpp11        |0.5.2      |0.5.2      |   |
+|data.table   |1.17.0     |1.17.0     |   |
 |diagram      |1.6.5      |1.6.5      |   |
 |digest       |0.6.37     |0.6.37     |   |
 |dplyr        |1.1.4      |1.1.4      |   |
@@ -32,7 +33,7 @@
 |globals      |0.16.3     |0.16.3     |   |
 |glue         |1.8.0      |1.8.0      |   |
 |gower        |1.0.2      |1.0.2      |   |
-|hardhat      |1.4.1      |1.4.1.9000 |*  |
+|hardhat      |1.4.1      |1.4.1      |   |
 |ipred        |0.9-15     |0.9-15     |   |
 |lava         |1.8.1      |1.8.1      |   |
 |lifecycle    |1.0.4      |1.0.4      |   |
@@ -46,11 +47,11 @@
 |prodlim      |2024.06.25 |2024.06.25 |   |
 |progressr    |0.15.1     |0.15.1     |   |
 |purrr        |1.0.4      |1.0.4      |   |
-|R6           |2.5.1      |2.5.1      |   |
+|R6           |2.6.1      |2.6.1      |   |
 |Rcpp         |1.0.14     |1.0.14     |   |
 |rlang        |1.1.5      |1.1.5      |   |
 |shape        |1.4.6.1    |1.4.6.1    |   |
-|sparsevctrs  |0.2.0      |0.2.0.9000 |*  |
+|sparsevctrs  |0.3.0      |0.3.0.9000 |*  |
 |SQUAREM      |2021.1     |2021.1     |   |
 |stringi      |1.8.4      |1.8.4      |   |
 |stringr      |1.5.1      |1.5.1      |   |
@@ -71,6 +72,6 @@
 |package |version |error |warning |note |
 |:-------|:-------|:-----|:-------|:----|
 |dann    |1.0.0   |1     |        |     |
-|ldmppr  |1.0.3   |1     |        |     |
+|ldmppr  |1.0.4   |1     |        |     |
 |shapr   |1.0.2   |1     |        |     |
 

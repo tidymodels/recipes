@@ -72,10 +72,10 @@ ERROR: compilation failed for package ‘dann’
 
 <details>
 
-* Version: 1.0.3
+* Version: 1.0.4
 * GitHub: https://github.com/lanedrew/ldmppr
 * Source code: https://github.com/cran/ldmppr
-* Date/Publication: 2024-12-02 12:41:19 UTC
+* Date/Publication: 2025-02-24 21:00:02 UTC
 * Number of recursive dependencies: 131
 
 Run `revdepcheck::revdep_details(, "ldmppr")` for more info
