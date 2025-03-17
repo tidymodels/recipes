@@ -57,14 +57,14 @@ test_that("dummy variables with factor inputs", {
       columns = attributes(dummy_trained$steps[[1]]$levels$city)$values,
       id = ""
     ) %>%
-      slice(-1)
+    slice(-1)
   dum_tibble_prepped_2 <-
     tibble(
       terms = "zip",
       columns = attributes(dummy_trained$steps[[1]]$levels$zip)$values,
       id = ""
     ) %>%
-      slice(-1)
+    slice(-1)
   expect_equal(tidy(dummy, 1), dum_tibble)
   expect_equal(
     tidy(dummy_trained, 1),
@@ -443,17 +443,18 @@ test_that("sparse = 'yes' works", {
   expect_true(all(vapply(sparse, sparsevctrs::is_sparse_vector, logical(1))))
 })
 
-test_that("sparse = 'yes' errors on unsupported contrasts", {
+test_that("sparse = 'yes' will go back to 'no' on unsupported contrasts", {
   go_helmert <- getOption("contrasts")
   go_helmert["unordered"] <- "contr.helmert"
   withr::local_options(contrasts = go_helmert)
 
-  expect_snapshot(
-    error = TRUE,
-    recipe(~., data = tibble(x = letters)) %>%
-      step_dummy(x, sparse = "yes") %>%
-      prep()
-  )
+  rec <- recipe(~., data = tibble(x = letters)) %>%
+    step_dummy(x, sparse = "yes") %>%
+    prep()
+
+  res <- bake(rec, tibble(x = letters))
+
+  expect_false(any(vapply(res, sparsevctrs::is_sparse_vector, logical(1))))
 })
 
 test_that("sparse argument is backwards compatible", {
@@ -609,13 +610,13 @@ test_that("bad args", {
   data(Sacramento, package = "modeldata")
 
   expect_snapshot(
-    recipe(~city + sqft + price, data = Sacramento) %>%
+    recipe(~ city + sqft + price, data = Sacramento) %>%
       step_dummy(city, one_hot = 2) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
-    recipe(~city + sqft + price, data = Sacramento) %>%
+    recipe(~ city + sqft + price, data = Sacramento) %>%
       step_dummy(city, naming = NULL) %>%
       prep(),
     error = TRUE
