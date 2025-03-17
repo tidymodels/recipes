@@ -94,9 +94,9 @@ If you really aren't using \code{sample} in your recipe, we recommend that you i
 bake(rec, biomass_test)
 #> Error in `bake()`:
 #> x The following required columns are missing from `new_data`: `sample`.
-#> ℹ These columns have one of the following roles, which are required at `bake()`
+#> i These columns have one of the following roles, which are required at `bake()`
 #>   time: `id variable`.
-#> ℹ If these roles are not required at `bake()` time, use
+#> i If these roles are not required at `bake()` time, use
 #>   `update_role_requirements(role = "your_role", bake = FALSE)`.
 }\if{html}{\out{</div>}}
 
