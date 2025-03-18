@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,12 +26,6 @@
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-learn-more" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Learn more</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-learn-more"><li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for class imbalance</a></li>
-    <li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/models/pls/">Multivariate analysis using partial least squares</a></li>
-    <li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/develop/recipes/">Build your own custom recipe step</a></li>
-  </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -44,9 +38,53 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/tidymodels/recipes/blob/v1.1.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/tidymodels/recipes/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.0" id="recipes-120">recipes 1.2.0<a class="anchor" aria-label="anchor" href="#recipes-120"></a></h2><p class="text-muted">CRAN release: 2025-03-17</p>
+<div class="section level3">
+<h3 id="improvements-1-2-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-2-0"></a></h3>
+<ul><li><p><code><a href="../reference/recipe.html">recipe()</a></code>, <code><a href="../reference/prep.html">prep()</a></code>, and <code><a href="../reference/bake.html">bake()</a></code> now work with sparse tibbles. (<a href="https://github.com/tidymodels/recipes/issues/1364" class="external-link">#1364</a>, <a href="https://github.com/tidymodels/recipes/issues/1366" class="external-link">#1366</a>)</p></li>
+<li><p><code><a href="../reference/recipe.html">recipe()</a></code>, <code><a href="../reference/prep.html">prep()</a></code>, and <code><a href="../reference/bake.html">bake()</a></code> now work with sparse matrices. (<a href="https://github.com/tidymodels/recipes/issues/1364" class="external-link">#1364</a>, <a href="https://github.com/tidymodels/recipes/issues/1368" class="external-link">#1368</a>, <a href="https://github.com/tidymodels/recipes/issues/1369" class="external-link">#1369</a>)</p></li>
+<li>
+<p>The following steps has gained the argument <code>sparse</code>. When set to <code>"yes"</code>, they will produce sparse vectors. (<a href="https://github.com/tidymodels/recipes/issues/1392" class="external-link">#1392</a>)</p>
+<ul><li><code><a href="../reference/step_count.html">step_count()</a></code></li>
+<li><code><a href="../reference/step_dummy_extract.html">step_dummy_extract()</a></code></li>
+<li><code><a href="../reference/step_dummy_multi_choice.html">step_dummy_multi_choice()</a></code></li>
+<li><code><a href="../reference/step_dummy.html">step_dummy()</a></code></li>
+<li><code><a href="../reference/step_dummy.html">step_dummy()</a></code></li>
+<li><code><a href="../reference/step_holiday.html">step_holiday()</a></code></li>
+<li><code><a href="../reference/step_indicate_na.html">step_indicate_na()</a></code></li>
+<li><code><a href="../reference/step_regex.html">step_regex()</a></code></li>
+</ul></li>
+<li>
+<p>The following steps have been modified to preserve sparsity in its input. (<a href="https://github.com/tidymodels/recipes/issues/1395" class="external-link">#1395</a>)</p>
+<ul><li><code><a href="../reference/step_arrange.html">step_arrange()</a></code></li>
+<li><code><a href="../reference/step_filter_missing.html">step_filter_missing()</a></code></li>
+<li><code><a href="../reference/step_filter.html">step_filter()</a></code></li>
+<li><code><a href="../reference/step_impute_mean.html">step_impute_mean()</a></code></li>
+<li><code><a href="../reference/step_impute_median.html">step_impute_median()</a></code></li>
+<li><code><a href="../reference/step_lag.html">step_lag()</a></code></li>
+<li><code><a href="../reference/step_lag.html">step_lag()</a></code></li>
+<li><code><a href="../reference/step_rename_at.html">step_rename_at()</a></code></li>
+<li><code><a href="../reference/step_rename.html">step_rename()</a></code></li>
+<li><code><a href="../reference/step_rm.html">step_rm()</a></code></li>
+<li><code><a href="../reference/step_sample.html">step_sample()</a></code></li>
+<li><code><a href="../reference/step_scale.html">step_scale()</a></code></li>
+<li><code><a href="../reference/step_select.html">step_select()</a></code></li>
+<li><code><a href="../reference/step_shuffle.html">step_shuffle()</a></code></li>
+<li><code><a href="../reference/step_slice.html">step_slice()</a></code></li>
+<li><code><a href="../reference/step_sqrt.html">step_sqrt()</a></code></li>
+<li><code><a href="../reference/step_zv.html">step_zv()</a></code></li>
+</ul></li>
+<li><p>All steps and checks now require arguments <code>trained</code>, <code>skip</code>, <code>role</code>, and <code>id</code> at all times. (<a href="https://github.com/tidymodels/recipes/issues/1387" class="external-link">#1387</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-2-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h3>
+<ul><li>Fixed bug where name repaired column names would get changed when baked for some steps. (<a href="https://github.com/tidymodels/recipes/issues/1347" class="external-link">#1347</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.1" id="recipes-111">recipes 1.1.1<a class="anchor" aria-label="anchor" href="#recipes-111"></a></h2><p class="text-muted">CRAN release: 2025-02-12</p>
 <div class="section level3">

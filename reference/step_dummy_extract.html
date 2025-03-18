@@ -11,7 +11,7 @@ model terms for the extracted levels."><meta property="og:image" content="https:
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,12 +30,6 @@ model terms for the extracted levels."><meta property="og:image" content="https:
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-learn-more" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Learn more</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-learn-more"><li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for class imbalance</a></li>
-    <li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/models/pls/">Multivariate analysis using partial least squares</a></li>
-    <li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/develop/recipes/">Build your own custom recipe step</a></li>
-  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -48,7 +42,7 @@ model terms for the extracted levels."><meta property="og:image" content="https:
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Extract patterns from nominal data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/v1.1.1/R/dummy_extract.R" class="external-link"><code>R/dummy_extract.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/R/dummy_extract.R" class="external-link"><code>R/dummy_extract.R</code></a></small>
       <div class="d-none name"><code>step_dummy_extract.Rd</code></div>
     </div>
 
@@ -71,6 +65,7 @@ model terms for the extracted levels.</p>
 <span>  other <span class="op">=</span> <span class="st">"other"</span>,</span>
 <span>  naming <span class="op">=</span> <span class="va">dummy_extract_names</span>,</span>
 <span>  levels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sparse <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  keep_original_cols <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  skip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="rand_id.html">rand_id</a></span><span class="op">(</span><span class="st">"dummy_extract"</span><span class="op">)</span></span>
@@ -137,6 +132,12 @@ variables for each variable contained in <code>terms</code>. This is <code>NULL<
 step is trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
+<dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
+<dd><p>A single string. Should the columns produced be sparse vectors.
+Can take the values <code>"yes"</code>, <code>"no"</code>, and <code>"auto"</code>. If <code>sparse = "auto"</code>
+then workflows can determine the best option. Defaults to <code>"auto"</code>.</p></dd>
+
+
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
 <dd><p>A logical to keep the original variables in the
 output. Defaults to <code>FALSE</code>.</p></dd>
@@ -192,6 +193,20 @@ columns <code>terms</code>, <code>columns</code> , and <code>id</code>:</p>
 
 
 </dl><p>The return value is ordered according to the frequency of <code>columns</code> entries in the training data set.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="sparse-data">Sparse data<a class="anchor" aria-label="anchor" href="#sparse-data"></a></h2>
+
+
+
+<p>This step produces sparse columns if <code>sparse = "yes"</code> is being set. The
+default value <code>"auto"</code> won't trigger production fo sparse columns if a recipe
+is <code><a href="prep.html">prep()</a></code>ed, but allows for a workflow to toggle to <code>"yes"</code> or <code>"no"</code>
+depending on whether the model supports <a href="sparse_data.html">sparse_data</a> and if the model is
+is expected to run faster with the data.</p>
+<p>The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+<code>sparse = "yes"</code> or <code>sparse = "no"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="case-weights">Case weights<a class="anchor" aria-label="anchor" href="#case-weights"></a></h2>

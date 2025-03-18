@@ -11,7 +11,7 @@ could be used."><meta property="og:image" content="https://recipes.tidymodels.or
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,12 +30,6 @@ could be used."><meta property="og:image" content="https://recipes.tidymodels.or
     <li><hr class="dropdown-divider"></li>
     <li><a class="dropdown-item" href="../articles/index.html">More articles...</a></li>
   </ul></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-learn-more" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Learn more</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-learn-more"><li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/models/sub-sampling/">Subsampling for class imbalance</a></li>
-    <li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/models/pls/">Multivariate analysis using partial least squares</a></li>
-    <li><a class="external-link dropdown-item" href="https://www.tidymodels.org/learn/develop/recipes/">Build your own custom recipe step</a></li>
-  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -48,7 +42,7 @@ could be used."><meta property="og:image" content="https://recipes.tidymodels.or
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Create a formula from a prepared recipe</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/v1.1.1/R/formula.R" class="external-link"><code>R/formula.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/recipes/blob/main/R/formula.R" class="external-link"><code>R/formula.R</code></a></small>
       <div class="d-none name"><code>formula.recipe.Rd</code></div>
     </div>
 
@@ -86,14 +80,14 @@ could be used.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">+</span> <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x558c40ce1fc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c34d2f48e8&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">iris_rec</span> <span class="op">&lt;-</span> <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">iris_rec</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x558c39643380&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c348181228&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

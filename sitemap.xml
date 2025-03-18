@@ -31,6 +31,7 @@
 <url><loc>https://recipes.tidymodels.org/reference/developer_functions.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/discretize.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/dot-recipes_estimate_sparsity.html</loc></url>
+<url><loc>https://recipes.tidymodels.org/reference/dot-recipes_preserve_sparsity.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/dot-recipes_toggle_sparse_args.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/fixed.html</loc></url>
 <url><loc>https://recipes.tidymodels.org/reference/format_ch_vec.html</loc></url>
