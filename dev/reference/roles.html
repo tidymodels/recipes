@@ -17,7 +17,7 @@ remove_role() eliminates a single existing role in the recipe."><meta property="
 
     <a class="navbar-brand me-2" href="../index.html">recipes</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,10 +146,10 @@ all of the variables that have a custom role with the selector <code><a href="ha
 <span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">rec</span>, <span class="va">biomass_test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `bake()`:</span></span>
-<span><span class="co">#&gt; ✖ The following required columns are missing from `new_data`: `sample`.</span></span>
-<span><span class="co">#&gt; ℹ These columns have one of the following roles, which are required at `bake()`</span></span>
+<span><span class="co">#&gt; x The following required columns are missing from `new_data`: `sample`.</span></span>
+<span><span class="co">#&gt; i These columns have one of the following roles, which are required at `bake()`</span></span>
 <span><span class="co">#&gt;   time: `id variable`.</span></span>
-<span><span class="co">#&gt; ℹ If these roles are not required at `bake()` time, use</span></span>
+<span><span class="co">#&gt; i If these roles are not required at `bake()` time, use</span></span>
 <span><span class="co">#&gt;   `update_role_requirements(role = "your_role", bake = FALSE)`.</span></span></code></pre><p></p></div>
 <p>As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the <code>sample</code> column from <code>biomass</code> before calling <code><a href="recipe.html">recipe()</a></code>. In general, predictors and non-standard roles that are supplied to <code><a href="recipe.html">recipe()</a></code> should be present at both <code><a href="prep.html">prep()</a></code> and <code><a href="bake.html">bake()</a></code> time.</p>
 <p>If you can't remove <code>sample</code> for some reason, then the second best way to get around this issue is to tell recipes that the <code>"id variable"</code> role isn't required at <code><a href="bake.html">bake()</a></code> time. You can do that by using <code><a href="update_role_requirements.html">update_role_requirements()</a></code>:</p>
