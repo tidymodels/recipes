@@ -211,7 +211,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     for (i in seq_along(col_names)) {
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form <- stats::update.formula(form, ~. - 1)
+        form <- stats::update.formula(form, ~ . - 1)
       }
       terms <- model.frame(
         formula = form,
@@ -317,16 +317,15 @@ bake.step_dummy <- function(object, new_data, ...) {
       ordered = is_ordered
     )
 
-    if (sparse_is_yes(object$sparse)) {
-      current_contrast <- getOption("contrasts")[is_ordered + 1]
-      if (!current_contrast %in% c("contr.treatment", "contr_one_hot")) {
-        cli::cli_abort(
-          "When {.code sparse = TRUE}, only {.val contr.treatment} and
-          {.val contr_one_hot} contrasts are supported, not
-          {.val {current_contrast}}."
-        )
-      }
+    current_contrast <- getOption("contrasts")[is_ordered + 1]
+    if (
+      !current_contrast %in% c("contr.treatment", "contr_one_hot") &&
+        sparse_is_yes(object$sparse)
+    ) {
+      object$sparse <- FALSE
+    }
 
+    if (sparse_is_yes(object$sparse)) {
       indicators <- sparsevctrs::sparse_dummy(
         x = new_data[[col_name]],
         one_hot = object$one_hot
