@@ -150,6 +150,10 @@ NULL
 #'   Defaults to `TRUE`. This is rarely changed and only needed in [juice()],
 #'   [bake.recipe()], [update_role()], and [add_role()].
 #'
+#' @param strict Should selecting non-existing names throw an error?
+#'   Defaults to `TRUE`. This is rarely changed and only needed in
+#'   `.recipes_estimate_sparsity.recipe()``.
+#'
 #' @param call The execution environment of a currently running function, e.g.
 #'   `caller_env()`. The function will be mentioned in error messages as the
 #'   source of the error. See the call argument of [rlang::abort()] for more
@@ -182,6 +186,7 @@ recipes_eval_select <- function(
   ...,
   allow_rename = FALSE,
   check_case_weights = TRUE,
+  strict = TRUE,
   call = caller_env()
 ) {
   check_dots_empty()
@@ -228,6 +233,7 @@ recipes_eval_select <- function(
     expr = expr,
     data = data,
     allow_rename = allow_rename,
+    strict = strict,
     error_call = call
   )
 
@@ -316,7 +322,7 @@ recipes_eval_select <- function(
 has_role <- function(match = "predictor") {
   roles <- peek_roles()
   # roles is potentially a list columns so we unlist `.x` below.
-  lgl_matches <- purrr::map_lgl(roles, ~any(unlist(.x) %in% match))
+  lgl_matches <- purrr::map_lgl(roles, ~ any(unlist(.x) %in% match))
   which(lgl_matches)
 }
 
@@ -324,7 +330,7 @@ has_role <- function(match = "predictor") {
 #' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
-  lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
+  lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
   which(lgl_matches)
 }
 
@@ -338,7 +344,7 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~unlist(.x[[col]]))
+  purrr::map(.data, ~ unlist(.x[[col]]))
 }
 
 #' @export
