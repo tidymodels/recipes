@@ -1,26 +1,26 @@
 # Platform
 
-|field    |value                                    |
-|:--------|:----------------------------------------|
-|version  |R version 4.4.2 (2024-10-31)             |
-|os       |macOS Sequoia 15.3.1                     |
-|system   |aarch64, darwin20                        |
-|ui       |X11                                      |
-|language |(EN)                                     |
-|collate  |en_US.UTF-8                              |
-|ctype    |en_US.UTF-8                              |
-|tz       |America/Los_Angeles                      |
-|date     |2025-03-17                               |
-|pandoc   |3.6.1 @ /usr/local/bin/pandoc            |
-|quarto   |1.6.42 @ /Applications/quarto/bin/quarto |
+|field    |value                                   |
+|:--------|:---------------------------------------|
+|version  |R version 4.4.2 (2024-10-31)            |
+|os       |macOS Sequoia 15.3.2                    |
+|system   |aarch64, darwin20                       |
+|ui       |X11                                     |
+|language |(EN)                                    |
+|collate  |en_US.UTF-8                             |
+|ctype    |en_US.UTF-8                             |
+|tz       |America/Los_Angeles                     |
+|date     |2025-03-25                              |
+|pandoc   |3.6.1 @ /usr/local/bin/ (via rmarkdown) |
+|quarto   |1.6.42 @ /usr/local/bin/quarto          |
 
 # Dependencies
 
 |package      |old        |new        |Δ  |
 |:------------|:----------|:----------|:--|
-|recipes      |1.1.1      |1.1.1.9000 |*  |
+|recipes      |1.2.0      |1.2.0.9000 |*  |
 |cli          |3.6.4      |3.6.4      |   |
-|clock        |0.7.2      |0.7.2      |   |
+|clock        |0.7.3      |0.7.3      |   |
 |cpp11        |0.5.2      |0.5.2      |   |
 |data.table   |1.17.0     |1.17.0     |   |
 |diagram      |1.6.5      |1.6.5      |   |
@@ -41,7 +41,7 @@
 |lubridate    |1.9.4      |1.9.4      |   |
 |magrittr     |2.0.3      |2.0.3      |   |
 |numDeriv     |2016.8-1.1 |2016.8-1.1 |   |
-|parallelly   |1.42.0     |1.42.0     |   |
+|parallelly   |1.43.0     |1.43.0     |   |
 |pillar       |1.10.1     |1.10.1     |   |
 |pkgconfig    |2.0.3      |2.0.3      |   |
 |prodlim      |2024.06.25 |2024.06.25 |   |
@@ -51,7 +51,7 @@
 |Rcpp         |1.0.14     |1.0.14     |   |
 |rlang        |1.1.5      |1.1.5      |   |
 |shape        |1.4.6.1    |1.4.6.1    |   |
-|sparsevctrs  |0.3.0      |0.3.0.9000 |*  |
+|sparsevctrs  |0.3.2      |0.3.2      |   |
 |SQUAREM      |2021.1     |2021.1     |   |
 |stringi      |1.8.4      |1.8.4      |   |
 |stringr      |1.5.1      |1.5.1      |   |
@@ -60,18 +60,19 @@
 |tidyselect   |1.2.1      |1.2.1      |   |
 |timechange   |0.3.0      |0.3.0      |   |
 |timeDate     |4041.110   |4041.110   |   |
-|tzdb         |0.4.0      |0.4.0      |   |
+|tzdb         |0.5.0      |0.5.0      |   |
 |utf8         |1.2.4      |1.2.4      |   |
 |vctrs        |0.6.5      |0.6.5      |   |
 |withr        |3.0.2      |3.0.2      |   |
 
 # Revdeps
 
-## Failed to check (3)
+## Failed to check (4)
 
 |package |version |error |warning |note |
 |:-------|:-------|:-----|:-------|:----|
 |dann    |1.0.0   |1     |        |     |
 |ldmppr  |1.0.4   |1     |        |     |
+|orbital |0.3.0   |1     |        |     |
 |shapr   |1.0.2   |1     |        |     |
 

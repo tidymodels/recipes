@@ -138,6 +138,25 @@ ERROR: compilation failed for package ‘ldmppr’
 
 
 ```
+# orbital
+
+<details>
+
+* Version: 0.3.0
+* GitHub: https://github.com/tidymodels/orbital
+* Source code: https://github.com/cran/orbital
+* Date/Publication: 2024-12-22 02:00:02 UTC
+* Number of recursive dependencies: 213
+
+Run `revdepcheck::revdep_details(, "orbital")` for more info
+
+</details>
+
+## In both
+
+*   R CMD check timed out
+    
+
 # shapr
 
 <details>
