@@ -296,7 +296,19 @@ print.step_geodist <-
       format(x$ref_lon, digits = 10),
       "using "
     )
-    print_step(x$columns, c(x$lat, x$lon), x$trained, title, width)
+    untr_obj <- c(x$lat, x$lon)
+
+    if (
+      all(vapply(
+        untr_obj,
+        function(obj) quo_is_null(obj),
+        FUN.VALUE = logical(1)
+      ))
+    ) {
+      untr_obj <- NULL
+    }
+
+    print_step(x$columns, untr_obj, x$trained, title, width)
     invisible(x)
   }
 
