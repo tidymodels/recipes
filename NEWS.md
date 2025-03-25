@@ -1,4 +1,4 @@
-# recipes (development version)
+# recipes 1.2.1
 
 ## Bug Fixes
 
