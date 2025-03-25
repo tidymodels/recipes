@@ -186,7 +186,7 @@
       predictor: 10
       
       -- Operations 
-      * Geographical distances from 0.5 x 0.25 using: NULL NULL
+      * Geographical distances from 0.5 x 0.25 using: <none>
 
 ---
 
