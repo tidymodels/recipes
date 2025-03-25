@@ -382,3 +382,12 @@
       x `x` should be a data frame, matrix, formula, or tibble.
       i `x` is an empty list.
 
+# recipe() error for table input (#1416)
+
+    Code
+      recipe(Titanic, Survived ~ .)
+    Condition
+      Error in `recipe()`:
+      x `x` should be a data frame, matrix, formula, or tibble.
+      i `x` is a <table> object.
+
