@@ -67,6 +67,7 @@ for more information about the unique recipes selectors.</p>
 <span>  <span class="va">...</span>,</span>
 <span>  allow_rename <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_case_weights <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  strict <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -107,6 +108,12 @@ It is unlikely that your step will need renaming capabilities.</p></dd>
 <dd><p>Should selecting case weights throw an error?
 Defaults to <code>TRUE</code>. This is rarely changed and only needed in <code><a href="juice.html">juice()</a></code>,
 <code><a href="bake.html">bake.recipe()</a></code>, <code><a href="roles.html">update_role()</a></code>, and <code><a href="roles.html">add_role()</a></code>.</p></dd>
+
+
+<dt id="arg-strict">strict<a class="anchor" aria-label="anchor" href="#arg-strict"></a></dt>
+<dd><p>Should selecting non-existing names throw an error?
+Defaults to <code>TRUE</code>. This is rarely changed and only needed in
+`.recipes_estimate_sparsity.recipe()“.</p></dd>
 
 
 <dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>
