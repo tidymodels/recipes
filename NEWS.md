@@ -1,5 +1,7 @@
 # recipes (development version)
 
+* fixed bug where sparsity creation steps error if applied to variables created by other steps. (#1448)
+
 # recipes 1.2.0
 
 ## Improvements

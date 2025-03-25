@@ -97,7 +97,12 @@ is_sparse_matrix <- function(x) {
 
   for (step in x$steps) {
     if (!is.null(step$sparse) && step$sparse != "no") {
-      col_names <- recipes_eval_select(step$terms, template, x$term_info)
+      col_names <- recipes_eval_select(
+        step$terms,
+        template,
+        x$term_info,
+        strict = FALSE
+      )
 
       adjustments <- .recipes_estimate_sparsity(step, template[col_names])
 
