@@ -325,10 +325,20 @@ test_that(".recipes_toggle_sparse_args works", {
 })
 
 test_that(".recipes_toggle_sparse_args works", {
-  rec <- recipe(~., mtcars) |>
+  rec <- recipe(~., mtcars) %>%
     step_dummy()
 
   expect_false(
     .recipes_preserve_sparsity(rec$steps[[1]])
+  )
+})
+
+test_that(".recipes_estimate_sparsity doesn't error on created vars (#1448)", {
+  rec <- recipe(~., iris) %>%
+    step_mutate(Species2 = Species) %>%
+    step_dummy(Species2)
+
+  expect_no_error(
+    .recipes_estimate_sparsity(rec)
   )
 })

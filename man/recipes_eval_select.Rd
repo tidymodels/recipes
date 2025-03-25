@@ -11,6 +11,7 @@ recipes_eval_select(
   ...,
   allow_rename = FALSE,
   check_case_weights = TRUE,
+  strict = TRUE,
   call = caller_env()
 )
 }
@@ -36,6 +37,10 @@ It is unlikely that your step will need renaming capabilities.}
 \item{check_case_weights}{Should selecting case weights throw an error?
 Defaults to \code{TRUE}. This is rarely changed and only needed in \code{\link[=juice]{juice()}},
 \code{\link[=bake.recipe]{bake.recipe()}}, \code{\link[=update_role]{update_role()}}, and \code{\link[=add_role]{add_role()}}.}
+
+\item{strict}{Should selecting non-existing names throw an error?
+Defaults to \code{TRUE}. This is rarely changed and only needed in
+`.recipes_estimate_sparsity.recipe()``.}
 
 \item{call}{The execution environment of a currently running function, e.g.
 \code{caller_env()}. The function will be mentioned in error messages as the
