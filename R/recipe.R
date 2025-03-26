@@ -1,198 +1,173 @@
-#' Create a Recipe for Preprocessing Data
+#' Create a recipe for preprocessing data
 #'
-#' A recipe is a description of what steps should be applied to a data set in
-#'   order to get it ready for data analysis.
+#' A recipe is a description of the steps to be applied to a data set in order
+#' to prepare it for data analysis.
 #'
-#' @aliases recipe recipe.default recipe.formula
-#' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
-#' @export
-recipe <- function(x, ...)
-  UseMethod("recipe")
-
-#' @rdname recipe
-#' @export
-recipe.default <- function(x, ...)
-  rlang::abort("`x` should be a data frame, matrix, or tibble")
-
-#' @rdname recipe
-#' @param strings_as_factors A logical: should character columns be converted to
+#' @param x,data A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package of the *template* data set. See [sparse_data] for more information
+#'   about use of sparse data. (see below).
+#' @param ... Further arguments passed to or from other methods (not currently
+#'   used).
+#' @param formula A model formula. No in-line functions should be used here
+#'   (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types
+#'   of transformations should be enacted using `step` functions in this
+#'   package. Dots are allowed as are simple multivariate outcome terms (i.e. no
+#'   need for [cbind()]; see Examples). A model formula may not be the best
+#'   choice for high-dimensional data with many columns, because of problems
+#'   with memory.
+#' @param vars A character string of column names corresponding to variables
+#'   that will be used in any context (see below)
+#' @param roles A character string (the same length of `vars`) that describes a
+#'   single role that the variable will take. This value could be anything but
+#'   common roles are `"outcome"`, `"predictor"`, `"case_weight"`, or `"ID"`.
+#' @param strings_as_factors A logical, should character columns be converted to
 #'   factors? This affects the preprocessed training set (when retain = TRUE) as
-#'   well as the results of both `prep.recipe()` and `bake.recipe()`. In 0.1.16
+#'   well as the results of both `prep.recipe()` and `bake.recipe()`. In 1.2.1
 #'   and prior versions, this argument was provided via `prep()`. Code which
 #'   only provides it via `prep()` will continue to work with a once per session
 #'   warning, and in a future version it will become an error. If provided in
 #'   both `prep()` and `recipe()`, the value in `recipe()` will take precedence.
-#' @param vars A character string of column names corresponding to variables
-#'   that will be used in any context (see below)
-#' @param roles A character string (the same length of `vars`) that
-#'   describes a single role that the variable will take. This value could be
-#'   anything but common roles are `"outcome"`, `"predictor"`,
-#'   `"case_weight"`, or `"ID"`
-#' @param ... Further arguments passed to or from other methods (not currently
-#'   used).
-#' @param formula A model formula. No in-line functions should be used here
-#'  (e.g. `log(x)`, `x:y`, etc.) and minus signs are not allowed. These types of
-#'  transformations should be enacted using `step` functions in this package.
-#'  Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-#'  `cbind`; see Examples). A model formula may not be the best choice for
-#'  high-dimensional data with many columns, because of problems with memory.
-#' @param x,data A data frame or tibble of the *template* data set
-#'   (see below).
-#' @return An object of class `recipe` with sub-objects:
-#'   \item{var_info}{A tibble containing information about the original data
-#'   set columns}
-#'   \item{term_info}{A tibble that contains the current set of terms in the
-#'   data set. This initially defaults to the same data contained in
-#'   `var_info`.}
-#'   \item{steps}{A list of `step`  or `check` objects that define the sequence of
-#'   preprocessing operations that will be applied to data. The default value is
-#'   `NULL`}
-#'   \item{template}{A tibble of the data. This is initialized to be the same
-#'   as the data given in the `data` argument but can be different after
-#'   the recipe is trained.}
 #'
-#' @details Recipes are alternative methods for creating design matrices and
-#'   for preprocessing data.
+#' @includeRmd man/rmd/recipes.Rmd details
 #'
-#' Variables in recipes can have any type of *role* in subsequent analyses
-#'   such as: outcome, predictor, case weights, stratification variables, etc.
+#' @return
 #'
-#' `recipe` objects can be created in several ways. If the analysis only
-#'   contains outcomes and predictors, the simplest way to create one is to use
-#'   a simple formula (e.g. `y ~ x1 + x2`) that does not contain inline
-#'   functions such as `log(x3)`. An example is given below.
+#' An object of class `recipe` with sub-objects:
+#' \item{var_info}{A tibble containing information about the original data set
+#' columns.}
+#' \item{term_info}{A tibble that contains the current set of terms in the
+#' data set. This initially defaults to the same data contained in
+#' `var_info`.}
+#' \item{steps}{A list of `step` or `check` objects that define the sequence
+#' of preprocessing operations that will be applied to data. The default value
+#' is `NULL`.}
+#' \item{template}{A tibble of the data. This is initialized to be the same as
+#' the data given in the `data` argument but can be different after the recipe
+#' is trained.}
 #'
-#' Alternatively, a `recipe` object can be created by first specifying
-#'   which variables in a data set should be used and then sequentially
-#'   defining their roles (see the last example). This alternative is an
-#'   excellent choice when the number of variables is very high, as the
-#'   formula method is memory-inefficient with many variables.
+#' @seealso [prep()] and [bake()]
 #'
-#' There are two different types of operations that can be
-#'  sequentially added to a recipe. **Steps**  can include common
-#'  operations like logging a variable, creating dummy variables or
-#'  interactions and so on. More computationally complex actions
-#'  such as dimension reduction or imputation can also be specified.
-#'  **Checks** are operations that conduct specific tests of the
-#'  data. When the test is satisfied, the data are returned without
-#'  issue or modification. Otherwise, any error is thrown.
-#'
-#' Once a recipe has been defined, the [prep()] function can be
-#'  used to estimate quantities required for the operations using a
-#'  data set (a.k.a. the training data). [prep()] returns another
-#'  recipe.
-#'
-#' To apply the recipe to a data set, the [bake()] function is
-#'   used in the same manner as `predict` would be for models. This
-#'   applies the steps to any data set.
-#'
-#' Note that the data passed to `recipe` need not be the complete data
-#'   that will be used to train the steps (by [prep()]). The recipe
-#'   only needs to know the names and types of data that will be used. For
-#'   large data sets, `head` could be used to pass the recipe a smaller
-#'   data set to save time and memory.
-#'
-#' @export
-#' @examples
-#'
-#' ###############################################
-#' # simple example:
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' # formula example with single outcome:
+#' data(biomass, package = "modeldata")
 #'
 #' # split data
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' # When only predictors and outcomes, a simplified formula can be used.
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' # With only predictors and outcomes, use a formula
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
-#' # Now add preprocessing steps to the recipe.
-#'
+#' # Now add preprocessing steps to the recipe
 #' sp_signed <- rec %>%
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_spatialsign(all_numeric_predictors())
 #' sp_signed
 #'
-#' # now estimate required parameters
-#' sp_signed_trained <- prep(sp_signed, training = biomass_tr)
-#' sp_signed_trained
-#'
-#' # apply the preprocessing to a data set
-#' test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
-#'
-#' # or use pipes for the entire workflow:
-#' rec <- biomass_tr %>%
-#'   recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) %>%
-#'   step_normalize(all_numeric_predictors()) %>%
-#'   step_spatialsign(all_numeric_predictors())
-#'
-#' ###############################################
-#' # multivariate example
-#'
+#' # ---------------------------------------------------------------------------
+#' # formula multivariate example:
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
+#'
 #' multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
-#'                   data = biomass_tr)
+#'   data = biomass_tr
+#' )
 #' multi_y <- multi_y %>%
 #'   step_center(all_numeric_predictors()) %>%
 #'   step_scale(all_numeric_predictors())
 #'
-#' multi_y_trained <- prep(multi_y, training = biomass_tr)
-#'
-#' results <- bake(multi_y_trained, biomass_te)
-#'
-#' ###############################################
-#' # example with manually updating different roles
-#'
-#' # best choice for high-dimensional data:
+#' # ---------------------------------------------------------------------------
+#' # example using `update_role` instead of formula:
+#' # best choice for high-dimensional data
 #'
 #' rec <- recipe(biomass_tr) %>%
 #'   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-#'            new_role = "predictor") %>%
+#'     new_role = "predictor"
+#'   ) %>%
 #'   update_role(HHV, new_role = "outcome") %>%
 #'   update_role(sample, new_role = "id variable") %>%
 #'   update_role(dataset, new_role = "splitting indicator")
 #' rec
-recipe.data.frame <-
-  function(x,
-           formula = NULL,
-           ...,
-           vars = NULL,
-           roles = NULL,
-           strings_as_factors = NULL) {
+#' @export
+recipe <- function(x, ...) {
+  UseMethod("recipe")
+}
 
+#' @rdname recipe
+#' @export
+recipe.default <- function(x, ...) {
+  # Doing this here since it should work for all types of Matrix classes
+  if (is_sparse_matrix(x)) {
+    x <- sparsevctrs::coerce_to_sparse_tibble(x, call = caller_env(0))
+    return(recipe(x, ...))
+  }
+
+  cli::cli_abort(
+    c(
+      x = "{.arg x} should be a data frame, matrix, formula, or tibble.",
+      i = "{.arg x} is {.obj_type_friendly {x}}."
+    )
+  )
+}
+
+#' @rdname recipe
+#' @export
+recipe.data.frame <-
+  function(
+    x,
+    formula = NULL,
+    ...,
+    vars = NULL,
+    roles = NULL,
+    strings_as_factors = NULL
+  ) {
     if (!is.null(formula)) {
-      if (!is.null(vars))
-        rlang::abort(
-          paste0("This `vars` specification will be ignored ",
-             "when a formula is used"
-             )
-          )
-      if (!is.null(roles))
-        rlang::abort(
-          paste0("This `roles` specification will be ignored ",
-             "when a formula is used"
-             )
-          )
+      if (!is.null(vars)) {
+        cli::cli_abort(
+          "The {.arg vars} argument will be ignored when a formula is used."
+        )
+      }
+      if (!is.null(roles)) {
+        cli::cli_abort(
+          "The {.arg roles} argument will be ignored when a formula is used."
+        )
+      }
 
       obj <- recipe.formula(formula, x, ...)
       return(obj)
     }
 
-    if (is.null(vars))
+    if (is.null(vars)) {
       vars <- colnames(x)
+    }
 
-    if (!is_tibble(x))
+    if (!is_tibble(x)) {
       x <- as_tibble(x)
+    }
 
-    if (any(table(vars) > 1))
-      rlang::abort("`vars` should have unique members")
-    if (any(!(vars %in% colnames(x))))
-      rlang::abort("1+ elements of `vars` are not in `x`")
+    if (any(table(vars) > 1)) {
+      offenders <- vctrs::vec_count(vars)
+      offenders <- offenders$key[offenders$count != 1]
+
+      cli::cli_abort(
+        c(
+          x = "{.arg vars} must have unique values.",
+          i = "The following values were duplicated: {.and {.field {offenders}}}."
+        )
+      )
+    }
+    if (any(!(vars %in% colnames(x)))) {
+      offenders <- vars[!(vars %in% colnames(x))]
+
+      cli::cli_abort(
+        c(
+          x = "The following elements of {.arg vars} are not found in {.arg x}:",
+          "*" = "{.and {.field {offenders}}}."
+        )
+      )
+    }
 
     x <- x[, vars]
 
@@ -200,18 +175,33 @@ recipe.data.frame <-
 
     ## Check and add roles when available
     if (!is.null(roles)) {
-      if (length(roles) != length(vars))
-        rlang::abort(
-          paste0("The number of roles should be the same as the number of ",
-             "variables")
+      if (length(roles) != length(vars)) {
+        cli::cli_abort(
+          c(
+            x = "{.arg vars} and {.arg roles} must have same length.",
+            "*" = "{.arg vars} has length {length(vars)}",
+            "*" = "{.arg roles} has length {length(roles)}"
+          )
         )
+      }
       var_info$role <- roles
-    } else
-      var_info$role <- NA
+    } else {
+      var_info$role <- NA_character_
+    }
 
     ## Add types
     var_info <- full_join(get_types(x), var_info, by = "variable")
     var_info$source <- "original"
+
+    # assign case weights
+    case_weights_cols <- map_lgl(x, hardhat::is_case_weights)
+    case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+    if (case_weights_n > 1) {
+      too_many_case_weights(names(case_weights_cols)[case_weights_cols])
+    }
+    var_info$role[case_weights_cols] <- "case_weights"
+
+    requirements <- new_role_requirements()
 
     ## Return final object of class `recipe`
     out <- list(
@@ -221,6 +211,8 @@ recipe.data.frame <-
       template = x,
       levels = NULL,
       retained = NA,
+      requirements = requirements,
+      ptype = vctrs::vec_ptype(x),
       strings_as_factors = strings_as_factors
     )
     class(out) <- "recipe"
@@ -230,10 +222,34 @@ recipe.data.frame <-
 #' @rdname recipe
 #' @export
 recipe.formula <- function(formula, data, ...) {
+  if (rlang::is_missing(data)) {
+    cli::cli_abort("{.arg data} is missing with no default.")
+  }
+
+  if (!is.data.frame(data) && !is.matrix(data) && !is_sparse_matrix(data)) {
+    cli::cli_abort(
+      "{.arg data} must be a data frame, matrix, or sparse matrix, 
+      not {.obj_type_friendly {data}}."
+    )
+  }
+
   # check for minus:
-  f_funcs <- fun_calls(formula)
+  f_funcs <- fun_calls(formula, data)
   if (any(f_funcs == "-")) {
-    rlang::abort("`-` is not allowed in a recipe formula. Use `step_rm()` instead.")
+    cli::cli_abort(
+      c(
+        "x" = "{.code -} is not allowed in a recipe formula.",
+        "i" = "Use {.help [{.fun step_rm}](recipes::step_rm)} instead."
+      )
+    )
+  }
+
+  if (is_sparse_matrix(data)) {
+    data <- sparsevctrs::coerce_to_sparse_tibble(data, call = caller_env(0))
+  }
+
+  if (!is_tibble(data)) {
+    data <- as_tibble(data)
   }
 
   # Check for other in-line functions
@@ -255,15 +271,13 @@ recipe.matrix <- function(x, ...) {
   recipe.data.frame(x, ...)
 }
 
-form2args <- function(formula, data, ...) {
-  if (!is_formula(formula))
+form2args <- function(formula, data, ..., call = rlang::caller_env()) {
+  if (!rlang::is_formula(formula)) {
     formula <- as.formula(formula)
+  }
 
   ## check for in-line formulas
-  inline_check(formula)
-
-  if (!is_tibble(data))
-    data <- as_tibble(data)
+  inline_check(formula, data, call)
 
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
@@ -280,88 +294,107 @@ form2args <- function(formula, data, ...) {
 
   ## derive roles
   roles <- rep("predictor", length(predictors))
-  if (length(outcomes) > 0)
+  if (length(outcomes) > 0) {
     roles <- c(roles, rep("outcome", length(outcomes)))
+  }
+
+  # assign case weights
+  case_weights_cols <- map_lgl(data, hardhat::is_case_weights)
+  case_weights_n <- sum(case_weights_cols, na.rm = TRUE)
+  if (case_weights_n > 1) {
+    too_many_case_weights(
+      names(case_weights_cols)[case_weights_cols],
+      call = call
+    )
+  }
+  roles[case_weights_cols] <- "case_weights"
 
   ## pass to recipe.default with vars and roles
 
   list(x = data, vars = vars, roles = roles)
 }
 
-inline_check <- function(x) {
-  funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
+inline_check <- function(x, data, call) {
+  funs <- fun_calls(x, data)
+  funs <- funs[!(funs %in% c("~", "+", "-", "."))]
 
   if (length(funs) > 0) {
-    rlang::abort(paste0(
-      "No in-line functions should be used here; ",
-      "use steps to define baking actions."
-    ))
+    cli::cli_abort(
+      c(
+        x = "Misspelled variable name or in-line functions detected.",
+        i = "{cli::qty(length(funs))}The following function{?s}/misspelling{?s} \\
+          {?was/were} found: {.and {.code {funs}}}.",
+        i = "Use steps to do transformations instead.",
+        i = "If your modeling engine uses special terms in formulas, pass \\
+          that formula to workflows as a \\
+          {.help [model formula](parsnip::model_formula)}."
+      ),
+      call = call
+    )
   }
 
   invisible(x)
 }
 
-
-#' @aliases prep prep.recipe
-#' @param x an object
-#' @param ... further arguments passed to or from other methods (not currently
-#'   used).
-#' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
-#' @export
-prep <- function(x, ...)
-  UseMethod("prep")
-
-#' Train a Data Recipe
+#' Estimate a preprocessing recipe
 #'
 #' For a recipe with at least one preprocessing operation, estimate the required
-#'   parameters from a training set that can be later applied to other data
-#'   sets.
-#' @param training A data frame or tibble that will be used to estimate
-#'   parameters for preprocessing.
+#' parameters from a training set that can be later applied to other data sets.
+#'
+#' @param x an [recipe()] object.
+#' @param ... further arguments passed to or from other methods (not currently
+#'   used).
+#' @param training A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package, that will be used to estimate parameters for preprocessing. See
+#'   [sparse_data] for more information about use of sparse data.
 #' @param fresh A logical indicating whether already trained operation should be
 #'   re-trained. If `TRUE`, you should pass in a data set to the argument
 #'   `training`.
-#' @param verbose A logical that controls whether progress is reported as operations
-#'   are executed.
+#' @param verbose A logical that controls whether progress is reported as
+#'   operations are executed.
+#' @param retain A logical: should the *preprocessed* training set be saved into
+#'   the `template` slot of the recipe after training? This is a good idea if
+#'   you want to add more steps later but want to avoid re-training the existing
+#'   steps. Also, it is advisable to use `retain = TRUE` if any steps use the
+#'   option `skip = FALSE`. **Note** that this can make the final recipe size
+#'   large. When `verbose = TRUE`, a message is written with the approximate
+#'   object size in memory but may be an underestimate since it does not take
+#'   environments into account.
 #' @param log_changes A logical for printing a summary for each step regarding
-#'  which (if any) columns were added or removed during training.
-#' @param retain A logical: should the *preprocessed* training set be saved
-#'   into the `template` slot of the recipe after training? This is a good
-#'     idea if you want to add more steps later but want to avoid re-training
-#'     the existing steps. Also, it is advisable to use `retain = TRUE`
-#'     if any steps use the option `skip = FALSE`. **Note** that this can make
-#'     the final recipe size large. When `verbose = TRUE`, a message is written
-#'     with the approximate object size in memory but may be an underestimate
-#'     since it does not take environments into account.
-#' @param strings_as_factors A logical: should character columns be converted to
-#'   factors? This affects the preprocessed training set (when
-#'   `retain = TRUE`) as well as the results of `bake.recipe`.
-#' @return A recipe whose step objects have been updated with the required
-#'   quantities (e.g. parameter estimates, model objects, etc). Also, the
-#'   `term_info` object is likely to be modified as the operations are
-#'   executed.
-#' @details Given a data set, this function estimates the required quantities
-#'   and statistics required by any operations.
+#'   which (if any) columns were added or removed during training.
+#' @param strings_as_factors A logical: should character columns that have role
+#'   `"predictor"` or `"outcome"` be converted to factors? This affects the
+#'   preprocessed training set (when `retain = TRUE`) as well as the results of
+#'   [bake()].
 #'
-#' [prep()] returns an updated recipe with the estimates.
+#' @details
 #'
-#' Note that missing data handling is handled in the steps; there is no global
-#'   `na.rm` option at the recipe-level or in [prep()].
+#' Given a data set, this function estimates the required quantities and
+#' statistics needed by any operations. [prep()] returns an updated recipe with
+#' the estimates. If you are using a recipe as a preprocessor for modeling, we
+#' **highly recommend** that you use a `workflow()` instead of manually
+#' estimating a recipe (see the example in [recipe()]).
 #'
-#' Also, if a recipe has been trained using [prep()] and then steps
-#'   are added, [prep()] will only update the new operations. If
-#'   `fresh = TRUE`, all of the operations will be (re)estimated.
+#' Note that missing data is handled in the steps; there is no global `na.rm`
+#' option at the recipe level or in [prep()].
 #'
-#' As the steps are executed, the `training` set is updated. For example,
-#'   if the first step is to center the data and the second is to scale the
-#'   data, the step for scaling is given the centered data.
+#' Also, if a recipe has been trained using [prep()] and then steps are added,
+#' [prep()] will only update the new operations. If `fresh = TRUE`, all of the
+#' operations will be (re)estimated.
 #'
+#' As the steps are executed, the `training` set is updated. For example, if the
+#' first step is to center the data and the second is to scale the data, the
+#' step for scaling is given the centered data.
 #'
-#' @examples
+#' @return
+#'
+#' A recipe whose step objects have been updated with the required quantities
+#' (e.g. parameter estimates, model objects, etc). Also, the `term_info` object
+#' is likely to be modified as the operations are executed.
+#'
+#' @seealso [recipe()] and [bake()]
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' library(dplyr)
@@ -381,19 +414,25 @@ prep <- function(x, ...)
 #' prep(ames_rec, verbose = TRUE)
 #'
 #' prep(ames_rec, log_changes = TRUE)
+#' @export
+prep <- function(x, ...) {
+  UseMethod("prep")
+}
+
 #' @rdname prep
 #' @export
 prep.recipe <-
-  function(x,
-           training = NULL,
-           fresh = FALSE,
-           verbose = FALSE,
-           retain = TRUE,
-           log_changes = FALSE,
-           strings_as_factors = TRUE,
-           ...) {
-
-    training <- check_training_set(training, x, fresh)
+  function(
+    x,
+    training = NULL,
+    fresh = FALSE,
+    verbose = FALSE,
+    retain = TRUE,
+    log_changes = FALSE,
+    strings_as_factors = TRUE,
+    ...
+  ) {
+    training <- validate_training_data(training, x, fresh)
 
     tr_data <- train_info(training)
 
@@ -414,6 +453,7 @@ prep.recipe <-
 
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
+      lvls <- kill_levels(lvls, x$var_info)
       training <- strings2factors(training, lvls)
     } else {
       lvls <- NULL
@@ -422,33 +462,85 @@ prep.recipe <-
     # The only way to get the results for skipped steps is to
     # use `retain = TRUE` so issue a warning if this is not the case
     skippers <- map_lgl(x$steps, is_skipable)
-    if (any(skippers) & !retain)
-      rlang::warn(
-        paste0(
-          "Since some operations have `skip = TRUE`, using ",
-          "`retain = TRUE` will allow those steps results to ",
-          "be accessible."
-        )
+    if (any(skippers) & !retain) {
+      cli::cli_warn(
+        "Since some operations have {.code skip = TRUE}, using \\
+        {.code retain = TRUE} will allow those step's results to be accessible."
       )
+    }
 
+    # Recalculate types of old recipes (>= 1.0.1) if possible and necessary
+    if (
+      all(x$var_info$source == "original") &
+        inherits(x$var_info$type, "character")
+    ) {
+      x$var_info <- x$var_info %>%
+        dplyr::select(-type) %>%
+        dplyr::left_join(
+          get_types(training),
+          by = "variable",
+          multiple = "all"
+        ) %>%
+        dplyr::select(variable, type, role, source)
+    }
+
+    if (
+      all(x$term_info$source == "original") &
+        inherits(x$term_info$type, "character")
+    ) {
+      x$term_info <- x$term_info %>%
+        dplyr::select(-type) %>%
+        dplyr::left_join(
+          get_types(training),
+          by = "variable",
+          multiple = "all"
+        ) %>%
+        dplyr::select(variable, type, role, source)
+    }
+
+    if (fresh) {
+      x$term_info <- x$var_info
+    }
+
+    fit_times <- list()
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
-    for (i in seq(along.with = x$steps)) {
-      needs_tuning <- map_lgl(x$steps[[i]], is_tune)
-      if (any(needs_tuning)) {
-        arg <- names(needs_tuning)[needs_tuning]
-        arg <- paste0("'", arg, "'", collapse = ", ")
-        msg <-
-          paste0(
-            "You cannot `prep()` a tuneable recipe. Argument(s) with `tune()`: ",
-            arg,
-            ". Do you want to use a tuning function such as `tune_grid()`?"
-          )
-        rlang::abort(msg)
-      }
-      note <- paste("oper",  i, gsub("_", " ", class(x$steps[[i]])[1]))
-      if (!x$steps[[i]]$trained | fresh) {
 
+    get_needs_tuning <- function(x) {
+      res <- map_lgl(x, is_tune)
+      res <- names(res)[res]
+      res <- vctrs::vec_recycle_common(step = class(x)[[1L]], arg = res)
+      tibble::new_tibble(res)
+    }
+
+    needs_tuning <- purrr::map(x$steps, get_needs_tuning)
+    needs_tuning <- purrr::list_rbind(needs_tuning)
+
+    if (nrow(needs_tuning) > 0) {
+      args <- vctrs::vec_split(needs_tuning$arg, needs_tuning$step)
+      msg <- c(
+        x = "You cannot {.fun prep} a tunable recipe.",
+        i = "{cli::qty(nrow(args))}The following step{?s} \\
+             {?no/has/have} {.fun tune}:"
+      )
+
+      step_msg <- paste0(
+        "{needs_tuning$step[",
+        seq_len(nrow(needs_tuning)),
+        "]}: {.and {.arg {needs_tuning$arg[",
+        seq_len(nrow(needs_tuning)),
+        "]}}}"
+      )
+      names(step_msg) <- rep("*", nrow(needs_tuning))
+
+      cli::cli_abort(c(msg, step_msg))
+    }
+
+    for (i in seq(along.with = x$steps)) {
+      step_name <- class(x$steps[[i]])[[1L]]
+
+      note <- paste("oper", i, gsub("_", " ", step_name))
+      if (!x$steps[[i]]$trained | fresh) {
         if (verbose) {
           cat(note, "[training]", "\n")
         }
@@ -457,24 +549,45 @@ prep.recipe <-
 
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
-        x$steps[[i]] <-
-          prep(x$steps[[i]],
-               training = training,
-               info = x$term_info)
-        training <- bake(x$steps[[i]], new_data = training)
-        x$term_info <-
-          merge_term_info(get_types(training), x$term_info)
+        time <- proc.time()
+        x$steps[[i]] <- recipes_error_context(
+          prep(x$steps[[i]], training = training, info = x$term_info),
+          step_name = step_name
+        )
+        prep_time <- proc.time() - time
+
+        time <- proc.time()
+        training <- recipes_error_context(
+          bake(x$steps[[i]], new_data = training),
+          step_name = step_name
+        )
+        bake_time <- proc.time() - time
+
+        fit_times[[i]] <- list(
+          stage_id = paste(c("prep", "bake"), x$steps[[i]]$id, sep = "."),
+          elapsed = c(prep_time[["elapsed"]], bake_time[["elapsed"]])
+        )
+
+        if (!is_tibble(training)) {
+          cli::cli_abort(
+            c(
+              "x" = "{.fun bake} methods should always return tibbles.",
+              "i" = "{.fun {paste0('bake.', step_name)}} returned \\
+                   {.obj_type_friendly {training}}."
+            )
+          )
+        }
+        x$term_info <- merge_term_info(get_types(training), x$term_info)
 
         # Update the roles and the term source
         if (!is.na(x$steps[[i]]$role)) {
           new_vars <- setdiff(x$term_info$variable, running_info$variable)
           pos_new_var <- x$term_info$variable %in% new_vars
           pos_new_and_na_role <- pos_new_var & is.na(x$term_info$role)
-          pos_new_and_na_source <- pos_new_var  & is.na(x$term_info$source)
+          pos_new_and_na_source <- pos_new_var & is.na(x$term_info$source)
 
           x$term_info$role[pos_new_and_na_role] <- x$steps[[i]]$role
           x$term_info$source[pos_new_and_na_source] <- "derived"
-
         }
 
         changelog(log_changes, before_nms, names(training), x$steps[[i]])
@@ -483,9 +596,7 @@ prep.recipe <-
           running_info,
           mutate(x$term_info, number = i, skip = x$steps[[i]]$skip)
         )
-
-      }
-      else {
+      } else {
         if (verbose) cat(note, "[pre-trained]\n")
       }
     }
@@ -493,25 +604,32 @@ prep.recipe <-
     ## The steps may have changed the data so reassess the levels
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
+      lvls <- kill_levels(lvls, x$term_info)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
-    } else lvls <- NULL
+    } else {
+      lvls <- NULL
+    }
 
     if (retain) {
-      if (verbose)
-        cat("The retained training set is ~",
-            format(object.size(training), units = "Mb", digits = 2),
-            " in memory.\n\n")
+      if (verbose) {
+        cat(
+          "The retained training set is ~",
+          format(object.size(training), units = "Mb", digits = 2),
+          " in memory.\n\n"
+        )
+      }
 
       x$template <- training
     } else {
-      x$template <- training[0,]
+      x$template <- training[0, ]
     }
 
     x$tr_info <- tr_data
     x$levels <- lvls
     x$orig_lvls <- orig_lvls
     x$retained <- retain
+    x$fit_times <- dplyr::bind_rows(fit_times)
     # In case a variable was removed, and that removal step used
     # `skip = TRUE`, we need to retain its record so that
     # selectors can be properly used with `bake`. This tibble
@@ -523,8 +641,8 @@ prep.recipe <-
       group_by(variable) %>%
       arrange(desc(number)) %>%
       summarise(
-        type = dplyr::first(type),
-        role = as.list(unique(unlist(role))),
+        type = list(dplyr::first(type)),
+        role = list(unique(unlist(role))),
         source = dplyr::first(source),
         number = dplyr::first(number),
         skip = dplyr::first(skip),
@@ -533,51 +651,52 @@ prep.recipe <-
     x
   }
 
-#' @rdname bake
-#' @aliases bake bake.recipe
-#' @author Max Kuhn
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
-#' @export
-bake <- function(object, ...)
-  UseMethod("bake")
-
-#' Apply a Trained Data Recipe
+#' Apply a trained preprocessing recipe
 #'
-#' For a recipe with at least one preprocessing operation that has been trained by
-#'   [prep.recipe()], apply the computations to new data.
-#' @param object A trained object such as a [recipe()] with at least
-#'   one preprocessing operation.
-#' @param new_data A data frame or tibble for whom the preprocessing will be
-#'   applied. If `NULL` is given to `new_data`, the pre-processed _training
-#'   data_ will be returned (assuming that `prep(retain = TRUE)` was used).
+#' For a recipe with at least one preprocessing operation that has been trained
+#' by [prep()], apply the computations to new data.
+#'
+#' @param object A trained object such as a [recipe()] with at least one
+#'   preprocessing operation.
 #' @param ... One or more selector functions to choose which variables will be
-#'   returned by the function. See [selections()] for more details.
-#'   If no selectors are given, the default is to use
-#'   [everything()].
-#' @param composition Either "tibble", "matrix", "data.frame", or
-#'  "dgCMatrix" for the format of the processed data set. Note that
-#'  all computations during the baking process are done in a
-#'  non-sparse format. Also, note that this argument should be
-#'  called **after** any selectors and the selectors should only
-#'  resolve to numeric columns (otherwise an error is thrown).
-#' @return A tibble, matrix, or sparse matrix that may have different
-#'  columns than the original columns in `new_data`.
-#' @details [bake()] takes a trained recipe and applies the
-#'   operations to a data set to create a design matrix.
+#'   returned by the function. See [selections()] for more details. If no
+#'   selectors are given, the default is to use [dplyr::everything()].
+#' @param new_data A data frame, tibble, or sparse matrix from the `Matrix`
+#'   package for whom the preprocessing will be applied. If `NULL` is given to
+#'   `new_data`, the pre-processed _training data_ will be returned (assuming
+#'   that `prep(retain = TRUE)` was used). See [sparse_data] for more
+#'   information about use of sparse data.
+#' @param composition Either `"tibble"`, `"matrix"`, `"data.frame"`, or
+#'   `"dgCMatrix"``for the format of the processed data set. Note that all
+#'   computations during the baking process are done in a non-sparse format.
+#'   Also, note that this argument should be called **after** any selectors and
+#'   the selectors should only resolve to numeric columns (otherwise an error is
+#'   thrown).
 #'
-#' If the data set is not too large, time can be saved by using the
-#'  `retain = TRUE` option of [prep()]. This stores the processed version of the
-#'  training set. With this option set, `bake(object, new_data = NULL)`
-#'  will return it for free.
+#' @details
 #'
-#' Also, any steps with `skip = TRUE` will not be applied to the
-#'   data when `bake()` is invoked with a data set in `new_data`.
-#'   `bake(object, new_data = NULL)` will always have all of the steps applied.
-#' @seealso [recipe()], [prep()]
-#' @rdname bake
-#' @examples
+#' [bake()] takes a trained recipe and applies its operations to a data set to
+#' create a design matrix. If you are using a recipe as a preprocessor for
+#' modeling, we **highly recommend** that you use a `workflow()` instead of
+#' manually applying a recipe (see the example in [recipe()]).
+#'
+#' If the data set is not too large, time can be saved by using the `retain =
+#' TRUE` option of [prep()]. This stores the processed version of the training
+#' set. With this option set, `bake(object, new_data = NULL)` will return it for
+#' free.
+#'
+#' Also, any steps with `skip = TRUE` will not be applied to the data when
+#' [bake()] is invoked with a data set in `new_data`. `bake(object, new_data =
+#' NULL)` will always have all of the steps applied.
+#'
+#' @return
+#'
+#' A tibble, matrix, or sparse matrix that may have different columns than the
+#' original columns in `new_data`.
+#'
+#' @seealso [recipe()] and [prep()]
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(ames, package = "modeldata")
 #'
 #' ames <- mutate(ames, Sale_Price = log10(Sale_Price))
@@ -592,28 +711,47 @@ bake <- function(object, ...)
 #'   prep()
 #'
 #' # return the training set (already embedded in ames_rec)
-#' ames_train <- bake(ames_rec, new_data = NULL)
+#' bake(ames_rec, new_data = NULL)
 #'
 #' # apply processing to other data:
-#' ames_new <- bake(ames_rec, new_data = head(ames))
+#' bake(ames_rec, new_data = head(ames))
+#'
+#' # only return selected variables:
+#' bake(ames_rec, new_data = head(ames), all_numeric_predictors())
+#' bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
+#' @export
+bake <- function(object, ...) {
+  UseMethod("bake")
+}
+
+#' @rdname bake
 #' @export
 bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   if (rlang::is_missing(new_data)) {
-    rlang::abort("'new_data' must be either a data frame or NULL. No value is not allowed.")
+    cli::cli_abort(
+      "{.arg new_data} must be either a data frame or NULL. \\
+      No value is not allowed."
+    )
   }
+
   if (is.null(new_data)) {
     return(juice(object, ..., composition = composition))
   }
 
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep`.")
+    cli::cli_abort(
+      c(
+        "x" = "At least one step has not been trained.",
+        "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
+      )
+    )
   }
 
   if (!any(composition == formats)) {
-    rlang::abort(
-      paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
+    cli::cli_abort(
+      c(
+        "x" = "{.arg composition} cannot be {.val {composition}}.",
+        "i" = "Allowed values are {.or {.val {formats}}}."
       )
     )
   }
@@ -623,18 +761,18 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     terms <- quos(everything())
   }
 
-  # In case someone used the deprecated `newdata`:
-  if (is.null(new_data) || is.null(ncol(new_data))) {
-    if (any(names(terms) == "newdata")) {
-      rlang::abort("Please use `new_data` instead of `newdata` with `bake`.")
-    } else {
-      rlang::abort("Please pass a data set to `new_data`.")
-    }
+  if (is_sparse_matrix(new_data)) {
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(
+      new_data,
+      call = caller_env(0)
+    )
   }
 
   if (!is_tibble(new_data)) {
     new_data <- as_tibble(new_data)
   }
+
+  check_role_requirements(object, new_data)
 
   check_nominal_type(new_data, object$orig_lvls)
 
@@ -657,7 +795,15 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     new_data <- bake(step, new_data = new_data)
 
     if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
+      step_name <- attr(step, "class")[1]
+
+      cli::cli_abort(
+        c(
+          "x" = "{.fun bake} methods should always return tibbles.",
+          "i" = "{.fun {paste0('bake.', step_name)}} returned \\
+                   {.obj_type_friendly {new_data}}."
+        )
+      )
     }
   }
 
@@ -668,28 +814,42 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   info <- object$last_term_info
 
   # Now reduce to only user selected columns
-  out_names <- eval_select_recipes(terms, new_data, info)
+  out_names <- recipes_eval_select(
+    terms,
+    new_data,
+    info,
+    check_case_weights = FALSE
+  )
   new_data <- new_data[, out_names]
 
+  new_data <- turn_strings_to_factors(object, new_data)
+
+  new_data <- hardhat::recompose(new_data, composition = composition)
+
+  new_data
+}
+
+turn_strings_to_factors <- function(object, new_data) {
   ## The levels are not null when no nominal data are present or
   ## if strings_as_factors = FALSE in `prep`
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[out_names]
-    check_values <-
-      vapply(var_levels, function(x)
-        (!all(is.na(x))), c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0)
-      new_data <- strings2factors(new_data, var_levels)
+  if (is.null(object$levels)) {
+    return(new_data)
   }
 
-  if (composition == "dgCMatrix") {
-    new_data <- convert_matrix(new_data, sparse = TRUE)
-  } else if (composition == "matrix") {
-    new_data <- convert_matrix(new_data, sparse = FALSE)
-  } else if (composition == "data.frame") {
-    new_data <- base::as.data.frame(new_data)
+  var_levels <- object$levels
+  string_names <- intersect(names(var_levels), names(new_data))
+  var_levels <- var_levels[string_names]
+
+  not_all_na <- purrr::map_lgl(var_levels, function(x) !all(is.na(x)))
+  if (is.null(object$template)) {
+    output_factor <- TRUE
+  } else {
+    output_factor <- purrr::map_lgl(object$template[string_names], is.factor)
+  }
+  var_levels <- var_levels[not_all_na & output_factor]
+
+  if (length(var_levels) > 0) {
+    new_data <- strings2factors(new_data, var_levels)
   }
 
   new_data
@@ -705,45 +865,62 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 #'   used).
 #' @return The original object (invisibly)
 #'
-#' @author Max Kuhn
 #' @export
 print.recipe <- function(x, form_width = 30, ...) {
-  cat("Data Recipe\n\n")
-  cat("Inputs:\n\n")
-  no_role <- is.na(x$var_info$role)
-  if (any(!no_role)) {
-    tab <- as.data.frame(table(x$var_info$role))
-    colnames(tab) <- c("role", "#variables")
-    print(tab, row.names = FALSE)
-    if (any(no_role)) {
-      cat("\n ", sum(no_role), "variables with undeclared roles\n")
-    }
-  } else {
-    cat(" ", nrow(x$var_info), "variables (no declared roles)\n")
-  }
+  cli::cli_div(theme = list(.pkg = list("vec-trunc" = Inf, "vec-last" = ", ")))
+
+  cli::cli_h1("Recipe")
+  cli::cli_h3("Inputs")
+
+  tab <- table(x$var_info$role, useNA = "ifany")
+  tab <- stats::setNames(tab, names(tab))
+  names(tab)[is.na(names(tab))] <- "undeclared role"
+
+  roles <- c("outcome", "predictor", "case_weights", "undeclared role")
+
+  tab <- c(
+    tab[names(tab) == roles[1]],
+    tab[names(tab) == roles[2]],
+    tab[names(tab) == roles[3]],
+    sort(tab[!names(tab) %in% roles], TRUE),
+    tab[names(tab) == roles[4]]
+  )
+
+  cli::cli_text("Number of variables by role")
+
+  spaces_needed <- max(nchar(names(tab))) -
+    nchar(names(tab)) +
+    max(nchar(tab)) -
+    nchar(tab)
+
+  cli::cli_verbatim(
+    glue("{names(tab)}: {strrep('\ua0', spaces_needed)}{tab}")
+  )
+
   if ("tr_info" %in% names(x)) {
+    cli::cli_h3("Training information")
     nmiss <- x$tr_info$nrows - x$tr_info$ncomplete
-    cat("\nTraining data contained ",
-        x$tr_info$nrows,
-        " data points and ",
-        sep = "")
-    if (x$tr_info$nrows == x$tr_info$ncomplete)
-      cat("no missing data.\n")
-    else
-      cat(nmiss,
-          "incomplete",
-          ifelse(nmiss > 1, "rows.", "row."),
-          "\n")
+    nrows <- x$tr_info$nrows
+
+    cli::cli_text(
+      "Training data contained {nrows} data points and {cli::no(nmiss)} \\
+       incomplete row{?s}."
+    )
   }
+
   if (!is.null(x$steps)) {
-    cat("\nOperations:\n\n")
-    for (i in seq_along(x$steps))
-      print(x$steps[[i]], form_width = form_width)
+    cli::cli_h3("Operations")
   }
+
+  for (step in x$steps) {
+    print(step, form_width = form_width)
+  }
+  cli::cli_end()
+
   invisible(x)
 }
 
-#' Summarize a Recipe
+#' Summarize a recipe
 #'
 #' This function prints the current set of variables/features and some of their
 #' characteristics.
@@ -754,7 +931,9 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' @param ... further arguments passed to or from other methods (not currently
 #'   used).
 #' @return A tibble with columns `variable`, `type`, `role`,
-#'   and `source`.
+#'   and `source`. When `original = TRUE`, an additional column is included
+#'   named `required_to_bake` (based on the results of
+#'   [update_role_requirements()]).
 #' @details
 #' Note that, until the recipe has been trained,
 #' the current and original variables are the same.
@@ -764,60 +943,87 @@ print.recipe <- function(x, form_width = 30, ...) {
 #' row in the summary tibble.
 #'
 #' @examples
-#' rec <- recipe( ~ ., data = USArrests)
+#' rec <- recipe(~., data = USArrests)
 #' summary(rec)
 #' rec <- step_pca(rec, all_numeric(), num_comp = 3)
 #' summary(rec) # still the same since not yet trained
 #' rec <- prep(rec, training = USArrests)
 #' summary(rec)
 #' @export
-#' @seealso [recipe()] [prep.recipe()]
+#' @seealso [recipe()] [prep()]
 summary.recipe <- function(object, original = FALSE, ...) {
-  if (original)
-    object$var_info
-  else
-    object$term_info
+  if (original) {
+    res <- object$var_info
+    res <- dplyr::left_join(
+      res,
+      bake_req_tibble(object),
+      by = "role",
+      multiple = "all"
+    )
+  } else {
+    res <- object$term_info
+  }
+  res
 }
 
+bake_req_tibble <- function(x) {
+  req <- compute_bake_role_requirements(x)
+  req <-
+    tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
+    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+  req
+}
 
-#' Extract Finalized Training Set
+#' Extract transformed training set
+#'
+#' @description
+#' `r lifecycle::badge('superseded')`
 #'
 #' As of `recipes` version 0.1.14, **`juice()` is superseded** in favor of
 #' `bake(object, new_data = NULL)`.
 #'
-#' As steps are estimated by `prep`, these operations are
-#'  applied to the training set. Rather than running `bake()`
-#'  to duplicate this processing, this function will return
-#'  variables from the processed training set.
-#' @inheritParams bake.recipe
-#' @param object A `recipe` object that has been prepared
-#'   with the option `retain = TRUE`.
-#' @details When preparing a recipe, if the training data set is
-#'  retained using `retain = TRUE`, there is no need to `bake()` the
-#'  recipe to get the preprocessed training set.
+#' As steps are estimated by `prep`, these operations are applied to the
+#' training set. Rather than running [bake()] to duplicate this processing, this
+#' function will return variables from the processed training set.
 #'
-#'  `juice()` will return the results of a recipe where _all steps_
-#'  have been applied to the data, irrespective of the value of
-#'  the step's `skip` argument.
+#' @inheritParams bake.recipe
+#' @param object A `recipe` object that has been prepared with the option
+#'   `retain = TRUE`.
+#'
+#' @details
+#' `juice()` will return the results of a recipe where _all steps_ have been
+#' applied to the data, irrespective of the value of the step's `skip` argument.
+#'
+#' `juice()` can only be used if a recipe was prepped with `retain = TRUE`. This
+#' is equivalent to `bake(object, new_data = NULL)` which is the preferred way
+#' to extract the transformation of the training data set.
+#'
 #' @export
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
+#' @seealso [recipe()] [prep()] [bake()]
 juice <- function(object, ..., composition = "tibble") {
   if (!fully_trained(object)) {
-    rlang::abort("At least one step has not been trained. Please run `prep()`.")
+    cli::cli_abort(
+      c(
+        "x" = "At least one step has not been trained.",
+        "i" = "Please run {.help [{.fun prep}](recipes::prep)}."
+      )
+    )
   }
 
   if (!isTRUE(object$retained)) {
-    rlang::abort(paste0(
-      "Use `retain = TRUE` in `prep()` to be able ",
-      "to extract the training set"
-    ))
+    cli::cli_abort(
+      "Use {.code retain = TRUE} in {.fun prep} to be able to extract the \\
+      training set."
+    )
   }
 
   if (!any(composition == formats)) {
-    rlang::abort(paste0(
-      "`composition` should be one of: ",
-      paste0("'", formats, "'", collapse = ",")
-    ))
+    cli::cli_abort(
+      c(
+        "x" = "{.arg composition} cannot be {.val {composition}}.",
+        "i" = "Allowed values are {.or {.val {formats}}}."
+      )
+    )
   }
 
   terms <- quos(...)
@@ -827,39 +1033,32 @@ juice <- function(object, ..., composition = "tibble") {
 
   # Get user requested columns
   new_data <- object$template
-  out_names <- eval_select_recipes(terms, new_data, object$term_info)
+  out_names <- recipes_eval_select(
+    terms,
+    new_data,
+    object$term_info,
+    check_case_weights = FALSE
+  )
   new_data <- new_data[, out_names]
 
-  ## Since most models require factors, do the conversion from character
-  if (!is.null(object$levels)) {
-    var_levels <- object$levels
-    var_levels <- var_levels[out_names]
-    check_values <-
-      vapply(var_levels, function(x)
-        (!all(is.na(x))), c(all = TRUE))
-    var_levels <- var_levels[check_values]
-    if (length(var_levels) > 0)
-      new_data <- strings2factors(new_data, var_levels)
-  }
+  new_data <- turn_strings_to_factors(object, new_data)
 
-  if (composition == "dgCMatrix") {
-    new_data <- convert_matrix(new_data, sparse = TRUE)
-  } else if (composition == "matrix") {
-    new_data <- convert_matrix(new_data, sparse = FALSE)
-  } else if (composition == "data.frame") {
-    new_data <- base::as.data.frame(new_data)
-  }
+  new_data <- hardhat::recompose(new_data, composition = composition)
 
   new_data
 }
 
 formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")
 
-utils::globalVariables(c("number"))
-
 # ------------------------------------------------------------------------------
 
-#' @rdname required_pkgs
+#' S3 methods for tracking which additional packages are needed for steps.
+#'
+#' @param x A recipe or recipe step
+#' @param infra Should recipes itself be included in the result?
+#' @return A character vector
+#' @name required_pkgs.recipe
+#' @keywords internal
 #' @export
 required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res <- purrr::map(x$steps, required_pkgs)
@@ -872,13 +1071,13 @@ required_pkgs.recipe <- function(x, infra = TRUE, ...) {
   res
 }
 
-#' @rdname required_pkgs
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step <- function(x, ...) {
   character(0)
 }
 
-#' @rdname required_pkgs
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.check <- function(x, ...) {
   character(0)

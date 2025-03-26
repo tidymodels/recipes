@@ -2,7 +2,7 @@
 % Please edit documentation in R/class.R
 \name{check_class}
 \alias{check_class}
-\title{Check Variable Class}
+\title{Check variable class}
 \usage{
 check_class(
   recipe,
@@ -20,15 +20,14 @@ check_class(
 \item{recipe}{A recipe object. The check will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the check. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this check. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical for whether the selectors in \code{...}
+have been resolved by \code{\link[=prep]{prep()}}.}
 
 \item{class_nm}{A character vector that will be used in \code{inherits} to
 check the class. If \code{NULL} the classes will be learned in \code{prep}.
@@ -38,20 +37,20 @@ Can contain more than one class.}
 have additional classes to the one(s) that are checked.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
 \item{class_list}{A named list of column classes. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
-\item{id}{A character string that is unique to this step to identify it.}
+\item{id}{A character string that is unique to this check to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new check
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new check added to the
+sequence of any existing operations.
 }
 \description{
 \code{check_class} creates a \emph{specification} of a recipe
@@ -70,28 +69,37 @@ that in \code{prep} the argument \code{strings_as_factors} defaults to
 \code{TRUE}. If the train set contains character variables
 the check will be break \code{bake} when \code{strings_as_factors} is
 \code{TRUE}.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the type) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the type)
+is returned.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
-library(modeldata)
-data(okc)
+data(Sacramento, package = "modeldata")
 
 # Learn the classes on the train set
-train <- okc[1:1000, ]
-test  <- okc[1001:2000, ]
-recipe(train, age ~ . ) \%>\%
+train <- Sacramento[1:500, ]
+test <- Sacramento[501:nrow(Sacramento), ]
+recipe(train, sqft ~ .) \%>\%
   check_class(everything()) \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
 
 # Manual specification
-recipe(train, age ~ .) \%>\%
-  check_class(age, class_nm = "integer") \%>\%
-  check_class(diet, location, class_nm = "character") \%>\%
-  check_class(date, class_nm = "Date") \%>\%
+recipe(train, sqft ~ .) \%>\%
+  check_class(sqft, class_nm = "integer") \%>\%
+  check_class(city, zip, type, class_nm = "factor") \%>\%
+  check_class(latitude, longitude, class_nm = "numeric") \%>\%
   prep(train, strings_as_factors = FALSE) \%>\%
   bake(test)
 
@@ -111,11 +119,13 @@ recipe(x_df) \%>\%
   check_class(time, class_nm = "POSIXt", allow_additional = TRUE) \%>\%
   prep(x_df) \%>\%
   bake(x_df)
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other checks: 
+\code{\link{check_cols}()},
+\code{\link{check_missing}()},
+\code{\link{check_new_values}()},
+\code{\link{check_range}()}
 }
-\concept{preprocessing normalization_methods}
-\keyword{datagen}
+\concept{checks}

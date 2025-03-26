@@ -2,7 +2,7 @@
 % Please edit documentation in R/profile.R
 \name{step_profile}
 \alias{step_profile}
-\title{Create a Profiling Version of a Data Set}
+\title{Create a profiling version of a data set}
 \usage{
 step_profile(
   recipe,
@@ -22,9 +22,8 @@ step_profile(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be fixed to a single value. See \code{\link[=selections]{selections()}} for
-more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{profile}{A call to \code{\link[dplyr:vars]{dplyr::vars()}}) to specify which
 variable will be profiled (see \code{\link[=selections]{selections()}}). If a column is
@@ -55,9 +54,8 @@ of their possible levels are profiled). In the case of date
 variables, \code{pctl = FALSE} will always be used since there is no
 quantile method for dates.}
 
-\item{columns}{A character string that contains the names of
-columns that should be fixed and their values. These values are
-not determined until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -66,44 +64,55 @@ created.}
 preprocessing have been estimated.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_profile} creates a \emph{specification} of a recipe step that
-will fix the levels of all variables but one and will create a
-sequence of values for the remaining variable. This step can be
-helpful when creating partial regression plots for additive
-models.
+\code{step_profile()} creates a \emph{specification} of a recipe step that will fix the
+levels of all variables but one and will create a sequence of values for the
+remaining variable. This step can be helpful when creating partial regression
+plots for additive models.
 }
 \details{
 This step is atypical in that, when baked, the
 \code{new_data} argument is ignored; the resulting data set is
 based on the fixed and profiled variable's information.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (which
-is the columns that will be affected) and \code{type} (fixed or
-profiled) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{type} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{type}{character, \code{"fixed"} or \code{"profiled"}}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
-# Setup a grid across date but keep the other values fixed
-recipe(~ diet + height + date, data = okc) \%>\%
-  step_profile(-date, profile = vars(date)) \%>\%
-  prep(training = okc) \%>\%
-  juice
-
+# Setup a grid across beds but keep the other values fixed
+recipe(~ city + price + beds, data = Sacramento) \%>\%
+  step_profile(-beds, profile = vars(beds)) \%>\%
+  prep(training = Sacramento) \%>\%
+  bake(new_data = NULL)
 
 ##########
 
@@ -128,13 +137,17 @@ disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
 
 grid_data <- bake(disp_grid, new_data = NULL)
 grid_data <- grid_data \%>\%
-  mutate(pred = predict(lin_mod, grid_data),
-         method = "grid")
+  mutate(
+    pred = predict(lin_mod, grid_data),
+    method = "grid"
+  )
 
 pctl_data <- bake(disp_pctl, new_data = NULL)
 pctl_data <- pctl_data \%>\%
-  mutate(pred = predict(lin_mod, pctl_data),
-         method = "percentile")
+  mutate(
+    pred = predict(lin_mod, pctl_data),
+    method = "percentile"
+  )
 
 plot_data <- bind_rows(grid_data, pctl_data)
 
@@ -142,7 +155,6 @@ library(ggplot2)
 
 ggplot(plot_data, aes(x = disp, y = pred)) +
   geom_point(alpha = .5, cex = 1) +
-  facet_wrap(~ method)
+  facet_wrap(~method)
+\dontshow{\}) # examplesIf}
 }
-\concept{preprocessing}
-\keyword{datagen}

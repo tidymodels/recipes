@@ -2,13 +2,14 @@
 % Please edit documentation in R/zv.R
 \name{step_zv}
 \alias{step_zv}
-\title{Zero Variance Filter}
+\title{Zero variance filter}
 \usage{
 step_zv(
   recipe,
   ...,
   role = NA,
   trained = FALSE,
+  group = NULL,
   removals = NULL,
   skip = FALSE,
   id = rand_id("zv")
@@ -18,9 +19,8 @@ step_zv(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be evaluated by the filtering. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -28,43 +28,75 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
+\item{group}{An optional character string or call to \code{\link[dplyr:vars]{dplyr::vars()}}
+that can be used to specify a group(s) within which to identify
+variables that contain only a single value. If the grouping variables
+are contained in terms selector, they will not be considered for
+removal.}
+
 \item{removals}{A character string that contains the names of
 columns that should be removed. These values are not determined
-until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+until \code{\link[=prep]{prep()}} is called.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_zv} creates a \emph{specification} of a recipe step
-that will remove variables that contain only a single value.
+\code{step_zv()} creates a \emph{specification} of a recipe step that will remove
+variables that contain only a single value.
 }
 \details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be removed) is returned.
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, names of the columns that will be removed}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass$one_value <- 1
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-                    nitrogen + sulfur + one_value,
-              data = biomass_tr)
+  nitrogen + sulfur + one_value,
+data = biomass_tr
+)
 
 zv_filter <- rec \%>\%
   step_zv(all_predictors())
@@ -76,12 +108,15 @@ any(names(filtered_te) == "one_value")
 
 tidy(zv_filter, number = 1)
 tidy(filter_obj, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_nzv]{step_nzv()}} \code{\link[=step_corr]{step_corr()}}
-\code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other variable filter steps: 
+\code{\link{step_corr}()},
+\code{\link{step_filter_missing}()},
+\code{\link{step_lincomb}()},
+\code{\link{step_nzv}()},
+\code{\link{step_rm}()},
+\code{\link{step_select}()}
 }
-\concept{preprocessing}
-\concept{variable_filters}
-\keyword{datagen}
+\concept{variable filter steps}

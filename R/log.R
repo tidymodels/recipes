@@ -1,30 +1,34 @@
-#' Logarithmic Transformation
+#' Logarithmic transformation
 #'
-#' `step_log` creates a *specification* of a recipe step
-#'  that will log transform data.
+#' `step_log()` creates a *specification* of a recipe step that will log
+#' transform data.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
+#' @inheritParams step_pca
 #' @param base A numeric value for the base.
 #' @param offset An optional value to add to the data prior to
 #'  logging (to avoid `log(0)`).
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
 #' @param signed A logical indicating whether to take the signed log.
-#'  This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
+#'  This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 #'  If `TRUE` the `offset` argument will be ignored.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @template step-return
+#' @family individual transformation steps
 #' @export
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `base`.
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `base` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{base}{numeric, value for the base}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
 #' @examples
 #' set.seed(313)
 #' examples <- matrix(exp(rnorm(40)), ncol = 2)
@@ -32,7 +36,7 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' log_trans <- rec  %>%
+#' log_trans <- rec %>%
 #'   step_log(all_numeric_predictors())
 #'
 #' log_obj <- prep(log_trans, training = examples)
@@ -57,28 +61,23 @@
 #'   step_log(all_numeric_predictors(), signed = TRUE) %>%
 #'   prep(training = examples2) %>%
 #'   bake(examples2)
-#'
-#' @seealso [step_logit()] [step_invlogit()]
-#'   [step_hyperbolic()]  [step_sqrt()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
 step_log <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           base = exp(1),
-           offset = 0,
-           columns = NULL,
-           skip = FALSE,
-           signed = FALSE,
-           id = rand_id("log")
-           ) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    base = exp(1),
+    offset = 0,
+    columns = NULL,
+    skip = FALSE,
+    signed = FALSE,
+    id = rand_id("log")
+  ) {
     add_step(
       recipe,
       step_log_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         base = base,
@@ -109,9 +108,11 @@ step_log_new <-
 
 #' @export
 prep.step_log <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$offset, arg = "offset")
+  check_bool(x$signed, arg = "signed")
+  check_number_decimal(x$base, arg = "base", min = 0)
 
   step_log_new(
     terms = x$terms,
@@ -128,38 +129,48 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_log <- function(object, new_data, ...) {
-  col_names <- object$columns
-  # for backward compat
-  if(all(names(object) != "offset"))
-    object$offset <- 0
+  # For backward compatibility #1284
+  col_names <- names(object$columns) %||% object$columns
+  check_new_data(col_names, object, new_data)
 
-  if (!object$signed){
-    for (i in seq_along(col_names))
-      new_data[, col_names[i]] <-
-        log(new_data[[ col_names[i] ]] + object$offset, base = object$base)
-  } else {
-    if (object$offset != 0)
-      rlang::warn("When signed is TRUE, offset will be ignored")
-     for (i in seq_along(col_names))
-       new_data[, col_names[i]] <-
-         ifelse(abs(new_data[[ col_names[i] ]]) < 1,
-                0,
-                sign(new_data[[ col_names[i] ]]) *
-                  log(abs(new_data[[ col_names[i] ]]), base = object$base ))
+  # for backward compat
+  if (all(names(object) != "offset")) {
+    object$offset <- 0
   }
-  as_tibble(new_data)
+
+  if (object$signed && object$offset != 0) {
+    cli::cli_warn("When {.arg signed} is TRUE, {.arg offset} will be ignored.")
+  }
+
+  for (col_name in col_names) {
+    tmp <- new_data[[col_name]]
+
+    if (object$signed) {
+      tmp <- ifelse(
+        abs(tmp) < 1,
+        0,
+        sign(tmp) * log(abs(tmp), base = object$base)
+      )
+    } else {
+      tmp <- log(tmp + object$offset, base = object$base)
+    }
+
+    new_data[[col_name]] <- tmp
+  }
+
+  new_data
 }
 
+#' @export
 print.step_log <-
   function(x, width = max(20, options()$width - 31), ...) {
-    msg <- ifelse(x$signed, "Signed log ", "Log ")
-    cat(msg, "transformation on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    msg <- ifelse(x$signed, "Signed log", "Log")
+    title <- glue("{msg} transformation on ")
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_log` object.
 #' @export
 tidy.step_log <- function(x, ...) {
   out <- simple_terms(x, ...)

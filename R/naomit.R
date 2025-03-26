@@ -1,30 +1,33 @@
 #' Remove observations with missing values
 #'
-#' `step_naomit` creates a *specification* of a recipe step that
-#'   will remove observations (rows of data) if they contain `NA`
-#'   or `NaN` values.
+#' `step_naomit()` creates a *specification* of a recipe step that will remove
+#' observations (rows of data) if they contain `NA` or `NaN` values.
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to remove observations containing `NA` or `NaN`
-#'   values. See [selections()] for more details.
+#' @template row-ops
+#' @inheritParams step_center
+#' @inheritParams step_pca
 #' @param role Unused, include for consistency with other steps.
 #' @param trained A logical to indicate if the quantities for preprocessing
 #'   have been estimated. Again included for consistency.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
-#' @param id A character string that is unique to this step to identify it.
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`.
 #'
-#' @template row-ops
-#' @rdname step_naomit
-#' @return An updated version of `recipe` with the
-#'   new step added to the sequence of existing steps (if any).
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @template step-return
+#' @family row operation steps
 #' @export
 #'
 #' @examples
@@ -33,15 +36,19 @@
 #'   step_naomit(Solar.R) %>%
 #'   prep(airquality, verbose = FALSE) %>%
 #'   bake(new_data = NULL)
-#'
-#' @seealso [step_filter()] [step_sample()] [step_slice()]
-step_naomit <- function(recipe, ..., role = NA, trained = FALSE,
-                        columns = NULL, skip = FALSE,
-                        id = rand_id("naomit")) {
+step_naomit <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = TRUE,
+  id = rand_id("naomit")
+) {
   add_step(
     recipe,
     step_naomit_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       columns = columns,
@@ -69,7 +76,7 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
     terms = x$terms,
     role = x$role,
     trained = TRUE,
-    columns = eval_select_recipes(x$terms, training, info),
+    columns = recipes_eval_select(x$terms, training, info),
     skip = x$skip,
     id = x$id
   )
@@ -77,22 +84,29 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_naomit <- function(object, new_data, ...) {
-  tibble::as_tibble(tidyr::drop_na(new_data, object$columns))
+  col_names <- unname(object$columns)
+  check_new_data(col_names, object, new_data)
+
+  tibble::as_tibble(tidyr::drop_na(new_data, tidyselect::all_of(col_names)))
 }
 
+#' @export
 print.step_naomit <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Removing rows with NA values in ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-    cat("\n")
+    title <- "Removing rows with NA values in "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_naomit` object.
 #' @export
 tidy.step_naomit <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_naomit <- function(x, ...) {
+  TRUE
 }

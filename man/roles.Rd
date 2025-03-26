@@ -5,7 +5,7 @@
 \alias{add_role}
 \alias{update_role}
 \alias{remove_role}
-\title{Manually Alter Roles}
+\title{Manually alter roles}
 \usage{
 add_role(recipe, ..., new_role = "predictor", new_type = NULL)
 
@@ -16,8 +16,8 @@ remove_role(recipe, ..., old_role)
 \arguments{
 \item{recipe}{An existing \code{\link[=recipe]{recipe()}}.}
 
-\item{...}{One or more selector functions to choose which variables are
-being assigned a role. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose which variables are being
+assigned a role. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{new_role}{A character string for a single role.}
 
@@ -26,8 +26,8 @@ be identified as. If left as \code{NULL}, the type is automatically identified
 as the \emph{first} type you see for that variable in \code{summary(recipe)}.}
 
 \item{old_role}{A character string for the specific role to update for the
-variables selected by \code{...}. \code{update_role()} accepts a \code{NULL} as long as the
-variables have only a single role.}
+variables selected by \code{...}. \code{update_role()} accepts a \code{NULL} as long as
+the variables have only a single role.}
 }
 \value{
 An updated recipe object.
@@ -43,9 +43,16 @@ multiple roles.
 \code{remove_role()} eliminates a single existing role in the recipe.
 }
 \details{
-Variables can have any arbitrary role (see the examples) but there are two
-special standard roles, \code{"predictor"} and \code{"outcome"}. These two roles are
-typically required when fitting a model.
+\code{update_role()}, \code{add_role()} and \code{remove_role()} will be applied on a recipe
+before any of the steps or checks, regardless of where they are located in
+position. This means that roles can only be changed with these three
+functions for columns that are already present in the original data supplied
+to \code{recipe()}. See the \code{role} argument in some step functions to update
+roles for columns created by steps.
+
+Variables can have any arbitrary role (see the examples) but there are three
+special standard roles, \code{"predictor"}, \code{"outcome"}, and \code{"case_weights"}.
+The first two roles are typically required when fitting a model.
 
 \code{update_role()} should be used when a variable doesn't currently have a role
 in the recipe, or to replace an \code{old_role} with a \code{new_role}. \code{add_role()}
@@ -57,14 +64,64 @@ When using \code{add_role()}, if a variable is selected that already has the
 roles are added.
 
 Adding or updating roles is a useful way to group certain variables that
-don't fall in the standard \code{"predictor"} bucket. You can perform a step
-on all of the variables that have a custom role with the selector
-\code{\link[=has_role]{has_role()}}.
+don't fall in the standard \code{"predictor"} bucket. You can perform a step on
+all of the variables that have a custom role with the selector \code{\link[=has_role]{has_role()}}.
+\subsection{Effects of non-standard roles}{
+
+Recipes can label and retain column(s) of your data set that should not be treated as outcomes or predictors. A unique identifier column or some other ancillary data could be used to troubleshoot issues during model development but may not be either an outcome or predictor.
+
+For example, the \code{modeldata::biomass} dataset has a column named \code{sample} with information about the specific sample type. We can change that role:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(recipes)
+
+data(biomass, package = "modeldata")
+biomass_train <- biomass[1:100,]
+biomass_test <- biomass[101:200,]
+
+rec <- recipe(HHV ~ ., data = biomass_train) \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  step_center(carbon)
+
+rec <- prep(rec, biomass_train)
+}\if{html}{\out{</div>}}
+
+This means that \code{sample} is no longer treated as a \code{"predictor"} (the default role for columns on the right-hand side of the formula supplied to \code{recipe()}) and won't be used in model fitting or analysis, but will still be retained in the data set.
+
+If you really aren't using \code{sample} in your recipe, we recommend that you instead remove \code{sample} from your dataset before passing it to \code{recipe()}. The reason for this is because recipes assumes that all non-standard roles are required at \code{bake()} time (or \code{predict()} time, if you are using a workflow). Since you didn't use \code{sample} in any steps of the recipe, you might think that you don't need to pass it to \code{bake()}, but this isn't true because recipes doesn't know that you didn't use it:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{biomass_test$sample <- NULL
+
+bake(rec, biomass_test)
+#> Error in `bake()`:
+#> x The following required columns are missing from `new_data`: `sample`.
+#> i These columns have one of the following roles, which are required at `bake()`
+#>   time: `id variable`.
+#> i If these roles are not required at `bake()` time, use
+#>   `update_role_requirements(role = "your_role", bake = FALSE)`.
+}\if{html}{\out{</div>}}
+
+As we mentioned before, the best way to avoid this issue is to not even use a role, just remove the \code{sample} column from \code{biomass} before calling \code{recipe()}. In general, predictors and non-standard roles that are supplied to \code{recipe()} should be present at both \code{prep()} and \code{bake()} time.
+
+If you can't remove \code{sample} for some reason, then the second best way to get around this issue is to tell recipes that the \code{"id variable"} role isn't required at \code{bake()} time. You can do that by using \code{update_role_requirements()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rec <- recipe(HHV ~ ., data = biomass_train) \%>\%
+  update_role(sample, new_role = "id variable") \%>\%
+  update_role_requirements("id variable", bake = FALSE) \%>\%
+  step_center(carbon)
+
+rec <- prep(rec, biomass_train)
+
+# No errors!
+biomass_test_baked <- bake(rec, biomass_test)
+}\if{html}{\out{</div>}}
+
+It should be very rare that you need this feature.
+}
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 # Using the formula method, roles are created for any outcomes and predictors:
 recipe(HHV ~ ., data = biomass) \%>\%
@@ -126,8 +183,5 @@ recipe(HHV ~ ., data = biomass) \%>\%
 # If the formula method is not used, all columns have a missing role:
 recipe(biomass) \%>\%
   summary()
-
+\dontshow{\}) # examplesIf}
 }
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

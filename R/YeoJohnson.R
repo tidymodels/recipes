@@ -1,26 +1,17 @@
-#' Yeo-Johnson Transformation
+#' Yeo-Johnson transformation
 #'
-#' `step_YeoJohnson` creates a *specification* of a
-#'  recipe step that will transform data using a simple Yeo-Johnson
-#'  transformation.
+#' `step_YeoJohnson()` creates a *specification* of a recipe step that will
+#' transform data using a Yeo-Johnson transformation.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param lambdas A numeric vector of transformation values. This
-#'  is `NULL` until computed by [prep.recipe()].
+#'  is `NULL` until computed by [prep()].
 #' @param limits A length 2 numeric vector defining the range to
 #'  compute the transformation parameter lambda.
 #' @param num_unique An integer where data that have less possible
 #'  values will not be evaluated for a transformation.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @template step-return
+#' @family individual transformation steps
 #' @export
 #' @details The Yeo-Johnson transformation is very similar to the
 #'  Box-Cox but does not require the input variables to be strictly
@@ -39,24 +30,33 @@
 #'  closed to the bounds, or if the optimization fails, a value of
 #'  `NA` is used and no transformation is applied.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the
-#'  lambda estimate) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the lambda estimate}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
 #'
 #' @references Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 #'   transformations to improve normality or symmetry. *Biometrika*.
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
-#' library(modeldata)
-#' data(biomass)
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
-#'
-#' yj_transform <- step_YeoJohnson(rec,  all_numeric())
+#' yj_transform <- step_YeoJohnson(rec, all_numeric())
 #'
 #' yj_estimates <- prep(yj_transform, training = biomass_tr)
 #'
@@ -67,18 +67,23 @@
 #'
 #' tidy(yj_transform, number = 1)
 #' tidy(yj_estimates, number = 1)
-#' @seealso [step_BoxCox()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
 step_YeoJohnson <-
-  function(recipe, ..., role = NA, trained = FALSE,
-           lambdas = NULL, limits = c(-5, 5), num_unique = 5,
-           na_rm = TRUE,
-           skip = FALSE,
-           id = rand_id("YeoJohnson")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    lambdas = NULL,
+    limits = c(-5, 5),
+    num_unique = 5,
+    na_rm = TRUE,
+    skip = FALSE,
+    id = rand_id("YeoJohnson")
+  ) {
     add_step(
       recipe,
       step_YeoJohnson_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         lambdas = lambdas,
@@ -109,8 +114,18 @@ step_YeoJohnson_new <-
 
 #' @export
 prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$num_unique, args = "num_unique")
+  check_bool(x$na_rm, arg = "na_rm")
+  if (!is.numeric(x$limits) || anyNA(x$limits) || length(x$limits) != 2) {
+    cli::cli_abort(
+      "{.arg limits} should be a numeric vector with two values,
+                    not {.obj_type_friendly {x$limits}}"
+    )
+  }
+
+  x$limits <- sort(x$limits)
 
   values <- vapply(
     training[, col_names],
@@ -136,119 +151,146 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_YeoJohnson <- function(object, new_data, ...) {
-  if (length(object$lambdas) == 0)
-    return(as_tibble(new_data))
-  param <- names(object$lambdas)
-  for (i in seq_along(object$lambdas))
-    new_data[, param[i]] <-
-    yj_transform(getElement(new_data, param[i]),
-             lambda = object$lambdas[param[i]])
-  as_tibble(new_data)
+  col_names <- names(object$lambdas)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- yj_transform(
+      new_data[[col_name]],
+      lambda = object$lambdas[col_name]
+    )
+  }
+
+  new_data
 }
 
+#' @export
 print.step_YeoJohnson <-
   function(x, width = max(20, options()$width - 39), ...) {
-    cat("Yeo-Johnson transformation on ", sep = "")
-    printer(names(x$lambdas), x$terms, x$trained, width = width)
+    title <- "Yeo-Johnson transformation on "
+    print_step(names(x$lambdas), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 ## computes the new data given a lambda
 #' Internal Functions
 #'
-#' These are not to be used directly by the users.
-#' @export
 #' @keywords internal
 #' @rdname recipes-internal
-yj_transform <- function(x, lambda, eps = .001) {
-  if (is.na(lambda))
+#' @export
+yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
+  if (is.na(lambda)) {
     return(x)
+  }
   if (!inherits(x, "tbl_df") || is.data.frame(x)) {
     x <- unlist(x, use.names = FALSE)
   } else {
-    if (!is.vector(x))
+    if (!is.vector(x)) {
       x <- as.vector(x)
+    }
+  }
+  # TODO case weights: can we use weights here?
+  if (is.null(ind_neg)) {
+    dat_neg <- x < 0
+    ind_neg <- list(is = which(dat_neg), not = which(!dat_neg))
+  }
+  not_neg <- ind_neg[["not"]]
+  is_neg <- ind_neg[["is"]]
+
+  nn_trans <- function(x, lambda) {
+    if (abs(lambda) < eps) {
+      log(x + 1)
+    } else {
+      ((x + 1)^lambda - 1) / lambda
+    }
   }
 
-  not_neg <- which(x >= 0)
-  is_neg <- which(x < 0)
+  ng_trans <- function(x, lambda) {
+    if (abs(lambda - 2) < eps) {
+      -log(-x + 1)
+    } else {
+      -((-x + 1)^(2 - lambda) - 1) / (2 - lambda)
+    }
+  }
 
-  nn_trans <- function(x, lambda)
-    if (abs(lambda) < eps)
-      log(x + 1)
-  else
-    ((x + 1) ^ lambda - 1) / lambda
-
-  ng_trans <- function(x, lambda)
-    if (abs(lambda - 2) < eps)
-      - log(-x + 1)
-  else
-    - ((-x + 1) ^ (2 - lambda) - 1) / (2 - lambda)
-
-  if (length(not_neg) > 0)
+  if (length(not_neg) > 0) {
     x[not_neg] <- nn_trans(x[not_neg], lambda)
+  }
 
-  if (length(is_neg) > 0)
+  if (length(is_neg) > 0) {
     x[is_neg] <- ng_trans(x[is_neg], lambda)
+  }
   x
 }
-
 
 ## Helper for the log-likelihood calc for eq 3.1 of Yeo, I. K.,
 ## & Johnson, R. A. (2000). A new family of power transformations
 ## to improve normality or symmetry. Biometrika. page 957
-
-ll_yj <- function(lambda, y, eps = .001) {
-  y <- y[!is.na(y)]
+ll_yj <- function(lambda, y, ind_neg, const, eps = 0.001) {
   n <- length(y)
-  nonneg <- all(y > 0)
-  y_t <- yj_transform(y, lambda)
+  y_t <- yj_transform(y, lambda, ind_neg)
   mu_t <- mean(y_t)
   var_t <- var(y_t) * (n - 1) / n
-  const <- sum(sign(y) * log(abs(y) + 1))
   res <- -.5 * n * log(var_t) + (lambda - 1) * const
   res
 }
 
 ## eliminates missing data and returns -llh
-yj_obj <- function(lam, dat){
-  dat <- dat[complete.cases(dat)]
-  ll_yj(lambda = lam, y = dat)
+yj_obj <- function(lam, dat, ind_neg, const) {
+  ll_yj(lambda = lam, y = dat, ind_neg = ind_neg, const = const)
 }
 
 ## estimates the values
-#' @export
 #' @keywords internal
 #' @rdname recipes-internal
-estimate_yj <- function(dat, limits = c(-5, 5), num_unique = 5,
-                        na_rm = TRUE) {
+#' @export
+estimate_yj <- function(
+  dat,
+  limits = c(-5, 5),
+  num_unique = 5,
+  na_rm = TRUE,
+  call = caller_env(2)
+) {
   na_rows <- which(is.na(dat))
   if (length(na_rows) > 0) {
     if (na_rm) {
       dat <- dat[-na_rows]
     } else {
-      rlang::abort("Missing values in data. See `na_rm` option")
+      cli::cli_abort(
+        c(
+          x = "Missing values are not allowed for the YJ transformation.",
+          i = "See {.arg na_rm} option."
+        ),
+        call = call
+      )
     }
   }
 
   eps <- .001
-  if (length(unique(dat)) < num_unique)
+  if (length(unique(dat)) < num_unique) {
     return(NA)
+  }
+  dat_neg <- dat < 0
+  ind_neg <- list(is = which(dat_neg), not = which(!dat_neg))
+
+  const <- sum(sign(dat) * log(abs(dat) + 1))
+
   res <- optimize(
     yj_obj,
     interval = limits,
     maximum = TRUE,
     dat = dat,
+    ind_neg = ind_neg,
+    const = const,
     tol = .0001
   )
   lam <- res$maximum
-  if (abs(limits[1] - lam) <= eps | abs(limits[2] - lam) <= eps)
+  if (abs(limits[1] - lam) <= eps | abs(limits[2] - lam) <= eps) {
     lam <- NA
+  }
   lam
 }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_YeoJohnson` object.
 #' @export
 tidy.step_YeoJohnson <- tidy.step_BoxCox

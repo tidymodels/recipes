@@ -3,10 +3,10 @@
 \name{recipe}
 \alias{recipe}
 \alias{recipe.default}
-\alias{recipe.formula}
 \alias{recipe.data.frame}
+\alias{recipe.formula}
 \alias{recipe.matrix}
-\title{Create a Recipe for Preprocessing Data}
+\title{Create a recipe for preprocessing data}
 \usage{
 recipe(x, ...)
 
@@ -26,30 +26,31 @@ recipe(x, ...)
 \method{recipe}{matrix}(x, ...)
 }
 \arguments{
-\item{x, data}{A data frame or tibble of the \emph{template} data set
-(see below).}
+\item{x, data}{A data frame, tibble, or sparse matrix from the \code{Matrix}
+package of the \emph{template} data set. See \link{sparse_data} for more information
+about use of sparse data. (see below).}
 
 \item{...}{Further arguments passed to or from other methods (not currently
 used).}
 
 \item{formula}{A model formula. No in-line functions should be used here
-(e.g. \code{log(x)}, \code{x:y}, etc.) and minus signs are not allowed. These types of
-transformations should be enacted using \code{step} functions in this package.
-Dots are allowed as are simple multivariate outcome terms (i.e. no need for
-\code{cbind}; see Examples). A model formula may not be the best choice for
-high-dimensional data with many columns, because of problems with memory.}
+(e.g. \code{log(x)}, \code{x:y}, etc.) and minus signs are not allowed. These types
+of transformations should be enacted using \code{step} functions in this
+package. Dots are allowed as are simple multivariate outcome terms (i.e. no
+need for \code{\link[=cbind]{cbind()}}; see Examples). A model formula may not be the best
+choice for high-dimensional data with many columns, because of problems
+with memory.}
 
 \item{vars}{A character string of column names corresponding to variables
 that will be used in any context (see below)}
 
-\item{roles}{A character string (the same length of \code{vars}) that
-describes a single role that the variable will take. This value could be
-anything but common roles are \code{"outcome"}, \code{"predictor"},
-\code{"case_weight"}, or \code{"ID"}}
+\item{roles}{A character string (the same length of \code{vars}) that describes a
+single role that the variable will take. This value could be anything but
+common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}.}
 
-\item{strings_as_factors}{A logical: should character columns be converted to
+\item{strings_as_factors}{A logical, should character columns be converted to
 factors? This affects the preprocessed training set (when retain = TRUE) as
-well as the results of both \code{prep.recipe()} and \code{bake.recipe()}. In 0.1.16
+well as the results of both \code{prep.recipe()} and \code{bake.recipe()}. In 1.2.1
 and prior versions, this argument was provided via \code{prep()}. Code which
 only provides it via \code{prep()} will continue to work with a once per session
 warning, and in a future version it will become an error. If provided in
@@ -57,33 +58,32 @@ both \code{prep()} and \code{recipe()}, the value in \code{recipe()} will take p
 }
 \value{
 An object of class \code{recipe} with sub-objects:
-\item{var_info}{A tibble containing information about the original data
-set columns}
+\item{var_info}{A tibble containing information about the original data set
+columns.}
 \item{term_info}{A tibble that contains the current set of terms in the
 data set. This initially defaults to the same data contained in
 \code{var_info}.}
-\item{steps}{A list of \code{step}  or \code{check} objects that define the sequence of
-preprocessing operations that will be applied to data. The default value is
-\code{NULL}}
-\item{template}{A tibble of the data. This is initialized to be the same
-as the data given in the \code{data} argument but can be different after
-the recipe is trained.}
+\item{steps}{A list of \code{step} or \code{check} objects that define the sequence
+of preprocessing operations that will be applied to data. The default value
+is \code{NULL}.}
+\item{template}{A tibble of the data. This is initialized to be the same as
+the data given in the \code{data} argument but can be different after the recipe
+is trained.}
 }
 \description{
-A recipe is a description of what steps should be applied to a data set in
-order to get it ready for data analysis.
+A recipe is a description of the steps to be applied to a data set in order
+to prepare it for data analysis.
 }
 \details{
-Recipes are alternative methods for creating design matrices and
-for preprocessing data.
+\subsection{Defining recipes}{
 
-Variables in recipes can have any type of \emph{role} in subsequent analyses
-such as: outcome, predictor, case weights, stratification variables, etc.
+Variables in recipes can have any type of \emph{role}, including outcome,
+predictor, observation ID, case weights, stratification variables, etc.
 
-\code{recipe} objects can be created in several ways. If the analysis only
-contains outcomes and predictors, the simplest way to create one is to use
-a simple formula (e.g. \code{y ~ x1 + x2}) that does not contain inline
-functions such as \code{log(x3)}. An example is given below.
+\code{recipe} objects can be created in several ways. If an analysis only
+contains outcomes and predictors, the simplest way to create one is to
+use a formula (e.g. \code{y ~ x1 + x2}) that does not contain inline
+functions such as \code{log(x3)} (see the first example below).
 
 Alternatively, a \code{recipe} object can be created by first specifying
 which variables in a data set should be used and then sequentially
@@ -91,95 +91,291 @@ defining their roles (see the last example). This alternative is an
 excellent choice when the number of variables is very high, as the
 formula method is memory-inefficient with many variables.
 
-There are two different types of operations that can be
-sequentially added to a recipe. \strong{Steps}  can include common
-operations like logging a variable, creating dummy variables or
-interactions and so on. More computationally complex actions
-such as dimension reduction or imputation can also be specified.
-\strong{Checks} are operations that conduct specific tests of the
-data. When the test is satisfied, the data are returned without
-issue or modification. Otherwise, any error is thrown.
-
-Once a recipe has been defined, the \code{\link[=prep]{prep()}} function can be
-used to estimate quantities required for the operations using a
-data set (a.k.a. the training data). \code{\link[=prep]{prep()}} returns another
-recipe.
-
-To apply the recipe to a data set, the \code{\link[=bake]{bake()}} function is
-used in the same manner as \code{predict} would be for models. This
-applies the steps to any data set.
-
-Note that the data passed to \code{recipe} need not be the complete data
-that will be used to train the steps (by \code{\link[=prep]{prep()}}). The recipe
-only needs to know the names and types of data that will be used. For
-large data sets, \code{head} could be used to pass the recipe a smaller
-data set to save time and memory.
+There are two different types of operations that can be sequentially
+added to a recipe.
+\itemize{
+\item \strong{Steps} can include operations like scaling a variable, creating
+dummy variables or interactions, and so on. More computationally
+complex actions such as dimension reduction or imputation can also be
+specified.
+\item \strong{Checks} are operations that conduct specific tests of the data.
+When the test is satisfied, the data are returned without issue or
+modification. Otherwise, an error is thrown.
 }
-\examples{
 
-###############################################
-# simple example:
-library(modeldata)
-data(biomass)
+If you have defined a recipe and want to see which steps are included,
+use the \code{\link[=tidy.recipe]{tidy()}} method on the recipe object.
+
+Note that the data passed to \code{\link[=recipe]{recipe()}} need not be the
+complete data that will be used to train the steps (by
+\code{\link[=prep]{prep()}}). The recipe only needs to know the names and types
+of data that will be used. For large data sets, \code{\link[=head]{head()}} could
+be used to pass a smaller data set to save time and memory.
+}
+
+\subsection{Using recipes}{
+
+Once a recipe is defined, it needs to be \emph{estimated} before being
+applied to data. Most recipe steps have specific quantities that must be
+calculated or estimated. For example,
+\code{\link[=step_normalize]{step_normalize()}} needs to compute the training
+set’s mean for the selected columns, while
+\code{\link[=step_dummy]{step_dummy()}} needs to determine the factor levels of
+selected columns in order to make the appropriate indicator columns.
+
+The two most common application of recipes are modeling and stand-alone
+preprocessing. How the recipe is estimated depends on how it is being
+used.
+\subsection{Modeling}{
+
+The best way to use use a recipe for modeling is via the \code{workflows}
+package. This bundles a model and preprocessor (e.g. a recipe) together
+and gives the user a fluent way to train the model/recipe and make
+predictions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(dplyr)
+library(workflows)
+library(recipes)
+library(parsnip)
+
+data(biomass, package = "modeldata")
 
 # split data
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass \%>\% filter(dataset == "Training")
+biomass_te <- biomass \%>\% filter(dataset == "Testing")
 
-# When only predictors and outcomes, a simplified formula can be used.
+# With only predictors and outcomes, use a formula:
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
               data = biomass_tr)
 
-# Now add preprocessing steps to the recipe.
+# Now add preprocessing steps to the recipe:
+sp_signed <- 
+  rec \%>\%
+  step_normalize(all_numeric_predictors()) \%>\%
+  step_spatialsign(all_numeric_predictors())
+sp_signed
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
+
+## -- Recipe ------------------------------------------------------------
+
+## 
+
+## -- Inputs
+
+## Number of variables by role
+
+## outcome:   1
+## predictor: 5
+
+## 
+
+## -- Operations
+
+## * Centering and scaling for: all_numeric_predictors()
+
+## * Spatial sign on: all_numeric_predictors()
+}\if{html}{\out{</div>}}
+
+We can create a \code{parsnip} model, and then build a workflow with the
+model and recipe:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_mod <- linear_reg()
+
+linear_sp_sign_wflow <- 
+  workflow() \%>\% 
+  add_model(linear_mod) \%>\% 
+  add_recipe(sp_signed)
+
+linear_sp_sign_wflow
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## == Workflow ==========================================================
+## Preprocessor: Recipe
+## Model: linear_reg()
+## 
+## -- Preprocessor ------------------------------------------------------
+## 2 Recipe Steps
+## 
+## * step_normalize()
+## * step_spatialsign()
+## 
+## -- Model -------------------------------------------------------------
+## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm
+}\if{html}{\out{</div>}}
+
+To estimate the preprocessing steps and then fit the linear model, a
+single call to \code{\link[parsnip:fit]{fit()}} is used:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{linear_sp_sign_fit <- fit(linear_sp_sign_wflow, data = biomass_tr)
+}\if{html}{\out{</div>}}
+
+When predicting, there is no need to do anything other than call
+\code{\link[parsnip:predict.model_fit]{predict()}}. This preprocesses the new
+data in the same manner as the training set, then gives the data to the
+linear model prediction code:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{predict(linear_sp_sign_fit, new_data = head(biomass_te))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 x 1
+##   .pred
+##   <dbl>
+## 1  18.1
+## 2  17.9
+## 3  17.2
+## 4  18.8
+## 5  19.6
+## 6  14.6
+}\if{html}{\out{</div>}}
+}
+
+\subsection{Stand-alone use of recipes}{
+
+When using a recipe to generate data for a visualization or to
+troubleshoot any problems with the recipe, there are functions that can
+be used to estimate the recipe and apply it to new data manually.
+
+Once a recipe has been defined, the \code{\link[=prep]{prep()}} function can be
+used to estimate quantities required for the operations using a data set
+(a.k.a. the training data). \code{\link[=prep]{prep()}} returns a recipe.
+
+As an example of using PCA (perhaps to produce a plot):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Define the recipe
+pca_rec <- 
+  rec \%>\%
+  step_normalize(all_numeric_predictors()) \%>\%
+  step_pca(all_numeric_predictors())
+}\if{html}{\out{</div>}}
+
+Now to estimate the normalization statistics and the PCA loadings:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pca_rec <- prep(pca_rec, training = biomass_tr)
+pca_rec
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
+
+## -- Recipe ------------------------------------------------------------
+
+## 
+
+## -- Inputs
+
+## Number of variables by role
+
+## outcome:   1
+## predictor: 5
+
+## 
+
+## -- Training information
+
+## Training data contained 456 data points and no incomplete rows.
+
+## 
+
+## -- Operations
+
+## * Centering and scaling for: carbon hydrogen, ... | Trained
+
+## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained
+}\if{html}{\out{</div>}}
+
+Note that the estimated recipe shows the actual column names captured by
+the selectors.
+
+You can \code{\link[=tidy.recipe]{tidy.recipe()}} a recipe, either when it is
+prepped or unprepped, to learn more about its components.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tidy(pca_rec)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 2 x 6
+##   number operation type      trained skip  id             
+##    <int> <chr>     <chr>     <lgl>   <lgl> <chr>          
+## 1      1 step      normalize TRUE    FALSE normalize_AeYA4
+## 2      2 step      pca       TRUE    FALSE pca_Zn1yz
+}\if{html}{\out{</div>}}
+
+You can also \code{\link[=tidy.recipe]{tidy()}} recipe \emph{steps} with a \code{number}
+or \code{id} argument.
+
+To apply the prepped recipe to a data set, the \code{\link[=bake]{bake()}}
+function is used in the same manner that
+\code{\link[parsnip:predict.model_fit]{predict()}} would be for models. This
+applies the estimated steps to any data set.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{bake(pca_rec, head(biomass_te))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## # A tibble: 6 x 6
+##     HHV    PC1    PC2     PC3     PC4     PC5
+##   <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
+## 1  18.3 0.730  -0.412 -0.495   0.333   0.253 
+## 2  17.6 0.617   1.41   0.118  -0.466   0.815 
+## 3  17.2 0.761   1.10  -0.0550 -0.397   0.747 
+## 4  18.9 0.0400  0.950  0.158   0.405  -0.143 
+## 5  20.5 0.792  -0.732  0.204   0.465  -0.148 
+## 6  18.5 0.433  -0.127 -0.354  -0.0168 -0.0888
+}\if{html}{\out{</div>}}
+
+In general, the workflow interface to recipes is recommended for most
+applications.
+}
+
+}
+}
+\examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# formula example with single outcome:
+data(biomass, package = "modeldata")
+
+# split data
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
+
+# With only predictors and outcomes, use a formula
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
+
+# Now add preprocessing steps to the recipe
 sp_signed <- rec \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_spatialsign(all_numeric_predictors())
 sp_signed
 
-# now estimate required parameters
-sp_signed_trained <- prep(sp_signed, training = biomass_tr)
-sp_signed_trained
-
-# apply the preprocessing to a data set
-test_set_values <- bake(sp_signed_trained, new_data = biomass_te)
-
-# or use pipes for the entire workflow:
-rec <- biomass_tr \%>\%
-  recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur) \%>\%
-  step_normalize(all_numeric_predictors()) \%>\%
-  step_spatialsign(all_numeric_predictors())
-
-###############################################
-# multivariate example
-
+# ---------------------------------------------------------------------------
+# formula multivariate example:
 # no need for `cbind(carbon, hydrogen)` for left-hand side
+
 multi_y <- recipe(carbon + hydrogen ~ oxygen + nitrogen + sulfur,
-                  data = biomass_tr)
+  data = biomass_tr
+)
 multi_y <- multi_y \%>\%
   step_center(all_numeric_predictors()) \%>\%
   step_scale(all_numeric_predictors())
 
-multi_y_trained <- prep(multi_y, training = biomass_tr)
-
-results <- bake(multi_y_trained, biomass_te)
-
-###############################################
-# example with manually updating different roles
-
-# best choice for high-dimensional data:
+# ---------------------------------------------------------------------------
+# example using `update_role` instead of formula:
+# best choice for high-dimensional data
 
 rec <- recipe(biomass_tr) \%>\%
   update_role(carbon, hydrogen, oxygen, nitrogen, sulfur,
-           new_role = "predictor") \%>\%
+    new_role = "predictor"
+  ) \%>\%
   update_role(HHV, new_role = "outcome") \%>\%
   update_role(sample, new_role = "id variable") \%>\%
   update_role(dataset, new_role = "splitting indicator")
 rec
+\dontshow{\}) # examplesIf}
 }
-\author{
-Max Kuhn
+\seealso{
+\code{\link[=prep]{prep()}} and \code{\link[=bake]{bake()}}
 }
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

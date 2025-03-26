@@ -2,7 +2,7 @@
 % Please edit documentation in R/num2factor.R
 \name{step_num2factor}
 \alias{step_num2factor}
-\title{Convert Numbers to Factors}
+\title{Convert numbers to factors}
 \usage{
 step_num2factor(
   recipe,
@@ -20,52 +20,66 @@ step_num2factor(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables will be
-converted to factors. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{transform}{A function taking a single argument \code{x} that can be used
 to modify the numeric values prior to determining the levels (perhaps using
 \code{\link[base:integer]{base::as.integer()}}). The output of a function should be an integer that
 corresponds to the value of \code{levels} that should be assigned. If not an
-integer, the value will be converted to an integer during \code{bake()}.}
+integer, the value will be converted to an integer during \code{\link[=bake]{bake()}}.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
 \item{levels}{A character vector of values that will be used as the levels.
 These are the numeric data converted to character and ordered. This is
-modified once \code{\link[=prep.recipe]{prep.recipe()}} is executed.}
+modified once \code{\link[=prep]{prep()}} is executed.}
 
 \item{ordered}{A single logical value; should the factor(s) be ordered?}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
-\code{step_num2factor} will convert one or more numeric vectors to factors
+\code{step_num2factor()} will convert one or more numeric vectors to factors
 (ordered or unordered). This can be useful when categories are encoded as
 integers.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{ordered} is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{ordered} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{ordered}{logical, were the factor(s) ordered}
+\item{id}{character, id of this step}
 }
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(dplyr)
-library(modeldata)
-data(attrition)
+data(attrition, package = "modeldata")
 
 attrition \%>\%
   group_by(StockOptionLevel) \%>\%
@@ -81,7 +95,9 @@ rec <-
     levels = amnt
   )
 
-encoded <- rec \%>\% prep() \%>\% bake(new_data = NULL)
+encoded <- rec \%>\%
+  prep() \%>\%
+  bake(new_data = NULL)
 
 table(encoded$StockOptionLevel, attrition$StockOptionLevel)
 
@@ -111,14 +127,33 @@ encoded <- bake(rec, new_data = NULL)
 table(encoded$MonthlyIncome, binner(attrition$MonthlyIncome))
 
 # What happens when a value is out of range?
-ceo <- attrition \%>\% slice(1) \%>\% mutate(MonthlyIncome = 10^10)
+ceo <- attrition \%>\%
+  slice(1) \%>\%
+  mutate(MonthlyIncome = 10^10)
 
 bake(rec, ceo)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}}, \code{\link[=step_dummy]{step_dummy()}}
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
 }
-\concept{factors}
-\concept{preprocessing}
-\concept{variable_encodings}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

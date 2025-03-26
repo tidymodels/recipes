@@ -31,21 +31,21 @@ preprocessing have been estimated.}
 \item{inputs}{Quosure of values given by \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_arrange} creates a \emph{specification} of a recipe step
-that will sort rows using \code{\link[dplyr:arrange]{dplyr::arrange()}}.
+\code{step_arrange()} creates a \emph{specification} of a recipe step that will sort
+rows using \code{\link[dplyr:arrange]{dplyr::arrange()}}.
 }
 \details{
 When an object in the user's global environment is
@@ -53,14 +53,33 @@ referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!!})
 to embed the value of the object in the expression (to
 be portable between sessions). See the examples.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
-contains the sorting variable(s) or expression(s) is returned. The
-expressions are text representations and are not parsable.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-rec <- recipe( ~ ., data = iris) \%>\%
-  step_arrange(desc(Sepal.Length), 1/Petal.Length)
+rec <- recipe(~., data = iris) \%>\%
+  step_arrange(desc(Sepal.Length), 1 / Petal.Length)
 
 prepped <- prep(rec, training = iris \%>\% slice(1:75))
 tidy(prepped, number = 1)
@@ -71,7 +90,7 @@ dplyr_train <-
   iris \%>\%
   as_tibble() \%>\%
   slice(1:75) \%>\%
-  dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
+  dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 
 rec_train <- bake(prepped, new_data = NULL)
 all.equal(dplyr_train, rec_train)
@@ -80,7 +99,7 @@ dplyr_test <-
   iris \%>\%
   as_tibble() \%>\%
   slice(76:150) \%>\%
-  dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
+  dplyr::arrange(desc(Sepal.Length), 1 / Petal.Length)
 rec_test <- bake(prepped, iris \%>\% slice(76:150))
 all.equal(dplyr_test, rec_test)
 
@@ -91,12 +110,32 @@ all.equal(dplyr_test, rec_test)
 sort_vars <- c("Sepal.Length", "Petal.Length")
 
 qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   # Embed the `values` object in the call using !!!
   step_arrange(!!!syms(sort_vars)) \%>\%
   prep(training = iris)
 
 tidy(qq_rec, number = 1)
 }
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other row operation steps: 
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
+
+Other dplyr steps: 
+\code{\link{step_filter}()},
+\code{\link{step_mutate}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{dplyr steps}
+\concept{row operation steps}

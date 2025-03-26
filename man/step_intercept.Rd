@@ -10,60 +10,77 @@ step_intercept(
   role = "predictor",
   trained = FALSE,
   name = "intercept",
-  value = 1,
+  value = 1L,
   skip = FALSE,
   id = rand_id("intercept")
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
 \item{...}{Argument ignored; included for consistency with other step
 specification functions.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new columns created from the original variables will be
-used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated. Again included for consistency.}
+have been estimated. Again included only for consistency.}
 
 \item{name}{Character name for newly added column}
 
-\item{value}{A numeric constant to fill the intercept column. Defaults to 1.}
+\item{value}{A numeric constant to fill the intercept column. Defaults to
+\code{1L}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the
-new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_intercept} creates a \emph{specification} of a recipe step that
-will add an intercept or constant term in the first column of a data
-matrix. \code{step_intercept} has defaults to \emph{predictor} role so
-that it is by default called in the bake step. Be careful to avoid
-unintentional transformations when calling steps with
-\code{all_predictors}.
+\code{step_intercept()} creates a \emph{specification} of a recipe step that will add
+an intercept or constant term in the first column of a data matrix.
+\code{step_intercept()} defaults to \emph{predictor} role so that it is by default
+only called in the bake step. Be careful to avoid unintentional transformations
+when calling steps with \code{all_predictors()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) \%>\%
   step_intercept(value = 2) \%>\%
   step_scale(carbon)
@@ -72,8 +89,5 @@ rec_obj <- prep(rec_trans, training = biomass_tr)
 
 with_intercept <- bake(rec_obj, biomass_te)
 with_intercept
-
-}
-\seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+\dontshow{\}) # examplesIf}
 }

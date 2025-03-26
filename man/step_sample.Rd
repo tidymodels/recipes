@@ -37,49 +37,72 @@ of the training set (or smaller for smaller \code{new_data}).}
 \item{replace}{Sample with or without replacement?}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_sample} creates a \emph{specification} of a recipe step
-that will sample rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or
-\code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
-}
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{size},
-\code{replace}, and \code{id} is returned.
+\code{step_sample()} creates a \emph{specification} of a recipe step that will sample
+rows using \code{\link[dplyr:sample_n]{dplyr::sample_n()}} or \code{\link[dplyr:sample_n]{dplyr::sample_frac()}}.
 }
 \section{Row Filtering}{
 
 
 This step can entirely remove observations (rows of data), which can have
 unintended and/or problematic consequences when applying the step to new
-data later via \code{\link[=bake.recipe]{bake.recipe()}}. Consider whether \code{skip = TRUE} or
+data later via \code{\link[=bake]{bake()}}. Consider whether \code{skip = TRUE} or
 \code{skip = FALSE} is more appropriate in any given use case. In most instances
 that affect the rows of the data being predicted, this step probably should
 not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing \code{\link[=recipe]{recipe()}}.
 }
 
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{size}, \code{replace} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{size}{numeric, amount of sampling}
+\item{replace}{logical, whether sampling is done with replacement}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
 
 # Uses `sample_n`
-recipe( ~ ., data = mtcars) \%>\%
+recipe(~., data = mtcars) \%>\%
   step_sample(size = 1) \%>\%
   prep(training = mtcars) \%>\%
   bake(new_data = NULL) \%>\%
   nrow()
 
 # Uses `sample_frac`
-recipe( ~ ., data = mtcars) \%>\%
+recipe(~., data = mtcars) \%>\%
   step_sample(size = 0.9999) \%>\%
   prep(training = mtcars) \%>\%
   bake(new_data = NULL) \%>\%
@@ -87,7 +110,7 @@ recipe( ~ ., data = mtcars) \%>\%
 
 # Uses `sample_n` and returns _at maximum_ 20 samples.
 smaller_cars <-
-  recipe( ~ ., data = mtcars) \%>\%
+  recipe(~., data = mtcars) \%>\%
   step_sample() \%>\%
   prep(training = mtcars \%>\% slice(1:20))
 
@@ -95,7 +118,24 @@ bake(smaller_cars, new_data = NULL) \%>\% nrow()
 bake(smaller_cars, new_data = mtcars \%>\% slice(21:32)) \%>\% nrow()
 }
 \seealso{
-\code{\link[=step_filter]{step_filter()}} \code{\link[=step_naomit]{step_naomit()}} \code{\link[=step_slice]{step_slice()}}
+Other row operation steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
+
+Other dplyr steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
 }
-\concept{preprocessing}
-\keyword{datagen}
+\concept{dplyr steps}
+\concept{row operation steps}

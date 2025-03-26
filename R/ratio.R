@@ -1,20 +1,16 @@
-#' Ratio Variable Creation
+#' Ratio variable creation
 #'
-#' `step_ratio` creates a *specification* of a recipe
-#'  step that will create one or more ratios out of numeric
-#'  variables.
+#' `step_ratio()` creates a *specification* of a recipe step that will create
+#' one or more ratios from selected numeric variables.
 #'
+#' @inheritParams step_date
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
 #' @param ... One or more selector functions to choose which
 #'  variables will be used in the *numerator* of the ratio.
 #'  When used with `denom_vars`, the dots indicate which
 #'  variables are used in the *denominator*. See
 #'  [selections()] for more details.
-#' @param role For terms created by this step, what analysis role
-#'  should they be assigned?. By default, the function assumes that
-#'  the newly created ratios created by the original variables will
-#'  be used as predictors in a model.
 #' @param denom A call to `denom_vars` to specify which
 #'  variables are used in the denominator that can include specific
 #'  variable names separated by commas or different selectors (see
@@ -23,65 +19,79 @@
 #'  listing.
 #' @param naming A function that defines the naming convention for
 #'  new ratio columns.
-#' @param columns The column names used in the ratios. This
-#'  argument is not populated until [prep.recipe()] is
-#'  executed.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `denom` is returned.
-#' @keywords datagen
-#' @concept preprocessing
+#' @template step-return
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' `terms` (the selectors or variables selected) and `denom` is returned.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `denom` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{denom}{character, name of denominator selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @family multivariate transformation steps
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass$total <- apply(biomass[, 3:7], 1, sum)
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-#'                     sulfur + total,
-#'               data = biomass_tr)
+#'   sulfur + total,
+#' data = biomass_tr
+#' )
 #'
 #' ratio_recipe <- rec %>%
 #'   # all predictors over total
-#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total)) %>%
-#'   # get rid of the original predictors
-#'   step_rm(all_predictors(), -ends_with("total"))
+#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+#'              keep_original_cols = FALSE)
 #'
 #' ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 #'
 #' ratio_data <- bake(ratio_recipe, biomass_te)
 #' ratio_data
-
 step_ratio <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           denom = denom_vars(),
-           naming = function(numer, denom)
-             make.names(paste(numer, denom, sep = "_o_")),
-           columns = NULL,
-           keep_original_cols = TRUE,
-           skip = FALSE,
-           id = rand_id("ratio")) {
-    if (is_empty(denom))
-      rlang::abort(
-        paste0(
-          "Please supply at least one denominator variable specification. ",
-          "See ?selections."
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    denom = denom_vars(),
+    naming = function(numer, denom) {
+      make.names(paste(numer, denom, sep = "_o_"))
+    },
+    columns = NULL,
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("ratio")
+  ) {
+    if (is_empty(denom)) {
+      cli::cli_abort(
+        c(
+          "!" = "{.arg denom} must select at least one variable.",
+          "i" = "See {.help [?selections](recipes::selections)} \\
+              for more information."
         )
       )
+    }
     add_step(
       recipe,
       step_ratio_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         denom = denom,
@@ -95,8 +105,17 @@ step_ratio <-
   }
 
 step_ratio_new <-
-  function(terms, role, trained, denom, naming, columns,
-           keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    denom,
+    naming,
+    columns,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "ratio",
       terms = terms,
@@ -111,22 +130,21 @@ step_ratio_new <-
     )
   }
 
-
 #' @export
 prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
-    top = eval_select_recipes(x$terms, training, info),
-    bottom = eval_select_recipes(x$denom, training, info),
+    top = recipes_eval_select(x$terms, training, info),
+    bottom = recipes_eval_select(x$denom, training, info),
     stringsAsFactors = FALSE
   )
+  col_names <- tibble::as_tibble(col_names)
   col_names <- col_names[!(col_names$top == col_names$bottom), ]
 
-  if (nrow(col_names) == 0)
-    rlang::abort("No variables were selected for making ratios")
-  if (any(info$type[info$variable %in% col_names$top] != "numeric"))
-    rlang::abort("The ratio variables should be numeric")
-  if (any(info$type[info$variable %in% col_names$bottom] != "numeric"))
-    rlang::abort("The ratio variables should be numeric")
+  check_type(
+    training[, unique(c(col_names$top, col_names$bottom))],
+    types = c("double", "integer")
+  )
+  check_function(x$naming, arg = "naming")
 
   step_ratio_new(
     terms = x$terms,
@@ -143,39 +161,38 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
-  res <- new_data[, object$columns$top] /
-    new_data[, object$columns$bottom]
-  colnames(res) <-
-    apply(object$columns, 1, function(x)
-      object$naming(x[1], x[2]))
-  if (!is_tibble(res))
-    res <- as_tibble(res)
+  col_names <- purrr::pmap(object$columns, c)
+  unique_col_names <- unique(unlist(col_names))
+  check_new_data(unique_col_names, object, new_data)
 
-  keep_original_cols <- get_keep_original_cols(object)
-  new_data <- bind_cols(new_data, res)
+  res <- list()
 
-  if (!keep_original_cols) {
-    union_cols <- union(object$columns$top, object$columns$bottom)
-    new_data <- new_data[, !(colnames(new_data) %in% union_cols), drop = FALSE]
+  for (col_name in col_names) {
+    value <- new_data[[col_name[["top"]]]] / new_data[[col_name[["bottom"]]]]
+    res <- c(res, list(value))
   }
 
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
+  names(res) <- vapply(
+    col_names,
+    FUN.VALUE = character(1),
+    function(x) object$naming(x[1], x[2])
+  )
+
+  res <- tibble::new_tibble(res, nrow = nrow(new_data))
+
+  res <- check_name(res, new_data, object, names(res))
+  new_data <- vec_cbind(new_data, res, .name_repair = "minimal")
+  new_data <- remove_original_cols(new_data, object, unique_col_names)
+
   new_data
 }
 
+#' @export
 print.step_ratio <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Ratios from ")
-    if (x$trained) {
-      vars <- c(unique(x$columns$top), unique(x$columns$bottom))
-      cat(format_ch_vec(vars, width = width))
-    } else
-      cat(format_selectors(c(x$terms, x$denom), width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Ratios from "
+    vars <- c(unique(x$columns$top), unique(x$columns$bottom))
+    print_step(vars, c(x$terms, x$denom), x$trained, title, width)
     invisible(x)
   }
 
@@ -184,18 +201,20 @@ print.step_ratio <-
 denom_vars <- function(...) quos(...)
 
 #' @rdname tidy.recipe
-#' @param x A `step_ratio` object
 #' @export
 tidy.step_ratio <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = unname(x$columns$top),
-                  denom = unname(x$columns$bottom))
+    res <- tibble(
+      terms = unname(x$columns$top),
+      denom = unname(x$columns$bottom)
+    )
   } else {
-    res <- tidyr::crossing(terms = sel2char(x$terms),
-                           denom = sel2char(x$denom))
+    res <- tidyr::crossing(
+      terms = sel2char(x$terms),
+      denom = sel2char(x$denom)
+    )
     res <- as_tibble(res)
   }
   res$id <- x$id
   arrange(res, terms, denom)
 }
-

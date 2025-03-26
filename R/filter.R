@@ -1,7 +1,7 @@
 #' Filter rows using dplyr
 #'
-#' `step_filter` creates a *specification* of a recipe step
-#'  that will remove rows using [dplyr::filter()].
+#' `step_filter()` creates a *specification* of a recipe step that will remove
+#' rows using [dplyr::filter()].
 #'
 #' @template row-ops
 #' @inheritParams step_center
@@ -9,32 +9,35 @@
 #'  in the data. Multiple conditions are combined with `&`. Only
 #'  rows where the condition evaluates to `TRUE` are kept. See
 #'  [dplyr::filter()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param inputs Quosure of values given by `...`.
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the conditional statements is returned. These
-#'  expressions are text representations and are not parsable.
+#' # Tidying
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept row_filters
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' The expressions in `terms` are text representations and are not parsable.
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
-#' rec <- recipe( ~ ., data = iris) %>%
+#' rec <- recipe(~., data = iris) %>%
 #'   step_filter(Sepal.Length > 4.5, Species == "setosa")
 #'
 #' prepped <- prep(rec, training = iris %>% slice(1:75))
@@ -61,22 +64,20 @@
 #' values <- c("versicolor", "virginica")
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   # Embed the `values` object in the call using !!
-#'   step_filter(Sepal.Length > 4.5, Species  %in% !!values)
+#'   step_filter(Sepal.Length > 4.5, Species %in% !!values)
 #'
 #' tidy(qq_rec, number = 1)
-#' @seealso [step_naomit()] [step_sample()] [step_slice()]
-
 step_filter <- function(
-  recipe, ...,
+  recipe,
+  ...,
   role = NA,
   trained = FALSE,
   inputs = NULL,
   skip = TRUE,
   id = rand_id("filter")
 ) {
-
   inputs <- enquos(...)
 
   add_step(
@@ -122,26 +123,26 @@ bake.step_filter <- function(object, new_data, ...) {
   dplyr::filter(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_filter <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Row filtering")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Row filtering using "
+    print_step(x$inputs, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_filter` object
 #' @export
 tidy.step_filter <- function(x, ...) {
-  cond_expr <- map(x$inputs, quo_get_expr)
+  cond_expr <- map(unname(x$inputs), quo_get_expr)
   cond_expr <- map_chr(cond_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
     terms = cond_expr,
     id = rep(x$id, length(x$inputs))
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_filter <- function(x, ...) {
+  TRUE
 }

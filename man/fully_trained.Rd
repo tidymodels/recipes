@@ -24,5 +24,10 @@ rec <- recipe(Species ~ ., data = iris) \%>\%
 rec \%>\% fully_trained()
 
 
-rec \%>\% prep(training = iris) \%>\% fully_trained()
+rec \%>\%
+  prep(training = iris) \%>\%
+  fully_trained()
+}
+\seealso{
+\link{developer_functions}
 }

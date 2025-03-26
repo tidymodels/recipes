@@ -7,6 +7,7 @@
 step_mutate(
   recipe,
   ...,
+  .pkgs = character(),
   role = "predictor",
   trained = FALSE,
   inputs = NULL,
@@ -18,14 +19,14 @@ step_mutate(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.
-If the argument is not named, the expression is converted to
-a column name.}
+\item{...}{Name-value pairs of expressions. See \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned? By default, the function assumes
-that the new dimension columns created by the original variables
-will be used as predictors in a model.}
+\item{.pkgs}{Character vector, package names of functions used in
+expressions \code{...}. Should be specified if using non-base functions.}
+
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -33,36 +34,57 @@ preprocessing have been estimated.}
 \item{inputs}{Quosure(s) of \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_mutate} creates a \emph{specification} of a recipe step
-that will add variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
+\code{step_mutate()} creates a \emph{specification} of a recipe step that will add
+variables using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
 }
 \details{
+When using this flexible step, use extra care to avoid data leakage in your
+preprocessing. Consider, for example, the transformation \code{x = w > mean(w)}.
+When applied to new data or testing data, this transformation would use the
+mean of \code{w} from the \emph{new} data, not the mean of \code{w} from the training data.
+
 When an object in the user's global environment is
 referenced in the expression defining the new variable(s),
 it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{values}, which
-contains the \code{mutate} expressions as character strings
-(and are not reparsable), is returned.
+If a preceding step removes a column that is selected by name in
+\code{step_mutate()}, the recipe will error when being estimated with \code{\link[=prep]{prep()}}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, expression passed to \code{mutate()}}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   step_mutate(
     dbl_width = Sepal.Width * 2,
     half_length = Sepal.Length / 2
@@ -99,7 +121,7 @@ all.equal(dplyr_test, rec_test)
 const <- 1.414
 
 qq_rec <-
-  recipe( ~ ., data = iris) \%>\%
+  recipe(~., data = iris) \%>\%
   step_mutate(
     bad_approach = Sepal.Width * const,
     best_approach = Sepal.Width * !!const
@@ -111,6 +133,32 @@ bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 # The difference:
 tidy(qq_rec, number = 1)
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\seealso{
+Other individual transformation steps: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_log}()},
+\code{\link{step_logit}()},
+\code{\link{step_ns}()},
+\code{\link{step_percentile}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
+
+Other dplyr steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{dplyr steps}
+\concept{individual transformation steps}

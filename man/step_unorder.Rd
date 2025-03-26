@@ -2,7 +2,7 @@
 % Please edit documentation in R/unorder.R
 \name{step_unorder}
 \alias{step_unorder}
-\title{Convert Ordered Factors to Unordered Factors}
+\title{Convert ordered factors to unordered factors}
 \usage{
 step_unorder(
   recipe,
@@ -18,9 +18,8 @@ step_unorder(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -28,42 +27,58 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_unorder} creates a \emph{specification} of a recipe
-step that will transform the data.
+\code{step_unorder()} creates a \emph{specification} of a recipe step that will turn
+ordered factor variables into unordered factor variables.
 }
 \details{
 The factors level order is preserved during the transformation.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be affected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 lmh <- c("Low", "Med", "High")
 
-examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
-                       X2 = ordered(rep(lmh, each = 4),
-                                    levels = lmh))
+examples <- data.frame(
+  X1 = factor(rep(letters[1:4], each = 3)),
+  X2 = ordered(rep(lmh, each = 4),
+    levels = lmh
+  )
+)
 
 rec <- recipe(~ X1 + X2, data = examples)
 
-factor_trans <- rec  \%>\%
+factor_trans <- rec \%>\%
   step_unorder(all_nominal_predictors())
 
 factor_obj <- prep(factor_trans, training = examples)
@@ -75,9 +90,25 @@ tidy(factor_trans, number = 1)
 tidy(factor_obj, number = 1)
 }
 \seealso{
-\code{\link[=step_ordinalscore]{step_ordinalscore()}} \code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()}
 }
-\concept{ordinal_data}
-\concept{preprocessing}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

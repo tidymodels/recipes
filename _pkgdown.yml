@@ -1,17 +1,21 @@
 url: https://recipes.tidymodels.org
 
+navbar:
+  components:
+    home: ~
+
 template:
   package: tidytemplate
-  params:
-    theme: tidymodels
-    part_of: <a href="https://tidymodels.org">tidymodels</a>
-    footer: recipes is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
+  bootstrap: 5
+  bslib:
+    primary: "#CA225E"
+
+  includes:
+      in_header: |
+        <script defer data-domain="recipes.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 
 development:
   mode: auto
-
-home:
-  strip_header: true
 
 figures:
   fig.width: 8
@@ -20,16 +24,20 @@ figures:
 reference:
   - title: Basic Functions
     contents:
-    - matches("recipe")
+    - recipes
+    - recipe
+    - formula.recipe
+    - print.recipe
+    - summary.recipe
     - prep
     - bake
     - juice
     - selections
-    - starts_with("all_")
     - has_role
-    - has_type
-    - current_info
     - add_role
+    - update_role_requirements
+    - get_case_weights
+    - case_weights
   - title: Step Functions - Imputation
     contents:
     - starts_with("step_impute_")
@@ -38,6 +46,7 @@ reference:
     contents:
     - step_BoxCox
     - step_bs
+    - step_harmonic
     - step_hyperbolic
     - step_inverse
     - step_invlogit
@@ -46,32 +55,41 @@ reference:
     - step_mutate
     - step_ns
     - step_poly
+    - step_poly_bernstein
     - step_relu
+    - starts_with("step_spline_")
     - step_sqrt
     - step_YeoJohnson
   - title: Step Functions - Discretization
     contents:
-    - matches("discreti")
+    - step_discretize
+    - discretize
     - step_cut
   - title: Step Functions - Dummy Variables and Encodings
     contents:
     - step_bin2factor
     - step_count
-    - step_date
     - step_dummy
+    - step_dummy_extract
+    - step_dummy_multi_choice
     - step_factor2string
-    - step_holiday
     - step_indicate_na
     - step_integer
     - step_novel
     - step_num2factor
     - step_ordinalscore
     - step_other
+    - step_percentile
     - step_regex
     - step_relevel
     - step_string2factor
     - step_unknown
     - step_unorder
+  - title: Step Functions - Date and Datetime
+    contents:
+    - step_date
+    - step_time
+    - step_holiday
   - title: Step Functions - Interactions
     contents:
     - step_interact
@@ -83,15 +101,17 @@ reference:
     - step_scale
   - title: Step Functions - Multivariate Transformations
     contents:
-    - step_classdist
+    - starts_with("step_classdist")
     - step_depth
     - step_geodist
     - step_ica
     - step_isomap
+    - step_kpca
     - step_kpca_poly
     - step_kpca_rbf
     - step_mutate_at
     - step_nnmf
+    - step_nnmf_sparse
     - step_pca
     - step_pls
     - step_ratio
@@ -99,6 +119,7 @@ reference:
   - title: Step Functions - Filters
     contents:
     - step_corr
+    - step_filter_missing
     - step_lincomb
     - step_nzv
     - step_rm
@@ -124,43 +145,58 @@ reference:
   - title: Check Functions
     contents:
     - matches("^check_")
-  - title: Internal Step Handling
+  - title: Developer Functions
     contents:
+    - developer_functions
     - add_step
     - detect_step
     - fully_trained
+    - .get_data_types
     - names0
     - prepper
-    - terms_select
+    - recipes_eval_select
+    - recipes_extension_check
+    - recipes_ptype
+    - recipes_ptype_validate
+    - recipes-role-indicator
+    - sparse_data
     - update.step
   - title: Tidy Methods
     contents:
     - tidy.recipe
 
+articles:
+  - title: Get started
+    contents:
+      - recipes
+  - title: Learn more
+    navbar: ~
+    contents:
+      - Dummies
+      - Selecting_Variables
+      - Roles
+      - Skipping
+  - title: Practical advice
+    contents:
+      - Ordering
+  - title: Developer
+    contents:
+      - custom
+  - title: Examples
+    contents:
+      - subsampling
+      - pls
 
-navbar:
-  left:
-  - text: "Simple Example"
-    href: articles/Simple_Example.html
-  - text: "Articles"
-    menu:
-      - text: "Selecting Variables"
-        href: articles/Selecting_Variables.html
-      - text: "Custom Steps"
-        href: articles/Custom_Steps.html
-      - text: "The Order of Steps"
-        href: articles/Ordering.html
-      - text: "Dummy Variables and Interactions"
-        href: articles/Dummies.html
-      - text: "Column Roles"
-        href: articles/Roles.html
-      - text: "On Skipping Steps"
-        href: articles/Skipping.html
-      - text: "Subsampling for Class Imbalances"
-        href: https://www.tidymodels.org/learn/models/sub-sampling/
-      - text: "Multivariate Analysis using Partial Least Squares"
-        href: https://www.tidymodels.org/learn/models/pls/
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
+external-articles:
+  - name: subsampling
+    title: Subsampling for Class Imbalances
+    description: Improve model performance in imbalanced data sets through undersampling or oversampling.
+    href: https://www.tidymodels.org/learn/models/sub-sampling/
+  - name: pls
+    title: Multivariate Analysis using Partial Least Squares
+    description: Build and fit a predictive model with more than one outcome.
+    href: https://www.tidymodels.org/learn/models/pls/
+  - name: custom 
+    title: Custom Steps
+    description: Write a new recipe step for data preprocessing.
+    href: https://www.tidymodels.org/learn/develop/recipes/

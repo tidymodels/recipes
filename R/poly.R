@@ -1,51 +1,63 @@
-#' Orthogonal Polynomial Basis Functions
+#' Orthogonal polynomial basis functions
 #'
-#' `step_poly` creates a *specification* of a recipe
-#'  step that will create new columns that are basis expansions of
-#'  variables using orthogonal polynomials.
-
+#' `step_poly()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using orthogonal polynomials.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
-#' @param objects A list of [stats::poly()] objects
-#'  created once the step has been trained.
+#' @param objects A list of [stats::poly()] objects created once the step has
+#'   been trained.
 #' @param degree The polynomial degree (an integer).
-#' @param options A list of options for [stats::poly()]
-#'  which should not include `x`, `degree`, or `simple`. Note that
-#'  the option `raw = TRUE` will produce the regular polynomial
-#'  values (not orthogonalized).
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept basis_expansion
+#' @param options A list of options for [stats::poly()] which should not include
+#'   `x`, `degree`, or `simple`. Note that the option `raw = TRUE` will produce
+#'   the regular polynomial values (not orthogonalized).
+#' @template step-return
+#' @family individual transformation steps
 #' @export
-#' @details `step_poly` can create new features from a single
-#'  variable that enable fitting routines to model this variable in
-#'  a nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `degree` argument of
-#'  [stats::poly()]. The original variables are removed
-#'  from the data and new columns are added. The naming convention
-#'  for the new variables is `varname_poly_1` and so on.
+#' @details
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  columns that will be affected) and `degree` is returned.
+#' `step_poly()` can create new features from a single variable that enable
+#' fitting routines to model this variable in a nonlinear manner. The extent of
+#' the possible nonlinearity is determined by the `degree` argument of
+#' [stats::poly()]. The original variables are removed from the data by default,
+#' but can be retained by setting `keep_original_cols = TRUE` and new columns
+#' are added. The naming convention for the new variables is `varname_poly_1`
+#' and so on.
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' The orthogonal polynomial expansion is used by default because it yields
+#' variables that are uncorrelated and doesn't produce large values which would
+#' otherwise be a problem for large values of `degree`. Orthogonal polynomial
+#' expansion pick up the same signal as their uncorrelated counterpart.
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' # Tidying
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `degree` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{degree}{integer, the polynomial degree}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_poly"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' quadratic <- rec %>%
 #'   step_poly(carbon, hydrogen)
@@ -55,44 +67,37 @@
 #' expanded
 #'
 #' tidy(quadratic, number = 1)
-#' @seealso [step_ns()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
-
 step_poly <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           objects = NULL,
-           degree = 2,
-           options = list(),
-        skip = FALSE,
-        id = rand_id("poly")) {
-
-    if (!is_tune(degree) & !is_varying(degree)) {
-      degree <- as.integer(degree)
-    }
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    objects = NULL,
+    degree = 2L,
+    options = list(),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("poly")
+  ) {
     if (any(names(options) == "degree")) {
       degree <- options$degree
-      message(
-        paste(
-          "The `degree` argument is now a main argument instead of being",
-          "within `options`."
-        )
+      cli::cli_inform(
+        "The {.arg degree} argument is now a main argument instead of being \\
+        within {.arg options}."
       )
     }
 
     add_step(
       recipe,
       step_poly_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         role = role,
         objects = objects,
         degree = degree,
         options = options,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -100,7 +105,17 @@ step_poly <-
   }
 
 step_poly_new <-
-  function(terms, role, trained, objects, degree, options, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    objects,
+    degree,
+    options,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "poly",
       terms = terms,
@@ -109,11 +124,11 @@ step_poly_new <-
       objects = objects,
       degree = degree,
       options = options,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
   }
-
 
 poly_wrapper <- function(x, args) {
   args$x <- x
@@ -128,12 +143,12 @@ poly_wrapper <- function(x, args) {
   out
 }
 
-
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$degree, arg = "degree", min = 1)
+  x$degree <- as.integer(x$degree)
 
   opts <- x$options
   opts$degree <- x$degree
@@ -149,6 +164,7 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
     objects = obj,
     degree = x$degree,
     options = x$options,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -157,26 +173,42 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
-  new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
-  poly_values <-
-    purrr::map2(new_data[, col_names], object$objects, ~ predict(.y, .x)) %>%
-    purrr::map(as_tibble) %>%
-    purrr::map2_dfc(new_names, ~ setNames(.x, .y))
-  new_data <- dplyr::bind_cols(new_data, poly_values)
-  new_data <- dplyr::select(new_data, -col_names)
+  check_new_data(col_names, object, new_data)
+  new_names <- purrr::map(
+    object$objects,
+    ~ paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
+  )
+
+  # Start with n-row, 0-col tibble for the empty selection case
+  new_tbl <- tibble::new_tibble(x = list(), nrow = nrow(new_data))
+
+  for (col_name in col_names) {
+    i_col <- new_data[[col_name]]
+    i_object <- object$objects[[col_name]]
+    i_new_names <- new_names[[col_name]]
+
+    new_cols <- predict(i_object, i_col)
+    colnames(new_cols) <- i_new_names
+    new_cols <- tibble::as_tibble(new_cols)
+
+    new_tbl[i_new_names] <- new_cols
+  }
+
+  new_tbl <- check_name(new_tbl, new_data, object, names(new_tbl))
+  new_data <- vec_cbind(new_data, new_tbl, .name_repair = "minimal")
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 
-
+#' @export
 print.step_poly <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Orthogonal polynomials on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Polynomial expansion on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_poly` object.
 #' @export
 tidy.step_poly <- function(x, ...) {
   if (is_trained(x)) {
@@ -189,8 +221,6 @@ tidy.step_poly <- function(x, ...) {
   res
 }
 
-
-#' @rdname tunable.step
 #' @export
 tunable.step_poly <- function(x, ...) {
   tibble::tibble(

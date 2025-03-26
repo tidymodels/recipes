@@ -2,7 +2,7 @@
 % Please edit documentation in R/log.R
 \name{step_log}
 \alias{step_log}
-\title{Logarithmic Transformation}
+\title{Logarithmic transformation}
 \usage{
 step_log(
   recipe,
@@ -21,9 +21,8 @@ step_log(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -36,34 +35,47 @@ preprocessing have been estimated.}
 \item{offset}{An optional value to add to the data prior to
 logging (to avoid \code{log(0)}).}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{signed}{A logical indicating whether to take the signed log.
-This is sign(x) * abs(x) when abs(x) => 1 or 0 if abs(x) < 1.
+This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
 If \code{TRUE} the \code{offset} argument will be ignored.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_log} creates a \emph{specification} of a recipe step
-that will log transform data.
+\code{step_log()} creates a \emph{specification} of a recipe step that will log
+transform data.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{base}.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{base} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{base}{numeric, value for the base}
+\item{id}{character, id of this step}
 }
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 set.seed(313)
 examples <- matrix(exp(rnorm(40)), ncol = 2)
@@ -71,7 +83,7 @@ examples <- as.data.frame(examples)
 
 rec <- recipe(~ V1 + V2, data = examples)
 
-log_trans <- rec  \%>\%
+log_trans <- rec \%>\%
   step_log(all_numeric_predictors())
 
 log_obj <- prep(log_trans, training = examples)
@@ -96,14 +108,22 @@ recipe(~ V1 + V2, data = examples2) \%>\%
   step_log(all_numeric_predictors(), signed = TRUE) \%>\%
   prep(training = examples2) \%>\%
   bake(examples2)
-
 }
 \seealso{
-\code{\link[=step_logit]{step_logit()}} \code{\link[=step_invlogit]{step_invlogit()}}
-\code{\link[=step_hyperbolic]{step_hyperbolic()}}  \code{\link[=step_sqrt]{step_sqrt()}}
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other individual transformation steps: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_YeoJohnson}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_logit}()},
+\code{\link{step_mutate}()},
+\code{\link{step_ns}()},
+\code{\link{step_percentile}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\concept{individual transformation steps}

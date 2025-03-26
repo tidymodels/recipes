@@ -1,23 +1,16 @@
-#' Create a Factors from A Dummy Variable
+#' Create a factors from A dummy variable
 #'
-#' `step_bin2factor` creates a *specification* of a
-#'  recipe step that will create a two-level factor from a single
-#'  dummy variable.
+#' `step_bin2factor()` creates a *specification* of a recipe step that will
+#' create a two-level factor from a single dummy variable.
+#'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... Selector functions that choose which variables will
-#'  be converted. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
+#' @inheritParams step_pca
 #' @param levels A length 2 character string that indicates the
 #'  factor levels for the 1's (in the first position) and the zeros
 #'  (second)
 #' @param ref_first Logical. Should the first level, which replaces
 #' 1's, be the factor reference level?
-#' @param columns A vector with the selected variable names. This
-#'  is `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details This operation may be useful for situations where a
 #'  binary piece of information may need to be represented as
 #'  categorical instead of numeric. For example, naive Bayes models
@@ -26,22 +19,27 @@
 #'  density of numeric binary data. Note that the numeric data is
 #'  only verified to be numeric (and does not count levels).
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#' # Tidying
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dummy_variables
-#' @concept factors
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @family dummy variable and encoding steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(covers)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(covers, package = "modeldata")
 #'
-#' rec <- recipe(~ description, covers) %>%
-#'  step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
-#'  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
-#'  step_bin2factor(rocks)
+#' rec <- recipe(~description, covers) %>%
+#'   step_regex(description, pattern = "(rock|stony)", result = "rocks") %>%
+#'   step_regex(description, pattern = "(rock|stony)", result = "more_rocks") %>%
+#'   step_bin2factor(rocks)
 #'
 #' tidy(rec, number = 3)
 #'
@@ -52,21 +50,40 @@
 #'
 #' tidy(rec, number = 3)
 step_bin2factor <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           levels = c("yes", "no"),
-           ref_first = TRUE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("bin2factor")) {
-    if (length(levels) != 2 | !is.character(levels))
-      rlang::abort("`levels` should be a two element character string")
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    levels = c("yes", "no"),
+    ref_first = TRUE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("bin2factor")
+  ) {
+    if (length(levels) != 2 || !is.character(levels)) {
+      msg <- c(x = "{.arg levels} should be a 2-element character string.")
+
+      if (length(levels) != 2) {
+        msg <- c(
+          msg,
+          i = "{length(levels)} element{?s} were supplied; two were expected."
+        )
+      }
+      if (!is.character(levels)) {
+        msg <- c(
+          msg,
+          i = "It was {.obj_type_friendly {levels}}."
+        )
+      }
+      cli::cli_abort(msg)
+    }
+    check_bool(ref_first)
+
     add_step(
       recipe,
       step_bin2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         levels = levels,
@@ -95,11 +112,9 @@ step_bin2factor_new <-
 
 #' @export
 prep.step_bin2factor <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  if (length(col_names) < 1)
-    rlang::abort("The selector should only select at least one variable")
-  if (any(info$type[info$variable %in% col_names] != "numeric"))
-    rlang::abort("The variables should be numeric")
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer", "logical"))
+
   step_bin2factor_new(
     terms = x$terms,
     role = x$role,
@@ -112,32 +127,39 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
   )
 }
 
+#' @export
 bake.step_bin2factor <- function(object, new_data, ...) {
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      factor(ifelse(
-        getElement(new_data, object$columns[i]) == 1,
-        object$levels[1],
-        object$levels[2]
-      ),
-      levels = levs)
+
+  for (col_name in col_names) {
+    tmp <- ifelse(
+      new_data[[col_name]] == 1,
+      object$levels[1],
+      object$levels[2]
+    )
+    tmp <- factor(tmp, levels = levs)
+
+    new_data[[col_name]] <- tmp
+  }
+
   new_data
 }
 
+#' @export
 print.step_bin2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Dummy variable to factor conversion for ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Dummy variable to factor conversion for "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_bin2factor` object.
 #' @export
 tidy.step_bin2factor <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
 }

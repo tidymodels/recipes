@@ -3,8 +3,8 @@ library(glue)
 # set up the boilerplate for a new step or check
 # creates a prefilled script in /R
 # and an empty script in /tests
-make_new <- function(name,
-                     which = c("step", "check")) {
+# consider using @inheritParams where appropriate instead of full boilerplate
+make_new <- function(name, which = c("step", "check")) {
   which <- match.arg(which)
   stopifnot(is.character(name))
 
@@ -14,12 +14,13 @@ make_new <- function(name,
     rlang::abort("Change working directory to package root")
   }
 
-  if (glue::glue("{name}.R") %in% list.files("./R")) {
+  if (glue("{name}.R") %in% list.files("./R")) {
     rlang::abort("step or check already present with this name in /R")
   }
 
   boilerplate <-
-    glue("
+    glue(
+      "
 {create_documentation(name, which)}
 {create_function(name, which)}
 {create_generator(name, which)}
@@ -27,16 +28,17 @@ make_new <- function(name,
 {create_bake_method(name, which)}
 {create_print_method(name, which)}
 {create_tidy_method(name, which)}
-    ")
+    "
+    )
 
   file.create(glue("./R/{name}.R"))
   cat(boilerplate, file = glue("./R/{name}.R"))
   file.create(glue("./tests/testthat/test_{name}.R"))
 }
 
-create_documentation <- function(name,
-                                 which) {
-  glue("
+create_documentation <- function(name, which) {
+  glue(
+    "
 #' <Title>
 #'
 #' `{which}_{name}` creates a *specification* of a recipe
@@ -54,26 +56,31 @@ create_documentation <- function(name,
 #'  preprocessing have been estimated.
 #' <additional args here>
 #' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
+#'  recipe is baked by [bake()]? While all operations are baked
+#'  when [prep()] is run, some operations may not be able to be
 #'  conducted on new data (e.g. processing the outcome variable(s)).
 #'  Care should be taken when using `skip = TRUE` as it may affect
 #'  the computations for subsequent operations
 #' @param id A character string that is unique to this step to identify it.
 #' @return <describe return>
 #'
-#' @keywords datagen
-#' @concept preprocessing
 #' @export
 #' @details <describe details>
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#' <describe tidying> is returned.
+#'
 #' @examples
 
-  ")
+  "
+  )
 }
 
 create_function <- function(name, which) {
-  glue('
+  glue(
+    '
 {which}_{name} <-
     function(recipe,
              ...,
@@ -85,7 +92,7 @@ create_function <- function(name, which) {
       add_{which}(
         recipe,
         {which}_{name}_new(
-          terms = ellipse_check(...),
+          terms = enquos(...),
           trained = trained,
           role = role,
           <additional args here>
@@ -95,11 +102,13 @@ create_function <- function(name, which) {
       )
     }}
 
-')
+'
+  )
 }
 
 create_generator <- function(name, which) {
-  glue('
+  glue(
+    '
   {which}_{name}_new <-
     function(terms, role, <additional args here>, na_rm, skip, id) {{
       step(
@@ -113,13 +122,16 @@ create_generator <- function(name, which) {
       )
     }}
 
-  ')
+  '
+  )
 }
 
 create_prep_method <- function(name, which) {
-  glue('
+  glue(
+    "
+#' @export
 prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names])
 
   <prepping action here>
@@ -134,35 +146,41 @@ prep.{which}_{name} <- function(x, training, info = NULL, ...) {{
   )
 }}
 
-')
+"
+  )
 }
 
 create_bake_method <- function(name, which) {
-  glue('
+  glue(
+    "
+#' @export
 bake.{which}_{name} <- function(object, new_data, ...) {{
   <baking actions here>
   as_tibble(new_data)
 }}
 
-')
+"
+  )
 }
 
 create_print_method <- function(name, which) {
-  glue('
+  glue(
+    '
 print.{which}_{name} <-
   function(x, width = max(20, options()$width - 30), ...) {{
-    cat("<describe action here> ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "<describe action here> "
+    print_step(names(x$means), x$terms, x$trained, title, width)
     invisible(x)
   }}
 
-')
+'
+  )
 }
 
 create_tidy_method <- function(name, which) {
-  glue("
-#' @rdname {which}_{name}
-#' @param x A `{which}_{name}` object.
+  glue(
+    "
+#' @rdname tidy.recipe
 #' @export
 tidy.{which}_{name} <- function(x, ...) {{
   if (is_trained(x)) {{
@@ -176,5 +194,6 @@ tidy.{which}_{name} <- function(x, ...) {{
   res$id <- x$id
   res
 }}
-  ")
+  "
+  )
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/impute_roll.R
 \name{step_impute_roll}
 \alias{step_impute_roll}
-\alias{step_rollimpute}
-\title{Impute Numeric Data Using a Rolling Window Statistic}
+\title{Impute numeric data using a rolling window statistic}
 \usage{
 step_impute_roll(
   recipe,
@@ -12,19 +11,7 @@ step_impute_roll(
   trained = FALSE,
   columns = NULL,
   statistic = median,
-  window = 5,
-  skip = FALSE,
-  id = rand_id("impute_roll")
-)
-
-step_rollimpute(
-  recipe,
-  ...,
-  role = NA,
-  trained = FALSE,
-  columns = NULL,
-  statistic = median,
-  window = 5,
+  window = 5L,
   skip = FALSE,
   id = rand_id("impute_roll")
 )
@@ -33,10 +20,9 @@ step_rollimpute(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}} for more
-details. These columns should be non-integer numerics (i.e.,
-double precision).}
+\item{...}{One or more selector functions to choose variables to be imputed;
+these columns must be non-integer numerics (i.e., double precision).
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -44,8 +30,8 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A named numeric vector of columns. This is
-\code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{statistic}{A function with a single argument for the data to compute
 the imputed value. Only complete values will be passed to the function and
@@ -56,22 +42,22 @@ an odd integer greater than one. See Details below for a discussion of
 points at the ends of the series.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_impute_roll} creates a \emph{specification} of a
-recipe step that will substitute missing values of numeric
-variables by the measure of location (e.g. median) within a moving window.
+\code{step_impute_roll()} creates a \emph{specification} of a recipe step that will
+substitute missing values of numeric variables by the measure of location
+(e.g. median) within a moving window.
 }
 \details{
 On the tails, the window is shifted towards the ends.
@@ -89,12 +75,34 @@ window data used for imputation. In other words, each imputation
 does not know anything about previous imputations in the series
 prior to the current point.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{window} (the window size) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_rollimpute()}
 to \code{step_impute_roll()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{window} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{window}{integer, window size}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{statistic}: Rolling Summary Statistic (type: character, default: median)
+\item \code{window}: Window Size (type: integer, default: 5)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(lubridate)
 
@@ -110,7 +118,7 @@ example_data$x1[c(1, 5, 6)] <- NA
 example_data$x2[c(1:4, 10)] <- NA
 
 library(recipes)
-seven_pt <- recipe(~ . , data = example_data) \%>\%
+seven_pt <- recipe(~., data = example_data) \%>\%
   update_role(day, new_role = "time_index") \%>\%
   step_impute_roll(all_numeric_predictors(), window = 7) \%>\%
   prep(training = example_data)
@@ -118,7 +126,24 @@ seven_pt <- recipe(~ . , data = example_data) \%>\%
 # The training set:
 bake(seven_pt, new_data = NULL)
 }
-\concept{imputation}
-\concept{preprocessing}
-\keyword{datagen}
-\keyword{internal}
+\seealso{
+Other imputation steps: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()}
+
+Other row operation steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_lag}()},
+\code{\link{step_naomit}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
+}
+\concept{imputation steps}
+\concept{row operation steps}

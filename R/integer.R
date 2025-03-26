@@ -1,31 +1,20 @@
 #' Convert values to predefined integers
 #'
-#' `step_integer` creates a *specification* of a recipe
-#'  step that will convert new data into a set of integers based
-#'  on the original data values.
+#' `step_integer()` creates a *specification* of a recipe step that will convert
+#' new data into a set of integers based on the original data values.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to create the integer variables. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created by the original variables will be
-#'  used as predictors in a model.
 #' @param key A list that contains the information needed to
 #'  create integer variables for each variable contained in
 #'  `terms`. This is `NULL` until the step is trained by
-#'  [prep.recipe()].
+#'  [prep()].
 #' @param strict A logical for whether the values should be returned as
 #'  integers (as opposed to double).
 #' @param zero_based A logical for whether the integers should start at zero and
 #'  new values be appended as the largest integer.
-#' @return An updated version of `recipe` with the new step added
-#'  to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_encodings
+#' @template step-return
+#' @family dummy variable and encoding steps
 #' @export
 #' @details `step_integer` will determine the unique values of
 #'  each variable from the training set (excluding missing values),
@@ -40,49 +29,52 @@
 #' Despite the name, the new values are returned as numeric unless
 #'  `strict = TRUE`, which will coerce the results to integers.
 #'
-#' When you [`tidy()`] this step, a tibble with columns `terms` (the selectors or
-#'  variables selected) and `value` (a _list column_ with the
-#'  conversion key) is returned.
+#' # Tidying
 #'
-#' @seealso [step_factor2string()], [step_string2factor()],
-#'  [step_regex()], [step_count()],
-#'  [step_ordinalscore()], [step_unorder()], [step_other()]
-#'  [step_novel()], [step_dummy()]
-#' @examples
-#' library(modeldata)
-#' data(okc)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
 #'
-#' okc$location <- factor(okc$location)
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{list, a _list column_ with the conversion key}
+#'   \item{id}{character, id of this step}
+#' }
 #'
-#' okc_tr <- okc[1:100, ]
-#' okc_tr$age[1] <- NA
+#' @template case-weights-not-supported
 #'
-#' okc_te <- okc[101:105, ]
-#' okc_te$age[1] <- NA
-#' okc_te$diet[1] <- "fast food"
-#' okc_te$diet[2] <- NA
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(Sacramento, package = "modeldata")
 #'
-#' rec <- recipe(Class ~ ., data = okc_tr) %>%
+#' sacr_tr <- Sacramento[1:100, ]
+#' sacr_tr$sqft[1] <- NA
+#'
+#' sacr_te <- Sacramento[101:105, ]
+#' sacr_te$sqft[1] <- NA
+#' sacr_te$city[1] <- "whoville"
+#' sacr_te$city[2] <- NA
+#'
+#' rec <- recipe(type ~ ., data = sacr_tr) %>%
 #'   step_integer(all_predictors()) %>%
-#'   prep(training = okc_tr)
+#'   prep(training = sacr_tr)
 #'
-#' bake(rec, okc_te, all_predictors())
+#' bake(rec, sacr_te, all_predictors())
 #' tidy(rec, number = 1)
-
 step_integer <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           strict = FALSE,
-           zero_based = FALSE,
-           key = NULL,
-           skip = FALSE,
-           id = rand_id("integer")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    strict = TRUE,
+    zero_based = FALSE,
+    key = NULL,
+    skip = FALSE,
+    id = rand_id("integer")
+  ) {
     add_step(
       recipe,
       step_integer_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         strict = strict,
@@ -110,7 +102,7 @@ step_integer_new <-
   }
 
 get_unique_values <- function(x, zero = FALSE) {
-  if(is.factor(x)) {
+  if (is.factor(x)) {
     res <- levels(x)
   } else {
     res <- sort(unique(x))
@@ -125,7 +117,22 @@ get_unique_values <- function(x, zero = FALSE) {
 
 #' @export
 prep.step_integer <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(
+    training[, col_names],
+    types = c(
+      "string",
+      "factor",
+      "ordered",
+      "integer",
+      "double",
+      "logical",
+      "date",
+      "datetime"
+    )
+  )
+  check_bool(x$strict, arg = "strict")
+  check_bool(x$zero_based, arg = "zero_based")
 
   step_integer_new(
     terms = x$terms,
@@ -140,10 +147,15 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
 }
 
 map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
-  if (is.factor(dat))
+  if (is.factor(dat)) {
     dat <- as.character(dat)
+  }
 
-  res <- full_join(tibble(value = dat, .row = seq_along(dat)), key, by = "value")
+  res <- full_join(
+    tibble(value = dat, .row = seq_along(dat)),
+    key,
+    by = "value"
+  )
   res <- dplyr::filter(res, !is.na(.row))
   res <- arrange(res, .row)
   if (zero) {
@@ -152,48 +164,44 @@ map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
   } else {
     res$integer[is.na(res$integer) & !is.na(res$value)] <- 0
   }
-  if (strict)
+  if (strict) {
     res$integer <- as.integer(res$integer)
+  }
   res[["integer"]]
 }
 
 #' @export
 bake.step_integer <- function(object, new_data, ...) {
+  col_names <- names(object$key)
+  check_new_data(col_names, object, new_data)
 
-  for (i in names(object$key)) {
-    new_data[[i]] <-
-      map_key_to_int(new_data[[i]], object$key[[i]], object$strict, object$zero_based)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- map_key_to_int(
+      new_data[[col_name]],
+      key = object$key[[col_name]],
+      strict = object$strict,
+      zero = object$zero_based
+    )
   }
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
+
   new_data
 }
 
+#' @export
 print.step_integer <-
   function(x, width = max(20, options()$width - 20), ...) {
-    if (x$trained) {
-      cat("Integer encoding for ")
-      cat(format_ch_vec(names(x$key), width = width))
-    } else {
-      cat("Integer encoding for ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Integer encoding for "
+    print_step(names(x$key), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_integer` object.
 #' @export
 tidy.step_integer <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$key), value = x$key)
+    res <- tibble(terms = names(x$key), value = unname(x$key))
   } else {
-    res <- tibble(terms = sel2char(x$terms))
-    res$value = NA
+    res <- tibble(terms = sel2char(x$terms), value = list(NULL))
   }
   res$id <- x$id
   res

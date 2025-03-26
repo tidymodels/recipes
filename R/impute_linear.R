@@ -1,28 +1,18 @@
-#' Imputation of numeric variables via a linear model.
+#' Impute numeric variables via a linear model
 #'
-#' `step_impute_linear` creates a *specification* of a recipe step that will
-#'  create linear regression models to impute missing data.
+#' `step_impute_linear()` creates a *specification* of a recipe step that will
+#' create linear regression models to impute missing data.
 #'
+#' @inheritParams step_impute_bag
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose variables. For
-#' `step_impute_linear`, this indicates the variables to be imputed; these variables
-#' **must** be of type `numeric`. When used with `imp_vars`, the dots indicates
-#' which variables are used to predict the missing data in each variable. See
-#' [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param impute_with A call to `imp_vars` to specify which variables are used
-#'  to impute the variables that can include specific variable names separated
-#'  by commas or different selectors (see [selections()]). If a column is
-#'  included in both lists to be imputed and to be an imputation predictor, it
-#'  will be removed from the latter and not used to impute itself.
+#' @param ... One or more selector functions to choose variables to be imputed;
+#' these variables **must** be of type `numeric`. When used with `imp_vars`,
+#' these dots indicate which variables are used to predict the missing data
+#' in each variable. See [selections()] for more details.
 #' @param models The [lm()] objects are stored here once the linear models
-#'  have been trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#'  have been trained by [prep()].
+#' @template step-return
+#' @family imputation steps
 #' @export
 #' @details For each variable requiring imputation, a linear model is fit
 #'  where the outcome is the variable of interest and the predictors are any
@@ -36,14 +26,23 @@
 #'  Since this is a linear regression, the imputation model only uses complete
 #'  cases for the training set predictors.
 #'
-#'  When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the
-#'  bagged tree object) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `model` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{model}{list, list of fitted `lm()` models}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-unsupervised
 #'
 #' @references Kuhn, M. and Johnson, K. (2013).
 #' *Feature Engineering and Selection*
 #' \url{https://bookdown.org/max/FES/handling-missing-data.html}
-#' @examples
+#' @examplesIf rlang::is_installed(c("modeldata", "ggplot2"))
 #' data(ames, package = "modeldata")
 #' set.seed(393)
 #' ames_missing <- ames
@@ -64,42 +63,44 @@
 #'   bind_cols(ames_missing %>% dplyr::select(Longitude)) %>%
 #'   dplyr::filter(is.na(Longitude))
 #'
-#'library(ggplot2)
+#' library(ggplot2)
 #' ggplot(imputed, aes(x = original, y = imputed)) +
 #'   geom_abline(col = "green") +
 #'   geom_point(alpha = .3) +
 #'   coord_equal() +
 #'   labs(title = "Imputed Values")
-
 step_impute_linear <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           models = NULL,
-           skip = FALSE,
-           id = rand_id("impute_linear")) {
-    if (is.null(impute_with))
-      rlang::abort("Please provide some variables to `impute_with`.")
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    impute_with = imp_vars(all_predictors()),
+    models = NULL,
+    skip = FALSE,
+    id = rand_id("impute_linear")
+  ) {
+    if (is.null(impute_with)) {
+      cli::cli_abort("{.arg impute_with} must not be empty.")
+    }
 
     add_step(
       recipe,
       step_impute_linear_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         impute_with = impute_with,
         models = models,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
 step_impute_linear_new <-
-  function(terms, role, trained, models, impute_with,
-           skip, id) {
+  function(terms, role, trained, models, impute_with, skip, id, case_weights) {
     step(
       subclass = "impute_linear",
       terms = terms,
@@ -108,30 +109,44 @@ step_impute_linear_new <-
       impute_with = impute_with,
       models = models,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
-
-lm_wrap <- function(vars, dat) {
+lm_wrap <- function(vars, dat, wts = NULL, call = caller_env(2)) {
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
-  dat <- na.omit(dat)
+  complete <- vec_detect_complete(dat)
+  dat <- dat[complete, ]
+  wts <- wts[complete]
   if (nrow(dat) == 0) {
-    rlang::abort(
-      paste("The data used by step_impute_linear() did not have any rows",
-            "where the imputation values were all complete.")
+    cli::cli_abort(
+      "The data did not have any rows where the imputation values were all \\
+      complete. Is is thus unable to fit the linear regression model.",
+      call = call
     )
   }
 
-  if (!is.numeric(dat[[vars$y]]))
-    rlang::abort(
-      glue::glue(
-        "Variable '{vars$y}' chosen for linear regression imputation ",
-        "must be of type numeric."
-    ))
+  if (!is.numeric(dat[[vars$y]])) {
+    cli::cli_abort(
+      "Variable {.var {vars$y}} chosen for linear regression imputation \\
+      must be of type numeric. Not {.obj_type_friendly {vars$y}}.",
+      call = call
+    )
+  }
 
+  if (is.null(wts)) {
+    wts <- rep(1, nrow(dat))
+  } else {
+    wts <- as.double(wts)
+  }
 
-  out <- lm(as.formula(paste0(vars$y, "~", ".")), data = dat, model = FALSE)
+  out <- lm(
+    as.formula(paste0(vars$y, "~", ".")),
+    data = dat,
+    weights = wts,
+    model = FALSE
+  )
   out$..imp_vars <- vars$x
   attr(out$terms, ".Environment") <- rlang::base_env()
 
@@ -149,6 +164,12 @@ lm_wrap <- function(vars, dat) {
 
 #' @export
 prep.step_impute_linear <- function(x, training, info = NULL, ...) {
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
+
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -160,8 +181,10 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
   x$models <- lapply(
     var_lists,
     lm_wrap,
-    dat = training
+    dat = training,
+    wts = wts
   )
+
   names(x$models) <- vapply(var_lists, function(x) x$y, c(""))
 
   step_impute_linear_new(
@@ -171,58 +194,72 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
     models = x$models,
     impute_with = x$impute_with,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
-  missing_rows <- !complete.cases(new_data)
-  if (!any(missing_rows))
-    return(new_data)
+  col_names <- names(object$models)
+  check_new_data(col_names, object, new_data)
 
-  old_data <- new_data
-  for (i in seq(along.with = object$models)) {
-    imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[, imp_var])
-    if (any(missing_rows)) {
-      preds <- object$models[[imp_var]]$..imp_vars
-      pred_data <- old_data[missing_rows, preds, drop = FALSE]
-      ## do a better job of checking this:
-      if (any(is.na(pred_data))) {
-        rlang::warn("
-          There were missing values in the predictor(s) used to impute;
-          imputation did not occur.
-        ")
-      } else {
-        pred_vals <- predict(object$models[[imp_var]], pred_data)
-        pred_vals <- cast(pred_vals, new_data[[imp_var]])
-        new_data[missing_rows, imp_var] <- pred_vals
-      }
-    }
+  missing_rows <- !vec_detect_complete(new_data)
+  if (!any(missing_rows)) {
+    return(new_data)
   }
 
-  as_tibble(new_data)
+  old_data <- new_data
+  for (col_name in col_names) {
+    missing_rows <- !vec_detect_complete(new_data[[col_name]])
+    if (!any(missing_rows)) {
+      next
+    }
+
+    preds <- object$models[[col_name]]$..imp_vars
+    pred_data <- old_data[missing_rows, preds, drop = FALSE]
+    ## do a better job of checking this:
+    if (anyNA(pred_data)) {
+      cli::cli_warn(
+        "There were missing values in the predictor(s) used to impute; \\
+        imputation did not occur."
+      )
+    } else {
+      pred_vals <- predict(object$models[[col_name]], pred_data)
+      pred_vals <- cast(pred_vals, new_data[[col_name]])
+      new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
+      new_data[missing_rows, col_name] <- pred_vals
+    }
+  }
+  new_data
 }
 
 #' @export
 print.step_impute_linear <-
   function(x, width = max(20, options()$width - 31), ...) {
-    cat("Linear regression imputation for ", sep = "")
-    printer(names(x$models), x$terms, x$trained, width = width)
+    title <- "Linear regression imputation for "
+    print_step(
+      names(x$models),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_linear` object.
 #' @export
 tidy.step_impute_linear <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$models),
-                  model = x$models)
+    res <- tibble(
+      terms = names(x$models),
+      model = unname(x$models)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = NA)
+    res <- tibble(terms = term_names, model = list(NULL))
   }
   res$id <- x$id
   res

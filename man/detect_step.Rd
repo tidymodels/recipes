@@ -22,5 +22,8 @@ Detect if a particular step or check is used in a recipe
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_intercept()
 
-detect_step(rec, "step_intercept")
+detect_step(rec, "intercept")
+}
+\seealso{
+\link{developer_functions}
 }

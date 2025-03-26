@@ -12,7 +12,7 @@ step_discretize(
   num_breaks = 4,
   min_unique = 10,
   objects = NULL,
-  options = list(),
+  options = list(prefix = "bin"),
   skip = FALSE,
   id = rand_id("discretize")
 )
@@ -21,10 +21,8 @@ step_discretize(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{For \code{step_discretize}, the dots specify
-one or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -42,7 +40,7 @@ discretization takes place.}
 
 \item{objects}{The \code{\link[=discretize]{discretize()}} objects are stored
 here once the recipe has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{options}{A list of options to \code{\link[=discretize]{discretize()}}. A
 default is set for the argument \code{x}. Note that using
@@ -51,27 +49,70 @@ variable is being transformed might be problematic as all
 variables inherit those values.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-\code{step_discretize} returns an updated version of
-\code{recipe} with the new step added to the sequence of
-existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_discretize} creates a \emph{specification} of a recipe
-step that will convert numeric data into a factor with
-bins having approximately the same number of data points (based
-on a training set).
+\code{step_discretize()} creates a \emph{specification} of a recipe step that will
+convert numeric data into a factor with bins having approximately the same
+number of data points (based on a training set).
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble
-with columns \code{terms} (the selectors or variables selected)
-and \code{value} (the breaks) is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the breaks}
+\item{id}{character, id of this step}
 }
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{min_unique}: Unique Value Threshold (type: integer, default: 10)
+\item \code{num_breaks}: Number of Cut Points (type: integer, default: 4)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
+\examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
+
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
+
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+) \%>\%
+  step_discretize(carbon, hydrogen)
+
+rec <- prep(rec, biomass_tr)
+binned_te <- bake(rec, biomass_te)
+table(binned_te$carbon)
+
+tidy(rec, 1)
+\dontshow{\}) # examplesIf}
+}
+\seealso{
+Other discretization steps: 
+\code{\link{step_cut}()}
+}
+\concept{discretization steps}

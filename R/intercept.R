@@ -1,39 +1,47 @@
 #' Add intercept (or constant) column
 #'
-#' `step_intercept` creates a *specification* of a recipe step that
-#'   will add an intercept or constant term in the first column of a data
-#'   matrix. `step_intercept` has defaults to *predictor* role so
-#'   that it is by default called in the bake step. Be careful to avoid
-#'   unintentional transformations when calling steps with
-#'   `all_predictors`.
+#' `step_intercept()` creates a *specification* of a recipe step that will add
+#' an intercept or constant term in the first column of a data matrix.
+#' `step_intercept()` defaults to *predictor* role so that it is by default
+#' only called in the bake step. Be careful to avoid unintentional transformations
+#' when calling steps with `all_predictors()`.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'   operations for this recipe.
 #' @param ... Argument ignored; included for consistency with other step
 #'   specification functions.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated. Again included for consistency.
+#'   have been estimated. Again included only for consistency.
 #' @param name Character name for newly added column
-#' @param value A numeric constant to fill the intercept column. Defaults to 1.
-#'
-#' @return An updated version of `recipe` with the
-#'   new step added to the sequence of existing steps (if any).
+#' @param value A numeric constant to fill the intercept column. Defaults to
+#'   `1L`.
+#' @template step-return
 #' @export
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @details
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' # Tidying
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #' rec_trans <- recipe(HHV ~ ., data = biomass_tr[, -(1:2)]) %>%
 #'   step_intercept(value = 2) %>%
 #'   step_scale(carbon)
@@ -42,18 +50,23 @@
 #'
 #' with_intercept <- bake(rec_obj, biomass_te)
 #' with_intercept
-#'
-#' @seealso [recipe()] [prep.recipe()] [bake.recipe()]
-step_intercept <- function(recipe, ..., role = "predictor",
-                           trained = FALSE, name = "intercept",
-                           value = 1,
-                           skip = FALSE, id = rand_id("intercept")) {
-  if (length(list(...)) > 0)
-    rlang::warn("Selectors are not used for this step.")
-  if (!is.numeric(value))
-    rlang::abort("Intercept value must be numeric.")
-  if (!is.character(name) | length(name) != 1)
-    rlang::abort("Intercept/constant column name must be a character value.")
+step_intercept <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  name = "intercept",
+  value = 1L,
+  skip = FALSE,
+  id = rand_id("intercept")
+) {
+  if (length(list(...)) > 0) {
+    cli::cli_warn("Selectors are not used for this step.")
+  }
+
+  check_number_decimal(value)
+  check_string(name)
+
   add_step(
     recipe,
     step_intercept_new(
@@ -88,11 +101,25 @@ prep.step_intercept <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_intercept <- function(object, new_data, ...) {
-  tibble::add_column(new_data, !!object$name := object$value, .before = TRUE)
+  intercept <- tibble(!!object$name := rep(object$value, nrow(new_data)))
+  intercept <- check_name(intercept, new_data, object, names(intercept))
+  new_data <- vec_cbind(intercept, new_data, .name_repair = "minimal")
+  new_data
 }
 
+#' @export
 print.step_intercept <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Adding intercept\n")
+    title <- "Adding intercept named: "
+    untrained_terms <- rlang::parse_quos(x$name, rlang::current_env())
+    print_step(x$name, untrained_terms, x$trained, title, width)
     invisible(x)
   }
+
+#' @rdname tidy.recipe
+#' @export
+tidy.step_intercept <- function(x, ...) {
+  res <- tibble(value = x$name)
+  res$id <- x$id
+  res
+}

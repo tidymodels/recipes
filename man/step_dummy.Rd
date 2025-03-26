@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy.R
 \name{step_dummy}
 \alias{step_dummy}
-\title{Dummy Variables Creation}
+\title{Create traditional dummy variables}
 \usage{
 step_dummy(
   recipe,
@@ -13,6 +13,7 @@ step_dummy(
   preserve = deprecated(),
   naming = dummy_names,
   levels = NULL,
+  sparse = "auto",
   keep_original_cols = FALSE,
   skip = FALSE,
   id = rand_id("dummy")
@@ -22,15 +23,13 @@ step_dummy(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-\emph{factor} variables will be used to create the dummy variables. See
-\code{\link[=selections]{selections()}} for more details. The selected
-variables must be factors.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details. The selected variables \emph{must} be
+factors.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the binary dummy variable columns created by the original
-variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -38,78 +37,73 @@ preprocessing have been estimated.}
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
 
-\item{preserve}{Use \code{keep_original_cols} to specify whether the selected
-column(s) should be retained (in addition to the new dummy variables).}
+\item{preserve}{This argument has been deprecated. Please use
+\code{keep_original_cols} instead.}
 
-\item{naming}{A function that defines the naming convention for
-new dummy columns. See Details below.}
+\item{naming}{A function that defines the naming convention for new dummy
+columns. See Details below.}
 
-\item{levels}{A list that contains the information needed to
-create dummy variables for each variable contained in
-\code{terms}. This is \code{NULL} until the step is trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{levels}{A list that contains the information needed to create dummy
+variables for each variable contained in \code{terms}. This is \code{NULL} until the
+step is trained by \code{\link[=prep]{prep()}}.}
+
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_dummy()} creates a \emph{specification} of a recipe
-step that will convert nominal data (e.g. character or factors)
-into one or more numeric binary model terms for the levels of
-the original data.
+\code{step_dummy()} creates a \emph{specification} of a recipe step that will convert
+nominal data (e.g. factors) into one or more numeric binary model terms
+corresponding to the levels of the original data.
 }
 \details{
-\code{step_dummy()} will create a set of binary dummy
-variables from a factor variable. For example, if an unordered
-factor column in the data set has levels of "red", "green",
-"blue", the dummy variable bake will create two additional
-columns of 0/1 data for two of those three values (and remove
-the original column). For ordered factors, polynomial contrasts
-are used to encode the numeric values.
+\code{step_dummy()} will create a set of binary dummy variables from a factor
+variable. For example, if an unordered factor column in the data set has
+levels of "red", "green", "blue", the dummy variable bake will create two
+additional columns of 0/1 data for two of those three values (and remove the
+original column). For ordered factors, polynomial contrasts are used to
+encode the numeric values.
 
-By default, the excluded dummy variable (i.e. the reference
-cell) will correspond to the first level of the unordered
-factor being converted.
+By default, the excluded dummy variable (i.e. the reference cell) will
+correspond to the first level of the unordered factor being converted.
+\code{step_relevel()} can be used to create a new reference level by setting the
+\code{ref_level} argument.
 
-The function allows for non-standard naming of the resulting
+This recipe step allows for flexible naming of the resulting
 variables. For an unordered factor named \code{x}, with levels \code{"a"}
 and \code{"b"}, the default naming convention would be to create a
-new variable called \code{x_b}. Note that if the factor levels are
-not valid variable names (e.g. "some text with spaces"), it will
-be changed by \code{\link[base:make.names]{base::make.names()}} to be valid (see the example
-below). The naming format can be changed using the \code{naming}
-argument and the function \code{\link[=dummy_names]{dummy_names()}} is the default. This
-function will also change the names of ordinal dummy variables.
-Instead of values such as "\code{.L}", "\code{.Q}", or "\verb{^4}", ordinal
-dummy variables are given simple integer suffixes such as
-"\verb{_1}", "\verb{_2}", etc.
+new variable called \code{x_b}. The naming format can be changed using
+the \code{naming} argument; the function \code{\link[=dummy_names]{dummy_names()}} is the
+default.
 
-To change the type of contrast being used, change the global
-contrast option via \code{options}.
+To change the type of contrast being used, change the global contrast option
+via \code{options}.
 
-When the factor being converted has a missing value, all of the
-corresponding dummy variables are also missing. See \code{\link[=step_unknown]{step_unknown()}} for
-a solution.
+When the factor being converted has a missing value, all of the corresponding
+dummy variables are also missing. See \code{\link[=step_unknown]{step_unknown()}} for a solution.
 
-When data to be processed contains novel levels (i.e., not
-contained in the training set), a missing value is assigned to
-the results. See \code{\link[=step_other]{step_other()}} for an alternative.
+When data to be processed contains novel levels (i.e., not contained in the
+training set), a missing value is assigned to the results. See \code{\link[=step_other]{step_other()}}
+for an alternative.
 
-If no columns are selected (perhaps due to an earlier \code{step_zv()}),
-\code{bake()} will return the data as-is (e.g. with no dummy variables).
+If no columns are selected (perhaps due to an earlier \code{step_zv()}), \code{\link[=bake]{bake()}}
+will return the data as-is (e.g. with no dummy variables).
 
 Note that, by default, the new dummy variable column names obey the naming
 rules for columns. If there are levels such as "0", \code{\link[=dummy_names]{dummy_names()}} will put
@@ -117,58 +111,103 @@ a leading "X" in front of the level (since it uses \code{\link[=make.names]{make
 be changed by passing in a different function to the \code{naming} argument for
 this step.
 
+Also, there are a number of contrast methods that return fractional values.
+The columns returned by this step are doubles (not integers) when
+\code{sparse = FALSE}. The columns returned when \code{sparse = TRUE} are integers.
+
 The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
 and interactions has more information.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or original variables selected) and \code{columns} (the
-list of corresponding binary columns) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{columns} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{columns}{character, names of resulting columns}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step produces sparse columns if \code{sparse = "yes"} is being set. The
+default value \code{"auto"} won't trigger production fo sparse columns if a recipe
+is \code{\link[=prep]{prep()}}ed, but allows for a workflow to toggle to \code{"yes"} or \code{"no"}
+depending on whether the model supports \link{sparse_data} and if the model is
+is expected to run faster with the data.
+
+The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+\code{sparse = "yes"} or \code{sparse = "no"}.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
-okc <- okc[complete.cases(okc),]
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
-# Original data: diet has 18 levels
-length(unique(okc$diet))
-unique(okc$diet) \%>\% sort()
+# Original data: city has 37 levels
+length(unique(Sacramento$city))
+unique(Sacramento$city) \%>\% sort()
 
-rec <- recipe(~ diet + age + height, data = okc)
+rec <- recipe(~ city + sqft + price, data = Sacramento)
 
-# Default dummy coding: 17 dummy variables
+# Default dummy coding: 36 dummy variables
 dummies <- rec \%>\%
-    step_dummy(diet) \%>\%
-    prep(training = okc)
+  step_dummy(city) \%>\%
+  prep(training = Sacramento)
 
 dummy_data <- bake(dummies, new_data = NULL)
 
 dummy_data \%>\%
-    select(starts_with("diet")) \%>\%
-    names() # level "anything" is the reference level
+  select(starts_with("city")) \%>\%
+  names() # level "anything" is the reference level
 
-# Obtain the full set of 18 dummy variables using `one_hot` option
+# Obtain the full set of 37 dummy variables using `one_hot` option
 dummies_one_hot <- rec \%>\%
-    step_dummy(diet, one_hot = TRUE) \%>\%
-    prep(training = okc)
+  step_dummy(city, one_hot = TRUE) \%>\%
+  prep(training = Sacramento)
 
 dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 
 dummy_data_one_hot \%>\%
-    select(starts_with("diet")) \%>\%
-    names() # no reference level
+  select(starts_with("city")) \%>\%
+  names() # no reference level
 
 
 tidy(dummies, number = 1)
 tidy(dummies_one_hot, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
-\code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
-\code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
-\code{\link[=step_novel]{step_novel()}}
+\code{\link[=dummy_names]{dummy_names()}}
+
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
 }
-\concept{dummy_variables}
-\concept{model_specification}
-\concept{preprocessing}
-\concept{variable_encodings}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

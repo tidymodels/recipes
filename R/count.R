@@ -1,19 +1,15 @@
-#' Create Counts of Patterns using Regular Expressions
+#' Create counts of patterns using regular expressions
 #'
-#' `step_count` creates a *specification* of a recipe
-#'  step that will create a variable that counts instances of a
-#'  regular expression pattern in text.
+#' `step_count()` creates a *specification* of a recipe step that will create a
+#' variable that counts instances of a regular expression pattern in text.
 #'
+#' @inheritParams step_classdist
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... A single selector functions to choose which variable
-#'  will be searched for the pattern. The selector should resolve
-#'  into a single variable. See [selections()] for more
-#'  details.
-#' @param role For a variable created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new dummy variable column created by the original
-#'  variable will be used as a predictor in a model.
+#' @inheritParams step_dummy
+#' @param ... A single selector function to choose which variable
+#'  will be searched for the regex pattern. The selector should
+#'  resolve to a single variable. See [selections()] for more details.
 #' @param pattern A character string containing a regular
 #'  expression (or character string for `fixed = TRUE`) to be
 #'  matched in the given character vector. Coerced by
@@ -26,22 +22,31 @@
 #'  variable. It should be a valid column name.
 #' @param input A single character value for the name of the
 #'  variable being searched. This is `NULL` until computed by
-#'  [prep.recipe()].
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `result` (the
-#'  new column name) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dummy_variables
-#' @concept regular_expressions
-#' @export
-#' @examples
-#' library(modeldata)
-#' data(covers)
+#'  [prep()].
+#' @template step-return
+#' @details
 #'
-#' rec <- recipe(~ description, covers) %>%
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `result` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{result}{character, the new column names}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-creation
+#'
+#' @template case-weights-not-supported
+#'
+#' @family dummy variable and encoding steps
+#' @export
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(covers, package = "modeldata")
+#'
+#' rec <- recipe(~description, covers) %>%
 #'   step_count(description, pattern = "(rock|stony)", result = "rocks") %>%
 #'   step_count(description, pattern = "famil", normalize = TRUE)
 #'
@@ -53,29 +58,44 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec2, number = 1)
-step_count <- function(recipe,
-                       ...,
-                       role = "predictor",
-                       trained = FALSE,
-                       pattern = ".",
-                       normalize = FALSE,
-                       options = list(),
-                       result = make.names(pattern),
-                       input = NULL,
-                       skip = FALSE,
-                       id = rand_id("count")) {
-  if (!is.character(pattern))
-    rlang::abort("`pattern` should be a character string")
-  if (length(pattern) != 1)
-    rlang::abort("`pattern` should be a single pattern")
-  valid_args <- names(formals(grepl))[- (1:2)]
-  if (any(!(names(options) %in% valid_args)))
-    rlang::abort(paste0("Valid options are: ",
-                        paste0(valid_args, collapse = ", ")))
+step_count <- function(
+  recipe,
+  ...,
+  role = "predictor",
+  trained = FALSE,
+  pattern = ".",
+  normalize = FALSE,
+  options = list(),
+  result = make.names(pattern),
+  input = NULL,
+  sparse = "auto",
+  keep_original_cols = TRUE,
+  skip = FALSE,
+  id = rand_id("count")
+) {
+  check_string(pattern)
 
-  terms <- ellipse_check(...)
-  if (length(terms) > 1)
-    rlang::abort("For this step, only a single selector can be used.")
+  valid_args <- names(formals(grepl))[-(1:2)]
+  if (any(!(names(options) %in% valid_args))) {
+    cli::cli_abort(
+      c(
+        "x" = "The following elements of {.arg options} are not allowed:",
+        "*" = "{.val {setdiff(names(options), valid_args)}}.",
+        "i" = "Valid options are: {.val {valid_args}}."
+      )
+    )
+  }
+
+  terms <- enquos(...)
+  if (length(terms) > 1) {
+    cli::cli_abort(
+      c(
+        x = "For this step, only a single selector can be used.",
+        i = "The following {length(terms)} selectors were used: \\
+          {.var {as.character(terms)}}."
+      )
+    )
+  }
 
   add_step(
     recipe,
@@ -88,6 +108,8 @@ step_count <- function(recipe,
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -95,7 +117,20 @@ step_count <- function(recipe,
 }
 
 step_count_new <-
-  function(terms, role, trained, pattern, normalize, options, result, input, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    pattern,
+    normalize,
+    options,
+    result,
+    input,
+    sparse,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "count",
       terms = terms,
@@ -106,6 +141,8 @@ step_count_new <-
       options = options,
       result = result,
       input = input,
+      sparse = sparse,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -113,11 +150,12 @@ step_count_new <-
 
 #' @export
 prep.step_count <- function(x, training, info = NULL, ...) {
-  col_name <- eval_select_recipes(x$terms, training, info)
-  if (length(col_name) != 1)
-    rlang::abort("The selector should only select a single variable")
-  if (any(info$type[info$variable %in% col_name] != "nominal"))
-    rlang::abort("The regular expression input should be character or factor")
+  col_name <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_name], types = c("string", "factor", "ordered"))
+  check_string(x$pattern, allow_empty = TRUE, arg = "pattern")
+  check_string(x$result, allow_empty = FALSE, arg = "result")
+  check_bool(x$normalize, arg = "normalize")
+  check_sparse_arg(x$sparse)
 
   step_count_new(
     terms = x$terms,
@@ -128,16 +166,26 @@ prep.step_count <- function(x, training, info = NULL, ...) {
     options = x$options,
     input = col_name,
     result = x$result,
+    sparse = x$sparse,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
 }
 
+#' @export
 bake.step_count <- function(object, new_data, ...) {
+  col_name <- names(object$input)
+  check_new_data(col_name, object, new_data)
+
+  if (length(col_name) == 0L) {
+    return(new_data)
+  }
+
   ## sub in options
   regex <- expr(
     gregexpr(
-      text = getElement(new_data, object$input),
+      text = new_data[[col_name]],
       pattern = object$pattern,
       ignore.case = FALSE,
       perl = FALSE,
@@ -145,47 +193,73 @@ bake.step_count <- function(object, new_data, ...) {
       useBytes = FALSE
     )
   )
-  if (length(object$options) > 0)
-    regex <- mod_call_args(regex, args = object$options)
-
-  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
-  if(object$normalize) {
-    totals <- nchar(as.character(getElement(new_data, object$input)))
-    new_data[, object$result] <- new_data[, object$result]/totals
+  if (length(object$options) > 0) {
+    regex <- rlang::call_modify(regex, !!!object$options)
   }
+
+  new_values <- tibble::tibble(
+    !!object$result := vapply(eval(regex), counter, integer(1))
+  )
+
+  if (object$normalize) {
+    totals <- nchar(as.character(new_data[[col_name]]))
+    new_values[[object$result]] <- new_values[[object$result]] / totals
+  }
+
+  if (sparse_is_yes(object$sparse)) {
+    if (object$normalize) {
+      new_values[[object$result]] <- sparsevctrs::as_sparse_double(
+        new_values[[object$result]]
+      )
+    } else {
+      new_values[[object$result]] <- sparsevctrs::as_sparse_integer(
+        new_values[[object$result]]
+      )
+    }
+  }
+
+  new_values <- check_name(new_values, new_data, object, object$result)
+  new_data <- vec_cbind(new_data, new_values, .name_repair = "minimal")
+  new_data <- remove_original_cols(new_data, object, col_name)
   new_data
 }
 
 counter <- function(x) length(x[x > 0])
 
-
+#' @export
 print.step_count <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Regular expression counts using `",
-        x$pattern,
-        "`",
-        sep = "")
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    title <- "Regular expression counts using "
+    print_step(x$input, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_count` object.
 #' @export
 tidy.step_count <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
-    res <- tibble(terms = term_names,
-                  result = rep(x$result, p))
+    res <- tibble(
+      terms = term_names,
+      result = rep(x$result, p)
+    )
   } else {
-    res <- tibble(terms = term_names,
-                  result = rep(na_chr, p))
+    res <- tibble(
+      terms = term_names,
+      result = rep(na_chr, p)
+    )
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_estimate_sparsity.step_count <- function(x, data, ...) {
+  lapply(1, function(n_lvl) {
+    c(
+      n_cols = n_lvl,
+      sparsity = 0.5
+    )
+  })
 }

@@ -19,10 +19,8 @@ step_unknown(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be affected by the step. These variables
-should be character or factor types. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -34,24 +32,24 @@ preprocessing have been estimated.}
 to new factor levels.}
 
 \item{objects}{A list of objects that contain the information
-on factor levels that will be determined by \code{\link[=prep.recipe]{prep.recipe()}}.}
+on factor levels that will be determined by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_unknown} creates a \emph{specification} of a recipe
-step that will assign a missing value in a factor level to"unknown".
+\code{step_unknown()} creates a \emph{specification} of a recipe step that will assign
+a missing value in a factor level to \code{"unknown"}.
 }
 \details{
 The selected variables are adjusted to have a new
@@ -63,34 +61,66 @@ converted to factors by this step.
 
 If \code{new_level} is already in the data given to \code{prep}, an error
 is thrown.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{value} (the factor
-levels that is used for the new value) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{statistic}{character, the factor levels for the new values}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 rec <-
-  recipe(~ diet + location, data = okc) \%>\%
-  step_unknown(diet, new_level = "unknown diet") \%>\%
-  step_unknown(location, new_level = "unknown location") \%>\%
+  recipe(~ city + zip, data = Sacramento) \%>\%
+  step_unknown(city, new_level = "unknown city") \%>\%
+  step_unknown(zip, new_level = "unknown zip") \%>\%
   prep()
 
-table(bake(rec, new_data = NULL) \%>\% pull(diet),
-      okc \%>\% pull(diet),
-      useNA = "always") \%>\%
+table(bake(rec, new_data = NULL) \%>\% pull(city),
+  Sacramento \%>\% pull(city),
+  useNA = "always"
+) \%>\%
   as.data.frame() \%>\%
   dplyr::filter(Freq > 0)
 
 tidy(rec, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
-\code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
-\code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}, \code{\link[=step_novel]{step_novel()}}
+\code{\link[=dummy_names]{dummy_names()}}
+
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unorder}()}
 }
-\concept{factors}
-\concept{preprocessing}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

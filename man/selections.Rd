@@ -3,14 +3,17 @@
 \name{selections}
 \alias{selections}
 \alias{selection}
-\title{Methods for Selecting Variables in Step Functions}
+\title{Methods for selecting variables in step functions}
 \description{
+Tips for selecting columns in step functions.
+}
+\details{
 When selecting variables or model terms in \code{step}
 functions, \code{dplyr}-like tools are used. The \emph{selector} functions
 can choose variables based on their name, current role, data
 type, or any combination of these. The selectors are passed as
 any other argument to the step. If the variables are explicitly
-stated in the step function, this might be similar to:
+named in the step function, this might look like:
 
 \preformatted{
   recipe( ~ ., data = USArrests) \%>\%
@@ -19,7 +22,7 @@ stated in the step function, this might be similar to:
 
 The first four arguments indicate which variables should be
 used in the PCA while the last argument is a specific argument
-to \code{\link[=step_pca]{step_pca()}}.
+to \code{\link[=step_pca]{step_pca()}} about the number of components.
 
 Note that:
 
@@ -30,8 +33,8 @@ function for the step is executed.
 exclude variables (e.g. \code{-Murder}) and the set of selectors will
 processed in order.
 \item A leading exclusion in these arguments (e.g. \code{-Murder})
-has the effect of adding all variables to the list except the
-excluded variable(s).
+has the effect of adding \emph{all} variables to the list except the
+excluded variable(s), ignoring role information.
 }
 
 Select helpers from the \code{tidyselect} package can also be used:
@@ -40,6 +43,11 @@ Select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:starts_with]{tidyselect::num_range()}}, \code{\link[tidyselect:everything]{tidyselect::everything()}},
 \code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}}, and
 \code{\link[tidyselect:all_of]{tidyselect::any_of()}}
+
+Note that using \code{\link[tidyselect:everything]{tidyselect::everything()}} or any of the other \code{tidyselect}
+functions aren't restricted to predictors. They will thus select outcomes,
+ID, and predictor columns alike. This is why these functions should be used
+with care, and why \code{\link[tidyselect:everything]{tidyselect::everything()}} likely isn't what you need.
 
 For example:
 
@@ -63,8 +71,11 @@ variables based on their role or type: \code{\link[=has_role]{has_role()}} and
 more specific. The functions \code{\link[=all_numeric]{all_numeric()}} and \code{\link[=all_nominal]{all_nominal()}} select
 based on type, with nominal variables including both character and factor;
 the functions \code{\link[=all_predictors]{all_predictors()}} and \code{\link[=all_outcomes]{all_outcomes()}} select based on role.
-Any can be used in conjunction with the previous functions described for
-selecting variables using their names:
+The functions \code{\link[=all_numeric_predictors]{all_numeric_predictors()}} and \code{\link[=all_nominal_predictors]{all_nominal_predictors()}}
+select intersections of role and type. Any can be used in conjunction with
+the previous functions described for selecting variables using their names.
+
+A selection like this:
 
 \preformatted{
   data(biomass)
@@ -72,11 +83,20 @@ selecting variables using their names:
     step_center(all_numeric(), -all_outcomes())
 }
 
-This results in all the numeric predictors: carbon, hydrogen,
+is equivalent to:
+
+\preformatted{
+  data(biomass)
+  recipe(HHV ~ ., data = biomass) \%>\%
+    step_center(all_numeric_predictors())
+}
+
+Both result in all the numeric predictors: carbon, hydrogen,
 oxygen, nitrogen, and sulfur.
 
 If a role for a variable has not been defined, it will never be
 selected using role-specific selectors.
+\subsection{Interactions}{
 
 Selectors can be used in \code{\link[=step_interact]{step_interact()}} in similar ways but
 must be embedded in a model formula (as opposed to a sequence
@@ -90,4 +110,65 @@ recipes and tidyselect are allowed. User defined selector functions
 will not be recognized. Additionally, the tidyselect domain specific
 language is not recognized here, meaning that \code{&}, \code{|}, \code{!}, and \code{-}
 will not work.
+}
+
+\subsection{Tips for saving recipes and filtering columns}{
+
+When creating variable selections:
+\itemize{
+\item If you are using column filtering steps, such as \code{step_corr()}, try to
+avoid hardcoding specific variable names in downstream steps in case
+those columns are removed by the filter. Instead, use
+\code{\link[dplyr:reexports]{dplyr::any_of()}} and
+\code{\link[dplyr:reexports]{dplyr::all_of()}}.
+\itemize{
+\item \code{\link[dplyr:reexports]{dplyr::any_of()}} will be tolerant if a column
+has been removed.
+\item \code{\link[dplyr:reexports]{dplyr::all_of()}} will fail unless all of the
+columns are present in the data.
+}
+\item For both of these functions, if you are going to save the recipe as a
+binary object to use in another R session, try to avoid referring to a
+vector in your workspace.
+\itemize{
+\item Preferred: \code{any_of(!!var_names)}
+\item Avoid: \code{any_of(var_names)}
+}
+}
+
+Some examples:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_vars <- names(mtcars)[4:6]
+
+# No filter steps, OK for not saving the recipe
+rec_1 <-
+  recipe(mpg ~ ., data = mtcars) \%>\% 
+  step_log(all_of(some_vars)) \%>\% 
+  prep()
+
+# No filter steps, saving the recipe
+rec_2 <-
+  recipe(mpg ~ ., data = mtcars) \%>\% 
+  step_log(!!!some_vars) \%>\% 
+  prep()
+
+# This fails since `wt` is not in the data
+try(
+recipe(mpg ~ ., data = mtcars) \%>\% 
+  step_rm(wt) \%>\% 
+  step_log(!!!some_vars) \%>\% 
+  prep(),
+  silent = TRUE
+)
+
+# Best for filters (using any_of()) and when
+# saving the recipe
+rec_4 <- 
+  recipe(mpg ~ ., data = mtcars) \%>\% 
+  step_rm(wt) \%>\% 
+  step_log(any_of(!!some_vars)) \%>\% 
+  # equal to step_log(any_of(c("hp", "drat", "wt")))
+  prep()
+}\if{html}{\out{</div>}}
+}
 }

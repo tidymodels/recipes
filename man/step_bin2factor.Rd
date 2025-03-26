@@ -2,7 +2,7 @@
 % Please edit documentation in R/bin2factor.R
 \name{step_bin2factor}
 \alias{step_bin2factor}
-\title{Create a Factors from A Dummy Variable}
+\title{Create a factors from A dummy variable}
 \usage{
 step_bin2factor(
   recipe,
@@ -20,8 +20,8 @@ step_bin2factor(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{Selector functions that choose which variables will
-be converted. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -36,26 +36,25 @@ factor levels for the 1's (in the first position) and the zeros
 \item{ref_first}{Logical. Should the first level, which replaces
 1's, be the factor reference level?}
 
-\item{columns}{A vector with the selected variable names. This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_bin2factor} creates a \emph{specification} of a
-recipe step that will create a two-level factor from a single
-dummy variable.
+\code{step_bin2factor()} creates a \emph{specification} of a recipe step that will
+create a two-level factor from a single dummy variable.
 }
 \details{
 This operation may be useful for situations where a
@@ -65,18 +64,31 @@ would do better to have factor predictors so that the binomial
 distribution is modeled instead of a Gaussian probability
 density of numeric binary data. Note that the numeric data is
 only verified to be numeric (and does not count levels).
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-columns that will be affected) is returned.
 }
-\examples{
-library(modeldata)
-data(covers)
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
 
-rec <- recipe(~ description, covers) \%>\%
- step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
- step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
- step_bin2factor(rocks)
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
+\examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(covers, package = "modeldata")
+
+rec <- recipe(~description, covers) \%>\%
+  step_regex(description, pattern = "(rock|stony)", result = "rocks") \%>\%
+  step_regex(description, pattern = "(rock|stony)", result = "more_rocks") \%>\%
+  step_bin2factor(rocks)
 
 tidy(rec, number = 3)
 
@@ -86,8 +98,28 @@ results <- bake(rec, new_data = covers)
 table(results$rocks, results$more_rocks)
 
 tidy(rec, number = 3)
+\dontshow{\}) # examplesIf}
 }
-\concept{dummy_variables}
-\concept{factors}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other dummy variable and encoding steps: 
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
+}
+\concept{dummy variable and encoding steps}

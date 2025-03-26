@@ -2,7 +2,7 @@
 % Please edit documentation in R/ica.R
 \name{step_ica}
 \alias{step_ica}
-\title{ICA Signal Extraction}
+\title{ICA signal extraction}
 \usage{
 step_ica(
   recipe,
@@ -11,7 +11,9 @@ step_ica(
   trained = FALSE,
   num_comp = 5,
   options = list(method = "C"),
+  seed = sample.int(10000, 5),
   res = NULL,
+  columns = NULL,
   prefix = "IC",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -22,55 +24,59 @@ step_ica(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to compute the components. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new independent component columns created by the
-original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of ICA components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged, regardless of the value of \code{keep_original_cols}.}
 
 \item{options}{A list of options to
 \code{\link[fastICA:fastICA]{fastICA::fastICA()}}. No defaults are set here.
 \strong{Note} that the arguments \code{X} and \code{n.comp} should
 not be passed here.}
 
+\item{seed}{A single integer to set the random number stream prior to
+running ICA.}
+
 \item{res}{The \code{\link[fastICA:fastICA]{fastICA::fastICA()}} object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
-\item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
+
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_ica} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more independent
-components.
+\code{step_ica()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more independent components.
 }
 \details{
 Independent component analysis (ICA) is a
@@ -89,20 +95,40 @@ methodology (see reference below). This step requires the
 \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
 step will stop with a note about installing these packages.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}.
-If \code{num_comp = 101}, the names would be \code{IC001} -
-\code{IC101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the loading),
-and \code{component} is returned.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{IC1} - \code{IC9}. If \code{num_comp = 101},
+the names would be \code{IC1} - \code{IC101}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{component}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{component}{character, name of component}
+\item{value}{numeric, the loading}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 5)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # from fastICA::fastICA
 set.seed(131)
 S <- matrix(runif(400), 200, 2)
@@ -112,22 +138,21 @@ X <- as.data.frame(S \%*\% A)
 tr <- X[1:100, ]
 te <- X[101:200, ]
 
-rec <- recipe( ~ ., data = tr)
+rec <- recipe(~., data = tr)
 
-ica_trans <- step_center(rec,  V1, V2)
+ica_trans <- step_center(rec, V1, V2)
 ica_trans <- step_scale(ica_trans, V1, V2)
 ica_trans <- step_ica(ica_trans, V1, V2, num_comp = 2)
 
-if (require(dimRed) & require(fastICA)) {
-  ica_estimates <- prep(ica_trans, training = tr)
-  ica_data <- bake(ica_estimates, te)
+ica_estimates <- prep(ica_trans, training = tr)
+ica_data <- bake(ica_estimates, te)
 
-  plot(te$V1, te$V2)
-  plot(ica_data$IC1, ica_data$IC2)
+plot(te$V1, te$V2)
+plot(ica_data$IC1, ica_data$IC2)
 
-  tidy(ica_trans, number = 3)
-  tidy(ica_estimates, number = 3)
-}
+tidy(ica_trans, number = 3)
+tidy(ica_estimates, number = 3)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Hyvarinen, A., and Oja, E. (2000). Independent
@@ -135,11 +160,21 @@ component analysis: algorithms and applications. \emph{Neural
 Networks}, 13(4-5), 411-430.
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}
-\code{\link[=step_isomap]{step_isomap()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_classdist_shrunken}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_nnmf_sparse}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
-\concept{ica}
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\concept{multivariate transformation steps}

@@ -10,53 +10,74 @@ step_naomit(
   role = NA,
   trained = FALSE,
   columns = NULL,
-  skip = FALSE,
+  skip = TRUE,
   id = rand_id("naomit")
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to remove observations containing \code{NA} or \code{NaN}
-values. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Unused, include for consistency with other steps.}
 
 \item{trained}{A logical to indicate if the quantities for preprocessing
 have been estimated. Again included for consistency.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = FALSE}.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the
-new step added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_naomit} creates a \emph{specification} of a recipe step that
-will remove observations (rows of data) if they contain \code{NA}
-or \code{NaN} values.
+\code{step_naomit()} creates a \emph{specification} of a recipe step that will remove
+observations (rows of data) if they contain \code{NA} or \code{NaN} values.
 }
 \section{Row Filtering}{
 
 
 This step can entirely remove observations (rows of data), which can have
 unintended and/or problematic consequences when applying the step to new
-data later via \code{\link[=bake.recipe]{bake.recipe()}}. Consider whether \code{skip = TRUE} or
+data later via \code{\link[=bake]{bake()}}. Consider whether \code{skip = TRUE} or
 \code{skip = FALSE} is more appropriate in any given use case. In most instances
 that affect the rows of the data being predicted, this step probably should
 not be applied at all; instead, execute operations like this outside and
 before starting a preprocessing \code{\link[=recipe]{recipe()}}.
+}
+
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
 }
 
 \examples{
@@ -65,8 +86,15 @@ recipe(Ozone ~ ., data = airquality) \%>\%
   step_naomit(Solar.R) \%>\%
   prep(airquality, verbose = FALSE) \%>\%
   bake(new_data = NULL)
-
 }
 \seealso{
-\code{\link[=step_filter]{step_filter()}} \code{\link[=step_sample]{step_sample()}} \code{\link[=step_slice]{step_slice()}}
+Other row operation steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_impute_roll}()},
+\code{\link{step_lag}()},
+\code{\link{step_sample}()},
+\code{\link{step_shuffle}()},
+\code{\link{step_slice}()}
 }
+\concept{row operation steps}

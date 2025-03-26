@@ -1,17 +1,20 @@
-
-
 #' @name selections
 #' @aliases selections
 #' @aliases selection
 #'
-#' @title Methods for Selecting Variables in Step Functions
+#' @title Methods for selecting variables in step functions
 #'
-#' @description When selecting variables or model terms in `step`
+#' @description
+#'
+#' Tips for selecting columns in step functions.
+#'
+#' @details
+#'  When selecting variables or model terms in `step`
 #'  functions, `dplyr`-like tools are used. The *selector* functions
 #'  can choose variables based on their name, current role, data
 #'  type, or any combination of these. The selectors are passed as
 #'  any other argument to the step. If the variables are explicitly
-#'  stated in the step function, this might be similar to:
+#'  named in the step function, this might look like:
 #'
 #' \preformatted{
 #'   recipe( ~ ., data = USArrests) \%>\%
@@ -20,7 +23,7 @@
 #'
 #'  The first four arguments indicate which variables should be
 #'  used in the PCA while the last argument is a specific argument
-#'  to [step_pca()].
+#'  to [step_pca()] about the number of components.
 #'
 #' Note that:
 #'
@@ -31,8 +34,8 @@
 #'    exclude variables (e.g. `-Murder`) and the set of selectors will
 #'    processed in order.
 #'   \item A leading exclusion in these arguments (e.g. `-Murder`)
-#'   has the effect of adding all variables to the list except the
-#'   excluded variable(s).
+#'   has the effect of adding *all* variables to the list except the
+#'   excluded variable(s), ignoring role information.
 #'   }
 #'
 #' Select helpers from the `tidyselect` package can also be used:
@@ -41,6 +44,11 @@
 #'   [tidyselect::num_range()], [tidyselect::everything()],
 #'   [tidyselect::one_of()], [tidyselect::all_of()], and
 #'   [tidyselect::any_of()]
+#'
+#' Note that using [tidyselect::everything()] or any of the other `tidyselect`
+#' functions aren't restricted to predictors. They will thus select outcomes,
+#' ID, and predictor columns alike. This is why these functions should be used
+#' with care, and why [tidyselect::everything()] likely isn't what you need.
 #'
 #' For example:
 #'
@@ -64,8 +72,11 @@
 #' more specific. The functions [all_numeric()] and [all_nominal()] select
 #' based on type, with nominal variables including both character and factor;
 #' the functions [all_predictors()] and [all_outcomes()] select based on role.
-#' Any can be used in conjunction with the previous functions described for
-#' selecting variables using their names:
+#' The functions [all_numeric_predictors()] and [all_nominal_predictors()]
+#' select intersections of role and type. Any can be used in conjunction with
+#' the previous functions described for selecting variables using their names.
+#'
+#' A selection like this:
 #'
 #' \preformatted{
 #'   data(biomass)
@@ -73,11 +84,21 @@
 #'     step_center(all_numeric(), -all_outcomes())
 #' }
 #'
-#' This results in all the numeric predictors: carbon, hydrogen,
+#' is equivalent to:
+#'
+#' \preformatted{
+#'   data(biomass)
+#'   recipe(HHV ~ ., data = biomass) \%>\%
+#'     step_center(all_numeric_predictors())
+#' }
+#'
+#' Both result in all the numeric predictors: carbon, hydrogen,
 #' oxygen, nitrogen, and sulfur.
 #'
 #' If a role for a variable has not been defined, it will never be
 #' selected using role-specific selectors.
+#'
+#' ## Interactions
 #'
 #' Selectors can be used in [step_interact()] in similar ways but
 #' must be embedded in a model formula (as opposed to a sequence
@@ -91,36 +112,129 @@
 #' will not be recognized. Additionally, the tidyselect domain specific
 #' language is not recognized here, meaning that `&`, `|`, `!`, and `-`
 #' will not work.
+#'
+#' @includeRmd man/rmd/selections.Rmd details
 NULL
 
+# ------------------------------------------------------------------------------
 
-eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
+#' Evaluate a selection with tidyselect semantics specific to recipes
+#'
+#' @description
+#' `recipes_eval_select()` is a recipes specific variant of
+#' [tidyselect::eval_select()] enhanced with the ability to recognize recipes
+#' selectors, such as [all_numeric_predictors()]. See [selections]
+#' for more information about the unique recipes selectors.
+#'
+#' This is a developer tool that is only useful for creating new recipes steps.
+#'
+#' @inheritParams rlang::args_dots_empty
+#'
+#' @param quos A list of quosures describing the selection. This is generally
+#'   the `...` argument of your step function, captured with [rlang::enquos()]
+#'   and stored in the step object as the `terms` element.
+#'
+#' @param data A data frame to use as the context to evaluate the selection in.
+#'   This is generally the `training` data passed to the [prep()] method
+#'   of your step.
+#'
+#' @param info A data frame of term information describing each column's type
+#'   and role for use with the recipes selectors. This is generally the `info`
+#'   data passed to the [prep()] method of your step.
+#'
+#' @param allow_rename Should the renaming syntax `c(foo = bar)` be allowed?
+#'   This is rarely required, and is currently only used by [step_select()].
+#'   It is unlikely that your step will need renaming capabilities.
+#'
+#' @param check_case_weights Should selecting case weights throw an error?
+#'   Defaults to `TRUE`. This is rarely changed and only needed in [juice()],
+#'   [bake.recipe()], [update_role()], and [add_role()].
+#'
+#' @param strict Should selecting non-existing names throw an error?
+#'   Defaults to `TRUE`. This is rarely changed and only needed in
+#'   `.recipes_estimate_sparsity.recipe()``.
+#'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
+#'
+#' @return
+#' A named character vector containing the evaluated selection. The names are
+#' always the same as the values, except when `allow_rename = TRUE`, in which
+#' case the names reflect the new names chosen by the user.
+#'
+#' @seealso [developer_functions]
+#'
+#' @export
+#' @examplesIf rlang::is_installed("modeldata")
+#' library(rlang)
+#' data(scat, package = "modeldata")
+#'
+#' rec <- recipe(Species ~ ., data = scat)
+#'
+#' info <- summary(rec)
+#' info
+#'
+#' quos <- quos(all_numeric_predictors(), where(is.factor))
+#'
+#' recipes_eval_select(quos, scat, info)
+recipes_eval_select <- function(
+  quos,
+  data,
+  info,
+  ...,
+  allow_rename = FALSE,
+  check_case_weights = TRUE,
+  strict = TRUE,
+  call = caller_env()
+) {
+  check_dots_empty()
 
-  ellipsis::check_dots_empty()
+  if (rlang::is_missing(quos)) {
+    cli::cli_abort("Argument {.arg quos} is missing, with no default.")
+  }
 
   # Maintain ordering between `data` column names and `info$variable` so
   # `eval_select()` and recipes selectors return compatible positions
-  data_info <- tibble(variable = names(data))
-  data_info <- dplyr::left_join(data_info, info, by = "variable")
+  matches <- vctrs::vec_locate_matches(
+    names(data),
+    info$variable,
+    no_match = "error"
+  )
+  data_info <- vec_slice(info, matches$haystack)
 
-  nested_info <- nest_current_info(data_info)
+  data_nest <- data_info[names(data_info) != "variable"]
+  data_nest <- tibble::new_tibble(data_nest, nrow = vctrs::vec_size(data_nest))
+
+  nested_info <- vctrs::vec_split(data_nest, by = data_info$variable)
+  nested_info <- list(variable = nested_info$key, data = nested_info$val)
+  nested_info <- tibble::new_tibble(
+    nested_info,
+    nrow = length(nested_info$variable)
+  )
 
   local_current_info(nested_info)
 
   expr <- expr(c(!!!quos))
 
-  # FIXME: Ideally this is `FALSE` for strict selection,
-  # but empty selections incorrectly throw an
-  # error when this is false due to the following bug:
-  # https://github.com/r-lib/tidyselect/issues/221
-  # Once it's fixed, remove this and pass allow_rename to
-  # tidyselect::eval_select().
-  allow_rename_compat <- TRUE
+  if ((!allow_rename) && any(names(expr) != "")) {
+    offenders <- names(expr)
+    offenders <- offenders[offenders != ""]
+
+    cli::cli_abort(
+      "The following argument{?s} {?was/were} specified but do{?es/} not exist: \\
+      {.arg {offenders}}.",
+      call = call
+    )
+  }
 
   sel <- tidyselect::eval_select(
     expr = expr,
     data = data,
-    allow_rename = allow_rename_compat
+    allow_rename = allow_rename,
+    strict = strict,
+    error_call = call
   )
 
   # Return names not positions, as these names are
@@ -129,24 +243,15 @@ eval_select_recipes <- function(quos, data, info, ..., allow_rename = FALSE) {
   out <- names(data)[sel]
   names <- names(sel)
 
-  # FIXME: Remove this check when the following issue is fixed,
-  # at that point, just pass `allow_rename` to `eval_select()` directly.
-  # https://github.com/r-lib/tidyselect/issues/221
-  if (!allow_rename & !identical(out, names)) {
-    abort("Can't rename variables in this context.")
+  if (
+    check_case_weights &&
+      any(out %in% info$variable[info$role == "case_weights"])
+  ) {
+    cli::cli_abort("Cannot select case weights variable.", call = call)
   }
 
   names(out) <- names
   out
-}
-
-nest_current_info <- function(info) {
-  # See https://tidyr.tidyverse.org/dev/articles/in-packages.html
-  if (tidyr_new_interface()) {
-    tidyr::nest(info, data = -variable)
-  } else {
-    tidyr::nest(info, -variable)
-  }
 }
 
 #' Role Selection
@@ -156,13 +261,26 @@ nest_current_info <- function(info) {
 #' `has_role()`, `all_predictors()`, and `all_outcomes()` can be used to
 #'  select variables in a formula that have certain roles.
 #'
-#' Similarly, `has_type()`, `all_numeric()`, and `all_nominal()` are used to
-#'  select columns based on their data type. Nominal variables include both
-#'  character and factor.
+#'  **In most cases**, the right approach for users will be use to use the
+#'  predictor-specific selectors such as `all_numeric_predictors()` and
+#'  `all_nominal_predictors()`. In general you should be careful about using
+#'  `-all_outcomes()` if a `*_predictors()` selector would do what you want.
 #'
-#' **In most cases**, the selectors `all_numeric_predictors()` and
-#'  `all_nominal_predictors()`, which select on role and type, will be the right
-#'  approach for users.
+#'  Similarly, `has_type()`, `all_numeric()`, `all_integer()`, `all_double()`,
+#'  `all_nominal()`, `all_ordered()`, `all_unordered()`, `all_factor()`,
+#'  `all_string()`, `all_date()` and `all_datetime()` are used to select columns
+#'  based on their data type.
+#'
+#'  `all_factor()` captures ordered and unordered factors, `all_string()`
+#'  captures characters, `all_unordered()` captures unordered factors and
+#'  characters, `all_ordered()` captures ordered factors, `all_nominal()`
+#'  captures characters, unordered and ordered factors.
+#'
+#'  `all_integer()` captures integers, `all_double()` captures doubles,
+#'  `all_numeric()` captures all kinds of numeric.
+#'
+#'  `all_date()` captures [Date()] variables, `all_datetime()` captures
+#'  [POSIXct()] variables.
 #'
 #'  See [selections] for more details.
 #'
@@ -180,10 +298,8 @@ nest_current_info <- function(info) {
 #'
 #' `current_info()` returns an environment with objects `vars` and `data`.
 #'
-#' @keywords datagen
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' rec <- recipe(biomass) %>%
 #'   update_role(
@@ -202,58 +318,20 @@ nest_current_info <- function(info) {
 #'   step_center(all_predictors(), -carbon) %>%
 #'   prep(training = biomass) %>%
 #'   bake(new_data = NULL)
-#'
 #' @export
 has_role <- function(match = "predictor") {
   roles <- peek_roles()
   # roles is potentially a list columns so we unlist `.x` below.
-  lgl_matches <- purrr::map_lgl(roles, ~any(unlist(.x) %in% match))
+  lgl_matches <- purrr::map_lgl(roles, ~ any(unlist(.x) %in% match))
   which(lgl_matches)
-}
-
-#' @export
-#' @rdname has_role
-all_predictors <- function() {
-  has_role("predictor")
-}
-
-#' @export
-#' @rdname has_role
-all_numeric_predictors <- function() {
-  intersect(has_role("predictor"), has_type("numeric"))
-}
-
-#' @export
-#' @rdname has_role
-all_nominal_predictors <- function() {
-  intersect(has_role("predictor"), has_type("nominal"))
-}
-
-
-#' @export
-#' @rdname has_role
-all_outcomes <- function() {
-  has_role("outcome")
 }
 
 #' @export
 #' @rdname has_role
 has_type <- function(match = "numeric") {
   types <- peek_types()
-  lgl_matches <- purrr::map_lgl(types, ~any(.x %in% match))
+  lgl_matches <- purrr::map_lgl(types, ~ any(.x %in% match))
   which(lgl_matches)
-}
-
-#' @export
-#' @rdname has_role
-all_numeric <- function() {
-  has_type("numeric")
-}
-
-#' @export
-#' @rdname has_role
-all_nominal <- function() {
-  has_type("nominal")
 }
 
 peek_roles <- function() {
@@ -266,13 +344,155 @@ peek_types <- function() {
 
 peek_info <- function(col) {
   .data <- current_info()$data
-  purrr::map(.data, ~.x[[col]])
+  purrr::map(.data, ~ unlist(.x[[col]]))
+}
+
+#' @export
+#' @rdname has_role
+all_outcomes <- function() {
+  has_role("outcome")
+}
+
+#' @export
+#' @rdname has_role
+all_predictors <- function() {
+  has_role("predictor")
+}
+
+#' @export
+#' @rdname has_role
+all_date <- function() {
+  has_type("date")
+}
+
+#' @export
+#' @rdname has_role
+all_date_predictors <- function() {
+  intersect(has_role("predictor"), has_type("date"))
+}
+
+#' @export
+#' @rdname has_role
+all_datetime <- function() {
+  has_type("datetime")
+}
+
+#' @export
+#' @rdname has_role
+all_datetime_predictors <- function() {
+  intersect(has_role("predictor"), has_type("datetime"))
+}
+
+#' @export
+#' @rdname has_role
+all_double <- function() {
+  has_type("double")
+}
+
+#' @export
+#' @rdname has_role
+all_double_predictors <- function() {
+  intersect(has_role("predictor"), has_type("double"))
+}
+
+#' @export
+#' @rdname has_role
+all_factor <- function() {
+  has_type("factor")
+}
+
+#' @export
+#' @rdname has_role
+all_factor_predictors <- function() {
+  intersect(has_role("predictor"), has_type("factor"))
+}
+
+#' @export
+#' @rdname has_role
+all_integer <- function() {
+  has_type("integer")
+}
+
+#' @export
+#' @rdname has_role
+all_integer_predictors <- function() {
+  intersect(has_role("predictor"), has_type("integer"))
+}
+
+#' @export
+#' @rdname has_role
+all_logical <- function() {
+  has_type("logical")
+}
+
+#' @export
+#' @rdname has_role
+all_logical_predictors <- function() {
+  intersect(has_role("predictor"), has_type("logical"))
+}
+
+#' @export
+#' @rdname has_role
+all_nominal <- function() {
+  has_type("nominal")
+}
+
+#' @export
+#' @rdname has_role
+all_nominal_predictors <- function() {
+  intersect(has_role("predictor"), has_type("nominal"))
+}
+
+#' @export
+#' @rdname has_role
+all_numeric <- function() {
+  has_type("numeric")
+}
+
+#' @export
+#' @rdname has_role
+all_numeric_predictors <- function() {
+  intersect(has_role("predictor"), has_type("numeric"))
+}
+
+#' @export
+#' @rdname has_role
+all_ordered <- function() {
+  has_type("ordered")
+}
+
+#' @export
+#' @rdname has_role
+all_ordered_predictors <- function() {
+  intersect(has_role("predictor"), has_type("ordered"))
+}
+
+#' @export
+#' @rdname has_role
+all_string <- function() {
+  has_type("string")
+}
+
+#' @export
+#' @rdname has_role
+all_string_predictors <- function() {
+  intersect(has_role("predictor"), has_type("string"))
+}
+
+#' @export
+#' @rdname has_role
+all_unordered <- function() {
+  has_type("unordered")
+}
+
+#' @export
+#' @rdname has_role
+all_unordered_predictors <- function() {
+  intersect(has_role("predictor"), has_type("unordered"))
 }
 
 ## functions to get current variable info for selectors modeled after
 ## dplyr versions
-
-#' @import rlang
 cur_info_env <- env(empty_env())
 
 local_current_info <- function(nested_info, frame = parent.frame()) {
@@ -287,127 +507,5 @@ local_current_info <- function(nested_info, frame = parent.frame()) {
 #' @export
 #' @rdname has_role
 current_info <- function() {
-  cur_info_env %||% rlang::abort("Variable context not set")
+  cur_info_env %||% cli::cli_abort("Variable context not set.")
 }
-
-# ------------------------------------------------------------------------------
-# Old method for selection. This has been completely superseded by
-# `eval_select_recipes()`, and should no longer be used in recipes, but we
-# have exported it so we continue to support it here.
-
-# This flags formulas that are not allowed
-element_check <- function(x) {
-  funs <- fun_calls(x)
-  funs <- funs[!(funs %in% c("~", "+", "-"))]
-
-  # i.e. tidyselect::matches()
-  funs <- funs[!(funs %in% c("::", "tidyselect", "dplyr", "recipes"))]
-
-  name_selectors <- c(
-    "starts_with",
-    "ends_with",
-    "contains",
-    "matches",
-    "num_range",
-    "everything",
-    "one_of",
-    "all_of",
-    "any_of",
-    "c"
-  )
-  role_selectors <- c(
-    "has_role",
-    "all_predictors",
-    "all_numeric_predictors",
-    "all_nominal_predictors",
-    "all_outcomes"
-  )
-  type_selectors <- c(
-    "has_type",
-    "all_numeric",
-    "all_nominal"
-  )
-  selectors <- c(
-    name_selectors,
-    role_selectors,
-    type_selectors
-  )
-
-  not_good <- funs[!(funs %in% selectors)]
-
-  if (length(not_good) > 0) {
-    rlang::abort(paste0(
-      "Not all functions are allowed in step function selectors (e.g. ",
-      paste0("`", not_good, "`", collapse = ", "),
-      "). See ?selections."
-    ))
-  }
-
-  invisible(NULL)
-}
-
-#' Select Terms in a Step Function.
-#'
-#' This function bakes the step function selectors and might be
-#'  useful when creating custom steps.
-#'
-#' @param info A tibble with columns `variable`, `type`, `role`,
-#'  and `source` that represent the current state of the data. The
-#'  function [summary.recipe()] can be used to get this information
-#'  from a recipe.
-#' @param terms A list of formulas whose right-hand side contains
-#'  quoted expressions. See [rlang::quos()] for examples.
-#' @param empty_fun A function to execute when no terms are selected by the
-#'  step. The default function throws an error with a message.
-#' @keywords datagen
-#' @concept preprocessing
-#' @return A character string of column names or an error of there
-#'  are no selectors or if no variables are selected.
-#' @seealso [recipe()] [summary.recipe()]
-#'   [prep.recipe()]
-#' @export
-#' @examples
-#' library(rlang)
-#' library(modeldata)
-#' data(okc)
-#' rec <- recipe(~ ., data = okc)
-#' info <- summary(rec)
-#' terms_select(info = info, quos(all_predictors()))
-terms_select <- function(terms, info, empty_fun = abort_selection) {
-  # unique in case a variable has multiple roles
-  vars <- unique(info$variable)
-
-  if (is_empty(terms)) {
-    rlang::abort("At least one selector should be used")
-  }
-
-  ## check arguments against whitelist
-  lapply(terms, element_check)
-
-  # Set current_info so available to helpers
-
-  nested_info <- nest_current_info(info)
-
-  local_current_info(nested_info)
-
-  # `terms` might be a single call (like in step_interact()),
-  # or it could be a list of quosures.
-  # They have to be unquoted differently
-  if (is.call(terms)) {
-    sel <- with_handlers(
-      tidyselect::vars_select(vars, !! terms),
-      tidyselect_empty = empty_fun
-    )
-  } else {
-    sel <- with_handlers(
-      tidyselect::vars_select(vars, !!! terms),
-      tidyselect_empty = empty_fun
-    )
-  }
-
-  unname(sel)
-}
-
-abort_selection <- exiting(function(cnd) {
-  abort("No variables or terms were selected.")
-})

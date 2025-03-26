@@ -1,37 +1,40 @@
-#' Convert Numbers to Factors
+#' Convert numbers to factors
 #'
-#' `step_num2factor` will convert one or more numeric vectors to factors
-#'  (ordered or unordered). This can be useful when categories are encoded as
-#'  integers.
+#' `step_num2factor()` will convert one or more numeric vectors to factors
+#' (ordered or unordered). This can be useful when categories are encoded as
+#' integers.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which variables will be
-#'  converted to factors. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param transform A function taking a single argument `x` that can be used
 #'  to modify the numeric values prior to determining the levels (perhaps using
 #'  [base::as.integer()]). The output of a function should be an integer that
 #'  corresponds to the value of `levels` that should be assigned. If not an
-#'  integer, the value will be converted to an integer during `bake()`.
+#'  integer, the value will be converted to an integer during [bake()].
 #' @param levels A character vector of values that will be used as the levels.
 #'  These are the numeric data converted to character and ordered. This is
-#'  modified once [prep.recipe()] is executed.
+#'  modified once [prep()] is executed.
 #' @param ordered A single logical value; should the factor(s) be ordered?
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `ordered` is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_encodings
-#' @concept factors
+#' @template step-return
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `ordered` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{ordered}{logical, were the factor(s) ordered}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @family dummy variable and encoding steps
 #' @export
-#' @seealso [step_factor2string()], [step_string2factor()], [step_dummy()]
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(attrition)
+#' data(attrition, package = "modeldata")
 #'
 #' attrition %>%
 #'   group_by(StockOptionLevel) %>%
@@ -47,7 +50,9 @@
 #'     levels = amnt
 #'   )
 #'
-#' encoded <- rec %>% prep() %>% bake(new_data = NULL)
+#' encoded <- rec %>%
+#'   prep() %>%
+#'   bake(new_data = NULL)
 #'
 #' table(encoded$StockOptionLevel, attrition$StockOptionLevel)
 #'
@@ -77,33 +82,38 @@
 #' table(encoded$MonthlyIncome, binner(attrition$MonthlyIncome))
 #'
 #' # What happens when a value is out of range?
-#' ceo <- attrition %>% slice(1) %>% mutate(MonthlyIncome = 10^10)
+#' ceo <- attrition %>%
+#'   slice(1) %>%
+#'   mutate(MonthlyIncome = 10^10)
 #'
 #' bake(rec, ceo)
-
 step_num2factor <-
-  function(recipe,
-           ...,
-           role = NA,
-           transform = function(x) x,
-           trained = FALSE,
-           levels,
-           ordered = FALSE,
-           skip = FALSE,
-           id = rand_id("num2factor")) {
-    if (!is_tune(ordered) & !is_varying(ordered)) {
-      if (!is.logical(ordered) || length(ordered) != 1)
-        rlang::abort("`ordered` should be a single logical variable")
+  function(
+    recipe,
+    ...,
+    role = NA,
+    transform = function(x) x,
+    trained = FALSE,
+    levels,
+    ordered = FALSE,
+    skip = FALSE,
+    id = rand_id("num2factor")
+  ) {
+    if (!is_tune(ordered)) {
+      check_bool(ordered)
     }
 
     if (rlang::is_missing(levels) || !is.character(levels)) {
-      rlang::abort("Please provide a character vector of appropriate length for `levels`.")
+      cli::cli_abort(
+        "Please provide a character vector of appropriate length for \\
+        {.arg levels}."
+      )
     }
 
     add_step(
       recipe,
       step_num2factor_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         transform = transform,
         trained = trained,
@@ -130,14 +140,15 @@ step_num2factor_new <-
     )
   }
 
-get_ord_lvls_num <- function(x, foo)
+get_ord_lvls_num <- function(x, foo) {
   sort(unique(as.character(foo(x))))
+}
 
 #' @export
 prep.step_num2factor <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
+  check_function(x$transform, arg = "transform")
 
   res <- lapply(training[, col_names], get_ord_lvls_num, foo = x$transform)
   res <- c(res, ..levels = list(x$levels))
@@ -165,48 +176,49 @@ make_factor_num <- function(x, lvl, ord, foo) {
   factor(lvl[y], levels = lvl, ordered = ord)
 }
 
-
 #' @export
 bake.step_num2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
+  check_new_data(col_names, object, new_data)
 
   lvls <- object$levels[names(object$levels) == "..levels"]
-  object$levels <- object$levels[names(object$levels) != "..levels"]
 
-  new_data[, col_names] <-
-    map_df(new_data[, col_names],
-            make_factor_num,
-            lvl = lvls[[1]],
-            ord = object$ordered[1],
-            foo = object$transform)
+  for (col_name in col_names) {
+    new_data[[col_names]] <- make_factor_num(
+      new_data[[col_name]],
+      lvl = lvls[[1]],
+      ord = object$ordered[1],
+      foo = object$transform
+    )
+  }
 
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
   new_data
 }
 
+#' @export
 print.step_num2factor <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Factor variables from ")
-    printer(names(x$ordered), x$terms, x$trained, width = width)
+    title <- "Factor variables from "
+    print_step(names(x$ordered), x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_num2factor` object.
 #' @export
 tidy.step_num2factor <- function(x, ...) {
   term_names <- sel2char(x$terms)
   p <- length(term_names)
   if (is_trained(x)) {
-    res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+    res <- tibble(
+      terms = term_names,
+      ordered = rep(unname(x$ordered), p)
+    )
   } else {
-    res <- tibble(terms = term_names,
-                  ordered = rep(x$ordered, p))
+    res <- tibble(
+      terms = term_names,
+      ordered = rep(unname(x$ordered), p)
+    )
   }
   res$id <- x$id
   res
 }
-

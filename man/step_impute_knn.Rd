@@ -2,24 +2,9 @@
 % Please edit documentation in R/impute_knn.R
 \name{step_impute_knn}
 \alias{step_impute_knn}
-\alias{step_knnimpute}
-\title{Imputation via K-Nearest Neighbors}
+\title{Impute via k-nearest neighbors}
 \usage{
 step_impute_knn(
-  recipe,
-  ...,
-  role = NA,
-  trained = FALSE,
-  neighbors = 5,
-  impute_with = imp_vars(all_predictors()),
-  options = list(nthread = 1, eps = 1e-08),
-  ref_data = NULL,
-  columns = NULL,
-  skip = FALSE,
-  id = rand_id("impute_knn")
-)
-
-step_knnimpute(
   recipe,
   ...,
   role = NA,
@@ -37,12 +22,13 @@ step_knnimpute(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables. For
-\code{step_impute_knn}, this indicates the variables to be imputed. When used
-with \code{imp_vars}, the dots indicate which variables are used to predict the
-missing data in each variable. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables to be imputed.
+When used with \code{imp_vars}, these dots indicate which variables are used to
+predict the missing data in each variable. See \code{\link[=selections]{selections()}} for more
+details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -60,26 +46,26 @@ Available options are currently \code{nthread} and \code{eps}.}
 
 \item{ref_data}{A tibble of data that will reflect the data preprocessing
 done up to the point of this imputation step. This is \code{NULL} until the step
-is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is trained by \code{\link[=prep]{prep()}}.}
 
-\item{columns}{The column names that will be imputed and used for
-imputation. This is \code{NULL} until the step is trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
-\code{step_impute_knn} creates a \emph{specification} of a recipe step that will
+\code{step_impute_knn()} creates a \emph{specification} of a recipe step that will
 impute missing data using nearest neighbors.
 }
 \details{
@@ -97,17 +83,38 @@ this variable will be ignored.
 It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables for imputation), \code{predictors}
-(those variables used to impute), and \code{neighbors} is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_knnimpute()}
 to \code{step_impute_knn()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{predictors}, \code{neighbors} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{predictors}{character, selected predictors used to impute}
+\item{neighbors}{integer, number of neighbors}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{neighbors}: # Nearest Neighbors (type: integer, default: 5)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -121,8 +128,10 @@ nitro_missing <- sample(1:nrow(biomass_te), 3)
 biomass_te$carbon[carb_missing] <- NA
 biomass_te$nitrogen[nitro_missing] <- NA
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 ratio_recipe <- rec \%>\%
   step_impute_knn(all_predictors(), neighbors = 3)
@@ -131,21 +140,33 @@ imputed <- bake(ratio_recipe2, biomass_te)
 
 # how well did it work?
 summary(biomass_te_whole$carbon)
-cbind(before = biomass_te_whole$carbon[carb_missing],
-      after = imputed$carbon[carb_missing])
+cbind(
+  before = biomass_te_whole$carbon[carb_missing],
+  after = imputed$carbon[carb_missing]
+)
 
 summary(biomass_te_whole$nitrogen)
-cbind(before = biomass_te_whole$nitrogen[nitro_missing],
-      after = imputed$nitrogen[nitro_missing])
+cbind(
+  before = biomass_te_whole$nitrogen[nitro_missing],
+  after = imputed$nitrogen[nitro_missing]
+)
 
 tidy(ratio_recipe, number = 1)
 tidy(ratio_recipe2, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Gower, C. (1971) "A general coefficient of similarity and some
 of its properties," Biometrics, 857-871.
 }
-\concept{imputation}
-\concept{preprocessing}
-\keyword{datagen}
-\keyword{internal}
+\seealso{
+Other imputation steps: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
+\concept{imputation steps}

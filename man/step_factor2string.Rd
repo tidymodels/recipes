@@ -2,7 +2,7 @@
 % Please edit documentation in R/factor2string.R
 \name{step_factor2string}
 \alias{step_factor2string}
-\title{Convert Factors to Strings}
+\title{Convert factors to strings}
 \usage{
 step_factor2string(
   recipe,
@@ -18,9 +18,8 @@ step_factor2string(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be converted to strings. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -28,67 +27,94 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variables that will be
-converted. This is \code{NULL} until computed by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any). For the
-\code{tidy} method, a tibble with columns \code{terms} (the
-columns that will be affected).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_factor2string} will convert one or more factor
-vectors to strings.
+\code{step_factor2string()} creates a \emph{specification} of a recipe step that will
+convert one or more factor vectors to strings.
 }
 \details{
-\code{prep} has an option \code{strings_as_factors} that
-defaults to \code{TRUE}. If this step is used with the default
-option, the string(s() produced by this step will be converted
-to factors after all of the steps have been prepped.
+\code{\link[=prep]{prep()}} has an option \code{strings_as_factors} that defaults to \code{TRUE}. If this
+step is used with the default option, the strings produced by this step will
+not be converted to factors.
+
+Remember that categorical data that will be directly passed to a model should
+be encoded as factors. This step is helpful for ancillary columns (such as
+identifiers) that will not be computed on in the model.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
-rec <- recipe(~ diet + location, data = okc)
+rec <- recipe(~ city + zip, data = Sacramento)
 
-rec <- rec \%>\%
-  step_string2factor(diet)
+make_string <- rec \%>\%
+  step_factor2string(city)
 
-factor_test <- rec \%>\%
-  prep(training = okc,
-       strings_as_factors = FALSE) \%>\%
-  juice
-# diet is a
-class(factor_test$diet)
+make_string <- prep(make_string,
+  training = Sacramento,
+  strings_as_factors = FALSE
+)
 
-rec <- rec \%>\%
-  step_factor2string(diet)
+make_string
 
-string_test <- rec \%>\%
-  prep(training = okc,
-       strings_as_factors = FALSE) \%>\%
-  juice
-# diet is a
-class(string_test$diet)
+# note that `city` is a string in recipe output
+bake(make_string, new_data = NULL) \%>\% head()
 
-tidy(rec, number = 1)
+# ...but remains a factor in the original data
+Sacramento \%>\% head()
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_string2factor]{step_string2factor()}} \code{\link[=step_dummy]{step_dummy()}}
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
 }
-\concept{factors}
-\concept{preprocessing}
-\concept{variable_encodings}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

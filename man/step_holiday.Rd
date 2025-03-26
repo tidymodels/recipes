@@ -2,7 +2,7 @@
 % Please edit documentation in R/holiday.R
 \name{step_holiday}
 \alias{step_holiday}
-\title{Holiday Feature Generator}
+\title{Holiday feature generator}
 \usage{
 step_holiday(
   recipe,
@@ -11,6 +11,7 @@ step_holiday(
   trained = FALSE,
   holidays = c("LaborDay", "NewYearsDay", "ChristmasDay"),
   columns = NULL,
+  sparse = "auto",
   keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("holiday")
@@ -20,15 +21,13 @@ step_holiday(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to create the new variables. The selected
-variables should have class \code{Date} or \code{POSIXct}. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. The selected variables should have class \code{Date} or
+\code{POSIXct}. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new variable columns created by the original variables
-will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -37,57 +36,102 @@ preprocessing have been estimated.}
 holiday supported by the \code{timeDate} package. See
 \code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}} for a complete list.}
 
-\item{columns}{A character string of variables that will be
-used as inputs. This field is a placeholder and will be
-populated once \code{\link[=prep.recipe]{prep.recipe()}} is used.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
+
+\item{sparse}{A single string. Should the columns produced be sparse vectors.
+Can take the values \code{"yes"}, \code{"no"}, and \code{"auto"}. If \code{sparse = "auto"}
+then workflows can determine the best option. Defaults to \code{"auto"}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_holiday} creates a \emph{specification} of a
-recipe step that will convert date data into one or more binary
-indicator variables for common holidays.
+\code{step_holiday()} creates a \emph{specification} of a recipe step that will convert
+date data into one or more binary indicator variables for common holidays.
 }
 \details{
 Unlike some other steps, \code{step_holiday} does \emph{not}
 remove the original date variables by default. Set \code{keep_original_cols}
 to \code{FALSE} to remove them.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms}
-(the columns that will be affected) and \code{holiday} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{holiday} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{holiday}{character, name of holidays}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step produces sparse columns if \code{sparse = "yes"} is being set. The
+default value \code{"auto"} won't trigger production fo sparse columns if a recipe
+is \code{\link[=prep]{prep()}}ed, but allows for a workflow to toggle to \code{"yes"} or \code{"no"}
+depending on whether the model supports \link{sparse_data} and if the model is
+is expected to run faster with the data.
+
+The mechanism for determining how much sparsity is produced isn't perfect,
+and there will be times when you want to manually overwrite by setting
+\code{sparse = "yes"} or \code{sparse = "no"}.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(lubridate)
 
 examples <- data.frame(someday = ymd("2000-12-20") + days(0:40))
-holiday_rec <- recipe(~ someday, examples) \%>\%
-   step_holiday(all_predictors())
+holiday_rec <- recipe(~someday, examples) \%>\%
+  step_holiday(all_predictors())
 
 holiday_rec <- prep(holiday_rec, training = examples)
 holiday_values <- bake(holiday_rec, new_data = examples)
 holiday_values
 }
 \seealso{
-\code{\link[=step_date]{step_date()}} \code{\link[=step_rm]{step_rm()}}
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}} \code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}}
+\code{\link[timeDate:holiday-Listing]{timeDate::listHolidays()}}
+
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
 }
-\concept{dates}
-\concept{model_specification}
-\concept{preprocessing}
-\concept{variable_encodings}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/impute_linear.R
 \name{step_impute_linear}
 \alias{step_impute_linear}
-\title{Imputation of numeric variables via a linear model.}
+\title{Impute numeric variables via a linear model}
 \usage{
 step_impute_linear(
   recipe,
@@ -19,13 +19,13 @@ step_impute_linear(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables. For
-\code{step_impute_linear}, this indicates the variables to be imputed; these variables
-\strong{must} be of type \code{numeric}. When used with \code{imp_vars}, the dots indicates
-which variables are used to predict the missing data in each variable. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables to be imputed;
+these variables \strong{must} be of type \code{numeric}. When used with \code{imp_vars},
+these dots indicate which variables are used to predict the missing data
+in each variable. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -37,23 +37,23 @@ included in both lists to be imputed and to be an imputation predictor, it
 will be removed from the latter and not used to impute itself.}
 
 \item{models}{The \code{\link[=lm]{lm()}} objects are stored here once the linear models
-have been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+have been trained by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
-\code{step_impute_linear} creates a \emph{specification} of a recipe step that will
+\code{step_impute_linear()} creates a \emph{specification} of a recipe step that will
 create linear regression models to impute missing data.
 }
 \details{
@@ -68,12 +68,29 @@ coerced to integer as needed).
 
 Since this is a linear regression, the imputation model only uses complete
 cases for the training set predictors.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{terms} (the selectors or variables selected) and \code{model} (the
-bagged tree object) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{model} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{model}{list, list of fitted \code{lm()} models}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 set.seed(393)
 ames_missing <- ames
@@ -100,12 +117,21 @@ ggplot(imputed, aes(x = original, y = imputed)) +
   geom_point(alpha = .3) +
   coord_equal() +
   labs(title = "Imputed Values")
+\dontshow{\}) # examplesIf}
 }
 \references{
 Kuhn, M. and Johnson, K. (2013).
 \emph{Feature Engineering and Selection}
 \url{https://bookdown.org/max/FES/handling-missing-data.html}
 }
-\concept{imputation}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other imputation steps: 
+\code{\link{step_impute_bag}()},
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
+\concept{imputation steps}

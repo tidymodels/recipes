@@ -2,7 +2,7 @@
 % Please edit documentation in R/window.R
 \name{step_window}
 \alias{step_window}
-\title{Moving Window Functions}
+\title{Moving window functions}
 \usage{
 step_window(
   recipe,
@@ -14,6 +14,7 @@ step_window(
   statistic = "mean",
   columns = NULL,
   names = NULL,
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("window")
 )
@@ -22,9 +23,8 @@ step_window(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis
 role should they be assigned? If \code{names} is left to be
@@ -47,9 +47,8 @@ values are: \code{'max'}, \code{'mean'}, \code{'median'},
 \code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
 \code{'var'}}
 
-\item{columns}{A character string that contains the names of
-columns that should be processed. These values are not
-determined until \code{\link[=prep.recipe]{prep.recipe()}} is called.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{names}{An optional character string that is the same
 length of the number of terms selected by \code{terms}. If you
@@ -57,23 +56,26 @@ are not sure what columns will be selected, use the
 \code{summary} function (see the example below). These will be
 the names of the new columns created by the step.}
 
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{TRUE}.}
+
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_window} creates a \emph{specification} of a recipe
-step that will create new columns that are the results of
-functions that compute statistics across moving windows.
+\code{step_window()} creates a \emph{specification} of a recipe step that will create
+new columns that are the results of functions that compute statistics across
+moving windows.
 }
 \details{
 The calculations use a somewhat atypical method for
@@ -86,13 +88,38 @@ smoothed with a 5-point moving median, the first three smoothed
 values are estimated by \code{median(x[1:5])} and the fourth
 uses \code{median(x[2:6])}.
 
-step will stop with a note about installing the package.
+\code{keep_original_cols} also applies to this step if \code{names} is specified.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{statistic} (the
-summary function name), and \code{size} is returned.
+step will stop with a note about installing the package.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{statistic}, \code{size} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{statistic}{character, the summary function name}
+\item{size}{integer, window size}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{statistic}: Rolling Summary Statistic (type: character, default: mean)
+\item \code{size}: Window Size (type: integer, default: 3)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed(c("RcppML", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
 library(dplyr)
 library(rlang)
@@ -107,19 +134,18 @@ sim_dat$x2 <- runif(n)
 sim_dat$x3 <- rnorm(n)
 
 rec <- recipe(y1 + y2 ~ x1 + x2 + x3, data = sim_dat) \%>\%
-  step_window(starts_with("y"), size = 7, statistic = "median",
-              names = paste0("med_7pt_", 1:2),
-              role = "outcome") \%>\%
   step_window(starts_with("y"),
-              names = paste0("mean_3pt_", 1:2),
-              role = "outcome")
+    size = 7, statistic = "median",
+    names = paste0("med_7pt_", 1:2),
+    role = "outcome"
+  ) \%>\%
+  step_window(starts_with("y"),
+    names = paste0("mean_3pt_", 1:2),
+    role = "outcome"
+  )
 rec <- prep(rec, training = sim_dat)
 
-# If you aren't sure how to set the names, see which variables are selected
-# and the order that they are selected:
-terms_select(info = summary(rec), terms = quos(starts_with("y")))
-
-smoothed_dat <- bake(rec, sim_dat, everything())
+smoothed_dat <- bake(rec, sim_dat)
 
 ggplot(data = sim_dat, aes(x = x1, y = y1)) +
   geom_point() +
@@ -136,11 +162,9 @@ sim_dat$original <- sim_dat$y1
 rec <- recipe(y1 + y2 + original ~ x1 + x2 + x3, data = sim_dat) \%>\%
   step_window(starts_with("y"))
 rec <- prep(rec, training = sim_dat)
-smoothed_dat <- bake(rec, sim_dat, everything())
+smoothed_dat <- bake(rec, sim_dat)
 ggplot(smoothed_dat, aes(x = original, y = y1)) +
   geom_point() +
   theme_bw()
+\dontshow{\}) # examplesIf}
 }
-\concept{moving_windows}
-\concept{preprocessing}
-\keyword{datagen}

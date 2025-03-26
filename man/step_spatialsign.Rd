@@ -2,7 +2,7 @@
 % Please edit documentation in R/spatialsign.R
 \name{step_spatialsign}
 \alias{step_spatialsign}
-\title{Spatial Sign Preprocessing}
+\title{Spatial sign preprocessing}
 \usage{
 step_spatialsign(
   recipe,
@@ -19,12 +19,12 @@ step_spatialsign(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used for the normalization. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{na_rm}{A logical: should missing data be removed from the
 norm computation?}
@@ -32,26 +32,25 @@ norm computation?}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{columns}{A character string of variable names that will
-be populated (eventually) by the \code{terms} argument.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_spatialsign} is a \emph{specification} of a recipe
-step that will convert numeric data into a projection on to a
-unit sphere.
+\code{step_spatialsign()} is a \emph{specification} of a recipe step that will convert
+numeric data into a projection on to a unit sphere.
 }
 \details{
 The spatial sign transformation projects the variables
@@ -61,19 +60,44 @@ normalization. The spatial sign of a vector \code{w} is
 
 The variables should be centered and scaled prior to the
 computations.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the columns
-that will be affected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, only frequency weights are allowed. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+
+Unlike most, this step requires the case weights to be available when new
+samples are processed (e.g., when \code{bake()} is used or \code{predict()} with a
+workflow). To tell recipes that the case weights are required at bake time,
+use
+\code{recipe \%>\% update_role_requirements(role = "case_weights", bake = TRUE)}.
+See \code{\link[=update_role_requirements]{update_role_requirements()}} for more information.
+}
+
 \examples{
-library(modeldata)
-data(biomass)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 ss_trans <- rec \%>\%
   step_center(carbon, hydrogen) \%>\%
@@ -90,6 +114,7 @@ plot(transformed_te$carbon, transformed_te$hydrogen)
 
 tidy(ss_trans, number = 3)
 tidy(ss_obj, number = 3)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Serneels, S., De Nolf, E., and Van Espen, P.
@@ -97,6 +122,22 @@ Serneels, S., De Nolf, E., and Van Espen, P.
 moderate robustness to multivariate estimators. \emph{Journal of
 Chemical Information and Modeling}, 46(3), 1402-1409.
 }
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\seealso{
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_classdist_shrunken}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_nnmf_sparse}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()}
+}
+\concept{multivariate transformation steps}

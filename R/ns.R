@@ -1,17 +1,10 @@
-#' Natural Spline Basis Functions
+#' Natural spline basis functions
 #'
-#' `step_ns` creates a *specification* of a recipe step
-#'  that will create new columns that are basis expansions of
-#'  variables using natural splines.
+#' `step_ns()` creates a *specification* of a recipe step that will create new
+#' columns that are basis expansions of variables using natural splines.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new columns created from the original variables will be
-#'  used as predictors in a model.
 #' @param deg_free The degrees of freedom for the natural spline. As the
 #'  degrees of freedom for a natural spline increase, more flexible and
 #'  complex curves can be generated. When a single degree of freedom is used,
@@ -20,32 +13,45 @@
 #'  created once the step has been trained.
 #' @param options A list of options for [splines::ns()]
 #'  which should not include `x` or `df`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept basis_expansion
+#' @template step-return
+#' @family individual transformation steps
 #' @export
 #' @details `step_ns` can create new features from a single variable
 #'  that enable fitting routines to model this variable in a
 #'  nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `df` or `knot` arguments of
+#'  determined by the `df` or `knots` arguments of
 #'  [splines::ns()]. The original variables are removed
 #'  from the data and new columns are added. The naming convention
 #'  for the new variables is `varname_ns_1` and so on.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#' # Tidying
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_ns"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' with_splines <- rec %>%
 #'   step_ns(carbon, hydrogen)
@@ -53,28 +59,29 @@
 #'
 #' expanded <- bake(with_splines, biomass_te)
 #' expanded
-#' @seealso [step_poly()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_ns <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           objects = NULL,
-           deg_free = 2,
-           options = list(),
-           skip = FALSE,
-           id = rand_id("ns")) {
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    objects = NULL,
+    deg_free = 2,
+    options = list(),
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("ns")
+  ) {
     add_step(
       recipe,
       step_ns_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         trained = trained,
         deg_free = deg_free,
         role = role,
         objects = objects,
         options = options,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -82,7 +89,17 @@ step_ns <-
   }
 
 step_ns_new <-
-  function(terms, role, trained, deg_free, objects, options, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    deg_free,
+    objects,
+    options,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "ns",
       terms = terms,
@@ -91,6 +108,7 @@ step_ns_new <-
       deg_free = deg_free,
       objects = objects,
       options = options,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
@@ -105,17 +123,26 @@ ns_statistics <- function(x, args) {
 
   # This behaves differently from splines::bs() and splines::ns() if num_knots < 0L
   # the original implementations issue a warning.
-  if (!is.null(args$df) && is.null(args$knots) && args$df - degree - intercept >= 1L) {
+  if (
+    !is.null(args$df) &&
+      is.null(args$knots) &&
+      args$df - degree - intercept >= 1L
+  ) {
     num_knots <- args$df - degree - intercept
     ok <- !is.na(x) & x >= boundary[1L] & x <= boundary[2L]
     knots <- unname(quantile(x[ok], seq_len(num_knots) / (num_knots + 1L)))
   } else {
-    knots <- numeric()
+    if (is.null(args$knots)) {
+      knots <- numeric()
+    } else {
+      knots <- args$knots
+    }
   }
 
   # Only construct the data necessary for splines_predict
   out <- matrix(NA, ncol = degree + length(knots) + intercept, nrow = 1L)
   class(out) <- c("ns", "basis", "matrix")
+  attr(out, "degree") <- 3L
   attr(out, "knots") <- knots
   attr(out, "Boundary.knots") <- boundary
   attr(out, "intercept") <- intercept
@@ -133,15 +160,15 @@ ns_predict <- function(object, x) {
 
 #' @export
 prep.step_ns <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer", "datetime"))
 
   opt <- x$options
   opt$df <- x$deg_free
   obj <- lapply(training[, col_names], ns_statistics, opt)
-  for (i in seq(along.with = col_names))
+  for (i in seq(along.with = col_names)) {
     attr(obj[[i]], "var") <- col_names[i]
+  }
   step_ns_new(
     terms = x$terms,
     role = x$role,
@@ -149,6 +176,7 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
     deg_free = x$deg_free,
     objects = obj,
     options = x$options,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
@@ -156,54 +184,42 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ns <- function(object, new_data, ...) {
-  ## pre-allocate a matrix for the basis functions.
-  new_cols <- vapply(object$objects, ncol, c(int = 1L))
-  ns_values <-
-    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
-  colnames(ns_values) <- rep("", sum(new_cols))
-  strt <- 1
-  for (i in names(object$objects)) {
-    cols <- (strt):(strt + new_cols[i] - 1)
-    orig_var <- attr(object$objects[[i]], "var")
-    ns_values[, cols] <-
-      ns_predict(object$objects[[i]], getElement(new_data, i))
-    new_names <-
-      paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
-    colnames(ns_values)[cols] <- new_names
-    strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
+  col_names <- names(object$objects)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_values <- bs_predict(object$objects[[col_name]], new_data[[col_name]])
+
+    new_names <- paste(col_name, "ns", names0(ncol(new_values), ""), sep = "_")
+    colnames(new_values) <- new_names
+
+    new_values <- check_name(new_values, new_data, object, new_names)
+    new_data <- vctrs::vec_cbind(new_data, new_values, .name_repair = "minimal")
   }
-  new_data <- bind_cols(new_data, as_tibble(ns_values))
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
+
+  new_data <- remove_original_cols(new_data, object, col_names)
   new_data
 }
 
-
+#' @export
 print.step_ns <-
   function(x, width = max(20, options()$width - 28), ...) {
-    cat("Natural Splines on ")
-    printer(names(x$objects), x$terms, x$trained, width = width)
+    title <- "Natural splines on "
+    print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_ns` object.
 #' @export
 tidy.step_ns <- function(x, ...) {
   if (is_trained(x)) {
-    cols <- tibble(terms = names(x$objects))
+    terms <- names(x$objects)
   } else {
-    cols <- sel2char(x$terms)
+    terms <- sel2char(x$terms)
   }
-  res <- expand.grid(terms = cols, stringsAsFactors = FALSE)
-  res$id <- x$id
-  as_tibble(res)
+  tibble(terms = terms, id = x$id)
 }
 
-
-
-#' @rdname tunable.step
 #' @export
 tunable.step_ns <- function(x, ...) {
   tibble::tibble(

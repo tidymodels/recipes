@@ -1,37 +1,22 @@
-#' Isomap Embedding
+#' Isomap embedding
 #'
-#' `step_isomap` creates a *specification* of a recipe
-#'  step that will convert numeric data into one or more new
-#'  dimensions.
+#' `step_isomap()` creates a *specification* of a recipe step that uses
+#' multidimensional scaling to convert numeric data into one or more new
+#' dimensions.
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be used to compute the dimensions. See
-#'  [selections()] for more details.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that the new dimension columns created by the original variables
-#'  will be used as predictors in a model.
 #' @param num_terms The number of isomap dimensions to retain as new
 #'  predictors. If `num_terms` is greater than the number of columns
 #'  or the number of possible dimensions, a smaller value will be
 #'  used.
 #' @param neighbors The number of neighbors.
-#' @param options A list of options to [dimRed::Isomap()].
-#' @param res The [dimRed::Isomap()] object is stored
+#' @param options A list of options to `dimRed::Isomap()``.
+#' @param res The `dimRed::Isomap()`` object is stored
 #'  here once this preprocessing step has be trained by
-#'  [prep.recipe()].
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. See notes below.
-#' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept isomap
-#' @concept projection_methods
+#'  [prep()].
+#' @template step-return
+#' @family multivariate transformation steps
 #' @export
 #' @details Isomap is a form of multidimensional scaling (MDS).
 #'  MDS methods try to find a reduced set of dimensions such that
@@ -58,8 +43,23 @@
 #'  `Isomap9`. If `num_terms = 101`, the names would be
 #'  `Isomap001` - `Isomap101`.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  selectors or variables selected) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`  , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_isomap"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
+#' @template case-weights-not-supported
 #'
 #' @references De Silva, V., and Tenenbaum, J. B. (2003). Global
 #'  versus local methods in nonlinear dimensionality reduction.
@@ -69,65 +69,62 @@
 #' \pkg{dimRed}, a framework for dimensionality reduction,
 #'   https://github.com/gdkrmr
 #'
-#' @examples
-#' \donttest{
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf FALSE
+#' data(biomass, package = "modeldata")
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' im_trans <- rec %>%
 #'   step_YeoJohnson(all_numeric_predictors()) %>%
 #'   step_normalize(all_numeric_predictors()) %>%
 #'   step_isomap(all_numeric_predictors(), neighbors = 100, num_terms = 2)
 #'
-#' if (require(dimRed) & require(RSpectra)) {
-#'   im_estimates <- prep(im_trans, training = biomass_tr)
+#' im_estimates <- prep(im_trans, training = biomass_tr)
 #'
-#'   im_te <- bake(im_estimates, biomass_te)
+#' im_te <- bake(im_estimates, biomass_te)
 #'
-#'   rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-#'   plot(im_te$Isomap1, im_te$Isomap2,
-#'        xlim = rng, ylim = rng)
+#' rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+#' plot(im_te$Isomap1, im_te$Isomap2,
+#'   xlim = rng, ylim = rng
+#' )
 #'
-#'   tidy(im_trans, number = 3)
-#'   tidy(im_estimates, number = 3)
-#' }
-#' }
-#' @seealso [step_pca()] [step_kpca()]
-#'   [step_ica()] [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
+#' tidy(im_trans, number = 3)
+#' tidy(im_estimates, number = 3)
 step_isomap <-
-  function(recipe,
-           ...,
-           role = "predictor",
-           trained = FALSE,
-           num_terms  = 5,
-           neighbors = 50,
-           options = list(.mute = c("message", "output")),
-           res = NULL,
-           prefix = "Isomap",
-           keep_original_cols = FALSE,
-           skip = FALSE,
-           id = rand_id("isomap")) {
-
+  function(
+    recipe,
+    ...,
+    role = "predictor",
+    trained = FALSE,
+    num_terms = 5,
+    neighbors = 50,
+    options = list(.mute = c("message", "output")),
+    res = NULL,
+    columns = NULL,
+    prefix = "Isomap",
+    keep_original_cols = FALSE,
+    skip = FALSE,
+    id = rand_id("isomap")
+  ) {
     recipes_pkg_check(required_pkgs.step_isomap())
 
     add_step(
       recipe,
       step_isomap_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         num_terms = num_terms,
         neighbors = neighbors,
         options = options,
         res = res,
+        columns = columns,
         prefix = prefix,
         keep_original_cols = keep_original_cols,
         skip = skip,
@@ -137,8 +134,20 @@ step_isomap <-
   }
 
 step_isomap_new <-
-  function(terms, role, trained, num_terms, neighbors, options, res,
-           prefix, keep_original_cols, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    num_terms,
+    neighbors,
+    options,
+    res,
+    columns,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "isomap",
       terms = terms,
@@ -148,6 +157,7 @@ step_isomap_new <-
       neighbors = neighbors,
       options = options,
       res = res,
+      columns = columns,
       prefix = prefix,
       keep_original_cols = keep_original_cols,
       skip = skip,
@@ -157,30 +167,37 @@ step_isomap_new <-
 
 #' @export
 prep.step_isomap <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
+  check_number_whole(x$neighbors, arg = "neighbors", min = 1)
+  check_string(x$prefix, arg = "prefix")
 
-  check_type(training[, col_names])
-
-  if (x$num_terms > 0) {
+  if (x$num_terms > 0 && length(col_names) > 0L) {
     x$num_terms <- min(x$num_terms, ncol(training))
     x$neighbors <- min(x$neighbors, nrow(training))
 
     iso_map <-
       try(
-        dimRed::embed(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
-          "Isomap",
+        eval_dimred_call(
+          "embed",
+          .data = dimred_data(training[, col_names, drop = FALSE]),
+          .method = "Isomap",
           knn = x$neighbors,
           ndim = x$num_terms,
           .mute = x$options$.mute
         ),
-        silent = TRUE)
+        silent = TRUE
+      )
     if (inherits(iso_map, "try-error")) {
-      rlang::abort(paste0("`step_isomap` failed with error:\n", as.character(iso_map)))
+      cli::cli_abort(
+        c(
+          x = "Failed with error:",
+          i = as.character(iso_map)
+        )
+      )
     }
-
   } else {
-    iso_map <- list(x_vars = col_names)
+    iso_map <- NULL
   }
 
   step_isomap_new(
@@ -191,6 +208,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     neighbors = x$neighbors,
     options = x$options,
     res = iso_map,
+    columns = col_names,
     prefix = x$prefix,
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
@@ -200,47 +218,42 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_isomap <- function(object, new_data, ...) {
-  if (object$num_terms > 0) {
-    isomap_vars <- colnames(environment(object$res@apply)$indata)
-    comps <-
-      object$res@apply(
-        dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
+  if (object$num_terms > 0 && length(col_names) > 0L) {
+    suppressMessages({
+      comps <- object$res@apply(
+        dimred_data(new_data[, col_names, drop = FALSE])
       )@data
-    comps <- comps[, 1:object$num_terms, drop = FALSE]
+    })
+    comps <- comps[, seq_len(object$num_terms), drop = FALSE]
+    comps <- as_tibble(comps)
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    keep_original_cols <- get_keep_original_cols(object)
-    if (!keep_original_cols) {
-      new_data <- new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
-    }
-    if (!is_tibble(new_data))
-      new_data <- as_tibble(new_data)
+    new_data <- vec_cbind(new_data, comps, .name_repair = "minimal")
+    new_data <- remove_original_cols(new_data, object, col_names)
   }
+
   new_data
 }
 
-
+#' @export
 print.step_isomap <- function(x, width = max(20, options()$width - 35), ...) {
   if (x$num_terms == 0) {
-    cat("Isomap was not conducted.\n")
+    title <- "Isomap was not conducted for "
   } else {
-    cat("Isomap approximation with ")
-    printer(colnames(x$res@org.data), x$terms, x$trained, width = width)
-  }
-    invisible(x)
+    title <- "Isomap approximation with "
   }
 
+  print_step(x$columns, x$terms, x$trained, title, width)
+  invisible(x)
+}
 
 #' @rdname tidy.recipe
-#' @param x A `step_isomap` object
 #' @export
 tidy.step_isomap <- function(x, ...) {
   if (is_trained(x)) {
-    if (x$num_terms > 0) {
-      res <- tibble(terms = colnames(x$res@org.data))
-    } else {
-      res <- tibble(terms = x$res$x_vars)
-    }
+    res <- tibble(terms = unname(x$columns))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
@@ -249,9 +262,6 @@ tidy.step_isomap <- function(x, ...) {
   res
 }
 
-
-
-#' @rdname tunable.step
 #' @export
 tunable.step_isomap <- function(x, ...) {
   tibble::tibble(
@@ -266,9 +276,8 @@ tunable.step_isomap <- function(x, ...) {
   )
 }
 
-#' @rdname required_pkgs.step
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_isomap <- function(x, ...) {
   c("dimRed", "RSpectra", "igraph", "RANN")
 }
-

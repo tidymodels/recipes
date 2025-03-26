@@ -1,39 +1,50 @@
-#' Zero Variance Filter
+#' Zero variance filter
 #'
-#' `step_zv` creates a *specification* of a recipe step
-#'  that will remove variables that contain only a single value.
+#' `step_zv()` creates a *specification* of a recipe step that will remove
+#' variables that contain only a single value.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be removed) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_filters
+#'  until [prep()] is called.
+#' @param group An optional character string or call to [dplyr::vars()]
+#'  that can be used to specify a group(s) within which to identify
+#'  variables that contain only a single value. If the grouping variables
+#'  are contained in terms selector, they will not be considered for
+#'  removal.
+#' @template step-return
+#' @template filter-steps
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, names of the columns that will be removed}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @family variable filter steps
 #' @export
 #'
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass$one_value <- 1
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
 #' rec <- recipe(HHV ~ carbon + hydrogen + oxygen +
-#'                     nitrogen + sulfur + one_value,
-#'               data = biomass_tr)
+#'   nitrogen + sulfur + one_value,
+#' data = biomass_tr
+#' )
 #'
 #' zv_filter <- rec %>%
 #'   step_zv(all_predictors())
@@ -45,24 +56,24 @@
 #'
 #' tidy(zv_filter, number = 1)
 #' tidy(filter_obj, number = 1)
-#' @seealso [step_nzv()] [step_corr()]
-#'   [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
 step_zv <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           removals = NULL,
-           skip = FALSE,
-           id = rand_id("zv")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    group = NULL,
+    removals = NULL,
+    skip = FALSE,
+    id = rand_id("zv")
+  ) {
     add_step(
       recipe,
       step_zv_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
+        group = group,
         removals = removals,
         skip = skip,
         id = id
@@ -71,12 +82,13 @@ step_zv <-
   }
 
 step_zv_new <-
-  function(terms, role, trained, removals, skip, id) {
+  function(terms, role, trained, group, removals, skip, id) {
     step(
       subclass = "zv",
       terms = terms,
       role = role,
       trained = trained,
+      group = group,
       removals = removals,
       skip = skip,
       id = id
@@ -85,18 +97,40 @@ step_zv_new <-
 
 one_unique <- function(x) {
   x <- x[!is.na(x)]
-  length(unique(x)) < 2
+  if (sparsevctrs::is_sparse_vector(x)) {
+    res <- length(unique(sparsevctrs::sparse_values(x))) == 0
+  } else {
+    res <- length(unique(x)) < 2
   }
+  res
+}
+
+group_one_unique <- function(x, f) {
+  x_split <- split(x, f)
+  any(vapply(x_split, one_unique, logical(1)))
+}
 
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  filter <- vapply(training[, col_names], one_unique, logical(1))
+  col_names <- recipes_eval_select(x$terms, training, info)
+  group_names <- recipes_eval_select(x$group, training, info)
+
+  if (is.null(x$group)) {
+    filter <- vapply(training[, col_names], one_unique, logical(1))
+  } else {
+    filter <- vapply(
+      training[, setdiff(col_names, group_names)],
+      group_one_unique,
+      f = interaction(training[group_names]),
+      logical(1)
+    )
+  }
 
   step_zv_new(
     terms = x$terms,
     role = x$role,
     trained = TRUE,
+    group = x$group,
     removals = names(filter)[filter],
     skip = x$skip,
     id = x$id
@@ -105,32 +139,27 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_zv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+  new_data <- recipes_remove_cols(new_data, object)
+  new_data
 }
 
+#' @export
 print.step_zv <-
   function(x, width = max(20, options()$width - 38), ...) {
     if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Zero variance filter removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else
-        cat("Zero variance filter removed no terms")
+      title <- "Zero variance filter removed "
     } else {
-      cat("Zero variance filter on ", sep = "")
-      cat(format_selectors(x$terms, width = width))
+      title <- "Zero variance filter on "
     }
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_zv` object.
 #' @export
 tidy.step_zv <- tidy_filter
+
+#' @export
+.recipes_preserve_sparsity.step_zv <- function(x, ...) {
+  TRUE
+}

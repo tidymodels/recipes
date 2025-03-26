@@ -1,37 +1,40 @@
-#' Convert Ordered Factors to Unordered Factors
+#' Convert ordered factors to unordered factors
 #'
-#' `step_unorder` creates a *specification* of a recipe
-#'  step that will transform the data.
+#' `step_unorder()` creates a *specification* of a recipe step that will turn
+#' ordered factor variables into unordered factor variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept ordinal_data
+#' @inheritParams step_pca
+#' @template step-return
+#' @family dummy variable and encoding steps
 #' @export
 #' @details The factors level order is preserved during the transformation.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be affected) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
 #'
 #' @examples
 #' lmh <- c("Low", "Med", "High")
 #'
-#' examples <- data.frame(X1 = factor(rep(letters[1:4], each = 3)),
-#'                        X2 = ordered(rep(lmh, each = 4),
-#'                                     levels = lmh))
+#' examples <- data.frame(
+#'   X1 = factor(rep(letters[1:4], each = 3)),
+#'   X2 = ordered(rep(lmh, each = 4),
+#'     levels = lmh
+#'   )
+#' )
 #'
 #' rec <- recipe(~ X1 + X2, data = examples)
 #'
-#' factor_trans <- rec  %>%
+#' factor_trans <- rec %>%
 #'   step_unorder(all_nominal_predictors())
 #'
 #' factor_obj <- prep(factor_trans, training = examples)
@@ -41,26 +44,27 @@
 #'
 #' tidy(factor_trans, number = 1)
 #' tidy(factor_obj, number = 1)
-#' @seealso [step_ordinalscore()] [recipe()]
-#' [prep.recipe()] [bake.recipe()]
-
 step_unorder <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("unorder")) {
-    add_step(recipe,
-             step_unorder_new(
-               terms = ellipse_check(...),
-               role = role,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("unorder")
+  ) {
+    add_step(
+      recipe,
+      step_unorder_new(
+        terms = enquos(...),
+        role = role,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_unorder_new <-
@@ -78,26 +82,8 @@ step_unorder_new <-
 
 #' @export
 prep.step_unorder <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  order_check <- vapply(training[, col_names],
-                        is.ordered,
-                        logical(1L))
-  if(all(!order_check)) {
-    rlang::abort("`step_unorder` required ordered factors.")
-  } else {
-    if(any(!order_check)) {
-      bad_cols <- names(order_check)[!order_check]
-      bad_cols <- paste0(bad_cols, collapse = ", ")
-      rlang::warn(
-        paste0(
-          "`step_unorder` requires ordered factors. Variables ",
-          bad_cols,
-          " will be ignored."
-        )
-      )
-      col_names <- names(order_check)[order_check]
-    }
-  }
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("string", "factor", "ordered"))
 
   step_unorder_new(
     terms = x$terms,
@@ -111,24 +97,28 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unorder <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      factor(as.character(getElement(new_data, object$columns[i])),
-             levels = levels(getElement(new_data, object$columns[i])))
-  as_tibble(new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <-
+      factor(
+        x = as.character(new_data[[col_name]]),
+        levels = levels(new_data[[col_name]])
+      )
+  }
+  new_data
 }
 
-
+#' @export
 print.step_unorder <-
   function(x, width = max(20, options()$width - 33), ...) {
-    cat("Unordered variables ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Unordered variables "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_unorder` object.
 #' @export
 tidy.step_unorder <- function(x, ...) {
   res <- simple_terms(x, ...)

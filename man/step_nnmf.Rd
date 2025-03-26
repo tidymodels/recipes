@@ -2,7 +2,7 @@
 % Please edit documentation in R/nnmf.R
 \name{step_nnmf}
 \alias{step_nnmf}
-\title{NNMF Signal Extraction}
+\title{Non-negative matrix factorization signal extraction}
 \usage{
 step_nnmf(
   recipe,
@@ -13,6 +13,7 @@ step_nnmf(
   num_run = 30,
   options = list(),
   res = NULL,
+  columns = NULL,
   prefix = "NNMF",
   seed = sample.int(10^5, 1),
   keep_original_cols = FALSE,
@@ -24,22 +25,21 @@ step_nnmf(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to compute the components. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new component columns created by the
-original variables will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{num_comp}{The number of components to retain as new
-predictors. If \code{num_comp} is greater than the number of columns
-or the number of possible components, a smaller value will be
-used.}
+\item{num_comp}{The number of components to retain as new predictors.
+If \code{num_comp} is greater than the number of columns or the number of
+possible components, a smaller value will be used. If \code{num_comp = 0}
+is set then no transformation is done and selected variables will
+stay unchanged, regardless of the value of \code{keep_original_cols}.}
 
 \item{num_run}{A positive integer for the number of computations runs used
 to obtain a consensus projection.}
@@ -51,7 +51,10 @@ processing is turned off in favor of resample-level parallelization.}
 
 \item{res}{The \code{NNMF()} object is stored
 here once this preprocessing step has been trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
+
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{prefix}{A character string that will be the prefix to the
 resulting new variables. See notes below.}
@@ -63,44 +66,67 @@ when computing the factorization.}
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_nnmf} creates a \emph{specification} of a recipe step
-that will convert numeric data into one or more non-negative
-components.
+\code{step_nnmf()} creates a \emph{specification} of a recipe step that will convert
+numeric data into one or more non-negative components.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Please use \code{\link[=step_nnmf_sparse]{step_nnmf_sparse()}} instead of this step function.
 }
 \details{
 Non-negative matrix factorization computes latent components that
 have non-negative values and take into account that the original data
 have non-negative values.
 
-The argument \code{num_comp} controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with \code{prefix} and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if \code{num < 10}, their names will be \code{NNMF1} - \code{NNMF9}.
-If \code{num = 101}, the names would be \code{NNMF001} -
-\code{NNMF101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) and the number of components is returned.
+The argument \code{num_comp} controls the number of components that will be retained
+(the original variables that are used to derive the components are removed from
+the data). The new components will have names that begin with \code{prefix} and a
+sequence of numbers. The variable names are padded with zeros. For example, if
+\code{num_comp < 10}, their names will be \code{NNMF1} - \code{NNMF9}. If \code{num_comp = 101},
+the names would be \code{NNMF1} - \code{NNMF101}.
 }
-\examples{
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{component} , and \code{id}:
 
-library(modeldata)
-data(biomass)
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, value of loading}
+\item{component}{character, name of component}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_comp}: # Components (type: integer, default: 2)
+\item \code{num_run}: Number of Computation Runs (type: integer, default: 30)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
+\examples{
+\dontshow{if (rlang::is_installed(c("modeldata", "ggplot2"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 # rec <- recipe(HHV ~ ., data = biomass) \%>\%
 #   update_role(sample, new_role = "id var") \%>\%
@@ -113,14 +139,24 @@ data(biomass)
 # library(ggplot2)
 # bake(rec, new_data = NULL) \%>\%
 #  ggplot(aes(x = NNMF2, y = NNMF1, col = HHV)) + geom_point()
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}}, \code{\link[=step_ica]{step_ica()}}, \code{\link[=step_kpca]{step_kpca()}},
-\code{\link[=step_isomap]{step_isomap()}}, \code{\link[=recipe]{recipe()}}, \code{\link[=prep.recipe]{prep.recipe()}},
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_classdist_shrunken}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf_sparse}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
-\concept{nnmf}
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\concept{multivariate transformation steps}

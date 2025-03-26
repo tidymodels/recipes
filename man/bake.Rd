@@ -3,54 +3,56 @@
 \name{bake}
 \alias{bake}
 \alias{bake.recipe}
-\title{Apply a Trained Data Recipe}
+\title{Apply a trained preprocessing recipe}
 \usage{
 bake(object, ...)
 
 \method{bake}{recipe}(object, new_data, ..., composition = "tibble")
 }
 \arguments{
-\item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least
-one preprocessing operation.}
+\item{object}{A trained object such as a \code{\link[=recipe]{recipe()}} with at least one
+preprocessing operation.}
 
 \item{...}{One or more selector functions to choose which variables will be
-returned by the function. See \code{\link[=selections]{selections()}} for more details.
-If no selectors are given, the default is to use
-\code{\link[=everything]{everything()}}.}
+returned by the function. See \code{\link[=selections]{selections()}} for more details. If no
+selectors are given, the default is to use \code{\link[dplyr:reexports]{dplyr::everything()}}.}
 
-\item{new_data}{A data frame or tibble for whom the preprocessing will be
-applied. If \code{NULL} is given to \code{new_data}, the pre-processed \emph{training
-data} will be returned (assuming that \code{prep(retain = TRUE)} was used).}
+\item{new_data}{A data frame, tibble, or sparse matrix from the \code{Matrix}
+package for whom the preprocessing will be applied. If \code{NULL} is given to
+\code{new_data}, the pre-processed \emph{training data} will be returned (assuming
+that \code{prep(retain = TRUE)} was used). See \link{sparse_data} for more
+information about use of sparse data.}
 
-\item{composition}{Either "tibble", "matrix", "data.frame", or
-"dgCMatrix" for the format of the processed data set. Note that
-all computations during the baking process are done in a
-non-sparse format. Also, note that this argument should be
-called \strong{after} any selectors and the selectors should only
-resolve to numeric columns (otherwise an error is thrown).}
+\item{composition}{Either \code{"tibble"}, \code{"matrix"}, \code{"data.frame"}, or
+`"dgCMatrix"``for the format of the processed data set. Note that all
+computations during the baking process are done in a non-sparse format.
+Also, note that this argument should be called \strong{after} any selectors and
+the selectors should only resolve to numeric columns (otherwise an error is
+thrown).}
 }
 \value{
-A tibble, matrix, or sparse matrix that may have different
-columns than the original columns in \code{new_data}.
+A tibble, matrix, or sparse matrix that may have different columns than the
+original columns in \code{new_data}.
 }
 \description{
-For a recipe with at least one preprocessing operation that has been trained by
-\code{\link[=prep.recipe]{prep.recipe()}}, apply the computations to new data.
+For a recipe with at least one preprocessing operation that has been trained
+by \code{\link[=prep]{prep()}}, apply the computations to new data.
 }
 \details{
-\code{\link[=bake]{bake()}} takes a trained recipe and applies the
-operations to a data set to create a design matrix.
+\code{\link[=bake]{bake()}} takes a trained recipe and applies its operations to a data set to
+create a design matrix. If you are using a recipe as a preprocessor for
+modeling, we \strong{highly recommend} that you use a \code{workflow()} instead of
+manually applying a recipe (see the example in \code{\link[=recipe]{recipe()}}).
 
-If the data set is not too large, time can be saved by using the
-\code{retain = TRUE} option of \code{\link[=prep]{prep()}}. This stores the processed version of the
-training set. With this option set, \code{bake(object, new_data = NULL)}
-will return it for free.
+If the data set is not too large, time can be saved by using the \code{retain = TRUE} option of \code{\link[=prep]{prep()}}. This stores the processed version of the training
+set. With this option set, \code{bake(object, new_data = NULL)} will return it for
+free.
 
-Also, any steps with \code{skip = TRUE} will not be applied to the
-data when \code{bake()} is invoked with a data set in \code{new_data}.
-\code{bake(object, new_data = NULL)} will always have all of the steps applied.
+Also, any steps with \code{skip = TRUE} will not be applied to the data when
+\code{\link[=bake]{bake()}} is invoked with a data set in \code{new_data}. \code{bake(object, new_data = NULL)} will always have all of the steps applied.
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(ames, package = "modeldata")
 
 ames <- mutate(ames, Sale_Price = log10(Sale_Price))
@@ -65,17 +67,16 @@ ames_rec <-
   prep()
 
 # return the training set (already embedded in ames_rec)
-ames_train <- bake(ames_rec, new_data = NULL)
+bake(ames_rec, new_data = NULL)
 
 # apply processing to other data:
-ames_new <- bake(ames_rec, new_data = head(ames))
+bake(ames_rec, new_data = head(ames))
+
+# only return selected variables:
+bake(ames_rec, new_data = head(ames), all_numeric_predictors())
+bake(ames_rec, new_data = head(ames), starts_with(c("Longitude", "Latitude")))
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=recipe]{recipe()}}, \code{\link[=prep]{prep()}}
+\code{\link[=recipe]{recipe()}} and \code{\link[=prep]{prep()}}
 }
-\author{
-Max Kuhn
-}
-\concept{model_specification}
-\concept{preprocessing}
-\keyword{datagen}

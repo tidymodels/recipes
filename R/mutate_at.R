@@ -1,34 +1,43 @@
 #' Mutate multiple columns using dplyr
 #'
-#' `step_mutate_at` creates a *specification* of a recipe step that will modify
-#' the selected variables using a common function via [dplyr::mutate_at()].
+#' `step_mutate_at()` creates a *specification* of a recipe step that will
+#' modify the selected variables using a common function via
+#' [dplyr::mutate_at()].
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param fn A function fun, a quosure style lambda `~ fun(.)`` or a list of
 #' either form. (see [dplyr::mutate_at()]). **Note that this argument must be
 #' named**.
-#' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the function assumes that the new dimension
-#'  columns created by the original variables will be used as predictors in a
-#'  model.
-#' @param inputs A vector of column names populated by `prep()`.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with
-#'  column `terms` which contains the columns being transformed is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @param inputs A vector of column names populated by [prep()].
+#' @template step-return
+#' @template mutate-leakage
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @family multivariate transformation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' library(dplyr)
-#' recipe(~ ., data = iris) %>%
-#'   step_mutate_at(contains("Length"), fn = ~ 1/.) %>%
+#' recipe(~., data = iris) %>%
+#'   step_mutate_at(contains("Length"), fn = ~ 1 / .) %>%
 #'   prep() %>%
 #'   bake(new_data = NULL) %>%
 #'   slice(1:10)
 #'
-#' recipe(~ ., data = iris) %>%
+#' recipe(~., data = iris) %>%
 #'   # leads to more columns being created.
 #'   step_mutate_at(contains("Length"), fn = list(log = log, sqrt = sqrt)) %>%
 #'   prep() %>%
@@ -36,7 +45,8 @@
 #'   slice(1:10)
 #' @export
 step_mutate_at <- function(
-  recipe, ...,
+  recipe,
+  ...,
   fn,
   role = "predictor",
   trained = FALSE,
@@ -44,11 +54,14 @@ step_mutate_at <- function(
   skip = FALSE,
   id = rand_id("mutate_at")
 ) {
+  if (rlang::is_missing(fn)) {
+    cli::cli_abort("Argument {.arg fn} must be specified.")
+  }
 
   add_step(
     recipe,
     step_mutate_at_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       fn = fn,
       trained = trained,
       role = role,
@@ -75,7 +88,7 @@ step_mutate_at_new <-
 
 #' @export
 prep.step_mutate_at <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   step_mutate_at_new(
     terms = x$terms,
@@ -93,11 +106,11 @@ bake.step_mutate_at <- function(object, new_data, ...) {
   dplyr::mutate_at(new_data, .vars = object$inputs, .funs = object$fn)
 }
 
-
+#' @export
 print.step_mutate_at <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ", sep = "")
-    printer(x$inputs, x$terms, x$trained, width = width)
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$terms, x$trained, title, width)
     invisible(x)
   }
 
@@ -105,7 +118,7 @@ print.step_mutate_at <-
 #' @export
 tidy.step_mutate_at <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$inputs)
+    res <- tibble(terms = unname(x$inputs))
   } else {
     term_names <- sel2char(x$terms)
     res <- tibble(terms = term_names)
@@ -113,4 +126,3 @@ tidy.step_mutate_at <- function(x, ...) {
   res$id <- x$id
   res
 }
-

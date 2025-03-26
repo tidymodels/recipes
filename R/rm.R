@@ -1,33 +1,40 @@
-#' General Variable Filter
+#' General variable filter
 #'
-#' `step_rm` creates a *specification* of a recipe step
-#'  that will remove variables based on their name, type, or role.
+#' `step_rm()` creates a *specification* of a recipe step that will remove
+#' selected variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables that will be evaluated by the filtering bake. See
-#'  [selections()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param removals A character string that contains the names of
 #'  columns that should be removed. These values are not determined
-#'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#'  columns that will be removed) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_filters
+#'  until [prep()] is called.
+#' @template step-return
+#' @template filter-steps
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @family variable filter steps
 #' @export
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
 #'   data = biomass_tr
 #' )
 #'
@@ -41,17 +48,19 @@
 #' filtered_te
 #'
 #' tidy(smaller_set, number = 1)
-step_rm <- function(recipe,
-                    ...,
-                    role = NA,
-                    trained = FALSE,
-                    removals = NULL,
-                    skip = FALSE,
-                    id = rand_id("rm")) {
+step_rm <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  removals = NULL,
+  skip = FALSE,
+  id = rand_id("rm")
+) {
   add_step(
     recipe,
     step_rm_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       removals = removals,
@@ -75,7 +84,7 @@ step_rm_new <- function(terms, role, trained, removals, skip, id) {
 
 #' @export
 prep.step_rm <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   step_rm_new(
     terms = x$terms,
@@ -89,35 +98,23 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_rm <- function(object, new_data, ...) {
-  if (length(object$removals) > 0) {
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  }
-  as_tibble(new_data)
+  new_data <- recipes_remove_cols(new_data, object)
+  new_data
 }
 
+#' @export
 print.step_rm <-
   function(x, width = max(20, options()$width - 22), ...) {
-    if (x$trained) {
-      if (length(x$removals) > 0) {
-        cat("Variables removed ")
-        cat(format_ch_vec(x$removals, width = width))
-      } else {
-        cat("No variables were removed")
-      }
-    } else {
-      cat("Delete terms ", sep = "")
-      cat(format_selectors(x$terms, width = width))
-    }
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variables removed "
+    print_step(x$removals, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `step_rm` object.
 #' @export
 tidy.step_rm <- tidy_filter
+
+#' @export
+.recipes_preserve_sparsity.step_rm <- function(x, ...) {
+  TRUE
+}

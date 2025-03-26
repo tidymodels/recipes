@@ -1,29 +1,35 @@
 #' Select variables using dplyr
 #'
-#' `step_select()` creates a *specification* of a recipe step
-#'  that will select variables using [dplyr::select()].
+#' `step_select()` creates a *specification* of a recipe step that will select
+#' variables using [dplyr::select()].
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables will be selected when baking. See
-#'  [selections()] for more details.
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#' When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the `select` expressions as character strings
-#'  (and are not reparsable) is returned.
+#' # Tidying
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept variable_filters
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @family variable filter steps
+#' @family dplyr steps
+#' @template filter-steps
 #' @export
 #' @examples
 #' library(dplyr)
@@ -57,16 +63,18 @@
 #'
 #' # Note that `sepal_vars` is inlined in the second approach
 #' qq_rec
-step_select <- function(recipe,
-                        ...,
-                        role = NA,
-                        trained = FALSE,
-                        skip = FALSE,
-                        id = rand_id("select")) {
+step_select <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  skip = FALSE,
+  id = rand_id("select")
+) {
   add_step(
     recipe,
     step_select_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       trained = trained,
       role = role,
       skip = skip,
@@ -75,19 +83,19 @@ step_select <- function(recipe,
   )
 }
 step_select_new <- function(terms, role, trained, skip, id) {
-    step(
-      subclass = "select",
-      terms = terms,
-      role = role,
-      trained = trained,
-      skip = skip,
-      id = id
-    )
-  }
+  step(
+    subclass = "select",
+    terms = terms,
+    role = role,
+    trained = trained,
+    skip = skip,
+    id = id
+  )
+}
 
 #' @export
 prep.step_select <- function(x, training, info = NULL, ...) {
-  terms <- eval_select_recipes(x$terms, training, info, allow_rename = TRUE)
+  terms <- recipes_eval_select(x$terms, training, info, allow_rename = TRUE)
 
   step_select_new(
     terms = terms,
@@ -100,33 +108,20 @@ prep.step_select <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_select <- function(object, new_data, ...) {
+  check_new_data(object$terms, object, new_data)
+
   dplyr::select(new_data, dplyr::all_of(object$terms))
 }
 
-
+#' @export
 print.step_select <-
   function(x, width = max(20, options()$width - 35), ...) {
-    if (x$trained) {
-      cat(
-        "Variables selected ",
-        paste0(names(x$terms), collapse = ", ")
-      )
-    } else {
-      cat(
-        "Terms selected ",
-        paste0(x$terms, collapse = ", ")
-      )
-    }
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variables selected "
+    print_step(names(x$terms), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_select` object
 #' @export
 tidy.step_select <- function(x, ...) {
   if (is_trained(x)) {
@@ -134,8 +129,13 @@ tidy.step_select <- function(x, ...) {
   } else {
     var_expr <- map(x$terms, quo_get_expr)
     var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
-    res <- tibble(terms = var_expr)
+    res <- tibble(terms = unname(var_expr))
   }
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_select <- function(x, ...) {
+  TRUE
 }

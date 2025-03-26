@@ -1,33 +1,19 @@
-#' Imputation via K-Nearest Neighbors
+#' Impute via k-nearest neighbors
 #'
-#' `step_impute_knn` creates a *specification* of a recipe step that will
-#'  impute missing data using nearest neighbors.
+#' `step_impute_knn()` creates a *specification* of a recipe step that will
+#' impute missing data using nearest neighbors.
 #'
+#' @inheritParams step_impute_bag
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose variables. For
-#'  `step_impute_knn`, this indicates the variables to be imputed. When used
-#'  with `imp_vars`, the dots indicate which variables are used to predict the
-#'  missing data in each variable. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param impute_with A call to `imp_vars` to specify which variables are used
-#'  to impute the variables that can include specific variable names separated
-#'  by commas or different selectors (see [selections()]). If a column is
-#'  included in both lists to be imputed and to be an imputation predictor, it
-#'  will be removed from the latter and not used to impute itself.
+#' @inheritParams step_pca
 #' @param neighbors The number of neighbors.
 #' @param options A named list of options to pass to [gower::gower_topn()].
 #'  Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
 #'  done up to the point of this imputation step. This is `NULL` until the step
-#'  is trained by [prep.recipe()].
-#' @param columns The column names that will be imputed and used for
-#'  imputation. This is `NULL` until the step is trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#'  is trained by [prep()].
+#' @template step-return
+#' @family imputation steps
 #' @export
 #' @details The step uses the training set to impute any other data sets. The
 #'  only distance function available is Gower's distance which can be used for
@@ -43,19 +29,34 @@
 #' It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables for imputation), `predictors`
-#'  (those variables used to impute), and `neighbors` is returned.
-#'
 #' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
 #'    to `step_impute_knn()`.
 #'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `predictors`, `neighbors` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{predictors}{character, selected predictors used to impute}
+#'   \item{neighbors}{integer, number of neighbors}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_knn"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
+#' @template case-weights-not-supported
+#'
 #' @references Gower, C. (1971) "A general coefficient of similarity and some
 #'  of its properties," Biometrics, 857-871.
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' biomass_tr <- biomass[biomass$dataset == "Training", ]
 #' biomass_te <- biomass[biomass$dataset == "Testing", ]
@@ -69,8 +70,10 @@
 #' biomass_te$carbon[carb_missing] <- NA
 #' biomass_te$nitrogen[nitro_missing] <- NA
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
 #'
 #' ratio_recipe <- rec %>%
 #'   step_impute_knn(all_predictors(), neighbors = 3)
@@ -79,38 +82,46 @@
 #'
 #' # how well did it work?
 #' summary(biomass_te_whole$carbon)
-#' cbind(before = biomass_te_whole$carbon[carb_missing],
-#'       after = imputed$carbon[carb_missing])
+#' cbind(
+#'   before = biomass_te_whole$carbon[carb_missing],
+#'   after = imputed$carbon[carb_missing]
+#' )
 #'
 #' summary(biomass_te_whole$nitrogen)
-#' cbind(before = biomass_te_whole$nitrogen[nitro_missing],
-#'       after = imputed$nitrogen[nitro_missing])
+#' cbind(
+#'   before = biomass_te_whole$nitrogen[nitro_missing],
+#'   after = imputed$nitrogen[nitro_missing]
+#' )
 #'
 #' tidy(ratio_recipe, number = 1)
 #' tidy(ratio_recipe2, number = 1)
-
 step_impute_knn <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           neighbors = 5,
-           impute_with = imp_vars(all_predictors()),
-           options = list(nthread = 1, eps = 1e-08),
-           ref_data = NULL,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("impute_knn")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    neighbors = 5,
+    impute_with = imp_vars(all_predictors()),
+    options = list(nthread = 1, eps = 1e-08),
+    ref_data = NULL,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("impute_knn")
+  ) {
     if (is.null(impute_with)) {
-      rlang::abort("Please list some variables in `impute_with`")
+      cli::cli_abort("{.arg impute_with} must not be empty.")
     }
 
-    if (!is.list(options))
-      rlang::abort("`options` should be a named list.")
+    if (!is.list(options)) {
+      cli::cli_abort("{.arg options} should be a named list.")
+    }
     opt_nms <- names(options)
     if (length(options) > 0) {
       if (any(!(opt_nms %in% c("eps", "nthread")))) {
-        rlang::abort("Availible options are 'eps', and 'nthread'.")
+        cli::cli_abort(
+          "Valid values for {.arg options} are {.val eps} and {.val nthread}."
+        )
       }
       if (all(opt_nms != "nthread")) {
         options$nthread <- 1
@@ -125,7 +136,7 @@ step_impute_knn <-
     add_step(
       recipe,
       step_impute_knn_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         neighbors = neighbors,
@@ -139,44 +150,19 @@ step_impute_knn <-
     )
   }
 
-#' @rdname step_impute_knn
-#' @export
-#' @keywords internal
-step_knnimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           neighbors = 5,
-           impute_with = imp_vars(all_predictors()),
-           options = list(nthread = 1, eps = 1e-08),
-           ref_data = NULL,
-           columns = NULL,
-           skip = FALSE,
-           id = rand_id("impute_knn")) {
-    lifecycle::deprecate_soft(
-      when = "0.1.16",
-      what = "recipes::step_knnimpute()",
-      with = "recipes::step_impute_knn()"
-    )
-    step_impute_knn(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      neighbors = neighbors,
-      impute_with = impute_with,
-      options = options,
-      ref_data = ref_data,
-      columns = columns,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_knn_new <-
-  function(terms, role, trained, neighbors, impute_with, ref_data, options,
-           columns, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    neighbors,
+    impute_with,
+    ref_data,
+    options,
+    columns,
+    skip,
+    id
+  ) {
     step(
       subclass = "impute_knn",
       terms = terms,
@@ -194,6 +180,7 @@ step_impute_knn_new <-
 
 #' @export
 prep.step_impute_knn <- function(x, training, info = NULL, ...) {
+  check_number_whole(x$neighbors, arg = "neighbors", min = 1)
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -218,10 +205,6 @@ prep.step_impute_knn <- function(x, training, info = NULL, ...) {
   )
 }
 
-#' @export
-#' @keywords internal
-prep.step_knnimpute <- prep.step_impute_knn
-
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
     ref_data[, vars],
@@ -234,105 +217,108 @@ nn_index <- function(miss_data, ref_data, vars, K, opt) {
 
 nn_pred <- function(index, dat) {
   dat <- dat[index, ]
-  dat <- getElement(dat, names(dat))
+  dat <- dat[[names(dat)]]
   dat <- dat[!is.na(dat)]
-  est <- if (is.factor(dat) | is.character(dat))
+  est <- if (is.factor(dat) | is.character(dat)) {
     mode_est(dat)
-  else
+  } else {
     mean(dat)
+  }
   est
 }
 
-
 #' @export
 bake.step_impute_knn <- function(object, new_data, ...) {
-  missing_rows <- !complete.cases(new_data)
-  if (!any(missing_rows))
+  col_names <- purrr::map_chr(object$columns, "y")
+  all_cols <- unique(unlist(object$columns, recursive = TRUE))
+  check_new_data(all_cols, object, new_data)
+
+  missing_rows <- !vec_detect_complete(new_data)
+  if (!any(missing_rows)) {
     return(new_data)
+  }
+
+  names(object$columns) <- col_names
 
   old_data <- new_data
-  for (i in seq(along.with = object$columns)) {
-    imp_var <- object$columns[[i]]$y
-    missing_rows <- !complete.cases(new_data[, imp_var])
-    if (any(missing_rows)) {
-      preds <- object$columns[[i]]$x
-      imp_data <- old_data[missing_rows, preds, drop = FALSE]
-      ## do a better job of checking this:
-      if (all(is.na(imp_data))) {
-        rlang::warn("All predictors are missing; cannot impute")
-      } else {
-        imp_var_complete <- !is.na(object$ref_data[[imp_var]])
-        nn_ind <- nn_index(object$ref_data[imp_var_complete,],
-                           imp_data, preds,
-                           object$neighbors,
-                           object$options)
-        pred_vals <-
-          apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
-        pred_vals <- cast(pred_vals, object$ref_data[[imp_var]])
-        new_data[missing_rows, imp_var] <- pred_vals
-      }
+  for (col_name in col_names) {
+    missing_rows <- !vec_detect_complete(new_data[, col_name])
+    if (!any(missing_rows)) {
+      next
+    }
+    preds <- object$columns[[col_name]]$x
+    imp_data <- old_data[missing_rows, preds, drop = FALSE]
+    ## do a better job of checking this:
+    if (all(is.na(imp_data))) {
+      cli::cli_warn("All predictors are missing; cannot impute.")
+    } else {
+      imp_var_complete <- !is.na(object$ref_data[[col_name]])
+      nn_ind <- nn_index(
+        object$ref_data[imp_var_complete, ],
+        imp_data,
+        preds,
+        object$neighbors,
+        object$options
+      )
+      pred_vals <-
+        apply(
+          nn_ind,
+          2,
+          nn_pred,
+          dat = object$ref_data[imp_var_complete, col_name]
+        )
+      pred_vals <- cast(pred_vals, object$ref_data[[col_name]])
+      new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
+      new_data[missing_rows, col_name] <- pred_vals
     }
   }
   new_data
 }
 
 #' @export
-#' @keywords internal
-bake.step_knnimpute <- bake.step_impute_knn
-
-#' @export
 print.step_impute_knn <-
   function(x, width = max(20, options()$width - 31), ...) {
-    all_x_vars <- lapply(x$columns, function(x) x$x)
-    all_x_vars <- unique(unlist(all_x_vars))
-    cat("K-nearest neighbor imputation for ", sep = "")
-    printer(all_x_vars, x$terms, x$trained, width = width)
+    all_y_vars <- lapply(x$columns, function(x) x$y)
+    all_y_vars <- unique(unlist(all_y_vars))
+    title <- "K-nearest neighbor imputation for "
+    print_step(all_y_vars, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-#' @export
-#' @keywords internal
-print.step_knnimpute <- print.step_impute_knn
-
 #' @rdname tidy.recipe
-#' @param x A `step_impute_knn` object.
 #' @export
 tidy.step_impute_knn <- function(x, ...) {
   if (is_trained(x)) {
-    res <- purrr::map_df(x$columns,
-                         function(x)
-                           data.frame(
-                             terms = x$y,
-                             predictors = x$x,
-                             stringsAsFactors = FALSE
-                           )
+    terms <- purrr::map(x$columns, function(x) unname(x$y))
+    predictors <- purrr::map(x$columns, function(x) unname(x$x))
+    res <- tibble(terms = terms, predictors = predictors)
+    res <- tidyr::unchop(
+      data = res,
+      cols = tidyselect::all_of(c("terms", "predictors")),
+      ptype = list(terms = character(), predictors = character())
     )
-    res <- as_tibble(res)
     res$neighbors <- rep(x$neighbors, nrow(res))
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, predictors = na_chr, neighbors = x$neighbors)
+    res <- tibble(
+      terms = term_names,
+      predictors = na_chr,
+      neighbors = x$neighbors
+    )
   }
   res$id <- x$id
   res
 }
 
 #' @export
-#' @keywords internal
-tidy.step_knnimpute <- tidy.step_impute_knn
-
-#' @rdname tunable.step
-#' @export
 tunable.step_impute_knn <- function(x, ...) {
   tibble::tibble(
     name = "neighbors",
-    call_info = list(list(pkg = "dials", fun = "neighbors", range = c(1L, 10L))),
+    call_info = list(
+      list(pkg = "dials", fun = "neighbors", range = c(1L, 10L))
+    ),
     source = "recipe",
     component = "step_impute_knn",
     component_id = x$id
   )
 }
-
-#' @export
-#' @keywords internal
-tunable.step_knnimpute <- tunable.step_impute_knn

@@ -2,7 +2,7 @@
 % Please edit documentation in R/YeoJohnson.R
 \name{step_YeoJohnson}
 \alias{step_YeoJohnson}
-\title{Yeo-Johnson Transformation}
+\title{Yeo-Johnson transformation}
 \usage{
 step_YeoJohnson(
   recipe,
@@ -21,9 +21,8 @@ step_YeoJohnson(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -32,7 +31,7 @@ created.}
 preprocessing have been estimated.}
 
 \item{lambdas}{A numeric vector of transformation values. This
-is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{limits}{A length 2 numeric vector defining the range to
 compute the transformation parameter lambda.}
@@ -44,22 +43,21 @@ values will not be evaluated for a transformation.}
 values should be removed during computations.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_YeoJohnson} creates a \emph{specification} of a
-recipe step that will transform data using a simple Yeo-Johnson
-transformation.
+\code{step_YeoJohnson()} creates a \emph{specification} of a recipe step that will
+transform data using a Yeo-Johnson transformation.
 }
 \details{
 The Yeo-Johnson transformation is very similar to the
@@ -78,23 +76,37 @@ variable distributions more symmetric.
 If the transformation parameters are estimated to be very
 closed to the bounds, or if the optimization fails, a value of
 \code{NA} is used and no transformation is applied.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the
-lambda estimate) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the lambda estimate}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-library(modeldata)
-data(biomass)
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
-
-yj_transform <- step_YeoJohnson(rec,  all_numeric())
+yj_transform <- step_YeoJohnson(rec, all_numeric())
 
 yj_estimates <- prep(yj_transform, training = biomass_tr)
 
@@ -105,15 +117,27 @@ plot(density(yj_te$sulfur), main = "after")
 
 tidy(yj_transform, number = 1)
 tidy(yj_estimates, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \references{
 Yeo, I. K., and Johnson, R. A. (2000). A new family of power
 transformations to improve normality or symmetry. \emph{Biometrika}.
 }
 \seealso{
-\code{\link[=step_BoxCox]{step_BoxCox()}} \code{\link[=recipe]{recipe()}}
-\code{\link[=prep.recipe]{prep.recipe()}} \code{\link[=bake.recipe]{bake.recipe()}}
+Other individual transformation steps: 
+\code{\link{step_BoxCox}()},
+\code{\link{step_bs}()},
+\code{\link{step_harmonic}()},
+\code{\link{step_hyperbolic}()},
+\code{\link{step_inverse}()},
+\code{\link{step_invlogit}()},
+\code{\link{step_log}()},
+\code{\link{step_logit}()},
+\code{\link{step_mutate}()},
+\code{\link{step_ns}()},
+\code{\link{step_percentile}()},
+\code{\link{step_poly}()},
+\code{\link{step_relu}()},
+\code{\link{step_sqrt}()}
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\concept{individual transformation steps}

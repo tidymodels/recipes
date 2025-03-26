@@ -1,12 +1,13 @@
 ---
-title: "How are categorical predictors handled in `recipes`?"
+title: "Handling categorical predictors"
+output: rmarkdown::html_vignette
+description: |
+  This vignette describes different methods for encoding categorical 
+  predictors, with special attention to interaction terms and contrasts.
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Dummy Variables and Interactions}
-  %\VignetteEncoding{UTF-8}  
-output:
-  knitr:::html_vignette:
-    toc: yes
+  %\VignetteIndexEntry{Handling categorical predictors}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -103,9 +104,9 @@ iris_int <-
 summary(iris_int)
 ```
 
-In [R model formulae](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html), using a `*` between two variables would expand to `a*b = a + b + a:b` so that the main effects are included. In [`step_interact`](https://recipes.tidymodels.org/reference/step_interact.html), you can do use `*`, but only the interactions are recorded as columns that needs to be created. 
+In [R model formulae](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html), using a `*` between two variables would expand to `a*b = a + b + a:b` so that the main effects are included. In [`step_interact`](https://recipes.tidymodels.org/reference/step_interact.html), you can use `*`, but only the interactions are recorded as columns that need to be created. 
 
-One thing that `recipes` does differently than base R is to construct the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors. 
+One thing that `recipes` does differently than base R is it constructs the design matrix in sequential iterations. This is relevant when thinking about interactions between continuous and categorical predictors. 
 
 For example, if you were to use the standard formula interface, the creation of the dummy variables happens at the same time as the interactions are created:
 
@@ -117,7 +118,7 @@ model.matrix(~ Species*Sepal.Length, data = iris) %>%
   as.data.frame()
 ```
 
-With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variable? 
+With recipes, you create them sequentially. This raises an issue: do I have to type out all of the interaction effects by their specific names when using dummy variables? 
 
 ```{r nope, eval = FALSE}
 # Must I do this?
@@ -126,7 +127,7 @@ iris_rec %>%
                    Species_virginica:Sepal.Length) 
 ```
 
-Note only is this a pain, but it may not be obvious what dummy variables are available (especially when [`step_other`](https://recipes.tidymodels.org/reference/step_other.html) is used). 
+Not only is this a pain, but it may not be obvious what dummy variables are available (especially when [`step_other`](https://recipes.tidymodels.org/reference/step_other.html) is used). 
 
 The solution is to use a selector:
 
@@ -139,7 +140,7 @@ iris_int <-
 summary(iris_int)
 ```
 
-What happens here is that `starts_with("Species")` is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selectors are then translated to an additive function of the results. In this case, that means that 
+What happens here is that `starts_with("Species")` is executed on the data that are available when the previous steps have been applied to the data. That means that the dummy variable columns are present. The results of this selector are then translated to an additive function of the results. In this case, that means that 
 
 ```{r sel-input, eval = FALSE}
 starts_with("Species")
@@ -190,7 +191,7 @@ iris_rec %>%
   distinct()
 ```
 
-The option is named that way since this is that the computer scientists call ["one-hot encoding"](https://www.google.com/search?q=one-hot+encoding). 
+The option is named that way since this is what the computer scientists call ["one-hot encoding"](https://www.google.com/search?q=one-hot+encoding). 
 
 ***Warning!*** (again)
 
@@ -223,7 +224,7 @@ Since this contrast doesn't make sense using all _C_ columns, it reverts back to
 
 ## Novel Levels
 
-When a recipe is used with new samples, some factors may have acquired new levels that were not present when `prep` was run. If `step_dummy` encounters this situation, a warning is issues ("There are new levels in a factor") and the indicator variables that correspond to the factor are assigned missing values. 
+When a recipe is used with new samples, some factors may have acquired new levels that were not present when `prep` was run. If `step_dummy` encounters this situation, a warning is issued ("There are new levels in a factor") and the indicator variables that correspond to the factor are assigned missing values. 
 
 One way around this is to use `step_other`. This step can convert infrequently occurring levels to a new category (that defaults to "other"). This step can also be used to convert new factor levels to "other" also. 
 
@@ -244,7 +245,7 @@ There are a bunch of steps related to going in-between factors and dummy variabl
  * [`step_zv`](https://recipes.tidymodels.org/reference/step_zv.html) can remove dummy variables that never show a 1 in the column (i.e. is zero-variance).
  * [`step_bin2factor`](https://recipes.tidymodels.org/reference/step_bin2factor.html) takes a binary indicator and makes a factor variable. This can be useful when using naive Bayes models. 
  * `step_embed`, `step_lencode_glm`, `step_lencode_bayes` and others  in the [`embed`](https://github.com/tidymodels/embed) package can use one or more (non-binary) values to encode factor predictors into a numeric form. 
- 
+ * `step_dummy_extract` can create binary indicators from strings and is especially useful for multiple choice columns. 
  
 [`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html) also works with _ordered factors_. As seen above, the default encoding is to create a series of polynomial variables. There are also a few steps for ordered factors:
 

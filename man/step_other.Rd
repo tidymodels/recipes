@@ -2,7 +2,7 @@
 % Please edit documentation in R/other.R
 \name{step_other}
 \alias{step_other}
-\title{Collapse Some Categorical Levels}
+\title{Collapse infrequent categorical levels}
 \usage{
 step_other(
   recipe,
@@ -20,9 +20,8 @@ step_other(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will potentially be reduced. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -30,35 +29,35 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{threshold}{A numeric value between 0 and 1 or an integer greater or
-equal to one.  If it's less than one then factor levels whose rate of
-occurrence in the training set are below \code{threshold} will be "othered". If
-it's greater or equal to one then it's treated as a frequency and factor
-levels that occur less then \code{threshold} times will be "othered".}
+\item{threshold}{A numeric value between 0 and 1, or an integer greater or
+equal to one.  If less than one, then factor levels with a rate of
+occurrence in the training set below \code{threshold} will be pooled to \code{other}.
+If greater or equal to one, then this value is treated as a frequency
+and factor levels that occur less than \code{threshold} times will be pooled
+to \code{other}.}
 
 \item{other}{A single character value for the "other" category.}
 
 \item{objects}{A list of objects that contain the information
 to pool infrequent levels that is determined by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_other} creates a \emph{specification} of a recipe
-step that will potentially pool infrequently occurring values
-into an "other" category.
+\code{step_other()} creates a \emph{specification} of a recipe step that will
+potentially pool infrequently occurring values into an \code{"other"} category.
 }
 \details{
 The overall proportion (or total counts) of the categories are
@@ -68,7 +67,7 @@ whose individual proportion (or frequency) in the training set is less than
 
 If no pooling is done the data are unmodified (although character data may
 be changed to factors based on the value of \code{strings_as_factors} in
-\code{\link[=prep.recipe]{prep.recipe()}}). Otherwise, a factor is always returned with
+\code{\link[=prep]{prep()}}). Otherwise, a factor is always returned with
 different factor levels.
 
 If \code{threshold} is less than the largest category proportion, all levels
@@ -83,55 +82,96 @@ pooling is needed, they will be placed into the other category.
 
 When data to be processed contains novel levels (i.e., not
 contained in the training set), the other category is assigned.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{retained} (the factor
-levels that were not pulled into "other") is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{retained} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{retained}{character, factor levels not pulled into \code{"other"}}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{threshold}: Threshold (type: double, default: 0.05)
+}
+}
+
+\section{Case weights}{
+
+
+This step performs an unsupervised operation that can utilize case weights.
+As a result, case weights are only used with frequency weights. For more
+information, see the documentation in \link{case_weights} and the examples on
+\code{tidymodels.org}.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
 set.seed(19)
-in_train <- sample(1:nrow(okc), size = 30000)
+in_train <- sample(1:nrow(Sacramento), size = 800)
 
-okc_tr <- okc[ in_train,]
-okc_te <- okc[-in_train,]
+sacr_tr <- Sacramento[in_train, ]
+sacr_te <- Sacramento[-in_train, ]
 
-rec <- recipe(~ diet + location, data = okc_tr)
+rec <- recipe(~ city + zip, data = sacr_tr)
 
 
 rec <- rec \%>\%
-  step_other(diet, location, threshold = .1, other = "other values")
-rec <- prep(rec, training = okc_tr)
+  step_other(city, zip, threshold = .1, other = "other values")
+rec <- prep(rec, training = sacr_tr)
 
-collapsed <- bake(rec, okc_te)
-table(okc_te$diet, collapsed$diet, useNA = "always")
+collapsed <- bake(rec, sacr_te)
+table(sacr_te$city, collapsed$city, useNA = "always")
 
 tidy(rec, number = 1)
 
 # novel levels are also "othered"
-tahiti <- okc[1,]
-tahiti$location <- "a magical place"
+tahiti <- Sacramento[1, ]
+tahiti$zip <- "a magical place"
 bake(rec, tahiti)
 
 # threshold as a frequency
-rec <- recipe(~ diet + location, data = okc_tr)
+rec <- recipe(~ city + zip, data = sacr_tr)
 
 rec <- rec \%>\%
-  step_other(diet, location, threshold = 2000, other = "other values")
-rec <- prep(rec, training = okc_tr)
+  step_other(city, zip, threshold = 2000, other = "other values")
+rec <- prep(rec, training = sacr_tr)
 
 tidy(rec, number = 1)
 # compare it to
-# okc_tr \%>\% count(diet, sort = TRUE) \%>\% top_n(4)
-# okc_tr \%>\% count(location, sort = TRUE) \%>\% top_n(3)
+# sacr_tr \%>\% count(city, sort = TRUE) \%>\% top_n(4)
+# sacr_tr \%>\% count(zip, sort = TRUE) \%>\% top_n(3)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
-\code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
-\code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_novel]{step_novel()}}
+\code{\link[=dummy_names]{dummy_names()}}
+
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
 }
-\concept{factors}
-\concept{preprocessing}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

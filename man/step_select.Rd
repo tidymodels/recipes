@@ -17,9 +17,8 @@ step_select(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be selected when baking. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms selected by this step, what analysis
 role should they be assigned?}
@@ -28,21 +27,21 @@ role should they be assigned?}
 preprocessing have been estimated.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_select()} creates a \emph{specification} of a recipe step
-that will select variables using \code{\link[dplyr:select]{dplyr::select()}}.
+\code{step_select()} creates a \emph{specification} of a recipe step that will select
+variables using \code{\link[dplyr:select]{dplyr::select()}}.
 }
 \details{
 When an object in the user's global environment is
@@ -51,10 +50,34 @@ it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
 the value of the object in the expression (to be portable
 between sessions). See the examples.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} which
-contains the \code{select} expressions as character strings
-(and are not reparsable) is returned.
+This step can potentially remove columns from the data set. This may
+cause issues for subsequent steps in your recipe if the missing columns are
+specifically referenced by name. To avoid this, see the advice in the
+\emph{Tips for saving recipes and filtering columns} section of \link{selections}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms} and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 library(dplyr)
 
@@ -88,6 +111,24 @@ qq_rec <-
 # Note that `sepal_vars` is inlined in the second approach
 qq_rec
 }
-\concept{preprocessing}
-\concept{variable_filters}
-\keyword{datagen}
+\seealso{
+Other variable filter steps: 
+\code{\link{step_corr}()},
+\code{\link{step_filter_missing}()},
+\code{\link{step_lincomb}()},
+\code{\link{step_nzv}()},
+\code{\link{step_rm}()},
+\code{\link{step_zv}()}
+
+Other dplyr steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_sample}()},
+\code{\link{step_slice}()}
+}
+\concept{dplyr steps}
+\concept{variable filter steps}

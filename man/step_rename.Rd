@@ -22,9 +22,8 @@ sequence of operations for this recipe.}
 \code{\link[dplyr:rename]{dplyr::rename()}} where the convention is \strong{\code{new_name = old_name}}.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the function assumes that the new dimension
-columns created by the original variables will be used as predictors in a
-model.}
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -32,20 +31,20 @@ preprocessing have been estimated.}
 \item{inputs}{Quosure(s) of \code{...}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
-\code{step_rename} creates a \emph{specification} of a recipe step that will add
+\code{step_rename()} creates a \emph{specification} of a recipe step that will add
 variables using \code{\link[dplyr:rename]{dplyr::rename()}}.
 }
 \details{
@@ -53,13 +52,33 @@ When an object in the user's global environment is referenced in
 the expression defining the new variable(s), it is a good idea to use
 quasiquotation (e.g. \verb{!!}) to embed the value of the object in the
 expression (to be portable between sessions).
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with
-columns \code{values} which contains the \code{rename} expressions as character
-strings (and are not reparsable) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, \code{rename} expression}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Sparse data}{
+
+
+This step can be applied to \link{sparse_data} such that it is preserved. Nothing
+needs to be done for this to happen as it is done automatically.
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-recipe( ~ ., data = iris) \%>\%
+recipe(~., data = iris) \%>\%
   step_rename(Sepal_Width = Sepal.Width) \%>\%
   prep() \%>\%
   bake(new_data = NULL) \%>\%
@@ -67,8 +86,8 @@ recipe( ~ ., data = iris) \%>\%
 
 vars <- c(var1 = "cyl", var2 = "am")
 car_rec <-
-  recipe(~ ., data = mtcars) \%>\%
-  step_rename(!!vars)
+  recipe(~., data = mtcars) \%>\%
+  step_rename(!!!vars)
 
 car_rec \%>\%
   prep() \%>\%
@@ -77,6 +96,15 @@ car_rec \%>\%
 car_rec \%>\%
   tidy(number = 1)
 }
-\concept{preprocessing}
-\concept{transformation_methods}
-\keyword{datagen}
+\seealso{
+Other dplyr steps: 
+\code{\link{step_arrange}()},
+\code{\link{step_filter}()},
+\code{\link{step_mutate}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_rename_at}()},
+\code{\link{step_sample}()},
+\code{\link{step_select}()},
+\code{\link{step_slice}()}
+}
+\concept{dplyr steps}

@@ -3,7 +3,7 @@
 \name{step_ratio}
 \alias{step_ratio}
 \alias{denom_vars}
-\title{Ratio Variable Creation}
+\title{Ratio variable creation}
 \usage{
 step_ratio(
   recipe,
@@ -11,7 +11,9 @@ step_ratio(
   role = "predictor",
   trained = FALSE,
   denom = denom_vars(),
-  naming = function(numer, denom) make.names(paste(numer, denom, sep = "_o_")),
+  naming = function(numer, denom) {
+     make.names(paste(numer, denom, sep = "_o_"))
+ },
   columns = NULL,
   keep_original_cols = TRUE,
   skip = FALSE,
@@ -30,10 +32,9 @@ When used with \code{denom_vars}, the dots indicate which
 variables are used in the \emph{denominator}. See
 \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For terms created by this step, what analysis role
-should they be assigned?. By default, the function assumes that
-the newly created ratios created by the original variables will
-be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -48,58 +49,90 @@ listing.}
 \item{naming}{A function that defines the naming convention for
 new ratio columns.}
 
-\item{columns}{The column names used in the ratios. This
-argument is not populated until \code{\link[=prep.recipe]{prep.recipe()}} is
-executed.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_ratio} creates a \emph{specification} of a recipe
-step that will create one or more ratios out of numeric
-variables.
+\code{step_ratio()} creates a \emph{specification} of a recipe step that will create
+one or more ratios from selected numeric variables.
 }
-\details{
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{denom} is returned.
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{denom} is returned.
+
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{denom} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{denom}{character, name of denominator selected}
+\item{id}{character, id of this step}
 }
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
-library(modeldata)
-data(biomass)
+data(biomass, package = "modeldata")
 
 biomass$total <- apply(biomass[, 3:7], 1, sum)
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen +
-                    sulfur + total,
-              data = biomass_tr)
+  sulfur + total,
+data = biomass_tr
+)
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
-  step_ratio(all_numeric_predictors(), denom = denom_vars(total)) \%>\%
-  # get rid of the original predictors
-  step_rm(all_predictors(), -ends_with("total"))
+  step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+             keep_original_cols = FALSE)
 
 ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
 
 ratio_data <- bake(ratio_recipe, biomass_te)
 ratio_data
+\dontshow{\}) # examplesIf}
 }
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_classdist_shrunken}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_nnmf_sparse}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_spatialsign}()}
+}
+\concept{multivariate transformation steps}

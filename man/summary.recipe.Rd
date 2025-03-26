@@ -2,7 +2,7 @@
 % Please edit documentation in R/recipe.R
 \name{summary.recipe}
 \alias{summary.recipe}
-\title{Summarize a Recipe}
+\title{Summarize a recipe}
 \usage{
 \method{summary}{recipe}(object, original = FALSE, ...)
 }
@@ -17,7 +17,9 @@ used).}
 }
 \value{
 A tibble with columns \code{variable}, \code{type}, \code{role},
-and \code{source}.
+and \code{source}. When \code{original = TRUE}, an additional column is included
+named \code{required_to_bake} (based on the results of
+\code{\link[=update_role_requirements]{update_role_requirements()}}).
 }
 \description{
 This function prints the current set of variables/features and some of their
@@ -32,7 +34,7 @@ It is possible for variables to have multiple roles by adding them with
 row in the summary tibble.
 }
 \examples{
-rec <- recipe( ~ ., data = USArrests)
+rec <- recipe(~., data = USArrests)
 summary(rec)
 rec <- step_pca(rec, all_numeric(), num_comp = 3)
 summary(rec) # still the same since not yet trained
@@ -40,5 +42,5 @@ rec <- prep(rec, training = USArrests)
 summary(rec)
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
+\code{\link[=recipe]{recipe()}} \code{\link[=prep]{prep()}}
 }

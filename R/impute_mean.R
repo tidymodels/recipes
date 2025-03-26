@@ -1,39 +1,49 @@
-#' Impute Numeric Data Using the Mean
+#' Impute numeric data using the mean
 #'
-#' `step_impute_mean` creates a *specification* of a recipe step that will
-#'  substitute missing values of numeric variables by the training set mean of
-#'  those variables.
+#' `step_impute_mean()` creates a *specification* of a recipe step that will
+#' substitute missing values of numeric variables by the training set mean of
+#' those variables.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
 #' @param means A named numeric vector of means. This is `NULL` until computed
-#'  by [prep.recipe()]. Note that, if the original data are integers, the mean
+#'  by [prep()]. Note that, if the original data are integers, the mean
 #'  will be converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
 #'  end of the variables before the mean is computed. Values of trim outside
 #'  that range are taken as the nearest endpoint.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#' @template step-return
+#' @family imputation steps
 #' @export
 #' @details `step_impute_mean` estimates the variable means from the data used
 #'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
 #'  new values to new data sets using these averages.
 #'
-#' When you [`tidy()`] this step, a tibble with
-#'  columns `terms` (the selectors or variables selected) and `model` (the mean
-#'  value) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
 #'    to `step_impute_mean()`.
 #'
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the mean value}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_mean"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-unsupervised
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -41,7 +51,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -52,68 +62,41 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te)
 #'
-#' credit_te[missing_examples,]
+#' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
-
 step_impute_mean <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           trim = 0,
-           skip = FALSE,
-           id = rand_id("impute_mean")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    means = NULL,
+    trim = 0,
+    skip = FALSE,
+    id = rand_id("impute_mean")
+  ) {
     add_step(
       recipe,
       step_impute_mean_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         means = means,
         trim = trim,
         skip = skip,
-        id = id
+        id = id,
+        case_weights = NULL
       )
     )
   }
 
-#' @rdname step_impute_mean
-#' @export
-#' @keywords internal
-step_meanimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           means = NULL,
-           trim = 0,
-           skip = FALSE,
-           id = rand_id("impute_mean")) {
-    lifecycle::deprecate_soft(
-      when = "0.1.16",
-      what = "recipes::step_meanimpute()",
-      with = "recipes::step_impute_mean()"
-    )
-    step_impute_mean(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      means = means,
-      trim = trim,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_mean_new <-
-  function(terms, role, trained, means, trim, skip, id) {
+  function(terms, role, trained, means, trim, skip, id, case_weights) {
     step(
       subclass = "impute_mean",
       terms = terms,
@@ -122,18 +105,46 @@ step_impute_mean_new <-
       means = means,
       trim = trim,
       skip = skip,
-      id = id
+      id = id,
+      case_weights = case_weights
     )
   }
 
+trim <- function(x, trim) {
+  if (trim == 0) {
+    return(x)
+  }
+  # Adapted from mean.default
+  x <- sort(x, na.last = TRUE)
+  na_ind <- is.na(x)
+  n <- length(x[!na_ind])
+  if (trim > 0 && n) {
+    if (trim >= 0.5) return(stats::median(x[!na_ind], na.rm = FALSE))
+    lo <- floor(n * trim) + 1
+    hi <- n + 1 - lo
+    x[seq(1, lo - 1)] <- NA
+    x[seq(hi + 1, n)] <- NA
+  }
+  x
+}
+
 #' @export
 prep.step_impute_mean <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
+  check_number_decimal(x$trim, arg = "trim", min = 0, max = 1 / 2)
 
-  check_type(training[, col_names])
+  wts <- get_case_weights(info, training)
+  were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
+  if (isFALSE(were_weights_used)) {
+    wts <- NULL
+  }
 
-  means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
-  means <- purrr::map2(means, training[, col_names], cast)
+  trimmed <- purrr::map(training[, col_names], trim, x$trim)
+  trimmed <- vctrs::vec_cbind(!!!trimmed)
+
+  means <- averages(trimmed, wts = wts)
+  means <- purrr::map2(means, trimmed, cast)
 
   step_impute_mean_new(
     terms = x$terms,
@@ -142,59 +153,65 @@ prep.step_impute_mean <- function(x, training, info = NULL, ...) {
     means,
     trim = x$trim,
     skip = x$skip,
-    id = x$id
+    id = x$id,
+    case_weights = were_weights_used
   )
 }
 
 #' @export
-#' @keywords internal
-prep.step_meanimpute <- prep.step_impute_mean
-
-#' @export
 bake.step_impute_mean <- function(object, new_data, ...) {
-  for (i in names(object$means)) {
-    if (any(is.na(new_data[[i]])))
-      new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
-  }
-  as_tibble(new_data)
-}
+  col_names <- names(object$means)
+  check_new_data(col_names, object, new_data)
 
-#' @export
-#' @keywords internal
-bake.step_meanimpute <- bake.step_impute_mean
+  for (col_name in col_names) {
+    mean <- object$means[[col_name]]
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_replace_na(
+        new_data[[col_name]],
+        mean
+      )
+    } else {
+      if (anyNA(new_data[[col_name]])) {
+        new_data[[col_name]] <- vctrs::vec_cast(new_data[[col_name]], mean)
+      }
+      new_data[is.na(new_data[[col_name]]), col_name] <- mean
+    }
+  }
+
+  new_data
+}
 
 #' @export
 print.step_impute_mean <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Mean Imputation for ", sep = "")
-    printer(names(x$means), x$terms, x$trained, width = width)
+    title <- "Mean imputation for "
+    print_step(
+      names(x$means),
+      x$terms,
+      x$trained,
+      title,
+      width,
+      case_weights = x$case_weights
+    )
     invisible(x)
   }
 
-#' @export
-#' @keywords internal
-print.step_meanimpute <- print.step_impute_mean
-
 #' @rdname tidy.recipe
-#' @param x A `step_impute_mean` object.
 #' @export
 tidy.step_impute_mean <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$means),
-                  model = unlist(x$means))
+    res <- tibble(
+      terms = names(x$means),
+      value = vctrs::list_unchop(unname(x$means), ptype = double())
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = na_dbl)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
   res$id <- x$id
   res
 }
 
-#' @export
-#' @keywords internal
-tidy.step_meanimpute <- tidy.step_impute_mean
-
-#' @rdname tunable.step
 #' @export
 tunable.step_impute_mean <- function(x, ...) {
   tibble::tibble(
@@ -209,5 +226,6 @@ tunable.step_impute_mean <- function(x, ...) {
 }
 
 #' @export
-#' @keywords internal
-tunable.step_meanimpute <- tunable.step_impute_mean
+.recipes_preserve_sparsity.step_impute_mean <- function(x, ...) {
+  TRUE
+}

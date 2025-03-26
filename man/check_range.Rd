@@ -2,7 +2,7 @@
 % Please edit documentation in R/range_check.R
 \name{check_range}
 \alias{check_range}
-\title{Check Range Consistency}
+\title{Check range consistency}
 \usage{
 check_range(
   recipe,
@@ -21,22 +21,21 @@ check_range(
 \item{recipe}{A recipe object. The check will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the check. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this check. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical for whether the selectors in \code{...}
+have been resolved by \code{\link[=prep]{prep()}}.}
 
 \item{slack_prop}{The allowed slack as a proportion of the range
 of the variable in the train set.}
@@ -45,16 +44,16 @@ of the variable in the train set.}
 of an error when failing.}
 
 \item{lower}{A named numeric vector of minimum values in the train set.
-This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{upper}{A named numeric vector of maximum values in the train set.
-This is \code{NULL} until computed by \code{\link[=prep.recipe]{prep.recipe()}}.}
+This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
-\item{id}{A character string that is unique to this step to identify it.}
+\item{id}{A character string that is unique to this check to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new check
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new check added to the
+sequence of any existing operations.
 }
 \description{
 \code{check_range} creates a \emph{specification} of a recipe
@@ -68,42 +67,46 @@ of length one, the same proportion will be used at both ends
 of the train set range. If of length two, its first value
 is used to compute the allowed slack at the lower end,
 the second to compute the allowed slack at the upper end.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the means) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the means)
+is returned.
+}
+
 \examples{
-  slack_df <- data_frame(x = 0:100)
-  slack_new_data <- data_frame(x = -10:110)
+slack_df <- data_frame(x = 0:100)
+slack_new_data <- data_frame(x = -10:110)
 
-  # this will fail the check both ends
+# this will fail the check both ends
 \dontrun{
-  recipe(slack_df) \%>\%
-    check_range(x) \%>\%
-    prep() \%>\%
-    bake(slack_new_data)
- }
-
-  # this will fail the check only at the upper end
-\dontrun{
-  recipe(slack_df) \%>\%
-    check_range(x, slack_prop = c(0.1, 0.05)) \%>\%
-    prep() \%>\%
-    bake(slack_new_data)
+recipe(slack_df) \%>\%
+  check_range(x) \%>\%
+  prep() \%>\%
+  bake(slack_new_data)
 }
 
-  # give a warning instead of an error
+# this will fail the check only at the upper end
 \dontrun{
-  recipe(slack_df) \%>\%
-    check_range(x, warn = TRUE) \%>\%
-    prep() \%>\%
-    bake(slack_new_data)
+recipe(slack_df) \%>\%
+  check_range(x, slack_prop = c(0.1, 0.05)) \%>\%
+  prep() \%>\%
+  bake(slack_new_data)
+}
+
+# give a warning instead of an error
+\dontrun{
+recipe(slack_df) \%>\%
+  check_range(x, warn = TRUE) \%>\%
+  prep() \%>\%
+  bake(slack_new_data)
 }
 }
 \seealso{
-\code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other checks: 
+\code{\link{check_class}()},
+\code{\link{check_cols}()},
+\code{\link{check_missing}()},
+\code{\link{check_new_values}()}
 }
-\concept{normalization_methods}
-\concept{preprocessing}
-\keyword{datagen}
+\concept{checks}

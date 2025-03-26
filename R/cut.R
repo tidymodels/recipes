@@ -1,29 +1,15 @@
 #' Cut a numeric variable into a factor
 #'
 #' `step_cut()` creates a *specification* of a recipe step that cuts a numeric
-#'  variable into a factor based on provided boundary values
+#' variable into a factor based on provided boundary values.
 #'
-#' @param recipe A recipe object. The step will be added to the sequence of
-#'  operations for this recipe.
-#' @param ... One or more selector functions to choose which variables are
-#'  affected by the step. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'  have been estimated.
+#' @inheritParams step_center
 #' @param breaks A numeric vector with at least one cut point.
 #' @param include_outside_range Logical, indicating if values outside the
 #'  range in the train set should be included in the lowest or highest bucket.
 #'  Defaults to `FALSE`, values outside the original range will be set to `NA`.
-#' @param skip A logical. Should the step be skipped when the recipe is baked
-#'  by [bake.recipe()]? While all operations are baked when [prep.recipe()] is
-#'  run, some operations may not be able to be conducted on new data (e.g.
-#'  processing the outcome variable(s)). Care should be taken when using `skip =
-#'  TRUE` as it may affect the computations for subsequent operations
-#' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
+#' @template step-return
+#' @family discretization steps
 #' @export
 #' @details Unlike the `base::cut()` function there is no need to specify the
 #'  min and the max values in the breaks. All values before the lowest break
@@ -32,6 +18,19 @@
 #'
 #'  `step_cut()` will call `base::cut()` in the baking step with
 #'  `include.lowest` set to `TRUE`.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{numeric, the location of the cuts}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
 #'
 #' @examples
 #' df <- data.frame(x = 1:10, y = 5:14)
@@ -61,7 +60,7 @@
 #'
 #' # It is up to you if you want values outside the
 #' # range learned at prep to be included
-#' new_df <- data.frame(x = 1:11)
+#' new_df <- data.frame(x = 1:11, y = 5:15)
 #' rec %>%
 #'   step_cut(x, breaks = 5, include_outside_range = TRUE) %>%
 #'   prep() %>%
@@ -72,31 +71,32 @@
 #'   prep() %>%
 #'   bake(new_df)
 step_cut <-
-    function(recipe,
-             ...,
-             role = NA,
-             trained = FALSE,
-             breaks,
-             include_outside_range = FALSE,
-             skip = FALSE,
-             id = rand_id("cut")) {
-      add_step(
-        recipe,
-        step_cut_new(
-          terms = ellipse_check(...),
-          trained = trained,
-          role = role,
-          breaks = breaks,
-          include_outside_range = include_outside_range,
-          skip = skip,
-          id = id
-        )
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    breaks,
+    include_outside_range = FALSE,
+    skip = FALSE,
+    id = rand_id("cut")
+  ) {
+    add_step(
+      recipe,
+      step_cut_new(
+        terms = enquos(...),
+        trained = trained,
+        role = role,
+        breaks = breaks,
+        include_outside_range = include_outside_range,
+        skip = skip,
+        id = id
       )
-    }
+    )
+  }
 
 step_cut_new <-
-  function(terms, role, trained,
-           breaks, include_outside_range, skip, id) {
+  function(terms, role, trained, breaks, include_outside_range, skip, id) {
     step(
       subclass = "cut",
       terms = terms,
@@ -109,16 +109,23 @@ step_cut_new <-
     )
   }
 
+#' @export
 prep.step_cut <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
 
-  check_type(training[, col_names])
+  if (!is.numeric(x$breaks)) {
+    cli::cli_abort(
+      "{.arg breaks} must be a numeric vector, not {.obj_type_friendly {x$breaks}}."
+    )
+  }
+  check_bool(x$include_outside_range, arg = "include_outside_range")
 
   all_breaks <- vector("list", length(col_names))
   names(all_breaks) <- col_names
   for (col_name in col_names) {
     all_breaks[[col_name]] <-
-      create_full_breaks(training[ ,col_name, drop = TRUE], breaks = x$breaks)
+      create_full_breaks(training[[col_name]], breaks = x$breaks)
     full_breaks_check(all_breaks[[col_name]])
   }
 
@@ -133,34 +140,67 @@ prep.step_cut <- function(x, training, info = NULL, ...) {
   )
 }
 
-create_full_breaks <- function(var, breaks) {
-  stopifnot(is.numeric(var), is.numeric(breaks))
+create_full_breaks <- function(var, breaks, call = rlang::caller_env()) {
+  if (!is.numeric(var)) {
+    cli::cli_abort(
+      "{.arg var} must be a numeric vector, not {.obj_type_friendly {var}}.",
+      call = call
+    )
+  }
+
+  if (!is.numeric(breaks)) {
+    cli::cli_abort(
+      "{.arg breaks} must be a numeric vector, not {.obj_type_friendly {breaks}}.",
+      call = call
+    )
+  }
+
+  if (anyNA(var)) {
+    cli::cli_warn(
+      "{.arg var} contains missing values. These will be ignored in break
+       calculations.",
+      call = call
+    )
+    var <- var[!is.na(var)]
+  }
+
   if (min(var) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
+
   if (max(var) > max(breaks)) {
     breaks <- c(max(var), breaks)
   }
+
   sort(breaks)
 }
 
-full_breaks_check <- function(breaks) {
+full_breaks_check <- function(breaks, call = rlang::caller_env()) {
   if (length(breaks) == 1) {
-    rlang::abort("In step_cut: variable is invariant and equal to break point.")
+    cli::cli_abort(
+      "Variable is invariant and equal to break point.",
+      call = call
+    )
   }
   if (length(breaks) == 2) {
-    rlang::warn("In step_cut: this will create a factor with one value only.")
+    cli::cli_warn("This will create a factor with one value only.")
   }
 }
 
+#' @export
 bake.step_cut <- function(object, new_data, ...) {
-  for (col_name in names(object$breaks)) {
-    res <- cut_var(new_data[, col_name, drop = TRUE],
-              object$breaks[[col_name]],
-              object$include_outside_range)
-    new_data[, col_name] <- res
+  col_names <- names(object$breaks)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- cut_var(
+      new_data[[col_name]],
+      object$breaks[[col_name]],
+      object$include_outside_range
+    )
   }
-  as_tibble(new_data)
+
+  new_data
 }
 
 cut_var <- function(var, breaks, include_outside_range) {
@@ -184,7 +224,6 @@ cut_var <- function(var, breaks, include_outside_range) {
 # the levels when bake.recipe itself is called. Moreover,
 # it is cleaner to show it in this way.
 adjust_levels_min_max <- function(x) {
-  stopifnot(is.factor(x))
   levs <- levels(x)
   if (length(levs) == 1) {
     return(factor(rep("[min,max]", length(x))))
@@ -201,28 +240,26 @@ adjust_levels_min_max <- function(x) {
   factor(new_x, levels = new_levs)
 }
 
+#' @export
 print.step_cut <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Cut numeric for ", sep = "")
-    printer(names(x$breaks), x$terms, x$trained, width = width)
+    title <- "Cut numeric for "
+    print_step(names(x$breaks), x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_cut` object.
 #' @export
 tidy.step_cut <- function(x, ...) {
   if (is_trained(x)) {
-    res <-
-      tibble(terms = names(x$breaks),
-             value = sapply(x$class_list,
-                            function(x) paste0(x, collapse = "-")))
+    res <- tibble(
+      terms = rep(names(x$breaks), lengths(x$breaks)),
+      value = unlist(x$breaks, use.names = FALSE) %||% double()
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_dbl)
+    res <- tibble(terms = term_names, value = na_dbl)
   }
-  res$id <- x$id
+  res$id <- rep(x$id, nrow(res))
   res
 }
-

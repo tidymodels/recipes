@@ -2,7 +2,7 @@
 % Please edit documentation in R/colcheck.R
 \name{check_cols}
 \alias{check_cols}
-\title{Check if all Columns are Present}
+\title{Check if all columns are present}
 \usage{
 check_cols(
   recipe,
@@ -17,9 +17,8 @@ check_cols(
 \item{recipe}{A recipe object. The check will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are checked in the check See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this check. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this check since no new variables are
 created.}
@@ -28,13 +27,17 @@ created.}
 have been resolved by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
 the computations for subsequent operations.}
 
-\item{id}{A character string that is unique to this step to identify it.}
+\item{id}{A character string that is unique to this check to identify it.}
+}
+\value{
+An updated version of \code{recipe} with the new check added to the
+sequence of any existing operations.
 }
 \description{
 \code{check_cols} creates a \emph{specification} of a recipe
@@ -45,21 +48,31 @@ present in the new data.
 This check will break the \code{bake} function if any of the specified
 columns is not present in the data. If the check passes, nothing is changed
 to the data.
-
-When you \code{\link[=tidy]{tidy()}} this check, a tibble with columns \code{terms} (the
-selectors or variables selected) and \code{value} (the type) is returned.
 }
-\examples{
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{value} (the type)
+is returned.
+}
 
-library(modeldata)
-data(biomass)
+\examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
 biomass_rec <- recipe(HHV ~ ., data = biomass) \%>\%
-   step_rm(sample, dataset) \%>\%
-   check_cols(contains("gen")) \%>\%
-   step_center(all_numeric_predictors())
-
+  step_rm(sample, dataset) \%>\%
+  check_cols(contains("gen")) \%>\%
+  step_center(all_numeric_predictors())
 \dontrun{
 bake(biomass_rec, biomass[, c("carbon", "HHV")])
 }
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+Other checks: 
+\code{\link{check_class}()},
+\code{\link{check_missing}()},
+\code{\link{check_new_values}()},
+\code{\link{check_range}()}
+}
+\concept{checks}

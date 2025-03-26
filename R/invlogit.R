@@ -1,40 +1,41 @@
-#' Inverse Logit Transformation
+#' Inverse logit transformation
 #'
-#' `step_invlogit` creates a *specification* of a recipe
-#'  step that will transform the data from real values to be between
-#'  zero and one.
+#' `step_invlogit()` creates a *specification* of a recipe step that will
+#' transform the data from real values to be between zero and one.
 #'
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the step. See [selections()]
-#'  for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' @inheritParams step_pca
+#' @template step-return
+#' @family individual transformation steps
 #' @export
 #' @details The inverse logit transformation takes values on the
 #'  real line and translates them to be between zero and one using
 #'  the function `f(x) = 1/(1+exp(-x))`.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms`
-#'  (the columns that will be affected) is returned.
-#' @examples
-#' library(modeldata)
-#' data(biomass)
+#' # Tidying
 #'
-#' biomass_tr <- biomass[biomass$dataset == "Training",]
-#' biomass_te <- biomass[biomass$dataset == "Testing",]
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
 #'
-#' rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-#'               data = biomass_tr)
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
 #'
-#' ilogit_trans <- rec  %>%
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
+#' data(biomass, package = "modeldata")
+#'
+#' biomass_tr <- biomass[biomass$dataset == "Training", ]
+#' biomass_te <- biomass[biomass$dataset == "Testing", ]
+#'
+#' rec <- recipe(
+#'   HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+#'   data = biomass_tr
+#' )
+#'
+#' ilogit_trans <- rec %>%
 #'   step_center(carbon, hydrogen) %>%
 #'   step_scale(carbon, hydrogen) %>%
 #'   step_invlogit(carbon, hydrogen)
@@ -43,23 +44,27 @@
 #'
 #' transformed_te <- bake(ilogit_obj, biomass_te)
 #' plot(biomass_te$carbon, transformed_te$carbon)
-#' @seealso [step_logit()] [step_log()]
-#'   [step_sqrt()]  [step_hyperbolic()]
-#'   [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
-
 step_invlogit <-
-  function(recipe, ...,  role = NA, trained = FALSE, columns = NULL,
-           skip = FALSE, id = rand_id("invlogit")) {
-    add_step(recipe,
-             step_invlogit_new(
-               terms = ellipse_check(...),
-               role = role,
-               trained = trained,
-               columns = columns,
-               skip = skip,
-               id = id
-             ))
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    columns = NULL,
+    skip = FALSE,
+    id = rand_id("invlogit")
+  ) {
+    add_step(
+      recipe,
+      step_invlogit_new(
+        terms = enquos(...),
+        role = role,
+        trained = trained,
+        columns = columns,
+        skip = skip,
+        id = id
+      )
+    )
   }
 
 step_invlogit_new <-
@@ -77,8 +82,8 @@ step_invlogit_new <-
 
 #' @export
 prep.step_invlogit <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
 
   step_invlogit_new(
     terms = x$terms,
@@ -92,23 +97,25 @@ prep.step_invlogit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_invlogit <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      binomial()$linkinv(unlist(getElement(new_data, object$columns[i]),
-                                use.names = FALSE))
-  as_tibble(new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    new_data[[col_name]] <- binomial()$linkinv(new_data[[col_name]])
+  }
+
+  new_data
 }
 
-
+#' @export
 print.step_invlogit <-
   function(x, width = max(20, options()$width - 26), ...) {
-    cat("Inverse logit on ", sep = "")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Inverse logit on "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_invlogit` object.
 #' @export
 tidy.step_invlogit <- function(x, ...) {
   res <- simple_terms(x, ...)

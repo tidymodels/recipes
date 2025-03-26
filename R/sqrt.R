@@ -1,24 +1,28 @@
-#' Square Root Transformation
+#' Square root transformation
 #'
-#' `step_sqrt` creates a *specification* of a recipe
-#'  step that will square root transform the data.
+#' `step_sqrt()` creates a *specification* of a recipe step that will apply
+#' square root transform to the variables.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be transformed. See [selections()] for
-#'  more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param columns A character string of variable names that will
-#'  be populated (eventually) by the `terms` argument.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#' columns that will be affected) is returned.
+#' @inheritParams step_pca
+#' @template step-return
+#' @family individual transformation steps
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
 #' @export
 #' @examples
 #' set.seed(313)
@@ -27,7 +31,7 @@
 #'
 #' rec <- recipe(~ V1 + V2, data = examples)
 #'
-#' sqrt_trans <- rec  %>%
+#' sqrt_trans <- rec %>%
 #'   step_sqrt(all_numeric_predictors())
 #'
 #' sqrt_obj <- prep(sqrt_trans, training = examples)
@@ -37,18 +41,19 @@
 #'
 #' tidy(sqrt_trans, number = 1)
 #' tidy(sqrt_obj, number = 1)
-#' @seealso [step_logit()] [step_invlogit()]
-#'   [step_log()]  [step_hyperbolic()] [recipe()]
-#'   [prep.recipe()] [bake.recipe()]
-
-step_sqrt <- function(recipe, ..., role = NA,
-                      trained = FALSE, columns = NULL,
-                      skip = FALSE,
-                      id = rand_id("sqrt")) {
+step_sqrt <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("sqrt")
+) {
   add_step(
     recipe,
     step_sqrt_new(
-      terms = ellipse_check(...),
+      terms = enquos(...),
       role = role,
       trained = trained,
       columns = columns,
@@ -71,11 +76,10 @@ step_sqrt_new <-
     )
   }
 
-
 #' @export
 prep.step_sqrt <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  col_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, col_names], types = c("double", "integer"))
 
   step_sqrt_new(
     terms = x$terms,
@@ -89,24 +93,36 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
-  col_names <- object$columns
-  for (i in seq_along(col_names))
-    new_data[, col_names[i]] <-
-      sqrt(getElement(new_data, col_names[i]))
-  as_tibble(new_data)
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    if (sparsevctrs::is_sparse_vector(new_data[[col_name]])) {
+      new_data[[col_name]] <- sparsevctrs::sparse_sqrt(new_data[[col_name]])
+    } else {
+      new_data[[col_name]] <- sqrt(new_data[[col_name]])
+    }
+  }
+
+  new_data
 }
 
+#' @export
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
-  cat("Square root transformation on ", sep = "")
-  printer(x$columns, x$terms, x$trained, width = width)
+  title <- "Square root transformation on "
+  print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
 }
 
 #' @rdname tidy.recipe
-#' @param x A `step_sqrt` object.
 #' @export
 tidy.step_sqrt <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_sqrt <- function(x, ...) {
+  TRUE
 }

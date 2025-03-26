@@ -7,24 +7,9 @@
 #' @keywords internal
 #' @export
 format_ch_vec <-
-  function(x,
-           sep = ", ",
-           width = options()$width - 9) {
-    widths <- nchar(x)
-    sep_wd <- nchar(sep)
-    adj_wd <- widths + sep_wd
-    if (sum(adj_wd) >= width) {
-      keepers <- max(which(cumsum(adj_wd) < width)) - 1
-      if (length(keepers) == 0 || keepers < 1) {
-        x <- paste(length(x), "items")
-      } else {
-        x <- c(x[1:keepers], "...")
-      }
-    }
-    paste0(x, collapse = sep)
+  function(x, sep = ", ", width = options()$width - 9) {
+    as.character(glue::glue_collapse(x, sep = sep, width = width))
   }
-
-
 
 #' @keywords internal
 #' @rdname format_ch_vec
@@ -32,9 +17,9 @@ format_ch_vec <-
 format_selectors <- function(x, width = options()$width - 9) {
   ## convert to character without the leading ~
   x_items <- lapply(x, function(x) {
-    expr_deparse(quo_get_expr(x))
+    expr_deparse(quo_get_expr(x), width = Inf)
   })
 
-  x_items <- unlist(x_items)
+  x_items <- vctrs::list_unchop(x_items, ptype = character())
   format_ch_vec(x_items, width = width, sep = ", ")
 }

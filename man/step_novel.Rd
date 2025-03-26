@@ -2,7 +2,7 @@
 % Please edit documentation in R/novel.R
 \name{step_novel}
 \alias{step_novel}
-\title{Simple Value Assignments for Novel Factor Levels}
+\title{Simple value assignments for novel factor levels}
 \usage{
 step_novel(
   recipe,
@@ -19,10 +19,8 @@ step_novel(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be affected by the step. These variables
-should be character or factor types. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -34,25 +32,24 @@ preprocessing have been estimated.}
 to new factor levels.}
 
 \item{objects}{A list of objects that contain the information
-on factor levels that will be determined by \code{\link[=prep.recipe]{prep.recipe()}}.}
+on factor levels that will be determined by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_novel} creates a \emph{specification} of a recipe
-step that will assign a previously unseen factor level to a
-new value.
+\code{step_novel()} creates a \emph{specification} of a recipe step that will assign a
+previously unseen factor level to \code{"new"}.
 }
 \details{
 The selected variables are adjusted to have a new
@@ -73,36 +70,72 @@ When fitting a model that can deal with new factor levels, consider using
 \code{\link[workflows:add_recipe]{workflows::add_recipe()}} with \code{allow_novel_levels = TRUE} set in
 \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}}. This will allow your model to handle
 new levels at prediction time, instead of throwing warnings or errors.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-columns that will be affected) and \code{value} (the factor
-levels that is used for the new value) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, the factor levels that are used for the new value}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data(okc)
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
 
-okc_tr <- okc[1:30000,]
-okc_te <- okc[30001:30006,]
-okc_te$diet[3] <- "cannibalism"
-okc_te$diet[4] <- "vampirism"
+sacr_tr <- Sacramento[1:800, ]
+sacr_te <- Sacramento[801:806, ]
 
-rec <- recipe(~ diet + location, data = okc_tr)
+# Without converting the predictor to a character, the new level would be converted
+# to `NA`.
+sacr_te$city <- as.character(sacr_te$city)
+sacr_te$city[3] <- "beeptown"
+sacr_te$city[4] <- "boopville"
+sacr_te$city <- as.factor(sacr_te$city)
+
+rec <- recipe(~ city + zip, data = sacr_tr)
 
 rec <- rec \%>\%
-  step_novel(diet, location)
-rec <- prep(rec, training = okc_tr)
+  step_novel(city, zip)
+rec <- prep(rec, training = sacr_tr)
 
-processed <- bake(rec, okc_te)
-tibble(old = okc_te$diet, new = processed$diet)
+processed <- bake(rec, sacr_te)
+tibble(old = sacr_te$city, new = processed$city)
 
 tidy(rec, number = 1)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=step_factor2string]{step_factor2string()}}, \code{\link[=step_string2factor]{step_string2factor()}},
-\code{\link[=dummy_names]{dummy_names()}}, \code{\link[=step_regex]{step_regex()}}, \code{\link[=step_count]{step_count()}},
-\code{\link[=step_ordinalscore]{step_ordinalscore()}}, \code{\link[=step_unorder]{step_unorder()}}, \code{\link[=step_other]{step_other()}}
+\code{\link[=dummy_names]{dummy_names()}}
+
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_relevel}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
 }
-\concept{factors}
-\concept{preprocessing}
-\keyword{datagen}
+\concept{dummy variable and encoding steps}

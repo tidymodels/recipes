@@ -1,36 +1,39 @@
 #' Filter rows by position using dplyr
 #'
-#' `step_slice` creates a *specification* of a recipe step
-#'  that will filter rows using [dplyr::slice()].
+#' `step_slice()` creates a *specification* of a recipe step that will filter
+#' rows using [dplyr::slice()].
 #'
 #' @template row-ops
 #' @inheritParams step_center
 #' @param ... Integer row values. See
 #'  [dplyr::slice()] for more details.
-#' @param role Not used by this step since no new variables are
-#'  created.
 #' @param inputs Quosure of values given by `...`.
-#' @param skip A logical. Should the step be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = FALSE`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`)
 #'   to embed the value of the object in the expression (to
 #'   be portable between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `terms` which
-#'  contains the filtering indices is returned.
+#' # Tidying
 #'
-#' @keywords datagen
-#' @concept preprocessing
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, containing the filtering indices}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @family row operation steps
+#' @family dplyr steps
 #' @export
 #' @examples
-#' rec <- recipe( ~ ., data = iris) %>%
+#' rec <- recipe(~., data = iris) %>%
 #'   step_slice(1:3)
 #'
 #' prepped <- prep(rec, training = iris %>% slice(1:75))
@@ -50,8 +53,8 @@
 #' dplyr_test <-
 #'   iris %>%
 #'   as_tibble() %>%
-#'   slice(76:150) %>%
-#'   slice(1:3)
+#'   slice(76:150)
+#'
 #' rec_test <- bake(prepped, iris %>% slice(76:150))
 #' all.equal(dplyr_test, rec_test)
 #'
@@ -61,23 +64,21 @@
 #' keep_rows <- 1:6
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
-#'   # Embed `keep_rows` in the call using !!
-#'   step_slice(!!keep_rows) %>%
+#'   recipe(~., data = iris) %>%
+#'   # Embed `keep_rows` in the call using !!!
+#'   step_slice(!!!keep_rows) %>%
 #'   prep(training = iris)
 #'
 #' tidy(qq_rec, number = 1)
-#' @seealso [step_filter()] [step_naomit()] [step_sample()]
-
 step_slice <- function(
-  recipe, ...,
+  recipe,
+  ...,
   role = NA,
   trained = FALSE,
   inputs = NULL,
   skip = TRUE,
   id = rand_id("slice")
 ) {
-
   inputs <- enquos(...)
 
   add_step(
@@ -123,26 +124,27 @@ bake.step_slice <- function(object, new_data, ...) {
   dplyr::slice(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_slice <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Row filtering via position")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Row filtering via position "
+    tr_obj <- format_selectors(x$inputs, width)
+    print_step(tr_obj, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_slice` object
 #' @export
 tidy.step_slice <- function(x, ...) {
   cond_expr <- map(x$inputs, quo_get_expr)
   cond_expr <- map_chr(cond_expr, quo_text, width = options()$width, nlines = 1)
   tibble(
-    terms = cond_expr,
+    terms = unname(cond_expr),
     id = rep(x$id, length(x$inputs))
   )
+}
+
+#' @export
+.recipes_preserve_sparsity.step_slice <- function(x, ...) {
+  TRUE
 }

@@ -1,36 +1,44 @@
 #' Add new variables using dplyr
 #'
-#' `step_mutate` creates a *specification* of a recipe step
-#'  that will add variables using [dplyr::mutate()].
+#' `step_mutate()` creates a *specification* of a recipe step that will add
+#' variables using [dplyr::mutate()].
 #'
+#' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Name-value pairs of expressions. See [dplyr::mutate()].
-#' If the argument is not named, the expression is converted to
-#' a column name.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned? By default, the function assumes
-#'  that the new dimension columns created by the original variables
-#'  will be used as predictors in a model.
+#' @param .pkgs Character vector, package names of functions used in
+#'   expressions `...`. Should be specified if using non-base functions.
 #' @param inputs Quosure(s) of `...`.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
+#' @template step-return
+#' @template mutate-leakage
 #' @details When an object in the user's global environment is
 #'  referenced in the expression defining the new variable(s),
 #'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
 #'  the value of the object in the expression (to be portable
 #'  between sessions). See the examples.
 #'
-#'  When you [`tidy()`] this step, a tibble with column `values`, which
-#'  contains the `mutate` expressions as character strings
-#'  (and are not reparsable), is returned.
+#'  If a preceding step removes a column that is selected by name in
+#'  `step_mutate()`, the recipe will error when being estimated with [prep()].
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept transformation_methods
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `value` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{value}{character, expression passed to `mutate()`}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @family individual transformation steps
+#' @family dplyr steps
 #' @export
 #' @examples
 #' rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   step_mutate(
 #'     dbl_width = Sepal.Width * 2,
 #'     half_length = Sepal.Length / 2
@@ -67,7 +75,7 @@
 #' const <- 1.414
 #'
 #' qq_rec <-
-#'   recipe( ~ ., data = iris) %>%
+#'   recipe(~., data = iris) %>%
 #'   step_mutate(
 #'     bad_approach = Sepal.Width * const,
 #'     best_approach = Sepal.Width * !!const
@@ -78,24 +86,27 @@
 #'
 #' # The difference:
 #' tidy(qq_rec, number = 1)
-
 step_mutate <- function(
-  recipe, ...,
+  recipe,
+  ...,
+  .pkgs = character(),
   role = "predictor",
   trained = FALSE,
   inputs = NULL,
   skip = FALSE,
   id = rand_id("mutate")
 ) {
+  check_character(.pkgs)
+  recipes_pkg_check(required_pkgs.step_mutate(list(.pkgs = .pkgs)))
 
-  inputs <- enquos(..., .named = TRUE)
+  inputs <- enquos(...)
 
   add_step(
     recipe,
     step_mutate_new(
-      terms = terms,
-      trained = trained,
+      .pkgs = .pkgs,
       role = role,
+      trained = trained,
       inputs = inputs,
       skip = skip,
       id = id
@@ -104,10 +115,10 @@ step_mutate <- function(
 }
 
 step_mutate_new <-
-  function(terms, role, trained, inputs, skip, id) {
+  function(.pkgs, role, trained, inputs, skip, id) {
     step(
       subclass = "mutate",
-      terms = terms,
+      .pkgs = .pkgs,
       role = role,
       trained = trained,
       inputs = inputs,
@@ -119,8 +130,8 @@ step_mutate_new <-
 #' @export
 prep.step_mutate <- function(x, training, info = NULL, ...) {
   step_mutate_new(
-    terms = x$terms,
     trained = TRUE,
+    .pkgs = x$.pkgs,
     role = x$role,
     inputs = x$inputs,
     skip = x$skip,
@@ -133,29 +144,31 @@ bake.step_mutate <- function(object, new_data, ...) {
   dplyr::mutate(new_data, !!!object$inputs)
 }
 
-
+#' @export
 print.step_mutate <-
   function(x, width = max(20, options()$width - 35), ...) {
-    cat("Variable mutation for ",
-        paste0(names(x$inputs), collapse = ", "),
-        sep = "")
-    if (x$trained) {
-      cat(" [trained]\n")
-    } else {
-      cat("\n")
-    }
+    title <- "Variable mutation for "
+    print_step(x$inputs, x$inputs, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_mutate` object
 #' @export
 tidy.step_mutate <- function(x, ...) {
-  var_expr <- map(x$inputs, quo_get_expr)
-  var_expr <- map_chr(var_expr, quo_text, width = options()$width, nlines = 1)
-    tibble(
-      terms = names(x$inputs),
-      value = var_expr,
-      id = rep(x$id, length(x$inputs))
-    )
+  inputs <- x$inputs
+
+  terms <- names(quos_auto_name(inputs))
+  value <- map_chr(unname(inputs), as_label)
+
+  tibble(
+    terms = terms,
+    value = value,
+    id = rep(x$id, length(x$inputs))
+  )
+}
+
+#' @rdname required_pkgs.recipe
+#' @export
+required_pkgs.step_mutate <- function(x, ...) {
+  x$.pkgs
 }

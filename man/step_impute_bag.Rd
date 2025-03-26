@@ -2,25 +2,10 @@
 % Please edit documentation in R/impute_bag.R
 \name{step_impute_bag}
 \alias{step_impute_bag}
-\alias{step_bagimpute}
 \alias{imp_vars}
-\title{Imputation via Bagged Trees}
+\title{Impute via bagged trees}
 \usage{
 step_impute_bag(
-  recipe,
-  ...,
-  role = NA,
-  trained = FALSE,
-  impute_with = imp_vars(all_predictors()),
-  trees = 25,
-  models = NULL,
-  options = list(keepX = FALSE),
-  seed_val = sample.int(10^4, 1),
-  skip = FALSE,
-  id = rand_id("impute_bag")
-)
-
-step_bagimpute(
   recipe,
   ...,
   role = NA,
@@ -40,12 +25,13 @@ imp_vars(...)
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables. For
-\code{step_impute_bag}, this indicates the variables to be imputed. When used
-with \code{imp_vars}, the dots indicate which variables are used to predict the
-missing data in each variable. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables to be imputed.
+When used with \code{imp_vars}, these dots indicate which variables are used to
+predict the missing data in each variable. See \code{\link[=selections]{selections()}} for more
+details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -59,7 +45,7 @@ will be removed from the latter and not used to impute itself.}
 \item{trees}{An integer for the number of bagged trees to use in each model.}
 
 \item{models}{The \code{\link[ipred:bagging]{ipred::ipredbagg()}} objects are stored here once this
-bagged trees have be trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+bagged trees have be trained by \code{\link[=prep]{prep()}}.}
 
 \item{options}{A list of options to \code{\link[ipred:bagging]{ipred::ipredbagg()}}. Defaults are set
 for the arguments \code{nbagg} and \code{keepX} but others can be passed in. \strong{Note}
@@ -69,20 +55,20 @@ that the arguments \code{X} and \code{y} should not be passed here.}
 is used across all imputation models.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
-\code{step_impute_bag} creates a \emph{specification} of a recipe step that will
+\code{step_impute_bag()} creates a \emph{specification} of a recipe step that will
 create bagged tree models to impute missing data.
 }
 \details{
@@ -100,15 +86,40 @@ this variable will be ignored.
 It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.
 
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the selectors
-or variables selected) and \code{model} (the bagged tree object) is returned.
-
 As of \code{recipes} 0.1.16, this function name changed from \code{step_bagimpute()}
 to \code{step_impute_bag()}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble with columns
+\code{terms} (the selectors or variables selected) and \code{model}
+(the bagged tree object) is returned.
+
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{model} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{model}{list, the bagged tree object}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 1 tuning parameters:
+\itemize{
+\item \code{trees}: # Trees (type: integer, default: 25)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-library(modeldata)
-data("credit_data")
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data("credit_data", package = "modeldata")
 
 ## missing data per column
 vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -116,7 +127,7 @@ vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
 set.seed(342)
 in_training <- sample(1:nrow(credit_data), 2000)
 
-credit_tr <- credit_data[ in_training, ]
+credit_tr <- credit_data[in_training, ]
 credit_te <- credit_data[-in_training, ]
 missing_examples <- c(14, 394, 565)
 
@@ -127,9 +138,9 @@ impute_rec <- rec \%>\%
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, new_data = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te)
 
-credit_te[missing_examples,]
+credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
@@ -137,28 +148,37 @@ tidy(imp_models, number = 1)
 
 ## Specifying which variables to imputate with
 
- impute_rec <- rec \%>\%
+impute_rec <- rec \%>\%
   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
-                 impute_with = imp_vars(Time, Age, Expenses),
-                 # for quick execution, nbagg lowered
-                 options = list(nbagg = 5, keepX = FALSE))
+    impute_with = imp_vars(Time, Age, Expenses),
+    # for quick execution, nbagg lowered
+    options = list(nbagg = 5, keepX = FALSE)
+  )
 
 imp_models <- prep(impute_rec, training = credit_tr)
 
-imputed_te <- bake(imp_models, new_data = credit_te, everything())
+imputed_te <- bake(imp_models, new_data = credit_te)
 
-credit_te[missing_examples,]
+credit_te[missing_examples, ]
 imputed_te[missing_examples, names(credit_te)]
 
 tidy(impute_rec, number = 1)
 tidy(imp_models, number = 1)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 Kuhn, M. and Johnson, K. (2013). \emph{Applied Predictive Modeling}.
 Springer Verlag.
 }
-\concept{imputation}
-\concept{preprocessing}
-\keyword{datagen}
-\keyword{internal}
+\seealso{
+Other imputation steps: 
+\code{\link{step_impute_knn}()},
+\code{\link{step_impute_linear}()},
+\code{\link{step_impute_lower}()},
+\code{\link{step_impute_mean}()},
+\code{\link{step_impute_median}()},
+\code{\link{step_impute_mode}()},
+\code{\link{step_impute_roll}()}
+}
+\concept{imputation steps}

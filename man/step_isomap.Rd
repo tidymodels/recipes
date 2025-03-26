@@ -2,7 +2,7 @@
 % Please edit documentation in R/isomap.R
 \name{step_isomap}
 \alias{step_isomap}
-\title{Isomap Embedding}
+\title{Isomap embedding}
 \usage{
 step_isomap(
   recipe,
@@ -13,6 +13,7 @@ step_isomap(
   neighbors = 50,
   options = list(.mute = c("message", "output")),
   res = NULL,
+  columns = NULL,
   prefix = "Isomap",
   keep_original_cols = FALSE,
   skip = FALSE,
@@ -23,14 +24,12 @@ step_isomap(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables will be used to compute the dimensions. See
-\code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that the new dimension columns created by the original variables
-will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -42,34 +41,37 @@ used.}
 
 \item{neighbors}{The number of neighbors.}
 
-\item{options}{A list of options to \code{\link[dimRed:Isomap-class]{dimRed::Isomap()}}.}
+\item{options}{A list of options to `dimRed::Isomap()``.}
 
-\item{res}{The \code{\link[dimRed:Isomap-class]{dimRed::Isomap()}} object is stored
+\item{res}{The `dimRed::Isomap()`` object is stored
 here once this preprocessing step has be trained by
-\code{\link[=prep.recipe]{prep.recipe()}}.}
+\code{\link[=prep]{prep()}}.}
 
-\item{prefix}{A character string that will be the prefix to the
-resulting new variables. See notes below.}
+\item{columns}{A character string of the selected variable names. This field
+is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
+
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_isomap} creates a \emph{specification} of a recipe
-step that will convert numeric data into one or more new
+\code{step_isomap()} creates a \emph{specification} of a recipe step that uses
+multidimensional scaling to convert numeric data into one or more new
 dimensions.
 }
 \details{
@@ -96,39 +98,60 @@ numbers. The variable names are padded with zeros. For example,
 if \code{num_terms < 10}, their names will be \code{Isomap1} -
 \code{Isomap9}. If \code{num_terms = 101}, the names would be
 \code{Isomap001} - \code{Isomap101}.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with column \code{terms} (the
-selectors or variables selected) is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}  , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Tuning Parameters}{
+This step has 2 tuning parameters:
+\itemize{
+\item \code{num_terms}: # Model Terms (type: integer, default: 5)
+\item \code{neighbors}: # Nearest Neighbors (type: integer, default: 50)
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
-\donttest{
-library(modeldata)
-data(biomass)
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(biomass, package = "modeldata")
 
-biomass_tr <- biomass[biomass$dataset == "Training",]
-biomass_te <- biomass[biomass$dataset == "Testing",]
+biomass_tr <- biomass[biomass$dataset == "Training", ]
+biomass_te <- biomass[biomass$dataset == "Testing", ]
 
-rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass_tr)
+rec <- recipe(
+  HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
+  data = biomass_tr
+)
 
 im_trans <- rec \%>\%
   step_YeoJohnson(all_numeric_predictors()) \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
   step_isomap(all_numeric_predictors(), neighbors = 100, num_terms = 2)
 
-if (require(dimRed) & require(RSpectra)) {
-  im_estimates <- prep(im_trans, training = biomass_tr)
+im_estimates <- prep(im_trans, training = biomass_tr)
 
-  im_te <- bake(im_estimates, biomass_te)
+im_te <- bake(im_estimates, biomass_te)
 
-  rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
-  plot(im_te$Isomap1, im_te$Isomap2,
-       xlim = rng, ylim = rng)
+rng <- extendrange(c(im_te$Isomap1, im_te$Isomap2))
+plot(im_te$Isomap1, im_te$Isomap2,
+  xlim = rng, ylim = rng
+)
 
-  tidy(im_trans, number = 3)
-  tidy(im_estimates, number = 3)
-}
-}
+tidy(im_trans, number = 3)
+tidy(im_estimates, number = 3)
+\dontshow{\}) # examplesIf}
 }
 \references{
 De Silva, V., and Tenenbaum, J. B. (2003). Global
@@ -140,11 +163,21 @@ versus local methods in nonlinear dimensionality reduction.
 https://github.com/gdkrmr
 }
 \seealso{
-\code{\link[=step_pca]{step_pca()}} \code{\link[=step_kpca]{step_kpca()}}
-\code{\link[=step_ica]{step_ica()}} \code{\link[=recipe]{recipe()}} \code{\link[=prep.recipe]{prep.recipe()}}
-\code{\link[=bake.recipe]{bake.recipe()}}
+Other multivariate transformation steps: 
+\code{\link{step_classdist}()},
+\code{\link{step_classdist_shrunken}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_kpca}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_nnmf_sparse}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
 }
-\concept{isomap}
-\concept{preprocessing}
-\concept{projection_methods}
-\keyword{datagen}
+\concept{multivariate transformation steps}

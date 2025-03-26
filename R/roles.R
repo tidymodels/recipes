@@ -1,4 +1,4 @@
-#' Manually Alter Roles
+#' Manually alter roles
 #'
 #' @description
 #' `update_role()` alters an existing role in the recipe or assigns an initial
@@ -11,26 +11,30 @@
 #' `remove_role()` eliminates a single existing role in the recipe.
 #' @param recipe An existing [recipe()].
 #'
-#' @param ... One or more selector functions to choose which variables are
-#'   being assigned a role. See [selections()] for more details.
-#'
+#' @param ... One or more selector functions to choose which variables are being
+#'   assigned a role. See [selections()] for more details.
 #' @param new_role A character string for a single role.
-#'
 #' @param new_type A character string for specific type that the variable should
-#' be identified as. If left as `NULL`, the type is automatically identified
-#' as the _first_ type you see for that variable in `summary(recipe)`.
-#'
+#'   be identified as. If left as `NULL`, the type is automatically identified
+#'   as the _first_ type you see for that variable in `summary(recipe)`.
 #' @param old_role A character string for the specific role to update for the
-#' variables selected by `...`. `update_role()` accepts a `NULL` as long as the
-#' variables have only a single role.
+#'   variables selected by `...`. `update_role()` accepts a `NULL` as long as
+#'   the variables have only a single role.
 #'
 #' @return An updated recipe object.
 #'
 #' @details
 #'
-#' Variables can have any arbitrary role (see the examples) but there are two
-#' special standard roles, `"predictor"` and `"outcome"`. These two roles are
-#' typically required when fitting a model.
+#' `update_role()`, `add_role()` and `remove_role()` will be applied on a recipe
+#' before any of the steps or checks, regardless of where they are located in
+#' position. This means that roles can only be changed with these three
+#' functions for columns that are already present in the original data supplied
+#' to `recipe()`. See the `role` argument in some step functions to update
+#' roles for columns created by steps.
+#'
+#' Variables can have any arbitrary role (see the examples) but there are three
+#' special standard roles, `"predictor"`, `"outcome"`, and `"case_weights"`.
+#' The first two roles are typically required when fitting a model.
 #'
 #' `update_role()` should be used when a variable doesn't currently have a role
 #' in the recipe, or to replace an `old_role` with a `new_role`. `add_role()`
@@ -42,17 +46,15 @@
 #' roles are added.
 #'
 #' Adding or updating roles is a useful way to group certain variables that
-#' don't fall in the standard `"predictor"` bucket. You can perform a step
-#' on all of the variables that have a custom role with the selector
-#' [has_role()].
+#' don't fall in the standard `"predictor"` bucket. You can perform a step on
+#' all of the variables that have a custom role with the selector [has_role()].
 #'
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept model_specification
-#' @examples
+#' ```{r, child = "man/rmd/non-standard-roles.Rmd"}
+#' ```
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(recipes)
-#' library(modeldata)
-#' data(biomass)
+#' data(biomass, package = "modeldata")
 #'
 #' # Using the formula method, roles are created for any outcomes and predictors:
 #' recipe(HHV ~ ., data = biomass) %>%
@@ -114,35 +116,47 @@
 #' # If the formula method is not used, all columns have a missing role:
 #' recipe(biomass) %>%
 #'   summary()
-#'
 #' @name roles
 NULL
 
 #' @export
 #' @rdname roles
 add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
-  single_chr(new_role, "new_", null_ok = FALSE)
+  check_string(new_role, allow_empty = FALSE)
+  check_string(new_type, allow_empty = FALSE, allow_null = TRUE)
 
-  if (length(new_type) != 1L & length(new_type) != 0L) {
-    rlang::abort("`new_type` must have length 1.")
+  if (new_role == "case_weights") {
+    cli::cli_abort(
+      c(
+        "!" = "Roles of {.val case_weights} cannot be set using \\
+      {.fn add_role}.",
+        "i" = "Please use {.help hardhat::frequency_weights} or \\
+      {.help hardhat::importance_weights} to specify case weights \\
+      before the data is passed to {.fn recipe}."
+      )
+    )
   }
-
-  if (!is.character(new_type) & !is.null(new_type)) {
-    rlang::abort("`new_type` must be a character vector, or `NULL`.")
-  }
-
-  terms <- quos(...)
 
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
+  terms <- quos(...)
 
-  vars <- eval_select_recipes(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
-    rlang::warn("No columns were selected in `add_role()`.")
+    cli::cli_warn("No columns were selected in {.fn add_role}.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    cli::cli_abort(
+      "{.fn add_role} cannot be used on variables with role \\
+      {.val case_weights}."
+    )
   }
 
   # Check to see if role already exists
@@ -150,11 +164,12 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   existing_var_idx <- recipe$var_info$variable %in% vars
 
   if (all(is.na(recipe$var_info$role[existing_var_idx]))) {
-    vars <- glue::glue_collapse(glue::single_quote(vars), sep = ", ")
-    rlang::abort(glue::glue(
-      "No role currently exists for column(s): {vars}. Please use ",
-      "`update_role()` instead."
-    ))
+    cli::cli_abort(
+      c(
+        "!" = "No role currently exists for column{?s}: {.var {vars}}.",
+        "i" = "Please use {.fn update_role} instead."
+      )
+    )
   }
 
   role_already_exists <- recipe$var_info$role[existing_var_idx] %in% new_role
@@ -169,16 +184,9 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
     existing_vars <- recipe$var_info$variable[existing_var_idx]
     vars_that_role_exists_for <- existing_vars[role_already_exists]
 
-    bad_vars <- glue::glue_collapse(
-      glue::single_quote(vars_that_role_exists_for),
-      sep = ", "
-    )
-
-    rlang::warn(
-      glue::glue(
-        "Role, '{new_role}', already exists for column(s): {bad_vars}. ",
-        "Skipping."
-      )
+    cli::cli_warn(
+      "Role {.val {new_role}} already exists for column{?s}: \\
+      {.and {.var {vars_that_role_exists_for}}}. Skipping."
     )
 
     vars <- vars[!(vars %in% vars_that_role_exists_for)]
@@ -186,25 +194,49 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   # Pull in first type we come across if unspecified
   if (is.null(new_type)) {
-    new_type <- purrr::map_chr(vars, ~{
-      first_row_with_var <- which(recipe$var_info$variable == .x)[1]
-      recipe$var_info$type[first_row_with_var]
-    })
+    new_type <- purrr::map(
+      vars,
+      ~{
+        first_row_with_var <- which(recipe$var_info$variable == .x)[1]
+        recipe$var_info$type[[first_row_with_var]]
+      }
+    )
   } else {
-    new_type <- rep(new_type, times = length(vars))
+    new_type <- as.list(rep(new_type, times = length(vars)))
   }
 
-  source <- purrr::map_chr(vars, ~{
-    first_row_with_var <- which(recipe$var_info$variable == .x)[1]
-    recipe$var_info$source[first_row_with_var]
-  })
+  source <- purrr::map_chr(
+    vars,
+    ~{
+      first_row_with_var <- which(recipe$var_info$variable == .x)[1]
+      recipe$var_info$source[first_row_with_var]
+    }
+  )
+
+  for (var in vars) {
+    old_roles <- recipe$var_info$role[recipe$var_info$variable == var]
+
+    if (new_role == "predictor" && any(old_roles == "outcome")) {
+      cli::cli_abort(
+        "{.var {var}} cannot get {.val predictor} role as it already \\
+          has role {.val outcome}."
+      )
+    }
+
+    if (new_role == "outcome" && any(old_roles == "predictor")) {
+      cli::cli_abort(
+        "{.var {var}} cannot get {.val outcome} role as it already \\
+        has role {.val predictor}."
+      )
+    }
+  }
 
   for (i in seq_along(vars)) {
     last_row_with_var <- dplyr::last(which(recipe$var_info$variable == vars[i]))
     recipe$var_info <- tibble::add_row(
       .data = recipe$var_info,
       variable = unname(vars[i]),
-      type = unname(new_type[i]),
+      type = list(unname(new_type[[i]])),
       role = new_role,
       source = unname(source[i]),
       .after = last_row_with_var
@@ -213,42 +245,59 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   recipe$term_info <- recipe$var_info
   recipe
-
 }
 
 #' @export
 #' @rdname roles
 update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
-  single_chr(new_role, "new_", null_ok = FALSE)
-  single_chr(old_role, "old_", null_ok = TRUE)
+  check_string(new_role, allow_empty = FALSE)
+  check_string(old_role, allow_empty = FALSE, allow_null = TRUE)
 
-  terms <- quos(...)
+  if (new_role == "case_weights") {
+    cli::cli_abort(
+      c(
+        "!" = "Roles of {.val case_weights} cannot be set using \\
+      {.fn update_role}.",
+        "i" = "Please use {.help hardhat::frequency_weights} or \\
+      {.help hardhat::importance_weights} to specify case weights \\
+      before the data is passed to {.fn recipe}."
+      )
+    )
+  }
 
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
+  terms <- quos(...)
 
-  vars <- eval_select_recipes(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info, check_case_weights = FALSE)
 
   if (length(vars) == 0L) {
-    rlang::warn("No columns were selected in `update_role()`.")
+    cli::cli_warn("No columns were selected in {.fn update_role}.")
     return(recipe)
+  }
+
+  case_weights_vars <- info %>%
+    filter(role == "case_weights", variable %in% vars)
+  if (nrow(case_weights_vars) > 0) {
+    cli::cli_abort(
+      "{.fn update_role} cannot be used on variables with role \\
+      {.val case_weights}."
+    )
   }
 
   # check to see if any variables have multiple roles
   if (is.null(old_role)) {
     var_counts <-
       info %>%
-      dplyr::filter(variable %in% vars) %>%
-      dplyr::group_by(variable) %>%
-      dplyr::count()
+        dplyr::filter(variable %in% vars) %>%
+        dplyr::group_by(variable) %>%
+        dplyr::count()
     if (any(var_counts$n > 1)) {
-      rlang::abort(
-        paste0(
-          "`old_role` can only be `NULL` when the variable(s) have ",
-          "a single existing role."
-        )
+      cli::cli_abort(
+        "{.arg old_role} can only be {.code NULL} when the variable(s) have a \\
+        single existing role."
       )
     }
   }
@@ -270,24 +319,29 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
 #' @rdname roles
 #' @export
 remove_role <- function(recipe, ..., old_role) {
-  single_chr(old_role, "old_")
+  check_string(old_role, allow_empty = FALSE)
 
-  terms <- quos(...)
+  if (old_role == "case_weights") {
+    cli::cli_abort(
+      "Roles of {.val case_weights} cannot removed using {.fn remove_role}."
+    )
+  }
 
   # Roles can only be changed on the original data supplied to `recipe()`,
   # so this is safe
   data <- recipe$template
   info <- recipe$var_info
+  terms <- quos(...)
 
-  vars <- eval_select_recipes(terms, data, info)
+  vars <- recipes_eval_select(terms, data, info)
 
   if (length(vars) == 0L) {
-    rlang::warn("No columns were selected in `remove_role()`.")
+    cli::cli_warn("No columns were selected in {.fn remove_role}.")
     return(recipe)
   }
 
   info <- info %>%
-    mutate(.orig_order = 1:nrow(info)) %>%
+    mutate(.orig_order = seq_len(nrow(info))) %>%
     group_by(variable) %>%
     do(role_rm_machine(., role = old_role, var = vars)) %>%
     ungroup() %>%
@@ -309,43 +363,18 @@ role_rm_machine <- function(x, role, var) {
   sel_role <- x$role == role
 
   if (sum(sel_role) == 0) {
-    var <- glue::single_quote(x$variable[1])
-    role <- glue::single_quote(role)
-
-    rlang::warn(
-      glue::glue("Column, {var}, does not have role, {role}."))
+    cli::cli_warn(
+      "Column {.var {x$variable[1]}} does not have role {.val {role}}."
+    )
 
     return(x)
   }
 
   if (nrow(x) == 1) {
     x$role <- NA_character_
-  }
-  else {
-    x <- x[x$role != role,]
+  } else {
+    x <- x[x$role != role, ]
   }
 
   x
-}
-
-single_chr <- function(x, prefix = "", null_ok = FALSE) {
-  arg <- paste0("`", prefix, "role", "`")
-
-  if (null_ok && is.null(x)) {
-    return(invisible(NULL))
-  }
-
-  if (length(x) != 1L) {
-    rlang::abort(paste0(arg, " must have length 1."))
-  }
-
-  if (!is.character(x)) {
-    rlang::abort(paste0(arg, " must be a character vector."))
-  }
-
-  if (is.na(x)) {
-    rlang::abort(paste0(arg, " must not be `NA`."))
-  }
-
-  invisible(NULL)
 }

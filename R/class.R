@@ -1,36 +1,19 @@
-#' Check Variable Class
+#' Check variable class
 #'
 #' `check_class` creates a *specification* of a recipe
 #'  check that will check if a variable is of a designated class.
 #'
-#' @param recipe A recipe object. The check will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the check. See [selections()]
-#'  for more details.
-#' @param role Not used by this check since no new variables are
-#'  created.
-#' @param trained A logical to indicate if the quantities for
-#'  preprocessing have been estimated.
-#' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations.
+#' @inheritParams check_missing
 #' @param class_nm A character vector that will be used in `inherits` to
 #'  check the class. If `NULL` the classes will be learned in `prep`.
 #'  Can contain more than one class.
 #' @param allow_additional If `TRUE` a variable is allowed to
 #'  have additional classes to the one(s) that are checked.
 #' @param class_list A named list of column classes. This is
-#'  `NULL` until computed by [prep.recipe()].
-#' @param id A character string that is unique to this step to identify it.
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any).
+#'  `NULL` until computed by [prep()].
+#' @template check-return
 #'
-#' @keywords datagen
-#' @concept preprocessing normalization_methods
+#' @family checks
 #' @export
 #' @details
 #' This function can check the classes of the variables
@@ -46,27 +29,31 @@
 #'  the check will be break `bake` when `strings_as_factors` is
 #'  `TRUE`.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the type) is returned.
+#'  # Tidying
 #'
-#' @examples
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the type)
+#'  is returned.
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("modeldata")
 #' library(dplyr)
-#' library(modeldata)
-#' data(okc)
+#' data(Sacramento, package = "modeldata")
 #'
 #' # Learn the classes on the train set
-#' train <- okc[1:1000, ]
-#' test  <- okc[1001:2000, ]
-#' recipe(train, age ~ . ) %>%
+#' train <- Sacramento[1:500, ]
+#' test <- Sacramento[501:nrow(Sacramento), ]
+#' recipe(train, sqft ~ .) %>%
 #'   check_class(everything()) %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)
 #'
 #' # Manual specification
-#' recipe(train, age ~ .) %>%
-#'   check_class(age, class_nm = "integer") %>%
-#'   check_class(diet, location, class_nm = "character") %>%
-#'   check_class(date, class_nm = "Date") %>%
+#' recipe(train, sqft ~ .) %>%
+#'   check_class(sqft, class_nm = "integer") %>%
+#'   check_class(city, zip, type, class_nm = "factor") %>%
+#'   check_class(latitude, longitude, class_nm = "numeric") %>%
 #'   prep(train, strings_as_factors = FALSE) %>%
 #'   bake(test)
 #'
@@ -86,77 +73,84 @@
 #'   check_class(time, class_nm = "POSIXt", allow_additional = TRUE) %>%
 #'   prep(x_df) %>%
 #'   bake(x_df)
-#'
-#' @seealso [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
 check_class <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained  = FALSE,
-           class_nm = NULL,
-           allow_additional = FALSE,
-           skip = FALSE,
-           class_list = NULL,
-           id = rand_id("class")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    class_nm = NULL,
+    allow_additional = FALSE,
+    skip = FALSE,
+    class_list = NULL,
+    id = rand_id("class")
+  ) {
     add_check(
       recipe,
       check_class_new(
-        terms            = ellipse_check(...),
-        trained          = trained,
-        role             = role,
-        class_nm         = class_nm,
+        terms = enquos(...),
+        trained = trained,
+        role = role,
+        class_nm = class_nm,
         allow_additional = allow_additional,
-        class_list       = class_list,
-        skip             = skip,
-        id               = id
+        class_list = class_list,
+        skip = skip,
+        id = id
       )
     )
   }
 
 ## Initializes a new object
 check_class_new <-
-  function(terms, role, trained, class_nm,
-           allow_additional, class_list, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    class_nm,
+    allow_additional,
+    class_list,
+    skip,
+    id
+  ) {
+    check_character(class_nm, allow_null = TRUE, call = rlang::caller_env(2))
+    check_bool(allow_additional, call = rlang::caller_env(2))
     check(
-      subclass         = "class",
-      terms            = terms,
-      role             = role,
-      skip             = skip,
-      trained          = trained,
-      class_nm         = class_nm,
+      subclass = "class",
+      terms = terms,
+      role = role,
+      skip = skip,
+      trained = trained,
+      class_nm = class_nm,
       allow_additional = allow_additional,
-      class_list       = class_list,
-      skip             = skip,
-      id               = id
+      class_list = class_list,
+      skip = skip,
+      id = id
     )
   }
 
-prep.check_class <- function(x,
-                             training,
-                             info = NULL,
-                             ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+#' @export
+prep.check_class <- function(x, training, info = NULL, ...) {
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   # vapply requires a very specific return here
   # class can give back multiple values, return shape
   # is not predetermined. Thats why we use lapply instead.
   if (is.null(x$class_nm)) {
-    class_list <- lapply(training[ ,col_names], class)
+    class_list <- lapply(training[, col_names], class)
   } else {
     class_list <- rep(list(x$class_nm), length(col_names))
     names(class_list) <- col_names
   }
 
   check_class_new(
-    terms            = x$terms,
-    role             = x$role,
-    skip             = x$skip,
-    trained          = TRUE,
-    class_nm         = x$class_nm,
+    terms = x$terms,
+    role = x$role,
+    skip = x$skip,
+    trained = TRUE,
+    class_nm = x$class_nm,
     allow_additional = x$allow_additional,
-    class_list       = class_list,
-    id               = x$id
+    class_list = class_list,
+    id = x$id
   )
 }
 
@@ -164,73 +158,67 @@ prep.check_class <- function(x,
 # can be of length > 1. inherits will result
 # in TRUE if just one of the classes in class_nm
 # is present in x.
-bake_check_class_core <- function(x,
-                                  class_nm,
-                                  var_nm,
-                                  aa = FALSE) {
+bake_check_class_core <- function(x, class_nm, var_nm, aa = FALSE) {
   classes <- class(x)
   missing <- setdiff(class_nm, classes)
   if (length(missing) > 0) {
-    rlang::abort(
-      paste0(
-        var_nm,
-        " should have the class(es) ",
-        paste(class_nm, collapse = ", "),
-        " but has the class(es) ",
-        paste(classes, collapse = ", "),
-        "."
-    )
+    cli::cli_abort(
+      "{.var {var_nm}} should have the class{?es} {.cls {class_nm}} but
+      has the class{?es} {.and {.cls {classes}}}."
     )
   }
 
   extra <- setdiff(classes, class_nm)
   if (length(extra) > 0 && !aa) {
-    rlang::abort(
-      paste0(
-        var_nm,
-        " has the class(es) ",
-        paste(classes, collapse = ", "),
-        ", but only the following is/are asked ",
-        paste(class_nm, collapse = ", "),
-        ", allow_additional is FALSE."
+    cli::cli_abort(
+      c(
+        x = "{.var {var_nm}} has class{?es} {.and {.cls {classes}}} but only \\
+            the following {?is/are} asked: {.and {.cls {class_nm}}}.",
+        i = "This error is shown because {.arg allow_additional} is set to \\
+            {.val FALSE}."
       )
     )
   }
 }
 
-bake.check_class <- function(object,
-                             new_data,
-                             ...) {
-
+#' @export
+bake.check_class <- function(object, new_data, ...) {
   col_names <- names(object$class_list)
-  mapply(bake_check_class_core,
-         new_data[ ,col_names],
-         object$class_list,
-         col_names,
-         aa = object$allow_additional)
+  check_new_data(col_names, object, new_data)
 
-  as_tibble(new_data)
+  mapply(
+    bake_check_class_core,
+    new_data[, col_names],
+    object$class_list,
+    col_names,
+    MoreArgs = list(aa = object$allow_additional)
+  )
+
+  new_data
 }
 
+#' @export
 print.check_class <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking the class(es) for ", sep = "")
-    printer(names(x$class_list), x$terms, x$trained, width = width)
+    title <- "Checking the class(es) for "
+    print_step(names(x$class_list), x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `check_class` object.
+#' @export
 tidy.check_class <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$class_list),
-                  value = sapply(x$class_list,
-                                 function(x) paste0(x, collapse = "-")))
+    values <- vapply(
+      unname(x$class_list),
+      FUN = function(x) paste0(x, collapse = "-"),
+      FUN.VALUE = character(1)
+    )
+    res <- tibble(terms = names(x$class_list), value = values)
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  value = na_chr)
+    res <- tibble(terms = term_names, value = na_chr)
   }
+  res$id <- x$id
   res
 }

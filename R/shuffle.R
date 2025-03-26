@@ -1,27 +1,28 @@
-#' Shuffle Variables
+#' Shuffle variables
 #'
-#' `step_shuffle` creates a *specification* of a recipe
-#'  step that will randomly change the order of rows for selected
-#'  variables.
+#' `step_shuffle()` creates a *specification* of a recipe step that will
+#' randomly change the order of rows for selected variables.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables will be permuted. See [selections()] for more
-#'  details.
-#' @param role Not used by this step since no new variables are
-#'  created.
-#' @param columns A character string that contains the names of
-#'  columns that should be shuffled. These values are not determined
-#'  until [prep.recipe()] is called.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @details When you [`tidy()`] this step, a tibble with column `terms` (the
-#' columns that will be affected) is returned.
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept randomization
-#' @concept permutation
+#' @inheritParams step_pca
+#' @template step-return
+#' @details
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms` and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template sparse-preserve
+#'
+#' @template case-weights-not-supported
+#'
+#' @family row operation steps
 #' @export
 #' @examples
 #' integers <- data.frame(A = 1:12, B = 13:24, C = 25:36)
@@ -37,23 +38,26 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rand_set, number = 1)
-
-step_shuffle <- function(recipe,
-                         ...,
-                         role = NA,
-                         trained = FALSE,
-                         columns = NULL,
-                         skip = FALSE,
-                         id = rand_id("shuffle")) {
-  add_step(recipe,
-           step_shuffle_new(
-             terms = ellipse_check(...),
-             role = role,
-             trained = trained,
-             columns = columns,
-             skip = skip,
-             id = id
-           ))
+step_shuffle <- function(
+  recipe,
+  ...,
+  role = NA,
+  trained = FALSE,
+  columns = NULL,
+  skip = FALSE,
+  id = rand_id("shuffle")
+) {
+  add_step(
+    recipe,
+    step_shuffle_new(
+      terms = enquos(...),
+      role = role,
+      trained = trained,
+      columns = columns,
+      skip = skip,
+      id = id
+    )
+  )
 }
 
 step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
@@ -70,7 +74,7 @@ step_shuffle_new <- function(terms, role, trained, columns, skip, id) {
 
 #' @export
 prep.step_shuffle <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes_eval_select(x$terms, training, info)
   step_shuffle_new(
     terms = x$terms,
     role = x$role,
@@ -83,30 +87,38 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_shuffle <- function(object, new_data, ...) {
+  col_names <- names(object$columns)
+  check_new_data(col_names, object, new_data)
+
   if (nrow(new_data) == 1) {
-    rlang::warn("`new_data` contains a single row; unable to shuffle")
+    cli::cli_warn("{.arg new_data} contains a single row; unable to shuffle.")
     return(new_data)
   }
 
-  if (length(object$columns) > 0)
-    for (i in seq_along(object$columns))
-      new_data[, object$columns[i]] <-
-        sample(getElement(new_data, object$columns[i]))
-    as_tibble(new_data)
+  for (col_name in col_names) {
+    new_data[[col_name]] <- sample(new_data[[col_name]])
+  }
+
+  new_data
 }
 
+#' @export
 print.step_shuffle <-
   function(x, width = max(20, options()$width - 22), ...) {
-    cat("Shuffled ")
-    printer(x$columns, x$terms, x$trained, width = width)
+    title <- "Shuffled "
+    print_step(x$columns, x$terms, x$trained, title, width)
     invisible(x)
   }
 
 #' @rdname tidy.recipe
-#' @param x A `step_shuffle` object.
 #' @export
 tidy.step_shuffle <- function(x, ...) {
-  res <-simple_terms(x, ...)
+  res <- simple_terms(x, ...)
   res$id <- x$id
   res
+}
+
+#' @export
+.recipes_preserve_sparsity.step_shuffle <- function(x, ...) {
+  TRUE
 }

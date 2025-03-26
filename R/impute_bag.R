@@ -1,15 +1,13 @@
-#' Imputation via Bagged Trees
+#' Impute via bagged trees
 #'
-#' `step_impute_bag` creates a *specification* of a recipe step that will
-#'  create bagged tree models to impute missing data.
+#' `step_impute_bag()` creates a *specification* of a recipe step that will
+#' create bagged tree models to impute missing data.
 #'
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose variables. For
-#'  `step_impute_bag`, this indicates the variables to be imputed. When used
-#'  with `imp_vars`, the dots indicate which variables are used to predict the
-#'  missing data in each variable. See [selections()] for more details.
-#' @param role Not used by this step since no new variables are created.
+#' @param ... One or more selector functions to choose variables to be imputed.
+#'  When used with `imp_vars`, these dots indicate which variables are used to
+#'  predict the missing data in each variable. See [selections()] for more
+#'  details.
 #' @param impute_with A call to `imp_vars` to specify which variables are used
 #'  to impute the variables that can include specific variable names separated
 #'  by commas or different selectors (see [selections()]). If a column is
@@ -22,12 +20,9 @@
 #' @param seed_val An integer used to create reproducible models. The same seed
 #'  is used across all imputation models.
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
-#'  bagged trees have be trained by [prep.recipe()].
-#' @return An updated version of `recipe` with the new step added to the
-#'  sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept imputation
+#'  bagged trees have be trained by [prep()].
+#' @template step-return
+#' @family imputation steps
 #' @export
 #' @details For each variable requiring imputation, a bagged tree is created
 #'  where the outcome is the variable of interest and the predictors are any
@@ -43,16 +38,38 @@
 #'   It is possible that missing values will still occur after imputation if a
 #'  large majority (or all) of the imputing variables are also missing.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the selectors
-#'  or variables selected) and `model` (the bagged tree object) is returned.
-#'
 #'  As of `recipes` 0.1.16, this function name changed from `step_bagimpute()`
 #'    to `step_impute_bag()`.
+#'
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `model`
+#'  (the bagged tree object) is returned.
+#'
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `model` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{model}{list, the bagged tree object}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' ```{r, echo = FALSE, results="asis"}
+#' step <- "step_impute_bag"
+#' result <- knitr::knit_child("man/rmd/tunable-args.Rmd")
+#' cat(result)
+#' ```
+#'
+#' @template case-weights-not-supported
+#'
 #' @references Kuhn, M. and Johnson, K. (2013). *Applied Predictive Modeling*.
 #'  Springer Verlag.
-#' @examples
-#' library(modeldata)
-#' data("credit_data")
+#' @examplesIf rlang::is_installed("modeldata")
+#' data("credit_data", package = "modeldata")
 #'
 #' ## missing data per column
 #' vapply(credit_data, function(x) mean(is.na(x)), c(num = 0))
@@ -60,7 +77,7 @@
 #' set.seed(342)
 #' in_training <- sample(1:nrow(credit_data), 2000)
 #'
-#' credit_tr <- credit_data[ in_training, ]
+#' credit_tr <- credit_data[in_training, ]
 #' credit_te <- credit_data[-in_training, ]
 #' missing_examples <- c(14, 394, 565)
 #'
@@ -71,9 +88,9 @@
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te)
 #'
-#' credit_te[missing_examples,]
+#' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
 #'
 #' tidy(impute_rec, number = 1)
@@ -81,41 +98,45 @@
 #'
 #' ## Specifying which variables to imputate with
 #'
-#'  impute_rec <- rec %>%
+#' impute_rec <- rec %>%
 #'   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
-#'                  impute_with = imp_vars(Time, Age, Expenses),
-#'                  # for quick execution, nbagg lowered
-#'                  options = list(nbagg = 5, keepX = FALSE))
+#'     impute_with = imp_vars(Time, Age, Expenses),
+#'     # for quick execution, nbagg lowered
+#'     options = list(nbagg = 5, keepX = FALSE)
+#'   )
 #'
 #' imp_models <- prep(impute_rec, training = credit_tr)
 #'
-#' imputed_te <- bake(imp_models, new_data = credit_te, everything())
+#' imputed_te <- bake(imp_models, new_data = credit_te)
 #'
-#' credit_te[missing_examples,]
+#' credit_te[missing_examples, ]
 #' imputed_te[missing_examples, names(credit_te)]
 #'
 #' tidy(impute_rec, number = 1)
 #' tidy(imp_models, number = 1)
 #' }
-
 step_impute_bag <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           trees = 25,
-           models = NULL,
-           options = list(keepX = FALSE),
-           seed_val = sample.int(10 ^ 4, 1),
-           skip = FALSE,
-           id = rand_id("impute_bag")) {
-    if (is.null(impute_with))
-      rlang::abort("Please list some variables in `impute_with`")
+  function(
+    recipe,
+    ...,
+    role = NA,
+    trained = FALSE,
+    impute_with = imp_vars(all_predictors()),
+    trees = 25,
+    models = NULL,
+    options = list(keepX = FALSE),
+    seed_val = sample.int(10^4, 1),
+    skip = FALSE,
+    id = rand_id("impute_bag")
+  ) {
+    if (is.null(impute_with)) {
+      cli::cli_abort("{.arg impute_with} must not be empty.")
+    }
+
     add_step(
       recipe,
       step_impute_bag_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         role = role,
         trained = trained,
         impute_with = impute_with,
@@ -129,44 +150,19 @@ step_impute_bag <-
     )
   }
 
-#' @rdname step_impute_bag
-#' @export
-#' @keywords internal
-step_bagimpute <-
-  function(recipe,
-           ...,
-           role = NA,
-           trained = FALSE,
-           impute_with = imp_vars(all_predictors()),
-           trees = 25,
-           models = NULL,
-           options = list(keepX = FALSE),
-           seed_val = sample.int(10 ^ 4, 1),
-           skip = FALSE,
-           id = rand_id("impute_bag")) {
-    lifecycle::deprecate_soft(
-      when = "0.1.16",
-      what = "recipes::step_bagimpute()",
-      with = "recipes::step_impute_bag()"
-    )
-    step_impute_bag(
-      recipe,
-      ...,
-      role = role,
-      trained = trained,
-      impute_with = impute_with,
-      trees = trees,
-      models = models,
-      options = options,
-      seed_val = seed_val,
-      skip = skip,
-      id = id
-    )
-  }
-
 step_impute_bag_new <-
-  function(terms, role, trained, models, options, impute_with, trees,
-           seed_val, skip, id) {
+  function(
+    terms,
+    role,
+    trained,
+    models,
+    options,
+    impute_with,
+    trees,
+    seed_val,
+    skip,
+    id
+  ) {
     step(
       subclass = "impute_bag",
       terms = terms,
@@ -182,17 +178,27 @@ step_impute_bag_new <-
     )
   }
 
-
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]
   dat <- as.data.frame(dat[, c(vars$y, vars$x)])
-  if (!is.null(seed_val) && !is.na(seed_val))
-    set.seed(seed_val)
+  if (is.character(dat[[vars$y]])) {
+    dat[[vars$y]] <- factor(dat[[vars$y]])
+  }
 
-  out <- do.call("ipredbagg",
-                 c(list(y = dat[, vars$y],
-                        X = dat[, vars$x, drop = FALSE]),
-                   opt))
+  if (!is.null(seed_val) && !is.na(seed_val)) {
+    set.seed(seed_val)
+  }
+
+  out <- do.call(
+    "ipredbagg",
+    c(
+      list(
+        y = dat[, vars$y],
+        X = dat[, vars$x, drop = FALSE]
+      ),
+      opt
+    )
+  )
   out$..imp_vars <- vars$x
   out
 }
@@ -200,19 +206,23 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 ## This figures out which data should be used to predict each variable
 ## scheduled for imputation
 impute_var_lists <- function(to_impute, impute_using, training, info) {
-  to_impute <- eval_select_recipes(to_impute, training, info)
-  impute_using <- eval_select_recipes(impute_using, training, info)
+  to_impute <- recipes_eval_select(to_impute, training, info)
+  impute_using <- recipes_eval_select(impute_using, training, info)
 
   var_lists <- vector(mode = "list", length = length(to_impute))
   for (i in seq_along(var_lists)) {
-    var_lists[[i]] <- list(y = to_impute[i],
-                           x = impute_using[!(impute_using %in% to_impute[i])])
+    var_lists[[i]] <- list(
+      y = to_impute[i],
+      x = impute_using[!(impute_using %in% to_impute[i])]
+    )
   }
   var_lists
 }
 
 #' @export
 prep.step_impute_bag <- function(x, training, info = NULL, ...) {
+  check_number_whole(x$trees, arg = "trees", min = 1)
+  check_number_whole(x$seed_val, arg = "seed_val")
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -247,78 +257,66 @@ prep.step_impute_bag <- function(x, training, info = NULL, ...) {
 }
 
 #' @export
-#' @keywords internal
-prep.step_bagimpute <- prep.step_impute_bag
-
-#' @export
 bake.step_impute_bag <- function(object, new_data, ...) {
-  missing_rows <- !complete.cases(new_data)
-  if (!any(missing_rows))
+  col_names <- names(object$models)
+  check_new_data(col_names, object, new_data)
+
+  missing_rows <- !vec_detect_complete(new_data)
+  if (!any(missing_rows)) {
     return(new_data)
+  }
 
   old_data <- new_data
-  for (i in seq(along.with = object$models)) {
-    imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[, imp_var])
-    if (any(missing_rows)) {
-      preds <- object$models[[imp_var]]$..imp_vars
-      pred_data <- old_data[missing_rows, preds, drop = FALSE]
-      ## do a better job of checking this:
-      if (all(is.na(pred_data))) {
-        rlang::warn("All predictors are missing; cannot impute")
-      } else {
-        pred_vals <- predict(object$models[[imp_var]], pred_data)
-        pred_vals <- cast(pred_vals, new_data[[imp_var]])
-        new_data[missing_rows, imp_var] <- pred_vals
-      }
+  for (col_name in col_names) {
+    missing_rows <- !vec_detect_complete(new_data[[col_name]])
+    if (!any(missing_rows)) {
+      next
+    }
+    preds <- object$models[[col_name]]$..imp_vars
+    pred_data <- old_data[missing_rows, preds, drop = FALSE]
+    ## do a better job of checking this:
+    if (all(is.na(pred_data))) {
+      cli::cli_warn("All predictors are missing; cannot impute.")
+    } else {
+      pred_vals <- predict(object$models[[col_name]], pred_data)
+      # For an ipred bug reported on 2021-09-14:
+      pred_vals <- cast(pred_vals, object$models[[col_name]]$y)
+      new_data[missing_rows, col_name] <- pred_vals
     }
   }
-  ## changes character to factor!
-  as_tibble(new_data)
+  new_data
 }
-
-#' @export
-#' @keywords internal
-bake.step_bagimpute <- bake.step_impute_bag
 
 #' @export
 print.step_impute_bag <-
   function(x, width = max(20, options()$width - 31), ...) {
-    cat("Bagged tree imputation for ", sep = "")
-    printer(names(x$models), x$terms, x$trained, width = width)
+    title <- "Bagged tree imputation for "
+    print_step(names(x$models), x$terms, x$trained, title, width)
     invisible(x)
   }
-
-#' @export
-#' @keywords internal
-print.step_bagimpute <- print.step_impute_bag
 
 #' @export
 #' @rdname step_impute_bag
 imp_vars <- function(...) quos(...)
 
 #' @rdname tidy.recipe
-#' @param x A `step_impute_bag` object.
 #' @export
 tidy.step_impute_bag <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = names(x$models),
-                  model = x$models)
+    res <- tibble(
+      terms = names(x$models),
+      model = unname(x$models)
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names, model = NA)
+    res <- tibble(terms = term_names, model = list(NULL))
   }
   res$id <- x$id
   res
 }
 
-#' @export
-#' @keywords internal
-tidy.step_bagimpute <- tidy.step_impute_bag
-
 # ------------------------------------------------------------------------------
 
-#' @rdname tunable.step
 #' @export
 tunable.step_impute_bag <- function(x, ...) {
   tibble::tibble(
@@ -329,5 +327,3 @@ tunable.step_impute_bag <- function(x, ...) {
     component_id = x$id
   )
 }
-
-tunable.step_bagimpute <- tunable.step_impute_bag

@@ -2,7 +2,7 @@
 % Please edit documentation in R/classdist.R
 \name{step_classdist}
 \alias{step_classdist}
-\title{Distances to Class Centroids}
+\title{Distances to class centroids}
 \usage{
 step_classdist(
   recipe,
@@ -16,6 +16,7 @@ step_classdist(
   log = TRUE,
   objects = NULL,
   prefix = "classdist_",
+  keep_original_cols = TRUE,
   skip = FALSE,
   id = rand_id("classdist")
 )
@@ -24,16 +25,15 @@ step_classdist(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables are affected by the step. See \code{\link[=selections]{selections()}}
-for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{class}{A single character string that specifies a single
 categorical variable to be used as the class.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned?. By default, the function assumes
-that resulting distances will be used as predictors in a model.}
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? By default, the new columns created by this step from
+the original variables will be used as \emph{predictors} in a model.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -50,72 +50,125 @@ by pooling the data for all of the classes?}
 the natural log function?}
 
 \item{objects}{Statistics are stored here once this step has
-been trained by \code{\link[=prep.recipe]{prep.recipe()}}.}
+been trained by \code{\link[=prep]{prep()}}.}
 
-\item{prefix}{A character string that defines the naming convention for
-new distance columns. Defaults to \code{"classdist_"}. See Details below.}
+\item{prefix}{A character string for the prefix of the resulting new
+variables. See notes below.}
+
+\item{keep_original_cols}{A logical to keep the original variables in the
+output. Defaults to \code{TRUE}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_classdist} creates a \emph{specification} of a
-recipe step that will convert numeric data into Mahalanobis
-distance measurements to the data centroid. This is done for
-each value of a categorical class variable.
+\code{step_classdist()} creates a \emph{specification} of a recipe step that will
+convert numeric data into Mahalanobis distance measurements to the data
+centroid. This is done for each value of a categorical class variable.
 }
 \details{
-\code{step_classdist} will create a new column for every
-unique value of the \code{class} variable.
-The resulting variables will not replace the original values
-and by default have the prefix \code{classdist_}. The naming format can be
-changed using the \code{prefix} argument.
+\code{step_classdist} will create a new column for every unique value of
+the \code{class} variable. The resulting variables will not replace the original
+values and, by default, have the prefix \code{classdist_}. The naming format can
+be changed using the \code{prefix} argument.
+
+Class-specific centroids are the multivariate averages of each predictor
+using the data from each class in the training set. When pre-processing a
+new data point, this step computes the distance from the new point to each
+of the class centroids. These distance features can be very effective at
+capturing linear class boundaries. For this reason, they can be useful to
+add to an existing predictor set used within a nonlinear model. If the true
+boundary is actually linear, the model will have an easier time learning the
+training data patterns.
 
 Note that, by default, the default covariance function requires
 that each class should have at least as many rows as variables
 listed in the \code{terms} argument. If \code{pool = TRUE},
 there must be at least as many data points are variables
 overall.
-
-When you \code{\link[=tidy]{tidy()}} this step, a tibble with columns \code{terms} (the
-selectors or variables selected), \code{value} (the centroid of
-the class), and \code{class} is returned.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value}, \code{class} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, location of centroid}
+\item{class}{character, name of the class}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+This step performs an supervised operation that can utilize case weights.
+As a result, case weights are used with frequency weights as well as
+importance weights. For more information,, see the documentation in
+\link{case_weights} and the examples on \code{tidymodels.org}.
+}
+
 \examples{
+\dontshow{if (rlang::is_installed(c("modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(penguins, package = "modeldata")
+penguins <- penguins[vctrs::vec_detect_complete(penguins), ]
+penguins$island <- NULL
+penguins$sex <- NULL
 
 # in case of missing data...
 mean2 <- function(x) mean(x, na.rm = TRUE)
 
 # define naming convention
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(all_numeric_predictors(), class = "Species",
-                 pool = FALSE, mean_func = mean2, prefix = "centroid_")
+rec <- recipe(species ~ ., data = penguins) \%>\%
+  step_classdist(all_numeric_predictors(),
+    class = "species",
+    pool = FALSE, mean_func = mean2, prefix = "centroid_"
+  )
 
 # default naming
-rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_classdist(all_numeric_predictors(), class = "Species",
-                 pool = FALSE, mean_func = mean2)
+rec <- recipe(species ~ ., data = penguins) \%>\%
+  step_classdist(all_numeric_predictors(),
+    class = "species",
+    pool = FALSE, mean_func = mean2
+  )
 
-rec_dists <- prep(rec, training = iris)
+rec_dists <- prep(rec, training = penguins)
 
-dists_to_species <- bake(rec_dists, new_data = iris, everything())
+dists_to_species <- bake(rec_dists, new_data = penguins)
 ## on log scale:
 dist_cols <- grep("classdist", names(dists_to_species), value = TRUE)
-dists_to_species[, c("Species", dist_cols)]
+dists_to_species[, c("species", dist_cols)]
 
 tidy(rec, number = 1)
 tidy(rec_dists, number = 1)
+\dontshow{\}) # examplesIf}
 }
-\concept{dimension_reduction}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other multivariate transformation steps: 
+\code{\link{step_classdist_shrunken}()},
+\code{\link{step_depth}()},
+\code{\link{step_geodist}()},
+\code{\link{step_ica}()},
+\code{\link{step_isomap}()},
+\code{\link{step_kpca}()},
+\code{\link{step_kpca_poly}()},
+\code{\link{step_kpca_rbf}()},
+\code{\link{step_mutate_at}()},
+\code{\link{step_nnmf}()},
+\code{\link{step_nnmf_sparse}()},
+\code{\link{step_pca}()},
+\code{\link{step_pls}()},
+\code{\link{step_ratio}()},
+\code{\link{step_spatialsign}()}
+}
+\concept{multivariate transformation steps}

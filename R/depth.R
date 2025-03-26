@@ -1,21 +1,14 @@
-#' Data Depths
+#' Data depths
 #'
-#' `step_depth` creates a *specification* of a recipe
-#'  step that will convert numeric data into measurement of
-#'  *data depth*. This is done for each value of a categorical
-#'  class variable.
+#' `step_depth()` creates a *specification* of a recipe step that will convert
+#' numeric data into a measurement of *data depth*. This is done for each value of
+#' a categorical class variable.
 #'
+#' @inheritParams step_classdist
+#' @inheritParams step_pca
 #' @inheritParams step_center
-#' @inherit step_center return
-#' @param ... One or more selector functions to choose which
-#'  variables that will be used to create the new features. See
-#'  [selections()] for more details.
 #' @param class A single character string that specifies a single
 #'  categorical variable to be used as the class.
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned?. By default, the function assumes
-#'  that resulting depth estimates will be used as predictors in a
-#'  model.
 #' @param metric A character string specifying the depth metric.
 #'  Possible values are "potential", "halfspace", "Mahalanobis",
 #'  "simplicialVolume", "spatial", and "zonoid".
@@ -28,19 +21,14 @@
 #'  [ddalpha::depth.simplicialVolume()],
 #'  [ddalpha::depth.spatial()],
 #'  [ddalpha::depth.zonoid()].
-#' @param prefix A character string that defines the naming convention for
-#'  new depth columns. Defaults to `"depth_"`. See Details below.
 #' @param data The training data are stored here once after
-#'  [prep.recipe()] is executed.
-#' @return An updated version of `recipe` with the new step
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept dimension_reduction
+#'  [prep()] is executed.
+#' @template step-return
+#' @family multivariate transformation steps
 #' @export
 #' @details Data depth metrics attempt to measure how close data a
 #'  data point is to the center of its distribution. There are a
-#'  number of methods for calculating death but a simple example is
+#'  number of methods for calculating depth but a simple example is
 #'  the inverse of the distance of a data point to the centroid of
 #'  the distribution. Generally, small values indicate that a data
 #'  point not close to the centroid. `step_depth` can compute a
@@ -64,10 +52,20 @@
 #'  replace the original values and by default have the prefix `depth_`. The
 #'  naming format can be changed using the `prefix` argument.
 #'
-#'  When you [`tidy()`] this step, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `class` is returned.
+#' # Tidying
 #'
-#' @examples
+#' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
+#' columns `terms`, `class` , and `id`:
+#'
+#' \describe{
+#'   \item{terms}{character, the selectors or variables selected}
+#'   \item{class}{character, name of class variable}
+#'   \item{id}{character, id of this step}
+#' }
+#'
+#' @template case-weights-not-supported
+#'
+#' @examplesIf rlang::is_installed("ddalpha")
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
@@ -76,8 +74,10 @@
 #' # use zonoid metric instead
 #' # also, define naming convention for new columns
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_numeric_predictors(), class = "Species",
-#'              metric = "zonoid", prefix = "zonoid_")
+#'   step_depth(all_numeric_predictors(),
+#'     class = "Species",
+#'     metric = "zonoid", prefix = "zonoid_"
+#'   )
 #'
 #' rec_dists <- prep(rec, training = iris)
 #'
@@ -86,28 +86,28 @@
 #'
 #' tidy(rec, number = 1)
 #' tidy(rec_dists, number = 1)
-
 step_depth <-
-  function(recipe,
-           ...,
-           class,
-           role = "predictor",
-           trained = FALSE,
-           metric =  "halfspace",
-           options = list(),
-           data = NULL,
-           prefix = "depth_",
-           skip = FALSE,
-           id = rand_id("depth")) {
-    if (!is.character(class) || length(class) != 1)
-      rlang::abort("`class` should be a single character value.")
-
+  function(
+    recipe,
+    ...,
+    class,
+    role = "predictor",
+    trained = FALSE,
+    metric = "halfspace",
+    options = list(),
+    data = NULL,
+    prefix = "depth_",
+    keep_original_cols = TRUE,
+    skip = FALSE,
+    id = rand_id("depth")
+  ) {
+    check_string(class)
     recipes_pkg_check(required_pkgs.step_depth())
 
     add_step(
       recipe,
       step_depth_new(
-        terms = ellipse_check(...),
+        terms = enquos(...),
         class = class,
         role = role,
         trained = trained,
@@ -115,6 +115,7 @@ step_depth <-
         options = options,
         data = data,
         prefix = prefix,
+        keep_original_cols = keep_original_cols,
         skip = skip,
         id = id
       )
@@ -122,8 +123,19 @@ step_depth <-
   }
 
 step_depth_new <-
-  function(terms, class, role, trained, metric,
-           options, data, prefix, skip, id) {
+  function(
+    terms,
+    class,
+    role,
+    trained,
+    metric,
+    options,
+    data,
+    prefix,
+    keep_original_cols,
+    skip,
+    id
+  ) {
     step(
       subclass = "depth",
       terms = terms,
@@ -134,19 +146,32 @@ step_depth_new <-
       options = options,
       data = data,
       prefix = prefix,
+      keep_original_cols = keep_original_cols,
       skip = skip,
       id = id
     )
   }
 
+depth_metric <- c(
+  "potential",
+  "halfspace",
+  "Mahalanobis",
+  "simplicialVolume",
+  "spatial",
+  "zonoid"
+)
+
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
-  class_var <- x$class[1]
-  x_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, x_names])
+  x_names <- recipes_eval_select(x$terms, training, info)
+  check_type(training[, x_names], types = c("double", "integer"))
+  metric <- x$metric
+  rlang::arg_match(metric, depth_metric)
+  check_string(x$prefix, allow_empty = FALSE, arg = "prefix")
 
-  x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+  class_var <- x$class[1]
+
+  x_dat <- split(training[, x_names], training[[class_var]])
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,
@@ -157,14 +182,21 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
     options = x$options,
     data = x_dat,
     prefix = x$prefix,
+    keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
   )
 }
 
 get_depth <- function(tr_dat, new_dat, metric, opts) {
-  if (!is.matrix(new_dat))
+  if (ncol(new_dat) == 0L) {
+    # ddalpha can't handle 0 col inputs
+    return(rep(NA_real_, nrow(new_dat)))
+  }
+
+  if (!is.matrix(new_dat)) {
     new_dat <- as.matrix(new_dat)
+  }
   opts$data <- tr_dat
   opts$x <- new_dat
   dd_call <- call2(paste0("depth.", metric), !!!opts, .ns = "ddalpha")
@@ -173,8 +205,15 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
-  x_names <- colnames(object$data[[1]])
-  x_data <- as.matrix(new_data[, x_names])
+  col_names <- colnames(object$data[[1]])
+  check_new_data(col_names, object, new_data)
+
+  if (length(col_names) == 0) {
+    return(new_data)
+  }
+
+  x_data <- as.matrix(new_data[, col_names])
+
   res <- lapply(
     object$data,
     get_depth,
@@ -182,53 +221,53 @@ bake.step_depth <- function(object, new_data, ...) {
     metric = object$metric,
     opts = object$options
   )
-  res <- as_tibble(res)
-  newname <- paste0(object$prefix, colnames(res))
-  res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
-    res <- as_tibble(res)
-  res
+  res <- tibble::new_tibble(res)
+
+  new_names <- paste0(object$prefix, colnames(res))
+  colnames(res) <- new_names
+
+  res <- check_name(res, new_data, object, new_names)
+
+  new_data <- vctrs::vec_cbind(new_data, res, .name_repair = "minimal")
+  new_data <- remove_original_cols(new_data, object, col_names)
+  new_data
 }
 
+#' @export
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Data depth by ", x$class, "for ")
+    title <- glue("Data depth by {x$class} for ")
 
     if (x$trained) {
-      cat(format_ch_vec(x_names, width = width))
-    } else
-      x_names <- NULL
-    printer(x_names, x$terms, x$trained, width = width)
+      x_names <- colnames(x$data[[1]])
+    } else {
+      x_names <- character()
+    }
+
+    print_step(x_names, x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
-
 #' @rdname tidy.recipe
-#' @param x A `step_depth` object.
 #' @export
 tidy.step_depth <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = colnames(x$data[[1]]),
-                  class = x$class)
+    res <- tibble(
+      terms = colnames(x$data[[1]]) %||% character(),
+      class = x$class
+    )
   } else {
     term_names <- sel2char(x$terms)
-    res <- tibble(terms = term_names,
-                  class = na_chr)
+    res <- tibble(
+      terms = term_names,
+      class = na_chr
+    )
   }
   res$id <- x$id
   res
 }
 
-
-
-#' S3 methods for tracking which additional packages are needed for steps.
-#'
-#' @param x A recipe step
-#' @return A character vector
-#' @rdname required_pkgs.step
-#' @keywords internal
+#' @rdname required_pkgs.recipe
 #' @export
 required_pkgs.step_depth <- function(x, ...) {
   c("ddalpha")

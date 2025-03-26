@@ -1,38 +1,20 @@
-#' Check Range Consistency
+#' Check range consistency
 #'
 #' `check_range` creates a *specification* of a recipe
 #'  check that will check if the range of a numeric
 #'  variable changed in the new data.
 #'
-#' @param recipe A recipe object. The check will be added to the
-#'  sequence of operations for this recipe.
-#' @param ... One or more selector functions to choose which
-#'  variables are affected by the check. See [selections()]
-#'  for more details.
-#' @param role Not used by this check since no new variables are
-#'  created.
-#' @param id A character string that is unique to this step to identify it.
-#' @param skip A logical. Should the check be skipped when the
-#'  recipe is baked by [bake.recipe()]? While all operations are baked
-#'  when [prep.recipe()] is run, some operations may not be able to be
-#'  conducted on new data (e.g. processing the outcome variable(s)).
-#'  Care should be taken when using `skip = TRUE` as it may affect
-#'  the computations for subsequent operations.
-#' @param trained A logical to indicate if the quantities for
-#'  preprocessing have been estimated.
+#' @inheritParams check_missing
 #' @param slack_prop The allowed slack as a proportion of the range
 #'   of the variable in the train set.
 #' @param warn If `TRUE` the check will throw a warning instead
 #'   of an error when failing.
 #' @param lower A named numeric vector of minimum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
+#'   This is `NULL` until computed by [prep()].
 #' @param upper A named numeric vector of maximum values in the train set.
-#'   This is `NULL` until computed by [prep.recipe()].
-#' @return An updated version of `recipe` with the new check
-#'  added to the sequence of existing steps (if any).
-#' @keywords datagen
-#' @concept preprocessing
-#' @concept normalization_methods
+#'   This is `NULL` until computed by [prep()].
+#' @template check-return
+#' @family checks
 #' @export
 #' @details
 #'   The amount of slack that is allowed is determined by the
@@ -42,59 +24,62 @@
 #'   is used to compute the allowed slack at the lower end,
 #'   the second to compute the allowed slack at the upper end.
 #'
-#'  When you [`tidy()`] this check, a tibble with columns `terms` (the
-#'  selectors or variables selected) and `value` (the means) is returned.
+#'  # Tidying
+#'
+#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
+#'  `terms` (the selectors or variables selected) and `value` (the means)
+#'  is returned.
 #'
 #' @examples
-#'   slack_df <- data_frame(x = 0:100)
-#'   slack_new_data <- data_frame(x = -10:110)
+#' slack_df <- data_frame(x = 0:100)
+#' slack_new_data <- data_frame(x = -10:110)
 #'
-#'   # this will fail the check both ends
+#' # this will fail the check both ends
 #' \dontrun{
-#'   recipe(slack_df) %>%
-#'     check_range(x) %>%
-#'     prep() %>%
-#'     bake(slack_new_data)
-#'  }
-#'
-#'   # this will fail the check only at the upper end
-#' \dontrun{
-#'   recipe(slack_df) %>%
-#'     check_range(x, slack_prop = c(0.1, 0.05)) %>%
-#'     prep() %>%
-#'     bake(slack_new_data)
+#' recipe(slack_df) %>%
+#'   check_range(x) %>%
+#'   prep() %>%
+#'   bake(slack_new_data)
 #' }
 #'
-#'   # give a warning instead of an error
+#' # this will fail the check only at the upper end
 #' \dontrun{
-#'   recipe(slack_df) %>%
-#'     check_range(x, warn = TRUE) %>%
-#'     prep() %>%
-#'     bake(slack_new_data)
+#' recipe(slack_df) %>%
+#'   check_range(x, slack_prop = c(0.1, 0.05)) %>%
+#'   prep() %>%
+#'   bake(slack_new_data)
 #' }
-#' @seealso [recipe()] [prep.recipe()]
-#'   [bake.recipe()]
+#'
+#' # give a warning instead of an error
+#' \dontrun{
+#' recipe(slack_df) %>%
+#'   check_range(x, warn = TRUE) %>%
+#'   prep() %>%
+#'   bake(slack_new_data)
+#' }
 check_range <-
-  function(recipe,
-           ...,
-           role       = NA,
-           skip       = FALSE,
-           trained    = FALSE,
-           slack_prop = 0.05,
-           warn       = FALSE,
-           lower      = NULL,
-           upper      = NULL,
-           id = rand_id("range_check_")) {
+  function(
+    recipe,
+    ...,
+    role = NA,
+    skip = FALSE,
+    trained = FALSE,
+    slack_prop = 0.05,
+    warn = FALSE,
+    lower = NULL,
+    upper = NULL,
+    id = rand_id("range_check_")
+  ) {
     add_check(
       recipe,
       check_range_new(
-        terms   = ellipse_check(...),
-        role    = role,
-        skip    = skip,
+        terms = enquos(...),
+        role = role,
+        skip = skip,
         trained = trained,
-        warn    = warn,
-        lower   = lower,
-        upper   = upper,
+        warn = warn,
+        lower = lower,
+        upper = upper,
         slack_prop = slack_prop,
         id = id
       )
@@ -106,54 +91,63 @@ check_range_new <-
   function(terms, role, skip, trained, slack_prop, warn, lower, upper, id) {
     check(
       subclass = "range",
-      terms    = terms,
-      role     = role,
-      skip     = skip,
-      trained  = trained,
-      warn     = warn,
-      lower    = lower,
-      upper    = upper,
+      terms = terms,
+      role = role,
+      skip = skip,
+      trained = trained,
+      warn = warn,
+      lower = lower,
+      upper = upper,
       slack_prop = slack_prop,
-      id       = id
+      id = id
     )
   }
 
-prep.check_range <- function(x,
-                             training,
-                             info = NULL,
-                             ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+#' @export
+prep.check_range <- function(x, training, info = NULL, ...) {
+  col_names <- recipes_eval_select(x$terms, training, info)
 
   ## TODO add informative error for nonnumerics
 
-  lower_vals <- vapply(training[ ,col_names], min, c(min = 1),
-                       na.rm = TRUE)
-  upper_vals <- vapply(training[ ,col_names], max, c(max = 1),
-                       na.rm = TRUE)
+  lower_vals <- vapply(training[, col_names], min, c(min = 1), na.rm = TRUE)
+  upper_vals <- vapply(training[, col_names], max, c(max = 1), na.rm = TRUE)
   check_range_new(
-    terms      = x$terms,
-    role       = x$role,
-    trained    = TRUE,
-    skip       = x$skip,
-    warn       = x$warn,
-    lower      = lower_vals,
-    upper      = upper_vals,
+    terms = x$terms,
+    role = x$role,
+    trained = TRUE,
+    skip = x$skip,
+    warn = x$warn,
+    lower = lower_vals,
+    upper = upper_vals,
     slack_prop = x$slack_prop,
-    id         = x$id
+    id = x$id
   )
 }
 
-range_check_func <- function(x,
-                             lower,
-                             upper,
-                             slack_prop = 0.05,
-                             warn       = FALSE,
-                             colname    = "x") {
-  stopifnot(is.numeric(slack_prop),
-            is.numeric(x))
+range_check_func <- function(
+  x,
+  lower,
+  upper,
+  slack_prop = 0.05,
+  warn = FALSE,
+  colname = "x"
+) {
+  if (!is.numeric(x)) {
+    cli::cli_abort(
+      "{.arg x} must be a numeric vector, not {.obj_type_friendly {x}}."
+    )
+  }
+
+  if (!is.numeric(slack_prop)) {
+    cli::cli_abort(
+      "{.arg slack_prop} must be a numeric vector, \\
+      not {.obj_type_friendly {slack_prop}}."
+    )
+  }
+
   min_x <- min(x)
   max_x <- max(x)
-  msg <- NULL
+
   if (length(slack_prop) == 1) {
     lower_allowed <- lower - ((upper - lower) * slack_prop)
     upper_allowed <- upper + ((upper - lower) * slack_prop)
@@ -161,58 +155,67 @@ range_check_func <- function(x,
     lower_allowed <- lower - ((upper - lower) * slack_prop[1])
     upper_allowed <- upper + ((upper - lower) * slack_prop[2])
   } else {
-    rlang::abort("slack_prop should be of length 1 or of length 2")
+    cli::cli_abort(
+      "{.arg slack_prop} should be of length 1 or 2, not {length(slack_prop)}."
+    )
   }
 
-  if (min_x < lower_allowed & max_x > upper_allowed) {
-    msg <- paste0("min ", colname, " is ", min_x, ", lower bound is ",
-                  lower_allowed,", max x is ", max_x, ", upper bound is ",
-                  upper_allowed)
-  } else if (min_x < lower_allowed) {
-    msg <- paste0("min ", colname, " is ", min_x, ", lower bound is ",
-                  lower_allowed)
-  } else if (max_x > upper_allowed) {
-    msg <- paste0("max ", colname, " is ", max_x, ", upper bound is ",
-                  upper_allowed)
+  msg <- NULL
+  if (min_x < lower_allowed) {
+    msg <- c(
+      msg,
+      i = "Smallest value of {.var {colname}} is {min_x}, \\
+      crossing the lower bound {lower_allowed}."
+    )
   }
-  if (warn & !is.null(msg)) {
-    rlang::warn(msg)
-  } else if (!is.null(msg)) {
-    rlang::abort(msg)
+  if (max_x > upper_allowed) {
+    msg <- c(
+      msg,
+      i = "Largest value of {.var {colname}} is {max_x}, \\
+      crossing the upper bound {upper_allowed}."
+    )
+  }
+
+  if (!is.null(msg)) {
+    if (warn) {
+      cli::cli_warn(msg)
+    } else {
+      cli::cli_abort(msg)
+    }
   }
 }
 
-bake.check_range <- function(object,
-                             new_data,
-                             ...) {
-
+#' @export
+bake.check_range <- function(object, new_data, ...) {
   col_names <- names(object$lower)
-  for (i in seq_along(col_names)) {
-    colname <- col_names[i]
-    range_check_func(new_data[[ colname ]],
-                     object$lower[colname],
-                     object$upper[colname],
-                     object$slack_prop,
-                     object$warn,
-                     colname)
+  check_new_data(col_names, object, new_data)
+
+  for (col_name in col_names) {
+    range_check_func(
+      new_data[[col_name]],
+      object$lower[col_name],
+      object$upper[col_name],
+      object$slack_prop,
+      object$warn,
+      col_name
+    )
   }
-  as_tibble(new_data)
+  new_data
 }
 
+#' @export
 print.check_range <-
   function(x, width = max(20, options()$width - 30), ...) {
-    cat("Checking range of ", sep = "")
-    printer(names(x$lower), x$terms, x$trained, width = width)
+    title <- "Checking range of "
+    print_step(names(x$lower), x$terms, x$trained, title, width)
     invisible(x)
   }
 
-
 #' @rdname tidy.recipe
-#' @param x A `check_range` object.
 #' @export
 tidy.check_range <- function(x, ...) {
   if (is_trained(x)) {
-    res <- tibble(terms = x$columns)
+    res <- tibble(terms = names(x$lower))
   } else {
     res <- tibble(terms = sel2char(x$terms))
   }

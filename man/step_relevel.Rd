@@ -19,10 +19,8 @@ step_relevel(
 \item{recipe}{A recipe object. The step will be added to the
 sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which
-variables that will be affected by the step. These variables
-should be character or factor types. See \code{\link[=selections]{selections()}} for more
-details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -34,48 +32,84 @@ preprocessing have been estimated.}
 relevel the factor column(s) (if the level is present).}
 
 \item{objects}{A list of objects that contain the information
-on factor levels that will be determined by \code{\link[=prep.recipe]{prep.recipe()}}.}
+on factor levels that will be determined by \code{\link[=prep]{prep()}}.}
 
 \item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked
-when \code{\link[=prep.recipe]{prep.recipe()}} is run, some operations may not be able to be
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
 conducted on new data (e.g. processing the outcome variable(s)).
 Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations}
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
-An updated version of \code{recipe} with the new step
-added to the sequence of existing steps (if any).
+An updated version of \code{recipe} with the new step added to the
+sequence of any existing operations.
 }
 \description{
-\code{step_relevel} creates a \emph{specification} of a recipe
-step that will reorder the provided factor columns so that
-the level specified by ref_level is first. This is useful
-for contr.treatment contrasts which take the first level as the
-reference.
+\code{step_relevel()} creates a \emph{specification} of a recipe step that will reorder
+the provided factor columns so that the level specified by \code{ref_level} is
+first. This is useful for \code{\link[=contr.treatment]{contr.treatment()}} contrasts which take the first
+level as the reference.
 }
 \details{
 The selected variables are releveled to a level
-(given by \code{ref_level}). Placing the \code{ref_level} in the first
+(given by \code{ref_level}), placing the \code{ref_level} in the first
 position.
 
 Note that if the original columns are character, they will be
 converted to factors by this step.
 }
-\examples{
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
 
-library(modeldata)
-data(okc)
-rec <- recipe(~ diet + location, data = okc) \%>\%
-  step_unknown(diet, new_level = "UNKNOWN") \%>\%
-  step_relevel(diet, ref_level = "UNKNOWN") \%>\%
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{character, the value of \code{ref_level}}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
+\examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(Sacramento, package = "modeldata")
+rec <- recipe(~ city + zip, data = Sacramento) \%>\%
+  step_unknown(city, new_level = "UNKNOWN") \%>\%
+  step_relevel(city, ref_level = "UNKNOWN") \%>\%
   prep()
 
-data <- bake(rec, okc)
-levels(data$diet)
+data <- bake(rec, Sacramento)
+levels(data$city)
+\dontshow{\}) # examplesIf}
 }
-\concept{factors}
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other dummy variable and encoding steps: 
+\code{\link{step_bin2factor}()},
+\code{\link{step_count}()},
+\code{\link{step_date}()},
+\code{\link{step_dummy}()},
+\code{\link{step_dummy_extract}()},
+\code{\link{step_dummy_multi_choice}()},
+\code{\link{step_factor2string}()},
+\code{\link{step_holiday}()},
+\code{\link{step_indicate_na}()},
+\code{\link{step_integer}()},
+\code{\link{step_novel}()},
+\code{\link{step_num2factor}()},
+\code{\link{step_ordinalscore}()},
+\code{\link{step_other}()},
+\code{\link{step_regex}()},
+\code{\link{step_string2factor}()},
+\code{\link{step_time}()},
+\code{\link{step_unknown}()},
+\code{\link{step_unorder}()}
+}
+\concept{dummy variable and encoding steps}

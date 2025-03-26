@@ -16,16 +16,17 @@ step_cut(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the sequence of
-operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the
+sequence of operations for this recipe.}
 
-\item{...}{One or more selector functions to choose which variables are
-affected by the step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables
+for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are created.}
+\item{role}{Not used by this step since no new variables are
+created.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated.}
+\item{trained}{A logical to indicate if the quantities for
+preprocessing have been estimated.}
 
 \item{breaks}{A numeric vector with at least one cut point.}
 
@@ -33,20 +34,22 @@ have been estimated.}
 range in the train set should be included in the lowest or highest bucket.
 Defaults to \code{FALSE}, values outside the original range will be set to \code{NA}.}
 
-\item{skip}{A logical. Should the step be skipped when the recipe is baked
-by \code{\link[=bake.recipe]{bake.recipe()}}? While all operations are baked when \code{\link[=prep.recipe]{prep.recipe()}} is
-run, some operations may not be able to be conducted on new data (e.g.
-processing the outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it may affect the computations for subsequent operations}
+\item{skip}{A logical. Should the step be skipped when the
+recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
+when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
+conducted on new data (e.g. processing the outcome variable(s)).
+Care should be taken when using \code{skip = TRUE} as it may affect
+the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
 \value{
 An updated version of \code{recipe} with the new step added to the
-sequence of existing steps (if any).
+sequence of any existing operations.
 }
 \description{
 \code{step_cut()} creates a \emph{specification} of a recipe step that cuts a numeric
-variable into a factor based on provided boundary values
+variable into a factor based on provided boundary values.
 }
 \details{
 Unlike the \code{base::cut()} function there is no need to specify the
@@ -57,6 +60,23 @@ points will end up in the last.
 \code{step_cut()} will call \code{base::cut()} in the baking step with
 \code{include.lowest} set to \code{TRUE}.
 }
+\section{Tidying}{
+When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
+columns \code{terms}, \code{value} , and \code{id}:
+
+\describe{
+\item{terms}{character, the selectors or variables selected}
+\item{value}{numeric, the location of the cuts}
+\item{id}{character, id of this step}
+}
+}
+
+\section{Case weights}{
+
+
+The underlying operation does not allow for case weights.
+}
+
 \examples{
 df <- data.frame(x = 1:10, y = 5:14)
 rec <- recipe(df)
@@ -85,7 +105,7 @@ rec \%>\%
 
 # It is up to you if you want values outside the
 # range learned at prep to be included
-new_df <- data.frame(x = 1:11)
+new_df <- data.frame(x = 1:11, y = 5:15)
 rec \%>\%
   step_cut(x, breaks = 5, include_outside_range = TRUE) \%>\%
   prep() \%>\%
@@ -96,5 +116,8 @@ rec \%>\%
   prep() \%>\%
   bake(new_df)
 }
-\concept{preprocessing}
-\keyword{datagen}
+\seealso{
+Other discretization steps: 
+\code{\link{step_discretize}()}
+}
+\concept{discretization steps}
