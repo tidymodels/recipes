@@ -441,7 +441,7 @@ prep.recipe <-
 
     if (!missing(strings_as_factors)) {
       lifecycle::deprecate_soft(
-        when = "0.1.17",
+        when = "1.3.0",
         what = "recipes::prep.recipe(strings_as_factors)",
         with = "recipes::recipe(strings_as_factors)"
       )
