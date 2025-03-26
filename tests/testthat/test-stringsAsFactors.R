@@ -14,12 +14,11 @@ as_str$fact <- as.character(as_str$fact)
 as_str$ord <- as.character(as_str$ord)
 
 test_that("strings_as_factors = FALSE", {
-  rec1 <- recipe(~., data = as_fact) %>%
+  rec1 <- recipe(~., data = as_fact, strings_as_factors = FALSE) %>%
     step_center(numbers)
   rec1 <- prep(
     rec1,
     training = as_fact,
-    strings_as_factors = FALSE,
     verbose = FALSE
   )
   rec1_as_fact <- bake(rec1, new_data = as_fact)
@@ -31,12 +30,11 @@ test_that("strings_as_factors = FALSE", {
 })
 
 test_that("strings_as_factors = TRUE", {
-  rec2 <- recipe(~., data = as_fact) %>%
+  rec2 <- recipe(~., data = as_fact, strings_as_factors = TRUE) %>%
     step_center(numbers)
   rec2 <- prep(
     rec2,
     training = as_fact,
-    strings_as_factors = TRUE,
     verbose = FALSE
   )
   rec2_as_fact <- bake(rec2, new_data = as_fact)

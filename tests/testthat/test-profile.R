@@ -55,9 +55,9 @@ test_that("beds profile", {
 })
 
 test_that("character profile", {
-  chr_rec <- sacr_rec %>%
+  chr_rec <- recipe(~., data = Sacramento, strings_as_factors = FALSE) %>%
     step_profile(-zip, profile = vars(zip)) %>%
-    prep(Sacramento, strings_as_factors = FALSE) %>%
+    prep(Sacramento) %>%
     bake(new_data = NULL)
   expect_true(is_unq(chr_rec$city))
   expect_true(is_unq(chr_rec$price))

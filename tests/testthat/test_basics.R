@@ -40,19 +40,17 @@ test_that("Recipe on missspelled variables in formulas", {
 })
 
 test_that("return character or factor values", {
-  raw_recipe <- recipe(HHV ~ ., data = biomass)
-  centered <- raw_recipe %>%
+  centered <- recipe(HHV ~ ., data = biomass, strings_as_factors = FALSE) %>%
     step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
 
-  centered_char <- prep(
-    centered,
-    training = biomass,
-    strings_as_factors = FALSE
-  )
+  centered_char <- prep(centered, training = biomass)
   char_var <- bake(centered_char, new_data = head(biomass))
   expect_equal(class(char_var$sample), "character")
 
-  centered_fac <- prep(centered, training = biomass, strings_as_factors = TRUE)
+  centered <- recipe(HHV ~ ., data = biomass, strings_as_factors = TRUE) %>%
+    step_center(carbon, hydrogen, oxygen, nitrogen, sulfur)
+
+  centered_fac <- prep(centered, training = biomass)
   fac_var <- bake(centered_fac, new_data = head(biomass))
   expect_equal(class(fac_var$sample), "factor")
   expect_equal(levels(fac_var$sample), sort(unique(biomass$sample)))
