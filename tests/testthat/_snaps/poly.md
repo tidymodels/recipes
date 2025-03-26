@@ -38,7 +38,7 @@
       predictor: 10
       
       -- Operations 
-      * Orthogonal polynomials on: <none>
+      * Polynomial expansion on: <none>
 
 ---
 
@@ -57,7 +57,7 @@
       Training data contained 32 data points and no incomplete rows.
       
       -- Operations 
-      * Orthogonal polynomials on: <none> | Trained
+      * Polynomial expansion on: <none> | Trained
 
 # keep_original_cols - can prep recipes with it missing
 
@@ -82,7 +82,7 @@
       predictor: 5
       
       -- Operations 
-      * Orthogonal polynomials on: carbon hydrogen
+      * Polynomial expansion on: carbon hydrogen
 
 ---
 
@@ -101,7 +101,7 @@
       Training data contained 456 data points and no incomplete rows.
       
       -- Operations 
-      * Orthogonal polynomials on: carbon hydrogen | Trained
+      * Polynomial expansion on: carbon hydrogen | Trained
 
 # bad args
 

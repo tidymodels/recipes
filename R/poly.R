@@ -176,7 +176,7 @@ bake.step_poly <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
   new_names <- purrr::map(
     object$objects,
-    ~paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
+    ~ paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
   )
 
   # Start with n-row, 0-col tibble for the empty selection case
@@ -203,7 +203,7 @@ bake.step_poly <- function(object, new_data, ...) {
 #' @export
 print.step_poly <-
   function(x, width = max(20, options()$width - 35), ...) {
-    title <- "Orthogonal polynomials on "
+    title <- "Polynomial expansion on "
     print_step(names(x$objects), x$terms, x$trained, title, width)
     invisible(x)
   }
