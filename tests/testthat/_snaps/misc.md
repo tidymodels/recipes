@@ -80,6 +80,16 @@
       Error in `recipes:::spline_msg()`:
       ! craaazzyy {{}}{}{}
 
+---
+
+    Code
+      recipe(. ~ disp, data = mtcars) %>% step_spline_convex(disp) %>% prep()
+    Condition
+      Error in `step_spline_convex()`:
+      Caused by error in `prep()`:
+      ! Error in splines2::cSpline(x = x, df = 10, intercept = TRUE, degree = 3) :
+      mocked error
+
 # names0() error on non-positive number
 
     Code
