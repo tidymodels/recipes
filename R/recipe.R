@@ -211,14 +211,6 @@ recipe.formula <- function(formula, data, ...) {
     cli::cli_abort("{.arg data} is missing with no default.")
   }
 
-  if (is.table(data)) {
-    cli::cli_warn(
-      "Passing a table to {.fn recipe} is undocumented unsupported behavior.
-      This will no longer be possible in the next release of {.pkg recipes}."
-    )
-    data <- as_tibble(data)
-  }
-
   if (!is.data.frame(data) && !is.matrix(data) && !is_sparse_matrix(data)) {
     cli::cli_abort(
       "{.arg data} must be a data frame, matrix, or sparse matrix, 
@@ -618,16 +610,16 @@ prep.recipe <-
     # that variable was available.
     x$last_term_info <-
       running_info %>%
-        group_by(variable) %>%
-        arrange(desc(number)) %>%
-        summarise(
-          type = list(dplyr::first(type)),
-          role = list(unique(unlist(role))),
-          source = dplyr::first(source),
-          number = dplyr::first(number),
-          skip = dplyr::first(skip),
-          .groups = "keep"
-        )
+      group_by(variable) %>%
+      arrange(desc(number)) %>%
+      summarise(
+        type = list(dplyr::first(type)),
+        role = list(unique(unlist(role))),
+        source = dplyr::first(source),
+        number = dplyr::first(number),
+        skip = dplyr::first(skip),
+        .groups = "keep"
+      )
     x
   }
 
@@ -950,7 +942,7 @@ bake_req_tibble <- function(x) {
   req <- compute_bake_role_requirements(x)
   req <-
     tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
-      dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
   req
 }
 

@@ -2,6 +2,8 @@
 
 * Fixed printing for `step_geodist()` when no variables are selected. (#1423)
 
+* Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
+
 # recipes 1.2.1
 
 ## Bug Fixes

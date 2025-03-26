@@ -133,8 +133,8 @@ test_that("prep with fresh = TRUE", {
 
   rec <-
     recipe(y ~ ., data = test_data) %>%
-      step_dummy(x, id = "") %>%
-      prep()
+    step_dummy(x, id = "") %>%
+    prep()
 
   new_rec <- prep(rec, training = test_data, fresh = TRUE)
 
@@ -218,9 +218,9 @@ test_that("logging", {
 test_that("`bake(new_data = NULL)` same as `juice()`", {
   rec <-
     recipe(mpg ~ ., data = mtcars) %>%
-      step_filter(gear == 4) %>%
-      step_center(all_predictors()) %>%
-      prep()
+    step_filter(gear == 4) %>%
+    step_center(all_predictors()) %>%
+    prep()
 
   juiced <- juice(rec)
   baked <- bake(rec, new_data = NULL)
@@ -483,7 +483,7 @@ test_that("juice() error if prep(retain = FALSE)", {
 test_that("recipe() error with minus in formula", {
   expect_snapshot(
     error = TRUE,
-    recipe(~. - 1, data = mtcars)
+    recipe(~ . - 1, data = mtcars)
   )
 })
 
@@ -523,5 +523,12 @@ test_that("recipe() error for unsupported data types", {
   expect_snapshot(
     error = TRUE,
     recipe(list())
+  )
+})
+
+test_that("recipe() error for table input (#1416)", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(Titanic, Survived ~ .)
   )
 })
