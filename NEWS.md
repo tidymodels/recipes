@@ -4,6 +4,8 @@
 
 * Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
 
+* Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
+ 
 # recipes 1.2.1
 
 ## Bug Fixes

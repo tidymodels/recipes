@@ -2,10 +2,10 @@ library(testthat)
 library(recipes)
 
 dummies <- cbind(
-  model.matrix(~block - 1, npk),
-  model.matrix(~N - 1, npk),
-  model.matrix(~P - 1, npk),
-  model.matrix(~K - 1, npk),
+  model.matrix(~ block - 1, npk),
+  model.matrix(~ N - 1, npk),
+  model.matrix(~ P - 1, npk),
+  model.matrix(~ K - 1, npk),
   yield = npk$yield
 )
 
@@ -68,6 +68,19 @@ test_that("no exclusions", {
 
   expect_true(length(filtering_trained_2$steps[[1]]$removals) == 0)
   expect_true(all(colnames(test_res_2) == c("carbon", "hydrogen")))
+})
+
+test_that("doesn't remove both variables if identical (#1357)", {
+  mtcars <- as_tibble(mtcars[1])
+  exp <- mtcars
+  mtcars$mpg_copy <- mtcars$mpg
+
+  res <- recipe(~., data = mtcars) %>%
+    step_lincomb(all_numeric_predictors()) %>%
+    prep() |>
+    bake(NULL)
+
+  expect_identical(res, exp)
 })
 
 # Infrastructure ---------------------------------------------------------------
