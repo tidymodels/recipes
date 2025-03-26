@@ -136,7 +136,7 @@ test_that("tunable", {
 
   rec <-
     recipe(~., data = iris) %>%
-      step_spline_b(all_predictors())
+    step_spline_b(all_predictors())
   rec_param <- tunable.step_spline_b(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free", "degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -158,6 +158,18 @@ test_that("works when baked with 1 row", {
   )
 
   expect_identical(nrow(res), 1L)
+})
+
+test_that("errors with zero variance predictors (#1455)", {
+  mtcars$disp <- 1
+  mtcars$vs <- 1
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_spline_b(all_numeric_predictors()) %>%
+      prep()
+  )
 })
 
 # Infrastructure ---------------------------------------------------------------

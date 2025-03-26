@@ -28,6 +28,17 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_01`
 
+# errors with zero variance predictors (#1455)
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_spline_monotone(all_numeric_predictors()) %>%
+        prep()
+    Condition
+      Error in `step_spline_monotone()`:
+      Caused by error in `prep()`:
+      ! The following columns have zero variance making computations unable to proceed: disp and vs.
+      i Consider using ?step_zv (`?recipes::step_zv()`) to remove those columns before this step.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
