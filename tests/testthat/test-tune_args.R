@@ -23,13 +23,13 @@ test_that("tune_tbl() errors on duplicate ids", {
 })
 
 test_that("tune_args() returns all arguments marked for tuning (#1296)", {
-  rec <- recipe(Price ~ ., data = credit_data) %>%
+  rec <- recipe(~., data = mtcars) %>%
     step_impute_bag(
       all_predictors(),
       # tunable
-      trees = tune(),
+      trees = hardhat::tune(),
       # not known tunable
-      options = tune(),
+      options = hardhat::tune(),
       id = ""
     )
 
