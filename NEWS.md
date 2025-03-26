@@ -2,6 +2,8 @@
 
 * Fixed printing for `step_geodist()` when no variables are selected. (#1423)
 
+* fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
+
 * Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
 
 * Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)

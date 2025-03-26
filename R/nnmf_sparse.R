@@ -177,6 +177,10 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
     dat <- tibble_to_sparse(training[, col_names], transp = TRUE)
     cl <- nnmf_pen_call(x)
 
+    if (!"package:Matrix" %in% search()) {
+      attachNamespace("Matrix")
+    }
+
     nnm <- try(rlang::eval_tidy(cl), silent = TRUE)
 
     if (inherits(nnm, "try-error")) {

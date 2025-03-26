@@ -1,7 +1,7 @@
 test_that("check_name() is used", {
   skip_if_not_installed("RcppML")
   data("ames", package = "modeldata")
-  library(Matrix)
+
   dat <- mtcars
   dat$NNMF1 <- as.character(dat$mpg)
 
@@ -16,7 +16,6 @@ test_that("check_name() is used", {
 
 test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
 
   rec <- recipe(~., data = mtcars) %>%
     step_nnmf_sparse(
@@ -33,7 +32,6 @@ test_that("Do nothing for num_comps = 0 and keep_original_cols = FALSE (#1152)",
 
 test_that("rethrows error correctly from implementation", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
 
   local_mocked_bindings(
     .package = "RcppML",
@@ -51,7 +49,7 @@ test_that("rethrows error correctly from implementation", {
 
 test_that("errors for missing data", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   mtcars$mpg[1] <- NA
 
   expect_snapshot(
@@ -66,7 +64,6 @@ test_that("errors for missing data", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
 
   rec <- recipe(mtcars) %>%
     step_nnmf_sparse(disp, wt) %>%
@@ -80,7 +77,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
 test_that("empty printing", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_nnmf_sparse(rec)
 
@@ -93,7 +90,7 @@ test_that("empty printing", {
 
 test_that("empty selection prep/bake is a no-op", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   rec1 <- recipe(mpg ~ ., mtcars)
   rec2 <- step_nnmf_sparse(rec1)
 
@@ -108,7 +105,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_nnmf_sparse(rec)
 
@@ -128,7 +125,7 @@ test_that("empty selection tidy method works", {
 
 test_that("keep_original_cols works", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   new_names <- c("NNMF1")
 
   rec <- recipe(~mpg, mtcars) %>%
@@ -156,7 +153,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   rec <- recipe(~mpg, mtcars) %>%
     step_nnmf_sparse(all_predictors())
 
@@ -173,7 +170,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 
 test_that("printing", {
   skip_if_not_installed("RcppML")
-  library(Matrix)
+
   rec <- recipe(mpg ~ ., mtcars) %>%
     step_nnmf_sparse(disp, drat)
 
