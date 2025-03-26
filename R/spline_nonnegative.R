@@ -153,6 +153,8 @@ prep.step_spline_nonnegative <- function(x, training, info = NULL, ...) {
   check_number_whole(x$degree, arg = "degree", min = 0)
   check_number_whole(x$deg_free, arg = "deg_free", min = 0)
 
+  check_zv(training[, col_names])
+
   res <- list()
 
   for (col_name in col_names) {

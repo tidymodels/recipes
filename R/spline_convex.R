@@ -140,6 +140,8 @@ prep.step_spline_convex <- function(x, training, info = NULL, ...) {
   check_bool(x$complete_set, arg = "complete_set")
   check_number_whole(x$degree, arg = "degree", min = 0)
 
+  check_zv(training[, col_names])
+
   res <- list()
 
   for (col_name in col_names) {

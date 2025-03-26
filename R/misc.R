@@ -465,7 +465,7 @@ check_type <- function(dat, quant = TRUE, types = NULL, call = caller_env()) {
       types <- "factor or character"
     }
   } else {
-    all_good <- purrr::map_lgl(get_types(dat)$type, ~any(.x %in% types))
+    all_good <- purrr::map_lgl(get_types(dat)$type, ~ any(.x %in% types))
   }
 
   if (!all(all_good)) {
@@ -1015,4 +1015,22 @@ get_from_info <- function(info, role) {
   res <- info$variable[info$role == role & !is.na(info$role)]
 
   res
+}
+
+check_zv <- function(data, call = rlang::caller_env()) {
+  vz_ind <- vapply(data, one_unique, logical(1))
+
+  if (any(vz_ind)) {
+    col_names <- colnames(data)
+    offenders <- col_names[vz_ind]
+    cli::cli_abort(
+      c(
+        "!" = "{cli::qty(offenders)} The following column{?s} {?has/have} zero \\
+        variance making computations unable to proceed: {offenders}.",
+        "i" = "Consider using {.help [?step_zv](recipes::step_zv)} to remove \\
+        those columns before this step."
+      ),
+      call = call
+    )
+  }
 }

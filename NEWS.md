@@ -5,6 +5,8 @@
 * Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
 
 * Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
+
+* `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now gives informative errors when applied to zero variance predictors. (#1455)
  
 # recipes 1.2.1
 
