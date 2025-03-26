@@ -119,6 +119,8 @@ test_that("spline error messages", {
     error = TRUE
   )
 
+  skip_if_not_installed("splines2")
+
   local_mocked_bindings(
     .package = "splines2",
     cSpline = function(...) {
