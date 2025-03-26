@@ -210,7 +210,7 @@ iter_lc_rm <- function(x, max_steps = 10, verbose = FALSE) {
       if (verbose) {
         cat(" removing", length(lcs), "\n")
       }
-      x <- x[, !(colnames(x) %in% lcs)]
+      x <- x[, !(colnames(x) %in% lcs), drop = FALSE]
     }
   }
   if (verbose) {
