@@ -3,7 +3,7 @@ test_that("check_new_data works", {
   examples <- matrix(exp(rnorm(40)), ncol = 4)
   examples <- as.data.frame(examples)
 
-  log_trans <- recipe(~V1 + V2 + V3 + V4, data = examples) %>%
+  log_trans <- recipe(~ V1 + V2 + V3 + V4, data = examples) %>%
     step_log(V1, V2, V3) %>%
     update_role(V1, V2, V3, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
@@ -118,6 +118,25 @@ test_that("spline error messages", {
     recipes:::spline_msg("craaazzyy {{}}{}{}"),
     error = TRUE
   )
+
+  skip_if_not_installed("splines2")
+
+  local_mocked_bindings(
+    .package = "splines2",
+    cSpline = function(...) {
+      cli::cli_abort("mocked error")
+    }
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(. ~ disp, data = mtcars) %>%
+      step_spline_convex(disp) %>%
+      prep()
+  )
+})
+
+test_that("spline error messages", {
 })
 
 test_that("names0() error on non-positive number", {

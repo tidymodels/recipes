@@ -46,7 +46,7 @@ spline2_create <- function(
     )
   res <- try(rlang::eval_tidy(.cl), silent = TRUE)
   if (inherits(res, "try-error")) {
-    spline_msg(res)
+    spline_msg(res, call)
     return(NULL)
   }
   res <- attributes(res)
@@ -59,7 +59,7 @@ spline2_create <- function(
   res
 }
 
-spline_msg <- function(x) {
+spline_msg <- function(x, call) {
   x <- as.character(x)
   # Error messages can contain brackets (e.g. "Error in if (df < 0) { : missing value")
   # For glue string interpolation, the default open/close deliminators the
@@ -70,7 +70,7 @@ spline_msg <- function(x) {
   x <- gsub("(\\{)", "\\1\\1", x)
   x <- gsub("(\\})", "\\1\\1", x)
   x <- strsplit(x, "\\n")[[1]]
-  cli::cli_abort(x)
+  cli::cli_abort(x, call = call)
 }
 
 spline2_apply <- function(object, new_data) {
