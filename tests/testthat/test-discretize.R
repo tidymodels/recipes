@@ -168,7 +168,7 @@ test_that("bad args", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_discretize(all_predictors())
+    step_discretize(all_predictors())
   rec_param <- tunable.step_discretize(rec$steps[[1]])
   expect_equal(rec_param$name, c("min_unique", "num_breaks"))
   expect_true(all(rec_param$source == "recipe"))
@@ -183,6 +183,31 @@ test_that("tunable", {
 test_that("war when less breaks are generated", {
   expect_snapshot(
     tmp <- discretize(c(rep(1, 50), 1:50), cuts = 5, min_unique = 1)
+  )
+})
+
+test_that("bake works predicting on only NAs (#1350)", {
+  rec <- recipe(~mpg, data = mtcars) %>%
+    step_discretize(mpg, min_unique = 4) %>%
+    prep()
+
+  exp_levels <- rec %>%
+    bake(data.frame(mpg = numeric(0))) %>%
+    pull() %>%
+    levels()
+
+  expect_identical(
+    rec %>%
+      bake(data.frame(mpg = NA)) %>%
+      pull(mpg),
+    factor(NA, exp_levels)
+  )
+
+  expect_identical(
+    rec %>%
+      bake(data.frame(mpg = c(NA, NA))) %>%
+      pull(mpg),
+    factor(c(NA, NA), exp_levels)
   )
 })
 
