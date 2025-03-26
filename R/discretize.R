@@ -179,8 +179,12 @@ predict.discretize <- function(object, new_data, ...) {
     } else {
       object$labels
     }
-    out <-
-      cut(new_data, object$breaks, labels = labs, include.lowest = TRUE)
+    if (all(is.na(new_data))) {
+      out <- factor(new_data, levels = labs)
+    } else {
+      out <-
+        cut(new_data, object$breaks, labels = labs, include.lowest = TRUE)
+    }
 
     if (object$keep_na) {
       out_levels <- levels(out)

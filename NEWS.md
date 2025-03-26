@@ -7,7 +7,9 @@
 * Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
 
 * `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now gives informative errors when applied to zero variance predictors. (#1455)
- 
+
+* fixed bug where `bake.step_discretize()` would error if applied to predictor only containing `NA`s. (#1350)
+
 # recipes 1.2.1
 
 ## Bug Fixes
