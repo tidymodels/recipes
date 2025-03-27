@@ -558,4 +558,16 @@ test_that("strings_as_factors in `recipe()`", {
 
   factor_var <- bake(prepped_factor_recipe, new_data = head(biomass))
   expect_identical(class(factor_var$sample), "factor")
+
+  # `prep()` takes precedence if it isn't set in `recipe()`
+  string_recipe <- recipe(HHV ~ ., data = biomass)
+
+  prepped_string_recipe <- prep(
+    string_recipe,
+    training = biomass,
+    strings_as_factors = FALSE
+  )
+
+  char_var <- bake(prepped_string_recipe, new_data = head(biomass))
+  expect_identical(class(char_var$sample), "character")
 })
