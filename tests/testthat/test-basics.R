@@ -533,3 +533,29 @@ test_that("recipe() error for table input (#1416)", {
     recipe(Titanic, Survived ~ .)
   )
 })
+
+
+test_that("strings_as_factors in `recipe()`", {
+  local_options(lifecycle_verbosity = "quiet")
+
+  # Takes precedence over value in `prep()`
+  string_recipe <- recipe(HHV ~ ., data = biomass, strings_as_factors = FALSE)
+  prepped_string_recipe <- prep(
+    string_recipe,
+    training = biomass,
+    strings_as_factors = TRUE
+  )
+
+  factor_recipe <- recipe(HHV ~ ., data = biomass, strings_as_factors = TRUE)
+  prepped_factor_recipe <- prep(
+    factor_recipe,
+    training = biomass,
+    strings_as_factors = FALSE
+  )
+
+  char_var <- bake(prepped_string_recipe, new_data = head(biomass))
+  expect_identical(class(char_var$sample), "character")
+
+  factor_var <- bake(prepped_factor_recipe, new_data = head(biomass))
+  expect_identical(class(factor_var$sample), "factor")
+})
