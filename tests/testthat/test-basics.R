@@ -535,7 +535,7 @@ test_that("recipe() error for table input (#1416)", {
 })
 
 
-test_that("strings_as_factors in `recipe()`", {
+test_that("precedence for strings_as_factors in `recipe()`", {
   local_options(lifecycle_verbosity = "quiet")
 
   # Takes precedence over value in `prep()`
@@ -570,4 +570,54 @@ test_that("strings_as_factors in `recipe()`", {
 
   char_var <- bake(prepped_string_recipe, new_data = head(biomass))
   expect_identical(class(char_var$sample), "character")
+})
+
+test_that("strings_as_factors in `recipe()` for different roles", {
+  # outcomes
+  # predictors
+  # id / other
+  # undeclared
+
+  ex_dat <- tibble(
+    outcome_string = letters,
+    outcome_factor = factor(letters),
+    predictor_string = letters,
+    predictor_factor = factor(letters),
+    id_string = letters,
+    id_factor = factor(letters),
+    undeclared_string = letters,
+    undeclared_factor = factor(letters)
+  )
+
+  res_false <- recipe(ex_dat, strings_as_factors = FALSE) %>%
+    update_role(starts_with("outcome"), new_role = "outcome") %>%
+    update_role(starts_with("predictor"), new_role = "predictor") %>%
+    update_role(starts_with("id"), new_role = "id") %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(vctrs::vec_ptype(ex_dat), vctrs::vec_ptype(res_false))
+
+  res_true <- recipe(ex_dat, strings_as_factors = TRUE) %>%
+    update_role(starts_with("outcome"), new_role = "outcome") %>%
+    update_role(starts_with("predictor"), new_role = "predictor") %>%
+    update_role(starts_with("id"), new_role = "id") %>%
+    prep() %>%
+    bake(NULL)
+
+  exp_true_classes <- list(
+    outcome_string = "factor",
+    outcome_factor = "factor",
+    predictor_string = "factor",
+    predictor_factor = "factor",
+    id_string = "character",
+    id_factor = "factor",
+    undeclared_string = "character",
+    undeclared_factor = "factor"
+  )
+
+  expect_identical(
+    lapply(res_true, class),
+    exp_true_classes
+  )
 })
