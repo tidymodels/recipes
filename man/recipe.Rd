@@ -49,12 +49,14 @@ single role that the variable will take. This value could be anything but
 common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}.}
 
 \item{strings_as_factors}{A logical, should character columns be converted to
-factors? This affects the preprocessed training set (when retain = TRUE) as
-well as the results of both \code{prep.recipe()} and \code{bake.recipe()}. In 1.2.1
-and prior versions, this argument was provided via \code{prep()}. Code which
-only provides it via \code{prep()} will continue to work with a once per session
-warning, and in a future version it will become an error. If provided in
-both \code{prep()} and \code{recipe()}, the value in \code{recipe()} will take precedence.}
+factors? This affects the preprocessed training set (when \code{retain = TRUE})
+as well as the results of both \code{prep.recipe()} and \code{bake.recipe()}. This
+will only affect variables with roles \code{"outcome"} and \code{"predictor"} In
+1.2.1 and prior versions, this argument was provided via \code{prep()}. Code
+which only provides it via \code{prep()} will continue to work with a once per
+session warning, and in a future version it will become an error. If
+provided in both \code{prep()} and \code{recipe()}, the value in \code{recipe()} will take
+precedence. Default to \code{NULL} which will be taken as \code{TRUE}.}
 }
 \value{
 An object of class \code{recipe} with sub-objects:
