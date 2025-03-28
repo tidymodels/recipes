@@ -182,6 +182,7 @@ articles:
   - title: Developer
     contents:
       - custom
+      - articles/checklists
   - title: Examples
     contents:
       - subsampling

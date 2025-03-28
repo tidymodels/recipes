@@ -1,0 +1,47 @@
+---
+title: "Dev checklists"
+description: |
+ These are checklists used by the tidymodels team, extension package authors and contributors.
+---
+
+These are checklists used by the tidymodels team. If you want to use them to add models and/or engines in your own package, you will have to adapt them somewhat.
+
+Copy these checklists into the corresponding GitHub issue.
+
+## Adding an argument to an existing step
+
+```
+* [ ] Document argument for the given step, `step_name()` will be used as example.
+
+* [ ] Add argument to `step_name()`, making sure that it is passed to `step_name_new()` in `add_step()`.
+
+* [ ] Add argument to `step_name_new()` and make sure it is passed to `step()`.
+
+* [ ] Make sure argument is passed to `step_umap_new()` in `prep.step_name()`.
+
+* [ ] Add the following code to `prep.step_name()`. This will prevent older recipes from breaking.
+    ```
+    if (is.null(x$new_arg)) {
+      x$new_arg <- default-value-for-new_arg
+    }
+    ```
+
+* [ ] Add test to make sure you didn't mess up the above tasks.
+    ```
+    test_that("backwards compatible for new_arg", {
+      rec <- recipe(~ ., data = data_set_of_your_choice) %>%
+        step_name(all_predictors())
+  
+      exp_res <- prep(rec)
+  
+      rec$steps[[1]]$new_arg <- NULL
+  
+      expect_identical(
+        prep(rec),
+        exp_res
+      )
+    })
+    ```
+
+* [ ] Test that new argument works.
+```
