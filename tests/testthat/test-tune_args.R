@@ -2,7 +2,7 @@ test_that("tune_args() errors on multiple tune()s in same arg", {
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%
-      step_pca(all_predictors(), num_comp = ~tune() + tune()) %>%
+      step_pca(all_predictors(), num_comp = ~ tune() + tune()) %>%
       tune_args()
   )
 })
@@ -19,5 +19,31 @@ test_that("tune_tbl() errors on duplicate ids", {
       component_id = c("a", "b"),
       full = TRUE
     )
+  )
+})
+
+test_that("tune_args() returns all arguments marked for tuning (#1296)", {
+  rec <- recipe(~., data = mtcars) %>%
+    step_impute_bag(
+      all_predictors(),
+      # tunable
+      trees = hardhat::tune(),
+      # not known tunable
+      options = hardhat::tune(),
+      id = ""
+    )
+
+  exp <- tibble::tibble(
+    name = c("trees", "options"),
+    tunable = c(TRUE, FALSE),
+    id = c("trees", "options"),
+    source = "recipe",
+    component = "step_impute_bag",
+    component_id = "",
+  )
+
+  expect_identical(
+    tune_args(rec),
+    exp
   )
 })
