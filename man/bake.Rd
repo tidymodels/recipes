@@ -24,11 +24,7 @@ that \code{prep(retain = TRUE)} was used). See \link{sparse_data} for more
 information about use of sparse data.}
 
 \item{composition}{Either \code{"tibble"}, \code{"matrix"}, \code{"data.frame"}, or
-`"dgCMatrix"``for the format of the processed data set. Note that all
-computations during the baking process are done in a non-sparse format.
-Also, note that this argument should be called \strong{after} any selectors and
-the selectors should only resolve to numeric columns (otherwise an error is
-thrown).}
+\verb{"dgCMatrix"``for the format of the processed data set. Also, note that this argument should be called **after** any selectors and the selectors should only resolve to numeric columns if }composition\verb{is set to}"matrix"\code{or}"dgCMatrix"\verb{. If the data contains sparse columns they will be perseved for }"tibble"\code{and}"data.frame"\verb{, and efficiently used for }"dgCMatrix"`.}
 }
 \value{
 A tibble, matrix, or sparse matrix that may have different columns than the
