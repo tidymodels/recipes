@@ -21,8 +21,8 @@
 ---
 
     Code
-      tmp <- recipe(mpg ~ ., data = mtcars) %>% step_interact(~ disp:am) %>% prep(
-        strings_as_factors = FALSE)
+      tmp <- recipe(mpg ~ ., data = mtcars, strings_as_factors = FALSE) %>%
+        step_interact(~ disp:am) %>% prep()
     Condition
       Warning:
       Categorical variables used in `step_interact()` should probably be avoided; This can lead to differences in dummy variable values that are produced by ?step_dummy (`?recipes::step_dummy()`). Please convert all involved variables to dummy variables first.

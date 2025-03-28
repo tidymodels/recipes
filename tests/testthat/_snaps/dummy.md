@@ -1,7 +1,7 @@
 # dummy variables errors with character inputs
 
     Code
-      prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
+      prep(dummy, training = sacr, verbose = FALSE)
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:

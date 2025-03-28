@@ -20,6 +20,15 @@
 #' @param roles A character string (the same length of `vars`) that describes a
 #'   single role that the variable will take. This value could be anything but
 #'   common roles are `"outcome"`, `"predictor"`, `"case_weight"`, or `"ID"`.
+#' @param strings_as_factors A logical, should character columns be converted to
+#'   factors? This affects the preprocessed training set (when `retain = TRUE`)
+#'   as well as the results of both `prep.recipe()` and `bake.recipe()`. This
+#'   will only affect variables with roles `"outcome"` and `"predictor"` In
+#'   1.2.1 and prior versions, this argument was provided via `prep()`. Code
+#'   which only provides it via `prep()` will continue to work with a once per
+#'   session warning, and in a future version it will become an error. If
+#'   provided in both `prep()` and `recipe()`, the value in `recipe()` will take
+#'   precedence. Default to `NULL` which will be taken as `TRUE`.
 #'
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
@@ -108,7 +117,14 @@ recipe.default <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.data.frame <-
-  function(x, formula = NULL, ..., vars = NULL, roles = NULL) {
+  function(
+    x,
+    formula = NULL,
+    ...,
+    vars = NULL,
+    roles = NULL,
+    strings_as_factors = NULL
+  ) {
     if (!is.null(formula)) {
       if (!is.null(vars)) {
         cli::cli_abort(
@@ -198,7 +214,8 @@ recipe.data.frame <-
       levels = NULL,
       retained = NA,
       requirements = requirements,
-      ptype = vctrs::vec_ptype(x)
+      ptype = vctrs::vec_ptype(x),
+      strings_as_factors = strings_as_factors
     )
     class(out) <- "recipe"
     out
@@ -423,6 +440,19 @@ prep.recipe <-
 
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
+
+    if (!missing(strings_as_factors)) {
+      lifecycle::deprecate_soft(
+        when = "1.3.0",
+        what = "recipes::prep.recipe(strings_as_factors)",
+        with = "recipes::recipe(strings_as_factors)"
+      )
+    }
+
+    if (!is.null(x$strings_as_factors)) {
+      strings_as_factors <- x$strings_as_factors
+    }
+
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
       lvls <- kill_levels(lvls, x$var_info)

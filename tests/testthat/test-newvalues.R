@@ -130,9 +130,9 @@ test_that("check_new_values not ignoring NA argument", {
 
 check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
   expect_no_error(
-    res <- recipe(x1) %>%
+    res <- recipe(x1, strings_as_factors = saf) %>%
       check_new_values(a) %>%
-      prep(strings_as_factors = saf) %>%
+      prep() %>%
       bake(x1)
   )
 

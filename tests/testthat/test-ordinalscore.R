@@ -19,12 +19,11 @@ ex_miss$ord3[2] <- NA
 score <- function(x) as.numeric(x)^2
 
 test_that("linear scores", {
-  rec1 <- recipe(~., data = ex_dat) %>%
+  rec1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
     step_ordinalscore(starts_with("ord"))
   rec1 <- prep(
     rec1,
     training = ex_dat,
-    strings_as_factors = FALSE,
     verbose = FALSE
   )
   rec1_scores <- bake(rec1, new_data = ex_dat)
@@ -39,12 +38,11 @@ test_that("linear scores", {
 })
 
 test_that("nonlinear scores", {
-  rec2 <- recipe(~., data = ex_dat) %>%
+  rec2 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
     step_ordinalscore(starts_with("ord"), convert = score)
   rec2 <- prep(
     rec2,
     training = ex_dat,
-    strings_as_factors = FALSE,
     verbose = FALSE
   )
   rec2_scores <- bake(rec2, new_data = ex_dat)
@@ -67,14 +65,13 @@ test_that("bad spec", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec1 <- recipe(~., data = ex_dat) %>%
+  rec1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
     step_ordinalscore(starts_with("ord")) %>%
     update_role(starts_with("ord"), new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
   rec1 <- prep(
     rec1,
     training = ex_dat,
-    strings_as_factors = FALSE,
     verbose = FALSE
   )
 
