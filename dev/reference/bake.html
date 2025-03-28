@@ -82,11 +82,7 @@ information about use of sparse data.</p></dd>
 
 <dt id="arg-composition">composition<a class="anchor" aria-label="anchor" href="#arg-composition"></a></dt>
 <dd><p>Either <code>"tibble"</code>, <code>"matrix"</code>, <code>"data.frame"</code>, or
-`"dgCMatrix"“for the format of the processed data set. Note that all
-computations during the baking process are done in a non-sparse format.
-Also, note that this argument should be called <strong>after</strong> any selectors and
-the selectors should only resolve to numeric columns (otherwise an error is
-thrown).</p></dd>
+<code>"dgCMatrix"``for the format of the processed data set. Also, note that this argument should be called **after** any selectors and the selectors should only resolve to numeric columns if </code>composition<code>is set to</code>"matrix"<code>or</code>"dgCMatrix"<code>. If the data contains sparse columns they will be perseved for </code>"tibble"<code>and</code>"data.frame"<code>, and efficiently used for </code>"dgCMatrix"`.</p></dd>
 
 </dl></div>
     <div class="section level2">
