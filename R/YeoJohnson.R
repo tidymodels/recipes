@@ -229,7 +229,6 @@ yj_transform <- function(x, lambda, ind_neg = NULL, eps = 0.001) {
 ll_yj <- function(lambda, y, ind_neg, const, eps = 0.001) {
   n <- length(y)
   y_t <- yj_transform(y, lambda, ind_neg)
-  mu_t <- mean(y_t)
   var_t <- var(y_t) * (n - 1) / n
   res <- -.5 * n * log(var_t) + (lambda - 1) * const
   res
