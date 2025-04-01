@@ -79,7 +79,7 @@ error is thrown.
 \code{ellipse_check()} is deprecated. Instead, empty selections should be
 supported by all steps.
 
-\code{printer()} is used for printing steps.
+\code{printer()} is used for printing steps. \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 \code{is_trained()} is a helper function that returned a single logical to
 indicate whether a recipe is traine or not.

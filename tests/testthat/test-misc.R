@@ -154,6 +154,8 @@ test_that("ellipse_check() errors on empty selection", {
 })
 
 test_that("ellipse_check() errors on empty selection", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   x <- 2
   class(x) <- "dimRedResult"
   expect_snapshot(

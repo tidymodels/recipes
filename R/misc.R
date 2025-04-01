@@ -315,7 +315,7 @@ ellipse_check <- function(...) {
 
 #' Printing Workhorse Function
 #'
-#' `printer()` is used for printing steps.
+#' `printer()` is used for printing steps. `r lifecycle::badge("deprecated")`
 #'
 #' @param tr_obj A character vector of names that have been
 #'  resolved during preparing the recipe (e.g. the `columns` object
@@ -336,6 +336,8 @@ printer <- function(
   trained = FALSE,
   width = max(20, options()$width - 30)
 ) {
+  lifecycle::deprecate_soft("1.3.0", "printer()", "print_step()")
+
   if (trained) {
     txt <- format_ch_vec(tr_obj, width = width)
   } else {

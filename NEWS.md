@@ -12,6 +12,8 @@
 
 * fixed bug where `bake.step_discretize()` would error if applied to predictor only containing `NA`s. (#1350)
 
+* Officially deprecate `printer()` in favor of `print_step()`. (#1243)
+
 # recipes 1.2.1
 
 ## Bug Fixes
