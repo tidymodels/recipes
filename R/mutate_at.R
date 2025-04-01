@@ -1,5 +1,11 @@
 #' Mutate multiple columns using dplyr
 #'
+#' @description
+#' `r lifecycle::badge("superseded")`
+#'
+#' `step_mutate_at()` is superseded in favor of using [step_mutate()] with
+#' [dplyr::across()].
+#'
 #' `step_mutate_at()` creates a *specification* of a recipe step that will
 #' modify the selected variables using a common function via
 #' [dplyr::mutate_at()].
@@ -54,6 +60,8 @@ step_mutate_at <- function(
   skip = FALSE,
   id = rand_id("mutate_at")
 ) {
+  lifecycle::signal_stage("superseded", "step_mutate_at()", "step_mutate()")
+
   if (rlang::is_missing(fn)) {
     cli::cli_abort("Argument {.arg fn} must be specified.")
   }
