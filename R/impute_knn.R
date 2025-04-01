@@ -248,29 +248,42 @@ bake.step_impute_knn <- function(object, new_data, ...) {
     }
     preds <- object$columns[[col_name]]$x
     imp_data <- old_data[missing_rows, preds, drop = FALSE]
-    ## do a better job of checking this:
-    if (all(is.na(imp_data))) {
-      cli::cli_warn("All predictors are missing; cannot impute.")
-    } else {
-      imp_var_complete <- !is.na(object$ref_data[[col_name]])
-      nn_ind <- nn_index(
-        object$ref_data[imp_var_complete, ],
-        imp_data,
-        preds,
-        object$neighbors,
-        object$options
+
+    imp_data_all_missing <- vctrs::vec_detect_missing(imp_data)
+
+    if (any(imp_data_all_missing)) {
+      missing_rows <- which(missing_rows)[imp_data_all_missing]
+
+      cli::cli_warn(
+        "The {.arg impute_with} variables for {.col {col_name}} only contains 
+        missing values for row: {missing_rows}. Cannot impute for those rows.",
       )
-      pred_vals <-
-        apply(
-          nn_ind,
-          2,
-          nn_pred,
-          dat = object$ref_data[imp_var_complete, col_name]
-        )
-      pred_vals <- cast(pred_vals, object$ref_data[[col_name]])
-      new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
-      new_data[missing_rows, col_name] <- pred_vals
+
+      imp_data <- imp_data[!imp_data_all_missing, , drop = FALSE]
+
+      if (nrow(imp_data) == 0) {
+        next
+      }
     }
+
+    imp_var_complete <- !is.na(object$ref_data[[col_name]])
+    nn_ind <- nn_index(
+      object$ref_data[imp_var_complete, ],
+      imp_data,
+      preds,
+      object$neighbors,
+      object$options
+    )
+    pred_vals <-
+      apply(
+        nn_ind,
+        2,
+        nn_pred,
+        dat = object$ref_data[imp_var_complete, col_name]
+      )
+    pred_vals <- cast(pred_vals, object$ref_data[[col_name]])
+    new_data[[col_name]] <- vec_cast(new_data[[col_name]], pred_vals)
+    new_data[missing_rows, col_name] <- pred_vals
   }
   new_data
 }

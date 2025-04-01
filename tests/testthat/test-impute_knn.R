@@ -182,7 +182,7 @@ test_that("options", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_impute_knn(all_predictors())
+    step_impute_knn(all_predictors())
   rec_param <- tunable.step_impute_knn(rec$steps[[1]])
   expect_equal(rec_param$name, c("neighbors"))
   expect_true(all(rec_param$source == "recipe"))
@@ -203,15 +203,18 @@ test_that("impute_with errors with nothing selected", {
   )
 })
 
-test_that("warn if all values of predictor are missing", {
-  mtcars[, 1:11] <- NA_real_
+test_that("Warns when impute_with contains all NAs in a row", {
+  mtcars[1:3, 1] <- NA_real_
+  mtcars[10, 3] <- NA_real_
+
+  mtcars[c(2, 3, 10), 9:10] <- NA_real_
+
   expect_snapshot(
     tmp <- recipe(~., data = mtcars) %>%
-      step_impute_knn(mpg, disp, vs) %>%
+      step_impute_knn(mpg, disp, vs, impute_with = imp_vars(am, gear)) %>%
       prep()
   )
 })
-
 test_that("error on wrong options argument", {
   expect_snapshot(
     error = TRUE,
@@ -232,9 +235,9 @@ test_that("error on wrong options argument", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   imputed <-
     recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) %>%
-      step_impute_knn(carbon, impute_with = imp_vars(hydrogen, oxygen)) %>%
-      update_role(hydrogen, new_role = "potato") %>%
-      update_role_requirements(role = "potato", bake = FALSE)
+    step_impute_knn(carbon, impute_with = imp_vars(hydrogen, oxygen)) %>%
+    update_role(hydrogen, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE)
 
   imputed_trained <- prep(imputed, training = biomass, verbose = FALSE)
 
