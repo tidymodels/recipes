@@ -5,7 +5,6 @@
 \alias{estimate_yj}
 \alias{ellipse_check}
 \alias{printer}
-\alias{prepare}
 \alias{is_trained}
 \alias{sel2char}
 \alias{print_step}
@@ -29,8 +28,6 @@ printer(
   trained = FALSE,
   width = max(20, options()$width - 30)
 )
-
-prepare(x, ...)
 
 is_trained(x)
 

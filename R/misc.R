@@ -359,15 +359,6 @@ printer <- function(
   invisible(NULL)
 }
 
-#' @keywords internal
-#' @rdname recipes-internal
-#' @export
-prepare <- function(x, ...) {
-  cli::cli_abort(
-    "As of version 0.0.1.9006 please use {.fn prep} instead of {.fn prepare}."
-  )
-}
-
 #' Check to see if a recipe is trained/prepared
 #'
 #' @param x A recipe
