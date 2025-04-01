@@ -1,5 +1,8 @@
 #' Rename multiple columns using dplyr
 #'
+#' @description
+#' `r lifecycle::badge("superseded")`
+#'
 #' `step_rename_at()` creates a *specification* of a recipe step that will
 #' rename the selected variables using a common function via
 #' [dplyr::rename_at()].
@@ -47,6 +50,8 @@ step_rename_at <- function(
   skip = FALSE,
   id = rand_id("rename_at")
 ) {
+  lifecycle::signal_stage("superseded", "step_mutate_at()", "step_mutate()")
+
   if (rlang::is_missing(fn)) {
     cli::cli_abort("Argument {.arg fn} must be specified.")
   }
