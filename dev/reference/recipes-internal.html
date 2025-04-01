@@ -59,7 +59,7 @@ print_step() is used for printing steps."><meta property="og:image" content="htt
     <div class="ref-description section level2">
     <p><code>ellipse_check()</code> is deprecated. Instead, empty selections should be
 supported by all steps.</p>
-<p><code>printer()</code> is used for printing steps.</p>
+<p><code>printer()</code> is used for printing steps. <a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p>
 <p><code>is_trained()</code> is a helper function that returned a single logical to
 indicate whether a recipe is traine or not.</p>
 <p><code>sel2char()</code> takes a list of selectors (e.g. <code>terms</code> in most steps) and
@@ -87,8 +87,6 @@ returns a character vector version for printing.</p>
 <span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">width</span> <span class="op">-</span> <span class="fl">30</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">prepare</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_trained</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
