@@ -132,6 +132,22 @@ bake(qq_rec, new_data = NULL, contains("appro")) \%>\% slice(1:4)
 
 # The difference:
 tidy(qq_rec, number = 1)
+
+# Using across()
+recipe(~., data = iris) \%>\%
+  step_mutate(across(contains("Length"), .fns = ~ 1 / .)) \%>\%
+  prep() \%>\%
+  bake(new_data = NULL) \%>\%
+  slice(1:10)
+
+recipe(~., data = iris) \%>\%
+  # leads to more columns being created.
+  step_mutate(
+    across(contains("Length"), .fns = list(log = log, sqrt = sqrt))
+  ) \%>\%
+  prep() \%>\%
+  bake(new_data = NULL) \%>\%
+  slice(1:10)
 }
 \seealso{
 Other individual transformation steps: 

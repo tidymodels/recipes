@@ -3,6 +3,9 @@
 #' @description
 #' `r lifecycle::badge("superseded")`
 #'
+#' `step_mutate_at()` is superseded in favor of using [step_mutate()] with
+#' [dplyr::across()].
+#'
 #' `step_mutate_at()` creates a *specification* of a recipe step that will
 #' modify the selected variables using a common function via
 #' [dplyr::mutate_at()].

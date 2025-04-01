@@ -49,8 +49,6 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
-
 \code{step_rename_at()} creates a \emph{specification} of a recipe step that will
 rename the selected variables using a common function via
 \code{\link[dplyr:select_all]{dplyr::rename_at()}}.

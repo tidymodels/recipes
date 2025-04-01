@@ -51,6 +51,9 @@ sequence of any existing operations.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
+\code{step_mutate_at()} is superseded in favor of using \code{\link[=step_mutate]{step_mutate()}} with
+\code{\link[dplyr:across]{dplyr::across()}}.
+
 \code{step_mutate_at()} creates a \emph{specification} of a recipe step that will
 modify the selected variables using a common function via
 \code{\link[dplyr:mutate_all]{dplyr::mutate_at()}}.
