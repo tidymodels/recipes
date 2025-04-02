@@ -8,6 +8,8 @@
 
 * The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (@smingerson, #331, #287)
 
+* Fixed bugs in `step_bs()`, `step_depth()`, `step_harmonic()`, `step_invlogit()`, `step_isomap()`, `step_logit()`, `check_range()`, `step_poly_bernstein()`, `step_spline_b()`, `step_spline_convex()`, `step_monotone()`, `step_natural()`, `step_nonnegative()` would error in `bake()` with zero-row data. (#1219)
+
 * Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
 
 * `step_impute_bag()` and `step_impute_knn()` now gives more informative warnings when `impute_with` data contains all NAs. (#1385)
