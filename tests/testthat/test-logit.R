@@ -26,13 +26,13 @@ test_that("simple logit trans", {
   rec_trans <- bake(rec_trained, new_data = ex_dat)
   exp_res <-
     as_tibble(ex_dat) %>%
-      mutate(
-        x3 = case_when(
-          x3 == 1.0 ~ 1 - 0.1,
-          x3 == 0.0 ~ 0.1,
-          TRUE ~ x3
-        )
+    mutate(
+      x3 = case_when(
+        x3 == 1.0 ~ 1 - 0.1,
+        x3 == 0.0 ~ 0.1,
+        TRUE ~ x3
       )
+    )
   exp_res$x3 <- binomial()$linkfun(exp_res$x3)
   expect_equal(rec_trans, exp_res)
 })
@@ -108,5 +108,21 @@ test_that("bad args", {
       step_logit(x1, offset = "sure") %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_logit(vs, am) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

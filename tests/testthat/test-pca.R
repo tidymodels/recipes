@@ -215,7 +215,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_pca(all_predictors())
+    step_pca(all_predictors())
   rec_param <- tunable.step_pca(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -459,5 +459,21 @@ test_that("bad args", {
       step_pca(all_numeric_predictors(), threshold = -1) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_pca(all_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

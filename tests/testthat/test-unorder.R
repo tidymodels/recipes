@@ -7,7 +7,7 @@ examples <- data.frame(
   X1 = factor(rep(letters[1:4], each = 3)),
   X2 = ordered(rep(lmh, each = 4), levels = lmh)
 )
-rec <- recipe(~X1 + X2, data = examples)
+rec <- recipe(~ X1 + X2, data = examples)
 
 test_that("correct var", {
   rec1 <- rec %>% step_unorder(X2)
@@ -83,9 +83,27 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
-  rec <- recipe(~X1 + X2, data = examples) %>%
+  rec <- recipe(~ X1 + X2, data = examples) %>%
     step_unorder(X2)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- iris
+  data$Species <- as.ordered(data$Species)
+
+  rec <- recipe(~., data) %>%
+    step_unorder(Species) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

@@ -114,7 +114,7 @@ test_that("na_rm argument works for step_window", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_window(all_predictors(), outcome = "Species")
+    step_window(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_window(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "size"))
   expect_true(all(rec_param$source == "recipe"))
@@ -272,4 +272,10 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  # step_window() requires rows to apply itself to
+
+  expect_true(TRUE)
 })

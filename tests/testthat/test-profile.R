@@ -195,3 +195,8 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("0 and 1 rows data work in bake method", {
+  # step_profile() doesn't work like other steps
+  expect_true(TRUE)
+})

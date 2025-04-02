@@ -302,3 +302,21 @@ test_that("bad args", {
     error = TRUE
   )
 })
+
+test_that("0 and 1 rows data work in bake method", {
+  skip_if_not_installed("splines2")
+
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_spline_b(mpg, disp) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
+})

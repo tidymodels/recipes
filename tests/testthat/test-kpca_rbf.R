@@ -77,7 +77,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_kpca_rbf(all_predictors())
+    step_kpca_rbf(all_predictors())
   rec_param <- tunable.step_kpca_rbf(rec$steps[[1]])
   expect_equal(rec_param$name, c("num_comp", "sigma"))
   expect_true(all(rec_param$source == "recipe"))
@@ -260,5 +260,23 @@ test_that("bad args", {
       step_kpca_rbf(all_numeric_predictors(), prefix = 1) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  skip_if_not_installed("kernlab")
+
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_kpca_rbf(all_numeric_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

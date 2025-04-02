@@ -24,10 +24,8 @@ test_that("default option", {
     times_minute = lubridate::minute(examples$times),
     times_second = lubridate::second(examples$times),
     times_decimal_day = lubridate::hour(examples$times) +
-      (
-        lubridate::second(examples$times) +
-          lubridate::minute(examples$times) * 60
-      ) /
+      (lubridate::second(examples$times) +
+        lubridate::minute(examples$times) * 60) /
         3600
   )
   expect_equal(date_res, date_exp)
@@ -258,4 +256,26 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- data.frame(
+    times = lubridate::ymd_hms("2022-05-06 10:01:07") +
+      lubridate::hours(1:5) +
+      lubridate::minutes(1:5) +
+      lubridate::seconds(1:5)
+  )
+
+  rec <- recipe(~., data) %>%
+    step_time(all_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

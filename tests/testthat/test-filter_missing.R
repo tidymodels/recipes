@@ -48,7 +48,7 @@ test_that("Remove all columns with missing data", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_filter_missing(all_predictors())
+    step_filter_missing(all_predictors())
   rec_param <- tunable.step_filter_missing(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -97,7 +97,7 @@ test_that("case weights", {
 test_that("doesn't destroy sparsity", {
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
-  rec <- recipe(~am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) %>%
     step_scale(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -182,5 +182,21 @@ test_that("bad args", {
       step_filter_missing(all_predictors(), threshold = -.2) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_filter_missing(all_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

@@ -89,6 +89,27 @@ test_that("prefix", {
   expect_true(any(grepl("spatial_", names(dists))))
 })
 
+
+test_that("bad args", {
+  skip_if_not_installed("ddalpha")
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_depth(
+        all_numeric_predictors(),
+        class = "Species",
+        metric = "circular"
+      ) %>%
+      prep(),
+    error = TRUE
+  )
+  expect_snapshot(
+    recipe(Species ~ ., data = iris) %>%
+      step_depth(all_numeric_predictors(), class = "Species", prefix = 0L) %>%
+      prep(),
+    error = TRUE
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -201,22 +222,19 @@ test_that("printing", {
   expect_snapshot(prep(rec))
 })
 
-test_that("bad args", {
+test_that("0 and 1 rows data work in bake method", {
   skip_if_not_installed("ddalpha")
-  expect_snapshot(
-    recipe(Species ~ ., data = iris) %>%
-      step_depth(
-        all_numeric_predictors(),
-        class = "Species",
-        metric = "circular"
-      ) %>%
-      prep(),
-    error = TRUE
+  data <- iris
+  rec <- recipe(~., data) %>%
+    step_depth(all_numeric_predictors(), class = "Species") %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
   )
-  expect_snapshot(
-    recipe(Species ~ ., data = iris) %>%
-      step_depth(all_numeric_predictors(), class = "Species", prefix = 0L) %>%
-      prep(),
-    error = TRUE
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

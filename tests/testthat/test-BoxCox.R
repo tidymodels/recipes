@@ -156,7 +156,7 @@ test_that("warnings", {
   )
 
   expect_snapshot(
-    recipe(~mpg + disp, data = mtcars) %>%
+    recipe(~ mpg + disp, data = mtcars) %>%
       step_BoxCox(mpg, disp) %>%
       prep() %>%
       bake(new_data = tibble(mpg = -1, disp = -1))
@@ -222,4 +222,20 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_BoxCox(mpg, disp) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

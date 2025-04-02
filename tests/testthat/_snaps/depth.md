@@ -1,3 +1,23 @@
+# bad args
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
+      class = "Species", metric = "circular") %>% prep()
+    Condition
+      Error in `step_depth()`:
+      Caused by error in `prep()`:
+      ! `metric` must be one of "potential", "halfspace", "Mahalanobis", "simplicialVolume", "spatial", or "zonoid", not "circular".
+
+---
+
+    Code
+      recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
+      class = "Species", prefix = 0L) %>% prep()
+    Condition
+      Error in `step_depth()`:
+      Caused by error in `prep()`:
+      ! `prefix` must be a single string, not the number 0.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
@@ -84,24 +104,4 @@
       
       -- Operations 
       * Data depth by Species for: Sepal.Length Sepal.Width, ... | Trained
-
-# bad args
-
-    Code
-      recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
-      class = "Species", metric = "circular") %>% prep()
-    Condition
-      Error in `step_depth()`:
-      Caused by error in `prep()`:
-      ! `metric` must be one of "potential", "halfspace", "Mahalanobis", "simplicialVolume", "spatial", or "zonoid", not "circular".
-
----
-
-    Code
-      recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
-      class = "Species", prefix = 0L) %>% prep()
-    Condition
-      Error in `step_depth()`:
-      Caused by error in `prep()`:
-      ! `prefix` must be a single string, not the number 0.
 
