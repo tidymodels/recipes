@@ -49,14 +49,7 @@ single role that the variable will take. This value could be anything but
 common roles are \code{"outcome"}, \code{"predictor"}, \code{"case_weight"}, or \code{"ID"}.}
 
 \item{strings_as_factors}{A logical, should character columns be converted to
-factors? This affects the preprocessed training set (when \code{retain = TRUE})
-as well as the results of both \code{prep.recipe()} and \code{bake.recipe()}. This
-will only affect variables with roles \code{"outcome"} and \code{"predictor"} In
-1.2.1 and prior versions, this argument was provided via \code{prep()}. Code
-which only provides it via \code{prep()} will continue to work with a once per
-session warning, and in a future version it will become an error. If
-provided in both \code{prep()} and \code{recipe()}, the value in \code{recipe()} will take
-precedence. Default to \code{NULL} which will be taken as \code{TRUE}.}
+factors? See Details below.}
 }
 \value{
 An object of class \code{recipe} with sub-objects:
@@ -283,7 +276,7 @@ pca_rec
 
 ## -- Operations
 
-## * Centering and scaling for: carbon hydrogen, ... | Trained
+## * Centering and scaling for: carbon and hydrogen, ... | Trained
 
 ## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained
 }\if{html}{\out{</div>}}
@@ -330,6 +323,32 @@ In general, the workflow interface to recipes is recommended for most
 applications.
 }
 
+}
+
+\subsection{Strings and Factors}{
+
+The primary purpose of a recipe is to facilitate visualization,
+modeling, and analysis. Because of this, most qualitative data should be
+encoded as factors instead of character strings (with exceptions for
+text analysis and related tasks). It is preferred that quantitative data
+be converted to factors prior to passing the data to the recipe since
+the number of levels is usually required for steps (e.g., for making
+dummy indicator columns).
+
+Although it is advisable to create factors before calling
+\code{\link[=recipe]{recipe()}}, that function has a \code{strings_as_factors}
+argument that can do the conversion. This affects the preprocessed
+training set (when \code{retain = TRUE}) as well as the results of both
+\code{\link[=prep.recipe]{prep.recipe()}} and \code{\link[=bake.recipe]{bake.recipe()}}.
+This will only affect variables with roles \code{"outcome"} and \code{"predictor"}
+
+In 1.2.1 and prior versions of the recipes package, this argument was
+provided via \code{\link[=prep]{prep()}}. Code that only provides it via
+\code{\link[=prep]{prep()}} will continue to work with a once-per-session
+warning, and in a future version, it will become an error. If provided
+in both \code{\link[=prep]{prep()}} and \code{\link[=recipe]{recipe()}}, the value in
+\code{\link[=recipe]{recipe()}} will take precedence. Default to \verb{NULL,} which
+will be taken as \code{TRUE}.
 }
 }
 \examples{

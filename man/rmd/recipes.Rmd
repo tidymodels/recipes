@@ -126,4 +126,12 @@ bake(pca_rec, head(biomass_te))
 
 In general, the workflow interface to recipes is recommended for most applications. 
 
+## Strings and Factors
+
+The primary purpose of a recipe is to facilitate visualization, modeling, and analysis. Because of this, most qualitative data should be encoded as factors instead of character strings (with exceptions for text analysis and related tasks). It is preferred that quantitative data be converted to factors prior to passing the data to the recipe since the number of levels is usually required for steps (e.g., for making dummy indicator columns). 
+
+Although it is advisable to create factors before calling [recipe()], that function has a `strings_as_factors` argument that can do the conversion. This affects the preprocessed training set (when `retain = TRUE`) as well as the results of both [prep.recipe()] and [bake.recipe()]. This will only affect variables with roles `"outcome"` and `"predictor"` 
+
+In 1.2.1 and prior versions of the recipes package, this argument was provided via [prep()]. Code that only provides it via [prep()] will continue to work with a once-per-session warning, and in a future version, it will become an error. If provided in both [prep()] and [recipe()], the value in [recipe()] will take precedence. Default to `NULL,` which will be taken as `TRUE`.
+
 
