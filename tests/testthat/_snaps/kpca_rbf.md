@@ -34,8 +34,9 @@
     Condition
       Error in `step_kpca_rbf()`:
       Caused by error in `prep()`:
-      x Failed with error:
-      i Error in kernlab::kpca(x = as.matrix(training[, col_names]), features = 5, : mocked error
+      ! Failed to compute:
+      Caused by error in `kernlab::kpca()`:
+      ! mocked error
 
 # bake method errors when needed non-standard role columns are missing
 

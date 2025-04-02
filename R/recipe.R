@@ -669,11 +669,12 @@ prep.recipe <-
 #'   that `prep(retain = TRUE)` was used). See [sparse_data] for more
 #'   information about use of sparse data.
 #' @param composition Either `"tibble"`, `"matrix"`, `"data.frame"`, or
-#'   `"dgCMatrix"``for the format of the processed data set. Note that all
-#'   computations during the baking process are done in a non-sparse format.
-#'   Also, note that this argument should be called **after** any selectors and
-#'   the selectors should only resolve to numeric columns (otherwise an error is
-#'   thrown).
+#'   `"dgCMatrix"``for the format of the processed data set. Also, note that
+#'   this argument should be called **after** any selectors and the selectors
+#'   should only resolve to numeric columns if `composition` is set to
+#'   `"matrix"` or `"dgCMatrix"`. If the data contains sparse columns they will
+#'   be perseved for `"tibble"` and `"data.frame"`, and efficiently used for
+#'   `"dgCMatrix"`.
 #'
 #' @details
 #'

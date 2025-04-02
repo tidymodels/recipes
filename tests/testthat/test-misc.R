@@ -110,15 +110,6 @@ test_that("vars without role in predictor/outcome avoid string processing", {
 })
 
 test_that("spline error messages", {
-  expect_snapshot(
-    recipes:::spline_msg("Error in if (df < 0) { : missing blah blah\n"),
-    error = TRUE
-  )
-  expect_snapshot(
-    recipes:::spline_msg("craaazzyy {{}}{}{}"),
-    error = TRUE
-  )
-
   skip_if_not_installed("splines2")
 
   local_mocked_bindings(
@@ -154,6 +145,8 @@ test_that("ellipse_check() errors on empty selection", {
 })
 
 test_that("ellipse_check() errors on empty selection", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   x <- 2
   class(x) <- "dimRedResult"
   expect_snapshot(

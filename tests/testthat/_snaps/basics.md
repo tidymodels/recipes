@@ -69,8 +69,9 @@
     Code
       prepare(recipe(HHV ~ ., data = biomass), training = biomass)
     Condition
-      Error in `prepare()`:
-      ! As of version 0.0.1.9006 please use `prep()` instead of `prepare()`.
+      Error:
+      ! `prepare()` was deprecated in recipes 0.0.1.9006 and is now defunct.
+      i Please use `prep()` instead.
 
 # bake without prep
 

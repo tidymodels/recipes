@@ -181,29 +181,20 @@ prep.step_nnmf_sparse <- function(x, training, info = NULL, ...) {
       attachNamespace("Matrix")
     }
 
-    nnm <- try(rlang::eval_tidy(cl), silent = TRUE)
+    nnm <- try_fetch_eval_tidy(rlang::eval_tidy(cl))
 
-    if (inherits(nnm, "try-error")) {
+    na_w <- sum(is.na(nnm$w))
+    if (na_w > 0) {
       cli::cli_abort(
         c(
-          x = "Failed with error:",
-          i = as.character(nnm)
+          x = "The NNMF loadings are missing.",
+          i = "The penalty may have been too high or missing values are present in data."
         )
       )
     } else {
-      na_w <- sum(is.na(nnm$w))
-      if (na_w > 0) {
-        cli::cli_abort(
-          c(
-            x = "The NNMF loadings are missing.",
-            i = "The penalty may have been too high or missing values are present in data."
-          )
-        )
-      } else {
-        nnm <- list(x_vars = col_names, w = nnm$w)
-        rownames(nnm$w) <- col_names
-        colnames(nnm$w) <- names0(ncol(nnm$w), x$prefix)
-      }
+      nnm <- list(x_vars = col_names, w = nnm$w)
+      rownames(nnm$w) <- col_names
+      colnames(nnm$w) <- names0(ncol(nnm$w), x$prefix)
     }
   } else {
     nnm <- list(x_vars = col_names, w = NULL)
