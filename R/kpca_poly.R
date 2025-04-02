@@ -160,15 +160,7 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
           offset = x$offset
         )
       )
-    kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
-    if (inherits(kprc, "try-error")) {
-      cli::cli_abort(
-        c(
-          x = "Failed with error:",
-          i = as.character(kprc)
-        )
-      )
-    }
+    kprc <- try_fetch_eval_tidy(rlang::eval_tidy(cl))
   } else {
     kprc <- NULL
   }

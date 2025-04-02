@@ -1027,3 +1027,12 @@ check_zv <- function(data, call = rlang::caller_env()) {
     )
   }
 }
+
+try_fetch_eval_tidy <- function(x, call = rlang::caller_env(1)) {
+  rlang::try_fetch(
+    x,
+    error = function(cnd) {
+      cli::cli_abort("Failed to compute:", parent = cnd, call = call)
+    }
+  )
+}

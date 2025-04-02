@@ -15,8 +15,9 @@
     Condition
       Error in `step_nnmf_sparse()`:
       Caused by error in `prep()`:
-      x Failed with error:
-      i Error in RcppML::nmf(A = dat, k = 2, L1 = c(0.001, 0.001), verbose = FALSE, : mocked error
+      ! Failed to compute:
+      Caused by error in `RcppML::nmf()`:
+      ! mocked error
 
 # errors for missing data
 
