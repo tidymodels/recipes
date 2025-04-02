@@ -89,9 +89,10 @@ created.</p></dd>
 <dt id="arg-transform">transform<a class="anchor" aria-label="anchor" href="#arg-transform"></a></dt>
 <dd><p>A function taking a single argument <code>x</code> that can be used
 to modify the numeric values prior to determining the levels (perhaps using
-<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">base::as.integer()</a></code>). The output of a function should be an integer that
-corresponds to the value of <code>levels</code> that should be assigned. If not an
-integer, the value will be converted to an integer during <code><a href="bake.html">bake()</a></code>.</p></dd>
+<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">base::as.integer()</a></code> or <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">base::as.factor()</a></code>). The output of a function
+should be an integer that corresponds to the value of <code>levels</code> that should
+be assigned. If not an integer, the value will be converted to an integer
+during <code><a href="bake.html">bake()</a></code>.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
@@ -126,6 +127,12 @@ the computations for subsequent operations.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An updated version of <code>recipe</code> with the new step added to the
 sequence of any existing operations.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Note that since the numeric variables will be used for indexing into <code>levels</code>
+it will need to take values between <code>1</code> and <code>length(levels)</code> to avoid <code>getting</code>NA<code>s as results. Using </code>transform = base::as.factor` can be used to
+shrink values to smaller domain.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
