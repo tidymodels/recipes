@@ -1,7 +1,7 @@
 # 'other' already in use
 
     Code
-      prep(others, training = sacr_tr_chr, strings_as_factors = FALSE)
+      prep(others, training = sacr_tr_chr)
     Condition
       Error in `step_other()`:
       Caused by error in `prep()`:

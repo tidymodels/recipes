@@ -22,13 +22,12 @@ sacr_fac$city <- factor(sacr_fac$city)
 sacr_fac$zip <- factor(sacr_fac$zip)
 
 test_that("dummy variables with factor inputs", {
-  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
+  rec <- recipe(sqft ~ zip + city, data = sacr_fac, strings_as_factors = FALSE)
   dummy <- rec %>% step_dummy(city, zip, id = "")
   dummy_trained <- prep(
     dummy,
     training = sacr_fac,
-    verbose = FALSE,
-    strings_as_factors = FALSE
+    verbose = FALSE
   )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
 
@@ -73,12 +72,12 @@ test_that("dummy variables with factor inputs", {
 })
 
 test_that("dummy variables errors with character inputs", {
-  rec <- recipe(sqft ~ zip + city, data = sacr)
+  rec <- recipe(sqft ~ zip + city, data = sacr, strings_as_factors = FALSE)
   dummy <- rec %>% step_dummy(city, zip)
 
   expect_snapshot(
     error = TRUE,
-    prep(dummy, training = sacr, verbose = FALSE, strings_as_factors = FALSE)
+    prep(dummy, training = sacr, verbose = FALSE)
   )
 })
 
@@ -92,26 +91,28 @@ test_that("check_type() is used", {
 })
 
 test_that("create double dummy variables", {
-  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
+  rec <- recipe(sqft ~ zip + city, data = sacr_fac, strings_as_factors = FALSE)
   dummy <- rec %>% step_dummy(city, zip, id = "")
   dummy_trained <- prep(
     dummy,
     training = sacr_fac,
-    verbose = FALSE,
-    strings_as_factors = FALSE
+    verbose = FALSE
   )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
   expect_true(all(vapply(dummy_pred, is.double, logical(1))))
 })
 
 test_that("create all dummy variables", {
-  rec <- recipe(sqft ~ zip + city + price, data = sacr_fac)
+  rec <- recipe(
+    sqft ~ zip + city + price,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
   dummy <- rec %>% step_dummy(city, zip, one_hot = TRUE, id = "")
   dummy_trained <- prep(
     dummy,
     training = sacr_fac,
-    verbose = FALSE,
-    strings_as_factors = FALSE
+    verbose = FALSE
   )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
   dummy_pred <- dummy_pred[, order(colnames(dummy_pred))]
@@ -501,7 +502,7 @@ test_that(".recipes_toggle_sparse_args works", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(sqft ~ zip + city, data = sacr_fac)
+  rec <- recipe(sqft ~ zip + city, data = sacr_fac, strings_as_factors = FALSE)
   dummy <- rec %>%
     step_dummy(city, zip, id = "") %>%
     update_role(city, zip, new_role = "potato") %>%
@@ -509,8 +510,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
   dummy_trained <- prep(
     dummy,
     training = sacr_fac,
-    verbose = FALSE,
-    strings_as_factors = FALSE
+    verbose = FALSE
   )
 
   expect_snapshot(

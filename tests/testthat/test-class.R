@@ -65,15 +65,23 @@ test_that("check_class works when class is provided", {
 
 # recipes has internal coercion to character >> factor
 test_that("characters are handled correctly", {
-  rec5_NULL <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
+  rec5_NULL <- recipe(
+    Sacramento[1:10, ],
+    sqft ~ .,
+    strings_as_factors = FALSE
+  ) %>%
     check_class(all_predictors()) %>%
-    prep(Sacramento[1:10, ], strings_as_factors = FALSE)
+    prep(Sacramento[1:10, ])
 
   expect_no_error(bake(rec5_NULL, Sacramento[11:20, ]))
 
-  rec5_man <- recipe(Sacramento[1:10, ], sqft ~ .) %>%
+  rec5_man <- recipe(
+    Sacramento[1:10, ],
+    sqft ~ .,
+    strings_as_factors = FALSE
+  ) %>%
     check_class(city, zip) %>%
-    prep(Sacramento[1:10, ], strings_as_factors = FALSE)
+    prep(Sacramento[1:10, ])
 
   expect_no_error(bake(rec5_man, Sacramento[11:20, ]))
 
@@ -85,15 +93,15 @@ test_that("characters are handled correctly", {
       type = as.character(type)
     )
 
-  rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
+  rec6_NULL <- recipe(sacr_fac[1:10, ], sqft ~ ., strings_as_factors = TRUE) %>%
     check_class(all_predictors()) %>%
-    prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
+    prep(sacr_fac[1:10, ])
 
   expect_snapshot(error = TRUE, bake(rec6_NULL, sacr_fac[11:20, ]))
 
-  rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ .) %>%
+  rec6_man <- recipe(sacr_fac[1:10, ], sqft ~ ., strings_as_factors = TRUE) %>%
     check_class(type) %>%
-    prep(sacr_fac[1:10, ], strings_as_factors = TRUE)
+    prep(sacr_fac[1:10, ])
 
   expect_snapshot(error = TRUE, bake(rec6_man, sacr_fac[11:20, ]))
 })

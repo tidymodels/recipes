@@ -16,18 +16,18 @@ ex_dat <- data.frame(
 rec <- recipe(~., data = ex_dat)
 
 test_that("basic functionality", {
-  ex_1 <- rec %>%
+  ex_1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
     step_string2factor(w, x) %>%
-    prep(ex_dat, strings_as_factors = FALSE) %>%
+    prep(ex_dat) %>%
     bake(new_data = NULL)
   expect_equal(class(ex_1$w), "factor")
   expect_equal(class(ex_1$x), "factor")
   expect_equal(levels(ex_1$w), letters[1:3])
   expect_equal(levels(ex_1$x), LETTERS[1:2])
 
-  ex_2 <- rec %>%
+  ex_2 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
     step_string2factor(w, x, ordered = TRUE) %>%
-    prep(ex_dat, strings_as_factors = FALSE) %>%
+    prep(ex_dat) %>%
     bake(new_data = NULL)
   expect_equal(class(ex_2$w), c("ordered", "factor"))
   expect_equal(class(ex_2$x), c("ordered", "factor"))
@@ -51,9 +51,9 @@ test_that("bad args", {
 })
 
 test_that("pre-made factors", {
-  ex_1 <- rec %>%
+  ex_1 <- recipe(~., data = ex_dat, strings_as_factors = FALSE) %>%
     step_string2factor(w, x, y, z) %>%
-    prep(ex_dat, strings_as_factors = FALSE) %>%
+    prep(ex_dat) %>%
     bake(new_data = NULL)
   expect_true(inherits(ex_1$w, "factor"))
   expect_true(inherits(ex_1$x, "factor"))

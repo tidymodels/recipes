@@ -120,9 +120,9 @@ test_that("non-factor imputation", {
   scat$Location <- as.character(scat$Location)
   scat$Location[1] <- NA
   rec <-
-    recipe(Species ~ ., data = scat) %>%
+    recipe(Species ~ ., data = scat, strings_as_factors = FALSE) %>%
     step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
-    prep(strings_as_factors = FALSE)
+    prep()
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 

@@ -337,32 +337,32 @@ test_that("new dplyr selectors", {
   expect_no_error(
     rec_1 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(all_of(c("hydrogen", "carbon"))) %>%
-        prep()
+      step_normalize(all_of(c("hydrogen", "carbon"))) %>%
+      prep()
   )
   expect_equal(names(rec_1$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_2 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(all_of(!!vnames)) %>%
-        prep()
+      step_normalize(all_of(!!vnames)) %>%
+      prep()
   )
   expect_equal(names(rec_2$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_3 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(any_of(c("hydrogen", "carbon"))) %>%
-        prep()
+      step_normalize(any_of(c("hydrogen", "carbon"))) %>%
+      prep()
   )
   expect_equal(names(rec_3$steps[[1]]$means), c("hydrogen", "carbon"))
 
   expect_no_error(
     rec_4 <-
       recipe(HHV ~ ., data = biomass) %>%
-        step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
-        prep()
+      step_normalize(any_of(c("hydrogen", "carbon", "bourbon"))) %>%
+      prep()
   )
   expect_equal(names(rec_4$steps[[1]]$means), c("hydrogen", "carbon"))
 })
@@ -480,10 +480,14 @@ test_that("old recipes from 1.0.1 work with new get_types", {
       source = 'character'
     )
   )
+
   expect_false(identical(old_rec_sac, rec_sac))
 
   # Avoid issue with new ptype field in 1.1.0
   rec_sac$ptype <- NULL
+
+  # Avoid issue with new strings_as_factors field in 1.3.0
+  rec_sac$strings_as_factors <- NULL
 
   expect_identical(
     prep(old_rec_sac),

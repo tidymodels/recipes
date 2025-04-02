@@ -1,7 +1,8 @@
 # bad args
 
     Code
-      rec %>% step_factor2string(w, x) %>% prep(ex_dat, strings_as_factors = FALSE)
+      recipe(~., data = ex_dat, strings_as_factors = FALSE) %>% step_factor2string(w,
+        x) %>% prep(ex_dat)
     Condition
       Error in `step_factor2string()`:
       Caused by error in `prep()`:

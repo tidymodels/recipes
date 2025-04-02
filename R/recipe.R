@@ -20,6 +20,8 @@
 #' @param roles A character string (the same length of `vars`) that describes a
 #'   single role that the variable will take. This value could be anything but
 #'   common roles are `"outcome"`, `"predictor"`, `"case_weight"`, or `"ID"`.
+#' @param strings_as_factors A logical, should character columns be converted to
+#'   factors? See Details below.
 #'
 #' @includeRmd man/rmd/recipes.Rmd details
 #'
@@ -108,7 +110,14 @@ recipe.default <- function(x, ...) {
 #' @rdname recipe
 #' @export
 recipe.data.frame <-
-  function(x, formula = NULL, ..., vars = NULL, roles = NULL) {
+  function(
+    x,
+    formula = NULL,
+    ...,
+    vars = NULL,
+    roles = NULL,
+    strings_as_factors = NULL
+  ) {
     if (!is.null(formula)) {
       if (!is.null(vars)) {
         cli::cli_abort(
@@ -198,7 +207,8 @@ recipe.data.frame <-
       levels = NULL,
       retained = NA,
       requirements = requirements,
-      ptype = vctrs::vec_ptype(x)
+      ptype = vctrs::vec_ptype(x),
+      strings_as_factors = strings_as_factors
     )
     class(out) <- "recipe"
     out
@@ -213,7 +223,7 @@ recipe.formula <- function(formula, data, ...) {
 
   if (!is.data.frame(data) && !is.matrix(data) && !is_sparse_matrix(data)) {
     cli::cli_abort(
-      "{.arg data} must be a data frame, matrix, or sparse matrix, 
+      "{.arg data} must be a data frame, matrix, or sparse matrix,
       not {.obj_type_friendly {data}}."
     )
   }
@@ -348,9 +358,9 @@ inline_check <- function(x, data, call) {
 #' @param log_changes A logical for printing a summary for each step regarding
 #'   which (if any) columns were added or removed during training.
 #' @param strings_as_factors A logical: should character columns that have role
-#'   `"predictor"` or `"outcome"` be converted to factors? This affects the
-#'   preprocessed training set (when `retain = TRUE`) as well as the results of
-#'   [bake()].
+#'   `"predictor"` or `"outcome"` be converted to factors? **This option has now
+#'   been moved to [recipe()]**; please specify `strings_as_factors` there and
+#'   see the notes in the Details section for that function.
 #'
 #' @details
 #'
@@ -423,6 +433,19 @@ prep.recipe <-
 
     # Record the original levels for later checking
     orig_lvls <- lapply(training, get_levels)
+
+    if (!missing(strings_as_factors)) {
+      lifecycle::deprecate_soft(
+        when = "1.3.0",
+        what = "recipes::prep.recipe(strings_as_factors)",
+        with = "recipes::recipe(strings_as_factors)"
+      )
+    }
+
+    if (!is.null(x$strings_as_factors)) {
+      strings_as_factors <- x$strings_as_factors
+    }
+
     if (strings_as_factors) {
       lvls <- lapply(training, get_levels)
       lvls <- kill_levels(lvls, x$var_info)

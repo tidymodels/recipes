@@ -48,9 +48,9 @@ environments into account.}
 which (if any) columns were added or removed during training.}
 
 \item{strings_as_factors}{A logical: should character columns that have role
-\code{"predictor"} or \code{"outcome"} be converted to factors? This affects the
-preprocessed training set (when \code{retain = TRUE}) as well as the results of
-\code{\link[=bake]{bake()}}.}
+\code{"predictor"} or \code{"outcome"} be converted to factors? \strong{This option has now
+been moved to \code{\link[=recipe]{recipe()}}}; please specify \code{strings_as_factors} there and
+see the notes in the Details section for that function.}
 }
 \value{
 A recipe whose step objects have been updated with the required quantities
