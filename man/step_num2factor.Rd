@@ -28,9 +28,10 @@ created.}
 
 \item{transform}{A function taking a single argument \code{x} that can be used
 to modify the numeric values prior to determining the levels (perhaps using
-\code{\link[base:integer]{base::as.integer()}}). The output of a function should be an integer that
-corresponds to the value of \code{levels} that should be assigned. If not an
-integer, the value will be converted to an integer during \code{\link[=bake]{bake()}}.}
+\code{\link[base:integer]{base::as.integer()}} or \code{\link[base:factor]{base::as.factor()}}). The output of a function
+should be an integer that corresponds to the value of \code{levels} that should
+be assigned. If not an integer, the value will be converted to an integer
+during \code{\link[=bake]{bake()}}.}
 
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
@@ -58,6 +59,11 @@ sequence of any existing operations.
 \code{step_num2factor()} will convert one or more numeric vectors to factors
 (ordered or unordered). This can be useful when categories are encoded as
 integers.
+}
+\details{
+Note that since the numeric variables will be used for indexing into \code{levels}
+it will need to take values between \code{1} and \code{length(levels)} to avoid \code{getting}NA\verb{s as results. Using }transform = base::as.factor` can be used to
+shrink values to smaller domain.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
