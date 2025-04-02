@@ -8,6 +8,8 @@
 
 * Fixed bug where `step_lincomb()` would remove both variables if they were identical. (#1357)
 
+* `step_impute_bag()` and `step_impute_knn()` now gives more informative warnings when `impute_with` data contains all NAs. (#1385)
+
 * `step_spline_b()`, `step_spline_convex()`, `step_spline_monotone()`, `step_spline_natural()`, and `step_spline_nonnegative()` now gives informative errors when applied to zero variance predictors. (#1455)
 
 * fixed bug where `bake.step_discretize()` would error if applied to predictor only containing `NA`s. (#1350)

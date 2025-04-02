@@ -7,17 +7,16 @@
       Error in `step_impute_bag()`:
       ! `impute_with` must not be empty.
 
----
+# Warns when impute_with contains all NAs in a row
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_impute_bag(mpg, disp, vs) %>% prep()
+      tmp <- recipe(~., data = mtcars) %>% step_impute_bag(mpg, disp, vs,
+        impute_with = imp_vars(am, gear)) %>% prep()
     Condition
       Warning:
-      All predictors are missing; cannot impute.
+      The `impute_with` variables for `mpg` only contains missing values for row: 2 and 3. Cannot impute for those rows.
       Warning:
-      All predictors are missing; cannot impute.
-      Warning:
-      All predictors are missing; cannot impute.
+      The `impute_with` variables for `disp` only contains missing values for row: 10. Cannot impute for those rows.
 
 # bake method errors when needed non-standard role columns are missing
 

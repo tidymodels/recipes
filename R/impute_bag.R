@@ -273,16 +273,30 @@ bake.step_impute_bag <- function(object, new_data, ...) {
       next
     }
     preds <- object$models[[col_name]]$..imp_vars
-    pred_data <- old_data[missing_rows, preds, drop = FALSE]
-    ## do a better job of checking this:
-    if (all(is.na(pred_data))) {
-      cli::cli_warn("All predictors are missing; cannot impute.")
-    } else {
-      pred_vals <- predict(object$models[[col_name]], pred_data)
-      # For an ipred bug reported on 2021-09-14:
-      pred_vals <- cast(pred_vals, object$models[[col_name]]$y)
-      new_data[missing_rows, col_name] <- pred_vals
+    imp_data <- old_data[missing_rows, preds, drop = FALSE]
+
+    imp_data_all_missing <- vctrs::vec_detect_missing(imp_data)
+
+    if (any(imp_data_all_missing)) {
+      missing_rows <- which(missing_rows)[imp_data_all_missing]
+
+      cli::cli_warn(
+        "The {.arg impute_with} variables for {.col {col_name}} only contains 
+        missing values for row: {missing_rows}. Cannot impute for those rows.",
+      )
+
+      imp_data <- imp_data[!imp_data_all_missing, , drop = FALSE]
+
+      if (nrow(imp_data) == 0) {
+        next
+      }
     }
+
+    pred_vals <- predict(object$models[[col_name]], imp_data)
+
+    # For an ipred bug reported on 2021-09-14:
+    pred_vals <- cast(pred_vals, object$models[[col_name]]$y)
+    new_data[missing_rows, col_name] <- pred_vals
   }
   new_data
 }

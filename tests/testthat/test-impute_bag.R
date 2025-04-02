@@ -100,10 +100,10 @@ test_that("All NA values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_impute_bag(
-        all_predictors(),
-        impute_with = imp_vars(all_predictors())
-      )
+    step_impute_bag(
+      all_predictors(),
+      impute_with = imp_vars(all_predictors())
+    )
   rec_param <- tunable.step_impute_bag(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))
   expect_true(all(rec_param$source == "recipe"))
@@ -121,8 +121,8 @@ test_that("non-factor imputation", {
   scat$Location[1] <- NA
   rec <-
     recipe(Species ~ ., data = scat) %>%
-      step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
-      prep(strings_as_factors = FALSE)
+    step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
+    prep(strings_as_factors = FALSE)
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
 
@@ -135,11 +135,15 @@ test_that("impute_with errors with nothing selected", {
   )
 })
 
-test_that("impute_with errors with nothing selected", {
-  mtcars[, 1:11] <- NA_real_
+test_that("Warns when impute_with contains all NAs in a row", {
+  mtcars[1:3, 1] <- NA_real_
+  mtcars[10, 3] <- NA_real_
+
+  mtcars[c(2, 3, 10), 9:10] <- NA_real_
+
   expect_snapshot(
     tmp <- recipe(~., data = mtcars) %>%
-      step_impute_bag(mpg, disp, vs) %>%
+      step_impute_bag(mpg, disp, vs, impute_with = imp_vars(am, gear)) %>%
       prep()
   )
 })
