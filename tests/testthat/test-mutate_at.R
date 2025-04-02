@@ -6,30 +6,30 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-      step_mutate_at(contains("Length"), fn = log)
+    step_mutate_at(contains("Length"), fn = log)
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      mutate(
-        Sepal.Length = log(Sepal.Length),
-        Petal.Length = log(Petal.Length)
-      )
+    as_tibble() %>%
+    slice(1:75) %>%
+    mutate(
+      Sepal.Length = log(Sepal.Length),
+      Petal.Length = log(Petal.Length)
+    )
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-      as_tibble() %>%
-      slice(76:150) %>%
-      mutate(
-        Sepal.Length = log(Sepal.Length),
-        Petal.Length = log(Petal.Length)
-      )
+    as_tibble() %>%
+    slice(76:150) %>%
+    mutate(
+      Sepal.Length = log(Sepal.Length),
+      Petal.Length = log(Petal.Length)
+    )
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -37,34 +37,34 @@ test_that("basic usage", {
 test_that("mulitple functions", {
   rec <-
     iris_rec %>%
-      step_mutate_at(contains("Length"), fn = list(a = log, b = sqrt))
+    step_mutate_at(contains("Length"), fn = list(a = log, b = sqrt))
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      mutate(
-        Sepal.Length_a = log(Sepal.Length),
-        Petal.Length_a = log(Petal.Length),
-        Sepal.Length_b = sqrt(Sepal.Length),
-        Petal.Length_b = sqrt(Petal.Length)
-      )
+    as_tibble() %>%
+    slice(1:75) %>%
+    mutate(
+      Sepal.Length_a = log(Sepal.Length),
+      Petal.Length_a = log(Petal.Length),
+      Sepal.Length_b = sqrt(Sepal.Length),
+      Petal.Length_b = sqrt(Petal.Length)
+    )
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-      as_tibble() %>%
-      slice(76:150) %>%
-      mutate(
-        Sepal.Length_a = log(Sepal.Length),
-        Petal.Length_a = log(Petal.Length),
-        Sepal.Length_b = sqrt(Sepal.Length),
-        Petal.Length_b = sqrt(Petal.Length)
-      )
+    as_tibble() %>%
+    slice(76:150) %>%
+    mutate(
+      Sepal.Length_a = log(Sepal.Length),
+      Petal.Length_a = log(Petal.Length),
+      Sepal.Length_b = sqrt(Sepal.Length),
+      Petal.Length_b = sqrt(Petal.Length)
+    )
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -131,4 +131,20 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_mutate_at(all_numeric_predictors(), fn = abs) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

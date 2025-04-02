@@ -89,7 +89,7 @@ test_that("options(knots) works correctly (#1297)", {
     bake(new_data = NULL)
 
   mm_res <- model.matrix(
-    ~splines::bs(
+    ~ splines::bs(
       x,
       knots = seq(-1, 1, 0.125),
       Boundary.knots = c(-2.5, 2.5)
@@ -120,7 +120,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_bs(all_predictors())
+    step_bs(all_predictors())
   rec_param <- tunable.step_bs(rec$steps[[1]])
   expect_equal(rec_param$name, c("deg_free", "degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -256,4 +256,20 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 2L)
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_bs(mpg, disp) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

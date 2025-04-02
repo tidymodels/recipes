@@ -155,6 +155,9 @@ bs_statistics <- function(x, args) {
 }
 
 bs_predict <- function(object, x) {
+  if (length(x) == 0) {
+    return(object)
+  }
   xu <- unique(x)
   ru <- predict(object, xu)
   res <- ru[match(x, xu), , drop = FALSE]

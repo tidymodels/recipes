@@ -63,6 +63,11 @@ spline2_apply <- function(object, new_data) {
   object$.ns <- NULL
   object$.fn <- NULL
   object$nm <- NULL
+
+  if (NROW(new_data) == 0) {
+    new_data <- object$Boundary.knots[[1]]
+  }
+
   .cl <- rlang::call2(
     .ns = .ns,
     .fn = .fn,
@@ -70,6 +75,11 @@ spline2_apply <- function(object, new_data) {
     x = rlang::expr(new_data)
   )
   res <- rlang::eval_tidy(.cl)
+
+  if (NROW(new_data) == 0) {
+    res <- res[0, , drop = FALSE]
+  }
+
   attributes(res) <- list(dim = dim(res), dimnames = dimnames(res))
   if (length(new_data) == 1) {
     res <- matrix(res, nrow = 1, dimnames = dimnames(res))

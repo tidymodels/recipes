@@ -301,11 +301,16 @@ sin_cos <- function(
   cycle_size,
   call = caller_env()
 ) {
+  nc <- length(frequency)
+
+  if (length(x) == 0) {
+    return(matrix(NA_real_, nrow = 0, ncol = nc * 2L))
+  }
+
   if (all(is.na(x))) {
     cli::cli_abort("Variable must have at least one non-NA value.", call = call)
   }
 
-  nc <- length(frequency)
   nr <- length(x)
 
   # adjust phase

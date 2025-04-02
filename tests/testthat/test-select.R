@@ -87,10 +87,10 @@ test_that("quasiquotation", {
 
   rec_1 <-
     recipe(~., data = iris_train) %>%
-      step_select(all_of(sepal_vars))
+    step_select(all_of(sepal_vars))
   rec_2 <-
     recipe(~., data = iris_train) %>%
-      step_select(all_of(!!sepal_vars))
+    step_select(all_of(!!sepal_vars))
 
   # both work when local variable is available
   prepped_1 <- prep(rec_1, training = iris_train)
@@ -193,4 +193,21 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_select(all_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

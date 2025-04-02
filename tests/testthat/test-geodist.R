@@ -423,3 +423,26 @@ test_that("printing", {
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
 })
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- rand_data
+  rec <- recipe(~., data) %>%
+    step_geodist(
+      x,
+      y,
+      ref_lat = 0.5,
+      ref_lon = 0.25,
+      is_lat_lon = FALSE,
+      log = FALSE
+    ) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
+})

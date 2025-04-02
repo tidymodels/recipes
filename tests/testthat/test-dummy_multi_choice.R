@@ -93,7 +93,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = languages) %>%
-      step_dummy_multi_choice(all_predictors())
+    step_dummy_multi_choice(all_predictors())
   rec_param <- tunable.step_dummy_multi_choice(rec$steps[[1]])
   expect_equal(rec_param$name, c("threshold"))
   expect_true(all(rec_param$source == "recipe"))
@@ -350,5 +350,21 @@ test_that("bad args", {
       step_dummy_multi_choice(starts_with("lang"), naming = NULL) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- languages
+  rec <- recipe(~., data) %>%
+    step_dummy_multi_choice(all_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

@@ -14,12 +14,12 @@ test_that("shrunken centroids", {
 
   nsc_rec_zero <-
     recipe(class ~ x + y, data = nsc_test) %>%
-      step_classdist_shrunken(
-        all_numeric_predictors(),
-        class = "class",
-        threshold = 0
-      ) %>%
-      prep()
+    step_classdist_shrunken(
+      all_numeric_predictors(),
+      class = "class",
+      threshold = 0
+    ) %>%
+    prep()
 
   exp_res <-
     dplyr::tibble(
@@ -44,14 +44,14 @@ test_that("shrunken centroids", {
 
   nsc_rec_one <-
     recipe(class ~ x + y, data = nsc_test) %>%
-      step_classdist_shrunken(
-        all_numeric_predictors(),
-        class = "class",
-        threshold = 1,
-        log = FALSE,
-        prefix = "potato_"
-      ) %>%
-      prep()
+    step_classdist_shrunken(
+      all_numeric_predictors(),
+      class = "class",
+      threshold = 1,
+      log = FALSE,
+      prefix = "potato_"
+    ) %>%
+    prep()
 
   cent_one <- nsc_rec_one$steps[[1]]$objects
   expect_equal(cent_one[0, ], exp_res)
@@ -67,12 +67,12 @@ test_that("shrunken centroids", {
 
   nsc_rec_half <-
     recipe(class ~ x + y, data = nsc_test) %>%
-      step_classdist_shrunken(
-        all_numeric_predictors(),
-        class = "class",
-        threshold = 1 / 2,
-        keep_original_cols = FALSE
-      )
+    step_classdist_shrunken(
+      all_numeric_predictors(),
+      class = "class",
+      threshold = 1 / 2,
+      keep_original_cols = FALSE
+    )
   nsc_rec_half_prep <- prep(nsc_rec_half)
 
   expect_snapshot(print(nsc_rec_half))
@@ -136,12 +136,12 @@ test_that("shrunken centroids", {
   nsc_test$weights <- importance_weights(1:nrow(nsc_test))
   nsc_rec_weights <-
     recipe(class ~ ., data = nsc_test) %>%
-      step_classdist_shrunken(
-        all_numeric_predictors(),
-        class = "class",
-        threshold = 1 / 2,
-        keep_original_cols = FALSE
-      )
+    step_classdist_shrunken(
+      all_numeric_predictors(),
+      class = "class",
+      threshold = 1 / 2,
+      keep_original_cols = FALSE
+    )
   nsc_rec_weights_prep <- prep(nsc_rec_weights)
 
   tidy_weights_prep <- tidy(nsc_rec_weights_prep, 1)
@@ -166,7 +166,7 @@ test_that("shrunken centroids", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_classdist_shrunken(all_predictors())
+    step_classdist_shrunken(all_predictors())
   rec_param <- tunable.step_classdist_shrunken(rec$steps[[1]])
   expect_equal(rec_param$name, "threshold")
   expect_true(all(rec_param$source == "recipe"))
@@ -300,4 +300,20 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- iris
+  rec <- recipe(~., data) %>%
+    step_classdist_shrunken(all_numeric_predictors(), class = "Species") %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

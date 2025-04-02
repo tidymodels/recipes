@@ -123,3 +123,19 @@ test_that("printing", {
   expect_snapshot(print(rec2))
   expect_snapshot(prep(rec2))
 })
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_bin2factor(am, vs) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
+})

@@ -105,7 +105,7 @@ test_that("tunable", {
 
   rec <-
     recipe(~., data = iris) %>%
-      step_poly_bernstein(all_predictors())
+    step_poly_bernstein(all_predictors())
   rec_param <- tunable.step_poly_bernstein(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -238,5 +238,23 @@ test_that("bad args", {
       step_poly_bernstein(disp, complete_set = 1) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  skip_if_not_installed("splines2")
+
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_poly_bernstein(disp, mpg) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

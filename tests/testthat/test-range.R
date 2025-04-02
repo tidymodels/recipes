@@ -32,18 +32,14 @@ test_that("correct values", {
   new_max <- 1
   new_range <- new_max - new_min
 
-  carb <- (
-    (new_range * (biomass_te$carbon - mins["carbon"])) /
-      (maxs["carbon"] - mins["carbon"])
-  ) +
+  carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
+    (maxs["carbon"] - mins["carbon"])) +
     new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
 
-  hydro <- (
-    (new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
-      (maxs["hydrogen"] - mins["hydrogen"])
-  ) +
+  hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
+    (maxs["hydrogen"] - mins["hydrogen"])) +
     new_min
   hydro <- ifelse(hydro > new_max, new_max, hydro)
   hydro <- ifelse(hydro < new_min, new_min, hydro)
@@ -95,18 +91,14 @@ test_that("defaults", {
   new_max <- 1
   new_range <- new_max - new_min
 
-  carb <- (
-    (new_range * (biomass_te$carbon - mins["carbon"])) /
-      (maxs["carbon"] - mins["carbon"])
-  ) +
+  carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
+    (maxs["carbon"] - mins["carbon"])) +
     new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
 
-  hydro <- (
-    (new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
-      (maxs["hydrogen"] - mins["hydrogen"])
-  ) +
+  hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
+    (maxs["hydrogen"] - mins["hydrogen"])) +
     new_min
   hydro <- ifelse(hydro > new_max, new_max, hydro)
   hydro <- ifelse(hydro < new_min, new_min, hydro)
@@ -135,10 +127,8 @@ test_that("one variable", {
   new_max <- 1
   new_range <- new_max - new_min
 
-  carb <- (
-    (new_range * (biomass_te$carbon - mins)) /
-      (maxs - mins)
-  ) +
+  carb <- ((new_range * (biomass_te$carbon - mins)) /
+    (maxs - mins)) +
     new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
@@ -170,16 +160,12 @@ test_that("correct values", {
   new_max <- 1
   new_range <- new_max - new_min
 
-  carb <- (
-    (new_range * (biomass_te$carbon - mins["carbon"])) /
-      (maxs["carbon"] - mins["carbon"])
-  ) +
+  carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
+    (maxs["carbon"] - mins["carbon"])) +
     new_min
 
-  hydro <- (
-    (new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
-      (maxs["hydrogen"] - mins["hydrogen"])
-  ) +
+  hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
+    (maxs["hydrogen"] - mins["hydrogen"])) +
     new_min
 
   exp_pred <- cbind(carb, hydro)
@@ -214,18 +200,14 @@ test_that("backwards compatibility for before clipping <= 1.0.2 (#1090)", {
   new_max <- 1
   new_range <- new_max - new_min
 
-  carb <- (
-    (new_range * (biomass_te$carbon - mins["carbon"])) /
-      (maxs["carbon"] - mins["carbon"])
-  ) +
+  carb <- ((new_range * (biomass_te$carbon - mins["carbon"])) /
+    (maxs["carbon"] - mins["carbon"])) +
     new_min
   carb <- ifelse(carb > new_max, new_max, carb)
   carb <- ifelse(carb < new_min, new_min, carb)
 
-  hydro <- (
-    (new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
-      (maxs["hydrogen"] - mins["hydrogen"])
-  ) +
+  hydro <- ((new_range * (biomass_te$hydrogen - mins["hydrogen"])) /
+    (maxs["hydrogen"] - mins["hydrogen"])) +
     new_min
   hydro <- ifelse(hydro > new_max, new_max, hydro)
   hydro <- ifelse(hydro < new_min, new_min, hydro)
@@ -339,5 +321,21 @@ test_that("bad args", {
       step_range(disp, wt, clipping = "never") %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_range(disp, mpg) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

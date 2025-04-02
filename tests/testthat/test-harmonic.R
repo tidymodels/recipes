@@ -349,7 +349,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_harmonic(all_predictors(), cycle_size = 1)
+    step_harmonic(all_predictors(), cycle_size = 1)
   rec_param <- tunable.step_harmonic(rec$steps[[1]])
   expect_equal(rec_param$name, c("frequency"))
   expect_true(all(rec_param$source == "recipe"))
@@ -500,4 +500,20 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 
   expect_s3_class(params, "parameters")
   expect_identical(nrow(params), 1L)
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_harmonic(disp, frequency = 1 / 11, cycle_size = 1) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

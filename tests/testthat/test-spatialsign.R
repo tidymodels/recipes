@@ -70,8 +70,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-      step_spatialsign(all_numeric_predictors()) %>%
-      prep()
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(cyl, mpg))^2),
@@ -87,8 +87,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-      step_spatialsign(all_numeric_predictors()) %>%
-      prep()
+    step_spatialsign(all_numeric_predictors()) %>%
+    prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),
@@ -162,4 +162,20 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_spatialsign(all_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

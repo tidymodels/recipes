@@ -110,6 +110,10 @@ bake.step_logit <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
+  if (nrow(new_data) == 0) {
+    return(new_data)
+  }
+
   for (col_name in col_names) {
     new_data[[col_name]] <- binomial()$linkfun(
       pre_logit(new_data[[col_name]], object$offset)

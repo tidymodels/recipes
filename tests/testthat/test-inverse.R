@@ -12,7 +12,7 @@ ex_dat <- data.frame(
 )
 
 test_that("simple inverse trans", {
-  rec <- recipe(~x1 + x2 + x3 + x4, data = ex_dat) %>%
+  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) %>%
     step_inverse(x1, x2, x3, x4)
 
   rec_trained <- prep(rec, training = ex_dat, verbose = FALSE)
@@ -38,7 +38,7 @@ test_that("alt offset", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
-  rec <- recipe(~x1 + x2 + x3 + x4, data = ex_dat) %>%
+  rec <- recipe(~ x1 + x2 + x3 + x4, data = ex_dat) %>%
     step_inverse(x1, x2, x3, x4) %>%
     update_role(x1, x2, x3, x4, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
@@ -99,5 +99,21 @@ test_that("bad args", {
       step_inverse(x1, x2, x3, x4, offset = function(x) x / 3) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_inverse(mpg, disp) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

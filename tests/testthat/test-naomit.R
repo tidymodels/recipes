@@ -37,7 +37,7 @@ test_that("doesn't destroy sparsity", {
   mtcars$vs[c(1, 5, 7)] <- NA
   mtcars$vs <- sparsevctrs::as_sparse_double(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_double(mtcars$am)
-  rec <- recipe(~am + vs, data = mtcars) %>%
+  rec <- recipe(~ am + vs, data = mtcars) %>%
     step_naomit(am, vs)
 
   rec_trained <- prep(rec, training = mtcars, verbose = FALSE)
@@ -104,4 +104,20 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_naomit(all_numeric_predictors()) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

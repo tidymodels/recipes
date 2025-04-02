@@ -6,7 +6,7 @@ data(covers, package = "modeldata")
 covers$rows <- 1:nrow(covers)
 covers$ch_rows <- paste(1:nrow(covers))
 
-rec <- recipe(~description + rows + ch_rows, covers)
+rec <- recipe(~ description + rows + ch_rows, covers)
 
 test_that("default options", {
   rec1 <- rec %>%
@@ -141,10 +141,10 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
   rec <-
     recipe(mpg ~ ., data = mt_tibble) %>%
-      step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
-      update_role(make_model, new_role = "potato") %>%
-      update_role_requirements(role = "potato", bake = FALSE) %>%
-      prep(mt_tibble)
+    step_regex(make_model, pattern = "Toyota", result = "is_toyota") %>%
+    update_role(make_model, new_role = "potato") %>%
+    update_role_requirements(role = "potato", bake = FALSE) %>%
+    prep(mt_tibble)
 
   expect_snapshot(error = TRUE, bake(rec, new_data = mt_tibble[, c(-1)]))
 })
@@ -238,7 +238,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 })
 
 test_that("printing", {
-  rec <- recipe(~description + rows + ch_rows, covers) %>%
+  rec <- recipe(~ description + rows + ch_rows, covers) %>%
     step_regex(description, pattern = "(rock|stony)")
 
   expect_snapshot(print(rec))
@@ -251,5 +251,21 @@ test_that("bad args", {
       step_regex(description, pattern = character(0)) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- iris
+  rec <- recipe(~., data) %>%
+    step_regex(Species, pattern = "virg") %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })

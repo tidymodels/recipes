@@ -6,33 +6,33 @@ iris_rec <- recipe(~., data = iris)
 test_that("basic usage", {
   rec <-
     iris_rec %>%
-      step_rename(
-        popcorn = Sepal.Width,
-        plum = Sepal.Length
-      )
+    step_rename(
+      popcorn = Sepal.Width,
+      plum = Sepal.Length
+    )
 
   prepped <- prep(rec, training = iris %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
-      as_tibble() %>%
-      slice(1:75) %>%
-      rename(
-        popcorn = Sepal.Width,
-        plum = Sepal.Length
-      )
+    as_tibble() %>%
+    slice(1:75) %>%
+    rename(
+      popcorn = Sepal.Width,
+      plum = Sepal.Length
+    )
 
   rec_train <- bake(prepped, new_data = NULL)
   expect_equal(dplyr_train, rec_train)
 
   dplyr_test <-
     iris %>%
-      as_tibble() %>%
-      slice(76:150) %>%
-      rename(
-        popcorn = Sepal.Width,
-        plum = Sepal.Length
-      )
+    as_tibble() %>%
+    slice(76:150) %>%
+    rename(
+      popcorn = Sepal.Width,
+      plum = Sepal.Length
+    )
   rec_test <- bake(prepped, iris %>% slice(76:150))
   expect_equal(dplyr_test, rec_test)
 })
@@ -40,9 +40,9 @@ test_that("basic usage", {
 test_that("no input", {
   no_inputs <-
     iris_rec %>%
-      step_rename() %>%
-      prep(training = iris) %>%
-      bake(new_data = NULL, composition = "data.frame")
+    step_rename() %>%
+    prep(training = iris) %>%
+    bake(new_data = NULL, composition = "data.frame")
   expect_equal(no_inputs, iris)
 })
 
@@ -111,4 +111,21 @@ test_that("printing", {
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
+})
+
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_rename(MPG = mpg) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
+  )
 })

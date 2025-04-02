@@ -96,7 +96,7 @@ test_that("bad args", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-      step_impute_roll(all_predictors(), outcome = "Species")
+    step_impute_roll(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_impute_roll(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "window"))
   expect_true(all(rec_param$source == "recipe"))
@@ -214,5 +214,21 @@ test_that("bad args", {
       ) %>%
       prep(),
     error = TRUE
+  )
+})
+
+test_that("0 and 1 rows data work in bake method", {
+  data <- mtcars
+  rec <- recipe(~., data) %>%
+    step_impute_roll(disp, mpg) %>%
+    prep()
+
+  expect_identical(
+    nrow(bake(rec, slice(data, 1))),
+    1L
+  )
+  expect_identical(
+    nrow(bake(rec, slice(data, 0))),
+    0L
   )
 })
