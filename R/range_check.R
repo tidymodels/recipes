@@ -190,6 +190,10 @@ bake.check_range <- function(object, new_data, ...) {
   col_names <- names(object$lower)
   check_new_data(col_names, object, new_data)
 
+  if (nrow(new_data) == 0) {
+    return(new_data)
+  }
+
   for (col_name in col_names) {
     range_check_func(
       new_data[[col_name]],

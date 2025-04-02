@@ -189,8 +189,8 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
 }
 
 get_depth <- function(tr_dat, new_dat, metric, opts) {
-  if (ncol(new_dat) == 0L) {
-    # ddalpha can't handle 0 col inputs
+  if (ncol(new_dat) == 0L || nrow(new_dat) == 0L) {
+    # ddalpha can't handle 0 col inputs or 0 row inputs
     return(rep(NA_real_, nrow(new_dat)))
   }
 

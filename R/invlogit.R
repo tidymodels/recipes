@@ -100,6 +100,10 @@ bake.step_invlogit <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   check_new_data(col_names, object, new_data)
 
+  if (nrow(new_data) == 0) {
+    return(new_data)
+  }
+
   for (col_name in col_names) {
     new_data[[col_name]] <- binomial()$linkinv(new_data[[col_name]])
   }
