@@ -146,15 +146,8 @@ prep.step_kpca_rbf <- function(x, training, info = NULL, ...) {
         kernel = "rbfdot",
         kpar = list(sigma = x$sigma)
       )
-    kprc <- try(rlang::eval_tidy(cl), silent = TRUE)
-    if (inherits(kprc, "try-error")) {
-      cli::cli_abort(
-        c(
-          x = "Failed with error:",
-          i = as.character(kprc)
-        )
-      )
-    }
+
+    kprc <- try_fetch_eval_tidy(rlang::eval_tidy(cl))
   } else {
     kprc <- NULL
   }

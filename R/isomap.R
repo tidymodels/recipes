@@ -176,18 +176,17 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
     x$num_terms <- min(x$num_terms, ncol(training))
     x$neighbors <- min(x$neighbors, nrow(training))
 
-    iso_map <-
-      try(
-        eval_dimred_call(
-          "embed",
-          .data = dimred_data(training[, col_names, drop = FALSE]),
-          .method = "Isomap",
-          knn = x$neighbors,
-          ndim = x$num_terms,
-          .mute = x$options$.mute
-        ),
-        silent = TRUE
+    iso_map <- try_fetch_eval_tidy(
+      eval_dimred_call(
+        "embed",
+        .data = dimred_data(training[, col_names, drop = FALSE]),
+        .method = "Isomap",
+        knn = x$neighbors,
+        ndim = x$num_terms,
+        .mute = x$options$.mute
       )
+    )
+
     if (inherits(iso_map, "try-error")) {
       cli::cli_abort(
         c(

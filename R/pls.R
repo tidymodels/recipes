@@ -324,7 +324,7 @@ pls_project <- function(object, x) {
   z <- sweep(z, 2, STATS = object$sd, "/")
   res <- z %*% object$coefs
   res <- tibble::as_tibble(res)
-  res <- purrr::map2_dfc(res, object$col_norms, ~.x * .y)
+  res <- purrr::map2_dfc(res, object$col_norms, ~ .x * .y)
   res
 }
 
@@ -393,15 +393,9 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     nterm <- prop2int(x$predictor_prop, length(x_names))
 
     cl <- make_pls_call(ncomp, nterm, y_names, x$options)
-    res <- try(rlang::eval_tidy(cl), silent = TRUE)
-    if (inherits(res, "try-error")) {
-      cli::cli_warn(
-        "{.fn step_pls} failed with error: {as.character(res)}.",
-      )
-      res <- list(x_vars = x_names, y_vars = y_names)
-    } else {
-      res <- butcher_pls(res)
-    }
+    res <- try_fetch_eval_tidy(rlang::eval_tidy(cl))
+
+    res <- butcher_pls(res)
   } else {
     res <- NULL
   }
@@ -479,14 +473,14 @@ tidy.step_pls <- function(x, ...) {
         purrr::map2_dfc(
           as.data.frame(x$res$coefs),
           x$res$col_norms,
-          ~.x * .y
+          ~ .x * .y
         ) %>%
-          dplyr::mutate(terms = rownames(x$res$coefs)) %>%
-          tidyr::pivot_longer(
-            c(-terms),
-            names_to = "component",
-            values_to = "value"
-          )
+        dplyr::mutate(terms = rownames(x$res$coefs)) %>%
+        tidyr::pivot_longer(
+          c(-terms),
+          names_to = "component",
+          values_to = "value"
+        )
       res <- res[, c("terms", "value", "component")]
       res$component <- gsub("comp", "PLS", res$component)
     } else {

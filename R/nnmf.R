@@ -158,7 +158,7 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
 
     nmf_opts <- list(parallel = FALSE, parallel.required = FALSE)
 
-    nnm <- try(
+    nnm <- try_fetch_eval_tidy(
       eval_dimred_call(
         "embed",
         .method = "NNMF",
@@ -169,17 +169,8 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
         .mute = c("message", "output"),
         options = x$options,
         .options = nmf_opts
-      ),
-      silent = TRUE
-    )
-    if (inherits(nnm, "try-error")) {
-      cli::cli_abort(
-        c(
-          x = "Failed with error:",
-          i = as.character(nnm)
-        )
       )
-    }
+    )
   } else {
     nnm <- NULL
   }

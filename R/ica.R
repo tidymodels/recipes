@@ -173,16 +173,8 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
         X = rlang::expr(as.matrix(training[, col_names]))
       )
     cl <- rlang::call_modify(cl, !!!x$options)
-    indc <- try(withr::with_seed(x$seed, rlang::eval_tidy(cl)), silent = TRUE)
 
-    if (inherits(indc, "try-error")) {
-      cli::cli_abort(
-        c(
-          x = "Failed with error:",
-          i = as.character(indc)
-        )
-      )
-    }
+    indc <- try_fetch_eval_tidy(withr::with_seed(x$seed, rlang::eval_tidy(cl)))
 
     indc <- indc[c("K", "W")]
     indc$means <- colMeans(training[, col_names])
