@@ -114,9 +114,9 @@ which (if any) columns were added or removed during training.</p></dd>
 
 <dt id="arg-strings-as-factors">strings_as_factors<a class="anchor" aria-label="anchor" href="#arg-strings-as-factors"></a></dt>
 <dd><p>A logical: should character columns that have role
-<code>"predictor"</code> or <code>"outcome"</code> be converted to factors? This affects the
-preprocessed training set (when <code>retain = TRUE</code>) as well as the results of
-<code><a href="bake.html">bake()</a></code>.</p></dd>
+<code>"predictor"</code> or <code>"outcome"</code> be converted to factors? <strong>This option has now
+been moved to <code><a href="recipe.html">recipe()</a></code></strong>; please specify <code>strings_as_factors</code> there and
+see the notes in the Details section for that function.</p></dd>
 
 </dl></div>
     <div class="section level2">

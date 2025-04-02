@@ -57,7 +57,14 @@ to prepare it for data analysis.</p>
 <span><span class="fu">recipe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
-<span><span class="fu">recipe</span><span class="op">(</span><span class="va">x</span>, formula <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, vars <span class="op">=</span> <span class="cn">NULL</span>, roles <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">recipe</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  formula <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  roles <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  strings_as_factors <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'formula'</span></span>
 <span><span class="fu">recipe</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -100,6 +107,11 @@ that will be used in any context (see below)</p></dd>
 <dd><p>A character string (the same length of <code>vars</code>) that describes a
 single role that the variable will take. This value could be anything but
 common roles are <code>"outcome"</code>, <code>"predictor"</code>, <code>"case_weight"</code>, or <code>"ID"</code>.</p></dd>
+
+
+<dt id="arg-strings-as-factors">strings_as_factors<a class="anchor" aria-label="anchor" href="#arg-strings-as-factors"></a></dt>
+<dd><p>A logical, should character columns be converted to
+factors? See Details below.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -307,7 +319,7 @@ used to estimate quantities required for the operations using a data set
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
 <span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="do">## -- Operations</span></span>
 <span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="do">## * Centering and scaling for: carbon hydrogen, ... | Trained</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="do">## * Centering and scaling for: carbon and hydrogen, ... | Trained</span></span>
 <span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="do">## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained</span></span></code></pre><p></p></div>
 <p>Note that the estimated recipe shows the actual column names captured by
@@ -341,6 +353,32 @@ applications.</p>
 </div>
 
 
+</div>
+
+<div class="section">
+<h3 id="strings-and-factors">Strings and Factors<a class="anchor" aria-label="anchor" href="#strings-and-factors"></a></h3>
+
+
+<p>The primary purpose of a recipe is to facilitate visualization,
+modeling, and analysis. Because of this, most qualitative data should be
+encoded as factors instead of character strings (with exceptions for
+text analysis and related tasks). It is preferred that quantitative data
+be converted to factors prior to passing the data to the recipe since
+the number of levels is usually required for steps (e.g., for making
+dummy indicator columns).</p>
+<p>Although it is advisable to create factors before calling
+<code>recipe()</code>, that function has a <code>strings_as_factors</code>
+argument that can do the conversion. This affects the preprocessed
+training set (when <code>retain = TRUE</code>) as well as the results of both
+<code><a href="prep.html">prep.recipe()</a></code> and <code><a href="bake.html">bake.recipe()</a></code>.
+This will only affect variables with roles <code>"outcome"</code> and <code>"predictor"</code></p>
+<p>In 1.2.1 and prior versions of the recipes package, this argument was
+provided via <code><a href="prep.html">prep()</a></code>. Code that only provides it via
+<code><a href="prep.html">prep()</a></code> will continue to work with a once-per-session
+warning, and in a future version, it will become an error. If provided
+in both <code><a href="prep.html">prep()</a></code> and <code>recipe()</code>, the value in
+<code>recipe()</code> will take precedence. Default to <code>NULL,</code> which
+will be taken as <code>TRUE</code>.</p>
 </div>
 
     </div>

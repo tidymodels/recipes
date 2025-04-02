@@ -171,6 +171,9 @@ is returned.</p>
 <span class="r-in"><span>  <span class="fu">check_class</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="prep.html">prep</a></span><span class="op">(</span><span class="va">train</span>, strings_as_factors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="bake.html">bake</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `strings_as_factors` argument of `prep.recipe()` is deprecated as</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> of recipes 1.3.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use the `strings_as_factors` argument of `recipe()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 432 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    city         zip    beds baths type   price latitude longitude  sqft</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -228,8 +231,8 @@ is returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 1</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   time               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2025-04-02 <span style="color: #949494;">04:03:44</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2025-04-02 <span style="color: #949494;">04:04:44</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2025-04-02 <span style="color: #949494;">16:13:04</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2025-04-02 <span style="color: #949494;">16:14:04</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
