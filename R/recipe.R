@@ -358,9 +358,9 @@ inline_check <- function(x, data, call) {
 #' @param log_changes A logical for printing a summary for each step regarding
 #'   which (if any) columns were added or removed during training.
 #' @param strings_as_factors A logical: should character columns that have role
-#'   `"predictor"` or `"outcome"` be converted to factors? This affects the
-#'   preprocessed training set (when `retain = TRUE`) as well as the results of
-#'   [bake()].
+#'   `"predictor"` or `"outcome"` be converted to factors? **This option has now
+#'   been moved to [recipe()]**; please specify `strings_as_factors` there and
+#'   see the notes in the Details section for that function.
 #'
 #' @details
 #'
