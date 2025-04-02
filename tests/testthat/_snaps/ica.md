@@ -35,8 +35,9 @@
     Condition
       Error in `step_ica()`:
       Caused by error in `prep()`:
-      x Failed with error:
-      i Error in fastICA::fastICA(n.comp = 5, X = as.matrix(training[, col_names]), : mocked error
+      ! Failed to compute:
+      Caused by error in `fastICA::fastICA()`:
+      ! mocked error
 
 # bake method errors when needed non-standard role columns are missing
 

@@ -41,8 +41,11 @@
       tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = "mpg") %>%
         prep()
     Condition
-      Warning:
-      `step_pls()` failed with error: Error in mixOmics::pls(X = x, Y = y, ncomp = 2, scale = TRUE) : mocked error .
+      Error in `step_pls()`:
+      Caused by error in `prep()`:
+      ! Failed to compute:
+      Caused by error in `mixOmics::pls()`:
+      ! mocked error
 
 # error on no outcome
 
