@@ -18,6 +18,16 @@
       Warning:
       The `impute_with` variables for `disp` only contains missing values for row: 10. Cannot impute for those rows.
 
+# Better error message for nzv fit error (#209)
+
+    Code
+      recipe(~., d) %>% step_impute_bag(let) %>% prep()
+    Condition
+      Error in `step_impute_bag()`:
+      Caused by error in `prep()`:
+      x The bagged tree model was not able to fit to `let`. It appears to be because it had near zero variance.
+      i Please deselect it for this step.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
