@@ -44,6 +44,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="recipes-development-version">recipes (development version)<a class="anchor" aria-label="anchor" href="#recipes-development-version"></a></h2>
 <ul><li><p>Fixed printing for <code><a href="../reference/step_geodist.html">step_geodist()</a></code> when no variables are selected. (<a href="https://github.com/tidymodels/recipes/issues/1423" class="external-link">#1423</a>)</p></li>
+<li><p>Fixed bug where <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_time()</a></code> would throw warning for when recipe didn’t have any steps. (<a href="https://github.com/tidymodels/recipes/issues/1475" class="external-link">#1475</a>)</p></li>
 <li><p><code><a href="../reference/step_num2factor.html">step_num2factor()</a></code> has gotten improved documentation to avoid getting NAs as output. (<a href="https://github.com/tidymodels/recipes/issues/575" class="external-link">#575</a>)</p></li>
 <li><p>fixed bug where <code><a href="../reference/step_nnmf_sparse.html">step_nnmf_sparse()</a></code> required that the Matrix package was loaded. (<a href="https://github.com/tidymodels/recipes/issues/1141" class="external-link">#1141</a>)</p></li>
 <li><p><code><a href="../reference/step_cut.html">step_cut()</a></code> not longer errors on NA values in <code><a href="../reference/bake.html">bake()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/1304" class="external-link">#1304</a>)</p></li>
