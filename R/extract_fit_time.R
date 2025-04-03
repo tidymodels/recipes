@@ -9,6 +9,10 @@ extract_fit_time.recipe <- function(x, summarize = TRUE, ...) {
     )
   }
 
+  if (identical(res, tibble::tibble())) {
+    res <- tibble(stage_id = character(), elapsed = numeric())
+  }
+
   if (summarize) {
     res <- tibble(
       stage_id = "recipe",

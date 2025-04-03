@@ -2,6 +2,8 @@
 
 * Fixed printing for `step_geodist()` when no variables are selected. (#1423)
 
+* Fixed bug where `extract_fit_time()` would throw warning for when recipe didn't have any steps. (#1475)
+
 * `step_num2factor()` has gotten improved documentation to avoid getting NAs as output. (#575)
 
 * fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
