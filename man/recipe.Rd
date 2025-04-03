@@ -276,7 +276,7 @@ pca_rec
 
 ## -- Operations
 
-## * Centering and scaling for: carbon and hydrogen, ... | Trained
+## * Centering and scaling for: carbon hydrogen, ... | Trained
 
 ## * PCA extraction with: carbon, hydrogen, oxygen, ... | Trained
 }\if{html}{\out{</div>}}

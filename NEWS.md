@@ -6,6 +6,8 @@
 
 * fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
 
+* `step_cut()` not longer errors on NA values in `bake()`. (#1304)
+
 * Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
 
 * The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (@smingerson, #331, #287)

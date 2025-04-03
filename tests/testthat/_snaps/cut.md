@@ -44,6 +44,48 @@
       Warning:
       This will create a factor with one value only.
 
+# step_cut() provides informative warning on missing values
+
+    Code
+      recipe(~., data = mtcars_with_na) %>% step_cut(mpg, breaks = 20) %>% prep()
+    Condition
+      Warning in `prep()`:
+      `var` contains missing values. These will be ignored in break calculations.
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Training information 
+      Training data contained 32 data points and 1 incomplete row.
+      
+      -- Operations 
+      * Cut numeric for: mpg | Trained
+
+---
+
+    Code
+      recipe(~., data = mtcars_with_nas) %>% step_cut(mpg, breaks = 20) %>% prep()
+    Condition
+      Warning in `prep()`:
+      `var` contains missing values. These will be ignored in break calculations.
+    Message
+      
+      -- Recipe ----------------------------------------------------------------------
+      
+      -- Inputs 
+      Number of variables by role
+      predictor: 11
+      
+      -- Training information 
+      Training data contained 32 data points and 3 incomplete rows.
+      
+      -- Operations 
+      * Cut numeric for: mpg | Trained
+
 # breaks argument are type checked
 
     Code

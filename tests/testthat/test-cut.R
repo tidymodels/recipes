@@ -203,6 +203,25 @@ test_that("step_cut() provides informative warning on missing values", {
   )
 })
 
+test_that("step_cut() can handle missig missing values in bake() (#1304)", {
+  mtcars_with_na <- mtcars
+  mtcars_with_na[c(1, 10, 20), "mpg"] <- NA
+
+  suppressWarnings(
+    rec <- recipe(~., data = mtcars_with_na) %>%
+      step_cut(mpg, breaks = 20) %>%
+      prep()
+  )
+
+  exp <- bake(rec, mtcars)$mpg
+  exp[c(1, 10, 20)] <- NA
+
+  expect_identical(
+    bake(rec, mtcars_with_na)$mpg,
+    exp
+  )
+})
+
 test_that("breaks argument are type checked", {
   expect_snapshot(
     error = TRUE,

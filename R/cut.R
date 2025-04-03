@@ -164,11 +164,11 @@ create_full_breaks <- function(var, breaks, call = rlang::caller_env()) {
     var <- var[!is.na(var)]
   }
 
-  if (min(var) < min(breaks)) {
+  if (min(var, na.rm = TRUE) < min(breaks)) {
     breaks <- c(min(var), breaks)
   }
 
-  if (max(var) > max(breaks)) {
+  if (max(var, na.rm = TRUE) > max(breaks)) {
     breaks <- c(max(var), breaks)
   }
 
@@ -205,10 +205,10 @@ bake.step_cut <- function(object, new_data, ...) {
 
 cut_var <- function(var, breaks, include_outside_range) {
   if (include_outside_range) {
-    if (min(var) < min(breaks)) {
+    if (min(var, na.rm = TRUE) < min(breaks)) {
       breaks[1] <- min(var)
     }
-    if (max(var) > max(breaks)) {
+    if (max(var, na.rm = TRUE) > max(breaks)) {
       breaks[length(breaks)] <- max(var)
     }
   }
