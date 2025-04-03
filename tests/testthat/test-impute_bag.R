@@ -148,6 +148,17 @@ test_that("Warns when impute_with contains all NAs in a row", {
   )
 })
 
+test_that("Better error message for nzv fit error (#209)", {
+  d <- data.frame(let = c(rep("a", 99), rep("b", 1)), num = seq_len(100))
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~., d) %>%
+      step_impute_bag(let) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

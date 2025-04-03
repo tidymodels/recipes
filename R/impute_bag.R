@@ -188,16 +188,31 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
   if (!is.null(seed_val) && !is.na(seed_val)) {
     set.seed(seed_val)
   }
+  out <- rlang::try_fetch(
+    do.call(
+      "ipredbagg",
+      c(
+        list(
+          y = dat[, vars$y],
+          X = dat[, vars$x, drop = FALSE]
+        ),
+        opt
+      )
+    ),
+    error = function(cnd) {
+      if (grepl("number of rows of matrices must match", cnd$message)) {
+        cli::cli_abort(
+          c(
+            x = "The bagged tree model was not able to fit to {.col {vars$y}}.
+          It appears to be because it had near zero variance.",
+            i = "Please deselect it for this step."
+          ),
+          call = call("prep")
+        )
+      }
 
-  out <- do.call(
-    "ipredbagg",
-    c(
-      list(
-        y = dat[, vars$y],
-        X = dat[, vars$x, drop = FALSE]
-      ),
-      opt
-    )
+      cli::cli_abort("Failed to compute:", parent = cnd, call = call("prep"))
+    }
   )
   out$..imp_vars <- vars$x
   out
