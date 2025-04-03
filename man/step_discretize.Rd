@@ -66,6 +66,10 @@ sequence of any existing operations.
 convert numeric data into a factor with bins having approximately the same
 number of data points (based on a training set).
 }
+\details{
+Note that missing values will be turned into a factor level with the level
+\code{prefix_missing}, where \code{prefix} is specified in the \code{options} argument.
+}
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with
 columns \code{terms}, \code{value} , and \code{id}:

@@ -253,6 +253,9 @@ print.discretize <-
 #' @template step-return
 #' @details
 #'
+#' Note that missing values will be turned into a factor level with the level
+#' `prefix_missing`, where `prefix` is specified in the `options` argument.
+#'
 #' # Tidying
 #'
 #' When you [`tidy()`][tidy.recipe()] this step, a tibble is returned with
