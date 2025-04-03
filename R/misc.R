@@ -201,11 +201,12 @@ kill_levels <- function(lvls, var_info) {
 }
 
 strings2factors <- function(x, info) {
-  check_lvls <- has_lvls(info)
-  if (!any(check_lvls)) {
-    return(x)
-  }
-  info <- info[check_lvls]
+  to_factor <- vapply(
+    info,
+    function(x) !is.null(x$factor),
+    FUN.VALUE = logical(1)
+  )
+  info <- info[to_factor]
   vars <- names(info)
   info <- info[vars %in% names(x)]
   for (i in seq_along(info)) {
