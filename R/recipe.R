@@ -244,7 +244,9 @@ recipe.formula <- function(formula, data, ...) {
   }
 
   # Dealing with sf data sets
-  class(data) <- setdiff(class(data), "sf")
+  if (rlang::inherits_any(data, "sf")) {
+    class(data) <- setdiff(class(data), "sf")
+  }
 
   if (!is_tibble(data)) {
     data <- as_tibble(data)
