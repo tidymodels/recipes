@@ -6,6 +6,8 @@
 
 * `step_num2factor()` has gotten improved documentation to avoid getting NAs as output. (#575)
 
+* `step_interact()` now works with empty selections instead of erroring. (#1417)
+
 * fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
 
 * Fixed bug where `recipe()` would error on sf objects. (#1393)
