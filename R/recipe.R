@@ -809,6 +809,13 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   # set.
   info <- object$last_term_info
 
+  # Handle old grouped data.frames
+  if (!is.null(attr(info, "vars"))) {
+    group_vars <- attr(info, "vars")
+    info <- dplyr::ungroup(info)
+    info <- dplyr::group_by(info, dplyr::pick(group_vars))
+  }
+
   # Now reduce to only user selected columns
   out_names <- recipes_eval_select(
     terms,
