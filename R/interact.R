@@ -353,9 +353,11 @@ make_small_terms <- function(forms, dat) {
 print.step_interact <-
   function(x, width = max(20, options()$width - 27), ...) {
     title <- "Interactions with "
-
     if (x$trained) {
-      terms <- as.character(x$terms)[-1]
+      terms <- map_chr(
+        x$objects,
+        function(x) utils::tail(attr(x, "term.labels"), 1)
+      )
     } else {
       terms <- as_label(x$terms[[1]])
       if (terms == "<empty>") {
@@ -457,6 +459,9 @@ intersect_selectors <- c(
 plus_call <- function(x, y) call("+", x, y)
 
 vec_2_expr <- function(x) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
   x <- rlang::syms(x)
   res <- purrr::reduce(x, plus_call)
   expr((!!res))

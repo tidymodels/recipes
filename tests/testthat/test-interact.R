@@ -344,6 +344,27 @@ test_that("gives informative error if terms isn't a formula (#1299)", {
   )
 })
 
+test_that("one-sided empty selections works (#1299)", {
+  res <- recipe(~., data = mtcars) %>%
+    step_interact(~ any_of("vs"):any_of("not_am")) %>%
+    prep() %>%
+    bake(NULL)
+  exp <- as_tibble(mtcars)
+
+  expect_identical(res, exp)
+
+  res <- recipe(~., data = mtcars) %>%
+    step_interact(~ hp:mpg + any_of("vs"):any_of("not_am")) %>%
+    prep() %>%
+    bake(NULL)
+  exp <- recipe(~., data = mtcars) %>%
+    step_interact(~ hp:mpg) %>%
+    prep() %>%
+    bake(NULL)
+
+  expect_identical(res, exp)
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
