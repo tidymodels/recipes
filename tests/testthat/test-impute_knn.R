@@ -230,6 +230,32 @@ test_that("error on wrong options argument", {
   )
 })
 
+test_that("step_impute_knn() can prep with character vectors (#926)", {
+  set.seed(42)
+
+  dat <- tibble(
+    criterion = rnorm(50),
+    num_pred_a = rnorm(50) + .8 * criterion,
+    char_pred = ifelse(
+      criterion < .2,
+      sample(c("a", "b"), 1, prob = c(.75, .25)),
+      sample(c("a", "b"), 1, prob = c(.5, .5))
+    )
+  )
+
+  dat[sample(1:nrow(dat), 2), 2] <- NA
+  dat[sample(1:nrow(dat), 2), 3] <- NA
+
+  rec <- recipe(criterion ~ ., data = dat, strings_as_factors = TRUE) %>%
+    step_impute_knn(all_predictors())
+
+  rec_prepped <- prep(rec, dat)
+
+  expect_no_error(
+    bake(rec_prepped, dat)
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

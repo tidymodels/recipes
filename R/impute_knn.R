@@ -266,6 +266,11 @@ bake.step_impute_knn <- function(object, new_data, ...) {
         next
       }
     }
+    # make sure imp_data as same types as ref_data
+    imp_data <- vctrs::tib_cast(
+      imp_data,
+      select(object$ref_data, names(imp_data))
+    )
 
     imp_var_complete <- !is.na(object$ref_data[[col_name]])
     nn_ind <- nn_index(

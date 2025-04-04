@@ -10,6 +10,8 @@
 
 * `step_cut()` not longer errors on NA values in `bake()`. (#1304)
 
+* Fixed bug in `step_impute_knn()` would error on character vectors when `strings_as_factors = TRUE`. (#926)
+
 * Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)
 
 * The `strings_as_factors` argument of `prep.recipe()` has been soft-deprecated in favor of `recipe(strings_as_factors)`. If both are provided, the value in `recipe()` takes precedence. This allows control of recipe behavior within a workflow, which wasn't previously possible. (@smingerson, #331, #287)
