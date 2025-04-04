@@ -457,6 +457,9 @@ intersect_selectors <- c(
 plus_call <- function(x, y) call("+", x, y)
 
 vec_2_expr <- function(x) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
   x <- rlang::syms(x)
   res <- purrr::reduce(x, plus_call)
   expr((!!res))
