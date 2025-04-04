@@ -1,7 +1,7 @@
 #' Natural splines
 #'
 #' `step_spline_natural()` creates a *specification* of a recipe step that
-#' creates natural spline features.
+#' creates natural spline (also known as restricted cubic spline) features.
 #'
 #' @inheritParams step_spline_b
 #' @param deg_free The degrees of freedom for the natural spline. As the
