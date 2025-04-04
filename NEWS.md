@@ -8,6 +8,8 @@
 
 * fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
 
+* Fixed bug where `recipe()` would error on sf objects. (#1393)
+
 * `step_cut()` not longer errors on NA values in `bake()`. (#1304)
 
 * Fixed bug in `step_impute_knn()` would error on character vectors when `strings_as_factors = TRUE`. (#926)
