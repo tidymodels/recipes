@@ -243,6 +243,11 @@ recipe.formula <- function(formula, data, ...) {
     data <- sparsevctrs::coerce_to_sparse_tibble(data, call = caller_env(0))
   }
 
+  # Dealing with sf data sets
+  if (rlang::inherits_any(data, "sf")) {
+    class(data) <- setdiff(class(data), "sf")
+  }
+
   if (!is_tibble(data)) {
     data <- as_tibble(data)
   }
