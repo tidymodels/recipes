@@ -252,11 +252,12 @@ bake.step_impute_knn <- function(object, new_data, ...) {
     imp_data_all_missing <- vctrs::vec_detect_missing(imp_data)
 
     if (any(imp_data_all_missing)) {
-      missing_rows <- which(missing_rows)[imp_data_all_missing]
+      offenders <- which(missing_rows)[imp_data_all_missing]
+      missing_rows[offenders] <- FALSE
 
       cli::cli_warn(
         "The {.arg impute_with} variables for {.col {col_name}} only contains 
-        missing values for row: {missing_rows}. Cannot impute for those rows.",
+        missing values for row: {offenders}. Cannot impute for those rows.",
       )
 
       imp_data <- imp_data[!imp_data_all_missing, , drop = FALSE]
