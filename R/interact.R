@@ -353,9 +353,11 @@ make_small_terms <- function(forms, dat) {
 print.step_interact <-
   function(x, width = max(20, options()$width - 27), ...) {
     title <- "Interactions with "
-
     if (x$trained) {
-      terms <- as.character(x$terms)[-1]
+      terms <- map_chr(
+        x$objects,
+        function(x) utils::tail(attr(x, "term.labels"), 1)
+      )
     } else {
       terms <- as_label(x$terms[[1]])
       if (terms == "<empty>") {
