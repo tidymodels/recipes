@@ -11,6 +11,12 @@
 #'   factors.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #'   rather than C-1?
+#' @param contrasts A named list of contrast functions or a single contrast
+#'   function. Defaults to
+#'   `list(unordered = contr.treatment, ordered = contr.poly)`. If it is a list,
+#'   it must include both `unordered` and `ordered` elements. If a constrast
+#'   function is passed by itself, it will be used for both unordered and
+#'   ordered predictors.
 #' @param preserve This argument has been deprecated. Please use
 #'   `keep_original_cols` instead.
 #' @param naming A function that defines the naming convention for new dummy
@@ -127,6 +133,10 @@ step_dummy <-
     role = "predictor",
     trained = FALSE,
     one_hot = FALSE,
+    contrasts = list(
+      unordered = stats::contr.treatment,
+      ordered = stats::contr.poly
+    ),
     preserve = deprecated(),
     naming = dummy_names,
     levels = NULL,
@@ -150,6 +160,7 @@ step_dummy <-
         role = role,
         trained = trained,
         one_hot = one_hot,
+        contrasts = contrasts,
         preserve = keep_original_cols,
         naming = naming,
         levels = levels,
@@ -167,6 +178,7 @@ step_dummy_new <-
     role,
     trained,
     one_hot,
+    contrasts,
     preserve,
     naming,
     levels,
@@ -181,6 +193,7 @@ step_dummy_new <-
       role = role,
       trained = trained,
       one_hot = one_hot,
+      contrasts = contrasts,
       preserve = preserve,
       naming = naming,
       levels = levels,
@@ -198,6 +211,16 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   check_bool(x$one_hot, arg = "one_hot")
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
   check_sparse_arg(x$sparse)
+
+  if (is.null(x$contrasts)) {
+    x$contrasts <- list(
+      unordered = stats::contr.treatment,
+      ordered = stats::contr.poly
+    )
+  }
+  if (is.function(x$contrasts)) {
+    x$contrasts <- list(unordered = x$contrasts, ordered = x$contrasts)
+  }
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -239,6 +262,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     one_hot = x$one_hot,
+    contrasts = x$contrasts,
     preserve = x$preserve,
     naming = x$naming,
     levels = levels,
@@ -280,6 +304,13 @@ bake.step_dummy <- function(object, new_data, ...) {
   col_names <- names(object$levels)
   check_new_data(col_names, object, new_data)
 
+  if (is.null(object$contrasts)) {
+    object$contrasts <- list(
+      unordered = stats::contr.treatment,
+      ordered = stats::contr.poly
+    )
+  }
+
   if (length(col_names) == 0) {
     return(new_data)
   }
@@ -317,9 +348,15 @@ bake.step_dummy <- function(object, new_data, ...) {
       ordered = is_ordered
     )
 
-    current_contrast <- getOption("contrasts")[is_ordered + 1]
+    object$contrasts <- object$contrasts[c("unordered", "ordered")]
+    current_contrast <- object$contrasts[is_ordered + 1]
     if (
-      !current_contrast %in% c("contr.treatment", "contr_one_hot") &&
+      !any(vapply(
+        c(stats::contr.treatment, hardhat::contr_one_hot),
+        identical,
+        current_contrast[[1]],
+        FUN.VALUE = logical(1)
+      )) &&
         sparse_is_yes(object$sparse)
     ) {
       object$sparse <- FALSE
@@ -342,8 +379,14 @@ bake.step_dummy <- function(object, new_data, ...) {
           na.action = na.pass
         )
 
+      current_contrast <- stats::setNames(current_contrast, col_name)
+
       indicators <- tryCatch(
-        model.matrix(object = levels, data = indicators),
+        model.matrix(
+          object = levels,
+          data = indicators,
+          contrasts.arg = current_contrast
+        ),
         error = function(cnd) {
           if (grepl("(vector memory|cannot allocate)", cnd$message)) {
             n_levels <- length(attr(levels, "values"))

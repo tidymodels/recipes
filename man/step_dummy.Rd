@@ -10,6 +10,7 @@ step_dummy(
   role = "predictor",
   trained = FALSE,
   one_hot = FALSE,
+  contrasts = list(unordered = stats::contr.treatment, ordered = stats::contr.poly),
   preserve = deprecated(),
   naming = dummy_names,
   levels = NULL,
@@ -36,6 +37,13 @@ preprocessing have been estimated.}
 
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
+
+\item{contrasts}{A named list of contrast functions or a single contrast
+function. Defaults to
+\code{list(unordered = contr.treatment, ordered = contr.poly)}. If it is a list,
+it must include both \code{unordered} and \code{ordered} elements. If a constrast
+function is passed by itself, it will be used for both unordered and
+ordered predictors.}
 
 \item{preserve}{This argument has been deprecated. Please use
 \code{keep_original_cols} instead.}
