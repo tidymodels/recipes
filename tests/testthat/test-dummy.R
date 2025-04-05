@@ -445,12 +445,8 @@ test_that("sparse = 'yes' works", {
 })
 
 test_that("sparse = 'yes' will go back to 'no' on unsupported contrasts", {
-  go_helmert <- getOption("contrasts")
-  go_helmert["unordered"] <- "contr.helmert"
-  withr::local_options(contrasts = go_helmert)
-
   rec <- recipe(~., data = tibble(x = letters)) %>%
-    step_dummy(x, sparse = "yes") %>%
+    step_dummy(x, sparse = "yes", contrasts = contr.helmert) %>%
     prep()
 
   res <- bake(rec, tibble(x = letters))
