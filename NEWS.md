@@ -8,6 +8,8 @@
 
 * `step_interact()` now works with empty selections instead of erroring. (#1417)
 
+* Added developer function `check_options()`. (#1269)
+
 * fixed bug where `step_nnmf_sparse()` required that the Matrix package was loaded. (#1141)
 
 * Fixed bug where `recipe()` would error on sf objects. (#1393)
