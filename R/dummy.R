@@ -35,10 +35,11 @@
 #'
 #' `step_dummy()` will create a set of binary dummy variables from a factor
 #' variable. For example, if an unordered factor column in the data set has
-#' levels of "red", "green", "blue", the dummy variable bake will create two
-#' additional columns of 0/1 data for two of those three values (and remove the
-#' original column). For ordered factors, polynomial contrasts are used to
-#' encode the numeric values.
+#' levels of `"red"`, `"green"`, `"blue"`, the dummy variable bake will create
+#' two additional columns of 0/1 data for two of those three values (and remove
+#' the original column). For ordered factors, polynomial contrasts are used to
+#' encode the numeric values. These defaults are controlled by the `contrasts`
+#' argument.
 #'
 #' By default, the excluded dummy variable (i.e. the reference cell) will
 #' correspond to the first level of the unordered factor being converted.
@@ -48,9 +49,6 @@
 #' @template dummy-naming
 #'
 #' @details
-#'
-#' To change the type of contrast being used, change the global contrast option
-#' via `options`.
 #'
 #' When the factor being converted has a missing value, all of the corresponding
 #' dummy variables are also missing. See [step_unknown()] for a solution.
@@ -63,12 +61,10 @@
 #' will return the data as-is (e.g. with no dummy variables).
 #'
 #' Note that, by default, the new dummy variable column names obey the naming
-#' rules for columns. If there are levels such as "0", [dummy_names()] will put
-#' a leading "X" in front of the level (since it uses [make.names()]). This can
-#' be changed by passing in a different function to the `naming` argument for
-#' this step.
-#'
-#'
+#' rules for columns. If there are levels such as `"0"`, [dummy_names()] will
+#' put a leading `"X"` in front of the level (since it uses [make.names()]).
+#' This can be changed by passing in a different function to the `naming`
+#' argument for this step.
 #'
 #' Also, there are a number of contrast methods that return fractional values.
 #' The columns returned by this step are doubles (not integers) when
@@ -104,28 +100,39 @@
 #' # Default dummy coding: 36 dummy variables
 #' dummies <- rec %>%
 #'   step_dummy(city) %>%
-#'   prep(training = Sacramento)
+#'   prep()
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
 #'
 #' dummy_data %>%
 #'   select(starts_with("city")) %>%
-#'   names() # level "anything" is the reference level
+#'   glimpse() # level "anything" is the reference level
 #'
 #' # Obtain the full set of 37 dummy variables using `one_hot` option
 #' dummies_one_hot <- rec %>%
 #'   step_dummy(city, one_hot = TRUE) %>%
-#'   prep(training = Sacramento)
+#'   prep()
 #'
 #' dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 #'
 #' dummy_data_one_hot %>%
 #'   select(starts_with("city")) %>%
-#'   names() # no reference level
+#'   glimpse() # no reference level
 #'
+#' # Obtain the full set of 37 dummy variables using helmert contrasts
+#' dummies_helmert <- rec %>%
+#'   step_dummy(city, contrasts = contr.helmert) %>%
+#'   prep()
+#'
+#' dummy_data_helmert <- bake(dummies_helmert, new_data = NULL)
+#'
+#' dummy_data_helmert %>%
+#'   select(starts_with("city")) %>%
+#'   glimpse() # no reference level
 #'
 #' tidy(dummies, number = 1)
 #' tidy(dummies_one_hot, number = 1)
+#' tidy(dummies_helmert, number = 1)
 step_dummy <-
   function(
     recipe,
