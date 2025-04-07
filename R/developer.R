@@ -85,6 +85,21 @@
 #' check_type(training[, col_names], types = c("double", "integer"))
 #' ```
 #'
+#' [check_options()] can be used within `prep.step_*()` functions to check that
+#' the `options` argument contains the right elements. It doens't check the
+#' types of the elements, just that `options` is a named list and it includes
+#' or excludes some names.
+#'
+#' It should be used like so:
+#'
+#' ```r
+#' # When you know some arguments are excluded
+#' check_options(xoptions, exclude = c("x", "pattern"))
+#'
+#' # When you know all legal elements
+#' check_options(xoptions, include = c("nthread", "eps"))
+#' ```
+#'
 #' [check_new_data()] should be used within `bake.step_*()`. This function is
 #' used to make check that the required columns are present in the data. It
 #' should be one of the first lines inside the function.
