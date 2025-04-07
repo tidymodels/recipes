@@ -30,7 +30,9 @@ test_that("dummy variables with factor inputs", {
     verbose = FALSE
   )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
+  glimpse(dummy_pred)
 
+  cat(dummy_pred[[1]])
   expect_false(any(colnames(dummy_pred) == "city"))
   expect_false(any(colnames(dummy_pred) == "zip"))
 
@@ -47,6 +49,9 @@ test_that("dummy variables with factor inputs", {
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
   expect_equal(dummy_pred, exp_res, ignore_attr = TRUE)
+
+  glimpse(exp_res)
+  cat(exp_res[[1]])
 
   dum_tibble <-
     tibble(terms = c("city", "zip"), columns = rep(rlang::na_chr, 2), id = "")
