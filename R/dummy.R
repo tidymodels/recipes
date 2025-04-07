@@ -468,19 +468,15 @@ bake.step_dummy <- function(object, new_data, ...) {
         }
       )
 
+      used_lvl <- attr(indicators, "assign") == 1
+      used_lvl <- rownames(attr(indicators, "contrasts")[[1]])[used_lvl]
+
       if (!object$one_hot) {
         indicators <- indicators[,
           colnames(indicators) != "(Intercept)",
           drop = FALSE
         ]
       }
-
-      ## use backticks for nonstandard factor levels here
-      used_lvl <- gsub(
-        paste0("^\\`?", col_name, "\\`?"),
-        "",
-        colnames(indicators)
-      )
     }
 
     new_names <- object$naming(col_name, used_lvl, is_ordered)
