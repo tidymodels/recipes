@@ -238,6 +238,8 @@ impute_var_lists <- function(to_impute, impute_using, training, info) {
 prep.step_impute_bag <- function(x, training, info = NULL, ...) {
   check_number_whole(x$trees, arg = "trees", min = 1)
   check_number_whole(x$seed_val, arg = "seed_val")
+  check_options(x$options, exclude = c("X", "y"))
+
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,

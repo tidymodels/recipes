@@ -168,6 +168,7 @@ prep.step_depth <- function(x, training, info = NULL, ...) {
   metric <- x$metric
   rlang::arg_match(metric, depth_metric)
   check_string(x$prefix, allow_empty = FALSE, arg = "prefix")
+  check_options(x$options, exclude = c("data", "x"))
 
   class_var <- x$class[1]
 

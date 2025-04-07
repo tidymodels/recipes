@@ -152,6 +152,7 @@ prep.step_spline_b <- function(x, training, info = NULL, ...) {
   check_bool(x$complete_set, arg = "complete_set")
   check_number_whole(x$degree, arg = "degree", min = 0)
   check_number_whole(x$deg_free, arg = "deg_free", min = 0)
+  check_options(x$options, exclude = c("x", "df", "degree", "intercept"))
 
   check_zv(training[, col_names])
 

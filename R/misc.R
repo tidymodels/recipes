@@ -1057,6 +1057,13 @@ check_options <- function(
   include = NULL,
   call = caller_env()
 ) {
+  if (is.null(options)) {
+    return(NULL)
+  }
+  if (identical(options, list())) {
+    return(NULL)
+  }
+
   if (!is.list(options)) {
     cli::cli_abort(
       "{.arg options} must be a list, not {.obj_type_friendly {options}}.",

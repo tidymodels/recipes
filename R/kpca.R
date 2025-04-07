@@ -141,6 +141,7 @@ prep.step_kpca <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
   check_string(x$prefix, arg = "prefix")
   check_number_whole(x$num_comp, arg = "num_comp", min = 0)
+  check_options(x$options, exclude = c("x", "features"))
 
   if (x$num_comp > 0 && length(col_names) > 0) {
     cl <-

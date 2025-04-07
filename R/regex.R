@@ -145,6 +145,7 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
   check_type(training[, col_name], types = c("string", "factor", "ordered"))
   check_string(x$pattern, arg = "pattern", allow_empty = FALSE)
   check_sparse_arg(x$sparse)
+  check_options(x$options, exclude = c("x", "pattern"))
 
   step_regex_new(
     terms = x$terms,
