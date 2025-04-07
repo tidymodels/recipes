@@ -215,6 +215,49 @@ test_that("make sure contrasts argument work for ordered factors", {
   expect_identical(unname(dummy_pred), unname(exp_res))
 })
 
+test_that("make sure contrasts argument is checked", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(Species, contrasts = TRUE) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(Species, contrasts = list()) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(Species, contrasts = list(ordered = contr.treatment)) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(
+        Species,
+        contrasts = list(ordered = 1, unordered = contr.treatment)
+      ) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(
+        Species,
+        contrasts = list(ordered = contr.treatment, unordered = 1)
+      ) %>%
+      prep()
+  )
+})
+
 test_that("tests for issue #91", {
   rec <- recipe(~city, data = sacr)
   factors <- rec %>% step_dummy(city)

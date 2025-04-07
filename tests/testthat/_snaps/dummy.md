@@ -19,6 +19,54 @@
       x All columns selected for the step should be factor or ordered.
       * 1 integer variable found: `price`
 
+# make sure contrasts argument is checked
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = TRUE) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! `contrasts` must be a function or list, not `TRUE`.
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list()) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The list passed to `contrasts` must have the names "ordered" and "unordered".
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = contr.treatment)) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The names of list passed to `contrasts` must be "ordered" and "unordered", not "ordered".
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = 1,
+        unordered = contr.treatment)) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The ordered element of `contracts` but be a function, not a number.
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = contr.treatment,
+        unordered = 1)) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The unordered element of `contracts` but be a function, not a number.
+
 # tests for NA values in factor
 
     Code

@@ -50,6 +50,7 @@ test_that("check existing steps for `skip` arg", {
   step_check <- step_check[step_check != "check_bake_role_requirements"]
   step_check <- step_check[step_check != "check_step_check_args"]
   step_check <- step_check[step_check != "check_sparse_arg"]
+  step_check <- step_check[step_check != "check_contrasts_arg"]
   step_check <- step_check[step_check != "check_zv"]
 
   # R/import-standalone-types-check.R

@@ -225,9 +225,12 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       ordered = stats::contr.poly
     )
   }
+
   if (is.function(x$contrasts)) {
     x$contrasts <- list(unordered = x$contrasts, ordered = x$contrasts)
   }
+
+  check_contrasts_arg(x$contrasts)
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -277,6 +280,48 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
+  )
+}
+
+check_contrasts_arg <- function(x, call = rlang::caller_env()) {
+  if (is.list(x)) {
+    if (!identical(sort(names(x)), c("ordered", "unordered"))) {
+      offender <- names(x)
+      if (length(offender) == 0) {
+        cli::cli_abort(
+          "The list passed to {.arg contrasts} must have the names 
+          {.val ordered} and {.val unordered}.",
+          call = call
+        )
+      }
+      cli::cli_abort(
+        "The names of list passed to {.arg contrasts} must be {.val ordered} and
+        {.val unordered}, not {.val {offender}}.",
+        call = call
+      )
+    }
+    if (!is.function(x$ordered)) {
+      cli::cli_abort(
+        "The {.field ordered} element of {.arg contracts} but be a function, 
+        not {.obj_type_friendly {x$ordered}}.",
+        call = call
+      )
+    }
+    if (!is.function(x$unordered)) {
+      cli::cli_abort(
+        "The {.field unordered} element of {.arg contracts} but be a function, 
+        not {.obj_type_friendly {x$unordered}}.",
+        call = call
+      )
+    }
+
+    return(NULL)
+  }
+
+  cli::cli_abort(
+    "{.arg contrasts} must be a function or list,
+    not {.obj_type_friendly {x}}.",
+    call = call
   )
 }
 
