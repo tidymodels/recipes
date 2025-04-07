@@ -30,9 +30,7 @@ test_that("dummy variables with factor inputs", {
     verbose = FALSE
   )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac, all_predictors())
-  glimpse(dummy_pred)
 
-  cat(dummy_pred[[1]])
   expect_false(any(colnames(dummy_pred) == "city"))
   expect_false(any(colnames(dummy_pred) == "zip"))
 
@@ -49,9 +47,6 @@ test_that("dummy variables with factor inputs", {
   exp_res <- as.data.frame(exp_res)
   rownames(exp_res) <- NULL
   expect_equal(dummy_pred, exp_res, ignore_attr = TRUE)
-
-  glimpse(exp_res)
-  cat(exp_res[[1]])
 
   dum_tibble <-
     tibble(terms = c("city", "zip"), columns = rep(rlang::na_chr, 2), id = "")
@@ -176,14 +171,9 @@ test_that("make sure contrasts argument work", {
     data = sacr_fac,
     contrasts.arg = setNames(list(contr.poly), pred)
   )
-  colnames(tmp) <- gsub(paste0("^", pred), paste0(pred, "_"), colnames(tmp))
   exp_res <- as_tibble(tmp %*% attr(tmp, "contrasts")[[pred]])
-  colnames(exp_res) <- paste0("city_", make.names(colnames(exp_res)))
 
-  # Make sure they have same order
-  exp_res <- exp_res[names(dummy_pred)]
-
-  expect_identical(dummy_pred, exp_res)
+  expect_identical(unname(dummy_pred), unname(exp_res))
 })
 
 test_that("make sure contrasts argument work for ordered factors", {
