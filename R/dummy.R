@@ -232,6 +232,22 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 
   check_contrasts_arg(x$contrasts)
 
+  if (
+    !identical(
+      getOption("contrasts"),
+      c(unordered = "contr.treatment", ordered = "contr.poly")
+    )
+  ) {
+    x$contrasts <- getOption("contrasts")
+    x$contrasts <- lapply(x$contrasts, get)
+
+    lifecycle::deprecate_warn(
+      "1.3.0",
+      I("options(contrasts) with step_dummy()"),
+      I("step_dummy(contrasts)")
+    )
+  }
+
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
     ## to save the terms object from the original (= training)

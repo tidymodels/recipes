@@ -67,6 +67,15 @@
       Caused by error in `prep()`:
       ! The unordered element of `contracts` but be a function, not a number.
 
+# getOption('contrasts') gives deprecation warning in step_dummy
+
+    Code
+      tmp <- recipe(~., data = iris) %>% step_dummy(Species) %>% prep()
+    Condition
+      Warning:
+      options(contrasts) with step_dummy() was deprecated in recipes 1.3.0.
+      i Please use step_dummy(contrasts) instead.
+
 # tests for NA values in factor
 
     Code

@@ -258,6 +258,20 @@ test_that("make sure contrasts argument is checked", {
   )
 })
 
+test_that("getOption('contrasts') gives deprecation warning in step_dummy", {
+  param <- getOption("contrasts")
+
+  go_helmert <- param
+  go_helmert["unordered"] <- "contr.helmert"
+  withr::local_options("contrasts" = go_helmert)
+
+  expect_snapshot(
+    tmp <- recipe(~., data = iris) %>%
+      step_dummy(Species) %>%
+      prep()
+  )
+})
+
 test_that("tests for issue #91", {
   rec <- recipe(~city, data = sacr)
   factors <- rec %>% step_dummy(city)
