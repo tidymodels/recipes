@@ -151,6 +151,70 @@ test_that("create all dummy variables", {
   )
 })
 
+test_that("make sure contrasts argument work", {
+  rec <- recipe(
+    ~city,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
+  dummy <- rec %>% step_dummy(city, contrasts = contr.poly, id = "")
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE
+  )
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+
+  pred <- "city"
+  tmp <- model.matrix(
+    as.formula(paste("~", pred, "+ 0")),
+    data = sacr_fac,
+    contrasts.arg = setNames(list(contr.poly), pred)
+  )
+  colnames(tmp) <- gsub(paste0("^", pred), paste0(pred, "_"), colnames(tmp))
+  exp_res <- as_tibble(tmp %*% attr(tmp, "contrasts")[[pred]])
+  colnames(exp_res) <- paste0("city_", make.names(colnames(exp_res)))
+
+  # Make sure they have same order
+  exp_res <- exp_res[names(dummy_pred)]
+
+  expect_identical(dummy_pred, exp_res)
+})
+
+test_that("make sure contrasts argument work for ordered factors", {
+  sacr_fac$city <- as.ordered(sacr_fac$city)
+  rec <- recipe(
+    ~city,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
+  dummy <- rec %>%
+    step_dummy(
+      city,
+      contrasts = list(
+        unordered = contr.poly,
+        ordered = contr.treatment
+      ),
+      id = ""
+    )
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE
+  )
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+
+  pred <- "city"
+  tmp <- model.matrix(
+    as.formula(paste("~", pred, "+ 0")),
+    data = sacr_fac,
+    contrasts.arg = setNames(list(contr.treatment), pred)
+  )
+  exp_res <- as_tibble(tmp %*% attr(tmp, "contrasts")[[pred]])
+
+  expect_identical(unname(dummy_pred), unname(exp_res))
+})
+
 test_that("tests for issue #91", {
   rec <- recipe(~city, data = sacr)
   factors <- rec %>% step_dummy(city)
