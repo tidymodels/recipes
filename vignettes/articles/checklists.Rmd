@@ -30,15 +30,16 @@ Copy these checklists into the corresponding GitHub issue.
     ```
     test_that("backwards compatible for new_arg", {
       rec <- recipe(~ ., data = data_set_of_your_choice) %>%
-        step_name(all_predictors())
+        step_name(all_predictors()) %>%
+        prep()
   
-      exp_res <- prep(rec)
+      exp <- bake(rec, data_set_of_your_choice)
   
       rec$steps[[1]]$new_arg <- NULL
   
       expect_identical(
-        prep(rec),
-        exp_res
+        bake(rec, data_set_of_your_choice),
+        exp
       )
     })
     ```
