@@ -109,15 +109,16 @@ adapt them somewhat.</p>
     ```
     test_that("backwards compatible for new_arg", {
       rec &lt;- recipe(~ ., data = data_set_of_your_choice) %&gt;%
-        step_name(all_predictors())
+        step_name(all_predictors()) %&gt;%
+        prep()
   
-      exp_res &lt;- prep(rec)
+      exp &lt;- bake(rec, data_set_of_your_choice)
   
       rec$steps[[1]]$new_arg &lt;- NULL
   
       expect_identical(
-        prep(rec),
-        exp_res
+        bake(rec, data_set_of_your_choice),
+        exp
       )
     })
     ```
