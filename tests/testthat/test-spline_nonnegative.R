@@ -193,6 +193,8 @@ test_that("errors with zero variance predictors (#1455)", {
 })
 
 test_that("check_options() is used", {
+  skip_if_not_installed("splines2")
+
   expect_snapshot(
     error = TRUE,
     recipe(~mpg, data = mtcars) %>%

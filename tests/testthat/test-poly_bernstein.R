@@ -118,6 +118,8 @@ test_that("tunable", {
 })
 
 test_that("check_options() is used", {
+  skip_if_not_installed("splines2")
+
   expect_snapshot(
     error = TRUE,
     recipe(~mpg, data = mtcars) %>%

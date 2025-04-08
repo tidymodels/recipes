@@ -111,6 +111,7 @@ test_that("bad args", {
 })
 
 test_that("check_options() is used", {
+  skip_if_not_installed("ddalpha")
   expect_snapshot(
     error = TRUE,
     recipe(~Species, data = iris) %>%
