@@ -127,9 +127,6 @@ test_that("spline error messages", {
   )
 })
 
-test_that("spline error messages", {
-})
-
 test_that("names0() error on non-positive number", {
   expect_snapshot(
     error = TRUE,
@@ -152,5 +149,30 @@ test_that("ellipse_check() errors on empty selection", {
   expect_snapshot(
     error = TRUE,
     uses_dim_red(x)
+  )
+})
+
+test_that("check_options() works", {
+  expect_no_error(
+    check_options(NULL)
+  )
+  expect_no_error(
+    check_options(list())
+  )
+  expect_snapshot(
+    error = TRUE,
+    check_options(c("unname", "arguments"))
+  )
+  expect_snapshot(
+    error = TRUE,
+    check_options(list("unname", "arguments"))
+  )
+  expect_snapshot(
+    error = TRUE,
+    check_options(list(a = 1, b = 2), exclude = "b")
+  )
+  expect_snapshot(
+    error = TRUE,
+    check_options(list(a = 1, b = 2), include = "b")
   )
 })

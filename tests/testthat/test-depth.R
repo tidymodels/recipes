@@ -110,6 +110,19 @@ test_that("bad args", {
   )
 })
 
+test_that("check_options() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, data = iris) %>%
+      step_depth(
+        all_numeric_predictors(),
+        class = "Species",
+        options = TRUE
+      ) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

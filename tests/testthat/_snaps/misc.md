@@ -100,3 +100,35 @@
       Error in `uses_dim_red()`:
       ! Recipes version >= 0.1.17 represents the estimates using a different format. Please recreate this recipe or use version 0.1.16 or less. See issue #823 (<https://github.com/tidymodels/recipes/issues/823>).
 
+# check_options() works
+
+    Code
+      check_options(c("unname", "arguments"))
+    Condition
+      Error:
+      ! `options` must be a list, not a character vector.
+
+---
+
+    Code
+      check_options(list("unname", "arguments"))
+    Condition
+      Error:
+      ! The list passed to `options` must be named.
+
+---
+
+    Code
+      check_options(list(a = 1, b = 2), exclude = "b")
+    Condition
+      Error:
+      ! The following elements of the list passed to `options` are not allowed: a and b.
+
+---
+
+    Code
+      check_options(list(a = 1, b = 2), include = "b")
+    Condition
+      Error:
+      ! `options` must only contain elements b, the following are not allowed: a.
+
