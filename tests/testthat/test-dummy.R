@@ -267,6 +267,20 @@ test_that("getOption('contrasts') gives deprecation warning in step_dummy", {
   )
 })
 
+test_that("backwards compatible for contrasts", {
+  rec <- recipe(~., data = iris) %>%
+    step_dummy(Species)
+
+  exp_res <- prep(rec)
+
+  rec$steps[[1]]$contrasts <- NULL
+
+  expect_identical(
+    prep(rec),
+    exp_res
+  )
+})
+
 test_that("tests for issue #91", {
   rec <- recipe(~city, data = sacr)
   factors <- rec %>% step_dummy(city)
