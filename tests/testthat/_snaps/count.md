@@ -37,6 +37,16 @@
       * "not_real_option".
       i Valid options are: "ignore.case", "perl", "fixed", and "useBytes".
 
+# check_options() is used
+
+    Code
+      recipe(~description, data = covers) %>% step_count(description, options = TRUE) %>%
+        prep()
+    Condition
+      Error in `step_count()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

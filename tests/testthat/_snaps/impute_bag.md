@@ -28,6 +28,15 @@
       x The bagged tree model was not able to fit to `let`. It appears to be because it had near zero variance.
       i Please deselect it for this step.
 
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_impute_bag(mpg, options = TRUE) %>% prep()
+    Condition
+      Error in `step_impute_bag()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

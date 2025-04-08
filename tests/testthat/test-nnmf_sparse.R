@@ -61,6 +61,8 @@ test_that("errors for missing data", {
 })
 
 test_that("check_options() is used", {
+  skip_if_not_installed("RcppML")
+
   expect_snapshot(
     error = TRUE,
     recipe(~mpg, data = mtcars) %>%

@@ -366,6 +366,7 @@ test_that("error on no outcome", {
 })
 
 test_that("check_options() is used", {
+  skip_if_not_installed("mixOmics")
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%

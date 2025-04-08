@@ -29,6 +29,16 @@
       x The NNMF loadings are missing.
       i The penalty may have been too high or missing values are present in data.
 
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_nnmf_sparse(all_predictors(), options = TRUE) %>%
+        prep()
+    Condition
+      Error in `step_nnmf_sparse()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

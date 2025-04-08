@@ -16,6 +16,15 @@
     Message
       The `degree` argument is now a main argument instead of being within `options`.
 
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_poly(mpg, options = TRUE) %>% prep()
+    Condition
+      Error in `step_poly()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

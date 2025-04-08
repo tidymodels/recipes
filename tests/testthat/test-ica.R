@@ -186,6 +186,10 @@ test_that("rethrows error correctly from implementation", {
 })
 
 test_that("check_options() is used", {
+  skip_if_not_installed("dimRed")
+  skip_if_not_installed("fastICA")
+  skip_if_not_installed("RSpectra")
+
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%
