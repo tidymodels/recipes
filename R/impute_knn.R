@@ -113,26 +113,6 @@ step_impute_knn <-
       cli::cli_abort("{.arg impute_with} must not be empty.")
     }
 
-    if (!is.list(options)) {
-      cli::cli_abort("{.arg options} should be a named list.")
-    }
-    opt_nms <- names(options)
-    if (length(options) > 0) {
-      if (any(!(opt_nms %in% c("eps", "nthread")))) {
-        cli::cli_abort(
-          "Valid values for {.arg options} are {.val eps} and {.val nthread}."
-        )
-      }
-      if (all(opt_nms != "nthread")) {
-        options$nthread <- 1
-      }
-      if (all(opt_nms != "eps")) {
-        options$eps <- 1e-08
-      }
-    } else {
-      options <- list(nthread = 1, eps = 1e-08)
-    }
-
     add_step(
       recipe,
       step_impute_knn_new(
@@ -181,6 +161,20 @@ step_impute_knn_new <-
 #' @export
 prep.step_impute_knn <- function(x, training, info = NULL, ...) {
   check_number_whole(x$neighbors, arg = "neighbors", min = 1)
+  check_options(x$options, include = c("nthread", "eps"))
+
+  if (length(x$options) > 0) {
+    opt_nms <- names(x$options)
+    if (all(opt_nms != "nthread")) {
+      x$options$nthread <- 1
+    }
+    if (all(opt_nms != "eps")) {
+      x$options$eps <- 1e-08
+    }
+  } else {
+    x$options <- list(nthread = 1, eps = 1e-08)
+  }
+
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,

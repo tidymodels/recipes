@@ -76,6 +76,20 @@ It should be used like so:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{check_type(training[, col_names], types = c("double", "integer"))
 }\if{html}{\out{</div>}}
 
+\code{\link[=check_options]{check_options()}} can be used within \verb{prep.step_*()} functions to check that
+the \code{options} argument contains the right elements. It doens't check the
+types of the elements, just that \code{options} is a named list and it includes
+or excludes some names.
+
+It should be used like so:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# When you know some arguments are excluded
+check_options(xoptions, exclude = c("x", "pattern"))
+
+# When you know all legal elements
+check_options(xoptions, include = c("nthread", "eps"))
+}\if{html}{\out{</div>}}
+
 \code{\link[=check_new_data]{check_new_data()}} should be used within \verb{bake.step_*()}. This function is
 used to make check that the required columns are present in the data. It
 should be one of the first lines inside the function.

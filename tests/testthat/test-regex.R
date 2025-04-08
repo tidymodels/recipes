@@ -133,6 +133,15 @@ test_that(".recipes_toggle_sparse_args works", {
   )
 })
 
+test_that("check_options() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, data = iris) %>%
+      step_regex(Species, options = TRUE) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

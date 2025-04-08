@@ -112,7 +112,8 @@ test_that("options", {
       neighbors = 3,
       options = list(),
       id = ""
-    )
+    ) %>%
+    prep()
   expect_equal(rec_1$steps[[1]]$options, list(nthread = 1, eps = 1e-08))
 
   rec_2 <- rec %>%
@@ -123,7 +124,8 @@ test_that("options", {
       neighbors = 3,
       options = list(nthread = 10),
       id = ""
-    )
+    ) %>%
+    prep()
   expect_equal(rec_2$steps[[1]]$options, list(nthread = 10, eps = 1e-08))
 
   rec_3 <- rec %>%
@@ -134,7 +136,8 @@ test_that("options", {
       neighbors = 3,
       options = list(eps = 10),
       id = ""
-    )
+    ) %>%
+    prep()
   expect_equal(rec_3$steps[[1]]$options, list(eps = 10, nthread = 1))
 
   dat_1 <-
@@ -253,6 +256,15 @@ test_that("step_impute_knn() can prep with character vectors (#926)", {
 
   expect_no_error(
     bake(rec_prepped, dat)
+  )
+})
+
+test_that("check_options() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~mpg, data = mtcars) %>%
+      step_impute_knn(mpg, options = TRUE) %>%
+      prep()
   )
 })
 

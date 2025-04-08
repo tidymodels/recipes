@@ -147,6 +147,15 @@
       Warning:
       Not enough data for 5 breaks. Only 4 breaks were used.
 
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_discretize(mpg, options = TRUE) %>% prep()
+    Condition
+      Error in `step_discretize()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

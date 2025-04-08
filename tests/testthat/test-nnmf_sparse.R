@@ -60,6 +60,17 @@ test_that("errors for missing data", {
   )
 })
 
+test_that("check_options() is used", {
+  skip_if_not_installed("RcppML")
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~mpg, data = mtcars) %>%
+      step_nnmf_sparse(all_predictors(), options = TRUE) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

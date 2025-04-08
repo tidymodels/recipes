@@ -39,6 +39,15 @@
       ! The following columns have zero variance making computations unable to proceed: disp and vs.
       i Consider using ?step_zv (`?recipes::step_zv()`) to remove those columns before this step.
 
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_spline_b(mpg, options = TRUE) %>% prep()
+    Condition
+      Error in `step_spline_b()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

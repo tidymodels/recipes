@@ -18,6 +18,16 @@
       Caused by error in `prep()`:
       ! `prefix` must be a single string, not the number 0.
 
+# check_options() is used
+
+    Code
+      recipe(~Species, data = iris) %>% step_depth(all_numeric_predictors(), class = "Species",
+      options = TRUE) %>% prep()
+    Condition
+      Error in `step_depth()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

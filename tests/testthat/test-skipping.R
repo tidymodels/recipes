@@ -51,6 +51,7 @@ test_that("check existing steps for `skip` arg", {
   step_check <- step_check[step_check != "check_step_check_args"]
   step_check <- step_check[step_check != "check_sparse_arg"]
   step_check <- step_check[step_check != "check_zv"]
+  step_check <- step_check[step_check != "check_options"]
 
   # R/import-standalone-types-check.R
   step_check <- step_check[step_check != "check_bool"]

@@ -171,6 +171,7 @@ prep.step_isomap <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
   check_number_whole(x$neighbors, arg = "neighbors", min = 1)
   check_string(x$prefix, arg = "prefix")
+  check_options(x$options)
 
   if (x$num_terms > 0 && length(col_names) > 0L) {
     x$num_terms <- min(x$num_terms, ncol(training))

@@ -118,6 +118,7 @@ step_percentile_new <-
 prep.step_percentile <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
+  check_options(x$options)
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)
@@ -172,7 +173,7 @@ wrighted_quantile <- function(x, wts, probs, ...) {
   wts <- wts[order_x]
 
   wts_norm <- cumsum(wts) / sum(wts)
-  res <- purrr::map_dbl(probs, ~x[min(which(wts_norm >= .x))])
+  res <- purrr::map_dbl(probs, ~ x[min(which(wts_norm >= .x))])
 
   names(res) <- paste0(probs * 100, "%")
   res

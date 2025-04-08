@@ -378,6 +378,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   )
   check_string(x$prefix, arg = "prefix")
   check_number_whole(x$num_comp, arg = "num_comp", min = 0)
+  check_options(x$options)
 
   if (length(y_names) > 1 && any(!map_lgl(training[y_names], is.numeric))) {
     cli::cli_abort(

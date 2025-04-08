@@ -117,6 +117,17 @@ test_that("tunable", {
   )
 })
 
+test_that("check_options() is used", {
+  skip_if_not_installed("splines2")
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~mpg, data = mtcars) %>%
+      step_poly_bernstein(mpg, options = TRUE) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

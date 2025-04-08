@@ -108,6 +108,17 @@ test_that("rethrows error correctly from implementation", {
   )
 })
 
+test_that("check_options() is used", {
+  skip_if_not_installed("kernlab")
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~mpg, data = mtcars) %>%
+      step_kpca(mpg, options = TRUE) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

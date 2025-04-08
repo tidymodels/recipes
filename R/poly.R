@@ -148,6 +148,8 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer"))
   check_number_whole(x$degree, arg = "degree", min = 1)
+  check_options(x$options, exclude = c("x", "simple"))
+
   x$degree <- as.integer(x$degree)
 
   opts <- x$options

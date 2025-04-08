@@ -151,6 +151,22 @@ test_that("tunable", {
   )
 })
 
+test_that("check_options() is used", {
+  skip_on_cran()
+  skip_if_not_installed("RSpectra")
+  skip_if_not_installed("igraph")
+  skip_if_not_installed("RANN")
+  skip_if_not_installed("dimRed")
+  skip_if(getRversion() <= "3.4.4")
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~mpg, data = mtcars) %>%
+      step_isomap(mpg, options = TRUE) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

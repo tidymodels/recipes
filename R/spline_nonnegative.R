@@ -8,7 +8,7 @@
 #'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
 #'  for piecewise constant basis functions.
 #' @param options A list of options for [splines2::mSpline()]
-#'  which should not include `x`, `df`, `degree`, `periodic`, or `intercept`.
+#'  which should not include `x`, `df`, `degree`, or `intercept`.
 #' @return An object with classes `"step_spline_nonnegative"` and `"step"`.
 #' @export
 #' @details
@@ -152,6 +152,7 @@ prep.step_spline_nonnegative <- function(x, training, info = NULL, ...) {
   check_bool(x$complete_set, arg = "complete_set")
   check_number_whole(x$degree, arg = "degree", min = 0)
   check_number_whole(x$deg_free, arg = "deg_free", min = 0)
+  check_options(x$options, exclude = c("x", "df", "degree", "intercept"))
 
   check_zv(training[, col_names])
 

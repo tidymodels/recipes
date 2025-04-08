@@ -156,6 +156,7 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   check_string(x$result, allow_empty = FALSE, arg = "result")
   check_bool(x$normalize, arg = "normalize")
   check_sparse_arg(x$sparse)
+  check_options(x$options, exclude = c("x", "pattern"))
 
   step_count_new(
     terms = x$terms,

@@ -144,6 +144,15 @@ test_that("works when baked with 1 row", {
   expect_identical(nrow(res), 1L)
 })
 
+test_that("check_options() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_bs(disp, options = TRUE) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

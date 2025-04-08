@@ -33,7 +33,8 @@
         wrong = "wrong")) %>% prep()
     Condition
       Error in `step_impute_knn()`:
-      ! Valid values for `options` are "eps" and "nthread".
+      Caused by error in `prep()`:
+      ! `options` must only contain elements nthread and eps, the following are not allowed: wrong.
 
 ---
 
@@ -42,7 +43,17 @@
         wrong = "wrong")) %>% prep()
     Condition
       Error in `step_impute_knn()`:
-      ! `options` should be a named list.
+      Caused by error in `prep()`:
+      ! `options` must be a list, not a string.
+
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_impute_knn(mpg, options = TRUE) %>% prep()
+    Condition
+      Error in `step_impute_knn()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
 
 # bake method errors when needed non-standard role columns are missing
 

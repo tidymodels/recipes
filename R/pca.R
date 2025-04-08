@@ -196,6 +196,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
   )
   check_string(x$prefix, arg = "prefix")
   check_number_whole(x$num_comp, arg = "num_comp", min = 0)
+  check_options(x$options, exclude = "x")
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts, unsupervised = TRUE)

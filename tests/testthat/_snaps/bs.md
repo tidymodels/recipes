@@ -8,6 +8,15 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_bs_1`
 
+# check_options() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_bs(disp, options = TRUE) %>% prep()
+    Condition
+      Error in `step_bs()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

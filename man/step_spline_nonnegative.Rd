@@ -47,7 +47,7 @@ the \code{intercept} argument of the corresponding function from the
 \pkg{splines2} package and has the same default value.}
 
 \item{options}{A list of options for \code{\link[splines2:mSpline]{splines2::mSpline()}}
-which should not include \code{x}, \code{df}, \code{degree}, \code{periodic}, or \code{intercept}.}
+which should not include \code{x}, \code{df}, \code{degree}, or \code{intercept}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}

@@ -162,6 +162,7 @@ ns_predict <- function(object, x) {
 prep.step_ns <- function(x, training, info = NULL, ...) {
   col_names <- recipes_eval_select(x$terms, training, info)
   check_type(training[, col_names], types = c("double", "integer", "datetime"))
+  check_options(x$options, exclude = c("x", "df"))
 
   opt <- x$options
   opt$df <- x$deg_free

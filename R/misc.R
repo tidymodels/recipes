@@ -1037,3 +1037,61 @@ try_fetch_eval_tidy <- function(x, call = rlang::caller_env(1)) {
     }
   )
 }
+
+#' Check that options argument contain the right elements
+#'
+#' `check_options` is to be used in the prep function to ensure that
+#' `options` arguments are lists and contain the right elements.
+#'
+#' @param options options to be checked.
+#' @param exclude Character vector, elements that can't be present in `options`.
+#' @param include Character vector, Allowed elements in `options`.
+#'
+#' @seealso [developer_functions]
+#'
+#' @export
+#' @keywords internal
+check_options <- function(
+  options,
+  exclude = NULL,
+  include = NULL,
+  call = caller_env()
+) {
+  if (is.null(options)) {
+    return(NULL)
+  }
+  if (identical(options, list())) {
+    return(NULL)
+  }
+
+  if (!is.list(options)) {
+    cli::cli_abort(
+      "{.arg options} must be a list, not {.obj_type_friendly {options}}.",
+      call = call
+    )
+  }
+  names <- names(options)
+
+  if (is.null(names)) {
+    cli::cli_abort(
+      "The list passed to {.arg options} must be named.",
+      call = call
+    )
+  }
+  if (!is.null(exclude) && any(exclude %in% names)) {
+    offenders <- names[exclude %in% names]
+    cli::cli_abort(
+      "The following element{?s} of the list passed to {.arg options} {?is/are}
+      not allowed: {.field {offenders}}.",
+      call = call
+    )
+  }
+  if (!is.null(include) && any(!names %in% include)) {
+    offenders <- names[!names %in% include]
+    cli::cli_abort(
+      "{.arg options} must only contain elements {.field {include}}, the
+      following are not allowed: {.field {offenders}}.",
+      call = call
+    )
+  }
+}

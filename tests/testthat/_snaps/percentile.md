@@ -45,6 +45,15 @@
       -- Operations 
       * Percentile transformation on: carbon sulfur | Trained, ignored weights
 
+# check_options() is used
+
+    Code
+      recipe(~mpg, data = mtcars) %>% step_percentile(mpg, options = TRUE) %>% prep()
+    Condition
+      Error in `step_percentile()`:
+      Caused by error in `prep()`:
+      ! `options` must be a list, not `TRUE`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

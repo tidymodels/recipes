@@ -130,6 +130,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
   check_bool(x$complete_set, arg = "complete_set")
   check_number_whole(x$degree, arg = "degree", min = 0)
+  check_options(x$options, exclude = c("x", 'degree'))
 
   x$options <- c(x$options, degree = x$degree)
 
@@ -137,7 +138,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
     purrr::map2(
       training[, col_names],
       col_names,
-      ~spline2_create(
+      ~ spline2_create(
         .x,
         nm = .y,
         .fn = "bernsteinPoly",

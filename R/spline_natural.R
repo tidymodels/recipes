@@ -133,6 +133,7 @@ prep.step_spline_natural <- function(x, training, info = NULL, ...) {
   check_type(training[, col_names], types = c("double", "integer"))
   check_bool(x$complete_set, arg = "complete_set")
   check_number_whole(x$deg_free, arg = "deg_free", min = 2)
+  check_options(x$options, exclude = c("x", "df", "intercept"))
 
   check_zv(training[, col_names])
 
