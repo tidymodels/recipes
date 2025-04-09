@@ -149,6 +149,34 @@ test_that("recipes_argument_select() is used", {
   )
 })
 
+test_that("addition of recipes_argument_select() is backwards compatible", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_ratio(all_predictors(), denom = disp) %>%
+    prep()
+
+  exp <- bake(rec, mtcars)
+
+  rec$steps[[1]]$denom <- rlang::new_quosures(
+    list(
+      rlang::new_quosure(quote(disp))
+    )
+  )
+
+  expect_identical(
+    bake(rec, mtcars),
+    exp
+  )
+
+  rec_old <- recipe(mpg ~ ., data = mtcars) %>%
+    step_ratio(all_predictors(), denom = denom_vars(disp)) %>%
+    prep()
+
+  expect_identical(
+    bake(rec_old, mtcars),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

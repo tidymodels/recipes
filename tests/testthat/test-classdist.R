@@ -194,6 +194,30 @@ test_that("recipes_argument_select() is used", {
   )
 })
 
+test_that("addition of recipes_argument_select() is backwards compatible", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = Species) %>%
+    prep()
+
+  exp <- bake(rec, iris)
+
+  rec$steps[[1]]$class <- "Species"
+
+  expect_identical(
+    bake(rec, iris),
+    exp
+  )
+
+  rec_old <- recipe(Species ~ ., data = iris) %>%
+    step_classdist(all_predictors(), class = "Species") %>%
+    prep()
+
+  expect_identical(
+    bake(rec_old, iris),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
