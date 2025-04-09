@@ -1101,7 +1101,7 @@ recipes_argument_select <- function(
   data,
   info,
   single = TRUE,
-  col_name = "outcome",
+  arg_name = "outcome",
   call = caller_env()
 ) {
   # Because we know the input will be a list of qousures
@@ -1109,7 +1109,7 @@ recipes_argument_select <- function(
 
   if (quo_is_null(expr)) {
     cli::cli_abort(
-      "{.arg {col_name}} must not be {.code NULL}.",
+      "{.arg {arg_name}} must not be {.code NULL}.",
       call = call
     )
   }
@@ -1124,7 +1124,7 @@ recipes_argument_select <- function(
     if (single && length(expr) != 1) {
       cli::cli_abort(
         c(
-          x = "only 1 selection is allowed in {.arg {col_name}},
+          x = "only 1 selection is allowed in {.arg {arg_name}},
               not {length(expr)}.",
           i = "For this argument consider using bare names instead."
         ),
@@ -1163,7 +1163,7 @@ recipes_argument_select <- function(
 
   if ((single && length(out) != 1) || (!single && length(out) == 0)) {
     cli::cli_abort(
-      "only 1 selection is allowed in {.arg {col_name}}, not {length(out)}.",
+      "only 1 selection is allowed in {.arg {arg_name}}, not {length(out)}.",
       call = call
     )
   }
@@ -1172,7 +1172,7 @@ recipes_argument_select <- function(
 
   if (any(out %in% info$variable[info$role == "case_weights"])) {
     cli::cli_abort(
-      "Cannot select case weights variable for {.arg {col_name}}.",
+      "Cannot select case weights variable for {.arg {arg_name}}.",
       call = call
     )
   }

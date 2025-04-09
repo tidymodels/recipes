@@ -130,7 +130,7 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
       training,
       info,
       single = FALSE,
-      col_name = "denom"
+      arg_name = "denom"
     ),
     stringsAsFactors = FALSE
   )

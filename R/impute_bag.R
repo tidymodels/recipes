@@ -229,7 +229,7 @@ impute_var_lists <- function(
     training,
     info,
     single = FALSE,
-    col_name = "impute_with",
+    arg_name = "impute_with",
     call = call
   )
 

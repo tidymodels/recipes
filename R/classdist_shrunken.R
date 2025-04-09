@@ -316,7 +316,7 @@ prep.step_classdist_shrunken <- function(x, training, info = NULL, ...) {
     x$class,
     training,
     info,
-    col_name = "class"
+    arg_name = "class"
   )
 
   check_type(training[, x_names], types = c("double", "integer"))

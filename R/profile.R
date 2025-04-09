@@ -179,7 +179,7 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
     x$profile,
     training,
     info,
-    col_name = "profile"
+    arg_name = "profile"
   )
 
   if (length(profile_name) != 1) {
