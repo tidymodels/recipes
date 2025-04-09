@@ -125,6 +125,8 @@ test_that("check_options() is used", {
 })
 
 test_that("recipes_argument_select() is used", {
+  skip_if_not_installed("ddalpha")
+
   expect_snapshot(
     error = TRUE,
     recipe(mpg ~ ., data = mtcars) %>%
@@ -135,6 +137,8 @@ test_that("recipes_argument_select() is used", {
 
 
 test_that("addition of recipes_argument_select() is backwards compatible", {
+  skip_if_not_installed("ddalpha")
+
   rec <- recipe(Species ~ ., data = iris) %>%
     step_depth(all_predictors(), class = Species) %>%
     prep()
