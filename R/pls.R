@@ -9,8 +9,9 @@
 #'   non-zero coefficients for each PLS component (via regularization).
 #' @param preserve Use `keep_original_cols` instead to specify whether the
 #'   original predictor data should be retained along with the new features.
-#' @param outcome When a single outcome is available, character string or call
-#'   to [dplyr::vars()] can be used to specify a single outcome variable.
+#' @param outcome When a single outcome is available, bare name, character
+#'   strings or call to [dplyr::vars()] can be used to specify a single outcome
+#'   variable.
 #' @param options A list of options to `mixOmics::pls()`, `mixOmics::spls()`,
 #'   `mixOmics::plsda()`, or `mixOmics::splsda()` (depending on the data and
 #'   arguments).
@@ -86,11 +87,11 @@
 #'
 #' dense_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3)
+#'   step_pls(all_numeric_predictors(), outcome = HHV, num_comp = 3)
 #'
 #' sparse_pls <-
 #'   recipe(HHV ~ ., data = biom_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3,
+#'   step_pls(all_numeric_predictors(), outcome = HHV, num_comp = 3,
 #'            predictor_prop = 4 / 5)
 #'
 #' ## -----------------------------------------------------------------------------
@@ -109,11 +110,11 @@
 #'
 #' dense_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5)
+#'   step_pls(all_numeric_predictors(), outcome = class, num_comp = 5)
 #'
 #' sparse_plsda <-
 #'   recipe(class ~ ., data = cell_tr) %>%
-#'   step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5,
+#'   step_pls(all_numeric_predictors(), outcome = class, num_comp = 5,
 #'            predictor_prop = 1 / 4)
 step_pls <-
   function(

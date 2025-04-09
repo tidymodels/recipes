@@ -36,11 +36,12 @@ created.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{impute_with}{A call to \code{imp_vars} to specify which variables are used
-to impute the variables that can include specific variable names separated
-by commas or different selectors (see \code{\link[=selections]{selections()}}). If a column is
-included in both lists to be imputed and to be an imputation predictor, it
-will be removed from the latter and not used to impute itself.}
+\item{impute_with}{Bare names or selectors functions that specify which
+variables are used to impute the variables that can include specific
+variable names separated by commas or different selectors (see
+\code{\link[=selections]{selections()}}). If a column is included in both lists to be imputed and to
+be an imputation predictor, it will be removed from the latter and not used
+to impute itself.}
 
 \item{trees}{An integer for the number of bagged trees to use in each model.}
 
@@ -150,7 +151,7 @@ tidy(imp_models, number = 1)
 
 impute_rec <- rec \%>\%
   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
-    impute_with = imp_vars(Time, Age, Expenses),
+    impute_with = c(Time, Age, Expenses),
     # for quick execution, nbagg lowered
     options = list(nbagg = 5, keepX = FALSE)
   )

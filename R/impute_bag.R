@@ -8,11 +8,12 @@
 #'  When used with `imp_vars`, these dots indicate which variables are used to
 #'  predict the missing data in each variable. See [selections()] for more
 #'  details.
-#' @param impute_with A call to `imp_vars` to specify which variables are used
-#'  to impute the variables that can include specific variable names separated
-#'  by commas or different selectors (see [selections()]). If a column is
-#'  included in both lists to be imputed and to be an imputation predictor, it
-#'  will be removed from the latter and not used to impute itself.
+#' @param impute_with Bare names or selectors functions that specify which
+#'  variables are used to impute the variables that can include specific
+#'  variable names separated by commas or different selectors (see
+#'  [selections()]). If a column is included in both lists to be imputed and to
+#'  be an imputation predictor, it will be removed from the latter and not used
+#'  to impute itself.
 #' @param trees An integer for the number of bagged trees to use in each model.
 #' @param options A list of options to [ipred::ipredbagg()]. Defaults are set
 #'  for the arguments `nbagg` and `keepX` but others can be passed in. **Note**
@@ -100,7 +101,7 @@
 #'
 #' impute_rec <- rec %>%
 #'   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
-#'     impute_with = imp_vars(Time, Age, Expenses),
+#'     impute_with = c(Time, Age, Expenses),
 #'     # for quick execution, nbagg lowered
 #'     options = list(nbagg = 5, keepX = FALSE)
 #'   )

@@ -6,8 +6,9 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param class A single character string that specifies a single
-#'  categorical variable to be used as the class.
+#' @param class A bare name that specifies a single categorical variable to be
+#'  used as the class. Can also be a string or tidyselect for backwards
+#'  compatibility.
 #' @param mean_func A function to compute the center of the
 #'  distribution.
 #' @param cov_func A function that computes the covariance matrix
@@ -68,14 +69,14 @@
 #' # define naming convention
 #' rec <- recipe(species ~ ., data = penguins) %>%
 #'   step_classdist(all_numeric_predictors(),
-#'     class = "species",
+#'     class = species,
 #'     pool = FALSE, mean_func = mean2, prefix = "centroid_"
 #'   )
 #'
 #' # default naming
 #' rec <- recipe(species ~ ., data = penguins) %>%
 #'   step_classdist(all_numeric_predictors(),
-#'     class = "species",
+#'     class = species,
 #'     pool = FALSE, mean_func = mean2
 #'   )
 #'

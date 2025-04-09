@@ -35,11 +35,12 @@ preprocessing have been estimated.}
 
 \item{neighbors}{The number of neighbors.}
 
-\item{impute_with}{A call to \code{imp_vars} to specify which variables are used
-to impute the variables that can include specific variable names separated
-by commas or different selectors (see \code{\link[=selections]{selections()}}). If a column is
-included in both lists to be imputed and to be an imputation predictor, it
-will be removed from the latter and not used to impute itself.}
+\item{impute_with}{Bare names or selectors functions that specify which
+variables are used to impute the variables that can include specific
+variable names separated by commas or different selectors (see
+\code{\link[=selections]{selections()}}). If a column is included in both lists to be imputed and to
+be an imputation predictor, it will be removed from the latter and not used
+to impute itself.}
 
 \item{options}{A named list of options to pass to \code{\link[gower:gower_topn]{gower::gower_topn()}}.
 Available options are currently \code{nthread} and \code{eps}.}

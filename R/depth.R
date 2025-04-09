@@ -7,8 +7,6 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param class A single character string that specifies a single
-#'  categorical variable to be used as the class.
 #' @param metric A character string specifying the depth metric.
 #'  Possible values are "potential", "halfspace", "Mahalanobis",
 #'  "simplicialVolume", "spatial", and "zonoid".
@@ -69,13 +67,13 @@
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_numeric_predictors(), class = "Species")
+#'   step_depth(all_numeric_predictors(), class = Species)
 #'
 #' # use zonoid metric instead
 #' # also, define naming convention for new columns
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_depth(all_numeric_predictors(),
-#'     class = "Species",
+#'     class = Species,
 #'     metric = "zonoid", prefix = "zonoid_"
 #'   )
 #'

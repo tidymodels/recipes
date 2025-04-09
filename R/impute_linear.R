@@ -52,7 +52,7 @@
 #'   recipe(Sale_Price ~ ., data = ames_missing) %>%
 #'   step_impute_linear(
 #'     Longitude,
-#'     impute_with = imp_vars(Latitude, Neighborhood, MS_Zoning, Alley)
+#'     impute_with = c(Latitude, Neighborhood, MS_Zoning, Alley)
 #'   ) %>%
 #'   prep(ames_missing)
 #'

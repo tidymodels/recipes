@@ -7,10 +7,10 @@
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca
-#' @param profile A call to [dplyr::vars()]) to specify which
-#'  variable will be profiled (see [selections()]). If a column is
-#'  included in both lists to be fixed and to be profiled, an error
-#'  is thrown.
+#' @param profile A bare name to specify which variable will be profiled (see
+#'  [selections()]). Can also be a string or tidyselect for backwards
+#'  compatibility. If a column is included in both lists to be fixed and to be
+#'  profiled, an error is thrown.
 #' @param pct A value between 0 and 1 that is the percentile to
 #'  fix continuous variables. This is applied to all continuous
 #'  variables captured by the selectors. For date variables, either
@@ -56,7 +56,7 @@
 #'
 #' # Setup a grid across beds but keep the other values fixed
 #' recipe(~ city + price + beds, data = Sacramento) %>%
-#'   step_profile(-beds, profile = vars(beds)) %>%
+#'   step_profile(-beds, profile = beds) %>%
 #'   prep(training = Sacramento) %>%
 #'   bake(new_data = NULL)
 #'
@@ -70,13 +70,13 @@
 #' # Show the difference in the two grid creation methods
 #'
 #' disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) %>%
-#'   step_profile(-disp, profile = vars(disp)) %>%
+#'   step_profile(-disp, profile = disp) %>%
 #'   prep(training = mtcars)
 #'
 #' disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) %>%
 #'   step_profile(
 #'     -disp,
-#'     profile = vars(disp),
+#'     profile = disp,
 #'     grid = list(pctl = FALSE, len = 100)
 #'   ) %>%
 #'   prep(training = mtcars)

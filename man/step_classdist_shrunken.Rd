@@ -27,8 +27,9 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{class}{A single character string that specifies a single
-categorical variable to be used as the class.}
+\item{class}{A bare name that specifies a single categorical variable to be
+used as the class. Can also be a string or tidyselect for backwards
+compatibility.}
 
 \item{role}{Not used by this step since no new variables are
 created.}
@@ -132,14 +133,14 @@ penguins$sex <- NULL
 # define naming convention
 rec <- recipe(species ~ ., data = penguins) \%>\%
   step_classdist_shrunken(all_numeric_predictors(),
-    class = "species",
+    class = species,
     threshold = 1 / 4, prefix = "centroid_"
   )
 
 # default naming
 rec <- recipe(species ~ ., data = penguins) \%>\%
   step_classdist_shrunken(all_numeric_predictors(),
-    class = "species",
+    class = species,
     threshold = 3 / 4
   )
 
