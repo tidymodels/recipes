@@ -174,6 +174,15 @@ test_that("errors if there are no rows without missing values", {
   )
 })
 
+test_that("recipes_argument_select() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_impute_linear(disp, impute_with = NULL) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

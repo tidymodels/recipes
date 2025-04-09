@@ -14,7 +14,7 @@
     Condition
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
-      ! `outcome` must not be `NULL`.
+      ! `impute_with` must not be `NULL`.
 
 # Warns when impute_with contains all NAs in a row
 
@@ -55,6 +55,16 @@
       Error in `step_impute_knn()`:
       Caused by error in `prep()`:
       ! `options` must be a list, not `TRUE`.
+
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_impute_knn(disp, impute_with = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_knn()`:
+      Caused by error in `prep()`:
+      ! `impute_with` must not be `NULL`.
 
 # bake method errors when needed non-standard role columns are missing
 

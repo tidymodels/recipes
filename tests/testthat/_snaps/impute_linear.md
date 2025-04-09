@@ -63,7 +63,7 @@
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
-      ! `outcome` must not be `NULL`.
+      ! `impute_with` must not be `NULL`.
 
 # warns if impute_with columns contains missing values
 
@@ -82,6 +82,16 @@
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
       ! The data did not have any rows where the imputation values were all complete. Is is thus unable to fit the linear regression model.
+
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_impute_linear(disp, impute_with = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_linear()`:
+      Caused by error in `prep()`:
+      ! `impute_with` must not be `NULL`.
 
 # bake method errors when needed non-standard role columns are missing
 

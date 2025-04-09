@@ -28,6 +28,15 @@
       Caused by error in `prep()`:
       ! `options` must be a list, not `TRUE`.
 
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_depth(disp, class = NULL) %>% prep()
+    Condition
+      Error in `step_depth()`:
+      Caused by error in `prep()`:
+      ! `outcome` must not be `NULL`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

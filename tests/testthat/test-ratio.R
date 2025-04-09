@@ -140,6 +140,15 @@ test_that("check_name() is used", {
   )
 })
 
+test_that("recipes_argument_select() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_ratio(disp, denom = NULL) %>%
+      prep()
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

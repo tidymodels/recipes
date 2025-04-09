@@ -38,6 +38,15 @@
       ! Name collision occurred. The following variable names already exist:
       * `mpg_o_disp`
 
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_ratio(disp, denom = NULL) %>% prep()
+    Condition
+      Error in `step_ratio()`:
+      Caused by error in `prep()`:
+      ! `denom` must not be `NULL`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code

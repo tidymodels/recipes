@@ -15,7 +15,7 @@
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
-      ! only 1 selection is allowed in `outcome`, not 2.
+      ! only 1 selection is allowed in `profile`, not 2.
 
 ---
 
@@ -59,6 +59,15 @@
       Error in `step_profile()`:
       x `grid` should have two named elements len and pctl, not "not_len" and "pctl".
       i See ?step_profile (`?recipes::step_profile()`) for information.
+
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_profile(disp, profile = NULL) %>% prep()
+    Condition
+      Error in `step_profile()`:
+      Caused by error in `prep()`:
+      ! `profile` must not be `NULL`.
 
 # empty printing
 

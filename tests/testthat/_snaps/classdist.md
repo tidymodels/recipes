@@ -52,6 +52,15 @@
       -- Operations 
       * Distances to Species for: Sepal.Length, ... | Trained, weighted
 
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_classdist(disp, class = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `class` must not be `NULL`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
