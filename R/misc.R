@@ -1095,3 +1095,87 @@ check_options <- function(
     )
   }
 }
+
+recipes_argument_select <- function(
+  expr,
+  data,
+  info,
+  single = TRUE,
+  col_name = "outcome",
+  call = caller_env()
+) {
+  # Because we know the input will be a list of qousures
+  expr <- expr[[1]]
+
+  if (quo_is_null(expr)) {
+    cli::cli_abort(
+      "{.arg {col_name}} must not be {.code NULL}.",
+      call = call
+    )
+  }
+
+  if (
+    rlang::quo_is_call(expr, name = "vars", ns = c("dplyr", "")) ||
+      rlang::quo_is_call(expr, name = "imp_vars", ns = c("recipes", "")) ||
+      rlang::quo_is_call(expr, name = "denom_vars", ns = c("recipes", ""))
+  ) {
+    expr <- eval_tidy(expr)
+
+    if (single && length(expr) != 1) {
+      cli::cli_abort(
+        c(
+          x = "only 1 selection is allowed in {.arg {col_name}},
+              not {length(expr)}.",
+          i = "For this argument consider using bare names instead."
+        ),
+        call = call
+      )
+    }
+    expr <- expr(c(!!!expr))
+  }
+
+  # Maintain ordering between `data` column names and `info$variable` so
+  # `eval_select()` and recipes selectors return compatible positions
+  matches <- vctrs::vec_locate_matches(
+    names(data),
+    info$variable,
+    no_match = "error"
+  )
+  data_info <- vec_slice(info, matches$haystack)
+
+  data_nest <- data_info[names(data_info) != "variable"]
+  data_nest <- tibble::new_tibble(data_nest, nrow = vctrs::vec_size(data_nest))
+
+  nested_info <- vctrs::vec_split(data_nest, by = data_info$variable)
+  nested_info <- list(variable = nested_info$key, data = nested_info$val)
+  nested_info <- tibble::new_tibble(
+    nested_info,
+    nrow = length(nested_info$variable)
+  )
+  local_current_info(nested_info)
+
+  out <- tidyselect::eval_select(
+    expr,
+    data,
+    allow_rename = FALSE,
+    error_call = call
+  )
+
+  if ((single && length(out) != 1) || (!single && length(out) == 0)) {
+    cli::cli_abort(
+      "only 1 selection is allowed in {.arg {col_name}}, not {length(out)}.",
+      call = call
+    )
+  }
+
+  out <- names(out)
+
+  if (any(out %in% info$variable[info$role == "case_weights"])) {
+    cli::cli_abort(
+      "Cannot select case weights variable for {.arg {col_name}}.",
+      call = call
+    )
+  }
+
+  out
+}
