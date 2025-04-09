@@ -142,7 +142,7 @@ step_profile <- function(
     recipe,
     step_profile_new(
       terms = enquos(...),
-      profile = profile,
+      profile = enquos(profile),
       pct = pct,
       index = index,
       grid = grid,
@@ -175,7 +175,12 @@ step_profile_new <-
 #' @export
 prep.step_profile <- function(x, training, info = NULL, ...) {
   fixed_names <- recipes_eval_select(x$terms, training, info)
-  profile_name <- recipes_eval_select(x$profile, training, info)
+  profile_name <- recipes_argument_select(
+    x$profile,
+    training,
+    info,
+    col_name = "profile"
+  )
 
   if (length(profile_name) != 1) {
     msg <- c(x = "{.arg profile} should select only one column")

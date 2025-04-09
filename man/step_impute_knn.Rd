@@ -10,7 +10,7 @@ step_impute_knn(
   role = NA,
   trained = FALSE,
   neighbors = 5,
-  impute_with = imp_vars(all_predictors()),
+  impute_with = all_predictors(),
   options = list(nthread = 1, eps = 1e-08),
   ref_data = NULL,
   columns = NULL,

@@ -101,14 +101,13 @@ step_depth <-
     skip = FALSE,
     id = rand_id("depth")
   ) {
-    check_string(class)
     recipes_pkg_check(required_pkgs.step_depth())
 
     add_step(
       recipe,
       step_depth_new(
         terms = enquos(...),
-        class = class,
+        class = enquos(class),
         role = role,
         trained = trained,
         metric = metric,
@@ -164,19 +163,18 @@ depth_metric <- c(
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
+  class_var <- recipes_argument_select(x$class, training, info)
   check_type(training[, x_names], types = c("double", "integer"))
   metric <- x$metric
   rlang::arg_match(metric, depth_metric)
   check_string(x$prefix, allow_empty = FALSE, arg = "prefix")
   check_options(x$options, exclude = c("data", "x"))
 
-  class_var <- x$class[1]
-
   x_dat <- split(training[, x_names], training[[class_var]])
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,
-    class = x$class,
+    class = class_var,
     role = x$role,
     trained = TRUE,
     metric = x$metric,
@@ -237,11 +235,12 @@ bake.step_depth <- function(object, new_data, ...) {
 #' @export
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue("Data depth by {x$class} for ")
-
     if (x$trained) {
+      title <- glue("Data depth by {x$class} for ")
       x_names <- colnames(x$data[[1]])
     } else {
+      class <- rlang::quo_name(x$class[[1]])
+      title <- glue("Data depth by {class} for ")
       x_names <- character()
     }
 

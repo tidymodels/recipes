@@ -9,7 +9,7 @@ step_impute_linear(
   ...,
   role = NA,
   trained = FALSE,
-  impute_with = imp_vars(all_predictors()),
+  impute_with = all_predictors(),
   models = NULL,
   skip = FALSE,
   id = rand_id("impute_linear")

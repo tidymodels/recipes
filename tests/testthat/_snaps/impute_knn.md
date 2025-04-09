@@ -13,13 +13,14 @@
         prep()
     Condition
       Error in `step_impute_knn()`:
-      ! `impute_with` must not be empty.
+      Caused by error in `prep()`:
+      ! `outcome` must not be `NULL`.
 
 # Warns when impute_with contains all NAs in a row
 
     Code
       tmp <- recipe(~., data = mtcars) %>% step_impute_knn(mpg, disp, vs,
-        impute_with = imp_vars(am, gear)) %>% prep()
+        impute_with = c(am, gear)) %>% prep()
     Condition
       Warning:
       The `impute_with` variables for `mpg` only contains missing values for row: 2 and 3. Cannot impute for those rows.

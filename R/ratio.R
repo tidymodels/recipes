@@ -79,22 +79,13 @@ step_ratio <-
     skip = FALSE,
     id = rand_id("ratio")
   ) {
-    if (is_empty(denom)) {
-      cli::cli_abort(
-        c(
-          "!" = "{.arg denom} must select at least one variable.",
-          "i" = "See {.help [?selections](recipes::selections)} \\
-              for more information."
-        )
-      )
-    }
     add_step(
       recipe,
       step_ratio_new(
         terms = enquos(...),
         role = role,
         trained = trained,
-        denom = denom,
+        denom = enquos(denom),
         naming = naming,
         columns = columns,
         keep_original_cols = keep_original_cols,
@@ -134,7 +125,13 @@ step_ratio_new <-
 prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
     top = recipes_eval_select(x$terms, training, info),
-    bottom = recipes_eval_select(x$denom, training, info),
+    bottom = recipes_argument_select(
+      x$denom,
+      training,
+      info,
+      single = FALSE,
+      col_name = "denom"
+    ),
     stringsAsFactors = FALSE
   )
   col_names <- tibble::as_tibble(col_names)

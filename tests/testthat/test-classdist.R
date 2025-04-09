@@ -12,7 +12,7 @@ eps <- if (capabilities("long.double")) {
 
 test_that("defaults", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species", log = FALSE, id = "")
+    step_classdist(all_predictors(), class = Species, log = FALSE, id = "")
   trained <- prep(rec, training = iris, verbose = FALSE)
   dists <- bake(trained, new_data = iris)
   dists <- dists[, grepl("classdist", names(dists))]
@@ -57,7 +57,7 @@ test_that("alt args", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(
       all_predictors(),
-      class = "Species",
+      class = Species,
       log = FALSE,
       mean_func = median
     )
@@ -89,7 +89,7 @@ test_that("check_name() is used", {
       Sepal.Width,
       Petal.Length,
       Petal.Width,
-      class = "Species"
+      class = Species
     )
 
   expect_snapshot(
@@ -102,7 +102,7 @@ test_that("prefix", {
   rec <- recipe(Species ~ ., data = iris) %>%
     step_classdist(
       all_predictors(),
-      class = "Species",
+      class = Species,
       log = FALSE,
       prefix = "centroid_"
     )
@@ -153,7 +153,7 @@ test_that("case weights", {
   iris1$wts <- importance_weights(iris1$Petal.Width)
 
   rec_prep <- recipe(Species ~ ., data = iris1) %>%
-    step_classdist(all_predictors(), class = "Species") %>%
+    step_classdist(all_predictors(), class = Species) %>%
     prep()
 
   ref_objects <- split(iris1, ~Species) %>%
@@ -167,7 +167,7 @@ test_that("case weights", {
   )
 
   rec_prep <- recipe(Species ~ ., data = iris1) %>%
-    step_classdist(all_predictors(), class = "Species", pool = TRUE) %>%
+    step_classdist(all_predictors(), class = Species, pool = TRUE) %>%
     prep()
 
   ref_objects_means <- split(iris1, ~Species) %>%
@@ -189,7 +189,7 @@ test_that("case weights", {
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(Petal.Length, class = "Species", log = FALSE) %>%
+    step_classdist(Petal.Length, class = Species, log = FALSE) %>%
     update_role(Petal.Length, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
@@ -200,7 +200,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
 test_that("empty printing", {
   rec <- recipe(Species ~ ., iris)
-  rec <- step_classdist(rec, class = "Species")
+  rec <- step_classdist(rec, class = Species)
 
   expect_snapshot(rec)
 
@@ -211,7 +211,7 @@ test_that("empty printing", {
 
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_classdist(rec1, class = "mpg")
+  rec2 <- step_classdist(rec1, class = mpg)
 
   rec1 <- prep(rec1, mtcars)
   rec2 <- prep(rec2, mtcars)
@@ -224,8 +224,8 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(Species ~ ., iris)
-  rec2 <- step_classdist(rec, class = "Species", pool = FALSE)
-  rec3 <- step_classdist(rec, class = "Species", pool = TRUE)
+  rec2 <- step_classdist(rec, class = Species, pool = FALSE)
+  rec3 <- step_classdist(rec, class = Species, pool = TRUE)
 
   expect <- tibble(
     terms = character(),
@@ -255,7 +255,7 @@ test_that("keep_original_cols works", {
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
     step_classdist(
       all_predictors(),
-      class = "Species",
+      class = Species,
       keep_original_cols = FALSE
     )
 
@@ -270,7 +270,7 @@ test_that("keep_original_cols works", {
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
     step_classdist(
       all_predictors(),
-      class = "Species",
+      class = Species,
       keep_original_cols = TRUE
     )
 
@@ -285,7 +285,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
-    step_classdist(all_predictors(), class = "Species")
+    step_classdist(all_predictors(), class = Species)
 
   rec$steps[[1]]$keep_original_cols <- NULL
 
@@ -300,7 +300,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 
 test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist(all_predictors(), class = "Species")
+    step_classdist(all_predictors(), class = Species)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
@@ -309,25 +309,25 @@ test_that("printing", {
 test_that("bad args", {
   expect_snapshot(
     recipe(Species ~ ., data = iris) %>%
-      step_classdist(all_predictors(), class = "Species", mean_func = 2) %>%
+      step_classdist(all_predictors(), class = Species, mean_func = 2) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
     recipe(Species ~ ., data = iris) %>%
-      step_classdist(all_predictors(), class = "Species", cov_func = NULL) %>%
+      step_classdist(all_predictors(), class = Species, cov_func = NULL) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
     recipe(Species ~ ., data = iris) %>%
-      step_classdist(all_predictors(), class = "Species", prefix = NULL) %>%
+      step_classdist(all_predictors(), class = Species, prefix = NULL) %>%
       prep(),
     error = TRUE
   )
   expect_snapshot(
     recipe(Species ~ ., data = iris) %>%
-      step_classdist(all_predictors(), class = "Species", pool = NULL) %>%
+      step_classdist(all_predictors(), class = Species, pool = NULL) %>%
       prep(),
     error = TRUE
   )
@@ -336,7 +336,7 @@ test_that("bad args", {
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
   rec <- recipe(~., data) %>%
-    step_classdist(all_numeric_predictors(), class = "Species") %>%
+    step_classdist(all_numeric_predictors(), class = Species) %>%
     prep()
 
   expect_identical(

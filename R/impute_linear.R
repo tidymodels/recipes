@@ -75,22 +75,18 @@ step_impute_linear <-
     ...,
     role = NA,
     trained = FALSE,
-    impute_with = imp_vars(all_predictors()),
+    impute_with = all_predictors(),
     models = NULL,
     skip = FALSE,
     id = rand_id("impute_linear")
   ) {
-    if (is.null(impute_with)) {
-      cli::cli_abort("{.arg impute_with} must not be empty.")
-    }
-
     add_step(
       recipe,
       step_impute_linear_new(
         terms = enquos(...),
         role = role,
         trained = trained,
-        impute_with = impute_with,
+        impute_with = enquos(impute_with),
         models = models,
         skip = skip,
         id = id,

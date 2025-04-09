@@ -104,13 +104,11 @@ step_classdist <- function(
   skip = FALSE,
   id = rand_id("classdist")
 ) {
-  check_string(class)
-
   add_step(
     recipe,
     step_classdist_new(
       terms = enquos(...),
-      class = class,
+      class = enquos(class),
       role = role,
       trained = trained,
       mean_func = mean_func,
@@ -201,9 +199,13 @@ get_both <- function(x, wts = NULL, mfun = mean, cfun = cov) {
 #' @export
 prep.step_classdist <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
+  class_var <- recipes_argument_select(
+    x$class,
+    training,
+    info,
+    col_name = "class"
+  )
   check_type(training[, x_names], types = c("double", "integer"))
-
-  class_var <- x$class[1]
 
   wts <- get_case_weights(info, training)
   were_weights_used <- are_weights_used(wts)
@@ -239,7 +241,7 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   }
   step_classdist_new(
     terms = x$terms,
-    class = x$class,
+    class = class_var,
     role = x$role,
     trained = TRUE,
     mean_func = x$mean_func,
@@ -314,14 +316,16 @@ bake.step_classdist <- function(object, new_data, ...) {
 #' @export
 print.step_classdist <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue("Distances to {x$class} for ")
     if (x$trained) {
+      title <- glue("Distances to {x$class} for ")
       x_names <- if (x$pool) {
         names(x$objects[["center"]][[1]])
       } else {
         names(x$objects[[1]]$center)
       }
     } else {
+      class <- rlang::quo_name(x$class[[1]])
+      title <- glue("Distances to {class} for ")
       x_names <- NULL
     }
     print_step(

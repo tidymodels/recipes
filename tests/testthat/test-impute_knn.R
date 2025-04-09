@@ -26,7 +26,7 @@ test_that("imputation values", {
     step_impute_knn(
       carbon,
       nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+      impute_with = c(hydrogen, oxygen, nitrogen),
       neighbors = 3,
       id = ""
     )
@@ -94,7 +94,7 @@ test_that("All NA values", {
     step_impute_knn(
       carbon,
       nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+      impute_with = c(hydrogen, oxygen, nitrogen),
       neighbors = 3
     ) %>%
     prep(biomass_tr)
@@ -108,7 +108,7 @@ test_that("options", {
     step_impute_knn(
       carbon,
       nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+      impute_with = c(hydrogen, oxygen, nitrogen),
       neighbors = 3,
       options = list(),
       id = ""
@@ -120,7 +120,7 @@ test_that("options", {
     step_impute_knn(
       carbon,
       nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+      impute_with = c(hydrogen, oxygen, nitrogen),
       neighbors = 3,
       options = list(nthread = 10),
       id = ""
@@ -132,7 +132,7 @@ test_that("options", {
     step_impute_knn(
       carbon,
       nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen),
+      impute_with = c(hydrogen, oxygen, nitrogen),
       neighbors = 3,
       options = list(eps = 10),
       id = ""
@@ -214,7 +214,7 @@ test_that("Warns when impute_with contains all NAs in a row", {
 
   expect_snapshot(
     tmp <- recipe(~., data = mtcars) %>%
-      step_impute_knn(mpg, disp, vs, impute_with = imp_vars(am, gear)) %>%
+      step_impute_knn(mpg, disp, vs, impute_with = c(am, gear)) %>%
       prep()
   )
 })
@@ -273,7 +273,7 @@ test_that("check_options() is used", {
 test_that("bake method errors when needed non-standard role columns are missing", {
   imputed <-
     recipe(HHV ~ carbon + hydrogen + oxygen, data = biomass) %>%
-    step_impute_knn(carbon, impute_with = imp_vars(hydrogen, oxygen)) %>%
+    step_impute_knn(carbon, impute_with = c(hydrogen, oxygen)) %>%
     update_role(hydrogen, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
@@ -335,7 +335,7 @@ test_that("printing", {
     step_impute_knn(
       carbon,
       nitrogen,
-      impute_with = imp_vars(hydrogen, oxygen, nitrogen)
+      impute_with = c(hydrogen, oxygen, nitrogen)
     )
 
   expect_snapshot(print(rec))

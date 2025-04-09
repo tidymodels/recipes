@@ -29,7 +29,7 @@
 # Deprecation warning
 
     Code
-      recipe(~., data = mtcars) %>% step_pls(outcome = "mpg", preserve = TRUE)
+      recipe(~., data = mtcars) %>% step_pls(outcome = mpg, preserve = TRUE)
     Condition
       Error:
       ! The `preserve` argument of `step_pls()` was deprecated in recipes 0.1.16 and is now defunct.
@@ -38,7 +38,7 @@
 # rethrows error correctly from implementation
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = "mpg") %>%
+      tmp <- recipe(~., data = mtcars) %>% step_pls(all_predictors(), outcome = mpg) %>%
         prep()
     Condition
       Error in `step_pls()`:
@@ -53,12 +53,13 @@
       recipe(~., data = mtcars) %>% step_pls(all_predictors()) %>% prep()
     Condition
       Error in `step_pls()`:
-      ! `outcome` should select at least one column.
+      Caused by error in `prep()`:
+      ! `outcome` must not be `NULL`.
 
 # check_options() is used
 
     Code
-      recipe(~., data = mtcars) %>% step_pls(disp, outcome = "mpg", options = TRUE) %>%
+      recipe(~., data = mtcars) %>% step_pls(disp, outcome = mpg, options = TRUE) %>%
         prep()
     Condition
       Error in `step_pls()`:
@@ -155,8 +156,8 @@
 # bad args
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = "mpg", num_comp = -
-        1) %>% prep()
+      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = mpg, num_comp = -1) %>%
+        prep()
     Condition
       Error in `step_pls()`:
       Caused by error in `prep()`:
@@ -165,7 +166,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = "mpg", prefix = 1) %>%
+      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = mpg, prefix = 1) %>%
         prep()
     Condition
       Error in `step_pls()`:
@@ -175,7 +176,7 @@
 ---
 
     Code
-      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = "mpg",
+      recipe(mpg ~ ., data = mtcars) %>% step_pls(-mpg, outcome = mpg,
         predictor_prop = -1) %>% prep()
     Condition
       Error in `step_pls()`:

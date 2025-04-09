@@ -12,7 +12,7 @@ is_unq <- function(x) length(unique(x)) == 1
 
 test_that("numeric profile", {
   num_rec <- sacr_rec %>%
-    step_profile(-sqft, profile = vars(sqft)) %>%
+    step_profile(-sqft, profile = sqft) %>%
     prep(Sacramento) %>%
     bake(new_data = NULL)
   expect_true(is_unq(num_rec$city))
@@ -32,7 +32,7 @@ test_that("numeric profile", {
 
 test_that("factor profile", {
   fact_rec <- sacr_rec %>%
-    step_profile(-city, profile = vars(city)) %>%
+    step_profile(-city, profile = city) %>%
     prep(Sacramento) %>%
     bake(new_data = NULL)
   expect_false(is_unq(fact_rec$city))
@@ -44,7 +44,7 @@ test_that("factor profile", {
 
 test_that("beds profile", {
   beds_rec <- sacr_rec %>%
-    step_profile(-beds, profile = vars(beds)) %>%
+    step_profile(-beds, profile = beds) %>%
     prep(Sacramento) %>%
     bake(new_data = NULL)
   expect_true(is_unq(beds_rec$city))
@@ -56,7 +56,7 @@ test_that("beds profile", {
 
 test_that("character profile", {
   chr_rec <- recipe(~., data = Sacramento, strings_as_factors = FALSE) %>%
-    step_profile(-zip, profile = vars(zip)) %>%
+    step_profile(-zip, profile = zip) %>%
     prep(Sacramento) %>%
     bake(new_data = NULL)
   expect_true(is_unq(chr_rec$city))
@@ -70,25 +70,25 @@ test_that("bad values", {
   expect_snapshot(
     error = TRUE,
     sacr_rec %>%
-      step_profile(all_predictors(), profile = vars(sqft)) %>%
+      step_profile(all_predictors(), profile = sqft) %>%
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
     sacr_rec %>%
-      step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
+      step_profile(sqft, beds, price, profile = c(zip, beds)) %>%
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
     sacr_rec %>%
-      step_profile(city, profile = vars(sqft), pct = -1) %>%
+      step_profile(city, profile = sqft, pct = -1) %>%
       prep(data = Sacramento)
   )
   expect_snapshot(
     error = TRUE,
     sacr_rec %>%
-      step_profile(city, profile = vars(sqft), grid = 1:3) %>%
+      step_profile(city, profile = sqft, grid = 1:3) %>%
       prep(data = Sacramento)
   )
   expect_snapshot(
@@ -96,7 +96,7 @@ test_that("bad values", {
     sacr_rec %>%
       step_profile(
         city,
-        profile = vars(sqft),
+        profile = sqft,
         grid = list(pctl = 1, len = 2)
       ) %>%
       prep(data = Sacramento)
@@ -106,7 +106,7 @@ test_that("bad values", {
 
 test_that("tidy", {
   num_rec_3 <- sacr_rec %>%
-    step_profile(-sqft, profile = vars(contains("sqft")), id = "")
+    step_profile(-sqft, profile = contains("sqft"), id = "")
   num_rec_4 <- prep(num_rec_3, Sacramento)
 
   tidy_3 <- tidy(num_rec_3, 1)
@@ -155,7 +155,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_profile(rec, profile = vars(mpg))
+  rec <- step_profile(rec, profile = mpg)
 
   expect_snapshot(rec)
 
@@ -166,7 +166,7 @@ test_that("empty printing", {
 
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_profile(rec1, profile = vars(mpg))
+  rec2 <- step_profile(rec1, profile = mpg)
 
   rec2 <- prep(rec2, mtcars)
 
@@ -177,7 +177,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_profile(rec, profile = vars(mpg))
+  rec <- step_profile(rec, profile = mpg)
 
   expect <- tibble(terms = character(), type = character(), id = character())
 
@@ -190,7 +190,7 @@ test_that("empty selection tidy method works", {
 
 test_that("printing", {
   rec <- recipe(~., data = Sacramento) %>%
-    step_profile(-sqft, profile = vars(sqft))
+    step_profile(-sqft, profile = sqft)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))

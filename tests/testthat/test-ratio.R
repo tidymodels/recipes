@@ -14,7 +14,7 @@ rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat)
 
 test_that("1:many", {
   rec1 <- rec %>%
-    step_ratio(x1, denom = denom_vars(all_numeric()), id = "")
+    step_ratio(x1, denom = all_numeric(), id = "")
 
   exp_un_1 <- tibble(
     terms = "x1",
@@ -44,7 +44,7 @@ test_that("1:many", {
 
 test_that("many:1", {
   rec2 <- rec %>%
-    step_ratio(all_numeric(), denom = denom_vars(x1), id = "")
+    step_ratio(all_numeric(), denom = x1, id = "")
 
   exp_un_2 <- tibble(
     terms = "all_numeric()",
@@ -74,7 +74,7 @@ test_that("many:1", {
 
 test_that("many:many", {
   rec3 <- rec %>%
-    step_ratio(all_numeric(), denom = denom_vars(all_numeric()), id = "")
+    step_ratio(all_numeric(), denom = all_numeric(), id = "")
 
   exp_un_3 <- tibble(
     terms = "all_numeric()",
@@ -115,15 +115,15 @@ test_that("many:many", {
 
 test_that("wrong type", {
   rec4 <- rec %>%
-    step_ratio(x1, denom = denom_vars(all_predictors()))
+    step_ratio(x1, denom = all_predictors())
   expect_snapshot(error = TRUE, prep(rec4, ex_dat, verbose = FALSE))
 
   rec5 <- rec %>%
-    step_ratio(all_predictors(), denom = denom_vars(x1))
+    step_ratio(all_predictors(), denom = x1)
   expect_snapshot(error = TRUE, prep(rec5, ex_dat, verbose = FALSE))
 
   rec6 <- rec %>%
-    step_ratio(all_predictors(), denom = denom_vars(all_predictors()))
+    step_ratio(all_predictors(), denom = all_predictors())
   expect_snapshot(error = TRUE, prep(rec6, ex_dat, verbose = FALSE))
 })
 
@@ -132,7 +132,7 @@ test_that("check_name() is used", {
   dat$mpg_o_disp <- dat$mpg
 
   rec <- recipe(~., data = dat) %>%
-    step_ratio(mpg, denom = denom_vars(disp))
+    step_ratio(mpg, denom = disp)
 
   expect_snapshot(
     error = TRUE,
@@ -140,19 +140,11 @@ test_that("check_name() is used", {
   )
 })
 
-test_that("check_name() is used", {
-  expect_snapshot(
-    error = TRUE,
-    recipe(~., data = mtcars) %>%
-      step_ratio(mpg, denom = NULL)
-  )
-})
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec1 <- rec %>%
-    step_ratio(x1, denom = denom_vars(all_numeric())) %>%
+    step_ratio(x1, denom = all_numeric()) %>%
     update_role(x1, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
@@ -163,7 +155,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
 test_that("empty printing", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_ratio(rec, denom = vars(mpg))
+  rec <- step_ratio(rec, denom = mpg)
 
   expect_snapshot(rec)
 
@@ -174,7 +166,7 @@ test_that("empty printing", {
 
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(mpg ~ ., mtcars)
-  rec2 <- step_ratio(rec1, denom = vars(mpg))
+  rec2 <- step_ratio(rec1, denom = mpg)
 
   rec1 <- prep(rec1, mtcars)
   rec2 <- prep(rec2, mtcars)
@@ -187,7 +179,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_ratio(rec, denom = vars(mpg))
+  rec <- step_ratio(rec, denom = mpg)
 
   expect <- tibble(terms = character(), denom = character(), id = character())
 
@@ -202,7 +194,7 @@ test_that("keep_original_cols works", {
   new_names <- c("mpg_o_disp")
 
   rec <- recipe(~ mpg + disp, mtcars) %>%
-    step_ratio(mpg, denom = denom_vars(disp), keep_original_cols = FALSE)
+    step_ratio(mpg, denom = disp, keep_original_cols = FALSE)
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -213,7 +205,7 @@ test_that("keep_original_cols works", {
   )
 
   rec <- recipe(~ mpg + disp, mtcars) %>%
-    step_ratio(mpg, denom = denom_vars(disp), keep_original_cols = TRUE)
+    step_ratio(mpg, denom = disp, keep_original_cols = TRUE)
 
   rec <- prep(rec)
   res <- bake(rec, new_data = NULL)
@@ -226,7 +218,7 @@ test_that("keep_original_cols works", {
 
 test_that("keep_original_cols - can prep recipes with it missing", {
   rec <- recipe(~ mpg + disp, mtcars) %>%
-    step_ratio(mpg, denom = denom_vars(disp))
+    step_ratio(mpg, denom = disp)
 
   rec$steps[[1]]$keep_original_cols <- NULL
 
@@ -241,7 +233,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 
 test_that("printing", {
   rec <- recipe(~ x1 + x2 + x3 + x4 + x5, data = ex_dat) %>%
-    step_ratio(all_numeric(), denom = denom_vars(all_numeric()))
+    step_ratio(all_numeric(), denom = all_numeric())
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
@@ -250,7 +242,7 @@ test_that("printing", {
 test_that("bad args", {
   expect_snapshot(
     recipe(~ mpg + disp, mtcars) %>%
-      step_ratio(mpg, denom = denom_vars(disp), naming = NULL) %>%
+      step_ratio(mpg, denom = disp, naming = NULL) %>%
       prep(),
     error = TRUE
   )
@@ -259,7 +251,7 @@ test_that("bad args", {
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
   rec <- recipe(~., data) %>%
-    step_ratio(disp, mpg, denom = denom_vars("carb")) %>%
+    step_ratio(disp, mpg, denom = carb) %>%
     prep()
 
   expect_identical(

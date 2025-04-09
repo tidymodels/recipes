@@ -133,10 +133,6 @@ step_pls <-
     skip = FALSE,
     id = rand_id("pls")
   ) {
-    if (is.null(outcome)) {
-      cli::cli_abort("{.arg outcome} should select at least one column.")
-    }
-
     if (lifecycle::is_present(preserve)) {
       lifecycle::deprecate_stop(
         "0.1.16",
@@ -155,7 +151,7 @@ step_pls <-
         trained = trained,
         num_comp = num_comp,
         predictor_prop = predictor_prop,
-        outcome = outcome,
+        outcome = enquos(outcome),
         options = options,
         preserve = keep_original_cols,
         res = res,
@@ -367,7 +363,7 @@ get_columns_pls <- function(x) {
 #' @export
 prep.step_pls <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
-  y_names <- recipes_eval_select(x$outcome, training, info)
+  y_names <- recipes_argument_select(x$outcome, training, info, single = FALSE)
 
   check_type(training[, x_names], types = c("double", "integer"))
   check_number_decimal(
@@ -407,7 +403,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     num_comp = x$num_comp,
     predictor_prop = x$predictor_prop,
-    outcome = x$outcome,
+    outcome = y_names,
     options = x$options,
     preserve = x$preserve,
     res = res,

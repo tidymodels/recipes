@@ -10,7 +10,7 @@ step_impute_bag(
   ...,
   role = NA,
   trained = FALSE,
-  impute_with = imp_vars(all_predictors()),
+  impute_with = all_predictors(),
   trees = 25,
   models = NULL,
   options = list(keepX = FALSE),

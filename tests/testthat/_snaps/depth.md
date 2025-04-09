@@ -2,7 +2,7 @@
 
     Code
       recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
-      class = "Species", metric = "circular") %>% prep()
+      class = Species, metric = "circular") %>% prep()
     Condition
       Error in `step_depth()`:
       Caused by error in `prep()`:
@@ -12,7 +12,7 @@
 
     Code
       recipe(Species ~ ., data = iris) %>% step_depth(all_numeric_predictors(),
-      class = "Species", prefix = 0L) %>% prep()
+      class = Species, prefix = 0L) %>% prep()
     Condition
       Error in `step_depth()`:
       Caused by error in `prep()`:
@@ -21,7 +21,7 @@
 # check_options() is used
 
     Code
-      recipe(~Species, data = iris) %>% step_depth(all_numeric_predictors(), class = "Species",
+      recipe(~Species, data = iris) %>% step_depth(all_numeric_predictors(), class = Species,
       options = TRUE) %>% prep()
     Condition
       Error in `step_depth()`:

@@ -121,7 +121,7 @@ step_impute_bag <-
     ...,
     role = NA,
     trained = FALSE,
-    impute_with = imp_vars(all_predictors()),
+    impute_with = all_predictors(),
     trees = 25,
     models = NULL,
     options = list(keepX = FALSE),
@@ -129,17 +129,13 @@ step_impute_bag <-
     skip = FALSE,
     id = rand_id("impute_bag")
   ) {
-    if (is.null(impute_with)) {
-      cli::cli_abort("{.arg impute_with} must not be empty.")
-    }
-
     add_step(
       recipe,
       step_impute_bag_new(
         terms = enquos(...),
         role = role,
         trained = trained,
-        impute_with = impute_with,
+        impute_with = enquos(impute_with),
         trees = trees,
         models = models,
         options = options,
@@ -220,9 +216,22 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 
 ## This figures out which data should be used to predict each variable
 ## scheduled for imputation
-impute_var_lists <- function(to_impute, impute_using, training, info) {
+impute_var_lists <- function(
+  to_impute,
+  impute_using,
+  training,
+  info,
+  call = caller_env()
+) {
   to_impute <- recipes_eval_select(to_impute, training, info)
-  impute_using <- recipes_eval_select(impute_using, training, info)
+  impute_using <- recipes_argument_select(
+    impute_using,
+    training,
+    info,
+    single = FALSE,
+    col_name = "impute_with",
+    call = call
+  )
 
   var_lists <- vector(mode = "list", length = length(to_impute))
   for (i in seq_along(var_lists)) {
