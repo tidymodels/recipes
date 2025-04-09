@@ -139,9 +139,8 @@ test_that("recipes_argument_select() is used", {
 test_that("addition of recipes_argument_select() is backwards compatible", {
   skip_if_not_installed("ddalpha")
 
-  set.seed(1234)
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = Species) %>%
+    step_depth(all_predictors(), class = Species, options = list(seed = 1)) %>%
     prep()
 
   exp <- bake(rec, iris)
@@ -153,9 +152,12 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 
-  set.seed(1234)
   rec_old <- recipe(Species ~ ., data = iris) %>%
-    step_depth(all_predictors(), class = "Species") %>%
+    step_depth(
+      all_predictors(),
+      class = "Species",
+      options = list(seed = 1)
+    ) %>%
     prep()
 
   expect_identical(
