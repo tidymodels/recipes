@@ -65,6 +65,15 @@ It will most likely be used like so:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{col_names <- recipes_eval_select(x$terms, training, info)
 }\if{html}{\out{</div>}}
 
+\code{\link[=recipes_argument_select]{recipes_argument_select()}} is used within \verb{prep.step_*()} functions in the
+same way as \code{\link[=recipes_eval_select]{recipes_eval_select()}} but is intended to be used for arguments
+such as \code{denom} in \code{\link[=step_ratio]{step_ratio()}}.
+
+It will most likely be used like so:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{outcome_var <- recipes_argument_select(x$outcome, training, info)
+}\if{html}{\out{</div>}}
+
 \code{\link[=check_type]{check_type()}} can be used within \verb{prep.step_*()} functions to check that the
 variables passed in are the right types. We recommend that you use the
 \code{types} argument as it offers higher flexibility and it matches the types

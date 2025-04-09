@@ -1096,8 +1096,62 @@ check_options <- function(
   }
 }
 
+#' Evaluate a selection with tidyselect semantics for arguments
+#'
+#' @description
+#' `recipes_argument_select()` is a varient of [recipes_eval_select()] that is
+#' tailored to work well with arguments in steps that specify variables. Such as
+#' `denom` in [step_ratio()].
+#'
+#' This is a developer tool that is only useful for creating new recipes steps.
+#'
+#' @param quos A list of quosures describing the selection. Captured with
+#'   [rlang::enquos()] and stored in the step object corresponding to the
+#'   argument.
+#'
+#' @param data A data frame to use as the context to evaluate the selection in.
+#'   This is generally the `training` data passed to the [prep()] method
+#'   of your step.
+#'
+#' @param info A data frame of term information describing each column's type
+#'   and role for use with the recipes selectors. This is generally the `info`
+#'   data passed to the [prep()] method of your step.
+#'
+#' @param single A logical. Should an error be thrown if more than 1 variable is
+#'   selected. Defaults to `TRUE`.
+#'
+#' @param arg_name A string. Name of argument, used to enrich error messages.
+#'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
+#'
+#' @details
+#' This function is written to be backwards compatible with previous input types
+#' of these arguments. Will thus accept strings, tidyselect, recipes selections,
+#' helper functions [imp_vars()] in addition to the prefered bare names.
+#'
+#' @return
+#' A character vector containing the evaluated selection.
+#'
+#' @seealso [developer_functions]
+#'
+#' @export
+#' @examplesIf rlang::is_installed("modeldata")
+#' library(rlang)
+#' data(scat, package = "modeldata")
+#'
+#' rec <- recipe(Species ~ ., data = scat)
+#'
+#' info <- summary(rec)
+#' info
+#'
+#' recipes_argument_select(quos(Year), scat, info)
+#' recipes_argument_select(vars(Year), scat, info)
+#' recipes_argument_select(imp_vars(Year), scat, info)
 recipes_argument_select <- function(
-  expr,
+  quos,
   data,
   info,
   single = TRUE,
@@ -1105,7 +1159,7 @@ recipes_argument_select <- function(
   call = caller_env()
 ) {
   # Because we know the input will be a list of qousures
-  expr <- expr[[1]]
+  expr <- quos[[1]]
 
   if (quo_is_null(expr)) {
     cli::cli_abort(
