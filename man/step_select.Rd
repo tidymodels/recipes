@@ -42,13 +42,14 @@ sequence of any existing operations.
 \description{
 \code{step_select()} creates a \emph{specification} of a recipe step that will select
 variables using \code{\link[dplyr:select]{dplyr::select()}}.
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
-When an object in the user's global environment is
-referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \verb{!!}) to embed
-the value of the object in the expression (to be portable
-between sessions). See the examples.
+When an object in the user's global environment is referenced in the
+expression defining the new variable(s), it is a good idea to use
+quasiquotation (e.g. \verb{!!}) to embed the value of the object in the expression
+(to be portable between sessions). See the examples.
 
 This step can potentially remove columns from the data set. This may
 cause issues for subsequent steps in your recipe if the missing columns are

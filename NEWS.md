@@ -6,6 +6,8 @@
 
 * `step_num2factor()` has gotten improved documentation to avoid getting NAs as output. (#575)
 
+* `step_select()` has started its deprecation process. See `?step_select()` for alternatives. (#1488)
+
 * `step_interact()` now works with empty selections instead of erroring. (#1417)
 
 * Added developer function `check_options()`. (#1269)

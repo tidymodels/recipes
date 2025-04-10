@@ -1,4 +1,6 @@
 test_that("basic usage", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
   iris_test <- slice(iris_tbl, 76:150) %>%
@@ -20,6 +22,8 @@ test_that("basic usage", {
 })
 
 test_that("basic rename", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
   iris_test <- slice(iris_tbl, 76:150)
@@ -39,6 +43,8 @@ test_that("basic rename", {
 })
 
 test_that("select via type", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
   iris_test <- slice(iris_tbl, 76:150)
@@ -58,6 +64,8 @@ test_that("select via type", {
 })
 
 test_that("select via role", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
   iris_test <- slice(iris_tbl, 76:150)
@@ -77,6 +85,8 @@ test_that("select via role", {
 })
 
 test_that("quasiquotation", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   # Local variables
   sepal_vars <- c("Sepal.Width", "Sepal.Length")
 
@@ -107,6 +117,8 @@ test_that("quasiquotation", {
 })
 
 test_that("tidying", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   iris_tbl <- as_tibble(iris)
   iris_train <- slice(iris_tbl, 1:75)
 
@@ -134,6 +146,8 @@ test_that("tidying", {
 })
 
 test_that("doesn't destroy sparsity", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   mtcars$vs <- sparsevctrs::as_sparse_integer(mtcars$vs)
   mtcars$am <- sparsevctrs::as_sparse_integer(mtcars$am)
 
@@ -148,6 +162,8 @@ test_that("doesn't destroy sparsity", {
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   rec <- recipe(~., data = mtcars) %>%
     step_select(cyl) %>%
     update_role(cyl, new_role = "potato") %>%
@@ -158,6 +174,8 @@ test_that("bake method errors when needed non-standard role columns are missing"
 })
 
 test_that("empty printing", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_select(rec)
 
@@ -175,6 +193,8 @@ test_that("empty selection prep/bake is a no-op", {
 })
 
 test_that("empty selection tidy method works", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   rec <- recipe(mpg ~ ., mtcars)
   rec <- step_select(rec)
 
@@ -188,6 +208,8 @@ test_that("empty selection tidy method works", {
 })
 
 test_that("printing", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   rec <- recipe(~., data = iris) %>%
     step_select(Species)
 
@@ -197,6 +219,8 @@ test_that("printing", {
 
 
 test_that("0 and 1 rows data work in bake method", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   data <- mtcars
   rec <- recipe(~., data) %>%
     step_select(all_predictors()) %>%
