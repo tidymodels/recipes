@@ -47,6 +47,8 @@
 
 * Officially deprecate `printer()` in favor of `print_step()`. (#1243)
 
+* `step_dummy()` has gained `contrasts` argument. This change soft deprecates the use of `getOption("contrasts")` with `step_dummy()`. (##1349)
+
 * `step_mutate_at()` has been superceded in favor of `step_mutate()` when used with `across()`. (#662)
 
 # recipes 1.2.1

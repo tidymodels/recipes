@@ -19,6 +19,63 @@
       x All columns selected for the step should be factor or ordered.
       * 1 integer variable found: `price`
 
+# make sure contrasts argument is checked
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = TRUE) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The ordered element of `contracts` must be a string, not `TRUE`.
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list()) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The list passed to `contrasts` must have the names "ordered" and "unordered".
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = "contr.treatment")) %>%
+        prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The ordered element of `contracts` must be a string, not a list.
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = 1,
+        unordered = "contr.treatment")) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The ordered element of `contracts` must be a string, not a number.
+
+---
+
+    Code
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = "contr.treatment",
+        unordered = 1)) %>% prep()
+    Condition
+      Error in `step_dummy()`:
+      Caused by error in `prep()`:
+      ! The unordered element of `contracts` must be a string, not a number.
+
+# getOption('contrasts') gives deprecation warning in step_dummy
+
+    Code
+      tmp <- recipe(~., data = iris) %>% step_dummy(Species) %>% prep()
+    Condition
+      Warning:
+      options(contrasts) with step_dummy() was deprecated in recipes 1.3.0.
+      i Please use step_dummy(contrasts) instead.
+
 # tests for NA values in factor
 
     Code

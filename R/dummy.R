@@ -11,6 +11,9 @@
 #'   factors.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #'   rather than C-1?
+#' @param contrasts A named vector or list of contrast functions names. Defaults
+#'   to `list(unordered = "contr.treatment", ordered = "contr.poly")`. If only a
+#'   single string is passed it will be used for both `unordered` and `ordered`.
 #' @param preserve This argument has been deprecated. Please use
 #'   `keep_original_cols` instead.
 #' @param naming A function that defines the naming convention for new dummy
@@ -29,10 +32,14 @@
 #'
 #' `step_dummy()` will create a set of binary dummy variables from a factor
 #' variable. For example, if an unordered factor column in the data set has
-#' levels of "red", "green", "blue", the dummy variable bake will create two
-#' additional columns of 0/1 data for two of those three values (and remove the
-#' original column). For ordered factors, polynomial contrasts are used to
-#' encode the numeric values.
+#' levels of `"red"`, `"green"`, `"blue"`, the dummy variable bake will create
+#' two additional columns of 0/1 data for two of those three values (and remove
+#' the original column). For ordered factors, polynomial contrasts are used to
+#' encode the numeric values. These defaults are controlled by the `contrasts`
+#' argument. Note that since the contrasts are specified via character strings
+#' you will need to have those packages loaded. If you are using this with the
+#' tune package, you might need to add that these packages to the `pkg` option
+#' in `control_grid()`.
 #'
 #' By default, the excluded dummy variable (i.e. the reference cell) will
 #' correspond to the first level of the unordered factor being converted.
@@ -42,9 +49,6 @@
 #' @template dummy-naming
 #'
 #' @details
-#'
-#' To change the type of contrast being used, change the global contrast option
-#' via `options`.
 #'
 #' When the factor being converted has a missing value, all of the corresponding
 #' dummy variables are also missing. See [step_unknown()] for a solution.
@@ -57,12 +61,10 @@
 #' will return the data as-is (e.g. with no dummy variables).
 #'
 #' Note that, by default, the new dummy variable column names obey the naming
-#' rules for columns. If there are levels such as "0", [dummy_names()] will put
-#' a leading "X" in front of the level (since it uses [make.names()]). This can
-#' be changed by passing in a different function to the `naming` argument for
-#' this step.
-#'
-#'
+#' rules for columns. If there are levels such as `"0"`, [dummy_names()] will
+#' put a leading `"X"` in front of the level (since it uses [make.names()]).
+#' This can be changed by passing in a different function to the `naming`
+#' argument for this step.
 #'
 #' Also, there are a number of contrast methods that return fractional values.
 #' The columns returned by this step are doubles (not integers) when
@@ -98,28 +100,39 @@
 #' # Default dummy coding: 36 dummy variables
 #' dummies <- rec %>%
 #'   step_dummy(city) %>%
-#'   prep(training = Sacramento)
+#'   prep()
 #'
 #' dummy_data <- bake(dummies, new_data = NULL)
 #'
 #' dummy_data %>%
 #'   select(starts_with("city")) %>%
-#'   names() # level "anything" is the reference level
+#'   glimpse() # level "anything" is the reference level
 #'
 #' # Obtain the full set of 37 dummy variables using `one_hot` option
 #' dummies_one_hot <- rec %>%
 #'   step_dummy(city, one_hot = TRUE) %>%
-#'   prep(training = Sacramento)
+#'   prep()
 #'
 #' dummy_data_one_hot <- bake(dummies_one_hot, new_data = NULL)
 #'
 #' dummy_data_one_hot %>%
 #'   select(starts_with("city")) %>%
-#'   names() # no reference level
+#'   glimpse() # no reference level
 #'
+#' # Obtain the full set of 37 dummy variables using helmert contrasts
+#' dummies_helmert <- rec %>%
+#'   step_dummy(city, contrasts = "contr.helmert") %>%
+#'   prep()
+#'
+#' dummy_data_helmert <- bake(dummies_helmert, new_data = NULL)
+#'
+#' dummy_data_helmert %>%
+#'   select(starts_with("city")) %>%
+#'   glimpse() # no reference level
 #'
 #' tidy(dummies, number = 1)
 #' tidy(dummies_one_hot, number = 1)
+#' tidy(dummies_helmert, number = 1)
 step_dummy <-
   function(
     recipe,
@@ -127,6 +140,7 @@ step_dummy <-
     role = "predictor",
     trained = FALSE,
     one_hot = FALSE,
+    contrasts = list(unordered = "contr.treatment", ordered = "contr.poly"),
     preserve = deprecated(),
     naming = dummy_names,
     levels = NULL,
@@ -150,6 +164,7 @@ step_dummy <-
         role = role,
         trained = trained,
         one_hot = one_hot,
+        contrasts = contrasts,
         preserve = keep_original_cols,
         naming = naming,
         levels = levels,
@@ -167,6 +182,7 @@ step_dummy_new <-
     role,
     trained,
     one_hot,
+    contrasts,
     preserve,
     naming,
     levels,
@@ -181,6 +197,7 @@ step_dummy_new <-
       role = role,
       trained = trained,
       one_hot = one_hot,
+      contrasts = contrasts,
       preserve = preserve,
       naming = naming,
       levels = levels,
@@ -198,6 +215,34 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   check_bool(x$one_hot, arg = "one_hot")
   check_function(x$naming, arg = "naming", allow_empty = FALSE)
   check_sparse_arg(x$sparse)
+
+  if (is.null(x$contrasts)) {
+    x$contrasts <- list(
+      unordered = "contr.treatment",
+      ordered = "contr.poly"
+    )
+  }
+
+  if (length(x$contrasts) == 1) {
+    x$contrasts <- list(unordered = x$contrasts, ordered = x$contrasts)
+  }
+
+  check_contrasts_arg(x$contrasts)
+
+  if (
+    !identical(
+      getOption("contrasts"),
+      c(unordered = "contr.treatment", ordered = "contr.poly")
+    )
+  ) {
+    x$contrasts <- as.list(getOption("contrasts"))
+
+    lifecycle::deprecate_warn(
+      "1.3.0",
+      I("options(contrasts) with step_dummy()"),
+      I("step_dummy(contrasts)")
+    )
+  }
 
   if (length(col_names) > 0) {
     ## I hate doing this but currently we are going to have
@@ -239,6 +284,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     role = x$role,
     trained = TRUE,
     one_hot = x$one_hot,
+    contrasts = x$contrasts,
     preserve = x$preserve,
     naming = x$naming,
     levels = levels,
@@ -246,6 +292,48 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     keep_original_cols = get_keep_original_cols(x),
     skip = x$skip,
     id = x$id
+  )
+}
+
+check_contrasts_arg <- function(x, call = rlang::caller_env()) {
+  if (is.vector(x)) {
+    if (!identical(sort(names(x)), c("ordered", "unordered"))) {
+      offender <- names(x)
+      if (length(offender) == 0) {
+        cli::cli_abort(
+          "The list passed to {.arg contrasts} must have the names 
+          {.val ordered} and {.val unordered}.",
+          call = call
+        )
+      }
+      cli::cli_abort(
+        "The names of list passed to {.arg contrasts} must be {.val ordered} and
+        {.val unordered}, not {.val {offender}}.",
+        call = call
+      )
+    }
+    if (!is.character(x$ordered)) {
+      cli::cli_abort(
+        "The {.field ordered} element of {.arg contracts} must be a string, 
+        not {.obj_type_friendly {x$ordered}}.",
+        call = call
+      )
+    }
+    if (!is.character(x$unordered)) {
+      cli::cli_abort(
+        "The {.field unordered} element of {.arg contracts} must be a string, 
+        not {.obj_type_friendly {x$unordered}}.",
+        call = call
+      )
+    }
+
+    return(NULL)
+  }
+
+  cli::cli_abort(
+    "{.arg contrasts} must be a named character vector or list,
+    not {.obj_type_friendly {x}}.",
+    call = call
   )
 }
 
@@ -279,6 +367,13 @@ warn_new_levels <- function(dat, lvl, column, step, details = NULL) {
 bake.step_dummy <- function(object, new_data, ...) {
   col_names <- names(object$levels)
   check_new_data(col_names, object, new_data)
+
+  if (is.null(object$contrasts)) {
+    object$contrasts <- list(
+      unordered = "contr.treatment",
+      ordered = "contr.poly"
+    )
+  }
 
   if (length(col_names) == 0) {
     return(new_data)
@@ -317,9 +412,15 @@ bake.step_dummy <- function(object, new_data, ...) {
       ordered = is_ordered
     )
 
-    current_contrast <- getOption("contrasts")[is_ordered + 1]
+    object$contrasts <- object$contrasts[c("unordered", "ordered")]
+    current_contrast <- object$contrasts[is_ordered + 1]
     if (
-      !current_contrast %in% c("contr.treatment", "contr_one_hot") &&
+      !any(vapply(
+        c("contr.treatment", "contr_one_hot"),
+        identical,
+        current_contrast[[1]],
+        FUN.VALUE = logical(1)
+      )) &&
         sparse_is_yes(object$sparse)
     ) {
       object$sparse <- FALSE
@@ -342,8 +443,14 @@ bake.step_dummy <- function(object, new_data, ...) {
           na.action = na.pass
         )
 
+      current_contrast <- stats::setNames(current_contrast, col_name)
+
       indicators <- tryCatch(
-        model.matrix(object = levels, data = indicators),
+        model.matrix(
+          object = levels,
+          data = indicators,
+          contrasts.arg = current_contrast
+        ),
         error = function(cnd) {
           if (grepl("(vector memory|cannot allocate)", cnd$message)) {
             n_levels <- length(attr(levels, "values"))
@@ -357,19 +464,15 @@ bake.step_dummy <- function(object, new_data, ...) {
         }
       )
 
+      used_lvl <- attr(indicators, "assign") == 1
+      used_lvl <- attr(levels, "values")[used_lvl]
+
       if (!object$one_hot) {
         indicators <- indicators[,
           colnames(indicators) != "(Intercept)",
           drop = FALSE
         ]
       }
-
-      ## use backticks for nonstandard factor levels here
-      used_lvl <- gsub(
-        paste0("^\\`?", col_name, "\\`?"),
-        "",
-        colnames(indicators)
-      )
     }
 
     new_names <- object$naming(col_name, used_lvl, is_ordered)

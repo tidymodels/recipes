@@ -54,36 +54,23 @@ bake(ref_cell, new_data = NULL, original, starts_with("Species")) %>% distinct()
 
 Note that the column that was used to make the new columns (`Species`) is no longer there. See the section below on obtaining the entire set of _C_ columns. 
 
-There are different types of contrasts that can be used for different types of factors. The defaults are:
-
-```{r defaults}
-param <- getOption("contrasts")
-param
-```
+There are different types of contrasts that can be used for different types of factors. The defaults are `"contr.treatment"` for unordered and `"contr.poly"` for ordered factors.
 
 Looking at `?contrast`, there are other options. One alternative is the little known Helmert contrast:
 
 > `contr.helmert` returns Helmert contrasts, which contrast the second level with the first, the third with the average of the first two, and so on. 
 
-To get this encoding, the global option for the contrasts can be changed and saved. [`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html) picks up on this and makes the correct calculations:
+To get this encoding you can use the `contrasts` argument like so:, the global option for the contrasts can be changed and saved. [`step_dummy`](https://recipes.tidymodels.org/reference/step_dummy.html) picks up on this and makes the correct calculations:
 
 ```{r iris-helmert}
-# change it:
-go_helmert <- param
-go_helmert["unordered"] <- "contr.helmert"
-options(contrasts = go_helmert)
-
 # now make dummy variables with new parameterization
 helmert <- 
   iris_rec %>% 
-  step_dummy(Species) %>%
+  step_dummy(Species, contrasts = "contr.helmert") %>%
   prep(training = iris)
 summary(helmert)
 
 bake(helmert, new_data = NULL, original, starts_with("Species")) %>% distinct()
-
-# Yuk; go back to the original method
-options(contrasts = param)
 ```
 
 Note that the column names do not reference a specific level of the species variable. This contrast function has columns that can involve multiple levels; level-specific columns wouldn't make sense. 
@@ -207,12 +194,9 @@ hot_reference <-
 
 hot_reference
 
-# from above
-options(contrasts = go_helmert)
-
 hot_helmert <- 
   iris_rec %>% 
-  step_dummy(Species, one_hot = TRUE) %>%
+  step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") %>%
   prep(training = iris) %>%
   bake(original, new_data = NULL, starts_with("Species")) %>%
   distinct()

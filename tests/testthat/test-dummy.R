@@ -151,6 +151,170 @@ test_that("create all dummy variables", {
   )
 })
 
+test_that("make sure contrasts argument work", {
+  rec <- recipe(
+    ~city,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
+  dummy <- rec %>% step_dummy(city, contrasts = "contr.poly", id = "")
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE
+  )
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+
+  pred <- "city"
+  tmp <- model.matrix(
+    as.formula(paste("~", pred, "+ 0")),
+    data = sacr_fac,
+    contrasts.arg = setNames(list(contr.poly), pred)
+  )
+  exp_res <- as_tibble(tmp %*% attr(tmp, "contrasts")[[pred]])
+
+  expect_identical(unname(dummy_pred), unname(exp_res))
+})
+
+test_that("make sure contrasts argument work for ordered factors", {
+  sacr_fac$city <- as.ordered(sacr_fac$city)
+  rec <- recipe(
+    ~city,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
+  dummy <- rec %>%
+    step_dummy(
+      city,
+      one_hot = TRUE,
+      contrasts = list(
+        unordered = "contr.poly",
+        ordered = "contr.treatment"
+      ),
+      id = ""
+    )
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE
+  )
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+  dummy_pred <- as.data.frame(dummy_pred)
+  rownames(dummy_pred) <- NULL
+
+  pred <- "city"
+  tmp <- model.matrix(
+    as.formula(paste("~", pred, "+ 0")),
+    data = sacr_fac,
+    contrasts.arg = setNames(list("contr.treatment"), pred)
+  )
+  exp_res <- as.data.frame(tmp)
+  rownames(exp_res) <- NULL
+
+  expect_identical(unname(dummy_pred), unname(exp_res))
+})
+
+test_that("make sure contrasts argument work non-base contrasts", {
+  library(hardhat)
+  rec <- recipe(
+    ~city,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
+  dummy <- rec %>% step_dummy(city, contrasts = "contr_one_hot", id = "")
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE
+  )
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+  dummy_pred <- as.data.frame(dummy_pred)
+  rownames(dummy_pred) <- NULL
+
+  pred <- "city"
+  tmp <- model.matrix(
+    as.formula(paste("~", pred, "+ 0")),
+    data = sacr_fac,
+    contrasts.arg = setNames(list(contr_one_hot), pred)
+  )
+  exp_res <- as.data.frame(tmp)
+  rownames(exp_res) <- NULL
+
+  expect_identical(unname(dummy_pred), unname(exp_res))
+})
+
+test_that("make sure contrasts argument is checked", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(Species, contrasts = TRUE) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(Species, contrasts = list()) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(Species, contrasts = list(ordered = "contr.treatment")) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(
+        Species,
+        contrasts = list(ordered = 1, unordered = "contr.treatment")
+      ) %>%
+      prep()
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    recipe(~Species, iris) %>%
+      step_dummy(
+        Species,
+        contrasts = list(ordered = "contr.treatment", unordered = 1)
+      ) %>%
+      prep()
+  )
+})
+
+test_that("getOption('contrasts') gives deprecation warning in step_dummy", {
+  param <- getOption("contrasts")
+
+  go_helmert <- param
+  go_helmert["unordered"] <- "contr.helmert"
+  withr::local_options("contrasts" = go_helmert)
+
+  expect_snapshot(
+    tmp <- recipe(~., data = iris) %>%
+      step_dummy(Species) %>%
+      prep()
+  )
+})
+
+test_that("backwards compatible for contrasts", {
+  rec <- recipe(~., data = iris) %>%
+    step_dummy(Species) %>%
+    prep()
+
+  exp <- bake(rec, iris)
+
+  rec$steps[[1]]$contrasts <- NULL
+
+  expect_identical(
+    bake(rec, iris),
+    exp
+  )
+})
+
 test_that("tests for issue #91", {
   rec <- recipe(~city, data = sacr)
   factors <- rec %>% step_dummy(city)
@@ -445,12 +609,8 @@ test_that("sparse = 'yes' works", {
 })
 
 test_that("sparse = 'yes' will go back to 'no' on unsupported contrasts", {
-  go_helmert <- getOption("contrasts")
-  go_helmert["unordered"] <- "contr.helmert"
-  withr::local_options(contrasts = go_helmert)
-
   rec <- recipe(~., data = tibble(x = letters)) %>%
-    step_dummy(x, sparse = "yes") %>%
+    step_dummy(x, sparse = "yes", contrasts = "contr.helmert") %>%
     prep()
 
   res <- bake(rec, tibble(x = letters))
