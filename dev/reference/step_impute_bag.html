@@ -56,7 +56,7 @@ create bagged tree models to impute missing data.</p>
 <span>  <span class="va">...</span>,</span>
 <span>  role <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  impute_with <span class="op">=</span> <span class="fu">imp_vars</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  impute_with <span class="op">=</span> <span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  trees <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>  models <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>keepX <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -95,11 +95,12 @@ preprocessing have been estimated.</p></dd>
 
 
 <dt id="arg-impute-with">impute_with<a class="anchor" aria-label="anchor" href="#arg-impute-with"></a></dt>
-<dd><p>A call to <code>imp_vars</code> to specify which variables are used
-to impute the variables that can include specific variable names separated
-by commas or different selectors (see <code><a href="selections.html">selections()</a></code>). If a column is
-included in both lists to be imputed and to be an imputation predictor, it
-will be removed from the latter and not used to impute itself.</p></dd>
+<dd><p>Bare names or selectors functions that specify which
+variables are used to impute the variables that can include specific
+variable names separated by commas or different selectors (see
+<code><a href="selections.html">selections()</a></code>). If a column is included in both lists to be imputed and to
+be an imputation predictor, it will be removed from the latter and not used
+to impute itself.</p></dd>
 
 
 <dt id="arg-trees">trees<a class="anchor" aria-label="anchor" href="#arg-trees"></a></dt>
@@ -241,7 +242,7 @@ Springer Verlag.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">impute_rec</span> <span class="op">&lt;-</span> <span class="va">rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">step_impute_bag</span><span class="op">(</span><span class="va">Status</span>, <span class="va">Home</span>, <span class="va">Marital</span>, <span class="va">Job</span>, <span class="va">Income</span>, <span class="va">Assets</span>, <span class="va">Debt</span>,</span></span>
-<span class="r-in"><span>    impute_with <span class="op">=</span> <span class="fu">imp_vars</span><span class="op">(</span><span class="va">Time</span>, <span class="va">Age</span>, <span class="va">Expenses</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    impute_with <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Time</span>, <span class="va">Age</span>, <span class="va">Expenses</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="co"># for quick execution, nbagg lowered</span></span></span>
 <span class="r-in"><span>    options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nbagg <span class="op">=</span> <span class="fl">5</span>, keepX <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>

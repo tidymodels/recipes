@@ -51,6 +51,18 @@
 <li><p>fixed bug where <code><a href="../reference/step_nnmf_sparse.html">step_nnmf_sparse()</a></code> required that the Matrix package was loaded. (<a href="https://github.com/tidymodels/recipes/issues/1141" class="external-link">#1141</a>)</p></li>
 <li><p>Fixed bug where <code><a href="../reference/recipe.html">recipe()</a></code> would error on sf objects. (<a href="https://github.com/tidymodels/recipes/issues/1393" class="external-link">#1393</a>)</p></li>
 <li><p><code><a href="../reference/step_cut.html">step_cut()</a></code> not longer errors on NA values in <code><a href="../reference/bake.html">bake()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/1304" class="external-link">#1304</a>)</p></li>
+<li>
+<p>The following arguments in steps can now take bare names as input instead of strings, calls to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>, <code><a href="../reference/step_impute_bag.html">imp_vars()</a></code>, and <code><a href="../reference/step_ratio.html">denom_vars()</a></code>. (<a href="https://github.com/tidymodels/recipes/issues/1225" class="external-link">#1225</a>)</p>
+<ul><li><code>step_classdist_shrunken(class)</code></li>
+<li><code>step_classdist(class)</code></li>
+<li><code>step_depth(class)</code></li>
+<li><code>step_impute_bag(impute_with)</code></li>
+<li><code>step_impute_knn(impute_with)</code></li>
+<li><code>step_impute_linear(impute_with)</code></li>
+<li><code>step_pls(outcome)</code></li>
+<li><code>step_profile(profile)</code></li>
+<li><code>step_ratio(denom)</code></li>
+</ul></li>
 <li><p>Fixed bug in <code><a href="../reference/step_impute_knn.html">step_impute_knn()</a></code> would error on character vectors when <code>strings_as_factors = TRUE</code>. (<a href="https://github.com/tidymodels/recipes/issues/926" class="external-link">#926</a>)</p></li>
 <li><p>Make it so <code><a href="../reference/recipe.html">recipe.formula()</a></code> can’t take table objects as input, in accordance with documentation. (<a href="https://github.com/tidymodels/recipes/issues/1416" class="external-link">#1416</a>)</p></li>
 <li><p>The <code>strings_as_factors</code> argument of <code><a href="../reference/prep.html">prep.recipe()</a></code> has been soft-deprecated in favor of <code>recipe(strings_as_factors)</code>. If both are provided, the value in <code><a href="../reference/recipe.html">recipe()</a></code> takes precedence. This allows control of recipe behavior within a workflow, which wasn’t previously possible. (<a href="https://github.com/smingerson" class="external-link">@smingerson</a>, <a href="https://github.com/tidymodels/recipes/issues/331" class="external-link">#331</a>, <a href="https://github.com/tidymodels/recipes/issues/287" class="external-link">#287</a>)</p></li>

@@ -95,6 +95,11 @@ used to turn the <code>terms</code> object into a character vector of the select
 variables.</p>
 <p>It will most likely be used like so:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">col_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipes_eval_select.html">recipes_eval_select</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">terms</span>, <span class="va">training</span>, <span class="va">info</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><code><a href="recipes_argument_select.html">recipes_argument_select()</a></code> is used within <code>prep.step_*()</code> functions in the
+same way as <code><a href="recipes_eval_select.html">recipes_eval_select()</a></code> but is intended to be used for arguments
+such as <code>denom</code> in <code><a href="step_ratio.html">step_ratio()</a></code>.</p>
+<p>It will most likely be used like so:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">outcome_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipes_argument_select.html">recipes_argument_select</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">outcome</span>, <span class="va">training</span>, <span class="va">info</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><code><a href="check_type.html">check_type()</a></code> can be used within <code>prep.step_*()</code> functions to check that the
 variables passed in are the right types. We recommend that you use the
 <code>types</code> argument as it offers higher flexibility and it matches the types

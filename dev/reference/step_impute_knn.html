@@ -57,7 +57,7 @@ impute missing data using nearest neighbors.</p>
 <span>  role <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  trained <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  neighbors <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  impute_with <span class="op">=</span> <span class="fu"><a href="step_impute_bag.html">imp_vars</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  impute_with <span class="op">=</span> <span class="fu"><a href="has_role.html">all_predictors</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nthread <span class="op">=</span> <span class="fl">1</span>, eps <span class="op">=</span> <span class="fl">1e-08</span><span class="op">)</span>,</span>
 <span>  ref_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  columns <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -97,11 +97,12 @@ preprocessing have been estimated.</p></dd>
 
 
 <dt id="arg-impute-with">impute_with<a class="anchor" aria-label="anchor" href="#arg-impute-with"></a></dt>
-<dd><p>A call to <code>imp_vars</code> to specify which variables are used
-to impute the variables that can include specific variable names separated
-by commas or different selectors (see <code><a href="selections.html">selections()</a></code>). If a column is
-included in both lists to be imputed and to be an imputation predictor, it
-will be removed from the latter and not used to impute itself.</p></dd>
+<dd><p>Bare names or selectors functions that specify which
+variables are used to impute the variables that can include specific
+variable names separated by commas or different selectors (see
+<code><a href="selections.html">selections()</a></code>). If a column is included in both lists to be imputed and to
+be an imputation predictor, it will be removed from the latter and not used
+to impute itself.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>

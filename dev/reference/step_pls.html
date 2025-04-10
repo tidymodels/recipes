@@ -109,8 +109,9 @@ non-zero coefficients for each PLS component (via regularization).</p></dd>
 
 
 <dt id="arg-outcome">outcome<a class="anchor" aria-label="anchor" href="#arg-outcome"></a></dt>
-<dd><p>When a single outcome is available, character string or call
-to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">dplyr::vars()</a></code> can be used to specify a single outcome variable.</p></dd>
+<dd><p>When a single outcome is available, bare name, character
+strings or call to <code><a href="https://dplyr.tidyverse.org/reference/vars.html" class="external-link">dplyr::vars()</a></code> can be used to specify a single outcome
+variable.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
@@ -256,11 +257,11 @@ columns <code>terms</code>, <code>value</code>, <code>component</code> , and <co
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dense_pls</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biom_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"HHV"</span>, num_comp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="va">HHV</span>, num_comp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sparse_pls</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biom_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"HHV"</span>, num_comp <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="va">HHV</span>, num_comp <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>           predictor_prop <span class="op">=</span> <span class="fl">4</span> <span class="op">/</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## -----------------------------------------------------------------------------</span></span></span>
@@ -279,11 +280,11 @@ columns <code>terms</code>, <code>value</code>, <code>component</code> , and <co
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dense_plsda</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cell_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"class"</span>, num_comp <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="va">class</span>, num_comp <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sparse_plsda</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">class</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">cell_tr</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="st">"class"</span>, num_comp <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">step_pls</span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="va">class</span>, num_comp <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>           predictor_prop <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">4</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
