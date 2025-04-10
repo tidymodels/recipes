@@ -11,12 +11,9 @@
 #'   factors.
 #' @param one_hot A logical. For C levels, should C dummy variables be created
 #'   rather than C-1?
-#' @param contrasts A named list of contrast functions or a single contrast
-#'   function. Defaults to
-#'   `list(unordered = contr.treatment, ordered = contr.poly)`. If it is a list,
-#'   it must include both `unordered` and `ordered` elements. If a constrast
-#'   function is passed by itself, it will be used for both unordered and
-#'   ordered predictors.
+#' @param contrasts A named vector or list of contrast functions names. Defaults
+#'   to `list(unordered = "contr.treatment", ordered = "contr.poly")`. If only a
+#'   single string is passed it will be used for both `unordered` and `ordered`.
 #' @param preserve This argument has been deprecated. Please use
 #'   `keep_original_cols` instead.
 #' @param naming A function that defines the naming convention for new dummy
@@ -121,7 +118,7 @@
 #'
 #' # Obtain the full set of 37 dummy variables using helmert contrasts
 #' dummies_helmert <- rec %>%
-#'   step_dummy(city, contrasts = contr.helmert) %>%
+#'   step_dummy(city, contrasts = "contr.helmert") %>%
 #'   prep()
 #'
 #' dummy_data_helmert <- bake(dummies_helmert, new_data = NULL)
@@ -140,10 +137,7 @@ step_dummy <-
     role = "predictor",
     trained = FALSE,
     one_hot = FALSE,
-    contrasts = list(
-      unordered = stats::contr.treatment,
-      ordered = stats::contr.poly
-    ),
+    contrasts = list(unordered = "contr.treatment", ordered = "contr.poly"),
     preserve = deprecated(),
     naming = dummy_names,
     levels = NULL,
@@ -221,12 +215,12 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 
   if (is.null(x$contrasts)) {
     x$contrasts <- list(
-      unordered = stats::contr.treatment,
-      ordered = stats::contr.poly
+      unordered = "contr.treatment",
+      ordered = "contr.poly"
     )
   }
 
-  if (is.function(x$contrasts)) {
+  if (length(x$contrasts) == 1) {
     x$contrasts <- list(unordered = x$contrasts, ordered = x$contrasts)
   }
 
@@ -238,8 +232,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       c(unordered = "contr.treatment", ordered = "contr.poly")
     )
   ) {
-    x$contrasts <- getOption("contrasts")
-    x$contrasts <- lapply(x$contrasts, get)
+    x$contrasts <- as.list(getOption("contrasts"))
 
     lifecycle::deprecate_warn(
       "1.3.0",
@@ -300,7 +293,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
 }
 
 check_contrasts_arg <- function(x, call = rlang::caller_env()) {
-  if (is.list(x)) {
+  if (is.vector(x)) {
     if (!identical(sort(names(x)), c("ordered", "unordered"))) {
       offender <- names(x)
       if (length(offender) == 0) {
@@ -316,16 +309,16 @@ check_contrasts_arg <- function(x, call = rlang::caller_env()) {
         call = call
       )
     }
-    if (!is.function(x$ordered)) {
+    if (!is.character(x$ordered)) {
       cli::cli_abort(
-        "The {.field ordered} element of {.arg contracts} but be a function, 
+        "The {.field ordered} element of {.arg contracts} must be a string, 
         not {.obj_type_friendly {x$ordered}}.",
         call = call
       )
     }
-    if (!is.function(x$unordered)) {
+    if (!is.character(x$unordered)) {
       cli::cli_abort(
-        "The {.field unordered} element of {.arg contracts} but be a function, 
+        "The {.field unordered} element of {.arg contracts} must be a string, 
         not {.obj_type_friendly {x$unordered}}.",
         call = call
       )
@@ -335,7 +328,7 @@ check_contrasts_arg <- function(x, call = rlang::caller_env()) {
   }
 
   cli::cli_abort(
-    "{.arg contrasts} must be a function or list,
+    "{.arg contrasts} must be a named character vector or list,
     not {.obj_type_friendly {x}}.",
     call = call
   )
@@ -374,8 +367,8 @@ bake.step_dummy <- function(object, new_data, ...) {
 
   if (is.null(object$contrasts)) {
     object$contrasts <- list(
-      unordered = stats::contr.treatment,
-      ordered = stats::contr.poly
+      unordered = "contr.treatment",
+      ordered = "contr.poly"
     )
   }
 
@@ -420,7 +413,7 @@ bake.step_dummy <- function(object, new_data, ...) {
     current_contrast <- object$contrasts[is_ordered + 1]
     if (
       !any(vapply(
-        c(stats::contr.treatment, hardhat::contr_one_hot),
+        c("contr.treatment", "contr_one_hot"),
         identical,
         current_contrast[[1]],
         FUN.VALUE = logical(1)
@@ -469,7 +462,7 @@ bake.step_dummy <- function(object, new_data, ...) {
       )
 
       used_lvl <- attr(indicators, "assign") == 1
-      used_lvl <- rownames(attr(indicators, "contrasts")[[1]])[used_lvl]
+      used_lvl <- attr(levels, "values")[used_lvl]
 
       if (!object$one_hot) {
         indicators <- indicators[,

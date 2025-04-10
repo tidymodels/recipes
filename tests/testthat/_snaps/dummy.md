@@ -26,7 +26,7 @@
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! `contrasts` must be a function or list, not `TRUE`.
+      ! The ordered element of `contracts` must be a string, not `TRUE`.
 
 ---
 
@@ -40,32 +40,32 @@
 ---
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = contr.treatment)) %>%
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = "contr.treatment")) %>%
         prep()
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! The names of list passed to `contrasts` must be "ordered" and "unordered", not "ordered".
+      ! The ordered element of `contracts` must be a string, not a list.
 
 ---
 
     Code
       recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = 1,
-        unordered = contr.treatment)) %>% prep()
+        unordered = "contr.treatment")) %>% prep()
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! The ordered element of `contracts` but be a function, not a number.
+      ! The ordered element of `contracts` must be a string, not a number.
 
 ---
 
     Code
-      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = contr.treatment,
+      recipe(~Species, iris) %>% step_dummy(Species, contrasts = list(ordered = "contr.treatment",
         unordered = 1)) %>% prep()
     Condition
       Error in `step_dummy()`:
       Caused by error in `prep()`:
-      ! The unordered element of `contracts` but be a function, not a number.
+      ! The unordered element of `contracts` must be a string, not a number.
 
 # getOption('contrasts') gives deprecation warning in step_dummy
 

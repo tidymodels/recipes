@@ -157,7 +157,7 @@ test_that("make sure contrasts argument work", {
     data = sacr_fac,
     strings_as_factors = FALSE
   )
-  dummy <- rec %>% step_dummy(city, contrasts = contr.poly, id = "")
+  dummy <- rec %>% step_dummy(city, contrasts = "contr.poly", id = "")
   dummy_trained <- prep(
     dummy,
     training = sacr_fac,
@@ -186,9 +186,10 @@ test_that("make sure contrasts argument work for ordered factors", {
   dummy <- rec %>%
     step_dummy(
       city,
+      one_hot = TRUE,
       contrasts = list(
-        unordered = contr.poly,
-        ordered = contr.treatment
+        unordered = "contr.poly",
+        ordered = "contr.treatment"
       ),
       id = ""
     )
@@ -198,14 +199,17 @@ test_that("make sure contrasts argument work for ordered factors", {
     verbose = FALSE
   )
   dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+  dummy_pred <- as.data.frame(dummy_pred)
+  rownames(dummy_pred) <- NULL
 
   pred <- "city"
   tmp <- model.matrix(
     as.formula(paste("~", pred, "+ 0")),
     data = sacr_fac,
-    contrasts.arg = setNames(list(contr.treatment), pred)
+    contrasts.arg = setNames(list("contr.treatment"), pred)
   )
-  exp_res <- as_tibble(tmp %*% attr(tmp, "contrasts")[[pred]])
+  exp_res <- as.data.frame(tmp)
+  rownames(exp_res) <- NULL
 
   expect_identical(unname(dummy_pred), unname(exp_res))
 })
@@ -228,7 +232,7 @@ test_that("make sure contrasts argument is checked", {
   expect_snapshot(
     error = TRUE,
     recipe(~Species, iris) %>%
-      step_dummy(Species, contrasts = list(ordered = contr.treatment)) %>%
+      step_dummy(Species, contrasts = list(ordered = "contr.treatment")) %>%
       prep()
   )
 
@@ -237,7 +241,7 @@ test_that("make sure contrasts argument is checked", {
     recipe(~Species, iris) %>%
       step_dummy(
         Species,
-        contrasts = list(ordered = 1, unordered = contr.treatment)
+        contrasts = list(ordered = 1, unordered = "contr.treatment")
       ) %>%
       prep()
   )
@@ -247,7 +251,7 @@ test_that("make sure contrasts argument is checked", {
     recipe(~Species, iris) %>%
       step_dummy(
         Species,
-        contrasts = list(ordered = contr.treatment, unordered = 1)
+        contrasts = list(ordered = "contr.treatment", unordered = 1)
       ) %>%
       prep()
   )
@@ -577,7 +581,7 @@ test_that("sparse = 'yes' works", {
 
 test_that("sparse = 'yes' will go back to 'no' on unsupported contrasts", {
   rec <- recipe(~., data = tibble(x = letters)) %>%
-    step_dummy(x, sparse = "yes", contrasts = contr.helmert) %>%
+    step_dummy(x, sparse = "yes", contrasts = "contr.helmert") %>%
     prep()
 
   res <- bake(rec, tibble(x = letters))

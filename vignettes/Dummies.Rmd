@@ -54,7 +54,7 @@ bake(ref_cell, new_data = NULL, original, starts_with("Species")) %>% distinct()
 
 Note that the column that was used to make the new columns (`Species`) is no longer there. See the section below on obtaining the entire set of _C_ columns. 
 
-There are different types of contrasts that can be used for different types of factors. The defaults are `contr.treatment()` for unordered and `contr.poly()` for ordered factors.
+There are different types of contrasts that can be used for different types of factors. The defaults are `"contr.treatment"` for unordered and `"contr.poly"` for ordered factors.
 
 Looking at `?contrast`, there are other options. One alternative is the little known Helmert contrast:
 
@@ -66,7 +66,7 @@ To get this encoding you can use the `contrasts` argument like so:, the global o
 # now make dummy variables with new parameterization
 helmert <- 
   iris_rec %>% 
-  step_dummy(Species, contrasts = contr.helmert) %>%
+  step_dummy(Species, contrasts = "contr.helmert") %>%
   prep(training = iris)
 summary(helmert)
 
@@ -196,7 +196,7 @@ hot_reference
 
 hot_helmert <- 
   iris_rec %>% 
-  step_dummy(Species, one_hot = TRUE, contrasts = contr.helmert) %>%
+  step_dummy(Species, one_hot = TRUE, contrasts = "contr.helmert") %>%
   prep(training = iris) %>%
   bake(original, new_data = NULL, starts_with("Species")) %>%
   distinct()

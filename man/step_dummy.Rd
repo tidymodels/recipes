@@ -10,7 +10,7 @@ step_dummy(
   role = "predictor",
   trained = FALSE,
   one_hot = FALSE,
-  contrasts = list(unordered = stats::contr.treatment, ordered = stats::contr.poly),
+  contrasts = list(unordered = "contr.treatment", ordered = "contr.poly"),
   preserve = deprecated(),
   naming = dummy_names,
   levels = NULL,
@@ -38,12 +38,9 @@ preprocessing have been estimated.}
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
 
-\item{contrasts}{A named list of contrast functions or a single contrast
-function. Defaults to
-\code{list(unordered = contr.treatment, ordered = contr.poly)}. If it is a list,
-it must include both \code{unordered} and \code{ordered} elements. If a constrast
-function is passed by itself, it will be used for both unordered and
-ordered predictors.}
+\item{contrasts}{A named vector or list of contrast functions names. Defaults
+to \code{list(unordered = "contr.treatment", ordered = "contr.poly")}. If only a
+single string is passed it will be used for both \code{unordered} and \code{ordered}.}
 
 \item{preserve}{This argument has been deprecated. Please use
 \code{keep_original_cols} instead.}
@@ -189,7 +186,7 @@ dummy_data_one_hot \%>\%
 
 # Obtain the full set of 37 dummy variables using helmert contrasts
 dummies_helmert <- rec \%>\%
-  step_dummy(city, contrasts = contr.helmert) \%>\%
+  step_dummy(city, contrasts = "contr.helmert") \%>\%
   prep()
 
 dummy_data_helmert <- bake(dummies_helmert, new_data = NULL)
