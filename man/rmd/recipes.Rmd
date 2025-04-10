@@ -14,7 +14,7 @@ Variables in recipes can have any type of *role*, including outcome, predictor, 
 
 `recipe` objects can be created in several ways. If an analysis only contains outcomes and predictors, the simplest way to create one is to use a formula (e.g. `y ~ x1 + x2`) that does not contain inline functions such as `log(x3)` (see the first example below).
 
-Alternatively, a `recipe` object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example). This alternative is an excellent choice when the number of variables is very high, as the formula method is memory-inefficient with many variables. 
+Alternatively, a `recipe` object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).
 
 There are two different types of operations that can be sequentially added to a recipe. 
 
