@@ -214,6 +214,35 @@ test_that("make sure contrasts argument work for ordered factors", {
   expect_identical(unname(dummy_pred), unname(exp_res))
 })
 
+test_that("make sure contrasts argument work non-base contrasts", {
+  library(hardhat)
+  rec <- recipe(
+    ~city,
+    data = sacr_fac,
+    strings_as_factors = FALSE
+  )
+  dummy <- rec %>% step_dummy(city, contrasts = "contr_one_hot", id = "")
+  dummy_trained <- prep(
+    dummy,
+    training = sacr_fac,
+    verbose = FALSE
+  )
+  dummy_pred <- bake(dummy_trained, new_data = sacr_fac)
+  dummy_pred <- as.data.frame(dummy_pred)
+  rownames(dummy_pred) <- NULL
+
+  pred <- "city"
+  tmp <- model.matrix(
+    as.formula(paste("~", pred, "+ 0")),
+    data = sacr_fac,
+    contrasts.arg = setNames(list(contr_one_hot), pred)
+  )
+  exp_res <- as.data.frame(tmp)
+  rownames(exp_res) <- NULL
+
+  expect_identical(unname(dummy_pred), unname(exp_res))
+})
+
 test_that("make sure contrasts argument is checked", {
   expect_snapshot(
     error = TRUE,
