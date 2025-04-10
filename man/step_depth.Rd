@@ -26,8 +26,9 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{class}{A single character string that specifies a single
-categorical variable to be used as the class.}
+\item{class}{A bare name that specifies a single categorical variable to be
+used as the class. Can also be a string or tidyselect for backwards
+compatibility.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
@@ -126,13 +127,13 @@ The underlying operation does not allow for case weights.
 
 # halfspace depth is the default
 rec <- recipe(Species ~ ., data = iris) \%>\%
-  step_depth(all_numeric_predictors(), class = "Species")
+  step_depth(all_numeric_predictors(), class = Species)
 
 # use zonoid metric instead
 # also, define naming convention for new columns
 rec <- recipe(Species ~ ., data = iris) \%>\%
   step_depth(all_numeric_predictors(),
-    class = "Species",
+    class = Species,
     metric = "zonoid", prefix = "zonoid_"
   )
 

@@ -45,8 +45,9 @@ stay unchanged, regardless of the value of \code{keep_original_cols}.}
 \item{predictor_prop}{The maximum number of original predictors that can have
 non-zero coefficients for each PLS component (via regularization).}
 
-\item{outcome}{When a single outcome is available, character string or call
-to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome variable.}
+\item{outcome}{When a single outcome is available, bare name, character
+strings or call to \code{\link[dplyr:vars]{dplyr::vars()}} can be used to specify a single outcome
+variable.}
 
 \item{options}{A list of options to \code{mixOmics::pls()}, \code{mixOmics::spls()},
 \code{mixOmics::plsda()}, or \code{mixOmics::splsda()} (depending on the data and
@@ -151,11 +152,11 @@ biom_te <-
 
 dense_pls <-
   recipe(HHV ~ ., data = biom_tr) \%>\%
-  step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3)
+  step_pls(all_numeric_predictors(), outcome = HHV, num_comp = 3)
 
 sparse_pls <-
   recipe(HHV ~ ., data = biom_tr) \%>\%
-  step_pls(all_numeric_predictors(), outcome = "HHV", num_comp = 3,
+  step_pls(all_numeric_predictors(), outcome = HHV, num_comp = 3,
            predictor_prop = 4 / 5)
 
 ## -----------------------------------------------------------------------------
@@ -174,11 +175,11 @@ cell_te <-
 
 dense_plsda <-
   recipe(class ~ ., data = cell_tr) \%>\%
-  step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5)
+  step_pls(all_numeric_predictors(), outcome = class, num_comp = 5)
 
 sparse_plsda <-
   recipe(class ~ ., data = cell_tr) \%>\%
-  step_pls(all_numeric_predictors(), outcome = "class", num_comp = 5,
+  step_pls(all_numeric_predictors(), outcome = class, num_comp = 5,
            predictor_prop = 1 / 4)
 \dontshow{\}) # examplesIf}
 }

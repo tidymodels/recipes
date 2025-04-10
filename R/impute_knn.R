@@ -102,17 +102,13 @@ step_impute_knn <-
     role = NA,
     trained = FALSE,
     neighbors = 5,
-    impute_with = imp_vars(all_predictors()),
+    impute_with = all_predictors(),
     options = list(nthread = 1, eps = 1e-08),
     ref_data = NULL,
     columns = NULL,
     skip = FALSE,
     id = rand_id("impute_knn")
   ) {
-    if (is.null(impute_with)) {
-      cli::cli_abort("{.arg impute_with} must not be empty.")
-    }
-
     add_step(
       recipe,
       step_impute_knn_new(
@@ -120,7 +116,7 @@ step_impute_knn <-
         role = role,
         trained = trained,
         neighbors = neighbors,
-        impute_with = impute_with,
+        impute_with = enquos(impute_with),
         ref_data = ref_data,
         options = options,
         columns = columns,

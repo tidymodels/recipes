@@ -7,8 +7,6 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param class A single character string that specifies a single
-#'  categorical variable to be used as the class.
 #' @param metric A character string specifying the depth metric.
 #'  Possible values are "potential", "halfspace", "Mahalanobis",
 #'  "simplicialVolume", "spatial", and "zonoid".
@@ -69,13 +67,13 @@
 #'
 #' # halfspace depth is the default
 #' rec <- recipe(Species ~ ., data = iris) %>%
-#'   step_depth(all_numeric_predictors(), class = "Species")
+#'   step_depth(all_numeric_predictors(), class = Species)
 #'
 #' # use zonoid metric instead
 #' # also, define naming convention for new columns
 #' rec <- recipe(Species ~ ., data = iris) %>%
 #'   step_depth(all_numeric_predictors(),
-#'     class = "Species",
+#'     class = Species,
 #'     metric = "zonoid", prefix = "zonoid_"
 #'   )
 #'
@@ -101,14 +99,13 @@ step_depth <-
     skip = FALSE,
     id = rand_id("depth")
   ) {
-    check_string(class)
     recipes_pkg_check(required_pkgs.step_depth())
 
     add_step(
       recipe,
       step_depth_new(
         terms = enquos(...),
-        class = class,
+        class = enquos(class),
         role = role,
         trained = trained,
         metric = metric,
@@ -164,19 +161,18 @@ depth_metric <- c(
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
   x_names <- recipes_eval_select(x$terms, training, info)
+  class_var <- recipes_argument_select(x$class, training, info)
   check_type(training[, x_names], types = c("double", "integer"))
   metric <- x$metric
   rlang::arg_match(metric, depth_metric)
   check_string(x$prefix, allow_empty = FALSE, arg = "prefix")
   check_options(x$options, exclude = c("data", "x"))
 
-  class_var <- x$class[1]
-
   x_dat <- split(training[, x_names], training[[class_var]])
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,
-    class = x$class,
+    class = class_var,
     role = x$role,
     trained = TRUE,
     metric = x$metric,
@@ -237,11 +233,12 @@ bake.step_depth <- function(object, new_data, ...) {
 #' @export
 print.step_depth <-
   function(x, width = max(20, options()$width - 30), ...) {
-    title <- glue("Data depth by {x$class} for ")
-
     if (x$trained) {
+      title <- glue("Data depth by {x$class} for ")
       x_names <- colnames(x$data[[1]])
     } else {
+      class <- rlang::quo_name(x$class[[1]])
+      title <- glue("Data depth by {class} for ")
       x_names <- character()
     }
 

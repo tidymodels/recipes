@@ -11,12 +11,12 @@
 #'  When used with `denom_vars`, the dots indicate which
 #'  variables are used in the *denominator*. See
 #'  [selections()] for more details.
-#' @param denom A call to `denom_vars` to specify which
+#' @param denom Bare names that specifies which
 #'  variables are used in the denominator that can include specific
 #'  variable names separated by commas or different selectors (see
-#'  [selections()]). If a column is included in both lists
-#'  to be numerator and denominator, it will be removed from the
-#'  listing.
+#'  [selections()]). Can also be a strings or tidyselect for backwards
+#'  compatibility If a column is included in both lists to be numerator and
+#'  denominator, it will be removed from the listing.
 #' @param naming A function that defines the naming convention for
 #'  new ratio columns.
 #' @template step-return
@@ -57,7 +57,7 @@
 #'
 #' ratio_recipe <- rec %>%
 #'   # all predictors over total
-#'   step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+#'   step_ratio(all_numeric_predictors(), denom = total,
 #'              keep_original_cols = FALSE)
 #'
 #' ratio_recipe <- prep(ratio_recipe, training = biomass_tr)
@@ -79,22 +79,13 @@ step_ratio <-
     skip = FALSE,
     id = rand_id("ratio")
   ) {
-    if (is_empty(denom)) {
-      cli::cli_abort(
-        c(
-          "!" = "{.arg denom} must select at least one variable.",
-          "i" = "See {.help [?selections](recipes::selections)} \\
-              for more information."
-        )
-      )
-    }
     add_step(
       recipe,
       step_ratio_new(
         terms = enquos(...),
         role = role,
         trained = trained,
-        denom = denom,
+        denom = enquos(denom),
         naming = naming,
         columns = columns,
         keep_original_cols = keep_original_cols,
@@ -134,7 +125,13 @@ step_ratio_new <-
 prep.step_ratio <- function(x, training, info = NULL, ...) {
   col_names <- expand.grid(
     top = recipes_eval_select(x$terms, training, info),
-    bottom = recipes_eval_select(x$denom, training, info),
+    bottom = recipes_argument_select(
+      x$denom,
+      training,
+      info,
+      single = FALSE,
+      arg_name = "denom"
+    ),
     stringsAsFactors = FALSE
   )
   col_names <- tibble::as_tibble(col_names)

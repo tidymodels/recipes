@@ -18,7 +18,7 @@ test_that("imputation models", {
     step_impute_bag(
       carbon,
       fac,
-      impute_with = imp_vars(hydrogen, oxygen),
+      impute_with = c(hydrogen, oxygen),
       seed_val = 12,
       trees = 5
     )
@@ -87,7 +87,7 @@ test_that("All NA values", {
     step_impute_bag(
       carbon,
       fac,
-      impute_with = imp_vars(hydrogen, oxygen),
+      impute_with = c(hydrogen, oxygen),
       seed_val = 12,
       trees = 5
     ) %>%
@@ -102,7 +102,7 @@ test_that("tunable", {
     recipe(~., data = iris) %>%
     step_impute_bag(
       all_predictors(),
-      impute_with = imp_vars(all_predictors())
+      impute_with = all_predictors()
     )
   rec_param <- tunable.step_impute_bag(rec$steps[[1]])
   expect_equal(rec_param$name, c("trees"))
@@ -121,7 +121,7 @@ test_that("non-factor imputation", {
   scat$Location[1] <- NA
   rec <-
     recipe(Species ~ ., data = scat, strings_as_factors = FALSE) %>%
-    step_impute_bag(Location, impute_with = imp_vars(all_predictors())) %>%
+    step_impute_bag(Location, impute_with = all_predictors()) %>%
     prep()
   expect_true(is.character(bake(rec, NULL, Location)[[1]]))
 })
@@ -143,7 +143,7 @@ test_that("Warns when impute_with contains all NAs in a row", {
 
   expect_snapshot(
     tmp <- recipe(~., data = mtcars) %>%
-      step_impute_bag(mpg, disp, vs, impute_with = imp_vars(am, gear)) %>%
+      step_impute_bag(mpg, disp, vs, impute_with = c(am, gear)) %>%
       prep()
   )
 })
@@ -168,6 +168,45 @@ test_that("check_options() is used", {
   )
 })
 
+test_that("recipes_argument_select() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_impute_bag(disp, impute_with = NULL) %>%
+      prep()
+  )
+})
+
+test_that("addition of recipes_argument_select() is backwards compatible", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_impute_bag(disp) %>%
+    prep()
+
+  exp <- bake(rec, mtcars)
+
+  rec$steps[[1]]$impute_with <- rlang::new_quosures(
+    list(
+      rlang::new_quosure(
+        quote(all_predictors())
+      )
+    )
+  )
+
+  expect_identical(
+    bake(rec, mtcars),
+    exp
+  )
+
+  rec_old <- recipe(mpg ~ ., data = mtcars) %>%
+    step_impute_bag(disp, impute_with = imp_vars(all_predictors())) %>%
+    prep()
+
+  expect_identical(
+    bake(rec_old, mtcars),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
@@ -175,7 +214,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
     step_impute_bag(
       carbon,
       fac,
-      impute_with = imp_vars(hydrogen, oxygen),
+      impute_with = c(hydrogen, oxygen),
       seed_val = 12,
       trees = 5
     ) %>%
@@ -232,7 +271,7 @@ test_that("printing", {
     HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur + fac,
     data = biomass
   ) %>%
-    step_impute_bag(carbon, impute_with = imp_vars(hydrogen))
+    step_impute_bag(carbon, impute_with = hydrogen)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
@@ -276,7 +315,7 @@ test_that("bad args", {
 test_that("0 and 1 rows data work in bake method", {
   data <- mtcars
   rec <- recipe(~., data) %>%
-    step_impute_bag(disp, mpg) %>%
+    step_impute_bag(disp, mpg, impute_with = all_predictors()) %>%
     prep()
 
   expect_identical(

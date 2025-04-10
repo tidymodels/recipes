@@ -52,6 +52,15 @@
       -- Operations 
       * Distances to Species for: Sepal.Length, ... | Trained, weighted
 
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_classdist(disp, class = NULL) %>% prep()
+    Condition
+      Error in `step_classdist()`:
+      Caused by error in `prep()`:
+      ! `class` must not be `NULL`.
+
 # bake method errors when needed non-standard role columns are missing
 
     Code
@@ -142,7 +151,7 @@
 # bad args
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
       mean_func = 2) %>% prep()
     Condition
       Error in `step_classdist()`:
@@ -152,7 +161,7 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
       cov_func = NULL) %>% prep()
     Condition
       Error in `step_classdist()`:
@@ -162,7 +171,7 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
       prefix = NULL) %>% prep()
     Condition
       Error in `step_classdist()`:
@@ -172,7 +181,7 @@
 ---
 
     Code
-      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = "Species",
+      recipe(Species ~ ., data = iris) %>% step_classdist(all_predictors(), class = Species,
       pool = NULL) %>% prep()
     Condition
       Error in `step_classdist()`:

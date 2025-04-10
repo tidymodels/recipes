@@ -1,8 +1,7 @@
 # bad values
 
     Code
-      sacr_rec %>% step_profile(all_predictors(), profile = vars(sqft)) %>% prep(
-        data = Sacramento)
+      sacr_rec %>% step_profile(all_predictors(), profile = sqft) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
@@ -11,18 +10,17 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(sqft, beds, price, profile = vars(zip, beds)) %>%
-        prep(data = Sacramento)
+      sacr_rec %>% step_profile(sqft, beds, price, profile = c(zip, beds)) %>% prep(
+        data = Sacramento)
     Condition
       Error in `step_profile()`:
       Caused by error in `prep()`:
-      x `profile` should select only one column
-      i 2 columns were selected: `zip` and `beds`.
+      ! only 1 selection is allowed in `profile`, not 2.
 
 ---
 
     Code
-      sacr_rec %>% step_profile(city, profile = vars(sqft), pct = -1) %>% prep(data = Sacramento)
+      sacr_rec %>% step_profile(city, profile = sqft, pct = -1) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `pct` must be a number between 0 and 1, not the number -1.
@@ -30,8 +28,7 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(city, profile = vars(sqft), grid = 1:3) %>% prep(
-        data = Sacramento)
+      sacr_rec %>% step_profile(city, profile = sqft, grid = 1:3) %>% prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
       x `grid` should have 2 elements, not 3.
@@ -40,8 +37,8 @@
 ---
 
     Code
-      sacr_rec %>% step_profile(city, profile = vars(sqft), grid = list(pctl = 1,
-        len = 2)) %>% prep(data = Sacramento)
+      sacr_rec %>% step_profile(city, profile = sqft, grid = list(pctl = 1, len = 2)) %>%
+        prep(data = Sacramento)
     Condition
       Error in `step_profile()`:
       ! `grid$pctl` must be `TRUE` or `FALSE`, not the number 1.
@@ -62,6 +59,15 @@
       Error in `step_profile()`:
       x `grid` should have two named elements len and pctl, not "not_len" and "pctl".
       i See ?step_profile (`?recipes::step_profile()`) for information.
+
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_profile(disp, profile = NULL) %>% prep()
+    Condition
+      Error in `step_profile()`:
+      Caused by error in `prep()`:
+      ! `profile` must not be `NULL`.
 
 # empty printing
 

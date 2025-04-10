@@ -132,3 +132,193 @@
       Error:
       ! `options` must only contain elements b, the following are not allowed: a.
 
+# recipes_argument_select() works with single selection
+
+    Code
+      helper(NULL)
+    Condition
+      Error in `helper()`:
+      ! `outcome` must not be `NULL`.
+
+---
+
+    Code
+      helper(not_mpg)
+    Condition
+      Error in `helper()`:
+      ! Can't select columns that don't exist.
+      x Column `not_mpg` doesn't exist.
+
+---
+
+    Code
+      helper(c())
+    Condition
+      Error in `helper()`:
+      ! only 1 selection is allowed in `outcome`, not 0.
+
+---
+
+    Code
+      helper(vars())
+    Condition
+      Error in `helper()`:
+      x only 1 selection is allowed in `outcome`, not 0.
+      i For this argument consider using bare names instead.
+
+---
+
+    Code
+      helper(imp_vars())
+    Condition
+      Error in `helper()`:
+      x only 1 selection is allowed in `outcome`, not 0.
+      i For this argument consider using bare names instead.
+
+---
+
+    Code
+      helper(c(mpg, disp))
+    Condition
+      Error in `helper()`:
+      ! only 1 selection is allowed in `outcome`, not 2.
+
+---
+
+    Code
+      helper(c("mpg", "disp"))
+    Condition
+      Error in `helper()`:
+      ! only 1 selection is allowed in `outcome`, not 2.
+
+---
+
+    Code
+      helper(vars(mpg, disp))
+    Condition
+      Error in `helper()`:
+      x only 1 selection is allowed in `outcome`, not 2.
+      i For this argument consider using bare names instead.
+
+---
+
+    Code
+      helper(imp_vars(mpg, disp))
+    Condition
+      Error in `helper()`:
+      x only 1 selection is allowed in `outcome`, not 2.
+      i For this argument consider using bare names instead.
+
+# recipes_argument_select() works with multiple selections
+
+    Code
+      helper(NULL)
+    Condition
+      Error in `helper()`:
+      ! `outcome` must not be `NULL`.
+
+---
+
+    Code
+      helper(not_mpg)
+    Condition
+      Error in `helper()`:
+      ! Can't select columns that don't exist.
+      x Column `not_mpg` doesn't exist.
+
+---
+
+    Code
+      helper(c())
+    Condition
+      Error in `helper()`:
+      ! only 1 selection is allowed in `outcome`, not 0.
+
+---
+
+    Code
+      helper(vars())
+    Condition
+      Error in `helper()`:
+      ! only 1 selection is allowed in `outcome`, not 0.
+
+---
+
+    Code
+      helper(imp_vars())
+    Condition
+      Error in `helper()`:
+      ! only 1 selection is allowed in `outcome`, not 0.
+
+# recipes_argument_select() errors on case_weights
+
+    Code
+      helper(gear)
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(gear)
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(vars(gear))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(imp_vars(gear))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(starts_with("gea"))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(c(mpg, gear))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(c("mpg", "gear"))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(vars(mpg, gear))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+
+---
+
+    Code
+      helper(imp_vars(mpg, gear))
+    Condition
+      Error in `helper()`:
+      ! Cannot select case weights variable for `outcome`.
+

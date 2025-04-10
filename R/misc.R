@@ -1095,3 +1095,141 @@ check_options <- function(
     )
   }
 }
+
+#' Evaluate a selection with tidyselect semantics for arguments
+#'
+#' @description
+#' `recipes_argument_select()` is a varient of [recipes_eval_select()] that is
+#' tailored to work well with arguments in steps that specify variables. Such as
+#' `denom` in [step_ratio()].
+#'
+#' This is a developer tool that is only useful for creating new recipes steps.
+#'
+#' @param quos A list of quosures describing the selection. Captured with
+#'   [rlang::enquos()] and stored in the step object corresponding to the
+#'   argument.
+#'
+#' @param data A data frame to use as the context to evaluate the selection in.
+#'   This is generally the `training` data passed to the [prep()] method
+#'   of your step.
+#'
+#' @param info A data frame of term information describing each column's type
+#'   and role for use with the recipes selectors. This is generally the `info`
+#'   data passed to the [prep()] method of your step.
+#'
+#' @param single A logical. Should an error be thrown if more than 1 variable is
+#'   selected. Defaults to `TRUE`.
+#'
+#' @param arg_name A string. Name of argument, used to enrich error messages.
+#'
+#' @param call The execution environment of a currently running function, e.g.
+#'   `caller_env()`. The function will be mentioned in error messages as the
+#'   source of the error. See the call argument of [rlang::abort()] for more
+#'   information.
+#'
+#' @details
+#' This function is written to be backwards compatible with previous input types
+#' of these arguments. Will thus accept strings, tidyselect, recipes selections,
+#' helper functions [imp_vars()] in addition to the prefered bare names.
+#'
+#' @return
+#' A character vector containing the evaluated selection.
+#'
+#' @seealso [developer_functions]
+#'
+#' @export
+#' @examplesIf rlang::is_installed("modeldata")
+#' library(rlang)
+#' data(scat, package = "modeldata")
+#'
+#' rec <- recipe(Species ~ ., data = scat)
+#'
+#' info <- summary(rec)
+#' info
+#'
+#' recipes_argument_select(quos(Year), scat, info)
+#' recipes_argument_select(vars(Year), scat, info)
+#' recipes_argument_select(imp_vars(Year), scat, info)
+recipes_argument_select <- function(
+  quos,
+  data,
+  info,
+  single = TRUE,
+  arg_name = "outcome",
+  call = caller_env()
+) {
+  # Because we know the input will be a list of qousures
+  expr <- quos[[1]]
+
+  if (quo_is_null(expr)) {
+    cli::cli_abort(
+      "{.arg {arg_name}} must not be {.code NULL}.",
+      call = call
+    )
+  }
+
+  if (
+    rlang::quo_is_call(expr, name = "vars", ns = c("dplyr", "")) ||
+      rlang::quo_is_call(expr, name = "imp_vars", ns = c("recipes", "")) ||
+      rlang::quo_is_call(expr, name = "denom_vars", ns = c("recipes", ""))
+  ) {
+    expr <- eval_tidy(expr)
+
+    if (single && length(expr) != 1) {
+      cli::cli_abort(
+        c(
+          x = "only 1 selection is allowed in {.arg {arg_name}},
+              not {length(expr)}.",
+          i = "For this argument consider using bare names instead."
+        ),
+        call = call
+      )
+    }
+    expr <- expr(c(!!!expr))
+  }
+
+  # Maintain ordering between `data` column names and `info$variable` so
+  # `eval_select()` and recipes selectors return compatible positions
+  matches <- vctrs::vec_locate_matches(
+    names(data),
+    info$variable,
+    no_match = "error"
+  )
+  data_info <- vec_slice(info, matches$haystack)
+
+  data_nest <- data_info[names(data_info) != "variable"]
+  data_nest <- tibble::new_tibble(data_nest, nrow = vctrs::vec_size(data_nest))
+
+  nested_info <- vctrs::vec_split(data_nest, by = data_info$variable)
+  nested_info <- list(variable = nested_info$key, data = nested_info$val)
+  nested_info <- tibble::new_tibble(
+    nested_info,
+    nrow = length(nested_info$variable)
+  )
+  local_current_info(nested_info)
+
+  out <- tidyselect::eval_select(
+    expr,
+    data,
+    allow_rename = FALSE,
+    error_call = call
+  )
+
+  if ((single && length(out) != 1) || (!single && length(out) == 0)) {
+    cli::cli_abort(
+      "only 1 selection is allowed in {.arg {arg_name}}, not {length(out)}.",
+      call = call
+    )
+  }
+
+  out <- names(out)
+
+  if (any(out %in% info$variable[info$role == "case_weights"])) {
+    cli::cli_abort(
+      "Cannot select case weights variable for {.arg {arg_name}}.",
+      call = call
+    )
+  }
+
+  out
+}

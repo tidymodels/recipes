@@ -25,10 +25,10 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{profile}{A call to \code{\link[dplyr:vars]{dplyr::vars()}}) to specify which
-variable will be profiled (see \code{\link[=selections]{selections()}}). If a column is
-included in both lists to be fixed and to be profiled, an error
-is thrown.}
+\item{profile}{A bare name to specify which variable will be profiled (see
+\code{\link[=selections]{selections()}}). Can also be a string or tidyselect for backwards
+compatibility. If a column is included in both lists to be fixed and to be
+profiled, an error is thrown.}
 
 \item{pct}{A value between 0 and 1 that is the percentile to
 fix continuous variables. This is applied to all continuous
@@ -110,7 +110,7 @@ data(Sacramento, package = "modeldata")
 
 # Setup a grid across beds but keep the other values fixed
 recipe(~ city + price + beds, data = Sacramento) \%>\%
-  step_profile(-beds, profile = vars(beds)) \%>\%
+  step_profile(-beds, profile = beds) \%>\%
   prep(training = Sacramento) \%>\%
   bake(new_data = NULL)
 
@@ -124,13 +124,13 @@ lin_mod <- lm(mpg ~ poly(disp, 2) + cyl + hp, data = mtcars)
 # Show the difference in the two grid creation methods
 
 disp_pctl <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
-  step_profile(-disp, profile = vars(disp)) \%>\%
+  step_profile(-disp, profile = disp) \%>\%
   prep(training = mtcars)
 
 disp_grid <- recipe(~ disp + cyl + hp, data = mtcars) \%>\%
   step_profile(
     -disp,
-    profile = vars(disp),
+    profile = disp,
     grid = list(pctl = FALSE, len = 100)
   ) \%>\%
   prep(training = mtcars)

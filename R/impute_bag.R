@@ -8,11 +8,12 @@
 #'  When used with `imp_vars`, these dots indicate which variables are used to
 #'  predict the missing data in each variable. See [selections()] for more
 #'  details.
-#' @param impute_with A call to `imp_vars` to specify which variables are used
-#'  to impute the variables that can include specific variable names separated
-#'  by commas or different selectors (see [selections()]). If a column is
-#'  included in both lists to be imputed and to be an imputation predictor, it
-#'  will be removed from the latter and not used to impute itself.
+#' @param impute_with Bare names or selectors functions that specify which
+#'  variables are used to impute the variables that can include specific
+#'  variable names separated by commas or different selectors (see
+#'  [selections()]). If a column is included in both lists to be imputed and to
+#'  be an imputation predictor, it will be removed from the latter and not used
+#'  to impute itself.
 #' @param trees An integer for the number of bagged trees to use in each model.
 #' @param options A list of options to [ipred::ipredbagg()]. Defaults are set
 #'  for the arguments `nbagg` and `keepX` but others can be passed in. **Note**
@@ -100,7 +101,7 @@
 #'
 #' impute_rec <- rec %>%
 #'   step_impute_bag(Status, Home, Marital, Job, Income, Assets, Debt,
-#'     impute_with = imp_vars(Time, Age, Expenses),
+#'     impute_with = c(Time, Age, Expenses),
 #'     # for quick execution, nbagg lowered
 #'     options = list(nbagg = 5, keepX = FALSE)
 #'   )
@@ -121,7 +122,7 @@ step_impute_bag <-
     ...,
     role = NA,
     trained = FALSE,
-    impute_with = imp_vars(all_predictors()),
+    impute_with = all_predictors(),
     trees = 25,
     models = NULL,
     options = list(keepX = FALSE),
@@ -129,17 +130,13 @@ step_impute_bag <-
     skip = FALSE,
     id = rand_id("impute_bag")
   ) {
-    if (is.null(impute_with)) {
-      cli::cli_abort("{.arg impute_with} must not be empty.")
-    }
-
     add_step(
       recipe,
       step_impute_bag_new(
         terms = enquos(...),
         role = role,
         trained = trained,
-        impute_with = impute_with,
+        impute_with = enquos(impute_with),
         trees = trees,
         models = models,
         options = options,
@@ -220,9 +217,22 @@ bag_wrap <- function(vars, dat, opt, seed_val) {
 
 ## This figures out which data should be used to predict each variable
 ## scheduled for imputation
-impute_var_lists <- function(to_impute, impute_using, training, info) {
+impute_var_lists <- function(
+  to_impute,
+  impute_using,
+  training,
+  info,
+  call = caller_env()
+) {
   to_impute <- recipes_eval_select(to_impute, training, info)
-  impute_using <- recipes_eval_select(impute_using, training, info)
+  impute_using <- recipes_argument_select(
+    impute_using,
+    training,
+    info,
+    single = FALSE,
+    arg_name = "impute_with",
+    call = call
+  )
 
   var_lists <- vector(mode = "list", length = length(to_impute))
   for (i in seq_along(var_lists)) {

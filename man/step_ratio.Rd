@@ -39,12 +39,12 @@ the original variables will be used as \emph{predictors} in a model.}
 \item{trained}{A logical to indicate if the quantities for
 preprocessing have been estimated.}
 
-\item{denom}{A call to \code{denom_vars} to specify which
+\item{denom}{Bare names that specifies which
 variables are used in the denominator that can include specific
 variable names separated by commas or different selectors (see
-\code{\link[=selections]{selections()}}). If a column is included in both lists
-to be numerator and denominator, it will be removed from the
-listing.}
+\code{\link[=selections]{selections()}}). Can also be a strings or tidyselect for backwards
+compatibility If a column is included in both lists to be numerator and
+denominator, it will be removed from the listing.}
 
 \item{naming}{A function that defines the naming convention for
 new ratio columns.}
@@ -108,7 +108,7 @@ data = biomass_tr
 
 ratio_recipe <- rec \%>\%
   # all predictors over total
-  step_ratio(all_numeric_predictors(), denom = denom_vars(total),
+  step_ratio(all_numeric_predictors(), denom = total,
              keep_original_cols = FALSE)
 
 ratio_recipe <- prep(ratio_recipe, training = biomass_tr)

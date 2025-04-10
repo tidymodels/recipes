@@ -16,7 +16,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
     step_classdist_shrunken(
       all_numeric_predictors(),
-      class = "class",
+      class = class,
       threshold = 0
     ) %>%
     prep()
@@ -46,7 +46,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
     step_classdist_shrunken(
       all_numeric_predictors(),
-      class = "class",
+      class = class,
       threshold = 1,
       log = FALSE,
       prefix = "potato_"
@@ -69,7 +69,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
     step_classdist_shrunken(
       all_numeric_predictors(),
-      class = "class",
+      class = class,
       threshold = 1 / 2,
       keep_original_cols = FALSE
     )
@@ -94,7 +94,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
       step_classdist_shrunken(
         all_numeric_predictors(),
-        class = "class",
+        class = class,
         threshold = -1
       ) %>%
       prep(),
@@ -104,7 +104,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
       step_classdist_shrunken(
         all_numeric_predictors(),
-        class = "class",
+        class = class,
         sd_offset = -1
       ) %>%
       prep(),
@@ -114,7 +114,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
       step_classdist_shrunken(
         all_numeric_predictors(),
-        class = "class",
+        class = class,
         log = 2
       ) %>%
       prep(),
@@ -124,7 +124,7 @@ test_that("shrunken centroids", {
     recipe(class ~ x + y, data = nsc_test) %>%
       step_classdist_shrunken(
         all_numeric_predictors(),
-        class = "class",
+        class = class,
         prefix = 2
       ) %>%
       prep(),
@@ -138,7 +138,7 @@ test_that("shrunken centroids", {
     recipe(class ~ ., data = nsc_test) %>%
     step_classdist_shrunken(
       all_numeric_predictors(),
-      class = "class",
+      class = class,
       threshold = 1 / 2,
       keep_original_cols = FALSE
     )
@@ -178,11 +178,45 @@ test_that("tunable", {
   )
 })
 
+test_that("recipes_argument_select() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_classdist_shrunken(disp, class = NULL) %>%
+      prep()
+  )
+})
+
+
+test_that("addition of recipes_argument_select() is backwards compatible", {
+  rec <- recipe(Species ~ ., data = iris) %>%
+    step_classdist_shrunken(all_predictors(), class = Species) %>%
+    prep()
+
+  exp <- bake(rec, iris)
+
+  rec$steps[[1]]$class <- "Species"
+
+  expect_identical(
+    bake(rec, iris),
+    exp
+  )
+
+  rec_old <- recipe(Species ~ ., data = iris) %>%
+    step_classdist_shrunken(all_predictors(), class = "Species") %>%
+    prep()
+
+  expect_identical(
+    bake(rec_old, iris),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist_shrunken(Petal.Length, class = "Species", log = FALSE) %>%
+    step_classdist_shrunken(Petal.Length, class = Species, log = FALSE) %>%
     update_role(Petal.Length, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE)
 
@@ -193,7 +227,7 @@ test_that("bake method errors when needed non-standard role columns are missing"
 
 test_that("empty printing", {
   rec <- recipe(Species ~ ., iris)
-  rec <- step_classdist_shrunken(rec, class = "Species")
+  rec <- step_classdist_shrunken(rec, class = Species)
 
   expect_snapshot(rec)
 
@@ -204,7 +238,7 @@ test_that("empty printing", {
 
 test_that("empty selection prep/bake is a no-op", {
   rec1 <- recipe(Species ~ ., iris)
-  rec2 <- step_classdist_shrunken(rec1, class = "Species")
+  rec2 <- step_classdist_shrunken(rec1, class = Species)
 
   rec1 <- prep(rec1, iris)
   rec2 <- prep(rec2, iris)
@@ -217,7 +251,7 @@ test_that("empty selection prep/bake is a no-op", {
 
 test_that("empty selection tidy method works", {
   rec <- recipe(Species ~ ., iris)
-  rec <- step_classdist_shrunken(rec, class = "Species")
+  rec <- step_classdist_shrunken(rec, class = Species)
 
   expect <- tibble(
     terms = character(),
@@ -246,7 +280,7 @@ test_that("keep_original_cols works", {
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
     step_classdist_shrunken(
       all_predictors(),
-      class = "Species",
+      class = Species,
       keep_original_cols = FALSE
     )
 
@@ -261,7 +295,7 @@ test_that("keep_original_cols works", {
   rec <- recipe(Species ~ Sepal.Length, data = iris) %>%
     step_classdist_shrunken(
       all_predictors(),
-      class = "Species",
+      class = Species,
       keep_original_cols = TRUE
     )
 
@@ -282,7 +316,7 @@ test_that("keep_original_cols - can prep recipes with it missing", {
 
 test_that("printing", {
   rec <- recipe(Species ~ ., data = iris) %>%
-    step_classdist_shrunken(all_predictors(), class = "Species")
+    step_classdist_shrunken(all_predictors(), class = Species)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))
@@ -305,7 +339,7 @@ test_that("tunable is setup to work with extract_parameter_set_dials", {
 test_that("0 and 1 rows data work in bake method", {
   data <- iris
   rec <- recipe(~., data) %>%
-    step_classdist_shrunken(all_numeric_predictors(), class = "Species") %>%
+    step_classdist_shrunken(all_numeric_predictors(), class = Species) %>%
     prep()
 
   expect_identical(

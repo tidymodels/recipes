@@ -15,7 +15,7 @@ test_that("Does the imputation (no NAs), and does it correctly.", {
   missing_ind <- which(is.na(ames_dat$Lot_Frontage), arr.ind = TRUE)
 
   imputed <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
     prep(ames_dat) %>%
     bake(new_data = NULL) %>%
     pull(Lot_Frontage) %>%
@@ -31,7 +31,7 @@ test_that("Does the imputation (no NAs), and does it correctly.", {
 
 test_that("All NA values", {
   imputed <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
     prep(ames_dat)
 
   imputed_te <- bake(imputed, ames_dat %>% mutate(Lot_Frontage = NA))
@@ -49,7 +49,7 @@ test_that("Returns correct models.", {
     step_impute_linear(
       Lot_Frontage,
       Total_Bsmt_SF,
-      impute_with = c("Lot_Area")
+      impute_with = Lot_Area
     ) %>%
     prep(ames_dat)
 
@@ -64,13 +64,13 @@ test_that("Fails when one of the variables to impute is non-numeric.", {
   expect_snapshot(
     error = TRUE,
     recipe(tg_dat) %>%
-      step_impute_linear(supp, impute_with = c("len")) %>%
+      step_impute_linear(supp, impute_with = len) %>%
       prep(tg_dat)
   )
   expect_snapshot(
     error = TRUE,
     recipe(tg_dat) %>%
-      step_impute_linear(supp, dose, impute_with = c("len")) %>%
+      step_impute_linear(supp, dose, impute_with = len) %>%
       prep(tg_dat)
   )
 })
@@ -81,7 +81,7 @@ test_that("Maintain data type", {
   integer_rec <- recipe(~., data = ames_integer) %>%
     step_impute_linear(
       TotRms_AbvGrd,
-      impute_with = vars(Bedroom_AbvGr, Gr_Liv_Area)
+      impute_with = c(Bedroom_AbvGr, Gr_Liv_Area)
     ) %>%
     prep()
   expect_true(
@@ -98,7 +98,7 @@ test_that("case weights", {
     mutate(Total_Bsmt_SF = frequency_weights(Total_Bsmt_SF))
 
   rec_prepped <- recipe(head(ames_dat_cw)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
     prep(ames_dat_cw)
 
   imputed <- rec_prepped %>%
@@ -127,7 +127,7 @@ test_that("case weights", {
     mutate(Total_Bsmt_SF = importance_weights(Total_Bsmt_SF))
 
   rec_prepped <- recipe(head(ames_dat_cw)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
     prep(ames_dat_cw)
 
   imputed <- rec_prepped %>%
@@ -159,7 +159,7 @@ test_that("warns if impute_with columns contains missing values", {
   mtcars$disp[3] <- NA
   expect_snapshot(
     tmp <- recipe(~., data = mtcars) %>%
-      step_impute_linear(mpg, impute_with = imp_vars(disp)) %>%
+      step_impute_linear(mpg, impute_with = disp) %>%
       prep()
   )
 })
@@ -174,11 +174,50 @@ test_that("errors if there are no rows without missing values", {
   )
 })
 
+test_that("recipes_argument_select() is used", {
+  expect_snapshot(
+    error = TRUE,
+    recipe(mpg ~ ., data = mtcars) %>%
+      step_impute_linear(disp, impute_with = NULL) %>%
+      prep()
+  )
+})
+
+test_that("addition of recipes_argument_select() is backwards compatible", {
+  rec <- recipe(mpg ~ ., data = mtcars) %>%
+    step_impute_linear(disp) %>%
+    prep()
+
+  exp <- bake(rec, mtcars)
+
+  rec$steps[[1]]$impute_with <- rlang::new_quosures(
+    list(
+      rlang::new_quosure(
+        quote(all_predictors())
+      )
+    )
+  )
+
+  expect_identical(
+    bake(rec, mtcars),
+    exp
+  )
+
+  rec_old <- recipe(mpg ~ ., data = mtcars) %>%
+    step_impute_linear(disp, impute_with = imp_vars(all_predictors())) %>%
+    prep()
+
+  expect_identical(
+    bake(rec_old, mtcars),
+    exp
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
   rec <- recipe(head(ames_dat)) %>%
-    step_impute_linear(Lot_Frontage, impute_with = c("Lot_Area")) %>%
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area) %>%
     update_role(Lot_Frontage, new_role = "potato") %>%
     update_role_requirements(role = "potato", bake = FALSE) %>%
     prep(ames_dat)
@@ -228,7 +267,7 @@ test_that("empty selection tidy method works", {
 
 test_that("printing", {
   rec <- recipe(ames_dat) %>%
-    step_impute_linear(Lot_Frontage, impute_with = imp_vars(Lot_Area))
+    step_impute_linear(Lot_Frontage, impute_with = Lot_Area)
 
   expect_snapshot(print(rec))
   expect_snapshot(prep(rec))

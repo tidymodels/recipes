@@ -16,6 +16,17 @@
 
 * `step_cut()` not longer errors on NA values in `bake()`. (#1304)
 
+* The following arguments in steps can now take bare names as input instead of strings, calls to `vars()`, `imp_vars()`, and `denom_vars()`. (#1225)
+    - `step_classdist_shrunken(class)`
+    - `step_classdist(class)`
+    - `step_depth(class)`
+    - `step_impute_bag(impute_with)`
+    - `step_impute_knn(impute_with)`
+    - `step_impute_linear(impute_with)`
+    - `step_pls(outcome)`
+    - `step_profile(profile)`
+    - `step_ratio(denom)`
+
 * Fixed bug in `step_impute_knn()` would error on character vectors when `strings_as_factors = TRUE`. (#926)
 
 * Make it so `recipe.formula()` can't take table objects as input, in accordance with documentation. (#1416)

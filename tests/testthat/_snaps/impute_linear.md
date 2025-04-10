@@ -1,8 +1,7 @@
 # Fails when one of the variables to impute is non-numeric.
 
     Code
-      recipe(tg_dat) %>% step_impute_linear(supp, impute_with = c("len")) %>% prep(
-        tg_dat)
+      recipe(tg_dat) %>% step_impute_linear(supp, impute_with = len) %>% prep(tg_dat)
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
@@ -11,8 +10,8 @@
 ---
 
     Code
-      recipe(tg_dat) %>% step_impute_linear(supp, dose, impute_with = c("len")) %>%
-        prep(tg_dat)
+      recipe(tg_dat) %>% step_impute_linear(supp, dose, impute_with = len) %>% prep(
+        tg_dat)
     Condition
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
@@ -63,13 +62,14 @@
         prep()
     Condition
       Error in `step_impute_linear()`:
-      ! `impute_with` must not be empty.
+      Caused by error in `prep()`:
+      ! `impute_with` must not be `NULL`.
 
 # warns if impute_with columns contains missing values
 
     Code
-      tmp <- recipe(~., data = mtcars) %>% step_impute_linear(mpg, impute_with = imp_vars(
-        disp)) %>% prep()
+      tmp <- recipe(~., data = mtcars) %>% step_impute_linear(mpg, impute_with = disp) %>%
+        prep()
     Condition
       Warning:
       There were missing values in the predictor(s) used to impute; imputation did not occur.
@@ -82,6 +82,16 @@
       Error in `step_impute_linear()`:
       Caused by error in `prep()`:
       ! The data did not have any rows where the imputation values were all complete. Is is thus unable to fit the linear regression model.
+
+# recipes_argument_select() is used
+
+    Code
+      recipe(mpg ~ ., data = mtcars) %>% step_impute_linear(disp, impute_with = NULL) %>%
+        prep()
+    Condition
+      Error in `step_impute_linear()`:
+      Caused by error in `prep()`:
+      ! `impute_with` must not be `NULL`.
 
 # bake method errors when needed non-standard role columns are missing
 

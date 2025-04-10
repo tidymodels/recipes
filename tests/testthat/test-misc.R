@@ -176,3 +176,190 @@ test_that("check_options() works", {
     check_options(list(a = 1, b = 2), include = "b")
   )
 })
+
+test_that("recipes_argument_select() works with single selection", {
+  rec <- recipe(~., data = mtcars)
+  info <- rec$var_info
+  helper <- function(x) {
+    recipes_argument_select(enquos(x), mtcars, info)
+  }
+
+  expect_identical(
+    helper(drat),
+    "drat"
+  )
+  expect_identical(
+    helper("drat"),
+    "drat"
+  )
+  expect_identical(
+    helper(vars(drat)),
+    "drat"
+  )
+  expect_identical(
+    helper(imp_vars(drat)),
+    "drat"
+  )
+  expect_identical(
+    helper(starts_with("dra")),
+    "drat"
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    helper(NULL)
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(not_mpg)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    helper(c())
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(vars())
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(imp_vars())
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    helper(c(mpg, disp))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(c("mpg", "disp"))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(vars(mpg, disp))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(imp_vars(mpg, disp))
+  )
+})
+
+test_that("recipes_argument_select() works with multiple selections", {
+  rec <- recipe(mpg ~ ., data = mtcars)
+  info <- rec$var_info
+  helper <- function(x) {
+    recipes_argument_select(enquos(x), mtcars, info, single = FALSE)
+  }
+
+  expect_identical(
+    helper(drat),
+    "drat"
+  )
+  expect_identical(
+    helper("drat"),
+    "drat"
+  )
+  expect_identical(
+    helper(vars(drat)),
+    "drat"
+  )
+  expect_identical(
+    helper(imp_vars(drat)),
+    "drat"
+  )
+  expect_identical(
+    helper(starts_with("dra")),
+    "drat"
+  )
+
+  expect_identical(
+    helper(c(mpg, disp)),
+    c("mpg", "disp")
+  )
+  expect_identical(
+    helper(c("mpg", "disp")),
+    c("mpg", "disp")
+  )
+  expect_identical(
+    helper(vars(mpg, disp)),
+    c("mpg", "disp")
+  )
+  expect_identical(
+    helper(imp_vars(mpg, disp)),
+    c("mpg", "disp")
+  )
+  expect_identical(
+    helper(all_predictors()),
+    setdiff(names(mtcars), "mpg")
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    helper(NULL)
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(not_mpg)
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    helper(c())
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(vars())
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(imp_vars())
+  )
+})
+
+test_that("recipes_argument_select() errors on case_weights", {
+  mtcars$gear <- hardhat::importance_weights(mtcars$gear)
+  rec <- recipe(mpg ~ ., data = mtcars)
+  info <- rec$var_info
+  helper <- function(x) {
+    recipes_argument_select(enquos(x), mtcars, info, single = FALSE)
+  }
+
+  expect_snapshot(
+    error = TRUE,
+    helper(gear)
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(gear)
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(vars(gear))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(imp_vars(gear))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(starts_with("gea"))
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    helper(c(mpg, gear))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(c("mpg", "gear"))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(vars(mpg, gear))
+  )
+  expect_snapshot(
+    error = TRUE,
+    helper(imp_vars(mpg, gear))
+  )
+})

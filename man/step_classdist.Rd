@@ -28,8 +28,9 @@ sequence of operations for this recipe.}
 \item{...}{One or more selector functions to choose variables
 for this step. See \code{\link[=selections]{selections()}} for more details.}
 
-\item{class}{A single character string that specifies a single
-categorical variable to be used as the class.}
+\item{class}{A bare name that specifies a single categorical variable to be
+used as the class. Can also be a string or tidyselect for backwards
+compatibility.}
 
 \item{role}{For model terms created by this step, what analysis role should
 they be assigned? By default, the new columns created by this step from
@@ -131,14 +132,14 @@ mean2 <- function(x) mean(x, na.rm = TRUE)
 # define naming convention
 rec <- recipe(species ~ ., data = penguins) \%>\%
   step_classdist(all_numeric_predictors(),
-    class = "species",
+    class = species,
     pool = FALSE, mean_func = mean2, prefix = "centroid_"
   )
 
 # default naming
 rec <- recipe(species ~ ., data = penguins) \%>\%
   step_classdist(all_numeric_predictors(),
-    class = "species",
+    class = species,
     pool = FALSE, mean_func = mean2
   )
 
