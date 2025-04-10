@@ -84,7 +84,10 @@ levels of \code{"red"}, \code{"green"}, \code{"blue"}, the dummy variable bake w
 two additional columns of 0/1 data for two of those three values (and remove
 the original column). For ordered factors, polynomial contrasts are used to
 encode the numeric values. These defaults are controlled by the \code{contrasts}
-argument.
+argument. Note that since the contrasts are specified via character strings
+you will need to have those packages loaded. If you are using this with the
+tune package, you might need to add that these packages to the \code{pkg} option
+in \code{control_grid()}.
 
 By default, the excluded dummy variable (i.e. the reference cell) will
 correspond to the first level of the unordered factor being converted.
