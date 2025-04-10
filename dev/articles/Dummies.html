@@ -154,12 +154,8 @@ columns:</p>
 (<code>Species</code>) is no longer there. See the section below on
 obtaining the entire set of <em>C</em> columns.</p>
 <p>There are different types of contrasts that can be used for different
-types of factors. The defaults are:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"contrasts"</span><span class="op">)</span></span>
-<span><span class="va">param</span></span>
-<span><span class="co">#&gt;         unordered           ordered </span></span>
-<span><span class="co">#&gt; "contr.treatment"      "contr.poly"</span></span></code></pre></div>
+types of factors. The defaults are <code>"contr.treatment"</code> for
+unordered and <code>"contr.poly"</code> for ordered factors.</p>
 <p>Looking at <code>?contrast</code>, there are other options. One
 alternative is the little known Helmert contrast:</p>
 <blockquote>
@@ -167,42 +163,35 @@ alternative is the little known Helmert contrast:</p>
 the second level with the first, the third with the average of the first
 two, and so on.</p>
 </blockquote>
-<p>To get this encoding, the global option for the contrasts can be
-changed and saved. <a href="https://recipes.tidymodels.org/reference/step_dummy.html"><code>step_dummy</code></a>
+<p>To get this encoding you can use the <code>contrasts</code> argument
+like so:, the global option for the contrasts can be changed and saved.
+<a href="https://recipes.tidymodels.org/reference/step_dummy.html"><code>step_dummy</code></a>
 picks up on this and makes the correct calculations:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># change it:</span></span>
-<span><span class="va">go_helmert</span> <span class="op">&lt;-</span> <span class="va">param</span></span>
-<span><span class="va">go_helmert</span><span class="op">[</span><span class="st">"unordered"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"contr.helmert"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">go_helmert</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># now make dummy variables with new parameterization</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># now make dummy variables with new parameterization</span></span>
 <span><span class="va">helmert</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, contrasts <span class="op">=</span> <span class="st">"contr.helmert"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">helmert</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 4</span></span></span>
-<span><span class="co">#&gt;   variable     type      role      source  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original     <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_X1   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_X2   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span>
+<span><span class="co">#&gt;   variable           type      role      source  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sepal.Length       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sepal.Width        <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length       <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width        <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> original           <span style="color: #949494;">&lt;chr [3]&gt;</span> predictor original</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Species_versicolor <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Species_virginica  <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor derived</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">helmert</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">original</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
-<span><span class="co">#&gt;   original   Species_X1 Species_X2</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa             -<span style="color: #BB0000;">1</span>         -<span style="color: #BB0000;">1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor          1         -<span style="color: #BB0000;">1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica           0          2</span></span>
-<span></span>
-<span><span class="co"># Yuk; go back to the original method</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">param</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;   original   Species_versicolor Species_virginica</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> setosa                     -<span style="color: #BB0000;">1</span>                -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor                  1                -<span style="color: #BB0000;">1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica                   0                 2</span></span></code></pre></div>
 <p>Note that the column names do not reference a specific level of the
 species variable. This contrast function has columns that can involve
 multiple levels; level-specific columns wouldn’t make sense.</p>
@@ -218,7 +207,7 @@ columns that are being used to create the dummy variables.</p>
 </h2>
 <p>Creating interactions with recipes requires the use of a model
 formula, such as</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris_int</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Sepal.Width</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -247,7 +236,7 @@ categorical predictors.</p>
 <p>For example, if you were to use the standard formula interface, the
 creation of the dummy variables happens at the same time as the
 interactions are created:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span><span class="op">*</span><span class="va">Sepal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="co"># show a few specific rows</span></span>
@@ -264,7 +253,7 @@ interactions are created:</p>
 <p>With recipes, you create them sequentially. This raises an issue: do
 I have to type out all of the interaction effects by their specific
 names when using dummy variables?</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Must I do this?</span></span>
 <span><span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species_versicolor</span><span class="op">:</span><span class="va">Sepal.Length</span> <span class="op">+</span> </span>
@@ -273,7 +262,7 @@ names when using dummy variables?</p>
 variables are available (especially when <a href="https://recipes.tidymodels.org/reference/step_other.html"><code>step_other</code></a>
 is used).</p>
 <p>The solution is to use a selector:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris_int</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -297,13 +286,13 @@ executed on the data that are available when the previous steps have
 been applied to the data. That means that the dummy variable columns are
 present. The results of this selector are then translated to an additive
 function of the results. In this case, that means that</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span></span></code></pre></div>
 <p>becomes</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">Species_versicolor</span> <span class="op">+</span> <span class="va">Species_virginica</span><span class="op">)</span></span></code></pre></div>
 <p>The entire interaction formula is shown here:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris_int</span></span></code></pre></div>
 <p>For interactions between multiple sets of dummy variables, the
 formula could include multiple selectors
@@ -314,7 +303,7 @@ formula could include multiple selectors
 </h2>
 <p>Would it work if I didn’t convert species to a factor and used the
 interactions step?</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris_int</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/step_interact.html">step_interact</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">Species</span><span class="op">:</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -354,7 +343,7 @@ matrix like this is “less than full rank”.</p>
 this issue so you might want to get all of the columns. To do this,
 <code>step_dummy</code> has an option called <code>one_hot</code> that
 will make sure that all <em>C</em> are produced:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -373,7 +362,7 @@ encoding”</a>.</p>
 <p>This will give you the full set of indicators and, when you use the
 typical contrast function, it does. It might do some seemingly weird
 (but legitimate) things when used with other contrasts:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hot_reference</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -389,12 +378,9 @@ typical contrast function, it does. It might do some seemingly weird
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> versicolor              0                  1                 0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> virginica               0                  0                 1</span></span>
 <span></span>
-<span><span class="co"># from above</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="va">go_helmert</span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">hot_helmert</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris_rec</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="va">Species</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span>, contrasts <span class="op">=</span> <span class="st">"contr.helmert"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span>training <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">original</span>, new_data <span class="op">=</span> <span class="cn">NULL</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="op">)</span></span>
