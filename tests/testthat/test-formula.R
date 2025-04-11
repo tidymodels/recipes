@@ -46,7 +46,7 @@ test_that("formulas", {
   expect_equal(
     formula(rec8),
     as.formula(
-      ~Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species
+      ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width + Species
     ),
     ignore_formula_env = TRUE
   )
@@ -56,6 +56,47 @@ test_that("formulas", {
     formula(rec9),
     as.formula(
       Species + Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width
+    ),
+    ignore_formula_env = TRUE
+  )
+
+  rec10 <- recipe(mtcars) %>% prep()
+  expect_equal(
+    formula(rec10),
+    as.formula(
+      ~1
+    ),
+    ignore_formula_env = TRUE
+  )
+
+  rec11 <- recipe(mtcars) %>%
+    update_role(mpg, new_role = "outcome") %>%
+    prep()
+  expect_equal(
+    formula(rec11),
+    as.formula(
+      mpg ~ 1
+    ),
+    ignore_formula_env = TRUE
+  )
+  rec12 <- recipe(mtcars) %>%
+    update_role(-mpg, new_role = "predictor") %>%
+    prep()
+  expect_equal(
+    formula(rec12),
+    as.formula(
+      ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
+    ),
+    ignore_formula_env = TRUE
+  )
+  rec13 <- recipe(mtcars) %>%
+    update_role(mpg, new_role = "outcome") %>%
+    update_role(-mpg, new_role = "predictor") %>%
+    prep()
+  expect_equal(
+    formula(rec13),
+    as.formula(
+      mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
     ),
     ignore_formula_env = TRUE
   )
