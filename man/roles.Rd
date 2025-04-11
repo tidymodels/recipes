@@ -140,8 +140,6 @@ recipe(HHV ~ ., data = biomass) \%>\%
   update_role(sample, new_role = NA_character_)
 }
 
-# ------------------------------------------------------------------------------
-
 # Variables can have more than one role. `add_role()` can be used
 # if the column already has at least one role:
 recipe(HHV ~ ., data = biomass) \%>\%
@@ -155,15 +153,13 @@ recipe(HHV ~ ., data = biomass) \%>\%
   update_role(carbon, new_role = "something else", old_role = "something") \%>\%
   summary()
 
-# `carbon` has two roles at the end, so the last `update_roles()` fails since
+# `carbon` has two roles at the end, so the last `update_role()` fails since
 # `old_role` was not given.
 \dontrun{
 recipe(HHV ~ ., data = biomass) \%>\%
   add_role(carbon, sulfur, new_role = "something") \%>\%
   update_role(carbon, new_role = "something else")
 }
-
-# ------------------------------------------------------------------------------
 
 # To remove a role, `remove_role()` can be used to remove a single role.
 recipe(HHV ~ ., data = biomass) \%>\%
@@ -177,8 +173,6 @@ recipe(HHV ~ ., data = biomass) \%>\%
   remove_role(carbon, old_role = "something") \%>\%
   remove_role(carbon, old_role = "predictor") \%>\%
   summary()
-
-# ------------------------------------------------------------------------------
 
 # If the formula method is not used, all columns have a missing role:
 recipe(biomass) \%>\%

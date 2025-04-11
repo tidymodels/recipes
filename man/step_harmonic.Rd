@@ -165,7 +165,6 @@ bind_rows(sunspots, preds) \%>\%
   geom_line()
 
 
-# ------------------------------------------------------------------------------
 # POSIXct example
 
 date_time <-

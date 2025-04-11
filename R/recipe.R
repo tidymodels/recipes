@@ -62,7 +62,6 @@
 #'   step_spatialsign(all_numeric_predictors())
 #' sp_signed
 #'
-#' # ---------------------------------------------------------------------------
 #' # formula multivariate example:
 #' # no need for `cbind(carbon, hydrogen)` for left-hand side
 #'
@@ -73,7 +72,6 @@
 #'   step_center(all_numeric_predictors()) %>%
 #'   step_scale(all_numeric_predictors())
 #'
-#' # ---------------------------------------------------------------------------
 #' # example using `update_role` instead of formula:
 #' # best choice for high-dimensional data
 #'
