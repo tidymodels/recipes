@@ -7,6 +7,12 @@
 #'
 #' `r lifecycle::badge("deprecated")`
 #'
+#' Due to how `step_select()` works with `workflows::workflow()`, we no longer
+#' recommend the usage of this step.If you are using `step_select()` to remove
+#' variables with `-` then you can flip it around and use [step_rm()] instead.
+#' All other uses of `step_select()` could be replaced by a call to
+#' [dplyr::select()] on the data before it is passed to `recipe()`.
+#'
 #' @inheritParams step_center
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?

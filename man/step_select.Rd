@@ -44,6 +44,12 @@ sequence of any existing operations.
 variables using \code{\link[dplyr:select]{dplyr::select()}}.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Due to how \code{step_select()} works with \code{workflows::workflow()}, we no longer
+recommend the usage of this step.If you are using \code{step_select()} to remove
+variables with \code{-} then you can flip it around and use \code{\link[=step_rm]{step_rm()}} instead.
+All other uses of \code{step_select()} could be replaced by a call to
+\code{\link[dplyr:select]{dplyr::select()}} on the data before it is passed to \code{recipe()}.
 }
 \details{
 When an object in the user's global environment is referenced in the
