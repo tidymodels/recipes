@@ -123,7 +123,7 @@ tune_id <- function(x) {
 
     # [tune()] will always return a call object
     if (is.call(x)) {
-      if (rlang::call_name(x) == "tune") {
+      if (identical(rlang::call_name(x), "tune")) {
         # If an id was specified:
         if (length(x) > 1) {
           return(x[[2]])
