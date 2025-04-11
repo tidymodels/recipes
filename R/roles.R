@@ -86,7 +86,7 @@
 #'   update_role(carbon, new_role = "something else", old_role = "something") %>%
 #'   summary()
 #'
-#' # `carbon` has two roles at the end, so the last `update_roles()` fails since
+#' # `carbon` has two roles at the end, so the last `update_role()` fails since
 #' # `old_role` was not given.
 #' \dontrun{
 #' recipe(HHV ~ ., data = biomass) %>%
