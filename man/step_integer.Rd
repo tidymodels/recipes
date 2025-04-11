@@ -55,8 +55,9 @@ An updated version of \code{recipe} with the new step added to the
 sequence of any existing operations.
 }
 \description{
-\code{step_integer()} creates a \emph{specification} of a recipe step that will convert
-new data into a set of integers based on the original data values.
+\code{step_integer()} creates a specification of a recipe step that will convert
+data into a set of ascending integers based on the ascending order from the
+training data.
 }
 \details{
 \code{step_integer} will determine the unique values of
@@ -67,7 +68,7 @@ value of zero for yet unseen data (although see the \code{zero_based}
 argument above). Missing values propagate.
 
 Factor inputs are ordered by their levels. All others are
-ordered by \code{sort}.
+ordered by \code{\link[=sort]{sort()}}.
 
 Despite the name, the new values are returned as numeric unless
 \code{strict = TRUE}, which will coerce the results to integers.
