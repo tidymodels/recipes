@@ -6,11 +6,11 @@
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param base A numeric value for the base.
-#' @param offset An optional value to add to the data prior to
-#'  logging (to avoid `log(0)`).
-#' @param signed A logical indicating whether to take the signed log.
-#'  This is sign(x) * log(abs(x)) when abs(x) => 1 or 0 if abs(x) < 1.
-#'  If `TRUE` the `offset` argument will be ignored.
+#' @param offset An optional value to add to the data prior to logging (to avoid
+#'   `log(0)`).
+#' @param signed A logical indicating whether to take the signed log. This is
+#'   `sign(x) * log(abs(x))` when `abs(x) => 1` or `0 if abs(x) < 1`. If `TRUE`
+#'   the `offset` argument will be ignored.
 #' @template step-return
 #' @family individual transformation steps
 #' @export

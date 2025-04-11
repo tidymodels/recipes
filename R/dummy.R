@@ -67,11 +67,12 @@
 #' argument for this step.
 #'
 #' Also, there are a number of contrast methods that return fractional values.
-#' The columns returned by this step are doubles (not integers) when
-#' `sparse = FALSE`. The columns returned when `sparse = TRUE` are integers.
+#' The columns returned by this step are doubles (not integers) when `sparse =
+#' FALSE`. The columns returned when `sparse = TRUE` are integers.
 #'
-#' The [package vignette for dummy variables](https://recipes.tidymodels.org/articles/Dummies.html)
-#' and interactions has more information.
+#' The [package vignette for dummy
+#' variables](https://recipes.tidymodels.org/articles/Dummies.html) and
+#' interactions has more information.
 #'
 #' # Tidying
 #'
@@ -301,7 +302,7 @@ check_contrasts_arg <- function(x, call = rlang::caller_env()) {
       offender <- names(x)
       if (length(offender) == 0) {
         cli::cli_abort(
-          "The list passed to {.arg contrasts} must have the names 
+          "The list passed to {.arg contrasts} must have the names
           {.val ordered} and {.val unordered}.",
           call = call
         )
@@ -314,14 +315,14 @@ check_contrasts_arg <- function(x, call = rlang::caller_env()) {
     }
     if (!is.character(x$ordered)) {
       cli::cli_abort(
-        "The {.field ordered} element of {.arg contracts} must be a string, 
+        "The {.field ordered} element of {.arg contracts} must be a string,
         not {.obj_type_friendly {x$ordered}}.",
         call = call
       )
     }
     if (!is.character(x$unordered)) {
       cli::cli_abort(
-        "The {.field unordered} element of {.arg contracts} must be a string, 
+        "The {.field unordered} element of {.arg contracts} must be a string,
         not {.obj_type_friendly {x$unordered}}.",
         call = call
       )

@@ -8,11 +8,10 @@
 Tips for selecting columns in step functions.
 }
 \details{
-When selecting variables or model terms in \code{step}
-functions, \code{dplyr}-like tools are used. The \emph{selector} functions
-can choose variables based on their name, current role, data
-type, or any combination of these. The selectors are passed as
-any other argument to the step. If the variables are explicitly
+When selecting variables or model terms in \code{step} functions, \code{dplyr}-like
+tools are used. The \emph{selector} functions can choose variables based on their
+name, current role, data type, or any combination of these. The selectors are
+passed as any other argument to the step. If the variables are explicitly
 named in the step function, this might look like:
 
 \preformatted{
@@ -20,29 +19,28 @@ named in the step function, this might look like:
     step_pca(Murder, Assault, UrbanPop, Rape, num_comp = 3)
 }
 
-The first four arguments indicate which variables should be
-used in the PCA while the last argument is a specific argument
-to \code{\link[=step_pca]{step_pca()}} about the number of components.
+The first four arguments indicate which variables should be used in the PCA
+while the last argument is a specific argument to \code{\link[=step_pca]{step_pca()}} about the
+number of components.
 
 Note that:
 
 \enumerate{
-\item These arguments are not evaluated until the \code{prep}
-function for the step is executed.
-\item The \code{dplyr}-like syntax allows for negative signs to
-exclude variables (e.g. \code{-Murder}) and the set of selectors will
-processed in order.
-\item A leading exclusion in these arguments (e.g. \code{-Murder})
-has the effect of adding \emph{all} variables to the list except the
-excluded variable(s), ignoring role information.
+\item These arguments are not evaluated until the \code{prep} function for the
+step is executed.
+\item The \code{dplyr}-like syntax allows for negative signs to exclude
+variables (e.g. \code{-Murder}) and the set of selectors will processed in
+order.
+\item A leading exclusion in these arguments (e.g. \code{-Murder}) has the
+effect of adding \emph{all} variables to the list except the excluded
+variable(s), ignoring role information.
 }
 
 Select helpers from the \code{tidyselect} package can also be used:
 \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}}, \code{\link[tidyselect:starts_with]{tidyselect::ends_with()}},
-\code{\link[tidyselect:starts_with]{tidyselect::contains()}}, \code{\link[tidyselect:starts_with]{tidyselect::matches()}},
-\code{\link[tidyselect:starts_with]{tidyselect::num_range()}}, \code{\link[tidyselect:everything]{tidyselect::everything()}},
-\code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}}, and
-\code{\link[tidyselect:all_of]{tidyselect::any_of()}}
+\code{\link[tidyselect:starts_with]{tidyselect::contains()}}, \code{\link[tidyselect:starts_with]{tidyselect::matches()}}, \code{\link[tidyselect:starts_with]{tidyselect::num_range()}},
+\code{\link[tidyselect:everything]{tidyselect::everything()}}, \code{\link[tidyselect:one_of]{tidyselect::one_of()}}, \code{\link[tidyselect:all_of]{tidyselect::all_of()}},
+and \code{\link[tidyselect:all_of]{tidyselect::any_of()}}
 
 Note that using \code{\link[tidyselect:everything]{tidyselect::everything()}} or any of the other \code{tidyselect}
 functions aren't restricted to predictors. They will thus select outcomes,
@@ -58,22 +56,21 @@ For example:
 
 would only select \code{Sepal.Length}
 
-Columns of the design matrix that may not exist when the step
-is coded can also be selected. For example, when using
-\code{step_pca()}, the number of columns created by feature extraction
-may not be known when subsequent steps are defined. In this
-case, using \code{matches("^PC")} will select all of the columns
+Columns of the design matrix that may not exist when the step is coded can
+also be selected. For example, when using \code{step_pca()}, the number of columns
+created by feature extraction may not be known when subsequent steps are
+defined. In this case, using \code{matches("^PC")} will select all of the columns
 whose names start with "PC" \emph{once those columns are created}.
 
 There are sets of recipes-specific functions that can be used to select
-variables based on their role or type: \code{\link[=has_role]{has_role()}} and
-\code{\link[=has_type]{has_type()}}. For convenience, there are also functions that are
-more specific. The functions \code{\link[=all_numeric]{all_numeric()}} and \code{\link[=all_nominal]{all_nominal()}} select
-based on type, with nominal variables including both character and factor;
-the functions \code{\link[=all_predictors]{all_predictors()}} and \code{\link[=all_outcomes]{all_outcomes()}} select based on role.
-The functions \code{\link[=all_numeric_predictors]{all_numeric_predictors()}} and \code{\link[=all_nominal_predictors]{all_nominal_predictors()}}
-select intersections of role and type. Any can be used in conjunction with
-the previous functions described for selecting variables using their names.
+variables based on their role or type: \code{\link[=has_role]{has_role()}} and \code{\link[=has_type]{has_type()}}. For
+convenience, there are also functions that are more specific. The functions
+\code{\link[=all_numeric]{all_numeric()}} and \code{\link[=all_nominal]{all_nominal()}} select based on type, with nominal
+variables including both character and factor; the functions
+\code{\link[=all_predictors]{all_predictors()}} and \code{\link[=all_outcomes]{all_outcomes()}} select based on role. The functions
+\code{\link[=all_numeric_predictors]{all_numeric_predictors()}} and \code{\link[=all_nominal_predictors]{all_nominal_predictors()}} select
+intersections of role and type. Any can be used in conjunction with the
+previous functions described for selecting variables using their names.
 
 A selection like this:
 
@@ -91,25 +88,22 @@ is equivalent to:
     step_center(all_numeric_predictors())
 }
 
-Both result in all the numeric predictors: carbon, hydrogen,
-oxygen, nitrogen, and sulfur.
+Both result in all the numeric predictors: carbon, hydrogen, oxygen,
+nitrogen, and sulfur.
 
-If a role for a variable has not been defined, it will never be
-selected using role-specific selectors.
+If a role for a variable has not been defined, it will never be selected
+using role-specific selectors.
 \subsection{Interactions}{
 
-Selectors can be used in \code{\link[=step_interact]{step_interact()}} in similar ways but
-must be embedded in a model formula (as opposed to a sequence
-of selectors). For example, the interaction specification
-could be \code{~ starts_with("Species"):Sepal.Width}. This can be
-useful if \code{Species} was converted to dummy variables
-previously using \code{\link[=step_dummy]{step_dummy()}}. The implementation of
-\code{step_interact()} is special, and is more restricted than
-the other step functions. Only the selector functions from
-recipes and tidyselect are allowed. User defined selector functions
-will not be recognized. Additionally, the tidyselect domain specific
-language is not recognized here, meaning that \code{&}, \code{|}, \code{!}, and \code{-}
-will not work.
+Selectors can be used in \code{\link[=step_interact]{step_interact()}} in similar ways but must be
+embedded in a model formula (as opposed to a sequence of selectors). For
+example, the interaction specification could be \code{~ starts_with("Species"):Sepal.Width}. This can be useful if \code{Species} was
+converted to dummy variables previously using \code{\link[=step_dummy]{step_dummy()}}. The
+implementation of \code{step_interact()} is special, and is more restricted than
+the other step functions. Only the selector functions from recipes and
+tidyselect are allowed. User defined selector functions will not be
+recognized. Additionally, the tidyselect domain specific language is not
+recognized here, meaning that \code{&}, \code{|}, \code{!}, and \code{-} will not work.
 }
 
 \subsection{Tips for saving recipes and filtering columns}{

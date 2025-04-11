@@ -6,12 +6,12 @@
 #' @template row-ops
 #' @inheritParams step_center
 #' @param ... Argument ignored; included for consistency with other step
-#'  specification functions.
+#'   specification functions.
 #' @param size An integer or fraction. If the value is within (0, 1),
-#'  [dplyr::sample_frac()] is applied to the data. If an integer
-#'  value of 1 or greater is used, [dplyr::sample_n()] is applied.
-#'  The default of `NULL` uses [dplyr::sample_n()] with the size
-#'  of the training set (or smaller for smaller `new_data`).
+#'   [dplyr::sample_frac()] is applied to the data. If an integer value of 1 or
+#'   greater is used, [dplyr::sample_n()] is applied. The default of `NULL` uses
+#'   [dplyr::sample_n()] with the size of the training set (or smaller for
+#'   smaller `new_data`).
 #' @param replace Sample with or without replacement?
 #' @template step-return
 #' @details

@@ -5,20 +5,21 @@
 #'
 #' @inheritParams step_center
 #' @param freq_cut,unique_cut Numeric parameters for the filtering process. See
-#'  the Details section below.
-#' @param options A list of options for the filter (see Details
-#'  below).
-#' @param removals A character string that contains the names of
-#'  columns that should be removed. These values are not determined
-#'  until [prep()] is called.
+#'   the Details section below.
+#' @param options A list of options for the filter (see Details below).
+#' @param removals A character string that contains the names of columns that
+#'   should be removed. These values are not determined until [prep()] is
+#'   called.
 #' @template step-return
 #' @template filter-steps
 #' @family variable filter steps
 #' @export
 #'
-#' @details This step diagnoses predictors that have one unique
-#'  value (i.e. are zero variance predictors) or predictors that have
-#'  both of the following characteristics:
+#' @details
+#'
+#' This step diagnoses predictors that have one unique value (i.e. are zero
+#' variance predictors) or predictors that have both of the following
+#' characteristics:
 #' \enumerate{
 #'   \item they have very few unique values relative to the number
 #'    of samples and
@@ -26,19 +27,17 @@
 #'    the frequency of the second most common value is large.
 #' }
 #'
-#' For example, an example of near-zero variance predictor is one
-#'  that, for 1000 samples, has two distinct values and 999 of them
-#'  are a single value.
+#' For example, an example of near-zero variance predictor is one that, for 1000
+#' samples, has two distinct values and 999 of them are a single value.
 #'
-#' To be flagged, first, the frequency of the most prevalent value
-#'  over the second most frequent value (called the "frequency
-#'  ratio") must be above `freq_cut`. Secondly, the "percent of
-#'  unique values," the number of unique values divided by the total
-#'  number of samples (times 100), must also be below
-#'  `unique_cut`.
+#' To be flagged, first, the frequency of the most prevalent value over the
+#' second most frequent value (called the "frequency ratio") must be above
+#' `freq_cut`. Secondly, the "percent of unique values," the number of unique
+#' values divided by the total number of samples (times 100), must also be below
+#' `unique_cut`.
 #'
-#' In the above example, the frequency ratio is 999 and the unique
-#'  value percent is 0.2%.
+#' In the above example, the frequency ratio is 999 and the unique value percent
+#' is 0.2%.
 #'
 #' # Tidying
 #'

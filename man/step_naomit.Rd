@@ -15,16 +15,16 @@ step_naomit(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{Unused, include for consistency with other steps.}
 
-\item{trained}{A logical to indicate if the quantities for preprocessing
-have been estimated. Again included for consistency.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated. Again included for consistency.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}

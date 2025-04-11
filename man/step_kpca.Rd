@@ -20,24 +20,24 @@ step_kpca(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{num_comp}{The number of components to retain as new predictors.
-If \code{num_comp} is greater than the number of columns or the number of
-possible components, a smaller value will be used. If \code{num_comp = 0}
-is set then no transformation is done and selected variables will
-stay unchanged, regardless of the value of \code{keep_original_cols}.}
+\item{num_comp}{The number of components to retain as new predictors. If
+\code{num_comp} is greater than the number of columns or the number of possible
+components, a smaller value will be used. If \code{num_comp = 0} is set then no
+transformation is done and selected variables will stay unchanged,
+regardless of the value of \code{keep_original_cols}.}
 
 \item{res}{An S4 \code{\link[kernlab:kpca]{kernlab::kpca()}} object is stored here once this
 preprocessing step has be trained by \code{\link[=prep]{prep()}}.}
@@ -56,12 +56,11 @@ variables. See notes below.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -75,13 +74,13 @@ numeric data into one or more principal components using a kernel basis
 expansion.
 }
 \details{
-When performing kPCA with \code{step_kpca()}, you must choose the kernel
-function (and any important kernel parameters). This step uses the
-\pkg{kernlab} package; the reference below discusses the types of kernels
-available and their parameter(s). These specifications can be made in the
-\code{kernel} and \code{kpar} slots of the \code{options} argument to \code{step_kpca()}.
-Consider using \code{\link[=step_kpca_rbf]{step_kpca_rbf()}} for a radial basis function kernel or
-\code{\link[=step_kpca_poly]{step_kpca_poly()}} for a polynomial kernel.
+When performing kPCA with \code{step_kpca()}, you must choose the kernel function
+(and any important kernel parameters). This step uses the \pkg{kernlab}
+package; the reference below discusses the types of kernels available and
+their parameter(s). These specifications can be made in the \code{kernel} and
+\code{kpar} slots of the \code{options} argument to \code{step_kpca()}. Consider using
+\code{\link[=step_kpca_rbf]{step_kpca_rbf()}} for a radial basis function kernel or \code{\link[=step_kpca_poly]{step_kpca_poly()}}
+for a polynomial kernel.
 
 Kernel principal component analysis (kPCA) is an extension of a PCA analysis
 that conducts the calculations in a broader dimensionality defined by a

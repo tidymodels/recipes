@@ -1,8 +1,7 @@
 #' Manually alter roles
 #'
-#' @description
-#' `update_role()` alters an existing role in the recipe or assigns an initial
-#' role to variables that do not yet have a declared role.
+#' @description `update_role()` alters an existing role in the recipe or assigns
+#' an initial role to variables that do not yet have a declared role.
 #'
 #' `add_role()` adds an _additional_ role to variables that already have a role
 #' in the recipe. It does not overwrite old roles, as a single variable can have
@@ -29,12 +28,12 @@
 #' before any of the steps or checks, regardless of where they are located in
 #' position. This means that roles can only be changed with these three
 #' functions for columns that are already present in the original data supplied
-#' to `recipe()`. See the `role` argument in some step functions to update
-#' roles for columns created by steps.
+#' to `recipe()`. See the `role` argument in some step functions to update roles
+#' for columns created by steps.
 #'
 #' Variables can have any arbitrary role (see the examples) but there are three
-#' special standard roles, `"predictor"`, `"outcome"`, and `"case_weights"`.
-#' The first two roles are typically required when fitting a model.
+#' special standard roles, `"predictor"`, `"outcome"`, and `"case_weights"`. The
+#' first two roles are typically required when fitting a model.
 #'
 #' `update_role()` should be used when a variable doesn't currently have a role
 #' in the recipe, or to replace an `old_role` with a `new_role`. `add_role()`

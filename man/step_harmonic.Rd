@@ -19,33 +19,33 @@ step_harmonic(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details. This will
-typically be a single variable.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details. This will typically be a single
+variable.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{frequency}{A numeric vector with at least one value.
-The value(s) must be greater than zero and finite.}
+\item{frequency}{A numeric vector with at least one value. The value(s) must
+be greater than zero and finite.}
 
-\item{cycle_size}{A numeric vector with at least one value that indicates
-the size of a single cycle. \code{cycle_size} should have the same units as the
+\item{cycle_size}{A numeric vector with at least one value that indicates the
+size of a single cycle. \code{cycle_size} should have the same units as the
 input variable(s).}
 
-\item{starting_val}{either \code{NA}, numeric, Date or POSIXt value(s) that indicates
-the reference point for the sin and cos curves for each input variable.
-If the value is a \code{Date} or \code{POISXt} the value is converted to numeric
-using \code{as.numeric}. This parameter may be specified to increase control
-over the signal phase.  If \code{starting_val} is not specified the default
-is 0.}
+\item{starting_val}{either \code{NA}, numeric, Date or POSIXt value(s) that
+indicates the reference point for the sin and cos curves for each input
+variable. If the value is a \code{Date} or \code{POISXt} the value is converted to
+numeric using \code{\link[=as.numeric]{as.numeric()}}. This parameter may be specified to increase
+control over the signal phase.  If \code{starting_val} is not specified the
+default is 0.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
@@ -53,12 +53,11 @@ output. Defaults to \code{FALSE}.}
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -71,23 +70,23 @@ sequence of any existing operations.
 \code{sin()} and \code{cos()} terms for harmonic analysis.
 }
 \details{
-This step seeks to describe periodic components of observational
-data using a combination of sin and cos waves. To do this, each wave of a
-specified frequency is modeled using one sin and one cos term. The two
-terms for each frequency can then be used to estimate the amplitude and
-phase shift of a periodic signal in observational data. The equation
-relating cos waves of known frequency but unknown phase and amplitude to a
-sum of sin and cos terms is below:
+This step seeks to describe periodic components of observational data using a
+combination of sin and cos waves. To do this, each wave of a specified
+frequency is modeled using one sin and one cos term. The two terms for each
+frequency can then be used to estimate the amplitude and phase shift of a
+periodic signal in observational data. The equation relating cos waves of
+known frequency but unknown phase and amplitude to a sum of sin and cos terms
+is below:
 
-\deqn{A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j sin(\sigma_j t_i)}
+\deqn{A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j
+sin(\sigma_j t_i)}
 
-Solving the equation yields \eqn{C_j} and \eqn{S_j}. the
-amplitude can then be obtained with:
+Solving the equation yields \eqn{C_j} and \eqn{S_j}. the amplitude can then
+be obtained with:
 
 \deqn{A_j = \sqrt{C^2_j + S^2_j}}
 
-And the phase can be obtained with:
-\deqn{\Phi_j = \arctan{(S_j / C_j)}}
+And the phase can be obtained with: \deqn{\Phi_j = \arctan{(S_j / C_j)}}
 
 where:
 \itemize{
@@ -99,11 +98,11 @@ where:
 }
 
 The periodic component is specified by \code{frequency} and \code{cycle_size}
-parameters. The cycle size relates the specified frequency to the
-input column(s) units. There are multiple ways to specify a wave of given
-frequency, for example, a \code{POSIXct} input column given a \code{frequency} of
-24 and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of
-1.0 with \code{cycle_size} equal to 3600.
+parameters. The cycle size relates the specified frequency to the input
+column(s) units. There are multiple ways to specify a wave of given
+frequency, for example, a \code{POSIXct} input column given a \code{frequency} of 24
+and a \code{cycle_size} equal to 86400 is equivalent to a \code{frequency} of 1.0 with
+\code{cycle_size} equal to 3600.
 }
 \section{Tuning Parameters}{
 This step has 1 tuning parameters:

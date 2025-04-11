@@ -5,19 +5,19 @@
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca
-#' @param levels A length 2 character string that indicates the
-#'  factor levels for the 1's (in the first position) and the zeros
-#'  (second)
-#' @param ref_first Logical. Should the first level, which replaces
-#' 1's, be the factor reference level?
+#' @param levels A length 2 character string that indicates the factor levels
+#'   for the 1's (in the first position) and the zeros (second)
+#' @param ref_first Logical. Should the first level, which replaces 1's, be the
+#'   factor reference level?
 #' @template step-return
-#' @details This operation may be useful for situations where a
-#'  binary piece of information may need to be represented as
-#'  categorical instead of numeric. For example, naive Bayes models
-#'  would do better to have factor predictors so that the binomial
-#'  distribution is modeled instead of a Gaussian probability
-#'  density of numeric binary data. Note that the numeric data is
-#'  only verified to be numeric (and does not count levels).
+#' @details
+#'
+#' This operation may be useful for situations where a binary piece of
+#' information may need to be represented as categorical instead of numeric. For
+#' example, naive Bayes models would do better to have factor predictors so that
+#' the binomial distribution is modeled instead of a Gaussian probability
+#' density of numeric binary data. Note that the numeric data is only verified
+#' to be numeric (and does not count levels).
 #'
 #' # Tidying
 #'

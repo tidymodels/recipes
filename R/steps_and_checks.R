@@ -1,12 +1,12 @@
 ## Overall wrappers to make new `step_X` or `check_Y` objects
 #'
-#' `step` sets the class of the `step` and `check` is for checks.
+#' `step()` sets the class of the `step` and `check()` is for checks.
 #'
-#' @param subclass A character string for the resulting class. For example,
-#'   if `subclass = "blah"` the step object that is returned has class
-#'   `step_blah` or `check_blah` depending on the context.
+#' @param subclass A character string for the resulting class. For example, if
+#'   `subclass = "blah"` the step object that is returned has class `step_blah`
+#'   or `check_blah` depending on the context.
 #' @param ... All arguments to the operator that should be returned. Required
-#' arguments are `trained`, `skip`, and `id`.
+#'   arguments are `trained`, `skip`, and `id`.
 #' @param .prefix Prefix to the subclass created.
 #'
 #' @seealso [developer_functions]
@@ -56,8 +56,8 @@ check <- function(
 
 #' Add a New Operation to the Current Recipe
 #'
-#' `add_step` adds a step to the last location in the recipe.
-#' `add_check` does the same for checks.
+#' `add_step()` adds a step to the last location in the recipe. `add_check()`
+#' does the same for checks.
 #'
 #' @param rec A [recipe()].
 #' @param object A step or check object.

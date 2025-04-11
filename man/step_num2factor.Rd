@@ -17,24 +17,23 @@ step_num2factor(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{transform}{A function taking a single argument \code{x} that can be used
-to modify the numeric values prior to determining the levels (perhaps using
+\item{transform}{A function taking a single argument \code{x} that can be used to
+modify the numeric values prior to determining the levels (perhaps using
 \code{\link[base:integer]{base::as.integer()}} or \code{\link[base:factor]{base::as.factor()}}). The output of a function
 should be an integer that corresponds to the value of \code{levels} that should
 be assigned. If not an integer, the value will be converted to an integer
 during \code{\link[=bake]{bake()}}.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{levels}{A character vector of values that will be used as the levels.
 These are the numeric data converted to character and ordered. This is
@@ -42,12 +41,11 @@ modified once \code{\link[=prep]{prep()}} is executed.}
 
 \item{ordered}{A single logical value; should the factor(s) be ordered?}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -62,8 +60,9 @@ integers.
 }
 \details{
 Note that since the numeric variables will be used for indexing into \code{levels}
-it will need to take values between \code{1} and \code{length(levels)} to avoid \code{getting}NA\verb{s as results. Using }transform = base::as.factor` can be used to
-shrink values to smaller domain.
+it will need to take values between \code{1} and \code{length(levels)} to avoid getting
+\code{NA}s as results. Using \code{transform = base::as.factor} can be used to shrink
+values to smaller domain.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

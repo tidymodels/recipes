@@ -6,42 +6,38 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param num_terms The number of isomap dimensions to retain as new
-#'  predictors. If `num_terms` is greater than the number of columns
-#'  or the number of possible dimensions, a smaller value will be
-#'  used.
+#' @param num_terms The number of isomap dimensions to retain as new predictors.
+#'   If `num_terms` is greater than the number of columns or the number of
+#'   possible dimensions, a smaller value will be used.
 #' @param neighbors The number of neighbors.
 #' @param options A list of options to `dimRed::Isomap()``.
-#' @param res The `dimRed::Isomap()`` object is stored
-#'  here once this preprocessing step has be trained by
-#'  [prep()].
+#' @param res The `dimRed::Isomap()`` object is stored here once this
+#'   preprocessing step has be trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details Isomap is a form of multidimensional scaling (MDS).
-#'  MDS methods try to find a reduced set of dimensions such that
-#'  the geometric distances between the original data points are
-#'  preserved. This version of MDS uses nearest neighbors in the
-#'  data as a method for increasing the fidelity of the new
-#'  dimensions to the original data values.
+#' @details
 #'
-#' This step requires the \pkg{dimRed}, \pkg{RSpectra},
-#'  \pkg{igraph}, and \pkg{RANN} packages. If not installed, the
-#'  step will stop with a note about installing these packages.
+#' Isomap is a form of multidimensional scaling (MDS). MDS methods try to find a
+#' reduced set of dimensions such that the geometric distances between the
+#' original data points are preserved. This version of MDS uses nearest
+#' neighbors in the data as a method for increasing the fidelity of the new
+#' dimensions to the original data values.
+#'
+#' This step requires the \pkg{dimRed}, \pkg{RSpectra}, \pkg{igraph}, and
+#' \pkg{RANN} packages. If not installed, the step will stop with a note about
+#' installing these packages.
 #'
 #'
-#' It is advisable to center and scale the variables prior to
-#'  running Isomap (`step_center` and `step_scale` can be
-#'  used for this purpose).
+#' It is advisable to center and scale the variables prior to running Isomap
+#' (`step_center` and `step_scale` can be used for this purpose).
 #'
-#' The argument `num_terms` controls the number of components that
-#'  will be retained (the original variables that are used to derive
-#'  the components are removed from the data). The new components
-#'  will have names that begin with `prefix` and a sequence of
-#'  numbers. The variable names are padded with zeros. For example,
-#'  if `num_terms < 10`, their names will be `Isomap1` -
-#'  `Isomap9`. If `num_terms = 101`, the names would be
-#'  `Isomap001` - `Isomap101`.
+#' The argument `num_terms` controls the number of components that will be
+#' retained (the original variables that are used to derive the components are
+#' removed from the data). The new components will have names that begin with
+#' `prefix` and a sequence of numbers. The variable names are padded with zeros.
+#' For example, if `num_terms < 10`, their names will be `Isomap1` - `Isomap9`.
+#' If `num_terms = 101`, the names would be `Isomap001` - `Isomap101`.
 #'
 #' # Tidying
 #'

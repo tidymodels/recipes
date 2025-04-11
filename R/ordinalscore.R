@@ -5,18 +5,19 @@
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca
-#' @param convert A function that takes an ordinal factor vector
-#'  as an input and outputs a single numeric variable.
+#' @param convert A function that takes an ordinal factor vector as an input and
+#'   outputs a single numeric variable.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details Dummy variables from ordered factors with `C`
-#'  levels will create polynomial basis functions with `C-1`
-#'  terms. As an alternative, this step can be used to translate the
-#'  ordered levels into a single numeric vector of values that
-#'  represent (subjective) scores. By default, the translation uses
-#'  a linear scale (1, 2, 3, ... `C`) but custom score
-#'  functions can also be used (see the example below).
+#' @details
+#'
+#' Dummy variables from ordered factors with `C` levels will create polynomial
+#' basis functions with `C-1` terms. As an alternative, this step can be used to
+#' translate the ordered levels into a single numeric vector of values that
+#' represent (subjective) scores. By default, the translation uses a linear
+#' scale (1, 2, 3, ... `C`) but custom score functions can also be used (see the
+#' example below).
 #'
 #' # Tidying
 #'

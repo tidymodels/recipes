@@ -4,16 +4,17 @@
 #' rows using [dplyr::arrange()].
 #'
 #' @inheritParams step_center
-#' @param ... Comma separated list of unquoted variable names.
-#'  Use `desc()`` to sort a variable in descending order. See
-#'  [dplyr::arrange()] for more details.
+#' @param ... Comma separated list of unquoted variable names. Use `desc()`` to
+#'   sort a variable in descending order. See [dplyr::arrange()] for more
+#'   details.
 #' @param inputs Quosure of values given by `...`.
 #' @template step-return
-#' @details When an object in the user's global environment is
-#'  referenced in the expression defining the new variable(s),
-#'  it is a good idea to use quasiquotation (e.g. `!!!`)
-#'   to embed the value of the object in the expression (to
-#'   be portable between sessions). See the examples.
+#' @details
+#'
+#' When an object in the user's global environment is referenced in the
+#' expression defining the new variable(s), it is a good idea to use
+#' quasiquotation (e.g. `!!!`) to embed the value of the object in the
+#' expression (to be portable between sessions). See the examples.
 #'
 #' # Tidying
 #'

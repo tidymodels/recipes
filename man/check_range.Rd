@@ -18,36 +18,34 @@ check_range(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The check will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The check will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this check. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this check.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this check since no new variables are
-created.}
+\item{role}{Not used by this check since no new variables are created.}
 
-\item{skip}{A logical. Should the check be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the check be skipped when the recipe is baked
+by \code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
-\item{trained}{A logical for whether the selectors in \code{...}
-have been resolved by \code{\link[=prep]{prep()}}.}
+\item{trained}{A logical for whether the selectors in \code{...} have been
+resolved by \code{\link[=prep]{prep()}}.}
 
-\item{slack_prop}{The allowed slack as a proportion of the range
-of the variable in the train set.}
+\item{slack_prop}{The allowed slack as a proportion of the range of the
+variable in the train set.}
 
-\item{warn}{If \code{TRUE} the check will throw a warning instead
-of an error when failing.}
+\item{warn}{If \code{TRUE} the check will throw a warning instead of an error when
+failing.}
 
-\item{lower}{A named numeric vector of minimum values in the train set.
-This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{lower}{A named numeric vector of minimum values in the train set. This
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
-\item{upper}{A named numeric vector of maximum values in the train set.
-This is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{upper}{A named numeric vector of maximum values in the train set. This
+is \code{NULL} until computed by \code{\link[=prep]{prep()}}.}
 
 \item{id}{A character string that is unique to this check to identify it.}
 }
@@ -56,22 +54,19 @@ An updated version of \code{recipe} with the new check added to the
 sequence of any existing operations.
 }
 \description{
-\code{check_range} creates a \emph{specification} of a recipe
-check that will check if the range of a numeric
-variable changed in the new data.
+\code{check_range()} creates a \emph{specification} of a recipe check that will check
+if the range of a numeric variable changed in the new data.
 }
 \details{
-The amount of slack that is allowed is determined by the
-\code{slack_prop}. This is a numeric of length one or two. If
-of length one, the same proportion will be used at both ends
-of the train set range. If of length two, its first value
-is used to compute the allowed slack at the lower end,
-the second to compute the allowed slack at the upper end.
+The amount of slack that is allowed is determined by the \code{slack_prop}. This
+is a numeric of length one or two. If of length one, the same proportion will
+be used at both ends of the train set range. If of length two, its first
+value is used to compute the allowed slack at the lower end, the second to
+compute the allowed slack at the upper end.
 }
 \section{Tidying}{
-When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns
-\code{terms} (the selectors or variables selected) and \code{value} (the means)
-is returned.
+When you \code{\link[=tidy.recipe]{tidy()}} this check, a tibble with columns \code{terms}
+(the selectors or variables selected) and \code{value} (the means) is returned.
 }
 
 \examples{

@@ -16,30 +16,28 @@ step_center(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{means}{A named numeric vector of means. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{means}{A named numeric vector of means. This is \code{NULL} until computed
+by \code{\link[=prep]{prep()}}.}
 
-\item{na_rm}{A logical value indicating whether \code{NA}
-values should be removed during computations.}
+\item{na_rm}{A logical value indicating whether \code{NA} values should be removed
+during computations.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -52,11 +50,10 @@ sequence of any existing operations.
 normalize numeric data to have a mean of zero.
 }
 \details{
-Centering data means that the average of a variable is
-subtracted from the data. \code{step_center} estimates the
-variable means from the data used in the \code{training}
-argument of \code{prep.recipe}. \code{bake.recipe} then applies
-the centering to new data sets using these means.
+Centering data means that the average of a variable is subtracted from the
+data. \code{step_center()} estimates the variable means from the data used in the
+\code{training} argument of \code{\link[=prep]{prep()}}. \code{\link[=bake]{bake()}} then applies the centering to new
+data sets using these means.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

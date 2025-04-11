@@ -6,26 +6,27 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param lon,lat Selector functions to choose which variables are
-#'  used by the step. See [selections()] for more details.
-#' @param ref_lon,ref_lat Single numeric values for the location
-#'  of the reference point.
+#' @param lon,lat Selector functions to choose which variables are used by the
+#'   step. See [selections()] for more details.
+#' @param ref_lon,ref_lat Single numeric values for the location of the
+#'   reference point.
 #' @param is_lat_lon A logical: Are coordinates in latitude and longitude? If
-#'  `TRUE` the Haversine formula is used and the returned result is meters. If
-#'  `FALSE` the Pythagorean formula is used. Default is `TRUE` and for recipes
-#'  created from previous versions of recipes, a value of `FALSE` is used.
-#' @param log A logical: should the distance be transformed by
-#'  the natural log function?
-#' @param name A single character value to use for the new
-#'  predictor column. If a column exists with this name, an error is
-#'  issued.
+#'   `TRUE` the Haversine formula is used and the returned result is meters. If
+#'   `FALSE` the Pythagorean formula is used. Default is `TRUE` and for recipes
+#'   created from previous versions of recipes, a value of `FALSE` is used.
+#' @param log A logical: should the distance be transformed by the natural log
+#'   function?
+#' @param name A single character value to use for the new predictor column. If
+#'   a column exists with this name, an error is issued.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @references https://en.wikipedia.org/wiki/Haversine_formula
 #' @export
-#' @details `step_geodist` uses the Pythagorean theorem to calculate Euclidean
-#'  distances if `is_lat_lon` is FALSE. If `is_lat_lon` is TRUE, the Haversine
-#'  formula is used to calculate the great-circle distance in meters.
+#' @details
+#'
+#' `step_geodist` uses the Pythagorean theorem to calculate Euclidean distances
+#' if `is_lat_lon` is FALSE. If `is_lat_lon` is TRUE, the Haversine formula is
+#' used to calculate the great-circle distance in meters.
 #'
 #' # Tidying
 #'

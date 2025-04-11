@@ -15,11 +15,11 @@ requirements of. This must be a role that already exists in the recipe.}
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{bake}{At \code{bake()} time, should a check be done to ensure that all
-columns of this role that were supplied to \code{recipe()} also be present
-in the \code{new_data} supplied to \code{bake()}?
+columns of this role that were supplied to \code{recipe()} also be present in
+the \code{new_data} supplied to \code{bake()}?
 
-Must be a single \code{TRUE} or \code{FALSE}. The default, \code{NULL}, won't modify
-this requirement.
+Must be a single \code{TRUE} or \code{FALSE}. The default, \code{NULL}, won't modify this
+requirement.
 
 The following represents the default bake time requirements of specific
 types of roles:
@@ -32,15 +32,15 @@ types of roles:
 }}
 }
 \description{
-\code{update_role_requirements()} allows you to fine tune requirements of the
-various roles you might come across in recipes (see \code{\link[=update_role]{update_role()}} for
-general information about roles). Role requirements can only be altered for
-roles that exist in the \emph{original} data supplied to \code{\link[=recipe]{recipe()}}, they are not
-applied to columns computed by steps.
+\code{update_role_requirements()} allows you to fine tune
+requirements of the various roles you might come across in recipes (see
+\code{\link[=update_role]{update_role()}} for general information about roles). Role requirements can
+only be altered for roles that exist in the \emph{original} data supplied to
+\code{\link[=recipe]{recipe()}}, they are not applied to columns computed by steps.
 
 Like \code{update_role()}, \code{update_role_requirements()} is applied to the recipe
-\emph{immediately}, unlike the \verb{step_*()} functions which do most of their work
-at \code{\link[=prep]{prep()}} time.
+\emph{immediately}, unlike the \verb{step_*()} functions which do most of their work at
+\code{\link[=prep]{prep()}} time.
 }
 \examples{
 df <- tibble(y = c(1, 2, 3), x = c(4, 5, 6), var = c("a", "b", "c"))

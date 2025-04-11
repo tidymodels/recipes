@@ -6,20 +6,22 @@
 #'
 #' @inheritParams step_center
 #' @param means A named numeric vector of means. This is `NULL` until computed
-#'  by [prep()]. Note that, if the original data are integers, the mean
-#'  will be converted to an integer to maintain the same data type.
+#'   by [prep()]. Note that, if the original data are integers, the mean will be
+#'   converted to an integer to maintain the same data type.
 #' @param trim The fraction (0 to 0.5) of observations to be trimmed from each
-#'  end of the variables before the mean is computed. Values of trim outside
-#'  that range are taken as the nearest endpoint.
+#'   end of the variables before the mean is computed. Values of trim outside
+#'   that range are taken as the nearest endpoint.
 #' @template step-return
 #' @family imputation steps
 #' @export
-#' @details `step_impute_mean` estimates the variable means from the data used
-#'  in the `training` argument of `prep.recipe`. `bake.recipe` then applies the
-#'  new values to new data sets using these averages.
+#' @details
 #'
-#'  As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
-#'    to `step_impute_mean()`.
+#' `step_impute_mean()` estimates the variable means from the data used in the
+#' `training` argument of [prep()]. [bake()] then applies the new values to new
+#' data sets using these averages.
+#'
+#' As of `recipes` 0.1.16, this function name changed from `step_meanimpute()`
+#' to `step_impute_mean()`.
 #'
 #' # Tidying
 #'

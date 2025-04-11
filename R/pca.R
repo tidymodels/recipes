@@ -5,48 +5,46 @@
 #'
 #' @inheritParams step_center
 #' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the new columns created by this step from
-#'  the original variables will be used as _predictors_ in a model.
-#' @param num_comp The number of components to retain as new predictors.
-#'  If `num_comp` is greater than the number of columns or the number of
-#'  possible components, a smaller value will be used. If `num_comp = 0`
-#'  is set then no transformation is done and selected variables will
-#'  stay unchanged, regardless of the value of `keep_original_cols`.
+#'   they be assigned? By default, the new columns created by this step from the
+#'   original variables will be used as _predictors_ in a model.
+#' @param num_comp The number of components to retain as new predictors. If
+#'   `num_comp` is greater than the number of columns or the number of possible
+#'   components, a smaller value will be used. If `num_comp = 0` is set then no
+#'   transformation is done and selected variables will stay unchanged,
+#'   regardless of the value of `keep_original_cols`.
 #' @param threshold A fraction of the total variance that should be covered by
-#'  the components. For example, `threshold = .75` means that `step_pca` should
-#'  generate enough components to capture 75 percent of the variability in the
-#'  variables. Note: using this argument will override and reset any value given
-#'  to `num_comp`.
-#' @param options A list of options to the default method for
-#'  [stats::prcomp()]. Argument defaults are set to `retx = FALSE`, `center =
-#'  FALSE`, `scale. = FALSE`, and `tol = NULL`. **Note** that the argument `x`
-#'  should not be passed here (or at all).
+#'   the components. For example, `threshold = .75` means that `step_pca()`
+#'   should generate enough components to capture 75 percent of the variability
+#'   in the variables. Note: using this argument will override and reset any
+#'   value given to `num_comp`.
+#' @param options A list of options to the default method for [stats::prcomp()].
+#'   Argument defaults are set to `retx = FALSE`, `center = FALSE`, `scale. =
+#'   FALSE`, and `tol = NULL`. **Note** that the argument `x` should not be
+#'   passed here (or at all).
 #' @param res The [stats::prcomp.default()] object is stored here once this
-#'  preprocessing step has be trained by [prep()].
+#'   preprocessing step has be trained by [prep()].
 #' @param columns A character string of the selected variable names. This field
 #'   is a placeholder and will be populated once [prep()] is used.
 #' @param prefix A character string for the prefix of the resulting new
-#'  variables. See notes below.
+#'   variables. See notes below.
 #' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
+#'   output. Defaults to `FALSE`.
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
 #' @details
 #'
-#' Principal component analysis (PCA) is a transformation of a
-#'  group of variables that produces a new set of artificial
-#'  features or components. These components are designed to capture
-#'  the maximum amount of information (i.e. variance) in the
-#'  original variables. Also, the components are statistically
-#'  independent from one another. This means that they can be used
-#'  to combat large inter-variables correlations in a data set.
+#' Principal component analysis (PCA) is a transformation of a group of
+#' variables that produces a new set of artificial features or components. These
+#' components are designed to capture the maximum amount of information (i.e.
+#' variance) in the original variables. Also, the components are statistically
+#' independent from one another. This means that they can be used to combat
+#' large inter-variables correlations in a data set.
 #'
-#' It is advisable to standardize the variables prior to running
-#'  PCA. Here, each variable will be centered and scaled prior to
-#'  the PCA calculation. This can be changed using the
-#'  `options` argument or by using [step_center()]
-#'  and [step_scale()].
+#' It is advisable to standardize the variables prior to running PCA. Here, each
+#' variable will be centered and scaled prior to the PCA calculation. This can
+#' be changed using the `options` argument or by using [step_center()] and
+#' [step_scale()].
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "PC"
@@ -54,9 +52,9 @@
 #' cat(result)
 #' ```
 #'
-#' Alternatively, `threshold` can be used to determine the
-#'  number of components that are required to capture a specified
-#'  fraction of the total variance in the variables.
+#' Alternatively, `threshold` can be used to determine the number of components
+#' that are required to capture a specified fraction of the total variance in
+#' the variables.
 #'
 #' # Tidying
 #'

@@ -7,18 +7,19 @@
 #' point.
 #'
 #' @inheritParams step_center
-#' @param threshold A named numeric vector of lower bounds. This is
-#'  `NULL` until computed by [prep()].
+#' @param threshold A named numeric vector of lower bounds. This is `NULL` until
+#'   computed by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
-#' @details `step_impute_lower` estimates the variable minimums
-#'  from the data used in the `training` argument of `prep.recipe`.
-#'  `bake.recipe` then simulates a value for any data at the minimum
-#'  with a random uniform value between zero and the minimum.
+#' @details
 #'
-#'  As of `recipes` 0.1.16, this function name changed from `step_lowerimpute()`
-#'    to `step_impute_lower()`.
+#' `step_impute_lower()` estimates the variable minimums from the data used in
+#' the `training` argument of [prep()]. [bake()] then simulates a value for any
+#' data at the minimum with a random uniform value between zero and the minimum.
+#'
+#' As of `recipes` 0.1.16, this function name changed from `step_lowerimpute()`
+#' to `step_impute_lower()`.
 #'
 #' # Tidying
 #'

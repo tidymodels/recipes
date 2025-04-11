@@ -17,37 +17,34 @@ step_interact(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{terms}{A traditional R formula that contains interaction
-terms. This can include \code{.} and selectors. See \code{\link[=selections]{selections()}}
-for more details, and consider using \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}} when
-dummy variables have been created.}
+\item{terms}{A traditional R formula that contains interaction terms. This
+can include \code{.} and selectors. See \code{\link[=selections]{selections()}} for more details, and
+consider using \code{\link[tidyselect:starts_with]{tidyselect::starts_with()}} when dummy variables have been
+created.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{objects}{A list of \code{terms} objects for each
-individual interaction.}
+\item{objects}{A list of \code{terms} objects for each individual interaction.}
 
-\item{sep}{A character value used to delineate variables in an
-interaction (e.g. \code{var1_x_var2} instead of the more
-traditional \code{var1:var2}).}
+\item{sep}{A character value used to delineate variables in an interaction
+(e.g. \code{var1_x_var2} instead of the more traditional \code{var1:var2}).}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -60,37 +57,31 @@ sequence of any existing operations.
 new columns that are interaction terms between two or more variables.
 }
 \details{
-\code{step_interact} can create interactions between
-variables. It is primarily intended for \strong{numeric data};
-categorical variables should probably be converted to dummy
-variables using \code{\link[=step_dummy]{step_dummy()}} prior to being used for
+\code{step_interact()} can create interactions between variables. It is primarily
+intended for \strong{numeric data}; categorical variables should probably be
+converted to dummy variables using \code{\link[=step_dummy]{step_dummy()}} prior to being used for
 interactions.
 
-Unlike other step functions, the \code{terms} argument should
-be a traditional R model formula but should contain no inline
-functions (e.g. \code{log}). For example, for predictors
-\code{A}, \code{B}, and \code{C}, a formula such as
-\code{~A:B:C} can be used to make a three way interaction
-between the variables. If the formula contains terms other than
-interactions (e.g. \code{(A+B+C)^3}) only the interaction terms
-are retained for the design matrix.
+Unlike other step functions, the \code{terms} argument should be a traditional R
+model formula but should contain no inline functions (e.g. \code{log}). For
+example, for predictors \code{A}, \code{B}, and \code{C}, a formula such as \code{~A:B:C} can be
+used to make a three way interaction between the variables. If the formula
+contains terms other than interactions (e.g. \code{(A+B+C)^3}) only the
+interaction terms are retained for the design matrix.
 
-The separator between the variables defaults to "\verb{_x_}" so
-that the three way interaction shown previously would generate a
-column named \code{A_x_B_x_C}. This can be changed using the
-\code{sep} argument.
+The separator between the variables defaults to "\verb{_x_}" so that the three way
+interaction shown previously would generate a column named \code{A_x_B_x_C}. This
+can be changed using the \code{sep} argument.
 
-When dummy variables are created and are used in interactions,
-selectors can help specify the interactions succinctly. For
-example, suppose a factor column \code{X} gets converted to dummy
-variables \code{x_2}, \code{x_3}, ..., \code{x_6} using \code{\link[=step_dummy]{step_dummy()}}. If
-you wanted an interaction with numeric column \code{z}, you could
-create a set of specific interaction effects (e.g.
-\code{x_2:z + x_3:z} and so on) or you could use
-\code{starts_with("x_"):z}. When \code{\link[=prep]{prep()}} evaluates this step,
-\code{starts_with("x_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x_6)}
-so that the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and
-all two-way interactions are created.
+When dummy variables are created and are used in interactions, selectors can
+help specify the interactions succinctly. For example, suppose a factor
+column \code{X} gets converted to dummy variables \code{x_2}, \code{x_3}, ..., \code{x_6} using
+\code{\link[=step_dummy]{step_dummy()}}. If you wanted an interaction with numeric column \code{z}, you
+could create a set of specific interaction effects (e.g. \code{x_2:z + x_3:z} and
+so on) or you could use \code{starts_with("x_"):z}. When \code{\link[=prep]{prep()}} evaluates this
+step, \code{starts_with("x_")} resolves to \code{(x_2 + x_3 + x_4 + x_5 + x_6)} so that
+the formula is now \code{(x_2 + x_3 + x_4 + x_5 + x_6):z} and all two-way
+interactions are created.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

@@ -6,13 +6,15 @@
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param offset A numeric value to modify values of the columns that are either
-#' one or zero. They are modified to be `x - offset` or `offset`, respectively.
+#'   one or zero. They are modified to be `x - offset` or `offset`,
+#'   respectively.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details The logit transformation takes values between
-#'  zero and one and translates them to be on the real line using
-#'  the function `f(p) = log(p/(1-p))`.
+#' @details
+#'
+#' The logit transformation takes values between zero and one and translates
+#' them to be on the real line using the function `f(p) = log(p/(1-p))`.
 #'
 #' # Tidying
 #'

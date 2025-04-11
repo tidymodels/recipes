@@ -4,26 +4,25 @@
 #' creates natural spline (also known as restricted cubic spline) features.
 #'
 #' @inheritParams step_spline_b
-#' @param deg_free The degrees of freedom for the natural spline. As the
-#'  degrees of freedom for a natural spline increase, more flexible and
-#'  complex curves can be generated. This step requires at least two degrees of
-#'  freedom.
-#' @param options A list of options for [splines2::naturalSpline()]
-#'  which should not include `x`, `df`, or `intercept`.
+#' @param deg_free The degrees of freedom for the natural spline. As the degrees
+#'   of freedom for a natural spline increase, more flexible and complex curves
+#'   can be generated. This step requires at least two degrees of freedom.
+#' @param options A list of options for [splines2::naturalSpline()] which should
+#'   not include `x`, `df`, or `intercept`.
 #' @return An object with classes `"step_spline_natural"` and `"step"`.
 #' @export
 #' @details
 #'
 #' Spline transformations take a numeric column and create multiple features
 #' that, when used in a model, can estimate nonlinear trends between the column
-#' and some outcome. The degrees of freedom determines how many new features
-#' are added to the data.
+#' and some outcome. The degrees of freedom determines how many new features are
+#' added to the data.
 #'
 #' This spline is a piece-wise cubic polynomial function.
 #'
-#' If the spline expansion fails for a selected column, the step will
-#' remove that column's results (but will retain the original data). Use the
-#' `tidy()` method to determine which columns were used.
+#' If the spline expansion fails for a selected column, the step will remove
+#' that column's results (but will retain the original data). Use the `tidy()`
+#' method to determine which columns were used.
 #'
 #' # Tidying
 #'

@@ -6,13 +6,15 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... One or more unquoted expressions separated by commas. See
-#'  [dplyr::rename()] where the convention is **`new_name = old_name`**.
+#'   [dplyr::rename()] where the convention is **`new_name = old_name`**.
 #' @param inputs Quosure(s) of `...`.
 #' @template step-return
-#' @details When an object in the user's global environment is referenced in
-#'  the expression defining the new variable(s), it is a good idea to use
-#'  quasiquotation (e.g. `!!`) to embed the value of the object in the
-#'  expression (to be portable between sessions).
+#' @details
+#'
+#' When an object in the user's global environment is referenced in the
+#' expression defining the new variable(s), it is a good idea to use
+#' quasiquotation (e.g. `!!`) to embed the value of the object in the expression
+#' (to be portable between sessions).
 #'
 #'  # Tidying
 #'

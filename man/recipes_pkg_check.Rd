@@ -12,9 +12,8 @@ recipes_pkg_check(pkg = NULL, ...)
 \item{...}{Extra arguments to pass to \code{\link[utils:install.packages]{utils::install.packages()}}}
 }
 \value{
-Nothing is returned but a message is printed to the
-console about which packages (if any) should be installed along
-with code to do so.
+Nothing is returned but a message is printed to the console about
+which packages (if any) should be installed along with code to do so.
 }
 \description{
 This will check to see if all required packages are installed.

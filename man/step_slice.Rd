@@ -15,17 +15,15 @@ step_slice(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{Integer row values. See
-\code{\link[dplyr:slice]{dplyr::slice()}} for more details.}
+\item{...}{Integer row values. See \code{\link[dplyr:slice]{dplyr::slice()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{inputs}{Quosure of values given by \code{...}.}
 
@@ -46,11 +44,10 @@ sequence of any existing operations.
 rows using \code{\link[dplyr:slice]{dplyr::slice()}}.
 }
 \details{
-When an object in the user's global environment is
-referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \verb{!!})
-to embed the value of the object in the expression (to
-be portable between sessions). See the examples.
+When an object in the user's global environment is referenced in the
+expression defining the new variable(s), it is a good idea to use
+quasiquotation (e.g. \verb{!!}) to embed the value of the object in the expression
+(to be portable between sessions). See the examples.
 }
 \section{Row Filtering}{
 

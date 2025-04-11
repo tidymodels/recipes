@@ -2,16 +2,16 @@
 #'
 #' `step_intercept()` creates a *specification* of a recipe step that will add
 #' an intercept or constant term in the first column of a data matrix.
-#' `step_intercept()` defaults to *predictor* role so that it is by default
-#' only called in the bake step. Be careful to avoid unintentional transformations
+#' `step_intercept()` defaults to *predictor* role so that it is by default only
+#' called in the bake step. Be careful to avoid unintentional transformations
 #' when calling steps with `all_predictors()`.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param ... Argument ignored; included for consistency with other step
 #'   specification functions.
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated. Again included only for consistency.
+#' @param trained A logical to indicate if the quantities for preprocessing have
+#'   been estimated. Again included only for consistency.
 #' @param name Character name for newly added column
 #' @param value A numeric constant to fill the intercept column. Defaults to
 #'   `1L`.

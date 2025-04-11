@@ -4,14 +4,13 @@
 #' variables that contain only a single value.
 #'
 #' @inheritParams step_center
-#' @param removals A character string that contains the names of
-#'  columns that should be removed. These values are not determined
-#'  until [prep()] is called.
-#' @param group An optional character string or call to [dplyr::vars()]
-#'  that can be used to specify a group(s) within which to identify
-#'  variables that contain only a single value. If the grouping variables
-#'  are contained in terms selector, they will not be considered for
-#'  removal.
+#' @param removals A character string that contains the names of columns that
+#'   should be removed. These values are not determined until [prep()] is
+#'   called.
+#' @param group An optional character string or call to [dplyr::vars()] that can
+#'   be used to specify a group(s) within which to identify variables that
+#'   contain only a single value. If the grouping variables are contained in
+#'   terms selector, they will not be considered for removal.
 #' @template step-return
 #' @template filter-steps
 #' @details

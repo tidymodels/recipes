@@ -7,20 +7,18 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @inheritParams step_dummy
-#' @param ... A single selector function to choose which variable
-#'  will be searched for the regex pattern. The selector should resolve
-#'  to a single variable. See [selections()] for more details.
-#' @param pattern A character string containing a regular
-#'  expression (or character string for `fixed = TRUE`) to be
-#'  matched in the given character vector. Coerced by
-#'  `as.character` to a character string if possible.
-#' @param options A list of options to [grepl()] that
-#'  should not include `x` or `pattern`.
-#' @param result A single character value for the name of the new
-#'  variable. It should be a valid column name.
-#' @param input A single character value for the name of the
-#'  variable being searched. This is `NULL` until computed by
-#'  [prep()].
+#' @param ... A single selector function to choose which variable will be
+#'   searched for the regex pattern. The selector should resolve to a single
+#'   variable. See [selections()] for more details.
+#' @param pattern A character string containing a regular expression (or
+#'   character string for `fixed = TRUE`) to be matched in the given character
+#'   vector. Coerced by `as.character` to a character string if possible.
+#' @param options A list of options to [grepl()] that should not include `x` or
+#'   `pattern`.
+#' @param result A single character value for the name of the new variable. It
+#'   should be a valid column name.
+#' @param input A single character value for the name of the variable being
+#'   searched. This is `NULL` until computed by [prep()].
 #' @template step-return
 #' @details
 #'

@@ -7,10 +7,9 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @param degree,scale_factor,offset Numeric values for the polynomial kernel
-#' function. See the documentation at [kernlab::polydot()].
-#' @param res An S4 [kernlab::kpca()] object is stored
-#'  here once this preprocessing step has be trained by
-#'  [prep()].
+#'   function. See the documentation at [kernlab::polydot()].
+#' @param res An S4 [kernlab::kpca()] object is stored here once this
+#'   preprocessing step has be trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export

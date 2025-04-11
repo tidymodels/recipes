@@ -5,8 +5,8 @@
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca
-#' @param offset An optional value to add to the data prior to
-#'  logging (to avoid `1/0`).
+#' @param offset An optional value to add to the data prior to logging (to avoid
+#'   `1/0`).
 #' @template step-return
 #' @family individual transformation steps
 #' @export

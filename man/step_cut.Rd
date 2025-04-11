@@ -16,30 +16,28 @@ step_cut(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{breaks}{A numeric vector with at least one cut point.}
 
-\item{include_outside_range}{Logical, indicating if values outside the
-range in the train set should be included in the lowest or highest bucket.
+\item{include_outside_range}{Logical, indicating if values outside the range
+in the train set should be included in the lowest or highest bucket.
 Defaults to \code{FALSE}, values outside the original range will be set to \code{NA}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -52,13 +50,13 @@ sequence of any existing operations.
 variable into a factor based on provided boundary values.
 }
 \details{
-Unlike the \code{base::cut()} function there is no need to specify the
-min and the max values in the breaks. All values before the lowest break
-point will end up in the first bucket, all values after the last break
-points will end up in the last.
+Unlike the \code{base::cut()} function there is no need to specify the min and the
+max values in the breaks. All values before the lowest break point will end
+up in the first bucket, all values after the last break points will end up in
+the last.
 
-\code{step_cut()} will call \code{base::cut()} in the baking step with
-\code{include.lowest} set to \code{TRUE}.
+\code{step_cut()} will call \code{base::cut()} in the baking step with \code{include.lowest}
+set to \code{TRUE}.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

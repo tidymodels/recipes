@@ -6,8 +6,9 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param fn A function `fun`, a quosure style lambda `~ fun(.)`` or a list of
-#' either form (but containing only a single function, see [dplyr::rename_at()]).
+#' @param fn A function `fun`, a quosure style lambda `~ fun(.)` or a list of
+#'   either form (but containing only a single function, see
+#'   [dplyr::rename_at()]).
 #' **Note that this argument must be named**.
 #' @param inputs A vector of column names populated by [prep()].
 #' @template step-return

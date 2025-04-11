@@ -27,66 +27,56 @@ discretize(x, ...)
 \arguments{
 \item{x}{A numeric vector}
 
-\item{...}{Options to pass to
-\code{\link[stats:quantile]{stats::quantile()}} that should not include \code{x}
+\item{...}{Options to pass to \code{\link[stats:quantile]{stats::quantile()}} that should not include \code{x}
 or \code{probs}.}
 
-\item{cuts}{An integer defining how many cuts to make of the
-data.}
+\item{cuts}{An integer defining how many cuts to make of the data.}
 
-\item{labels}{A character vector defining the factor levels
-that will be in the new factor (from smallest to largest). This
-should have length \code{cuts+1} and should not include a level
-for missing (see \code{keep_na} below).}
+\item{labels}{A character vector defining the factor levels that will be in
+the new factor (from smallest to largest). This should have length \code{cuts+1}
+and should not include a level for missing (see \code{keep_na} below).}
 
-\item{prefix}{A single parameter value to be used as a prefix
-for the factor levels (e.g. \code{bin1}, \code{bin2}, ...). If
-the string is not a valid R name, it is coerced to one.
-If \code{prefix = NULL} then the factor levels will be labelled
-according to the output of \code{cut()}.}
+\item{prefix}{A single parameter value to be used as a prefix for the factor
+levels (e.g. \code{bin1}, \code{bin2}, ...). If the string is not a valid R name, it
+is coerced to one. If \code{prefix = NULL} then the factor levels will be
+labelled according to the output of \code{\link[=cut]{cut()}}.}
 
-\item{keep_na}{A logical for whether a factor level should be
-created to identify missing values in \code{x}. If \code{keep_na} is
-set to \code{TRUE} then \code{na.rm = TRUE} is used when calling
-\code{\link[stats:quantile]{stats::quantile()}}.}
+\item{keep_na}{A logical for whether a factor level should be created to
+identify missing values in \code{x}. If \code{keep_na} is set to \code{TRUE} then \code{na.rm = TRUE} is used when calling \code{\link[stats:quantile]{stats::quantile()}}.}
 
-\item{infs}{A logical indicating whether the smallest and
-largest cut point should be infinite.}
+\item{infs}{A logical indicating whether the smallest and largest cut point
+should be infinite.}
 
-\item{min_unique}{An integer defining a sample size line of
-dignity for the binning. If (the number of unique
-values)\verb{/(cuts+1)} is less than \code{min_unique}, no
-discretization takes place.}
+\item{min_unique}{An integer defining a sample size line of dignity for the
+binning. If \verb{(the number of unique values)/(cuts+1)} is less than
+\code{min_unique}, no discretization takes place.}
 
 \item{object}{An object of class \code{discretize}.}
 
 \item{new_data}{A new numeric object to be binned.}
 }
 \value{
-\code{discretize} returns an object of class
-\code{discretize} and \code{predict.discretize} returns a factor
-vector.
+\code{discretize} returns an object of class \code{discretize} and
+\code{\link[=predict.discretize]{predict.discretize()}} returns a factor vector.
 }
 \description{
-\code{discretize()} converts a numeric vector into a factor with
-bins having approximately the same number of data points (based
-on a training set).
+\code{discretize()} converts a numeric vector into a factor with bins having
+approximately the same number of data points (based on a training set).
 }
 \details{
-\code{discretize} estimates the cut points from
-\code{x} using percentiles. For example, if \code{cuts = 3}, the
-function estimates the quartiles of \code{x} and uses these as
-the cut points. If \code{cuts = 2}, the bins are defined as
-being above or below the median of \code{x}.
+\code{discretize()} estimates the cut points from \code{x} using percentiles. For
+example, if \code{cuts = 3}, the function estimates the quartiles of \code{x} and uses
+these as the cut points. If \code{cuts = 2}, the bins are defined as being above
+or below the median of \code{x}.
 
-The \code{predict} method can then be used to turn numeric
-vectors into factor vectors.
+The \code{\link[=predict]{predict()}} method can then be used to turn numeric vectors into factor
+vectors.
 
-If \code{keep_na = TRUE}, a suffix of "_missing" is used as a
-factor level (see the examples below).
+If \code{keep_na = TRUE}, a suffix of \code{"_missing"} is used as a factor level (see
+the examples below).
 
-If \code{infs = FALSE} and a new value is greater than the
-largest value of \code{x}, a missing value will result.
+If \code{infs = FALSE} and a new value is greater than the largest value of \code{x}, a
+missing value will result.
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

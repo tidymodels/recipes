@@ -6,48 +6,42 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param terms A traditional R formula that contains interaction
-#'  terms. This can include `.` and selectors. See [selections()]
-#'  for more details, and consider using [tidyselect::starts_with()] when
-#'  dummy variables have been created.
-#' @param objects A list of `terms` objects for each
-#'  individual interaction.
-#' @param sep A character value used to delineate variables in an
-#'  interaction (e.g. `var1_x_var2` instead of the more
-#'  traditional `var1:var2`).
+#' @param terms A traditional R formula that contains interaction terms. This
+#'   can include `.` and selectors. See [selections()] for more details, and
+#'   consider using [tidyselect::starts_with()] when dummy variables have been
+#'   created.
+#' @param objects A list of `terms` objects for each individual interaction.
+#' @param sep A character value used to delineate variables in an interaction
+#'   (e.g. `var1_x_var2` instead of the more traditional `var1:var2`).
 #' @template step-return
 #' @export
-#' @details `step_interact` can create interactions between
-#'  variables. It is primarily intended for **numeric data**;
-#'  categorical variables should probably be converted to dummy
-#'  variables using [step_dummy()] prior to being used for
-#'  interactions.
+#' @details
 #'
-#' Unlike other step functions, the `terms` argument should
-#'  be a traditional R model formula but should contain no inline
-#'  functions (e.g. `log`). For example, for predictors
-#'  `A`, `B`, and `C`, a formula such as
-#'  `~A:B:C` can be used to make a three way interaction
-#'  between the variables. If the formula contains terms other than
-#'  interactions (e.g. `(A+B+C)^3`) only the interaction terms
-#'  are retained for the design matrix.
+#' `step_interact()` can create interactions between variables. It is primarily
+#' intended for **numeric data**; categorical variables should probably be
+#' converted to dummy variables using [step_dummy()] prior to being used for
+#' interactions.
 #'
-#' The separator between the variables defaults to "`_x_`" so
-#'  that the three way interaction shown previously would generate a
-#'  column named `A_x_B_x_C`. This can be changed using the
-#'  `sep` argument.
+#' Unlike other step functions, the `terms` argument should be a traditional R
+#' model formula but should contain no inline functions (e.g. `log`). For
+#' example, for predictors `A`, `B`, and `C`, a formula such as `~A:B:C` can be
+#' used to make a three way interaction between the variables. If the formula
+#' contains terms other than interactions (e.g. `(A+B+C)^3`) only the
+#' interaction terms are retained for the design matrix.
 #'
-#' When dummy variables are created and are used in interactions,
-#'  selectors can help specify the interactions succinctly. For
-#'  example, suppose a factor column `X` gets converted to dummy
-#'  variables `x_2`, `x_3`, ..., `x_6` using [step_dummy()]. If
-#'  you wanted an interaction with numeric column `z`, you could
-#'  create a set of specific interaction effects (e.g.
-#'  `x_2:z + x_3:z` and so on) or you could use
-#'  `starts_with("x_"):z`. When [prep()] evaluates this step,
-#'  `starts_with("x_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x_6)`
-#'  so that the formula is now `(x_2 + x_3 + x_4 + x_5 + x_6):z` and
-#'  all two-way interactions are created.
+#' The separator between the variables defaults to "`_x_`" so that the three way
+#' interaction shown previously would generate a column named `A_x_B_x_C`. This
+#' can be changed using the `sep` argument.
+#'
+#' When dummy variables are created and are used in interactions, selectors can
+#' help specify the interactions succinctly. For example, suppose a factor
+#' column `X` gets converted to dummy variables `x_2`, `x_3`, ..., `x_6` using
+#' [step_dummy()]. If you wanted an interaction with numeric column `z`, you
+#' could create a set of specific interaction effects (e.g. `x_2:z + x_3:z` and
+#' so on) or you could use `starts_with("x_"):z`. When [prep()] evaluates this
+#' step, `starts_with("x_")` resolves to `(x_2 + x_3 + x_4 + x_5 + x_6)` so that
+#' the formula is now `(x_2 + x_3 + x_4 + x_5 + x_6):z` and all two-way
+#' interactions are created.
 #'
 #' # Tidying
 #'

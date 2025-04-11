@@ -7,41 +7,37 @@
 #' @inheritParams step_classdist
 #' @inheritParams step_center
 #' @inheritParams step_pca
-#' @param role For model terms created by this step, what analysis
-#'  role should they be assigned? If `names` is left to be
-#'  `NULL`, the rolling statistics replace the original columns
-#'  and the roles are left unchanged. If `names` is set, those
-#'  new columns will have a role of `NULL` unless this argument
-#'  has a value.
+#' @param role For model terms created by this step, what analysis role should
+#'   they be assigned? If `names` is left to be `NULL`, the rolling statistics
+#'   replace the original columns and the roles are left unchanged. If `names`
+#'   is set, those new columns will have a role of `NULL` unless this argument
+#'   has a value.
 #' @param size An odd integer `>= 3` for the window size.
-#' @param na_rm A logical for whether missing values should be
-#'  removed from the calculations within each window.
-#' @param statistic A character string for the type of statistic
-#'  that should be calculated for each moving window. Possible
-#'  values are: `'max'`, `'mean'`, `'median'`,
-#'  `'min'`, `'prod'`, `'sd'`, `'sum'`,
-#'  `'var'`
-#' @param names An optional character string that is the same
-#'  length of the number of terms selected by `terms`. If you
-#'  are not sure what columns will be selected, use the
-#'  `summary` function (see the example below). These will be
-#'  the names of the new columns created by the step.
+#' @param na_rm A logical for whether missing values should be removed from the
+#'   calculations within each window.
+#' @param statistic A character string for the type of statistic that should be
+#'   calculated for each moving window. Possible values are: `'max'`, `'mean'`,
+#'   `'median'`, `'min'`, `'prod'`, `'sd'`, `'sum'`, `'var'`
+#' @param names An optional character string that is the same length of the
+#'   number of terms selected by `terms`. If you are not sure what columns will
+#'   be selected, use the `summary` function (see the example below). These will
+#'   be the names of the new columns created by the step.
 #' @template step-return
 #' @export
-#' @details The calculations use a somewhat atypical method for
-#'  handling the beginning and end parts of the rolling statistics.
-#'  The process starts with the center justified window calculations
-#'  and the beginning and ending parts of the rolling values are
-#'  determined using the first and last rolling values,
-#'  respectively. For example, if a column `x` with 12 values is
-#'  smoothed with a 5-point moving median, the first three smoothed
-#'  values are estimated by `median(x[1:5])` and the fourth
-#'  uses `median(x[2:6])`.
+#' @details
 #'
-#'  `keep_original_cols` also applies to this step if `names` is specified.
+#' The calculations use a somewhat atypical method for handling the beginning
+#' and end parts of the rolling statistics. The process starts with the center
+#' justified window calculations and the beginning and ending parts of the
+#' rolling values are determined using the first and last rolling values,
+#' respectively. For example, if a column `x` with 12 values is smoothed with a
+#' 5-point moving median, the first three smoothed values are estimated by
+#' `median(x[1:5])` and the fourth uses `median(x[2:6])`.
 #'
-#  This step requires the \pkg{RcppRoll} package. If not installed, the
-#'  step will stop with a note about installing the package.
+#' `keep_original_cols` also applies to this step if `names` is specified.
+#'
+#' This step requires the \pkg{RcppRoll} package. If not installed, the step
+#' will stop with a note about installing the package.
 #'
 #' # Tidying
 #'

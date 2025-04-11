@@ -52,21 +52,21 @@
 \item{x}{An object}
 }
 \description{
-The \code{.get_data_types()} generic is used internally to supply types to
-columns used in recipes. These functions underlie the work that the user sees
-in \link{selections}.
+The \code{.get_data_types()} generic is used internally to supply types to columns
+used in recipes. These functions underlie the work that the user sees in
+\link{selections}.
 }
 \details{
 This function acts as an extended recipes-specific version of \code{\link[=class]{class()}}. By
 ignoring differences in similar types ("double" and "numeric") and allowing
 each element to have multiple types ("factor" returns "factor", "unordered",
-and "nominal", and "character" returns "string", "unordered", and
-"nominal") we are able to create more natural selectors such as
-\code{\link[=all_nominal]{all_nominal()}}, \code{\link[=all_string]{all_string()}} and \code{\link[=all_integer]{all_integer()}}.
+and "nominal", and "character" returns "string", "unordered", and "nominal")
+we are able to create more natural selectors such as \code{\link[=all_nominal]{all_nominal()}},
+\code{\link[=all_string]{all_string()}} and \code{\link[=all_integer]{all_integer()}}.
 
-The following list shows the data types for different classes, as defined
-by recipes. If an object has a class not supported by \code{.get_data_types()},
-it will get data type "other".
+The following list shows the data types for different classes, as defined by
+recipes. If an object has a class not supported by \code{.get_data_types()}, it
+will get data type "other".
 \itemize{
 \item character: string, unordered, and nominal
 \item ordered: ordered, and nominal

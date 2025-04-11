@@ -21,8 +21,8 @@
 #' More types can be added by request.
 #'
 #' For recipes, we distinguish between supervised and unsupervised steps.
-#' Supervised steps use the outcome in the calculations, this type of steps
-#' will use frequency and importance weights. Unsupervised steps don't use the
+#' Supervised steps use the outcome in the calculations, this type of steps will
+#' use frequency and importance weights. Unsupervised steps don't use the
 #' outcome and will only use frequency weights.
 #'
 #' There are 3 main principles about how case weights are used within recipes.
@@ -52,8 +52,8 @@ NULL
 #' @param .data The training data
 #' @param x A numeric vector or a data frame
 #' @param wts A vector of case weights
-#' @param na_rm A logical value indicating whether `NA`
-#'  values should be removed during computations.
+#' @param na_rm A logical value indicating whether `NA` values should be removed
+#'   during computations.
 #' @param use Used by [correlations()] or [covariances()] to pass argument to
 #'   [cor()] or [cov()]
 #' @param method Used by [correlations()] or [covariances()] to pass argument to
@@ -61,17 +61,17 @@ NULL
 #' @param unsupervised Can the step handle unsupervised weights
 #' @inheritParams rlang::args_error_context
 #' @details
-#' [get_case_weights()] is designed for developers of recipe steps, to return
-#' a column with the role of "case weight" as a vector.
+#'
+#' [get_case_weights()] is designed for developers of recipe steps, to return a
+#' column with the role of "case weight" as a vector.
 #'
 #' For the other functions, rows with missing case weights are removed from
 #' calculations.
 #'
 #' For `averages()` and `variances()`, missing values in the data (*not* the
 #' case weights) only affect the calculations for those rows. For
-#' `correlations()`, the correlation matrix computation first removes rows
-#' with any missing values (equal to the "complete.obs" strategy in
-#' [stats::cor()]).
+#' `correlations()`, the correlation matrix computation first removes rows with
+#' any missing values (equal to the "complete.obs" strategy in [stats::cor()]).
 #'
 #' `are_weights_used()` is designed for developers of recipe steps and is used
 #' inside print method to determine how printing should be done.
@@ -88,7 +88,7 @@ get_case_weights <- function(info, .data, call = rlang::caller_env()) {
     if (!is.numeric(res)) {
       cli::cli_abort(
         c(
-          x = "{.field {wt_col}} has a {.code case_weights} role and should be 
+          x = "{.field {wt_col}} has a {.code case_weights} role and should be
               numeric, but is {.obj_type_friendly {wt_col}}.",
           i = "Only numeric case weights are supported in recipes."
         ),
@@ -165,10 +165,10 @@ averages <- function(x, wts = NULL, na_rm = TRUE) {
     res <- colMeans(x, na.rm = TRUE)
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts))
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts))
   }
   if (!na_rm) {
-    res[map_lgl(x, ~anyNA(.x))] <- NA
+    res[map_lgl(x, ~ anyNA(.x))] <- NA
   }
   res
 }
@@ -183,7 +183,7 @@ medians <- function(x, wts = NULL) {
     res <- apply(x, 2, median, na.rm = TRUE)
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "median"))
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "median"))
   }
   res
 }
@@ -206,12 +206,12 @@ variances <- function(x, wts = NULL, na_rm = TRUE) {
     return(vapply(x, sd, c(sd = 0), na.rm = na_rm))
   }
   if (is.null(wts)) {
-    res <- purrr::map_dbl(x, ~stats::var(.x, na.rm = na_rm))
+    res <- purrr::map_dbl(x, ~ stats::var(.x, na.rm = na_rm))
   } else {
     wts <- as.double(wts)
-    res <- purrr::map_dbl(x, ~wt_calcs(.x, wts, statistic = "var"))
+    res <- purrr::map_dbl(x, ~ wt_calcs(.x, wts, statistic = "var"))
     if (!na_rm) {
-      res[map_lgl(x, ~anyNA(.x))] <- NA
+      res[map_lgl(x, ~ anyNA(.x))] <- NA
     }
   }
   res

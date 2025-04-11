@@ -1,8 +1,7 @@
 #' Discretize Numeric Variables
 #'
-#' `discretize()` converts a numeric vector into a factor with
-#'  bins having approximately the same number of data points (based
-#'  on a training set).
+#' `discretize()` converts a numeric vector into a factor with bins having
+#' approximately the same number of data points (based on a training set).
 #'
 #' @export
 #' @param x A numeric vector
@@ -22,48 +21,43 @@ discretize.default <- function(x, ...) {
 }
 
 #' @rdname discretize
-#' @param cuts An integer defining how many cuts to make of the
-#'  data.
-#' @param labels A character vector defining the factor levels
-#'  that will be in the new factor (from smallest to largest). This
-#'  should have length `cuts+1` and should not include a level
-#'  for missing (see `keep_na` below).
-#' @param prefix A single parameter value to be used as a prefix
-#'  for the factor levels (e.g. `bin1`, `bin2`, ...). If
-#'  the string is not a valid R name, it is coerced to one.
-#'  If `prefix = NULL` then the factor levels will be labelled
-#'  according to the output of `cut()`.
-#' @param keep_na A logical for whether a factor level should be
-#'  created to identify missing values in `x`. If `keep_na` is
-#'  set to `TRUE` then `na.rm = TRUE` is used when calling
-#'  [stats::quantile()].
-#' @param infs A logical indicating whether the smallest and
-#'  largest cut point should be infinite.
-#' @param min_unique An integer defining a sample size line of
-#'  dignity for the binning. If (the number of unique
-#'  values)`/(cuts+1)` is less than `min_unique`, no
-#'  discretization takes place.
-#' @param ... Options to pass to
-#'  [stats::quantile()] that should not include `x`
-#'  or `probs`.
-#' @return `discretize` returns an object of class
-#'  `discretize` and `predict.discretize` returns a factor
-#'  vector.
+#' @param cuts An integer defining how many cuts to make of the data.
+#' @param labels A character vector defining the factor levels that will be in
+#'   the new factor (from smallest to largest). This should have length `cuts+1`
+#'   and should not include a level for missing (see `keep_na` below).
+#' @param prefix A single parameter value to be used as a prefix for the factor
+#'   levels (e.g. `bin1`, `bin2`, ...). If the string is not a valid R name, it
+#'   is coerced to one. If `prefix = NULL` then the factor levels will be
+#'   labelled according to the output of [cut()].
+#' @param keep_na A logical for whether a factor level should be created to
+#'   identify missing values in `x`. If `keep_na` is set to `TRUE` then `na.rm =
+#'   TRUE` is used when calling [stats::quantile()].
+#' @param infs A logical indicating whether the smallest and largest cut point
+#'   should be infinite.
+#' @param min_unique An integer defining a sample size line of dignity for the
+#'   binning. If `(the number of unique values)/(cuts+1)` is less than
+#'   `min_unique`, no discretization takes place.
+#' @param ... Options to pass to [stats::quantile()] that should not include `x`
+#'   or `probs`.
+#' @return `discretize` returns an object of class `discretize` and
+#'   [predict.discretize()] returns a factor vector.
 #' @export
-#' @details `discretize` estimates the cut points from
-#'  `x` using percentiles. For example, if `cuts = 3`, the
-#'  function estimates the quartiles of `x` and uses these as
-#'  the cut points. If `cuts = 2`, the bins are defined as
-#'  being above or below the median of `x`.
+#' @details
 #'
-#' The `predict` method can then be used to turn numeric
-#'  vectors into factor vectors.
+#' `discretize()` estimates the cut points from `x` using percentiles. For
+#' example, if `cuts = 3`, the function estimates the quartiles of `x` and uses
+#' these as the cut points. If `cuts = 2`, the bins are defined as being above
+#' or below the median of `x`.
 #'
-#' If `keep_na = TRUE`, a suffix of "_missing" is used as a
-#'  factor level (see the examples below).
+#' The [predict()] method can then be used to turn numeric vectors into factor
+#' vectors.
 #'
-#' If `infs = FALSE` and a new value is greater than the
-#'  largest value of `x`, a missing value will result.
+#' If `keep_na = TRUE`, a suffix of `"_missing"` is used as a factor level (see
+#' the examples below).
+#'
+#' If `infs = FALSE` and a new value is greater than the largest value of `x`, a
+#' missing value will result.
+#'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(biomass, package = "modeldata")
 #'

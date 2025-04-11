@@ -1,24 +1,26 @@
 #' Check for new values
 #'
-#' `check_new_values` creates a *specification* of a recipe
-#'  operation that will check if variables contain new values.
+#' `check_new_values()` creates a *specification* of a recipe operation that
+#' will check if variables contain new values.
 #'
 #' @inheritParams check_missing
 #' @param ignore_NA A logical that indicates if we should consider missing
-#'  values as value or not. Defaults to `TRUE`.
-#' @param values A named list with the allowed values.
-#'  This is `NULL` until computed by prep.recipe().
+#'   values as value or not. Defaults to `TRUE`.
+#' @param values A named list with the allowed values. This is `NULL` until
+#'   computed by [prep()].
 #' @template check-return
 #' @family checks
 #' @export
-#' @details This check will break the `bake` function if any of the checked
-#'  columns does contain values it did not contain when `prep` was called
-#'  on the recipe. If the check passes, nothing is changed to the data.
+#' @details
 #'
-#'  # Tidying
+#' This check will break the [bake()] function if any of the checked columns
+#' does contain values it did not contain when [prep()] was called on the
+#' recipe. If the check passes, nothing is changed to the data.
 #'
-#'  When you [`tidy()`][tidy.recipe()] this check, a tibble with columns
-#'  `terms` (the selectors or variables selected) is returned.
+#' # Tidying
+#'
+#' When you [`tidy()`][tidy.recipe()] this check, a tibble with columns `terms`
+#' (the selectors or variables selected) is returned.
 #'
 #' @template case-weights-not-supported
 #'

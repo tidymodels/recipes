@@ -4,23 +4,23 @@
 #' a missing value in a factor level to `"unknown"`.
 #'
 #' @inheritParams step_center
-#' @param new_level A single character value that will be assigned
-#'  to new factor levels.
-#' @param objects A list of objects that contain the information
-#'  on factor levels that will be determined by [prep()].
+#' @param new_level A single character value that will be assigned to new factor
+#'   levels.
+#' @param objects A list of objects that contain the information on factor
+#'   levels that will be determined by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @seealso [dummy_names()]
 #' @export
-#' @details The selected variables are adjusted to have a new
-#'  level (given by `new_level`) that is placed in the last
-#'  position.
+#' @details
 #'
-#' Note that if the original columns are character, they will be
-#'  converted to factors by this step.
+#' The selected variables are adjusted to have a new level (given by
+#' `new_level`) that is placed in the last position.
 #'
-#' If `new_level` is already in the data given to `prep`, an error
-#'  is thrown.
+#' Note that if the original columns are character, they will be converted to
+#' factors by this step.
+#'
+#' If `new_level` is already in the data given to [prep()], an error is thrown.
 #'
 #' # Tidying
 #'

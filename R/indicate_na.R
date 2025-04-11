@@ -8,8 +8,8 @@
 #' @inheritParams step_pca
 #' @inheritParams step_center
 #' @inheritParams step_dummy
-#' @param prefix A character string that will be the prefix to the
-#'  resulting new variables. Defaults to "na_ind".
+#' @param prefix A character string that will be the prefix to the resulting new
+#'   variables. Defaults to "na_ind".
 #' @template step-return
 #' @details
 #'

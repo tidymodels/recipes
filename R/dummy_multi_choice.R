@@ -9,11 +9,12 @@
 #' @inheritParams step_other
 #' @inheritParams step_pca
 #' @param input A character vector containing the names of the columns used.
-#'  This is `NULL` until the step is trained by [prep()].
+#'   This is `NULL` until the step is trained by [prep()].
 #' @template step-return
 #' @family dummy variable and encoding steps
 #'
 #' @details
+#'
 #' The overall proportion (or total counts) of the categories are computed. The
 #' `"other"` category is used in place of any categorical levels whose
 #' individual proportion (or frequency) in the training set is less than
@@ -22,8 +23,8 @@
 #' This step produces a number of columns, based on the number of categories it
 #' finds. The naming of the columns is determined by the function based on the
 #' `naming` argument. The default is to return `<prefix>_<category name>`. By
-#' default `prefix` is `NULL`, which means the name of the first column
-#' selected will be used in place.
+#' default `prefix` is `NULL`, which means the name of the first column selected
+#' will be used in place.
 #'
 #' @template dummy-naming
 #'

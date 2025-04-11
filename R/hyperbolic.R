@@ -5,8 +5,8 @@
 #'
 #' @inheritParams step_center
 #' @inheritParams step_pca
-#' @param func A character value for the function. Valid values
-#'  are "sinh", "cosh", or "tanh".
+#' @param func A character value for the function. Valid values are `"sinh"`,
+#'   `"cosh"`, or `"tanh"`.
 #' @param inverse A logical: should the inverse function be used?
 #' @template step-return
 #' @family individual transformation steps

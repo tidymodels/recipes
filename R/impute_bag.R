@@ -5,48 +5,44 @@
 #'
 #' @inheritParams step_center
 #' @param ... One or more selector functions to choose variables to be imputed.
-#'  When used with `imp_vars`, these dots indicate which variables are used to
-#'  predict the missing data in each variable. See [selections()] for more
-#'  details.
+#'   When used with `imp_vars`, these dots indicate which variables are used to
+#'   predict the missing data in each variable. See [selections()] for more
+#'   details.
 #' @param impute_with Bare names or selectors functions that specify which
-#'  variables are used to impute the variables that can include specific
-#'  variable names separated by commas or different selectors (see
-#'  [selections()]). If a column is included in both lists to be imputed and to
-#'  be an imputation predictor, it will be removed from the latter and not used
-#'  to impute itself.
+#'   variables are used to impute the variables that can include specific
+#'   variable names separated by commas or different selectors (see
+#'   [selections()]). If a column is included in both lists to be imputed and to
+#'   be an imputation predictor, it will be removed from the latter and not used
+#'   to impute itself.
 #' @param trees An integer for the number of bagged trees to use in each model.
 #' @param options A list of options to [ipred::ipredbagg()]. Defaults are set
-#'  for the arguments `nbagg` and `keepX` but others can be passed in. **Note**
-#'  that the arguments `X` and `y` should not be passed here.
+#'   for the arguments `nbagg` and `keepX` but others can be passed in. **Note**
+#'   that the arguments `X` and `y` should not be passed here.
 #' @param seed_val An integer used to create reproducible models. The same seed
-#'  is used across all imputation models.
+#'   is used across all imputation models.
 #' @param models The [ipred::ipredbagg()] objects are stored here once this
-#'  bagged trees have be trained by [prep()].
+#'   bagged trees have be trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
-#' @details For each variable requiring imputation, a bagged tree is created
-#'  where the outcome is the variable of interest and the predictors are any
-#'  other variables listed in the `impute_with` formula. One advantage to the
-#'  bagged tree is that is can accept predictors that have missing values
-#'  themselves. This imputation method can be used when the variable of interest
-#'  (and predictors) are numeric or categorical. Imputed categorical variables
-#'  will remain categorical. Also, integers will be imputed to integer too.
+#' @details
 #'
-#'   Note that if a variable that is to be imputed is also in `impute_with`,
-#'  this variable will be ignored.
+#' For each variable requiring imputation, a bagged tree is created where the
+#' outcome is the variable of interest and the predictors are any other
+#' variables listed in the `impute_with` formula. One advantage to the bagged
+#' tree is that is can accept predictors that have missing values themselves.
+#' This imputation method can be used when the variable of interest (and
+#' predictors) are numeric or categorical. Imputed categorical variables will
+#' remain categorical. Also, integers will be imputed to integer too.
 #'
-#'   It is possible that missing values will still occur after imputation if a
-#'  large majority (or all) of the imputing variables are also missing.
+#' Note that if a variable that is to be imputed is also in `impute_with`, this
+#' variable will be ignored.
 #'
-#'  As of `recipes` 0.1.16, this function name changed from `step_bagimpute()`
-#'    to `step_impute_bag()`.
+#' It is possible that missing values will still occur after imputation if a
+#' large majority (or all) of the imputing variables are also missing.
 #'
-#'  # Tidying
-#'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected) and `model`
-#'  (the bagged tree object) is returned.
+#' As of `recipes` 0.1.16, this function name changed from `step_bagimpute()` to
+#' `step_impute_bag()`.
 #'
 #' # Tidying
 #'
@@ -309,7 +305,7 @@ bake.step_impute_bag <- function(object, new_data, ...) {
       missing_rows[offenders] <- FALSE
 
       cli::cli_warn(
-        "The {.arg impute_with} variables for {.col {col_name}} only contains 
+        "The {.arg impute_with} variables for {.col {col_name}} only contains
         missing values for row: {offenders}. Cannot impute for those rows.",
       )
 

@@ -22,33 +22,32 @@ step_geodist(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{lon, lat}{Selector functions to choose which variables are
-used by the step. See \code{\link[=selections]{selections()}} for more details.}
+\item{lon, lat}{Selector functions to choose which variables are used by the
+step. See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{ref_lon, ref_lat}{Single numeric values for the location
-of the reference point.}
+\item{ref_lon, ref_lat}{Single numeric values for the location of the
+reference point.}
 
 \item{is_lat_lon}{A logical: Are coordinates in latitude and longitude? If
 \code{TRUE} the Haversine formula is used and the returned result is meters. If
 \code{FALSE} the Pythagorean formula is used. Default is \code{TRUE} and for recipes
 created from previous versions of recipes, a value of \code{FALSE} is used.}
 
-\item{log}{A logical: should the distance be transformed by
-the natural log function?}
+\item{log}{A logical: should the distance be transformed by the natural log
+function?}
 
-\item{name}{A single character value to use for the new
-predictor column. If a column exists with this name, an error is
-issued.}
+\item{name}{A single character value to use for the new predictor column. If
+a column exists with this name, an error is issued.}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
@@ -56,12 +55,11 @@ is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -74,9 +72,9 @@ sequence of any existing operations.
 calculate the distance between points on a map to a reference location.
 }
 \details{
-\code{step_geodist} uses the Pythagorean theorem to calculate Euclidean
-distances if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haversine
-formula is used to calculate the great-circle distance in meters.
+\code{step_geodist} uses the Pythagorean theorem to calculate Euclidean distances
+if \code{is_lat_lon} is FALSE. If \code{is_lat_lon} is TRUE, the Haversine formula is
+used to calculate the great-circle distance in meters.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

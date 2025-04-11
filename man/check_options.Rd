@@ -14,8 +14,8 @@ check_options(options, exclude = NULL, include = NULL, call = caller_env())
 \item{include}{Character vector, Allowed elements in \code{options}.}
 }
 \description{
-\code{check_options} is to be used in the prep function to ensure that
-\code{options} arguments are lists and contain the right elements.
+\code{check_options()} is to be used in the prep function to ensure that \code{options}
+arguments are lists and contain the right elements.
 }
 \seealso{
 \link{developer_functions}

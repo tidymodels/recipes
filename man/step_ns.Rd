@@ -18,39 +18,38 @@ step_ns(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{objects}{A list of \code{\link[splines:ns]{splines::ns()}} objects
-created once the step has been trained.}
+\item{objects}{A list of \code{\link[splines:ns]{splines::ns()}} objects created once the step has
+been trained.}
 
-\item{deg_free}{The degrees of freedom for the natural spline. As the
-degrees of freedom for a natural spline increase, more flexible and
-complex curves can be generated. When a single degree of freedom is used,
-the result is a rescaled version of the original data.}
+\item{deg_free}{The degrees of freedom for the natural spline. As the degrees
+of freedom for a natural spline increase, more flexible and complex curves
+can be generated. When a single degree of freedom is used, the result is a
+rescaled version of the original data.}
 
-\item{options}{A list of options for \code{\link[splines:ns]{splines::ns()}}
-which should not include \code{x} or \code{df}.}
+\item{options}{A list of options for \code{\link[splines:ns]{splines::ns()}} which should not include
+\code{x} or \code{df}.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -63,13 +62,12 @@ sequence of any existing operations.
 columns that are basis expansions of variables using natural splines.
 }
 \details{
-\code{step_ns} can create new features from a single variable
-that enable fitting routines to model this variable in a
-nonlinear manner. The extent of the possible nonlinearity is
-determined by the \code{df} or \code{knots} arguments of
-\code{\link[splines:ns]{splines::ns()}}. The original variables are removed
-from the data and new columns are added. The naming convention
-for the new variables is \code{varname_ns_1} and so on.
+\code{step_ns()} can create new features from a single variable that enable
+fitting routines to model this variable in a nonlinear manner. The extent of
+the possible nonlinearity is determined by the \code{df} or \code{knots} arguments of
+\code{\link[splines:ns]{splines::ns()}}. The original variables are removed from the data and new
+columns are added. The naming convention for the new variables is
+\code{varname_ns_1} and so on.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

@@ -4,12 +4,13 @@
 #' step have been created.
 #'
 #' @param pkg Character, name of package containing steps to check
-#' @param exclude_steps Character, name of steps to exclude. This is mostly
-#'   used to remove false positives.
+#' @param exclude_steps Character, name of steps to exclude. This is mostly used
+#'   to remove false positives.
 #' @param exclude_methods Character, which methods to exclude testing for. Can
 #'   take the values "prep", "bake", "print", "tidy", and "required_pkgs".
 #'
 #' @details
+#'
 #' It is recommended that the following test in placed in packages that add
 #' recipes steps to help keep everything up to date.
 #'

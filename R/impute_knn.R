@@ -8,29 +8,31 @@
 #' @inheritParams step_pca
 #' @param neighbors The number of neighbors.
 #' @param options A named list of options to pass to [gower::gower_topn()].
-#'  Available options are currently `nthread` and `eps`.
+#'   Available options are currently `nthread` and `eps`.
 #' @param ref_data A tibble of data that will reflect the data preprocessing
-#'  done up to the point of this imputation step. This is `NULL` until the step
-#'  is trained by [prep()].
+#'   done up to the point of this imputation step. This is `NULL` until the step
+#'   is trained by [prep()].
 #' @template step-return
 #' @family imputation steps
 #' @export
-#' @details The step uses the training set to impute any other data sets. The
-#'  only distance function available is Gower's distance which can be used for
-#'  mixtures of nominal and numeric data.
+#' @details
+#'
+#' The step uses the training set to impute any other data sets. The only
+#' distance function available is Gower's distance which can be used for
+#' mixtures of nominal and numeric data.
 #'
 #' Once the nearest neighbors are determined, the mode is used to predictor
-#'  nominal variables and the mean is used for numeric data. Note that, if the
-#'  underlying data are integer, the mean will be converted to an integer too.
+#' nominal variables and the mean is used for numeric data. Note that, if the
+#' underlying data are integer, the mean will be converted to an integer too.
 #'
-#' Note that if a variable that is to be imputed is also in `impute_with`,
-#'  this variable will be ignored.
+#' Note that if a variable that is to be imputed is also in `impute_with`, this
+#' variable will be ignored.
 #'
 #' It is possible that missing values will still occur after imputation if a
-#'  large majority (or all) of the imputing variables are also missing.
+#' large majority (or all) of the imputing variables are also missing.
 #'
-#' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()`
-#'    to `step_impute_knn()`.
+#' As of `recipes` 0.1.16, this function name changed from `step_knnimpute()` to
+#' `step_impute_knn()`.
 #'
 #' # Tidying
 #'
@@ -246,7 +248,7 @@ bake.step_impute_knn <- function(object, new_data, ...) {
       missing_rows[offenders] <- FALSE
 
       cli::cli_warn(
-        "The {.arg impute_with} variables for {.col {col_name}} only contains 
+        "The {.arg impute_with} variables for {.col {col_name}} only contains
         missing values for row: {offenders}. Cannot impute for those rows.",
       )
 

@@ -5,23 +5,22 @@
 #'
 #' @inheritParams step_center
 #' @param sds A named numeric vector of standard deviations. This is `NULL`
-#'  until computed by [prep()].
-#' @param factor A numeric value of either 1 or 2 that scales the
-#'  numeric inputs by one or two standard deviations. By dividing
-#'  by two standard deviations, the coefficients attached to
-#'  continuous predictors can be interpreted the same way as with
-#'  binary inputs. Defaults to `1`. More in reference below.
-#' @param na_rm A logical value indicating whether `NA`
-#'  values should be removed when computing the standard deviation.
+#'   until computed by [prep()].
+#' @param factor A numeric value of either 1 or 2 that scales the numeric inputs
+#'   by one or two standard deviations. By dividing by two standard deviations,
+#'   the coefficients attached to continuous predictors can be interpreted the
+#'   same way as with binary inputs. Defaults to `1`. More in reference below.
+#' @param na_rm A logical value indicating whether `NA` values should be removed
+#'   when computing the standard deviation.
 #' @template step-return
 #' @family normalization steps
 #' @export
-#' @details Scaling data means that the standard deviation of a
-#'  variable is divided out of the data. `step_scale` estimates
-#'  the variable standard deviations from the data used in the
-#'  `training` argument of `prep.recipe`.
-#'  `bake.recipe` then applies the scaling to new data sets
-#'  using these standard deviations.
+#' @details
+#'
+#' Scaling data means that the standard deviation of a variable is divided out
+#' of the data. `step_scale()` estimates the variable standard deviations from
+#' the data used in the `training` argument of [prep()]. [bake()] then applies
+#' the scaling to new data sets using these standard deviations.
 #'
 #' # Tidying
 #'

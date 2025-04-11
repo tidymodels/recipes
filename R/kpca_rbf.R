@@ -6,11 +6,10 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param sigma A numeric value for the radial basis function parameter. See
-#' the documentation at [kernlab::rbfdot()].
-#' @param res An S4 [kernlab::kpca()] object is stored
-#'  here once this preprocessing step has be trained by
-#'  [prep()].
+#' @param sigma A numeric value for the radial basis function parameter. See the
+#'   documentation at [kernlab::rbfdot()].
+#' @param res An S4 [kernlab::kpca()] object is stored here once this
+#'   preprocessing step has be trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export

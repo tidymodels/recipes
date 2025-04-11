@@ -24,10 +24,9 @@ information.}
 
 \item{var}{A single string for the original factor name.}
 
-\item{lvl}{A character vectors of the factor levels (in order).
-When used with \code{\link[=step_dummy]{step_dummy()}}, \code{lvl} would be the suffixes
-that result \emph{after} \code{model.matrix} is called (see the
-example below).}
+\item{lvl}{A character vectors of the factor levels (in order). When used
+with \code{\link[=step_dummy]{step_dummy()}}, \code{lvl} would be the suffixes that result \emph{after}
+\code{model.matrix} is called (see the example below).}
 
 \item{ordinal}{A logical; was the original factor ordered?}
 
@@ -35,24 +34,22 @@ example below).}
 levels.}
 }
 \value{
-\code{names0} returns a character string of length \code{num} and
-\code{dummy_names} generates a character vector the same length as
-\code{lvl}.
+\code{names0()} returns a character string of length \code{num} and
+\code{dummy_names()} generates a character vector the same length as \code{lvl}.
 }
 \description{
-\code{names0} creates a series of \code{num} names with a common prefix.
-The names are numbered with leading zeros (e.g.
-\code{prefix01}-\code{prefix10} instead of \code{prefix1}-\code{prefix10}).
-\code{dummy_names} can be used for renaming unordered and ordered
-dummy variables (in \code{\link[=step_dummy]{step_dummy()}}).
+\code{names0()} creates a series of \code{num} names with a common prefix. The names
+are numbered with leading zeros (e.g. \code{prefix01}-\code{prefix10} instead of
+\code{prefix1}-\code{prefix10}). \code{dummy_names} can be used for renaming unordered and
+ordered dummy variables (in \code{\link[=step_dummy]{step_dummy()}}).
 }
 \details{
-When using \code{dummy_names()}, factor levels that are not valid
-variable names (e.g. "some text  with spaces") will be changed to valid
-names by \code{\link[base:make.names]{base::make.names()}}; see example below. This function will also
-change the names of ordinal dummy variables. Instead of values such as
-"\code{.L}", "\code{.Q}", or "\verb{^4}", ordinal dummy variables are given simple integer
-suffixes such as "\verb{_1}", "\verb{_2}", etc.
+When using \code{dummy_names()}, factor levels that are not valid variable names
+(e.g. "some text  with spaces") will be changed to valid names by
+\code{\link[base:make.names]{base::make.names()}}; see example below. This function will also change the
+names of ordinal dummy variables. Instead of values such as \code{".L"}, \code{".Q"},
+or \code{"^4"}, ordinal dummy variables are given simple integer suffixes such as
+\code{"_1"}, \code{"_2"}, etc.
 }
 \examples{
 names0(9, "a")

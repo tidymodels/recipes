@@ -21,19 +21,19 @@ step_dummy(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
 \item{...}{One or more selector functions to choose variables for this step.
 See \code{\link[=selections]{selections()}} for more details. The selected variables \emph{must} be
 factors.}
 
 \item{role}{For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as \emph{predictors} in a model.}
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as \emph{predictors} in a model.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{one_hot}{A logical. For C levels, should C dummy variables be created
 rather than C-1?}
@@ -59,12 +59,11 @@ then workflows can determine the best option. Defaults to \code{"auto"}.}
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{FALSE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -118,11 +117,10 @@ This can be changed by passing in a different function to the \code{naming}
 argument for this step.
 
 Also, there are a number of contrast methods that return fractional values.
-The columns returned by this step are doubles (not integers) when
-\code{sparse = FALSE}. The columns returned when \code{sparse = TRUE} are integers.
+The columns returned by this step are doubles (not integers) when \code{sparse = FALSE}. The columns returned when \code{sparse = TRUE} are integers.
 
-The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables}
-and interactions has more information.
+The \href{https://recipes.tidymodels.org/articles/Dummies.html}{package vignette for dummy variables} and
+interactions has more information.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

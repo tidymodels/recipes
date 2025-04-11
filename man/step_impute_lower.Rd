@@ -15,27 +15,25 @@ step_impute_lower(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{threshold}{A named numeric vector of lower bounds. This is
-\code{NULL} until computed by \code{\link[=prep]{prep()}}.}
+\item{threshold}{A named numeric vector of lower bounds. This is \code{NULL} until
+computed by \code{\link[=prep]{prep()}}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -51,10 +49,9 @@ truncated value by a random uniform number between zero and the truncation
 point.
 }
 \details{
-\code{step_impute_lower} estimates the variable minimums
-from the data used in the \code{training} argument of \code{prep.recipe}.
-\code{bake.recipe} then simulates a value for any data at the minimum
-with a random uniform value between zero and the minimum.
+\code{step_impute_lower()} estimates the variable minimums from the data used in
+the \code{training} argument of \code{\link[=prep]{prep()}}. \code{\link[=bake]{bake()}} then simulates a value for any
+data at the minimum with a random uniform value between zero and the minimum.
 
 As of \code{recipes} 0.1.16, this function name changed from \code{step_lowerimpute()}
 to \code{step_impute_lower()}.

@@ -16,32 +16,30 @@ step_impute_mean(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{means}{A named numeric vector of means. This is \code{NULL} until computed
-by \code{\link[=prep]{prep()}}. Note that, if the original data are integers, the mean
-will be converted to an integer to maintain the same data type.}
+by \code{\link[=prep]{prep()}}. Note that, if the original data are integers, the mean will be
+converted to an integer to maintain the same data type.}
 
 \item{trim}{The fraction (0 to 0.5) of observations to be trimmed from each
 end of the variables before the mean is computed. Values of trim outside
 that range are taken as the nearest endpoint.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -55,9 +53,9 @@ substitute missing values of numeric variables by the training set mean of
 those variables.
 }
 \details{
-\code{step_impute_mean} estimates the variable means from the data used
-in the \code{training} argument of \code{prep.recipe}. \code{bake.recipe} then applies the
-new values to new data sets using these averages.
+\code{step_impute_mean()} estimates the variable means from the data used in the
+\code{training} argument of \code{\link[=prep]{prep()}}. \code{\link[=bake]{bake()}} then applies the new values to new
+data sets using these averages.
 
 As of \code{recipes} 0.1.16, this function name changed from \code{step_meanimpute()}
 to \code{step_impute_mean()}.

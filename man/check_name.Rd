@@ -20,11 +20,11 @@ check_name(
 
 \item{object}{A trained object passed to the bake function.}
 
-\item{newname}{A string of variable names if prefix isn't specified
-in the trained object.}
+\item{newname}{A string of variable names if prefix isn't specified in the
+trained object.}
 
-\item{names}{A logical determining if the names should be set using
-the names function (TRUE) or colnames function (FALSE).}
+\item{names}{A logical determining if the names should be set using the names
+function (TRUE) or colnames function (FALSE).}
 
 \item{call}{The execution environment of a currently running function, e.g.
 \code{caller_env()}. The function will be mentioned in error messages as the
@@ -32,9 +32,9 @@ source of the error. See the call argument of \code{\link[rlang:abort]{rlang::ab
 information.}
 }
 \description{
-\code{check_name} is to be used in the bake function to ensure that
-newly created variable names don't overlap with existing names.
-Throws an error if check fails.
+\code{check_name} is to be used in the bake function to ensure that newly created
+variable names don't overlap with existing names. Throws an error if check
+fails.
 }
 \seealso{
 \link{developer_functions}

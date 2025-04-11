@@ -13,8 +13,8 @@ recipes_extension_check(
 \arguments{
 \item{pkg}{Character, name of package containing steps to check}
 
-\item{exclude_steps}{Character, name of steps to exclude. This is mostly
-used to remove false positives.}
+\item{exclude_steps}{Character, name of steps to exclude. This is mostly used
+to remove false positives.}
 
 \item{exclude_methods}{Character, which methods to exclude testing for. Can
 take the values "prep", "bake", "print", "tidy", and "required_pkgs".}

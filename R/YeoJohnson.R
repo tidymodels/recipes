@@ -4,31 +4,31 @@
 #' transform data using a Yeo-Johnson transformation.
 #'
 #' @inheritParams step_center
-#' @param lambdas A numeric vector of transformation values. This
-#'  is `NULL` until computed by [prep()].
-#' @param limits A length 2 numeric vector defining the range to
-#'  compute the transformation parameter lambda.
-#' @param num_unique An integer where data that have less possible
-#'  values will not be evaluated for a transformation.
+#' @param lambdas A numeric vector of transformation values. This is `NULL`
+#'   until computed by [prep()].
+#' @param limits A length 2 numeric vector defining the range to compute the
+#'   transformation parameter lambda.
+#' @param num_unique An integer where data that have less possible values will
+#'   not be evaluated for a transformation.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details The Yeo-Johnson transformation is very similar to the
-#'  Box-Cox but does not require the input variables to be strictly
-#'  positive. In the package, the partial log-likelihood function is
-#'  directly optimized within a reasonable set of transformation
-#'  values (which can be changed by the user).
+#' @details
 #'
-#' This transformation is typically done on the outcome variable
-#'  using the residuals for a statistical model (such as ordinary
-#'  least squares). Here, a simple null model (intercept only) is
-#'  used to apply the transformation to the *predictor*
-#'  variables individually. This can have the effect of making the
-#'  variable distributions more symmetric.
+#' The Yeo-Johnson transformation is very similar to the Box-Cox but does not
+#' require the input variables to be strictly positive. In the package, the
+#' partial log-likelihood function is directly optimized within a reasonable set
+#' of transformation values (which can be changed by the user).
 #'
-#' If the transformation parameters are estimated to be very
-#'  closed to the bounds, or if the optimization fails, a value of
-#'  `NA` is used and no transformation is applied.
+#' This transformation is typically done on the outcome variable using the
+#' residuals for a statistical model (such as ordinary least squares). Here, a
+#' simple null model (intercept only) is used to apply the transformation to the
+#' *predictor* variables individually. This can have the effect of making the
+#' variable distributions more symmetric.
+#'
+#' If the transformation parameters are estimated to be very closed to the
+#' bounds, or if the optimization fails, a value of `NA` is used and no
+#' transformation is applied.
 #'
 #' # Tidying
 #'

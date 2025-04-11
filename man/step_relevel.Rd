@@ -16,30 +16,28 @@ step_relevel(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
-\item{ref_level}{A single character value that will be used to
-relevel the factor column(s) (if the level is present).}
+\item{ref_level}{A single character value that will be used to relevel the
+factor column(s) (if the level is present).}
 
-\item{objects}{A list of objects that contain the information
-on factor levels that will be determined by \code{\link[=prep]{prep()}}.}
+\item{objects}{A list of objects that contain the information on factor
+levels that will be determined by \code{\link[=prep]{prep()}}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -54,12 +52,11 @@ first. This is useful for \code{\link[=contr.treatment]{contr.treatment()}} cont
 level as the reference.
 }
 \details{
-The selected variables are releveled to a level
-(given by \code{ref_level}), placing the \code{ref_level} in the first
-position.
+The selected variables are releveled to a level (given by \code{ref_level}),
+placing the \code{ref_level} in the first position.
 
-Note that if the original columns are character, they will be
-converted to factors by this step.
+Note that if the original columns are character, they will be converted to
+factors by this step.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

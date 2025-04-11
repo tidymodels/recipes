@@ -1,4 +1,5 @@
 #' @details
+#'
 #' Kernel principal component analysis (kPCA) is an extension of a PCA analysis
 #' that conducts the calculations in a broader dimensionality defined by a
 #' kernel function. For example, if a quadratic kernel function were used,

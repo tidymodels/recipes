@@ -5,48 +5,38 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param ... One or more selector functions to choose variables
-#'  for this step. The selected variables should have class `Date` or
-#'  `POSIXct`. See [selections()] for more details.
-#' @param features A character string that includes at least one
-#'  of the following values: `month`, `dow` (day of week), `mday` (day of month),
-#'  `doy` (day of year), `week`, `month`,
-#'  `decimal` (decimal date, e.g. 2002.197), `quarter`,
-#'  `semester`, `year`.
-#' @param label A logical. Only available for features
-#'  `month` or `dow`. `TRUE` will display the day of
-#'  the week as an ordered factor of character strings, such as
-#'  "Sunday." `FALSE` will display the day of the week as a
-#'  number.
-#' @param abbr A logical. Only available for features `month`
-#'  or `dow`. `FALSE` will display the day of the week as
-#'  an ordered factor of character strings, such as "Sunday".
-#'  `TRUE` will display an abbreviated version of the label,
-#'  such as "Sun". `abbr` is disregarded if `label =
-#'  FALSE`.
-#' @param ordinal A logical: should factors be ordered? Only
-#'  available for features `month` or `dow`.
-#' @param locale Locale to be used for `month` and `dow`, see [locales].
-#'  On Linux systems you can use `system("locale -a")` to list all the
-#'  installed locales. Can be a locales string, or a [clock::clock_labels()]
-#'  object. Defaults to `clock::clock_locale()$labels`.
+#' @param ... One or more selector functions to choose variables for this step.
+#'   The selected variables should have class `Date` or `POSIXct`. See
+#'   [selections()] for more details.
+#' @param features A character string that includes at least one of the
+#'   following values: `month`, `dow` (day of week), `mday` (day of month),
+#'   `doy` (day of year), `week`, `month`, `decimal` (decimal date, e.g.
+#'   2002.197), `quarter`, `semester`, `year`.
+#' @param label A logical. Only available for features `month` or `dow`. `TRUE`
+#'   will display the day of the week as an ordered factor of character strings,
+#'   such as "Sunday." `FALSE` will display the day of the week as a number.
+#' @param abbr A logical. Only available for features `month` or `dow`. `FALSE`
+#'   will display the day of the week as an ordered factor of character strings,
+#'   such as "Sunday". `TRUE` will display an abbreviated version of the label,
+#'   such as "Sun". `abbr` is disregarded if `label = FALSE`.
+#' @param ordinal A logical: should factors be ordered? Only available for
+#'   features `month` or `dow`.
+#' @param locale Locale to be used for `month` and `dow`, see [locales]. On
+#'   Linux systems you can use `system("locale -a")` to list all the installed
+#'   locales. Can be a locales string, or a [clock::clock_labels()] object.
+#'   Defaults to `clock::clock_locale()$labels`.
 #' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `TRUE`.
+#'   output. Defaults to `TRUE`.
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details Unlike some other steps, `step_date` does *not*
-#'  remove the original date variables by default. Set `keep_original_cols`
-#'  to `FALSE` to remove them.
+#' @details
 #'
-#'  See [step_time()] if you want to calculate features that are smaller than
-#'  days.
+#' Unlike some other steps, `step_date()` does *not* remove the original date
+#' variables by default. Set `keep_original_cols` to `FALSE` to remove them.
 #'
-#'  # Tidying
-#'
-#'  When you [`tidy()`][tidy.recipe()] this step, a tibble with columns
-#'  `terms` (the selectors or variables selected), `value` (the feature
-#'  names), and `ordinal` (a logical) is returned.
+#' See [step_time()] if you want to calculate features that are smaller than
+#' days.
 #'
 #' # Tidying
 #'

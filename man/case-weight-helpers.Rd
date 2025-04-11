@@ -42,8 +42,8 @@ mentioned in error messages as the source of the error. See the
 
 \item{wts}{A vector of case weights}
 
-\item{na_rm}{A logical value indicating whether \code{NA}
-values should be removed during computations.}
+\item{na_rm}{A logical value indicating whether \code{NA} values should be removed
+during computations.}
 
 \item{use}{Used by \code{\link[=correlations]{correlations()}} or \code{\link[=covariances]{covariances()}} to pass argument to
 \code{\link[=cor]{cor()}} or \code{\link[=cov]{cov()}}}
@@ -58,17 +58,16 @@ These functions can be used to do basic calculations with or without case
 weights.
 }
 \details{
-\code{\link[=get_case_weights]{get_case_weights()}} is designed for developers of recipe steps, to return
-a column with the role of "case weight" as a vector.
+\code{\link[=get_case_weights]{get_case_weights()}} is designed for developers of recipe steps, to return a
+column with the role of "case weight" as a vector.
 
 For the other functions, rows with missing case weights are removed from
 calculations.
 
 For \code{averages()} and \code{variances()}, missing values in the data (\emph{not} the
 case weights) only affect the calculations for those rows. For
-\code{correlations()}, the correlation matrix computation first removes rows
-with any missing values (equal to the "complete.obs" strategy in
-\code{\link[stats:cor]{stats::cor()}}).
+\code{correlations()}, the correlation matrix computation first removes rows with
+any missing values (equal to the "complete.obs" strategy in \code{\link[stats:cor]{stats::cor()}}).
 
 \code{are_weights_used()} is designed for developers of recipe steps and is used
 inside print method to determine how printing should be done.

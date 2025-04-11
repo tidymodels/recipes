@@ -5,18 +5,18 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param na_rm A logical: should missing data be removed from the
-#'  norm computation?
+#' @param na_rm A logical: should missing data be removed from the norm
+#'   computation?
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details The spatial sign transformation projects the variables
-#'  onto a unit sphere and is related to global contrast
-#'  normalization. The spatial sign of a vector `w` is
-#'  `w/norm(w)`.
+#' @details
 #'
-#' The variables should be centered and scaled prior to the
-#'  computations.
+#' The spatial sign transformation projects the variables onto a unit sphere and
+#' is related to global contrast normalization. The spatial sign of a vector `w`
+#' is `w/norm(w)`.
+#'
+#' The variables should be centered and scaled prior to the computations.
 #'
 #' # Tidying
 #'
@@ -30,22 +30,20 @@
 #'
 #' @section Case weights:
 #'
-#' This step performs an unsupervised operation that can utilize case weights.
-#' As a result, only frequency weights are allowed. For more
-#' information, see the documentation in [case_weights] and the examples on
-#' `tidymodels.org`.
+#'   This step performs an unsupervised operation that can utilize case weights.
+#'   As a result, only frequency weights are allowed. For more information, see
+#'   the documentation in [case_weights] and the examples on `tidymodels.org`.
 #'
-#' Unlike most, this step requires the case weights to be available when new
-#' samples are processed (e.g., when `bake()` is used or `predict()` with a
-#' workflow). To tell recipes that the case weights are required at bake time,
-#' use
-#' `recipe %>% update_role_requirements(role = "case_weights", bake = TRUE)`.
-#' See [update_role_requirements()] for more information.
+#'   Unlike most, this step requires the case weights to be available when new
+#'   samples are processed (e.g., when `bake()` is used or `predict()` with a
+#'   workflow). To tell recipes that the case weights are required at bake time,
+#'   use `recipe %>% update_role_requirements(role = "case_weights", bake =
+#'   TRUE)`. See [update_role_requirements()] for more information.
 #'
-#' @references Serneels, S., De Nolf, E., and Van Espen, P.
-#'  (2006). Spatial sign preprocessing: a simple way to impart
-#'  moderate robustness to multivariate estimators. *Journal of
-#'  Chemical Information and Modeling*, 46(3), 1402-1409.
+#' @references Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial sign
+#'   preprocessing: a simple way to impart moderate robustness to multivariate
+#'   estimators. *Journal of Chemical Information and Modeling*, 46(3),
+#'   1402-1409.
 #'
 #' @examplesIf rlang::is_installed("modeldata")
 #' data(biomass, package = "modeldata")

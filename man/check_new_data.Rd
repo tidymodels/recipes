@@ -17,8 +17,8 @@ check_new_data(req, object, new_data)
 Invisible NULL. Side effects are the focus of the function.
 }
 \description{
-When baking a step, create an information error message when a column that
-is used by the step is not present in \code{new_data}.
+When baking a step, create an information error message when a column that is
+used by the step is not present in \code{new_data}.
 }
 \seealso{
 \link{developer_functions}

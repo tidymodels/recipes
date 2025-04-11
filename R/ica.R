@@ -5,33 +5,32 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param options A list of options to
-#'  [fastICA::fastICA()]. No defaults are set here.
+#' @param options A list of options to [fastICA::fastICA()]. No defaults are set
+#'   here.
 #'  **Note** that the arguments `X` and `n.comp` should
-#'  not be passed here.
-#' @param seed A single integer to set the random number stream prior to
-#'  running ICA.
-#' @param res The [fastICA::fastICA()] object is stored
-#'  here once this preprocessing step has be trained by
-#'  [prep()].
+#'   not be passed here.
+#' @param seed A single integer to set the random number stream prior to running
+#'   ICA.
+#' @param res The [fastICA::fastICA()] object is stored here once this
+#'   preprocessing step has be trained by [prep()].
 #' @template step-return
 #' @family multivariate transformation steps
 #' @export
-#' @details Independent component analysis (ICA) is a
-#'  transformation of a group of variables that produces a new set
-#'  of artificial features or components. ICA assumes that the
-#'  variables are mixtures of a set of distinct, non-Gaussian
-#'  signals and attempts to transform the data to isolate these
-#'  signals. Like PCA, the components are statistically independent
-#'  from one another. This means that they can be used to combat
-#'  large inter-variables correlations in a data set. Also like PCA,
-#'  it is advisable to center and scale the variables prior to
-#'  running ICA.
+#' @details
 #'
-#' This package produces components using the "FastICA"
-#'  methodology (see reference below). This step requires the
-#'  \pkg{dimRed} and \pkg{fastICA} packages. If not installed, the
-#'  step will stop with a note about installing these packages.
+#' Independent component analysis (ICA) is a transformation of a group of
+#' variables that produces a new set of artificial features or components. ICA
+#' assumes that the variables are mixtures of a set of distinct, non-Gaussian
+#' signals and attempts to transform the data to isolate these signals. Like
+#' PCA, the components are statistically independent from one another. This
+#' means that they can be used to combat large inter-variables correlations in a
+#' data set. Also like PCA, it is advisable to center and scale the variables
+#' prior to running ICA.
+#'
+#' This package produces components using the "FastICA" methodology (see
+#' reference below). This step requires the \pkg{dimRed} and \pkg{fastICA}
+#' packages. If not installed, the step will stop with a note about installing
+#' these packages.
 #'
 #' ```{r, echo = FALSE, results="asis"}
 #' prefix <- "IC"

@@ -328,31 +328,28 @@
 component) or \code{"variance"} (how much variance does each component
 account for).}
 
-\item{number}{An integer or \code{NA}. If missing, and \code{id} is not provided,
-the return value is a list of the operations in the recipe.
-If a number is given, a \code{tidy} method is executed for that operation
-in the recipe (if it exists). \code{number} must not be provided if
-\code{id} is.}
+\item{number}{An integer or \code{NA}. If missing, and \code{id} is not provided, the
+return value is a list of the operations in the recipe. If a number is
+given, a \code{tidy} method is executed for that operation in the recipe (if it
+exists). \code{number} must not be provided if \code{id} is.}
 
-\item{id}{A character string or \code{NA}. If missing and \code{number} is not provided,
-the return value is a list of the operations in the recipe.
-If a character string is given, a \code{tidy} method is executed for that
-operation in the recipe (if it exists). \code{id} must not be provided
-if \code{number} is.}
+\item{id}{A character string or \code{NA}. If missing and \code{number} is not
+provided, the return value is a list of the operations in the recipe. If a
+character string is given, a \code{tidy} method is executed for that operation
+in the recipe (if it exists). \code{id} must not be provided if \code{number} is.}
 }
 \value{
-A tibble with columns that vary depending on what
-\code{tidy} method is executed. When \code{number}, and \code{id} are \code{NA}, a
-tibble with columns \code{number} (the operation iteration),
-\code{operation} (either "step" or "check"),
-\code{type} (the method, e.g. "nzv", "center"), a logical
-column called \code{trained} for whether the operation has been
-estimated using \code{prep}, a logical for \code{skip}, and a character column \code{id}.
+A tibble with columns that vary depending on what \code{tidy} method is
+executed. When \code{number}, and \code{id} are \code{NA}, a tibble with columns \code{number}
+(the operation iteration), \code{operation} (either "step" or "check"), \code{type}
+(the method, e.g. "nzv", "center"), a logical column called \code{trained} for
+whether the operation has been estimated using \code{prep}, a logical for
+\code{skip}, and a character column \code{id}.
 }
 \description{
-\code{tidy} will return a data frame that contains information
-regarding a recipe or operation within the recipe (when a \code{tidy}
-method for the operation exists).
+\code{tidy()} will return a data frame that contains information regarding a
+recipe or operation within the recipe (when a \code{tidy()} method for the
+operation exists).
 }
 \examples{
 \dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

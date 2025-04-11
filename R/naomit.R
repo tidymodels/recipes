@@ -7,8 +7,8 @@
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param role Unused, include for consistency with other steps.
-#' @param trained A logical to indicate if the quantities for preprocessing
-#'   have been estimated. Again included for consistency.
+#' @param trained A logical to indicate if the quantities for preprocessing have
+#'   been estimated. Again included for consistency.
 #'
 #' @details
 #'

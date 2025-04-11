@@ -7,35 +7,35 @@
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param ... One or more selector functions to choose variables to be imputed;
-#'  these columns must be non-integer numerics (i.e., double precision).
-#'  See [selections()] for more details.
+#'   these columns must be non-integer numerics (i.e., double precision). See
+#'   [selections()] for more details.
 #' @param window The size of the window around a point to be imputed. Should be
-#'  an odd integer greater than one. See Details below for a discussion of
-#'  points at the ends of the series.
+#'   an odd integer greater than one. See Details below for a discussion of
+#'   points at the ends of the series.
 #' @param statistic A function with a single argument for the data to compute
-#'  the imputed value. Only complete values will be passed to the function and
-#'  it should return a double precision value.
+#'   the imputed value. Only complete values will be passed to the function and
+#'   it should return a double precision value.
 #' @template step-return
 #' @family imputation steps
 #' @family row operation steps
 #' @export
-#' @details On the tails, the window is shifted towards the ends.
-#'  For example, for a 5-point window, the windows for the first
-#'  four points are `1:5`, `1:5`, `1:5`, and then `2:6`.
+#' @details
 #'
-#'   When missing data are in the window, they are not passed to the
-#'  function. If all of the data in the window are missing, a
-#'  missing value is returned.
+#' On the tails, the window is shifted towards the ends. For example, for a
+#' 5-point window, the windows for the first four points are `1:5`, `1:5`,
+#' `1:5`, and then `2:6`.
 #'
-#'   The statistics are calculated on the training set values
-#'  _before_ imputation. This means that if previous data within the
-#'  window are missing, their imputed values are not included in the
-#'  window data used for imputation. In other words, each imputation
-#'  does not know anything about previous imputations in the series
-#'  prior to the current point.
+#' When missing data are in the window, they are not passed to the function. If
+#' all of the data in the window are missing, a missing value is returned.
 #'
-#'  As of `recipes` 0.1.16, this function name changed from `step_rollimpute()`
-#'    to `step_impute_roll()`.
+#' The statistics are calculated on the training set values _before_ imputation.
+#' This means that if previous data within the window are missing, their imputed
+#' values are not included in the window data used for imputation. In other
+#' words, each imputation does not know anything about previous imputations in
+#' the series prior to the current point.
+#'
+#' As of `recipes` 0.1.16, this function name changed from `step_rollimpute()`
+#' to `step_impute_roll()`.
 #'
 #' # Tidying
 #'

@@ -4,39 +4,39 @@
 #' b-spline features.
 #'
 #' @inheritParams step_center
-#' @param deg_free The degrees of freedom for the b-spline. As the
-#'  degrees of freedom for a b-spline increase, more flexible and
-#'  complex curves can be generated.
+#' @param deg_free The degrees of freedom for the b-spline. As the degrees of
+#'   freedom for a b-spline increase, more flexible and complex curves can be
+#'   generated.
 #' @param degree A non-negative integer specifying the degree of the piece-wise
-#'  polynomial. The default value is 3 for cubic splines. Zero degree is allowed
-#'  for piece-wise constant basis functions.
+#'   polynomial. The default value is 3 for cubic splines. Zero degree is
+#'   allowed for piece-wise constant basis functions.
 #' @param complete_set If `TRUE`, the complete basis matrix will be returned.
-#'  Otherwise, the first basis will be excluded from the output. This maps to
-#'  the `intercept` argument of the corresponding function from the
-#'  \pkg{splines2} package and has the same default value.
+#'   Otherwise, the first basis will be excluded from the output. This maps to
+#'   the `intercept` argument of the corresponding function from the
+#'   \pkg{splines2} package and has the same default value.
 #' @param results A list of objects created once the step has been trained.
-#' @param options A list of options for [splines2::bSpline()]
-#'  which should not include `x`, `df`, `degree`, or `intercept`.
+#' @param options A list of options for [splines2::bSpline()] which should not
+#'   include `x`, `df`, `degree`, or `intercept`.
 #' @param keep_original_cols A logical to keep the original variables in the
-#'  output. Defaults to `FALSE`.
+#'   output. Defaults to `FALSE`.
 #' @param role For model terms created by this step, what analysis role should
-#'  they be assigned? By default, the new columns created by this step from
-#'  the original variables will be used as _predictors_ in a model.
+#'   they be assigned? By default, the new columns created by this step from the
+#'   original variables will be used as _predictors_ in a model.
 #' @return An object with classes `"step_spline_b"` and `"step"`.
 #' @export
 #' @details
 #'
 #' Spline transformations take a numeric column and create multiple features
 #' that, when used in a model, can estimate nonlinear trends between the column
-#' and some outcome. The degrees of freedom determines how many new features
-#' are added to the data.
+#' and some outcome. The degrees of freedom determines how many new features are
+#' added to the data.
 #'
 #' Setting `periodic = TRUE` in the list passed to `options`, a periodic version
 #' of the spline is used.
 #'
-#' If the spline expansion fails for a selected column, the step will
-#' remove that column's results (but will retain the original data). Use the
-#' `tidy()` method to determine which columns were used.
+#' If the spline expansion fails for a selected column, the step will remove
+#' that column's results (but will retain the original data). Use the `tidy()`
+#' method to determine which columns were used.
 #'
 #' # Tidying
 #'

@@ -15,27 +15,25 @@ step_arrange(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{Comma separated list of unquoted variable names.
-Use `desc()`` to sort a variable in descending order. See
-\code{\link[dplyr:arrange]{dplyr::arrange()}} for more details.}
+\item{...}{Comma separated list of unquoted variable names. Use `desc()`` to
+sort a variable in descending order. See \code{\link[dplyr:arrange]{dplyr::arrange()}} for more
+details.}
 
-\item{role}{Not used by this step since no new variables are
-created.}
+\item{role}{Not used by this step since no new variables are created.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{inputs}{Quosure of values given by \code{...}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -48,11 +46,10 @@ sequence of any existing operations.
 rows using \code{\link[dplyr:arrange]{dplyr::arrange()}}.
 }
 \details{
-When an object in the user's global environment is
-referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. \verb{!!!})
-to embed the value of the object in the expression (to
-be portable between sessions). See the examples.
+When an object in the user's global environment is referenced in the
+expression defining the new variable(s), it is a good idea to use
+quasiquotation (e.g. \verb{!!!}) to embed the value of the object in the
+expression (to be portable between sessions). See the examples.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

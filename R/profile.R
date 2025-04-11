@@ -8,33 +8,32 @@
 #' @inheritParams step_center
 #' @inheritParams step_pca
 #' @param profile A bare name to specify which variable will be profiled (see
-#'  [selections()]). Can also be a string or tidyselect for backwards
-#'  compatibility. If a column is included in both lists to be fixed and to be
-#'  profiled, an error is thrown.
-#' @param pct A value between 0 and 1 that is the percentile to
-#'  fix continuous variables. This is applied to all continuous
-#'  variables captured by the selectors. For date variables, either
-#'  the minimum, median, or maximum used based on their distance to
-#'  `pct`.
-#' @param index The level that qualitative variables will be
-#'  fixed. If the variables are character (not factors), this will
-#'  be the index of the sorted unique values. This is applied to all
-#'  qualitative variables captured by the selectors.
-#' @param grid A named list with elements `pctl` (a logical) and
-#'  `len` (an integer). If `pctl = TRUE`, then `len` denotes how
-#'  many percentiles to use to create the profiling grid. This
-#'  creates a grid between 0 and 1 and the profile is determined by
-#'  the percentiles of the data. For example, if `pctl = TRUE` and
-#'  `len = 3`, the profile would contain the minimum, median, and
-#'  maximum values. If `pctl = FALSE`, it defines how many grid
-#'  points between the minimum and maximum values should be created.
-#'  This parameter is ignored for qualitative variables (since all
-#'  of their possible levels are profiled). In the case of date
-#'  variables, `pctl = FALSE` will always be used since there is no
-#'  quantile method for dates.
-#' @details This step is atypical in that, when baked, the
-#'  `new_data` argument is ignored; the resulting data set is
-#'  based on the fixed and profiled variable's information.
+#'   [selections()]). Can also be a string or tidyselect for backwards
+#'   compatibility. If a column is included in both lists to be fixed and to be
+#'   profiled, an error is thrown.
+#' @param pct A value between 0 and 1 that is the percentile to fix continuous
+#'   variables. This is applied to all continuous variables captured by the
+#'   selectors. For date variables, either the minimum, median, or maximum used
+#'   based on their distance to `pct`.
+#' @param index The level that qualitative variables will be fixed. If the
+#'   variables are character (not factors), this will be the index of the sorted
+#'   unique values. This is applied to all qualitative variables captured by the
+#'   selectors.
+#' @param grid A named list with elements `pctl` (a logical) and `len` (an
+#'   integer). If `pctl = TRUE`, then `len` denotes how many percentiles to use
+#'   to create the profiling grid. This creates a grid between 0 and 1 and the
+#'   profile is determined by the percentiles of the data. For example, if `pctl
+#'   = TRUE` and `len = 3`, the profile would contain the minimum, median, and
+#'   maximum values. If `pctl = FALSE`, it defines how many grid points between
+#'   the minimum and maximum values should be created. This parameter is ignored
+#'   for qualitative variables (since all of their possible levels are
+#'   profiled). In the case of date variables, `pctl = FALSE` will always be
+#'   used since there is no quantile method for dates.
+#' @details
+#'
+#' This step is atypical in that, when baked, the `new_data` argument is
+#' ignored; the resulting data set is based on the fixed and profiled variable's
+#' information.
 #'
 #' # Tidying
 #'

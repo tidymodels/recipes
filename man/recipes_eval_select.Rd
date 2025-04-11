@@ -21,8 +21,8 @@ the \code{...} argument of your step function, captured with \code{\link[rlang:e
 and stored in the step object as the \code{terms} element.}
 
 \item{data}{A data frame to use as the context to evaluate the selection in.
-This is generally the \code{training} data passed to the \code{\link[=prep]{prep()}} method
-of your step.}
+This is generally the \code{training} data passed to the \code{\link[=prep]{prep()}} method of your
+step.}
 
 \item{info}{A data frame of term information describing each column's type
 and role for use with the recipes selectors. This is generally the \code{info}
@@ -31,15 +31,15 @@ data passed to the \code{\link[=prep]{prep()}} method of your step.}
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{allow_rename}{Should the renaming syntax \code{c(foo = bar)} be allowed?
-This is rarely required, and is currently only used by \code{\link[=step_select]{step_select()}}.
-It is unlikely that your step will need renaming capabilities.}
+This is rarely required, and is currently only used by \code{\link[=step_select]{step_select()}}. It
+is unlikely that your step will need renaming capabilities.}
 
 \item{check_case_weights}{Should selecting case weights throw an error?
 Defaults to \code{TRUE}. This is rarely changed and only needed in \code{\link[=juice]{juice()}},
 \code{\link[=bake.recipe]{bake.recipe()}}, \code{\link[=update_role]{update_role()}}, and \code{\link[=add_role]{add_role()}}.}
 
-\item{strict}{Should selecting non-existing names throw an error?
-Defaults to \code{TRUE}. This is rarely changed and only needed in
+\item{strict}{Should selecting non-existing names throw an error? Defaults to
+\code{TRUE}. This is rarely changed and only needed in
 `.recipes_estimate_sparsity.recipe()``.}
 
 \item{call}{The execution environment of a currently running function, e.g.
@@ -48,15 +48,15 @@ source of the error. See the call argument of \code{\link[rlang:abort]{rlang::ab
 information.}
 }
 \value{
-A named character vector containing the evaluated selection. The names are
-always the same as the values, except when \code{allow_rename = TRUE}, in which
-case the names reflect the new names chosen by the user.
+A named character vector containing the evaluated selection. The
+names are always the same as the values, except when \code{allow_rename = TRUE},
+in which case the names reflect the new names chosen by the user.
 }
 \description{
 \code{recipes_eval_select()} is a recipes specific variant of
 \code{\link[tidyselect:eval_select]{tidyselect::eval_select()}} enhanced with the ability to recognize recipes
-selectors, such as \code{\link[=all_numeric_predictors]{all_numeric_predictors()}}. See \link{selections}
-for more information about the unique recipes selectors.
+selectors, such as \code{\link[=all_numeric_predictors]{all_numeric_predictors()}}. See \link{selections} for more
+information about the unique recipes selectors.
 
 This is a developer tool that is only useful for creating new recipes steps.
 }

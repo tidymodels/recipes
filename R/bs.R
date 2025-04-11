@@ -5,25 +5,26 @@
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
-#' @param objects A list of [splines::bs()] objects
-#'  created once the step has been trained.
-#' @param deg_free The degrees of freedom for the spline. As the
-#'  degrees of freedom for a spline increase, more flexible and
-#'  complex curves can be generated. When a single degree of freedom is used,
-#'  the result is a rescaled version of the original data.
+#' @param objects A list of [splines::bs()] objects created once the step has
+#'   been trained.
+#' @param deg_free The degrees of freedom for the spline. As the degrees of
+#'   freedom for a spline increase, more flexible and complex curves can be
+#'   generated. When a single degree of freedom is used, the result is a
+#'   rescaled version of the original data.
 #' @param degree Degree of polynomial spline (integer).
-#' @param options A list of options for [splines::bs()]
-#'  which should not include `x`, `degree`, or `df`.
+#' @param options A list of options for [splines::bs()] which should not include
+#'   `x`, `degree`, or `df`.
 #' @template step-return
 #' @family individual transformation steps
 #' @export
-#' @details `step_bs` can create new features from a single variable
-#'  that enable fitting routines to model this variable in a
-#'  nonlinear manner. The extent of the possible nonlinearity is
-#'  determined by the `df`, `degree`, or `knots` arguments of
-#'  [splines::bs()]. The original variables are removed
-#'  from the data and new columns are added. The naming convention
-#'  for the new variables is `varname_bs_1` and so on.
+#' @details
+#'
+#' `step_bs()` can create new features from a single variable that enable
+#' fitting routines to model this variable in a nonlinear manner. The extent of
+#' the possible nonlinearity is determined by the `df`, `degree`, or `knots`
+#' arguments of [splines::bs()]. The original variables are removed from the
+#' data and new columns are added. The naming convention for the new variables
+#' is `varname_bs_1` and so on.
 #'
 #' # Tidying
 #'

@@ -15,9 +15,8 @@
 A formula.
 }
 \description{
-In case a model formula is required, the formula method can
-be used on a recipe to show what predictors and outcome(s)
-could be used.
+In case a model formula is required, the formula method can be used on a
+recipe to show what predictors and outcome(s) could be used.
 }
 \examples{
 

@@ -20,51 +20,46 @@ step_window(
 )
 }
 \arguments{
-\item{recipe}{A recipe object. The step will be added to the
-sequence of operations for this recipe.}
+\item{recipe}{A recipe object. The step will be added to the sequence of
+operations for this recipe.}
 
-\item{...}{One or more selector functions to choose variables
-for this step. See \code{\link[=selections]{selections()}} for more details.}
+\item{...}{One or more selector functions to choose variables for this step.
+See \code{\link[=selections]{selections()}} for more details.}
 
-\item{role}{For model terms created by this step, what analysis
-role should they be assigned? If \code{names} is left to be
-\code{NULL}, the rolling statistics replace the original columns
-and the roles are left unchanged. If \code{names} is set, those
-new columns will have a role of \code{NULL} unless this argument
+\item{role}{For model terms created by this step, what analysis role should
+they be assigned? If \code{names} is left to be \code{NULL}, the rolling statistics
+replace the original columns and the roles are left unchanged. If \code{names}
+is set, those new columns will have a role of \code{NULL} unless this argument
 has a value.}
 
-\item{trained}{A logical to indicate if the quantities for
-preprocessing have been estimated.}
+\item{trained}{A logical to indicate if the quantities for preprocessing have
+been estimated.}
 
 \item{size}{An odd integer \verb{>= 3} for the window size.}
 
-\item{na_rm}{A logical for whether missing values should be
-removed from the calculations within each window.}
+\item{na_rm}{A logical for whether missing values should be removed from the
+calculations within each window.}
 
-\item{statistic}{A character string for the type of statistic
-that should be calculated for each moving window. Possible
-values are: \code{'max'}, \code{'mean'}, \code{'median'},
-\code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'},
-\code{'var'}}
+\item{statistic}{A character string for the type of statistic that should be
+calculated for each moving window. Possible values are: \code{'max'}, \code{'mean'},
+\code{'median'}, \code{'min'}, \code{'prod'}, \code{'sd'}, \code{'sum'}, \code{'var'}}
 
 \item{columns}{A character string of the selected variable names. This field
 is a placeholder and will be populated once \code{\link[=prep]{prep()}} is used.}
 
-\item{names}{An optional character string that is the same
-length of the number of terms selected by \code{terms}. If you
-are not sure what columns will be selected, use the
-\code{summary} function (see the example below). These will be
-the names of the new columns created by the step.}
+\item{names}{An optional character string that is the same length of the
+number of terms selected by \code{terms}. If you are not sure what columns will
+be selected, use the \code{summary} function (see the example below). These will
+be the names of the new columns created by the step.}
 
 \item{keep_original_cols}{A logical to keep the original variables in the
 output. Defaults to \code{TRUE}.}
 
-\item{skip}{A logical. Should the step be skipped when the
-recipe is baked by \code{\link[=bake]{bake()}}? While all operations are baked
-when \code{\link[=prep]{prep()}} is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using \code{skip = TRUE} as it may affect
-the computations for subsequent operations.}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by
+\code{\link[=bake]{bake()}}? While all operations are baked when \code{\link[=prep]{prep()}} is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using \code{skip = TRUE} as it
+may affect the computations for subsequent operations.}
 
 \item{id}{A character string that is unique to this step to identify it.}
 }
@@ -78,19 +73,18 @@ new columns that are the results of functions that compute statistics across
 moving windows.
 }
 \details{
-The calculations use a somewhat atypical method for
-handling the beginning and end parts of the rolling statistics.
-The process starts with the center justified window calculations
-and the beginning and ending parts of the rolling values are
-determined using the first and last rolling values,
-respectively. For example, if a column \code{x} with 12 values is
-smoothed with a 5-point moving median, the first three smoothed
-values are estimated by \code{median(x[1:5])} and the fourth
-uses \code{median(x[2:6])}.
+The calculations use a somewhat atypical method for handling the beginning
+and end parts of the rolling statistics. The process starts with the center
+justified window calculations and the beginning and ending parts of the
+rolling values are determined using the first and last rolling values,
+respectively. For example, if a column \code{x} with 12 values is smoothed with a
+5-point moving median, the first three smoothed values are estimated by
+\code{median(x[1:5])} and the fourth uses \code{median(x[2:6])}.
 
 \code{keep_original_cols} also applies to this step if \code{names} is specified.
 
-step will stop with a note about installing the package.
+This step requires the \pkg{RcppRoll} package. If not installed, the step
+will stop with a note about installing the package.
 }
 \section{Tidying}{
 When you \code{\link[=tidy.recipe]{tidy()}} this step, a tibble is returned with

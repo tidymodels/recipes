@@ -20,24 +20,23 @@
 #'
 #' @details
 #'
-#' The rectified linear transformation is calculated as
-#' \deqn{max(0, x - c)} and is also known as the ReLu or right hinge function.
-#' If `reverse` is true, then the transformation is reflected about the
-#' y-axis, like so: \deqn{max(0, c - x)} Setting the `smooth` option
-#' to true will instead calculate a smooth approximation to ReLu
-#' according to \deqn{ln(1 + e^(x - c)} The `reverse` argument may
-#' also be applied to this transformation.
+#' The rectified linear transformation is calculated as \deqn{max(0, x - c)} and
+#' is also known as the ReLu or right hinge function. If `reverse` is true, then
+#' the transformation is reflected about the y-axis, like so: \deqn{max(0, c -
+#' x)} Setting the `smooth` option to true will instead calculate a smooth
+#' approximation to ReLu according to \deqn{ln(1 + e^(x - c)} The `reverse`
+#' argument may also be applied to this transformation.
 #'
 #' # Connection to MARS:
 #'
 #' The rectified linear transformation is used in Multivariate Adaptive
 #' Regression Splines as a basis function to fit piecewise linear functions to
 #' data in a strategy similar to that employed in tree based models. The
-#' transformation is a popular choice as an activation function in many
-#' neural networks, which could then be seen as a stacked generalization of
-#' MARS when making use of ReLu activations. The hinge function also appears
-#' in the loss function of Support Vector Machines, where it penalizes
-#' residuals only if they are within a certain margin of the decision boundary.
+#' transformation is a popular choice as an activation function in many neural
+#' networks, which could then be seen as a stacked generalization of MARS when
+#' making use of ReLu activations. The hinge function also appears in the loss
+#' function of Support Vector Machines, where it penalizes residuals only if
+#' they are within a certain margin of the decision boundary.
 #'
 #' # Tidying
 #'

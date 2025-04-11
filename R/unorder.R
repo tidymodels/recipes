@@ -8,7 +8,9 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details The factors level order is preserved during the transformation.
+#' @details
+#'
+#' The factors level order is preserved during the transformation.
 #'
 #' # Tidying
 #'

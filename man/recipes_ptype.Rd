@@ -25,13 +25,11 @@ the recipe object.
 The returned ptype is a tibble of the data set that the recipe object is
 expecting. The specifics of which columns depend on the \code{stage}.
 
-At \code{prep()} time, when \code{stage = "prep"}, the ptype is the data passed to
-\code{recipe()}. The following code chunk represents a possible recipe scenario.
-\code{recipes_ptype(rec_spec, stage = "prep")} and
-\code{recipes_ptype(rec_prep, stage = "prep")} both return a ptype tibble
-corresponding to \code{data_ptype}. This information is used internally in
-\code{prep()} to verify that \code{data_training} has the right columns with the right
-types.
+At \code{\link[=prep]{prep()}} time, when \code{stage = "prep"}, the ptype is the data passed to
+\code{\link[=recipe]{recipe()}}. The following code chunk represents a possible recipe scenario.
+\code{recipes_ptype(rec_spec, stage = "prep")} and \code{recipes_ptype(rec_prep, stage = "prep")} both return a ptype tibble corresponding to \code{data_ptype}. This
+information is used internally in \code{\link[=prep]{prep()}} to verify that \code{data_training} has
+the right columns with the right types.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rec_spec <- recipe(outcome ~ ., data = data_ptype) \%>\%
   step_normalize(all_numeric_predictors()) \%>\%
@@ -40,15 +38,15 @@ types.
 rec_prep <- prep(rec_spec, training = data_training)
 }\if{html}{\out{</div>}}
 
-At \code{bake()} time, when \code{stage = "bake"}, the ptype represents the data
-that are required for \code{bake()} to run.
+At \code{\link[=bake]{bake()}} time, when \code{stage = "bake"}, the ptype represents the data that
+are required for \code{\link[=bake]{bake()}} to run.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data_bake <- bake(rec_prep, new_data = data_testing)
 }\if{html}{\out{</div>}}
 
 What this means in practice is that unless otherwise specified, everything
 but outcomes and case weights are required. These requirements can be changed
-with \code{update_role_requirements()}, and \code{recipes_ptype()} respects those
+with \code{\link[=update_role_requirements]{update_role_requirements()}}, and \code{recipes_ptype()} respects those
 changes.
 
 \code{recipes_ptype()} returns \code{NULL} on recipes created prior to version 1.1.0.
