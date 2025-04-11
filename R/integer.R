@@ -1,7 +1,8 @@
 #' Convert values to predefined integers
 #'
-#' `step_integer()` creates a *specification* of a recipe step that will convert
-#' new data into a set of integers based on the original data values.
+#' `step_integer()` creates a specification of a recipe step that will convert
+#' data into a set of ascending integers based on the ascending order from the
+#' training data. Also known as integer encoding.
 #'
 #' @inheritParams step_pca
 #' @inheritParams step_center
@@ -16,7 +17,7 @@
 #' @template step-return
 #' @family dummy variable and encoding steps
 #' @export
-#' @details `step_integer` will determine the unique values of
+#' @details `step_integer()` will determine the unique values of
 #'  each variable from the training set (excluding missing values),
 #'  order them, and then assign integers to each value. When baked,
 #'  each data point is translated to its corresponding integer or a
@@ -24,7 +25,7 @@
 #'  argument above). Missing values propagate.
 #'
 #' Factor inputs are ordered by their levels. All others are
-#'  ordered by `sort`.
+#'  ordered by [sort()].
 #'
 #' Despite the name, the new values are returned as numeric unless
 #'  `strict = TRUE`, which will coerce the results to integers.
