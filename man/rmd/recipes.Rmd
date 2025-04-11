@@ -10,11 +10,31 @@ library(parsnip)
 
 ## Defining recipes
 
-Variables in recipes can have any type of *role*, including outcome, predictor, observation ID, case weights, stratification variables, etc.
+Creating a recipe comes in two parts:
 
-`recipe` objects can be created in several ways. If an analysis only contains outcomes and predictors, the simplest way to create one is to use a formula (e.g. `y ~ x1 + x2`) that does not contain inline functions such as `log(x3)` (see the first example below).
+1. Specifying which variables are used and what roles they should have.
+2. Specifying what transformations should be applied to which variables.
 
-Alternatively, a `recipe` object can be created by first specifying which variables in a data set should be used and then sequentially defining their roles (see the last example).
+The first part is done with `recipe()` and optionally `update_role()`, `add_role()`, and `remove_role()`. A `recipe` object can be created in several ways. If an analysis only contains outcomes and predictors, the simplest way to create one is to use a formula (e.g. `y ~ x1 + x2`) that does not contain inline functions such as `log(x3)`.
+
+```r
+recipe(data, formula)
+recipe(formula, data)
+```
+
+Variables in recipes can have any type of *role*, including outcome, predictor, observation ID, case weights, stratification variables, etc. You can instead use the `vars` and `roles` argument to specify the variables and roles. `vars` must be a character vector of names and `roles` must the the corresponding roles.
+
+```r
+recipe(data, vars = vars, roles = roles)
+```
+
+Lastly you can use `update_role()`, `add_role()`, and `remove_role()`. These functions will alter, add, or eliminate roles from the selections. These can be used in combination with the above ways, or by themselves since `recipe(data)` will consume all the data as undeclared roles.
+
+```r
+recipe(data) %>%
+  update_role(class, new_role = "outcome") %>%
+  update_role(starts_with("x"), new_role = "predictor")
+```
 
 There are two different types of operations that can be sequentially added to a recipe. 
 

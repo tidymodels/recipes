@@ -72,17 +72,41 @@ to prepare it for data analysis.
 \details{
 \subsection{Defining recipes}{
 
+Creating a recipe comes in two parts:
+\enumerate{
+\item Specifying which variables are used and what roles they should have.
+\item Specifying what transformations should be applied to which
+variables.
+}
+
+The first part is done with \code{recipe()} and optionally \code{update_role()},
+\code{add_role()}, and \code{remove_role()}. A \code{recipe} object can be created in
+several ways. If an analysis only contains outcomes and predictors, the
+simplest way to create one is to use a formula (e.g. \code{y ~ x1 + x2}) that
+does not contain inline functions such as \code{log(x3)}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{recipe(data, formula)
+recipe(formula, data)
+}\if{html}{\out{</div>}}
+
 Variables in recipes can have any type of \emph{role}, including outcome,
 predictor, observation ID, case weights, stratification variables, etc.
+You can instead use the \code{vars} and \code{roles} argument to specify the
+variables and roles. \code{vars} must be a character vector of names and
+\code{roles} must the the corresponding roles.
 
-\code{recipe} objects can be created in several ways. If an analysis only
-contains outcomes and predictors, the simplest way to create one is to
-use a formula (e.g. \code{y ~ x1 + x2}) that does not contain inline
-functions such as \code{log(x3)} (see the first example below).
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{recipe(data, vars = vars, roles = roles)
+}\if{html}{\out{</div>}}
 
-Alternatively, a \code{recipe} object can be created by first specifying
-which variables in a data set should be used and then sequentially
-defining their roles (see the last example).
+Lastly you can use \code{update_role()}, \code{add_role()}, and \code{remove_role()}.
+These functions will alter, add, or eliminate roles from the selections.
+These can be used in combination with the above ways, or by themselves
+since \code{recipe(data)} will consume all the data as undeclared roles.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{recipe(data) \%>\%
+  update_role(class, new_role = "outcome") \%>\%
+  update_role(starts_with("x"), new_role = "predictor")
+}\if{html}{\out{</div>}}
 
 There are two different types of operations that can be sequentially
 added to a recipe.
