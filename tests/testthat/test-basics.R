@@ -6,6 +6,313 @@ data(biomass, package = "modeldata")
 biomass_tr <- biomass[biomass$dataset == "Training", ]
 biomass_te <- biomass[biomass$dataset == "Testing", ]
 
+test_that("recipe specifications works - formula", {
+  exp_all_predictors <- tibble::tibble(
+    variable = c(
+      "mpg",
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb"
+    ),
+    role = "predictor"
+  )
+
+  rec <- recipe(~., data = mtcars)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_all_predictors
+  )
+
+  rec <- recipe(data = mtcars, ~.)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_all_predictors
+  )
+
+  exp_outcomes_predictors <- tibble::tibble(
+    variable = c(
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb",
+      "mpg"
+    ),
+    role = c(rep("predictor", 10), "outcome")
+  )
+
+  rec <- recipe(mpg ~ ., data = mtcars)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_outcomes_predictors
+  )
+
+  rec <- recipe(data = mtcars, mpg ~ .)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_outcomes_predictors
+  )
+
+  exp_just_some <- tibble::tibble(
+    variable = c(
+      "vs",
+      "am",
+      "mpg"
+    ),
+    role = c(rep("predictor", 2), "outcome")
+  )
+
+  rec <- recipe(mpg ~ vs + am, data = mtcars)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_just_some
+  )
+
+  rec <- recipe(data = mtcars, mpg ~ vs + am)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_just_some
+  )
+})
+
+test_that("recipe specifications works - vars and roles arguments", {
+  exp_all_predictors <- tibble::tibble(
+    variable = c(
+      "mpg",
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb"
+    ),
+    role = "predictor"
+  )
+
+  rec <- recipe(
+    mtcars,
+    vars = exp_all_predictors$variable,
+    roles = exp_all_predictors$role
+  )
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_all_predictors
+  )
+
+  exp_outcomes_predictors <- tibble::tibble(
+    variable = c(
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb",
+      "mpg"
+    ),
+    role = c(rep("predictor", 10), "outcome")
+  )
+
+  rec <- recipe(
+    mtcars,
+    vars = exp_outcomes_predictors$variable,
+    roles = exp_outcomes_predictors$role
+  )
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_outcomes_predictors
+  )
+
+  exp_just_some <- tibble::tibble(
+    variable = c(
+      "vs",
+      "am",
+      "mpg"
+    ),
+    role = c(rep("predictor", 2), "outcome")
+  )
+
+  rec <- recipe(
+    mtcars,
+    vars = exp_just_some$variable,
+    roles = exp_just_some$role
+  )
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_just_some
+  )
+})
+
+test_that("recipe specifications works - update_role()", {
+  exp_all_predictors <- tibble::tibble(
+    variable = c(
+      "mpg",
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb"
+    ),
+    role = NA_character_
+  )
+
+  rec <- recipe(mtcars)
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_all_predictors
+  )
+
+  exp_all_predictors <- tibble::tibble(
+    variable = c(
+      "mpg",
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb"
+    ),
+    role = "predictor"
+  )
+
+  rec <- recipe(mtcars) %>%
+    update_role(everything())
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_all_predictors
+  )
+
+  exp_outcomes_predictors <- tibble::tibble(
+    variable = c(
+      "mpg",
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb"
+    ),
+    role = c("outcome", rep("predictor", 10)),
+  )
+
+  rec <- recipe(mtcars) %>%
+    update_role(everything()) %>%
+    update_role(mpg, new_role = "outcome")
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_outcomes_predictors
+  )
+
+  exp_just_some <- tibble::tibble(
+    variable = c(
+      "mpg",
+      "cyl",
+      "disp",
+      "hp",
+      "drat",
+      "wt",
+      "qsec",
+      "vs",
+      "am",
+      "gear",
+      "carb"
+    ),
+    role = rep(c("outcome", NA, "predictor", NA), c(1L, 6L, 2L, 2L))
+  )
+
+  rec <- recipe(mtcars) %>%
+    update_role(vs, am) %>%
+    update_role(mpg, new_role = "outcome")
+
+  var_info <- summary(rec) %>%
+    select(variable, role)
+
+  expect_identical(
+    var_info,
+    exp_just_some
+  )
+})
+
 test_that("Recipe correctly identifies output variable", {
   raw_recipe <- recipe(HHV ~ ., data = biomass)
   var_info <- raw_recipe$var_info
