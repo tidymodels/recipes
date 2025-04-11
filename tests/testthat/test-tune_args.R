@@ -47,3 +47,21 @@ test_that("tune_args() returns all arguments marked for tuning (#1296)", {
     exp
   )
 })
+
+test_that("tune_args() doesn't error on namespaced selectors", {
+  exp <- tibble::tibble(
+    name = character(0),
+    tunable = logical(0),
+    id = character(0),
+    source = character(0),
+    component = character(0),
+    component_id = character(0),
+  )
+
+  expect_identical(
+    recipe(~., data = mtcars) %>%
+      step_pca(dplyr::contains("a")) %>%
+      tune_args(),
+    exp
+  )
+})
