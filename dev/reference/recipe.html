@@ -144,17 +144,31 @@ is trained.</p></dd>
 <h3 id="defining-recipes">Defining recipes<a class="anchor" aria-label="anchor" href="#defining-recipes"></a></h3>
 
 
+<p>Creating a recipe comes in two parts:</p><ol><li><p>Specifying which variables are used and what roles they should have.</p></li>
+<li><p>Specifying what transformations should be applied to which
+variables.</p></li>
+</ol><p>The first part is done with <code>recipe()</code> and optionally <code><a href="roles.html">update_role()</a></code>,
+<code><a href="roles.html">add_role()</a></code>, and <code><a href="roles.html">remove_role()</a></code>. A <code>recipe</code> object can be created in
+several ways. If an analysis only contains outcomes and predictors, the
+simplest way to create one is to use a formula (e.g. <code>y ~ x1 + x2</code>) that
+does not contain inline functions such as <code>log(x3)</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">formula</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Variables in recipes can have any type of <em>role</em>, including outcome,
-predictor, observation ID, case weights, stratification variables, etc.</p>
-<p><code>recipe</code> objects can be created in several ways. If an analysis only
-contains outcomes and predictors, the simplest way to create one is to
-use a formula (e.g. <code>y ~ x1 + x2</code>) that does not contain inline
-functions such as <code>log(x3)</code> (see the first example below).</p>
-<p>Alternatively, a <code>recipe</code> object can be created by first specifying
-which variables in a data set should be used and then sequentially
-defining their roles (see the last example). This alternative is an
-excellent choice when the number of variables is very high, as the
-formula method is memory-inefficient with many variables.</p>
+predictor, observation ID, case weights, stratification variables, etc.
+You can instead use the <code>vars</code> and <code>roles</code> argument to specify the
+variables and roles. <code>vars</code> must be a character vector of names and
+<code>roles</code> must the the corresponding roles.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">data</span>, vars <span class="op">=</span> <span class="va">vars</span>, roles <span class="op">=</span> <span class="va">roles</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>Lastly you can use <code><a href="roles.html">update_role()</a></code>, <code><a href="roles.html">add_role()</a></code>, and <code><a href="roles.html">remove_role()</a></code>.
+These functions will alter, add, or eliminate roles from the selections.
+These can be used in combination with the above ways, or by themselves
+since <code>recipe(data)</code> will consume all the data as undeclared roles. Note
+that <code><a href="roles.html">update_role()</a></code>, <code><a href="roles.html">add_role()</a></code>, and <code><a href="roles.html">remove_role()</a></code> are applied
+before steps and checks, regardless of where they are in the pipeline.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="va">class</span>, new_role <span class="op">=</span> <span class="st">"outcome"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/roles.html">update_role</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>, new_role <span class="op">=</span> <span class="st">"predictor"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>There are two different types of operations that can be sequentially
 added to a recipe.</p><ul><li><p><strong>Steps</strong> can include operations like scaling a variable, creating
 dummy variables or interactions, and so on. More computationally
@@ -419,7 +433,6 @@ will be taken as <code>TRUE</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Centering and scaling for: <span style="color: #0000BB;">all_numeric_predictors()</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Spatial sign on: <span style="color: #0000BB;">all_numeric_predictors()</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># ---------------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># formula multivariate example:</span></span></span>
 <span class="r-in"><span><span class="co"># no need for `cbind(carbon, hydrogen)` for left-hand side</span></span></span>
 <span class="r-in"><span></span></span>
@@ -430,7 +443,6 @@ will be taken as <code>TRUE</code>.</p>
 <span class="r-in"><span>  <span class="fu"><a href="step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="step_scale.html">step_scale</a></span><span class="op">(</span><span class="fu"><a href="has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># ---------------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co"># example using `update_role` instead of formula:</span></span></span>
 <span class="r-in"><span><span class="co"># best choice for high-dimensional data</span></span></span>
 <span class="r-in"><span></span></span>

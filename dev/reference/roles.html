@@ -211,8 +211,6 @@ all of the variables that have a custom role with the selector <code><a href="ha
 <span class="r-in"><span>  <span class="fu">update_role</span><span class="op">(</span><span class="va">sample</span>, new_role <span class="op">=</span> <span class="cn">NA_character_</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># ------------------------------------------------------------------------------</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Variables can have more than one role. `add_role()` can be used</span></span></span>
 <span class="r-in"><span><span class="co"># if the column already has at least one role:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -251,15 +249,13 @@ all of the variables that have a custom role with the selector <code><a href="ha
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor      original</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome        original</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># `carbon` has two roles at the end, so the last `update_roles()` fails since</span></span></span>
+<span class="r-in"><span><span class="co"># `carbon` has two roles at the end, so the last `update_role()` fails since</span></span></span>
 <span class="r-in"><span><span class="co"># `old_role` was not given.</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">add_role</span><span class="op">(</span><span class="va">carbon</span>, <span class="va">sulfur</span>, new_role <span class="op">=</span> <span class="st">"something"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">update_role</span><span class="op">(</span><span class="va">carbon</span>, new_role <span class="op">=</span> <span class="st">"something else"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># ------------------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># To remove a role, `remove_role()` can be used to remove a single role.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
@@ -295,8 +291,6 @@ all of the variables that have a custom role with the selector <code><a href="ha
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> nitrogen <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> sulfur   <span style="color: #949494;">&lt;chr [2]&gt;</span> predictor original</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> HHV      <span style="color: #949494;">&lt;chr [2]&gt;</span> outcome   original</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># ------------------------------------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If the formula method is not used, all columns have a missing role:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recipe.html">recipe</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
