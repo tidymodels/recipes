@@ -1,17 +1,29 @@
 #' Select variables using dplyr
 #'
+#' @description
+#'
 #' `step_select()` creates a *specification* of a recipe step that will select
 #' variables using [dplyr::select()].
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Due to how `step_select()` works with `workflows::workflow()`, we no longer
+#' recommend the usage of this step.If you are using `step_select()` to remove
+#' variables with `-` then you can flip it around and use [step_rm()] instead.
+#' All other uses of `step_select()` could be replaced by a call to
+#' [dplyr::select()] on the data before it is passed to `recipe()`.
 #'
 #' @inheritParams step_center
 #' @param role For model terms selected by this step, what analysis
 #'  role should they be assigned?
 #' @template step-return
-#' @details When an object in the user's global environment is
-#'  referenced in the expression defining the new variable(s),
-#'  it is a good idea to use quasiquotation (e.g. `!!`) to embed
-#'  the value of the object in the expression (to be portable
-#'  between sessions). See the examples.
+#'
+#' @details
+#'
+#' When an object in the user's global environment is referenced in the
+#' expression defining the new variable(s), it is a good idea to use
+#' quasiquotation (e.g. `!!`) to embed the value of the object in the expression
+#' (to be portable between sessions). See the examples.
 #'
 #' # Tidying
 #'
@@ -71,6 +83,11 @@ step_select <- function(
   skip = FALSE,
   id = rand_id("select")
 ) {
+  lifecycle::deprecate_warn(
+    when = "1.3.0",
+    what = "step_select()",
+    details = "See `?select_select()` for recommended alternatives."
+  )
   add_step(
     recipe,
     step_select_new(
