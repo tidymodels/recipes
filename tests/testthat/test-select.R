@@ -159,6 +159,13 @@ test_that("doesn't destroy sparsity", {
   expect_true(sparsevctrs::is_sparse_integer(bake(rec, NULL)$vs))
 })
 
+test_that("step_select() throws deprecating warning", {
+  expect_snapshot(
+    tmp <- recipe(~., mtcars) %>%
+      step_select(vs, mpg, disp)
+  )
+})
+
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {
