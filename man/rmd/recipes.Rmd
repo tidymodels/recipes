@@ -28,7 +28,7 @@ Variables in recipes can have any type of *role*, including outcome, predictor, 
 recipe(data, vars = vars, roles = roles)
 ```
 
-Lastly you can use `update_role()`, `add_role()`, and `remove_role()`. These functions will alter, add, or eliminate roles from the selections. These can be used in combination with the above ways, or by themselves since `recipe(data)` will consume all the data as undeclared roles.
+Lastly you can use `update_role()`, `add_role()`, and `remove_role()`. These functions will alter, add, or eliminate roles from the selections. These can be used in combination with the above ways, or by themselves since `recipe(data)` will consume all the data as undeclared roles. Note that `update_role()`, `add_role()`, and `remove_role()` are applied before steps and checks, regardless of where they are in the pipeline.
 
 ```r
 recipe(data) %>%

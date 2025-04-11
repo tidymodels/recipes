@@ -101,7 +101,9 @@ variables and roles. \code{vars} must be a character vector of names and
 Lastly you can use \code{update_role()}, \code{add_role()}, and \code{remove_role()}.
 These functions will alter, add, or eliminate roles from the selections.
 These can be used in combination with the above ways, or by themselves
-since \code{recipe(data)} will consume all the data as undeclared roles.
+since \code{recipe(data)} will consume all the data as undeclared roles. Note
+that \code{update_role()}, \code{add_role()}, and \code{remove_role()} are applied
+before steps and checks, regardless of where they are in the pipeline.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{recipe(data) \%>\%
   update_role(class, new_role = "outcome") \%>\%
