@@ -82,9 +82,7 @@ functions such as \code{log(x3)} (see the first example below).
 
 Alternatively, a \code{recipe} object can be created by first specifying
 which variables in a data set should be used and then sequentially
-defining their roles (see the last example). This alternative is an
-excellent choice when the number of variables is very high, as the
-formula method is memory-inefficient with many variables.
+defining their roles (see the last example).
 
 There are two different types of operations that can be sequentially
 added to a recipe.
@@ -372,7 +370,6 @@ sp_signed <- rec \%>\%
   step_spatialsign(all_numeric_predictors())
 sp_signed
 
-# ---------------------------------------------------------------------------
 # formula multivariate example:
 # no need for `cbind(carbon, hydrogen)` for left-hand side
 
@@ -383,7 +380,6 @@ multi_y <- multi_y \%>\%
   step_center(all_numeric_predictors()) \%>\%
   step_scale(all_numeric_predictors())
 
-# ---------------------------------------------------------------------------
 # example using `update_role` instead of formula:
 # best choice for high-dimensional data
 

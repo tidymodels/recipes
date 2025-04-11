@@ -73,8 +73,6 @@
 #'   update_role(sample, new_role = NA_character_)
 #' }
 #'
-#' # ------------------------------------------------------------------------------
-#'
 #' # Variables can have more than one role. `add_role()` can be used
 #' # if the column already has at least one role:
 #' recipe(HHV ~ ., data = biomass) %>%
@@ -96,8 +94,6 @@
 #'   update_role(carbon, new_role = "something else")
 #' }
 #'
-#' # ------------------------------------------------------------------------------
-#'
 #' # To remove a role, `remove_role()` can be used to remove a single role.
 #' recipe(HHV ~ ., data = biomass) %>%
 #'   add_role(carbon, new_role = "something") %>%
@@ -110,8 +106,6 @@
 #'   remove_role(carbon, old_role = "something") %>%
 #'   remove_role(carbon, old_role = "predictor") %>%
 #'   summary()
-#'
-#' # ------------------------------------------------------------------------------
 #'
 #' # If the formula method is not used, all columns have a missing role:
 #' recipe(biomass) %>%
@@ -196,7 +190,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   if (is.null(new_type)) {
     new_type <- purrr::map(
       vars,
-      ~{
+      ~ {
         first_row_with_var <- which(recipe$var_info$variable == .x)[1]
         recipe$var_info$type[[first_row_with_var]]
       }
@@ -207,7 +201,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   source <- purrr::map_chr(
     vars,
-    ~{
+    ~ {
       first_row_with_var <- which(recipe$var_info$variable == .x)[1]
       recipe$var_info$source[first_row_with_var]
     }
@@ -291,9 +285,9 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   if (is.null(old_role)) {
     var_counts <-
       info %>%
-        dplyr::filter(variable %in% vars) %>%
-        dplyr::group_by(variable) %>%
-        dplyr::count()
+      dplyr::filter(variable %in% vars) %>%
+      dplyr::group_by(variable) %>%
+      dplyr::count()
     if (any(var_counts$n > 1)) {
       cli::cli_abort(
         "{.arg old_role} can only be {.code NULL} when the variable(s) have a \\
