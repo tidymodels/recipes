@@ -178,7 +178,7 @@ bake.step_poly <- function(object, new_data, ...) {
   check_new_data(col_names, object, new_data)
   new_names <- purrr::map(
     object$objects,
-    ~ paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
+    ~paste(attr(.x, "var"), "poly", seq_len(ncol(.x)), sep = "_")
   )
 
   # Start with n-row, 0-col tibble for the empty selection case

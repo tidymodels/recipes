@@ -181,7 +181,7 @@ get_time_features <- function(dt, feats) {
     decimal_day = function(x) hour(x) + (second(x) + minute(x) * 60) / 3600
   )
 
-  res <- purrr::map(features[feats], ~ .x(dt))
+  res <- purrr::map(features[feats], ~.x(dt))
   res <- vctrs::vec_cbind(!!!res)
   res
 }

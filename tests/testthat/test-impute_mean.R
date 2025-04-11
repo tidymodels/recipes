@@ -104,7 +104,7 @@ test_that("all NA values", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_impute_mean(all_predictors())
+      step_impute_mean(all_predictors())
   rec_param <- tunable.step_impute_mean(rec$steps[[1]])
   expect_equal(rec_param$name, c("trim"))
   expect_true(all(rec_param$source == "recipe"))
@@ -122,8 +122,8 @@ test_that("trim works", {
   x[sample(seq_along(x), 100)] <- NA
 
   expect_equal(
-    purrr::map(seq(0, 1, by = 0.1), ~ mean(x, trim = .x, na.rm = TRUE)),
-    purrr::map(seq(0, 1, by = 0.1), ~ trim(x, trim = .x) %>% mean(na.rm = TRUE))
+    purrr::map(seq(0, 1, by = 0.1), ~mean(x, trim = .x, na.rm = TRUE)),
+    purrr::map(seq(0, 1, by = 0.1), ~trim(x, trim = .x) %>% mean(na.rm = TRUE))
   )
 })
 
@@ -194,7 +194,7 @@ test_that("case weights", {
   ref_means <- credit_tr %>%
     dplyr::select(Age, Assets, Income) %>%
     purrr::map(trim, trim = 0.2) %>%
-    purrr::map(~ weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) %>%
+    purrr::map(~weighted.mean(.x, w = rep(1, length(.x)), na.rm = TRUE)) %>%
     purrr::map(round, 0)
 
   expect_equal(

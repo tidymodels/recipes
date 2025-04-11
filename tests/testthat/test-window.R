@@ -114,7 +114,7 @@ test_that("na_rm argument works for step_window", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_window(all_predictors(), outcome = "Species")
+      step_window(all_predictors(), outcome = "Species")
   rec_param <- tunable.step_window(rec$steps[[1]])
   expect_equal(rec_param$name, c("statistic", "size"))
   expect_true(all(rec_param$source == "recipe"))

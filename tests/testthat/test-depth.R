@@ -89,7 +89,6 @@ test_that("prefix", {
   expect_true(any(grepl("spatial_", names(dists))))
 })
 
-
 test_that("bad args", {
   skip_if_not_installed("ddalpha")
   expect_snapshot(
@@ -135,7 +134,6 @@ test_that("recipes_argument_select() is used", {
   )
 })
 
-
 test_that("addition of recipes_argument_select() is backwards compatible", {
   skip_if_not_installed("ddalpha")
 
@@ -165,7 +163,6 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
     exp
   )
 })
-
 
 # Infrastructure ---------------------------------------------------------------
 

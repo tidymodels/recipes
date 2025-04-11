@@ -70,8 +70,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_freq) %>%
-    step_spatialsign(all_numeric_predictors()) %>%
-    prep()
+      step_spatialsign(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(cyl, mpg))^2),
@@ -87,8 +87,8 @@ test_that("centering with case weights", {
 
   rec <-
     recipe(mpg ~ ., mtcars_imp) %>%
-    step_spatialsign(all_numeric_predictors()) %>%
-    prep()
+      step_spatialsign(all_numeric_predictors()) %>%
+      prep()
 
   expect_equal(
     rowSums(bake(rec, new_data = NULL, -c(wt, mpg))^2),

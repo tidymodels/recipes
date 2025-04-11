@@ -2,7 +2,7 @@ test_that("tune_args() errors on multiple tune()s in same arg", {
   expect_snapshot(
     error = TRUE,
     recipe(~., data = mtcars) %>%
-      step_pca(all_predictors(), num_comp = ~ tune() + tune()) %>%
+      step_pca(all_predictors(), num_comp = ~tune() + tune()) %>%
       tune_args()
   )
 })

@@ -156,7 +156,7 @@ test_that("warnings", {
   )
 
   expect_snapshot(
-    recipe(~ mpg + disp, data = mtcars) %>%
+    recipe(~mpg + disp, data = mtcars) %>%
       step_BoxCox(mpg, disp) %>%
       prep() %>%
       bake(new_data = tibble(mpg = -1, disp = -1))

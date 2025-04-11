@@ -636,16 +636,16 @@ prep.recipe <-
     # that variable was available.
     x$last_term_info <-
       running_info %>%
-      group_by(variable) %>%
-      arrange(desc(number)) %>%
-      summarise(
-        type = list(dplyr::first(type)),
-        role = list(unique(unlist(role))),
-        source = dplyr::first(source),
-        number = dplyr::first(number),
-        skip = dplyr::first(skip),
-        .groups = "keep"
-      )
+        group_by(variable) %>%
+        arrange(desc(number)) %>%
+        summarise(
+          type = list(dplyr::first(type)),
+          role = list(unique(unlist(role))),
+          source = dplyr::first(source),
+          number = dplyr::first(number),
+          skip = dplyr::first(skip),
+          .groups = "keep"
+        )
     x
   }
 
@@ -976,7 +976,7 @@ bake_req_tibble <- function(x) {
   req <- compute_bake_role_requirements(x)
   req <-
     tibble::tibble(role = names(req), required_to_bake = unname(req)) %>%
-    dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
+      dplyr::mutate(role = ifelse(role == "NA", NA_character_, role))
   req
 }
 

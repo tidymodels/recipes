@@ -189,7 +189,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
   if (is.null(new_type)) {
     new_type <- purrr::map(
       vars,
-      ~ {
+      ~{
         first_row_with_var <- which(recipe$var_info$variable == .x)[1]
         recipe$var_info$type[[first_row_with_var]]
       }
@@ -200,7 +200,7 @@ add_role <- function(recipe, ..., new_role = "predictor", new_type = NULL) {
 
   source <- purrr::map_chr(
     vars,
-    ~ {
+    ~{
       first_row_with_var <- which(recipe$var_info$variable == .x)[1]
       recipe$var_info$source[first_row_with_var]
     }
@@ -284,9 +284,9 @@ update_role <- function(recipe, ..., new_role = "predictor", old_role = NULL) {
   if (is.null(old_role)) {
     var_counts <-
       info %>%
-      dplyr::filter(variable %in% vars) %>%
-      dplyr::group_by(variable) %>%
-      dplyr::count()
+        dplyr::filter(variable %in% vars) %>%
+        dplyr::group_by(variable) %>%
+        dplyr::count()
     if (any(var_counts$n > 1)) {
       cli::cli_abort(
         "{.arg old_role} can only be {.code NULL} when the variable(s) have a \\

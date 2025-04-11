@@ -180,7 +180,6 @@ test_that("addition of recipes_argument_select() is backwards compatible", {
   )
 })
 
-
 # Infrastructure ---------------------------------------------------------------
 
 test_that("bake method errors when needed non-standard role columns are missing", {

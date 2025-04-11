@@ -257,7 +257,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
     for (i in seq_along(col_names)) {
       form <- rlang::new_formula(lhs = NULL, rhs = rlang::sym(col_names[i]))
       if (x$one_hot) {
-        form <- stats::update.formula(form, ~ . - 1)
+        form <- stats::update.formula(form, ~. - 1)
       }
       terms <- model.frame(
         formula = form,
@@ -416,12 +416,14 @@ bake.step_dummy <- function(object, new_data, ...) {
     object$contrasts <- object$contrasts[c("unordered", "ordered")]
     current_contrast <- object$contrasts[is_ordered + 1]
     if (
-      !any(vapply(
-        c("contr.treatment", "contr_one_hot"),
-        identical,
-        current_contrast[[1]],
-        FUN.VALUE = logical(1)
-      )) &&
+      !any(
+        vapply(
+          c("contr.treatment", "contr_one_hot"),
+          identical,
+          current_contrast[[1]],
+          FUN.VALUE = logical(1)
+        )
+      ) &&
         sparse_is_yes(object$sparse)
     ) {
       object$sparse <- FALSE

@@ -300,11 +300,13 @@ print.step_geodist <-
     untr_obj <- c(x$lat, x$lon)
 
     if (
-      all(vapply(
-        untr_obj,
-        function(obj) quo_is_null(obj),
-        FUN.VALUE = logical(1)
-      ))
+      all(
+        vapply(
+          untr_obj,
+          function(obj) quo_is_null(obj),
+          FUN.VALUE = logical(1)
+        )
+      )
     ) {
       untr_obj <- NULL
     }

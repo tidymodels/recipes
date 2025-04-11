@@ -173,7 +173,7 @@ wrighted_quantile <- function(x, wts, probs, ...) {
   wts <- wts[order_x]
 
   wts_norm <- cumsum(wts) / sum(wts)
-  res <- purrr::map_dbl(probs, ~ x[min(which(wts_norm >= .x))])
+  res <- purrr::map_dbl(probs, ~x[min(which(wts_norm >= .x))])
 
   names(res) <- paste0(probs * 100, "%")
   res

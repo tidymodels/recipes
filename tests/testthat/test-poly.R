@@ -84,7 +84,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_poly(all_predictors())
+      step_poly(all_predictors())
   rec_param <- tunable.step_poly(rec$steps[[1]])
   expect_equal(rec_param$name, c("degree"))
   expect_true(all(rec_param$source == "recipe"))
@@ -100,9 +100,9 @@ test_that("old option argument", {
   expect_snapshot(
     res <-
       recipe(~., data = iris) %>%
-      step_poly(Sepal.Width, options = list(degree = 3)) %>%
-      prep() %>%
-      bake(new_data = NULL)
+        step_poly(Sepal.Width, options = list(degree = 3)) %>%
+        prep() %>%
+        bake(new_data = NULL)
   )
   exp_names <- c(
     "Sepal.Length",

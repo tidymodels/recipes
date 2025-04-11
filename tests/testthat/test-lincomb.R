@@ -2,10 +2,10 @@ library(testthat)
 library(recipes)
 
 dummies <- cbind(
-  model.matrix(~ block - 1, npk),
-  model.matrix(~ N - 1, npk),
-  model.matrix(~ P - 1, npk),
-  model.matrix(~ K - 1, npk),
+  model.matrix(~block - 1, npk),
+  model.matrix(~N - 1, npk),
+  model.matrix(~P - 1, npk),
+  model.matrix(~K - 1, npk),
   yield = npk$yield
 )
 

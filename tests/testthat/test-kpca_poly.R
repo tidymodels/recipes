@@ -77,7 +77,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_kpca_poly(all_predictors())
+      step_kpca_poly(all_predictors())
   rec_param <- tunable.step_kpca_poly(rec$steps[[1]])
   expect_equal(
     rec_param$name,

@@ -138,7 +138,7 @@ prep.step_poly_bernstein <- function(x, training, info = NULL, ...) {
     purrr::map2(
       training[, col_names],
       col_names,
-      ~ spline2_create(
+      ~spline2_create(
         .x,
         nm = .y,
         .fn = "bernsteinPoly",

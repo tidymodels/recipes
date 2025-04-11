@@ -349,7 +349,7 @@ test_that("check_name() is used", {
 test_that("tunable", {
   rec <-
     recipe(~., data = iris) %>%
-    step_harmonic(all_predictors(), cycle_size = 1)
+      step_harmonic(all_predictors(), cycle_size = 1)
   rec_param <- tunable.step_harmonic(rec$steps[[1]])
   expect_equal(rec_param$name, c("frequency"))
   expect_true(all(rec_param$source == "recipe"))
