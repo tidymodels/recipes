@@ -80,7 +80,7 @@ step_select <- function(
   lifecycle::deprecate_warn(
     when = "1.3.0",
     what = "step_select()",
-    details = "See `?select_select()` for recommened alternatives."
+    details = "See `?select_select()` for recommended alternatives."
   )
   add_step(
     recipe,
