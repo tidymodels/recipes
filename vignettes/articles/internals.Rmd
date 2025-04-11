@@ -1,0 +1,7 @@
+---
+title: "Object internals"
+description: |
+ Overview and explanation of recipe object internals.
+---
+
+These elements should not be accessed by users directly. they should instead be accessed via helper functions.
