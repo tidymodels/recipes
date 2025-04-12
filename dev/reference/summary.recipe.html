@@ -75,15 +75,14 @@ used).</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>,
-and <code>source</code>. When <code>original = TRUE</code>, an additional column is included
-named <code>required_to_bake</code> (based on the results of
-<code><a href="update_role_requirements.html">update_role_requirements()</a></code>).</p>
+    <p>A tibble with columns <code>variable</code>, <code>type</code>, <code>role</code>, and <code>source</code>. When
+<code>original = TRUE</code>, an additional column is included named
+<code>required_to_bake</code> (based on the results of <code><a href="update_role_requirements.html">update_role_requirements()</a></code>).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Note that, until the recipe has been trained,
-the current and original variables are the same.</p>
+    <p>Note that, until the recipe has been trained, the current and original
+variables are the same.</p>
 <p>It is possible for variables to have multiple roles by adding them with
 <code><a href="roles.html">add_role()</a></code>. If a variable has multiple roles, it will have more than one
 row in the summary tibble.</p>

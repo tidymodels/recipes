@@ -77,13 +77,13 @@ centroid. This is done for each value of a categorical class variable.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-class">class<a class="anchor" aria-label="anchor" href="#arg-class"></a></dt>
@@ -94,18 +94,17 @@ compatibility.</p></dd>
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-mean-func">mean_func<a class="anchor" aria-label="anchor" href="#arg-mean-func"></a></dt>
-<dd><p>A function to compute the center of the
-distribution.</p></dd>
+<dd><p>A function to compute the center of the distribution.</p></dd>
 
 
 <dt id="arg-cov-func">cov_func<a class="anchor" aria-label="anchor" href="#arg-cov-func"></a></dt>
@@ -113,18 +112,18 @@ distribution.</p></dd>
 
 
 <dt id="arg-pool">pool<a class="anchor" aria-label="anchor" href="#arg-pool"></a></dt>
-<dd><p>A logical: should the covariance matrix be computed
-by pooling the data for all of the classes?</p></dd>
+<dd><p>A logical: should the covariance matrix be computed by pooling
+the data for all of the classes?</p></dd>
 
 
 <dt id="arg-log">log<a class="anchor" aria-label="anchor" href="#arg-log"></a></dt>
-<dd><p>A logical: should the distances be transformed by
-the natural log function?</p></dd>
+<dd><p>A logical: should the distances be transformed by the natural log
+function?</p></dd>
 
 
 <dt id="arg-objects">objects<a class="anchor" aria-label="anchor" href="#arg-objects"></a></dt>
-<dd><p>Statistics are stored here once this step has
-been trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>Statistics are stored here once this step has been trained by
+<code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-prefix">prefix<a class="anchor" aria-label="anchor" href="#arg-prefix"></a></dt>
@@ -138,12 +137,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -157,23 +155,22 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>step_classdist</code> will create a new column for every unique value of
-the <code>class</code> variable. The resulting variables will not replace the original
+    <p><code>step_classdist()</code> will create a new column for every unique value of the
+<code>class</code> variable. The resulting variables will not replace the original
 values and, by default, have the prefix <code>classdist_</code>. The naming format can
 be changed using the <code>prefix</code> argument.</p>
 <p>Class-specific centroids are the multivariate averages of each predictor
-using the data from each class in the training set. When pre-processing a
-new data point, this step computes the distance from the new point to each
-of the class centroids. These distance features can be very effective at
-capturing linear class boundaries. For this reason, they can be useful to
-add to an existing predictor set used within a nonlinear model. If the true
-boundary is actually linear, the model will have an easier time learning the
-training data patterns.</p>
-<p>Note that, by default, the default covariance function requires
-that each class should have at least as many rows as variables
-listed in the <code>terms</code> argument. If <code>pool = TRUE</code>,
-there must be at least as many data points are variables
-overall.</p>
+using the data from each class in the training set. When pre-processing a new
+data point, this step computes the distance from the new point to each of the
+class centroids. These distance features can be very effective at capturing
+linear class boundaries. For this reason, they can be useful to add to an
+existing predictor set used within a nonlinear model. If the true boundary is
+actually linear, the model will have an easier time learning the training
+data patterns.</p>
+<p>Note that, by default, the default covariance function requires that each
+class should have at least as many rows as variables listed in the <code>terms</code>
+argument. If <code>pool = TRUE</code>, there must be at least as many data points are
+variables overall.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

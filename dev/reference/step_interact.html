@@ -69,37 +69,35 @@ new columns that are interaction terms between two or more variables.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg-terms">terms<a class="anchor" aria-label="anchor" href="#arg-terms"></a></dt>
-<dd><p>A traditional R formula that contains interaction
-terms. This can include <code>.</code> and selectors. See <code><a href="selections.html">selections()</a></code>
-for more details, and consider using <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::starts_with()</a></code> when
-dummy variables have been created.</p></dd>
+<dd><p>A traditional R formula that contains interaction terms. This
+can include <code>.</code> and selectors. See <code><a href="selections.html">selections()</a></code> for more details, and
+consider using <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::starts_with()</a></code> when dummy variables have been
+created.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-objects">objects<a class="anchor" aria-label="anchor" href="#arg-objects"></a></dt>
-<dd><p>A list of <code>terms</code> objects for each
-individual interaction.</p></dd>
+<dd><p>A list of <code>terms</code> objects for each individual interaction.</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>A character value used to delineate variables in an
-interaction (e.g. <code>var1_x_var2</code> instead of the more
-traditional <code>var1:var2</code>).</p></dd>
+<dd><p>A character value used to delineate variables in an interaction
+(e.g. <code>var1_x_var2</code> instead of the more traditional <code>var1:var2</code>).</p></dd>
 
 
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
@@ -108,12 +106,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -127,34 +124,28 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>step_interact</code> can create interactions between
-variables. It is primarily intended for <strong>numeric data</strong>;
-categorical variables should probably be converted to dummy
-variables using <code><a href="step_dummy.html">step_dummy()</a></code> prior to being used for
+    <p><code>step_interact()</code> can create interactions between variables. It is primarily
+intended for <strong>numeric data</strong>; categorical variables should probably be
+converted to dummy variables using <code><a href="step_dummy.html">step_dummy()</a></code> prior to being used for
 interactions.</p>
-<p>Unlike other step functions, the <code>terms</code> argument should
-be a traditional R model formula but should contain no inline
-functions (e.g. <code>log</code>). For example, for predictors
-<code>A</code>, <code>B</code>, and <code>C</code>, a formula such as
-<code>~A:B:C</code> can be used to make a three way interaction
-between the variables. If the formula contains terms other than
-interactions (e.g. <code>(A+B+C)^3</code>) only the interaction terms
-are retained for the design matrix.</p>
-<p>The separator between the variables defaults to "<code>_x_</code>" so
-that the three way interaction shown previously would generate a
-column named <code>A_x_B_x_C</code>. This can be changed using the
-<code>sep</code> argument.</p>
-<p>When dummy variables are created and are used in interactions,
-selectors can help specify the interactions succinctly. For
-example, suppose a factor column <code>X</code> gets converted to dummy
-variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using <code><a href="step_dummy.html">step_dummy()</a></code>. If
-you wanted an interaction with numeric column <code>z</code>, you could
-create a set of specific interaction effects (e.g.
-<code>x_2:z + x_3:z</code> and so on) or you could use
-<code>starts_with("x_"):z</code>. When <code><a href="prep.html">prep()</a></code> evaluates this step,
-<code>starts_with("x_")</code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x_6)</code>
-so that the formula is now <code>(x_2 + x_3 + x_4 + x_5 + x_6):z</code> and
-all two-way interactions are created.</p>
+<p>Unlike other step functions, the <code>terms</code> argument should be a traditional R
+model formula but should contain no inline functions (e.g. <code>log</code>). For
+example, for predictors <code>A</code>, <code>B</code>, and <code>C</code>, a formula such as <code>~A:B:C</code> can be
+used to make a three way interaction between the variables. If the formula
+contains terms other than interactions (e.g. <code>(A+B+C)^3</code>) only the
+interaction terms are retained for the design matrix.</p>
+<p>The separator between the variables defaults to "<code>_x_</code>" so that the three way
+interaction shown previously would generate a column named <code>A_x_B_x_C</code>. This
+can be changed using the <code>sep</code> argument.</p>
+<p>When dummy variables are created and are used in interactions, selectors can
+help specify the interactions succinctly. For example, suppose a factor
+column <code>X</code> gets converted to dummy variables <code>x_2</code>, <code>x_3</code>, ..., <code>x_6</code> using
+<code><a href="step_dummy.html">step_dummy()</a></code>. If you wanted an interaction with numeric column <code>z</code>, you
+could create a set of specific interaction effects (e.g. <code>x_2:z + x_3:z</code> and
+so on) or you could use <code>starts_with("x_"):z</code>. When <code><a href="prep.html">prep()</a></code> evaluates this
+step, <code>starts_with("x_")</code> resolves to <code>(x_2 + x_3 + x_4 + x_5 + x_6)</code> so that
+the formula is now <code>(x_2 + x_3 + x_4 + x_5 + x_6):z</code> and all two-way
+interactions are created.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

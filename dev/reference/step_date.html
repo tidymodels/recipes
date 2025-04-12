@@ -73,61 +73,57 @@ date data into one or more factor or numeric variables.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. The selected variables should have class <code>Date</code> or
-<code>POSIXct</code>. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+The selected variables should have class <code>Date</code> or <code>POSIXct</code>. See
+<code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>
-<dd><p>A character string that includes at least one
-of the following values: <code>month</code>, <code>dow</code> (day of week), <code>mday</code> (day of month),
-<code>doy</code> (day of year), <code>week</code>, <code>month</code>,
-<code>decimal</code> (decimal date, e.g. 2002.197), <code>quarter</code>,
-<code>semester</code>, <code>year</code>.</p></dd>
+<dd><p>A character string that includes at least one of the
+following values: <code>month</code>, <code>dow</code> (day of week), <code>mday</code> (day of month),
+<code>doy</code> (day of year), <code>week</code>, <code>month</code>, <code>decimal</code> (decimal date, e.g.
+2002.197), <code>quarter</code>, <code>semester</code>, <code>year</code>.</p></dd>
 
 
 <dt id="arg-abbr">abbr<a class="anchor" aria-label="anchor" href="#arg-abbr"></a></dt>
-<dd><p>A logical. Only available for features <code>month</code>
-or <code>dow</code>. <code>FALSE</code> will display the day of the week as
-an ordered factor of character strings, such as "Sunday".
-<code>TRUE</code> will display an abbreviated version of the label,
+<dd><p>A logical. Only available for features <code>month</code> or <code>dow</code>. <code>FALSE</code>
+will display the day of the week as an ordered factor of character strings,
+such as "Sunday". <code>TRUE</code> will display an abbreviated version of the label,
 such as "Sun". <code>abbr</code> is disregarded if <code>label = FALSE</code>.</p></dd>
 
 
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
-<dd><p>A logical. Only available for features
-<code>month</code> or <code>dow</code>. <code>TRUE</code> will display the day of
-the week as an ordered factor of character strings, such as
-"Sunday." <code>FALSE</code> will display the day of the week as a
-number.</p></dd>
+<dd><p>A logical. Only available for features <code>month</code> or <code>dow</code>. <code>TRUE</code>
+will display the day of the week as an ordered factor of character strings,
+such as "Sunday." <code>FALSE</code> will display the day of the week as a number.</p></dd>
 
 
 <dt id="arg-ordinal">ordinal<a class="anchor" aria-label="anchor" href="#arg-ordinal"></a></dt>
-<dd><p>A logical: should factors be ordered? Only
-available for features <code>month</code> or <code>dow</code>.</p></dd>
+<dd><p>A logical: should factors be ordered? Only available for
+features <code>month</code> or <code>dow</code>.</p></dd>
 
 
 <dt id="arg-locale">locale<a class="anchor" aria-label="anchor" href="#arg-locale"></a></dt>
-<dd><p>Locale to be used for <code>month</code> and <code>dow</code>, see <a href="https://rdrr.io/r/base/locales.html" class="external-link">locales</a>.
-On Linux systems you can use <code>system("locale -a")</code> to list all the
-installed locales. Can be a locales string, or a <code><a href="https://clock.r-lib.org/reference/clock_labels.html" class="external-link">clock::clock_labels()</a></code>
-object. Defaults to <code>clock::clock_locale()$labels</code>.</p></dd>
+<dd><p>Locale to be used for <code>month</code> and <code>dow</code>, see <a href="https://rdrr.io/r/base/locales.html" class="external-link">locales</a>. On
+Linux systems you can use <code>system("locale -a")</code> to list all the installed
+locales. Can be a locales string, or a <code><a href="https://clock.r-lib.org/reference/clock_labels.html" class="external-link">clock::clock_labels()</a></code> object.
+Defaults to <code>clock::clock_locale()$labels</code>.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -141,12 +137,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -160,18 +155,14 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Unlike some other steps, <code>step_date</code> does <em>not</em>
-remove the original date variables by default. Set <code>keep_original_cols</code>
-to <code>FALSE</code> to remove them.</p>
+    <p>Unlike some other steps, <code>step_date()</code> does <em>not</em> remove the original date
+variables by default. Set <code>keep_original_cols</code> to <code>FALSE</code> to remove them.</p>
 <p>See <code><a href="step_time.html">step_time()</a></code> if you want to calculate features that are smaller than
 days.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or variables selected), <code>value</code> (the feature
-names), and <code>ordinal</code> (a logical) is returned.</p>
-<p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
 columns <code>terms</code>, <code>value</code>, <code>ordinal</code> , and <code>id</code>:</p>
 <dl><dt>terms</dt>
 <dd><p>character, the selectors or variables selected</p></dd>

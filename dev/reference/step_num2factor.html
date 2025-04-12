@@ -72,23 +72,22 @@ integers.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-transform">transform<a class="anchor" aria-label="anchor" href="#arg-transform"></a></dt>
-<dd><p>A function taking a single argument <code>x</code> that can be used
-to modify the numeric values prior to determining the levels (perhaps using
+<dd><p>A function taking a single argument <code>x</code> that can be used to
+modify the numeric values prior to determining the levels (perhaps using
 <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">base::as.integer()</a></code> or <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">base::as.factor()</a></code>). The output of a function
 should be an integer that corresponds to the value of <code>levels</code> that should
 be assigned. If not an integer, the value will be converted to an integer
@@ -96,8 +95,8 @@ during <code><a href="bake.html">bake()</a></code>.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-levels">levels<a class="anchor" aria-label="anchor" href="#arg-levels"></a></dt>
@@ -111,12 +110,11 @@ modified once <code><a href="prep.html">prep()</a></code> is executed.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -131,8 +129,9 @@ sequence of any existing operations.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Note that since the numeric variables will be used for indexing into <code>levels</code>
-it will need to take values between <code>1</code> and <code>length(levels)</code> to avoid <code>getting</code>NA<code>s as results. Using </code>transform = base::as.factor` can be used to
-shrink values to smaller domain.</p>
+it will need to take values between <code>1</code> and <code>length(levels)</code> to avoid getting
+<code>NA</code>s as results. Using <code>transform = base::as.factor</code> can be used to shrink
+values to smaller domain.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

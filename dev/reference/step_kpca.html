@@ -75,32 +75,32 @@ expansion.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-num-comp">num_comp<a class="anchor" aria-label="anchor" href="#arg-num-comp"></a></dt>
-<dd><p>The number of components to retain as new predictors.
-If <code>num_comp</code> is greater than the number of columns or the number of
-possible components, a smaller value will be used. If <code>num_comp = 0</code>
-is set then no transformation is done and selected variables will
-stay unchanged, regardless of the value of <code>keep_original_cols</code>.</p></dd>
+<dd><p>The number of components to retain as new predictors. If
+<code>num_comp</code> is greater than the number of columns or the number of possible
+components, a smaller value will be used. If <code>num_comp = 0</code> is set then no
+transformation is done and selected variables will stay unchanged,
+regardless of the value of <code>keep_original_cols</code>.</p></dd>
 
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
@@ -131,12 +131,11 @@ output. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -150,13 +149,13 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When performing kPCA with <code>step_kpca()</code>, you must choose the kernel
-function (and any important kernel parameters). This step uses the
-<span class="pkg">kernlab</span> package; the reference below discusses the types of kernels
-available and their parameter(s). These specifications can be made in the
-<code>kernel</code> and <code>kpar</code> slots of the <code>options</code> argument to <code>step_kpca()</code>.
-Consider using <code><a href="step_kpca_rbf.html">step_kpca_rbf()</a></code> for a radial basis function kernel or
-<code><a href="step_kpca_poly.html">step_kpca_poly()</a></code> for a polynomial kernel.</p>
+    <p>When performing kPCA with <code>step_kpca()</code>, you must choose the kernel function
+(and any important kernel parameters). This step uses the <span class="pkg">kernlab</span>
+package; the reference below discusses the types of kernels available and
+their parameter(s). These specifications can be made in the <code>kernel</code> and
+<code>kpar</code> slots of the <code>options</code> argument to <code>step_kpca()</code>. Consider using
+<code><a href="step_kpca_rbf.html">step_kpca_rbf()</a></code> for a radial basis function kernel or <code><a href="step_kpca_poly.html">step_kpca_poly()</a></code>
+for a polynomial kernel.</p>
 <p>Kernel principal component analysis (kPCA) is an extension of a PCA analysis
 that conducts the calculations in a broader dimensionality defined by a
 kernel function. For example, if a quadratic kernel function were used,

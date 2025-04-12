@@ -73,53 +73,51 @@ variable that counts instances of a regular expression pattern in text.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>A single selector function to choose which variable
-will be searched for the regex pattern. The selector should
-resolve to a single variable. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>A single selector function to choose which variable will be
+searched for the regex pattern. The selector should resolve to a single
+variable. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-pattern">pattern<a class="anchor" aria-label="anchor" href="#arg-pattern"></a></dt>
-<dd><p>A character string containing a regular
-expression (or character string for <code>fixed = TRUE</code>) to be
-matched in the given character vector. Coerced by
-<code>as.character</code> to a character string if possible.</p></dd>
+<dd><p>A character string containing a regular expression (or
+character string for <code>fixed = TRUE</code>) to be matched in the given character
+vector. Coerced by <code>as.character</code> to a character string if possible.</p></dd>
 
 
 <dt id="arg-normalize">normalize<a class="anchor" aria-label="anchor" href="#arg-normalize"></a></dt>
-<dd><p>A logical; should the integer counts be
-divided by the total number of characters in the string?.</p></dd>
+<dd><p>A logical; should the integer counts be divided by the total
+number of characters in the string?.</p></dd>
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
-<dd><p>A list of options to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gregexpr()</a></code> that
-should not include <code>x</code> or <code>pattern</code>.</p></dd>
+<dd><p>A list of options to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gregexpr()</a></code> that should not include <code>x</code>
+or <code>pattern</code>.</p></dd>
 
 
 <dt id="arg-result">result<a class="anchor" aria-label="anchor" href="#arg-result"></a></dt>
-<dd><p>A single character value for the name of the new
-variable. It should be a valid column name.</p></dd>
+<dd><p>A single character value for the name of the new variable. It
+should be a valid column name.</p></dd>
 
 
 <dt id="arg-input">input<a class="anchor" aria-label="anchor" href="#arg-input"></a></dt>
-<dd><p>A single character value for the name of the
-variable being searched. This is <code>NULL</code> until computed by
-<code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>A single character value for the name of the variable being
+searched. This is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
@@ -134,12 +132,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>

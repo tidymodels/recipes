@@ -75,27 +75,26 @@ moving windows.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>For model terms created by this step, what analysis
-role should they be assigned? If <code>names</code> is left to be
-<code>NULL</code>, the rolling statistics replace the original columns
-and the roles are left unchanged. If <code>names</code> is set, those
-new columns will have a role of <code>NULL</code> unless this argument
+<dd><p>For model terms created by this step, what analysis role should
+they be assigned? If <code>names</code> is left to be <code>NULL</code>, the rolling statistics
+replace the original columns and the roles are left unchanged. If <code>names</code>
+is set, those new columns will have a role of <code>NULL</code> unless this argument
 has a value.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
@@ -103,16 +102,14 @@ preprocessing have been estimated.</p></dd>
 
 
 <dt id="arg-na-rm">na_rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A logical for whether missing values should be
-removed from the calculations within each window.</p></dd>
+<dd><p>A logical for whether missing values should be removed from the
+calculations within each window.</p></dd>
 
 
 <dt id="arg-statistic">statistic<a class="anchor" aria-label="anchor" href="#arg-statistic"></a></dt>
-<dd><p>A character string for the type of statistic
-that should be calculated for each moving window. Possible
-values are: <code>'max'</code>, <code>'mean'</code>, <code>'median'</code>,
-<code>'min'</code>, <code>'prod'</code>, <code>'sd'</code>, <code>'sum'</code>,
-<code>'var'</code></p></dd>
+<dd><p>A character string for the type of statistic that should be
+calculated for each moving window. Possible values are: <code>'max'</code>, <code>'mean'</code>,
+<code>'median'</code>, <code>'min'</code>, <code>'prod'</code>, <code>'sd'</code>, <code>'sum'</code>, <code>'var'</code></p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -121,11 +118,10 @@ is a placeholder and will be populated once <code><a href="prep.html">prep()</a>
 
 
 <dt id="arg-names">names<a class="anchor" aria-label="anchor" href="#arg-names"></a></dt>
-<dd><p>An optional character string that is the same
-length of the number of terms selected by <code>terms</code>. If you
-are not sure what columns will be selected, use the
-<code>summary</code> function (see the example below). These will be
-the names of the new columns created by the step.</p></dd>
+<dd><p>An optional character string that is the same length of the
+number of terms selected by <code>terms</code>. If you are not sure what columns will
+be selected, use the <code>summary</code> function (see the example below). These will
+be the names of the new columns created by the step.</p></dd>
 
 
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
@@ -134,12 +130,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -153,17 +148,16 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The calculations use a somewhat atypical method for
-handling the beginning and end parts of the rolling statistics.
-The process starts with the center justified window calculations
-and the beginning and ending parts of the rolling values are
-determined using the first and last rolling values,
-respectively. For example, if a column <code>x</code> with 12 values is
-smoothed with a 5-point moving median, the first three smoothed
-values are estimated by <code>median(x[1:5])</code> and the fourth
-uses <code>median(x[2:6])</code>.</p>
+    <p>The calculations use a somewhat atypical method for handling the beginning
+and end parts of the rolling statistics. The process starts with the center
+justified window calculations and the beginning and ending parts of the
+rolling values are determined using the first and last rolling values,
+respectively. For example, if a column <code>x</code> with 12 values is smoothed with a
+5-point moving median, the first three smoothed values are estimated by
+<code>median(x[1:5])</code> and the fourth uses <code>median(x[2:6])</code>.</p>
 <p><code>keep_original_cols</code> also applies to this step if <code>names</code> is specified.</p>
-<p>step will stop with a note about installing the package.</p>
+<p>This step requires the <span class="pkg">RcppRoll</span> package. If not installed, the step
+will stop with a note about installing the package.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

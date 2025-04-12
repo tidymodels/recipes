@@ -71,45 +71,45 @@ sin() and cos() terms for harmonic analysis."><meta property="og:image" content=
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details. This will
-typically be a single variable.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details. This will typically be a single
+variable.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-frequency">frequency<a class="anchor" aria-label="anchor" href="#arg-frequency"></a></dt>
-<dd><p>A numeric vector with at least one value.
-The value(s) must be greater than zero and finite.</p></dd>
+<dd><p>A numeric vector with at least one value. The value(s) must
+be greater than zero and finite.</p></dd>
 
 
 <dt id="arg-cycle-size">cycle_size<a class="anchor" aria-label="anchor" href="#arg-cycle-size"></a></dt>
-<dd><p>A numeric vector with at least one value that indicates
-the size of a single cycle. <code>cycle_size</code> should have the same units as the
+<dd><p>A numeric vector with at least one value that indicates the
+size of a single cycle. <code>cycle_size</code> should have the same units as the
 input variable(s).</p></dd>
 
 
 <dt id="arg-starting-val">starting_val<a class="anchor" aria-label="anchor" href="#arg-starting-val"></a></dt>
-<dd><p>either <code>NA</code>, numeric, Date or POSIXt value(s) that indicates
-the reference point for the sin and cos curves for each input variable.
-If the value is a <code>Date</code> or <code>POISXt</code> the value is converted to numeric
-using <code>as.numeric</code>. This parameter may be specified to increase control
-over the signal phase.  If <code>starting_val</code> is not specified the default
-is 0.</p></dd>
+<dd><p>either <code>NA</code>, numeric, Date or POSIXt value(s) that
+indicates the reference point for the sin and cos curves for each input
+variable. If the value is a <code>Date</code> or <code>POISXt</code> the value is converted to
+numeric using <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code>. This parameter may be specified to increase
+control over the signal phase.  If <code>starting_val</code> is not specified the
+default is 0.</p></dd>
 
 
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
@@ -123,12 +123,11 @@ is a placeholder and will be populated once <code><a href="prep.html">prep()</a>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -142,30 +141,30 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This step seeks to describe periodic components of observational
-data using a combination of sin and cos waves. To do this, each wave of a
-specified frequency is modeled using one sin and one cos term. The two
-terms for each frequency can then be used to estimate the amplitude and
-phase shift of a periodic signal in observational data. The equation
-relating cos waves of known frequency but unknown phase and amplitude to a
-sum of sin and cos terms is below:</p>
-<p>$$A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j sin(\sigma_j t_i)$$</p>
-<p>Solving the equation yields \(C_j\) and \(S_j\). the
-amplitude can then be obtained with:</p>
+    <p>This step seeks to describe periodic components of observational data using a
+combination of sin and cos waves. To do this, each wave of a specified
+frequency is modeled using one sin and one cos term. The two terms for each
+frequency can then be used to estimate the amplitude and phase shift of a
+periodic signal in observational data. The equation relating cos waves of
+known frequency but unknown phase and amplitude to a sum of sin and cos terms
+is below:</p>
+<p>$$A_j cos(\sigma_j t_i - \Phi_j) = C_j cos(\sigma_j t_i) + S_j
+sin(\sigma_j t_i)$$</p>
+<p>Solving the equation yields \(C_j\) and \(S_j\). the amplitude can then
+be obtained with:</p>
 <p>$$A_j = \sqrt{C^2_j + S^2_j}$$</p>
-<p>And the phase can be obtained with:
-$$\Phi_j = \arctan{(S_j / C_j)}$$</p>
+<p>And the phase can be obtained with: $$\Phi_j = \arctan{(S_j / C_j)}$$</p>
 <p>where:</p><ul><li><p>\(\sigma_j = 2 \pi (frequency / cycle\_size))\)</p></li>
 <li><p>\(A_j\) is the amplitude of the \(j^{th}\) frequency</p></li>
 <li><p>\(\Phi_j\) is the phase of the \(j^{th}\) frequency</p></li>
 <li><p>\(C_j\) is the coefficient of the cos term for the \(j^{th}\) frequency</p></li>
 <li><p>\(S_j\) is the coefficient of the sin term for the \(j^{th}\) frequency</p></li>
 </ul><p>The periodic component is specified by <code>frequency</code> and <code>cycle_size</code>
-parameters. The cycle size relates the specified frequency to the
-input column(s) units. There are multiple ways to specify a wave of given
-frequency, for example, a <code>POSIXct</code> input column given a <code>frequency</code> of
-24 and a <code>cycle_size</code> equal to 86400 is equivalent to a <code>frequency</code> of
-1.0 with <code>cycle_size</code> equal to 3600.</p>
+parameters. The cycle size relates the specified frequency to the input
+column(s) units. There are multiple ways to specify a wave of given
+frequency, for example, a <code>POSIXct</code> input column given a <code>frequency</code> of 24
+and a <code>cycle_size</code> equal to 86400 is equivalent to a <code>frequency</code> of 1.0 with
+<code>cycle_size</code> equal to 3600.</p>
     </div>
     <div class="section level2">
     <h2 id="tuning-parameters">Tuning Parameters<a class="anchor" aria-label="anchor" href="#tuning-parameters"></a></h2>

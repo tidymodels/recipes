@@ -74,41 +74,39 @@ one or more ratios from selected numeric variables.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose which
-variables will be used in the <em>numerator</em> of the ratio.
-When used with <code>denom_vars</code>, the dots indicate which
-variables are used in the <em>denominator</em>. See
-<code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose which variables will be
+used in the <em>numerator</em> of the ratio. When used with <code>denom_vars</code>, the dots
+indicate which variables are used in the <em>denominator</em>. See <code><a href="selections.html">selections()</a></code>
+for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-denom">denom<a class="anchor" aria-label="anchor" href="#arg-denom"></a></dt>
-<dd><p>Bare names that specifies which
-variables are used in the denominator that can include specific
-variable names separated by commas or different selectors (see
-<code><a href="selections.html">selections()</a></code>). Can also be a strings or tidyselect for backwards
-compatibility If a column is included in both lists to be numerator and
-denominator, it will be removed from the listing.</p></dd>
+<dd><p>Bare names that specifies which variables are used in the
+denominator that can include specific variable names separated by commas or
+different selectors (see <code><a href="selections.html">selections()</a></code>). Can also be a strings or
+tidyselect for backwards compatibility If a column is included in both
+lists to be numerator and denominator, it will be removed from the listing.</p></dd>
 
 
 <dt id="arg-naming">naming<a class="anchor" aria-label="anchor" href="#arg-naming"></a></dt>
-<dd><p>A function that defines the naming convention for
-new ratio columns.</p></dd>
+<dd><p>A function that defines the naming convention for new ratio
+columns.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -122,12 +120,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -141,9 +138,7 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
-    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble with columns
-<code>terms</code> (the selectors or variables selected) and <code>denom</code> is returned.</p>
-<p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
+    <p>When you <code><a href="tidy.recipe.html">tidy()</a></code> this step, a tibble is returned with
 columns <code>terms</code>, <code>denom</code> , and <code>id</code>:</p>
 <dl><dt>terms</dt>
 <dd><p>character, the selectors or variables selected</p></dd>

@@ -71,24 +71,24 @@ rectified linear or softplus transformations of a variable to the data set.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-shift">shift<a class="anchor" aria-label="anchor" href="#arg-shift"></a></dt>
@@ -117,12 +117,11 @@ is a placeholder and will be populated once <code><a href="prep.html">prep()</a>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -136,24 +135,23 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The rectified linear transformation is calculated as
-$$max(0, x - c)$$ and is also known as the ReLu or right hinge function.
-If <code>reverse</code> is true, then the transformation is reflected about the
-y-axis, like so: $$max(0, c - x)$$ Setting the <code>smooth</code> option
-to true will instead calculate a smooth approximation to ReLu
-according to $$ln(1 + e^(x - c)$$ The <code>reverse</code> argument may
-also be applied to this transformation.</p>
+    <p>The rectified linear transformation is calculated as $$max(0, x - c)$$ and
+is also known as the ReLu or right hinge function. If <code>reverse</code> is true, then
+the transformation is reflected about the y-axis, like so: $$max(0, c -
+x)$$ Setting the <code>smooth</code> option to true will instead calculate a smooth
+approximation to ReLu according to $$ln(1 + e^(x - c)$$ The <code>reverse</code>
+argument may also be applied to this transformation.</p>
     </div>
     <div class="section level2">
     <h2 id="connection-to-mars-">Connection to MARS:<a class="anchor" aria-label="anchor" href="#connection-to-mars-"></a></h2>
     <p>The rectified linear transformation is used in Multivariate Adaptive
 Regression Splines as a basis function to fit piecewise linear functions to
 data in a strategy similar to that employed in tree based models. The
-transformation is a popular choice as an activation function in many
-neural networks, which could then be seen as a stacked generalization of
-MARS when making use of ReLu activations. The hinge function also appears
-in the loss function of Support Vector Machines, where it penalizes
-residuals only if they are within a certain margin of the decision boundary.</p>
+transformation is a popular choice as an activation function in many neural
+networks, which could then be seen as a stacked generalization of MARS when
+making use of ReLu activations. The hinge function also appears in the loss
+function of Support Vector Machines, where it penalizes residuals only if
+they are within a certain margin of the decision boundary.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

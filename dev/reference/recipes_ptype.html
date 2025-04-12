@@ -81,18 +81,16 @@ details for more. Defaults to <code>"prep"</code>.</p></dd>
 expecting. The specifics of which columns depend on the <code>stage</code>.</p>
 <p>At <code><a href="prep.html">prep()</a></code> time, when <code>stage = "prep"</code>, the ptype is the data passed to
 <code><a href="recipe.html">recipe()</a></code>. The following code chunk represents a possible recipe scenario.
-<code>recipes_ptype(rec_spec, stage = "prep")</code> and
-<code>recipes_ptype(rec_prep, stage = "prep")</code> both return a ptype tibble
-corresponding to <code>data_ptype</code>. This information is used internally in
-<code><a href="prep.html">prep()</a></code> to verify that <code>data_training</code> has the right columns with the right
-types.</p>
+<code>recipes_ptype(rec_spec, stage = "prep")</code> and <code>recipes_ptype(rec_prep, stage = "prep")</code> both return a ptype tibble corresponding to <code>data_ptype</code>. This
+information is used internally in <code><a href="prep.html">prep()</a></code> to verify that <code>data_training</code> has
+the right columns with the right types.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">rec_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">data_ptype</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_normalize.html">step_normalize</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/step_dummy.html">step_dummy</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_nominal_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rec_prep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prep.html">prep</a></span><span class="op">(</span><span class="va">rec_spec</span>, training <span class="op">=</span> <span class="va">data_training</span><span class="op">)</span></span></code></pre><p></p></div>
-<p>At <code><a href="bake.html">bake()</a></code> time, when <code>stage = "bake"</code>, the ptype represents the data
-that are required for <code><a href="bake.html">bake()</a></code> to run.</p>
+<p>At <code><a href="bake.html">bake()</a></code> time, when <code>stage = "bake"</code>, the ptype represents the data that
+are required for <code><a href="bake.html">bake()</a></code> to run.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">data_bake</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bake.html">bake</a></span><span class="op">(</span><span class="va">rec_prep</span>, new_data <span class="op">=</span> <span class="va">data_testing</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>What this means in practice is that unless otherwise specified, everything
 but outcomes and case weights are required. These requirements can be changed

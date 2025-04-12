@@ -68,25 +68,24 @@ create linear regression models to impute missing data.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>One or more selector functions to choose variables to be imputed;
 these variables <strong>must</strong> be of type <code>numeric</code>. When used with <code>imp_vars</code>,
-these dots indicate which variables are used to predict the missing data
-in each variable. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+these dots indicate which variables are used to predict the missing data in
+each variable. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-impute-with">impute_with<a class="anchor" aria-label="anchor" href="#arg-impute-with"></a></dt>
@@ -99,17 +98,16 @@ to impute itself.</p></dd>
 
 
 <dt id="arg-models">models<a class="anchor" aria-label="anchor" href="#arg-models"></a></dt>
-<dd><p>The <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> objects are stored here once the linear models
-have been trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>The <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> objects are stored here once the linear models have
+been trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -123,10 +121,10 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>For each variable requiring imputation, a linear model is fit
-where the outcome is the variable of interest and the predictors are any
-other variables listed in the <code>impute_with</code> formula. Note that if a variable
-that is to be imputed is also in <code>impute_with</code>, this variable will be ignored.</p>
+    <p>For each variable requiring imputation, a linear model is fit where the
+outcome is the variable of interest and the predictors are any other
+variables listed in the <code>impute_with</code> formula. Note that if a variable that
+is to be imputed is also in <code>impute_with</code>, this variable will be ignored.</p>
 <p>The variable(s) to be imputed must be of type <code>numeric</code>. The imputed values
 will keep the same type as their original data (i.e, model predictions are
 coerced to integer as needed).</p>

@@ -49,34 +49,32 @@
 
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When selecting variables or model terms in <code>step</code>
-functions, <code>dplyr</code>-like tools are used. The <em>selector</em> functions
-can choose variables based on their name, current role, data
-type, or any combination of these. The selectors are passed as
-any other argument to the step. If the variables are explicitly
+    <p>When selecting variables or model terms in <code>step</code> functions, <code>dplyr</code>-like
+tools are used. The <em>selector</em> functions can choose variables based on their
+name, current role, data type, or any combination of these. The selectors are
+passed as any other argument to the step. If the variables are explicitly
 named in the step function, this might look like:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span>  <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">USArrests</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="../reference/step_pca.html">step_pca</a></span><span class="op">(</span><span class="va">Murder</span>, <span class="va">Assault</span>, <span class="va">UrbanPop</span>, <span class="va">Rape</span>, num_comp <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 
-<p>The first four arguments indicate which variables should be
-used in the PCA while the last argument is a specific argument
-to <code><a href="step_pca.html">step_pca()</a></code> about the number of components.</p>
+<p>The first four arguments indicate which variables should be used in the PCA
+while the last argument is a specific argument to <code><a href="step_pca.html">step_pca()</a></code> about the
+number of components.</p>
 <p>Note that:</p>
-<ol><li><p>These arguments are not evaluated until the <code>prep</code>
-function for the step is executed.</p></li>
-<li><p>The <code>dplyr</code>-like syntax allows for negative signs to
-exclude variables (e.g. <code>-Murder</code>) and the set of selectors will
-processed in order.</p></li>
-<li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>)
-has the effect of adding <em>all</em> variables to the list except the
-excluded variable(s), ignoring role information.</p></li>
+<ol><li><p>These arguments are not evaluated until the <code>prep</code> function for the
+step is executed.</p></li>
+<li><p>The <code>dplyr</code>-like syntax allows for negative signs to exclude
+variables (e.g. <code>-Murder</code>) and the set of selectors will processed in
+order.</p></li>
+<li><p>A leading exclusion in these arguments (e.g. <code>-Murder</code>) has the
+effect of adding <em>all</em> variables to the list except the excluded
+variable(s), ignoring role information.</p></li>
 </ol><p>Select helpers from the <code>tidyselect</code> package can also be used:
 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::ends_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::matches()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::num_range()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">tidyselect::everything()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">tidyselect::one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">tidyselect::all_of()</a></code>, and
-<code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">tidyselect::any_of()</a></code></p>
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">tidyselect::num_range()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">tidyselect::everything()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">tidyselect::one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">tidyselect::all_of()</a></code>,
+and <code><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">tidyselect::any_of()</a></code></p>
 <p>Note that using <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">tidyselect::everything()</a></code> or any of the other <code>tidyselect</code>
 functions aren't restricted to predictors. They will thus select outcomes,
 ID, and predictor columns alike. This is why these functions should be used
@@ -87,21 +85,20 @@ with care, and why <code><a href="https://tidyselect.r-lib.org/reference/everyth
 <span>    <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 
 <p>would only select <code>Sepal.Length</code></p>
-<p>Columns of the design matrix that may not exist when the step
-is coded can also be selected. For example, when using
-<code><a href="step_pca.html">step_pca()</a></code>, the number of columns created by feature extraction
-may not be known when subsequent steps are defined. In this
-case, using <code>matches("^PC")</code> will select all of the columns
+<p>Columns of the design matrix that may not exist when the step is coded can
+also be selected. For example, when using <code><a href="step_pca.html">step_pca()</a></code>, the number of columns
+created by feature extraction may not be known when subsequent steps are
+defined. In this case, using <code>matches("^PC")</code> will select all of the columns
 whose names start with "PC" <em>once those columns are created</em>.</p>
 <p>There are sets of recipes-specific functions that can be used to select
-variables based on their role or type: <code><a href="has_role.html">has_role()</a></code> and
-<code><a href="has_role.html">has_type()</a></code>. For convenience, there are also functions that are
-more specific. The functions <code><a href="has_role.html">all_numeric()</a></code> and <code><a href="has_role.html">all_nominal()</a></code> select
-based on type, with nominal variables including both character and factor;
-the functions <code><a href="has_role.html">all_predictors()</a></code> and <code><a href="has_role.html">all_outcomes()</a></code> select based on role.
-The functions <code><a href="has_role.html">all_numeric_predictors()</a></code> and <code><a href="has_role.html">all_nominal_predictors()</a></code>
-select intersections of role and type. Any can be used in conjunction with
-the previous functions described for selecting variables using their names.</p>
+variables based on their role or type: <code><a href="has_role.html">has_role()</a></code> and <code><a href="has_role.html">has_type()</a></code>. For
+convenience, there are also functions that are more specific. The functions
+<code><a href="has_role.html">all_numeric()</a></code> and <code><a href="has_role.html">all_nominal()</a></code> select based on type, with nominal
+variables including both character and factor; the functions
+<code><a href="has_role.html">all_predictors()</a></code> and <code><a href="has_role.html">all_outcomes()</a></code> select based on role. The functions
+<code><a href="has_role.html">all_numeric_predictors()</a></code> and <code><a href="has_role.html">all_nominal_predictors()</a></code> select
+intersections of role and type. Any can be used in conjunction with the
+previous functions described for selecting variables using their names.</p>
 <p>A selection like this:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">biomass</span><span class="op">)</span></span>
@@ -114,25 +111,22 @@ the previous functions described for selecting variables using their names.</p>
 <span>  <span class="fu"><a href="../reference/recipe.html">recipe</a></span><span class="op">(</span><span class="va">HHV</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">biomass</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="../reference/step_center.html">step_center</a></span><span class="op">(</span><span class="fu"><a href="../reference/has_role.html">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 
-<p>Both result in all the numeric predictors: carbon, hydrogen,
-oxygen, nitrogen, and sulfur.</p>
-<p>If a role for a variable has not been defined, it will never be
-selected using role-specific selectors.</p><div class="section">
+<p>Both result in all the numeric predictors: carbon, hydrogen, oxygen,
+nitrogen, and sulfur.</p>
+<p>If a role for a variable has not been defined, it will never be selected
+using role-specific selectors.</p><div class="section">
 <h3 id="interactions">Interactions<a class="anchor" aria-label="anchor" href="#interactions"></a></h3>
 
 
-<p>Selectors can be used in <code><a href="step_interact.html">step_interact()</a></code> in similar ways but
-must be embedded in a model formula (as opposed to a sequence
-of selectors). For example, the interaction specification
-could be <code>~ starts_with("Species"):Sepal.Width</code>. This can be
-useful if <code>Species</code> was converted to dummy variables
-previously using <code><a href="step_dummy.html">step_dummy()</a></code>. The implementation of
-<code><a href="step_interact.html">step_interact()</a></code> is special, and is more restricted than
-the other step functions. Only the selector functions from
-recipes and tidyselect are allowed. User defined selector functions
-will not be recognized. Additionally, the tidyselect domain specific
-language is not recognized here, meaning that <code>&amp;</code>, <code>|</code>, <code>!</code>, and <code>-</code>
-will not work.</p>
+<p>Selectors can be used in <code><a href="step_interact.html">step_interact()</a></code> in similar ways but must be
+embedded in a model formula (as opposed to a sequence of selectors). For
+example, the interaction specification could be <code>~ starts_with("Species"):Sepal.Width</code>. This can be useful if <code>Species</code> was
+converted to dummy variables previously using <code><a href="step_dummy.html">step_dummy()</a></code>. The
+implementation of <code><a href="step_interact.html">step_interact()</a></code> is special, and is more restricted than
+the other step functions. Only the selector functions from recipes and
+tidyselect are allowed. User defined selector functions will not be
+recognized. Additionally, the tidyselect domain specific language is not
+recognized here, meaning that <code>&amp;</code>, <code>|</code>, <code>!</code>, and <code>-</code> will not work.</p>
 </div>
 
 <div class="section">

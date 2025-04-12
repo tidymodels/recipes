@@ -72,37 +72,37 @@ creates monotone spline features.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-deg-free">deg_free<a class="anchor" aria-label="anchor" href="#arg-deg-free"></a></dt>
-<dd><p>The degrees of freedom for the b-spline. As the
-degrees of freedom for a b-spline increase, more flexible and
-complex curves can be generated.</p></dd>
+<dd><p>The degrees of freedom for the b-spline. As the degrees of
+freedom for a b-spline increase, more flexible and complex curves can be
+generated.</p></dd>
 
 
 <dt id="arg-degree">degree<a class="anchor" aria-label="anchor" href="#arg-degree"></a></dt>
 <dd><p>The degree of I-spline defined to be the degree of the
 associated M-spline instead of actual polynomial degree. For example,
-I-spline basis of degree 2 is defined as the integral of associated M-spline
-basis of degree 2.</p></dd>
+I-spline basis of degree 2 is defined as the integral of associated
+M-spline basis of degree 2.</p></dd>
 
 
 <dt id="arg-complete-set">complete_set<a class="anchor" aria-label="anchor" href="#arg-complete-set"></a></dt>
@@ -113,8 +113,8 @@ the <code>intercept</code> argument of the corresponding function from the
 
 
 <dt id="arg-options">options<a class="anchor" aria-label="anchor" href="#arg-options"></a></dt>
-<dd><p>A list of options for <code><a href="https://wwenjie.org/splines2/reference/iSpline.html" class="external-link">splines2::iSpline()</a></code>
-which should not include <code>x</code>, <code>df</code>, <code>degree</code>, <code>periodic</code>, or <code>intercept</code>.</p></dd>
+<dd><p>A list of options for <code><a href="https://wwenjie.org/splines2/reference/iSpline.html" class="external-link">splines2::iSpline()</a></code> which should not
+include <code>x</code>, <code>df</code>, <code>degree</code>, <code>periodic</code>, or <code>intercept</code>.</p></dd>
 
 
 <dt id="arg-keep-original-cols">keep_original_cols<a class="anchor" aria-label="anchor" href="#arg-keep-original-cols"></a></dt>
@@ -127,12 +127,11 @@ output. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -147,14 +146,14 @@ the computations for subsequent operations.</p></dd>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Spline transformations take a numeric column and create multiple features
 that, when used in a model, can estimate nonlinear trends between the column
-and some outcome. The degrees of freedom determines how many new features
-are added to the data.</p>
+and some outcome. The degrees of freedom determines how many new features are
+added to the data.</p>
 <p>These splines are integrated forms of M-splines and are non-negative and
 monotonic. This means that, when used with a fitting function that produces
 non-negative regression coefficients, the resulting fit is monotonic.</p>
-<p>If the spline expansion fails for a selected column, the step will
-remove that column's results (but will retain the original data). Use the
-<code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> method to determine which columns were used.</p>
+<p>If the spline expansion fails for a selected column, the step will remove
+that column's results (but will retain the original data). Use the <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code>
+method to determine which columns were used.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

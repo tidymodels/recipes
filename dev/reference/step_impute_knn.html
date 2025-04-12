@@ -71,8 +71,8 @@ impute missing data using nearest neighbors.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -83,13 +83,12 @@ details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-neighbors">neighbors<a class="anchor" aria-label="anchor" href="#arg-neighbors"></a></dt>
@@ -122,12 +121,11 @@ is a placeholder and will be populated once <code><a href="prep.html">prep()</a>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -141,18 +139,18 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The step uses the training set to impute any other data sets. The
-only distance function available is Gower's distance which can be used for
+    <p>The step uses the training set to impute any other data sets. The only
+distance function available is Gower's distance which can be used for
 mixtures of nominal and numeric data.</p>
 <p>Once the nearest neighbors are determined, the mode is used to predictor
 nominal variables and the mean is used for numeric data. Note that, if the
 underlying data are integer, the mean will be converted to an integer too.</p>
-<p>Note that if a variable that is to be imputed is also in <code>impute_with</code>,
-this variable will be ignored.</p>
+<p>Note that if a variable that is to be imputed is also in <code>impute_with</code>, this
+variable will be ignored.</p>
 <p>It is possible that missing values will still occur after imputation if a
 large majority (or all) of the imputing variables are also missing.</p>
-<p>As of <code>recipes</code> 0.1.16, this function name changed from <code><a href="step_knnimpute.html">step_knnimpute()</a></code>
-to <code>step_impute_knn()</code>.</p>
+<p>As of <code>recipes</code> 0.1.16, this function name changed from <code><a href="step_knnimpute.html">step_knnimpute()</a></code> to
+<code>step_impute_knn()</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

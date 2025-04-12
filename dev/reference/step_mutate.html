@@ -68,8 +68,8 @@ variables using <code><a href="https://dplyr.tidyverse.org/reference/mutate.html
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -77,19 +77,19 @@ sequence of operations for this recipe.</p></dd>
 
 
 <dt id="arg--pkgs">.pkgs<a class="anchor" aria-label="anchor" href="#arg--pkgs"></a></dt>
-<dd><p>Character vector, package names of functions used in
-expressions <code>...</code>. Should be specified if using non-base functions.</p></dd>
+<dd><p>Character vector, package names of functions used in expressions
+<code>...</code>. Should be specified if using non-base functions.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-inputs">inputs<a class="anchor" aria-label="anchor" href="#arg-inputs"></a></dt>
@@ -97,12 +97,11 @@ preprocessing have been estimated.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -120,11 +119,10 @@ sequence of any existing operations.</p>
 preprocessing. Consider, for example, the transformation <code>x = w &gt; mean(w)</code>.
 When applied to new data or testing data, this transformation would use the
 mean of <code>w</code> from the <em>new</em> data, not the mean of <code>w</code> from the training data.</p>
-<p>When an object in the user's global environment is
-referenced in the expression defining the new variable(s),
-it is a good idea to use quasiquotation (e.g. <code>!!</code>) to embed
-the value of the object in the expression (to be portable
-between sessions). See the examples.</p>
+<p>When an object in the user's global environment is referenced in the
+expression defining the new variable(s), it is a good idea to use
+quasiquotation (e.g. <code>!!</code>) to embed the value of the object in the expression
+(to be portable between sessions). See the examples.</p>
 <p>If a preceding step removes a column that is selected by name in
 <code>step_mutate()</code>, the recipe will error when being estimated with <code><a href="prep.html">prep()</a></code>.</p>
     </div>

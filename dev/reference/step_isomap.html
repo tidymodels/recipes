@@ -76,31 +76,30 @@ dimensions.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-num-terms">num_terms<a class="anchor" aria-label="anchor" href="#arg-num-terms"></a></dt>
-<dd><p>The number of isomap dimensions to retain as new
-predictors. If <code>num_terms</code> is greater than the number of columns
-or the number of possible dimensions, a smaller value will be
-used.</p></dd>
+<dd><p>The number of isomap dimensions to retain as new predictors.
+If <code>num_terms</code> is greater than the number of columns or the number of
+possible dimensions, a smaller value will be used.</p></dd>
 
 
 <dt id="arg-neighbors">neighbors<a class="anchor" aria-label="anchor" href="#arg-neighbors"></a></dt>
@@ -112,9 +111,8 @@ used.</p></dd>
 
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
-<dd><p>The `dimRed::Isomap()“ object is stored
-here once this preprocessing step has be trained by
-<code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>The `dimRed::Isomap()“ object is stored here once this
+preprocessing step has be trained by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -133,12 +131,11 @@ output. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -152,26 +149,22 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Isomap is a form of multidimensional scaling (MDS).
-MDS methods try to find a reduced set of dimensions such that
-the geometric distances between the original data points are
-preserved. This version of MDS uses nearest neighbors in the
-data as a method for increasing the fidelity of the new
+    <p>Isomap is a form of multidimensional scaling (MDS). MDS methods try to find a
+reduced set of dimensions such that the geometric distances between the
+original data points are preserved. This version of MDS uses nearest
+neighbors in the data as a method for increasing the fidelity of the new
 dimensions to the original data values.</p>
-<p>This step requires the <span class="pkg">dimRed</span>, <span class="pkg">RSpectra</span>,
-<span class="pkg">igraph</span>, and <span class="pkg">RANN</span> packages. If not installed, the
-step will stop with a note about installing these packages.</p>
-<p>It is advisable to center and scale the variables prior to
-running Isomap (<code>step_center</code> and <code>step_scale</code> can be
-used for this purpose).</p>
-<p>The argument <code>num_terms</code> controls the number of components that
-will be retained (the original variables that are used to derive
-the components are removed from the data). The new components
-will have names that begin with <code>prefix</code> and a sequence of
-numbers. The variable names are padded with zeros. For example,
-if <code>num_terms &lt; 10</code>, their names will be <code>Isomap1</code> -
-<code>Isomap9</code>. If <code>num_terms = 101</code>, the names would be
-<code>Isomap001</code> - <code>Isomap101</code>.</p>
+<p>This step requires the <span class="pkg">dimRed</span>, <span class="pkg">RSpectra</span>, <span class="pkg">igraph</span>, and
+<span class="pkg">RANN</span> packages. If not installed, the step will stop with a note about
+installing these packages.</p>
+<p>It is advisable to center and scale the variables prior to running Isomap
+(<code>step_center</code> and <code>step_scale</code> can be used for this purpose).</p>
+<p>The argument <code>num_terms</code> controls the number of components that will be
+retained (the original variables that are used to derive the components are
+removed from the data). The new components will have names that begin with
+<code>prefix</code> and a sequence of numbers. The variable names are padded with zeros.
+For example, if <code>num_terms &lt; 10</code>, their names will be <code>Isomap1</code> - <code>Isomap9</code>.
+If <code>num_terms = 101</code>, the names would be <code>Isomap001</code> - <code>Isomap101</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

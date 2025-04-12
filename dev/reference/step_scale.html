@@ -69,23 +69,22 @@ numeric data to have a standard deviation of one.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-sds">sds<a class="anchor" aria-label="anchor" href="#arg-sds"></a></dt>
@@ -94,25 +93,23 @@ until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-factor">factor<a class="anchor" aria-label="anchor" href="#arg-factor"></a></dt>
-<dd><p>A numeric value of either 1 or 2 that scales the
-numeric inputs by one or two standard deviations. By dividing
-by two standard deviations, the coefficients attached to
-continuous predictors can be interpreted the same way as with
-binary inputs. Defaults to <code>1</code>. More in reference below.</p></dd>
+<dd><p>A numeric value of either 1 or 2 that scales the numeric inputs
+by one or two standard deviations. By dividing by two standard deviations,
+the coefficients attached to continuous predictors can be interpreted the
+same way as with binary inputs. Defaults to <code>1</code>. More in reference below.</p></dd>
 
 
 <dt id="arg-na-rm">na_rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A logical value indicating whether <code>NA</code>
-values should be removed when computing the standard deviation.</p></dd>
+<dd><p>A logical value indicating whether <code>NA</code> values should be removed
+when computing the standard deviation.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -126,12 +123,10 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Scaling data means that the standard deviation of a
-variable is divided out of the data. <code>step_scale</code> estimates
-the variable standard deviations from the data used in the
-<code>training</code> argument of <code>prep.recipe</code>.
-<code>bake.recipe</code> then applies the scaling to new data sets
-using these standard deviations.</p>
+    <p>Scaling data means that the standard deviation of a variable is divided out
+of the data. <code>step_scale()</code> estimates the variable standard deviations from
+the data used in the <code>training</code> argument of <code><a href="prep.html">prep()</a></code>. <code><a href="bake.html">bake()</a></code> then applies
+the scaling to new data sets using these standard deviations.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

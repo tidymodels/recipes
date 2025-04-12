@@ -70,52 +70,50 @@ transform data using a Yeo-Johnson transformation.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-lambdas">lambdas<a class="anchor" aria-label="anchor" href="#arg-lambdas"></a></dt>
-<dd><p>A numeric vector of transformation values. This
-is <code>NULL</code> until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
+<dd><p>A numeric vector of transformation values. This is <code>NULL</code>
+until computed by <code><a href="prep.html">prep()</a></code>.</p></dd>
 
 
 <dt id="arg-limits">limits<a class="anchor" aria-label="anchor" href="#arg-limits"></a></dt>
-<dd><p>A length 2 numeric vector defining the range to
-compute the transformation parameter lambda.</p></dd>
+<dd><p>A length 2 numeric vector defining the range to compute the
+transformation parameter lambda.</p></dd>
 
 
 <dt id="arg-num-unique">num_unique<a class="anchor" aria-label="anchor" href="#arg-num-unique"></a></dt>
-<dd><p>An integer where data that have less possible
-values will not be evaluated for a transformation.</p></dd>
+<dd><p>An integer where data that have less possible values will
+not be evaluated for a transformation.</p></dd>
 
 
 <dt id="arg-na-rm">na_rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A logical value indicating whether <code>NA</code>
-values should be removed during computations.</p></dd>
+<dd><p>A logical value indicating whether <code>NA</code> values should be removed
+during computations.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -129,20 +127,18 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The Yeo-Johnson transformation is very similar to the
-Box-Cox but does not require the input variables to be strictly
-positive. In the package, the partial log-likelihood function is
-directly optimized within a reasonable set of transformation
-values (which can be changed by the user).</p>
-<p>This transformation is typically done on the outcome variable
-using the residuals for a statistical model (such as ordinary
-least squares). Here, a simple null model (intercept only) is
-used to apply the transformation to the <em>predictor</em>
-variables individually. This can have the effect of making the
+    <p>The Yeo-Johnson transformation is very similar to the Box-Cox but does not
+require the input variables to be strictly positive. In the package, the
+partial log-likelihood function is directly optimized within a reasonable set
+of transformation values (which can be changed by the user).</p>
+<p>This transformation is typically done on the outcome variable using the
+residuals for a statistical model (such as ordinary least squares). Here, a
+simple null model (intercept only) is used to apply the transformation to the
+<em>predictor</em> variables individually. This can have the effect of making the
 variable distributions more symmetric.</p>
-<p>If the transformation parameters are estimated to be very
-closed to the bounds, or if the optimization fails, a value of
-<code>NA</code> is used and no transformation is applied.</p>
+<p>If the transformation parameters are estimated to be very closed to the
+bounds, or if the optimization fails, a value of <code>NA</code> is used and no
+transformation is applied.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

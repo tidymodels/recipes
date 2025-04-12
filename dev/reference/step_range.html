@@ -70,23 +70,22 @@ numeric data to be within a pre-defined range of values.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-min-max">min, max<a class="anchor" aria-label="anchor" href="#arg-min-max"></a></dt>
@@ -95,25 +94,23 @@ the transformed data.</p></dd>
 
 
 <dt id="arg-clipping">clipping<a class="anchor" aria-label="anchor" href="#arg-clipping"></a></dt>
-<dd><p>A single logical value for determining whether
-application of transformation onto new data should be forced
-to be inside <code>min</code> and <code>max</code>. Defaults to TRUE.</p></dd>
+<dd><p>A single logical value for determining whether application of
+transformation onto new data should be forced to be inside <code>min</code> and <code>max</code>.
+Defaults to TRUE.</p></dd>
 
 
 <dt id="arg-ranges">ranges<a class="anchor" aria-label="anchor" href="#arg-ranges"></a></dt>
-<dd><p>A character vector of variables that will be
-normalized. Note that this is ignored until the values are
-determined by <code><a href="prep.html">prep()</a></code>. Setting this value will
-be ineffective.</p></dd>
+<dd><p>A character vector of variables that will be normalized. Note
+that this is ignored until the values are determined by <code><a href="prep.html">prep()</a></code>. Setting
+this value will be ineffective.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -127,9 +124,8 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When a new data point is outside of the ranges seen in
-the training set, the new values are truncated at <code>min</code> or
-<code>max</code>.</p>
+    <p>When a new data point is outside of the ranges seen in the training set, the
+new values are truncated at <code>min</code> or <code>max</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

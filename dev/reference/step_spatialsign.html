@@ -68,29 +68,29 @@ numeric data into a projection on to a unit sphere.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-na-rm">na_rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
-<dd><p>A logical: should missing data be removed from the
-norm computation?</p></dd>
+<dd><p>A logical: should missing data be removed from the norm
+computation?</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -99,12 +99,11 @@ is a placeholder and will be populated once <code><a href="prep.html">prep()</a>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -118,12 +117,10 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The spatial sign transformation projects the variables
-onto a unit sphere and is related to global contrast
-normalization. The spatial sign of a vector <code>w</code> is
-<code>w/norm(w)</code>.</p>
-<p>The variables should be centered and scaled prior to the
-computations.</p>
+    <p>The spatial sign transformation projects the variables onto a unit sphere and
+is related to global contrast normalization. The spatial sign of a vector <code>w</code>
+is <code>w/norm(w)</code>.</p>
+<p>The variables should be centered and scaled prior to the computations.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
@@ -143,22 +140,19 @@ columns <code>terms</code> and <code>id</code>:</p>
 
 
 <p>This step performs an unsupervised operation that can utilize case weights.
-As a result, only frequency weights are allowed. For more
-information, see the documentation in <a href="case_weights.html">case_weights</a> and the examples on
-<code>tidymodels.org</code>.</p>
+As a result, only frequency weights are allowed. For more information, see
+the documentation in <a href="case_weights.html">case_weights</a> and the examples on <code>tidymodels.org</code>.</p>
 <p>Unlike most, this step requires the case weights to be available when new
 samples are processed (e.g., when <code><a href="bake.html">bake()</a></code> is used or <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> with a
 workflow). To tell recipes that the case weights are required at bake time,
-use
-<code>recipe %&gt;% update_role_requirements(role = "case_weights", bake = TRUE)</code>.
-See <code><a href="update_role_requirements.html">update_role_requirements()</a></code> for more information.</p>
+use <code>recipe %&gt;% update_role_requirements(role = "case_weights", bake = TRUE)</code>. See <code><a href="update_role_requirements.html">update_role_requirements()</a></code> for more information.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Serneels, S., De Nolf, E., and Van Espen, P.
-(2006). Spatial sign preprocessing: a simple way to impart
-moderate robustness to multivariate estimators. <em>Journal of
-Chemical Information and Modeling</em>, 46(3), 1402-1409.</p>
+    <p>Serneels, S., De Nolf, E., and Van Espen, P. (2006). Spatial sign
+preprocessing: a simple way to impart moderate robustness to multivariate
+estimators. <em>Journal of Chemical Information and Modeling</em>, 46(3),
+1402-1409.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

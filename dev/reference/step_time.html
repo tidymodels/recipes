@@ -69,31 +69,31 @@ date-time data into one or more factor or numeric variables.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. The selected variables should have class
-<code>POSIXct</code> or <code>POSIXlt</code>. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+The selected variables should have class <code>POSIXct</code> or <code>POSIXlt</code>. See
+<code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-features">features<a class="anchor" aria-label="anchor" href="#arg-features"></a></dt>
-<dd><p>A character string that includes at least one
-of the following values: <code>am</code> (is is AM), <code>hour</code>, <code>hour12</code>, <code>minute</code>,
-<code>second</code>, <code>decimal_day</code>.</p></dd>
+<dd><p>A character string that includes at least one of the
+following values: <code>am</code> (is is AM), <code>hour</code>, <code>hour12</code>, <code>minute</code>, <code>second</code>,
+<code>decimal_day</code>.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -107,12 +107,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -126,14 +125,12 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Unlike some other steps, <code>step_time()</code> does <em>not</em>
-remove the original time variables by default. Set <code>keep_original_cols</code>
-to <code>FALSE</code> to remove them.</p>
+    <p>Unlike some other steps, <code>step_time()</code> does <em>not</em> remove the original time
+variables by default. Set <code>keep_original_cols</code> to <code>FALSE</code> to remove them.</p>
 <p><code>decimal_day</code> return time of day as a decimal number between 0 and 24. for
 example <code>"07:15:00"</code> would be transformed to <code>7.25</code>  and <code>"03:59:59"</code> would
-be transformed to <code>3.999722</code>. The formula for these calculations are
-<code>hour(x) + (second(x) + minute(x) * 60) / 3600</code>.</p>
-<p>See <code><a href="step_date.html">step_date()</a></code> if you want to calculate features that are larger than
+be transformed to <code>3.999722</code>. The formula for these calculations are `hour(x)</p><ul><li><p>(second(x) + minute(x) * 60) / 3600`.</p></li>
+</ul><p>See <code><a href="step_date.html">step_date()</a></code> if you want to calculate features that are larger than
 hours.</p>
     </div>
     <div class="section level2">

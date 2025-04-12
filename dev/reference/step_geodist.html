@@ -74,29 +74,29 @@ calculate the distance between points on a map to a reference location.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg-lon-lat">lon, lat<a class="anchor" aria-label="anchor" href="#arg-lon-lat"></a></dt>
-<dd><p>Selector functions to choose which variables are
-used by the step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>Selector functions to choose which variables are used by the
+step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
 <dd><p>For model terms created by this step, what analysis role should
-they be assigned? By default, the new columns created by this step from
-the original variables will be used as <em>predictors</em> in a model.</p></dd>
+they be assigned? By default, the new columns created by this step from the
+original variables will be used as <em>predictors</em> in a model.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-ref-lon-ref-lat">ref_lon, ref_lat<a class="anchor" aria-label="anchor" href="#arg-ref-lon-ref-lat"></a></dt>
-<dd><p>Single numeric values for the location
-of the reference point.</p></dd>
+<dd><p>Single numeric values for the location of the
+reference point.</p></dd>
 
 
 <dt id="arg-is-lat-lon">is_lat_lon<a class="anchor" aria-label="anchor" href="#arg-is-lat-lon"></a></dt>
@@ -107,14 +107,13 @@ created from previous versions of recipes, a value of <code>FALSE</code> is used
 
 
 <dt id="arg-log">log<a class="anchor" aria-label="anchor" href="#arg-log"></a></dt>
-<dd><p>A logical: should the distance be transformed by
-the natural log function?</p></dd>
+<dd><p>A logical: should the distance be transformed by the natural log
+function?</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
-<dd><p>A single character value to use for the new
-predictor column. If a column exists with this name, an error is
-issued.</p></dd>
+<dd><p>A single character value to use for the new predictor column. If
+a column exists with this name, an error is issued.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -128,12 +127,11 @@ output. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -147,9 +145,9 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>step_geodist</code> uses the Pythagorean theorem to calculate Euclidean
-distances if <code>is_lat_lon</code> is FALSE. If <code>is_lat_lon</code> is TRUE, the Haversine
-formula is used to calculate the great-circle distance in meters.</p>
+    <p><code>step_geodist</code> uses the Pythagorean theorem to calculate Euclidean distances
+if <code>is_lat_lon</code> is FALSE. If <code>is_lat_lon</code> is TRUE, the Haversine formula is
+used to calculate the great-circle distance in meters.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>

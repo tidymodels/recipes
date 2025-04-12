@@ -77,13 +77,13 @@ plots for additive models.</p>
 
 
 <dl><dt id="arg-recipe">recipe<a class="anchor" aria-label="anchor" href="#arg-recipe"></a></dt>
-<dd><p>A recipe object. The step will be added to the
-sequence of operations for this recipe.</p></dd>
+<dd><p>A recipe object. The step will be added to the sequence of
+operations for this recipe.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more selector functions to choose variables
-for this step. See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
+<dd><p>One or more selector functions to choose variables for this step.
+See <code><a href="selections.html">selections()</a></code> for more details.</p></dd>
 
 
 <dt id="arg-profile">profile<a class="anchor" aria-label="anchor" href="#arg-profile"></a></dt>
@@ -94,33 +94,29 @@ profiled, an error is thrown.</p></dd>
 
 
 <dt id="arg-pct">pct<a class="anchor" aria-label="anchor" href="#arg-pct"></a></dt>
-<dd><p>A value between 0 and 1 that is the percentile to
-fix continuous variables. This is applied to all continuous
-variables captured by the selectors. For date variables, either
-the minimum, median, or maximum used based on their distance to
-<code>pct</code>.</p></dd>
+<dd><p>A value between 0 and 1 that is the percentile to fix continuous
+variables. This is applied to all continuous variables captured by the
+selectors. For date variables, either the minimum, median, or maximum used
+based on their distance to <code>pct</code>.</p></dd>
 
 
 <dt id="arg-index">index<a class="anchor" aria-label="anchor" href="#arg-index"></a></dt>
-<dd><p>The level that qualitative variables will be
-fixed. If the variables are character (not factors), this will
-be the index of the sorted unique values. This is applied to all
-qualitative variables captured by the selectors.</p></dd>
+<dd><p>The level that qualitative variables will be fixed. If the
+variables are character (not factors), this will be the index of the sorted
+unique values. This is applied to all qualitative variables captured by the
+selectors.</p></dd>
 
 
 <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
-<dd><p>A named list with elements <code>pctl</code> (a logical) and
-<code>len</code> (an integer). If <code>pctl = TRUE</code>, then <code>len</code> denotes how
-many percentiles to use to create the profiling grid. This
-creates a grid between 0 and 1 and the profile is determined by
-the percentiles of the data. For example, if <code>pctl = TRUE</code> and
-<code>len = 3</code>, the profile would contain the minimum, median, and
-maximum values. If <code>pctl = FALSE</code>, it defines how many grid
-points between the minimum and maximum values should be created.
-This parameter is ignored for qualitative variables (since all
-of their possible levels are profiled). In the case of date
-variables, <code>pctl = FALSE</code> will always be used since there is no
-quantile method for dates.</p></dd>
+<dd><p>A named list with elements <code>pctl</code> (a logical) and <code>len</code> (an
+integer). If <code>pctl = TRUE</code>, then <code>len</code> denotes how many percentiles to use
+to create the profiling grid. This creates a grid between 0 and 1 and the
+profile is determined by the percentiles of the data. For example, if <code>pctl = TRUE</code> and <code>len = 3</code>, the profile would contain the minimum, median, and
+maximum values. If <code>pctl = FALSE</code>, it defines how many grid points between
+the minimum and maximum values should be created. This parameter is ignored
+for qualitative variables (since all of their possible levels are
+profiled). In the case of date variables, <code>pctl = FALSE</code> will always be
+used since there is no quantile method for dates.</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a></dt>
@@ -129,22 +125,20 @@ is a placeholder and will be populated once <code><a href="prep.html">prep()</a>
 
 
 <dt id="arg-role">role<a class="anchor" aria-label="anchor" href="#arg-role"></a></dt>
-<dd><p>Not used by this step since no new variables are
-created.</p></dd>
+<dd><p>Not used by this step since no new variables are created.</p></dd>
 
 
 <dt id="arg-trained">trained<a class="anchor" aria-label="anchor" href="#arg-trained"></a></dt>
-<dd><p>A logical to indicate if the quantities for
-preprocessing have been estimated.</p></dd>
+<dd><p>A logical to indicate if the quantities for preprocessing have
+been estimated.</p></dd>
 
 
 <dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A logical. Should the step be skipped when the
-recipe is baked by <code><a href="bake.html">bake()</a></code>? While all operations are baked
-when <code><a href="prep.html">prep()</a></code> is run, some operations may not be able to be
-conducted on new data (e.g. processing the outcome variable(s)).
-Care should be taken when using <code>skip = TRUE</code> as it may affect
-the computations for subsequent operations.</p></dd>
+<dd><p>A logical. Should the step be skipped when the recipe is baked by
+<code><a href="bake.html">bake()</a></code>? While all operations are baked when <code><a href="prep.html">prep()</a></code> is run, some
+operations may not be able to be conducted on new data (e.g. processing the
+outcome variable(s)). Care should be taken when using <code>skip = TRUE</code> as it
+may affect the computations for subsequent operations.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
@@ -158,9 +152,9 @@ sequence of any existing operations.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This step is atypical in that, when baked, the
-<code>new_data</code> argument is ignored; the resulting data set is
-based on the fixed and profiled variable's information.</p>
+    <p>This step is atypical in that, when baked, the <code>new_data</code> argument is
+ignored; the resulting data set is based on the fixed and profiled variable's
+information.</p>
     </div>
     <div class="section level2">
     <h2 id="tidying">Tidying<a class="anchor" aria-label="anchor" href="#tidying"></a></h2>
