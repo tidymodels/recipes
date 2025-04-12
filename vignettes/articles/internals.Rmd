@@ -1,0 +1,152 @@
+---
+title: "Recipes Internals"
+description: |
+ Overview and explanation of recipe object internals.
+---
+
+These elements should not be accessed by users directly. They should instead be accessed via helper functions.
+
+The `recipe` object will contain different elements depending on whether it has been `prep()`ed or not. We will list all of them here and what they contain.
+
+An unprepped recipe will contain:
+
+- var_info
+- term_info
+- steps
+- template
+- levels
+- retained
+- requirements
+- ptype
+- strings_as_factors
+
+A prepped recipe will contain:
+
+- var_info
+- term_info
+- steps
+- template
+- retained
+- requirements
+- ptype
+- strings_as_factors
+- tr_info
+- orig_lvls
+- fit_times
+- last_term_info
+
+## var_info
+
+*Appears in both unprepped and prepped recipes*
+
+A tibble containing information about the original data set columns. It will contain the 4 columns `variable`, `type`, `role`, and `source`. 
+
+- `variable` is a character vector of variable names.
+- `type` is a list column of character variables. These character vectors are used in type selection functions such as `all_numeric()` and `all_integer()`. Each variable has one or more character values to allow for granular selections. An integer variable will have `type` values `c("integer", "numeric")` allowing it to be selected by `all_numeric()` and `all_integer()` but not `all_doubles()`.
+- `role` is a character vector of roles.
+- `source` is a character vector. It can contain 2 values `"original"` and `"derived"`. `"derived"` is used to denote variables that are created by steps such as those created by `step_dummy()` and `step_pca()`.
+
+Note that there can be duplicates of `variable` as each variable can have multiple roles as denoted by `role`.
+
+The `source` element for unprepped recipes should be `"original"` for all variables. This is kept here for parity with `term_info`.
+
+## term_info
+
+*Appears in both unprepped and prepped recipes*
+
+A tibble that contains the current set of terms in the data set. This initially defaults to the same data contained in `var_info`. This is updated after each step is `prep()`ed. It should contain the state of the variables you would see after `bake()`ing a recipe.
+
+The format is the same as described in `var_info`.
+
+## steps
+
+*Appears in both unprepped and prepped recipes*
+
+A list of `step` or `check` objects that define the sequence of preprocessing operations that will be applied to data. The default value is `NULL`.
+
+The content of each element will depend on each `step` or `check` object. 
+
+## template
+
+*Appears in both unprepped and prepped recipes*
+
+A tibble of the data is passed to `recipe()`. This is initialized to be the same as the data given in the `data` argument but can be different after the recipe is trained. If `retain = TRUE` is set when `prep()`ing then the `template` dataset will contain the data after it has been processed by the recipe. `retain = TRUE` is the default.
+
+## levels
+
+*May appear in both unprepped and prepped recipes*
+
+When a recipe is unprepped this element will be `NULL`. When it has been prepped it will either not be present or not. If at least one of the variables in the `template` has factor levels. Otherwise, it will be missing, not `NULL`. If the element is there it will be a named list, with the names matching those in `template`. Each element will contain the elements `values` and `ordered`, with some also including `factor`. The `factor` element will only appear for variables that are factors, unordered or ordered.
+
+- `values` A character vector of factor levels if the variable is a factor, `NA` otherwise.
+- `ordered` A logical value, `TRUE` if the variable is an ordered factor, `FALSE` if the variable is an unordered factor, `NA` otherwise.
+- `factor` A logical value, appears to always be `TRUE`.
+
+## retained
+
+*Appears in both unprepped and prepped recipes*
+
+A logical value. Will be `NA` for unprepped recipes. Otherwise will depend on what value was passed to `retain` in `prep()`.
+
+## requirements
+
+*Appears in both unprepped and prepped recipes*
+
+A named list. This will be an empty list unless `update_role_requirements()` is used. If `update_role_requirements()` has been used it will gain an element named `bake()` which will contain a named logical vector.
+The names correspond to the roles that have updated requirements, and the value itself is whether the role is required at `bake()` time.
+
+## ptype
+
+*Appears in both unprepped and prepped recipes*
+
+A zero-row slice of the data set is passed to `recipe()`. This data set is used with `recipes_ptype()` and `recipes_ptype_validate()` to make sure the recipe takes on the same shape of data when specified as when prepped and baked.
+
+## strings_as_factors
+
+*Appears in both unprepped and prepped recipes*
+
+A single logical. Whether strings should be converted to factors in `prep()`. Defaults to `TRUE`.
+
+## tr_info
+
+*Appears only in prepped recipes*
+
+A data.frame with 1 row and 2 variables `nrows` and `ncomplete`.
+
+- `nrows` is an integer, the number of rows in the training data set used in `prep()`.
+- `ncomplete` is an integer, the number of rows that don't contain any missing values in the data that was passed to `prep()`.
+
+Note that `ncomplete` represents the counts before any of the steps are applied. `tr_info` is used for the print method for the recipe itself.
+
+## orig_lvls
+
+*Appears only in prepped recipes*
+
+This element is highly related to `levels` and will thus have the same structure. `levels` contains the information regarding the final data set. `orig_lvls` contains the same structure of information, but regarding the data set it was trained on before the steps take effect. This information is in many ways similar to what is found in `ptype`.
+
+## fit_times
+
+*Appears only in prepped recipes*
+
+A tibble containing two columns `stage_id` and `elapsed`. It will contain 2 rows for every `step` or `check` contained in the recipe.
+
+- `stage_id` A character vector on the format `{stage}.{name}_{id}` where `{stage}` can be either `prep` or `bake`, `name` will be the name of the step and `id` its id element.
+- `elapsed` A double, a calculation done with `proc.time()` to estimate how long each step took to apply.
+
+This element is used by `extract_fit_time()`.
+
+## last_term_info
+
+*Appears only in prepped recipes*
+
+A grouped tibble, this will look similar to `var_info` and `term_info`. The main difference is that there is one row per variable in the data. Variables with multiple roles don't have different rows and instead have them all listed in the list element of `role.
+
+- `variable` is a character vector of variable names.
+- `type` is a list column of character vectors.
+- `role` is a list column of character vectors.
+- `source` is a character vector. It can contain 2 values `"original"` and `"derived"`.
+- `number` is an integer corresponding to the last step where that variable was available.
+- `skip` is a logical corresponding to the value of `skip` in the last step where that variable was available. 
+
+This data set is used In case a variable was removed, and that removal step used
+`skip = TRUE`, we need to retain its record so that selectors can be properly used with `bake`. This is important for skipped steps which might have resulted in columns not being added/removed in the test set.

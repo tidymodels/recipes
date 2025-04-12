@@ -183,6 +183,7 @@ articles:
   - title: Developer
     contents:
       - custom
+      - articles/internals
       - articles/checklists
   - title: Examples
     contents:
